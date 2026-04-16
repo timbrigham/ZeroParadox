@@ -8,7 +8,7 @@ Zero is the foundational element of every mathematical structure in this framewo
 
 ## What This Is
 
-The framework derives the emergence of state from a null condition — the *Binary Snap* — using four independent mathematical disciplines brought into contact through a fifth, cross-framework bridge document. Each layer is self-contained and internally closed before any cross-framework claim is made. Every theorem is proved from stated axioms. Every connection is explicitly traced.
+The framework derives the emergence of state from a null condition - the *Binary Snap* - using four independent mathematical disciplines brought into contact through a fifth, cross-framework bridge document. Each layer is self-contained and internally closed before any cross-framework claim is made. Every theorem is proved from stated axioms. Every connection is explicitly traced.
 
 **This is not a physical theory.** It is an instantiation-independent mathematical ontology. Physical theories are recovered by fixing the free parameters, principally ε₀, the minimum viable deviation, which plays the structural role of a Planck-scale quantity.
 
@@ -36,8 +36,8 @@ The framework decomposes into five documents, sequenced by logical dependency. Z
 
 > The element that is present in every describable state is the element that cannot be described by the tools those states make possible.
 
-Algebraically: ⊥ ≤ x for all x ∈ L — zero is a constituent of every state (ZP-A T2).  
-Topologically: Q₂ is totally disconnected — no smooth paths exist near 0 (ZP-B T5).  
+Algebraically: ⊥ ≤ x for all x ∈ L - zero is a constituent of every state (ZP-A T2).  
+Topologically: Q₂ is totally disconnected - no smooth paths exist near 0 (ZP-B T5).  
 Informationally: the surprisal field diverges on every infinite path approaching 0 (ZP-C T2).  
 In Hilbert space: T(0) is the orthogonal anchor of every state vector (ZP-D T3).
 
@@ -69,7 +69,7 @@ The framework is explicit about what it assumes. There are two axioms, two metho
 | Document | Version | Internal Status | Open Items |
 |---|---|---|---|
 | ZP-A | v1.1 | Closed | None within ZP-A |
-| ZP-B | v1.2 | Closed | None — OQ-B1 closed by T0 |
+| ZP-B | v1.2 | Closed | None - OQ-B1 closed by T0 |
 | ZP-C | v1.3 | Closed | T2 conditional on branching measure of D4 |
 | ZP-D | v1.2 | Closed | DP-1 is a design commitment, not a derived result |
 | ZP-E | v1.4 | Closed | AX-1 and AX-B1 are intentional axioms, not gaps |
@@ -82,13 +82,13 @@ All previously open questions (OQ-A1, OQ-B1, OQ-C1, S1) are closed. The two rema
 
 The technical documents are formatted as **ontologies**, not conventional papers. Every claim appears in a labelled box:
 
-- `Axiom` — foundational commitment; not derived
-- `Principle` — methodological commitment; bridges ontology and mathematics  
-- `Design Commitment` — explicit design choice; stated, not derived
-- `Derived` — proved from stated axioms within the document's discipline
-- `Conditional` — proved, but depends on a stated assumption
-- `Defined` — definitional; not a truth claim
-- `Remark` — clarifying context; not load-bearing
+- `Axiom` - foundational commitment; not derived
+- `Principle` - methodological commitment; bridges ontology and mathematics  
+- `Design Commitment` - explicit design choice; stated, not derived
+- `Derived` - proved from stated axioms within the document's discipline
+- `Conditional` - proved, but depends on a stated assumption
+- `Defined` - definitional; not a truth claim
+- `Remark` - clarifying context; not load-bearing
 
 Nothing slides between categories. This format was chosen because the framework spans four disciplines and it must be possible at every point to know exactly what kind of claim is being read.
 
@@ -99,12 +99,12 @@ ZP-E cannot be fully understood without the four prior documents; it earns its c
 
 ## What This Is Not
 
-- **Not a physical theory** — the framework is instantiation-independent; physical theories are recovered by fixing ε₀
-- **Not a claim about consciousness or the hard problem** — the framework is silent on these questions
-- **Not a claim that zero is paradoxical in all of mathematics** — the paradox is local to this framework's structure
-- **Not a logical contradiction** — no theorem in ZP-A through ZP-D contradicts any other
+- **Not a physical theory** - the framework is instantiation-independent; physical theories are recovered by fixing ε₀
+- **Not a claim about consciousness or the hard problem** - the framework is silent on these questions
+- **Not a claim that zero is paradoxical in all of mathematics** - the paradox is local to this framework's structure
+- **Not a logical contradiction** - no theorem in ZP-A through ZP-D contradicts any other
 
-
+The paradox is proven within this framework's structure. Whether the same structural inversion, foundational presence combined with descriptive failure, appears wherever zero plays a foundational role across mathematics is an open question this framework raises but does not yet settle.
 
 # Purpose of This Repository 
 This project exists to: 
