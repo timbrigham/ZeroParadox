@@ -104,6 +104,28 @@ ZP-E cannot be fully understood without the four prior documents; it earns its c
 - **Not a claim that zero is paradoxical in all of mathematics** — the paradox is local to this framework's structure
 - **Not a logical contradiction** — no theorem in ZP-A through ZP-D contradicts any other
 
----
+
+
+# Purpose of This Repository 
+This project exists to: 
+* provide a stable, versioned archive of the Zero Paradox
+* make the system accessible to readers, researchers, and critics
+* document the evolution of the ontology
+* preserve formal and narrative expressions of the framework
+
+Future updates may include diagrams, commentary, and expanded editions.
+
+# License
+
+All conceptual development, structure, and authorship originate with the human creator.
+This work is licensed under the Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International License (CC BY‑NC‑ND 4.0).
+You may share the work with attribution, but you may not modify it or use it commercially.
+
+# Citation 
+If referencing this work, please cite:
+Brigham, Timothy. The Zero Paradox (zeroparadox.org)
+
+# Contact 
+For inquiries, discussion, or collaboration, please open an issue or reach out through the repository.
 
 *April 2026*
