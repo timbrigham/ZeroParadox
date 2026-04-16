@@ -22,13 +22,13 @@ The framework decomposes into five documents, sequenced by logical dependency. Z
 
 | Document | Discipline | Core Result |
 |---|---|---|
-| [ZP-A: Lattice Algebra](ZP-A_Lattice_Algebra_v1_1.pdf) | Abstract Algebra | ⊥ is the global minimum and algebraic constituent of every state. Monotonicity of state sequences is a theorem, not a postulate. |
-| [ZP-B: p-Adic Topology](ZP-B_pAdic_Topology_v1_2.pdf) | Topology / Number Theory | p = 2 is derived from the binary existence axiom. Q₂ is totally disconnected. The Snap is topologically irreversible; proven, not assumed. |
-| [ZP-C: Information Theory](ZP-C_Information_Theory_v1_3.pdf) | Algorithmic IT / Discrete Analysis | The Snap costs exactly 1 bit. Smooth calculus is retired; discrete operators native to Q₂ replace it. The surprisal field diverges on infinite sequences approaching 0. |
-| [ZP-D: State Layer](ZP-D_State_Layer_v1_2.pdf) | Functional Analysis | An explicit map T: Q₂ → H is constructed by basis assignment and proven unique up to unitary equivalence. The Snap produces an orthogonal shift in Hilbert space. |
-| [ZP-E: Bridge Document](ZP-E_Bridge_Document_v1_4.pdf) | Cross-Framework Ontology | All four layers connected. All open questions closed. Full traceability register. Closing theorem T7: the formal statement of the Zero Paradox. |
+| [ZP-A: Lattice Algebra](ZP-A_Lattice_Algebra_v1_1-1.pdf) | Abstract Algebra | ⊥ is the global minimum and algebraic constituent of every state. Monotonicity of state sequences is a theorem, not a postulate. |
+| [ZP-B: p-Adic Topology](ZP-B_pAdic_Topology_v1_2-1.pdf) | Topology / Number Theory | p = 2 is derived from the binary existence axiom. Q₂ is totally disconnected. The Snap is topologically irreversible; proven, not assumed. |
+| [ZP-C: Information Theory](ZP-C_Information_Theory_v1_3-2.pdf) | Algorithmic IT / Discrete Analysis | The Snap costs exactly 1 bit. Smooth calculus is retired; discrete operators native to Q₂ replace it. The surprisal field diverges on infinite sequences approaching 0. |
+| [ZP-D: State Layer](ZP-D_State_Layer_v1_2-1.pdf) | Functional Analysis | An explicit map T: Q₂ → H is constructed by basis assignment and proven unique up to unitary equivalence. The Snap produces an orthogonal shift in Hilbert space. |
+| [ZP-E: Bridge Document](ZP-E_Bridge_Document_v1_4-1.pdf) | Cross-Framework Ontology | All four layers connected. All open questions closed. Full traceability register. Closing theorem T7: the formal statement of the Zero Paradox. |
 
-**Start here if you are new:** [Foreword — A Narrative Introduction](Zero_Paradox_Foreword.pdf)
+**Start here if you are new:** [Foreword — A Narrative Introduction](Zero_Paradox_Foreword-2.pdf)
 
 ---
 
