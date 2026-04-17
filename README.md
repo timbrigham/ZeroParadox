@@ -1,131 +1,137 @@
 # The Zero Paradox
 
-**A multi-framework mathematical ontology of state emergence from a null condition.**
+**A foundational mathematical framework for the emergence of state from a null condition**
 
-Zero is the foundational element of every mathematical structure in this framework; the minimum of the algebra, the base of the topology, the anchor of the Hilbert space. It is also the unique point where the standard tools of mathematical description necessarily fail. This is not a contradiction. It is the Zero Paradox: a provable structural inversion at the origin of all describable states.
-
----
-
-## What This Is
-
-The framework derives the emergence of state from a null condition - the *Binary Snap* - using four independent mathematical disciplines brought into contact through a fifth, cross-framework bridge document. Each layer is self-contained and internally closed before any cross-framework claim is made. Every theorem is proved from stated axioms. Every connection is explicitly traced.
-
-**This is not a physical theory.** It is an instantiation-independent mathematical ontology. Physical theories are recovered by fixing the free parameters, principally ε₀, the minimum viable deviation, which plays the structural role of a Planck-scale quantity.
-
-**This is not philosophy.** Every claim is either an axiom (labelled as such), a derived theorem (proved), a stated principle (declared), or an open question (tracked).
+*Version 20+ | April 2026 | Internal Working Document*
 
 ---
 
-## Document Architecture
+## What Is This?
 
-The framework decomposes into five documents, sequenced by logical dependency. ZP-A, ZP-B, and ZP-C are independent of each other. ZP-D depends on ZP-A and ZP-B. ZP-E is written last and depends on all four.
+The Zero Paradox is a mathematical framework attempting to answer a precise question: **how does a first state emerge from nothing?**
 
-| Document | Discipline | Core Result |
+The answer is not philosophical. It is structural. The framework shows that the properties of "nothing" — of a true null condition — force the emergence of a first state as a mathematical necessity. The transition is called the **Binary Snap**.
+
+The framework is grounded in four independent mathematical disciplines, each of which describes the same event from a different vantage point:
+
+| Layer | Discipline | What It Describes |
 |---|---|---|
-| [ZP-A: Lattice Algebra](ZP-A_Lattice_Algebra_v1_1-1.pdf) | Abstract Algebra | ⊥ is the global minimum and algebraic constituent of every state. Monotonicity of state sequences is a theorem, not a postulate. |
-| [ZP-B: p-Adic Topology](ZP-B_pAdic_Topology_v1_2-1.pdf) | Topology / Number Theory | p = 2 is derived from the binary existence axiom. Q₂ is totally disconnected. The Snap is topologically irreversible; proven, not assumed. |
-| [ZP-C: Information Theory](ZP-C_Information_Theory_v1_3-2.pdf) | Algorithmic IT / Discrete Analysis | The Snap costs exactly 1 bit. Smooth calculus is retired; discrete operators native to Q₂ replace it. The surprisal field diverges on infinite sequences approaching 0. |
-| [ZP-D: State Layer](ZP-D_State_Layer_v1_2-1.pdf) | Functional Analysis | An explicit map T: Q₂ → H is constructed by basis assignment and proven unique up to unitary equivalence. The Snap produces an orthogonal shift in Hilbert space. |
-| [ZP-E: Bridge Document](ZP-E_Bridge_Document_v1_4-1.pdf) | Cross-Framework Ontology | All four layers connected. All open questions closed. Full traceability register. Closing theorem T7: the formal statement of the Zero Paradox. |
+| ZP-A | Abstract Algebra | How states accumulate without subtraction |
+| ZP-B | p-Adic Topology | Why the geometry of state space is non-Archimedean |
+| ZP-C | Information Theory | Why zero is an informational singularity |
+| ZP-D | Functional Analysis | How topology maps to quantum state space |
+| ZP-E | Cross-Framework Ontology | Where all four frameworks converge |
+| ZP-G | Category Theory | The universal algebraic skeleton |
+| ZP-H | Categorical Bridge | How the category connects to ZP-A through ZP-E |
 
-**Start here if you are new:** [Foreword — A Narrative Introduction](Zero_Paradox_Foreword-2.pdf)
-
----
-
-## The Central Claim
-
-> The element that is present in every describable state is the element that cannot be described by the tools those states make possible.
-
-Algebraically: ⊥ ≤ x for all x ∈ L - zero is a constituent of every state (ZP-A T2).  
-Topologically: Q₂ is totally disconnected - no smooth paths exist near 0 (ZP-B T5).  
-Informationally: the surprisal field diverges on every infinite path approaching 0 (ZP-C T2).  
-In Hilbert space: T(0) is the orthogonal anchor of every state vector (ZP-D T3).
-
-Standard mathematical description in calculus, differential geometry, and smooth analysis requires a smooth manifold. The space at the foundational element is not one. This is forced by the binary existence axiom, not by any failure of construction.
-
-The paradox is resolved, not dissolved, by discrete operators native to Q₂ that require no smoothness and are well-defined at every point in Q₂ \ {0}.
+Each document is **fully self-contained within its own discipline**. No cross-framework claims are made until ZP-E, which earns those claims by connecting frameworks that are each already internally closed.
 
 ---
 
-## Foundational Commitments
+## The Core Idea
 
-The framework is explicit about what it assumes. There are two axioms, two methodological principles, and one design commitment. Everything else is derived.
+Every framework in this project describes the same structural fact from a different angle:
 
-| Label | Kind | Statement |
+> **Zero is not absence. Zero is the universal constituent — the element that is present in every state, but that no state can return to.**
+
+- In ZP-A: ⊥ ≤ x for all x. The bottom element is a constituent of every state by algebraic necessity.
+- In ZP-B: 0 is topologically isolated in Q₂. No continuous path returns to it.
+- In ZP-C: The surprisal field I(x) diverges as x → 0. Zero costs infinite information to approach.
+- In ZP-D: T(0) = e₀ is the anchor of the Hilbert space. Every state vector is an orthogonal extension from it.
+- In ZP-G: 0 is the initial object. Morphisms flow out from it; none return.
+
+These are not analogies. They are independent proofs of the same structural fact, each carrying the full weight of their respective mathematical disciplines.
+
+---
+
+## The Two Foundational Axioms
+
+After all derivations, two irreducible axiomatic commitments remain:
+
+**AX-B1 — Binary Existence**
+The foundational distinction is binary: a state either exists or it does not. There is no partial existence. This axiom forces the choice of field Q₂ (Theorem T0 in ZP-B), forces the distributions P=(1,0) and Q=(0,1) (ZP-E T6), and governs increment selection at every step.
+
+**AX-1 — Binary Snap Causality**
+When the configuration string of the Null State reaches the incompressibility threshold P₀, the Null State undergoes the Binary Snap — a transition from ⊥ to the First Atomic State. Each framework describes what the Snap looks like; none derives that it *must* happen. This causality is the irreducible generative claim of the system.
+
+Everything else in the framework is derived.
+
+---
+
+## Document Index
+
+### Formal Ontology Documents
+
+These are the authoritative mathematical documents. Every claim is marked as Axiom, Definition, Derived, Import, Design Commitment, or Remark. Nothing slides between categories.
+
+| Document | Version | Description |
 |---|---|---|
-| **AX-B1** | Axiom | A state either exists or it does not. There is no third option at the foundational level. |
-| **AX-1** | Axiom | When a configuration string reaches its incompressibility threshold, the Binary Snap occurs. This is the generative claim, the one thing that cannot be derived from the internal mathematics. |
-| **MP-1** | Principle | The representational base must be the minimum sufficient to encode AX-B1 without redundancy or loss. This derives p = 2 from AX-B1. |
-| **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. This bridges AX-B1 and the information-theoretic tools of ZP-C. |
-| **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. The natural choice, stated explicitly. |
+| [ZP-A: Lattice Algebra](ZP-A_Lattice_Algebra_v1_1.pdf) | v1.1 | Join-semilattice (L, ∨, ⊥), monotonicity, additive ontology |
+| [ZP-B: p-Adic Topology](ZP-B_pAdic_Topology_v1_2.pdf) | v1.2 | Q₂ field, ultrametric, clopen balls, topological irreversibility |
+| [ZP-C: Information Theory](ZP-C_Information_Theory_v1_3.pdf) | v1.3 | Kolmogorov complexity, surprisal, discrete operators on Q₂ |
+| [ZP-D: State Layer](ZP-D_State_Layer_v1_2.pdf) | v1.2 | Hilbert space H = ℂⁿ, transition operator T: Q₂ → H |
+| [ZP-E: Bridge Document](ZP-E_Bridge_Document_v1_3.pdf) | v1.3 | Cross-framework synthesis, Binary Snap, Landauer bridge |
+| [ZP-G: Category Theory](ZPG_Category_Theory_v1_2.pdf) | v1.2 | Category C, initial object, categorical Zero Paradox, C-G1 |
+| [ZP-H: Categorical Bridge](ZPH_Categorical_Bridge_v1_0.pdf) | v1.0 | Four instantiation functors, singularity reconciliation |
 
-* A reader who disagrees with AX-1 disagrees with the causality claim. That disagreement is legitimate and does not affect the internal mathematics of ZP-A through ZP-D. 
-* The claim that reaching the incompressibility threshold causes the transition is a causal claim that no mathematical discipline in the framework has the too to derive.
+### Illustrated Companion Documents
 
----
+These companion documents explain each theory in plain language with diagrams. They are **not** the formal ontology — they are accessibility aids for readers encountering these ideas for the first time. Every claim in a companion document is a restatement of a theorem in the corresponding formal document.
 
-## Document Status
-
-| Document | Version | Internal Status | Open Items |
-|---|---|---|---|
-| ZP-A | v1.1 | Closed | None within ZP-A |
-| ZP-B | v1.2 | Closed | None - OQ-B1 closed by T0 |
-| ZP-C | v1.3 | Closed | T2 conditional on branching measure of D4 |
-| ZP-D | v1.2 | Closed | DP-1 is a design commitment, not a derived result |
-| ZP-E | v1.4 | Closed | AX-1 and AX-B1 are intentional axioms, not gaps |
-
-All previously open questions (OQ-A1, OQ-B1, OQ-C1, S1) are closed. The two remaining axioms and three principles are explicit by design.
+| Companion | Covers | Key Diagrams |
+|---|---|---|
+| [ZP-A Illustrated](ZP-A_Illustrated_Companion.pdf) | Lattice algebra, partial order, additive ontology | Hasse diagram, one-way transition arrows |
+| [ZP-B Illustrated](ZP-B_Illustrated_Companion.pdf) | p-Adic balls, ultrametric, topological isolation | Nested clopen ball hierarchy, ε₀ threshold |
+| [ZP-C Illustrated](ZP-C_Illustrated_Companion.pdf) | Surprisal field, informational singularity, 1-bit cost | Surprisal curve with divergence at 0 |
+| [ZP-D Illustrated](ZP-D_Illustrated_Companion.pdf) | Hilbert space, transition operator, orthogonal shift | Q₂ → H mapping with orthogonal basis vectors |
+| [ZP-G/H Illustrated](ZP-G_Illustrated_Companion.pdf) | Category C, morphism structure, complexity floor C-G1 | Directed graph with blocked return arrows, K=0 floor |
+| [ZP-E Illustrated](ZP-E_Illustrated_Companion.pdf) | Cross-framework convergence, Binary Snap, AX-1 | Four-quadrant framework map with Snap at center |
 
 ---
 
-## How to Read This
+## The Binary Snap
 
-The technical documents are formatted as **ontologies**, not conventional papers. Every claim appears in a labelled box:
+The Binary Snap is the central event of the framework. It is described independently and consistently by every layer:
 
-- `Axiom` - foundational commitment; not derived
-- `Principle` - methodological commitment; bridges ontology and mathematics  
-- `Design Commitment` - explicit design choice; stated, not derived
-- `Derived` - proved from stated axioms within the document's discipline
-- `Conditional` - proved, but depends on a stated assumption
-- `Defined` - definitional; not a truth claim
-- `Remark` - clarifying context; not load-bearing
+| Framework | Description of the Snap |
+|---|---|
+| ZP-A | The join ⊥ ∨ ε₀ — the first non-trivial element added to the bottom |
+| ZP-B | Crossing the ε₀ threshold — moving from 0 to the first element of a non-trivial clopen ball |
+| ZP-C | Reaching the incompressibility threshold P₀ — the string can no longer self-describe |
+| ZP-D | The orthogonal shift T(0) = e₀ → T(ε₀) = e₁ — a right-angle turn in Hilbert space |
+| ZP-G | The unique morphism ι_X: 0 → X — the initial object reaching its first non-initial object |
 
-Nothing slides between categories. This format was chosen because the framework spans four disciplines and it must be possible at every point to know exactly what kind of claim is being read.
-
-**Recommended reading order:** Foreword → ZP-A → ZP-B → ZP-C → ZP-D → ZP-E.  
-ZP-E cannot be fully understood without the four prior documents; it earns its claims by pointing back to proofs that are already complete.
+The Snap costs exactly **1 bit** of information (ZP-C, ZP-E T2). It is topologically irreversible (ZP-B C3). It is algebraically irreversible (ZP-A T3). It is structurally irreversible in every framework. The causality — that it *must* happen — is AX-1.
 
 ---
 
-## What This Is Not
+## Current Status
 
-- **Not a physical theory** - the framework is instantiation-independent; physical theories are recovered by fixing ε₀
-- **Not a claim about consciousness or the hard problem** - the framework is silent on these questions
-- **Not a claim that zero is paradoxical in all of mathematics** - the paradox is local to this framework's structure
-- **Not a logical contradiction** - no theorem in ZP-A through ZP-D contradicts any other
+All open questions from the original V20.0 rigor review have been resolved:
 
-The paradox is proven within this framework's structure. Whether the same structural inversion, foundational presence combined with descriptive failure, appears wherever zero plays a foundational role across mathematics is an open question this framework raises but does not yet settle.
+| Item | Resolution |
+|---|---|
+| OQ-B1: Why p = 2? | Derived from AX-B1 (ZP-B T0) |
+| S1: Distribution stipulation | Derived from AX-B1 (ZP-E T6, ZP-C v1.2 T1) |
+| OQ-C1: Non-conservatism of F | Derived from Q₂ ball hierarchy (ZP-C v1.2 T2) — smooth calculus retired |
+| OQ-A1: Increment selection | Closed by Iterative Forcing Theorem (ZP-E T5) |
+| OQ-D1: Construction of T | Basis assignment construction (ZP-D v1.1 T2, T3) |
+| OQ-G1 through OQ-G4 | Closed in ZP-G v1.1 and ZP-H v1.0 |
 
-# Purpose of This Repository 
-This project exists to: 
-* provide a stable, versioned archive of the Zero Paradox
-* make the system accessible to readers, researchers, and critics
-* document the evolution of the ontology
-* preserve formal and narrative expressions of the framework
+**Remaining intentional axioms:** AX-1 (Binary Snap causality) and AX-B1 (Binary Existence). These are not gaps — they are the irreducible foundational commitments of the system, stated explicitly.
 
-Future updates may include diagrams, commentary, and expanded editions.
+**Most recent addition:** Corollary C-G1 (ZP-G v1.2) — the Non-Zero Complexity Floor. An object X is a valid state if and only if its categorical surprisal I(ι_X) > 0. The threshold is binary, consistent with AX-B1.
 
-# License
+---
 
-All conceptual development, structure, and authorship originate with the human creator.
-This work is licensed under the Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International License (CC BY‑NC‑ND 4.0).
-You may share the work with attribution, but you may not modify it or use it commercially.
+## Governing Principles
 
-# Citation 
-If referencing this work, please cite:
-Brigham, Timothy. The Zero Paradox (zeroparadox.org)
+**Honest Labelling** — Every claim is marked as Axiom, Definition, Derived, Import, Design Commitment, or Remark. Nothing slides between categories without explicit acknowledgment.
 
-# Contact 
-For inquiries, discussion, or collaboration, please open an issue or reach out through the repository.
+**Boundary Discipline** — Each document is fully self-referential within its own discipline before any cross-framework claim is made. The moment a step requires importing a concept from outside the current framework, that is a boundary.
 
-*April 2026*
+**The Bridge Document Earns Its Claims** — ZP-E asserts only connections that are fully grounded on both sides. It does not paper over gaps with plausible-sounding language.
+
+---
+
+*Zero Paradox Project | April 2026 | Internal Working Document*
