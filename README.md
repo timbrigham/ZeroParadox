@@ -29,34 +29,30 @@ The three remaining intentional axioms of the system are: **AX-B1** (binary exis
 
 ## Document Map
 
+> Only the PDF versions are attached here. Word document versions were malformed and have not been included.
+
 ### Foundational Layers (read in any order — mutually independent)
 
 | File | Document | Contents |
 |------|----------|----------|
-| `ZP-A_Lattice_Algebra_v1_1.docx` / `.pdf` | ZP-A v1.1 | Join-semilattice (L, ∨, ⊥). Axioms A1–A4. Monotonicity theorem. Additive ontology. |
-| `ZP-B_pAdic_Topology_v1_2.docx` / `.pdf` | ZP-B v1.2 | AX-B1 binary existence axiom. MP-1 minimality principle. Derivation of p=2. 2-adic field Q₂. Ultrametric. Clopen ball structure. Total disconnectedness. Topological irreversibility of the Snap. |
-| `ZP-C_Information_Theory_v1_4.docx` / `.pdf` | ZP-C v1.4 | Kolmogorov complexity. Incompressibility threshold P₀. State representations derived from AX-B1. JSD = 1 bit. Discrete surprisal field on Q₂. Non-conservatism of DF. **L-RUN** (execution is a non-null state). **TQ-IH** (no null-only execution trace). **T-BUF** candidate theorem. AX-1 promoted to Candidate Theorem. |
+| [ZP-A_Lattice_Algebra_v1_1.pdf](./ZP-A_Lattice_Algebra_v1_1.pdf) | ZP-A v1.1 | Join-semilattice (L, ∨, ⊥). Axioms A1–A4. Monotonicity theorem. Additive ontology. |
+| [ZP-B_pAdic_Topology_v1_2.pdf](./ZP-B_pAdic_Topology_v1_2.pdf) | ZP-B v1.2 | AX-B1 binary existence axiom. MP-1 minimality principle. Derivation of p=2. 2-adic field Q₂. Ultrametric. Clopen ball structure. Total disconnectedness. Topological irreversibility of the Snap. |
+| [ZP-C_Information_Theory_v1_4.pdf](./ZP-C_Information_Theory_v1_4.pdf) | ZP-C v1.4 | Kolmogorov complexity. Incompressibility threshold P₀. State representations derived from AX-B1. JSD = 1 bit. Discrete surprisal field on Q₂. Non-conservatism of DF. **L-RUN** (execution is a non-null state). **TQ-IH** (no null-only execution trace). **T-BUF** candidate theorem. AX-1 promoted to Candidate Theorem. |
 
 ### Dependent Layers
 
 | File | Document | Contents |
 |------|----------|----------|
-| `ZP-D_State_Layer_v1_2.docx` / `.pdf` | ZP-D v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H constructed by basis assignment. Orthogonality design commitment DP-1. Existence and uniqueness of T. Snap produces orthogonal shift in H. |
-| `ZP-E_DA1_TSNAP_Insert.docx` / `.pdf` | ZP-E DA-1 / T-SNAP | **DA-1**: definitional alignment — D7 configurations are live by definition; instantiation at P₀ constitutes an execution event. **T-SNAP**: Binary Snap derived as theorem. AX-1 retired as axiom. Updated traceability register and open items table. |
+| [ZP-D_State_Layer_v1_2.pdf](./ZP-D_State_Layer_v1_2.pdf) | ZP-D v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H constructed by basis assignment. Orthogonality design commitment DP-1. Existence and uniqueness of T. Snap produces orthogonal shift in H. |
+| [ZP-E_DA1_TSNAP_Insert.pdf](./ZP-E_DA1_TSNAP_Insert.pdf) | ZP-E DA-1 / T-SNAP | **DA-1**: definitional alignment — D7 configurations are live by definition; instantiation at P₀ constitutes an execution event. **T-SNAP**: Binary Snap derived as theorem. AX-1 retired as axiom. Updated traceability register and open items table. |
 
 ### Category Theory Extensions
 
 | File | Document | Contents |
 |------|----------|----------|
-| `ZPG_Category_Theory_v1_2.pdf` | ZP-G v1.2 | Category-theoretic formulation. Initial object as 0. AX-G1, AX-G2. Universal property theorem. |
-| `ZPH_Categorical_Bridge_v1_0.pdf` | ZP-H v1.0 | Categorical bridge. Functors from C to SLat, pTop, InfoSp, Hilb. Singularity reconciliation. T-H3: Snap under all four functors. |
+| [ZP-G_Category_Theory_v1_1.pdf](./ZP-G_Category_Theory_v1_1.pdf) | ZP-G v1.2 | Category-theoretic formulation. Initial object as 0. AX-G1, AX-G2. Universal property theorem. |
+| [ZP-H_Categorical_Bridge_v1_0.pdf](./ZP-H_Categorical_Bridge_v1_0.pdf) | ZP-H v1.0 | Categorical bridge. Functors from C to SLat, pTop, InfoSp, Hilb. Singularity reconciliation. T-H3: Snap under all four functors. |
 
-### Reference
-
-| File | Contents |
-|------|----------|
-| `Zero_Paradox_V20.pdf` | Version 20 monolithic document — the source from which the modular decomposition began |
-| `README.md` | This file |
 
 ---
 
