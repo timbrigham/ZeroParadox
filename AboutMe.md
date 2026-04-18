@@ -1,6 +1,6 @@
 # Origins and Motivation
 
-The Zero Paradox did not begin as a grand theory. 
+The Zero Paradox did not begin as some grand theory. 
 
 It started with a small discomfort: a sense that I did not actually understand zero in the deep, structural way I wanted to. 
 I kept circling around this simple observation: you can add or subtract any number from zero and it remains zero. 
@@ -10,6 +10,7 @@ That symmetry felt too perfect, too frictionless, like a trick of the light.
 If zero could absorb arbitrary operations without changing, then the number line was not just symmetric; it was hiding something.
 
 Most evenings, I would sit on the porch, letting my mind wander while the world quieted down. 
+
 Three parts confusion, seven parts curiosity. And every time, I found myself returning to zero, not as a placeholder, but as something with its own internal logic. 
 
 Those quiet evenings were where the idea took root.
@@ -20,7 +21,7 @@ I was building a system inside Gemini to automatically generate and reload Googl
 
 The original purpose was mundane: tracking a complicated issue I was dealing with in my city. But as I fed more and more content into that system, my questions sharpened. The structure of my thinking became more layered. 
 
-Over months, the curiosity about zero evolved into something larger. The theological and psychological framing I had been exploring fell away, replaced by a mathematical and ontological structure that felt more precise. 
+Over months, the curiosity about zero evolved into something larger. The theological, psychological, and philosophical framing I had been exploring fell away, replaced by a mathematical and ontological structure that felt more precise. I needed to trade English for something more precise. 
 
 The Zero Paradox did not arrive fully formed; it emerged from the scaffolding I built to think more clearly.
 
