@@ -1,17 +1,18 @@
-# The Zero Paradox — Release Package
+# The Zero Paradox - Project Index
 **April 2026 | Final Formalism**
 
 ## What This Is
 
 The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
 
-The answer developed here is yes — and the proof is distributed across five self-contained mathematical layers, each internally closed before any cross-framework claim is made.
+The answer developed here is yes. The proof is distributed across five self-contained mathematical layers, each internally closed before any cross-framework claim is made.
+
 
 ---
 
 ## The Central Result
 
-The framework derives that the **Binary Snap** — the transition from the Null State ⊥ to the first atomic state ε₀ — is a **theorem**, not an axiom.
+The **Binary Snap** - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
 The derivation chain is:
 
@@ -20,45 +21,65 @@ The derivation chain is:
 → **D7** (machine configuration definition, ZP-C)  
 → **L-RUN** (execution is a non-null state change, ZP-C)  
 → **TQ-IH** (no program outputs ⊥ without a non-null intermediate state, ZP-C)  
-→ **ZP-A D2** (a non-null state change from ⊥ is a join — the Binary Snap)  
+→ **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
 
-The three remaining intentional axioms of the system are: **AX-B1** (binary existence), **AX-G1** (initial object exists), **AX-G2** (source asymmetry).
+The three remaining intentional axioms: **AX-B1** (binary existence), **AX-G1** (initial object exists), **AX-G2** (source asymmetry).
 
 ---
 
-## Document Map
+## What This Is Not
 
-> Only the PDF versions are attached here. Word document versions were malformed and have not been included.
+- **Not a physical theory** - the framework is instantiation-independent; physical theories are recovered by fixing ε₀
+- **Not a claim about consciousness or the hard problem** - the framework is silent on these questions
+- **Not a claim that zero is paradoxical in all of mathematics** - the paradox is local to this framework's structure
+- **Not a logical contradiction** - no theorem in ZP-A through ZP-D contradicts any other
 
-### Foundational Layers (read in any order — mutually independent)
+---
 
-| File | Document | Contents |
-|------|----------|----------|
-| [ZP-A_Lattice_Algebra_v1_1.pdf](./ZP-A_Lattice_Algebra_v1_1.pdf) | ZP-A v1.1 | Join-semilattice (L, ∨, ⊥). Axioms A1–A4. Monotonicity theorem. Additive ontology. |
-| [ZP-B_pAdic_Topology_v1_2.pdf](./ZP-B_pAdic_Topology_v1_2.pdf) | ZP-B v1.2 | AX-B1 binary existence axiom. MP-1 minimality principle. Derivation of p=2. 2-adic field Q₂. Ultrametric. Clopen ball structure. Total disconnectedness. Topological irreversibility of the Snap. |
-| [ZP-C_Information_Theory_v1_4.pdf](./ZP-C_Information_Theory_v1_4.pdf) | ZP-C v1.4 | Kolmogorov complexity. Incompressibility threshold P₀. State representations derived from AX-B1. JSD = 1 bit. Discrete surprisal field on Q₂. Non-conservatism of DF. **L-RUN** (execution is a non-null state). **TQ-IH** (no null-only execution trace). **T-BUF** candidate theorem. AX-1 promoted to Candidate Theorem. |
+## Document Index
 
-### Dependent Layers
+### Entry Point
 
-| File | Document | Contents |
-|------|----------|----------|
-| [ZP-D_State_Layer_v1_2.pdf](./ZP-D_State_Layer_v1_2.pdf) | ZP-D v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H constructed by basis assignment. Orthogonality design commitment DP-1. Existence and uniqueness of T. Snap produces orthogonal shift in H. |
-| [ZP-E_DA1_TSNAP_Insert.pdf](./ZP-E_DA1_TSNAP_Insert.pdf) | ZP-E DA-1 / T-SNAP | **DA-1**: definitional alignment — D7 configurations are live by definition; instantiation at P₀ constitutes an execution event. **T-SNAP**: Binary Snap derived as theorem. AX-1 retired as axiom. Updated traceability register and open items table. |
+| File | Description |
+|------|-------------|
+| [README](README.md) | This file - project index |
+| [Zero Paradox Foreword](Zero_Paradox_Foreword.pdf) | Plain-language introduction for any reader. Start here. |
 
-### Category Theory Extensions
+### Formal Ontology Documents
 
-| File | Document | Contents |
-|------|----------|----------|
-| [ZP-G_Category_Theory_v1_1.pdf](./ZP-G_Category_Theory_v1_1.pdf) | ZP-G v1.2 | Category-theoretic formulation. Initial object as 0. AX-G1, AX-G2. Universal property theorem. |
-| [ZP-H_Categorical_Bridge_v1_0.pdf](./ZP-H_Categorical_Bridge_v1_0.pdf) | ZP-H v1.0 | Categorical bridge. Functors from C to SLat, pTop, InfoSp, Hilb. Singularity reconciliation. T-H3: Snap under all four functors. |
+| File | Document | Version | Contents |
+|------|----------|---------|----------|
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_1.pdf) | ZP-A | v1.1 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
+| [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_2.pdf) | ZP-B | v1.2 | AX-B1. MP-1. Derivation of p=2. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
+| [ZP-C Information Theory](ZP-C_Information_Theory_v1_4.pdf) | ZP-C | v1.4 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF.** AX-1 promoted to Candidate Theorem. |
+| [ZP-D State Layer](ZP-D_State_Layer_v1_2.pdf) | ZP-D | v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. |
+| [ZP-E DA1 TSNAP Insert](ZP-E_DA1_TSNAP_Insert.pdf) | ZP-E | DA-1/T-SNAP | **DA-1** (instantiation = execution). **T-SNAP** (Binary Snap derived). AX-1 retired. Updated traceability register. |
+| [ZP-G Category Theory](ZP-G_Category_Theory_v1_1.pdf) | ZP-G | v1.1 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_0.pdf) | ZP-H | v1.0 | Functors FA-FD. Singularity reconciliation. T-H3: Snap under all four functors. |
 
+### Illustrated Companion Documents (General Reader)
+
+One companion per formal document. Plain language, diagrams, real-world examples.
+
+| File | For Document | Key Diagrams |
+|------|-------------|--------------|
+| [ZP-A Illustrated Companion](ZP-A_Illustrated_Companion.pdf) | ZP-A | Hasse diagram, one-directional transitions |
+| [ZP-B Illustrated Companion](ZP-B_Illustrated_Companion.pdf) | ZP-B | Nested clopen balls, disjoint ball separation |
+| [ZP-C Illustrated Companion](ZP-C_Illustrated_Companion.pdf) | ZP-C | Surprisal field singularity, 1-bit Snap cost, L-RUN execution trace |
+| [ZP-D Illustrated Companion](ZP-D_Illustrated_Companion.pdf) | ZP-D | T map: topology → orthogonality |
+| [ZP-E Illustrated Companion](ZP-E_Illustrated_Companion.pdf) | ZP-E | Four-framework convergence, T-SNAP derivation chain |
+| [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G/H | Category morphism structure, functor connections |
+
+### Supporting Documents
+
+| File | Description |
+|------|-------------|
+| [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 
 ---
 
 ## Axiomatic Commitments
-
-The framework rests on exactly three axioms, two principles, and one design commitment. Everything else is derived.
 
 | Label | Type | Statement |
 |-------|------|-----------|
@@ -69,7 +90,7 @@ The framework rests on exactly three axioms, two principles, and one design comm
 | **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
 
-**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E DA-1 insert.
+**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
 
 ---
 
@@ -77,26 +98,80 @@ The framework rests on exactly three axioms, two principles, and one design comm
 
 | Item | Status |
 |------|--------|
-| OQ-A1: Increment selection | Closed — ZP-E T5 (Iterative Forcing Theorem) |
-| OQ-B1: p = 2 justification | Closed — ZP-B T0 (derived from AX-B1 + MP-1) |
-| S1: Distribution stipulation | Closed — ZP-C T1 (derived from AX-B1 + RP-1) |
-| OQ-C1: Non-conservatism of DF | Closed — ZP-C T2 (rebuilt within extended D6) |
-| DA-1: Instantiation alignment | Closed — ZP-E DA-1 (D7 configurations are live by definition) |
-| AX-1: Binary Snap Causality | **Closed — ZP-E T-SNAP (derived theorem)** |
-| Temperature T in BA-1 | Parameter — intentional; universe-contingent |
+| OQ-A1: Increment selection | Closed - ZP-E T5 (Iterative Forcing Theorem) |
+| OQ-B1: p = 2 justification | Closed - ZP-B T0 (derived from AX-B1 + MP-1) |
+| S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
+| OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
+| DA-1: Instantiation alignment | Closed - ZP-E DA-1 (D7 configurations are live by definition) |
+| AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
+| Temperature T in BA-1 | Parameter - intentional; universe-contingent |
+| Formal verification (Lean/Rocq) | Not yet done - candidate for future work |
 
 ---
 
 ## Reading Order
 
-For a mathematician approaching cold:
+**General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-1. Read the **Foreword** (embedded in V20.pdf, or request separately) for motivation and architecture
-2. Read **ZP-A**, **ZP-B**, **ZP-C** in any order — they are mutually independent
-3. Read **ZP-D** — depends on ZP-A and ZP-B
-4. Read **ZP-E DA-1 / T-SNAP** — this is the closing document; depends on all prior layers
-5. **ZP-G** and **ZP-H** extend the framework into category theory and are self-contained extensions
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_1.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_2.pdf) → [ZP-C](ZP-C_Information_Theory_v1_4.pdf) → [ZP-D](ZP-D_State_Layer_v1_2.pdf) → [ZP-E](ZP-E_DA1_TSNAP_Insert.pdf) (in dependency order)
+
+**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_1.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_0.pdf) (self-contained; after ZP-E)
+
+**For process/methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 
 ---
 
-*Zero Paradox | Release Package | April 2026*
+## Notes on Development
+
+This framework was developed by a human researcher in collaboration with Claude (Anthropic, April 2026). Claude served as research assistant, formal scribe, gap identifier, and PDF renderer. All mathematical content and theoretical direction originated with the researcher. See `ZP_Tools_and_Methods.pdf` for a complete account.
+
+---
+
+## Repository and Version History
+
+This project is hosted on GitHub at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). The repository uses Git for version control, allowing you to explore the evolution of the theorems and documents over time.
+
+To view older versions of this README or the associated documents as the framework progressed:
+- **Via GitHub web interface**: Navigate to the repository, click on the file, then "History" to browse commits.
+- **Locally**: Use `git log` to see commit history and `git checkout <commit-hash>` to view specific versions.
+- **Branches**: Different branches may contain snapshots at various stages (e.g., compare "main" vs. "illustrated" branches).
+
+This ensures transparency in the development of the Zero Paradox.
+
+---
+
+## Purpose of This Repository
+
+This project exists to:
+- Provide a stable, versioned archive of the Zero Paradox
+- Make the framework accessible to readers, researchers, and critics
+- Document the evolution of the ontology and associated theorems
+- Preserve formal and narrative expressions of the framework
+
+---
+
+## License
+
+All conceptual development, structure, and authorship originate with the human creator.
+
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).
+
+You may share the work with attribution, but you may not modify it or use it commercially. See [LICENSE](LICENSE) for full details.
+
+---
+
+## Citation
+
+If referencing this work, please cite:
+
+> Brigham, Timothy. The Zero Paradox (April 2026). https://github.com/timbrigham/ZeroParadox
+
+---
+
+## Contact
+
+For inquiries, discussion, or collaboration, please open an issue on [GitHub](https://github.com/timbrigham/ZeroParadox) or reach out through the repository.
+
+---
+
+*Zero Paradox | Project Index | April 2026*
