@@ -138,6 +138,8 @@ To view older versions of this README or the associated documents as the framewo
 
 This ensures transparency in the development of the Zero Paradox.
 
+**Previous versions of documents** are also kept in the [historical/](historical/) folder for reference, making the development process visible without requiring Git access.
+
 ---
 
 ## Purpose of This Repository
