@@ -1,0 +1,7 @@
+# Claude Code session files and local tooling
+.claude-local/
+.claude/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
