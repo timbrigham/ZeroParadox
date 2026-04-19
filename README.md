@@ -76,6 +76,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | File | Description |
 |------|-------------|
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
+| [Generation 2: Applications and Open Problems](ZP_Gen2_Applications.pdf) | Where the framework reaches: the arrow of time, why something rather than nothing, the unreasonable effectiveness of mathematics, the fine-tuning problem, and Skolem's paradox. Stated assumptions, honest fit assessment, named gaps. |
 
 ---
 
