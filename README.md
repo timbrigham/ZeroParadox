@@ -56,7 +56,7 @@ The three remaining intentional axioms: **AX-B1** (binary existence), **AX-G1** 
 | [ZP-D State Layer](ZP-D_State_Layer_v1_2.pdf) | ZP-D | v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_0.pdf) | ZP-E | v2.0 | **DA-1** (instantiation = execution). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Accounts for Skolem, CH independence, Russell. Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_1.pdf) | ZP-G | v1.1 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_0.pdf) | ZP-H | v1.0 | Functors FA-FD. Singularity reconciliation. T-H3: Snap under all four functors. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_1.pdf) | ZP-H | v1.1 | Functors FA-FD. Singularity reconciliation. T-H3: Snap under all four functors. T-SNAP inherited as derived theorem. |
 
 ### Illustrated Companion Documents (General Reader)
 
@@ -104,6 +104,10 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
 | DA-1: Instantiation alignment | Closed - ZP-E DA-1 (D7 configurations are live by definition) |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
+| OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
+| DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
+| DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
+| OQ-E2: Cardinality-semilattice correspondence | **Open** - do specific semilattice structures correspond to specific cardinality regimes? |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
 | Formal verification (Lean/Rocq) | Not yet done - candidate for future work |
 

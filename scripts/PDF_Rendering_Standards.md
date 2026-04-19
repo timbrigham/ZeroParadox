@@ -325,4 +325,11 @@ Run the diagnostic (Section 2/2b) at the start of any new session to check if ad
 
 ---
 
+## 9. Problems
+The environment often has issues hanging on pipe actions. Instead of using find and piping toexecute, try direct `ls` list command without xargs or pipes to verify the files: ls -R | grep .py or find . -maxdepth 2 -name '*.py'."
+
+Additionally, when genrating scripts include verbouse output by default. We see freezes in thr output creation scripts. 
+
+---
+
 *Zero Paradox — PDF Rendering Standards | April 2026 | Internal Technical Reference*
