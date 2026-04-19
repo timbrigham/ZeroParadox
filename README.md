@@ -56,7 +56,7 @@ The three remaining intentional axioms: **AX-B1** (binary existence), **AX-G1** 
 | [ZP-D State Layer](ZP-D_State_Layer_v1_2.pdf) | ZP-D | v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_0.pdf) | ZP-E | v2.0 | **DA-1** (instantiation = execution). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Accounts for Skolem, CH independence, Russell. Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_1.pdf) | ZP-G | v1.1 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_0.pdf) | ZP-H | v1.0 | Functors FA-FD. Singularity reconciliation. T-H3: Snap under all four functors. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_1.pdf) | ZP-H | v1.1 | Functors FA-FD. Singularity reconciliation. T-H3: Snap under all four functors. T-SNAP inherited as derived theorem. |
 
 ### Illustrated Companion Documents (General Reader)
 

@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-H_Categorical_Bridge_v1_0-1.pdf](ZP-H_Categorical_Bridge_v1_0-1.pdf) | 2026-04-19 | ZP-H v1.0 before consistency update: AX-1 treated as axiom; imported ZP-G v1.0; OQ-G1 incorrectly open |
 | [Zero_Paradox_Foreword-4.pdf](Zero_Paradox_Foreword-4.pdf) | 2026-04-19 | Foreword before functor subscript fix (F_B rendered as Fᴇ in ZP-H section) |
 | [ZP-E_DA1_TSNAP_Insert-1.pdf](ZP-E_DA1_TSNAP_Insert-1.pdf) | 2026-04-19 | ZP-E insert document (DA-1 + T-SNAP only); superseded by Bridge Document v2.0 which adds DA-2, DA-3, and full traceability register |
 | [Zero_Paradox_Foreword-3.pdf](Zero_Paradox_Foreword-3.pdf) | 2026-04-19 | Foreword before April 2026 revision (geometry/logic/set-theory examples tightened; ZP-G and ZP-H added to architecture) |
