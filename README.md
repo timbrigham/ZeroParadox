@@ -5,7 +5,7 @@
 
 The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
 
-The answer developed here is yes. The proof is distributed across five self-contained mathematical layers, each internally closed before any cross-framework claim is made.
+The answer developed here is yes. The proof is distributed across seven self-contained mathematical layers, each internally closed before any cross-framework claim is made.
 
 
 ---
