@@ -275,10 +275,10 @@ def build_foreword(out_path):
         Paragraph(
             'The categorical bridge (ZP-H) constructs four instantiation functors connecting '
             'the categorical framework to each of the prior layers: '
-            'F\u2090: C \u2192 SLat (lattice algebra), '
-            'F\u1d07: C \u2192 pTop (p-adic topology), '
-            'F\u1d04: C \u2192 InfoSp (information theory), and '
-            'F\u1d05: C \u2192 Hilb (Hilbert space). '
+            'F<sub>A</sub>: C \u2192 SLat (lattice algebra), '
+            'F<sub>B</sub>: C \u2192 pTop (p-adic topology), '
+            'F<sub>C</sub>: C \u2192 InfoSp (information theory), and '
+            'F<sub>D</sub>: C \u2192 Hilb (Hilbert space). '
             'Each functor preserves the initial object and the singularity structure, '
             'proving that all seven layers are consistent accounts of the same foundational fact.',
             S['body']),

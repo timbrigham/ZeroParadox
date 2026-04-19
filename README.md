@@ -104,6 +104,10 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
 | DA-1: Instantiation alignment | Closed - ZP-E DA-1 (D7 configurations are live by definition) |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
+| OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
+| DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
+| DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
+| OQ-E2: Cardinality-semilattice correspondence | **Open** - do specific semilattice structures correspond to specific cardinality regimes? |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
 | Formal verification (Lean/Rocq) | Not yet done - candidate for future work |
 
