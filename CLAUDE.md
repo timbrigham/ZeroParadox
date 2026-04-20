@@ -35,6 +35,17 @@ Transparency is a core value of this project. The existence of this private fold
 - The `historical/README.md` tracks all archived files with date moved and description
 - README.md always links to the non-suffixed (current) version
 
+## README.md Link Restrictions
+
+The following files exist in the repository but **must not be linked from README.md** until the conditions below are met:
+
+| File | Reason | Condition to lift restriction |
+|------|--------|-------------------------------|
+| `ZP_Gen2_Applications.pdf` | Speculative applications document — depends on Gen 1 being formally complete and bridge documents written. Premature to surface publicly in the index. | All Gen 1 layers (ZP-A through ZP-H) fully tightened; thermodynamic bridge and OQ-E2 resolved; explicit decision by Tim to promote. |
+| `ABOUTME.md` | Not ready for prominent public linking from the main index. | Explicit decision by Tim to promote. |
+
+Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
+
 ## README.md Maintenance
 
 The `.copilot-instructions.md` file is the authoritative style guide for README updates. Key rules:
