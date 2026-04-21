@@ -86,7 +86,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 | Document | Lean Source | Theorems Verified | Build | Proof Doc |
 |----------|-------------|-------------------|-------|-----------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf) | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
+| ZP-A Lattice Algebra | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
 | ZP-B p-Adic Topology | [ZeroParadox/ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (isolation of 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 | [↗](proofs/ZP-B_Lean4.md) |
 | ZP-C Information Theory | [ZeroParadox/ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH | Clean - April 2026 | [↗](proofs/ZP-C_Lean4.md) |
 | ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T4 (Snap → orthogonal shift in H), T5 (monotone norms) | Clean - April 2026 | [↗](proofs/ZP-D_Lean4.md) |
