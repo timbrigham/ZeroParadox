@@ -50,7 +50,7 @@ All theorems, corollaries, and the axiom in ZP-B are machine-checked over `Q₂ 
 
 | ZP-B item | Lean name | Statement |
 |-----------|-----------|-----------|
-| AX-B1 (binary existence) | `ax_b1_distinct` | `nullState ≠ firstAtomicState` — follows from Classical.em; not a novel axiom of this framework |
+| AX-B1 (binary existence) | `ax_b1_distinct` | `nullState ≠ firstAtomicState` — proved by `decide` via decidable equality on `Fin 2`; depends only on `propext`. Not a novel axiom of this framework. |
 | T0 (p = 2 minimum prime) | `t0_no_prime_below_two`, `t0_two_is_prime`, `t0_redundancy` | No prime below 2; 2 is prime; any p > 2 has redundant coefficients |
 | T1 (ultrametric) | `t1_ultrametric` | `dist x z ≤ max (dist x y) (dist y z)` |
 | C1 (isosceles triangles) | `c1_isosceles` | If `d(x,y) ≠ d(y,z)` then `d(x,z) = max(d(x,y), d(y,z))` |
