@@ -90,3 +90,39 @@ Feedback received and reviewed. Status of each point:
 ## License
 
 CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
+
+
+# .claudecodes instructions for Lean 4 development
+- When working on the Zero Paradox ontology, prioritize files in the root C:\Workspace\ZeroParadox folder.
+- Always use 'lake build' to verify proofs before finalizing any theorem code.
+- Ignore PDF rendering assets and website build artifacts in the root.
+- Treat 'lake_testing' as the active branch for experimental verification.
+- Always check 'lake-manifest.json' for dependency updates before adding new imports.
+
+# Zero Paradox Project Standards
+
+# Zero Paradox Project Standards
+
+## Context Awareness & Branching Protocol
+- **Primary Proof Workspace:** `lake_testing` branch. 
+  - Goal: Formalizing the mathematical ontology using Lean 4.
+  - Scope: `.lean` files, `lakefile.lean`, and mathlib integration.
+- **Illustrated/Display Workspace:** `illustrated` branch.
+  - Goal: Rerendering PDFs, updating illustrated companions, and site-level display logic.
+  - Scope: `/pdfs`, `/site`, and PDF build tooling in `/scripts`.
+
+## Operational Rules
+1. **Branch-Task Lock:** - Lean 4 proof development **must** happen on `lake_testing`.
+   - PDF creation or rendering actions **must** happen on `illustrated`.
+2. **Mandatory Checkout:** If the user requests an action belonging to the other workspace, Claude must prompt the user to switch branches before reading or writing those specific assets.
+3. **Math Workflow:** When on `lake_testing`, always run `lake build` to verify any theorem changes.
+4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
+5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
+
+## File Priority & Access
+- **On `lake_testing`:** Prioritize `.lean` source files. Treat `/site` and `/pdfs` as Read-Only unless explicitly authorized for a cross-domain check.
+- **On `illustrated`:** Prioritize PDF artifacts and rendering scripts. Treat `/ZeroParadox` source files as the "Ground Truth" reference for documentation updates.
+
+## File Priority
+- Focus on `.lean` and `lakefile.lean` for the ontology.
+- Assets in `/site` and `/pdfs` are open for editing **only** for reredering tasks.
