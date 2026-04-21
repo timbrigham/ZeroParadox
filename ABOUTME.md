@@ -1,3 +1,5 @@
+> **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. I believe in being open about the development process, so here it is as-is. The main entry point for the Zero Paradox is [README.md](README.md).
+
 # About the Author: Origins and Architecture
 
 ## Origins and Motivation

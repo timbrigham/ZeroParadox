@@ -46,23 +46,123 @@ The following files exist in the repository but **must not be linked from README
 
 Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
 
+## scripts/ Folder — Keeping It Current
+
+The `scripts/` folder is a public transparency copy of the active build scripts from `.claude-local/`. It must be kept current: whenever a build script in `.claude-local/` produces a newly committed PDF, copy the script to `scripts/` as part of the same commit.
+
+**Rule:** After committing a new or updated PDF on the `illustrated` branch, copy the corresponding build script:
+```
+Copy-Item .claude-local\build_X.py scripts\build_X.py
+```
+Then stage and include it in the commit (or as a follow-up commit on the same branch).
+
+If a script is new (not yet in `scripts/`), add a row for it to `scripts/README.md` at the same time.
+
+The `scripts/` folder is intentionally not a runnable package — the README there sets that expectation explicitly. The goal is source visibility, not distribution.
+
+## Transparency Notices on Unlinked Public Documents
+
+Any file that is committed to the public repository but intentionally unlinked from README.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
+
+**For Markdown files:** Add a blockquote at the very top of the file:
+```
+> **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. [One sentence on why — e.g. speculative content, development artifact, etc.] The main entry point for the Zero Paradox is [README.md](README.md).
+```
+
+**For PDF files:** Add an amber callout box as the first element in the document (before the title block), using the `callout(text, bg=AMBER_LITE, border=AMBER)` helper in the build script. Wording should follow the same pattern: explain the document is unlinked, why, and direct the reader to the README.
+
+**If no build script exists for an unlinked PDF:** The correct action is to archive it to `historical/` rather than leave it unnoticed in the root. Standalone documents without active build scripts are almost always superseded development artifacts. Follow the archiving convention above.
+
 ## Development Environment
 
 This project runs on **Windows 11**. Shell commands must use PowerShell syntax, not Unix/Bash.
 
 - **File discovery:** Use the `Glob` tool — never `find` (hangs on this system) or `ls`
 - **Shell commands:** Use the `PowerShell` tool — never `Bash` with Unix-style commands
+- **Never prepend `cd`:** The working directory is always `C:\Workspace\ZeroParadox` at session start. Never prepend `cd C:\Workspace\ZeroParadox;` or `Set-Location` to any command — doing so creates command strings that don't match the allowlist and triggers unnecessary permission prompts.
 - **File verification:** Use `Get-ChildItem *.pdf` not `ls *.pdf`
 - **File moves:** Use `Move-Item` not `mv`
 - **Path separators:** Backslash in PowerShell (`C:\Workspace\ZeroParadox`), forward slash in Lean/lake config
 
 ## README.md Maintenance
 
-The `.copilot-instructions.md` file is the authoritative style guide for README updates. Key rules:
-- Links display as clean names: `[ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_1.pdf)` — no version or extension in display text
+### Document Structure
+
+The README must maintain this section order:
+
+1. Title and date — `# The Zero Paradox - Project Index`
+2. "What This Is" — high-level introduction
+3. "The Central Result" — core theorem and derivation chain
+4. "What This Is Not" — explicit clarifications
+5. "Document Index" — tables of all available documents
+6. "Axiomatic Commitments" — formal commitments and principles
+7. "Status of All Major Open Questions" — tracked open items
+8. "Reading Order" — paths for different reader types with clickable links
+9. "Notes on Development" — credits and contributor information
+10. "Repository and Version History" — Git/versioning guidance
+11. "Purpose of This Repository"
+12. "License"
+13. "Citation"
+14. "Contact"
+
+### Formatting Standards
+
+**File links:**
+- Display text uses clean names — no file extensions, no version numbers
+  - Correct: `[ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf)`
+  - Wrong: `[ZP-A Lattice Algebra v1.2.pdf](...)`
+- Link targets always point to the current (non-suffixed) version
+
+**Text:**
 - Use regular hyphens (`-`), not em dashes (`—`); mathematical arrows (`→`) are fine
-- Section order must follow the structure defined in `.copilot-instructions.md`
-- Before editing, verify all linked files actually exist using the `Glob` tool (pattern `*.pdf`)
+
+**Tables:**
+- Consistent column alignment; meaningful headers (File, Document, Version, Contents)
+- Version numbers go in the Version column only, not in display text
+
+### Reading Order Structure
+
+Include four distinct paths:
+1. **General reader** — Foreword → any Illustrated Companion → ZP-E Companion
+2. **Mathematician** — formal path ZP-A through ZP-E
+3. **Category theory extension** — ZP-G and ZP-H (after ZP-E)
+4. **Process/methods** — ZP Tools and Methods
+
+All entries must be clickable links, not plain text.
+
+### Validation Checklist
+
+Before committing any README update:
+- [ ] All linked files verified to exist (use `Glob` tool, pattern `*.pdf`)
+- [ ] No file extensions in display text
+- [ ] No version numbers in display text
+- [ ] No em dashes — regular hyphens only
+- [ ] Reading Order has clickable links for all documents
+- [ ] All four terminal sections present: License, Citation, Contact, Purpose
+- [ ] "What This Is Not" section present after "The Central Result"
+- [ ] Axiomatic Commitments matches current framework state (AX-1 is T-SNAP, not an axiom)
+- [ ] Open questions table reflects actual current status
+
+### Common Updates
+
+**Adding a new document:**
+1. Add to the appropriate Document Index section
+2. Use clean display name (no extension, no version)
+3. Link to the current version (no `-1`, `-2` suffix)
+4. Put version number in the Version column only
+5. Verify file exists with `Glob` before committing
+
+**Removing a broken link:**
+- Verify with `Glob` tool (never `ls`) before removing
+- Ask: should this file be created, or is it genuinely absent?
+
+**Historical folder table format** (`historical/README.md`):
+```
+| [ZP-A_Lattice_Algebra_v1_1-1.pdf](ZP-A_Lattice_Algebra_v1_1-1.pdf) | YYYY-MM-DD | Brief description of what this version was |
+```
+- File column: use the actual archived filename in both display text and link
+- Date: YYYY-MM-DD (date moved, not date of document)
+- Keep entries newest-first
 
 ## Archiving Old Document Versions
 
@@ -80,7 +180,7 @@ The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap 
 
 **ZP-G** (category theory) → **ZP-H** (categorical bridge) — self-contained; depends on ZP-E conceptually but not formally.
 
-Each formal document has a paired illustrated companion for general readers. The three remaining intentional axioms are AX-B1, AX-G1, and AX-G2. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
+Each formal document has a paired illustrated companion for general readers. The two remaining intentional axioms are AX-G1 and AX-G2. AX-B1 (binary existence) follows from the Law of Excluded Middle (Classical.em) and is not a novel commitment of this framework. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
 
 ## Reviewer Feedback Tracking
 
@@ -104,8 +204,8 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 # .claudecodes instructions for Lean 4 development
 - When working on the Zero Paradox ontology, prioritize files in the root C:\Workspace\ZeroParadox folder.
-- Always use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify proofs; the log file allows local debugging via tail.
-- **Logging Rule:** When performing builds on `lake_testing`, use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to allow for local log tailing.
+- Always run lake build as two separate PowerShell calls to avoid allowlist prompt issues: first `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then `Get-Content build.log | Select-Object -Last 1` (or with a `-match` filter). Never combine them with `;` in a single call.
+- **Logging Rule:** When performing builds on `lake_testing`, run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 - Ignore PDF rendering assets and website build artifacts in the root.
 - Treat 'lake_testing' as the active branch for experimental verification.
 - Always check 'lake-manifest.json' for dependency updates before adding new imports.
@@ -129,7 +229,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
    - **Auto-push:** After every commit on `lake_testing`, immediately run `git push origin lake_testing`. Tim has granted standing permission for this; no confirmation needed.
    - PDF creation or rendering actions **must** happen on `illustrated`.
 2. **Mandatory Checkout:** If the user requests an action belonging to the other workspace, Claude must prompt the user to switch branches before reading or writing those specific assets.
-3. **Math Workflow:** When on `lake_testing`, always run `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify theorem changes. The log file allows local debugging via log tailing.
+3. **Math Workflow:** When on `lake_testing`, verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
 
@@ -160,7 +260,7 @@ As proofs grow more complex (ZP-D onward), always use a stub-first approach befo
 
 When a ZP-X document is successfully proved in Lean 4, the following steps are **mandatory** before the work is considered complete:
 
-1. **Build clean** — run `lake build 2>&1 | tee build.log` and confirm zero errors and zero warnings. (Tim tails the log locally via PowerShell: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`.)
+1. **Build clean** — run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`. Confirm zero errors and zero warnings.
 2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in the proof doc.
 3. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting: Lean file path, commit hash, build result, purity check output, theorem-by-theorem table, and proof strategy notes.
 4. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the Document Index and update the Open Questions table row for `Formal verification (Lean/Rocq)`.

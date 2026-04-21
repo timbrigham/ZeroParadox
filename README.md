@@ -1,5 +1,7 @@
-# The Zero Paradox - Project Index
-**April 2026 | Final Formalism**
+# The Zero Paradox
+**April 2026 | Complete Formalism**
+
+*A formal mathematical proof that the emergence of something from nothing is not a starting assumption — it can be derived.*
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
 
@@ -14,7 +16,7 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 ## The Central Result
 
-The **Binary Snap** - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
+The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
 The derivation chain is:
 
@@ -26,7 +28,7 @@ The derivation chain is:
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
 
-The three remaining intentional axioms: **AX-B1** (binary existence), **AX-G1** (initial object exists), **AX-G2** (source asymmetry).
+The two remaining intentional axioms of this framework: **AX-G1** (initial object exists), **AX-G2** (source asymmetry). **AX-B1** (binary existence) follows from the Law of Excluded Middle and is not a novel commitment of this framework.
 
 ---
 
@@ -71,14 +73,14 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-C Illustrated Companion](ZP-C_Illustrated_Companion.pdf) | ZP-C | Surprisal field singularity, 1-bit Snap cost, L-RUN execution trace |
 | [ZP-D Illustrated Companion](ZP-D_Illustrated_Companion.pdf) | ZP-D | T map: topology → orthogonality |
 | [ZP-E Illustrated Companion](ZP-E_Illustrated_Companion.pdf) | ZP-E | Four-framework convergence, T-SNAP derivation chain |
-| [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G/H | Category morphism structure, functor connections |
+| [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
+| [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across all frameworks |
 
 ### Supporting Documents
 
 | File | Description |
 |------|-------------|
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
-| [Generation 2: Applications and Open Problems](ZP_Gen2_Applications.pdf) | Where the framework reaches: the arrow of time, why something rather than nothing, the unreasonable effectiveness of mathematics, the fine-tuning problem, and Skolem's paradox. Stated assumptions, honest fit assessment, named gaps. |
 
 ### Formal Verification (Lean 4)
 
@@ -86,7 +88,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 | Document | Lean Source | Theorems Verified | Build | Proof Doc |
 |----------|-------------|-------------------|-------|-----------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf) | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
+| ZP-A Lattice Algebra | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
 | ZP-B p-Adic Topology | [ZeroParadox/ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (isolation of 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 | [↗](proofs/ZP-B_Lean4.md) |
 | ZP-C Information Theory | [ZeroParadox/ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH | Clean - April 2026 | [↗](proofs/ZP-C_Lean4.md) |
 | ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T4 (Snap → orthogonal shift in H), T5 (monotone norms) | Clean - April 2026 | [↗](proofs/ZP-D_Lean4.md) |
@@ -100,7 +102,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 | Label | Type | Statement |
 |-------|------|-----------|
-| **AX-B1** | Axiom | A state either exists or it does not. Binary, no third option. |
+| **AX-B1** | Classical Logic | A state either exists or it does not. Follows from the Law of Excluded Middle (Classical.em) — not a novel commitment of this framework. |
 | **AX-G1** | Axiom | An initial object exists in the category C. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. No morphism returns to the initial object. |
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
@@ -108,6 +110,8 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
+
+**AX-B1 (Binary Existence) is not a novel axiom of this framework.** It follows from the Law of Excluded Middle (Classical.em), a kernel axiom of classical mathematics.
 
 ---
 
@@ -144,7 +148,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 ## Notes on Development
 
-This framework was developed by a human researcher in collaboration with Claude (Anthropic, April 2026). Claude served as research assistant, formal scribe, gap identifier, and PDF renderer. All mathematical content and theoretical direction originated with the researcher. See `ZP_Tools_and_Methods.pdf` for a complete account.
+This framework was developed by a human researcher in collaboration with Claude (Anthropic, April 2026). Claude served as research assistant, formal scribe, and gap identifier. All mathematical content and theoretical direction originated with the researcher. See `ZP_Tools_and_Methods.pdf` for a complete account.
 
 The PDF build tooling is publicly available in the [`scripts/`](scripts/) folder. Those scripts were generated by Claude and are included for transparency about how the documents were produced.
 
@@ -195,8 +199,8 @@ If referencing this work, please cite:
 
 ## Contact
 
-For inquiries, discussion, or collaboration, please open an issue on [GitHub](https://github.com/timbrigham/ZeroParadox) or reach out through the repository.
+For inquiries, discussion, or collaboration, reach out by email at [timbrigham@gmail.com](mailto:timbrigham@gmail.com) or open an issue on [GitHub](https://github.com/timbrigham/ZeroParadox).
 
 ---
 
-*Zero Paradox | Project Index | April 2026*
+*Zero Paradox | April 2026*
