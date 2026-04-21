@@ -82,11 +82,9 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives on the `lake_testing` branch under `ZeroParadox/`.
 
-| Document | Lean Source | Theorems Verified | Build |
-|----------|-------------|-------------------|-------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf) | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 |
-
-Proof documentation: [`proofs/ZP-A_Lean4.md`](proofs/ZP-A_Lean4.md)
+| Document | Lean Source | Theorems Verified | Build | Proof Doc |
+|----------|-------------|-------------------|-------|-----------|
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf) | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
 
 ---
 
