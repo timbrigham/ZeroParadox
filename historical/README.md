@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP_TQ_IH_Formal-1.pdf](ZP_TQ_IH_Formal-1.pdf) | 2026-04-21 | Early standalone formal treatment of TQ-IH; superseded by ZP-C v1.4 which integrates TQ-IH as a proved theorem |
+| [ZP_TQ_IH_Illustrated-1.pdf](ZP_TQ_IH_Illustrated-1.pdf) | 2026-04-21 | Early standalone illustrated treatment of TQ-IH; superseded by ZP-C Illustrated Companion |
 | [Zero_Paradox_Foreword-5.pdf](Zero_Paradox_Foreword-5.pdf) | 2026-04-19 | Foreword before Section VIII (Generation 2 applications) was added |
 | [ZP-H_Categorical_Bridge_v1_0-1.pdf](ZP-H_Categorical_Bridge_v1_0-1.pdf) | 2026-04-19 | ZP-H v1.0 before consistency update: AX-1 treated as axiom; imported ZP-G v1.0; OQ-G1 incorrectly open |
 | [Zero_Paradox_Foreword-4.pdf](Zero_Paradox_Foreword-4.pdf) | 2026-04-19 | Foreword before functor subscript fix (F_B rendered as Fᴇ in ZP-H section) |
