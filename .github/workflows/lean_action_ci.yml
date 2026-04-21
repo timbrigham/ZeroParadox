@@ -17,10 +17,16 @@ on:
       - 'lean-toolchain'
   workflow_dispatch:
 
+# Note: a docgen-action deploy job was removed from this workflow (April 2026).
+# It generated Lean 4 API documentation and published it to GitHub Pages.
+# This project is a mathematical publication — the public-facing content is the
+# PDFs and README, not auto-generated theorem browser output. The deploy job
+# added CI friction (Pages environment protection rules blocking PR builds)
+# without providing value to readers. The Lean source remains fully public on
+# GitHub for anyone who wants to inspect the formal proofs directly.
+
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -28,14 +34,3 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v5
-      - uses: leanprover-community/docgen-action@v1
