@@ -94,7 +94,8 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 # .claudecodes instructions for Lean 4 development
 - When working on the Zero Paradox ontology, prioritize files in the root C:\Workspace\ZeroParadox folder.
-- Always use 'lake build' to verify proofs before finalizing any theorem code.
+- Always use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify proofs; the log file allows local debugging via tail.
+- **Logging Rule:** When performing builds on `lake_testing`, use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to allow for local log tailing.
 - Ignore PDF rendering assets and website build artifacts in the root.
 - Treat 'lake_testing' as the active branch for experimental verification.
 - Always check 'lake-manifest.json' for dependency updates before adding new imports.
@@ -115,7 +116,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 1. **Branch-Task Lock:** - Lean 4 proof development **must** happen on `lake_testing`.
    - PDF creation or rendering actions **must** happen on `illustrated`.
 2. **Mandatory Checkout:** If the user requests an action belonging to the other workspace, Claude must prompt the user to switch branches before reading or writing those specific assets.
-3. **Math Workflow:** When on `lake_testing`, always run `lake build` to verify any theorem changes.
+3. **Math Workflow:** When on `lake_testing`, always run `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify theorem changes. The log file allows local debugging via log tailing.
 4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
 
@@ -126,3 +127,12 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 ## File Priority
 - Focus on `.lean` and `lakefile.lean` for the ontology.
 - Assets in `/site` and `/pdfs` are open for editing **only** for reredering tasks.
+
+## Proof Documentation Workflow
+
+When a ZP-X document is successfully proved in Lean 4, the following steps are **mandatory** before the work is considered complete:
+
+1. **Build clean** — run `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` and confirm zero errors and zero warnings.
+2. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting what was proved, the Lean file path, the commit hash, and the build result.
+3. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the Document Index and update the Open Questions table row for `Formal verification (Lean/Rocq)`.
+4. **Commit all three changes together** on `lake_testing`.

@@ -78,6 +78,16 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 | [Generation 2: Applications and Open Problems](ZP_Gen2_Applications.pdf) | Where the framework reaches: the arrow of time, why something rather than nothing, the unreasonable effectiveness of mathematics, the fine-tuning problem, and Skolem's paradox. Stated assumptions, honest fit assessment, named gaps. |
 
+### Formal Verification (Lean 4)
+
+Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives on the `lake_testing` branch under `ZeroParadox/`.
+
+| Document | Lean Source | Theorems Verified | Build |
+|----------|-------------|-------------------|-------|
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf) | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 |
+
+Proof documentation: [`proofs/ZP-A_Lean4.md`](proofs/ZP-A_Lean4.md)
+
 ---
 
 ## Axiomatic Commitments
@@ -110,7 +120,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
 | OQ-E2: Cardinality-semilattice correspondence | **Open** - do specific semilattice structures correspond to specific cardinality regimes? |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
-| Formal verification (Lean/Rocq) | Not yet done - candidate for future work |
+| Formal verification (Lean/Rocq) | ZP-A complete - [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) (April 2026); ZP-B through ZP-H pending |
 
 ---
 
