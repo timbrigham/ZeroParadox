@@ -628,11 +628,11 @@ def build_zpa_companion():
     E.append(sp(4))
 
     E.append(example_box('Example — Power set with union', [
-        'Let X be any set. Take L = &#119823;(X) (the collection of all subsets of X), '
-        '&#8744; = &#8746; (set union), and &#8869; = &#8709; (the empty set). Union is '
+        'Let X be any set. Take L = P(X) (the collection of all subsets of X), '
+        '&#8744; = &#8746; (set union), and &#8869; = ∅ (the empty set). Union is '
         'associative, commutative, idempotent (A &#8746; A = A), and the empty set is a '
-        'neutral element (&#8709; &#8746; A = A). The induced order is inclusion: A &#8804; B '
-        'iff A &#8746; B = B, i.e. A &#8838; B. Every element of L sits above &#8709;.',
+        'neutral element (∅ &#8746; A = A). The induced order is inclusion: A &#8804; B '
+        'iff A &#8746; B = B, i.e. A &#8838; B. Every element of L sits above ∅.',
     ]))
     E.append(sp(4))
 
