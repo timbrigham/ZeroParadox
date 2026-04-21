@@ -1,6 +1,8 @@
 # The Zero Paradox - Project Index
 **April 2026 | Final Formalism**
 
+[![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
+
 ## What This Is
 
 The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
