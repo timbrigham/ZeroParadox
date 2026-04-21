@@ -46,18 +46,28 @@ The following files exist in the repository but **must not be linked from README
 
 Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
 
+## Development Environment
+
+This project runs on **Windows 11**. Shell commands must use PowerShell syntax, not Unix/Bash.
+
+- **File discovery:** Use the `Glob` tool — never `find` (hangs on this system) or `ls`
+- **Shell commands:** Use the `PowerShell` tool — never `Bash` with Unix-style commands
+- **File verification:** Use `Get-ChildItem *.pdf` not `ls *.pdf`
+- **File moves:** Use `Move-Item` not `mv`
+- **Path separators:** Backslash in PowerShell (`C:\Workspace\ZeroParadox`), forward slash in Lean/lake config
+
 ## README.md Maintenance
 
 The `.copilot-instructions.md` file is the authoritative style guide for README updates. Key rules:
 - Links display as clean names: `[ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_1.pdf)` — no version or extension in display text
 - Use regular hyphens (`-`), not em dashes (`—`); mathematical arrows (`→`) are fine
 - Section order must follow the structure defined in `.copilot-instructions.md`
-- Before editing, verify all linked files actually exist: `ls *.pdf`
+- Before editing, verify all linked files actually exist using the `Glob` tool (pattern `*.pdf`)
 
 ## Archiving Old Document Versions
 
 When a document is superseded:
-1. Add a numeric suffix to the old file and move it: `mv ZP-X_Title_vN_N.pdf historical/ZP-X_Title_vN_N-1.pdf`
+1. Add a numeric suffix to the old file and move it: `Move-Item ZP-X_Title_vN_N.pdf historical\ZP-X_Title_vN_N-1.pdf`
 2. Add the new version to the root (no suffix)
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
 4. Update the version number in README.md's Document Index table
