@@ -114,6 +114,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 ## Operational Rules
 1. **Branch-Task Lock:** - Lean 4 proof development **must** happen on `lake_testing`.
+   - **Auto-push:** After every commit on `lake_testing`, immediately run `git push origin lake_testing`. Tim has granted standing permission for this; no confirmation needed.
    - PDF creation or rendering actions **must** happen on `illustrated`.
 2. **Mandatory Checkout:** If the user requests an action belonging to the other workspace, Claude must prompt the user to switch branches before reading or writing those specific assets.
 3. **Math Workflow:** When on `lake_testing`, always run `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify theorem changes. The log file allows local debugging via log tailing.
