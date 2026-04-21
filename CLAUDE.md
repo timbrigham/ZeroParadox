@@ -204,8 +204,8 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 # .claudecodes instructions for Lean 4 development
 - When working on the Zero Paradox ontology, prioritize files in the root C:\Workspace\ZeroParadox folder.
-- Always use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify proofs; the log file allows local debugging via tail.
-- **Logging Rule:** When performing builds on `lake_testing`, use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to allow for local log tailing.
+- Always run lake build as two separate PowerShell calls to avoid allowlist prompt issues: first `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then `Get-Content build.log | Select-Object -Last 1` (or with a `-match` filter). Never combine them with `;` in a single call.
+- **Logging Rule:** When performing builds on `lake_testing`, run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 - Ignore PDF rendering assets and website build artifacts in the root.
 - Treat 'lake_testing' as the active branch for experimental verification.
 - Always check 'lake-manifest.json' for dependency updates before adding new imports.
@@ -229,7 +229,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
    - **Auto-push:** After every commit on `lake_testing`, immediately run `git push origin lake_testing`. Tim has granted standing permission for this; no confirmation needed.
    - PDF creation or rendering actions **must** happen on `illustrated`.
 2. **Mandatory Checkout:** If the user requests an action belonging to the other workspace, Claude must prompt the user to switch branches before reading or writing those specific assets.
-3. **Math Workflow:** When on `lake_testing`, always run `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify theorem changes. The log file allows local debugging via log tailing.
+3. **Math Workflow:** When on `lake_testing`, verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
 
@@ -260,7 +260,7 @@ As proofs grow more complex (ZP-D onward), always use a stub-first approach befo
 
 When a ZP-X document is successfully proved in Lean 4, the following steps are **mandatory** before the work is considered complete:
 
-1. **Build clean** — run `lake build 2>&1 | tee build.log` and confirm zero errors and zero warnings. (Tim tails the log locally via PowerShell: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`.)
+1. **Build clean** — run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`. Confirm zero errors and zero warnings.
 2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in the proof doc.
 3. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting: Lean file path, commit hash, build result, purity check output, theorem-by-theorem table, and proof strategy notes.
 4. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the Document Index and update the Open Questions table row for `Formal verification (Lean/Rocq)`.
