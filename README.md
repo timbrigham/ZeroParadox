@@ -50,7 +50,7 @@ The three remaining intentional axioms: **AX-B1** (binary existence), **AX-G1** 
 
 | File | Document | Version | Contents |
 |------|----------|---------|----------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_1.pdf) | ZP-A | v1.1 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf) | ZP-A | v1.2 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_2.pdf) | ZP-B | v1.2 | AX-B1. MP-1. Derivation of p=2. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
 | [ZP-C Information Theory](ZP-C_Information_Theory_v1_4.pdf) | ZP-C | v1.4 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF.** AX-1 promoted to Candidate Theorem. |
 | [ZP-D State Layer](ZP-D_State_Layer_v1_2.pdf) | ZP-D | v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. |
@@ -76,6 +76,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | File | Description |
 |------|-------------|
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
+| [Generation 2: Applications and Open Problems](ZP_Gen2_Applications.pdf) | Where the framework reaches: the arrow of time, why something rather than nothing, the unreasonable effectiveness of mathematics, the fine-tuning problem, and Skolem's paradox. Stated assumptions, honest fit assessment, named gaps. |
 
 ---
 
@@ -117,7 +118,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_1.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_2.pdf) → [ZP-C](ZP-C_Information_Theory_v1_4.pdf) → [ZP-D](ZP-D_State_Layer_v1_2.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_0.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_2.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_2.pdf) → [ZP-C](ZP-C_Information_Theory_v1_4.pdf) → [ZP-D](ZP-D_State_Layer_v1_2.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_0.pdf) (in dependency order)
 
 **For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_1.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_0.pdf) (self-contained; after ZP-E)
 
