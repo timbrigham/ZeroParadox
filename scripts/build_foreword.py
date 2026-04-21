@@ -172,7 +172,7 @@ def build_foreword(out_path):
             'and that role is filled differently depending on the framework. '
             'In arithmetic, zero is the additive identity: the number that leaves everything '
             'unchanged when you add it. '
-            'In set theory, zero is the empty set <font name="DV">&#8709;</font>: the foundation from which the '
+            'In set theory, zero is the empty set \u2205: the foundation from which the '
             'hierarchy of numbers is constructed. '
             'In algebra \u2014 vector spaces, rings, modules \u2014 zero is the neutral element '
             'of addition, inheriting whatever structure the framework provides. '
@@ -415,6 +415,35 @@ def build_foreword(out_path):
             'one element that every state inherits, that every measurement is taken from, that '
             'every description presupposes, and that no description, in the standard sense, '
             'can reach.',
+            S['body']),
+    ]
+
+    # ── VIII. WHERE THE FRAMEWORK REACHES ────────────────────────────────────
+    story += [
+        Paragraph('VIII. WHERE THE FRAMEWORK REACHES', S['h1']),
+        Paragraph(
+            'The Generation 1 result \u2014 the Binary Snap as a derived theorem \u2014 '
+            'has structural consequences beyond the framework itself. Under stated conditions '
+            'and with explicit assumptions, it bears on several problems that have remained '
+            'open in physics, mathematics, and philosophy.',
+            S['body']),
+        Paragraph(
+            'The most direct connection is to the arrow of time. The irreversibility of the '
+            'Binary Snap \u2014 derived independently in ZP-A (monotonicity), ZP-B '
+            '(topological irreversibility), and ZP-G (source asymmetry) \u2014 provides a '
+            'structural account of temporal asymmetry that does not import the arrow of time '
+            'as an assumption. Under the condition that the physical universe instantiates '
+            '\u22a5 and \u03b5\u2080 as its boundary states, the arrow of time is an instance '
+            'of the Zero Paradox, not a separate phenomenon requiring separate explanation.',
+            S['body']),
+        Paragraph(
+            'Further connections \u2014 to Leibniz\u2019s question of why there is something '
+            'rather than nothing, to Wigner\u2019s puzzle about the unreasonable effectiveness '
+            'of mathematics, to the fine-tuning problem in cosmology, and to Skolem\u2019s '
+            'paradox in set theory \u2014 are developed in the companion document '
+            '\u2018Generation 2: Applications and Open Problems.\u2019 '
+            'Each case states its required assumptions explicitly, assesses fit honestly, '
+            'and names the gaps that remain.',
             S['body']),
     ]
 

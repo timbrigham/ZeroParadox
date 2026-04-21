@@ -46,6 +46,20 @@ The following files exist in the repository but **must not be linked from README
 
 Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
 
+## scripts/ Folder — Keeping It Current
+
+The `scripts/` folder is a public transparency copy of the active build scripts from `.claude-local/`. It must be kept current: whenever a build script in `.claude-local/` produces a newly committed PDF, copy the script to `scripts/` as part of the same commit.
+
+**Rule:** After committing a new or updated PDF on the `illustrated` branch, copy the corresponding build script:
+```
+Copy-Item .claude-local\build_X.py scripts\build_X.py
+```
+Then stage and include it in the commit (or as a follow-up commit on the same branch).
+
+If a script is new (not yet in `scripts/`), add a row for it to `scripts/README.md` at the same time.
+
+The `scripts/` folder is intentionally not a runnable package — the README there sets that expectation explicitly. The goal is source visibility, not distribution.
+
 ## Transparency Notices on Unlinked Public Documents
 
 Any file that is committed to the public repository but intentionally unlinked from README.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
