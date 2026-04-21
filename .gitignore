@@ -17,3 +17,6 @@ lean_packages/
 *.c
 # Lake trace files (sometimes missed by .lake/ entry)
 .lake.trace
+
+# lake build logs 
+build.log
