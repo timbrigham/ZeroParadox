@@ -4,9 +4,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**/*.lean'
+      - 'lake-manifest.json'
+      - 'lean-toolchain'
   pull_request:
     branches:
       - main
+    paths:
+      - '**/*.lean'
+      - 'lake-manifest.json'
+      - 'lean-toolchain'
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
