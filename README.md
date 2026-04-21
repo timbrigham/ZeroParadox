@@ -1,7 +1,7 @@
 # The Zero Paradox
 **April 2026 | Complete Formalism**
 
-*A formal mathematical proof that the emergence of state from nothing cannot be an axiom — it is a theorem.*
+*A formal mathematical proof that the emergence of something from nothing is not a starting assumption — it can be derived.*
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
 
