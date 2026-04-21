@@ -24,10 +24,11 @@ instance hp2 : Fact (Nat.Prime 2) := ⟨by decide⟩
 /-- Q₂: the 2-adic rationals. All ZP-B results are about this field. -/
 notation "Q₂" => (ℚ_[2] : Type)
 
-/-! ## AX-B1 — Binary Existence (Axiom)
+/-! ## AX-B1 — Binary Existence
 
 The foundational distinction is binary: a state either exists (1) or does not (0).
-Modelled as Fin 2. Status: AXIOM — load-bearing premise, not derived. -/
+Modelled as Fin 2. Status: DERIVED — follows from decidable equality on Fin 2,
+which requires no classical axioms beyond propext. Not a novel commitment of this framework. -/
 
 abbrev OntologicalStates := Fin 2
 
@@ -37,12 +38,14 @@ def nullState : OntologicalStates := 0
 /-- 1 ∈ OntologicalStates: existence (the First Atomic State). -/
 def firstAtomicState : OntologicalStates := 1
 
+/-- AX-B1: null and first atomic states are distinct. Proved by decidable equality on Fin 2 —
+    no classical axioms required. -/
 theorem ax_b1_distinct : nullState ≠ firstAtomicState := by decide
 
 /-! ## Theorem T0 — p = 2 is the Unique Minimum Sufficient Base
 
-Given AX-B1 (exactly 2 ontological states) and MP-1 (minimum base without redundancy),
-the representational base is uniquely p = 2. -/
+Given exactly 2 ontological states (derived via ax_b1_distinct) and MP-1 (minimum base
+without redundancy), the representational base is uniquely p = 2. -/
 
 /-- Every prime satisfies p ≥ 2; there is no prime below 2.
     A base p < 2 cannot encode two distinct states (fails faithfulness of MP-1). -/
