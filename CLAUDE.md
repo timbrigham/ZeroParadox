@@ -46,6 +46,19 @@ The following files exist in the repository but **must not be linked from README
 
 Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
 
+## Transparency Notices on Unlinked Public Documents
+
+Any file that is committed to the public repository but intentionally unlinked from README.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
+
+**For Markdown files:** Add a blockquote at the very top of the file:
+```
+> **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. [One sentence on why — e.g. speculative content, development artifact, etc.] The main entry point for the Zero Paradox is [README.md](README.md).
+```
+
+**For PDF files:** Add an amber callout box as the first element in the document (before the title block), using the `callout(text, bg=AMBER_LITE, border=AMBER)` helper in the build script. Wording should follow the same pattern: explain the document is unlinked, why, and direct the reader to the README.
+
+**If no build script exists for an unlinked PDF:** The correct action is to archive it to `historical/` rather than leave it unnoticed in the root. Standalone documents without active build scripts are almost always superseded development artifacts. Follow the archiving convention above.
+
 ## Development Environment
 
 This project runs on **Windows 11**. Shell commands must use PowerShell syntax, not Unix/Bash.
