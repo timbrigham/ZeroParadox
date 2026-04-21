@@ -71,7 +71,8 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-C Illustrated Companion](ZP-C_Illustrated_Companion.pdf) | ZP-C | Surprisal field singularity, 1-bit Snap cost, L-RUN execution trace |
 | [ZP-D Illustrated Companion](ZP-D_Illustrated_Companion.pdf) | ZP-D | T map: topology → orthogonality |
 | [ZP-E Illustrated Companion](ZP-E_Illustrated_Companion.pdf) | ZP-E | Four-framework convergence, T-SNAP derivation chain |
-| [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G/H | Category morphism structure, functor connections |
+| [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
+| [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across all frameworks |
 
 ### Supporting Documents
 
