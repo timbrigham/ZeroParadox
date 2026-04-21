@@ -110,6 +110,8 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 - Treat 'lake_testing' as the active branch for experimental verification.
 - Always check 'lake-manifest.json' for dependency updates before adding new imports.
 
+- When searching for Lean source files in this project, always use the pattern ZeroParadox/**/*.lean, never **/*.lean. The .lake/ folder contains thousands of Mathlib library files that aren't mine."
+
 # Zero Paradox Project Standards
 
 # Zero Paradox Project Standards
@@ -138,6 +140,20 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 ## File Priority
 - Focus on `.lean` and `lakefile.lean` for the ontology.
 - Assets in `/site` and `/pdfs` are open for editing **only** for reredering tasks.
+
+## Lean 4 Proof Development: Stub-First Protocol
+
+As proofs grow more complex (ZP-D onward), always use a stub-first approach before writing full proofs. This prevents session hangs caused by heavy import chains and typeclass resolution.
+
+**The workflow for every new ZP-X Lean file:**
+
+1. **Symbol map** — before writing any Lean, map each PDF symbol to its Lean 4 / Mathlib equivalent. Identify which imports are required and which are dangerously heavy (p-adics + EuclideanSpace together, for example, can cause elaborator hangs).
+2. **Stub file** — write the complete file with all definitions and theorem statements, but use `sorry` for every proof body. Add `set_option maxHeartbeats 400000` at the top.
+3. **Build the stub** — run `lake build` and confirm 0 errors on the skeleton. This validates that types elaborate correctly before any proof work begins.
+4. **Fill proofs incrementally** — prove one theorem at a time, building after each. Do not attempt to write all proofs before checking.
+5. **Final clean build** — once all `sorry`s are removed, run a final build to confirm 0 errors and 0 warnings, then proceed to the documentation workflow below.
+
+**When to abstract away heavy dependencies:** If a layer imports both p-adic numbers and Hilbert space machinery, consider whether the cross-layer dependency can be replaced with an abstract typeclass or index type (e.g., `Fin (2^k)` instead of `ℚ_[2]`) for the purposes of the proof. Decoupling reduces elaboration load significantly.
 
 ## Proof Documentation Workflow
 
