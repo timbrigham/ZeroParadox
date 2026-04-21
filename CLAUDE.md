@@ -180,7 +180,7 @@ The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap 
 
 **ZP-G** (category theory) → **ZP-H** (categorical bridge) — self-contained; depends on ZP-E conceptually but not formally.
 
-Each formal document has a paired illustrated companion for general readers. The two remaining intentional axioms are AX-G1 and AX-G2. AX-B1 (binary existence) follows from the Law of Excluded Middle (Classical.em) and is not a novel commitment of this framework. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
+Each formal document has a paired illustrated companion for general readers. The two remaining intentional axioms are AX-G1 and AX-G2. AX-B1 (binary existence) is not a novel commitment — it is directly verifiable by computation (decidable equality on Fin 2 via `decide`; depends only on `propext`, not Classical.em). AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
 
 ## Reviewer Feedback Tracking
 
