@@ -132,7 +132,8 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 When a ZP-X document is successfully proved in Lean 4, the following steps are **mandatory** before the work is considered complete:
 
-1. **Build clean** — run `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` and confirm zero errors and zero warnings.
-2. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting what was proved, the Lean file path, the commit hash, and the build result.
-3. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the Document Index and update the Open Questions table row for `Formal verification (Lean/Rocq)`.
-4. **Commit all three changes together** on `lake_testing`.
+1. **Build clean** — run `lake build 2>&1 | tee build.log` and confirm zero errors and zero warnings. (Tim tails the log locally via PowerShell: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`.)
+2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in the proof doc.
+3. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting: Lean file path, commit hash, build result, purity check output, theorem-by-theorem table, and proof strategy notes.
+4. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the Document Index and update the Open Questions table row for `Formal verification (Lean/Rocq)`.
+5. **Commit all changes together** on `lake_testing`.

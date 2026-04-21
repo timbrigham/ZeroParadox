@@ -11,10 +11,28 @@
 ## Build Result
 
 ```
-lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8
+lake build 2>&1 | tee build.log
 ```
 
 **Result:** Clean - 3300 jobs, 0 errors, 0 warnings.
+
+## Axiom Purity Check
+
+`#print axioms` is placed at the bottom of every ZP-X Lean file as a mandatory purity check. It reports every foundational kernel axiom a theorem depends on (e.g. `Classical.choice`, `propext`, `Quot.sound`). The expected result for clean ZP-A proofs is "does not depend on any axioms", meaning the proofs are entirely equational and constructive.
+
+**Results for ZP-A (all theorems):**
+
+```
+'le_refl'                   does not depend on any axioms
+'le_antisymm'               does not depend on any axioms
+'le_trans'                  does not depend on any axioms
+'bot_le'                    does not depend on any axioms
+'state_transition_iff'      does not depend on any axioms
+'state_sequence_monotone'   does not depend on any axioms
+'cc1'                       does not depend on any axioms
+```
+
+**Interpretation:** The ZPSemilattice typeclass fields (A1–A4) function as proof hypotheses, not global axioms — so Lean's kernel sees them as assumptions in scope, not axiom declarations. No classical logic or choice principle was required. The proofs are purely equational and constructive.
 
 ---
 

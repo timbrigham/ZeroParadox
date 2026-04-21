@@ -119,3 +119,26 @@ theorem cc1 (S : ℕ → L) (_ : IsStateSequence S) (_ : S 0 = ⊥ₗ) :
 end ZPSemilattice
 
 end ZeroParadox.ZPA
+
+/-! ## Axiom Purity Check
+
+`#print axioms` reports every foundational axiom a theorem depends on.
+Clean ZP-A proofs should depend only on the ZPSemilattice typeclass fields
+and Lean's kernel axioms (propext, Classical.choice, Quot.sound).
+No Mathlib-specific axioms should appear.
+-/
+
+section PurityCheck
+open ZeroParadox.ZPA ZPSemilattice
+
+variable {L : Type*} [ZPSemilattice L]
+
+#print axioms le_refl
+#print axioms le_antisymm
+#print axioms le_trans
+#print axioms bot_le
+#print axioms state_transition_iff
+#print axioms state_sequence_monotone
+#print axioms cc1
+
+end PurityCheck
