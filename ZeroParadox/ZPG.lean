@@ -49,20 +49,20 @@ class ZPSurprisal (C : Type*) [Category C] [ZPCategory C] where
     Standard category theory; immediate from IsInitial.uniqueUpToIso. -/
 theorem t1_initial_unique {C : Type*} [Category C] [ZPCategory C]
     {A B : C} (hA : IsInitial A) (hB : IsInitial B) : Nonempty (A ≅ B) :=
-  sorry
+  ⟨hA.uniqueUpToIso hB⟩
 
 /-- T2 — Universal Constituent (AX-G1 / D3).
     The initial object 0 maps uniquely to every object X. -/
 theorem t2_universal_constituent {C : Type*} [Category C] [ZPC : ZPCategory C] (X : C) :
     ∃ f : ZPC.zpInitial ⟶ X, ∀ g : ZPC.zpInitial ⟶ X, f = g :=
-  sorry
+  ⟨ZPC.zpIsInitial.to X, fun g => ZPC.zpIsInitial.hom_ext _ g⟩
 
 /-- T3 — Unreachability of 0 (AX-G2).
     For any X not isomorphic to 0, hom(X, 0) = ∅. Direct from AX-G2. -/
 theorem t3_unreachability {C : Type*} [Category C] [ZPC : ZPCategory C]
     (X : C) (hne : IsEmpty (X ≅ ZPC.zpInitial)) :
     IsEmpty (X ⟶ ZPC.zpInitial) :=
-  sorry
+  ZPC.ax_g2 X hne
 
 /-- T4 — Chains are Forward-Only (AX-G2).
     No morphism chain starting at 0 can return to 0 through a non-initial object.
@@ -71,7 +71,7 @@ theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
     (X : C) (hne : IsEmpty (X ≅ ZPC.zpInitial))
     (_f : ZPC.zpInitial ⟶ X) :
     IsEmpty (X ⟶ ZPC.zpInitial) :=
-  sorry
+  t3_unreachability X hne
 
 /-! ## IV. T6 — Informational Singularity (D7', I-KC) -/
 
@@ -81,7 +81,7 @@ theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
 theorem t6a_identity_surprisal {C : Type*} [Category C] [ZPCategory C]
     [ZPS : ZPSurprisal C] (A : C) :
     ZPS.surp (𝟙 A) = 0 :=
-  sorry
+  ZPS.surp_id A
 
 /-- T6-b — Non-Negative Surprisal.
     I(f) = K(x_B | x_A) ≥ 0: program length is non-negative.
@@ -89,7 +89,7 @@ theorem t6a_identity_surprisal {C : Type*} [Category C] [ZPCategory C]
 theorem t6b_surprisal_nonneg {C : Type*} [Category C] [ZPCategory C]
     [ZPS : ZPSurprisal C] {A B : C} (f : A ⟶ B) :
     0 ≤ ZPS.surp f :=
-  sorry
+  Nat.zero_le _
 
 /-- T6-c — Surprisal Accumulates Along Chains.
     The total surprisal ∑ I(X_k → X_{k+1}) over a morphism chain of length n is ≥ 0. -/
@@ -98,7 +98,7 @@ theorem t6c_surprisal_accumulates {C : Type*} [Category C] [ZPCategory C]
     (objs : Fin (n + 1) → C)
     (morphs : ∀ k : Fin n, objs k.castSucc ⟶ objs k.succ) :
     0 ≤ Finset.sum Finset.univ (fun k => ZPS.surp (morphs k)) :=
-  sorry
+  Nat.zero_le _
 
 /-- T6 — Informational Singularity of 0.
     Part I: outward surprisal from 0 is defined and non-negative (T6-b).
@@ -110,7 +110,7 @@ theorem t6_informational_singularity {C : Type*} [Category C] [ZPC : ZPCategory 
     (X : C) (hne : IsEmpty (X ≅ ZPC.zpInitial)) :
     (∀ f : ZPC.zpInitial ⟶ X, 0 ≤ ZPS.surp f) ∧
     IsEmpty (X ⟶ ZPC.zpInitial) :=
-  sorry
+  ⟨fun f => t6b_surprisal_nonneg f, t3_unreachability X hne⟩
 
 /-! ## V. T7 — The Categorical Zero Paradox (Closing Theorem) -/
 
@@ -128,7 +128,9 @@ theorem t7_categorical_zero_paradox {C : Type*} [Category C] [ZPC : ZPCategory C
       IsEmpty (X ⟶ ZPC.zpInitial)) ∧
     (∀ X : C, IsEmpty (X ≅ ZPC.zpInitial) →
       (∀ f : ZPC.zpInitial ⟶ X, 0 ≤ ZPS.surp f) ∧ IsEmpty (X ⟶ ZPC.zpInitial)) :=
-  sorry
+  ⟨t2_universal_constituent, ZPC.ax_g2,
+   fun X hne _f => t3_unreachability X hne,
+   fun X hne => t6_informational_singularity X hne⟩
 
 /-- T5 — Functors Preserve Initial Objects. Deferred to ZP-H T-H1.
     For each instantiation functor F ∈ {F_A, F_B, F_C, F_D}, F(0) is initial in the codomain.

@@ -89,6 +89,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-C Information Theory | [ZeroParadox/ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH | Clean - April 2026 | [↗](proofs/ZP-C_Lean4.md) |
 | ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T4 (Snap → orthogonal shift in H), T5 (monotone norms) | Clean - April 2026 | [↗](proofs/ZP-D_Lean4.md) |
 | ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 | [↗](proofs/ZP-E_Lean4.md) |
+| ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox) | Clean - April 2026 | [↗](proofs/ZP-G_Lean4.md) |
 
 ---
 
@@ -122,7 +123,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
 | OQ-E2: Cardinality-semilattice correspondence | **Open** - do specific semilattice structures correspond to specific cardinality regimes? |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
-| Formal verification (Lean/Rocq) | ZP-A complete (April 2026); ZP-B complete (April 2026); ZP-C complete (April 2026); ZP-D complete (April 2026); ZP-E complete (April 2026); ZP-G through ZP-H pending |
+| Formal verification (Lean/Rocq) | ZP-A complete (April 2026); ZP-B complete (April 2026); ZP-C complete (April 2026); ZP-D complete (April 2026); ZP-E complete (April 2026); ZP-G complete (April 2026); ZP-H pending |
 
 ---
 
