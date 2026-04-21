@@ -79,6 +79,7 @@ This project runs on **Windows 11**. Shell commands must use PowerShell syntax, 
 
 - **File discovery:** Use the `Glob` tool — never `find` (hangs on this system) or `ls`
 - **Shell commands:** Use the `PowerShell` tool — never `Bash` with Unix-style commands
+- **Never prepend `cd`:** The working directory is always `C:\Workspace\ZeroParadox` at session start. Never prepend `cd C:\Workspace\ZeroParadox;` or `Set-Location` to any command — doing so creates command strings that don't match the allowlist and triggers unnecessary permission prompts.
 - **File verification:** Use `Get-ChildItem *.pdf` not `ls *.pdf`
 - **File moves:** Use `Move-Item` not `mv`
 - **Path separators:** Backslash in PowerShell (`C:\Workspace\ZeroParadox`), forward slash in Lean/lake config
