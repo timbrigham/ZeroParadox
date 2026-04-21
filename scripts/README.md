@@ -21,6 +21,9 @@ If you are primarily interested in the mathematical content, the PDF documents t
 
 | File | Purpose |
 |------|---------|
+| `build_zpa_companion.py` | Builds the ZP-A Illustrated Companion |
+| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion |
+| `build_tools.py` | Builds `ZP_Tools_and_Methods.pdf` |
 | `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
 | `build_zp_pdfs.py` | Builds the formal ontology documents: ZP-A through ZP-H and supporting docs |
 | `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |
