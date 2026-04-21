@@ -1,7 +1,7 @@
 # The Zero Paradox
 **April 2026 | Complete Formalism**
 
-*A formal mathematical proof that the emergence of state from nothing cannot be an axiom — it is a theorem.*
+*A formal mathematical proof that the emergence of something from nothing is not a starting assumption — it can be derived.*
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
 
@@ -28,7 +28,7 @@ The derivation chain is:
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
 
-The three remaining intentional axioms: **AX-B1** (binary existence), **AX-G1** (initial object exists), **AX-G2** (source asymmetry).
+The two remaining intentional axioms of this framework: **AX-G1** (initial object exists), **AX-G2** (source asymmetry). **AX-B1** (binary existence) follows from the Law of Excluded Middle and is not a novel commitment of this framework.
 
 ---
 
@@ -102,7 +102,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 | Label | Type | Statement |
 |-------|------|-----------|
-| **AX-B1** | Axiom | A state either exists or it does not. Binary, no third option. |
+| **AX-B1** | Classical Logic | A state either exists or it does not. Follows from the Law of Excluded Middle (Classical.em) — not a novel commitment of this framework. |
 | **AX-G1** | Axiom | An initial object exists in the category C. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. No morphism returns to the initial object. |
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
@@ -110,6 +110,8 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
+
+**AX-B1 (Binary Existence) is not a novel axiom of this framework.** It follows from the Law of Excluded Middle (Classical.em), a kernel axiom of classical mathematics.
 
 ---
 
