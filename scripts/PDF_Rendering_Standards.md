@@ -327,6 +327,24 @@ Run the diagnostic (Section 2/2b) at the start of any new session to check if ad
 
 ---
 
+## 2e. Graphics String Objects — Different Rules Apply
+
+`Drawing.String()` objects in `reportlab.graphics.shapes` do NOT use Paragraph styles. They use a `fontName=` parameter that directly selects the font. This means:
+
+- `fix()` does not apply — there is no HTML entity processing
+- The problem-character rules from sections 2/2b/2c only apply to **Paragraph contexts**
+- For `Drawing.String()`, the fix is simply to use `fontName='DV-B'` or `fontName='DV'` for any string containing characters that are absent from DejaVuSerif
+
+```python
+# CORRECT — explicit Sans font covers all characters present in Sans
+d.add(String(x, y, '⊥', fontSize=14, fontName='DV-B', fillColor=colors.white))
+d.add(String(x, y, '✗ No return path', fontSize=9, fontName='DV-B', fillColor=RED))
+```
+
+All raw Unicode characters used in `Drawing.String()` in this project use `fontName='DV-B'`, which contains ⊥ (U+22A5), ✗ (U+2717), and all other symbols needed for diagrams. This is correct and safe.
+
+---
+
 ## 2c. The HTML Entity Bypass Problem — Critical
 
 **`fix()` only processes raw Unicode characters, not pre-written HTML entities.**
