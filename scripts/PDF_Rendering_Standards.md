@@ -320,8 +320,68 @@ That single instruction, combined with this document, prevents all known failure
 **Known glyphs missing from DejaVuSerif (require DV font wrap):**
 - U+2713 ✓ checkmark
 - U+2205 ∅ empty set
+- U+2717 ✗ ballot cross
+- U+2118 ℘ power set (Weierstrass P)
 
 Run the diagnostic (Section 2/2b) at the start of any new session to check if additional glyphs have been discovered missing.
+
+---
+
+## 2e. Graphics String Objects — Different Rules Apply
+
+`Drawing.String()` objects in `reportlab.graphics.shapes` do NOT use Paragraph styles. They use a `fontName=` parameter that directly selects the font. This means:
+
+- `fix()` does not apply — there is no HTML entity processing
+- The problem-character rules from sections 2/2b/2c only apply to **Paragraph contexts**
+- For `Drawing.String()`, the fix is simply to use `fontName='DV-B'` or `fontName='DV'` for any string containing characters that are absent from DejaVuSerif
+
+```python
+# CORRECT — explicit Sans font covers all characters present in Sans
+d.add(String(x, y, '⊥', fontSize=14, fontName='DV-B', fillColor=colors.white))
+d.add(String(x, y, '✗ No return path', fontSize=9, fontName='DV-B', fillColor=RED))
+```
+
+All raw Unicode characters used in `Drawing.String()` in this project use `fontName='DV-B'`, which contains ⊥ (U+22A5), ✗ (U+2717), and all other symbols needed for diagrams. This is correct and safe.
+
+---
+
+## 2c. The HTML Entity Bypass Problem — Critical
+
+**`fix()` only processes raw Unicode characters, not pre-written HTML entities.**
+
+If you write `&#8709;` directly in a source string, `fix()` will not touch it. The entity passes straight to ReportLab, which resolves it to U+2205 and attempts to render it in the current paragraph font (DVS). Since U+2205 is missing from DejaVuSerif, you get a blank box — the same failure as the raw character, but silently bypassing the fix.
+
+**Rule:** For any character that needs DV wrapping, write the raw Unicode character in your source so `fix()` can process it. Do NOT write pre-escaped HTML entities for problem characters.
+
+```python
+# WRONG — &#8709; bypasses fix(), renders as blank box in DVS context
+'The bottom is &#8709;'
+
+# CORRECT — raw Unicode character; fix() wraps it automatically
+'The bottom is ∅'
+```
+
+This applies to all known problem glyphs: ∅ (U+2205), ✓ (U+2713), ✗ (U+2717), ℘ (U+2118).
+
+---
+
+## 2d. Mathematical Unicode Blocks — Not Supported
+
+**Characters from the Mathematical Alphanumerics block (U+1D400–U+1D7FF) are not in any DejaVu font.** This includes mathematical script letters (𝒫, 𝒜, ℬ…), mathematical bold letters, and mathematical fraktur letters.
+
+Examples of what does NOT work:
+- `&#119823;` (U+1D4AB, 𝒫 mathematical script capital P) — blank/missing in both fonts
+- Any character in the U+1D400–U+1D7FF range
+
+**Rule:** Use standard Latin equivalents. For power set notation, write `P(X)`. For other mathematical scripts, use the plain Latin letter or spell it out.
+
+```python
+# WRONG — mathematical script P is not in DejaVu
+'L = &#119823;(X)'
+
+# CORRECT — plain Latin P
+'L = P(X)'
+```
 
 ---
 

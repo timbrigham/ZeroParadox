@@ -219,17 +219,18 @@ def make_doc(path, title_str, doc_id, version_str):
 # ── DOCUMENT BUILDERS ─────────────────────────────────────────────────────────
 
 def build_zpa():
-    doc = make_doc('/tmp/pdfs/ZP-A_Lattice_Algebra_v1_1.pdf',
-                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.1')
+    doc = make_doc('/tmp/pdfs/ZP-A_Lattice_Algebra_v1_2.pdf',
+                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.2')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.1  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.0  |  T4 reclassified as Conditional Claim CC-1</i>', S['subtitle']),
+          Paragraph('Version 1.2  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.1  |  D1 notation clarified; D2 equivalence proved</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
-          body('<i>Version 1.1 change: Theorem T4 is reclassified as Conditional Claim CC-1. The v1.0 label "Theorem" was imprecise: the result holds only given the assumption that the state sequence is initialised at the minimum of L. This assumption is not derived from A1&#8211;A4 — it is a modelling commitment. The reclassification makes the epistemic status explicit without changing the content or downstream use of the result.</i>'),
+          body('<i>Version 1.2 changes: (1) Definition D1: the notation :&#10234; (non-standard) replaced by the standard definitional framing "define the relation &#8804; by". (2) Definition D2: the equivalence between x &#8804; f(x) and f(x) = x &#8744; &#945; is now accompanied by an explicit two-line proof of both directions.</i>'),
+          body('<i>Version 1.1 change: Theorem T4 reclassified as Conditional Claim CC-1. The v1.0 label "Theorem" was imprecise: the result holds only given the assumption that the state sequence is initialised at the minimum of L. This assumption is not derived from A1&#8211;A4 — it is a modelling commitment.</i>'),
           sp()]
 
     E.append(Paragraph('I. Primitives and Axioms', S['h1']))
@@ -249,8 +250,8 @@ def build_zpa():
     E.append(Paragraph('II. The Induced Partial Order', S['h1']))
     E.append(Paragraph('2.1  Definition of &#8804;', S['h2']))
     E.append(label_box('Definition D1 — Lattice Order', [
-        'For x, y &#8712; L, define:',
-        'x &#8804; y   :&#10234;   x &#8744; y = y',
+        'For x, y &#8712; L, define the relation &#8804; by:',
+        'x &#8804; y   &#10234;   x &#8744; y = y',
     ]))
     E.append(sp(4))
     E.append(label_box('Theorem T1 — &#8804; is a Partial Order', [
@@ -277,6 +278,9 @@ def build_zpa():
     E.append(label_box('Definition D2 — State Transition', [
         'A state transition is any function f: L &#8594; L such that x &#8804; f(x) for all x &#8712; L.',
         'Equivalently, f(x) = x &#8744; &#945; for some &#945; &#8712; L.',
+        'Proof of equivalence:',
+        '(&#8658;) If x &#8804; f(x), then x &#8744; f(x) = f(x) by D1. Take &#945; = f(x): then f(x) = x &#8744; &#945;. <font name="DV">&#10003;</font>',
+        '(&#8656;) If f(x) = x &#8744; &#945; for some &#945; &#8712; L, then x &#8744; f(x) = x &#8744; (x &#8744; &#945;) = (x &#8744; x) &#8744; &#945; = x &#8744; &#945; = f(x) by A1, A3. By D1, x &#8804; f(x). <font name="DV">&#10003;</font>',
     ]))
 
     E.append(Paragraph('IV. Monotonicity of State Sequences', S['h1']))
@@ -336,6 +340,343 @@ def build_zpa():
 
     doc.build(E)
     print('ZP-A done')
+
+
+def build_zpa_companion():
+    """Illustrated companion for ZP-A, v1.2. Adds Dan's suggested examples."""
+    from reportlab.graphics.shapes import Drawing, Circle, Line, String
+
+    TEAL      = colors.HexColor('#2A8080')
+    TEAL_DARK = colors.HexColor('#1A5555')
+    TEAL_LITE = colors.HexColor('#D5EEEE')
+    AMBER_C   = colors.HexColor('#B07800')
+    AMBER_LITE= colors.HexColor('#FFF8E7')
+    RED_C     = colors.HexColor('#BB2222')
+
+    # Companion paragraph styles
+    CS = {
+        'title':    ParagraphStyle('ctitle',   fontName='DV-B',  fontSize=22, leading=28,
+                                   alignment=1, spaceAfter=4, textColor=BLACK),
+        'subtitle': ParagraphStyle('csubtitle',fontName='DV-I',  fontSize=12, leading=16,
+                                   alignment=1, spaceAfter=4),
+        'meta':     ParagraphStyle('cmeta',    fontName='DV',    fontSize=9,  leading=13,
+                                   alignment=1, spaceAfter=8, textColor=colors.grey),
+        'disc':     ParagraphStyle('cdisc',    fontName='DVS-I', fontSize=9,  leading=13,
+                                   spaceAfter=10, textColor=colors.HexColor('#555555')),
+        'h1':       ParagraphStyle('ch1',      fontName='DV-B',  fontSize=13, leading=17,
+                                   spaceBefore=14, spaceAfter=5, textColor=TEAL),
+        'body':     ParagraphStyle('cbody',    fontName='DVS',   fontSize=10, leading=14,
+                                   spaceAfter=6),
+        'caption':  ParagraphStyle('ccaption', fontName='DVS-I', fontSize=9,  leading=12,
+                                   spaceAfter=8, textColor=colors.HexColor('#555555')),
+        'ex_title': ParagraphStyle('cex_title',fontName='DV-B',  fontSize=9,  leading=13,
+                                   textColor=AMBER_C),
+        'ex_body':  ParagraphStyle('cex_body', fontName='DVS',   fontSize=9,  leading=13),
+        'rem':      ParagraphStyle('crem',     fontName='DVS-I', fontSize=9,  leading=13),
+        'kr_hdr':   ParagraphStyle('ckr_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
+                                   textColor=WHITE),
+        'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13,
+                                   textColor=WHITE),
+    }
+
+    def cbody(text):
+        return Paragraph(fix(text), CS['body'])
+
+    def example_box(title, rows):
+        data = [[Paragraph(title, CS['ex_title'])]]
+        for r in rows:
+            data.append([Paragraph(fix(r), CS['ex_body'])])
+        ts = TableStyle([
+            ('BOX',           (0,0), (-1,-1), 1.5, AMBER_C),
+            ('LINEBELOW',     (0,0), (-1,0),  0.5, AMBER_C),
+            ('BACKGROUND',    (0,0), (-1,-1), AMBER_LITE),
+            ('TOPPADDING',    (0,0), (-1,-1), 5),
+            ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+            ('LEFTPADDING',   (0,0), (-1,-1), 8),
+            ('RIGHTPADDING',  (0,0), (-1,-1), 8),
+            ('VALIGN',        (0,0), (-1,-1), 'TOP'),
+        ])
+        t = Table(data, colWidths=[TW])
+        t.setStyle(ts)
+        return t
+
+    def remember_box(text):
+        ts = TableStyle([
+            ('BACKGROUND',    (0,0), (-1,-1), TEAL_LITE),
+            ('BOX',           (0,0), (-1,-1), 0.5, TEAL),
+            ('TOPPADDING',    (0,0), (-1,-1), 8),
+            ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+            ('LEFTPADDING',   (0,0), (-1,-1), 10),
+            ('RIGHTPADDING',  (0,0), (-1,-1), 10),
+        ])
+        t = Table([[Paragraph(fix(text), CS['rem'])]], colWidths=[TW])
+        t.setStyle(ts)
+        return t
+
+    def key_result_box(title, body_text):
+        data = [[Paragraph(fix(title), CS['kr_hdr'])],
+                [Paragraph(fix(body_text), CS['kr_body'])]]
+        ts = TableStyle([
+            ('BACKGROUND',    (0,0), (-1,0),  TEAL_DARK),
+            ('BACKGROUND',    (0,1), (-1,-1), TEAL),
+            ('BOX',           (0,0), (-1,-1), 0.5, TEAL_DARK),
+            ('TOPPADDING',    (0,0), (-1,-1), 6),
+            ('BOTTOMPADDING', (0,0), (-1,-1), 6),
+            ('LEFTPADDING',   (0,0), (-1,-1), 8),
+            ('RIGHTPADDING',  (0,0), (-1,-1), 8),
+            ('VALIGN',        (0,0), (-1,-1), 'TOP'),
+        ])
+        t = Table(data, colWidths=[TW])
+        t.setStyle(ts)
+        return t
+
+    def hasse_diagram():
+        dw, dh = TW, 2.6 * inch
+        d = Drawing(dw, dh)
+        cx = dw / 2
+        r = 18
+        y0, y1, y2 = 45, 125, 200
+
+        nodes1 = [(cx - 100, y1), (cx, y1), (cx + 100, y1)]
+        nodes2 = [(cx - 150, y2), (cx - 55, y2), (cx + 55, y2), (cx + 150, y2)]
+        lc = colors.HexColor('#888888')
+
+        for nx, ny in nodes1:
+            d.add(Line(cx, y0 + r, nx, ny - r, strokeColor=lc, strokeWidth=1))
+        for i, (nx, ny) in enumerate(nodes1):
+            for j, (tx, ty) in enumerate(nodes2):
+                if abs(i - j) <= 1:
+                    d.add(Line(nx, ny + r, tx, ty - r, strokeColor=lc, strokeWidth=1))
+        for xi in [cx - 195, cx - 85, cx + 30, cx + 175]:
+            d.add(String(xi, y2 + r + 6, '...', fontSize=10, fontName='DV',
+                         fillColor=colors.HexColor('#666666')))
+
+        d.add(Circle(cx, y0, r, fillColor=colors.HexColor('#F0A000'),
+                     strokeColor=colors.HexColor('#F0A000'), strokeWidth=0))
+        d.add(String(cx - 6, y0 - 6, '⊥', fontSize=14, fontName='DV-B',
+                     fillColor=colors.white))
+        for nx, ny in nodes1:
+            d.add(Circle(nx, ny, r, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
+            d.add(String(nx - 4, ny - 5, 'S', fontSize=11, fontName='DV-B',
+                         fillColor=colors.white))
+        for tx, ty in nodes2:
+            d.add(Circle(tx, ty, r, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
+            d.add(String(tx - 4, ty - 5, 'S', fontSize=11, fontName='DV-B',
+                         fillColor=colors.white))
+
+        lx = dw - 1.6 * inch
+        d.add(Circle(lx, y0 + 4, 7, fillColor=colors.HexColor('#F0A000'),
+                     strokeColor=colors.HexColor('#F0A000'), strokeWidth=0))
+        d.add(String(lx + 12, y0 - 1, '= bottom (additive identity)',
+                     fontSize=7.5, fontName='DVS', fillColor=BLACK))
+        d.add(Circle(lx, y0 - 20, 7, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
+        d.add(String(lx + 12, y0 - 25, 'States in L',
+                     fontSize=7.5, fontName='DVS', fillColor=BLACK))
+        return d
+
+    def transition_diagram():
+        dw, dh = TW, 1.5 * inch
+        d = Drawing(dw, dh)
+        cy = dh * 0.62
+        r = 22
+        xs = [r + 10, r + 120, r + 230, r + 340, r + 440]
+        lc = TEAL
+        ac = colors.HexColor('#F0A000')
+
+        d.add(Circle(xs[0], cy, r, fillColor=ac, strokeColor=ac, strokeWidth=0))
+        d.add(String(xs[0] - 6, cy - 6, '⊥', fontSize=14, fontName='DV-B',
+                     fillColor=colors.white))
+        for i in range(1, 4):
+            d.add(Circle(xs[i], cy, r, fillColor=lc, strokeColor=lc, strokeWidth=0))
+            d.add(String(xs[i] - 8, cy - 5, f'S{i}', fontSize=10, fontName='DV-B',
+                         fillColor=colors.white))
+        d.add(String(xs[4] - 8, cy - 5, '...', fontSize=12, fontName='DV',
+                     fillColor=colors.HexColor('#555555')))
+
+        for i in range(3):
+            x1 = xs[i] + r + 2
+            x2 = xs[i + 1] - r - 2
+            d.add(Line(x1, cy, x2, cy, strokeColor=lc, strokeWidth=2))
+            d.add(Line(x2 - 7, cy - 4, x2, cy, strokeColor=lc, strokeWidth=2))
+            d.add(Line(x2 - 7, cy + 4, x2, cy, strokeColor=lc, strokeWidth=2))
+
+        ry = cy - r - 14
+        x_l = xs[0]
+        x_r = xs[3]
+        d.add(Line(x_l, ry, x_r, ry, strokeColor=RED_C, strokeWidth=1.5,
+                   strokeDashArray=[6, 4]))
+        d.add(Line(x_l + 8, ry - 4, x_l, ry, strokeColor=RED_C, strokeWidth=1.5))
+        d.add(Line(x_l + 8, ry + 4, x_l, ry, strokeColor=RED_C, strokeWidth=1.5))
+        mid = (x_l + x_r) / 2
+        d.add(String(mid - 45, ry - 14, '✗ No return path', fontSize=9,
+                     fontName='DV-B', fillColor=RED_C))
+        return d
+
+    # ── Build content ──────────────────────────────────────────────────────────
+    doc = make_doc('/tmp/pdfs/ZP-A_Illustrated_Companion.pdf',
+                   'ZP-A Illustrated Companion', 'ZP-A Companion', 'Version 1.2')
+    E = []
+
+    # Header banner
+    hdr_ts = TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), TEAL_DARK),
+        ('TOPPADDING',    (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING',   (0,0), (-1,-1), 10),
+    ])
+    hdr = Table([[Paragraph('ZP-A Illustrated Companion',
+                            ParagraphStyle('hdr', fontName='DV-B', fontSize=11,
+                                           textColor=WHITE))]], colWidths=[TW])
+    hdr.setStyle(hdr_ts)
+    E.append(hdr)
+    E.append(sp(6))
+
+    E += [
+        Paragraph('How state accumulates without ever going backwards', CS['title']),
+        Paragraph('Lattice Algebra | Version 1.2', CS['subtitle']),
+        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph(
+            'This companion explains the ideas in plain language with diagrams and real-world '
+            'examples. It is not the formal ontology — every claim here restates a result already '
+            'proven in the corresponding technical document. Consult that document for the '
+            'authoritative mathematics.',
+            CS['disc']),
+    ]
+
+    # ── What Is ZP-A Doing? ────────────────────────────────────────────────────
+    E.append(Paragraph('What Is ZP-A Doing?', CS['h1']))
+    E.append(cbody(
+        'ZP-A establishes the algebraic rules for how states behave in the Zero Paradox '
+        'framework. It uses a structure called a join-semilattice — the simplest algebraic '
+        'system that can describe accumulation without subtraction. Think of it as a ledger '
+        'where entries can only be added, never erased.'))
+    E.append(cbody(
+        'The central object is the triple (L, &#8744;, &#8869;): a set of states L, a joining '
+        'operation &#8744; that combines two states into a larger one, and a special bottom '
+        'element &#8869; that represents the absolute starting point. Four axioms (A1&#8211;A4) '
+        'say that joining is associative, commutative, idempotent, and that &#8869; is a '
+        'neutral element.'))
+    E.append(sp(4))
+    E.append(example_box('Real-world example — Bank ledger', [
+        'Think of &#8869; as a brand-new account with zero balance. Every transaction adds to '
+        'the ledger. There is no undo operation — once a deposit is recorded, the total can '
+        'only stay the same or grow. The join-semilattice captures exactly this: accumulation '
+        'without reversal.',
+    ]))
+    E.append(sp(4))
+    E.append(remember_box(
+        'Remember: The bank account is just one way to picture it. The framework applies to '
+        'any system where state can only accumulate — energy, information, or any other '
+        'monotone quantity.'))
+
+    # ── The Partial Order ──────────────────────────────────────────────────────
+    E.append(Paragraph('The Partial Order: States Have a Natural Height', CS['h1']))
+    E.append(cbody(
+        'From the four axioms, a partial order falls out automatically: state x is "below" y '
+        'if joining x with y just gives y back — y already contains everything x does. '
+        '&#8869; is always at the very bottom.'))
+    E.append(sp(8))
+    E.append(hasse_diagram())
+    E.append(sp(4))
+    E.append(Paragraph(
+        'Hasse diagram: partial order on L. Arrows point upward. &#8869; (amber) is the '
+        'universal minimum. Every state sits above &#8869;.',
+        CS['caption']))
+    E.append(sp(4))
+    E.append(example_box('Real-world example — Biological complexity', [
+        'Think of &#8869; as the simplest possible organism. More complex life forms are '
+        '"above" simpler ones: they contain everything the simpler form has, plus more. '
+        'In this abstract sense, complexity only accumulates.',
+    ]))
+
+    # ── No Subtraction ─────────────────────────────────────────────────────────
+    E.append(Paragraph('No Subtraction', CS['h1']))
+    E.append(cbody(
+        'The join-semilattice deliberately omits subtraction. State content can only '
+        'accumulate, never be removed. Every valid transition moves upward.'))
+    E.append(sp(8))
+    E.append(transition_diagram())
+    E.append(sp(4))
+    E.append(Paragraph(
+        'State transitions are one-directional. The red dashed line — a return path — '
+        'does not exist in this algebra.',
+        CS['caption']))
+    E.append(sp(4))
+    E.append(key_result_box(
+        'Key Result: Monotonicity is a Theorem — not an Assumption (T3)',
+        'For any state sequence built by joining, S&#8320; &#8804; S&#8321; &#8804; S&#8322; '
+        '&#8804; &#8230; This is derived from the axioms, not assumed. The sequence can only '
+        'go up.'))
+    E.append(sp(4))
+    E.append(key_result_box(
+        'Key Result: &#8869; is a Constituent of Every State (T2)',
+        '&#8869; &#8804; x for all x in L. &#8869; is not a void that states escape from — '
+        'it is algebraically present in every state. Zero is not absence; it is the universal '
+        'base.'))
+    E.append(sp(4))
+    E.append(example_box('Real-world example — Silence in music', [
+        'Silence is not the absence of the piece — it is the baseline from which every note '
+        'departs. Every musical state contains silence as its foundation. The join-semilattice '
+        'captures this: &#8869; is a constituent of every state.',
+    ]))
+
+    # ── More Examples ─────────────────────────────────────────────────────────
+    E.append(Paragraph('More Examples of Join-Semilattices', CS['h1']))
+    E.append(cbody(
+        'A join-semilattice appears in many mathematical and everyday settings. Here are '
+        'four concrete instantiations of (L, &#8744;, &#8869;), each satisfying A1&#8211;A4.'))
+    E.append(sp(4))
+
+    E.append(example_box('Example — Power set with union', [
+        'Let X be any set. Take L = P(X) (the collection of all subsets of X), '
+        '&#8744; = &#8746; (set union), and &#8869; = ∅ (the empty set). Union is '
+        'associative, commutative, idempotent (A &#8746; A = A), and the empty set is a '
+        'neutral element (∅ &#8746; A = A). The induced order is inclusion: A &#8804; B '
+        'iff A &#8746; B = B, i.e. A &#8838; B. Every element of L sits above ∅.',
+    ]))
+    E.append(sp(4))
+
+    E.append(example_box('Example — [0, &#8734;) with maximum', [
+        'Take L = [0, &#8734;), &#8744; = max (the larger of two values), and &#8869; = 0. '
+        'Maximum is associative, commutative, idempotent (max(x, x) = x), and 0 is a neutral '
+        'element (max(0, x) = x for x &#8805; 0). The induced order is the usual &#8804; on '
+        'real numbers: x &#8804; y iff max(x, y) = y. Note: addition would not work here — '
+        'x + x = 2x &#8800; x, violating idempotency (A3).',
+    ]))
+    E.append(sp(4))
+
+    E.append(example_box('Example — Functions with pointwise maximum', [
+        'Let X be any set. Take L to be the set of all functions f: X &#8594; [0, &#8734;), '
+        '&#8744; = pointwise maximum ((f &#8744; g)(x) = max(f(x), g(x))), and &#8869; = the '
+        'zero function. All four axioms hold pointwise. The induced order is f &#8804; g iff '
+        'f(x) &#8804; g(x) for all x &#8712; X. This is a function-space version of the '
+        'previous example — one level up in abstraction.',
+    ]))
+    E.append(sp(4))
+
+    E.append(example_box('Example — Document edit history', [
+        'Open a document and start making edits. Even hitting Backspace does not erase from '
+        'the edit record — it adds a new deletion event to the history. Each saved state of '
+        'the document sits above all states that preceded it. The history can only grow. '
+        'The "join" of two document states is the later one (or the merge if branches exist). '
+        'The &#8869; state is the empty document. No edit operation removes from the record.',
+    ]))
+
+    # ── Closing remember ───────────────────────────────────────────────────────
+    E.append(sp(6))
+    E.append(remember_box(
+        'Remember: ZP-A makes no claims about topology, probability, or physics. It only '
+        'establishes the algebraic skeleton. Everything it claims can be verified by a reader '
+        'fluent in algebra without consulting any other document.'))
+
+    E.append(sp(4))
+    E.append(Paragraph(
+        'Zero Paradox ZP-A Companion | Lattice Algebra | April 2026 | v1.2',
+        ParagraphStyle('foot2', fontName='DV-I', fontSize=8, leading=10,
+                       textColor=colors.grey, alignment=1)))
+
+    doc.build(E)
+    print('ZP-A Companion done')
 
 
 def build_zpb():
@@ -935,6 +1276,7 @@ if __name__ == '__main__':
     os.makedirs('/tmp/pdfs', exist_ok=True)
 
     build_zpa()
+    build_zpa_companion()
     build_zpb()
     build_zpc()
     build_zpd()
@@ -953,7 +1295,8 @@ if __name__ == '__main__':
     # ∨ does NOT appear in ZP-B — it is topology only, no semilattice operators.
     import pdfplumber
     DOC_SYMBOLS = {
-        'ZP-A': [0x22A5, 0x2228, 0x2264],        # ⊥ ∨ ≤
+        'ZP-A_Lattice': [0x22A5, 0x2228, 0x2264],  # ⊥ ∨ ≤
+        'ZP-A_Illustrated': [0x22A5, 0x2264],      # ⊥ ≤
         'ZP-B': [0x22A5, 0x2208, 0x211A, 0x2192], # ⊥ ∈ ℚ →
         'ZP-C': [0x22A5, 0x2228, 0x2192, 0x2208], # ⊥ ∨ → ∈
         'ZP-D': [0x22A5, 0x2208, 0x2102, 0x2264], # ⊥ ∈ ℂ ≤
@@ -977,7 +1320,7 @@ if __name__ == '__main__':
         if null_count > 0:
             issues.append(f'NULL CHARS x{null_count} — missing glyph, needs DV font wrap')
         # Check 2: per-doc symbols via char-level set membership
-        doc_key = next((k for k in DOC_SYMBOLS if k in fname), None)
+        doc_key = next((k for k in DOC_SYMBOLS if k in fname.replace('_Lattice_Algebra', '_Lattice').replace('_Illustrated_Companion', '_Illustrated')), None)
         if doc_key:
             for cp in DOC_SYMBOLS[doc_key]:
                 if chr(cp) not in char_set:

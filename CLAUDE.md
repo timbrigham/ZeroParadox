@@ -35,6 +35,17 @@ Transparency is a core value of this project. The existence of this private fold
 - The `historical/README.md` tracks all archived files with date moved and description
 - README.md always links to the non-suffixed (current) version
 
+## README.md Link Restrictions
+
+The following files exist in the repository but **must not be linked from README.md** until the conditions below are met:
+
+| File | Reason | Condition to lift restriction |
+|------|--------|-------------------------------|
+| `ZP_Gen2_Applications.pdf` | Speculative applications document — depends on Gen 1 being formally complete and bridge documents written. Premature to surface publicly in the index. | All Gen 1 layers (ZP-A through ZP-H) fully tightened; thermodynamic bridge and OQ-E2 resolved; explicit decision by Tim to promote. |
+| `ABOUTME.md` | Not ready for prominent public linking from the main index. | Explicit decision by Tim to promote. |
+
+Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
+
 ## README.md Maintenance
 
 The `.copilot-instructions.md` file is the authoritative style guide for README updates. Key rules:
@@ -60,6 +71,21 @@ The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap 
 **ZP-G** (category theory) → **ZP-H** (categorical bridge) — self-contained; depends on ZP-E conceptually but not formally.
 
 Each formal document has a paired illustrated companion for general readers. The three remaining intentional axioms are AX-B1, AX-G1, and AX-G2. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
+
+## Reviewer Feedback Tracking
+
+### Dan — ZP-A Review (April 2026)
+
+Feedback received and reviewed. Status of each point:
+
+| Feedback | Status | Resolution |
+|----------|--------|------------|
+| `:⟺` notation is non-standard for definitional biconditional | **Fixed in v1.2** | Changed to `⟺` with "define the relation ≤ by:" framing |
+| D2 "Equivalently" claim has no proof | **Fixed in v1.2** | Explicit two-line proof of both directions added |
+| Illustrated companion needs more concrete examples | **Fixed in v1.2** | Power set with union, [0,∞) with max, document edit history added |
+| "Axiom Block A" — Dan prefers "properties" over "axioms" | Deferred — keep | A1–A4 are axioms in the standard algebraic sense; defensible |
+| "State space" / "states" language feels loaded | Deferred — keep | Intentional framing for the ZP ontology; L is explicitly called a "non-empty set" in 1.1 |
+| Dual structure (top/meet operator) as future work | Noted | Already addressed in R1; no action needed |
 
 ## License
 

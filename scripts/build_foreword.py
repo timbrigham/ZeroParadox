@@ -172,7 +172,7 @@ def build_foreword(out_path):
             'and that role is filled differently depending on the framework. '
             'In arithmetic, zero is the additive identity: the number that leaves everything '
             'unchanged when you add it. '
-            'In set theory, zero is the empty set \u2205: the foundation from which the '
+            'In set theory, zero is the empty set <font name="DV">&#8709;</font>: the foundation from which the '
             'hierarchy of numbers is constructed. '
             'In algebra \u2014 vector spaces, rings, modules \u2014 zero is the neutral element '
             'of addition, inheriting whatever structure the framework provides. '
