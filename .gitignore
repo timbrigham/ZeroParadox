@@ -5,3 +5,18 @@
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# --- Lean 4 / Lake ---
+# Ignore the build artifacts and local toolchain
+.lake/
+build/
+lean_packages/
+# Bytecode and intermediate C files
+*.olean
+*.ilean
+*.c
+# Lake trace files (sometimes missed by .lake/ entry)
+.lake.trace
+
+# lake build logs 
+build.log

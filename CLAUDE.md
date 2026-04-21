@@ -46,18 +46,28 @@ The following files exist in the repository but **must not be linked from README
 
 Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
 
+## Development Environment
+
+This project runs on **Windows 11**. Shell commands must use PowerShell syntax, not Unix/Bash.
+
+- **File discovery:** Use the `Glob` tool — never `find` (hangs on this system) or `ls`
+- **Shell commands:** Use the `PowerShell` tool — never `Bash` with Unix-style commands
+- **File verification:** Use `Get-ChildItem *.pdf` not `ls *.pdf`
+- **File moves:** Use `Move-Item` not `mv`
+- **Path separators:** Backslash in PowerShell (`C:\Workspace\ZeroParadox`), forward slash in Lean/lake config
+
 ## README.md Maintenance
 
 The `.copilot-instructions.md` file is the authoritative style guide for README updates. Key rules:
 - Links display as clean names: `[ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_1.pdf)` — no version or extension in display text
 - Use regular hyphens (`-`), not em dashes (`—`); mathematical arrows (`→`) are fine
 - Section order must follow the structure defined in `.copilot-instructions.md`
-- Before editing, verify all linked files actually exist: `ls *.pdf`
+- Before editing, verify all linked files actually exist using the `Glob` tool (pattern `*.pdf`)
 
 ## Archiving Old Document Versions
 
 When a document is superseded:
-1. Add a numeric suffix to the old file and move it: `mv ZP-X_Title_vN_N.pdf historical/ZP-X_Title_vN_N-1.pdf`
+1. Add a numeric suffix to the old file and move it: `Move-Item ZP-X_Title_vN_N.pdf historical\ZP-X_Title_vN_N-1.pdf`
 2. Add the new version to the root (no suffix)
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
 4. Update the version number in README.md's Document Index table
@@ -90,3 +100,68 @@ Feedback received and reviewed. Status of each point:
 ## License
 
 CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
+
+
+# .claudecodes instructions for Lean 4 development
+- When working on the Zero Paradox ontology, prioritize files in the root C:\Workspace\ZeroParadox folder.
+- Always use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify proofs; the log file allows local debugging via tail.
+- **Logging Rule:** When performing builds on `lake_testing`, use `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to allow for local log tailing.
+- Ignore PDF rendering assets and website build artifacts in the root.
+- Treat 'lake_testing' as the active branch for experimental verification.
+- Always check 'lake-manifest.json' for dependency updates before adding new imports.
+
+- When searching for Lean source files in this project, always use the pattern ZeroParadox/**/*.lean, never **/*.lean. The .lake/ folder contains thousands of Mathlib library files that aren't mine."
+
+# Zero Paradox Project Standards
+
+# Zero Paradox Project Standards
+
+## Context Awareness & Branching Protocol
+- **Primary Proof Workspace:** `lake_testing` branch. 
+  - Goal: Formalizing the mathematical ontology using Lean 4.
+  - Scope: `.lean` files, `lakefile.lean`, and mathlib integration.
+- **Illustrated/Display Workspace:** `illustrated` branch.
+  - Goal: Rerendering PDFs, updating illustrated companions, and site-level display logic.
+  - Scope: `/pdfs`, `/site`, and PDF build tooling in `/scripts`.
+
+## Operational Rules
+1. **Branch-Task Lock:** - Lean 4 proof development **must** happen on `lake_testing`.
+   - **Auto-push:** After every commit on `lake_testing`, immediately run `git push origin lake_testing`. Tim has granted standing permission for this; no confirmation needed.
+   - PDF creation or rendering actions **must** happen on `illustrated`.
+2. **Mandatory Checkout:** If the user requests an action belonging to the other workspace, Claude must prompt the user to switch branches before reading or writing those specific assets.
+3. **Math Workflow:** When on `lake_testing`, always run `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` to verify theorem changes. The log file allows local debugging via log tailing.
+4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
+5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
+
+## File Priority & Access
+- **On `lake_testing`:** Prioritize `.lean` source files. Treat `/site` and `/pdfs` as Read-Only unless explicitly authorized for a cross-domain check.
+- **On `illustrated`:** Prioritize PDF artifacts and rendering scripts. Treat `/ZeroParadox` source files as the "Ground Truth" reference for documentation updates.
+
+## File Priority
+- Focus on `.lean` and `lakefile.lean` for the ontology.
+- Assets in `/site` and `/pdfs` are open for editing **only** for reredering tasks.
+
+## Lean 4 Proof Development: Stub-First Protocol
+
+As proofs grow more complex (ZP-D onward), always use a stub-first approach before writing full proofs. This prevents session hangs caused by heavy import chains and typeclass resolution.
+
+**The workflow for every new ZP-X Lean file:**
+
+1. **Symbol map** — before writing any Lean, map each PDF symbol to its Lean 4 / Mathlib equivalent. Identify which imports are required and which are dangerously heavy (p-adics + EuclideanSpace together, for example, can cause elaborator hangs).
+2. **Stub file** — write the complete file with all definitions and theorem statements, but use `sorry` for every proof body. Add `set_option maxHeartbeats 400000` at the top. Do not write proof bodies during the planning or stub step — output the stub file and stop. Wait for a clean build before proceeding.
+3. **Build the stub** — run `lake build` and confirm 0 errors on the skeleton. This validates that types elaborate correctly before any proof work begins.
+4. **Commit the stub** — commit the sorry-stubbed file immediately after a clean build. This creates a rollback point before any proof work begins.
+5. **Fill proofs incrementally** — prove one theorem at a time, building after each. Commit after each theorem is successfully proved. Do not attempt to write all proofs before checking.
+6. **Final clean build** — once all `sorry`s are removed, run a final build to confirm 0 errors and 0 warnings, then proceed to the documentation workflow below.
+
+**When to abstract away heavy dependencies:** If a layer imports both p-adic numbers and Hilbert space machinery, consider whether the cross-layer dependency can be replaced with an abstract typeclass or index type (e.g., `Fin (2^k)` instead of `ℚ_[2]`) for the purposes of the proof. Decoupling reduces elaboration load significantly.
+
+## Proof Documentation Workflow
+
+When a ZP-X document is successfully proved in Lean 4, the following steps are **mandatory** before the work is considered complete:
+
+1. **Build clean** — run `lake build 2>&1 | tee build.log` and confirm zero errors and zero warnings. (Tim tails the log locally via PowerShell: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`.)
+2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in the proof doc.
+3. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting: Lean file path, commit hash, build result, purity check output, theorem-by-theorem table, and proof strategy notes.
+4. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the Document Index and update the Open Questions table row for `Formal verification (Lean/Rocq)`.
+5. **Commit all changes together** on `lake_testing`.

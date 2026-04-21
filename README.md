@@ -1,6 +1,8 @@
 # The Zero Paradox - Project Index
 **April 2026 | Final Formalism**
 
+[![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
+
 ## What This Is
 
 The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
@@ -78,6 +80,20 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 | [Generation 2: Applications and Open Problems](ZP_Gen2_Applications.pdf) | Where the framework reaches: the arrow of time, why something rather than nothing, the unreasonable effectiveness of mathematics, the fine-tuning problem, and Skolem's paradox. Stated assumptions, honest fit assessment, named gaps. |
 
+### Formal Verification (Lean 4)
+
+Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives on the `lake_testing` branch under `ZeroParadox/`.
+
+| Document | Lean Source | Theorems Verified | Build | Proof Doc |
+|----------|-------------|-------------------|-------|-----------|
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf) | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
+| ZP-B p-Adic Topology | [ZeroParadox/ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (isolation of 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 | [↗](proofs/ZP-B_Lean4.md) |
+| ZP-C Information Theory | [ZeroParadox/ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH | Clean - April 2026 | [↗](proofs/ZP-C_Lean4.md) |
+| ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T4 (Snap → orthogonal shift in H), T5 (monotone norms) | Clean - April 2026 | [↗](proofs/ZP-D_Lean4.md) |
+| ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 | [↗](proofs/ZP-E_Lean4.md) |
+| ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox) | Clean - April 2026 | [↗](proofs/ZP-G_Lean4.md) |
+| ZP-H Categorical Bridge | [ZeroParadox/ZPH.lean](ZeroParadox/ZPH.lean) | T-H1 (F_A initial object proved; F_B/F_C/F_D domain facts cited), T-H2 (singularity compatibility: ZPG unreachability ∧ ZPC divergence), T-H3 (Binary Snap under all four functors: join ∧ topological ∧ 1-bit ∧ orthogonal) | Clean - April 2026 | [↗](proofs/ZP-H_Lean4.md) |
+
 ---
 
 ## Axiomatic Commitments
@@ -110,7 +126,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
 | OQ-E2: Cardinality-semilattice correspondence | **Open** - do specific semilattice structures correspond to specific cardinality regimes? |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
-| Formal verification (Lean/Rocq) | Not yet done - candidate for future work |
+| Formal verification (Lean/Rocq) | ZP-A through ZP-H complete (April 2026) |
 
 ---
 
