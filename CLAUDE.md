@@ -72,6 +72,21 @@ The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap 
 
 Each formal document has a paired illustrated companion for general readers. The three remaining intentional axioms are AX-B1, AX-G1, and AX-G2. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
 
+## Reviewer Feedback Tracking
+
+### Dan — ZP-A Review (April 2026)
+
+Feedback received and reviewed. Status of each point:
+
+| Feedback | Status | Resolution |
+|----------|--------|------------|
+| `:⟺` notation is non-standard for definitional biconditional | **Fixed in v1.2** | Changed to `⟺` with "define the relation ≤ by:" framing |
+| D2 "Equivalently" claim has no proof | **Fixed in v1.2** | Explicit two-line proof of both directions added |
+| Illustrated companion needs more concrete examples | **Fixed in v1.2** | Power set with union, [0,∞) with max, document edit history added |
+| "Axiom Block A" — Dan prefers "properties" over "axioms" | Deferred — keep | A1–A4 are axioms in the standard algebraic sense; defensible |
+| "State space" / "states" language feels loaded | Deferred — keep | Intentional framing for the ZP ontology; L is explicitly called a "non-empty set" in 1.1 |
+| Dual structure (top/meet operator) as future work | Noted | Already addressed in R1; no action needed |
+
 ## License
 
 CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
