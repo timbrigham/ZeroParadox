@@ -236,6 +236,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 ## File Priority & Access
 - **On `lake_testing`:** Prioritize `.lean` source files. Treat `/site` and `/pdfs` as Read-Only unless explicitly authorized for a cross-domain check.
 - **On `illustrated`:** Prioritize PDF artifacts and rendering scripts. Treat `/ZeroParadox` source files as the "Ground Truth" reference for documentation updates.
+- **`proofs/` is owned by `lake_testing` exclusively.** Never edit files in `proofs/` from the `illustrated` branch — doing so causes merge conflicts when branches are reconciled.
 
 ## File Priority
 - Focus on `.lean` and `lakefile.lean` for the ontology.
