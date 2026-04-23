@@ -683,7 +683,7 @@ def build_zph(out_path):
          'Derived — T-SNAP in ZP-E v2.0. No longer an axiom. '
          'T-H3 and all downstream results inherit the derived status.'],
         ['AX-G1, AX-G2',
-         'Axioms — intentional. Foundational commitments. Not gaps.'],
+         'Not novel commitments — grounded in prior layers (ZP-A and ZP-B). Stated as local axioms in ZP-G for self-containment. Not gaps.'],
         ['R-BA, D-H1, DP-1',
          'Compatibility Remark / Design Commitments — intentional. Explicitly stated. Not laundered.'],
     ]
@@ -700,7 +700,7 @@ def build_zph(out_path):
             '<i>End of ZP-H v1.1 | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 all closed | '
             'T-SNAP inherited as derived theorem | '
-            'Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
+            'No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers</i>',
             S['note']),
     ]
 
