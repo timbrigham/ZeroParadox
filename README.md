@@ -78,7 +78,7 @@ This framework introduces no novel axioms. Every commitment is either a derived 
 |------|----------|---------|----------|
 | [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_4.pdf) | ZP-A | v1.4 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_2.pdf) | ZP-B | v1.2 | AX-B1. MP-1. Derivation of p=2. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
-| [ZP-C Information Theory](ZP-C_Information_Theory_v1_4.pdf) | ZP-C | v1.4 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF.** AX-1 promoted to Candidate Theorem. |
+| [ZP-C Information Theory](ZP-C_Information_Theory_v1_4.pdf) | ZP-C | v1.4 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). |
 | [ZP-D State Layer](ZP-D_State_Layer_v1_2.pdf) | ZP-D | v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_0.pdf) | ZP-E | v2.0 | **DA-1** (instantiation = execution). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Accounts for Skolem, CH independence, Russell. Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_1.pdf) | ZP-G | v1.1 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
@@ -151,6 +151,10 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
 | OQ-E2: Cardinality-semilattice correspondence | **Open** - formal derivation of DA-3's cardinality claims deferred pending further work. |
+| OQ-G1: Native categorical surprisal | Closed - ZP-G v1.1 D7' and I-KC (Kolmogorov import; BA-G1 demoted to compatibility remark R-BA) |
+| OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (universal property verified for all four instantiation functors) |
+| OQ-G3: Functor construction | Closed - ZP-H C-H1 through C-H4 (object maps, morphism maps, preservation proofs complete) |
+| OQ-G4: Singularity reconciliation | Closed - ZP-H T-H2 (categorical and ZP-C characterizations shown to be same obstruction) |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
 | Formal verification (Lean/Rocq) | ZP-A through ZP-H complete (April 2026) |
 
@@ -160,9 +164,9 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_2.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_2.pdf) → [ZP-C](ZP-C_Information_Theory_v1_4.pdf) → [ZP-D](ZP-D_State_Layer_v1_2.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_0.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_4.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_2.pdf) → [ZP-C](ZP-C_Information_Theory_v1_4.pdf) → [ZP-D](ZP-D_State_Layer_v1_2.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_0.pdf) (in dependency order)
 
-**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_1.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_0.pdf) (self-contained; after ZP-E)
+**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_1.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_1.pdf) (self-contained; after ZP-E)
 
 **For process/methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 

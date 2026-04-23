@@ -144,6 +144,24 @@ Before committing any README update:
 - [ ] Axiomatic Commitments matches current framework state (AX-1 is T-SNAP, not an axiom)
 - [ ] Open questions table reflects actual current status
 
+### README Sync Requirements — Triggers and Checklist
+
+Certain changes require README.md to be audited for consistency. Apply this checklist whenever any of the following occur:
+
+**Triggers:**
+- A document is versioned up (e.g. ZP-A v1.3 → v1.4)
+- An open question is closed (in any document)
+- A claim's status changes (axiom → theorem, candidate → derived, etc.)
+- A new document is added or archived
+
+**On each trigger, verify:**
+1. **Framework table** — version number matches the current file in the root
+2. **Reading Order links** — all version numbers in Reading Order match Framework table (these get out of sync when only the table is updated)
+3. **Question Register** — every OQ/item that changed status is updated; newly closed items are added if missing
+4. **Document descriptions** — any "Candidate Theorem", "Open", or status language in the Framework table description column still accurately reflects the document's current state
+
+**Known pattern to watch:** Reading Order links are hardcoded with version numbers separately from the Framework table. Updating the table does not update Reading Order — both must be changed together. This has caused stale links on ZP-A (v1.2 in Reading Order while Framework showed v1.4) and ZP-H (v1.0 in Reading Order while Framework showed v1.1).
+
 ### Common Updates
 
 **Adding a new document:**
