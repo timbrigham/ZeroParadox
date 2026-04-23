@@ -70,7 +70,6 @@ This framework introduces no novel axioms. Every commitment is either a derived 
 
 | File | Description |
 |------|-------------|
-| [README](README.md) | This file - project index |
 | [Zero Paradox Foreword](Zero_Paradox_Foreword.pdf) | Plain-language introduction for any reader. Start here. |
 
 ### Formal Ontology Documents
