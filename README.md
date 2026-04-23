@@ -135,12 +135,6 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
 
-**AX-B1 (Binary Existence) is not a novel axiom of this framework.** It is directly verifiable by computation — decidable equality on Fin 2 via `decide` — and depends only on `propext`, not `Classical.em`.
-
-**AX-G1 is not a novel commitment.** ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees an initial object in the corresponding category. ZP-G is self-contained by design and names it explicitly, but the underlying justification comes from ZP-A.
-
-**AX-G2 is not a novel commitment.** It follows from antisymmetry of the ZP-A partial order — no non-bottom element satisfies X ≤ ⊥ — and is independently confirmed by ZP-B C3 (topological irreversibility in Q₂).
-
 ---
 
 ## Question Register
