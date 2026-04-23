@@ -51,7 +51,7 @@ The derivation chain is:
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
 
-The category-theoretic layer (ZP-G) carries two structural commitments, both grounded in prior layers rather than introduced as novel assumptions: **AX-G1** (the null state is the universal origin of all structure, from ZP-A's bottom element) and **AX-G2** (once something emerges, it cannot return to nothing, from ZP-A antisymmetry and ZP-B C3). **AX-B1** (a state either exists or it does not) is directly verifiable by computation — not a novel commitment of this framework.
+This framework introduces no novel axioms. Every commitment is either a derived theorem (T-SNAP), directly verifiable by computation (AX-B1), or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
 
 ---
 
