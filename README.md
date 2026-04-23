@@ -30,7 +30,7 @@ The derivation chain is:
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
 
-The two remaining intentional axioms of this framework: **AX-G1** (the null state is the universal origin), **AX-G2** (source asymmetry). **AX-B1** (binary existence) follows from the Law of Excluded Middle and is not a novel commitment of this framework.
+Two assumptions underlie the category-theoretic layer and are not derived by the chain above: **AX-G1** (the null state is the universal origin of all structure) and **AX-G2** (once something emerges, it cannot return to nothing). **AX-B1** (a state either exists or it does not) is directly verifiable by computation — not a novel commitment of this framework.
 
 ---
 
