@@ -19,7 +19,7 @@
   - [Supporting Documents](#supporting-documents)
   - [Formal Verification (Lean 4)](#formal-verification-lean-4)
 - [Axiomatic Commitments](#axiomatic-commitments)
-- [Status of All Major Open Questions](#status-of-all-major-open-questions)
+- [Question Register](#question-register)
 - [Reading Order](#reading-order)
 - [Notes on Development](#notes-on-development)
 - [License](#license) · [Citation](#citation) · [Contact](#contact)
@@ -142,7 +142,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 ---
 
-## Status of All Major Open Questions
+## Question Register
 
 | Item | Status |
 |------|--------|
