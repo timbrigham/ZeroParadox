@@ -5,6 +5,27 @@
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
 
+---
+
+## Contents
+
+- [What This Is](#what-this-is)
+- [The Central Result](#the-central-result)
+- [What This Is Not](#what-this-is-not)
+- [Document Index](#document-index)
+  - [Entry Point](#entry-point)
+  - [Formal Ontology Documents](#formal-ontology-documents)
+  - [Illustrated Companion Documents](#illustrated-companion-documents-general-reader)
+  - [Supporting Documents](#supporting-documents)
+  - [Formal Verification (Lean 4)](#formal-verification-lean-4)
+- [Axiomatic Commitments](#axiomatic-commitments)
+- [Status of All Major Open Questions](#status-of-all-major-open-questions)
+- [Reading Order](#reading-order)
+- [Notes on Development](#notes-on-development)
+- [License](#license) · [Citation](#citation) · [Contact](#contact)
+
+---
+
 ## What This Is
 
 The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
