@@ -12,7 +12,7 @@
 - [What This Is](#what-this-is)
 - [The Central Result](#the-central-result)
 - [What This Is Not](#what-this-is-not)
-- [Document Index](#document-index)
+- [The Framework](#the-framework)
   - [Entry Point](#entry-point)
   - [Formal Ontology Documents](#formal-ontology-documents)
   - [Illustrated Companion Documents](#illustrated-companion-documents-general-reader)
@@ -64,7 +64,7 @@ This framework introduces no novel axioms. Every commitment is either a derived 
 
 ---
 
-## Document Index
+## The Framework
 
 ### Entry Point
 
