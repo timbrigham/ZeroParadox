@@ -101,7 +101,7 @@ def fix(text):
     for ch, rep in sub_map.items():
         text = text.replace(ch, f'<sub>{rep}</sub>')
     text = text.replace('✓', '<font name="DV">&#10003;</font>')
-    text = text.replace('\u2205', '<font name="DV">&#8709;</font>')
+    text = text.replace('∅', '<font name="DV">&#8709;</font>')
     replacements = [
         ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
         ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
@@ -251,7 +251,7 @@ def build_zph(out_path):
              'definition belongs here because it is instantiation-specific: the morphisms of C are '
              'defined by what the functor constructions require, not by the abstract category itself.'),
         body('Version 1.1 changes: (1) AX-1 (Binary Snap Causality) is no longer an axiom — it is '
-             'Theorem T-SNAP, derived in ZP-E v2.0 via the P\u2080 / L-RUN / TQ-IH / DA-1 chain. '
+             'Theorem T-SNAP, derived in ZP-E v2.0 via the P₀ / L-RUN / TQ-IH / DA-1 chain. '
              'All references to AX-1 as an axiom are updated to T-SNAP (Derived). '
              '(2) Import Registry updated from ZP-G v1.0 to ZP-G v1.1: BA-G1 is now a '
              'compatibility remark, not a bridge axiom premise. '
@@ -373,7 +373,7 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.1 F<sub>A</sub>: C &#8594; SLat (Join-Semilattices)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H1 — Functor F\u2041: C \u2192 SLat',
+        'Construction C-H1 — Functor F⁁: C → SLat',
         'Status: Derived — OQ-G3 partially closed',
         [
             'Object map: F<sub>A</sub> sends each object X &#8712; ob(C) to the state S<sub>X</sub> &#8712; L in the '
@@ -394,7 +394,7 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.2 F<sub>B</sub>: C &#8594; pTop (p-Adic Topological Spaces)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H2 — Functor F\u0432: C \u2192 pTop',
+        'Construction C-H2 — Functor Fв: C → pTop',
         'Status: Derived — OQ-G3 partially closed',
         [
             'Object map: F<sub>B</sub> sends each object X &#8712; ob(C) to an element x &#8712; Q<sub>2</sub>. The initial object 0 maps to '
@@ -415,7 +415,7 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.3 F<sub>C</sub>: C &#8594; InfoSp (Information-Theoretic Spaces)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H3 — Functor F\u0421: C \u2192 InfoSp',
+        'Construction C-H3 — Functor FС: C → InfoSp',
         'Status: Derived — OQ-G3 partially closed',
         [
             'Object map: F<sub>C</sub> sends each object X &#8712; ob(C) to a probability distribution P<sub>X</sub> over {0, 1}. The initial '
@@ -439,7 +439,7 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.4 F<sub>D</sub>: C &#8594; Hilb (Hilbert Spaces)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H4 — Functor F\u0110: C \u2192 Hilb',
+        'Construction C-H4 — Functor FĐ: C → Hilb',
         'Status: Derived — OQ-G3 partially closed',
         [
             'Object map: F<sub>D</sub> sends each object X &#8712; ob(C) to a state vector T(x) &#8712; H = &#8450;<sup>n</sup> via the transition '
@@ -613,7 +613,7 @@ def build_zph(out_path):
         ['AX-1',
          'Derived —\nT-SNAP\n(ZP-E v2.0)',
          'Binary Snap Causality. Derived as Theorem T-SNAP in ZP-E v2.0 via the '
-         'P\u2080 / L-RUN / TQ-IH / DA-1 chain. No longer an axiom. T-H3 inherits '
+         'P₀ / L-RUN / TQ-IH / DA-1 chain. No longer an axiom. T-H3 inherits '
          'T-SNAP as a derived result. Not a gap.'],
         ['AX-G1',
          'Axiom —\nnot novel',
@@ -621,7 +621,7 @@ def build_zph(out_path):
          'Not a novel commitment — grounded in ⊥ as bottom element of ZP-A semilattice. Not a gap.'],
         ['AX-G2',
          'Axiom —\nnot novel',
-         'Source asymmetry: hom(X, 0) = \u2205 for X \u2260 0. Inherited from ZP-G. '
+         'Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Inherited from ZP-G. '
          'Not a novel commitment — follows from ZP-A antisymmetry and ZP-B C3. Not a gap.'],
         ['R-BA',
          'Remark —\nBA-G1 demoted\n(ZP-G v1.1)',

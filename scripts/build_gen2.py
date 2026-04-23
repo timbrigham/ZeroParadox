@@ -154,7 +154,7 @@ def make_doc(path):
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0]/2, 0.6*inch,
-            f'Zero Paradox: Generation 2 \u2014 Applications and Open Problems  |  '
+            f'Zero Paradox: Generation 2 — Applications and Open Problems  |  '
             f'April 2026  |  Page {doc.page}')
         canvas.restoreState()
     return SimpleDocTemplate(path, pagesize=LETTER,
@@ -304,7 +304,7 @@ def build_gen2(out_path):
              '"Why something rather than nothing" is answered by showing that nothing, '
              'properly characterised, contains the conditions for its own transition.'),
         callout(
-            'Nothing at P\u2080 cannot hold. The transition to the first atomic state is '
+            'Nothing at P₀ cannot hold. The transition to the first atomic state is '
             'structurally forced by the properties of the null state itself — not by an '
             'external trigger, a divine agent, or a brute fact.',
             bg=GREEN_LITE, border=GREEN),

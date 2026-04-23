@@ -106,14 +106,14 @@ def commitments_table():
          'Not a novel commitment — follows from antisymmetry of the ZP-A partial order and ZP-B C3 (topological irreversibility).'),
         ('MP-1',  'Principle',
          'Minimality of Representation. The representational base must be the minimum '
-         'sufficient base for AX-B1. Derives p\u00a0=\u00a02.'),
+         'sufficient base for AX-B1. Derives p = 2.'),
         ('RP-1',  'Principle',
          'Minimum Sufficient Probabilistic Representation. The probabilistic form of a '
          'binary ontological state is a point-mass distribution.'),
         ('DP-1',  'Design Commitment',
-         'Orthogonality. Topological isolation in Q\u2082 is represented by orthogonality '
+         'Orthogonality. Topological isolation in Q₂ is represented by orthogonality '
          'in H. Chosen, not derived. Stated explicitly.'),
-        ('AX-1',  'Retired axiom \u2192 Theorem T-SNAP',
+        ('AX-1',  'Retired axiom → Theorem T-SNAP',
          'Binary Snap Causality. Previously an axiom; now derived as Theorem T-SNAP via '
          'the L-RUN / TQ-IH / DA-1 chain in ZP-C v1.4 and ZP-E.'),
     ]
@@ -159,7 +159,7 @@ def build_foreword(out_path):
         Paragraph(
             'The paradox is not that zero is nothing.<br/>'
             'The paradox is that zero is the one thing<br/>'
-            'that has to be there for everything else to exist \u2014<br/>'
+            'that has to be there for everything else to exist —<br/>'
             'and is the one thing the tools of everything else cannot reach.',
             S['epigraph']),
         sp(8),
@@ -171,13 +171,13 @@ def build_foreword(out_path):
         Paragraph('I. THE QUESTION', S['h1']),
         Paragraph(
             'Mathematics has always had a complicated relationship with zero. '
-            'The word \u201czero\u201d does not name a single object \u2014 it names a role, '
+            'The word “zero” does not name a single object — it names a role, '
             'and that role is filled differently depending on the framework. '
             'In arithmetic, zero is the additive identity: the number that leaves everything '
             'unchanged when you add it. '
-            'In set theory, zero is the empty set \u2205: the foundation from which the '
+            'In set theory, zero is the empty set ∅: the foundation from which the '
             'hierarchy of numbers is constructed. '
-            'In algebra \u2014 vector spaces, rings, modules \u2014 zero is the neutral element '
+            'In algebra — vector spaces, rings, modules — zero is the neutral element '
             'of addition, inheriting whatever structure the framework provides. '
             'In logic, the corresponding element is falsehood: the proposition that implies '
             'everything and is implied by nothing. '
@@ -186,7 +186,7 @@ def build_foreword(out_path):
         Paragraph(
             'This raises two questions that are easy to state and surprisingly hard to answer. '
             'The first is structural: what are the properties of that starting element itself? '
-            'Not what comes after it \u2014 that is the story of mathematics as we know it. '
+            'Not what comes after it — that is the story of mathematics as we know it. '
             'But the ground floor. The state before any state. '
             'The second question is generative: across all these frameworks, is there a common '
             'account of what it means to transition from the null element to the first non-trivial '
@@ -194,23 +194,23 @@ def build_foreword(out_path):
             S['body']),
         Paragraph(
             'These two questions are related but distinct. The first is about the properties of '
-            '\u22a5. The second is about the transition \u22a5 \u2192 \u03b5\u2080. '
+            '⊥. The second is about the transition ⊥ → ε₀. '
             'The Zero Paradox framework addresses both.',
             S['body']),
     ]
 
     story.append(box(
         'The central claim is this: zero is not the absence of mathematical structure. It is '
-        'the presence of structure at its most fundamental \u2014 the element that is '
+        'the presence of structure at its most fundamental — the element that is '
         'constituent of everything and directly describable by nothing.'
     ))
     story.append(sp(6))
 
     Paragraph(
         'A note on the converse: one might observe that in any rich framework, zero is the '
-        'trivial element \u2014 it inherits its structure from the framework around it. '
-        'This is true, and it is not in conflict with ZP\u2019s thesis. '
-        'The question ZP is asking is how minimal the framework needs to be before \u22a5 '
+        'trivial element — it inherits its structure from the framework around it. '
+        'This is true, and it is not in conflict with ZP’s thesis. '
+        'The question ZP is asking is how minimal the framework needs to be before ⊥ '
         'still has non-trivial properties. '
         'The answer, across seven independent layers, is: very minimal. That is the surprise.',
         S['body'])
@@ -218,9 +218,9 @@ def build_foreword(out_path):
     story += [
         Paragraph(
             'A note on the converse: one might observe that in any rich framework, zero is the '
-            'trivial element \u2014 it inherits its structure from the framework around it. '
-            'This is true, and it is not in conflict with ZP\u2019s thesis. '
-            'The question ZP is asking is how minimal the framework needs to be before \u22a5 '
+            'trivial element — it inherits its structure from the framework around it. '
+            'This is true, and it is not in conflict with ZP’s thesis. '
+            'The question ZP is asking is how minimal the framework needs to be before ⊥ '
             'still has non-trivial properties. '
             'The answer, across seven independent layers, is: very minimal. That is the surprise.',
             S['body']),
@@ -236,29 +236,29 @@ def build_foreword(out_path):
             S['body']),
         Paragraph(
             'The algebraic layer (ZP-A) works entirely within join-semilattice theory. '
-            'It derives that \u22a5 is the global minimum of the induced partial order, and that '
+            'It derives that ⊥ is the global minimum of the induced partial order, and that '
             'any sequence of states generated by repeated joins is monotone. '
             'Monotonicity is a theorem here, not an assumption.',
             S['body']),
         Paragraph(
             'The topological layer (ZP-B) works within p-adic number theory. '
             'From the single axiom that the foundational distinction is binary, together with '
-            'a minimality principle, it derives that the appropriate field is Q\u2082, the '
-            '2-adic numbers. The field Q\u2082 forces every ball to be clopen, which forces '
+            'a minimality principle, it derives that the appropriate field is Q₂, the '
+            '2-adic numbers. The field Q₂ forces every ball to be clopen, which forces '
             'total disconnectedness, which makes the transition from null to first state '
             'topologically irreversible. This is proven, not assumed.',
             S['body']),
         Paragraph(
             'The information-theoretic layer (ZP-C) works within algorithmic information '
-            'theory and discrete analysis on Q\u2082. It introduces the incompressibility '
+            'theory and discrete analysis on Q₂. It introduces the incompressibility '
             'threshold and establishes the informational cost of the null-to-first-state '
-            'transition as exactly one bit. It also establishes \u2014 in v1.4 \u2014 that the '
+            'transition as exactly one bit. It also establishes — in v1.4 — that the '
             'act of execution is itself a non-null state, which allows the Binary Snap to be '
             'derived rather than assumed.',
             S['body']),
         Paragraph(
-            'The Hilbert space layer (ZP-D) constructs an explicit map T from Q\u2082 into a '
-            'complex Hilbert space H = \u2102\u207f, with topological isolation in Q\u2082 '
+            'The Hilbert space layer (ZP-D) constructs an explicit map T from Q₂ into a '
+            'complex Hilbert space H = ℂⁿ, with topological isolation in Q₂ '
             'corresponding to orthogonality in H. T is proven to exist and to be unique up to '
             'unitary equivalence.',
             S['body']),
@@ -269,7 +269,7 @@ def build_foreword(out_path):
             S['body']),
         Paragraph(
             'The category-theoretic layer (ZP-G) recasts the entire framework within category '
-            'theory. It establishes the categorical zero \u2014 the initial object 0 \u2014 '
+            'theory. It establishes the categorical zero — the initial object 0 — '
             'as the object with a unique morphism to every other object and no incoming '
             'morphisms from outside. The informational singularity at 0 is derived '
             'independently of the prior layers, converging on the same result from a '
@@ -278,10 +278,10 @@ def build_foreword(out_path):
         Paragraph(
             'The categorical bridge (ZP-H) constructs four instantiation functors connecting '
             'the categorical framework to each of the prior layers: '
-            'F<sub>A</sub>: C \u2192 SLat (lattice algebra), '
-            'F<sub>B</sub>: C \u2192 pTop (p-adic topology), '
-            'F<sub>C</sub>: C \u2192 InfoSp (information theory), and '
-            'F<sub>D</sub>: C \u2192 Hilb (Hilbert space). '
+            'F<sub>A</sub>: C → SLat (lattice algebra), '
+            'F<sub>B</sub>: C → pTop (p-adic topology), '
+            'F<sub>C</sub>: C → InfoSp (information theory), and '
+            'F<sub>D</sub>: C → Hilb (Hilbert space). '
             'Each functor preserves the initial object and the singularity structure, '
             'proving that all seven layers are consistent accounts of the same foundational fact.',
             S['body']),
@@ -304,11 +304,11 @@ def build_foreword(out_path):
     story += [
         Paragraph('IV. THE PARADOX', S['h1']),
         Paragraph(
-            'Zero \u2014 the null state \u22a5, the element 0 \u2208 Q\u2082, the vector '
-            'T(0) \u2208 H, the initial object in C \u2014 is the foundational element of every '
+            'Zero — the null state ⊥, the element 0 ∈ Q₂, the vector '
+            'T(0) ∈ H, the initial object in C — is the foundational element of every '
             'layer of the framework. '
-            'Algebraically, \u22a5 \u2264 x for all x in L. '
-            'Topologically, 0 is the base of every ball in Q\u2082. '
+            'Algebraically, ⊥ ≤ x for all x in L. '
+            'Topologically, 0 is the base of every ball in Q₂. '
             'In Hilbert space, T(0) is the anchor from which every state vector is built. '
             'Categorically, 0 is the unique object with a morphism to every other. '
             'Zero is not prior to the framework. It is structurally present within every '
@@ -327,12 +327,12 @@ def build_foreword(out_path):
     story += [
         Paragraph('V. THE RESOLUTION', S['h1']),
         Paragraph(
-            'The paradox is resolved \u2014 not dissolved. The resolution provides the correct '
+            'The paradox is resolved — not dissolved. The resolution provides the correct '
             'tools for working at the boundary: the discrete operators of ZP-C, native to '
-            'Q\u2082, requiring no smoothness.',
+            'Q₂, requiring no smoothness.',
             S['body']),
         Paragraph(
-            'Under these operators, finite paths through Q\u2082 \\ {0} are conservative. '
+            'Under these operators, finite paths through Q₂ \\ {0} are conservative. '
             'Non-conservation appears in the infinite regime: infinite sequences through the '
             'ball hierarchy approaching zero accumulate surprisal without bound. '
             'The surprisal field has a singularity at zero. '
@@ -340,10 +340,10 @@ def build_foreword(out_path):
             'informational content.',
             S['body']),
         Paragraph(
-            'The framework lives at that boundary intentionally. The seven layers \u2014 '
+            'The framework lives at that boundary intentionally. The seven layers — '
             'algebra, topology, information theory, Hilbert space, bridge, category theory, '
-            'and categorical bridge \u2014 each arrive independently at the same boundary '
-            'from their own direction. That convergence is the framework\u2019s central result.',
+            'and categorical bridge — each arrive independently at the same boundary '
+            'from their own direction. That convergence is the framework’s central result.',
             S['body']),
     ]
 
@@ -365,7 +365,7 @@ def build_foreword(out_path):
         Paragraph(
             'This is not a physical theory. The framework is instantiation-independent. '
             'Physical theories are recovered by instantiating the free parameters. '
-            'The minimum viable deviation \u03b5\u2080 plays the structural role of a '
+            'The minimum viable deviation ε₀ plays the structural role of a '
             'Planck-scale quantity, but its numerical value depends on the physical constants '
             'of the universe.',
             S['body']),
@@ -389,11 +389,11 @@ def build_foreword(out_path):
         Paragraph(
             'The technical documents ZP-A through ZP-H are formatted as ontologies, not as '
             'discursive mathematical writing. Each claim appears in a labeled box with its '
-            'status \u2014 Axiom, Principle, Design Commitment, Defined, Derived, Conditional, '
+            'status — Axiom, Principle, Design Commitment, Defined, Derived, Conditional, '
             'or Remark. Proofs are included inline. Open items are tracked explicitly.',
             S['body']),
         Paragraph(
-            'A mathematician reading ZP-A will find it elementary \u2014 basic semilattice '
+            'A mathematician reading ZP-A will find it elementary — basic semilattice '
             'theory with clean proofs. The novelty is not in the mathematics of any single '
             'layer. It is in the discipline of the connections: the requirement that each layer '
             'be internally closed before any cross-framework claim is made.',
@@ -401,14 +401,14 @@ def build_foreword(out_path):
         Paragraph(
             'The bridge document ZP-E is worth reading last, after the four constituent '
             'algebraic, topological, information-theoretic, and Hilbert space layers, because '
-            'it earns its claims in the only way that counts \u2014 by pointing back to proofs '
+            'it earns its claims in the only way that counts — by pointing back to proofs '
             'that are already complete. ZP-H plays an analogous role for the category-theoretic '
             'side: read it after ZP-G.',
             S['body']),
         Paragraph(
             'The mathematics here is not new in its parts. Join-semilattices, p-adic numbers, '
             'Jensen-Shannon divergence, Hilbert space basis assignment, initial objects in '
-            'category theory \u2014 these are established structures with well-understood '
+            'category theory — these are established structures with well-understood '
             'properties. What is new is the conjunction: the claim that these seven structures, '
             'independently developed within their own disciplines, converge on the same '
             'foundational point, characterise the same transition, and illuminate the same '
@@ -416,7 +416,7 @@ def build_foreword(out_path):
             S['body']),
         Paragraph(
             'The answer, if the framework holds, is that zero is not the absence of everything. '
-            'It is the presence of the minimum sufficient condition for everything \u2014 the '
+            'It is the presence of the minimum sufficient condition for everything — the '
             'one element that every state inherits, that every measurement is taken from, that '
             'every description presupposes, and that no description, in the standard sense, '
             'can reach.',
@@ -427,26 +427,26 @@ def build_foreword(out_path):
     story += [
         Paragraph('VIII. WHERE THE FRAMEWORK REACHES', S['h1']),
         Paragraph(
-            'The Generation 1 result \u2014 the Binary Snap as a derived theorem \u2014 '
+            'The Generation 1 result — the Binary Snap as a derived theorem — '
             'has structural consequences beyond the framework itself. Under stated conditions '
             'and with explicit assumptions, it bears on several problems that have remained '
             'open in physics, mathematics, and philosophy.',
             S['body']),
         Paragraph(
             'The most direct connection is to the arrow of time. The irreversibility of the '
-            'Binary Snap \u2014 derived independently in ZP-A (monotonicity), ZP-B '
-            '(topological irreversibility), and ZP-G (source asymmetry) \u2014 provides a '
+            'Binary Snap — derived independently in ZP-A (monotonicity), ZP-B '
+            '(topological irreversibility), and ZP-G (source asymmetry) — provides a '
             'structural account of temporal asymmetry that does not import the arrow of time '
             'as an assumption. Under the condition that the physical universe instantiates '
-            '\u22a5 and \u03b5\u2080 as its boundary states, the arrow of time is an instance '
+            '⊥ and ε₀ as its boundary states, the arrow of time is an instance '
             'of the Zero Paradox, not a separate phenomenon requiring separate explanation.',
             S['body']),
         Paragraph(
-            'Further connections \u2014 to Leibniz\u2019s question of why there is something '
-            'rather than nothing, to Wigner\u2019s puzzle about the unreasonable effectiveness '
-            'of mathematics, to the fine-tuning problem in cosmology, and to Skolem\u2019s '
-            'paradox in set theory \u2014 are developed in the companion document '
-            '\u2018Generation 2: Applications and Open Problems.\u2019 '
+            'Further connections — to Leibniz’s question of why there is something '
+            'rather than nothing, to Wigner’s puzzle about the unreasonable effectiveness '
+            'of mathematics, to the fine-tuning problem in cosmology, and to Skolem’s '
+            'paradox in set theory — are developed in the companion document '
+            '‘Generation 2: Applications and Open Problems.’ '
             'Each case states its required assumptions explicitly, assesses fit honestly, '
             'and names the gaps that remain.',
             S['body']),
