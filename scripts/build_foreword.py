@@ -94,13 +94,16 @@ def commitments_table():
         Paragraph('Statement', S['label']),
     ]
     rows = [
-        ('AX-B1', 'Axiom',
-         'Binary Existence. A state either exists or it does not. No third option. '
-         'Logical commitment, not physical.'),
+        ('AX-B1', 'Decidable',
+         'Binary Existence. A state either exists or it does not. '
+         'Directly verifiable by computation (decidable equality on finite types) — '
+         'not a novel commitment of this framework.'),
         ('AX-G1', 'Axiom',
-         'Initial Object Exists. There is a starting point that reaches every other object.'),
+         'Initial Object Exists. There is a starting point that reaches every other object. '
+         'Not a novel commitment — ⊥’s existence as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language.'),
         ('AX-G2', 'Axiom',
-         'Source Asymmetry. No morphism returns to the initial object from outside.'),
+         'Source Asymmetry. No morphism returns to the initial object from outside. '
+         'Not a novel commitment — follows from antisymmetry of the ZP-A partial order and ZP-B C3 (topological irreversibility).'),
         ('MP-1',  'Principle',
          'Minimality of Representation. The representational base must be the minimum '
          'sufficient base for AX-B1. Derives p\u00a0=\u00a02.'),
@@ -289,8 +292,9 @@ def build_foreword(out_path):
         Paragraph('III. THE FOUNDATIONAL COMMITMENTS', S['h1']),
         Paragraph(
             'Every formal system rests on commitments it does not derive. The Zero Paradox '
-            'framework is unusually explicit about its own. As of the current version, there '
-            'are exactly three axioms, two methodological principles, and one design commitment:',
+            'framework is unusually explicit about its own. As of the current version, this '
+            'framework introduces no novel axioms. Two structural commitments (grounded in prior '
+            'layers), two methodological principles, and one design commitment are stated:',
             S['body']),
         commitments_table(),
         sp(8),
@@ -370,11 +374,12 @@ def build_foreword(out_path):
             'The framework is silent on these questions.',
             S['body']),
         Paragraph(
-            'The open commitments are honest. Three axioms, two principles, and one design '
-            'commitment are chosen and stated. The framework does not launder their status. '
-            'A reader who disagrees with AX-B1 disagrees with the foundational logical '
-            'commitment. That disagreement does not undermine the internal mathematics of any '
-            'layer. The theorems stand on their own axioms regardless.',
+            'The open commitments are honest. No novel axioms are introduced. Two structural '
+            'commitments, two principles, and one design commitment are stated. The framework does not launder their status. '
+            'AX-B1 — binary existence — is not a novel commitment: it is directly verifiable '
+            'by computation. Whether a finite type has two distinct elements requires no '
+            'classical axioms — it can be decided mechanically. The theorems stand on their '
+            'own axioms regardless.',
             S['body']),
     ]
 
