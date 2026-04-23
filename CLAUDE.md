@@ -233,6 +233,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
 6. **Sync before work on `illustrated`:** At the start of any session on `illustrated`, always run `git fetch origin main` then `git merge origin/main` before making any changes. Never make edits on `illustrated` against a stale base — this causes avoidable merge conflicts when the PR is opened.
+7. **Verify no conflict markers after any merge:** Before committing after a merge, run `git diff --check` to confirm no conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) remain in any file. A file with unresolved markers will commit silently and corrupt the document. This has happened twice on this project.
 
 ## File Priority & Access
 - **On `lake_testing`:** Prioritize `.lean` source files. Treat `/site` and `/pdfs` as Read-Only unless explicitly authorized for a cross-domain check.
