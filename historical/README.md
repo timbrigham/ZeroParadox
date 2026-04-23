@@ -14,6 +14,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 | [ZP-E_DA1_TSNAP_Insert-1.pdf](ZP-E_DA1_TSNAP_Insert-1.pdf) | 2026-04-19 | ZP-E insert document (DA-1 + T-SNAP only); superseded by Bridge Document v2.0 which adds DA-2, DA-3, and full traceability register |
 | [Zero_Paradox_Foreword-3.pdf](Zero_Paradox_Foreword-3.pdf) | 2026-04-19 | Foreword before April 2026 revision (geometry/logic/set-theory examples tightened; ZP-G and ZP-H added to architecture) |
 | [Zero_Paradox_Foreword-2.pdf](Zero_Paradox_Foreword-2.pdf) | 2026-04-18 | Earlier version of the Foreword |
+| [ZP-A_Lattice_Algebra_v1_2-1.pdf](ZP-A_Lattice_Algebra_v1_2-1.pdf) | 2026-04-23 | ZP-A v1.2 superseded by v1.3: D2 quantifier clarified; T3 iff symbol corrected; CC-1 reframed as direct modelling commitment |
 | [ZP-A_Lattice_Algebra_v1_1-2.pdf](ZP-A_Lattice_Algebra_v1_1-2.pdf) | 2026-04-21 | ZP-A v1.1 superseded by v1.2: D1 notation clarified; D2 equivalence proved; illustrated companion expanded |
 | [ZP-A_Lattice_Algebra_v1_1-1.pdf](ZP-A_Lattice_Algebra_v1_1-1.pdf) | 2026-04-18 | Earlier iteration of ZP-A (v1.1) |
 | [ZP-B_pAdic_Topology_v1_2-1.pdf](ZP-B_pAdic_Topology_v1_2-1.pdf) | 2026-04-18 | Earlier iteration of ZP-B (v1.2) |

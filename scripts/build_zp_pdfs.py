@@ -1,4 +1,4 @@
-"""
+﻿"""
 Zero Paradox — PDF Builder
 Follows all rules in PDF_Rendering_Standards.md:
   - DejaVu fonts only
@@ -18,8 +18,10 @@ from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-# ── 1. FONT REGISTRATION ─────────────────────────────────────────────────────
-FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fonts') + os.sep
+# ── 1. PATH SETUP ────────────────────────────────────────────────────────────
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FONT_DIR = os.path.join(PROJECT_ROOT, '.claude-local', 'fonts') + os.sep
+OUT_DIR = os.path.join(PROJECT_ROOT, '.claude-local', 'build_output')
 pdfmetrics.registerFont(TTFont('DV',    FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',  FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',  FONT_DIR + 'DejaVuSans-Oblique.ttf'))
@@ -219,16 +221,17 @@ def make_doc(path, title_str, doc_id, version_str):
 # ── DOCUMENT BUILDERS ─────────────────────────────────────────────────────────
 
 def build_zpa():
-    doc = make_doc('/tmp/pdfs/ZP-A_Lattice_Algebra_v1_2.pdf',
-                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.2')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-A_Lattice_Algebra_v1_3.pdf'),
+                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.3')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.2  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.1  |  D1 notation clarified; D2 equivalence proved</i>', S['subtitle']),
+          Paragraph('Version 1.3  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.2  |  D2 quantifier clarified; T3 symbol corrected; CC-1 reframed</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
+          body('<i>Version 1.3 changes: (1) Definition D2: the equivalence statement now makes explicit that &#945; depends on x — "for each x &#8712; L, f(x) = x &#8744; &#945; for some &#945; &#8712; L". (2) Theorem T3 proof: replaced the single spelled-out "iff" with &#10234; for consistency. (3) CC-1: removed circular conditional framing; reframed as a direct modelling commitment; corrected the consequence chain to S&#8320; = &#8869; &#8804; S&#8321; &#8804; &#8230;; replaced informal "constituent" with direct T2 reference.</i>'),
           body('<i>Version 1.2 changes: (1) Definition D1: the notation :&#10234; (non-standard) replaced by the standard definitional framing "define the relation &#8804; by". (2) Definition D2: the equivalence between x &#8804; f(x) and f(x) = x &#8744; &#945; is now accompanied by an explicit two-line proof of both directions.</i>'),
           body('<i>Version 1.1 change: Theorem T4 reclassified as Conditional Claim CC-1. The v1.0 label "Theorem" was imprecise: the result holds only given the assumption that the state sequence is initialised at the minimum of L. This assumption is not derived from A1&#8211;A4 — it is a modelling commitment.</i>'),
           sp()]
@@ -277,7 +280,7 @@ def build_zpa():
     E.append(Paragraph('3.2  Join is the Only State Transition', S['h2']))
     E.append(label_box('Definition D2 — State Transition', [
         'A state transition is any function f: L &#8594; L such that x &#8804; f(x) for all x &#8712; L.',
-        'Equivalently, f(x) = x &#8744; &#945; for some &#945; &#8712; L.',
+        'Equivalently, for each x &#8712; L, f(x) = x &#8744; &#945; for some &#945; &#8712; L.',
         'Proof of equivalence:',
         '(&#8658;) If x &#8804; f(x), then x &#8744; f(x) = f(x) by D1. Take &#945; = f(x): then f(x) = x &#8744; &#945;. <font name="DV">&#10003;</font>',
         '(&#8656;) If f(x) = x &#8744; &#945; for some &#945; &#8712; L, then x &#8744; f(x) = x &#8744; (x &#8744; &#945;) = (x &#8744; x) &#8744; &#945; = x &#8744; &#945; = f(x) by A1, A3. By D1, x &#8804; f(x). <font name="DV">&#10003;</font>',
@@ -292,16 +295,16 @@ def build_zpa():
     E.append(sp(4))
     E.append(label_box('Theorem T3 — State Sequences are Monotone', [
         'For any state sequence (S<sub>n</sub>) satisfying D3:   S<sub>n</sub> &#8804; S<sub>n+1</sub>   for all n &#8712; &#8469;',
-        'Proof: By D3, S<sub>n+1</sub> = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By D1, S<sub>n</sub> &#8804; S<sub>n</sub> &#8744; &#945;<sub>n</sub> iff S<sub>n</sub> &#8744; (S<sub>n</sub> &#8744; &#945;<sub>n</sub>) = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By A1, (S<sub>n</sub> &#8744; S<sub>n</sub>) &#8744; &#945;<sub>n</sub> = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By A3, S<sub>n</sub> &#8744; S<sub>n</sub> = S<sub>n</sub>. Therefore S<sub>n</sub> &#8744; &#945;<sub>n</sub> = S<sub>n+1</sub>. <font name="DV">&#10003;</font>',
+        'Proof: By D3, S<sub>n+1</sub> = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By D1, S<sub>n</sub> &#8804; S<sub>n</sub> &#8744; &#945;<sub>n</sub> &#10234; S<sub>n</sub> &#8744; (S<sub>n</sub> &#8744; &#945;<sub>n</sub>) = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By A1, (S<sub>n</sub> &#8744; S<sub>n</sub>) &#8744; &#945;<sub>n</sub> = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By A3, S<sub>n</sub> &#8744; S<sub>n</sub> = S<sub>n</sub>. Therefore S<sub>n</sub> &#8744; &#945;<sub>n</sub> = S<sub>n+1</sub>. <font name="DV">&#10003;</font>',
         'Monotonicity is a theorem, not a postulate. It is derived from A1&#8211;A3 via D3.',
     ]))
     E.append(sp(4))
     E.append(Paragraph('4.2  The Initial State', S['h2']))
     E.append(label_box('Conditional Claim CC-1 — S\u2080 = &#8869; (Reclassified from T4 in v1.0)', [
-        'If the state sequence begins at the minimum of L, then S<sub>0</sub> = &#8869;, and by T2 and T3:',
-        '&#8869; &#8804; S<sub>0</sub> &#8804; S<sub>1</sub> &#8804; S<sub>2</sub> &#8804; &#8230;',
-        'Corollary: Every state S<sub>n</sub> satisfies &#8869; &#8804; S<sub>n</sub>, confirming &#8869; is a constituent of every state in the sequence.',
-        'Status: CONDITIONAL CLAIM — S<sub>0</sub> = &#8869; is a modelling commitment, not derived from A1&#8211;A4. Content unchanged from v1.0; classification corrected.',
+        'We commit to initialising every state sequence at the minimum of L: S<sub>0</sub> = &#8869;. This is not derived from A1&#8211;A4 — it is a modelling choice.',
+        'Under CC-1 and T3:   S<sub>0</sub> = &#8869; &#8804; S<sub>1</sub> &#8804; S<sub>2</sub> &#8804; &#8230;',
+        'Corollary: By T2, &#8869; &#8804; S<sub>n</sub> for all n. Every state in the sequence sits above the global minimum.',
+        'Status: CONDITIONAL CLAIM — modelling commitment; not derived from A1&#8211;A4.',
     ]))
 
     E.append(Paragraph('V. Open Question OQ-A1', S['h1']))
@@ -513,7 +516,7 @@ def build_zpa_companion():
         return d
 
     # ── Build content ──────────────────────────────────────────────────────────
-    doc = make_doc('/tmp/pdfs/ZP-A_Illustrated_Companion.pdf',
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-A_Illustrated_Companion.pdf'),
                    'ZP-A Illustrated Companion', 'ZP-A Companion', 'Version 1.2')
     E = []
 
@@ -680,7 +683,7 @@ def build_zpa_companion():
 
 
 def build_zpb():
-    doc = make_doc('/tmp/pdfs/ZP-B_pAdic_Topology_v1_2.pdf',
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-B_pAdic_Topology_v1_2.pdf'),
                    'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.2')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
@@ -850,7 +853,7 @@ def build_zpb():
 # (included in full below)
 
 def build_zpd():
-    doc = make_doc('/tmp/pdfs/ZP-D_State_Layer_v1_2.pdf',
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-D_State_Layer_v1_2.pdf'),
                    'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.2')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
@@ -979,7 +982,7 @@ def build_zpd():
 
 
 def build_zpe_da1():
-    doc = make_doc('/tmp/pdfs/ZP-E_DA1_TSNAP_Insert.pdf',
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-E_DA1_TSNAP_Insert.pdf'),
                    'ZP-E: DA-1 / T-SNAP Insert', 'ZP-E DA-1 / T-SNAP', 'April 2026')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
@@ -1079,7 +1082,7 @@ def build_zpe_da1():
 # ── ZP-C is the largest — built separately due to length ──────────────────────
 
 def build_zpc():
-    doc = make_doc('/tmp/pdfs/ZP-C_Information_Theory_v1_4.pdf',
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-C_Information_Theory_v1_4.pdf'),
                    'ZP-C: Information Theory', 'ZP-C', 'Version 1.4')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
@@ -1272,8 +1275,8 @@ def build_zpc():
 
 # ── MAIN ──────────────────────────────────────────────────────────────────────
 if __name__ == '__main__':
-    import os
-    os.makedirs('/tmp/pdfs', exist_ok=True)
+    import shutil
+    os.makedirs(OUT_DIR, exist_ok=True)
 
     build_zpa()
     build_zpa_companion()
@@ -1296,17 +1299,17 @@ if __name__ == '__main__':
     import pdfplumber
     DOC_SYMBOLS = {
         'ZP-A_Lattice': [0x22A5, 0x2228, 0x2264],  # ⊥ ∨ ≤
-        'ZP-A_Illustrated': [0x22A5, 0x2264],      # ⊥ ≤
-        'ZP-B': [0x22A5, 0x2208, 0x211A, 0x2192], # ⊥ ∈ ℚ →
-        'ZP-C': [0x22A5, 0x2228, 0x2192, 0x2208], # ⊥ ∨ → ∈
-        'ZP-D': [0x22A5, 0x2208, 0x2102, 0x2264], # ⊥ ∈ ℂ ≤
-        'ZP-E': [0x22A5, 0x2192, 0x2208, 0x2228], # ⊥ → ∈ ∨
+        'ZP-A_Illustrated': [0x22A5, 0x2264],       # ⊥ ≤
+        'ZP-B': [0x22A5, 0x2208, 0x211A, 0x2192],  # ⊥ ∈ ℚ →
+        'ZP-C': [0x22A5, 0x2228, 0x2192, 0x2208],  # ⊥ ∨ → ∈
+        'ZP-D': [0x22A5, 0x2208, 0x2102, 0x2264],  # ⊥ ∈ ℂ ≤
+        'ZP-E': [0x22A5, 0x2192, 0x2208, 0x2228],  # ⊥ → ∈ ∨
     }
     print('\n── Verification ──')
-    for fname in sorted(os.listdir('/tmp/pdfs')):
+    for fname in sorted(os.listdir(OUT_DIR)):
         if not fname.endswith('.pdf'):
             continue
-        path = f'/tmp/pdfs/{fname}'
+        path = os.path.join(OUT_DIR, fname)
         with pdfplumber.open(path) as pdf:
             pages = len(pdf.pages)
             all_chars = []
@@ -1315,11 +1318,9 @@ if __name__ == '__main__':
         char_set = set(all_chars)
         size = os.path.getsize(path) // 1024
         issues = []
-        # Check 1: null chars = genuine missing glyph (font does not have it)
         null_count = sum(1 for c in all_chars if ord(c) == 0)
         if null_count > 0:
             issues.append(f'NULL CHARS x{null_count} — missing glyph, needs DV font wrap')
-        # Check 2: per-doc symbols via char-level set membership
         doc_key = next((k for k in DOC_SYMBOLS if k in fname.replace('_Lattice_Algebra', '_Lattice').replace('_Illustrated_Companion', '_Illustrated')), None)
         if doc_key:
             for cp in DOC_SYMBOLS[doc_key]:
@@ -1328,10 +1329,8 @@ if __name__ == '__main__':
         status = 'PASS' if not issues else 'FAIL: ' + ', '.join(issues)
         print(f'  {fname}: {pages}pp  {size}KB  [{status}]')
 
-    # Copy to outputs and project
-    import shutil
-    for fname in os.listdir('/tmp/pdfs'):
+    # Copy verified PDFs to project root
+    for fname in os.listdir(OUT_DIR):
         if fname.endswith('.pdf'):
-            shutil.copy(f'/tmp/pdfs/{fname}', f'/mnt/user-data/outputs/{fname}')
-            shutil.copy(f'/tmp/pdfs/{fname}', f'/mnt/project/{fname}')
-    print('\nAll PDFs copied to outputs and project repository.')
+            shutil.copy(os.path.join(OUT_DIR, fname), os.path.join(PROJECT_ROOT, fname))
+    print('\nAll PDFs copied to project root.')
