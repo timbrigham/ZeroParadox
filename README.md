@@ -102,7 +102,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 | Label | Type | Statement |
 |-------|------|-----------|
-| **AX-B1** | Classical Logic | A state either exists or it does not. Follows from the Law of Excluded Middle (Classical.em) — not a novel commitment of this framework. |
+| **AX-B1** | Decidable | A state either exists or it does not. Directly verifiable by computation (decidable equality on Fin 2 via `decide`) — not a novel commitment of this framework. |
 | **AX-G1** | Axiom | An initial object exists in the category C. The null state is the universal origin of all structure: a unique object from which every other object is reachable, and to which no morphism returns. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. No morphism returns to the initial object. |
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
@@ -111,7 +111,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
 
-**AX-B1 (Binary Existence) is not a novel axiom of this framework.** It follows from the Law of Excluded Middle (Classical.em), a kernel axiom of classical mathematics.
+**AX-B1 (Binary Existence) is not a novel axiom of this framework.** It is directly verifiable by computation — decidable equality on Fin 2 via `decide` — and depends only on `propext`, not `Classical.em`.
 
 ---
 
