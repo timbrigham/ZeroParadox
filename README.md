@@ -5,6 +5,27 @@
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
 
+---
+
+## Contents
+
+- [What This Is](#what-this-is)
+- [The Central Result](#the-central-result)
+- [What This Is Not](#what-this-is-not)
+- [The Framework](#the-framework)
+  - [Entry Point](#entry-point)
+  - [Formal Ontology Documents](#formal-ontology-documents)
+  - [Illustrated Companion Documents](#illustrated-companion-documents-general-reader)
+  - [Supporting Documents](#supporting-documents)
+  - [Formal Verification (Lean 4)](#formal-verification-lean-4)
+- [Axiomatic Commitments](#axiomatic-commitments)
+- [Question Register](#question-register)
+- [Reading Order](#reading-order)
+- [Notes on Development](#notes-on-development)
+- [License](#license) · [Citation](#citation) · [Contact](#contact)
+
+---
+
 ## What This Is
 
 The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
@@ -30,7 +51,7 @@ The derivation chain is:
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
 
-The category-theoretic layer (ZP-G) carries two structural commitments, both grounded in prior layers rather than introduced as novel assumptions: **AX-G1** (the null state is the universal origin of all structure, from ZP-A's bottom element) and **AX-G2** (once something emerges, it cannot return to nothing, from ZP-A antisymmetry and ZP-B C3). **AX-B1** (a state either exists or it does not) is directly verifiable by computation — not a novel commitment of this framework.
+This framework introduces no novel axioms. Every commitment is either a derived theorem (T-SNAP), directly verifiable by computation (AX-B1), or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
 
 ---
 
@@ -43,7 +64,7 @@ The category-theoretic layer (ZP-G) carries two structural commitments, both gro
 
 ---
 
-## Document Index
+## The Framework
 
 ### Entry Point
 
@@ -102,36 +123,28 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 ## Axiomatic Commitments
 
+A commitment marked "not a novel commitment" means its content is formally grounded in prior layers and provable without additional assumptions. It is stated as a local axiom only for the self-containment of that layer — the same pattern by which AX-1 was stated as an axiom before being formally derived as T-SNAP in ZP-E.
+
 | Label | Type | Statement |
 |-------|------|-----------|
-<<<<<<< HEAD
 | **AX-B1** | Decidable | A state either exists or it does not. Directly verifiable by computation (decidable equality on Fin 2 via `decide`) — not a novel commitment of this framework. |
 | **AX-G1** | Axiom | An initial object exists in the category C. The null state is the universal origin of all structure: a unique object from which every other object is reachable, and to which no morphism returns. Not a novel commitment — ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Once something emerges, it cannot return to nothing. Not a novel commitment — follows from antisymmetry of the ZP-A partial order and is independently confirmed by ZP-B C3 (topological irreversibility). |
-=======
-| **AX-B1** | Decidable | A state either exists or it does not. Directly verifiable by computation (decidable equality on finite types) — not a novel commitment of this framework. |
-| **AX-G1** | Axiom | An initial object exists in the category C. |
-| **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. No morphism returns to the initial object. |
->>>>>>> origin/main
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
 | **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
 
-<<<<<<< HEAD
 **AX-B1 (Binary Existence) is not a novel axiom of this framework.** It is directly verifiable by computation — decidable equality on Fin 2 via `decide` — and depends only on `propext`, not `Classical.em`.
 
 **AX-G1 is not a novel commitment.** ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees an initial object in the corresponding category. ZP-G is self-contained by design and names it explicitly, but the underlying justification comes from ZP-A.
 
 **AX-G2 is not a novel commitment.** It follows from antisymmetry of the ZP-A partial order — no non-bottom element satisfies X ≤ ⊥ — and is independently confirmed by ZP-B C3 (topological irreversibility in Q₂).
-=======
-**AX-B1 (Binary Existence) is not a novel axiom of this framework.** It is directly verifiable by computation — decidable equality on finite types — and requires no classical axioms beyond propext.
->>>>>>> origin/main
 
 ---
 
-## Status of All Major Open Questions
+## Question Register
 
 | Item | Status |
 |------|--------|
@@ -144,7 +157,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
 | DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
-| OQ-E2: Cardinality-semilattice correspondence | **Open** - do specific semilattice structures correspond to specific cardinality regimes? |
+| OQ-E2: Cardinality-semilattice correspondence | **Open** - formal derivation of DA-3's cardinality claims deferred pending further work. |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
 | Formal verification (Lean/Rocq) | ZP-A through ZP-H complete (April 2026) |
 

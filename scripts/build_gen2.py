@@ -175,8 +175,10 @@ def build_gen2(out_path):
         callout(
             '<b>A note on transparency:</b> This document lives in the public repository '
             'but is intentionally unlinked from the main project index. The Generation 1 '
-            'framework (ZP-A through ZP-H) is still undergoing formal review. Generation 2 '
-            'applications are speculative until that foundation is formally certified. '
+            'framework (ZP-A through ZP-H) is now formally complete and machine-verified '
+            '(Lean 4 + Mathlib, April 2026). Generation 2 applications remain speculative '
+            '&#8212; the formal foundation is certified, but the bridges from that foundation '
+            'to the problems addressed here are works in progress. '
             'You are seeing this in its unvarnished development state &#8212; I believe in '
             'being open about the process.',
             bg=AMBER_LITE, border=AMBER),
@@ -399,9 +401,8 @@ def build_gen2(out_path):
              'but because cardinality is genuinely relative to the instantiation context.'),
         body('<b>Required assumptions:</b> No physical assumptions required. '
              'This operates purely within the mathematical framework.'),
-        body('<b>Gap:</b> DA-3-C1 (the formal derivation of cardinality-semilattice '
-             'correspondence) is currently a candidate, not a proven theorem. '
-             'This is OQ-E2 — the primary open mathematical question of the framework.'),
+        body('<b>Gap:</b> Formal derivation of DA-3\'s cardinality claims is deferred (OQ-E2). '
+             'The structural account is in place; the formal derivation remains pending.'),
     ]
 
     # ── VII. CASES THAT DON'T FIT ─────────────────────────────────────────────
@@ -448,9 +449,8 @@ def build_gen2(out_path):
              'Closes the arrow of time case fully.',
              'High'],
             ['OQ-E2',
-             'Cardinality-semilattice correspondence. Formal derivation of DA-3-C1. '
-             'Closes the Skolem / CH case fully.',
-             'High'],
+             'Formal derivation of DA-3\'s cardinality claims deferred pending further work.',
+             'Open'],
             ['Physical constant mapping',
              'Extension of DA-3 to cover physical constant assignment under a specific '
              'instantiation frame. Addresses fine-tuning formally.',
@@ -460,11 +460,10 @@ def build_gen2(out_path):
              'non-zero intermediate state. Would allow AX-B1 itself to be derived — '
              'the path to a fully axiom-free framework.',
              'Longer term'],
-            ['Lean / Rocq formal verification',
-             'Mechanical verification of the Generation 1 framework. ZP-A and ZP-B are '
-             'the most tractable starting points. TQ-IH is more tractable than previously '
-             'thought — L-RUN requires no Kolmogorov machinery.',
-             'Longer term'],
+            ['Lean 4 formal verification',
+             'Complete. ZP-A through ZP-H machine-verified in Lean 4 + Mathlib, April 2026. '
+             'Zero errors, zero warnings. Proof docs at proofs/ on lake_testing branch.',
+             'Complete'],
         ],
         [TW*0.20, TW*0.62, TW*0.18]
     ))
@@ -485,7 +484,7 @@ def build_gen2(out_path):
             ['Fine-tuning problem', 'Medium-Strong',
              'Extension of DA-3 to physical constant assignment'],
             ['Skolem\'s paradox / CH independence', 'Strong',
-             'OQ-E2: formal derivation of DA-3-C1'],
+             'OQ-E2: formal derivation of DA-3 cardinality claims pending'],
         ],
         [TW*0.32, TW*0.18, TW*0.50]
     ))

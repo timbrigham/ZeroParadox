@@ -94,9 +94,9 @@ The README must maintain this section order:
 2. "What This Is" — high-level introduction
 3. "The Central Result" — core theorem and derivation chain
 4. "What This Is Not" — explicit clarifications
-5. "Document Index" — tables of all available documents
+5. "The Framework" — tables of all available documents
 6. "Axiomatic Commitments" — formal commitments and principles
-7. "Status of All Major Open Questions" — tracked open items
+7. "Question Register" — tracked questions and resolutions
 8. "Reading Order" — paths for different reader types with clickable links
 9. "Notes on Development" — credits and contributor information
 10. "Repository and Version History" — Git/versioning guidance
@@ -146,7 +146,7 @@ Before committing any README update:
 ### Common Updates
 
 **Adding a new document:**
-1. Add to the appropriate Document Index section
+1. Add to the appropriate The Framework section
 2. Use clean display name (no extension, no version)
 3. Link to the current version (no `-1`, `-2` suffix)
 4. Put version number in the Version column only
@@ -170,7 +170,7 @@ When a document is superseded:
 1. Add a numeric suffix to the old file and move it: `Move-Item ZP-X_Title_vN_N.pdf historical\ZP-X_Title_vN_N-1.pdf`
 2. Add the new version to the root (no suffix)
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
-4. Update the version number in README.md's Document Index table
+4. Update the version number in README.md's The Framework table
 
 ## Framework Structure (for context)
 
@@ -265,5 +265,5 @@ When a ZP-X document is successfully proved in Lean 4, the following steps are *
 1. **Build clean** — run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`. Confirm zero errors and zero warnings.
 2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in the proof doc.
 3. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting: Lean file path, commit hash, build result, purity check output, theorem-by-theorem table, and proof strategy notes.
-4. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the Document Index and update the Open Questions table row for `Formal verification (Lean/Rocq)`.
+4. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the The Framework and update the Question Register row for `Formal verification (Lean/Rocq)`.
 5. **Commit all changes together** on `lake_testing`.
