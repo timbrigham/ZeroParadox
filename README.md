@@ -76,7 +76,7 @@ This framework introduces no novel axioms. Every commitment is either a derived 
 
 | File | Document | Version | Contents |
 |------|----------|---------|----------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_3.pdf) | ZP-A | v1.3 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_4.pdf) | ZP-A | v1.4 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_2.pdf) | ZP-B | v1.2 | AX-B1. MP-1. Derivation of p=2. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
 | [ZP-C Information Theory](ZP-C_Information_Theory_v1_4.pdf) | ZP-C | v1.4 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF.** AX-1 promoted to Candidate Theorem. |
 | [ZP-D State Layer](ZP-D_State_Layer_v1_2.pdf) | ZP-D | v1.2 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. |
