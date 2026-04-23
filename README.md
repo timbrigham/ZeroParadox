@@ -28,7 +28,7 @@ The derivation chain is:
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
 
-The two remaining intentional axioms of this framework: **AX-G1** (initial object exists), **AX-G2** (source asymmetry). **AX-B1** (binary existence) follows from the Law of Excluded Middle and is not a novel commitment of this framework.
+The two remaining intentional axioms of this framework: **AX-G1** (the null state is the universal origin), **AX-G2** (source asymmetry). **AX-B1** (binary existence) follows from the Law of Excluded Middle and is not a novel commitment of this framework.
 
 ---
 
@@ -103,7 +103,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | Label | Type | Statement |
 |-------|------|-----------|
 | **AX-B1** | Classical Logic | A state either exists or it does not. Follows from the Law of Excluded Middle (Classical.em) — not a novel commitment of this framework. |
-| **AX-G1** | Axiom | An initial object exists in the category C. |
+| **AX-G1** | Axiom | An initial object exists in the category C. The null state is the universal origin of all structure: a unique object from which every other object is reachable, and to which no morphism returns. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. No morphism returns to the initial object. |
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
 | **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
