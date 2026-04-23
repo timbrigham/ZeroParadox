@@ -244,11 +244,12 @@ def tsnap_chain_diagram():
 
 def axioms_table():
     """AX-B1 / AX-G1 / AX-G2 table."""
-    hdr = [Paragraph('Axiom', CS['tbl_hdr']),
+    hdr = [Paragraph('Commitment', CS['tbl_hdr']),
            Paragraph('Statement', CS['tbl_hdr'])]
     rows = [
         ['AX-B1',
-         'Binary Existence. A state either exists or it does not. No third option.'],
+         'Binary Existence. A state either exists or it does not. No third option. '
+         'Directly verifiable by computation — not a novel commitment.'],
         ['AX-G1',
          'Initial Object Exists. There is a starting point that reaches everything. '
          'Not a novel commitment — grounded in ⊥ as the bottom element of the ZP-A semilattice.'],
@@ -367,9 +368,11 @@ def build():
     ]))
     E.append(sp(8))
 
-    # Remaining Axioms
-    E.append(Paragraph('The Remaining Axioms', CS['h1']))
-    E.append(cbody('After T-SNAP, the complete list of irreducible axioms is exactly three:'))
+    # Remaining Commitments
+    E.append(Paragraph('What the Framework Still Assumes', CS['h1']))
+    E.append(cbody(
+        'After T-SNAP, the framework rests on exactly three commitments — '
+        'none of them novel starting assumptions:'))
     E.append(axioms_table())
     E.append(sp(6))
     E.append(cbody(

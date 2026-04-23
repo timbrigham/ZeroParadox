@@ -79,7 +79,8 @@ This project runs on **Windows 11**. Shell commands must use PowerShell syntax, 
 
 - **File discovery:** Use the `Glob` tool — never `find` (hangs on this system) or `ls`
 - **Shell commands:** Use the `PowerShell` tool — never `Bash` with Unix-style commands
-- **Never prepend `cd`:** The working directory is always `C:\Workspace\ZeroParadox` at session start. Never prepend `cd C:\Workspace\ZeroParadox;` or `Set-Location` to any command — doing so creates command strings that don't match the allowlist and triggers unnecessary permission prompts.
+- **Never prepend `cd`:** The working directory is always `C:\Workspace\ZeroParadox` at session start. 
+- **Never prepend `cd C:\Workspace\ZeroParadox;` or `Set-Location` to any command — doing so creates command strings that don't match the allowlist and triggers unnecessary permission prompts.
 - **File verification:** Use `Get-ChildItem *.pdf` not `ls *.pdf`
 - **File moves:** Use `Move-Item` not `mv`
 - **Path separators:** Backslash in PowerShell (`C:\Workspace\ZeroParadox`), forward slash in Lean/lake config
@@ -203,7 +204,6 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 
 # .claudecodes instructions for Lean 4 development
-- When working on the Zero Paradox ontology, prioritize files in the root C:\Workspace\ZeroParadox folder.
 - Always run lake build as two separate PowerShell calls to avoid allowlist prompt issues: first `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then `Get-Content build.log | Select-Object -Last 1` (or with a `-match` filter). Never combine them with `;` in a single call.
 - **Logging Rule:** When performing builds on `lake_testing`, run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 - Ignore PDF rendering assets and website build artifacts in the root.
