@@ -104,30 +104,20 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 | Label | Type | Statement |
 |-------|------|-----------|
-<<<<<<< HEAD
 | **AX-B1** | Decidable | A state either exists or it does not. Directly verifiable by computation (decidable equality on Fin 2 via `decide`) — not a novel commitment of this framework. |
 | **AX-G1** | Axiom | An initial object exists in the category C. The null state is the universal origin of all structure: a unique object from which every other object is reachable, and to which no morphism returns. Not a novel commitment — ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Once something emerges, it cannot return to nothing. Not a novel commitment — follows from antisymmetry of the ZP-A partial order and is independently confirmed by ZP-B C3 (topological irreversibility). |
-=======
-| **AX-B1** | Decidable | A state either exists or it does not. Directly verifiable by computation (decidable equality on finite types) — not a novel commitment of this framework. |
-| **AX-G1** | Axiom | An initial object exists in the category C. |
-| **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. No morphism returns to the initial object. |
->>>>>>> origin/main
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
 | **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
 
-<<<<<<< HEAD
 **AX-B1 (Binary Existence) is not a novel axiom of this framework.** It is directly verifiable by computation — decidable equality on Fin 2 via `decide` — and depends only on `propext`, not `Classical.em`.
 
 **AX-G1 is not a novel commitment.** ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees an initial object in the corresponding category. ZP-G is self-contained by design and names it explicitly, but the underlying justification comes from ZP-A.
 
 **AX-G2 is not a novel commitment.** It follows from antisymmetry of the ZP-A partial order — no non-bottom element satisfies X ≤ ⊥ — and is independently confirmed by ZP-B C3 (topological irreversibility in Q₂).
-=======
-**AX-B1 (Binary Existence) is not a novel axiom of this framework.** It is directly verifiable by computation — decidable equality on finite types — and requires no classical axioms beyond propext.
->>>>>>> origin/main
 
 ---
 
