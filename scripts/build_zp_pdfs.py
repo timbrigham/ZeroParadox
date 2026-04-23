@@ -1283,7 +1283,10 @@ if __name__ == '__main__':
     build_zpb()
     build_zpc()
     build_zpd()
-    build_zpe_da1()
+    # build_zpe_da1() removed 2026-04-23: ZP-E_DA1_TSNAP_Insert was superseded by
+    # ZP-E_Bridge_Document_v2_0, which integrates DA-1, DA-2, DA-3, and the full
+    # traceability register. The insert is archived at historical/ZP-E_DA1_TSNAP_Insert-1.pdf.
+    # The build_zpe_da1() function is retained below for reference.
 
     # Verify all PDFs
     # METHOD: pdfplumber page.chars (character-level extraction).
