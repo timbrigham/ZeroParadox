@@ -232,6 +232,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 3. **Math Workflow:** When on `lake_testing`, verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
+6. **Sync before work on `illustrated`:** At the start of any session on `illustrated`, always run `git fetch origin main` then `git merge origin/main` before making any changes. Never make edits on `illustrated` against a stale base — this causes avoidable merge conflicts when the PR is opened.
 
 ## File Priority & Access
 - **On `lake_testing`:** Prioritize `.lean` source files. Treat `/site` and `/pdfs` as Read-Only unless explicitly authorized for a cross-domain check.
