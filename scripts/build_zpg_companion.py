@@ -392,15 +392,20 @@ def build():
         'ZP-G constructs a single abstract category C whose structure captures everything '
         'essential about the Zero Paradox: there is a privileged starting point (the initial '
         'object), all structure flows forward from it, and no morphism ever returns to it. '
-        'These properties are stated as two axioms.'))
+        'These properties are stated as two axioms within ZP-G — neither is a novel commitment. '
+        'Both are grounded in structure established in prior layers.'))
     E.append(cbody(
         '<b>AX-G1 (Initial Object):</b> The category C has an initial object, called 0. '
         'An initial object is an object with exactly one morphism to every other object — a '
-        'universal source. Every other object is "reachable" from 0 by exactly one route.'))
+        'universal source. Every other object is "reachable" from 0 by exactly one route. '
+        'This is not a new assumption: ⊥\'s existence as the bottom element of the ZP-A semilattice '
+        'already guarantees it. ZP-G names it in categorical language.'))
     E.append(cbody(
         '<b>AX-G2 (Source Asymmetry):</b> No morphism points from any non-initial object '
         'back to 0. Once you leave the initial object, you cannot return. '
-        'This is the categorical expression of irreversibility.'))
+        'This is the categorical expression of irreversibility. '
+        'Not a new assumption: it follows from antisymmetry of the ZP-A partial order '
+        'and is independently confirmed by ZP-B C3 (topological irreversibility in ℚ₂).'))
     E.append(remember_box(
         'Remember: 0 here is not the number zero. It is a label for the initial object of the '
         'category — the privileged starting point from which all structure originates. '

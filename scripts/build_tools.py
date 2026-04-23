@@ -249,9 +249,10 @@ def build():
         'Key Result: What formal verification does and does not change',
         'Formal verification in Lean 4 confirms that the proof steps are logically valid and '
         'that no step was silently skipped. It does not change the mathematical content. '
-        'The axiomatic commitments (AX-B1, AX-G1, AX-G2) remain axioms; the derived '
-        'results are confirmed as derived. The framework\'s epistemic status has improved — '
-        'it is now machine-checked, not merely informally reviewed.'))
+        'The stated commitments (AX-B1, AX-G1, AX-G2) remain as stated — none are novel; '
+        'AX-B1 is directly verifiable by computation, AX-G1 and AX-G2 are grounded in prior '
+        'layers. The derived results are confirmed as derived. The framework\'s epistemic '
+        'status has improved — it is now machine-checked, not merely informally reviewed.'))
     E.append(sp(8))
 
     # Section 3: Computational Tools

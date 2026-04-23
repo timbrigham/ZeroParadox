@@ -1,7 +1,7 @@
 """
 Build ZP-E Illustrated Companion
 Covers: four-framework convergence diagram, AX-1 → T-SNAP derivation chain,
-remaining three axioms table.
+remaining structural commitments table.
 """
 
 import os
@@ -250,10 +250,12 @@ def axioms_table():
         ['AX-B1',
          'Binary Existence. A state either exists or it does not. No third option.'],
         ['AX-G1',
-         'Initial Object Exists. There is a starting point that reaches everything.'],
+         'Initial Object Exists. There is a starting point that reaches everything. '
+         'Not a novel commitment — grounded in ⊥ as the bottom element of the ZP-A semilattice.'],
         ['AX-G2',
          'Source Asymmetry. Nothing returns to the initial object. '
-         'The origin is unreachable from outside.'],
+         'The origin is unreachable from outside. '
+         'Not a novel commitment — follows from ZP-A antisymmetry and ZP-B C3.'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['tbl_cell']),
                      Paragraph(fix(r[1]), CS['tbl_cell'])] for r in rows]

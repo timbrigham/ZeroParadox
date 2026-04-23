@@ -39,7 +39,7 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
-When nothing describes itself, the act of describing is already something. The Binary Snap is that moment — and this proof shows it must happen, rather than assuming it does.
+Every proof of existence starts by assuming something exists. This one starts from nothing and shows the first distinction must arise from it. The Binary Snap is the moment the transition is forced — when nothing becomes the most basic something.
 
 The derivation chain is:
 
@@ -70,7 +70,6 @@ This framework introduces no novel axioms. Every commitment is either a derived 
 
 | File | Description |
 |------|-------------|
-| [README](README.md) | This file - project index |
 | [Zero Paradox Foreword](Zero_Paradox_Foreword.pdf) | Plain-language introduction for any reader. Start here. |
 
 ### Formal Ontology Documents
