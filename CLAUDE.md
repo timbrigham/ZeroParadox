@@ -180,7 +180,7 @@ The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap 
 
 **ZP-G** (category theory) → **ZP-H** (categorical bridge) — self-contained; depends on ZP-E conceptually but not formally.
 
-Each formal document has a paired illustrated companion for general readers. The two remaining intentional axioms are AX-G1 and AX-G2. AX-B1 (binary existence) is not a novel commitment — it is directly verifiable by computation (decidable equality on Fin 2 via `decide`; depends only on `propext`, not Classical.em). AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
+Each formal document has a paired illustrated companion for general readers. AX-G1 and AX-G2 are the two structural commitments of ZP-G's categorical layer. Neither is a novel commitment: AX-G1 is grounded in ZP-A's bottom element ⊥; AX-G2 follows from ZP-A antisymmetry and ZP-B C3 (topological irreversibility). ZP-G is self-contained by design and states them explicitly within that layer. AX-B1 (binary existence) is not a novel commitment — it is directly verifiable by computation (decidable equality on Fin 2 via `decide`) and depends only on `propext`, not `Classical.em`. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
 
 ## Reviewer Feedback Tracking
 
@@ -232,6 +232,7 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 3. **Math Workflow:** When on `lake_testing`, verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
+6. **Sync before work on `illustrated`:** At the start of any session on `illustrated`, always run `git fetch origin main` then `git merge origin/main` before making any changes. Never make edits on `illustrated` against a stale base — this causes avoidable merge conflicts when the PR is opened.
 
 ## File Priority & Access
 - **On `lake_testing`:** Prioritize `.lean` source files. Treat `/site` and `/pdfs` as Read-Only unless explicitly authorized for a cross-domain check.
