@@ -616,11 +616,13 @@ def build_zph(out_path):
          'P\u2080 / L-RUN / TQ-IH / DA-1 chain. No longer an axiom. T-H3 inherits '
          'T-SNAP as a derived result. Not a gap.'],
         ['AX-G1',
-         'Axiom —\nintentional',
-         'Asymmetry: initial object 0, no terminal object. Inherited from ZP-G. Not a gap.'],
+         'Axiom —\nnot novel',
+         'Asymmetry: initial object 0, no terminal object. Inherited from ZP-G. '
+         'Not a novel commitment — grounded in ⊥ as bottom element of ZP-A semilattice. Not a gap.'],
         ['AX-G2',
-         'Axiom —\nintentional',
-         'Source asymmetry: hom(X, 0) = \u2205 for X \u2260 0. Inherited from ZP-G. Not a gap.'],
+         'Axiom —\nnot novel',
+         'Source asymmetry: hom(X, 0) = \u2205 for X \u2260 0. Inherited from ZP-G. '
+         'Not a novel commitment — follows from ZP-A antisymmetry and ZP-B C3. Not a gap.'],
         ['R-BA',
          'Remark —\nBA-G1 demoted\n(ZP-G v1.1)',
          'Leinster Shannon entropy characterization. BA-G1 demoted from Bridge Axiom '
