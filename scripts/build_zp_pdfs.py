@@ -221,16 +221,17 @@ def make_doc(path, title_str, doc_id, version_str):
 # ── DOCUMENT BUILDERS ─────────────────────────────────────────────────────────
 
 def build_zpa():
-    doc = make_doc(os.path.join(OUT_DIR, 'ZP-A_Lattice_Algebra_v1_3.pdf'),
-                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.3')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-A_Lattice_Algebra_v1_4.pdf'),
+                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.4')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.3  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.2  |  D2 quantifier clarified; T3 symbol corrected; CC-1 reframed</i>', S['subtitle']),
+          Paragraph('Version 1.4  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.3  |  OQ-A1 status corrected to closed</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
+          body('<i>Version 1.4 change: OQ-A1 section heading and box label corrected from "Open Question" to "CLOSED". The resolution was already recorded in the status line (closed by ZP-E T5 via AX-B1) but the section header was misleading. Status line expanded to answer both sub-questions explicitly.</i>'),
           body('<i>Version 1.3 changes: (1) Definition D2: the equivalence statement now makes explicit that &#945; depends on x — "for each x &#8712; L, f(x) = x &#8744; &#945; for some &#945; &#8712; L". (2) Theorem T3 proof: replaced the single spelled-out "iff" with &#10234; for consistency. (3) CC-1: removed circular conditional framing; reframed as a direct modelling commitment; corrected the consequence chain to S&#8320; = &#8869; &#8804; S&#8321; &#8804; &#8230;; replaced informal "constituent" with direct T2 reference.</i>'),
           body('<i>Version 1.2 changes: (1) Definition D1: the notation :&#10234; (non-standard) replaced by the standard definitional framing "define the relation &#8804; by". (2) Definition D2: the equivalence between x &#8804; f(x) and f(x) = x &#8744; &#945; is now accompanied by an explicit two-line proof of both directions.</i>'),
           body('<i>Version 1.1 change: Theorem T4 reclassified as Conditional Claim CC-1. The v1.0 label "Theorem" was imprecise: the result holds only given the assumption that the state sequence is initialised at the minimum of L. This assumption is not derived from A1&#8211;A4 — it is a modelling commitment.</i>'),
@@ -307,12 +308,12 @@ def build_zpa():
         'Status: CONDITIONAL CLAIM — modelling commitment; not derived from A1&#8211;A4.',
     ]))
 
-    E.append(Paragraph('V. Open Question OQ-A1', S['h1']))
-    E.append(label_box('Open Question OQ-A1 — Sufficiency of Monotonicity', [
+    E.append(Paragraph('V. OQ-A1 — Sufficiency of Monotonicity', S['h1']))
+    E.append(label_box('OQ-A1 — Sufficiency of Monotonicity  [CLOSED — ZP-E T5]', [
         'Is the monotonicity constraint (T3) sufficient to characterise all valid state sequences, or are additional axioms required?',
         'OQ-A1a: Is there algebraic reason to restrict &#945;<sub>n</sub> to join-irreducible elements (not expressible as joins of strictly smaller elements)?',
         'OQ-A1b: Does the open-ended semilattice (without top element &#8868;) permit unbounded ascending chains?',
-        'Status: Open within ZP-A. Closed by ZP-E Theorem T5 (Iterative Forcing Theorem) via AX-B1 from ZP-B.',
+        'Status: CLOSED — Both sub-questions resolved by ZP-E Theorem T5 (Iterative Forcing Theorem) via AX-B1 from ZP-B. OQ-A1a: &#945;<sub>n</sub> = &#949;(S<sub>n</sub>), the minimum viable deviation. OQ-A1b: AX-B1\'s binary constraint bounds ascending chains.',
     ]))
 
     E.append(Paragraph('VI. Boundary Conditions', S['h1']))
