@@ -18,7 +18,7 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
-In short: at the threshold where information can no longer be compressed, any instantiated configuration must execute — and execution is, by definition, a departure from the null state.
+When nothing describes itself, the act of describing is already something. The Binary Snap is that moment — and this proof shows it must happen, rather than assuming it does.
 
 The derivation chain is:
 
