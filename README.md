@@ -18,6 +18,8 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
+In short: at the threshold where information can no longer be compressed, any instantiated configuration must execute — and execution is, by definition, a departure from the null state.
+
 The derivation chain is:
 
 **P₀** (incompressibility threshold, ZP-C D1)  
