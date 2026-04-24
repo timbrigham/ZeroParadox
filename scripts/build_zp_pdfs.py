@@ -1,4 +1,4 @@
-﻿"""
+"""
 Zero Paradox — PDF Builder
 Follows all rules in PDF_Rendering_Standards.md:
   - DejaVu fonts only
@@ -221,16 +221,18 @@ def make_doc(path, title_str, doc_id, version_str):
 # ── DOCUMENT BUILDERS ─────────────────────────────────────────────────────────
 
 def build_zpa():
-    doc = make_doc(os.path.join(OUT_DIR, 'ZP-A_Lattice_Algebra_v1_4.pdf'),
-                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.4')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-A_Lattice_Algebra_v1_5.pdf'),
+                   'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.5')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.4  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.3  |  OQ-A1 status corrected to closed</i>', S['subtitle']),
+          Paragraph('Version 1.5  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.4  |  Theorem/Proposition/Lemma hierarchy applied; R2 terminology note; CC-1 corollary clarified</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
+          body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
+          body('<i>Version 1.5 changes: (1) Theorem/Proposition/Lemma hierarchy applied throughout: T1 relabelled Proposition (partial order properties are infrastructure), T2 relabelled Lemma (the global minimum result is a stepping stone for CC-1 and T3). T3 retains Theorem (monotonicity is the primary result of ZP-A). (2) Remark R2 added after D3 connecting the term "state sequence" to the standard order-theory term "ascending chain". (3) CC-1 corollary reworded to make explicit that T2 gives &#8869; &#8804; S&#8320; for any initialisation; CC-1 strengthens this to equality.</i>'),
           body('<i>Version 1.4 change: OQ-A1 section heading and box label corrected from "Open Question" to "CLOSED". The resolution was already recorded in the status line (closed by ZP-E T5 via AX-B1) but the section header was misleading. Status line expanded to answer both sub-questions explicitly.</i>'),
           body('<i>Version 1.3 changes: (1) Definition D2: the equivalence statement now makes explicit that &#945; depends on x — "for each x &#8712; L, f(x) = x &#8744; &#945; for some &#945; &#8712; L". (2) Theorem T3 proof: replaced the single spelled-out "iff" with &#10234; for consistency. (3) CC-1: removed circular conditional framing; reframed as a direct modelling commitment; corrected the consequence chain to S&#8320; = &#8869; &#8804; S&#8321; &#8804; &#8230;; replaced informal "constituent" with direct T2 reference.</i>'),
           body('<i>Version 1.2 changes: (1) Definition D1: the notation :&#10234; (non-standard) replaced by the standard definitional framing "define the relation &#8804; by". (2) Definition D2: the equivalence between x &#8804; f(x) and f(x) = x &#8744; &#945; is now accompanied by an explicit two-line proof of both directions.</i>'),
@@ -258,14 +260,14 @@ def build_zpa():
         'x &#8804; y   &#10234;   x &#8744; y = y',
     ]))
     E.append(sp(4))
-    E.append(label_box('Theorem T1 — &#8804; is a Partial Order', [
+    E.append(label_box('Proposition T1 — &#8804; is a Partial Order', [
         'Reflexivity: x &#8804; x — by A3, x &#8744; x = x. <font name="DV">&#10003;</font>',
         'Antisymmetry: if x &#8804; y and y &#8804; x, then x &#8744; y = y and y &#8744; x = x. By A2, y = x &#8744; y = y &#8744; x = x. <font name="DV">&#10003;</font>',
         'Transitivity: if x &#8804; y and y &#8804; z, then x &#8744; z = x &#8744; (y &#8744; z) = (x &#8744; y) &#8744; z = y &#8744; z = z, so x &#8804; z. <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
     E.append(Paragraph('2.2  &#8869; is the Least Element', S['h2']))
-    E.append(label_box('Theorem T2 — &#8869; is a Global Minimum under &#8804;', [
+    E.append(label_box('Lemma T2 — &#8869; is a Global Minimum under &#8804;', [
         'For all x &#8712; L:   &#8869; &#8804; x',
         'Proof: By A4, &#8869; &#8744; x = x. By D1, this is the definition of &#8869; &#8804; x. <font name="DV">&#10003;</font>',
     ]))
@@ -294,6 +296,10 @@ def build_zpa():
         'S<sub>n+1</sub> = S<sub>n</sub> &#8744; &#945;<sub>n</sub>   for some &#945;<sub>n</sub> &#8712; L, for all n &#8712; &#8469;',
     ]))
     E.append(sp(4))
+    E.append(label_box('Remark R2 — Terminology: State Sequence and Ascending Chain', [
+        'In the order-theory literature, a sequence (S<sub>n</sub>) satisfying S<sub>n</sub> &#8804; S<sub>n+1</sub> for all n is called an <i>ascending chain</i>. The term "state sequence" is used here in place of "ascending chain" to align with the state-transition framing of ZP-D and ZP-E, where the same structure is introduced as sequences of system states. The two terms denote the same mathematical object. Readers familiar with order theory should read "state sequence" as "ascending chain". For concrete illustrations, see the ZP-A Illustrated Companion.',
+    ]))
+    E.append(sp(4))
     E.append(label_box('Theorem T3 — State Sequences are Monotone', [
         'For any state sequence (S<sub>n</sub>) satisfying D3:   S<sub>n</sub> &#8804; S<sub>n+1</sub>   for all n &#8712; &#8469;',
         'Proof: By D3, S<sub>n+1</sub> = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By D1, S<sub>n</sub> &#8804; S<sub>n</sub> &#8744; &#945;<sub>n</sub> &#10234; S<sub>n</sub> &#8744; (S<sub>n</sub> &#8744; &#945;<sub>n</sub>) = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By A1, (S<sub>n</sub> &#8744; S<sub>n</sub>) &#8744; &#945;<sub>n</sub> = S<sub>n</sub> &#8744; &#945;<sub>n</sub>. By A3, S<sub>n</sub> &#8744; S<sub>n</sub> = S<sub>n</sub>. Therefore S<sub>n</sub> &#8744; &#945;<sub>n</sub> = S<sub>n+1</sub>. <font name="DV">&#10003;</font>',
@@ -304,7 +310,7 @@ def build_zpa():
     E.append(label_box('Conditional Claim CC-1 — S\u2080 = &#8869; (Reclassified from T4 in v1.0)', [
         'We commit to initialising every state sequence at the minimum of L: S<sub>0</sub> = &#8869;. This is not derived from A1&#8211;A4 — it is a modelling choice.',
         'Under CC-1 and T3:   S<sub>0</sub> = &#8869; &#8804; S<sub>1</sub> &#8804; S<sub>2</sub> &#8804; &#8230;',
-        'Corollary: By T2, &#8869; &#8804; S<sub>n</sub> for all n. Every state in the sequence sits above the global minimum.',
+        'Note: By T2, &#8869; &#8804; S<sub>0</sub> for any initialisation — this holds unconditionally from A4. CC-1 strengthens this to equality: S<sub>0</sub> = &#8869;. The commitment is not needed to establish &#8869; &#8804; S<sub>0</sub>; it is needed to fix the starting point precisely.',
         'Status: CONDITIONAL CLAIM — modelling commitment; not derived from A1&#8211;A4.',
     ]))
 
@@ -684,15 +690,18 @@ def build_zpa_companion():
 
 
 def build_zpb():
-    doc = make_doc(os.path.join(OUT_DIR, 'ZP-B_pAdic_Topology_v1_2.pdf'),
-                   'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.2')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-B_pAdic_Topology_v1_3.pdf'),
+                   'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.3')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
-          Paragraph('Version 1.2  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.1  |  T0 strengthened with MP-1; C2 fixed; T4 reclassified as C3</i>', S['subtitle']),
+          Paragraph('Version 1.3  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.2  |  Theorem/Proposition hierarchy applied: T1, T2, T5 relabelled Proposition</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within p-adic analysis and topology. No abstract algebra from ZP-A, no probability, and no Hilbert space is imported. Cross-framework connections are deferred to ZP-D and ZP-E.'),
+          body('<i>Illustrated Companion: A paired ZP-B Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
+          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T1 (Strong Triangle Inequality) and T2 (Every Ball is Clopen) relabelled Proposition — both are well-known infrastructure results of p-adic analysis, not primary claims of this framework. T5 (Total Disconnectedness) relabelled Proposition — it is load-bearing infrastructure for C3. T0 (p=2 is uniquely derived) and T3 (Topological Isolation of 0) retain Theorem labels as the primary claims of ZP-B.</i>'),
+          body('<i>Version 1.2 changes: T0 strengthened with MP-1; C2 fixed to derive from T2 only; T4 reclassified as C3 (corollary of T5).</i>'),
           sp()]
 
     E.append(Paragraph('I. The Foundational Distinction', S['h1']))
@@ -750,7 +759,7 @@ def build_zpb():
         'For x, y &#8712; Q<sub>2</sub>:   d(x, y)  =  |x &#8722; y|<sub>2</sub>',
     ]))
     E.append(sp(4))
-    E.append(label_box('Theorem T1 — Strong Triangle Inequality (Ultrametric)', [
+    E.append(label_box('Proposition T1 — Strong Triangle Inequality (Ultrametric)', [
         'For all x, y, z &#8712; Q<sub>2</sub>:   d(x, z)  &#8804;  max( d(x, y),  d(y, z) )',
         'Proof: Write x &#8722; z = (x &#8722; y) + (y &#8722; z). The ultrametric property of v<sub>2</sub> gives v<sub>2</sub>(a+b) &#8805; min(v<sub>2</sub>(a), v<sub>2</sub>(b)), from which |a+b|<sub>2</sub> &#8804; max(|a|<sub>2</sub>, |b|<sub>2</sub>). Apply with a = x&#8722;y and b = y&#8722;z. <font name="DV">&#10003;</font>',
     ]))
@@ -766,7 +775,7 @@ def build_zpb():
         'B&#176;(a, r)  =  { x &#8712; Q<sub>2</sub>  :  d(x, a) < r }   (open ball)',
     ]))
     E.append(sp(4))
-    E.append(label_box('Theorem T2 — Every Ball is Clopen', [
+    E.append(label_box('Proposition T2 — Every Ball is Clopen', [
         'In Q<sub>2</sub>, every closed ball is also open and every open ball is also closed.',
         'Proof (closed ball is open): Let y &#8712; B(a, r). For any z &#8712; B(y, r), T1 gives d(z, a) &#8804; max(d(z,y), d(y,a)) &#8804; r. So B(y,r) &#8838; B(a,r). Every point is an interior point. <font name="DV">&#10003;</font>',
         'Proof (open ball is closed): Let (x<sub>n</sub>) &#8594; x with all x<sub>n</sub> &#8712; B&#176;(a,r). Ball radii in Q<sub>2</sub> are discrete (powers of 2), so d(x,a) < r holds in the limit. Thus x &#8712; B&#176;(a,r). <font name="DV">&#10003;</font>',
@@ -786,7 +795,7 @@ def build_zpb():
 
     E.append(Paragraph('V. Topological Structure of Q\u2082', S['h1']))
     E.append(Paragraph('5.1  Total Disconnectedness — proven before C3', S['h2']))
-    E.append(label_box('Theorem T5 — Q\u2082 is Totally Disconnected', [
+    E.append(label_box('Proposition T5 — Q\u2082 is Totally Disconnected', [
         'The only connected subsets of Q<sub>2</sub> are singletons.',
         'Proof: Let S &#8838; Q<sub>2</sub> contain two distinct points a, b with d(a,b) = r > 0. Choose s with 0 < s < r. By T2, B(a,s) is clopen. Then S = [S &#8745; B(a,s)] &#8746; [S \\ B(a,s)] is a separation of S into two disjoint non-empty clopen sets. Therefore S is not connected. Since S was arbitrary, the only connected subsets are singletons. <font name="DV">&#10003;</font>',
     ]))
@@ -854,15 +863,17 @@ def build_zpb():
 # (included in full below)
 
 def build_zpd():
-    doc = make_doc(os.path.join(OUT_DIR, 'ZP-D_State_Layer_v1_2.pdf'),
-                   'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.2')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-D_State_Layer_v1_3.pdf'),
+                   'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.3')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version 1.2  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.1  |  T1 reclassified as Design Principle DP-1</i>', S['subtitle']),
+          Paragraph('Version 1.3  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.2  |  Theorem/Proposition hierarchy applied: T3, T5 relabelled Proposition</i>', S['subtitle']),
           sp(10),
           body('This document operates within functional analysis. It imports from ZP-A and ZP-B and constructs the Hilbert space state layer on top of them. No information theory from ZP-C is imported. Cross-framework synthesis is deferred to ZP-E.'),
+          body('<i>Illustrated Companion: A paired ZP-D Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
+          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T3 (Uniqueness of T up to Unitary Equivalence) relabelled Proposition — a well-known result in functional analysis, infrastructure for T4. T5 (Monotone Sequences Map to Accumulating Vectors) relabelled Proposition — a structural consequence of T2 and ZP-A T3. T2 (Existence of T) and T4 (Snap Produces Orthogonal Shift) retain Theorem labels as the primary existence and snap claims of ZP-D.</i>'),
           body('<i>Version 1.2 change: Theorem T1 is reclassified as Design Principle DP-1. Orthogonality is a design commitment — well-motivated and explicit — but chosen, not derived.</i>'),
           sp()]
 
@@ -929,7 +940,7 @@ def build_zpd():
     ]))
     E.append(sp(4))
     E.append(Paragraph('3.4  Uniqueness of T', S['h2']))
-    E.append(label_box('Theorem T3 — Uniqueness of T up to Unitary Equivalence', [
+    E.append(label_box('Proposition T3 — Uniqueness of T up to Unitary Equivalence', [
         'Any two operators T, T\': Q<sub>2</sub> &#8594; H satisfying D2 are related by a unitary transformation U: H &#8594; H such that T\' = U &#8728; T.',
         'Proof: T and T\' both assign e<sub>0</sub> to the image of 0, which is the unique additive identity (A4). The ball structure of Q<sub>2</sub> is fixed; only the labelling of basis vectors varies. A unitary map U taking T(0) to T\'(0) and preserving orthogonality relations defines the equivalence. <font name="DV">&#10003;</font>',
     ]))
@@ -946,12 +957,12 @@ def build_zpd():
         'Status: Derived — unconditional theorem given DP-1.',
     ]))
     E.append(sp(4))
-    E.append(label_box('Theorem T5 — Monotone Sequences Map to Accumulating Vectors', [
+    E.append(label_box('Proposition T5 — Monotone Sequences Map to Accumulating Vectors', [
         'Let (S<sub>n</sub>) be a monotone state sequence in L (ZP-A T3). Then &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214; for all n.',
         'Proof: By ZP-A T3, S<sub>n</sub> &#8804; S<sub>n+1</sub>. By D2(v), T is norm-increasing. Each additional join contributes a new component in H, and the norm grows monotonically. <font name="DV">&#10003;</font>',
     ]))
 
-    E.append(Paragraph('V. Open Items Register for ZP-D v1.2', S['h1']))
+    E.append(Paragraph('V. Open Items Register for ZP-D v1.3', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],
@@ -972,9 +983,9 @@ def build_zpd():
          ['DP-1: Orthogonality', 'Valid — Design Principle; reclassified from T1; well-motivated and explicit'],
          ['D2: T requirements', 'Valid — Defined; five requirements stated; all satisfied by T2'],
          ['T2: Existence of T', 'Valid — Derived; basis assignment; all five requirements verified'],
-         ['T3: Uniqueness of T', 'Valid — Derived; unique up to unitary equivalence'],
-         ['T4: Snap &#8594; orthogonal shift', 'Valid — Derived; unconditional; depends on DP-1'],
-         ['T5: Monotone norms', 'Valid — Derived; unconditional; from T2 and ZP-A T3']],
+         ['T3: Uniqueness of T', 'Valid — Proposition; derived; unique up to unitary equivalence'],
+         ['T4: Snap &#8594; orthogonal shift', 'Valid — Theorem; derived; unconditional; depends on DP-1'],
+         ['T5: Monotone norms', 'Valid — Proposition; derived; unconditional; from T2 and ZP-A T3']],
         [2.5*inch, 4.0*inch]
     ))
 
@@ -1083,15 +1094,17 @@ def build_zpe_da1():
 # ── ZP-C is the largest — built separately due to length ──────────────────────
 
 def build_zpc():
-    doc = make_doc(os.path.join(OUT_DIR, 'ZP-C_Information_Theory_v1_4.pdf'),
-                   'ZP-C: Information Theory', 'ZP-C', 'Version 1.4')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-C_Information_Theory_v1_5.pdf'),
+                   'ZP-C: Information Theory', 'ZP-C', 'Version 1.5')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version 1.4  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.3  |  L-RUN formalized; TQ-IH answered; T-BUF added; AX-1 promoted to Candidate Theorem</i>', S['subtitle']),
+          Paragraph('Version 1.5  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.4  |  Theorem/Corollary hierarchy applied: T1b relabelled Corollary</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
+          body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
+          body('<i>Version 1.5 change: Theorem/Corollary hierarchy applied. T1b (JSD = 1 bit) relabelled Corollary T1b — it follows immediately from T1 with no additional proof work. T1, T2, L-RUN, and T-BUF labels unchanged.</i>'),
           body('<i>Version 1.4 changes: (1) Lemma L-RUN formalized: the act of execution is a non-null state change, derived from AX-B1 and D7. (2) Test Question TQ-IH answered negatively by L-RUN — no program outputs &#8869; without a non-null intermediate configuration state. (3) Candidate Theorem T-BUF added: at P<sub>0</sub>, execution is structurally guaranteed and that execution state is &#949;<sub>0</sub> in the semilattice. (4) AX-1 status updated from Axiomatic to Candidate Theorem.</i>'),
           sp()]
 
@@ -1125,7 +1138,7 @@ def build_zpc():
         'Proof: AX-B1 establishes two ontological states. RP-1 requires point-mass representation of each. The Null State occupies value 0: P = (1,0). The First Atomic State occupies value 1: Q = (0,1). No distribution (p, 1&#8722;p) with 0 < p < 1 is consistent with AX-B1. P and Q are unique. Status: DERIVED from AX-B1 and RP-1. <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
-    E.append(label_box('Theorem T1b — JSD = 1 bit', [
+    E.append(label_box('Corollary T1b — JSD = 1 bit', [
         'For P=(1,0) and Q=(0,1) with M=(1/2, 1/2):',
         'D<sub>KL</sub>(P&#8214;M) = 1 bit,   D<sub>KL</sub>(Q&#8214;M) = 1 bit,   JSD(P&#8214;Q) = 1 bit',
         'E  =  JSD(P&#8214;Q)  =  1 bit   [information-theoretic, dimensionless]',
