@@ -8,7 +8,8 @@ Follows all rules in PDF_Rendering_Standards.md:
   - US Letter, 1-inch margins, TW = 6.5 inch
 """
 
-import os
+import os, sys
+sys.stdout.reconfigure(encoding='utf-8')
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.units import inch
