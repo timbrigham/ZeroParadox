@@ -41,6 +41,8 @@ print('[build_zpe] Fonts registered.')
 _stix_registered = False
 for _stix_path in [
     FONT_DIR + 'STIX-Regular.ttf',
+    FONT_DIR + 'seguisym.ttf',
+    r'C:\Windows\Fonts\seguisym.ttf',
     '/usr/share/fonts/opentype/stix/STIX-Regular.ttf',
     '/usr/share/fonts/truetype/stix/STIX-Regular.ttf',
 ]:
