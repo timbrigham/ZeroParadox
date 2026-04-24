@@ -392,4 +392,81 @@ Additionally, when genrating scripts include verbouse output by default. We see 
 
 ---
 
+## 10. Color Palette Standard
+
+All formal ZP documents (ZP-A through ZP-H) use a shared color palette. Define these constants at the top of every builder script using the exact hex values below. Do not introduce new colors without updating this document.
+
+### Formal Document Palette
+
+| Constant | Hex | Role |
+|---|---|---|
+| `BLUE` | `#2E75B6` | Box headers for Definitions; data table header backgrounds |
+| `BLUE_LITE` | `#D5E8F0` | Box body backgrounds for Definitions |
+| `GREEN` | `#2E7D32` | Box headers for Results (Theorems, Propositions, Lemmas, Corollaries) |
+| `GREEN_LITE` | `#E8F5E9` | Box body backgrounds for Results |
+| `GREEN_DARK` | `#1B5E20` | Inline derived-status text on white backgrounds (e.g. "DERIVED ✓" lines outside boxes) |
+| `ORANGE` | `#BF4E30` | Box headers for Axioms, Design Principles, Conditional Claims |
+| `ORANGE_LITE` | `#FBE9E7` | Box body backgrounds for Axioms |
+| `SLATE` | `#455A64` | Box headers for Remarks; bridge document claim boxes (ZP-E bridge_box) |
+| `SLATE_LITE` | `#ECEFF1` | Box body backgrounds for Remarks |
+| `AMBER` | `#B07800` | Box headers for Import boxes (results imported from other layers) |
+| `AMBER_LITE` | `#FFF8E7` | Box body backgrounds for Imports |
+| `GREY_LITE` | `#F5F5F5` | Alternating row background in data tables |
+
+`GREEN` vs `GREEN_DARK`: use `GREEN` (`#2E7D32`) for box header backgrounds; use `GREEN_DARK` (`#1B5E20`) only for inline text rendered on white backgrounds. Never swap them.
+
+### Semantic Box Type → Color Mapping
+
+| Box helper | Header color | Body color | Used for |
+|---|---|---|---|
+| `def_box()` | `BLUE` | `GREY_LITE` | Definitions |
+| `result_box()` | `GREEN` | `GREY_LITE` | Theorems, Propositions, Lemmas, Corollaries |
+| `axiom_box()` | `ORANGE` | `GREY_LITE` | Axioms, Design Principles, Conditional Claims |
+| `remark_box()` | `SLATE` | `GREY_LITE` | Remarks |
+| `import_box()` | `AMBER` | `GREY_LITE` | Imported results from other layers |
+| `bridge_box()` | `SLATE` | `GREY_LITE` | ZP-E bridge claim boxes (DA-1, DA-2, DA-3) |
+
+All box body backgrounds use `GREY_LITE`. Header text uses the `label` ParagraphStyle (DV-B, 9pt, WHITE) except `import_box()` whose header text uses `labelAmber` (DV-B, 9pt, AMBER text on AMBER_LITE background).
+
+### Typography Standard
+
+| Style key | Font | Size | Leading | Alignment | Notes |
+|---|---|---|---|---|---|
+| `title` | DV-B | 18pt | 24 | centered | Document title |
+| `subtitle` | DV-I | 11pt | 15 | centered | Version / date line |
+| `h1` | DV-B | 13pt | 18 | left | BLUE; section headings |
+| `h2` | DV-B | 11pt | 15 | left | BLUE; subsection headings |
+| `body` | DVS | 10pt | 14 | left | Main prose |
+| `bodyI` | DVS-I | 10pt | 14 | left | Italic prose (companion notes, version notes) |
+| `label` | DV-B | 9pt | 13 | left | WHITE text — box headers |
+| `cell` | DVS | 9pt | 13 | left | Table cells |
+| `cellB` | DVS-B | 9pt | 13 | left | Bold table cells |
+| `cellI` | DVS-I | 9pt | 13 | left | Italic table cells |
+| `derived` | DVS-B | 10pt | 14 | left | GREEN_DARK — inline derived-status lines |
+
+ZP-E uses `alignment=4` (justified) for `body`, `bodyI`, `li`, and `derived` — intentional for that document's prose-heavy bridge character. Other formal docs use default left alignment.
+
+### Companion Document Accent Color
+
+| Constant | Hex | Role |
+|---|---|---|
+| `TEAL` | `#2A8080` | Accent for ALL companion documents — h1 headings, example box borders |
+
+Use `#2A8080` in every companion builder (ZP-A through ZP-H). Do not introduce per-layer accent colors.
+
+### Footer Format
+
+**Formal documents:**
+```
+Zero Paradox {doc_id}: {title}  |  Version {version}  |  April 2026  |  Page {n}
+```
+Example: `Zero Paradox ZP-A: Lattice Algebra  |  Version 1.5  |  April 2026  |  Page 1`
+
+**Companion documents:**
+```
+Zero Paradox {doc_id} Illustrated Companion  |  Version {version}  |  April 2026  |  Page {n}
+```
+
+---
+
 *Zero Paradox — PDF Rendering Standards | April 2026 | Internal Technical Reference*

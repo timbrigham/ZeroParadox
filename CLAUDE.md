@@ -191,6 +191,20 @@ When a document is superseded:
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
 4. Update the version number in README.md's The Framework table
 
+## Theorem/Proposition/Lemma Naming Convention
+
+All formal ZP documents use the following hierarchy for naming results. Apply this consistently when drafting or editing any formal layer:
+
+- **Theorem**: The primary result of a section — of major significance for the framework. Reserve for results that drive the dependency chain or that are the central claim of a layer (e.g., T3 Monotonicity, T-SNAP).
+- **Proposition**: A derived result that is rigorously proved but subsidiary to the main theorems — true and important, but not the headline claim (e.g., T1 partial order, T2 clopen balls).
+- **Lemma**: A technical helper result used as a stepping stone toward proving another result (e.g., L-RUN, T2 global minimum).
+- **Corollary**: A result that follows immediately from a theorem, proposition, or lemma with no substantial additional work (e.g., C1, C2, C3, T1b). Mark with "Corollary" label.
+- **Conditional Claim (CC)**: A result that holds only given an explicit modelling commitment not derivable from the axioms (e.g., CC-1: S₀ = ⊥).
+- **Design Principle (DP)**: A design commitment — well-motivated and explicit — that is chosen rather than derived (e.g., DP-1: orthogonality).
+- **Remark (R)**: An observation providing context or clarification; does not require proof.
+
+When assigning a label, ask: "Is this result the central claim of its section, or is it infrastructure for something else?" Central claims are Theorems; infrastructure is Propositions or Lemmas.
+
 ## Framework Structure (for context)
 
 The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap (⊥ → ε₀) as a theorem. The dependency order of the formal layers is:
@@ -215,6 +229,10 @@ Feedback received and reviewed. Status of each point:
 | "Axiom Block A" — Dan prefers "properties" over "axioms" | Deferred — keep | A1–A4 are axioms in the standard algebraic sense; defensible |
 | "State space" / "states" language feels loaded | Deferred — keep | Intentional framing for the ZP ontology; L is explicitly called a "non-empty set" in 1.1 |
 | Dual structure (top/meet operator) as future work | Noted | Already addressed in R1; no action needed |
+| Theorem/proposition/lemma hierarchy missing | **Fixed in v1.5** | Full naming convention added to CLAUDE.md and all formal docs updated |
+| "State sequence" doesn't convey monotone condition | **Fixed in v1.5** | Remark R2 added after D3 connecting "state sequence" to "ascending chain" |
+| CC-1: ⊥ ≤ S₀ should be free from T2, not a commitment | **Fixed in v1.5** | CC-1 corollary reworded: T2 gives ⊥ ≤ S₀ unconditionally; CC-1 strengthens to equality |
+| Add examples for state sequences | Deferred to Companion | Companion already has power set and document history examples; formal doc adds companion cross-reference note |
 
 ## License
 

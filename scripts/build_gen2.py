@@ -37,10 +37,10 @@ print('[build_gen2] Fonts registered.')
 BLUE      = colors.HexColor('#2E75B6')
 BLUE_LITE = colors.HexColor('#D5E8F0')
 GREY_LITE = colors.HexColor('#F5F5F5')
-GREEN     = colors.HexColor('#1B5E20')
+GREEN     = colors.HexColor('#2E7D32')
 GREEN_LITE= colors.HexColor('#E8F5E9')
-AMBER_LITE= colors.HexColor('#FFF8E1')
-AMBER     = colors.HexColor('#E65100')
+AMBER_LITE= colors.HexColor('#FFF8E7')
+AMBER     = colors.HexColor('#B07800')
 RED_LITE  = colors.HexColor('#FFEBEE')
 WHITE     = colors.white
 
