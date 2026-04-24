@@ -218,6 +218,11 @@ def build_zpe(out_path):
         'to be perspective-dependent in a way that accounts for Skolem\'s Paradox, the independence '
         'of the Continuum Hypothesis, and Russell\'s Paradox as structural consequences of the same '
         'architecture.'))
+    E.append(body(
+        'Illustrated Companion: A paired ZP-E Illustrated Companion document provides accessible '
+        'explanations and visual summaries of the bridge derivations in this document. Readers new '
+        'to the framework are encouraged to start with the companion.',
+        style='bodyI'))
     E.append(hr())
 
     print('[build_zpe] Building DA-1...')
