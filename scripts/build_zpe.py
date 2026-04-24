@@ -37,6 +37,25 @@ pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf')); 
 pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf')); print('  DVS-BI ok')
 print('[build_zpe] Fonts registered.')
 
+# Register STIX for ℵ glyph (U+2135, decimal 8501) — missing from DejaVu
+_stix_registered = False
+for _stix_path in [
+    FONT_DIR + 'STIX-Regular.ttf',
+    '/usr/share/fonts/opentype/stix/STIX-Regular.ttf',
+    '/usr/share/fonts/truetype/stix/STIX-Regular.ttf',
+]:
+    if os.path.exists(_stix_path):
+        try:
+            pdfmetrics.registerFont(TTFont('STIX', _stix_path))
+            _stix_registered = True
+            print(f'  STIX ok ({_stix_path})')
+            break
+        except Exception as e:
+            print(f'  STIX failed: {e}')
+if not _stix_registered:
+    print('  WARNING: STIX not found — ℵ (U+2135) will not render correctly')
+ALEPH_FONT = 'STIX' if _stix_registered else 'DV'
+
 # ── 2. COLORS ─────────────────────────────────────────────────────────────────
 BLUE        = colors.HexColor('#2E75B6')
 SLATE       = colors.HexColor('#455A64')
@@ -96,6 +115,7 @@ def fix(text):
         text = text.replace(ch, f'<sub>{rep}</sub>')
     text = text.replace('✓', '<font name="DV">&#10003;</font>')
     text = text.replace('∅', '<font name="DV">&#8709;</font>')
+    text = text.replace('ℵ', f'<font name="{ALEPH_FONT}">&#8501;</font>')
     replacements = [
         ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
         ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
@@ -508,7 +528,7 @@ def build_zpe(out_path):
              'result, exactly as DA-3 predicts.'),
         body('<b>The Continuum Hypothesis.</b> G&#246;del and Cohen together established that CH is independent '
              'of ZFC — neither provable nor disprovable from the standard axioms. DA-3 accounts for this '
-             'structurally: the answer to whether anything sits between &#8484;<sub>0</sub> and 2<sup>&#8484;<sub>0</sub></sup> depends on which '
+             'structurally: the answer to whether anything sits between ℵ<sub>0</sub> and 2<sup>ℵ<sub>0</sub></sup> depends on which '
              'instantiation one is measuring from. Different semilattices with different accessible cardinality '
              'structures will give different answers. The independence of CH is not an accident of axiom '
              'selection — it is the formal shadow of perspective-dependence. No axiom system located '
@@ -525,7 +545,7 @@ def build_zpe(out_path):
     E.append(Paragraph('IV. The Cardinality Hierarchy as Perspective-Relative', S['h2']))
     E.append(body(
         'Cantor\'s theorem establishes that for any set S, |P(S)| > |S|, generating the hierarchy '
-        '&#8484;<sub>0</sub> &lt; 2<sup>&#8484;<sub>0</sub></sup> &lt; 2<sup>2<sup>&#8484;<sub>0</sub></sup></sup> &lt; ... '
+        'ℵ<sub>0</sub> &lt; 2<sup>ℵ<sub>0</sub></sup> &lt; 2<sup>2<sup>ℵ<sub>0</sub></sup></sup> &lt; ... '
         'DA-3 reframes this hierarchy not as a fixed ladder that mathematics climbs, but as a '
         'perspective-relative description of the branching structure of the instantiation tree, as seen '
         'from within different positions.'))

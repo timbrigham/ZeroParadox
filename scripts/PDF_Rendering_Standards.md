@@ -81,6 +81,7 @@ suspects = {
     'checkmark ✓': 0x2713,
     'heavy check ✔': 0x2714,
     'empty set ∅': 0x2205,   # Added session 2 — also missing from DejaVuSerif
+    'aleph ℵ': 0x2135,       # Added session 3 — missing from both DejaVu fonts; requires STIX fallback
 }
 for name, cp in suspects.items():
     print(f'{name}: Sans={cp in cmap_sans}  Serif={cp in cmap_serif}')
@@ -322,6 +323,9 @@ That single instruction, combined with this document, prevents all known failure
 - U+2205 ∅ empty set
 - U+2717 ✗ ballot cross
 - U+2118 ℘ power set (Weierstrass P)
+
+**Known glyphs missing from ALL DejaVu fonts (require STIX fallback):**
+- U+2135 ℵ aleph — register STIX font and wrap: `<font name="STIX">&#8501;</font>`. See build_zpe.py for STIX registration pattern with path fallback logic.
 
 Run the diagnostic (Section 2/2b) at the start of any new session to check if additional glyphs have been discovered missing.
 
