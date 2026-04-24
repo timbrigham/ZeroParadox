@@ -23,18 +23,21 @@ pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
 pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'DejaVuSerif.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'DejaVuSerif-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
 
-PURPLE      = colors.HexColor('#5B2D8E')
-PURPLE_DARK = colors.HexColor('#3A1A5E')
-PURPLE_LITE = colors.HexColor('#EDE5F7')
-AMBER_C     = colors.HexColor('#B07800')
-AMBER_LITE  = colors.HexColor('#FFF8E7')
-BLACK       = colors.black
-WHITE       = colors.white
+# Companion palette: 15% white tint on formal document header colors
+COMP_BLUE  = colors.HexColor('#4D89C0')
+COMP_GREEN = colors.HexColor('#4D9050')
+COMP_SLATE = colors.HexColor('#60727B')
+COMP_AMBER = colors.HexColor('#BB8C26')
+SLATE_LITE = colors.HexColor('#ECEFF1')
+AMBER_LITE = colors.HexColor('#FFF8E7')
+BLACK      = colors.black
+WHITE      = colors.white
+PURPLE     = colors.HexColor('#5B2D8E')  # kept for category diagram nodes
 
 TW = 6.5 * inch
 LM = RM = 1.0 * inch
@@ -50,19 +53,18 @@ CS = {
     'disc':     ParagraphStyle('cdisc',    fontName='DVS-I', fontSize=9,  leading=13,
                                spaceAfter=10, textColor=colors.HexColor('#555555')),
     'h1':       ParagraphStyle('ch1',      fontName='DV-B',  fontSize=13, leading=17,
-                               spaceBefore=14, spaceAfter=5, textColor=PURPLE),
+                               spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
     'body':     ParagraphStyle('cbody',    fontName='DVS',   fontSize=10, leading=14,
                                spaceAfter=6),
     'caption':  ParagraphStyle('ccaption', fontName='DVS-I', fontSize=9,  leading=12,
                                spaceAfter=8, textColor=colors.HexColor('#555555')),
     'ex_title': ParagraphStyle('cex_title',fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=AMBER_C),
+                               textColor=COMP_AMBER),
     'ex_body':  ParagraphStyle('cex_body', fontName='DVS',   fontSize=9,  leading=13),
     'rem':      ParagraphStyle('crem',     fontName='DVS-I', fontSize=9,  leading=13),
     'kr_hdr':   ParagraphStyle('ckr_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
                                textColor=WHITE),
-    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13,
-                               textColor=WHITE),
+    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13),
 }
 
 def sp(n=6):
@@ -102,8 +104,8 @@ def example_box(title, rows):
     for r in rows:
         data.append([Paragraph(fix(r), CS['ex_body'])])
     ts = TableStyle([
-        ('BOX',           (0,0), (-1,-1), 1.5, AMBER_C),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, AMBER_C),
+        ('BOX',           (0,0), (-1,-1), 1.5, COMP_AMBER),
+        ('LINEBELOW',     (0,0), (-1,0),  0.5, COMP_AMBER),
         ('BACKGROUND',    (0,0), (-1,-1), AMBER_LITE),
         ('TOPPADDING',    (0,0), (-1,-1), 5),
         ('BOTTOMPADDING', (0,0), (-1,-1), 5),
@@ -117,8 +119,8 @@ def example_box(title, rows):
 
 def remember_box(text):
     ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), PURPLE_LITE),
-        ('BOX',           (0,0), (-1,-1), 0.5, PURPLE),
+        ('BACKGROUND',    (0,0), (-1,-1), SLATE_LITE),
+        ('BOX',           (0,0), (-1,-1), 0.5, COMP_SLATE),
         ('TOPPADDING',    (0,0), (-1,-1), 8),
         ('BOTTOMPADDING', (0,0), (-1,-1), 8),
         ('LEFTPADDING',   (0,0), (-1,-1), 10),
@@ -132,9 +134,9 @@ def key_result_box(title, body_text):
     data = [[Paragraph(fix(title), CS['kr_hdr'])],
             [Paragraph(fix(body_text), CS['kr_body'])]]
     ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  PURPLE_DARK),
-        ('BACKGROUND',    (0,1), (-1,-1), PURPLE),
-        ('BOX',           (0,0), (-1,-1), 0.5, PURPLE_DARK),
+        ('BACKGROUND',    (0,0), (-1,0),  COMP_GREEN),
+        ('BACKGROUND',    (0,1), (-1,-1), colors.white),
+        ('BOX',           (0,0), (-1,-1), 0.5, COMP_GREEN),
         ('TOPPADDING',    (0,0), (-1,-1), 6),
         ('BOTTOMPADDING', (0,0), (-1,-1), 6),
         ('LEFTPADDING',   (0,0), (-1,-1), 8),
@@ -193,13 +195,13 @@ def category_diagram():
     arrow(bx, by, cx2, cy2, col=colors.HexColor('#888888'))
 
     # Dots for objects
-    d.add(Circle(ox, oy, dot_r, fillColor=AMBER_C, strokeColor=AMBER_C, strokeWidth=0))
+    d.add(Circle(ox, oy, dot_r, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(Circle(ax, ay, dot_r, fillColor=PURPLE, strokeColor=PURPLE, strokeWidth=0))
     d.add(Circle(bx, by, dot_r, fillColor=PURPLE, strokeColor=PURPLE, strokeWidth=0))
     d.add(Circle(cx2, cy2, dot_r, fillColor=PURPLE, strokeColor=PURPLE, strokeWidth=0))
 
     # Labels
-    d.add(String(ox - 12, oy - 20, '0', fontSize=10, fontName='DV-B', fillColor=AMBER_C))
+    d.add(String(ox - 12, oy - 20, '0', fontSize=10, fontName='DV-B', fillColor=COMP_AMBER))
     d.add(String(ox - 30, oy - 32, '(initial)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
     d.add(String(ax - 4, ay + 12, 'A', fontSize=10, fontName='DV-B', fillColor=PURPLE))
@@ -229,10 +231,10 @@ def functor_diagram():
     cax, cay = lx1 + 100, cy_mid + 30
     cbx, cby = lx1 + 130, cy_mid - 15
     dot_r = 5
-    d.add(Circle(c0x, c0y, dot_r, fillColor=AMBER_C, strokeColor=AMBER_C, strokeWidth=0))
+    d.add(Circle(c0x, c0y, dot_r, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(Circle(cax, cay, dot_r, fillColor=PURPLE, strokeColor=PURPLE, strokeWidth=0))
     d.add(Circle(cbx, cby, dot_r, fillColor=PURPLE, strokeColor=PURPLE, strokeWidth=0))
-    d.add(String(c0x - 12, c0y - 14, '0', fontSize=8, fontName='DV-B', fillColor=AMBER_C))
+    d.add(String(c0x - 12, c0y - 14, '0', fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
     d.add(String(cax + 4, cay + 4, 'A', fontSize=8, fontName='DV-B', fillColor=PURPLE))
     d.add(String(cbx + 4, cby - 12, 'B', fontSize=8, fontName='DV-B', fillColor=PURPLE))
     # Arrow 0->A in C
@@ -251,10 +253,10 @@ def functor_diagram():
     d0x, d0y = rx1 + 35, cy_mid + 18
     dax, day = rx1 + 100, cy_mid + 30
     dbx, dby = rx1 + 130, cy_mid - 15
-    d.add(Circle(d0x, d0y, dot_r, fillColor=AMBER_C, strokeColor=AMBER_C, strokeWidth=0))
+    d.add(Circle(d0x, d0y, dot_r, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(Circle(dax, day, dot_r, fillColor=DGREEN, strokeColor=DGREEN, strokeWidth=0))
     d.add(Circle(dbx, dby, dot_r, fillColor=DGREEN, strokeColor=DGREEN, strokeWidth=0))
-    d.add(String(d0x - 20, d0y - 14, 'F(0)', fontSize=7.5, fontName='DV-B', fillColor=AMBER_C))
+    d.add(String(d0x - 20, d0y - 14, 'F(0)', fontSize=7.5, fontName='DV-B', fillColor=COMP_AMBER))
     d.add(String(dax + 4, day + 4, 'F(A)', fontSize=7.5, fontName='DV-B', fillColor=DGREEN))
     d.add(String(dbx + 4, dby - 12, 'F(B)', fontSize=7.5, fontName='DV-B', fillColor=DGREEN))
     d.add(Line(d0x + dot_r, d0y, dax - dot_r, day, strokeColor=DGREEN, strokeWidth=1.2))
@@ -296,7 +298,7 @@ def build():
 
     # ── Header banner ──────────────────────────────────────────────────────────
     hdr_ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), PURPLE_DARK),
+        ('BACKGROUND',    (0,0), (-1,-1), COMP_BLUE),
         ('TOPPADDING',    (0,0), (-1,-1), 8),
         ('BOTTOMPADDING', (0,0), (-1,-1), 8),
         ('LEFTPADDING',   (0,0), (-1,-1), 10),

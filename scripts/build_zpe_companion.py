@@ -20,21 +20,23 @@ pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
 pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'DejaVuSerif.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'DejaVuSerif-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
 
-TEAL      = colors.HexColor('#2A8080')
-TEAL_DARK = colors.HexColor('#1A5555')
-TEAL_LITE = colors.HexColor('#D5EEEE')
-AMBER_C   = colors.HexColor('#B07800')
-AMBER_LITE= colors.HexColor('#FFF8E7')
-AMBER_BOX = colors.HexColor('#E65100')
-BLACK     = colors.black
-WHITE     = colors.white
-GREY      = colors.HexColor('#888888')
-GREY_LITE = colors.HexColor('#555555')
+# Companion palette: 15% white tint on formal document header colors
+COMP_BLUE  = colors.HexColor('#4D89C0')
+COMP_GREEN = colors.HexColor('#4D9050')
+COMP_SLATE = colors.HexColor('#60727B')
+COMP_AMBER = colors.HexColor('#BB8C26')
+SLATE_LITE = colors.HexColor('#ECEFF1')
+AMBER_LITE = colors.HexColor('#FFF8E7')
+AMBER_BOX  = colors.HexColor('#E65100')  # diagram: ε₀ snap state
+BLACK      = colors.black
+WHITE      = colors.white
+GREY       = colors.HexColor('#888888')
+GREY_TEXT  = colors.HexColor('#555555')  # diagram caption text
 
 TW = 6.5 * inch
 LM = RM = TM = BM = 1.0 * inch
@@ -47,21 +49,20 @@ CS = {
     'meta':     ParagraphStyle('cmeta',    fontName='DV',    fontSize=9,  leading=13,
                                alignment=1, spaceAfter=8, textColor=colors.grey),
     'disc':     ParagraphStyle('cdisc',    fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=10, textColor=GREY_LITE),
+                               spaceAfter=10, textColor=GREY_TEXT),
     'h1':       ParagraphStyle('ch1',      fontName='DV-B',  fontSize=13, leading=17,
-                               spaceBefore=14, spaceAfter=5, textColor=TEAL),
+                               spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
     'body':     ParagraphStyle('cbody',    fontName='DVS',   fontSize=10, leading=14,
                                spaceAfter=6),
     'caption':  ParagraphStyle('ccaption', fontName='DVS-I', fontSize=9,  leading=12,
-                               spaceAfter=8, textColor=GREY_LITE),
+                               spaceAfter=8, textColor=GREY_TEXT),
     'ex_title': ParagraphStyle('cex_title',fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=AMBER_C),
+                               textColor=COMP_AMBER),
     'ex_body':  ParagraphStyle('cex_body', fontName='DVS',   fontSize=9,  leading=13),
     'rem':      ParagraphStyle('crem',     fontName='DVS-I', fontSize=9,  leading=13),
     'kr_hdr':   ParagraphStyle('ckr_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
                                textColor=WHITE),
-    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13,
-                               textColor=WHITE),
+    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13),
     'tbl_hdr':  ParagraphStyle('ctbl_hdr', fontName='DV-B',  fontSize=9,  leading=13,
                                textColor=WHITE),
     'tbl_cell': ParagraphStyle('ctbl_cell',fontName='DVS',   fontSize=9,  leading=13),
@@ -89,8 +90,8 @@ def example_box(title, rows):
     for r in rows:
         data.append([Paragraph(fix(r), CS['ex_body'])])
     ts = TableStyle([
-        ('BOX',          (0,0),(-1,-1), 1.5, AMBER_C),
-        ('LINEBELOW',    (0,0),(-1,0),  0.5, AMBER_C),
+        ('BOX',          (0,0),(-1,-1), 1.5, COMP_AMBER),
+        ('LINEBELOW',    (0,0),(-1,0),  0.5, COMP_AMBER),
         ('BACKGROUND',   (0,0),(-1,-1), AMBER_LITE),
         ('TOPPADDING',   (0,0),(-1,-1), 5), ('BOTTOMPADDING',(0,0),(-1,-1), 5),
         ('LEFTPADDING',  (0,0),(-1,-1), 8), ('RIGHTPADDING', (0,0),(-1,-1), 8),
@@ -100,8 +101,8 @@ def example_box(title, rows):
 
 def remember_box(text):
     ts = TableStyle([
-        ('BACKGROUND',   (0,0),(-1,-1), TEAL_LITE),
-        ('BOX',          (0,0),(-1,-1), 0.5, TEAL),
+        ('BACKGROUND',   (0,0),(-1,-1), SLATE_LITE),
+        ('BOX',          (0,0),(-1,-1), 0.5, COMP_SLATE),
         ('TOPPADDING',   (0,0),(-1,-1), 8), ('BOTTOMPADDING',(0,0),(-1,-1), 8),
         ('LEFTPADDING',  (0,0),(-1,-1), 10),('RIGHTPADDING', (0,0),(-1,-1), 10),
     ])
@@ -112,9 +113,9 @@ def key_result_box(title, body_text):
     data = [[Paragraph(fix(title), CS['kr_hdr'])],
             [Paragraph(fix(body_text), CS['kr_body'])]]
     ts = TableStyle([
-        ('BACKGROUND',   (0,0),(-1,0),  TEAL_DARK),
-        ('BACKGROUND',   (0,1),(-1,-1), TEAL),
-        ('BOX',          (0,0),(-1,-1), 0.5, TEAL_DARK),
+        ('BACKGROUND',   (0,0),(-1,0),  COMP_GREEN),
+        ('BACKGROUND',   (0,1),(-1,-1), colors.white),
+        ('BOX',          (0,0),(-1,-1), 0.5, COMP_GREEN),
         ('TOPPADDING',   (0,0),(-1,-1), 6), ('BOTTOMPADDING',(0,0),(-1,-1), 6),
         ('LEFTPADDING',  (0,0),(-1,-1), 8), ('RIGHTPADDING', (0,0),(-1,-1), 8),
         ('VALIGN',       (0,0),(-1,-1), 'TOP'),
@@ -131,22 +132,22 @@ def four_framework_diagram():
     # Central amber circle
     cr = 42
     from reportlab.graphics.shapes import Circle
-    d.add(Circle(cx, cy, cr, fillColor=AMBER_C, strokeColor=AMBER_C, strokeWidth=0))
+    d.add(Circle(cx, cy, cr, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(String(cx - 26, cy + 6,  'Binary', fontSize=9.5, fontName='DV-B', fillColor=WHITE))
     d.add(String(cx - 17, cy - 7, 'Snap',   fontSize=9.5, fontName='DV-B', fillColor=WHITE))
 
     # Helper: draw a teal box with two text lines and an arrow toward the center
     def framework_box(bx, by, bw, bh, label, sub1, sub2, ax1, ay1, ax2, ay2):
-        d.add(Rect(bx, by, bw, bh, fillColor=TEAL, strokeColor=TEAL_DARK,
+        d.add(Rect(bx, by, bw, bh, fillColor=COMP_BLUE, strokeColor=COMP_BLUE,
                    strokeWidth=1, rx=4, ry=4))
         d.add(String(bx + 8, by + bh - 16, label, fontSize=9.5,
                      fontName='DV-B', fillColor=WHITE))
         d.add(String(bx + 8, by + bh - 28, sub1, fontSize=7.5,
-                     fontName='DV-I', fillColor=TEAL_LITE))
+                     fontName='DV-I', fillColor=colors.white))
         d.add(String(bx + 8, by + bh - 39, sub2, fontSize=7.5,
-                     fontName='DV-I', fillColor=TEAL_LITE))
+                     fontName='DV-I', fillColor=colors.white))
         # Arrow
-        d.add(Line(ax1, ay1, ax2, ay2, strokeColor=TEAL_DARK, strokeWidth=1.8))
+        d.add(Line(ax1, ay1, ax2, ay2, strokeColor=COMP_BLUE, strokeWidth=1.8))
         dx, dy = ax2 - ax1, ay2 - ay1
         ln = (dx*dx + dy*dy) ** 0.5
         if ln > 0:
@@ -155,10 +156,10 @@ def four_framework_diagram():
             hs = 6
             d.add(Line(ax2, ay2,
                        ax2 - hs*ux + hs*0.5*px, ay2 - hs*uy + hs*0.5*py,
-                       strokeColor=TEAL_DARK, strokeWidth=1.8))
+                       strokeColor=COMP_BLUE, strokeWidth=1.8))
             d.add(Line(ax2, ay2,
                        ax2 - hs*ux - hs*0.5*px, ay2 - hs*uy - hs*0.5*py,
-                       strokeColor=TEAL_DARK, strokeWidth=1.8))
+                       strokeColor=COMP_BLUE, strokeWidth=1.8))
 
     bw, bh = 1.35*inch, 0.62*inch
 
@@ -189,7 +190,7 @@ def four_framework_diagram():
     d.add(String(14, 10,
                  'The Binary Snap (amber) described simultaneously in all four frameworks. '
                  'Each arrow is an independent proof of the same structural fact.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_LITE))
+                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
 def tsnap_chain_diagram():
@@ -214,8 +215,8 @@ def tsnap_chain_diagram():
 
     for i, (label, sub) in enumerate(steps):
         bx = x0 + i * (bw + gap)
-        fill = AMBER_BOX if i == n-1 else TEAL
-        d.add(Rect(bx, by, bw, bh, fillColor=fill, strokeColor=TEAL_DARK,
+        fill = AMBER_BOX if i == n-1 else COMP_BLUE
+        d.add(Rect(bx, by, bw, bh, fillColor=fill, strokeColor=COMP_BLUE,
                    strokeWidth=0.8, rx=3, ry=3))
         lw = len(label) * 6.2
         d.add(String(bx + bw/2 - lw/2, by + bh - 16, label,
@@ -226,16 +227,16 @@ def tsnap_chain_diagram():
         for sl in sub_lines:
             sw = len(sl) * 5.2
             d.add(String(bx + bw/2 - sw/2, sub_y, sl,
-                         fontSize=7, fontName='DV-I', fillColor=GREY_LITE))
+                         fontSize=7, fontName='DV-I', fillColor=GREY_TEXT))
             sub_y -= 10
 
         if i < n-1:
             nx = bx + bw + gap
             ax1, ax2 = bx + bw + 1, nx - 1
             amid = by + bh/2
-            d.add(Line(ax1, amid, ax2, amid, strokeColor=TEAL_DARK, strokeWidth=1.5))
-            d.add(Line(ax2-5, amid-3, ax2, amid, strokeColor=TEAL_DARK, strokeWidth=1.5))
-            d.add(Line(ax2-5, amid+3, ax2, amid, strokeColor=TEAL_DARK, strokeWidth=1.5))
+            d.add(Line(ax1, amid, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
+            d.add(Line(ax2-5, amid-3, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
+            d.add(Line(ax2-5, amid+3, ax2, amid, strokeColor=COMP_BLUE, strokeWidth=1.5))
 
     d.add(String(14, dh - 14,
                  'AX-1 (Binary Snap Causality) is now Theorem T-SNAP — derived, not assumed.',
@@ -261,10 +262,10 @@ def axioms_table():
     data = [hdr] + [[Paragraph(fix(r[0]), CS['tbl_cell']),
                      Paragraph(fix(r[1]), CS['tbl_cell'])] for r in rows]
     ts = TableStyle([
-        ('BACKGROUND',    (0,0),(-1,0),  TEAL),
+        ('BACKGROUND',    (0,0),(-1,0),  COMP_BLUE),
         ('ROWBACKGROUNDS',(0,1),(-1,-1), [WHITE, colors.HexColor('#F0F8F8')]),
-        ('BOX',           (0,0),(-1,-1), 0.5, TEAL),
-        ('LINEBELOW',     (0,0),(-1,0),  0.5, TEAL),
+        ('BOX',           (0,0),(-1,-1), 0.5, COMP_BLUE),
+        ('LINEBELOW',     (0,0),(-1,0),  0.5, COMP_BLUE),
         ('INNERGRID',     (0,1),(-1,-1), 0.3, colors.HexColor('#CCCCCC')),
         ('TOPPADDING',    (0,0),(-1,-1), 5), ('BOTTOMPADDING',(0,0),(-1,-1), 5),
         ('LEFTPADDING',   (0,0),(-1,-1), 7), ('RIGHTPADDING', (0,0),(-1,-1), 7),
@@ -291,7 +292,7 @@ def build():
     E = []
 
     # Header banner
-    hdr_ts = TableStyle([('BACKGROUND',(0,0),(-1,-1),TEAL_DARK),
+    hdr_ts = TableStyle([('BACKGROUND',(0,0),(-1,-1),COMP_BLUE),
                          ('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8),
                          ('LEFTPADDING',(0,0),(-1,-1),10)])
     hdr = Table([[Paragraph('ZP-E Illustrated Companion',

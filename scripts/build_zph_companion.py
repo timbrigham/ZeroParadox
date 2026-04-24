@@ -23,24 +23,27 @@ pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
 pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'DejaVuSerif.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'DejaVuSerif-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
 
-INDIGO      = colors.HexColor('#1A3A6B')
-INDIGO_DARK = colors.HexColor('#0E2040')
-INDIGO_LITE = colors.HexColor('#E0E8F8')
-AMBER_C     = colors.HexColor('#B07800')
-AMBER_LITE  = colors.HexColor('#FFF8E7')
-BLACK       = colors.black
-WHITE       = colors.white
+# Companion palette: 15% white tint on formal document header colors
+COMP_BLUE  = colors.HexColor('#4D89C0')
+COMP_GREEN = colors.HexColor('#4D9050')
+COMP_SLATE = colors.HexColor('#60727B')
+COMP_AMBER = colors.HexColor('#BB8C26')
+SLATE_LITE = colors.HexColor('#ECEFF1')
+AMBER_LITE = colors.HexColor('#FFF8E7')
+BLACK      = colors.black
+WHITE      = colors.white
 
-# Domain colors for the four-functor diagram
+# Domain colors for the four-functor diagram (semantic distinction between functors)
 TEAL   = colors.HexColor('#2A8080')
 GREEN  = colors.HexColor('#2E7D32')
 RED    = colors.HexColor('#8B1A1A')
 PURPLE = colors.HexColor('#5B2D8E')
+INDIGO = colors.HexColor('#3D3D8F')
 
 TW = 6.5 * inch
 LM = RM = 1.0 * inch
@@ -56,19 +59,18 @@ CS = {
     'disc':     ParagraphStyle('cdisc',    fontName='DVS-I', fontSize=9,  leading=13,
                                spaceAfter=10, textColor=colors.HexColor('#555555')),
     'h1':       ParagraphStyle('ch1',      fontName='DV-B',  fontSize=13, leading=17,
-                               spaceBefore=14, spaceAfter=5, textColor=INDIGO),
+                               spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
     'body':     ParagraphStyle('cbody',    fontName='DVS',   fontSize=10, leading=14,
                                spaceAfter=6),
     'caption':  ParagraphStyle('ccaption', fontName='DVS-I', fontSize=9,  leading=12,
                                spaceAfter=8, textColor=colors.HexColor('#555555')),
     'ex_title': ParagraphStyle('cex_title',fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=AMBER_C),
+                               textColor=COMP_AMBER),
     'ex_body':  ParagraphStyle('cex_body', fontName='DVS',   fontSize=9,  leading=13),
     'rem':      ParagraphStyle('crem',     fontName='DVS-I', fontSize=9,  leading=13),
     'kr_hdr':   ParagraphStyle('ckr_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
                                textColor=WHITE),
-    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13,
-                               textColor=WHITE),
+    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13),
 }
 
 def sp(n=6):
@@ -108,8 +110,8 @@ def example_box(title, rows):
     for r in rows:
         data.append([Paragraph(fix(r), CS['ex_body'])])
     ts = TableStyle([
-        ('BOX',           (0,0), (-1,-1), 1.5, AMBER_C),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, AMBER_C),
+        ('BOX',           (0,0), (-1,-1), 1.5, COMP_AMBER),
+        ('LINEBELOW',     (0,0), (-1,0),  0.5, COMP_AMBER),
         ('BACKGROUND',    (0,0), (-1,-1), AMBER_LITE),
         ('TOPPADDING',    (0,0), (-1,-1), 5),
         ('BOTTOMPADDING', (0,0), (-1,-1), 5),
@@ -123,8 +125,8 @@ def example_box(title, rows):
 
 def remember_box(text):
     ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), INDIGO_LITE),
-        ('BOX',           (0,0), (-1,-1), 0.5, INDIGO),
+        ('BACKGROUND',    (0,0), (-1,-1), SLATE_LITE),
+        ('BOX',           (0,0), (-1,-1), 0.5, COMP_SLATE),
         ('TOPPADDING',    (0,0), (-1,-1), 8),
         ('BOTTOMPADDING', (0,0), (-1,-1), 8),
         ('LEFTPADDING',   (0,0), (-1,-1), 10),
@@ -138,9 +140,9 @@ def key_result_box(title, body_text):
     data = [[Paragraph(fix(title), CS['kr_hdr'])],
             [Paragraph(fix(body_text), CS['kr_body'])]]
     ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  INDIGO_DARK),
-        ('BACKGROUND',    (0,1), (-1,-1), INDIGO),
-        ('BOX',           (0,0), (-1,-1), 0.5, INDIGO_DARK),
+        ('BACKGROUND',    (0,0), (-1,0),  COMP_GREEN),
+        ('BACKGROUND',    (0,1), (-1,-1), colors.white),
+        ('BOX',           (0,0), (-1,-1), 0.5, COMP_GREEN),
         ('TOPPADDING',    (0,0), (-1,-1), 6),
         ('BOTTOMPADDING', (0,0), (-1,-1), 6),
         ('LEFTPADDING',   (0,0), (-1,-1), 8),
@@ -245,7 +247,7 @@ def snap_convergence_diagram():
         d.add(Line(snap_x + 10, y, rx - 20, y, strokeColor=col, strokeWidth=1.5))
 
     # Left dot: 0
-    d.add(Circle(lx + 18, cy, 8, fillColor=AMBER_C, strokeColor=AMBER_C, strokeWidth=0))
+    d.add(Circle(lx + 18, cy, 8, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(String(lx + 12, cy - 6, '0', fontSize=9, fontName='DV-B', fillColor=WHITE))
     d.add(String(lx + 4, cy - 20, '(null)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
@@ -292,7 +294,7 @@ def build():
 
     # ── Header banner ──────────────────────────────────────────────────────────
     hdr_ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), INDIGO_DARK),
+        ('BACKGROUND',    (0,0), (-1,-1), COMP_BLUE),
         ('TOPPADDING',    (0,0), (-1,-1), 8),
         ('BOTTOMPADDING', (0,0), (-1,-1), 8),
         ('LEFTPADDING',   (0,0), (-1,-1), 10),
