@@ -40,6 +40,7 @@ print('[build_zpe] Fonts registered.')
 # Register STIX for ℵ glyph (U+2135, decimal 8501) — missing from DejaVu
 _stix_registered = False
 for _stix_path in [
+    FONT_DIR + 'STIXTwo-Math.ttf',
     FONT_DIR + 'STIX-Regular.ttf',
     FONT_DIR + 'seguisym.ttf',
     r'C:\Windows\Fonts\seguisym.ttf',
