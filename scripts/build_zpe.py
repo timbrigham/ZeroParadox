@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 2.5 | April 2026
+Version 2.6 | April 2026
 Adds DA-2 (Instantiation Succession) and DA-3 (Perspective-Relative Cardinality)
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
@@ -198,7 +198,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.5  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.6  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -221,13 +221,14 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.5 | April 2026', S['subtitle']),
+        Paragraph('Version 2.6 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v2.4 | Physical analogies (Big Bang, quantum mechanics correspondence) '
-            'removed from formal sections — such analogies belong only in Illustrated Companions</i>',
+            '<i>Supersedes v2.5 | DA-3 candidate applications (Skolem, CH, Russell) removed — '
+            'speculative connections belong in applications documents, not the bridge layer</i>',
             S['subtitle']),
         Paragraph(
-            '<i>v2.4: R-DA2 framing corrected: multiverse described as structural consequence of T-SNAP + DA-2. '
+            '<i>v2.5: Physical analogies removed from formal sections. '
+            'v2.4: R-DA2 framing corrected. '
             'v2.3: CC-1 added to T-SNAP dependency list. '
             'v2.2: DA-1 redesigned to L-INF-based Design Principle. '
             'v2.1: Adds DA-2 and DA-3.</i>',
@@ -243,10 +244,8 @@ def build_zpe(out_path):
         'space state layer). It provides three formal inserts: DA-1 (Instantiation as Execution, carried '
         'from v1.0), DA-2 (Instantiation Succession — the multiple-&#8869; result), and DA-3 '
         '(Perspective-Relative Cardinality). With DA-1 in place, AX-1 is promoted to Theorem T-SNAP. '
-        'With DA-2, the directed instantiation tree is formally licensed. With DA-3, cardinality is shown '
-        'to be perspective-dependent. Candidate applications to Skolem\'s Paradox, the Continuum '
-        'Hypothesis, and Russell\'s Paradox are identified; formal derivation of these connections is '
-        'deferred to OQ-E2.'))
+        'With DA-2, the directed instantiation tree is formally licensed. With DA-3, cardinality is '
+        'shown to be position-dependent within the instantiation structure.'))
     E.append(body(
         'Illustrated Companion: A paired ZP-E Illustrated Companion document provides accessible '
         'explanations and visual summaries of the bridge derivations in this document. Readers new '
@@ -258,7 +257,7 @@ def build_zpe(out_path):
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Design Principle — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.5 | Physical analogies removed from formal sections | See v2.4: R-DA2 framing corrected | CC-1 in T-SNAP dependency</i>',
+        Paragraph('<i>Updated ZP-E v2.6 | DA-3 candidate applications removed | v2.5: Physical analogies removed | v2.4: R-DA2 framing corrected</i>',
                   S['note']),
         hr(),
     ]
@@ -493,8 +492,7 @@ def build_zpe(out_path):
     E += [
         hr(),
         Paragraph('Formal Insert DA-3: Perspective-Relative Cardinality', S['h1']),
-        Paragraph('<i>New in v2.0 | Cardinality as position-dependent measurement | '
-                  'Accounts for Skolem, CH independence, Russell</i>', S['note']),
+        Paragraph('<i>New in v2.0 | Cardinality as position-dependent measurement within the instantiation structure</i>', S['note']),
         hr(),
     ]
 
@@ -534,32 +532,7 @@ def build_zpe(out_path):
              'The Zero Paradox\'s name is more precise than it first appeared.'),
     ]
 
-    E.append(Paragraph('III. Candidate Applications to Classical Set Theory', S['h2']))
-    E += [
-        body('The following are candidate applications of DA-3\'s perspective-dependence framework to '
-             'classical set-theoretic anomalies. These connections are structurally motivated but not '
-             'formally derived — they are conjectures pending OQ-E2, not established results of this document.'),
-        body('<b>Candidate: Skolem\'s Paradox.</b> ZFC can be given a countable model even though it proves '
-             'uncountable sets exist. From within the model, certain sets are uncountable. From outside the '
-             'model, it is countable. DA-3 suggests a candidate interpretation: countable and uncountable '
-             'may be accessible-cardinality descriptions made from different positions — inside and outside '
-             'the instantiation respectively. Whether this interpretation is formally adequate is the subject '
-             'of OQ-E2.'),
-        body('<b>Candidate: The Continuum Hypothesis.</b> G&#246;del and Cohen together established that CH is '
-             'independent of ZFC — neither provable nor disprovable from the standard axioms. A candidate '
-             'structural account: the answer to whether anything sits between ℵ<sub>0</sub> and 2<sup>ℵ<sub>0</sub></sup> may depend '
-             'on which position in the semilattice one measures from. If so, the independence of CH would '
-             'reflect perspective-dependence rather than an accident of axiom selection. This is a conjecture; '
-             'OQ-E2 is the open question tracking its formal development.'),
-        body('<b>Candidate: Russell\'s Paradox.</b> The set of all sets that do not contain themselves is '
-             'paradoxical because its construction requires a position outside all sets. In the tree framework, '
-             'that position is ⊥ — the foundation that contributes nothing and cannot serve as a measuring '
-             'position. The paradox may arise from attempting to occupy ⊥ as an observer while remaining '
-             'within an instantiation. Whether the accessible-cardinality framework formally recovers this '
-             'result is pending OQ-E2.'),
-    ]
-
-    E.append(Paragraph('IV. The Cardinality Hierarchy as Perspective-Relative', S['h2']))
+    E.append(Paragraph('III. The Cardinality Hierarchy as Perspective-Relative', S['h2']))
     E.append(body(
         'Cantor\'s theorem establishes that for any set S, |P(S)| > |S|, generating the hierarchy '
         'ℵ<sub>0</sub> &lt; 2<sup>ℵ<sub>0</sub></sup> &lt; 2<sup>2<sup>ℵ<sub>0</sub></sup></sup> &lt; ... '
@@ -576,12 +549,10 @@ def build_zpe(out_path):
     ))
     E += [
         sp(4),
-        body('The framework does not resolve the Continuum Hypothesis with a yes or no. The candidate '
-             'claim (DA-3-C1) is that accessible cardinality from within any instantiation cannot '
-             'replicate the view from outside — which, if formally derived, would account for why CH '
-             'resists resolution from within any fixed formal system. Whether Gödel\'s incompleteness '
-             'theorems and CH independence are formal expressions of this perspective-dependence is '
-             'the conjecture that OQ-E2 is tasked with investigating.'),
+        body('The candidate claim (DA-3-C1) is that accessible cardinality from within any instantiation '
+             'cannot replicate the view from outside. Whether specific independence results in classical '
+             'set theory are formal expressions of this perspective-dependence is the conjecture that '
+             'OQ-E2 is tasked with investigating.'),
         derived('Status: DEFINITIONAL ALIGNMENT + CANDIDATE CLAIM. DA-3-D1 and R-DA3-1 are '
                 'definitional. DA-3-C1 is a candidate claim: structurally motivated within the framework; '
                 'formal derivation of the connection between accessible cardinality and specific '
@@ -590,7 +561,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.5', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.6', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -604,7 +575,9 @@ def build_zpe(out_path):
          'Terminal state of I<sub>n</sub> satisfies A4 role of ⊥ for I<sub>n+1</sub>. C-DA2 establishes ontological novelty of each ⊥.'],
         ['DA-3: Perspective-Relative Cardinality',
          'CLOSED (definitional) / CANDIDATE (DA-3-C1)',
-         'DA-3-D1 establishes cardinality is position-dependent. Candidate applications to Skolem, CH, Russell identified — not derived. OQ-E2 open.'],
+         'DA-3-D1 establishes accessible cardinality is position-dependent within the instantiation structure. '
+         'DA-3-C1 (candidate): no position within an instantiation can replicate the outside view. '
+         'Whether this connects formally to specific set-theoretic independence results is deferred to OQ-E2.'],
         ['OQ-A1: Increment selection',
          'CLOSED — T5',
          'Iterative Forcing Theorem. α<sub>n</sub> = ε(S<sub>n</sub>). Grounding updated from AX-1 to T-SNAP.'],
@@ -639,7 +612,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.5', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.6', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -661,7 +634,7 @@ def build_zpe(out_path):
         ['DA-3: Perspective-relative cardinality',
          'DA-2, C-DA2, ZP-B R1',
          'None',
-         'Definitional (DA-3-D1, R-DA3-1); Candidate (DA-3-C1)'],
+         'Definitional (DA-3-D1, R-DA3-1); Candidate (DA-3-C1: outside-view inaccessibility)'],
         ['T-SNAP: Snap is derived',
          'T-BUF chain + DA-1',
          'None',
@@ -690,7 +663,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.5', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.6', S['h1'])]
 
     val_rows = [
         ['DA-1: Design Principle',
@@ -713,8 +686,8 @@ def build_zpe(out_path):
          'Valid — Derived from ZP-A T3 (monotonicity) and ZP-B C3 (irreversibility). Not assumed.'],
         ['DA-3: Perspective-Relative Cardinality',
          'Valid (definitional components: DA-3-D1, R-DA3-1). Candidate (DA-3-C1: connection to specific set-theoretic independence results). OQ-E2 open.'],
-        ['Skolem, CH, Russell — candidate applications',
-         'Conjectures — each is identified as a candidate instance of perspective-dependence. Not derived results. Formal derivation deferred to OQ-E2.'],
+        ['DA-3-C1 — outside-view inaccessibility',
+         'Candidate — no position within any instantiation can replicate the meta-level view of the branching structure. Formal derivation deferred to OQ-E2.'],
         ['Remaining axioms: AX-B1, AX-G1, AX-G2',
          'Intentional foundational commitments. No further reduction claimed.'],
         ['All other ZP-E theorems (T1–T7, T2-C)',
@@ -730,7 +703,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.5 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v2.6 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
@@ -742,5 +715,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_5.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_6.pdf'))
     build_zpe(out)
