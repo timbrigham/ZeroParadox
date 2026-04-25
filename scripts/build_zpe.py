@@ -1,8 +1,9 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 2.7 | April 2026
-DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 (⊥ = {⊥}) and R3.
-Multiverse framing in R-DA2 corrected.
+Version 2.8 | April 2026
+DA-1 formal bridge added: incompressibility = self-description argument (ZP-C D1 + standard AIT).
+At P0, K(c1|n)/|c1| = 1 means description and execution coincide; CC-2/R3 and L-INF become corroboration.
+v2.7: DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 and R3.
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -222,13 +223,15 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.7 | April 2026', S['subtitle']),
+        Paragraph('Version 2.8 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v2.6 | DA-1 upgraded from Design Principle to Derived Proposition: '
-            'grounded in ZP-A CC-2 (&#8869; = {&#8869;} Quine atom) and R3. Multiverse framing in R-DA2 corrected.</i>',
+            '<i>Supersedes v2.7 | DA-1 formal bridge added: incompressibility = self-description argument '
+            '(ZP-C D1 + standard AIT). At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 means description '
+            'and execution coincide; CC-2/R3 and L-INF are independent corroboration of the same conclusion.</i>',
             S['subtitle']),
         Paragraph(
-            '<i>v2.6: DA-3 candidate applications removed. '
+            '<i>v2.7: DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 (&#8869; = {&#8869;}) and R3. '
+            'v2.6: DA-3 candidate applications removed. '
             'v2.5: Physical analogies removed from formal sections. '
             'v2.4: R-DA2 framing corrected. '
             'v2.3: CC-1 added to T-SNAP dependency list. '
@@ -259,7 +262,8 @@ def build_zpe(out_path):
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Derived Proposition — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.7 | DA-1 upgraded: grounded in ZP-A CC-2 (&#8869; = {&#8869;}) and R3 | v2.6: DA-3 applications removed | v2.5: Physical analogies removed | v2.4: R-DA2 corrected</i>',
+        Paragraph('<i>Updated ZP-E v2.8 | DA-1 formal bridge: incompressibility = self-description (ZP-C D1 + AIT) | '
+                  'v2.7: DA-1 upgraded, CC-2/R3 grounding | v2.6: DA-3 applications removed | v2.5: Physical analogies removed</i>',
                   S['note']),
         hr(),
     ]
@@ -324,16 +328,35 @@ def build_zpe(out_path):
              'Any finite external interpreter can hold only a finite informational bound; ⊥ exceeds every '
              'such bound. A configuration exceeding the capacity of every possible finite interpreter cannot '
              'be a static description awaiting interpretation.'),
-        body('Both paths entail the same conclusion by independent argument. Path 1 (structural) is the '
-             'primary grounding: given CC-2, DA-1 follows from R3 as a derivation, not a design commitment. '
-             'Path 2 (informational, L-INF) provides independent corroboration. The prior grounding of DA-1 '
-             'on L-INF alone was honest but still a design commitment; the structural argument from CC-2 '
-             'makes DA-1 a derived proposition, conditional on CC-2.'),
-        derived('Status: DERIVED PROPOSITION — conditional on ZP-A CC-2 (modeling commitment over ZF + AFA). '
-                'Given CC-2, DA-1 follows from ZP-A R3: no external interpreter exists for a self-containing object. '
-                'ZP-C L-INF provides independent informational corroboration. '
-                'Named modeling commitments: CC-1 (S<sub>0</sub> = ⊥, ZP-A) and CC-2 (⊥ = {⊥}, ZP-A), both explicit. '
-                'T-SNAP is derived given DA-1, CC-1, and CC-2. ✓'),
+        body('Path 3 — Formal bridge: Incompressibility as Self-Description (ZP-C D1 + standard AIT): '
+             'The preceding paths establish that ⊥ admits no external interpreter. This path provides '
+             'the formal bridge from that negative claim to the positive claim (necessarily executing). '
+             'In the standard Turing model (D7), a machine configuration x exists in one of two states: '
+             '(A) Static description — x exists as a string specified but not yet being executed; some '
+             'external program p (|p| &lt; |x|) generates x when run, so x is a description awaiting a '
+             'separate execution event by an external generator. '
+             '(B) Live execution — x is the current configuration of a running machine. '
+             'These are exhaustive in the Turing model: either x has a shorter external generator, or it does not. '
+             'At P<sub>0</sub>, ZP-C D1 gives K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1: c<sub>1</sub> is algorithmically incompressible. '
+             'No external program p exists with |p| &lt; |c<sub>1</sub>| such that U(p, n) = c<sub>1</sub>. '
+             'State (A) requires such a p — and no such p exists at P<sub>0</sub>. '
+             'State (A) is therefore eliminated by the Kolmogorov condition. '
+             'Since (A) and (B) are exhaustive and (A) is eliminated, c<sub>1</sub> is in state (B): it is executing. '
+             'Instantiation at P<sub>0</sub> is not the placement of a description to be executed later — '
+             'there is no shorter prior description to execute. Instantiation and execution are the same act.'),
+        body('All three paths entail the same conclusion. Path 3 (ZP-C D1 + AIT) is the primary formal '
+             'grounding: DA-1 follows from the Kolmogorov incompressibility condition at P<sub>0</sub> and the '
+             'exhaustiveness of the static/executing dichotomy in the Turing model. This derivation does '
+             'not require CC-2. Path 1 (CC-2 + R3) and Path 2 (L-INF) provide independent corroboration: '
+             'the structural argument (⊥ = {⊥}, no external position possible) and the informational argument '
+             '(unbounded surprisal, no finite interpreter can hold ⊥) each independently confirm the same '
+             'conclusion from different mathematical grounds.'),
+        derived('Status: DERIVED PROPOSITION — from ZP-C D1 (P<sub>0</sub> definition) and standard '
+                'algorithmic information theory (incompressibility = self-description, no shorter external generator). '
+                'Does not require CC-2. Independent corroboration: ZP-A CC-2 + R3 (structural path), '
+                'ZP-C L-INF (informational path). '
+                'Named modeling commitments: CC-1 (S<sub>0</sub> = &#8869;, ZP-A) and CC-2 (&#8869; = {&#8869;}, ZP-A) — both explicit. '
+                'T-SNAP is derived given DA-1, CC-1, and AX-B1. ✓'),
     ]
 
     E.append(Paragraph('IV. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
@@ -348,7 +371,7 @@ def build_zpe(out_path):
         sp(4),
         body('Proof:'),
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. When K(x|n)/n = 1, the configuration string x is algorithmically random. (ZP-C D1)'),
-        li('Step 2 — A configuration at P<sub>0</sub> is necessarily executing: ⊥ = {⊥} (ZP-A CC-2) is a Quine atom with no external interpreter (ZP-A R3); independently, ⊥ has unbounded surprisal (ZP-C L-INF) exceeding any finite interpreter. (DA-1 &#167; III — Derived Proposition, conditional on CC-2)'),
+        li('Step 2 — A configuration at P<sub>0</sub> is necessarily executing: At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 (ZP-C D1) — c<sub>1</sub> is incompressible, its own minimal program. No shorter external generator exists; the static description state is eliminated; c<sub>1</sub> is in live execution (DA-1 Path 3 — from ZP-C D1 + AIT). Corroboration: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF). (DA-1 &#167; III — Derived Proposition)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
         li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-null state)'),
         li('Step 5 — No program that executes produces only null configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
@@ -742,5 +765,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_7.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_8.pdf'))
     build_zpe(out)

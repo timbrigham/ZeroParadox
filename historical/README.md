@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v2_7-1.pdf](ZP-E_Bridge_Document_v2_7-1.pdf) | 2026-04-25 | ZP-E v2.7 superseded by v2.8: DA-1 formal bridge added — incompressibility = self-description argument (ZP-C D1 + standard AIT). At P0, K(c1|n)/|c1| = 1 eliminates the static description state; DA-1 derived without requiring CC-2. CC-2/R3 and L-INF retained as independent corroboration |
 | [ZP-G_Category_Theory_v1_2-1.pdf](ZP-G_Category_Theory_v1_2-1.pdf) | 2026-04-25 | ZP-G v1.2 superseded by v1.3: R2 added connecting initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥} Quine atom); all prior results unchanged |
 | [ZP-E_Bridge_Document_v2_6-1.pdf](ZP-E_Bridge_Document_v2_6-1.pdf) | 2026-04-25 | ZP-E v2.6 superseded by v2.7: DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 (⊥ = {⊥} Quine atom) and R3; L-INF retained as independent corroboration. Multiverse framing in R-DA2 corrected: multiverse follows from CC-2 + T-SNAP + DA-2 jointly, not "T-SNAP fires in all directions" |
 | [ZP-C_Information_Theory_v1_6-1.pdf](ZP-C_Information_Theory_v1_6-1.pdf) | 2026-04-25 | ZP-C v1.6 superseded by v1.7: L-INF extended with structural second grounding — ZP-A CC-2 (⊥ = {⊥}) and R3 noted as independent convergence with the informational-extremity argument |
