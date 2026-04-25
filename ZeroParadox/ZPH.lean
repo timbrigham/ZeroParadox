@@ -19,8 +19,9 @@ Key results:
   - F_A (ZPA/ZPE): fully categorical — ℕ with max/0 is a concrete ZPCategory instance
     (see NatSLat appendix); ⊥ satisfies the universal property of an initial object.
   - F_B, F_C, F_D: domain properties established (irreversibility, JSD cost,
-    orthogonality). Full categorical functor construction requires defining pTop,
-    InfoSp, and Hilb as CategoryTheory categories — deferred (OQ-G3 open).
+    orthogonality). Full categorical functor construction for F_B, F_C, F_D requires
+    defining pTop, InfoSp, and Hilb as CategoryTheory categories — deferred (OQ-G3
+    open for F_B/C/D). F_A is fully closed: see NatSLat appendix.
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
   accumulation) are compatible — jointly derivable (OQ-G4 closed).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved
@@ -47,7 +48,8 @@ D-H1 is a design commitment, not a derivation. No Lean theorem — the choice is
 makes the instantiation functors well-defined. A different morphism structure would
 yield different functors. -/
 
-/-! ## Section III — Instantiation Functors: Domain Properties (OQ-G3 Partially Open)
+/-! ## Section III — Instantiation Functors: Domain Properties
+    (OQ-G3 Closed for F_A; Open for F_B/C/D)
 
 The four functors F_A, F_B, F_C, F_D are intended to map the abstract ZPCategory C
 to its four domain codomains. A complete Lean construction of each functor as a
@@ -68,7 +70,9 @@ verifying that each functor preserves composition and identity.
 
 /-- T-H1 for F_A — ⊥ is the initial object in the join-semilattice codomain.
     For any element x, ⊥ ≼ x: the unique "morphism" ⊥ → x exists (bot_le).
-    In the poset-as-category, ⊥ satisfies the universal property of 0. -/
+    In the poset-as-category, ⊥ satisfies the universal property of 0.
+    The NatSLat appendix exhibits ℕ as a concrete ZPCategory grounding this claim.
+    OQ-G3 is closed for F_A. -/
 theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
     le bot x :=
   bot_le x
@@ -168,3 +172,66 @@ open CategoryTheory
 #print axioms th3_snap_all_functors
 
 end PurityCheck
+
+/-! ## Appendix — NatSLat: ℕ as a Concrete ZPCategory (Closes OQ-G3 for F_A)
+
+ℕ with Nat.max as join and 0 as bottom is a ZPSemilattice. The induced ≼ relation
+agrees with the standard ≤ on ℕ. The poset-as-category construction (morphisms are
+≤-proofs packed as ULift (PLift (m ≤ n))) makes 0 categorical initial and admits no
+terminal object. AX-G2 holds because m ≤ 0 implies m = 0. Together these verify ℕ
+instantiates ZPCategory with zpInitial = 0. This is the concrete grounding of the
+F_A claim in T-H1: OQ-G3 is closed for F_A. -/
+
+section NatSLat
+
+open ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+/-- ℕ is a ZPSemilattice with max as join and 0 as bottom. -/
+instance natZPSemilattice : ZPSemilattice ℕ where
+  join       := max
+  bot        := 0
+  join_assoc := max_assoc
+  join_comm  := max_comm
+  join_idem  := max_self
+  bot_join   := fun n => max_eq_right (Nat.zero_le n)
+
+/-- Category on ℕ via ≤: morphisms m → n are proofs of m ≤ n. -/
+instance natOrderCat : Category ℕ where
+  Hom m n     := ULift (PLift (m ≤ n))
+  id  n       := ⟨⟨le_refl n⟩⟩
+  comp f g    := ⟨⟨le_trans f.down.down g.down.down⟩⟩
+  id_comp _   := Subsingleton.elim _ _
+  comp_id _   := Subsingleton.elim _ _
+  assoc _ _ _ := Subsingleton.elim _ _
+
+/-- Every morphism out of 0 exists and is unique (Nat.zero_le). -/
+instance natHom0Unique (n : ℕ) : Unique ((0 : ℕ) ⟶ n) where
+  default := ⟨⟨Nat.zero_le n⟩⟩
+  uniq    := fun _ => Subsingleton.elim _ _
+
+/-- ℕ is a ZPCategory with 0 as initial object.
+    AX-G1: no greatest natural number exists.
+    AX-G2: m ≤ 0 implies m = 0, so hom(m, 0) = ∅ when m ≇ 0. -/
+noncomputable instance natZPCategory : ZPCategory ℕ where
+  zpInitial         := 0
+  zpIsInitial       := IsInitial.ofUnique 0
+  ax_g1_no_terminal := fun t => ⟨fun ht => by
+    have h : t + 1 ≤ t := (ht.from (t + 1)).down.down; omega⟩
+  ax_g2             := fun n hne => ⟨fun f => by
+    have hn0 : n = 0 := Nat.le_zero.mp f.down.down
+    subst hn0; exact hne.elim (Iso.refl (0 : ℕ))⟩
+
+end NatSLat
+
+/-! ## Axiom Purity Check — NatSLat -/
+
+section PurityCheckNatSLat
+open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+-- OQ-G3 closed for F_A: ℕ has a categorical initial object grounded in the ZPA semilattice.
+-- IsInitial is a Type (not Prop), so `def` rather than `theorem`.
+noncomputable def natSLat_initial_grounding : IsInitial (0 : ℕ) :=
+  natZPCategory.zpIsInitial
+#print axioms natSLat_initial_grounding
+
+end PurityCheckNatSLat
