@@ -221,10 +221,15 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.1 | April 2026', S['subtitle']),
+        Paragraph('Version 2.4 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v1.0 | Adds DA-2 (Instantiation Succession) and '
-            'DA-3 (Perspective-Relative Cardinality)</i>',
+            '<i>Supersedes v2.3 | R-DA2 framing corrected: multiverse of instantiations described as '
+            'structural consequence of T-SNAP + DA-2, not a "mandated" conclusion</i>',
+            S['subtitle']),
+        Paragraph(
+            '<i>v2.3: CC-1 added to T-SNAP dependency list; multiverse claim scoped to T-SNAP + DA-2 jointly. '
+            'v2.2: DA-1 redesigned to L-INF-based Design Principle. '
+            'v2.1: Adds DA-2 (Instantiation Succession) and DA-3 (Perspective-Relative Cardinality).</i>',
             S['subtitle']),
         sp(10),
         hr(),
@@ -443,7 +448,7 @@ def build_zpe(out_path):
         'Remark R-DA2: T-SNAP fires wherever P<sub>0</sub> conditions are met. DA-2 establishes that the terminal '
         'state of I<sub>n</sub> satisfies those conditions for I<sub>n+1</sub>. T-SNAP therefore applies across instantiation '
         'boundaries without modification. No new axiom is required. The multiverse of instantiations is not '
-        'a possibility the framework permits — it is a consequence the framework mandates.'))
+        'a speculative possibility — it is a structural consequence of T-SNAP + DA-2 applied iteratively.'))
 
     E.append(Paragraph('VI. The Zero Paradox Iterated', S['h2']))
     E.append(body('The paradox of ⊥ — simultaneously contributing nothing and being present in everything — '
@@ -748,5 +753,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_3.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_4.pdf'))
     build_zpe(out)

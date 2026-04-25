@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v2_3-1.pdf](ZP-E_Bridge_Document_v2_3-1.pdf) | 2026-04-25 | ZP-E v2.3 superseded by v2.4: R-DA2 "mandates" framing corrected to "structural consequence of T-SNAP + DA-2"; internal version string synced |
 | [ZP-C_Information_Theory_v1_5-1.pdf](ZP-C_Information_Theory_v1_5-1.pdf) | 2026-04-25 | ZP-C v1.5 superseded by v1.6: CC-2 added (c₀ = ⊥ labeled as modeling commitment, parallel to CC-1 in ZP-A); RP-2 added (branching measure labeled as representational commitment) |
 | [ZP-D_State_Layer_v1_3-1.pdf](ZP-D_State_Layer_v1_3-1.pdf) | 2026-04-25 | ZP-D v1.3 superseded by v1.4: T5 proof corrected — D2(v) lower-bound argument replaced with ball-boundary argument; T5 renamed "Non-Decreasing Norms" |
 | [ZP-B_pAdic_Topology_v1_3-1.pdf](ZP-B_pAdic_Topology_v1_3-1.pdf) | 2026-04-25 | ZP-B v1.3 superseded by v1.4: T0 (p=2) reframed as derived given MP-1 (design commitment); MP-1 acknowledged as the load-bearing design choice |
