@@ -1,7 +1,8 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.5)
-v1.5: D1 updated — n = 2 established as foundational minimum (binary existence/non-existence);
-      higher n derived, not foundational; core claims (T4, T5) grounded at n = 2.
+Build ZP-D: State Layer (Hilbert Space) (v1.6)
+v1.6: R3 added — topological type of T stated explicitly: locally constant, continuous from
+      (Q2, 2-adic topology) to H; connected-space concern addressed.
+v1.5: D1 updated — n = 2 foundational minimum; higher n derived, not foundational.
 v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 """
 import os, sys
@@ -182,15 +183,17 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_5.pdf')
-    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.5')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_6.pdf')
+    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.6')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version 1.5  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.4  |  D1 updated: n = 2 established as foundational minimum (binary existence/non-existence); '
-                    'further dimensions derived, not foundational; core claims T4 and T5 grounded at n = 2</i>', S['subtitle']),
-          Paragraph('<i>v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation</i>', S['subtitle']),
+          Paragraph('Version 1.6  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.5  |  R3 added: topological type of T stated explicitly — '
+                    'locally constant; continuous from (Q<sub>2</sub>, 2-adic topology) to H; '
+                    'totally-disconnected/connected-space concern addressed</i>', S['subtitle']),
+          Paragraph('<i>v1.5: D1 updated — n = 2 foundational minimum. '
+                    'v1.4: T5 proof corrected — ball-boundary argument.</i>', S['subtitle']),
           sp(10),
           body('This document operates within functional analysis. It imports from ZP-A and ZP-B and constructs the Hilbert space state layer on top of them. No information theory from ZP-C is imported. Cross-framework synthesis is deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-D Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
@@ -269,6 +272,22 @@ def build():
         '(i) 0 maps to e<sub>0</sub> by assignment. <font name="DV">&#10003;</font>  (ii) &#949;<sub>0</sub> maps to e<sub>1</sub> by assignment. <font name="DV">&#10003;</font>  (iii) Distinct balls &#8594; distinct basis vectors. <font name="DV">&#10003;</font>  (iv) Disjoint balls &#8594; orthogonal basis vectors. <font name="DV">&#10003;</font>  (v) All basis vectors have norm 1 &#8805; &#8214;e<sub>0</sub>&#8214; = 1. <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
+    E.append(label_box('Remark R3 — Topological Type of T', [
+        'T is locally constant: it is constant on each clopen ball of Q<sub>2</sub>. This follows directly from '
+        'DP-1 — topological isolation maps to orthogonality, so T does not interpolate between basis '
+        'vectors across ball boundaries.',
+        'Continuity: T is continuous from (Q<sub>2</sub>, 2-adic topology) to H. The image of T is a '
+        'discrete set of basis vectors {e<sub>0</sub>, e<sub>1</sub>, &#8230;}. Each preimage T<super>&#8722;1</super>(e<sub>i</sub>) '
+        'is a clopen ball of Q<sub>2</sub>, which is open in the 2-adic topology. Therefore preimages of '
+        'open sets in H are open in Q<sub>2</sub>, and T is continuous. &#10003;',
+        'Note on connected spaces: Q<sub>2</sub> is totally disconnected; H = &#8450;<super>n</super> with the norm '
+        'topology is path-connected. A continuous map from a totally disconnected space to a '
+        'connected space need not be constant &#8212; it must only have a totally disconnected image. '
+        'T\'s image is a discrete (hence totally disconnected) set of basis vectors, '
+        'which is consistent with both the total disconnectedness of Q<sub>2</sub> and the '
+        'path-connectedness of H as a whole.',
+    ]))
+    E.append(sp(4))
     E.append(Paragraph('3.4  Uniqueness of T', S['h2']))
     E.append(label_box('Proposition T3 — Uniqueness of T up to Unitary Equivalence', [
         'Any two operators T, T\': Q<sub>2</sub> &#8594; H satisfying D2 are related by a unitary transformation U: H &#8594; H such that T\' = U &#8728; T.',
@@ -296,7 +315,7 @@ def build():
         'Note: D2(v) gives a global lower bound &#8214;T(x)&#8214; &#8805; &#8214;T(0)&#8214; — this does not imply sequence monotonicity; the ball-boundary argument above is the correct proof. <font name="DV">&#10003;</font>',
     ]))
 
-    E.append(Paragraph('V. Open Items Register for ZP-D v1.5', S['h1']))
+    E.append(Paragraph('V. Open Items Register for ZP-D v1.6', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],
@@ -317,7 +336,8 @@ def build():
          ['Import I-B from ZP-B', 'Valid — Received; MP-1 included; C3 noted'],
          ['DP-1: Orthogonality', 'Valid — Design Principle; reclassified from T1; well-motivated and explicit'],
          ['D2: T requirements', 'Valid — Defined; five requirements stated; all satisfied by T2'],
-         ['T2: Existence of T', 'Valid — Derived; basis assignment; all five requirements verified'],
+         ['T2: Existence of T', 'Valid — Derived; basis assignment; all five requirements verified; '
+          'R3 (v1.6) names topological type: locally constant, continuous'],
          ['T3: Uniqueness of T', 'Valid — Proposition; derived; unique up to unitary equivalence'],
          ['T4: Snap &#8594; orthogonal shift', 'Valid — Theorem; derived; unconditional; depends on DP-1'],
          ['T5: Monotone norms', 'Valid — Proposition; derived; unconditional; from T2 and ZP-A T3']],
