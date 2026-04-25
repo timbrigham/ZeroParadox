@@ -51,9 +51,9 @@ The derivation chain is:
 → **L-RUN** (execution is a non-null state change, ZP-C)  
 → **TQ-IH** (no program outputs ⊥ without a non-null intermediate state, ZP-C)  
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
-→ **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
+→ **T-SNAP** (Binary Snap follows from A4, the standard bottom element axiom; AX-1 was redundant)
 
-This framework introduces no novel axioms. Every commitment is either a derived theorem (T-SNAP), directly verifiable by computation (AX-B1), or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
+This framework introduces no snap-specific axioms. T-SNAP follows from A4 — the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x) — a natural axiom for modeling additive state accumulation, not an assumption crafted to produce the snap. Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
 
 ---
 
@@ -135,7 +135,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
 
-**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
+**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 — the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure — it is a consequence of it.
 
 ---
 
