@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-H_Categorical_Bridge_v1_3-1.pdf](ZP-H_Categorical_Bridge_v1_3-1.pdf) | 2026-04-25 | ZP-H v1.3 superseded by v1.4: T-H3 cross-framework consistency caveat expanded — four-framework agreement is coherence across representations of shared structural commitments (A1-A4, AX-B1, CC-1), not external replication |
 | [ZP-E_Bridge_Document_v2_5-1.pdf](ZP-E_Bridge_Document_v2_5-1.pdf) | 2026-04-25 | ZP-E v2.5 superseded by v2.6: DA-3 candidate applications (Skolem, CH, Russell) removed — speculative connections belong in applications documents, not the bridge layer |
 | [ZP-E_Bridge_Document_v2_4-1.pdf](ZP-E_Bridge_Document_v2_4-1.pdf) | 2026-04-25 | ZP-E v2.4 superseded by v2.5: physical analogies (Big Bang cosmological endpoints, quantum mechanics correspondence) removed from formal sections — such analogies belong only in Illustrated Companions |
 | [ZP-H_Categorical_Bridge_v1_2-1.pdf](ZP-H_Categorical_Bridge_v1_2-1.pdf) | 2026-04-25 | ZP-H v1.2 superseded by v1.3: F_B/F_C/F_D status corrected — PDF constructions complete; Lean proxy witness only; full abstract Lean functors future work; OQ-G3 framing updated |

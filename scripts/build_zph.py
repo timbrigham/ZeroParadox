@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.1 | April 2026
+Version 1.4 | April 2026
+Changes from v1.3:
+  - T-H3 cross-framework consistency caveat expanded: added explicit acknowledgment
+    that the four frameworks share common structural commitments (A1-A4, AX-B1, CC-1)
+    and that their agreement is coherence across representations, not external replication.
 Changes from v1.0:
   - AX-1 status updated throughout: now T-SNAP (Derived — ZP-E v2.0)
   - Import Registry updated to ZP-G v1.1 (BA-G1 demoted to compatibility remark)
@@ -201,7 +205,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.3  |  April 2026  |  Page {doc.page}"
+        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.4  |  April 2026  |  Page {doc.page}"
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -224,11 +228,18 @@ def build_zph(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.3 | April 2026', S['bodyI']),
+        Paragraph('Version 1.4 | April 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.2 | F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub> framing corrected: PDF constructions complete; '
+            '<i>Supersedes v1.3 | T-H3 consistency caveat expanded: four-framework agreement '
+            'is coherence across representations of shared structural commitments (A1-A4, AX-B1, CC-1), '
+            'not external replication.</i>',
+            S['note']),
+        Paragraph(
+            '<i>v1.3: F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub> framing corrected: PDF constructions complete; '
             'Lean formalization uses proxy witness — full abstract Lean functors future work. '
-            'OQ-G3 status updated to honest "closed (concrete witness) / open (full Lean)" framing.</i>',
+            'OQ-G3 status updated to honest "closed (concrete witness) / open (full Lean)" framing. '
+            'v1.2: F<sub>C</sub> composition preservation corrected — Q-stability argument replaces JSD subadditivity. '
+            'v1.1: AX-1 updated to T-SNAP (ZP-E v2.0); Import Registry updated to ZP-G v1.1; OQ-G1 closed.</i>',
             S['note']),
         Paragraph(
             '<i>v1.2: F<sub>C</sub> composition preservation corrected — Q-stability argument replaces JSD subadditivity. '
@@ -560,7 +571,10 @@ def build_zph(out_path):
             '&#10216;e<sub>0</sub>, e<sub>1</sub>&#10217; = 0 (ZP-D T4). Norm-increasing (ZP-D T5). DP-1 is a design premise.',
             'Cross-framework consistency: All four functors agree that the Snap is irreversible. Each '
             'irreversibility result is a closed theorem within its own domain document. Their agreement is '
-            'structural consistency, not circular argument. T-SNAP (Binary Snap Causality) is a derived '
+            'structural consistency, not circular argument. The frameworks are not independent — they draw '
+            'from common structural commitments (A1-A4, AX-B1, CC-1). Their agreement confirms coherence '
+            'across mathematical representations of a shared foundation, not external replication. '
+            'T-SNAP (Binary Snap Causality) is a derived '
             'theorem in ZP-E v2.0 and is inherited here with derived status. DP-1 remains the only design premise. <font name="DV">&#10003;</font>',
         ]
     ))
@@ -598,7 +612,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.3', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.4', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -712,7 +726,7 @@ def build_zph(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.3 | Four instantiation functors constructed (PDF level) | '
+            '<i>End of ZP-H v1.4 | Four instantiation functors constructed (PDF level) | '
             'OQ-G1 through OQ-G4 closed (concrete witness level) | '
             'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub> Lean proxy witness — full abstract functors future work | '
             'T-SNAP inherited as derived theorem | '
@@ -727,5 +741,5 @@ def build_zph(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_3.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_4.pdf'))
     build_zph(out)
