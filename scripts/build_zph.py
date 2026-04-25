@@ -201,7 +201,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.1  |  April 2026  |  Page {doc.page}"
+        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.2  |  April 2026  |  Page {doc.page}"
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -423,8 +423,13 @@ def build_zph(out_path):
             'Morphism map: F<sub>C</sub> sends each morphism f: A &#8594; B to the informational transition from P<sub>A</sub> to P<sub>B</sub>, '
             'with informational work E = JSD(P<sub>A</sub> &#8741; P<sub>B</sub>) &#8805; 0. The fundamental transition (0 &#8594; first non-initial '
             'object) maps to JSD(P &#8741; Q) = 1 bit (ZP-C T1b).',
-            'Preservation of composition: JSD is subadditive: JSD(P<sub>A</sub> &#8741; P<sub>C</sub>) &#8804; JSD(P<sub>A</sub> &#8741; P<sub>B</sub>) + JSD(P<sub>B</sub> &#8741; P<sub>C</sub>). '
-            'Sequential informational transitions compose consistently. <font name="DV">&#10003;</font>',
+            'Preservation of composition: In the binary framework (Fin 2), only two non-trivial distributions exist: '
+            'P = (1, 0) and Q = (0, 1). The snap f: 0 &#8594; &#949;<sub>0</sub> is the unique morphism mapping P &#8594; Q at cost '
+            'JSD(P &#8741; Q) = 1 bit. All successor morphisms g: &#949;<sub>n</sub> &#8594; &#949;<sub>n+1</sub> map Q &#8594; Q (Q-stability of the '
+            'post-snap codomain), giving F<sub>C</sub>(g) = JSD(Q &#8741; Q) = 0. Therefore F<sub>C</sub>(g &#8728; f) = 1 bit = '
+            'F<sub>C</sub>(g) + F<sub>C</sub>(f) = 0 + 1 bit. Composition is preserved exactly by Q-stability, not by '
+            'subadditivity. (Note: JSD subadditivity is an inequality and does not establish this — '
+            'the equality holds here as a structural consequence of the binary framework.) <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>C</sub>(id<sub>A</sub>) = JSD(P<sub>A</sub> &#8741; P<sub>A</sub>) = 0. No informational work is done by a trivial transition. <font name="DV">&#10003;</font>',
             'AX-G1 respected: The Null State P = (1, 0) is the unique distribution of minimum entropy (H(P) = 0 bits). '
             'No terminal object exists in InfoSp because there is no maximum entropy distribution that all transitions '
@@ -570,7 +575,7 @@ def build_zph(out_path):
         ['F<sub>B</sub> preserves composition',        'ZP-B T2; C-H2',               'None',        'Valid — Derived'],
         ['F<sub>B</sub> respects AX-G1, AX-G2',       'ZP-B T5, C3; C-H2',           'None',        'Valid — Derived'],
         ['F<sub>C</sub>(0) = P = (1,0)',               'ZP-C T1; ZP-E T6; C-H3',      'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
-        ['F<sub>C</sub> preserves composition',        'JSD subadditivity; C-H3',      'None',        'Valid — Derived'],
+        ['F<sub>C</sub> preserves composition',        'Q-stability of post-snap codomain; C-H3', 'None', 'Valid — Derived (binary framework; Q-stability, not subadditivity)'],
         ['F<sub>C</sub> respects AX-G1, AX-G2',       'ZP-C T1b; C-H3',              'AX-B1, RP-1', 'Valid — from AX-B1, RP-1'],
         ['F<sub>D</sub>(0) = T(0) = e<sub>0</sub>',   'ZP-D T2, T3; C-H4',           'DP-1',        'Valid — from DP-1'],
         ['F<sub>D</sub> preserves composition',        'ZP-D T5; C-H4',               'DP-1',        'Valid — from DP-1'],
@@ -588,7 +593,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.1', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.2', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -699,7 +704,7 @@ def build_zph(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.1 | Four instantiation functors constructed | '
+            '<i>End of ZP-H v1.2 | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 all closed | '
             'T-SNAP inherited as derived theorem | '
             'No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers</i>',
@@ -713,5 +718,5 @@ def build_zph(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_1.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_2.pdf'))
     build_zph(out)
