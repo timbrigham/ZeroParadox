@@ -228,7 +228,7 @@ If referencing this work, please cite:
 
 ## Contact
 
-For inquiries, discussion, or collaboration, reach out by email at [timbrigham@gmail.com](mailto:timbrigham@gmail.com) or open an issue on [GitHub](https://github.com/timbrigham/ZeroParadox).
+For inquiries, discussion, or collaboration, reach out by email at [timbrigham@zeroparadox.org](mailto:timbrigham@zeroparadox.org) or open an issue on [GitHub](https://github.com/timbrigham/ZeroParadox).
 
 ---
 
