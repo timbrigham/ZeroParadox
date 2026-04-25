@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v2_1-1.pdf](ZP-E_Bridge_Document_v2_1-1.pdf) | 2026-04-25 | ZP-E v2.1 superseded by v2.2: DA-3 Skolem/CH/Russell connections reframed from derived results to candidate applications pending OQ-E2 |
 | [ZP_TQ_IH_Formal-1.pdf](ZP_TQ_IH_Formal-1.pdf) | 2026-04-21 | Early standalone formal treatment of TQ-IH; superseded by ZP-C v1.4 which integrates TQ-IH as a proved theorem |
 | [ZP_TQ_IH_Illustrated-1.pdf](ZP_TQ_IH_Illustrated-1.pdf) | 2026-04-21 | Early standalone illustrated treatment of TQ-IH; superseded by ZP-C Illustrated Companion |
 | [Zero_Paradox_Foreword-5.pdf](Zero_Paradox_Foreword-5.pdf) | 2026-04-19 | Foreword before Section VIII (Generation 2 applications) was added |
