@@ -285,6 +285,9 @@ def build_zpg(out_path):
         body('<i>Illustrated Companion: A paired ZP-G Illustrated Companion provides concrete examples '
              'and visual intuitions for the results here. Examples are kept separate from the formal '
              'layers to distinguish illustrative material from proofs.</i>', 'bodyI'),
+        body('<i>Note on sequencing: The Zero Paradox framework labels its layers A through H, '
+             'intentionally omitting F. ZP-G follows ZP-E directly; there is no missing document.</i>',
+             'bodyI'),
         sp(4),
         hr(),
     ]
