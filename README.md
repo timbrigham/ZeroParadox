@@ -80,7 +80,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 |------|----------|---------|----------|
 | [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_5.pdf) | ZP-A | v1.5 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_4.pdf) | ZP-B | v1.4 | AX-B1. MP-1 (design commitment). T0: p=2 derived given MP-1. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
-| [ZP-C Information Theory](ZP-C_Information_Theory_v1_5.pdf) | ZP-C | v1.5 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). |
+| [ZP-C Information Theory](ZP-C_Information_Theory_v1_6.pdf) | ZP-C | v1.6 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). CC-2: c₀ = ⊥ labeled as modeling commitment. RP-2: branching measure labeled as representational commitment. |
 | [ZP-D State Layer](ZP-D_State_Layer_v1_4.pdf) | ZP-D | v1.4 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_3.pdf) | ZP-E | v2.3 | **DA-1** (instantiation = execution, grounded in L-INF). **T-SNAP** (Binary Snap derived; depends on DA-1 and CC-1). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Candidate applications to Skolem, CH independence, Russell (pending OQ-E2). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_2.pdf) | ZP-G | v1.2 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
@@ -167,7 +167,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_5.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_5.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_3.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_5.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_6.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_3.pdf) (in dependency order)
 
 **For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_2.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_2.pdf) (self-contained; after ZP-E)
 

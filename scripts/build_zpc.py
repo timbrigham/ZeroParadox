@@ -1,5 +1,5 @@
 """
-Build ZP-C: Information Theory (v1.5)
+Build ZP-C: Information Theory (v1.6)
 """
 import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -179,13 +179,14 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_5.pdf')
-    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.5')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_6.pdf')
+    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.6')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version 1.5  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.4  |  L-INF added: Informational Extremity of &#8869;; T1b relabelled Corollary; T-BUF Step 2 grounded in L-INF</i>', S['subtitle']),
+          Paragraph('Version 1.6  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.5  |  CC-2 added: c&#8320; = &#8869; labeled as modeling commitment (parallel to CC-1 in ZP-A); RP-2 added: branching measure labeled as representational commitment</i>', S['subtitle']),
+          Paragraph('<i>Version 1.5 change: L-INF added: Informational Extremity of &#8869;; T1b relabelled Corollary; T-BUF Step 2 grounded in L-INF.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
@@ -249,7 +250,14 @@ def build():
         'For x &#8712; Q<sub>2</sub> with x &#8800; 0 and P(x) > 0:',
         'I(x)  =  &#8722;log<sub>2</sub> P(x)',
         'As v<sub>2</sub>(x) &#8594; +&#8734; (x approaches 0 in the 2-adic metric), I(x) &#8594; +&#8734;: states 2-adically close to 0 are informationally extreme.',
-        'The probability measure P on Q<sub>2</sub> \\ {0} is the branching measure induced by the binary ball hierarchy of Q<sub>2</sub>: at each level k, the two sub-balls of B(0, 2<super>&#8722;k</super>) each receive half the probability mass of their parent ball.',
+        'The probability measure P on Q<sub>2</sub> \\ {0} is the branching measure induced by the binary ball hierarchy of Q<sub>2</sub> (RP-2 below): at each level k, the two sub-balls of B(0, 2<super>&#8722;k</super>) each receive half the probability mass of their parent ball.',
+    ]))
+    E.append(sp(4))
+    E.append(label_box('Principle RP-2 — Branching Measure on Q₂ \\ {0}', [
+        'The probability measure P on Q<sub>2</sub> \\ {0} is the canonical branching measure induced by the binary ball hierarchy: at each level k, each sub-ball receives half the probability mass of its parent. This is a representational commitment — a specific measure choice not uniquely forced by AX-B1 alone.',
+        'Justification: The branching measure assigns equal weight to each binary branch, consistent with AX-B1\'s symmetric treatment of existence and non-existence. Alternative measures (e.g. non-uniform branching weights) would depart from this symmetry without additional motivation.',
+        'Parallel: RP-1 fixes the point-mass representation of ontological states. RP-2 fixes the probability measure on the 2-adic domain. Both are representational commitments sitting alongside, not derived from, AX-B1.',
+        'Status: PRINCIPLE — representational commitment. Required by T2 and L-INF.',
     ]))
     E.append(sp(4))
     E.append(label_box('Definition D5 — Discrete Surprisal Difference Operator DF', [
@@ -299,9 +307,17 @@ def build():
         'Step 1 — c<sub>0</sub> and c<sub>1</sub> are distinct configurations by D7: the control unit is in a different state (idle vs. executing). c<sub>0</sub> &#8800; c<sub>1</sub>.',
         'Step 2 — By AX-B1, a state either exists or it does not. The machine at c<sub>1</sub> occupies a configuration distinct from c<sub>0</sub>. The transition c<sub>0</sub> &#8594; c<sub>1</sub> is a binary state change in the sense of AX-B1.',
         'Step 3 — The transition is irreducible: there is no intermediate configuration between c<sub>0</sub> and c<sub>1</sub>. The first instruction fetch is the minimal unit of execution.',
-        'Step 4 — c<sub>0</sub> corresponds to &#8869; (no distinguishable structure). c<sub>1</sub> is strictly above &#8869; in the semilattice: the machine configuration has gained content (an active execution context) not present in c<sub>0</sub>.',
+        'Step 4 — c<sub>0</sub> is modeled as corresponding to &#8869; in the semilattice (CC-2 — see below). c<sub>1</sub> is strictly above &#8869;: the machine configuration has gained content (an active execution context) not present in c<sub>0</sub>.',
         'Conclusion: c<sub>1</sub> &#8800; &#8869;. The act of execution is itself a non-null state, regardless of what the output tape contains. <font name="DV">&#10003;</font>',
         'Status: DERIVED from AX-B1 and D7. No Coding Theorem required. No output-tape contents required.',
+    ]))
+    E.append(sp(4))
+    E.append(label_box('Conditional Claim CC-2 — c₀ = ⊥ (Parallel to CC-1 in ZP-A)', [
+        'We model the initial machine configuration c<sub>0</sub> as corresponding to &#8869; in the semilattice (L, &#8744;, &#8869;). This is not derived from D7 or from A1&#8211;A4 — it is a modeling choice.',
+        'Motivation: c<sub>0</sub> is the machine state prior to any execution: no instruction has been fetched, no content has accumulated. &#8869; is the algebraic element below all others — the state of no accumulated content. The identification is motivated by structural correspondence, not derivation.',
+        'Parallel: CC-1 in ZP-A commits to S<sub>0</sub> = &#8869; for state sequences. CC-2 makes the same commitment for machine configurations. Both are modeling choices, not derivations from the core axioms.',
+        'Effect: Step 4 of L-RUN depends on CC-2. The conclusion c<sub>1</sub> &#8800; &#8869; follows from L-RUN\'s proof; the identification of c<sub>0</sub> with &#8869; is the additional modeling commitment supplied by CC-2.',
+        'Status: CONDITIONAL CLAIM — modeling commitment; not derived from D7 or A1&#8211;A4.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R4 — Configuration and Output Are Independent', [
@@ -340,13 +356,15 @@ def build():
         'Status label: CANDIDATE THEOREM — gap identified and named (DA-1). Closed in ZP-E DA-1 insert.',
     ]))
 
-    E.append(Paragraph('VI. Open Items Register for ZP-C v1.4', S['h1']))
+    E.append(Paragraph('VI. Open Items Register for ZP-C v1.6', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['S1: Distribution stipulation', 'Closed — T1', 'T1 derives P and Q from AX-B1 and RP-1.'],
          ['OQ-C1: Non-conservation', 'Closed — T2 rebuilt', 'Telescoping critique resolved; infinite divergence proven within extended D6.'],
          ['Smooth embedding, MO-1, P1', 'Retired', 'Remain retired from v1.2. Inconsistent with ZP-B.'],
          ['RP-1: Representation principle', 'Principle — explicit', 'Bridge between AX-B1 and probabilistic tools.'],
+         ['RP-2: Branching measure on Q₂ \\ {0}', 'Principle — explicit', 'Canonical branching measure; representational commitment; required by T2 and L-INF.'],
+         ['CC-2: c₀ = ⊥', 'Conditional Claim', 'Modeling commitment — c₀ identified with ⊥ in semilattice. Parallel to CC-1 in ZP-A. Required by L-RUN Step 4.'],
          ['D7: Machine configuration', 'Defined', 'Foundation for L-RUN and TQ-IH.'],
          ['L-RUN: Hardware Lemma', 'Derived — Lemma', 'Execution is a non-null state change. Derived from AX-B1 and D7.'],
          ['TQ-IH: Test Question', 'Closed — Negative', 'No program can output &#8869; without a non-null intermediate configuration state. Proven by L-RUN.'],
@@ -367,6 +385,8 @@ def build():
          ['D3: Dirac measure &#948;<sub>0</sub>', 'Valid — standard; compatible with discrete Q<sub>2</sub> topology'],
          ['R3: Smooth embedding retired', 'Valid — Retired; inconsistent with ZP-B'],
          ['D4: Discrete surprisal I(x)', 'Valid — pointwise on Q<sub>2</sub> \\ {0}; branching measure stated'],
+         ['RP-2: Branching measure', 'Valid — Principle; explicit representational commitment; canonical binary branching measure'],
+         ['CC-2: c<sub>0</sub> = &#8869;', 'Valid — Conditional Claim; modeling commitment; parallel to CC-1 in ZP-A; load-bearing for L-RUN Step 4'],
          ['D5: Difference operator DF', 'Valid — antisymmetric; no smoothness assumed'],
          ['D6: Circulation (extended)', 'Valid — finite and infinite cases both defined; finite conservation acknowledged'],
          ['T2: Non-conservation rebuilt', 'Valid — Derived; telescoping critique addressed; divergence at &#963;&#8594;0 established'],
