@@ -81,7 +81,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_6.pdf) | ZP-A | v1.6 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. CC-2: ⊥ = {⊥} (Quine atom, ZF + AFA). R3: DA-1 in ZP-E follows from CC-2. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_4.pdf) | ZP-B | v1.4 | AX-B1. MP-1 (design commitment). T0: p=2 derived given MP-1. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
 | [ZP-C Information Theory](ZP-C_Information_Theory_v1_7.pdf) | ZP-C | v1.7 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). CC-2: c₀ = ⊥ labeled as modeling commitment. RP-2: branching measure labeled as representational commitment. L-INF grounded from two directions: informational extremity (D4, T2) and structural self-containment (ZP-A CC-2, R3). |
-| [ZP-D State Layer](ZP-D_State_Layer_v1_4.pdf) | ZP-D | v1.4 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
+| [ZP-D State Layer](ZP-D_State_Layer_v1_5.pdf) | ZP-D | v1.5 | Hilbert space H = ℂⁿ, foundational minimum n = 2 (binary existence/non-existence; no core claim requires n > 2). Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_8.pdf) | ZP-E | v2.8 | **DA-1** (instantiation = execution; v2.8 formal bridge: at P0, K(c1|n)/|c1| = 1 eliminates static description state — derivation from ZP-C D1 + AIT, independent of CC-2; CC-2/R3 and L-INF as corroboration). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_3.pdf) | ZP-G | v1.3 | Category C. Initial object. AX-G1, AX-G2. Universal property. R2 (v1.3): connecting note linking initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). |
 | [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_4.pdf) | ZP-H | v1.4 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proxy witness only - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
@@ -170,7 +170,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_6.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_8.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_6.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_5.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_8.pdf) (in dependency order)
 
 **For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_3.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_4.pdf) (self-contained; after ZP-E)
 

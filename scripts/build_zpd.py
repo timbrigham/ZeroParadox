@@ -1,5 +1,8 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.4)
+Build ZP-D: State Layer (Hilbert Space) (v1.5)
+v1.5: D1 updated — n = 2 established as foundational minimum (binary existence/non-existence);
+      higher n derived, not foundational; core claims (T4, T5) grounded at n = 2.
+v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 """
 import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -179,13 +182,15 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_4.pdf')
-    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.4')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_5.pdf')
+    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.5')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version 1.4  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.3  |  T5 proof corrected: ball-boundary argument replaces incorrect D2(v) citation</i>', S['subtitle']),
+          Paragraph('Version 1.5  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.4  |  D1 updated: n = 2 established as foundational minimum (binary existence/non-existence); '
+                    'further dimensions derived, not foundational; core claims T4 and T5 grounded at n = 2</i>', S['subtitle']),
+          Paragraph('<i>v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation</i>', S['subtitle']),
           sp(10),
           body('This document operates within functional analysis. It imports from ZP-A and ZP-B and constructs the Hilbert space state layer on top of them. No information theory from ZP-C is imported. Cross-framework synthesis is deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-D Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
@@ -221,8 +226,16 @@ def build():
 
     E.append(Paragraph('II. The Hilbert Space State Layer', S['h1']))
     E.append(label_box('Definition D1 — State Layer H', [
-        'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, e<sub>2</sub>, &#8230;}.',
-        'n is the cardinality of the clopen ball partition of Q<sub>2</sub>. For finite approximations, n is finite; the framework extends to infinite-dimensional Hilbert spaces by standard functional analysis.',
+        'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, &#8230;}.',
+        'The foundational minimum is n = 2, corresponding to the two ontological states of the framework: '
+        '&#8869; (null state, mapped to e<sub>0</sub>) and &#949;<sub>0</sub> (first atomic state, mapped to e<sub>1</sub>). '
+        'These two orthogonal vectors express the binary existence/non-existence distinction that is the '
+        'framework\'s central object. All further states are derived from this pair as joins in (L, &#8744;, &#8869;) '
+        '&#8212; they require no additional foundational dimension.',
+        'The framework\'s core claims (T4: snap produces orthogonal shift; T5: monotone norms) are '
+        'established at n = 2. Extensions to higher n are consistent and natural: for level-k '
+        'approximations using the clopen ball partition of Q<sub>2</sub> at depth k, n = 2<super>k</super>. '
+        'No foundational claim of the framework requires n &gt; 2.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R1 — Decoupling of Topological and State Layers', [
@@ -283,7 +296,7 @@ def build():
         'Note: D2(v) gives a global lower bound &#8214;T(x)&#8214; &#8805; &#8214;T(0)&#8214; — this does not imply sequence monotonicity; the ball-boundary argument above is the correct proof. <font name="DV">&#10003;</font>',
     ]))
 
-    E.append(Paragraph('V. Open Items Register for ZP-D v1.4', S['h1']))
+    E.append(Paragraph('V. Open Items Register for ZP-D v1.5', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],
@@ -297,7 +310,8 @@ def build():
     E.append(Paragraph('VI. Validation Status', S['h1']))
     E.append(data_table(
         ['Component', 'Status / Notes'],
-        [['H = &#8450;<super>n</super> (D1)', 'Valid — Defined; standard Hilbert space; self-contained'],
+        [['H = &#8450;<super>n</super> (D1)', 'Valid — Defined; foundational minimum n = 2 (binary existence/non-existence); '
+          'extensions to n = 2<super>k</super> consistent; no core claim requires n &gt; 2'],
          ['Decoupling of Q<sub>2</sub> and H (R1)', 'Valid — Structural; Q<sub>2</sub> and H are categorically distinct; T is the bridge'],
          ['Import I-A from ZP-A', 'Valid — Received; CC-1 reclassification noted'],
          ['Import I-B from ZP-B', 'Valid — Received; MP-1 included; C3 noted'],
