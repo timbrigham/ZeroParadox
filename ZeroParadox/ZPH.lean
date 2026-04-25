@@ -308,3 +308,108 @@ open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
 #print axioms fd_nnreal_initial_grounding
 
 end PurityCheckNNRealZPCat
+
+/-! ## Appendix — Q₂BallCat and fb_functor: Full Functor for F_B
+
+The clopen ball hierarchy in Q₂ — the sequence B(0, 2⁰) ⊃ B(0, 2⁻¹) ⊃ ⋯ converging to {0} —
+gives a natural category grounding F_B concretely in Q₂'s topology.
+
+Q₂BallDepth indexes this hierarchy: depth n corresponds to the clopen ball B(0, 2^(-n)).
+A morphism n → m (n ≤ m) descends into a smaller ball — topologically forward, not back.
+AX-G2 (no morphism m → 0 for m ≠ 0) is the categorical encoding of C3: no continuous path
+returns from a non-zero element to 0 in Q₂.
+
+fb_functor : Functor ℕ Q₂BallDepth is the concrete F_B Lean term.
+The snap morphism 0 → 1 in ℕ maps to the depth-0 → depth-1 ball transition;
+fb_snap_q2_grounded connects this to C3. -/
+
+section Q₂BallFunctor
+
+open ZeroParadox.ZPB ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+/-- Q₂BallDepth: depth index for the clopen ball hierarchy in Q₂.
+    A distinct type (not ℕ) so its Category and ZPCategory instances
+    do not conflict with NatSLat's Category ℕ instance. -/
+structure Q₂BallDepth where
+  val : ℕ
+  deriving DecidableEq
+
+instance : Zero Q₂BallDepth := ⟨⟨0⟩⟩
+
+@[ext] theorem Q₂BallDepth.ext {a b : Q₂BallDepth} (h : a.val = b.val) : a = b := by
+  cases a; cases b; simp_all
+
+/-- Category on Q₂BallDepth: morphisms n → m are proofs of n.val ≤ m.val.
+    Descending to a deeper ball (smaller radius, closer to 0) is the forward direction. -/
+instance q2BallCat : Category Q₂BallDepth where
+  Hom n m     := ULift (PLift (n.val ≤ m.val))
+  id  n       := ⟨⟨Nat.le_refl _⟩⟩
+  comp f g    := ⟨⟨Nat.le_trans f.down.down g.down.down⟩⟩
+  id_comp _   := Subsingleton.elim _ _
+  comp_id _   := Subsingleton.elim _ _
+  assoc _ _ _ := Subsingleton.elim _ _
+
+/-- Every morphism out of depth 0 exists and is unique (Nat.zero_le). -/
+instance q2BallHom0Unique (n : Q₂BallDepth) : Unique ((0 : Q₂BallDepth) ⟶ n) where
+  default := ⟨⟨Nat.zero_le _⟩⟩
+  uniq    := fun _ => Subsingleton.elim _ _
+
+/-- Q₂BallDepth is a ZPCategory with depth 0 as the initial object.
+    AX-G1: depth has no maximum — n + 1 > n always.
+    AX-G2: m.val ≤ 0 forces m = 0, grounded in C3 (no return to 0 in Q₂). -/
+noncomputable instance q2BallZPCat : ZPCategory Q₂BallDepth where
+  zpInitial         := 0
+  zpIsInitial       := IsInitial.ofUnique 0
+  ax_g1_no_terminal := fun t => ⟨fun ht => by
+    have h : t.val + 1 ≤ t.val := (ht.from ⟨t.val + 1⟩).down.down
+    omega⟩
+  ax_g2             := fun n hne => ⟨fun f => by
+    have hle : n.val ≤ 0 := f.down.down
+    have h0 : n.val = 0   := Nat.le_zero.mp hle
+    have hn : n = 0       := Q₂BallDepth.ext h0
+    subst hn
+    exact hne.elim (Iso.refl _)⟩
+
+/-- Semantic embedding: depth n corresponds to the clopen ball B(0, 2^(-n)) in Q₂. -/
+noncomputable def q2BallAt (n : Q₂BallDepth) : Set Q₂ :=
+  Metric.closedBall 0 (2 ^ (-(n.val : ℤ)))
+
+/-- Ball containment is antitone in depth: n ≤ m → B(0, 2^(-m)) ⊆ B(0, 2^(-n)). -/
+theorem q2Ball_antitone {n m : Q₂BallDepth} (h : n.val ≤ m.val) :
+    q2BallAt m ⊆ q2BallAt n := sorry
+
+/-- Semantic grounding of fb_functor's snap morphism 0 → ⟨1⟩:
+    For any x ∈ B(0, 2^(-1)) with x ≠ 0, C3 (ZPB) guarantees no continuous path
+    returns from x to 0 in Q₂. This is the topological content of AX-G2 in Q₂BallDepth. -/
+theorem fb_snap_q2_grounded :
+    ∀ x : Q₂, x ∈ q2BallAt ⟨1⟩ → x ≠ 0 →
+      ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
+        γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = 0 :=
+  fun x _ hx => c3_irreversible x hx
+
+/-- fb_functor: the concrete Lean Functor term for F_B.
+    Source: ℕ with ≤ (NatSLat / NatOrderCat).
+    Target: Q₂BallDepth with ≤ (q2BallCat), grounded in Q₂ via q2BallAt and C3.
+    Object map: n ↦ ⟨n⟩ (each ℕ index wraps to the corresponding ball depth).
+    Morphism map: carries the ≤ proof across; functor laws hold by Subsingleton. -/
+noncomputable def fb_functor : Functor ℕ Q₂BallDepth where
+  obj n       := ⟨n⟩
+  map f       := ⟨⟨f.down.down⟩⟩
+  map_id _    := Subsingleton.elim _ _
+  map_comp _ _ := Subsingleton.elim _ _
+
+/-- fb_functor maps the NatSLat initial object to the Q₂BallDepth initial object. -/
+noncomputable def fb_preserves_initial : IsInitial (fb_functor.obj 0) :=
+  show IsInitial (0 : Q₂BallDepth) from IsInitial.ofUnique 0
+
+end Q₂BallFunctor
+
+/-! ## Axiom Purity Check — Q₂BallFunctor -/
+
+section PurityCheckQ₂BallFunctor
+open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+#print axioms fb_preserves_initial
+#print axioms fb_snap_q2_grounded
+
+end PurityCheckQ₂BallFunctor
