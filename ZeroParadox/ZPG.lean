@@ -155,3 +155,74 @@ open ZeroParadox.ZPG CategoryTheory
 #print axioms t7_categorical_zero_paradox
 
 end PurityCheck
+
+/-! ## Appendix — ForkCat: A Concrete ZPCategory Instance
+
+Closes the vacuity risk identified in peer review: every ZPG theorem is universally
+quantified over [ZPCategory C] with no concrete C exhibited. ForkCat provides one.
+
+Objects: zero (initial), left, right. Morphisms: identities plus zero → left and
+zero → right, nothing else. Zero is initial; no terminal object exists; AX-G2 holds.
+-/
+
+section ForkCat
+
+open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+/-- Three objects: the initial zero and two non-initial leaves. -/
+inductive ForkObj : Type | zero | left | right deriving DecidableEq
+
+/-- Morphisms: one identity per object, plus two arrows out of zero. Nothing else. -/
+inductive ForkHom : ForkObj → ForkObj → Type
+  | idZ : ForkHom .zero  .zero
+  | toL : ForkHom .zero  .left
+  | toR : ForkHom .zero  .right
+  | idL : ForkHom .left  .left
+  | idR : ForkHom .right .right
+
+instance {X Y : ForkObj} : Subsingleton (ForkHom X Y) :=
+  ⟨fun f g => by cases f <;> cases g <;> rfl⟩
+
+private def forkId : ∀ (X : ForkObj), ForkHom X X
+  | .zero  => .idZ
+  | .left  => .idL
+  | .right => .idR
+
+private def forkComp : ∀ {X Y Z : ForkObj}, ForkHom X Y → ForkHom Y Z → ForkHom X Z
+  | _, _, _, .idZ, .idZ => .idZ
+  | _, _, _, .idZ, .toL => .toL
+  | _, _, _, .idZ, .toR => .toR
+  | _, _, _, .toL, .idL => .toL
+  | _, _, _, .toR, .idR => .toR
+  | _, _, _, .idL, .idL => .idL
+  | _, _, _, .idR, .idR => .idR
+
+instance forkCategory : Category ForkObj where
+  Hom   := ForkHom
+  id    := forkId
+  comp  := forkComp
+  id_comp := fun f => by cases f <;> rfl
+  comp_id := fun f => by cases f <;> rfl
+  assoc   := fun f g h => by cases f <;> cases g <;> cases h <;> rfl
+
+instance (Y : ForkObj) : Unique (ForkObj.zero ⟶ Y) where
+  default := match Y with | .zero => .idZ | .left => .toL | .right => .toR
+  uniq    := fun f => by cases f <;> rfl
+
+noncomputable instance forkZPCategory : ZPCategory ForkObj where
+  zpInitial        := .zero
+  zpIsInitial      := IsInitial.ofUnique ForkObj.zero
+  ax_g1_no_terminal := by
+    intro t; exact ⟨fun ht =>
+      match t with
+      | .zero  => nomatch (ht.from .left)
+      | .left  => nomatch (ht.from .right)
+      | .right => nomatch (ht.from .left)⟩
+  ax_g2 := by
+    intro X hX
+    match X with
+    | .zero  => exact hX.elim (Iso.refl ForkObj.zero)
+    | .left  => exact ⟨fun f => nomatch f⟩
+    | .right => exact ⟨fun f => nomatch f⟩
+
+end ForkCat
