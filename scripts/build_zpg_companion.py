@@ -1,7 +1,8 @@
 """
-Build ZP-G Illustrated Companion (v1.1, new standalone document)
+Build ZP-G Illustrated Companion (v1.2)
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
+Changes from v1.1: plain-language explanation of ⊥ = {⊥} connection added (R2).
 
 Accessibility target: 2 years of college math (calculus, some linear algebra).
 No prior category theory assumed.
@@ -285,7 +286,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-G Companion  |  Category Theory  |  April 2026  |  v1.1')
+            'Zero Paradox ZP-G Companion  |  Category Theory  |  April 2026  |  v1.2')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -312,7 +313,7 @@ def build():
 
     E += [
         Paragraph('Structure without substance', CS['title']),
-        Paragraph('Category Theory | Version 1.1', CS['subtitle']),
+        Paragraph('Category Theory | Version 1.2', CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
@@ -408,6 +409,14 @@ def build():
         'This is the categorical expression of irreversibility. '
         'Not a new assumption: it follows from antisymmetry of the ZP-A partial order '
         'and is independently confirmed by ZP-B C3 (topological irreversibility in ℚ₂).'))
+    E.append(cbody(
+        '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes the null state as a '
+        '<i>Quine atom</i> — ⊥ = {⊥}, meaning ⊥ is its own only member. '
+        'A self-containing object has no external interpreter: it IS its own interpretation. '
+        'In categorical terms, this is exactly what AX-G1 and AX-G2 together express: '
+        'nothing can reach inside 0 from outside (AX-G2), yet 0 constitutes every object '
+        'in C through a unique outgoing morphism (T2). '
+        'No external handle, present in everything — the categorical picture of self-containment.'))
     E.append(remember_box(
         'Remember: 0 here is not the number zero. It is a label for the initial object of the '
         'category — the privileged starting point from which all structure originates. '

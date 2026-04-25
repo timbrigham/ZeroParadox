@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.2 | April 2026
+Version 1.3 | April 2026
+Changes from v1.2:
+  - R2 added: Remark connecting initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥})
+  - All prior results, axioms, and definitions unchanged
 Changes from v1.1:
   - Theorem/Proposition/Lemma hierarchy applied: T1→Proposition, T2/T3→Lemma,
     T4/T5→Proposition, T6-a/T6-b→Lemma, T6-c→Proposition; T6/T7 remain Theorems
@@ -212,7 +215,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.2  |  April 2026  |'
+        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.3  |  April 2026  |'
               f'  Internal Working Document  |  Page {doc.page}')
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
@@ -236,10 +239,10 @@ def build_zpg(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version 1.2 | April 2026', S['bodyI']),
+        Paragraph('Version 1.3 | April 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.1 | Theorem/Proposition/Lemma hierarchy applied throughout | '
-            'Companion cross-reference note added</i>',
+            '<i>Supersedes v1.2 | R2 added: categorical expression of ⊥ = {⊥} connecting note | '
+            'All prior results unchanged</i>',
             S['note']),
         sp(8),
         hr(),
@@ -273,6 +276,11 @@ def build_zpg(out_path):
             'T6-c relabelled Proposition (supports T6 but not the central claim). '
             'T6 and T7 remain Theorems — central claims of their sections. '
             'All statements and proofs are unchanged.</i>',
+            S['note']),
+        Paragraph(
+            '<i>Version 1.3 changes from v1.2: Remark R2 added (Categorical Expression of Self-Containment). '
+            'Connects initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). '
+            'All prior results, axioms, and definitions unchanged.</i>',
             S['note']),
         body('<i>Illustrated Companion: A paired ZP-G Illustrated Companion provides concrete examples '
              'and visual intuitions for the results here. Examples are kept separate from the formal '
@@ -404,6 +412,28 @@ def build_zpg(out_path):
             'T2 and T3 together constitute the categorical Zero Paradox. 0 reaches every object (T2); '
             'no non-initial object reaches 0 (T3). This is not a logical contradiction. It is a structural '
             'inversion: the unique universal source is the unique object with no incoming non-trivial morphisms.',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(remark_box(
+        'Remark R2 — Categorical Expression of Self-Containment',
+        'Status: Remark — connecting note to ZP-A CC-2 [new in v1.3]',
+        [
+            'R1 frames the structural inversion of 0. This remark connects that structure to ZP-A CC-2: '
+            '⊥ = {⊥}. The null state is its own extension — a Quine atom. A self-containing object has '
+            'no external interpreter by structure; it IS its own interpretation.',
+            'In categorical terms, this corresponds to two conditions together: (1) AX-G2: '
+            'hom(X, 0) = ∅ for all X ≠ 0 — no morphism can reach inside 0 from outside; and '
+            '(2) T2: ∃! &#953;<sub>X</sub>: 0 → X for all X — 0 is structurally present in every object. '
+            'Together these are the categorical image of undifferentiated self-containment: unreachable '
+            'from without, yet constitutive of everything.',
+            '0 "points in all directions" (T2) because it is the undifferentiated ground from which all '
+            'differentiation proceeds — not because it selects a direction. The uniqueness of each '
+            '&#953;<sub>X</sub> is not a choice among alternatives; it is the absence of internal '
+            'structure that would allow differentiation among morphisms.',
+            'This remark bridges ZP-G to ZP-A CC-2. The formal correspondence between the categorical '
+            'initial object structure and the set-theoretic Quine atom ⊥ = {⊥} is made explicit in ZP-H.',
         ]
     ))
 
@@ -730,6 +760,9 @@ def build_zpg(out_path):
          'Valid — Derived. Relabelled Lemma in v1.2 (stepping-stone result). Unchanged. ✓'],
         ['R1: Structural inversion',
          'Valid — Remark. Unchanged.'],
+        ['R2: Categorical expression of self-containment',
+         'Valid — Remark [new in v1.3]. Connects T2 + AX-G2 to ZP-A CC-2 (⊥ = {⊥}). '
+         'No new derivation; explanatory bridge note.'],
         ['Proposition T4: Chains are forward-only',
          'Valid — Derived. Relabelled Proposition in v1.2. Unchanged. ✓'],
         ['Proposition T5: Functors preserve initial objects',
@@ -757,8 +790,8 @@ def build_zpg(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>Zero Paradox ZP-G: Category Theory | Version 1.2 | April 2026 | '
-            'Supersedes v1.1 | Internal Working Document</i>',
+            '<i>Zero Paradox ZP-G: Category Theory | Version 1.3 | April 2026 | '
+            'Supersedes v1.2 | Internal Working Document</i>',
             S['endnote']),
     ]
 
@@ -769,5 +802,5 @@ def build_zpg(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_2.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_3.pdf'))
     build_zpg(out)

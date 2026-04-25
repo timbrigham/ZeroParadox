@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-G_Category_Theory_v1_2-1.pdf](ZP-G_Category_Theory_v1_2-1.pdf) | 2026-04-25 | ZP-G v1.2 superseded by v1.3: R2 added connecting initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥} Quine atom); all prior results unchanged |
 | [ZP-E_Bridge_Document_v2_6-1.pdf](ZP-E_Bridge_Document_v2_6-1.pdf) | 2026-04-25 | ZP-E v2.6 superseded by v2.7: DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 (⊥ = {⊥} Quine atom) and R3; L-INF retained as independent corroboration. Multiverse framing in R-DA2 corrected: multiverse follows from CC-2 + T-SNAP + DA-2 jointly, not "T-SNAP fires in all directions" |
 | [ZP-C_Information_Theory_v1_6-1.pdf](ZP-C_Information_Theory_v1_6-1.pdf) | 2026-04-25 | ZP-C v1.6 superseded by v1.7: L-INF extended with structural second grounding — ZP-A CC-2 (⊥ = {⊥}) and R3 noted as independent convergence with the informational-extremity argument |
 | [ZP-A_Lattice_Algebra_v1_5-1.pdf](ZP-A_Lattice_Algebra_v1_5-1.pdf) | 2026-04-25 | ZP-A v1.5 superseded by v1.6: CC-2 (Self-Containment of ⊥) added — ⊥ = {⊥} as Quine atom under ZF + AFA; R3 added; DA-1 in ZP-E grounded as derivation from CC-2; foundation note (ZF + AFA, no AC) added |
