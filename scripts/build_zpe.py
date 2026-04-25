@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 2.1 | April 2026
+Version 2.5 | April 2026
 Adds DA-2 (Instantiation Succession) and DA-3 (Perspective-Relative Cardinality)
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
@@ -198,7 +198,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.4  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.5  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -221,15 +221,16 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.4 | April 2026', S['subtitle']),
+        Paragraph('Version 2.5 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v2.3 | R-DA2 framing corrected: multiverse of instantiations described as '
-            'structural consequence of T-SNAP + DA-2, not a "mandated" conclusion</i>',
+            '<i>Supersedes v2.4 | Physical analogies (Big Bang, quantum mechanics correspondence) '
+            'removed from formal sections — such analogies belong only in Illustrated Companions</i>',
             S['subtitle']),
         Paragraph(
-            '<i>v2.3: CC-1 added to T-SNAP dependency list; multiverse claim scoped to T-SNAP + DA-2 jointly. '
+            '<i>v2.4: R-DA2 framing corrected: multiverse described as structural consequence of T-SNAP + DA-2. '
+            'v2.3: CC-1 added to T-SNAP dependency list. '
             'v2.2: DA-1 redesigned to L-INF-based Design Principle. '
-            'v2.1: Adds DA-2 (Instantiation Succession) and DA-3 (Perspective-Relative Cardinality).</i>',
+            'v2.1: Adds DA-2 and DA-3.</i>',
             S['subtitle']),
         sp(10),
         hr(),
@@ -257,7 +258,7 @@ def build_zpe(out_path):
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Design Principle — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.4 | R-DA2 framing corrected | CC-1 in T-SNAP dependency | Multiverse claim scoped to T-SNAP + DA-2 | DA-3 candidate applications</i>',
+        Paragraph('<i>Updated ZP-E v2.5 | Physical analogies removed from formal sections | See v2.4: R-DA2 framing corrected | CC-1 in T-SNAP dependency</i>',
                   S['note']),
         hr(),
     ]
@@ -464,9 +465,7 @@ def build_zpe(out_path):
         body('The complete picture: The Zero Paradox describes a forward-directed infinite tree where '
              '⊥<sub>1</sub> → ... → S<sub>terminal</sub><sup>1</sup> ≡ ⊥<sub>2</sub> → ..., where ≡ means structurally satisfies the role of, '
              'not is identical to. Each arrow within an instantiation is monotone and irreversible. Each ≡ '
-             'crossing is not a path — it is a new instantiation of the universal structure. The Big Bang and '
-             'heat death are the visible ends of a single instantiation, with the framework implying, but not '
-             'requiring as a physical claim, that the structure continues on both sides.'),
+             'crossing is not a path — it is a new instantiation of the universal structure.'),
     ]
 
     E.append(Paragraph('VII. Implications Within the Framework', S['h2']))
@@ -589,19 +588,9 @@ def build_zpe(out_path):
                 'set-theoretic independence results is deferred to OQ-E2.'),
     ]
 
-    E.append(Paragraph('V. Quantum Mechanics Correspondence', S['h2']))
-    E.append(body(
-        'The perspective-dependence of DA-3 maps directly onto the quantum measurement problem. '
-        'Superposition — the simultaneous existence of multiple states before measurement — is the '
-        'view of the branching fan from outside an instantiation. Collapse — the resolution to a single '
-        'outcome upon measurement — is the view from inside an instantiation, where branching factor '
-        'is always 1. Neither is more fundamental. They are perspective-relative descriptions of '
-        'the same tree structure. The framework does not derive quantum mechanics, but it provides a '
-        'structural account of why the measurement problem has the shape it does.'))
-
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.4', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.5', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -650,7 +639,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.4', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.5', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -701,7 +690,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.4', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.5', S['h1'])]
 
     val_rows = [
         ['DA-1: Design Principle',
@@ -741,7 +730,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.4 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v2.5 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
@@ -753,5 +742,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_4.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_5.pdf'))
     build_zpe(out)

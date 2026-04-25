@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v2_4-1.pdf](ZP-E_Bridge_Document_v2_4-1.pdf) | 2026-04-25 | ZP-E v2.4 superseded by v2.5: physical analogies (Big Bang cosmological endpoints, quantum mechanics correspondence) removed from formal sections — such analogies belong only in Illustrated Companions |
 | [ZP-H_Categorical_Bridge_v1_2-1.pdf](ZP-H_Categorical_Bridge_v1_2-1.pdf) | 2026-04-25 | ZP-H v1.2 superseded by v1.3: F_B/F_C/F_D status corrected — PDF constructions complete; Lean proxy witness only; full abstract Lean functors future work; OQ-G3 framing updated |
 | [ZP-E_Bridge_Document_v2_3-1.pdf](ZP-E_Bridge_Document_v2_3-1.pdf) | 2026-04-25 | ZP-E v2.3 superseded by v2.4: R-DA2 "mandates" framing corrected to "structural consequence of T-SNAP + DA-2"; internal version string synced |
 | [ZP-C_Information_Theory_v1_5-1.pdf](ZP-C_Information_Theory_v1_5-1.pdf) | 2026-04-25 | ZP-C v1.5 superseded by v1.6: CC-2 added (c₀ = ⊥ labeled as modeling commitment, parallel to CC-1 in ZP-A); RP-2 added (branching measure labeled as representational commitment) |
