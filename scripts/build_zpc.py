@@ -1,5 +1,5 @@
 """
-Build ZP-C: Information Theory (v1.6)
+Build ZP-C: Information Theory (v1.7)
 """
 import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -179,14 +179,14 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_6.pdf')
-    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.6')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_7.pdf')
+    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.7')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version 1.6  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.5  |  CC-2 added: c&#8320; = &#8869; labeled as modeling commitment (parallel to CC-1 in ZP-A); RP-2 added: branching measure labeled as representational commitment</i>', S['subtitle']),
-          Paragraph('<i>Version 1.5 change: L-INF added: Informational Extremity of &#8869;; T1b relabelled Corollary; T-BUF Step 2 grounded in L-INF.</i>', S['subtitle']),
+          Paragraph('Version 1.7  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.6  |  L-INF extended: structural second grounding from ZP-A CC-2 (&#8869; = {&#8869;}) and R3 added; informational extremity and self-containment noted as independent derivations converging on the same conclusion.</i>', S['subtitle']),
+          Paragraph('<i>Version 1.6 change: CC-2 added: c&#8320; = &#8869; labeled as modeling commitment (parallel to CC-1 in ZP-A); RP-2 added: branching measure labeled as representational commitment.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
@@ -287,9 +287,9 @@ def build():
         'The null state &#8869; = c<sub>0</sub> corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2). At this limit, no finite bound M contains the informational content of &#8869;.',
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
-        'Semantic content: &#8869; is informationally extreme — the compressed limit of all possible binary programs, approached by the perfectly balanced binary branching hierarchy. No finite external program bounds its informational content; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1).',
+        'Semantic content: &#8869; is informationally extreme — the compressed limit of all possible binary programs, approached by the perfectly balanced binary branching hierarchy. No finite external program bounds its informational content; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1). ZP-A CC-2 (&#8869; = {&#8869;}) provides a structural second grounding for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent derivations converging on the same fact.',
         'Note: the connection from informational extremity to forced execution is a named design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
-        'Status: DERIVED from D4 and T2. Lean: ZPC.l_inf (purity check: no non-Mathlib axioms).',
+        'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: ZPC.l_inf (purity check: no non-Mathlib axioms).',
     ]))
     E.append(sp(4))
 
