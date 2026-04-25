@@ -1,11 +1,13 @@
 """
-Zero Paradox — PDF Builder
-Follows all rules in PDF_Rendering_Standards.md:
-  - DejaVu fonts only
-  - Checkmark always wrapped in <font name="DV">
-  - All table cells are Paragraph objects
-  - No unicode subscripts — use sub/super tags
-  - US Letter, 1-inch margins, TW = 6.5 inch
+Zero Paradox — PDF Builder (SUPERSEDED 2026-04-25)
+Functions extracted to standalone scripts:
+  build_zpa.py, build_zpb.py, build_zpc.py, build_zpd.py
+  (companions were already standalone before this refactor)
+
+build_zpe_da1() is retained here for reference only — it is archived;
+the insert was superseded by ZP-E_Bridge_Document_v2_0 (build_zpe.py).
+
+Do not add new document builders to this file.
 """
 
 import os, sys
