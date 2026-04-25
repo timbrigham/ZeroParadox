@@ -376,7 +376,11 @@ noncomputable def q2BallAt (n : Q₂BallDepth) : Set Q₂ :=
 
 /-- Ball containment is antitone in depth: n ≤ m → B(0, 2^(-m)) ⊆ B(0, 2^(-n)). -/
 theorem q2Ball_antitone {n m : Q₂BallDepth} (h : n.val ≤ m.val) :
-    q2BallAt m ⊆ q2BallAt n := sorry
+    q2BallAt m ⊆ q2BallAt n := by
+  simp only [q2BallAt]
+  apply Metric.closedBall_subset_closedBall
+  exact zpow_le_zpow_right₀ (by norm_num : (1 : ℝ) ≤ 2)
+    (by omega : -(↑m.val : ℤ) ≤ -(↑n.val : ℤ))
 
 /-- Semantic grounding of fb_functor's snap morphism 0 → ⟨1⟩:
     For any x ∈ B(0, 2^(-1)) with x ≠ 0, C3 (ZPB) guarantees no continuous path
