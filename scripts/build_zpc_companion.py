@@ -20,18 +20,20 @@ pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
 pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'DejaVuSerif.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'DejaVuSerif-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
 
-TEAL      = colors.HexColor('#2A8080')
-TEAL_DARK = colors.HexColor('#1A5555')
-TEAL_LITE = colors.HexColor('#D5EEEE')
-AMBER_C   = colors.HexColor('#B07800')
-AMBER_LITE= colors.HexColor('#FFF8E7')
-BLACK     = colors.black
-WHITE     = colors.white
+# Companion palette: 15% white tint on formal document header colors
+COMP_BLUE  = colors.HexColor('#4D89C0')
+COMP_GREEN = colors.HexColor('#4D9050')
+COMP_SLATE = colors.HexColor('#60727B')
+COMP_AMBER = colors.HexColor('#BB8C26')
+SLATE_LITE = colors.HexColor('#ECEFF1')
+AMBER_LITE = colors.HexColor('#FFF8E7')
+BLACK      = colors.black
+WHITE      = colors.white
 
 TW = 6.5 * inch
 LM = RM = 1.0 * inch
@@ -47,19 +49,18 @@ CS = {
     'disc':     ParagraphStyle('cdisc',    fontName='DVS-I', fontSize=9,  leading=13,
                                spaceAfter=10, textColor=colors.HexColor('#555555')),
     'h1':       ParagraphStyle('ch1',      fontName='DV-B',  fontSize=13, leading=17,
-                               spaceBefore=14, spaceAfter=5, textColor=TEAL),
+                               spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
     'body':     ParagraphStyle('cbody',    fontName='DVS',   fontSize=10, leading=14,
                                spaceAfter=6),
     'caption':  ParagraphStyle('ccaption', fontName='DVS-I', fontSize=9,  leading=12,
                                spaceAfter=8, textColor=colors.HexColor('#555555')),
     'ex_title': ParagraphStyle('cex_title',fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=AMBER_C),
+                               textColor=COMP_AMBER),
     'ex_body':  ParagraphStyle('cex_body', fontName='DVS',   fontSize=9,  leading=13),
     'rem':      ParagraphStyle('crem',     fontName='DVS-I', fontSize=9,  leading=13),
     'kr_hdr':   ParagraphStyle('ckr_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
                                textColor=WHITE),
-    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13,
-                               textColor=WHITE),
+    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13),
 }
 
 def sp(n=6):
@@ -92,8 +93,8 @@ def example_box(title, rows):
     for r in rows:
         data.append([Paragraph(fix(r), CS['ex_body'])])
     ts = TableStyle([
-        ('BOX',           (0,0), (-1,-1), 1.5, AMBER_C),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, AMBER_C),
+        ('BOX',           (0,0), (-1,-1), 1.5, COMP_AMBER),
+        ('LINEBELOW',     (0,0), (-1,0),  0.5, COMP_AMBER),
         ('BACKGROUND',    (0,0), (-1,-1), AMBER_LITE),
         ('TOPPADDING',    (0,0), (-1,-1), 5),
         ('BOTTOMPADDING', (0,0), (-1,-1), 5),
@@ -107,8 +108,8 @@ def example_box(title, rows):
 
 def remember_box(text):
     ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), TEAL_LITE),
-        ('BOX',           (0,0), (-1,-1), 0.5, TEAL),
+        ('BACKGROUND',    (0,0), (-1,-1), SLATE_LITE),
+        ('BOX',           (0,0), (-1,-1), 0.5, COMP_SLATE),
         ('TOPPADDING',    (0,0), (-1,-1), 8),
         ('BOTTOMPADDING', (0,0), (-1,-1), 8),
         ('LEFTPADDING',   (0,0), (-1,-1), 10),
@@ -122,9 +123,9 @@ def key_result_box(title, body_text):
     data = [[Paragraph(fix(title), CS['kr_hdr'])],
             [Paragraph(fix(body_text), CS['kr_body'])]]
     ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  TEAL_DARK),
-        ('BACKGROUND',    (0,1), (-1,-1), TEAL),
-        ('BOX',           (0,0), (-1,-1), 0.5, TEAL_DARK),
+        ('BACKGROUND',    (0,0), (-1,0),  COMP_GREEN),
+        ('BACKGROUND',    (0,1), (-1,-1), colors.white),
+        ('BOX',           (0,0), (-1,-1), 0.5, COMP_GREEN),
         ('TOPPADDING',    (0,0), (-1,-1), 6),
         ('BOTTOMPADDING', (0,0), (-1,-1), 6),
         ('LEFTPADDING',   (0,0), (-1,-1), 8),
@@ -159,13 +160,13 @@ def surprisal_graph():
 
     # Singularity marker at x=0
     sx = ax
-    d.add(Line(sx, ay, sx, ay + plot_h - 5, strokeColor=AMBER_C,
+    d.add(Line(sx, ay, sx, ay + plot_h - 5, strokeColor=COMP_AMBER,
                strokeWidth=1, strokeDashArray=[4, 3]))
     d.add(String(sx - 2, ay + plot_h + 2, 'singularity', fontSize=7,
-                 fontName='DV-I', fillColor=AMBER_C))
+                 fontName='DV-I', fillColor=COMP_AMBER))
 
     # Amber dot at origin
-    d.add(Circle(sx, ay, 5, fillColor=AMBER_C, strokeColor=AMBER_C, strokeWidth=0))
+    d.add(Circle(sx, ay, 5, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
 
     # Hyperbola-like curve
     pts = []
@@ -180,7 +181,7 @@ def surprisal_graph():
 
     for i in range(len(pts) - 1):
         d.add(Line(pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1],
-                   strokeColor=TEAL, strokeWidth=2))
+                   strokeColor=COMP_BLUE, strokeWidth=2))
 
     # Raw unicode → and ∞ work in String() with DV font
     d.add(String(ax + 8, ay + 6,
@@ -202,9 +203,9 @@ def jsd_diagram():
     p_x = cx - 130
     # P(0)=1 bar
     d.add(Rect(p_x - bar_w/2, base_y, bar_w, max_h,
-               fillColor=AMBER_C, strokeColor=AMBER_C, strokeWidth=0))
+               fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(String(p_x - 14, base_y + max_h + 4, 'P(0)=1', fontSize=8,
-                 fontName='DV-B', fillColor=AMBER_C))
+                 fontName='DV-B', fillColor=COMP_AMBER))
     # P(1)=0 bar (thin line)
     d.add(Rect(p_x + bar_w, base_y, bar_w, 2,
                fillColor=colors.HexColor('#999999'), strokeColor=colors.HexColor('#999999'), strokeWidth=0))
@@ -224,9 +225,9 @@ def jsd_diagram():
                  fontName='DV', fillColor=colors.HexColor('#888888')))
     # Q(1)=1 bar
     d.add(Rect(q_x + bar_w - bar_w/2, base_y, bar_w, max_h,
-               fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
+               fillColor=COMP_BLUE, strokeColor=COMP_BLUE, strokeWidth=0))
     d.add(String(q_x + bar_w - 14, base_y + max_h + 4, 'Q(1)=1', fontSize=8,
-                 fontName='DV-B', fillColor=TEAL))
+                 fontName='DV-B', fillColor=COMP_BLUE))
     d.add(String(q_x - 6, base_y - 22, 'Q = (0,1)', fontSize=8,
                  fontName='DV-B', fillColor=BLACK))
     d.add(String(q_x - 20, base_y - 32, 'First Atomic State', fontSize=7,
@@ -265,13 +266,13 @@ def lrun_diagram():
     # Plain labels for circle bodies; subscripts drawn separately below
     circle_letters = ['c', 'c', '...', 'out']
     circle_subs    = ['0', '1', '',    '']
-    fills  = [AMBER_C, TEAL, colors.HexColor('#888888'), colors.HexColor('#555555')]
+    fills  = [COMP_AMBER, COMP_BLUE, colors.HexColor('#888888'), colors.HexColor('#555555')]
 
     # Title
     d.add(String(dw/2 - 80, dh - 16, 'Turning on IS a state (L-RUN)',
-                 fontSize=9, fontName='DV-B', fillColor=TEAL))
+                 fontSize=9, fontName='DV-B', fillColor=COMP_BLUE))
     d.add(Line(dw/2 - 80, dh - 19, dw/2 + 80, dh - 19,
-               strokeColor=TEAL, strokeWidth=0.5, strokeDashArray=[3,2]))
+               strokeColor=COMP_BLUE, strokeWidth=0.5, strokeDashArray=[3,2]))
 
     for i, (x, ltr, sub, fc) in enumerate(zip(xs, circle_letters, circle_subs, fills)):
         d.add(Circle(x, cy, r, fillColor=fc, strokeColor=fc, strokeWidth=0))
@@ -283,26 +284,26 @@ def lrun_diagram():
             d.add(String(x - 10, cy - 5, ltr, fontSize=10, fontName='DV-B', fillColor=WHITE))
         if i < len(xs) - 1:
             x2 = xs[i+1]
-            d.add(Line(x + r + 2, cy, x2 - r - 2, cy, strokeColor=TEAL, strokeWidth=2))
-            d.add(Line(x2 - r - 9, cy - 4, x2 - r - 2, cy, strokeColor=TEAL, strokeWidth=2))
-            d.add(Line(x2 - r - 9, cy + 4, x2 - r - 2, cy, strokeColor=TEAL, strokeWidth=2))
+            d.add(Line(x + r + 2, cy, x2 - r - 2, cy, strokeColor=COMP_BLUE, strokeWidth=2))
+            d.add(Line(x2 - r - 9, cy - 4, x2 - r - 2, cy, strokeColor=COMP_BLUE, strokeWidth=2))
+            d.add(Line(x2 - r - 9, cy + 4, x2 - r - 2, cy, strokeColor=COMP_BLUE, strokeWidth=2))
 
     # Sub-labels below circles — use raw unicode; ⊥ (U+22A5) is in DV-B
-    d.add(String(xs[0] - 16, cy - r - 14, 'c', fontSize=8, fontName='DV-B', fillColor=AMBER_C))
-    d.add(String(xs[0] - 8,  cy - r - 20, '0', fontSize=6, fontName='DV-B', fillColor=AMBER_C))
-    d.add(String(xs[0] - 4,  cy - r - 14, ' = ⊥', fontSize=8, fontName='DV-B', fillColor=AMBER_C))
+    d.add(String(xs[0] - 16, cy - r - 14, 'c', fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
+    d.add(String(xs[0] - 8,  cy - r - 20, '0', fontSize=6, fontName='DV-B', fillColor=COMP_AMBER))
+    d.add(String(xs[0] - 4,  cy - r - 14, ' = ⊥', fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
     d.add(String(xs[0] - 12, cy - r - 27, '(null)', fontSize=7.5,
                  fontName='DV-I', fillColor=colors.HexColor('#666666')))
 
-    d.add(String(xs[1] - 16, cy - r - 14, 'c', fontSize=8, fontName='DV-B', fillColor=TEAL))
-    d.add(String(xs[1] - 8,  cy - r - 20, '1', fontSize=6, fontName='DV-B', fillColor=TEAL))
-    d.add(String(xs[1] - 4,  cy - r - 14, ' ≠ ⊥', fontSize=8, fontName='DV-B', fillColor=TEAL))
+    d.add(String(xs[1] - 16, cy - r - 14, 'c', fontSize=8, fontName='DV-B', fillColor=COMP_BLUE))
+    d.add(String(xs[1] - 8,  cy - r - 20, '1', fontSize=6, fontName='DV-B', fillColor=COMP_BLUE))
+    d.add(String(xs[1] - 4,  cy - r - 14, ' ≠ ⊥', fontSize=8, fontName='DV-B', fillColor=COMP_BLUE))
     d.add(String(xs[1] - 18, cy - r - 27, '(non-null!)', fontSize=7.5,
                  fontName='DV-I', fillColor=colors.HexColor('#666666')))
 
     # Vertical dashed line above c1 node
     d.add(Line(xs[1], cy + r + 2, xs[1], dh - 22,
-               strokeColor=TEAL, strokeWidth=1, strokeDashArray=[4, 3]))
+               strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
 def build():
@@ -327,7 +328,7 @@ def build():
 
     # ── Header banner ──────────────────────────────────────────────────────────
     hdr_ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), TEAL_DARK),
+        ('BACKGROUND',    (0,0), (-1,-1), COMP_BLUE),
         ('TOPPADDING',    (0,0), (-1,-1), 8),
         ('BOTTOMPADDING', (0,0), (-1,-1), 8),
         ('LEFTPADDING',   (0,0), (-1,-1), 10),

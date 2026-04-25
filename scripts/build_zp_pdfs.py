@@ -8,7 +8,8 @@ Follows all rules in PDF_Rendering_Standards.md:
   - US Letter, 1-inch margins, TW = 6.5 inch
 """
 
-import os
+import os, sys
+sys.stdout.reconfigure(encoding='utf-8')
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.units import inch
@@ -26,10 +27,10 @@ pdfmetrics.registerFont(TTFont('DV',    FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',  FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',  FONT_DIR + 'DejaVuSans-Oblique.ttf'))
 pdfmetrics.registerFont(TTFont('DV-BI', FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',   FONT_DIR + 'DejaVuSerif.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B', FONT_DIR + 'DejaVuSerif-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I', FONT_DIR + 'DejaVuSerif-Italic.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI',FONT_DIR + 'DejaVuSerif-BoldItalic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',   FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B', FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I', FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI',FONT_DIR + 'STIXTwo-Math.ttf'))
 
 # ── 2. COLORS ─────────────────────────────────────────────────────────────────
 BLUE      = colors.HexColor('#2E75B6')
@@ -37,6 +38,14 @@ BLUE_LITE = colors.HexColor('#D5E8F0')
 GREY_LITE = colors.HexColor('#F5F5F5')
 BLACK     = colors.black
 WHITE     = colors.white
+
+# Companion palette: 15% white tint on formal header colors
+COMP_BLUE  = colors.HexColor('#4D89C0')
+COMP_GREEN = colors.HexColor('#4D9050')
+COMP_SLATE = colors.HexColor('#60727B')
+COMP_AMBER = colors.HexColor('#BB8C26')
+SLATE_LITE = colors.HexColor('#ECEFF1')
+AMBER_LITE = colors.HexColor('#FFF8E7')
 
 # ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
 TW = 6.5 * inch          # text width (US Letter − 2 × 1 inch margins)
@@ -356,11 +365,6 @@ def build_zpa_companion():
     """Illustrated companion for ZP-A, v1.2. Adds Dan's suggested examples."""
     from reportlab.graphics.shapes import Drawing, Circle, Line, String
 
-    TEAL      = colors.HexColor('#2A8080')
-    TEAL_DARK = colors.HexColor('#1A5555')
-    TEAL_LITE = colors.HexColor('#D5EEEE')
-    AMBER_C   = colors.HexColor('#B07800')
-    AMBER_LITE= colors.HexColor('#FFF8E7')
     RED_C     = colors.HexColor('#BB2222')
 
     # Companion paragraph styles
@@ -374,19 +378,18 @@ def build_zpa_companion():
         'disc':     ParagraphStyle('cdisc',    fontName='DVS-I', fontSize=9,  leading=13,
                                    spaceAfter=10, textColor=colors.HexColor('#555555')),
         'h1':       ParagraphStyle('ch1',      fontName='DV-B',  fontSize=13, leading=17,
-                                   spaceBefore=14, spaceAfter=5, textColor=TEAL),
+                                   spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
         'body':     ParagraphStyle('cbody',    fontName='DVS',   fontSize=10, leading=14,
                                    spaceAfter=6),
         'caption':  ParagraphStyle('ccaption', fontName='DVS-I', fontSize=9,  leading=12,
                                    spaceAfter=8, textColor=colors.HexColor('#555555')),
         'ex_title': ParagraphStyle('cex_title',fontName='DV-B',  fontSize=9,  leading=13,
-                                   textColor=AMBER_C),
+                                   textColor=COMP_AMBER),
         'ex_body':  ParagraphStyle('cex_body', fontName='DVS',   fontSize=9,  leading=13),
         'rem':      ParagraphStyle('crem',     fontName='DVS-I', fontSize=9,  leading=13),
         'kr_hdr':   ParagraphStyle('ckr_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
                                    textColor=WHITE),
-        'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13,
-                                   textColor=WHITE),
+        'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13),
     }
 
     def cbody(text):
@@ -397,8 +400,8 @@ def build_zpa_companion():
         for r in rows:
             data.append([Paragraph(fix(r), CS['ex_body'])])
         ts = TableStyle([
-            ('BOX',           (0,0), (-1,-1), 1.5, AMBER_C),
-            ('LINEBELOW',     (0,0), (-1,0),  0.5, AMBER_C),
+            ('BOX',           (0,0), (-1,-1), 1.5, COMP_AMBER),
+            ('LINEBELOW',     (0,0), (-1,0),  0.5, COMP_AMBER),
             ('BACKGROUND',    (0,0), (-1,-1), AMBER_LITE),
             ('TOPPADDING',    (0,0), (-1,-1), 5),
             ('BOTTOMPADDING', (0,0), (-1,-1), 5),
@@ -412,8 +415,8 @@ def build_zpa_companion():
 
     def remember_box(text):
         ts = TableStyle([
-            ('BACKGROUND',    (0,0), (-1,-1), TEAL_LITE),
-            ('BOX',           (0,0), (-1,-1), 0.5, TEAL),
+            ('BACKGROUND',    (0,0), (-1,-1), SLATE_LITE),
+            ('BOX',           (0,0), (-1,-1), 0.5, COMP_SLATE),
             ('TOPPADDING',    (0,0), (-1,-1), 8),
             ('BOTTOMPADDING', (0,0), (-1,-1), 8),
             ('LEFTPADDING',   (0,0), (-1,-1), 10),
@@ -427,9 +430,9 @@ def build_zpa_companion():
         data = [[Paragraph(fix(title), CS['kr_hdr'])],
                 [Paragraph(fix(body_text), CS['kr_body'])]]
         ts = TableStyle([
-            ('BACKGROUND',    (0,0), (-1,0),  TEAL_DARK),
-            ('BACKGROUND',    (0,1), (-1,-1), TEAL),
-            ('BOX',           (0,0), (-1,-1), 0.5, TEAL_DARK),
+            ('BACKGROUND',    (0,0), (-1,0),  COMP_GREEN),
+            ('BACKGROUND',    (0,1), (-1,-1), colors.white),
+            ('BOX',           (0,0), (-1,-1), 0.5, COMP_GREEN),
             ('TOPPADDING',    (0,0), (-1,-1), 6),
             ('BOTTOMPADDING', (0,0), (-1,-1), 6),
             ('LEFTPADDING',   (0,0), (-1,-1), 8),
@@ -466,11 +469,11 @@ def build_zpa_companion():
         d.add(String(cx - 6, y0 - 6, '⊥', fontSize=14, fontName='DV-B',
                      fillColor=colors.white))
         for nx, ny in nodes1:
-            d.add(Circle(nx, ny, r, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
+            d.add(Circle(nx, ny, r, fillColor=COMP_BLUE, strokeColor=COMP_BLUE, strokeWidth=0))
             d.add(String(nx - 4, ny - 5, 'S', fontSize=11, fontName='DV-B',
                          fillColor=colors.white))
         for tx, ty in nodes2:
-            d.add(Circle(tx, ty, r, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
+            d.add(Circle(tx, ty, r, fillColor=COMP_BLUE, strokeColor=COMP_BLUE, strokeWidth=0))
             d.add(String(tx - 4, ty - 5, 'S', fontSize=11, fontName='DV-B',
                          fillColor=colors.white))
 
@@ -479,7 +482,7 @@ def build_zpa_companion():
                      strokeColor=colors.HexColor('#F0A000'), strokeWidth=0))
         d.add(String(lx + 12, y0 - 1, '= bottom (additive identity)',
                      fontSize=7.5, fontName='DVS', fillColor=BLACK))
-        d.add(Circle(lx, y0 - 20, 7, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
+        d.add(Circle(lx, y0 - 20, 7, fillColor=COMP_BLUE, strokeColor=COMP_BLUE, strokeWidth=0))
         d.add(String(lx + 12, y0 - 25, 'States in L',
                      fontSize=7.5, fontName='DVS', fillColor=BLACK))
         return d
@@ -490,7 +493,7 @@ def build_zpa_companion():
         cy = dh * 0.62
         r = 22
         xs = [r + 10, r + 120, r + 230, r + 340, r + 440]
-        lc = TEAL
+        lc = COMP_BLUE
         ac = colors.HexColor('#F0A000')
 
         d.add(Circle(xs[0], cy, r, fillColor=ac, strokeColor=ac, strokeWidth=0))
@@ -529,7 +532,7 @@ def build_zpa_companion():
 
     # Header banner
     hdr_ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), TEAL_DARK),
+        ('BACKGROUND',    (0,0), (-1,-1), COMP_BLUE),
         ('TOPPADDING',    (0,0), (-1,-1), 8),
         ('BOTTOMPADDING', (0,0), (-1,-1), 8),
         ('LEFTPADDING',   (0,0), (-1,-1), 10),

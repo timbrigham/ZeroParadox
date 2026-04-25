@@ -6,37 +6,45 @@ This document captures the specific technical requirements for generating PDFs i
 **Session log:**
 - April 2026 (initial): Three failure modes identified — font stack, checkmark glyph, table cell wrapping.
 - April 2026 (session 2): Two additional findings added — ∅ missing from DejaVuSerif (Section 2b), and verification must use `page.chars` not raw binary or `extract_text()` (Section 6, updated).
+- April 2026 (session 3): Font migration — DVS family switched from DejaVu Serif to STIX Two Math (single TTF for all four DVS weights). STIX Two Math covers all math Unicode operators that DejaVu Serif lacked. Italic body text for companion notes replaced with `remark_box()` (SLATE color scheme). Section 1 updated to reflect new standard.
 
 ---
 
 ## 1. Font Stack — Non-Negotiable
 
-Use DejaVu fonts exclusively. They are installed at `/usr/share/fonts/truetype/dejavu/` in the Claude environment and have the broadest unicode math coverage of any available font family.
+Two font families are in use. **DejaVu Sans** (`DV`) for headers, labels, and UI elements. **STIX Two Math** (`DVS`) for all body text — it covers the full math Unicode range that DejaVu Serif lacked.
 
-Register all four weights at the top of every builder script:
+Font files live in `.claude-local/fonts/` (gitignored, available locally). STIX Two Math TTF source files were obtained from the STIX Fonts GitHub repository (`input/` folder); the OTF releases use PostScript outlines and are not compatible with ReportLab.
+
+Register all eight aliases at the top of every builder script:
 
 ```python
+import os
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-FONT_DIR = '/usr/share/fonts/truetype/dejavu/'
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FONT_DIR = os.path.join(PROJECT_ROOT, '.claude-local', 'fonts') + os.sep
+
 pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
 pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'DejaVuSerif.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'DejaVuSerif-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
 ```
 
-**Body text** uses `DVS` (DejaVu Serif). **UI elements, headers, labels** use `DV` (DejaVu Sans).
+**All four DVS aliases point to the same STIXTwo-Math.ttf file.** STIX Two Math is a single-weight math font; bold/italic variants are not needed because visual distinction comes from box styling (remark_box, axiom_box, etc.) rather than font weight.
+
+**Body text** uses `DVS` (→ STIXTwo-Math.ttf). **UI elements, headers, labels** use `DV` (DejaVu Sans).
 
 ---
 
 ## 2. The Checkmark Problem — Critical
 
-**U+2713 (✓) is missing from DejaVuSerif.** It exists in DejaVuSans. This means any `&#10003;` in a `Paragraph` styled with `DVS` renders as a blank black box.
+**U+2713 (✓) is missing from STIX Two Math (and was missing from DejaVuSerif).** It exists in DejaVuSans. This means any `&#10003;` in a `Paragraph` styled with `DVS` renders as a blank black box.
 
 **Rule:** Never use `&#10003;` bare in a Paragraph that uses a Serif style. Always wrap it:
 
@@ -54,7 +62,7 @@ This applies everywhere: label boxes, theorem boxes, table cells, body text. If 
 
 ## 2b. The Empty Set Problem — Identical Fix Required
 
-**U+2205 (∅) is also missing from DejaVuSerif.** Discovered in session 2 when `hom(X, 0) = ∅` rendered as a null/blank box in ZP-E.
+**U+2205 (∅) is also missing from STIX Two Math (and was missing from DejaVuSerif).** Discovered in session 2 when `hom(X, 0) = ∅` rendered as a null/blank box in ZP-E.
 
 The fix is identical to the checkmark rule:
 
@@ -72,21 +80,22 @@ The updated diagnostic suspects list (run before every build session):
 
 ```python
 from fontTools.ttLib import TTFont
-dv  = TTFont('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
-dvs = TTFont('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf')
+dv  = TTFont(FONT_DIR + 'DejaVuSans.ttf')
+dvs = TTFont(FONT_DIR + 'STIXTwo-Math.ttf')
 cmap_sans  = dv.getBestCmap()
-cmap_serif = dvs.getBestCmap()
+cmap_serif = dvs.getBestCmap()  # now checks STIX Two Math, not DejaVu Serif
 
 suspects = {
     'checkmark ✓': 0x2713,
     'heavy check ✔': 0x2714,
     'empty set ∅': 0x2205,   # Added session 2 — also missing from DejaVuSerif
+    'aleph ℵ': 0x2135,       # Added session 3 — missing from both DejaVu fonts; requires STIX fallback
 }
 for name, cp in suspects.items():
     print(f'{name}: Sans={cp in cmap_sans}  Serif={cp in cmap_serif}')
 ```
 
-If Serif shows `False` for any symbol you intend to use, wrap that symbol in `<font name="DV">...</font>`.
+If STIX Two Math shows `False` for any symbol you intend to use, wrap that symbol in `<font name="DV">...</font>`.
 
 ---
 
@@ -313,15 +322,18 @@ The working builder script is saved at `/home/claude/build_zp_pdfs.py` and imple
 
 Tell Claude:
 
-> "Before building any PDFs, read the Zero Paradox PDF Rendering Standards document in the project files. Follow all rules in that document. In particular: use DejaVu fonts, wrap all checkmarks in `<font name="DV">`, wrap all empty set symbols (∅) in `<font name="DV">`, build all table cells as Paragraph objects, never use unicode subscript or superscript characters, and verify with `page.chars` not `extract_text()`."
+> "Before building any PDFs, read the Zero Paradox PDF Rendering Standards document in the project files. Follow all rules in that document. In particular: DV family is DejaVu Sans; DVS family all point to STIXTwo-Math.ttf. Wrap all checkmarks in `<font name="DV">`, wrap all empty set symbols (∅) in `<font name="DV">`, build all table cells as Paragraph objects, never use unicode subscript or superscript characters, and verify with `page.chars` not `extract_text()`."
 
 That single instruction, combined with this document, prevents all known failure modes.
 
-**Known glyphs missing from DejaVuSerif (require DV font wrap):**
-- U+2713 ✓ checkmark
-- U+2205 ∅ empty set
+**Known glyphs missing from STIX Two Math (require DV font wrap):**
+- U+2713 ✓ checkmark (also missing from DejaVu Serif)
+- U+2205 ∅ empty set (also missing from DejaVu Serif)
 - U+2717 ✗ ballot cross
 - U+2118 ℘ power set (Weierstrass P)
+
+**Known glyphs missing from ALL body fonts (require separate STIX registration in build_zpe.py):**
+- U+2135 ℵ aleph — build_zpe.py registers STIXTwo-Math.ttf under the alias `STIX` and wraps: `<font name="STIX">&#8501;</font>`. See build_zpe.py for the STIX registration pattern with path fallback logic. (The DVS alias in build_zp_pdfs.py also uses STIXTwo-Math.ttf, so ℵ renders correctly there using the DVS alias directly.)
 
 Run the diagnostic (Section 2/2b) at the start of any new session to check if additional glyphs have been discovered missing.
 
@@ -430,19 +442,21 @@ All box body backgrounds use `GREY_LITE`. Header text uses the `label` Paragraph
 
 ### Typography Standard
 
-| Style key | Font | Size | Leading | Alignment | Notes |
-|---|---|---|---|---|---|
-| `title` | DV-B | 18pt | 24 | centered | Document title |
-| `subtitle` | DV-I | 11pt | 15 | centered | Version / date line |
-| `h1` | DV-B | 13pt | 18 | left | BLUE; section headings |
-| `h2` | DV-B | 11pt | 15 | left | BLUE; subsection headings |
-| `body` | DVS | 10pt | 14 | left | Main prose |
-| `bodyI` | DVS-I | 10pt | 14 | left | Italic prose (companion notes, version notes) |
-| `label` | DV-B | 9pt | 13 | left | WHITE text — box headers |
-| `cell` | DVS | 9pt | 13 | left | Table cells |
-| `cellB` | DVS-B | 9pt | 13 | left | Bold table cells |
-| `cellI` | DVS-I | 9pt | 13 | left | Italic table cells |
-| `derived` | DVS-B | 10pt | 14 | left | GREEN_DARK — inline derived-status lines |
+| Style key | Font alias | Actual font | Size | Leading | Alignment | Notes |
+|---|---|---|---|---|---|---|
+| `title` | DV-B | DejaVu Sans Bold | 18pt | 24 | centered | Document title |
+| `subtitle` | DV-I | DejaVu Sans Oblique | 11pt | 15 | centered | Version / date line |
+| `h1` | DV-B | DejaVu Sans Bold | 13pt | 18 | left | BLUE; section headings |
+| `h2` | DV-B | DejaVu Sans Bold | 11pt | 15 | left | BLUE; subsection headings |
+| `body` | DVS | STIXTwo-Math | 10pt | 14 | left | Main prose |
+| `bodyI` | DVS-I | STIXTwo-Math | 10pt | 14 | left | Companion context notes (same glyph as DVS — visual distinction via remark_box) |
+| `label` | DV-B | DejaVu Sans Bold | 9pt | 13 | left | WHITE text — box headers |
+| `cell` | DVS | STIXTwo-Math | 9pt | 13 | left | Table cells |
+| `cellB` | DVS-B | STIXTwo-Math | 9pt | 13 | left | Bold table cells (same glyph as DVS) |
+| `cellI` | DVS-I | STIXTwo-Math | 9pt | 13 | left | Italic table cells (same glyph as DVS) |
+| `derived` | DVS-B | STIXTwo-Math | 10pt | 14 | left | GREEN_DARK — inline derived-status lines |
+
+**Note:** Since all DVS weights point to the same STIXTwo-Math.ttf, there is no typographic difference between `body`, `bodyI`, `cellB`, and `cellI`. Visual distinction for companion notes, version notes, and contextual asides is achieved through box styling (`remark_box()` with SLATE color scheme), not through italic text.
 
 ZP-E uses `alignment=4` (justified) for `body`, `bodyI`, `li`, and `derived` — intentional for that document's prose-heavy bridge character. Other formal docs use default left alignment.
 

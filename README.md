@@ -39,6 +39,8 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
+The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. Similarly, ε₀ is intentionally the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration, and the framework's Binary Snap produces a state whose ordinal measure is precisely that object.
+
 Every proof of existence starts by assuming something exists. This one starts from nothing and shows the first distinction must arise from it. The Binary Snap is the moment the transition is forced — when nothing becomes the most basic something.
 
 The derivation chain is:
@@ -155,6 +157,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (universal property verified for all four instantiation functors) |
 | OQ-G3: Functor construction | Closed - ZP-H C-H1 through C-H4 (object maps, morphism maps, preservation proofs complete) |
 | OQ-G4: Singularity reconciliation | Closed - ZP-H T-H2 (categorical and ZP-C characterizations shown to be same obstruction) |
+| ε₀ / proof-theoretic ordinal | Open - formal documentation. The framework's ε₀ (first post-Snap state at P₀) is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal ε₀ = sup{ω, ω^ω, ...}. Both name the minimal threshold transcending finite iteration; the symbol collision is not incidental. Formal embedding of L into ordinals deferred pending OQ-E2. |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
 | Formal verification (Lean/Rocq) | ZP-A through ZP-H complete (April 2026) |
 
