@@ -155,7 +155,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-E2: Cardinality-semilattice correspondence | **Open** - formal derivation of DA-3's cardinality claims deferred pending further work. |
 | OQ-G1: Native categorical surprisal | Closed - ZP-G v1.1 D7' and I-KC (Kolmogorov import; BA-G1 demoted to compatibility remark R-BA) |
 | OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (universal property verified for all four instantiation functors) |
-| OQ-G3: Functor construction | Closed - ZP-H C-H1 through C-H4 (object maps, morphism maps, preservation proofs complete) |
+| OQ-G3: Functor construction | Closed (concrete witness) / Open (full construction) - F_A: strong closure via NatSLat appendix (ℕ with max/0 as ZPCategory; 0 is categorical initial; genuine ZPA connection). F_B/C/D: shared ℝ≥0 proxy witness (NNRealZPCat appendix); domain facts C3, T1b, T4 cited. Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work. |
 | OQ-G4: Singularity reconciliation | Closed - ZP-H T-H2 (categorical and ZP-C characterizations shown to be same obstruction) |
 | ε₀ / proof-theoretic ordinal | Open - formal documentation. The framework's ε₀ (first post-Snap state at P₀) is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal ε₀ = sup{ω, ω^ω, ...}. Both name the minimal threshold transcending finite iteration; the symbol collision is not incidental. Formal embedding of L into ordinals deferred pending OQ-E2. |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
