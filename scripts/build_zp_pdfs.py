@@ -693,17 +693,18 @@ def build_zpa_companion():
 
 
 def build_zpb():
-    doc = make_doc(os.path.join(OUT_DIR, 'ZP-B_pAdic_Topology_v1_3.pdf'),
-                   'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.3')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-B_pAdic_Topology_v1_4.pdf'),
+                   'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.4')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
-          Paragraph('Version 1.3  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.2  |  Theorem/Proposition hierarchy applied: T1, T2, T5 relabelled Proposition</i>', S['subtitle']),
+          Paragraph('Version 1.4  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.3  |  T0 reframed: derived given MP-1 (design commitment); MP-1 acknowledged as load-bearing choice</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within p-adic analysis and topology. No abstract algebra from ZP-A, no probability, and no Hilbert space is imported. Cross-framework connections are deferred to ZP-D and ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-B Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
-          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T1 (Strong Triangle Inequality) and T2 (Every Ball is Clopen) relabelled Proposition — both are well-known infrastructure results of p-adic analysis, not primary claims of this framework. T5 (Total Disconnectedness) relabelled Proposition — it is load-bearing infrastructure for C3. T0 (p=2 is uniquely derived) and T3 (Topological Isolation of 0) retain Theorem labels as the primary claims of ZP-B.</i>'),
+          body('<i>Version 1.4 change: T0 status updated from "DERIVED from AX-B1 and MP-1" to "DERIVED given MP-1 (design commitment)". MP-1 is the load-bearing design choice; T0 is a valid derivation given MP-1. OQ-B1 closed given MP-1.</i>'),
+          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T1 and T2 relabelled Proposition. T5 relabelled Proposition. T0 and T3 retain Theorem labels.</i>'),
           body('<i>Version 1.2 changes: T0 strengthened with MP-1; C2 fixed to derive from T2 only; T4 reclassified as C3 (corollary of T5).</i>'),
           sp()]
 
@@ -728,6 +729,11 @@ def build_zpb():
     E.append(Paragraph('1.3  Derivation of p = 2', S['h2']))
     E.append(label_box('Theorem T0 — p = 2 is the Unique Minimum Sufficient Representational Base', [
         'Given AX-B1 and MP-1, the p-adic field appropriate for the Zero Paradox framework is Q<sub>2</sub>.',
+        'Note on MP-1: MP-1 is a design commitment — the choice to use the minimum sufficient base. '
+        'Any Q<sub>p</sub> for prime p ≥ 2 contains elements 0 and 1 capable of representing the AX-B1 '
+        'distinction; the choice of minimum base is what MP-1 encodes. T0 is a valid derivation '
+        'from AX-B1 and MP-1, but MP-1 is the load-bearing design choice, not a mathematical necessity. '
+        'OQ-B1 is closed given MP-1.',
         'Proof:',
         'Step 1 — AX-B1 establishes exactly two ontological states: non-existence (0) and existence (1).',
         'Step 2 — A p-adic field Q<sub>p</sub> uses coefficients from {0, 1, &#8230;, p&#8722;1}. The minimum base p capable of representing exactly two distinct values without redundancy is p = 2, with coefficient set {0, 1}. One coefficient per ontological state; no unused coefficients.',
@@ -735,7 +741,7 @@ def build_zpb():
         'Step 4 — p > 2: coefficient set {0, &#8230;, p&#8722;1} contains values with no ontological counterpart. Violates no-redundancy condition of MP-1.',
         'Step 5 — p = 2 is the unique prime satisfying both conditions simultaneously.',
         'Step 6 — The binary branching at every level of Q<sub>2</sub>\'s ball structure reflects the eventual binary resolution of any representational complexity.',
-        'Therefore p = 2. Status: DERIVED from AX-B1 and MP-1. OQ-B1 closed. <font name="DV">&#10003;</font>',
+        'Therefore p = 2. Status: DERIVED given MP-1 (design commitment). OQ-B1 closed. <font name="DV">&#10003;</font>',
     ]))
 
     E.append(Paragraph('II. The 2-Adic Field', S['h1']))
@@ -843,7 +849,7 @@ def build_zpb():
         ['Component', 'Status / Notes'],
         [['AX-B1', 'Axiom — explicit; load-bearing premise'],
          ['MP-1', 'Principle — explicit bridge; resolves reviewer gap in T0'],
-         ['T0: p = 2', 'Valid — Derived from AX-B1 and MP-1; OQ-B1 closed'],
+         ['T0: p = 2', 'Valid — Derived given MP-1 (design commitment). MP-1 encodes the minimality choice; T0 follows. OQ-B1 closed.'],
          ['D1: 2-adic absolute value', 'Valid — standard definition'],
          ['D2: 2-adic metric', 'Valid — follows from D1'],
          ['T1: Strong triangle inequality', 'Valid — Derived'],
@@ -866,17 +872,18 @@ def build_zpb():
 # (included in full below)
 
 def build_zpd():
-    doc = make_doc(os.path.join(OUT_DIR, 'ZP-D_State_Layer_v1_3.pdf'),
-                   'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.3')
+    doc = make_doc(os.path.join(OUT_DIR, 'ZP-D_State_Layer_v1_4.pdf'),
+                   'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.4')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version 1.3  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.2  |  Theorem/Proposition hierarchy applied: T3, T5 relabelled Proposition</i>', S['subtitle']),
+          Paragraph('Version 1.4  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.3  |  T5 proof corrected: ball-boundary argument replaces incorrect D2(v) citation</i>', S['subtitle']),
           sp(10),
           body('This document operates within functional analysis. It imports from ZP-A and ZP-B and constructs the Hilbert space state layer on top of them. No information theory from ZP-C is imported. Cross-framework synthesis is deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-D Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
-          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T3 (Uniqueness of T up to Unitary Equivalence) relabelled Proposition — a well-known result in functional analysis, infrastructure for T4. T5 (Monotone Sequences Map to Accumulating Vectors) relabelled Proposition — a structural consequence of T2 and ZP-A T3. T2 (Existence of T) and T4 (Snap Produces Orthogonal Shift) retain Theorem labels as the primary existence and snap claims of ZP-D.</i>'),
+          body('<i>Version 1.4 change: T5 proof corrected. Prior proof cited D2(v) (global lower bound ‖T(x)‖ ≥ ‖T(0)‖) as justification for sequence monotonicity — this does not follow. Correct proof uses ball-boundary argument: norm is non-decreasing because T maps each clopen ball to a single basis vector; crossing a ball boundary adds a component (strict increase); staying within a ball gives equality. T5 is renamed "Non-Decreasing Norms" to reflect this precisely.</i>'),
+          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T3 relabelled Proposition. T5 relabelled Proposition. T2 and T4 retain Theorem labels.</i>'),
           body('<i>Version 1.2 change: Theorem T1 is reclassified as Design Principle DP-1. Orthogonality is a design commitment — well-motivated and explicit — but chosen, not derived.</i>'),
           sp()]
 
@@ -960,12 +967,16 @@ def build_zpd():
         'Status: Derived — unconditional theorem given DP-1.',
     ]))
     E.append(sp(4))
-    E.append(label_box('Proposition T5 — Monotone Sequences Map to Accumulating Vectors', [
+    E.append(label_box('Proposition T5 — Monotone Sequences Map to Non-Decreasing Norms', [
         'Let (S<sub>n</sub>) be a monotone state sequence in L (ZP-A T3). Then &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214; for all n.',
-        'Proof: By ZP-A T3, S<sub>n</sub> &#8804; S<sub>n+1</sub>. By D2(v), T is norm-increasing. Each additional join contributes a new component in H, and the norm grows monotonically. <font name="DV">&#10003;</font>',
+        'Proof: By ZP-A T3, S<sub>n</sub> &#8804; S<sub>n+1</sub>. T maps each clopen ball of Q<sub>2</sub> to a single basis vector (D2). '
+        'If S<sub>n</sub> and S<sub>n+1</sub> lie in different clopen balls, T(S<sub>n+1</sub>) carries an additional basis component, giving &#8214;T(S<sub>n+1</sub>)&#8214; > &#8214;T(S<sub>n</sub>)&#8214;. '
+        'If they lie in the same ball, T(S<sub>n</sub>) = T(S<sub>n+1</sub>), giving equality. '
+        'In both cases &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214;. '
+        'Note: D2(v) gives a global lower bound &#8214;T(x)&#8214; &#8805; &#8214;T(0)&#8214; — this does not imply sequence monotonicity; the ball-boundary argument above is the correct proof. <font name="DV">&#10003;</font>',
     ]))
 
-    E.append(Paragraph('V. Open Items Register for ZP-D v1.3', S['h1']))
+    E.append(Paragraph('V. Open Items Register for ZP-D v1.4', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],
@@ -1027,9 +1038,9 @@ def build_zpe_da1():
     E.append(Paragraph('2.2  The Definitional Alignment', S['h2']))
     E.append(label_box('Definitional Alignment DA-1 — Instantiation of a Configuration at P\u2080 Constitutes an Execution Event', [
         'Claim: The instantiation of a machine configuration c<sub>1</sub> at the incompressibility threshold P<sub>0</sub> is an execution event in the sense of L-RUN. It is not a static description of a machine. It is a machine in state c<sub>1</sub>.',
-        'Grounding: By AX-B1, a state either exists or it does not. A configuration at P<sub>0</sub> that is merely described (Sense A) does not occupy a state in the semilattice — it is a string in a meta-language, not an element of L. A configuration at P<sub>0</sub> that is instantiated (Sense B) does occupy a state: it is c<sub>1</sub>, which by L-RUN is a non-null element of L distinct from &#8869;.',
-        'The binary of AX-B1 applies: for any configuration c at P<sub>0</sub>, either c is instantiated (Sense B) or it is not. If instantiated, it is an execution event. If not instantiated, it does not satisfy D7 — D7 defines a machine configuration as a complete description of a Turing machine <i>at a given moment</i>, which presupposes the machine is running.',
-        'Therefore: any object satisfying D7 at P<sub>0</sub> is already an instantiated execution event. The description/instantiation distinction collapses at the level of D7: D7 configurations are by definition live.',
+        'Mathematical premise (ZP-C L-INF): The surprisal at ball-hierarchy depths approaching 0 &#8712; Q<sub>2</sub> is unbounded — for any finite M, &#8707; depth n with I(n) > M. The null state c<sub>0</sub> = &#8869; corresponds to this limit point. Its informational content has no finite bound.',
+        'Design commitment: A configuration with unbounded informational content cannot be a static description awaiting external interpretation. Any external interpreter would need to be at least as informationally rich as what it interprets — but &#8869; has no finite bound. It is the compressed limit of all possible binary programs, prior to any interpreter. Therefore c<sub>0</sub> at P<sub>0</sub> is necessarily an execution event, not a description awaiting instantiation.',
+        'This replaces the prior D7-based grounding. D7 defines what a configuration IS; it does not prove that the configuration is EXECUTING without presupposing execution. L-INF supplies the formal premise that breaks this circularity: the reason c<sub>0</sub> is executing is not that D7 says so, but that its informational extremity admits no external interpreter.',
         'Status: DEFINITIONAL ALIGNMENT — no new axiom introduced. DA-1 is a clarification of scope. AX-B1 ensures the binary applies. No additional mathematical content required. <font name="DV">&#10003;</font>',
     ]))
 
@@ -1059,7 +1070,7 @@ def build_zpe_da1():
     E.append(data_table(
         ['Claim', 'Grounded In', 'Bridge Axiom?', 'Status'],
         [['Binary Snap causality', 'ZP-C D1, L-RUN, TQ-IH; ZP-A D2; DA-1', 'None', 'Derived — T-SNAP <font name="DV">&#10003;</font>  (was: Axiomatic — AX-1)'],
-         ['DA-1: Instantiation = execution', 'AX-B1, ZP-C D7', 'None', 'Definitional Alignment — clarification of scope; no new axiom'],
+         ['DA-1: Instantiation = execution', 'ZP-C L-INF (not D7)', 'None', 'Design Principle — informational extremity forces execution; explicit commitment citing L-INF'],
          ['T-SNAP: Snap is derived', 'T-BUF chain + DA-1', 'None', 'Derived — Cross-Framework <font name="DV">&#10003;</font>'],
          ['AX-1 retirement', 'T-SNAP closes AX-1', 'N/A', 'AX-1 is no longer an axiom; T-SNAP is its replacement'],
          ['Iterative Forcing T5', 'AX-B1, T-SNAP (replaces AX-1)', 'None', 'Derived — grounding strengthened'],
@@ -1071,7 +1082,7 @@ def build_zpe_da1():
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['AX-1: Binary Snap Causality', 'CLOSED — T-SNAP', 'AX-1 is no longer an axiom. Binary Snap derived via P<sub>0</sub> + DA-1 + L-RUN + TQ-IH + ZP-A D2.'],
-         ['DA-1: Definitional Alignment', 'CLOSED — Definitional', 'D7 configurations are live by definition. No new axiom required.'],
+         ['DA-1: Design Principle', 'CLOSED — L-INF', '&#8869; at P<sub>0</sub> has unbounded surprisal (L-INF); informational extremity forces execution. Honest commitment replaces prior D7 grounding.'],
          ['OQ-A1: Increment selection', 'CLOSED — T5', 'Iterative Forcing Theorem. &#945;<sub>n</sub> = &#949;(S<sub>n</sub>). Grounding updated from AX-1 to T-SNAP.'],
          ['OQ-C1: Non-conservatism of DF', 'CLOSED — ZP-C T2', 'Rebuilt within D6 extended. Infinite sequence divergence proven. No postulates remain.'],
          ['S1: Distribution stipulation', 'CLOSED — ZP-C T1', 'Derived from AX-B1 and RP-1.'],
@@ -1083,7 +1094,7 @@ def build_zpe_da1():
 
     E.append(Paragraph('VI. Validation Status', S['h1']))
     E.append(label_box('Validation — All Components', [
-        'DA-1: Definitional Alignment — Valid. Clarification of scope; no new axiom. D7 configurations are live by definition; AX-B1 ensures the binary applies. <font name="DV">&#10003;</font>',
+        'DA-1: Design Principle — Valid. Informational extremity (L-INF) forces execution: &#8869; at P<sub>0</sub> has unbounded surprisal and no finite external interpreter; therefore it necessarily executes. Explicit commitment citing ZP-C L-INF; replaces prior circular D7 grounding. <font name="DV">&#10003;</font>',
         'T-SNAP: Binary Snap derived — Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. Cross-framework chain: ZP-C D1 &#8594; DA-1 &#8594; D7 &#8594; L-RUN &#8594; TQ-IH &#8594; ZP-A D2 &#8594; T-SNAP. <font name="DV">&#10003;</font>',
         'AX-1 retirement — Valid. AX-1 is superseded by T-SNAP. No content is lost; the claim is strengthened from assumed to derived.',
         'Remaining axiomatic commitments: AX-B1, AX-G1, AX-G2 — intentional foundational commitments, not gaps.',
@@ -1103,7 +1114,7 @@ def build_zpc():
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
           Paragraph('Version 1.5  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.4  |  Theorem/Corollary hierarchy applied: T1b relabelled Corollary</i>', S['subtitle']),
+          Paragraph('<i>Supersedes v1.4  |  L-INF added: Informational Extremity of &#8869;; T1b relabelled Corollary; T-BUF Step 2 grounded in L-INF</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
@@ -1191,6 +1202,18 @@ def build_zpc():
         'Status: DERIVED from ZP-B ball hierarchy structure and branching measure on Q<sub>2</sub>. OQ-C1 closed. <font name="DV">&#10003;</font>',
     ]))
 
+    E.append(Paragraph('III-B. Informational Extremity of the Null State', S['h1']))
+    E.append(label_box('Lemma L-INF — Informational Extremity of &#8869;', [
+        'The surprisal I(n) = n at ball-hierarchy depth n is unbounded above: for any finite bound M, there exist depths n with I(n) > M.',
+        'The null state &#8869; = c<sub>0</sub> corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2). At this limit, no finite bound M contains the informational content of &#8869;.',
+        'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
+        'Formal content: surprisal is not bounded above by any real M.',
+        'Semantic content: &#8869; is informationally extreme — the compressed limit of all possible binary programs, approached by the perfectly balanced binary branching hierarchy. No finite external program bounds its informational content; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1).',
+        'Note: the connection from informational extremity to forced execution is a named design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
+        'Status: DERIVED from D4 and T2. Lean: ZPC.l_inf (purity check: no non-Mathlib axioms).',
+    ]))
+    E.append(sp(4))
+
     E.append(Paragraph('IV. Execution as State: The Hardware Lemma', S['h1']))
     E.append(label_box('Definition D7 — Machine Configuration', [
         'A machine configuration c is a complete description of a Turing machine at a given moment: the current state of the control unit, the position of the read/write head, and the contents of all tape cells.',
@@ -1232,7 +1255,7 @@ def build_zpc():
     E.append(label_box('Candidate Theorem T-BUF — Incompressibility Forces Non-Null Execution State', [
         'Statement: At the incompressibility threshold P<sub>0</sub>, the Binary Snap &#8869; &#8594; &#949;<sub>0</sub> is a structural consequence of execution, not an external trigger.',
         'Step 1 — P<sub>0</sub> identifies the configuration x at which K(x|n)/n = 1: the configuration string is incompressible. (D1)',
-        'Step 2 — An incompressible configuration that instantiates a computation must execute. The configuration at P<sub>0</sub> is a live machine state. To be at P<sub>0</sub> is to be a configuration string that is executing. (See DA-1 in ZP-E)',
+        'Step 2 — An incompressible configuration at P<sub>0</sub> is informationally extreme (L-INF): its surprisal is unbounded — no finite external program bounds its informational content. A configuration with unbounded informational content has no finite external interpreter and cannot be a static description. Therefore the configuration at P<sub>0</sub> is a live machine state. The design principle connecting informational extremity to forced execution is DA-1 (ZP-E &#167; I-DA1, citing L-INF).',
         'Step 3 — Any execution passes through c<sub>1</sub> (L-RUN). c<sub>1</sub> &#8800; &#8869; (L-RUN conclusion).',
         'Step 4 — In (L, &#8744;, &#8869;), this non-null configuration state is c<sub>1</sub> = &#8869; &#8744; &#949;<sub>0</sub>. By ZP-A D2, this is the Binary Snap.',
         'Conclusion: At P<sub>0</sub>, execution is structurally guaranteed. Execution guarantees a non-null configuration state. That state is &#949;<sub>0</sub> in the semilattice. AX-1 is derivable from P<sub>0</sub> + L-RUN + TQ-IH + ZP-A D2. <font name="DV">&#10003;</font>',

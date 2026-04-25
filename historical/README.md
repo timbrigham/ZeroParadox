@@ -6,6 +6,9 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-D_State_Layer_v1_3-1.pdf](ZP-D_State_Layer_v1_3-1.pdf) | 2026-04-25 | ZP-D v1.3 superseded by v1.4: T5 proof corrected — D2(v) lower-bound argument replaced with ball-boundary argument; T5 renamed "Non-Decreasing Norms" |
+| [ZP-B_pAdic_Topology_v1_3-1.pdf](ZP-B_pAdic_Topology_v1_3-1.pdf) | 2026-04-25 | ZP-B v1.3 superseded by v1.4: T0 (p=2) reframed as derived given MP-1 (design commitment); MP-1 acknowledged as the load-bearing design choice |
+| [ZP-E_Bridge_Document_v2_2-1.pdf](ZP-E_Bridge_Document_v2_2-1.pdf) | 2026-04-25 | ZP-E v2.2 superseded by v2.3: CC-1 added to T-SNAP dependency list; multiverse claim scoped correctly to T-SNAP + DA-2 jointly |
 | [ZP-H_Categorical_Bridge_v1_1-1.pdf](ZP-H_Categorical_Bridge_v1_1-1.pdf) | 2026-04-25 | ZP-H v1.1 superseded by v1.2: F_C composition preservation corrected — JSD subadditivity replaced with Q-stability argument (binary framework); subadditivity is an inequality, not equality |
 | [ZP-E_Bridge_Document_v2_1-1.pdf](ZP-E_Bridge_Document_v2_1-1.pdf) | 2026-04-25 | ZP-E v2.1 superseded by v2.2: DA-3 Skolem/CH/Russell connections reframed from derived results to candidate applications pending OQ-E2 |
 | [ZP_TQ_IH_Formal-1.pdf](ZP_TQ_IH_Formal-1.pdf) | 2026-04-21 | Early standalone formal treatment of TQ-IH; superseded by ZP-C v1.4 which integrates TQ-IH as a proved theorem |

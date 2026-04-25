@@ -198,7 +198,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.2  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.3  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -252,7 +252,7 @@ def build_zpe(out_path):
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Design Principle — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.2 | DA-1 grounded in L-INF | DA-3 Skolem/CH/Russell reframed as candidate applications | AX-1 promoted to T-SNAP</i>',
+        Paragraph('<i>Updated ZP-E v2.3 | CC-1 added to T-SNAP dependency list | Multiverse claim scoped to T-SNAP + DA-2 | DA-3 candidate applications</i>',
                   S['note']),
         hr(),
     ]
@@ -333,7 +333,9 @@ def build_zpe(out_path):
         sp(4),
         body('Conclusion: The Binary Snap is a derived consequence. AX-1 is promoted to Theorem T-SNAP. ✓'),
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
-                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. No axiom beyond AX-B1, AX-G1, AX-G2 is required.'),
+                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. Named modelling commitment: CC-1 (S₀ = ⊥, ZP-A) — '
+                'the identification of the initial state with the lattice bottom is a modelling commitment, '
+                'not derived from A1–A4. T-SNAP is derived given DA-1 and CC-1, both explicit.'),
     ]
 
     E.append(Paragraph('V. Effect of T-SNAP on Downstream Results', S['h2']))
@@ -464,8 +466,12 @@ def build_zpe(out_path):
 
     E.append(Paragraph('VII. Implications Within the Framework', S['h2']))
     E += [
-        body('<b>Multiverse as mandatory.</b> The branching fan at each ⊥ node is not optional. T-SNAP fires on '
-             'all accessible outbound vectors simultaneously. The multiverse is a structural consequence, not an interpretation.'),
+        body('<b>Multiverse as structural implication.</b> T-SNAP establishes that a Binary Snap occurs — '
+             'that ⊥ transitions to some ε₀ > ⊥. DA-2 establishes that any terminal state satisfying P₀ '
+             'conditions acts as ⊥ for a successor instantiation, generating a forward-directed branching '
+             'tree. The multiverse structure follows from T-SNAP + DA-2 jointly. Note: T-SNAP alone does '
+             'not establish that it fires on all outbound vectors simultaneously — that universality is the '
+             'scope of DA-2, not a direct consequence of the snap theorem itself.'),
         body('<b>Free will and irreversibility.</b> Within an instantiation, state sequences are monotone — no state '
              'can be decreased (ZP-A R1). Every choice is a join operation: S<sub>n</sub> ∨ α for some increment α. '
              'The algebra constrains only that the sequence be monotone, not which monotone path is '
@@ -590,7 +596,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.2', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.3', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -639,7 +645,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.2', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.3', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -674,10 +680,10 @@ def build_zpe(out_path):
          'AX-B1, T-SNAP (replaces AX-1)',
          'None',
          'Derived — grounding strengthened'],
-        ['Multiverse mandated',
-         'T-SNAP, DA-2',
+        ['Multiverse — structural implication',
+         'T-SNAP + DA-2 jointly',
          'None',
-         'Derived consequence — not an interpretation'],
+         'Structural implication — T-SNAP gives the snap; DA-2 gives the branching tree'],
         ['OQ-E2: Cardinality correspondence',
          'DA-3',
          'N/A',
@@ -690,7 +696,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.2', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.3', S['h1'])]
 
     val_rows = [
         ['DA-1: Design Principle',
@@ -705,8 +711,8 @@ def build_zpe(out_path):
          'Valid — Derived. Follows directly from DA-2 and ZP-B C3. ✓'],
         ['Directed instantiation tree',
          'Valid — Derived structural consequence of T-SNAP + DA-2. Branching is mandatory, not optional. Forward edges only.'],
-        ['Multiverse as mandatory',
-         'Valid — Derived. T-SNAP fires on all accessible outbound vectors. Not an interpretation.'],
+        ['Multiverse as structural implication',
+         'Valid — T-SNAP + DA-2 jointly. T-SNAP establishes the snap occurs; DA-2 establishes the branching tree structure. Universality (all outbound vectors) is DA-2\'s scope, not T-SNAP alone.'],
         ['Free will / irreversibility',
          'Valid — Structural consequence. Monotonicity (T3) constrains direction; additive ontology (R1) prohibits reduction. Path choice is undetermined by algebra.'],
         ['Time\'s arrow',
@@ -730,7 +736,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.2 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v2.3 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
@@ -742,5 +748,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_2.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_3.pdf'))
     build_zpe(out)
