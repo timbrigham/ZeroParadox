@@ -1,7 +1,9 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 2.8 | April 2026
-DA-1 formal bridge added: incompressibility = self-description argument (ZP-C D1 + standard AIT).
+Version 2.9 | April 2026
+v2.9: DA-1 Lean scope note added — functional role carried by ZPC.l_run/tq_ih; AIT+ZF+AFA bridge
+outside Lean scope (same category as ZP-A CC-2). PDF status line updated to reflect Lean scope.
+v2.8: DA-1 formal bridge added: incompressibility = self-description argument (ZP-C D1 + standard AIT).
 At P0, K(c1|n)/|c1| = 1 means description and execution coincide; CC-2/R3 and L-INF become corroboration.
 v2.7: DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 and R3.
 Follows all rules in pdf rendering standards:
@@ -200,7 +202,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.7  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.9  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -223,9 +225,13 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.8 | April 2026', S['subtitle']),
+        Paragraph('Version 2.9 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v2.7 | DA-1 formal bridge added: incompressibility = self-description argument '
+            '<i>Supersedes v2.8 | DA-1 Lean scope note added: functional role carried by ZPC.l_run/tq_ih (proved); '
+            'AIT and ZF+AFA bridge outside Lean scope — same category as ZP-A CC-2.</i>',
+            S['note']),
+        Paragraph(
+            '<i>v2.8: DA-1 formal bridge added: incompressibility = self-description argument '
             '(ZP-C D1 + standard AIT). At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 means description '
             'and execution coincide; CC-2/R3 and L-INF are independent corroboration of the same conclusion.</i>',
             S['subtitle']),
@@ -262,7 +268,7 @@ def build_zpe(out_path):
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Derived Proposition — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.8 | DA-1 formal bridge: incompressibility = self-description (ZP-C D1 + AIT) | '
+        Paragraph('<i>Updated ZP-E v2.9 | DA-1 Lean scope note added (v2.9) | DA-1 formal bridge: incompressibility = self-description (ZP-C D1 + AIT) | '
                   'v2.7: DA-1 upgraded, CC-2/R3 grounding | v2.6: DA-3 applications removed | v2.5: Physical analogies removed</i>',
                   S['note']),
         hr(),
@@ -356,7 +362,9 @@ def build_zpe(out_path):
                 'Does not require CC-2. Independent corroboration: ZP-A CC-2 + R3 (structural path), '
                 'ZP-C L-INF (informational path). '
                 'Named modeling commitments: CC-1 (S<sub>0</sub> = &#8869;, ZP-A) and CC-2 (&#8869; = {&#8869;}, ZP-A) — both explicit. '
-                'T-SNAP is derived given DA-1, CC-1, and AX-B1. ✓'),
+                'T-SNAP is derived given DA-1, CC-1, and AX-B1. ✓ '
+                'Lean scope: functional role carried by ZPC.l_run and ZPC.tq_ih (both proved independently); '
+                'AIT (Kolmogorov complexity) and ZF+AFA bridge outside Lean scope — same category as ZP-A CC-2.'),
     ]
 
     E.append(Paragraph('IV. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
@@ -609,7 +617,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.7', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.9', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -662,7 +670,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.7', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.9', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -713,7 +721,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.7', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.9', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (from v2.7)',
@@ -753,7 +761,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.7 | Three formal inserts: DA-1 (Derived Proposition), DA-2, DA-3 | '
+            '<i>End of ZP-E v2.9 | Three formal inserts: DA-1 (Derived Proposition), DA-2, DA-3 | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
@@ -765,5 +773,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_8.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_9.pdf'))
     build_zpe(out)
