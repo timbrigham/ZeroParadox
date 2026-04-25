@@ -14,12 +14,17 @@ is traced to a theorem in ZP-G or ZP-A through ZP-E, plus an explicit bridge axi
 where required. No floating connections.
 
 Key results:
-- T-H1: Each instantiation functor preserves the initial object (OQ-G2 closed).
-  F_A proved concretely; F_B/F_C/F_D require codomain category infrastructure.
+- T-H1: For each domain, the canonical initial element satisfies the relevant
+  domain-specific extremality property.
+  - F_A (ZPA/ZPE): fully categorical — ℕ with max/0 is a concrete ZPCategory instance
+    (see NatSLat appendix); ⊥ satisfies the universal property of an initial object.
+  - F_B, F_C, F_D: domain properties established (irreversibility, JSD cost,
+    orthogonality). Full categorical functor construction requires defining pTop,
+    InfoSp, and Hilb as CategoryTheory categories — deferred (OQ-G3 open).
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
   accumulation) are compatible — jointly derivable (OQ-G4 closed).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved
-  by assembling existing domain theorems.
+  by assembling independently proved domain theorems.
 -/
 
 namespace ZeroParadox.ZPH
@@ -42,18 +47,24 @@ D-H1 is a design commitment, not a derivation. No Lean theorem — the choice is
 makes the instantiation functors well-defined. A different morphism structure would
 yield different functors. -/
 
-/-! ## Section III — Construction of the Instantiation Functors (OQ-G3)
+/-! ## Section III — Instantiation Functors: Domain Properties (OQ-G3 Partially Open)
 
-The four functors F_A, F_B, F_C, F_D map C to its four domain codomains. A complete
-Lean construction requires defining SLat, pTop, InfoSp, and Hilb as CategoryTheory
-categories and verifying composition/identity preservation. That infrastructure is
-deferred. Instead, T-H1 is verified for each functor by citing the key domain theorem
-that establishes the initial-object property in the codomain. -/
+The four functors F_A, F_B, F_C, F_D are intended to map the abstract ZPCategory C
+to its four domain codomains. A complete Lean construction of each functor as a
+CategoryTheory.Functor requires defining SLat, pTop, InfoSp, and Hilb as full
+CategoryTheory categories (objects, hom-sets, composition, identity, laws) and
+verifying that each functor preserves composition and identity.
 
-/-! ## T-H1 — Each Functor Preserves the Initial Object (OQ-G2 Closed)
+- **F_A (SLat)**: The NatSLat appendix provides a concrete ZPCategory instance
+  (ℕ with max/0 as ZPSemilattice, standard ≤ as the poset-category) where 0 is
+  the categorical initial object. This grounds the SLat claim concretely.
+- **F_B, F_C, F_D**: The full category infrastructure for pTop, InfoSp, and Hilb
+  is deferred. T-H1 for these three establishes the key domain-specific property
+  (irreversibility, information cost, orthogonality) that the initial-object claim
+  rests on — but does not construct the categorical functor object. OQ-G3 remains
+  open for F_B, F_C, F_D. -/
 
-For each F ∈ {F_A, F_B, F_C, F_D}, F(0) is an initial object in the codomain.
-Verified by direct universal property check for each functor. -/
+/-! ## T-H1 — Initial-Object Properties Under Each Instantiation Functor -/
 
 /-- T-H1 for F_A — ⊥ is the initial object in the join-semilattice codomain.
     For any element x, ⊥ ≼ x: the unique "morphism" ⊥ → x exists (bot_le).
@@ -62,32 +73,37 @@ theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
     le bot x :=
   bot_le x
 
-/-- T-H1 for F_B — 0 ∈ Q₂ plays the initial object role in pTop.
-    The irreversibility result (C3) shows no continuous path returns to 0 from any x ≠ 0.
-    Grounded in ZPB T3 (topological isolation of 0) and ZPB T5 (Q₂ totally disconnected).
-    (Full category construction for pTop — verifying functor laws for the full morphism
-    category of clopen transitions — deferred to further infrastructure work.) -/
+/-- T-H1 for F_B — domain property: topological irreversibility of 0 in Q₂.
+    No continuous path returns to 0 from any x ≠ 0 (ZPB C3). This is the key
+    irreversibility property that F_B's initial-object claim rests on, grounded in
+    ZPB T3 (clopen isolation) and T5 (total disconnectedness).
+    NOTE: This is NOT a proof that 0 satisfies the categorical universal property of
+    an initial object in a defined category pTop. The full F_B functor construction
+    (defining pTop as a CategoryTheory category with clopen-transition morphisms,
+    verifying functor laws) is deferred. OQ-G3 is open for F_B. -/
 theorem th1_fb :
     ∀ x : Q₂, x ≠ 0 → ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
       γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = 0 :=
   c3_irreversible
 
-/-- T-H1 for F_C — P = (1, 0) plays the initial object role in InfoSp.
-    The fundamental transition costs exactly 1 bit: JSD(P, Q) = log 2.
-    Grounded in ZPC T1b (distinct distributions, JSD computation).
-    Composition preservation (C-H3): in the binary framework (Fin 2), only two non-trivial
-    distributions exist: P and Q. The snap is the unique morphism mapping P → Q at cost 1 bit.
-    All successor morphisms map Q → Q (Q-stability), so F_C(g) = JSD(Q ‖ Q) = 0 for g post-snap.
-    Therefore F_C(g ∘ f) = 1 bit = F_C(g) + F_C(f) = 0 + 1 bit — composition preserved exactly
-    by Q-stability, not by JSD subadditivity (which is an inequality, not equality).
-    (Full InfoSp category construction for the general case deferred.) -/
+/-- T-H1 for F_C — domain property: the P → Q snap costs exactly 1 bit.
+    JSD(P, Q) = log 2 (ZPC T1b). This is the information-cost fact that F_C's
+    initial-object claim rests on.
+    NOTE: This is NOT a proof that P satisfies the categorical universal property of
+    an initial object in a defined category InfoSp. The full F_C functor construction
+    (defining InfoSp as a CategoryTheory category with distributions as objects and
+    information channels as morphisms, verifying functor laws) is deferred.
+    OQ-G3 is open for F_C. -/
 theorem th1_fc : jsdPQ = Real.log 2 :=
   t1b_jsd
 
-/-- T-H1 for F_D — e₀ = T(0) plays the initial object role in Hilb.
-    The snap T(0) → T(ε₀) is an orthogonal shift: ⟪T(0), T(ε₀)⟫_ℂ = 0.
-    Grounded in ZPD T4 (snap → orthogonal shift) and ZPD T2 (T injective, norm 1).
-    (Full Hilb category construction deferred.) -/
+/-- T-H1 for F_D — domain property: the snap is an orthogonal shift in Hilb.
+    ⟪T(0), T(ε₀)⟫_ℂ = 0 (ZPD T4). This is the Hilbert-space fact that F_D's
+    initial-object claim rests on, grounded in ZPD T2 (injectivity, norm 1) and DP-1.
+    NOTE: This is NOT a proof that T(0) satisfies the categorical universal property
+    of an initial object in a defined category Hilb. The full F_D functor construction
+    (defining Hilb as a CategoryTheory category with bounded linear maps as morphisms,
+    verifying functor laws) is deferred. OQ-G3 is open for F_D. -/
 theorem th1_fd (n : ℕ) (hn : 2 ≤ n) :
     @inner ℂ (StateSpace n) _
       (transitionOp n ⟨0, by omega⟩)
