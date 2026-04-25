@@ -35,6 +35,37 @@ Transparency is a core value of this project. The existence of this private fold
 - The `historical/README.md` tracks all archived files with date moved and description
 - README.md always links to the non-suffixed (current) version
 
+## Companion Document Versioning
+
+Each formal ZP-X document has a paired illustrated companion (`ZP-X_Illustrated_Companion.pdf`). Companion PDFs overwrite in place — no versioned filename, no `historical/` archiving. The current companion version lives only in the title block of the PDF and the docstring of its build script.
+
+### Companion sync rule
+
+**Whenever a formal document is updated, review its companion in the same session.** Ask:
+- Does the companion describe any result whose label or status changed? (e.g., "Candidate Theorem" → "Theorem T-SNAP", CC-2 added, RP-2 added)
+- Does the companion omit a new result a general reader would benefit from? (e.g., L-INF, a new lemma or design principle)
+- Does the companion's key result box or closing summary still accurately reflect the framework state?
+
+If yes to any of these, update the companion and bump its internal version number in the same commit as the formal document. Do not leave the companion behind.
+
+### Bumping a companion version
+
+When updating a companion, change:
+1. The subtitle paragraph in `build()`: e.g., `'Information Theory | Version 1.4'` → `'Version 1.5'`
+2. The docstring at the top of the build script
+3. Any section headers of the form `'New in v1.X: ...'` that now refer to an old version — either drop the "New in" framing or update the version number
+
+Companion version numbers are independent of formal version numbers — ZP-C companion v1.5 pairing with ZP-C formal v1.6 is fine. What matters is that the companion is not materially stale.
+
+### Companion sync checklist
+
+Run this whenever a formal document version changes:
+- [ ] Key result box / closing summary still accurate
+- [ ] Changed theorem or claim labels updated in plain language (e.g., "AX-1 is a Candidate Theorem" → "T-SNAP is a proven theorem")
+- [ ] New results relevant to a general reader added with plain-language explanation
+- [ ] Internal version string bumped if any changes were made
+- [ ] Build script docstring updated to match
+
 ## README.md Link Restrictions
 
 The following files exist in the repository but **must not be linked from README.md** until the conditions below are met:
