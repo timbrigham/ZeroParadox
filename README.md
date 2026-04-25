@@ -79,12 +79,12 @@ This framework introduces no novel axioms. Every commitment is either a derived 
 | File | Document | Version | Contents |
 |------|----------|---------|----------|
 | [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_5.pdf) | ZP-A | v1.5 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
-| [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_3.pdf) | ZP-B | v1.3 | AX-B1. MP-1. Derivation of p=2. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
+| [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_4.pdf) | ZP-B | v1.4 | AX-B1. MP-1 (design commitment). T0: p=2 derived given MP-1. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
 | [ZP-C Information Theory](ZP-C_Information_Theory_v1_5.pdf) | ZP-C | v1.5 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). |
-| [ZP-D State Layer](ZP-D_State_Layer_v1_3.pdf) | ZP-D | v1.3 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. |
-| [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_0.pdf) | ZP-E | v2.0 | **DA-1** (instantiation = execution). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Accounts for Skolem, CH independence, Russell. Full traceability register. |
+| [ZP-D State Layer](ZP-D_State_Layer_v1_4.pdf) | ZP-D | v1.4 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
+| [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_3.pdf) | ZP-E | v2.3 | **DA-1** (instantiation = execution, grounded in L-INF). **T-SNAP** (Binary Snap derived; depends on DA-1 and CC-1). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Candidate applications to Skolem, CH independence, Russell (pending OQ-E2). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_2.pdf) | ZP-G | v1.2 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_1.pdf) | ZP-H | v1.1 | Functors FA-FD. Singularity reconciliation. T-H3: Snap under all four functors. T-SNAP inherited as derived theorem. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_2.pdf) | ZP-H | v1.2 | Functors FA-FD. F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four functors. T-SNAP inherited as derived theorem. |
 
 ### Illustrated Companion Documents (General Reader)
 
@@ -108,16 +108,16 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 ### Formal Verification (Lean 4)
 
-Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives on the `lake_testing` branch under `ZeroParadox/`.
+Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives on the `illustrated` branch under `ZeroParadox/`.
 
 | Document | Lean Source | Theorems Verified | Build | Proof Doc |
 |----------|-------------|-------------------|-------|-----------|
 | ZP-A Lattice Algebra | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
 | ZP-B p-Adic Topology | [ZeroParadox/ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (isolation of 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 | [↗](proofs/ZP-B_Lean4.md) |
 | ZP-C Information Theory | [ZeroParadox/ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH | Clean - April 2026 | [↗](proofs/ZP-C_Lean4.md) |
-| ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T4 (Snap → orthogonal shift in H), T5 (monotone norms) | Clean - April 2026 | [↗](proofs/ZP-D_Lean4.md) |
-| ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 | [↗](proofs/ZP-E_Lean4.md) |
-| ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox) | Clean - April 2026 | [↗](proofs/ZP-G_Lean4.md) |
+| ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T3 (uniqueness up to unitary equivalence), T4 (Snap → orthogonal shift in H), T5 (non-decreasing norms) | Clean - April 2026 | [↗](proofs/ZP-D_Lean4.md) |
+| ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility + accessible proper subset), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 | [↗](proofs/ZP-E_Lean4.md) |
+| ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox), ForkCat (concrete ZPCategory instance) | Clean - April 2026 | [↗](proofs/ZP-G_Lean4.md) |
 | ZP-H Categorical Bridge | [ZeroParadox/ZPH.lean](ZeroParadox/ZPH.lean) | T-H1 (F_A initial object proved; F_B/F_C/F_D domain facts cited), T-H2 (singularity compatibility: ZPG unreachability ∧ ZPC divergence), T-H3 (Binary Snap under all four functors: join ∧ topological ∧ 1-bit ∧ orthogonal) | Clean - April 2026 | [↗](proofs/ZP-H_Lean4.md) |
 
 ---
@@ -167,9 +167,9 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_5.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_3.pdf) → [ZP-C](ZP-C_Information_Theory_v1_5.pdf) → [ZP-D](ZP-D_State_Layer_v1_3.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_0.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_5.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_5.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_3.pdf) (in dependency order)
 
-**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_2.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_1.pdf) (self-contained; after ZP-E)
+**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_2.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_2.pdf) (self-contained; after ZP-E)
 
 **For process/methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 
