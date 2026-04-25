@@ -38,7 +38,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_tools.py` | Builds `ZP_Tools_and_Methods.pdf` |
 | `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
 | `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |
-| `build_zp_pdfs.py` | Superseded monolith — retained for reference only (contains archived `build_zpe_da1` function) |
+| `archive/build_zp_pdfs.py` | Superseded monolith — retained for reference only (contains archived `build_zpe_da1` function) |
 | `setup_fonts.py` | Downloads the required DejaVu font files into `scripts/fonts/` |
 | `PDF_Rendering_Standards.md` | Technical reference: font rules, known glyph gaps, rendering conventions |
 
