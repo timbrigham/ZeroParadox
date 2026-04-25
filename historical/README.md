@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v2_6-1.pdf](ZP-E_Bridge_Document_v2_6-1.pdf) | 2026-04-25 | ZP-E v2.6 superseded by v2.7: DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 (⊥ = {⊥} Quine atom) and R3; L-INF retained as independent corroboration. Multiverse framing in R-DA2 corrected: multiverse follows from CC-2 + T-SNAP + DA-2 jointly, not "T-SNAP fires in all directions" |
 | [ZP-C_Information_Theory_v1_6-1.pdf](ZP-C_Information_Theory_v1_6-1.pdf) | 2026-04-25 | ZP-C v1.6 superseded by v1.7: L-INF extended with structural second grounding — ZP-A CC-2 (⊥ = {⊥}) and R3 noted as independent convergence with the informational-extremity argument |
 | [ZP-A_Lattice_Algebra_v1_5-1.pdf](ZP-A_Lattice_Algebra_v1_5-1.pdf) | 2026-04-25 | ZP-A v1.5 superseded by v1.6: CC-2 (Self-Containment of ⊥) added — ⊥ = {⊥} as Quine atom under ZF + AFA; R3 added; DA-1 in ZP-E grounded as derivation from CC-2; foundation note (ZF + AFA, no AC) added |
 | [ZP-H_Categorical_Bridge_v1_3-1.pdf](ZP-H_Categorical_Bridge_v1_3-1.pdf) | 2026-04-25 | ZP-H v1.3 superseded by v1.4: T-H3 cross-framework consistency caveat expanded — four-framework agreement is coherence across representations of shared structural commitments (A1-A4, AX-B1, CC-1), not external replication |

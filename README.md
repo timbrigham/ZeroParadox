@@ -82,7 +82,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_4.pdf) | ZP-B | v1.4 | AX-B1. MP-1 (design commitment). T0: p=2 derived given MP-1. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
 | [ZP-C Information Theory](ZP-C_Information_Theory_v1_7.pdf) | ZP-C | v1.7 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). CC-2: c₀ = ⊥ labeled as modeling commitment. RP-2: branching measure labeled as representational commitment. L-INF grounded from two directions: informational extremity (D4, T2) and structural self-containment (ZP-A CC-2, R3). |
 | [ZP-D State Layer](ZP-D_State_Layer_v1_4.pdf) | ZP-D | v1.4 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
-| [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_6.pdf) | ZP-E | v2.6 | **DA-1** (instantiation = execution, grounded in L-INF). **T-SNAP** (Binary Snap derived; depends on DA-1 and CC-1). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality, position-dependent). Full traceability register. |
+| [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_7.pdf) | ZP-E | v2.7 | **DA-1** (instantiation = execution, upgraded to Derived Proposition in v2.7: grounded in ZP-A CC-2 and R3; L-INF as independent corroboration). **T-SNAP** (Binary Snap derived; depends on DA-1, CC-1, CC-2). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality, position-dependent). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_2.pdf) | ZP-G | v1.2 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
 | [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_4.pdf) | ZP-H | v1.4 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proxy witness only - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
 
@@ -148,7 +148,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-B1: p = 2 justification | Closed - ZP-B T0 (derived from AX-B1 + MP-1) |
 | S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
-| DA-1: Instantiation alignment | Closed - ZP-E DA-1 (D7 configurations are live by definition) |
+| DA-1: Instantiation alignment | Closed - ZP-E DA-1 v2.7 (Derived Proposition: grounded in ZP-A CC-2 — ⊥ = {⊥} Quine atom has no external interpreter by R3; L-INF provides independent corroboration) |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
 | OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
 | DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
@@ -168,7 +168,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_6.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_6.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_6.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_7.pdf) (in dependency order)
 
 **For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_2.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_4.pdf) (self-contained; after ZP-E)
 

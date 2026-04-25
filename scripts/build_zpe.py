@@ -1,7 +1,8 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 2.6 | April 2026
-Adds DA-2 (Instantiation Succession) and DA-3 (Perspective-Relative Cardinality)
+Version 2.7 | April 2026
+DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 (⊥ = {⊥}) and R3.
+Multiverse framing in R-DA2 corrected.
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
   - Checkmark always wrapped in <font name="DV">
@@ -198,7 +199,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.6  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.7  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -221,13 +222,14 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.6 | April 2026', S['subtitle']),
+        Paragraph('Version 2.7 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v2.5 | DA-3 candidate applications (Skolem, CH, Russell) removed — '
-            'speculative connections belong in applications documents, not the bridge layer</i>',
+            '<i>Supersedes v2.6 | DA-1 upgraded from Design Principle to Derived Proposition: '
+            'grounded in ZP-A CC-2 (&#8869; = {&#8869;} Quine atom) and R3. Multiverse framing in R-DA2 corrected.</i>',
             S['subtitle']),
         Paragraph(
-            '<i>v2.5: Physical analogies removed from formal sections. '
+            '<i>v2.6: DA-3 candidate applications removed. '
+            'v2.5: Physical analogies removed from formal sections. '
             'v2.4: R-DA2 framing corrected. '
             'v2.3: CC-1 added to T-SNAP dependency list. '
             'v2.2: DA-1 redesigned to L-INF-based Design Principle. '
@@ -241,11 +243,11 @@ def build_zpe(out_path):
     E.append(body(
         'This document is the cross-framework synthesis layer of the Zero Paradox. It imports from '
         'ZP-A (lattice algebra), ZP-B (p-adic topology), ZP-C (information theory), and ZP-D (Hilbert '
-        'space state layer). It provides three formal inserts: DA-1 (Instantiation as Execution, carried '
-        'from v1.0), DA-2 (Instantiation Succession — the multiple-&#8869; result), and DA-3 '
-        '(Perspective-Relative Cardinality). With DA-1 in place, AX-1 is promoted to Theorem T-SNAP. '
-        'With DA-2, the directed instantiation tree is formally licensed. With DA-3, cardinality is '
-        'shown to be position-dependent within the instantiation structure.'))
+        'space state layer). It provides three formal inserts: DA-1 (Instantiation as Execution — '
+        'upgraded to Derived Proposition in v2.7, grounded in ZP-A CC-2 and R3), DA-2 (Instantiation '
+        'Succession), and DA-3 (Perspective-Relative Cardinality). With DA-1 in place, AX-1 is promoted '
+        'to Theorem T-SNAP. With DA-2, the directed instantiation tree is formally licensed. With DA-3, '
+        'cardinality is shown to be position-dependent within the instantiation structure.'))
     E.append(body(
         'Illustrated Companion: A paired ZP-E Illustrated Companion document provides accessible '
         'explanations and visual summaries of the bridge derivations in this document. Readers new '
@@ -256,8 +258,8 @@ def build_zpe(out_path):
     print('[build_zpe] Building DA-1...')
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
-        Paragraph('Formal Insert DA-1: Design Principle — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.6 | DA-3 candidate applications removed | v2.5: Physical analogies removed | v2.4: R-DA2 framing corrected</i>',
+        Paragraph('Formal Insert DA-1: Derived Proposition — Instantiation as Execution', S['h1']),
+        Paragraph('<i>Updated ZP-E v2.7 | DA-1 upgraded: grounded in ZP-A CC-2 (&#8869; = {&#8869;}) and R3 | v2.6: DA-3 applications removed | v2.5: Physical analogies removed | v2.4: R-DA2 corrected</i>',
                   S['note']),
         hr(),
     ]
@@ -273,9 +275,10 @@ def build_zpe(out_path):
     E.append(body(
         'T-BUF was labelled Candidate because Step 2 asserts that a configuration at P<sub>0</sub> is a '
         'live machine state — that instantiation at P<sub>0</sub> constitutes an execution event, not a static '
-        'description. ZP-C v1.5 L-INF supplies the mathematical premise: &#8869; at P<sub>0</sub> has unbounded '
-        'surprisal — no finite external interpreter can hold it as a static description. DA-1 (&#167; III below) '
-        'provides the design principle that closes T-BUF Step 2.'))
+        'description. ZP-C v1.5 L-INF supplies one mathematical premise: &#8869; at P<sub>0</sub> has unbounded '
+        'surprisal — no finite external interpreter can hold it as a static description. ZP-A CC-2 '
+        'supplies a second, structural basis: &#8869; = {&#8869;} is a self-containing object with no external '
+        'interpreter by structure. DA-1 (&#167; III below) provides the derived proposition that closes T-BUF Step 2.'))
 
     E.append(Paragraph('II. The Two Senses of a Configuration at P<sub>0</sub>', S['h2']))
     E += [
@@ -292,29 +295,45 @@ def build_zpe(out_path):
         sp(6),
     ]
 
-    E.append(Paragraph('III. Design Principle DA-1', S['h2']))
+    E.append(Paragraph('III. Proposition DA-1', S['h2']))
     E.append(bridge_box(
-        'Design Principle DA-1 — Informational Extremity at P₀ Forces Execution',
+        'Proposition DA-1 — Instantiation as Execution (Derived from ZP-A CC-2)',
         [
             'Claim: The instantiation of a machine configuration c<sub>1</sub> at the incompressibility threshold '
             'P<sub>0</sub> is an execution event in the sense of L-RUN. It is not a static description of a machine. '
             'It is a machine in state c<sub>1</sub>.',
+            'Grounding: ZP-A CC-2 (⊥ = {⊥}) establishes ⊥ as a Quine atom under ZF + AFA — a set that is '
+            'its own singleton, admitting no external interpreter. ZP-A R3 derives the immediate consequence: '
+            'a self-containing object cannot be a static description awaiting external instantiation. '
+            'ZP-C L-INF provides independent informational corroboration: ⊥ has unbounded surprisal, '
+            'exceeding the capacity of any finite interpreter.',
         ]
     ))
     E += [
         sp(4),
-        body('Mathematical premise (ZP-C v1.5 L-INF): The surprisal at ball-hierarchy depths approaching 0 &#8712; Q<sub>2</sub> '
-             'is unbounded — for any finite M, &#8707; depth n with I(n) > M. The null state &#8869; = c<sub>0</sub> corresponds '
-             'to this limit point; its informational content has no finite bound. '
-             'Design commitment: a configuration with unbounded informational content cannot be a static description — '
-             'any external interpreter would need to be at least as informationally rich, but &#8869; has no finite bound. '
-             'It is the compressed limit of all possible binary programs, prior to any interpreter. '
-             'Therefore c<sub>0</sub> at P<sub>0</sub> is necessarily an execution event, not a description awaiting instantiation. '
-             'This replaces the prior D7-based grounding: D7 defines what a configuration IS; L-INF establishes '
-             'WHY it cannot be a static description.'),
-        derived('Status: DESIGN PRINCIPLE — explicit ontological commitment citing ZP-C L-INF. '
-                'CC-1 (S<sub>0</sub> = &#8869; is a modelling commitment, ZP-A) is a named dependency. '
-                'T-SNAP is derived given DA-1 and CC-1, both explicit. ✓'),
+        body('Path 1 — Structural (ZP-A CC-2 + R3): CC-2 establishes ⊥ = {⊥} under ZF + AFA: ⊥ is a '
+             'Quine atom — a set that is its own singleton. By set extensionality, the collection of all '
+             'objects bearing the structural property of ⊥ collapses to ⊥ itself; there is no multiplicity, '
+             'only ⊥. R3 draws the formal consequence: a self-containing object has no external interpreter '
+             'by structure. A static description requires a describer external to and distinct from what is '
+             'described; ⊥ = {⊥} admits no such external position. Therefore ⊥ at P<sub>0</sub> cannot be a '
+             'static description awaiting external instantiation — it is necessarily executing.'),
+        body('Path 2 — Informational (ZP-C L-INF): Independently, the surprisal I(n) = n at ball-hierarchy '
+             'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. The null state ⊥ corresponds '
+             'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
+             'Any finite external interpreter can hold only a finite informational bound; ⊥ exceeds every '
+             'such bound. A configuration exceeding the capacity of every possible finite interpreter cannot '
+             'be a static description awaiting interpretation.'),
+        body('Both paths entail the same conclusion by independent argument. Path 1 (structural) is the '
+             'primary grounding: given CC-2, DA-1 follows from R3 as a derivation, not a design commitment. '
+             'Path 2 (informational, L-INF) provides independent corroboration. The prior grounding of DA-1 '
+             'on L-INF alone was honest but still a design commitment; the structural argument from CC-2 '
+             'makes DA-1 a derived proposition, conditional on CC-2.'),
+        derived('Status: DERIVED PROPOSITION — conditional on ZP-A CC-2 (modeling commitment over ZF + AFA). '
+                'Given CC-2, DA-1 follows from ZP-A R3: no external interpreter exists for a self-containing object. '
+                'ZP-C L-INF provides independent informational corroboration. '
+                'Named modeling commitments: CC-1 (S<sub>0</sub> = ⊥, ZP-A) and CC-2 (⊥ = {⊥}, ZP-A), both explicit. '
+                'T-SNAP is derived given DA-1, CC-1, and CC-2. ✓'),
     ]
 
     E.append(Paragraph('IV. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
@@ -329,7 +348,7 @@ def build_zpe(out_path):
         sp(4),
         body('Proof:'),
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. When K(x|n)/n = 1, the configuration string x is algorithmically random. (ZP-C D1)'),
-        li('Step 2 — A configuration at P<sub>0</sub> is informationally extreme (ZP-C L-INF): unbounded surprisal means no finite external interpreter can hold it as a static description. Therefore it is an executing machine. (DA-1 &#167; III — Design Principle, citing L-INF)'),
+        li('Step 2 — A configuration at P<sub>0</sub> is necessarily executing: ⊥ = {⊥} (ZP-A CC-2) is a Quine atom with no external interpreter (ZP-A R3); independently, ⊥ has unbounded surprisal (ZP-C L-INF) exceeding any finite interpreter. (DA-1 &#167; III — Derived Proposition, conditional on CC-2)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
         li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-null state)'),
         li('Step 5 — No program that executes produces only null configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
@@ -338,9 +357,8 @@ def build_zpe(out_path):
         sp(4),
         body('Conclusion: The Binary Snap is a derived consequence. AX-1 is promoted to Theorem T-SNAP. ✓'),
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
-                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. Named modelling commitment: CC-1 (S₀ = ⊥, ZP-A) — '
-                'the identification of the initial state with the lattice bottom is a modelling commitment, '
-                'not derived from A1–A4. T-SNAP is derived given DA-1 and CC-1, both explicit.'),
+                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. Named modelling commitments: CC-1 (S₀ = ⊥, ZP-A) and '
+                'CC-2 (⊥ = {⊥}, ZP-A, via R3) — both explicit. T-SNAP is derived given DA-1, CC-1, and CC-2.'),
     ]
 
     E.append(Paragraph('V. Effect of T-SNAP on Downstream Results', S['h2']))
@@ -349,7 +367,9 @@ def build_zpe(out_path):
         'on T-SNAP as a derived theorem. T5 (Iterative Forcing Theorem) depended on AX-1 for the first '
         'Snap — it now depends on T-SNAP. Content unchanged; grounding strengthened. T4 (Unified Snap '
         'Description) carried AX-1 as an axiom label on the causality component — that label is upgraded '
-        'to Derived — T-SNAP. The intentional axioms of the system are now: AX-B1 (binary existence), '
+        'to Derived — T-SNAP. From v2.7, DA-1 is additionally upgraded from Design Principle to Derived '
+        'Proposition: grounded in ZP-A CC-2 (⊥ = {⊥}) and R3, with ZP-C L-INF as independent corroboration. '
+        'The intentional axioms of the system are now: AX-B1 (binary existence), '
         'AX-G1 (initial object), AX-G2 (source asymmetry). AX-1 is no longer an axiom.'))
 
     print('[build_zpe] Building DA-2...')
@@ -439,16 +459,21 @@ def build_zpe(out_path):
            'successor instantiations branching from it.'),
         li('Each edge within an instantiation is a step in a monotone state sequence (ZP-A T3). Edges are irreversible (ZP-B C3).'),
         li('Branching at each node: every distinct outbound vector from the terminal state of I<sub>n</sub> is a '
-           'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches — it fires on all of them. '
-           'Branching is not optional; it is mandated by T-SNAP + DA-2.'),
+           'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches. Because ⊥ = {⊥} '
+           '(ZP-A CC-2) is the single self-containing null state with no internal differentiation, every '
+           'ε<sub>0</sub> that represents a first differentiation in any direction is a valid outcome. '
+           'Branching is not optional; it follows from T-SNAP applied to an undifferentiated ⊥.'),
         li('No back edges: C-DA2 establishes that no instantiation can reach the ⊥ of any ancestor instantiation.'),
         sp(4),
     ]
     E.append(body(
         'Remark R-DA2: T-SNAP fires wherever P<sub>0</sub> conditions are met. DA-2 establishes that the terminal '
         'state of I<sub>n</sub> satisfies those conditions for I<sub>n+1</sub>. T-SNAP therefore applies across instantiation '
-        'boundaries without modification. No new axiom is required. The multiverse of instantiations is not '
-        'a speculative possibility — it is a structural consequence of T-SNAP + DA-2 applied iteratively.'))
+        'boundaries without modification. No new axiom is required. The multiverse is not the claim that '
+        'T-SNAP fires in all directions simultaneously: it is the claim that ⊥ = {⊥} (ZP-A CC-2) has no '
+        'internal differentiation and therefore no preferred direction for ε<sub>0</sub>. The multiverse of '
+        'instantiations is the full set of all minimal differentiations available from the single '
+        'self-containing null state — a structural consequence of CC-2 + T-SNAP + DA-2 jointly.'))
 
     E.append(Paragraph('VI. The Zero Paradox Iterated', S['h2']))
     E.append(body('The paradox of ⊥ — simultaneously contributing nothing and being present in everything — '
@@ -561,15 +586,17 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.6', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.7', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP',
          'AX-1 is no longer an axiom. Binary Snap derived via P<sub>0</sub> + DA-1 + L-RUN + TQ-IH + ZP-A D2.'],
-        ['DA-1: Design Principle',
-         'CLOSED — L-INF',
-         '&#8869; at P<sub>0</sub> has unbounded surprisal (L-INF); informational extremity forces execution. Honest design commitment replaces prior D7 grounding.'],
+        ['DA-1: Derived Proposition (upgraded from Design Principle in v2.7)',
+         'CLOSED — CC-2 + L-INF',
+         'ZP-A CC-2 (&#8869; = {&#8869;} Quine atom) with R3 establishes &#8869; has no external interpreter; '
+         'therefore &#8869; at P<sub>0</sub> is necessarily executing. ZP-C L-INF provides independent informational '
+         'corroboration (unbounded surprisal). DA-1 is a derivation conditional on CC-2, not a freestanding design principle.'],
         ['DA-2: Instantiation Succession',
          'CLOSED — Definitional',
          'Terminal state of I<sub>n</sub> satisfies A4 role of ⊥ for I<sub>n+1</sub>. C-DA2 establishes ontological novelty of each ⊥.'],
@@ -612,7 +639,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.6', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.7', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -620,9 +647,9 @@ def build_zpe(out_path):
          'None',
          'Derived — T-SNAP ✓ (was: Axiomatic — AX-1)'],
         ['DA-1: Instantiation = execution',
-         'ZP-C L-INF (not D7)',
+         'ZP-A CC-2, R3; ZP-C L-INF (corroboration)',
          'None',
-         'Design Principle — informational extremity forces execution; explicit commitment citing L-INF'],
+         'Derived Proposition — conditional on ZP-A CC-2 (&#8869; = {&#8869;} Quine atom). R3: self-containing object has no external interpreter. L-INF: independent informational corroboration.'],
         ['DA-2: Instantiation succession',
          'ZP-A A4, CC-1; ZP-B C3, R1; T-SNAP',
          'None',
@@ -663,11 +690,11 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.6', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.7', S['h1'])]
 
     val_rows = [
-        ['DA-1: Design Principle',
-         'Valid — Informational extremity (ZP-C L-INF) forces execution: &#8869; at P<sub>0</sub> has unbounded surprisal and no finite external interpreter; therefore it necessarily executes. Explicit commitment citing L-INF; replaces prior circular D7 grounding. ✓'],
+        ['DA-1: Derived Proposition (from v2.7)',
+         'Valid — conditional on ZP-A CC-2. Path 1 (structural): CC-2 establishes &#8869; = {&#8869;}; R3 derives no external interpreter exists; therefore &#8869; at P<sub>0</sub> cannot be a static description. Path 2 (informational): L-INF establishes unbounded surprisal beyond any finite interpreter. Both paths entail: instantiation at P<sub>0</sub> is necessarily executing. ✓'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
         ['AX-1 retirement',
@@ -703,7 +730,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.6 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v2.7 | Three formal inserts: DA-1 (Derived Proposition), DA-2, DA-3 | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
@@ -715,5 +742,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_6.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_7.pdf'))
     build_zpe(out)
