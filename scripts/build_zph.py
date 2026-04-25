@@ -201,7 +201,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.2  |  April 2026  |  Page {doc.page}"
+        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.3  |  April 2026  |  Page {doc.page}"
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -224,10 +224,15 @@ def build_zph(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.1 | April 2026', S['bodyI']),
+        Paragraph('Version 1.3 | April 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.0 | AX-1 status updated: Derived as T-SNAP (ZP-E v2.0) | '
-            'Import Registry updated to ZP-G v1.1 | OQ-G1 closed in ZP-G v1.1</i>',
+            '<i>Supersedes v1.2 | F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub> framing corrected: PDF constructions complete; '
+            'Lean formalization uses proxy witness — full abstract Lean functors future work. '
+            'OQ-G3 status updated to honest "closed (concrete witness) / open (full Lean)" framing.</i>',
+            S['note']),
+        Paragraph(
+            '<i>v1.2: F<sub>C</sub> composition preservation corrected — Q-stability argument replaces JSD subadditivity. '
+            'v1.1: AX-1 updated to T-SNAP (ZP-E v2.0); Import Registry updated to ZP-G v1.1; OQ-G1 closed.</i>',
             S['note']),
         sp(8),
         hr(),
@@ -363,7 +368,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section III: Instantiation Functors...')
     # ── III. CONSTRUCTION OF THE INSTANTIATION FUNCTORS ──────────────────────
-    E.append(Paragraph('III. Construction of the Instantiation Functors [OQ-G3 Closed]', S['h1']))
+    E.append(Paragraph('III. Construction of the Instantiation Functors [OQ-G3: PDF Constructions Complete]', S['h1']))
     E += [
         body('ZP-G Remark R3 claimed the existence of four functors F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub> without '
              'constructing them. This section constructs all four. Each construction must specify the '
@@ -395,7 +400,7 @@ def build_zph(out_path):
     E.append(Paragraph('3.2 F<sub>B</sub>: C &#8594; pTop (p-Adic Topological Spaces)', S['h2']))
     E.append(label_box_status(
         'Construction C-H2 — Functor Fв: C → pTop',
-        'Status: Derived — OQ-G3 partially closed',
+        'Status: PDF construction complete — Lean proxy witness; full abstract Lean functor future work',
         [
             'Object map: F<sub>B</sub> sends each object X &#8712; ob(C) to an element x &#8712; Q<sub>2</sub>. The initial object 0 maps to '
             'the element 0 &#8712; Q<sub>2</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>.',
@@ -416,7 +421,7 @@ def build_zph(out_path):
     E.append(Paragraph('3.3 F<sub>C</sub>: C &#8594; InfoSp (Information-Theoretic Spaces)', S['h2']))
     E.append(label_box_status(
         'Construction C-H3 — Functor FС: C → InfoSp',
-        'Status: Derived — OQ-G3 partially closed',
+        'Status: PDF construction complete — Lean proxy witness; full abstract Lean functor future work',
         [
             'Object map: F<sub>C</sub> sends each object X &#8712; ob(C) to a probability distribution P<sub>X</sub> over {0, 1}. The initial '
             'object 0 maps to the Null State distribution: F<sub>C</sub>(0) = P = (1, 0) (derived from AX-B1 and RP-1 in ZP-C T1).',
@@ -445,7 +450,7 @@ def build_zph(out_path):
     E.append(Paragraph('3.4 F<sub>D</sub>: C &#8594; Hilb (Hilbert Spaces)', S['h2']))
     E.append(label_box_status(
         'Construction C-H4 — Functor FĐ: C → Hilb',
-        'Status: Derived — OQ-G3 partially closed',
+        'Status: PDF construction complete — Lean proxy witness; full abstract Lean functor future work',
         [
             'Object map: F<sub>D</sub> sends each object X &#8712; ob(C) to a state vector T(x) &#8712; H = &#8450;<sup>n</sup> via the transition '
             'operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2). The initial object 0 maps to: F<sub>D</sub>(0) = T(0) = e<sub>0</sub>.',
@@ -593,7 +598,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.2', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.3', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -607,9 +612,12 @@ def build_zph(out_path):
          'Left adjoint verification for instantiation functors. Resolved in Section IV by '
          'direct verification of the universal property for each of the four functors.'],
         ['OQ-G3',
-         'Closed — C-H1\nthrough C-H4',
-         'Explicit construction of the four instantiation functors. Resolved in Section III. '
-         'Object maps, morphism maps, and preservation proofs are complete for all four.'],
+         'Closed (PDF)\n/ Open (Lean\nfull functors)',
+         'PDF-level constructions of all four instantiation functors complete (Section III): '
+         'object maps, morphism maps, composition and identity preservation verified for F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>. '
+         'F<sub>A</sub>: Lean-level full closure (NatSLat appendix — genuine ZPA connection). '
+         'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub>: Lean formalization uses shared proxy witness (NNRealZPCat); '
+         'full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work.'],
         ['OQ-G4',
          'Closed — T-H2',
          'Reconciliation of categorical (undefined domain) and ZP-C (infinite accumulation) '
@@ -669,11 +677,11 @@ def build_zph(out_path):
         ['C-H1: F<sub>A</sub>: C &#8594; SLat',
          'Valid — Derived. Object map, morphism map, composition, identity all verified. <font name="DV">&#10003;</font>'],
         ['C-H2: F<sub>B</sub>: C &#8594; pTop',
-         'Valid — Derived. Object map, morphism map, composition, identity all verified. <font name="DV">&#10003;</font>'],
+         'Valid (PDF level) — all four requirements verified. Lean: proxy witness (NNRealZPCat); full abstract Lean functor future work. <font name="DV">&#10003;</font>'],
         ['C-H3: F<sub>C</sub>: C &#8594; InfoSp',
-         'Valid — from AX-B1, RP-1. All four requirements verified; inherits AX-B1 and RP-1 labels. <font name="DV">&#10003;</font>'],
+         'Valid (PDF level) — from AX-B1, RP-1; all four requirements verified. Lean: proxy witness (NNRealZPCat); full abstract Lean functor future work. <font name="DV">&#10003;</font>'],
         ['C-H4: F<sub>D</sub>: C &#8594; Hilb',
-         'Valid — from DP-1. All four requirements verified; inherits DP-1 label. <font name="DV">&#10003;</font>'],
+         'Valid (PDF level) — from DP-1; all four requirements verified. Lean: proxy witness (NNRealZPCat); full abstract Lean functor future work. <font name="DV">&#10003;</font>'],
         ['T-H1: Universal property preserved',
          'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors. <font name="DV">&#10003;</font>'],
         ['T-H2: Singularity reconciliation',
@@ -704,8 +712,9 @@ def build_zph(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.2 | Four instantiation functors constructed | '
-            'OQ-G1 through OQ-G4 all closed | '
+            '<i>End of ZP-H v1.3 | Four instantiation functors constructed (PDF level) | '
+            'OQ-G1 through OQ-G4 closed (concrete witness level) | '
+            'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub> Lean proxy witness — full abstract functors future work | '
             'T-SNAP inherited as derived theorem | '
             'No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers</i>',
             S['note']),
@@ -718,5 +727,5 @@ def build_zph(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_2.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_3.pdf'))
     build_zph(out)

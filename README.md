@@ -84,7 +84,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-D State Layer](ZP-D_State_Layer_v1_4.pdf) | ZP-D | v1.4 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_4.pdf) | ZP-E | v2.4 | **DA-1** (instantiation = execution, grounded in L-INF). **T-SNAP** (Binary Snap derived; depends on DA-1 and CC-1). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Candidate applications to Skolem, CH independence, Russell (pending OQ-E2). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_2.pdf) | ZP-G | v1.2 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_2.pdf) | ZP-H | v1.2 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: ℝ≥0 proxy witness - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_3.pdf) | ZP-H | v1.3 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proxy witness only - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
 
 ### Illustrated Companion Documents (General Reader)
 
@@ -169,7 +169,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_5.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_6.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_4.pdf) (in dependency order)
 
-**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_2.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_2.pdf) (self-contained; after ZP-E)
+**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_2.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_3.pdf) (self-contained; after ZP-E)
 
 **For process/methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 
