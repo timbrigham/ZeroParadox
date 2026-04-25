@@ -345,8 +345,8 @@ def build():
         'Step 2 — An incompressible configuration at P<sub>0</sub> is informationally extreme (L-INF): its surprisal is unbounded — no finite external program bounds its informational content. A configuration with unbounded informational content has no finite external interpreter and cannot be a static description. Therefore the configuration at P<sub>0</sub> is a live machine state. The design principle connecting informational extremity to forced execution is DA-1 (ZP-E &#167; I-DA1, citing L-INF).',
         'Step 3 — Any execution passes through c<sub>1</sub> (L-RUN). c<sub>1</sub> &#8800; &#8869; (L-RUN conclusion).',
         'Step 4 — In (L, &#8744;, &#8869;), this non-null configuration state is c<sub>1</sub> = &#8869; &#8744; &#949;<sub>0</sub>. By ZP-A D2, this is the Binary Snap.',
-        'Conclusion: At P<sub>0</sub>, execution is structurally guaranteed. Execution guarantees a non-null configuration state. That state is &#949;<sub>0</sub> in the semilattice. AX-1 is derivable from P<sub>0</sub> + L-RUN + TQ-IH + ZP-A D2. <font name="DV">&#10003;</font>',
-        'Status: CANDIDATE THEOREM — structurally complete within ZP-C. Cross-framework integration (DA-1) owned by ZP-E. The gap between incompressibility and forced transition is closed at the configuration level.',
+        'Conclusion: At P<sub>0</sub>, execution is structurally guaranteed. Execution guarantees a non-null configuration state. That state is &#949;<sub>0</sub> in the semilattice. The derivation pathway is open: P<sub>0</sub> + L-RUN + TQ-IH + ZP-A D2, pending cross-framework integration via DA-1 in ZP-E. <font name="DV">&#10003;</font>',
+        'Status: CANDIDATE THEOREM — structurally complete within ZP-C. The step from informational extremity (L-INF) to forced execution (DA-1) is a design principle, not a mathematical consequence. Full derivation owned by ZP-E.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [

@@ -198,7 +198,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.3  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.4  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -257,7 +257,7 @@ def build_zpe(out_path):
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Design Principle — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.3 | CC-1 added to T-SNAP dependency list | Multiverse claim scoped to T-SNAP + DA-2 | DA-3 candidate applications</i>',
+        Paragraph('<i>Updated ZP-E v2.4 | R-DA2 framing corrected | CC-1 in T-SNAP dependency | Multiverse claim scoped to T-SNAP + DA-2 | DA-3 candidate applications</i>',
                   S['note']),
         hr(),
     ]
@@ -601,7 +601,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.3', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.4', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -650,7 +650,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.3', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.4', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -701,7 +701,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.3', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.4', S['h1'])]
 
     val_rows = [
         ['DA-1: Design Principle',
@@ -741,7 +741,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.3 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v2.4 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
