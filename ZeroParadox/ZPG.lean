@@ -91,9 +91,12 @@ theorem t6b_surprisal_nonneg {C : Type*} [Category C] [ZPCategory C]
     0 ≤ ZPS.surp f :=
   Nat.zero_le _
 
-/-- T6-c — Surprisal Accumulates Along Chains.
-    The total surprisal ∑ I(X_k → X_{k+1}) over a morphism chain of length n is ≥ 0. -/
-theorem t6c_surprisal_accumulates {C : Type*} [Category C] [ZPCategory C]
+/-- T6-c — Surprisal Sum is Non-Negative.
+    The total surprisal ∑ I(X_k → X_{k+1}) over a morphism chain of length n is ≥ 0.
+    Proved by non-negativity of ℕ (Nat.zero_le). This establishes a lower bound only;
+    the divergence claim (surprisal → ∞ along sequences approaching 0) is a separate
+    result proved in ZPC.t2_diverges, which uses the specific structure of Q₂. -/
+theorem t6c_surprisal_sum_nonneg {C : Type*} [Category C] [ZPCategory C]
     [ZPS : ZPSurprisal C] {n : ℕ}
     (objs : Fin (n + 1) → C)
     (morphs : ∀ k : Fin n, objs k.castSucc ⟶ objs k.succ) :
@@ -132,10 +135,10 @@ theorem t7_categorical_zero_paradox {C : Type*} [Category C] [ZPC : ZPCategory C
    fun X hne _f => t3_unreachability X hne,
    fun X hne => t6_informational_singularity X hne⟩
 
-/-- T5 — Functors Preserve Initial Objects. Deferred to ZP-H T-H1.
+/-! T5 — Functors Preserve Initial Objects. Deferred to ZP-H T-H1.
     For each instantiation functor F ∈ {F_A, F_B, F_C, F_D}, F(0) is initial in the codomain.
-    Verified by direct universal property check in ZP-H. -/
-theorem t5_functors_preserve_initial : True := trivial
+    Verified by direct universal property check in ZP-H. No Lean theorem here — a vacuous
+    `True := trivial` stub would misrepresent the theorem list. -/
 
 end ZeroParadox.ZPG
 
@@ -150,7 +153,7 @@ open ZeroParadox.ZPG CategoryTheory
 #print axioms t4_chains_forward_only
 #print axioms t6a_identity_surprisal
 #print axioms t6b_surprisal_nonneg
-#print axioms t6c_surprisal_accumulates
+#print axioms t6c_surprisal_sum_nonneg
 #print axioms t6_informational_singularity
 #print axioms t7_categorical_zero_paradox
 
