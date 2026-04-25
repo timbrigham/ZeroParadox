@@ -1,7 +1,9 @@
 """
-Build ZP-C Illustrated Companion (v1.4, revised)
-Change from original: closing key result box replaces technical labels
-(TQ-IH, ZP-A D2) with plain-language descriptions for general readers.
+Build ZP-C Illustrated Companion (v1.5)
+v1.5: L-INF section added — plain-language explanation of Informational Extremity of bottom;
+      key result box updated to reflect T-SNAP as proven theorem (not merely Candidate).
+v1.4: closing key result box replaced technical labels (TQ-IH, ZP-A D2) with
+      plain-language descriptions for general readers.
 """
 
 import os
@@ -342,7 +344,7 @@ def build():
 
     E += [
         Paragraph('Why zero is an informational singularity', CS['title']),
-        Paragraph('Information Theory | Version 1.4', CS['subtitle']),
+        Paragraph('Information Theory | Version 1.5', CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
@@ -389,6 +391,27 @@ def build():
     ]))
     E.append(sp(10))
 
+    E.append(Paragraph('New in v1.5: Why the Singularity Forces Execution (L-INF)', CS['h1']))
+    E.append(cbody(
+        'The surprisal graph shows that I(x) goes to infinity as x approaches 0. ZP-C v1.5 '
+        'makes this precise with Lemma L-INF (Informational Extremity of ⊥): at the '
+        'incompressibility threshold P₀, the configuration\'s surprisal is not just very large — '
+        'it is formally infinite. The branching measure assigns probability approaching zero to any '
+        'specific configuration at P₀, so I(P₀) = ∞.'))
+    E.append(cbody(
+        'This matters because infinite surprisal means no finite external program can bound the '
+        'informational content of the configuration. A static stored description always has finite '
+        'content. So a configuration at P₀ cannot be a stored description — it must be something '
+        'actively running. L-INF is the formal reason P₀ forces execution, and it is what connects '
+        'the surprisal singularity to the L-RUN argument below.'))
+    E.append(example_box('Analogy — A file that cannot be described', [
+        'A truly incompressible file has no pattern — every bit is essential, nothing can be '
+        'summarized or shortened. At P₀, the configuration is like this file: no shorter '
+        'description exists. The only way such a thing can "be present" is as something actively '
+        'running — not a stored record waiting to be read.',
+    ]))
+    E.append(sp(8))
+
     E.append(Paragraph('The Binary Snap Costs Exactly 1 Bit', CS['h1']))
     E.append(cbody(
         'The Jensen-Shannon Divergence (JSD) between the Null State P = (1,0) and the First '
@@ -400,11 +423,10 @@ def build():
         'The informational distance is exactly 1 bit — the minimum possible transition.',
         CS['caption']))
 
-    E.append(Paragraph('New in v1.4: Turning On Is a State', CS['h1']))
+    E.append(Paragraph('Turning On Is a State (L-RUN)', CS['h1']))
     E.append(cbody(
-        'Version 1.4 answers the question: can a program output the null state ⊥ without passing '
-        'through any non-null intermediate state? The answer is no — because the act of turning '
-        'on is itself a state.'))
+        'Can a program output the null state ⊥ without passing through any non-null intermediate '
+        'state? The answer is no — because the act of turning on is itself a state.'))
     E.append(cbody(
         'Any program that executes must pass through a "first instruction fetched" configuration '
         '(c₁). That configuration is distinct from the not-yet-running state (c₀). By AX-B1 it is '
@@ -434,14 +456,15 @@ def build():
     # descriptions so a general reader can follow the derivation chain without
     # consulting the formal documents.
     E.append(key_result_box(
-        'Key Result: AX-1 is now a Candidate Theorem, not a bare axiom',
-        'The derivation chain runs: the incompressibility threshold P₀ forces instantiation of '
-        'a live computation. Any live computation must execute a first instruction — and that '
-        'execution is a non-null state (L-RUN). No Turing machine program can produce any output '
-        'without passing through such a non-null intermediate state. And any non-null state change '
-        'starting from ⊥ is precisely the Binary Snap. The final bridge connecting this argument '
-        'to the instantiation framework is provided in ZP-E, which derives T-SNAP. '
-        'AX-1 is no longer a bare axiom — it is a proven theorem.'
+        'Key Result: T-SNAP — The Binary Snap Is a Proven Theorem',
+        'The derivation chain: the incompressibility threshold P₀ produces a configuration with '
+        'infinite surprisal (L-INF). A configuration with infinite surprisal cannot be a static '
+        'stored description — it must be a live computation (DA-1, ZP-E). Any live computation '
+        'must execute a first instruction, and that execution is a non-null state (L-RUN). '
+        'No Turing machine program can produce any output without passing through such a non-null '
+        'intermediate state. And any non-null state change starting from ⊥ is precisely the '
+        'Binary Snap (ZP-A D2). ZP-E closes the chain as Theorem T-SNAP. '
+        'The Binary Snap is no longer assumed — it is derived.'
     ))
 
     print(f'Building: {out_path}')
