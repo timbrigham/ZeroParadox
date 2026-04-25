@@ -119,6 +119,29 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
   obtain ⟨n, hn⟩ := exists_nat_gt M
   exact ⟨n, by rw [t2_partial_eq]; exact_mod_cast hn⟩
 
+/-! ## Section III-B: L-INF — Informational Extremity of the Null State -/
+
+/-- L-INF — Informational Extremity of ⊥.
+
+    The surprisal I(n) = n at ball-hierarchy depth n is unbounded: for any finite
+    bound M, there exist depths n with I(n) > M. The null state ⊥ = c₀ corresponds
+    to the limit point 0 ∈ Q₂ — the limit of the binary ball hierarchy at infinite
+    depth. At this limit, surprisal is not finite.
+
+    Formal content: surprisal is unbounded above.
+    Semantic content: ⊥ is informationally extreme — it is the compressed limit of
+    all possible binary programs. No finite program bounds its informational content,
+    so no finite external interpreter can hold ⊥ as a static description. This is
+    the mathematical premise for DA-1 in ZP-E.
+
+    Note: the connection from informational extremity to forced execution is a named
+    design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone.
+    L-INF supplies the formal premise; DA-1 supplies the ontological bridge. -/
+theorem l_inf : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n := by
+  intro M
+  obtain ⟨n, hn⟩ := exists_nat_gt M
+  exact ⟨n, by simp [surprisal]; exact_mod_cast hn⟩
+
 /-! ## Section IV: The Hardware Lemma (L-RUN) -/
 
 /-- D7: Machine configuration phases. -/
@@ -159,6 +182,7 @@ open ZeroParadox.ZPC
 #print axioms t2_partial_eq
 #print axioms t2_finite_loop
 #print axioms t2_diverges
+#print axioms l_inf
 #print axioms l_run
 #print axioms tq_ih
 

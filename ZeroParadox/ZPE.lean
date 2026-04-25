@@ -9,7 +9,11 @@ import Mathlib.Tactic
 
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
-- DA-1 (Instantiation as Execution): definitional alignment — no new axiom, no Lean theorem
+- DA-1 (Instantiation as Execution): DESIGN PRINCIPLE — cites ZPC.l_inf (not D7).
+  Informational extremity at P₀ (unbounded surprisal, L-INF) forces execution rather
+  than static description. Explicit ontological commitment, not a definitional
+  clarification. No Lean theorem — the mathematical premise is ZPC.l_inf; the bridge
+  from extremity to execution is a named design principle documented below (§ I-DA1).
 - DA-2 (Instantiation Succession): algebraic characterisation of the ⊥ role across instantiations
 - DA-3 (Perspective-Relative Cardinality): DA-3-D1 as a definition; DA-3-C1 is a
   candidate claim and is not formalised here
@@ -43,6 +47,36 @@ instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join_comm  := by intro x y;   cases x <;> cases y              <;> rfl
   join_idem  := by intro x;     cases x                          <;> rfl
   bot_join   := by intro x;     cases x                          <;> rfl
+
+/-! ## I-DA1. DA-1 — Design Principle: Informational Extremity Forces Execution
+
+DA-1 states: a machine configuration at the incompressibility threshold P₀ is a
+live execution event, not a static description.
+
+Mathematical premise (ZPC.l_inf): the surprisal at ball-hierarchy depths approaching
+0 ∈ Q₂ is unbounded — for any finite M, ∃ depth n with I(n) > M. The null state
+c₀ = ⊥ corresponds to this limit point. Its informational content has no finite bound.
+
+Design commitment: a configuration with unbounded informational content cannot be
+a static description awaiting external interpretation. Any external interpreter would
+need to be at least as informationally rich as what it interprets, but ⊥ has no
+finite bound — it is the compressed limit of all possible binary programs, prior to
+any interpreter. Therefore c₀ at P₀ is necessarily an execution event, not a
+description awaiting instantiation.
+
+This replaces the circular D7 citation in prior ZP-E prose. D7 defines what a
+configuration IS; it cannot prove that the configuration is EXECUTING without
+presupposing execution. L-INF supplies the formal premise that breaks this circularity:
+the reason c₀ is executing is not that D7 says so, but that its informational
+extremity admits no external interpreter.
+
+DA-1 is labelled DESIGN PRINCIPLE — it introduces a genuine ontological commitment.
+The commitment is targeted: unbounded surprisal at ⊥ (L-INF) closes the
+description/execution gap. CC-1 (S₀ = ⊥ is a modelling commitment, ZP-A) propagates
+as a named dependency: T-SNAP is derived given DA-1 and CC-1, both explicit.
+
+Lean status: no Lean theorem. L-INF (ZPC) is the formal premise; the bridge is
+interpretive and documented here as a named, honest design commitment. -/
 
 /-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
 
