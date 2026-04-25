@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 2.0 | April 2026
+Version 2.1 | April 2026
 Adds DA-2 (Instantiation Succession) and DA-3 (Perspective-Relative Cardinality)
 Follows all rules in pdf rendering standards:
   - DejaVu fonts only
@@ -198,7 +198,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.0  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.3  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -221,7 +221,7 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.0 | April 2026', S['subtitle']),
+        Paragraph('Version 2.1 | April 2026', S['subtitle']),
         Paragraph(
             '<i>Supersedes v1.0 | Adds DA-2 (Instantiation Succession) and '
             'DA-3 (Perspective-Relative Cardinality)</i>',
@@ -238,9 +238,9 @@ def build_zpe(out_path):
         'from v1.0), DA-2 (Instantiation Succession — the multiple-&#8869; result), and DA-3 '
         '(Perspective-Relative Cardinality). With DA-1 in place, AX-1 is promoted to Theorem T-SNAP. '
         'With DA-2, the directed instantiation tree is formally licensed. With DA-3, cardinality is shown '
-        'to be perspective-dependent in a way that accounts for Skolem\'s Paradox, the independence '
-        'of the Continuum Hypothesis, and Russell\'s Paradox as structural consequences of the same '
-        'architecture.'))
+        'to be perspective-dependent. Candidate applications to Skolem\'s Paradox, the Continuum '
+        'Hypothesis, and Russell\'s Paradox are identified; formal derivation of these connections is '
+        'deferred to OQ-E2.'))
     E.append(body(
         'Illustrated Companion: A paired ZP-E Illustrated Companion document provides accessible '
         'explanations and visual summaries of the bridge derivations in this document. Readers new '
@@ -251,8 +251,8 @@ def build_zpe(out_path):
     print('[build_zpe] Building DA-1...')
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
-        Paragraph('Formal Insert DA-1: Definitional Alignment — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Carried from ZP-E v1.0 | Closes DA-1 | AX-1 promoted to Theorem T-SNAP</i>',
+        Paragraph('Formal Insert DA-1: Design Principle — Instantiation as Execution', S['h1']),
+        Paragraph('<i>Updated ZP-E v2.3 | CC-1 added to T-SNAP dependency list | Multiverse claim scoped to T-SNAP + DA-2 | DA-3 candidate applications</i>',
                   S['note']),
         hr(),
     ]
@@ -268,8 +268,9 @@ def build_zpe(out_path):
     E.append(body(
         'T-BUF was labelled Candidate because Step 2 asserts that a configuration at P<sub>0</sub> is a '
         'live machine state — that instantiation at P<sub>0</sub> constitutes an execution event, not a static '
-        'description. This is a cross-framework claim connecting P<sub>0</sub> (ZP-C) to D7 (ZP-C) via AX-B1 '
-        '(ZP-B). The connection is the work of ZP-E. DA-1 provides the formal closure.'))
+        'description. ZP-C v1.5 L-INF supplies the mathematical premise: &#8869; at P<sub>0</sub> has unbounded '
+        'surprisal — no finite external interpreter can hold it as a static description. DA-1 (&#167; III below) '
+        'provides the design principle that closes T-BUF Step 2.'))
 
     E.append(Paragraph('II. The Two Senses of a Configuration at P<sub>0</sub>', S['h2']))
     E += [
@@ -286,9 +287,9 @@ def build_zpe(out_path):
         sp(6),
     ]
 
-    E.append(Paragraph('III. Definitional Alignment DA-1', S['h2']))
+    E.append(Paragraph('III. Design Principle DA-1', S['h2']))
     E.append(bridge_box(
-        'Definitional Alignment DA-1 — Instantiation of a Configuration at P₀ Constitutes an Execution Event',
+        'Design Principle DA-1 — Informational Extremity at P₀ Forces Execution',
         [
             'Claim: The instantiation of a machine configuration c<sub>1</sub> at the incompressibility threshold '
             'P<sub>0</sub> is an execution event in the sense of L-RUN. It is not a static description of a machine. '
@@ -297,16 +298,18 @@ def build_zpe(out_path):
     ))
     E += [
         sp(4),
-        body('Grounding: By AX-B1, a state either exists or it does not. A configuration at P<sub>0</sub> that is merely '
-             'described (Sense A) does not occupy a state in the semilattice — it is a string in a meta-language, '
-             'not an element of L. A configuration at P<sub>0</sub> that is instantiated (Sense B) occupies a state: '
-             'it is c<sub>1</sub>, which by L-RUN is a non-null element of L distinct from ⊥. The binary of AX-B1 '
-             'applies: for any configuration c at P<sub>0</sub>, either c is instantiated (Sense B) or it is not. D7 '
-             'defines a machine configuration as a complete description of a Turing machine at a given moment, '
-             'which presupposes the machine is running. Therefore any object satisfying D7 at P<sub>0</sub> is already '
-             'an instantiated execution event. The description/instantiation distinction collapses at the level of D7.'),
-        derived('Status: DEFINITIONAL ALIGNMENT — no new axiom introduced. DA-1 is a clarification of '
-                'scope. AX-B1 ensures the binary applies. No additional mathematical content required. ✓'),
+        body('Mathematical premise (ZP-C v1.5 L-INF): The surprisal at ball-hierarchy depths approaching 0 &#8712; Q<sub>2</sub> '
+             'is unbounded — for any finite M, &#8707; depth n with I(n) > M. The null state &#8869; = c<sub>0</sub> corresponds '
+             'to this limit point; its informational content has no finite bound. '
+             'Design commitment: a configuration with unbounded informational content cannot be a static description — '
+             'any external interpreter would need to be at least as informationally rich, but &#8869; has no finite bound. '
+             'It is the compressed limit of all possible binary programs, prior to any interpreter. '
+             'Therefore c<sub>0</sub> at P<sub>0</sub> is necessarily an execution event, not a description awaiting instantiation. '
+             'This replaces the prior D7-based grounding: D7 defines what a configuration IS; L-INF establishes '
+             'WHY it cannot be a static description.'),
+        derived('Status: DESIGN PRINCIPLE — explicit ontological commitment citing ZP-C L-INF. '
+                'CC-1 (S<sub>0</sub> = &#8869; is a modelling commitment, ZP-A) is a named dependency. '
+                'T-SNAP is derived given DA-1 and CC-1, both explicit. ✓'),
     ]
 
     E.append(Paragraph('IV. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
@@ -321,7 +324,7 @@ def build_zpe(out_path):
         sp(4),
         body('Proof:'),
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. When K(x|n)/n = 1, the configuration string x is algorithmically random. (ZP-C D1)'),
-        li('Step 2 — A configuration x satisfying D7 at P<sub>0</sub> is an instantiated execution event. (DA-1; D7 configurations are live by definition; AX-B1 ensures the binary applies)'),
+        li('Step 2 — A configuration at P<sub>0</sub> is informationally extreme (ZP-C L-INF): unbounded surprisal means no finite external interpreter can hold it as a static description. Therefore it is an executing machine. (DA-1 &#167; III — Design Principle, citing L-INF)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
         li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-null state)'),
         li('Step 5 — No program that executes produces only null configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
@@ -330,7 +333,9 @@ def build_zpe(out_path):
         sp(4),
         body('Conclusion: The Binary Snap is a derived consequence. AX-1 is promoted to Theorem T-SNAP. ✓'),
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
-                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. No axiom beyond AX-B1, AX-G1, AX-G2 is required.'),
+                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. Named modelling commitment: CC-1 (S₀ = ⊥, ZP-A) — '
+                'the identification of the initial state with the lattice bottom is a modelling commitment, '
+                'not derived from A1–A4. T-SNAP is derived given DA-1 and CC-1, both explicit.'),
     ]
 
     E.append(Paragraph('V. Effect of T-SNAP on Downstream Results', S['h2']))
@@ -461,8 +466,12 @@ def build_zpe(out_path):
 
     E.append(Paragraph('VII. Implications Within the Framework', S['h2']))
     E += [
-        body('<b>Multiverse as mandatory.</b> The branching fan at each ⊥ node is not optional. T-SNAP fires on '
-             'all accessible outbound vectors simultaneously. The multiverse is a structural consequence, not an interpretation.'),
+        body('<b>Multiverse as structural implication.</b> T-SNAP establishes that a Binary Snap occurs — '
+             'that ⊥ transitions to some ε₀ > ⊥. DA-2 establishes that any terminal state satisfying P₀ '
+             'conditions acts as ⊥ for a successor instantiation, generating a forward-directed branching '
+             'tree. The multiverse structure follows from T-SNAP + DA-2 jointly. Note: T-SNAP alone does '
+             'not establish that it fires on all outbound vectors simultaneously — that universality is the '
+             'scope of DA-2, not a direct consequence of the snap theorem itself.'),
         body('<b>Free will and irreversibility.</b> Within an instantiation, state sequences are monotone — no state '
              'can be decreased (ZP-A R1). Every choice is a join operation: S<sub>n</sub> ∨ α for some increment α. '
              'The algebra constrains only that the sequence be monotone, not which monotone path is '
@@ -521,28 +530,29 @@ def build_zpe(out_path):
              'The Zero Paradox\'s name is more precise than it first appeared.'),
     ]
 
-    E.append(Paragraph('III. Connection to Classical Set Theory', S['h2']))
+    E.append(Paragraph('III. Candidate Applications to Classical Set Theory', S['h2']))
     E += [
-        body('<b>Skolem\'s Paradox.</b> ZFC can be given a countable model even though it proves uncountable '
-             'sets exist. From within the model, certain sets are uncountable. From outside the model, it is '
-             'countable. DA-3 gives this a precise interpretation: countable and uncountable are '
-             'accessible-cardinality descriptions made from different positions — inside and outside the '
-             'instantiation respectively. Skolem\'s Paradox is not a paradox. It is a perspective-dependence '
-             'result, exactly as DA-3 predicts.'),
-        body('<b>The Continuum Hypothesis.</b> G&#246;del and Cohen together established that CH is independent '
-             'of ZFC — neither provable nor disprovable from the standard axioms. DA-3 accounts for this '
-             'structurally: the answer to whether anything sits between ℵ<sub>0</sub> and 2<sup>ℵ<sub>0</sub></sup> depends on which '
-             'instantiation one is measuring from. Different semilattices with different accessible cardinality '
-             'structures will give different answers. The independence of CH is not an accident of axiom '
-             'selection — it is the formal shadow of perspective-dependence. No axiom system located '
-             'within the set-theoretic hierarchy can resolve it because resolution would require the '
-             'meta-level view that DA-3 shows is unavailable from within any instantiation.'),
-        body('<b>Russell\'s Paradox.</b> The set of all sets that do not contain themselves is paradoxical because its '
-             'construction requires a position outside all sets. In the tree framework, that position is ⊥ — '
-             'the only vantage point from which the full structure is simultaneously visible, and precisely '
-             'the point that contributes nothing and therefore cannot serve as a measuring position. The '
-             'paradox arises from attempting to occupy ⊥ as an observer while remaining within an '
-             'instantiation. DA-3 establishes these are incompatible positions: ⊥ is the foundation, not a member.'),
+        body('The following are candidate applications of DA-3\'s perspective-dependence framework to '
+             'classical set-theoretic anomalies. These connections are structurally motivated but not '
+             'formally derived — they are conjectures pending OQ-E2, not established results of this document.'),
+        body('<b>Candidate: Skolem\'s Paradox.</b> ZFC can be given a countable model even though it proves '
+             'uncountable sets exist. From within the model, certain sets are uncountable. From outside the '
+             'model, it is countable. DA-3 suggests a candidate interpretation: countable and uncountable '
+             'may be accessible-cardinality descriptions made from different positions — inside and outside '
+             'the instantiation respectively. Whether this interpretation is formally adequate is the subject '
+             'of OQ-E2.'),
+        body('<b>Candidate: The Continuum Hypothesis.</b> G&#246;del and Cohen together established that CH is '
+             'independent of ZFC — neither provable nor disprovable from the standard axioms. A candidate '
+             'structural account: the answer to whether anything sits between ℵ<sub>0</sub> and 2<sup>ℵ<sub>0</sub></sup> may depend '
+             'on which position in the semilattice one measures from. If so, the independence of CH would '
+             'reflect perspective-dependence rather than an accident of axiom selection. This is a conjecture; '
+             'OQ-E2 is the open question tracking its formal development.'),
+        body('<b>Candidate: Russell\'s Paradox.</b> The set of all sets that do not contain themselves is '
+             'paradoxical because its construction requires a position outside all sets. In the tree framework, '
+             'that position is ⊥ — the foundation that contributes nothing and cannot serve as a measuring '
+             'position. The paradox may arise from attempting to occupy ⊥ as an observer while remaining '
+             'within an instantiation. Whether the accessible-cardinality framework formally recovers this '
+             'result is pending OQ-E2.'),
     ]
 
     E.append(Paragraph('IV. The Cardinality Hierarchy as Perspective-Relative', S['h2']))
@@ -562,12 +572,12 @@ def build_zpe(out_path):
     ))
     E += [
         sp(4),
-        body('The framework does not resolve the Continuum Hypothesis with a yes or no. It does '
-             'something more fundamental: it explains why CH is independent of ZFC as a structural '
-             'necessity, not an accident of which axioms were chosen. The reason cardinality resists '
-             'resolution from within any fixed formal system is the same reason branching factor is '
-             'perspective-dependent in the tree — you cannot see the full fan from inside a branch. '
-             'G&#246;del\'s incompleteness theorems and the independence of CH are formal expressions of this structural fact.'),
+        body('The framework does not resolve the Continuum Hypothesis with a yes or no. The candidate '
+             'claim (DA-3-C1) is that accessible cardinality from within any instantiation cannot '
+             'replicate the view from outside — which, if formally derived, would account for why CH '
+             'resists resolution from within any fixed formal system. Whether Gödel\'s incompleteness '
+             'theorems and CH independence are formal expressions of this perspective-dependence is '
+             'the conjecture that OQ-E2 is tasked with investigating.'),
         derived('Status: DEFINITIONAL ALIGNMENT + CANDIDATE CLAIM. DA-3-D1 and R-DA3-1 are '
                 'definitional. DA-3-C1 is a candidate claim: structurally motivated within the framework; '
                 'formal derivation of the connection between accessible cardinality and specific '
@@ -586,21 +596,21 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.0', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.3', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP',
          'AX-1 is no longer an axiom. Binary Snap derived via P<sub>0</sub> + DA-1 + L-RUN + TQ-IH + ZP-A D2.'],
-        ['DA-1: Definitional Alignment',
-         'CLOSED — Definitional',
-         'D7 configurations are live by definition. No new axiom required.'],
+        ['DA-1: Design Principle',
+         'CLOSED — L-INF',
+         '&#8869; at P<sub>0</sub> has unbounded surprisal (L-INF); informational extremity forces execution. Honest design commitment replaces prior D7 grounding.'],
         ['DA-2: Instantiation Succession',
          'CLOSED — Definitional',
          'Terminal state of I<sub>n</sub> satisfies A4 role of ⊥ for I<sub>n+1</sub>. C-DA2 establishes ontological novelty of each ⊥.'],
         ['DA-3: Perspective-Relative Cardinality',
          'CLOSED (definitional) / CANDIDATE (DA-3-C1)',
-         'Cardinality is position-dependent. Skolem, CH independence, Russell accounted for structurally. OQ-E2 open.'],
+         'DA-3-D1 establishes cardinality is position-dependent. Candidate applications to Skolem, CH, Russell identified — not derived. OQ-E2 open.'],
         ['OQ-A1: Increment selection',
          'CLOSED — T5',
          'Iterative Forcing Theorem. α<sub>n</sub> = ε(S<sub>n</sub>). Grounding updated from AX-1 to T-SNAP.'],
@@ -635,7 +645,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.0', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.3', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -643,9 +653,9 @@ def build_zpe(out_path):
          'None',
          'Derived — T-SNAP ✓ (was: Axiomatic — AX-1)'],
         ['DA-1: Instantiation = execution',
-         'AX-B1, ZP-C D7',
+         'ZP-C L-INF (not D7)',
          'None',
-         'Definitional Alignment — clarification of scope; no new axiom'],
+         'Design Principle — informational extremity forces execution; explicit commitment citing L-INF'],
         ['DA-2: Instantiation succession',
          'ZP-A A4, CC-1; ZP-B C3, R1; T-SNAP',
          'None',
@@ -670,10 +680,10 @@ def build_zpe(out_path):
          'AX-B1, T-SNAP (replaces AX-1)',
          'None',
          'Derived — grounding strengthened'],
-        ['Multiverse mandated',
-         'T-SNAP, DA-2',
+        ['Multiverse — structural implication',
+         'T-SNAP + DA-2 jointly',
          'None',
-         'Derived consequence — not an interpretation'],
+         'Structural implication — T-SNAP gives the snap; DA-2 gives the branching tree'],
         ['OQ-E2: Cardinality correspondence',
          'DA-3',
          'N/A',
@@ -686,11 +696,11 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.0', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.3', S['h1'])]
 
     val_rows = [
-        ['DA-1: Definitional Alignment',
-         'Valid — Clarification of scope; no new axiom. D7 configurations are live by definition; AX-B1 ensures the binary applies. ✓'],
+        ['DA-1: Design Principle',
+         'Valid — Informational extremity (ZP-C L-INF) forces execution: &#8869; at P<sub>0</sub> has unbounded surprisal and no finite external interpreter; therefore it necessarily executes. Explicit commitment citing L-INF; replaces prior circular D7 grounding. ✓'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
         ['AX-1 retirement',
@@ -701,16 +711,16 @@ def build_zpe(out_path):
          'Valid — Derived. Follows directly from DA-2 and ZP-B C3. ✓'],
         ['Directed instantiation tree',
          'Valid — Derived structural consequence of T-SNAP + DA-2. Branching is mandatory, not optional. Forward edges only.'],
-        ['Multiverse as mandatory',
-         'Valid — Derived. T-SNAP fires on all accessible outbound vectors. Not an interpretation.'],
+        ['Multiverse as structural implication',
+         'Valid — T-SNAP + DA-2 jointly. T-SNAP establishes the snap occurs; DA-2 establishes the branching tree structure. Universality (all outbound vectors) is DA-2\'s scope, not T-SNAP alone.'],
         ['Free will / irreversibility',
          'Valid — Structural consequence. Monotonicity (T3) constrains direction; additive ontology (R1) prohibits reduction. Path choice is undetermined by algebra.'],
         ['Time\'s arrow',
          'Valid — Derived from ZP-A T3 (monotonicity) and ZP-B C3 (irreversibility). Not assumed.'],
         ['DA-3: Perspective-Relative Cardinality',
          'Valid (definitional components: DA-3-D1, R-DA3-1). Candidate (DA-3-C1: connection to specific set-theoretic independence results). OQ-E2 open.'],
-        ['Skolem, CH, Russell accounted for',
-         'Structurally motivated — each is identified as an instance of perspective-dependence. Formal derivation deferred to OQ-E2.'],
+        ['Skolem, CH, Russell — candidate applications',
+         'Conjectures — each is identified as a candidate instance of perspective-dependence. Not derived results. Formal derivation deferred to OQ-E2.'],
         ['Remaining axioms: AX-B1, AX-G1, AX-G2',
          'Intentional foundational commitments. No further reduction claimed.'],
         ['All other ZP-E theorems (T1–T7, T2-C)',
@@ -726,7 +736,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.0 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v2.3 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
@@ -738,5 +748,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_0.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_3.pdf'))
     build_zpe(out)

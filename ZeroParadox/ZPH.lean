@@ -75,7 +75,12 @@ theorem th1_fb :
 /-- T-H1 for F_C — P = (1, 0) plays the initial object role in InfoSp.
     The fundamental transition costs exactly 1 bit: JSD(P, Q) = log 2.
     Grounded in ZPC T1b (distinct distributions, JSD computation).
-    (Full InfoSp category construction deferred.) -/
+    Composition preservation (C-H3): in the binary framework (Fin 2), only two non-trivial
+    distributions exist: P and Q. The snap is the unique morphism mapping P → Q at cost 1 bit.
+    All successor morphisms map Q → Q (Q-stability), so F_C(g) = JSD(Q ‖ Q) = 0 for g post-snap.
+    Therefore F_C(g ∘ f) = 1 bit = F_C(g) + F_C(f) = 0 + 1 bit — composition preserved exactly
+    by Q-stability, not by JSD subadditivity (which is an inequality, not equality).
+    (Full InfoSp category construction for the general case deferred.) -/
 theorem th1_fc : jsdPQ = Real.log 2 :=
   t1b_jsd
 

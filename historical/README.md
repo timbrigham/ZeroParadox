@@ -6,6 +6,11 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-D_State_Layer_v1_3-1.pdf](ZP-D_State_Layer_v1_3-1.pdf) | 2026-04-25 | ZP-D v1.3 superseded by v1.4: T5 proof corrected — D2(v) lower-bound argument replaced with ball-boundary argument; T5 renamed "Non-Decreasing Norms" |
+| [ZP-B_pAdic_Topology_v1_3-1.pdf](ZP-B_pAdic_Topology_v1_3-1.pdf) | 2026-04-25 | ZP-B v1.3 superseded by v1.4: T0 (p=2) reframed as derived given MP-1 (design commitment); MP-1 acknowledged as the load-bearing design choice |
+| [ZP-E_Bridge_Document_v2_2-1.pdf](ZP-E_Bridge_Document_v2_2-1.pdf) | 2026-04-25 | ZP-E v2.2 superseded by v2.3: CC-1 added to T-SNAP dependency list; multiverse claim scoped correctly to T-SNAP + DA-2 jointly |
+| [ZP-H_Categorical_Bridge_v1_1-1.pdf](ZP-H_Categorical_Bridge_v1_1-1.pdf) | 2026-04-25 | ZP-H v1.1 superseded by v1.2: F_C composition preservation corrected — JSD subadditivity replaced with Q-stability argument (binary framework); subadditivity is an inequality, not equality |
+| [ZP-E_Bridge_Document_v2_1-1.pdf](ZP-E_Bridge_Document_v2_1-1.pdf) | 2026-04-25 | ZP-E v2.1 superseded by v2.2: DA-3 Skolem/CH/Russell connections reframed from derived results to candidate applications pending OQ-E2 |
 | [ZP_TQ_IH_Formal-1.pdf](ZP_TQ_IH_Formal-1.pdf) | 2026-04-21 | Early standalone formal treatment of TQ-IH; superseded by ZP-C v1.4 which integrates TQ-IH as a proved theorem |
 | [ZP_TQ_IH_Illustrated-1.pdf](ZP_TQ_IH_Illustrated-1.pdf) | 2026-04-21 | Early standalone illustrated treatment of TQ-IH; superseded by ZP-C Illustrated Companion |
 | [Zero_Paradox_Foreword-5.pdf](Zero_Paradox_Foreword-5.pdf) | 2026-04-19 | Foreword before Section VIII (Generation 2 applications) was added |
@@ -17,6 +22,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 | [ZP-G_Category_Theory_v1_1-1.pdf](ZP-G_Category_Theory_v1_1-1.pdf) | 2026-04-24 | ZP-G v1.1 superseded by v1.2: Theorem/Proposition/Lemma hierarchy applied (T1 → Proposition, T2/T3 → Lemma, T4/T5 → Proposition, T6-a/T6-b → Lemma, T6-c → Proposition); companion cross-reference note added |
 | [ZP-A_Lattice_Algebra_v1_4-1.pdf](ZP-A_Lattice_Algebra_v1_4-1.pdf) | 2026-04-24 | ZP-A v1.4 superseded by v1.5: Theorem/Proposition/Lemma hierarchy applied (T1 → Proposition, T2 → Lemma); Remark R2 added connecting "state sequence" to "ascending chain"; CC-1 corollary clarified (T2 gives ⊥ ≤ S₀ unconditionally; CC-1 strengthens to equality); companion cross-reference note added |
 | [ZP-B_pAdic_Topology_v1_2-2.pdf](ZP-B_pAdic_Topology_v1_2-2.pdf) | 2026-04-24 | ZP-B v1.2 superseded by v1.3: Theorem/Proposition hierarchy applied (T1, T2, T5 → Proposition); companion cross-reference note added |
+| [ZP-C_Information_Theory_v1_4-1.pdf](ZP-C_Information_Theory_v1_4-1.pdf) | 2026-04-25 | ZP-C v1.4 superseded by v1.5: L-INF added (Informational Extremity of bottom); T-BUF Step 2 grounded in L-INF; T1b relabelled Corollary |
+| [ZP-E_Bridge_Document_v2_0-1.pdf](ZP-E_Bridge_Document_v2_0-1.pdf) | 2026-04-25 | ZP-E v2.0 superseded by v2.1: DA-1 redesigned from Definitional Alignment (D7-based) to Design Principle (L-INF-based); circular D7 grounding replaced with honest informational extremity argument |
 | [ZP-C_Information_Theory_v1_4-2.pdf](ZP-C_Information_Theory_v1_4-2.pdf) | 2026-04-24 | ZP-C v1.4 superseded by v1.5: Theorem/Corollary hierarchy applied (T1b → Corollary); companion cross-reference note added |
 | [ZP-D_State_Layer_v1_2-2.pdf](ZP-D_State_Layer_v1_2-2.pdf) | 2026-04-24 | ZP-D v1.2 superseded by v1.3: Theorem/Proposition hierarchy applied (T3, T5 → Proposition); companion cross-reference note added |
 | [ZP-A_Lattice_Algebra_v1_3-1.pdf](ZP-A_Lattice_Algebra_v1_3-1.pdf) | 2026-04-23 | ZP-A v1.3 superseded by v1.4: OQ-A1 section header corrected from "Open Question" to "CLOSED"; status line expanded to answer both sub-questions explicitly |

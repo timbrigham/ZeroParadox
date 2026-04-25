@@ -241,9 +241,8 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 # .claudecodes instructions for Lean 4 development
 - Always run lake build as two separate PowerShell calls to avoid allowlist prompt issues: first `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then `Get-Content build.log | Select-Object -Last 1` (or with a `-match` filter). Never combine them with `;` in a single call.
-- **Logging Rule:** When performing builds on `lake_testing`, run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
+- **Logging Rule:** Always run lake build as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 - Ignore PDF rendering assets and website build artifacts in the root.
-- Treat 'lake_testing' as the active branch for experimental verification.
 - Always check 'lake-manifest.json' for dependency updates before adding new imports.
 
 - When searching for Lean source files in this project, always use the pattern ZeroParadox/**/*.lean, never **/*.lean. The .lake/ folder contains thousands of Mathlib library files that aren't mine."
@@ -252,37 +251,25 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 # Zero Paradox Project Standards
 
-## Context Awareness & Branching Protocol
-- **Primary Proof Workspace:** `lake_testing` branch. 
-  - Goal: Formalizing the mathematical ontology using Lean 4.
-  - Scope: `.lean` files, `lakefile.lean`, and mathlib integration.
-- **Illustrated/Display Workspace:** `illustrated` branch.
-  - Goal: Rerendering PDFs, updating illustrated companions, and site-level display logic.
-  - Scope: `/pdfs`, `/site`, and PDF build tooling in `/scripts`.
+## Development Branch
+
+All work — Lean 4 proofs and PDF rendering — happens on the `illustrated` branch. This is the single active development branch. `main` is production/public. The `lake_testing` branch is retired; do not switch to it or push to it.
 
 ## Operational Rules
-1. **Branch-Task Lock:** - Lean 4 proof development **must** happen on `lake_testing`.
-   - **Auto-push:** After every commit on `lake_testing`, immediately run `git push origin lake_testing`. Tim has granted standing permission for this; no confirmation needed.
-   - PDF creation or rendering actions **must** happen on `illustrated`.
-2. **Mandatory Checkout:** If the user requests an action belonging to the other workspace, Claude must prompt the user to switch branches before reading or writing those specific assets.
-3. **Math Workflow:** When on `lake_testing`, verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
-4. **PDF Workflow:** On the `illustrated` branch, use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
-5. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
-6. **Sync before work on `illustrated`:** At the start of any session on `illustrated`, always run `git fetch origin main` then `git merge origin/main` before making any changes. Never make edits on `illustrated` against a stale base — this causes avoidable merge conflicts when the PR is opened.
-7. **Verify no conflict markers after any merge:** Before committing after a merge, run `git diff --check` to confirm no conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) remain in any file. A file with unresolved markers will commit silently and corrupt the document. This has happened twice on this project.
-8. **Pull request body — always use `--body-file`:** PowerShell cannot reliably pass multiline PR bodies inline (special characters, arrows, backticks, and asterisks all cause parse errors). Always write the body to `.claude-local\pr_body_<name>.md` first, then create the PR with:
+1. **Single branch:** All Lean and PDF work happens on `illustrated`. No branch switching required.
+2. **Math Workflow:** Verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
+3. **PDF Workflow:** Use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
+4. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
+5. **Sync before starting work:** At the start of any session, always run `git fetch origin main` then `git merge origin/main` before making any changes. Never make edits against a stale base.
+6. **Verify no conflict markers after any merge:** Before committing after a merge, run `git diff --check` to confirm no conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) remain in any file. A file with unresolved markers will commit silently and corrupt the document. This has happened twice on this project.
+7. **Pull request body — always use `--body-file`:** PowerShell cannot reliably pass multiline PR bodies inline (special characters, arrows, backticks, and asterisks all cause parse errors). Always write the body to `.claude-local\pr_body_<name>.md` first, then create the PR with:
    ```powershell
    gh pr create --title "..." --body-file ".claude-local\pr_body_<name>.md"
    ```
 
-## File Priority & Access
-- **On `lake_testing`:** Prioritize `.lean` source files. Treat `/site` and `/pdfs` as Read-Only unless explicitly authorized for a cross-domain check.
-- **On `illustrated`:** Prioritize PDF artifacts and rendering scripts. Treat `/ZeroParadox` source files as the "Ground Truth" reference for documentation updates.
-- **`proofs/` is owned by `lake_testing` exclusively.** Never edit files in `proofs/` from the `illustrated` branch — doing so causes merge conflicts when branches are reconciled.
-
 ## File Priority
-- Focus on `.lean` and `lakefile.lean` for the ontology.
-- Assets in `/site` and `/pdfs` are open for editing **only** for reredering tasks.
+- Both `.lean` files and PDF build scripts are first-class on `illustrated`.
+- All other conventions (versioning, archiving, scripts/ sync) apply as documented above.
 
 ## Lean 4 Proof Development: Stub-First Protocol
 
@@ -307,4 +294,4 @@ When a ZP-X document is successfully proved in Lean 4, the following steps are *
 2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in the proof doc.
 3. **Create proof doc** — write `proofs/ZP-X_Lean4.md` documenting: Lean file path, commit hash, build result, purity check output, theorem-by-theorem table, and proof strategy notes.
 4. **Update README.md** — add a row to the `### Formal Verification (Lean 4)` subsection of the The Framework and update the Question Register row for `Formal verification (Lean/Rocq)`.
-5. **Commit all changes together** on `lake_testing`.
+5. **Commit all changes together** on `illustrated`.
