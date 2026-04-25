@@ -102,8 +102,9 @@ theorem t2_existence (n : ℕ) :
 
 /-- T3: Any other function T': Fin n → StateSpace n satisfying D2 (orthonormal values)
     is related to transitionOp by a linear isometry equivalence (unitary map) U.
-    Proof strategy: T and T' both map to ONBs; any two ONBs are related by a unitary.
-    Deferred pending OrthonormalBasis.unitaryEquivalence API availability. -/
+    Proof: both T and T' are orthonormal families of size n in ℂⁿ, so each spans ℂⁿ and
+    forms an OrthonormalBasis. The symm of T's repr isometry sends transitionOp i = e_i
+    to b_T' i = T' i, giving the required unitary. -/
 theorem t3_uniqueness (n : ℕ)
     (T' : Fin n → StateSpace n)
     (hT'_orth : ∀ i j : Fin n, i ≠ j →
@@ -111,7 +112,15 @@ theorem t3_uniqueness (n : ℕ)
     (hT'_norm : ∀ i : Fin n, ‖T' i‖ = 1) :
     ∃ U : StateSpace n ≃ₗᵢ[ℂ] StateSpace n,
       ∀ i, U (transitionOp n i) = T' i := by
-  sorry
+  have hOrth_T' : Orthonormal ℂ T' :=
+    ⟨hT'_norm, fun i j hij => hT'_orth i j hij⟩
+  have hSpan : ⊤ ≤ Submodule.span ℂ (Set.range T') :=
+    (hOrth_T'.linearIndependent.span_eq_top_of_card_eq_finrank'
+      (by simp [StateSpace])).ge
+  refine ⟨(OrthonormalBasis.mk hOrth_T' hSpan).repr.symm, fun i => ?_⟩
+  rw [show transitionOp n i = EuclideanSpace.single i (1 : ℂ) from rfl,
+      (OrthonormalBasis.mk hOrth_T' hSpan).repr_symm_single]
+  exact congr_fun (OrthonormalBasis.coe_mk hOrth_T' hSpan) i
 
 /-! ## V. T4 — The Binary Snap Produces an Orthogonal Shift in H -/
 
