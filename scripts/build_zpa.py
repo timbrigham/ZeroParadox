@@ -287,6 +287,7 @@ def build():
         'Under ZF + AFA, &#8869; is a Quine atom — a set satisfying x = {x}. By set extensionality, any infinite collection of objects all indistinguishable under the structural property of &#8869; collapses to &#8869; itself. There is no multiplicity, only &#8869;.',
         'This is a modeling commitment. It is not derived from A1&#8211;A4. It requires replacing the classical Axiom of Foundation with AFA in the metatheory.',
         'Status: CONDITIONAL CLAIM — modeling commitment over ZF + AFA; not derived from A1&#8211;A4.',
+        'Lean 4 scope: ZPA.lean verifies the algebraic structure A1&#8211;A4 and all derived results (T1&#8211;T3, CC-1). CC-2 is a metatheoretic commitment at the set-theoretic level. Lean&#8217;s bot field is a term of an abstract typeclass — a structural proxy for the algebraic role of &#8869;. Lean&#8217;s type theory (CIC) is well-founded by construction; Quine atoms cannot be realized as Lean terms. The set-theoretic content of CC-2 is stated as a prose-level commitment in ZF + AFA and is outside the scope of the Lean verification.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R3 — DA-1 Follows from CC-2', [
