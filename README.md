@@ -39,7 +39,7 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
-The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. Similarly, ε₀ is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration. This identification is named and motivated in ZP-E; formal embedding of the framework's state lattice into ordinal theory is deferred pending OQ-E2 (see Question Register).
+The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. This cross-framework identification is a modeling commitment (MC-1) — the foundational design choice that makes multi-layer synthesis possible. It is not derived; it is chosen. See [Axiomatic Commitments](#axiomatic-commitments). Similarly, ε₀ is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration. This identification is named and motivated in ZP-E; formal embedding of the framework's state lattice into ordinal theory is deferred pending OQ-E2 (see Question Register).
 
 Every proof of existence starts by assuming something exists. This one starts from nothing and shows the first distinction must arise from it. The Binary Snap is the moment the transition is forced — when nothing becomes the most basic something.
 
@@ -134,6 +134,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
 | **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
+| **MC-1** | Modeling Commitment | The null states across all framework layers — algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object — are identified as a single object. This is the foundational cross-framework identification that makes multi-layer synthesis possible. It is not derived; it is chosen. |
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 — the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure — it is a consequence of it.
 
