@@ -1,5 +1,5 @@
 """
-Build ZP-A: Lattice Algebra (v1.5)
+Build ZP-A: Lattice Algebra (v1.6)
 """
 import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -180,17 +180,18 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_5.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.5')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_6.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.6')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.5  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.4  |  Theorem/Proposition/Lemma hierarchy applied; R2 terminology note; CC-1 corollary clarified</i>', S['subtitle']),
+          Paragraph('Version 1.6  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.5  |  CC-2 (Self-Containment of &#8869;) and R3 added; foundation note (ZF + AFA; AC not assumed) added</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
+          body('<i>Version 1.6 changes: CC-2 (Self-Containment of &#8869;) added as a new modeling commitment: &#8869; = {&#8869;} is a Quine atom under ZF + AFA (Aczel&#8217;s Anti-Foundation Axiom). R3 added immediately following CC-2, establishing that DA-1 in ZP-E follows from CC-2 as a derivation rather than a design principle. Foundation note added: the framework is stated over ZF + AFA; the Axiom of Choice is not assumed. Section V dedicated to self-containment of &#8869;; OQ-A1 renumbered VI, Boundary Conditions VII, Validation Status VIII.</i>'),
           body('<i>Version 1.5 changes: (1) Theorem/Proposition/Lemma hierarchy applied throughout: T1 relabelled Proposition (partial order properties are infrastructure), T2 relabelled Lemma (the global minimum result is a stepping stone for CC-1 and T3). T3 retains Theorem (monotonicity is the primary result of ZP-A). (2) Remark R2 added after D3 connecting the term "state sequence" to the standard order-theory term "ascending chain". (3) CC-1 corollary reworded to make explicit that T2 gives &#8869; &#8804; S&#8320; for any initialisation; CC-1 strengthens this to equality.</i>'),
           body('<i>Version 1.4 change: OQ-A1 section heading and box label corrected from "Open Question" to "CLOSED". The resolution was already recorded in the status line (closed by ZP-E T5 via AX-B1) but the section header was misleading. Status line expanded to answer both sub-questions explicitly.</i>'),
           body('<i>Version 1.3 changes: (1) Definition D2: the equivalence statement now makes explicit that &#945; depends on x — "for each x &#8712; L, f(x) = x &#8744; &#945; for some &#945; &#8712; L". (2) Theorem T3 proof: replaced the single spelled-out "iff" with &#10234; for consistency. (3) CC-1: removed circular conditional framing; reframed as a direct modelling commitment; corrected the consequence chain to S&#8320; = &#8869; &#8804; S&#8321; &#8804; &#8230;; replaced informal "constituent" with direct T2 reference.</i>'),
@@ -273,7 +274,28 @@ def build():
         'Status: CONDITIONAL CLAIM — modelling commitment; not derived from A1&#8211;A4.',
     ]))
 
-    E.append(Paragraph('V. OQ-A1 — Sufficiency of Monotonicity', S['h1']))
+    E.append(sp(4))
+
+    E.append(Paragraph('V. The Self-Containment of &#8869;', S['h1']))
+    E.append(Paragraph('5.1  Foundational Characterisation', S['h2']))
+    E.append(body('The axioms A1&#8211;A4 establish &#8869; as the additive identity and algebraic minimum of L. The following conditional claim characterises its set-theoretic nature and grounds DA-1 in ZP-E as a derivation rather than a design principle.'))
+    E.append(body('<i>Foundation note: The framework is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). The classical Axiom of Foundation is replaced by AFA, which permits self-containing sets. The Axiom of Choice is not assumed: T-SNAP is the unique forced first differentiation, not a selection over indistinguishable &#8869; instances.</i>'))
+    E.append(sp(4))
+    E.append(label_box('Conditional Claim CC-2 — Self-Containment of &#8869;', [
+        'The null state &#8869; is its own extension: the collection of all objects bearing the structural property of &#8869; is &#8869; itself.',
+        'Formally: &#8869; = {&#8869;}',
+        'Under ZF + AFA, &#8869; is a Quine atom — a set satisfying x = {x}. By set extensionality, any infinite collection of objects all indistinguishable under the structural property of &#8869; collapses to &#8869; itself. There is no multiplicity, only &#8869;.',
+        'This is a modeling commitment. It is not derived from A1&#8211;A4. It requires replacing the classical Axiom of Foundation with AFA in the metatheory.',
+        'Status: CONDITIONAL CLAIM — modeling commitment over ZF + AFA; not derived from A1&#8211;A4.',
+    ]))
+    E.append(sp(4))
+    E.append(label_box('Remark R3 — DA-1 Follows from CC-2', [
+        'A self-containing object has no external interpreter by structure: &#8869; = {&#8869;} is its own interpretation. A description requires a describer distinct from the thing described; CC-2 admits no such distinction for &#8869;.',
+        'Therefore &#8869; at P<sub>0</sub> cannot be a static description awaiting external instantiation. This is the formal basis for DA-1 in ZP-E: the claim that instantiation at P<sub>0</sub> is a live execution event becomes a derivation from CC-2, not a freestanding design principle.',
+    ]))
+    E.append(sp())
+
+    E.append(Paragraph('VI. OQ-A1 — Sufficiency of Monotonicity', S['h1']))
     E.append(label_box('OQ-A1 — Sufficiency of Monotonicity  [CLOSED — ZP-E T5]', [
         'Is the monotonicity constraint (T3) sufficient to characterise all valid state sequences, or are additional axioms required?',
         'OQ-A1a: Is there algebraic reason to restrict &#945;<sub>n</sub> to join-irreducible elements (not expressible as joins of strictly smaller elements)?',
@@ -281,19 +303,20 @@ def build():
         'Status: CLOSED — Both sub-questions resolved by ZP-E Theorem T5 (Iterative Forcing Theorem) via AX-B1 from ZP-B. OQ-A1a: &#945;<sub>n</sub> = &#949;(S<sub>n</sub>), the minimum viable deviation. OQ-A1b: AX-B1\'s binary constraint bounds ascending chains.',
     ]))
 
-    E.append(Paragraph('VI. Boundary Conditions', S['h1']))
+    E.append(Paragraph('VII. Boundary Conditions', S['h1']))
     E.append(data_table(
         ['Export', 'Status / Receiving Document'],
         [['(L, &#8744;, &#8869;) as join-semilattice', 'Derived (A1&#8211;A4) — ZP-D: algebraic structure of state space'],
          ['&#8804; partial order (D1, T1)', 'Derived — ZP-D: ordering on states'],
          ['Monotonicity of state sequences (T3)', 'Derived from A1&#8211;A3 — ZP-D: state layer ordering'],
          ['&#8869; as global minimum (T2, CC-1)', 'Derived / Conditional — ZP-E: ontological grounding claim'],
+         ['&#8869; = {&#8869;} self-containment (CC-2, R3)', 'Conditional / Remark — ZP-E: basis for DA-1 derivation'],
          ['No subtraction / additive ontology (R1)', 'Structural — ZP-C: no operation may reduce informational content'],
          ['OQ-A1 — increment selection', 'Open within ZP-A; closed by ZP-E T5']],
         [2.5*inch, 4.0*inch]
     ))
 
-    E.append(Paragraph('VII. Validation Status', S['h1']))
+    E.append(Paragraph('VIII. Validation Status', S['h1']))
     E.append(data_table(
         ['Component', 'Status / Notes'],
         [['A1&#8211;A4 join-semilattice axioms', 'Valid — Axioms; self-contained'],
@@ -303,6 +326,8 @@ def build():
          ['State transition as join (D2)', 'Valid — Defined; consistent with signature'],
          ['Monotonicity of state sequences (T3)', 'Valid — Derived from A1&#8211;A3 and D3'],
          ['CC-1: S<sub>0</sub> = &#8869;', 'Conditional Claim — modelling commitment; not derived from A1&#8211;A4'],
+         ['CC-2: &#8869; = {&#8869;}', 'Conditional Claim — modeling commitment over ZF + AFA; not derived from A1&#8211;A4'],
+         ['ZF + AFA foundation (no AC)', 'Meta-theoretic — framework-wide; required for CC-2'],
          ['OQ-A1: Sufficiency of monotonicity', 'Open within ZP-A; closed by ZP-E T5']],
         [2.5*inch, 4.0*inch]
     ))
