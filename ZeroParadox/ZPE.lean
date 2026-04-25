@@ -166,6 +166,29 @@ marked CANDIDATE in ZP-E v2.0; formal derivation deferred to OQ-E2. -/
 noncomputable def da3_accessibleCardinality {L : Type*} [ZPSemilattice L] (p : L) : Cardinal :=
   Cardinal.mk { x : L // le p x }
 
+/-! ## V. T-SNAP (Accessible Shrink) — Structural Content of the Binary Snap
+
+T-SNAP's algebraic core (join ⊥ ε₀ = ε₀, proved by rfl from A4) is an identity
+on the join operation. The deeper result is what the snap does to reachability:
+before the snap, ⊥ can reach ALL of L; after the snap, ε₀ can reach only a proper
+subset. This is the inverse face of the Zero Paradox: ⊥ is the universal source,
+yet transitioning away from it permanently forecloses access to ⊥ itself. -/
+
+/-- T-SNAP (accessible states shrink): the Binary Snap strictly narrows the set of
+    reachable states. From ⊥, every element of L is accessible (A4: bot_le x always).
+    From ε₀, only {x | ε₀ ≤ x} is accessible — a proper subset, since ⊥ is excluded:
+    if le ε₀ ⊥ then le_antisymm (with le ⊥ ε₀, always true) gives ⊥ = ε₀,
+    contradicting hne. This is the structural content beyond t_snap_machine := rfl.
+    Note: for infinite L, proper subset does not imply a smaller Cardinal (ℕ\{0} ≃ ℕ).
+    For Fintype L, this does imply da3_accessibleCardinality ε₀ < da3_accessibleCardinality ⊥. -/
+theorem t_snap_accessible_proper_subset {L : Type*} [ZPSemilattice L] {ε₀ : L}
+    (hne : (bot : L) ≠ ε₀) :
+    {x : L | le ε₀ x} ⊂ {x : L | le bot x} := by
+  constructor
+  · intro x _; exact bot_le x
+  · intro h
+    exact hne (le_antisymm (bot_le ε₀) (h (bot_le bot)))
+
 end ZeroParadox.ZPE
 
 /-! ## Axiom Purity Check -/
@@ -179,5 +202,6 @@ open ZeroParadox.ZPE ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPC
 #print axioms t_snap_irreversible
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty
+#print axioms t_snap_accessible_proper_subset
 
 end PurityCheck
