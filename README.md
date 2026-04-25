@@ -41,7 +41,7 @@ The **Binary Snap** (the first transition from nothing to something) - the trans
 
 The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. This cross-framework identification is a modeling commitment (MC-1) — the foundational design choice that makes multi-layer synthesis possible. It is not derived; it is chosen. See [Axiomatic Commitments](#axiomatic-commitments). Similarly, ε₀ is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration. This identification is named and motivated in ZP-E; formal embedding of the framework's state lattice into ordinal theory is deferred pending OQ-E2 (see Question Register).
 
-Every proof of existence starts by assuming something exists. This one starts from nothing and shows the first distinction must arise from it. The Binary Snap is the moment the transition is forced — when nothing becomes the most basic something.
+Most frameworks for describing the first emergence of something assume it. This framework does not. The Binary Snap is not a starting assumption - it is a structural consequence of standard mathematical commitments of the kind any model of additive states would adopt independently. No snap-specific axioms appear anywhere in the framework. The Binary Snap is the moment the transition is forced: when the mathematics demands that something emerge from the null state.
 
 The derivation chain is:
 
