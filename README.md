@@ -39,7 +39,7 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
-The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. Similarly, ε₀ is intentionally the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration, and the framework's Binary Snap produces a state whose ordinal measure is precisely that object.
+The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. Similarly, ε₀ is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration. This identification is named and motivated in ZP-E; formal embedding of the framework's state lattice into ordinal theory is deferred pending OQ-E2 (see Question Register).
 
 Every proof of existence starts by assuming something exists. This one starts from nothing and shows the first distinction must arise from it. The Binary Snap is the moment the transition is forced — when nothing becomes the most basic something.
 
@@ -84,7 +84,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-D State Layer](ZP-D_State_Layer_v1_4.pdf) | ZP-D | v1.4 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_3.pdf) | ZP-E | v2.3 | **DA-1** (instantiation = execution, grounded in L-INF). **T-SNAP** (Binary Snap derived; depends on DA-1 and CC-1). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Candidate applications to Skolem, CH independence, Russell (pending OQ-E2). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_2.pdf) | ZP-G | v1.2 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_2.pdf) | ZP-H | v1.2 | Functors FA-FD. F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four functors. T-SNAP inherited as derived theorem. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_2.pdf) | ZP-H | v1.2 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: ℝ≥0 proxy witness - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
 
 ### Illustrated Companion Documents (General Reader)
 
@@ -154,7 +154,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
 | OQ-E2: Cardinality-semilattice correspondence | **Open** - formal derivation of DA-3's cardinality claims deferred pending further work. |
 | OQ-G1: Native categorical surprisal | Closed - ZP-G v1.1 D7' and I-KC (Kolmogorov import; BA-G1 demoted to compatibility remark R-BA) |
-| OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (universal property verified for all four instantiation functors) |
+| OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (initial-object universal property verified for all four domain instantiations: F_A via NatSLat; F_B/C/D via ℝ≥0 proxy witness) |
 | OQ-G3: Functor construction | Closed (concrete witness) / Open (full construction) - F_A: strong closure via NatSLat appendix (ℕ with max/0 as ZPCategory; 0 is categorical initial; genuine ZPA connection). F_B/C/D: shared ℝ≥0 proxy witness (NNRealZPCat appendix); domain facts C3, T1b, T4 cited. Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work. |
 | OQ-G4: Singularity reconciliation | Closed - ZP-H T-H2 (categorical and ZP-C characterizations shown to be same obstruction) |
 | ε₀ / proof-theoretic ordinal | Open - formal documentation. The framework's ε₀ (first post-Snap state at P₀) is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal ε₀ = sup{ω, ω^ω, ...}. Both name the minimal threshold transcending finite iteration; the symbol collision is not incidental. Formal embedding of L into ordinals deferred pending OQ-E2. |
