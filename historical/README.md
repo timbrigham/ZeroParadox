@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-A_Lattice_Algebra_v1_7-1.pdf](ZP-A_Lattice_Algebra_v1_7-1.pdf) | 2026-04-26 | ZP-A v1.7 superseded by v1.8: CC-2 cross-framework note added — Foundation ruled out by R3 and L-INF; AFA identified as forced rather than chosen; Foundation note updated; cross-reference to ZP-E Remark R-AFA |
+| [ZP-E_Bridge_Document_v3_1-1.pdf](ZP-E_Bridge_Document_v3_1-1.pdf) | 2026-04-26 | ZP-E v3.1 superseded by v3.2: Remark R-AFA added — Foundation incompatibility with R3 and L-INF established; AFA as forced metatheoretic replacement derived; CC-2 status clarified |
 | [ZP-E_Bridge_Document_v3_0-1.pdf](ZP-E_Bridge_Document_v3_0-1.pdf) | 2026-04-26 | ZP-E v3.0 superseded by v3.1: Remark R-ε₀ added — deliberate notation justification for ε₀ symbol choice; structural correspondence with Cantor-Gentzen proof-theoretic ordinal explained |
 | [ZP-H_Categorical_Bridge_v1_5-1.pdf](ZP-H_Categorical_Bridge_v1_5-1.pdf) | 2026-04-25 | ZP-H v1.5 superseded by v1.6: three identical fb/fc/fd_nnreal_initial_grounding Lean defs consolidated into one nnreal_initial_grounding; OQ-G3 register updated to reflect single shared witness; Section III header clarified |
 | [ZP-H_Categorical_Bridge_v1_4-1.pdf](ZP-H_Categorical_Bridge_v1_4-1.pdf) | 2026-04-25 | ZP-H v1.4 superseded by v1.5: OQ-G3 register entry updated — fb/fc/fd_nnreal_initial_grounding share identical proof term (nnrealZPCategory.zpIsInitial); domain theorems C3/T1b/T4 clarified as semantic context, not formal Lean dependencies; full abstract functor terms explicitly deferred |

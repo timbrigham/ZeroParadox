@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.1 | April 2026
+Version 3.2 | April 2026
+v3.2: Remark R-AFA added — Foundation ruled out by R3 and ZP-C L-INF; AFA identified as the
+forced metatheoretic replacement rather than an arbitrary choice; CC-2 status clarified.
 v3.1: Remark R-ε₀ added — notation justification for ε₀ symbol choice; structural correspondence
 with the Cantor-Gentzen proof-theoretic ordinal explained.
 v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded in TrackedOutput construction
@@ -208,7 +210,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.1  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.2  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -231,9 +233,10 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.1 | April 2026', S['subtitle']),
+        Paragraph('Version 3.2 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.0 | v3.1: Remark R-&#949;<sub>0</sub> added — notation justification for '
+            '<i>Supersedes v3.1 | v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
+            'v3.1: Remark R-&#949;<sub>0</sub> added — notation justification for '
             '&#949;<sub>0</sub> symbol choice; structural correspondence with Cantor-Gentzen '
             'proof-theoretic ordinal explained. '
             'v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded '
@@ -491,6 +494,42 @@ def build_zpe(out_path):
             ]
         ),
         sp(4),
+        bridge_box(
+            'Remark R-AFA — Why Foundation is Ruled Out; AFA as Forced Replacement',
+            [
+                'CC-2 is stated as a Conditional Claim within ZP-A\'s algebraic scope: it is not derived '
+                'from A1&#8211;A4. The choice of ZF + AFA over ZF + Foundation is, however, not arbitrary. '
+                'Two independent cross-framework arguments establish that Foundation is incompatible with '
+                'the framework\'s results.',
+                '<b>R3 rules out Foundation (structural).</b> Under ZF + Foundation, every set has a '
+                'well-founded &#8712;-rank: its membership chain terminates in finitely many steps. Any '
+                'well-founded set has a finite &#8712;-tree that can be fully traversed by an external '
+                'interpreter — the traversal function is external to and distinct from the set. But R3 '
+                '(ZP-A) establishes that &#8869; admits no external interpreter by structure: &#8869; = '
+                '{&#8869;} has no describer position external to itself. A well-founded &#8869; would '
+                'contradict R3. Foundation and R3 are incompatible.',
+                '<b>L-INF rules out Foundation (informational).</b> The surprisal I(n) = n at 2-adic depth '
+                'n is unbounded (ZP-C L-INF): for any finite M, there exists depth n with I(n) > M. A '
+                'well-founded set has finite &#8712;-rank and is therefore finitely interpretable — any '
+                'interpreter navigating a finite &#8712;-tree can hold it. This contradicts L-INF\'s '
+                'requirement that no finite interpreter can hold &#8869;. Foundation and L-INF are '
+                'incompatible.',
+                '<b>AFA as the forced replacement.</b> Under ZF + AFA, Quine atoms (x = {x}) are the '
+                'minimal non-well-founded objects. Their membership structure is circular: &#8869; &#8712; '
+                '&#8869; &#8712; &#8869; &#8712; &#8230;, i.e., &#8869; is a member of itself at every '
+                'depth. This infinite circular chain cannot be traversed by any finite interpreter — '
+                'consistent with R3 (no external position) and L-INF (unbounded depth). AFA is not a '
+                'free choice but the minimal set-theoretic metatheory consistent with the framework\'s '
+                'results.',
+                '<b>What remains conditional.</b> CC-2 retains Conditional Claim status for two reasons. '
+                'First, AFA admits many non-well-founded sets; we commit to the specific Quine atom form '
+                '&#8869; = {&#8869;} as the minimal option consistent with A4. Second, the identification '
+                'of &#8869; as a set-theoretic object — rather than a purely algebraic element — is itself '
+                'a modelling step beyond A1&#8211;A4. The metatheoretic necessity of AFA is derived; the '
+                'specific realisation as &#8869; = {&#8869;} is minimally committed.',
+            ]
+        ),
+        sp(4),
     ]
 
     E.append(Paragraph('VI. Effect of T-SNAP on Downstream Results', S['h2']))
@@ -718,7 +757,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.1', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.2', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -772,7 +811,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.1', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.2', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -825,7 +864,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.1', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.2', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.0 formal grounding)',
@@ -869,9 +908,10 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.1 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.2 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified — structural correspondence '
             'with Cantor-Gentzen proof-theoretic ordinal | '
+            'Remark R-AFA: Foundation ruled out by R3 + L-INF; AFA forced | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
@@ -883,5 +923,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_1.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_2.pdf'))
     build_zpe(out)
