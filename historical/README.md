@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-H_Categorical_Bridge_v1_6-1.pdf](ZP-H_Categorical_Bridge_v1_6-1.pdf) | 2026-04-26 | ZP-H v1.6 superseded by v1.7: T-H3 consistency note strengthened — independence-of-discovery foregrounded: each framework located its null-analog through its own domain logic prior to cross-framework identification; "frameworks are not independent" framing replaced with explicit independence-of-discovery statement |
+| [ZP-E_Bridge_Document_v3_2-1.pdf](ZP-E_Bridge_Document_v3_2-1.pdf) | 2026-04-26 | ZP-E v3.2 superseded by v3.3: DA-1 path hierarchy foregrounded — explicit framing paragraph added before Paths 1–3 stating that the three informal paths are corroboration of the precondition DP-2 formalizes, not parallel proofs of DA-1 |
 | [ZP-C_Information_Theory_v1_7-1.pdf](ZP-C_Information_Theory_v1_7-1.pdf) | 2026-04-26 | ZP-C v1.7 superseded by v1.8: Remark R-BRIDGE added — explicit statement of the relationship between K (Kolmogorov complexity) and I(n) (2-adic surprisal): distinct measures converging at P₀; independence of L-INF and K paths preserved |
 | [ZP-A_Lattice_Algebra_v1_7-1.pdf](ZP-A_Lattice_Algebra_v1_7-1.pdf) | 2026-04-26 | ZP-A v1.7 superseded by v1.8: CC-2 cross-framework note added — Foundation ruled out by R3 and L-INF; AFA identified as forced rather than chosen; Foundation note updated; cross-reference to ZP-E Remark R-AFA |
 | [ZP-E_Bridge_Document_v3_1-1.pdf](ZP-E_Bridge_Document_v3_1-1.pdf) | 2026-04-26 | ZP-E v3.1 superseded by v3.2: Remark R-AFA added — Foundation incompatibility with R3 and L-INF established; AFA as forced metatheoretic replacement derived; CC-2 status clarified |

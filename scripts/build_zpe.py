@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.2 | April 2026
+Version 3.3 | April 2026
+v3.3: DA-1 path hierarchy foregrounded — added explicit framing before Paths 1–3 stating
+that the three informal paths are corroboration of the precondition DP-2 formalizes, not
+parallel proofs of DA-1 itself. Shrinks attack surface on Angle 1 (DA-1 doing too much work).
 v3.2: Remark R-AFA added — Foundation ruled out by R3 and ZP-C L-INF; AFA identified as the
 forced metatheoretic replacement rather than an arbitrary choice; CC-2 status clarified.
 v3.1: Remark R-ε₀ added — notation justification for ε₀ symbol choice; structural correspondence
@@ -210,7 +213,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.2  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.3  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -233,9 +236,10 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.2 | April 2026', S['subtitle']),
+        Paragraph('Version 3.3 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.1 | v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
+            '<i>Supersedes v3.2 | v3.3: DA-1 path hierarchy foregrounded — explicit framing added before Paths 1&#8211;3 clarifying that the three informal paths are corroboration of the precondition DP-2 formalizes, not parallel proofs of DA-1. '
+            'v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
             'v3.1: Remark R-&#949;<sub>0</sub> added — notation justification for '
             '&#949;<sub>0</sub> symbol choice; structural correspondence with Cantor-Gentzen '
             'proof-theoretic ordinal explained. '
@@ -378,6 +382,12 @@ def build_zpe(out_path):
     ))
     E += [
         sp(4),
+        body('The three paths below are not parallel proofs of DA-1. Each argues independently for why '
+             'the precondition DP-2 formalizes holds — why instantiation of &#8869; at P<sub>0</sub> '
+             'necessarily constitutes a first instruction fetch rather than a static description. '
+             'DP-2 + da1_minimal_path derive c<sub>0</sub> &#8594; c<sub>1</sub> axiom-free once that '
+             'precondition is established. The paths are convergent corroboration of the precondition; '
+             'the formal derivation is DP-2\'s.'),
         body('Path 1 — Structural (ZP-A CC-2 + R3): CC-2 establishes ⊥ = {⊥} under ZF + AFA: ⊥ is a '
              'Quine atom — a set that is its own singleton. By set extensionality, the collection of all '
              'objects bearing the structural property of ⊥ collapses to ⊥ itself; there is no multiplicity, '
@@ -757,7 +767,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.2', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.3', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -811,7 +821,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.2', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.3', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -864,7 +874,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.2', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.3', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.0 formal grounding)',
@@ -908,9 +918,9 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.2 | Three formal inserts: DA-1, DA-2, DA-3 | '
-            'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified — structural correspondence '
-            'with Cantor-Gentzen proof-theoretic ordinal | '
+            '<i>End of ZP-E v3.3 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
+            'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
             'Remark R-AFA: Foundation ruled out by R3 + L-INF; AFA forced | '
             'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
@@ -923,5 +933,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_2.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_3.pdf'))
     build_zpe(out)
