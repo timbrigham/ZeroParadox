@@ -122,7 +122,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility + accessible proper subset), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 |
 | ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox), ForkCat (concrete ZPCategory instance) | Clean - April 2026 |
 | ZP-H Categorical Bridge | [ZeroParadox/ZPH.lean](ZeroParadox/ZPH.lean) | T-H1 (F_A initial object proved; F_B/F_C/F_D domain facts cited), T-H2 (singularity compatibility: ZPG unreachability ∧ ZPC divergence), T-H3 (Binary Snap under all four functors: join ∧ topological ∧ 1-bit ∧ orthogonal) | Clean - April 2026 |
-| ZP-I Inside Zero | [ZeroParadox/ZPI.lean](ZeroParadox/ZPI.lean) | t_iz_cauchy (Cauchy convergence — sorry-pending fill), t_iz_limit_is_new_null (axiom-free), c_t_iz_null_balance, t_iz_c3_compatible (C3 compatible) | Stub clean - April 2026 |
+| ZP-I Inside Zero | [ZeroParadox/ZPI.lean](ZeroParadox/ZPI.lean) | t_iz_norm_tendsto_zero, t_iz_conv_zero, t_iz_cauchy (Cauchy core — no sorryAx), t_iz_r1_t3_geometric_bound (R1+T3 → geometric bound derived), t_iz_limit_is_new_null (axiom-free), c_t_iz_null_balance, t_iz_c3_compatible | Cauchy core proved - April 2026 |
 
 **Purity note:** ZP-H's Lean proof uses `Classical.choice` (via Mathlib). This is a Mathlib infrastructure dependency, not a Zero Paradox commitment - the `#print axioms` check reports it, but it is not a novel assumption introduced by the framework. ZP-A through ZP-G are `Classical.choice`-free except where standard Mathlib theorems require it.
 
@@ -166,9 +166,9 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-G4: Singularity reconciliation | Closed - ZP-H T-H2 (categorical and ZP-C characterizations shown to be same obstruction) |
 | ε₀ / proof-theoretic ordinal | Open - formal documentation. The framework's ε₀ (first post-Snap state at P₀) is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal ε₀ = sup{ω, ω^ω, ...}. Both name the minimal threshold transcending finite iteration; the symbol collision is not incidental. Formal embedding of L into ordinals deferred pending OQ-E2. |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
-| T-IZ: Inside Zero Theorem | **Derived - ZP-I v1.0** - every maximal ascending chain converges to its own successor null. Topological core proved axiom-free in Lean (sorry-pending fill); bridge and DA-1/T-SNAP chain follow ZP-E informal argument (same category as DA-1 Path 3). |
+| T-IZ: Inside Zero Theorem | **Derived - ZP-I v1.1** - every maximal ascending chain converges to its own successor null. Cauchy core (t_iz_cauchy) proved in Lean with no sorryAx; R1+T3 → geometric bound (t_iz_r1_t3_geometric_bound) derived from p-adic valuation API. Bridge and DA-1/T-SNAP chain follow ZP-E informal argument (same category as DA-1 Path 3). |
 | Null balance: 0 + x + (-x) = 0 | **Closed - T-IZ + DA-2** - exact and derived: every branch starts at bottom, ascends omega state changes (T3), generates successor null at ordinal limit (T-IZ + T-SNAP + DA-2). |
-| Formal verification (Lean/Rocq) | ZP-A through ZP-I in progress (April 2026) |
+| Formal verification (Lean/Rocq) | ZP-A through ZP-I in progress; ZP-I Cauchy core fully proved (no sorryAx) - April 2026 |
 
 ---
 
