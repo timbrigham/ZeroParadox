@@ -50,7 +50,6 @@ makes the instantiation functors well-defined. A different morphism structure wo
 yield different functors. -/
 
 /-! ## Section III — Instantiation Functors: Domain Properties
-    (OQ-G3 Closed for All Four Functors)
 
 The four functors F_A, F_B, F_C, F_D map the abstract ZPCategory C to its four domain
 codomains. A complete Lean construction of each functor as a CategoryTheory.Functor
@@ -60,13 +59,13 @@ remains future work. What is complete: a concrete ZPCategory witness for each fu
 plus the domain-specific theorem grounding the initial-object claim.
 
 - **F_A (SLat)**: NatSLat appendix — ℕ with max/0 as ZPSemilattice, ≤ as poset-category.
-  0 is categorical initial. OQ-G3 closed for F_A.
-- **F_B (pTop)**: NNRealZPCat appendix — ℝ≥0 with ≤. 0 is categorical initial.
-  C3 grounds the topological AX-G2 analogue in Q₂. OQ-G3 closed for F_B.
-- **F_C (InfoSp)**: NNRealZPCat appendix — ℝ≥0 with ≤. 0 is categorical initial.
-  T1b grounds the 1-bit snap cost. OQ-G3 closed for F_C.
-- **F_D (Hilb)**: NNRealZPCat appendix — ℝ≥0 with ≤. 0 is categorical initial.
-  T4 grounds the orthogonal snap shift. OQ-G3 closed for F_D. -/
+  0 is categorical initial. Distinct concrete instance. OQ-G3 closed for F_A.
+- **F_B / F_C / F_D**: NNRealZPCat appendix — ℝ≥0 with ≤ is the **shared** concrete ZPCategory
+  witness for all three. One concrete instance; three distinct domain contexts. The domain
+  differentiation is carried by the per-domain theorems proved separately in T-H1 above:
+  C3 (ZPB) for F_B, T1b (ZPC) for F_C, T4 (ZPD) for F_D. `nnreal_initial_grounding` is the
+  single Lean definition establishing 0 : NNReal as a categorical initial object.
+  Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work (OQ-G3). -/
 
 /-! ## T-H1 — Initial-Object Properties Under Each Instantiation Functor -/
 
@@ -83,9 +82,9 @@ theorem th1_fa {L : Type*} [ZPSemilattice L] (x : L) :
     No continuous path returns to 0 from any x ≠ 0 (ZPB C3). This is the key
     irreversibility property that F_B's initial-object claim rests on, grounded in
     ZPB T3 (clopen isolation) and T5 (total disconnectedness).
-    The concrete ZPCategory witness for F_B is nnrealZPCategory (ℝ≥0 with ≤);
-    C3 is the domain analogue of AX-G2 in that category. OQ-G3 closed for F_B:
-    see fb_nnreal_initial_grounding in the NNRealZPCat appendix. -/
+    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤);
+    C3 is the domain analogue of AX-G2 in that category. See nnreal_initial_grounding
+    in the NNRealZPCat appendix for the categorical grounding. -/
 theorem th1_fb :
     ∀ x : Q₂, x ≠ 0 → ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
       γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = 0 :=
@@ -94,18 +93,18 @@ theorem th1_fb :
 /-- T-H1 for F_C — domain property: the P → Q snap costs exactly 1 bit.
     JSD(P, Q) = log 2 (ZPC T1b). This is the information-cost fact that F_C's
     initial-object claim rests on.
-    The concrete ZPCategory witness for F_C is nnrealZPCategory (ℝ≥0 with ≤);
+    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤);
     the snap corresponds to the morphism 0 → ⟨Real.log 2, _⟩ in that category.
-    OQ-G3 closed for F_C: see fc_nnreal_initial_grounding in the NNRealZPCat appendix. -/
+    See nnreal_initial_grounding in the NNRealZPCat appendix for the categorical grounding. -/
 theorem th1_fc : jsdPQ = Real.log 2 :=
   t1b_jsd
 
 /-- T-H1 for F_D — domain property: the snap is an orthogonal shift in Hilb.
     ⟪T(0), T(ε₀)⟫_ℂ = 0 (ZPD T4). This is the Hilbert-space fact that F_D's
     initial-object claim rests on, grounded in ZPD T2 (injectivity, norm 1) and DP-1.
-    The concrete ZPCategory witness for F_D is nnrealZPCategory (ℝ≥0 with ≤);
+    The shared concrete ZPCategory witness for F_B/C/D is nnrealZPCategory (ℝ≥0 with ≤);
     the categorical snap 0 → 1 corresponds to the orthogonal shift T(0) → T(ε₀) in Hilb.
-    OQ-G3 closed for F_D: see fd_nnreal_initial_grounding in the NNRealZPCat appendix. -/
+    See nnreal_initial_grounding in the NNRealZPCat appendix for the categorical grounding. -/
 theorem th1_fd (n : ℕ) (hn : 2 ≤ n) :
     @inner ℂ (StateSpace n) _
       (transitionOp n ⟨0, by omega⟩)
@@ -235,19 +234,16 @@ noncomputable def natSLat_initial_grounding : IsInitial (0 : ℕ) :=
 end PurityCheckNatSLat
 
 /-! ## Appendix — NNRealZPCat: ℝ≥0 as a Concrete ZPCategory
-    (Closes OQ-G3 for F_B, F_C, F_D)
+    (Shared Categorical Witness for F_B, F_C, F_D)
 
 ℝ≥0 (nonneg reals) with ≤ as morphisms is a ZPCategory where 0 is the initial object.
 For any t : ℝ≥0, t + 1 > t, so no terminal object exists (AX-G1). For any x ≤ 0 in
 ℝ≥0, x = 0 (AX-G2). Together, ℝ≥0 instantiates ZPCategory with zpInitial = 0.
 
-This closes OQ-G3 for F_B, F_C, and F_D:
-- F_B: C3 (irreversibility in Q₂) is the topological analogue of AX-G2 — no continuous path
-  returns to 0 from x ≠ 0. NNRealZPCat supplies the concrete categorical witness.
-- F_C: T1b (JSD = log 2) grounds the F_C initial-object claim — the snap corresponds to
-  the morphism 0 → ⟨Real.log 2, _⟩ in NNRealZPCat, carrying exactly 1 bit of cost.
-- F_D: T4 (⟪T(0), T(ε₀)⟫_ℂ = 0) grounds the F_D initial-object claim — the categorical
-  snap 0 → 1 in NNRealZPCat corresponds to the orthogonal shift T(0) → T(ε₀) in Hilb. -/
+`nnreal_initial_grounding` is the single Lean definition establishing this. F_B, F_C, and
+F_D all share this one concrete categorical instance — they are distinguished only by the
+domain-specific theorems proved separately in T-H1 (C3 for F_B, T1b for F_C, T4 for F_D).
+Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work (OQ-G3). -/
 
 section NNRealZPCat
 open ZeroParadox.ZPB ZeroParadox.ZPC ZeroParadox.ZPD ZeroParadox.ZPG
@@ -280,31 +276,17 @@ noncomputable instance nnrealZPCategory : ZPCategory NNReal where
     have hx0 : x = 0 := le_antisymm f.down.down (zero_le x)
     subst hx0; exact hne.elim (Iso.refl (0 : NNReal))⟩
 
-/-- OQ-G3 closed for F_B (concrete categorical witness): ℝ≥0 with ≤ instantiates ZPCategory,
-    0 is the categorical initial object. Proof term: nnrealZPCategory.zpIsInitial (shared with
-    fc/fd — same concrete category, three distinct domain contexts).
-    Domain grounding: C3 (ZPB) establishes topological irreversibility in Q₂; this is the
-    semantic motivation, not a formal Lean dependency of this definition.
-    Full abstract F_B as a CategoryTheory.Functor ℕ pTop remains future work (OQ-G3 open). -/
-noncomputable def fb_nnreal_initial_grounding : IsInitial (0 : NNReal) :=
-  nnrealZPCategory.zpIsInitial
-
-/-- OQ-G3 closed for F_C (concrete categorical witness): ℝ≥0 with ≤ instantiates ZPCategory,
-    0 is the categorical initial object. Proof term: nnrealZPCategory.zpIsInitial (shared with
-    fb/fd — same concrete category, three distinct domain contexts).
-    Domain grounding: T1b (ZPC) establishes JSD(P, Q) = log 2; this is the semantic motivation,
-    not a formal Lean dependency of this definition.
-    Full abstract F_C as a CategoryTheory.Functor ℕ InfoSp remains future work (OQ-G3 open). -/
-noncomputable def fc_nnreal_initial_grounding : IsInitial (0 : NNReal) :=
-  nnrealZPCategory.zpIsInitial
-
-/-- OQ-G3 closed for F_D (concrete categorical witness): ℝ≥0 with ≤ instantiates ZPCategory,
-    0 is the categorical initial object. Proof term: nnrealZPCategory.zpIsInitial (shared with
-    fb/fc — same concrete category, three distinct domain contexts).
-    Domain grounding: T4 (ZPD) establishes ⟪T(0), T(ε₀)⟫_ℂ = 0; this is the semantic
-    motivation, not a formal Lean dependency of this definition.
-    Full abstract F_D as a CategoryTheory.Functor ℕ Hilb remains future work (OQ-G3 open). -/
-noncomputable def fd_nnreal_initial_grounding : IsInitial (0 : NNReal) :=
+/-- Shared concrete ZPCategory witness for F_B, F_C, and F_D.
+    ℝ≥0 with ≤ is a ZPCategory (nnrealZPCategory); 0 : NNReal is the categorical initial object.
+    All three instantiation functors share this single concrete instance — same category, three
+    distinct domain contexts differentiated by the per-domain theorems in T-H1:
+      F_B: th1_fb (C3 — topological irreversibility in Q₂)
+      F_C: th1_fc (T1b — JSD snap cost = log 2)
+      F_D: th1_fd (T4 — orthogonal snap shift in Hilb)
+    This is one concrete witness, not three independent verifications. The domain facts above
+    are proved separately; this definition establishes only the shared categorical structure.
+    Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work (OQ-G3). -/
+noncomputable def nnreal_initial_grounding : IsInitial (0 : NNReal) :=
   nnrealZPCategory.zpIsInitial
 
 end NNRealZPCat
@@ -314,10 +296,9 @@ end NNRealZPCat
 section PurityCheckNNRealZPCat
 open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
 
--- OQ-G3 closed for F_B, F_C, F_D: ℝ≥0 has a categorical initial object grounding all three.
-#print axioms fb_nnreal_initial_grounding
-#print axioms fc_nnreal_initial_grounding
-#print axioms fd_nnreal_initial_grounding
+-- One shared witness for F_B, F_C, F_D: ℝ≥0 has a categorical initial object.
+-- Domain differentiation (C3, T1b, T4) is proved separately in T-H1 above.
+#print axioms nnreal_initial_grounding
 
 end PurityCheckNNRealZPCat
 
