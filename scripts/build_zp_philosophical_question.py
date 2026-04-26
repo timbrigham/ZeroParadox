@@ -161,6 +161,25 @@ def distinction_box(left_title, left_body, right_title, right_body):
     ]))
     return outer
 
+def math_ahead(note=''):
+    msg = ('&#9632;  <b>Heads up — technical terminology ahead.</b>  '
+           'The next section uses specific mathematical names. '
+           'You do not need to understand the details to follow the argument — '
+           'they are a map of the territory, not the territory itself.')
+    if note:
+        msg += '  ' + note
+    ts = TableStyle([
+        ('BACKGROUND',    (0,0),(-1,-1), colors.HexColor('#FFF3CD')),
+        ('BOX',           (0,0),(-1,-1), 0.8, AMBER),
+        ('TOPPADDING',    (0,0),(-1,-1), 7),
+        ('BOTTOMPADDING', (0,0),(-1,-1), 7),
+        ('LEFTPADDING',   (0,0),(-1,-1), 10),
+        ('RIGHTPADDING',  (0,0),(-1,-1), 10),
+    ])
+    t = Table([[Paragraph(fix(msg), S['note'])]], colWidths=[TW])
+    t.setStyle(ts)
+    return t
+
 def amber_note(text):
     ts = TableStyle([
         ('BACKGROUND',    (0,0),(-1,-1), SLATE_LITE),
@@ -280,7 +299,9 @@ def build():
         'What makes it interesting is the claim that this formal structure corresponds '
         'to something real: that a system in the null state, when it reaches maximum '
         'complexity (the point where no shorter description of it exists than itself), '
-        'is not merely described — it is executing. DA-1 is the bridge '
+        'is not merely described — it is executing: actually happening, '
+        'real in the way a running program is real rather than a program '
+        'sitting unread on a shelf. DA-1 is the bridge '
         'between the mathematics and that claim.'))
     E.append(body(
         '<b>Lean 4</b> is a formal proof assistant — software that checks '
@@ -292,10 +313,34 @@ def build():
     E.append(hr())
 
     # ── Section 1 ──────────────────────────────────────────────────────────────
+    E.append(math_ahead())
+    E.append(sp(6))
     E.append(Paragraph('I. The Mathematical Response', S['h1']))
     E.append(body(
-        'The framework built to answer the question spans eight layers. Each is '
-        'self-contained before any cross-layer claim is made:'))
+        'The framework did not arrive fully formed. It grew. Each layer was added '
+        'because the previous one was not enough — because the question kept '
+        'demanding more precision, more structure, more coverage. The algebra '
+        'needed topology to pin down irreversibility. The topology needed information '
+        'theory to connect state-changes to computation. The information theory needed '
+        'a formal bridge to make the snap a theorem rather than an assumption. '
+        'The theorem needed category theory to show it wasn\'t an artifact of one '
+        'particular mathematical language. And the whole structure needed a closure '
+        'result to show it wasn\'t just a description of emergence but a complete cycle. '
+        'Eight layers, added one at a time, each forced by what the layer before it '
+        'could not yet say.'))
+    E.append(body(
+        'Two features of the construction matter for what follows. First, '
+        '<b>each layer is self-contained</b>: every claim within a layer is '
+        'proved using only the tools of that layer, before anything from another '
+        'layer is borrowed. This matters because it means no single layer can '
+        'quietly smuggle in an assumption from another — every commitment is visible '
+        'where it is made. Second, <b>the layers cross-claim</b>: four entirely '
+        'different branches of mathematics — algebra, topology, information theory, '
+        'and geometry — independently arrive at the same structural conclusion. '
+        'This is not one argument repeated four times. It is four separate '
+        'disciplines, each with its own tools and vocabulary, all forced to the '
+        'same place. That convergence is evidence of a different kind than any '
+        'single proof provides.'))
     E.append(body(
         '<b>ZP-A</b> establishes the join-semilattice (L, ∨, ⊥) — a state space with '
         'a null element, monotone transitions, and no top element (R1: the ascent '
@@ -318,6 +363,13 @@ def build():
     E.append(hr())
 
     # ── Section 2 ──────────────────────────────────────────────────────────────
+    E.append(math_ahead(
+        'This section names specific tools from mathematical logic: '
+        'Kolmogorov complexity (a measure of information density), '
+        'ZF+AFA (a version of set theory), and Lean (a proof-checking program). '
+        'The core argument — that a formal system cannot prove its own instantiation — '
+        'is the important part and does not require knowing what these tools are.'))
+    E.append(sp(6))
     E.append(Paragraph('II. The Gap', S['h1']))
     E.append(body(
         'At the critical juncture sits DA-1: the argument that a configuration at '
