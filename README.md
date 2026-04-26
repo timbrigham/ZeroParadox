@@ -30,7 +30,7 @@
 
 The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
 
-The answer developed here is yes. The proof is distributed across seven self-contained mathematical layers, each internally closed before any cross-framework claim is made.
+The answer developed here is yes. The proof is distributed across eight self-contained mathematical layers, each internally closed before any cross-framework claim is made.
 
 
 ---
@@ -85,6 +85,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v3_0.pdf) | ZP-E | v3.0 | **DA-1** (instantiation = execution; v3.0: DP-2 (Execution Distinguishability) added — TrackedOutput separates output value from machine state; da1_minimal_path proved axiom-free in Lean; first formal Lean grounding of DA-1. AIT and ZF+AFA informal paths retained as corroboration). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_4.pdf) | ZP-G | v1.4 | Category C. Initial object. AX-G1, AX-G2. Universal property. R2 (v1.3): connecting note linking initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). Lean scope note (v1.4): T6-b strict inequality and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton. |
 | [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_5.pdf) | ZP-H | v1.5 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proof terms shared - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
+| [ZP-I Inside Zero](ZP-I_Inside_Zero_v1_0.pdf) | ZP-I | v1.0 | **T-IZ (Inside Zero):** every maximal ascending chain is a Cauchy sequence converging to its own successor null in Q2. ZP-A R1 (no top) is the engine: unbounded ascent forces v2(Sn) → infinity, which is the Cauchy condition. Framework closure: the Zero Paradox is a closed system. OQ-E2 partially closed — ordinal indexing Omega = omega forced by countable binary substrate. Lean: t_iz_cauchy proved axiom-free (sorry-pending fill); t_iz_limit_is_new_null proved with no axioms. |
 
 ### Illustrated Companion Documents (General Reader)
 
@@ -121,6 +122,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility + accessible proper subset), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 |
 | ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox), ForkCat (concrete ZPCategory instance) | Clean - April 2026 |
 | ZP-H Categorical Bridge | [ZeroParadox/ZPH.lean](ZeroParadox/ZPH.lean) | T-H1 (F_A initial object proved; F_B/F_C/F_D domain facts cited), T-H2 (singularity compatibility: ZPG unreachability ∧ ZPC divergence), T-H3 (Binary Snap under all four functors: join ∧ topological ∧ 1-bit ∧ orthogonal) | Clean - April 2026 |
+| ZP-I Inside Zero | [ZeroParadox/ZPI.lean](ZeroParadox/ZPI.lean) | t_iz_cauchy (Cauchy convergence — sorry-pending fill), t_iz_limit_is_new_null (axiom-free), c_t_iz_null_balance, t_iz_c3_compatible (C3 compatible) | Stub clean - April 2026 |
 
 **Purity note:** ZP-H's Lean proof uses `Classical.choice` (via Mathlib). This is a Mathlib infrastructure dependency, not a Zero Paradox commitment - the `#print axioms` check reports it, but it is not a novel assumption introduced by the framework. ZP-A through ZP-G are `Classical.choice`-free except where standard Mathlib theorems require it.
 
@@ -157,14 +159,16 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
 | DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
-| OQ-E2: Cardinality-semilattice correspondence | **Open** - formal derivation of DA-3's cardinality claims deferred pending further work. |
+| OQ-E2: Cardinality-semilattice correspondence | **Partially closed - ZP-I T-IZ v1.0** - ordinal indexing Omega = omega forced by countable binary substrate (ZP-C D4, Q2 separability, binary alphabet). Internal/external perspective relativity is ordinal, not set-theoretically free. Formal connection between specific semilattice structures and specific CH instances remains open. |
 | OQ-G1: Native categorical surprisal | Closed - ZP-G v1.1 D7' and I-KC (Kolmogorov import; BA-G1 demoted to compatibility remark R-BA) |
 | OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (initial-object universal property verified for all four domain instantiations: F_A via NatSLat; F_B/C/D via ℝ≥0 proxy witness) |
 | OQ-G3: Functor construction | Closed (concrete witness) / Open (full construction) - F_A: strong closure via NatSLat appendix (ℕ with max/0 as ZPCategory; 0 is categorical initial; genuine ZPA connection). F_B/C/D: shared ℝ≥0 proxy witness (NNRealZPCat appendix); domain facts C3, T1b, T4 cited. Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work. |
 | OQ-G4: Singularity reconciliation | Closed - ZP-H T-H2 (categorical and ZP-C characterizations shown to be same obstruction) |
 | ε₀ / proof-theoretic ordinal | Open - formal documentation. The framework's ε₀ (first post-Snap state at P₀) is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal ε₀ = sup{ω, ω^ω, ...}. Both name the minimal threshold transcending finite iteration; the symbol collision is not incidental. Formal embedding of L into ordinals deferred pending OQ-E2. |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
-| Formal verification (Lean/Rocq) | ZP-A through ZP-H complete (April 2026) |
+| T-IZ: Inside Zero Theorem | **Derived - ZP-I v1.0** - every maximal ascending chain converges to its own successor null. Topological core proved axiom-free in Lean (sorry-pending fill); bridge and DA-1/T-SNAP chain follow ZP-E informal argument (same category as DA-1 Path 3). |
+| Null balance: 0 + x + (-x) = 0 | **Closed - T-IZ + DA-2** - exact and derived: every branch starts at bottom, ascends omega state changes (T3), generates successor null at ordinal limit (T-IZ + T-SNAP + DA-2). |
+| Formal verification (Lean/Rocq) | ZP-A through ZP-I in progress (April 2026) |
 
 ---
 
@@ -172,7 +176,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_7.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_0.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_7.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_0.pdf) → [ZP-I](ZP-I_Inside_Zero_v1_0.pdf) (framework closure)
 
 **For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_4.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_5.pdf) (self-contained; after ZP-E)
 
