@@ -36,6 +36,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion |
 | `build_zpg_companion.py` | Builds the ZP-G Illustrated Companion |
 | `build_zph_companion.py` | Builds the ZP-H Illustrated Companion |
+| `build_zpi_companion.py` | Builds the ZP-I Illustrated Companion |
 | `build_tools.py` | Builds `ZP_Tools_and_Methods.pdf` |
 | `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
 | `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |
