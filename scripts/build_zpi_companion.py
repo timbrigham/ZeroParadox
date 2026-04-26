@@ -184,80 +184,112 @@ def lean_status_box(rows):
 
 # ── DIAGRAM 1: Inside Approach (2-adic depth) ─────────────────────────────────
 def depth_diagram():
-    """Shows chain descending in 2-adic depth toward zero at the bottom."""
-    dw, dh = TW, 2.8 * inch
+    """Shows chain descending in 2-adic depth toward zero at the limit.
+
+    All elements are strictly within [0, dh] and [0, dw] to avoid the ReportLab
+    Drawing overflow bug (elements outside bounds render over surrounding page text).
+    Uses 4 states with safe fixed y-coordinates, and a right-pointing limit indicator
+    instead of a zero circle placed below the chain.
+    """
+    dw, dh = TW, 2.8 * inch  # 2.8 * 72 = 201.6 pts
     d = Drawing(dw, dh)
 
+    # Safe margins: keep all content within y=[14, dh-14] = [14, 187.6]
+    TOP_Y  = dh - 14   # 187.6
+    BOT_Y  = 14        # 14
+
+    # Gradient bands (shallow at top, deep at bottom)
     band_colors = [
         colors.HexColor('#EEF4FA'), colors.HexColor('#DDEAF7'),
         colors.HexColor('#CCE0F5'), colors.HexColor('#BBD6F2'),
         colors.HexColor('#AACCEF'),
     ]
-    top_y = dh - 30
-    band_h = (top_y - 30) / len(band_colors)
+    band_h = (TOP_Y - BOT_Y) / len(band_colors)
     for i, bc in enumerate(band_colors):
-        y = top_y - (i + 1) * band_h
-        d.add(Rect(32, y, dw - 64, band_h, fillColor=bc, strokeColor=None))
+        y = BOT_Y + i * band_h
+        d.add(Rect(30, y, dw - 60, band_h, fillColor=bc, strokeColor=None))
 
-    # Vertical axis
-    ax = 30
-    d.add(Line(ax, dh - 22, ax, 22, strokeColor=COMP_SLATE, strokeWidth=1.5))
-    d.add(Polygon([ax, 16, ax - 4, 24, ax + 4, 24],
+    # Vertical axis (left edge): arrow points downward = deeper
+    ax = 28
+    d.add(Line(ax, TOP_Y, ax, BOT_Y + 6, strokeColor=COMP_SLATE, strokeWidth=1.5))
+    d.add(Polygon([ax, BOT_Y, ax - 4, BOT_Y + 8, ax + 4, BOT_Y + 8],
                   fillColor=COMP_SLATE, strokeColor=COMP_SLATE, strokeWidth=0))
-    d.add(String(4, dh - 30, 'shallow', fontSize=7, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(4, 28, 'deep', fontSize=7, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(2, dh / 2 + 8, '2-adic', fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(2, dh / 2 - 4, 'depth', fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(2, TOP_Y - 8, 'shallow', fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(2, BOT_Y + 2, 'deep',    fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(0, dh / 2 + 6,  '2-adic', fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(0, dh / 2 - 5,  'depth',  fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
 
-    # State positions: descending right and downward
-    cx_base = dw * 0.22
-    states = [
-        (cx_base,        dh - 42,  'S0', '= bot'),
-        (cx_base + 55,   dh - 72,  'S1', ''),
-        (cx_base + 110,  dh - 108, 'S2', ''),
-        (cx_base + 165,  dh - 150, 'S3', ''),
-        (cx_base + 220,  dh - 200, 'S4', ''),
-    ]
-    # connecting lines
-    for i in range(len(states) - 1):
-        x1, y1, _, _ = states[i]
-        x2, y2, _, _ = states[i + 1]
-        d.add(Line(x1 + 9, y1 - 7, x2 - 9, y2 + 7,
+    # 4 states at fixed, safe y-coordinates: 165, 128, 91, 54 (all within [14, 187])
+    # x-coordinates step left-to-right so the chain goes upper-left → lower-right
+    cx_base = dw * 0.20    # ≈ 93.6
+    cx_step = dw * 0.155   # ≈ 72.5
+    state_ys = [165, 128, 91, 54]
+    state_xs = [cx_base + i * cx_step for i in range(4)]
+    # S0: (93.6, 165)  S1: (166.1, 128)  S2: (238.6, 91)  S3: (311.1, 54)
+    # Circle radius 8: all circles stay in y=[46, 173] ⊂ [14, 188] ✓
+    # Rightmost x = 311.1 + 8 = 319.1 ≪ dw = 468 ✓
+
+    state_lbls = ['S₀', 'S₁', 'S₂', 'S₃']
+    state_subs = ['= ⊥', '',   '',   ''  ]
+
+    # Connecting lines between consecutive states
+    for i in range(3):
+        d.add(Line(state_xs[i] + 9, state_ys[i] - 7,
+                   state_xs[i+1] - 9, state_ys[i+1] + 7,
                    strokeColor=COMP_BLUE, strokeWidth=1.5))
-    # dots continuation
-    last_x, last_y = states[-1][0] + 30, states[-1][1] - 22
+
+    # State circles
     for i in range(4):
-        dy = i * 13
-        d.add(Circle(last_x, last_y - dy, 2.5, fillColor=COMP_BLUE, strokeColor=None))
-
-    # state circles
-    state_lbls  = ['S₀', 'S₁', 'S₂', 'S₃', 'S₄']
-    state_subs  = ['= ⊥', '', '', '', '']
-    for i, (sx, sy, _, _) in enumerate(states):
+        sx, sy = state_xs[i], state_ys[i]
         d.add(Circle(sx, sy, 8, fillColor=COMP_BLUE, strokeColor=WHITE, strokeWidth=1.5))
-        d.add(String(sx - 9, sy - 4, state_lbls[i],
-                     fontSize=8, fontName='DVS', fillColor=WHITE))
+        d.add(String(sx - 10, sy - 4, state_lbls[i], fontSize=8, fontName='DVS', fillColor=WHITE))
         if state_subs[i]:
-            d.add(String(sx + 12, sy - 3, state_subs[i],
-                         fontSize=8, fontName='DVS', fillColor=COMP_SLATE))
+            d.add(String(sx + 12, sy - 3, state_subs[i], fontSize=8, fontName='DVS',
+                         fillColor=COMP_SLATE))
 
-    # norm labels
-    for idx, (i_state, norm_str) in enumerate([(0, '||S0||=1'), (2, '||S2||<=2^-2'), (4, '||S4||<=2^-4')]):
-        sx, sy = states[i_state][0], states[i_state][1]
-        d.add(String(sx + 14, sy - 4, norm_str, fontSize=7.5, fontName='DV-I',
+    # Norm labels (to the right of each circle, short strings — all within dw)
+    norms = [(0, '||S0||=1'), (1, '||S1||<=2^-1'), (3, '||S3||<=2^-3')]
+    for i_s, ns in norms:
+        sx, sy = state_xs[i_s], state_ys[i_s]
+        d.add(String(sx + 12, sy - 4, ns, fontSize=6.5, fontName='DV-I',
                      fillColor=colors.HexColor('#888888')))
+    # S3 norm label above-left to avoid crowding with the limit indicator
+    sx3, sy3 = state_xs[3], state_ys[3]
+    d.add(String(sx3 - 60, sy3 + 12, '||S3||<=2^-3', fontSize=6.5, fontName='DV-I',
+                 fillColor=colors.HexColor('#888888')))
 
-    # Zero at bottom-right
-    zx = last_x + 48
-    zy = last_y - 52
-    d.add(Circle(zx, zy, 11, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
-    d.add(String(zx - 4, zy - 5, '0', fontSize=11, fontName='DV-B', fillColor=WHITE))
-    d.add(String(zx + 16, zy - 3, '(⊥′ — infinite depth)',
-                 fontSize=8, fontName='DVS-I', fillColor=COMP_SLATE))
+    # Limit indicator: dotted line + arrow pointing right from S3, then "→ 0"
+    # Arrow: from S3.x+10 to S3.x+10+40, at S3.y level
+    arr_x1 = sx3 + 10
+    arr_x2 = sx3 + 55      # ≈ 366
+    arr_y  = sy3            # 54
+    # Three dots along the arrow
+    for k in range(3):
+        d.add(Circle(arr_x1 + 10 + k * 10, arr_y, 2, fillColor=COMP_BLUE, strokeColor=None))
+    # Arrow shaft + head
+    d.add(Line(arr_x1 + 42, arr_y, arr_x2 - 6, arr_y,
+               strokeColor=COMP_AMBER, strokeWidth=2))
+    d.add(Polygon([arr_x2, arr_y, arr_x2 - 7, arr_y + 4, arr_x2 - 7, arr_y - 4],
+                  fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
+    # "0 (limit)" label
+    # arr_x2 ≈ 366, text at ≈ 370; '0 (limit)' ~9 chars × 5pt = 45pt → ends at 415 ≪ 468 ✓
+    d.add(String(arr_x2 + 5, arr_y + 3, '0',
+                 fontSize=11, fontName='DVS-B', fillColor=COMP_AMBER))
+    d.add(String(arr_x2 + 18, arr_y + 3, '(null limit,',
+                 fontSize=7.5, fontName='DVS-I', fillColor=COMP_SLATE))
+    d.add(String(arr_x2 + 18, arr_y - 9, 'infinite depth)',
+                 fontSize=7.5, fontName='DVS-I', fillColor=COMP_SLATE))
+    # Lowest text baseline: arr_y - 9 = 54 - 9 = 45, text top ≈ 45 + 8 = 53.
+    # Circle bottom of S3: sy3 - 8 = 46. Text top 53 > 46. No overlap. ✓
+    # Arrow and all annotation elements: y in [37, 62]. Well within [14, 187] ✓
 
-    d.add(String(40, 6,
-                 'The chain descends into 2-adic depth by going forward — not by reversing direction',
-                 fontSize=8, fontName='DV-I', fillColor=colors.HexColor('#555555')))
+    # Bottom caption (within drawing, at y=4; text occupies y=[4, 12] — below all circles)
+    d.add(String(30, 4,
+                 'States descend in 2-adic depth by going forward — the limit is 0, reached from inside',
+                 fontSize=7.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
+    # Caption at y=4 (top ≈ 12). BOT_Y = 14 means the band background starts at y=14. ✓
+    # Nothing below y=4 in this diagram. ✓
+
     return d
 
 
