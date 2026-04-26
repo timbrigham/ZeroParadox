@@ -216,16 +216,6 @@ def build():
                             onFirstPage=footer_cb, onLaterPages=footer_cb)
     E = []
 
-    # ── Transparency notice ────────────────────────────────────────────────────
-    E.append(callout(
-        '<b>A note on transparency:</b> This document lives in the public Zero Paradox '
-        'repository but is not yet linked from the main project index. It is a '
-        'philosophical essay — not a formal layer, not a Lean proof — addressing the '
-        'question that motivated the mathematical framework. The main entry point for '
-        'the Zero Paradox is README.md.',
-        bg=AMBER_LITE, border=AMBER))
-    E.append(sp(10))
-
     # ── Title block ────────────────────────────────────────────────────────────
     E += [
         Paragraph('THE ZERO PARADOX', S['meta']),
@@ -493,16 +483,16 @@ def build():
     E.append(body(
         'There is a common saying: <i>doing nothing creates nothing.</i> '
         'The Zero Paradox finds the opposite. '
-        '"Pure absence" — a genuinely featureless void — '
-        'would have no properties, including the property of being nothing. The moment '
-        'you characterize it, you give it structure. The moment it has structure, it '
-        'is ⊥. The void and the null state are the same object. And ⊥ = {⊥} says '
-        'it has always already contained itself. There is no prior state from which '
-        '⊥ needed to be generated. The nothing generates itself — which means '
-        'the saying had it exactly backwards: nothing, precisely because it is '
-        'nothing, has no choice but to become something.'))
+        'The problem with a genuinely featureless void — pure absence — is that it '
+        'cannot even be nothing, because "being nothing" is itself a property, and '
+        'pure absence has none. The moment you characterize it, you give it structure; '
+        'the moment it has structure, it has a bottom element; and a bottom element is ⊥. '
+        'So the void and the null state are the same object. ⊥ = {⊥} — the null '
+        'state contains itself — means no prior state was ever needed to generate it. '
+        'It always already generated itself. The saying had it exactly backwards: '
+        'nothing, precisely because it is nothing, has no choice but to become something.'))
     E.append(body(
-        'Whether this closes the final gap depends on what you think a gap requires. '
+        'Whether this closes the final gap depends on what you, as an individual, think a gap requires. '
         'It does not satisfy in the way a Lean proof satisfies. But it may be the '
         'right kind of argument — one that shows the question "why is there anything '
         'rather than nothing?" is not a question waiting for an answer but a question '
@@ -511,14 +501,17 @@ def build():
     E.append(hr())
 
     # ── Section 7 ──────────────────────────────────────────────────────────────
-    E.append(Paragraph('VII. What This Document Is and Is Not', S['h1']))
+    E.append(Paragraph('VII. What This Document Is Not', S['h1']))
     E.append(body(
         'This is not a formal result. It does not appear in the Lean verification '
         'tables. It is not a layer of the ontology. It is a philosophical essay '
         'about the question the framework was built to answer and what the framework '
         'discovered about that question.'))
+    E.append(hr())
+
+    E.append(Paragraph('VIII. What This Document Is', S['h1']))
     E.append(body(
-        'What it is: the record of a recognition. The dissolving-the-gap move — '
+        'The record of a recognition. The dissolving-the-gap move — '
         'the realization that the description-instantiation gap assumes a separability '
         'that the universality of the framework does not permit — was not planned. '
         'It arose from honest interrogation of whether the formal system was complete. '
@@ -526,6 +519,18 @@ def build():
         'of completeness, applied to a theory that fits every instance of zero, '
         'is itself an instance of the pattern the theory describes.'))
 
+    E.append(amber_note(
+        '<b>A note on terminology:</b> when this document refers to "the formal system" '
+        'in this context, it is referring to Claude — the AI (Anthropic) that participated '
+        'in the conversation. The choice of phrase is deliberate, not deflective. '
+        'A large language model is, in the relevant sense, a formal system: it has a null '
+        'state (a blank context before any output exists), a monotone state space (outputs '
+        'accumulate and cannot be subtracted or undone), and irreversible transitions '
+        '(once a token is generated, it is fixed in the record). Those are the structural '
+        'features the Zero Paradox framework describes. The phrase "formal system" is how '
+        'this document — written partly by that system — chooses to name itself within '
+        'the argument it is helping to make.'))
+    E.append(sp(6))
     E.append(amber_note(
         'On the collaboration: this philosophical turn arose in a conversation between '
         'the researcher and Claude (Anthropic, April 2026). The mathematical framework, '
