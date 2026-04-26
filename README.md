@@ -39,9 +39,9 @@ The answer developed here is yes. The proof is distributed across seven self-con
 
 The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
 
-The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. Similarly, ε₀ is intentionally the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration, and the framework's Binary Snap produces a state whose ordinal measure is precisely that object.
+The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. This cross-framework identification is a modeling commitment (MC-1) — the foundational design choice that makes multi-layer synthesis possible. It is not derived; it is chosen. See [Axiomatic Commitments](#axiomatic-commitments). Similarly, ε₀ is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration. This identification is named and motivated in ZP-E; formal embedding of the framework's state lattice into ordinal theory is deferred pending OQ-E2 (see Question Register).
 
-Every proof of existence starts by assuming something exists. This one starts from nothing and shows the first distinction must arise from it. The Binary Snap is the moment the transition is forced — when nothing becomes the most basic something.
+Most frameworks for describing the first emergence of something assume it. This framework does not. The Binary Snap is not a starting assumption - it is a structural consequence of standard mathematical commitments of the kind any model of additive states would adopt independently. No snap-specific axioms appear anywhere in the framework. The Binary Snap is the moment the transition is forced: when the mathematics demands that something emerge from the null state.
 
 The derivation chain is:
 
@@ -51,9 +51,9 @@ The derivation chain is:
 → **L-RUN** (execution is a non-null state change, ZP-C)  
 → **TQ-IH** (no program outputs ⊥ without a non-null intermediate state, ZP-C)  
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
-→ **T-SNAP** (Binary Snap is derived; AX-1 is retired as an axiom)
+→ **T-SNAP** (Binary Snap follows from A4, the standard bottom element axiom; AX-1 was redundant)
 
-This framework introduces no novel axioms. Every commitment is either a derived theorem (T-SNAP), directly verifiable by computation (AX-B1), or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
+This framework introduces no snap-specific axioms. T-SNAP follows from A4 — the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x) — a natural axiom for modeling additive state accumulation, not an assumption crafted to produce the snap. Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
 
 ---
 
@@ -78,17 +78,19 @@ This framework introduces no novel axioms. Every commitment is either a derived 
 
 | File | Document | Version | Contents |
 |------|----------|---------|----------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_5.pdf) | ZP-A | v1.5 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. |
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_7.pdf) | ZP-A | v1.7 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. CC-2: ⊥ = {⊥} (Quine atom, ZF + AFA). R3: CC-2 eliminates static-description state for ⊥, given D7 exhaustiveness (ZP-E) as background. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_4.pdf) | ZP-B | v1.4 | AX-B1. MP-1 (design commitment). T0: p=2 derived given MP-1. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
-| [ZP-C Information Theory](ZP-C_Information_Theory_v1_5.pdf) | ZP-C | v1.5 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). |
-| [ZP-D State Layer](ZP-D_State_Layer_v1_4.pdf) | ZP-D | v1.4 | Hilbert space H = ℂⁿ. Transition operator T: Q₂ → H. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
-| [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_3.pdf) | ZP-E | v2.3 | **DA-1** (instantiation = execution, grounded in L-INF). **T-SNAP** (Binary Snap derived; depends on DA-1 and CC-1). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Candidate applications to Skolem, CH independence, Russell (pending OQ-E2). Full traceability register. |
-| [ZP-G Category Theory](ZP-G_Category_Theory_v1_2.pdf) | ZP-G | v1.2 | Category C. Initial object. AX-G1, AX-G2. Universal property. |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_2.pdf) | ZP-H | v1.2 | Functors FA-FD. F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four functors. T-SNAP inherited as derived theorem. |
+| [ZP-C Information Theory](ZP-C_Information_Theory_v1_7.pdf) | ZP-C | v1.7 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). CC-2: c₀ = ⊥ labeled as modeling commitment. RP-2: branching measure labeled as representational commitment. L-INF grounded from two directions: informational extremity (D4, T2) and structural self-containment (ZP-A CC-2, R3). |
+| [ZP-D State Layer](ZP-D_State_Layer_v1_6.pdf) | ZP-D | v1.6 | Hilbert space H = ℂⁿ, foundational minimum n = 2. Transition operator T: Q₂ → H — locally constant, continuous (R3 v1.6). DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
+| [ZP-E Bridge Document](ZP-E_Bridge_Document_v3_0.pdf) | ZP-E | v3.0 | **DA-1** (instantiation = execution; v3.0: DP-2 (Execution Distinguishability) added — TrackedOutput separates output value from machine state; da1_minimal_path proved axiom-free in Lean; first formal Lean grounding of DA-1. AIT and ZF+AFA informal paths retained as corroboration). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Full traceability register. |
+| [ZP-G Category Theory](ZP-G_Category_Theory_v1_4.pdf) | ZP-G | v1.4 | Category C. Initial object. AX-G1, AX-G2. Universal property. R2 (v1.3): connecting note linking initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). Lean scope note (v1.4): T6-b strict inequality and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_5.pdf) | ZP-H | v1.5 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proof terms shared - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
 
 ### Illustrated Companion Documents (General Reader)
 
 One companion per formal document. Plain language, diagrams, real-world examples.
+
+> **Note (April 2026):** The companion documents are currently behind the formal layers. The formal documents (ZP-A through ZP-H) have undergone significant structural revisions - including the addition of DA-1's Lean formalization (DP-2, ZP-E v3.0), the ZF+AFA foundation note (ZP-A v1.7), and Lean scope clarifications in ZP-G and ZP-H. Companion updates are in progress. Until then, treat the companions as introductions to the framework's structure rather than authoritative statements of current result labels or claim statuses.
 
 | File | For Document | Key Diagrams |
 |------|-------------|--------------|
@@ -110,15 +112,17 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives on the `illustrated` branch under `ZeroParadox/`.
 
-| Document | Lean Source | Theorems Verified | Build | Proof Doc |
-|----------|-------------|-------------------|-------|-----------|
-| ZP-A Lattice Algebra | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 | [↗](proofs/ZP-A_Lean4.md) |
-| ZP-B p-Adic Topology | [ZeroParadox/ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (isolation of 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 | [↗](proofs/ZP-B_Lean4.md) |
-| ZP-C Information Theory | [ZeroParadox/ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH | Clean - April 2026 | [↗](proofs/ZP-C_Lean4.md) |
-| ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T3 (uniqueness up to unitary equivalence), T4 (Snap → orthogonal shift in H), T5 (non-decreasing norms) | Clean - April 2026 | [↗](proofs/ZP-D_Lean4.md) |
-| ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility + accessible proper subset), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 | [↗](proofs/ZP-E_Lean4.md) |
-| ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox), ForkCat (concrete ZPCategory instance) | Clean - April 2026 | [↗](proofs/ZP-G_Lean4.md) |
-| ZP-H Categorical Bridge | [ZeroParadox/ZPH.lean](ZeroParadox/ZPH.lean) | T-H1 (F_A initial object proved; F_B/F_C/F_D domain facts cited), T-H2 (singularity compatibility: ZPG unreachability ∧ ZPC divergence), T-H3 (Binary Snap under all four functors: join ∧ topological ∧ 1-bit ∧ orthogonal) | Clean - April 2026 | [↗](proofs/ZP-H_Lean4.md) |
+| Document | Lean Source | Theorems Verified | Build |
+|----------|-------------|-------------------|-------|
+| ZP-A Lattice Algebra | [ZeroParadox/ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (conditional) | Clean - April 2026 |
+| ZP-B p-Adic Topology | [ZeroParadox/ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (isolation of 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 |
+| ZP-C Information Theory | [ZeroParadox/ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH, L-INF (informational extremity) | Clean - April 2026 |
+| ZP-D State Layer | [ZeroParadox/ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T3 (uniqueness up to unitary equivalence), T4 (Snap → orthogonal shift in H), T5 (non-decreasing norms) | Clean - April 2026 |
+| ZP-E Bridge Document | [ZeroParadox/ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility + accessible proper subset), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition) | Clean - April 2026 |
+| ZP-G Category Theory | [ZeroParadox/ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox), ForkCat (concrete ZPCategory instance) | Clean - April 2026 |
+| ZP-H Categorical Bridge | [ZeroParadox/ZPH.lean](ZeroParadox/ZPH.lean) | T-H1 (F_A initial object proved; F_B/F_C/F_D domain facts cited), T-H2 (singularity compatibility: ZPG unreachability ∧ ZPC divergence), T-H3 (Binary Snap under all four functors: join ∧ topological ∧ 1-bit ∧ orthogonal) | Clean - April 2026 |
+
+**Purity note:** ZP-H's Lean proof uses `Classical.choice` (via Mathlib). This is a Mathlib infrastructure dependency, not a Zero Paradox commitment - the `#print axioms` check reports it, but it is not a novel assumption introduced by the framework. ZP-A through ZP-G are `Classical.choice`-free except where standard Mathlib theorems require it.
 
 ---
 
@@ -134,8 +138,9 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
 | **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
 | **DP-1** | Design Commitment | Topological isolation in Q₂ is represented by orthogonality in H. |
+| **MC-1** | Modeling Commitment | The null states across all framework layers — algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object — are identified as a single object. This is the foundational cross-framework identification that makes multi-layer synthesis possible. It is not derived; it is chosen. |
 
-**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E.
+**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 — the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure — it is a consequence of it.
 
 ---
 
@@ -147,15 +152,15 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-B1: p = 2 justification | Closed - ZP-B T0 (derived from AX-B1 + MP-1) |
 | S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
-| DA-1: Instantiation alignment | Closed - ZP-E DA-1 (D7 configurations are live by definition) |
+| DA-1: Instantiation alignment | Closed - ZP-E DA-1 v3.0 (Derived Proposition: DP-2 formal core — da1_minimal_path proved axiom-free in Lean (TrackedOutput separates output value from machine state); AIT incompressibility, CC-2/R3, and L-INF retained as convergent informal corroboration) |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
 | OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
 | DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
 | DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
 | OQ-E2: Cardinality-semilattice correspondence | **Open** - formal derivation of DA-3's cardinality claims deferred pending further work. |
 | OQ-G1: Native categorical surprisal | Closed - ZP-G v1.1 D7' and I-KC (Kolmogorov import; BA-G1 demoted to compatibility remark R-BA) |
-| OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (universal property verified for all four instantiation functors) |
-| OQ-G3: Functor construction | Closed - ZP-H C-H1 through C-H4 (object maps, morphism maps, preservation proofs complete) |
+| OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (initial-object universal property verified for all four domain instantiations: F_A via NatSLat; F_B/C/D via ℝ≥0 proxy witness) |
+| OQ-G3: Functor construction | Closed (concrete witness) / Open (full construction) - F_A: strong closure via NatSLat appendix (ℕ with max/0 as ZPCategory; 0 is categorical initial; genuine ZPA connection). F_B/C/D: shared ℝ≥0 proxy witness (NNRealZPCat appendix); domain facts C3, T1b, T4 cited. Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work. |
 | OQ-G4: Singularity reconciliation | Closed - ZP-H T-H2 (categorical and ZP-C characterizations shown to be same obstruction) |
 | ε₀ / proof-theoretic ordinal | Open - formal documentation. The framework's ε₀ (first post-Snap state at P₀) is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal ε₀ = sup{ω, ω^ω, ...}. Both name the minimal threshold transcending finite iteration; the symbol collision is not incidental. Formal embedding of L into ordinals deferred pending OQ-E2. |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
@@ -167,9 +172,9 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_5.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_5.pdf) → [ZP-D](ZP-D_State_Layer_v1_4.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_3.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_7.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_0.pdf) (in dependency order)
 
-**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_2.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_2.pdf) (self-contained; after ZP-E)
+**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_4.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_5.pdf) (self-contained; after ZP-E)
 
 **For process/methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 

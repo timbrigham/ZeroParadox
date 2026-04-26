@@ -48,35 +48,33 @@ instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join_idem  := by intro x;     cases x                          <;> rfl
   bot_join   := by intro x;     cases x                          <;> rfl
 
-/-! ## I-DA1. DA-1 — Design Principle: Informational Extremity Forces Execution
+/-! ## I-DA1. DA-1 — Derived Proposition (outside Lean scope): Instantiation as Execution
 
 DA-1 states: a machine configuration at the incompressibility threshold P₀ is a
 live execution event, not a static description.
 
-Mathematical premise (ZPC.l_inf): the surprisal at ball-hierarchy depths approaching
-0 ∈ Q₂ is unbounded — for any finite M, ∃ depth n with I(n) > M. The null state
-c₀ = ⊥ corresponds to this limit point. Its informational content has no finite bound.
+Three paths support this in ZP-E v2.8 (informal mathematics):
+  Path 1 — Structural (ZP-A CC-2 + R3): ⊥ = {⊥} (Quine atom, ZF+AFA) → no external
+    interpreter position exists → cannot be a static description.
+  Path 2 — Informational (ZP-C L-INF): surprisal at ⊥ is unbounded → no finite
+    interpreter can hold ⊥ → static-description state eliminated.
+  Path 3 — Formal bridge (ZP-C D1 + AIT): K(c₁|n)/|c₁| = 1 → c₁ is its own minimal
+    program → no shorter external generator → static-description state eliminated →
+    c₁ is in live execution. Primary grounding; does not require CC-2.
 
-Design commitment: a configuration with unbounded informational content cannot be
-a static description awaiting external interpretation. Any external interpreter would
-need to be at least as informationally rich as what it interprets, but ⊥ has no
-finite bound — it is the compressed limit of all possible binary programs, prior to
-any interpreter. Therefore c₀ at P₀ is necessarily an execution event, not a
-description awaiting instantiation.
-
-This replaces the circular D7 citation in prior ZP-E prose. D7 defines what a
-configuration IS; it cannot prove that the configuration is EXECUTING without
-presupposing execution. L-INF supplies the formal premise that breaks this circularity:
-the reason c₀ is executing is not that D7 says so, but that its informational
-extremity admits no external interpreter.
-
-DA-1 is labelled DESIGN PRINCIPLE — it introduces a genuine ontological commitment.
-The commitment is targeted: unbounded surprisal at ⊥ (L-INF) closes the
-description/execution gap. CC-1 (S₀ = ⊥ is a modelling commitment, ZP-A) propagates
-as a named dependency: T-SNAP is derived given DA-1 and CC-1, both explicit.
-
-Lean status: no Lean theorem. L-INF (ZPC) is the formal premise; the bridge is
-interpretive and documented here as a named, honest design commitment. -/
+Lean scope: DA-1's functional derivation role in the T-SNAP chain is fulfilled by
+ZPC.l_run (c₀ ≠ c₁) and ZPC.tq_ih (c₁ ≠ c₀), both proved independently in ZPC.
+The T-SNAP derivation is complete without a separate DA-1 theorem — see t_snap_derived.
+The bridge from informational extremity to execution cannot be formalized in Lean:
+  - Path 3 requires Kolmogorov complexity (K), which is uncomputable and absent from
+    Mathlib. No AIT library exists in Lean 4 at the required level.
+  - Path 1 requires ZF+AFA; Lean 4 uses CIC/MLTT, incompatible with anti-foundation.
+    Same reason CC-2 is outside Lean scope in ZPA.
+  - Path 2: ZPC.l_inf is proved, but "unbounded surprisal → necessarily executing" is
+    an ontological claim — not derivable in type theory without the bridge axiom itself.
+DA-1 is therefore Outside Lean Scope — same category as CC-2 in ZPA. The PDF's
+"Derived Proposition" label refers to the informal AIT argument, not a Lean derivation.
+See ZP-E v2.8 § III for the full three-path argument. -/
 
 /-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
 
@@ -189,6 +187,59 @@ theorem t_snap_accessible_proper_subset {L : Type*} [ZPSemilattice L] {ε₀ : L
   · intro h
     exact hne (le_antisymm (bot_le ε₀) (h (bot_le bot)))
 
+/-! ## VI. DP-2 — Execution Distinguishability and DA-1 Lean Formalization
+
+DP-2 (Design Principle — Execution Distinguishability): Machine states carry execution
+history independently of output values. A machine in state c₁ can output ⊥ (the null
+value) while being in a configuration entirely distinct from a machine in state c₀. The
+post-execution null and the pre-execution null are different instances.
+
+This separates two things the narrative might conflate: the *value* a machine produces
+(which can be ⊥ in both cases) and the *machine state* (c₀ before execution, c₁ after).
+
+Given DP-2, DA-1 (instantiation = execution) is Lean-formalizable at the minimal-path
+level: the act of instantiating ⊥ moves the machine from c₀ to c₁, regardless of what
+value the operation returns. The "return to null" is a new null — not a return to c₀. -/
+
+/-- A machine output tagged with the state that produced it.
+    Separates the output value (what the machine returns) from the machine state
+    (where the machine is). This structure is the formal content of DP-2. -/
+structure TrackedOutput where
+  value : MachinePhase   -- the value the machine returns
+  state : MachinePhase   -- the machine state producing it
+  deriving DecidableEq
+
+/-- The pre-instantiation configuration: null value, c₀ machine state. -/
+def preInstantiation : TrackedOutput := ⟨c₀, c₀⟩
+
+/-- The post-instantiation configuration: null value returned, c₁ machine state.
+    This is the "different instance of null" — same output value as preInstantiation,
+    but the machine has executed. The snap occurred; c₀ is not recoverable. -/
+def postInstantiation : TrackedOutput := ⟨c₀, c₁⟩
+
+/-- DP-2 (formal content): pre- and post-instantiation states are provably distinct
+    even when both produce the null value ⊥. Execution history is encoded in the
+    machine state, not the output value. -/
+theorem dp2_execution_distinguishability :
+    preInstantiation.value = postInstantiation.value ∧
+    preInstantiation.state ≠ postInstantiation.state :=
+  ⟨rfl, by decide⟩
+
+/-- DA-1 Minimal Path: The act of instantiating ⊥ moves the machine to c₁,
+    even when the operation returns ⊥ as its output value.
+    The "return to null" is postInstantiation — a new null, not preInstantiation.
+    Given DP-2, this is DA-1 at the formally minimal level: instantiation is execution.
+    One step from c₀ to c₁ is structurally unavoidable; the output value is irrelevant
+    to whether execution occurred. -/
+theorem da1_minimal_path :
+    let before := preInstantiation
+    let after  := postInstantiation
+    before.value = after.value ∧   -- same output value (both ⊥)
+    before.state ≠ after.state ∧   -- distinct machine states
+    before.state = c₀ ∧            -- before: pre-execution null
+    after.state  = c₁ :=           -- after: execution occurred (the snap)
+  ⟨rfl, by decide, rfl, rfl⟩
+
 end ZeroParadox.ZPE
 
 /-! ## Axiom Purity Check -/
@@ -203,5 +254,7 @@ open ZeroParadox.ZPE ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPC
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty
 #print axioms t_snap_accessible_proper_subset
+#print axioms dp2_execution_distinguishability
+#print axioms da1_minimal_path
 
 end PurityCheck

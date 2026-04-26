@@ -88,6 +88,19 @@ theorem t1b_jsd : jsdPQ = Real.log 2 := by
     The branching measure assigns P(x) = 2⁻ⁿ at depth n, so I(n) = -log₂(2⁻ⁿ) = n. -/
 noncomputable def surprisal : ℕ → ℝ := fun n => (n : ℝ)
 
+/-- D4 formula verification: surprisal n = -log₂(2⁻ⁿ).
+    At ball-hierarchy depth n the binary branching measure assigns each branch probability
+    2⁻ⁿ. Shannon information: -log₂(2⁻ⁿ) = n. This proves the D4 docstring claim
+    formally — `surprisal n = n` is the correct information-theoretic formula, not an
+    arbitrary choice. The correspondence between depth n and Q₂ ball-hierarchy depth
+    is a design identification (not a formal import of ZPB). -/
+theorem surprisal_eq_binary_info (n : ℕ) :
+    surprisal n = -Real.log ((1 / 2 : ℝ) ^ n) / Real.log 2 := by
+  have hlog2 : Real.log 2 ≠ 0 := (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'
+  simp only [surprisal]
+  rw [show (1 / 2 : ℝ) = 2⁻¹ from by norm_num, Real.log_pow, Real.log_inv]
+  field_simp [hlog2]
+
 /-- D5: DF antisymmetry — DF(x, y) = I(y) − I(x) = −DF(y, x). -/
 theorem d5_antisymm (m n : ℕ) :
     surprisal n - surprisal m = -(surprisal m - surprisal n) := by ring
@@ -178,6 +191,7 @@ open ZeroParadox.ZPC
 #print axioms t1b_kl_P
 #print axioms t1b_kl_Q
 #print axioms t1b_jsd
+#print axioms surprisal_eq_binary_info
 #print axioms d5_antisymm
 #print axioms t2_partial_eq
 #print axioms t2_finite_loop

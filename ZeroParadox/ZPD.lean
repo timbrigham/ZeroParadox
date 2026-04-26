@@ -138,9 +138,13 @@ theorem t4_snap_orthogonal (n : ℕ) (hn : 2 ≤ n) :
 /-! ## VI. T5 — Monotone State Sequences Map to Non-Decreasing Norms -/
 
 /-- T5: For any sequence S: ℕ → Fin n, ‖T(S(k))‖ ≤ ‖T(S(k+1))‖ for all k.
-    In the basis-assignment construction all T(i) have norm 1, so the norm
-    sequence is constant — trivially non-decreasing. This formalises the
-    ZP-A T3 (monotone state sequences) property in H under basis assignment. -/
+    In the basis-assignment construction all T(i) have norm 1 (T2(v)), so the norm
+    sequence is constant — trivially non-decreasing. The theorem is therefore a
+    tautology of the construction: it holds because every norm equals 1, not because
+    of any ordering relation on S.
+    The connection to ZP-A T3 (monotone state sequences in the semilattice) is a
+    design identification, not a formal relationship between the two structures —
+    ZP-A and ZP-D are not imported as Lean dependencies of each other. -/
 theorem t5_monotone_norms (n : ℕ) (S : ℕ → Fin n) (k : ℕ) :
     ‖transitionOp n (S k)‖ ≤ ‖transitionOp n (S (k + 1))‖ := by
   simp [t2_norm_eq_one]

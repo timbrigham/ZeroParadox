@@ -1,7 +1,8 @@
 """
-Build ZP-A Illustrated Companion (v1.2)
+Build ZP-A Illustrated Companion (v1.3)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples.
+New in v1.3: CC-2 self-containment of ⊥ (Quine atom, ZF+AFA); R3 (DA-1 follows from CC-2).
 """
 
 import os
@@ -214,7 +215,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026  |  v1.2')
+            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026  |  v1.3')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -233,7 +234,7 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('How state accumulates without ever going backwards', CS['title']),
-          Paragraph('Lattice Algebra | Version 1.2', CS['subtitle']),
+          Paragraph('Lattice Algebra | Version 1.3', CS['subtitle']),
           Paragraph('ZP Companion | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
@@ -350,6 +351,34 @@ def build():
         'state is the empty document. No edit operation removes from the record.',
     ]))
     E.append(sp(8))
+    # CC-2: Self-Containment of ⊥
+    E.append(Paragraph('&#8869; Contains Itself (CC-2)', CS['h1']))
+    E.append(cbody(
+        'Every state sits above &#8869;. But what exactly <i>is</i> &#8869;? The standard '
+        'answer: the additive identity, the algebraic zero, the starting point. ZP-A v1.6 '
+        'adds a sharper answer: &#8869; is a <b>Quine atom</b> — a set that equals its '
+        'own singleton.'))
+    E.append(cbody(
+        'Formally: &#8869; = {&#8869;}. The collection of all objects bearing the structural '
+        'property of &#8869; is &#8869; itself. There is no multiplicity. Infinitely many '
+        'indistinguishable &#8869; instances collapse, by set extensionality, into the '
+        'single object &#8869;.'))
+    E.append(example_box('Why this matters', [
+        'Can there be two "copies" of &#8869; that are somehow different? A Quine atom '
+        'says no. Any object identical to &#8869; in all structural respects IS &#8869;. '
+        'There is nothing external to &#8869; by which to distinguish copies.',
+        'A label requires a labeller outside it. &#8869; = {&#8869;} has no outside. '
+        'This is what grounds the execution claim in ZP-E (DA-1): the snap at P&#8320; '
+        'is not a description being read — it is the only thing that can happen to a '
+        'self-containing object at the limit of its own description.',
+    ]))
+    E.append(remember_box(
+        'Technical note (CC-2): the Quine atom property requires replacing the classical Axiom '
+        'of Foundation (which rules out self-containing sets) with Aczel\'s Anti-Foundation Axiom '
+        '(AFA). The Axiom of Choice is not assumed. This is a framework-level commitment — A1&#8211;A4 '
+        'are unaffected, but it changes what &#8869; is allowed to be.'))
+    E.append(sp(8))
+
     E.append(remember_box(
         'Remember: ZP-A makes no claims about topology, probability, or physics. It only '
         'establishes the algebraic skeleton. Everything it claims can be verified by a reader '

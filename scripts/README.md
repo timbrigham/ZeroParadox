@@ -21,20 +21,24 @@ If you are primarily interested in the mathematical content, the PDF documents t
 
 | File | Purpose |
 |------|---------|
-| `build_zpa_companion.py` | Builds the ZP-A Illustrated Companion |
-| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion |
-| `build_tools.py` | Builds `ZP_Tools_and_Methods.pdf` |
-| `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
-| `build_zp_pdfs.py` | Builds the formal ontology documents: ZP-A through ZP-D (and ZP-E, ZP-H via dedicated scripts) |
+| `build_zpa.py` | Builds `ZP-A_Lattice_Algebra_v1_5.pdf` |
+| `build_zpb.py` | Builds `ZP-B_pAdic_Topology_v1_4.pdf` |
+| `build_zpc.py` | Builds `ZP-C_Information_Theory_v1_5.pdf` |
+| `build_zpd.py` | Builds `ZP-D_State_Layer_v1_4.pdf` |
 | `build_zpe.py` | Builds `ZP-E_Bridge_Document_v2_0.pdf` (DA-1, DA-2, DA-3 bridge inserts) |
 | `build_zpg.py` | Builds `ZP-G_Category_Theory_v1_2.pdf` (category theory layer) |
-| `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |
+| `build_zph.py` | Builds `ZP-H_Categorical_Bridge_v1_2.pdf` |
+| `build_zpa_companion.py` | Builds the ZP-A Illustrated Companion |
 | `build_zpb_companion.py` | Builds the ZP-B Illustrated Companion |
 | `build_zpc_companion.py` | Builds the ZP-C Illustrated Companion |
 | `build_zpd_companion.py` | Builds the ZP-D Illustrated Companion |
+| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion |
 | `build_zpg_companion.py` | Builds the ZP-G Illustrated Companion |
 | `build_zph_companion.py` | Builds the ZP-H Illustrated Companion |
-| `build_zph.py` | Earlier ZP-H build script (superseded by `build_zph_companion.py`) |
+| `build_tools.py` | Builds `ZP_Tools_and_Methods.pdf` |
+| `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
+| `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |
+| `archive/build_zp_pdfs.py` | Superseded monolith — retained for reference only (contains archived `build_zpe_da1` function) |
 | `setup_fonts.py` | Downloads the required DejaVu font files into `scripts/fonts/` |
 | `PDF_Rendering_Standards.md` | Technical reference: font rules, known glyph gaps, rendering conventions |
 
@@ -65,8 +69,12 @@ From the repo root:
 
 ```bash
 pip install reportlab
-python scripts/build_foreword.py
-python scripts/build_zp_pdfs.py
+python scripts/build_zpa.py
+python scripts/build_zpb.py
+python scripts/build_zpc.py
+python scripts/build_zpd.py
+python scripts/build_zpe.py
+# etc. — each script is independent and writes directly to the repo root
 ```
 
 Output PDFs are written to the repo root.

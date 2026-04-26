@@ -1,5 +1,8 @@
 """
 Build ZP-E Illustrated Companion
+Version 1.1 | April 2026
+v1.1: DA-1 diagram label updated (no longer D7-based); DA-1 status clarified as Derived Proposition
+grounded in ZP-A CC-2 (⊥ = {⊥}), not a freestanding design commitment.
 Covers: four-framework convergence diagram, AX-1 → T-SNAP derivation chain,
 remaining structural commitments table.
 """
@@ -200,7 +203,7 @@ def tsnap_chain_diagram():
 
     steps = [
         ('P₀',      'Incomp.\nthreshold'),
-        ('DA-1',    'D7 configs\nare live'),
+        ('DA-1',    '⊥={⊥}: no\nextl. interp.'),
         ('L-RUN',   'Exec =\nnon-null'),
         ('TQ-IH',   'No null-only\ntrace'),
         ('ZP-A D2', 'State change\n= Snap'),
@@ -303,7 +306,7 @@ def build():
           Paragraph('Where all four frameworks converge —\nand AX-1 becomes a theorem',
                     CS['title']),
           Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
-          Paragraph('ZP Companion | April 2026', CS['meta']),
+          Paragraph('ZP Companion | Version 1.1 | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
               'examples. It is not the formal ontology — every claim here restates a result '
@@ -356,6 +359,14 @@ def build():
         'live machine configuration exists (DA-1). Any live configuration passes through c₁ '
         '(definition). c₁ is non-null (L-RUN). No program avoids this (TQ-IH). A non-null '
         'state change from ⊥ is the Binary Snap (ZP-A D2). The Snap is derived — not assumed.'))
+    E.append(cbody(
+        'In v2.7, DA-1 itself is upgraded from a Design Principle to a Derived Proposition. '
+        'Previously DA-1 was an honest but freestanding commitment: "a configuration at P₀ '
+        'is necessarily executing." Now it follows from ZP-A CC-2: ⊥ = {⊥}. The null state '
+        'is a Quine atom — a self-containing object with no external position from which it '
+        'could be interpreted as a static description. A thing that interprets itself cannot '
+        'be waiting for an external interpreter. So ⊥ at P₀ is necessarily executing. '
+        'The design commitment has become a derivation.'))
     E.append(tsnap_chain_diagram())
     E.append(ccaption(
         'The T-SNAP derivation chain: six steps, no axioms beyond AX-B1 and the definition '

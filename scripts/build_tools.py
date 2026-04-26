@@ -228,9 +228,12 @@ def build():
         ['Tool', 'Used?', 'Notes'],
         [
             ['Rocq (Coq)',    'No',  'Not used. No Coq terms, tactics, or proof scripts were written.'],
-            ['Lean 4',        'Yes', 'All seven layers (ZP-A through ZP-H) formally verified in Lean 4 + Mathlib. '
-                                     'Machine-checked proofs on the lake_testing branch under ZeroParadox/. '
-                                     'Completed April 2026.'],
+            ['Lean 4',        'Yes', 'ZP-A: full algebraic verification — NatSLat concrete instance, #print axioms clean. '
+                                     'ZP-B/C/D: concrete proxy witness (NNRealZPCat); domain theorems (C3, T1b, T4) close OQ-G3. '
+                                     'Full abstract functor objects for ZP-B/C/D remain future work. '
+                                     'ZP-E/G/H: sorry-free proofs for key results. Source on illustrated branch. '
+                                     'Note: CC-2 (&#8869; = {&#8869;}, ZF+AFA) is a metatheoretic commitment; '
+                                     'Lean\'s bot is a structural proxy, not a Quine atom in Lean\'s type theory.'],
             ['Isabelle/HOL',  'No',  'Not used.'],
             ['Agda',          'No',  'Not used.'],
             ['Mizar',         'No',  'Not used.'],
@@ -247,12 +250,20 @@ def build():
     E.append(sp(6))
     E.append(key_result_box(
         'Key Result: What formal verification does and does not change',
-        'Formal verification in Lean 4 confirms that the proof steps are logically valid and '
-        'that no step was silently skipped. It does not change the mathematical content. '
-        'The stated commitments (AX-B1, AX-G1, AX-G2) remain as stated — none are novel; '
-        'AX-B1 is directly verifiable by computation, AX-G1 and AX-G2 are grounded in prior '
-        'layers. The derived results are confirmed as derived. The framework\'s epistemic '
-        'status has improved — it is now machine-checked, not merely informally reviewed.'))
+        'Formal verification in Lean 4 operates at two levels. (1) Full algebraic verification: '
+        'ZP-A\'s algebraic layer (A1-A4 and all derived results) is fully machine-checked via NatSLat; '
+        '#print axioms confirms the proofs depend only on the ZPSemilattice typeclass fields and '
+        'Lean\'s kernel axioms. (2) Proxy-level verification: for ZP-B, ZP-C, and ZP-D, the '
+        'NNRealZPCat concrete witness closes OQ-G3 and grounds the domain theorems (C3, T1b, T4). '
+        'Full abstract Lean functor objects for these three domains remain future work. '
+        'Neither level formalizes CC-2 (&#8869; = {&#8869;}). CC-2 is a metatheoretic commitment '
+        'over ZF + AFA — Lean\'s type theory (CIC) is well-founded by construction and cannot '
+        'realize a Quine atom as a Lean term. The Lean bot is the structural proxy for the algebraic '
+        'role of &#8869;; its set-theoretic self-containment is a prose-level commitment. '
+        'The stated axioms (AX-B1, AX-G1, AX-G2) and modeling commitments (CC-1, CC-2) remain '
+        'as stated. The derived results are confirmed as derived. The framework\'s epistemic '
+        'status has improved — the algebraic core is machine-checked; the metatheoretic '
+        'commitment CC-2 is explicitly outside that scope.'))
     E.append(sp(8))
 
     # Section 3: Computational Tools
