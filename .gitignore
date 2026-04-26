@@ -20,3 +20,4 @@ lean_packages/
 
 # lake build logs 
 build.log
+build*.log
