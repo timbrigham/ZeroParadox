@@ -83,8 +83,8 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-C Information Theory](ZP-C_Information_Theory_v1_7.pdf) | ZP-C | v1.7 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). CC-2: c₀ = ⊥ labeled as modeling commitment. RP-2: branching measure labeled as representational commitment. L-INF grounded from two directions: informational extremity (D4, T2) and structural self-containment (ZP-A CC-2, R3). |
 | [ZP-D State Layer](ZP-D_State_Layer_v1_6.pdf) | ZP-D | v1.6 | Hilbert space H = ℂⁿ, foundational minimum n = 2. Transition operator T: Q₂ → H — locally constant, continuous (R3 v1.6). DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document_v3_0.pdf) | ZP-E | v3.0 | **DA-1** (instantiation = execution; v3.0: DP-2 (Execution Distinguishability) added — TrackedOutput separates output value from machine state; da1_minimal_path proved axiom-free in Lean; first formal Lean grounding of DA-1. AIT and ZF+AFA informal paths retained as corroboration). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Full traceability register. |
-| [ZP-G Category Theory](ZP-G_Category_Theory_v1_3.pdf) | ZP-G | v1.3 | Category C. Initial object. AX-G1, AX-G2. Universal property. R2 (v1.3): connecting note linking initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_4.pdf) | ZP-H | v1.4 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proxy witness only - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
+| [ZP-G Category Theory](ZP-G_Category_Theory_v1_4.pdf) | ZP-G | v1.4 | Category C. Initial object. AX-G1, AX-G2. Universal property. R2 (v1.3): connecting note linking initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). Lean scope note (v1.4): T6-b strict inequality and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_5.pdf) | ZP-H | v1.5 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proof terms shared - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
 
 ### Illustrated Companion Documents (General Reader)
 
@@ -172,7 +172,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_7.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_0.pdf) (in dependency order)
 
-**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_3.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_4.pdf) (self-contained; after ZP-E)
+**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_4.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_5.pdf) (self-contained; after ZP-E)
 
 **For process/methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 

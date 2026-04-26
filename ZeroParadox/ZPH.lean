@@ -280,18 +280,30 @@ noncomputable instance nnrealZPCategory : ZPCategory NNReal where
     have hx0 : x = 0 := le_antisymm f.down.down (zero_le x)
     subst hx0; exact hne.elim (Iso.refl (0 : NNReal))⟩
 
-/-- OQ-G3 closed for F_B: ℝ≥0 has a categorical initial object grounding the pTop claim.
-    Domain grounding: C3 establishes topological irreversibility in Q₂ (AX-G2 analogue). -/
+/-- OQ-G3 closed for F_B (concrete categorical witness): ℝ≥0 with ≤ instantiates ZPCategory,
+    0 is the categorical initial object. Proof term: nnrealZPCategory.zpIsInitial (shared with
+    fc/fd — same concrete category, three distinct domain contexts).
+    Domain grounding: C3 (ZPB) establishes topological irreversibility in Q₂; this is the
+    semantic motivation, not a formal Lean dependency of this definition.
+    Full abstract F_B as a CategoryTheory.Functor ℕ pTop remains future work (OQ-G3 open). -/
 noncomputable def fb_nnreal_initial_grounding : IsInitial (0 : NNReal) :=
   nnrealZPCategory.zpIsInitial
 
-/-- OQ-G3 closed for F_C: ℝ≥0 has a categorical initial object grounding the InfoSp claim.
-    Domain grounding: T1b establishes JSD(P, Q) = log 2 (snap cost = 1 bit). -/
+/-- OQ-G3 closed for F_C (concrete categorical witness): ℝ≥0 with ≤ instantiates ZPCategory,
+    0 is the categorical initial object. Proof term: nnrealZPCategory.zpIsInitial (shared with
+    fb/fd — same concrete category, three distinct domain contexts).
+    Domain grounding: T1b (ZPC) establishes JSD(P, Q) = log 2; this is the semantic motivation,
+    not a formal Lean dependency of this definition.
+    Full abstract F_C as a CategoryTheory.Functor ℕ InfoSp remains future work (OQ-G3 open). -/
 noncomputable def fc_nnreal_initial_grounding : IsInitial (0 : NNReal) :=
   nnrealZPCategory.zpIsInitial
 
-/-- OQ-G3 closed for F_D: ℝ≥0 has a categorical initial object grounding the Hilb claim.
-    Domain grounding: T4 establishes ⟪T(0), T(ε₀)⟫_ℂ = 0 (snap is orthogonal shift). -/
+/-- OQ-G3 closed for F_D (concrete categorical witness): ℝ≥0 with ≤ instantiates ZPCategory,
+    0 is the categorical initial object. Proof term: nnrealZPCategory.zpIsInitial (shared with
+    fb/fc — same concrete category, three distinct domain contexts).
+    Domain grounding: T4 (ZPD) establishes ⟪T(0), T(ε₀)⟫_ℂ = 0; this is the semantic
+    motivation, not a formal Lean dependency of this definition.
+    Full abstract F_D as a CategoryTheory.Functor ℕ Hilb remains future work (OQ-G3 open). -/
 noncomputable def fd_nnreal_initial_grounding : IsInitial (0 : NNReal) :=
   nnrealZPCategory.zpIsInitial
 

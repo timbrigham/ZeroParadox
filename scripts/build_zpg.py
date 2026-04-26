@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.3 | April 2026
+Version 1.4 | April 2026
+Changes from v1.3:
+  - Lean scope note added after T6-c: T6-b strict inequality and T6-c subadditivity are
+    K-specific AIT content outside the ZPSurprisal skeleton; Lean proofs reduce to Nat.zero_le _
 Changes from v1.2:
   - R2 added: Remark connecting initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥})
   - All prior results, axioms, and definitions unchanged
@@ -587,6 +590,25 @@ def build_zpg(out_path):
             'Adding distinct objects strictly increases the total. ✓',
         ]
     ))
+    E.append(sp(6))
+
+    E.append(remark_box(
+        'Remark — Lean Scope of T6-b and T6-c',
+        'Status: Scope note — I-KC content; ZPSurprisal captures structural skeleton only',
+        [
+            'The Lean formalization of T6-b and T6-c uses the ZPSurprisal typeclass, which abstracts '
+            'only the structural skeleton of K: surp_id (identity morphism has zero surprisal) and '
+            'surp : hom &#8594; &#8469; (non-negative by type). The Lean proofs reduce to Nat.zero_le _, '
+            'which is trivially true for any &#8469;-valued function.',
+            'The K-specific content of T6-b (strict inequality K(x<sub>B</sub>|x<sub>A</sub>) &gt; 0 when A &#8775; B) '
+            'and T6-c (subadditivity K(x<sub>n</sub>|x<sub>0</sub>) &#8804; &#8721; K(x<sub>k+1</sub>|x<sub>k</sub>) + O(n&#183;c)) '
+            'is not captured by ZPSurprisal and falls outside the current Lean scope.',
+            'This is the same boundary as DA-1 Path 3 (AIT bridge) in ZP-E &#167;VI: the I-KC import '
+            'marks this as mathematically sound external content. A full K-formalization would be '
+            'required to close this gap in Lean. The structural implications of T6 (T6-a, domain-absence '
+            'via AX-G2) are fully Lean-verified.',
+        ]
+    ))
 
     print('[build_zpg] Building Section VII: Informational Singularity...')
     # ── VII. THE INFORMATIONAL SINGULARITY OF 0 [REBUILT IN v1.1] ────────────
@@ -805,5 +827,5 @@ def build_zpg(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_3.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_4.pdf'))
     build_zpg(out)

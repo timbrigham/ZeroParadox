@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.4 | April 2026
+Version 1.5 | April 2026
+Changes from v1.4:
+  - OQ-G3 register entry updated: fb/fc/fd all share proof term nnrealZPCategory.zpIsInitial;
+    domain theorems (C3, T1b, T4) clarified as semantic context, not formal Lean dependencies;
+    full abstract functor terms explicitly deferred as future work
 Changes from v1.3:
   - T-H3 cross-framework consistency caveat expanded: added explicit acknowledgment
     that the four frameworks share common structural commitments (A1-A4, AX-B1, CC-1)
@@ -612,7 +616,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.4', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.5', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -629,9 +633,11 @@ def build_zph(out_path):
          'Closed (PDF)\n/ Open (Lean\nfull functors)',
          'PDF-level constructions of all four instantiation functors complete (Section III): '
          'object maps, morphism maps, composition and identity preservation verified for F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>. '
-         'F<sub>A</sub>: Lean-level full closure (NatSLat appendix — genuine ZPA connection). '
-         'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub>: Lean formalization uses shared proxy witness (NNRealZPCat); '
-         'full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work.'],
+         'F<sub>A</sub>: Lean-level full closure (NatSLat appendix); fb_functor provides a concrete Functor &#8469; Q&#8322;BallDepth term. '
+         'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub>: Lean uses the shared proof term nnrealZPCategory.zpIsInitial for all three — '
+         'the three definitions (fb/fc/fd_nnreal_initial_grounding) are identical at the proof level. '
+         'Domain theorems C3, T1b, T4 cited in their docstrings are semantic context, not formal Lean dependencies. '
+         'Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work.'],
         ['OQ-G4',
          'Closed — T-H2',
          'Reconciliation of categorical (undefined domain) and ZP-C (infinite accumulation) '
@@ -741,5 +747,5 @@ def build_zph(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_4.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_5.pdf'))
     build_zph(out)

@@ -75,6 +75,20 @@ theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
 
 /-! ## IV. T6 — Informational Singularity (D7', I-KC) -/
 
+/- Lean Scope Note — T6-b/c versus PDF Claims
+   The PDF's T6-b proves strict inequality: I(f) > 0 when A ≇ 0 (the empty program
+   cannot reproduce x_B from x_A when they encode distinct states). The PDF's T6-c
+   establishes monotone accumulation via subadditivity of K:
+     K(x_n|x_0) ≤ ∑ K(x_{k+1}|x_k) + O(n·c).
+   Neither claim is captured by ZPSurprisal. That typeclass abstracts only the
+   structural skeleton of K — surp_id (zero identity surprisal) and surp : hom → ℕ
+   (non-negative by type). The Lean proofs of T6-b and T6-c reduce to Nat.zero_le _,
+   which is trivially true for any ℕ-valued function, not K-specifically derived.
+   This is the same category as DA-1 Path 3 (AIT bridge) in ZPE.lean §VI: the
+   K-specific content is mathematically sound and drives the PDF derivation, but
+   requires a full K-formalization to verify in Lean. The I-KC import marks this
+   boundary: structural implications are Lean-verified; AIT content is not. -/
+
 /-- T6-a — Surprisal of Identity is Zero.
     I(id_A) = K(x_A | x_A) = 0 (up to c): the empty program reproduces x_A given x_A.
     From I-KC (ZPSurprisal.surp_id). -/
