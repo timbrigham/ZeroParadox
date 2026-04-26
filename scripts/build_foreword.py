@@ -1,5 +1,5 @@
 """
-Zero Paradox — Foreword PDF Builder (revised April 2026)
+Zero Paradox — Foreword PDF Builder (v1.2, revised April 2026)
 Follows all rules in pdf rendering standards.md:
   - DejaVu fonts only
   - All table cells are Paragraph objects
@@ -100,7 +100,7 @@ def commitments_table():
          'not a novel commitment of this framework.'),
         ('AX-G1', 'Axiom',
          'Initial Object Exists. There is a starting point that reaches every other object. '
-         'Not a novel commitment — ⊥’s existence as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language.'),
+         'Not a novel commitment — the existence of ⊥ as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language.'),
         ('AX-G2', 'Axiom',
          'Source Asymmetry. No morphism returns to the initial object from outside. '
          'Not a novel commitment — follows from antisymmetry of the ZP-A partial order and ZP-B C3 (topological irreversibility).'),
@@ -116,6 +116,22 @@ def commitments_table():
         ('AX-1',  'Retired axiom → Theorem T-SNAP',
          'Binary Snap Causality. Previously an axiom; now derived as Theorem T-SNAP via '
          'the L-RUN / TQ-IH / DA-1 chain in ZP-C v1.4 and ZP-E.'),
+        ('MC-1',  'Modeling Commitment',
+         'Cross-Framework Identification. The four concrete frameworks (ZP-A semilattice, '
+         'ZP-B p-adic topology, ZP-C information theory, ZP-D Hilbert space) are '
+         'identified as instantiations of the abstract categorical structure in ZP-G. '
+         'Demonstrated by the four functors in ZP-H; asserted as structural '
+         'correspondence, not derived within any single layer.'),
+        ('CC-1',  'Conditional Claim',
+         'S₀ = ⊥. The initial state equals the null state. '
+         'T2 establishes ⊥ ≤ S₀ unconditionally; CC-1 strengthens this to equality '
+         'as an explicit modeling choice. Conditional on this identification '
+         'holding in a given instantiation.'),
+        ('CC-2',  'Conditional Claim',
+         '⊥ = {⊥}. The null state is self-containing — a Quine atom under ZF+AFA. '
+         'Requires the Anti-Foundation Axiom in place of the Foundation Axiom. '
+         'Grounds the self-referential structure of ⊥ and supports DA-1. '
+         'Incompatible with standard ZFC.'),
     ]
 
     table_data = [headers]
@@ -154,7 +170,7 @@ def build_foreword(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('April 2026', S['date']),
+        Paragraph('April 2026  |  v1.2', S['date']),
         sp(10),
         Paragraph(
             'The paradox is not that zero is nothing.<br/>'
@@ -206,23 +222,14 @@ def build_foreword(out_path):
     ))
     story.append(sp(6))
 
-    Paragraph(
-        'A note on the converse: one might observe that in any rich framework, zero is the '
-        'trivial element — it inherits its structure from the framework around it. '
-        'This is true, and it is not in conflict with ZP’s thesis. '
-        'The question ZP is asking is how minimal the framework needs to be before ⊥ '
-        'still has non-trivial properties. '
-        'The answer, across seven independent layers, is: very minimal. That is the surprise.',
-        S['body'])
-
     story += [
         Paragraph(
             'A note on the converse: one might observe that in any rich framework, zero is the '
             'trivial element — it inherits its structure from the framework around it. '
-            'This is true, and it is not in conflict with ZP’s thesis. '
+            'This is true, and it is not in conflict with ZP\'s thesis. '
             'The question ZP is asking is how minimal the framework needs to be before ⊥ '
             'still has non-trivial properties. '
-            'The answer, across seven independent layers, is: very minimal. That is the surprise.',
+            'The answer, across eight independent layers, is: very minimal. That is the surprise.',
             S['body']),
     ]
 
@@ -230,7 +237,7 @@ def build_foreword(out_path):
     story += [
         Paragraph('II. THE ARCHITECTURE', S['h1']),
         Paragraph(
-            'The framework is built in seven layers, each self-contained within its own '
+            'The framework is built in eight layers, each self-contained within its own '
             'mathematical discipline, each contributing one dimension of the full picture. '
             'No layer is allowed to borrow from another until that other is internally closed.',
             S['body']),
@@ -283,7 +290,15 @@ def build_foreword(out_path):
             'F<sub>C</sub>: C → InfoSp (information theory), and '
             'F<sub>D</sub>: C → Hilb (Hilbert space). '
             'Each functor preserves the initial object and the singularity structure, '
-            'proving that all seven layers are consistent accounts of the same foundational fact.',
+            'proving that all eight layers are consistent accounts of the same foundational fact.',
+            S['body']),
+        Paragraph(
+            'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem: every '
+            'maximal ascending chain in the state space converges to a new null state '
+            'at its limit. This establishes that the framework is not merely an emergence '
+            'theorem but a closed cycle: the Snap produces states, states accumulate, '
+            'and the accumulation eventually produces a new ⊥. '
+            'The framework contains its own recurrence.',
             S['body']),
     ]
 
@@ -293,8 +308,9 @@ def build_foreword(out_path):
         Paragraph(
             'Every formal system rests on commitments it does not derive. The Zero Paradox '
             'framework is unusually explicit about its own. As of the current version, this '
-            'framework introduces no novel axioms. Two structural commitments (grounded in prior '
-            'layers), two methodological principles, and one design commitment are stated:',
+            'framework introduces no novel axioms. Stated explicitly: two structural commitments '
+            '(grounded in prior layers), two methodological principles, one design commitment, '
+            'one modeling commitment (MC-1), and two conditional claims (CC-1, CC-2):',
             S['body']),
         commitments_table(),
         sp(8),
@@ -340,10 +356,10 @@ def build_foreword(out_path):
             'informational content.',
             S['body']),
         Paragraph(
-            'The framework lives at that boundary intentionally. The seven layers — '
+            'The framework lives at that boundary intentionally. The eight layers — '
             'algebra, topology, information theory, Hilbert space, bridge, category theory, '
-            'and categorical bridge — each arrive independently at the same boundary '
-            'from their own direction. That convergence is the framework’s central result.',
+            'categorical bridge, and closure — each arrive independently at the same boundary '
+            'from their own direction. That convergence is the framework\'s central result.',
             S['body']),
     ]
 
@@ -374,8 +390,10 @@ def build_foreword(out_path):
             'The framework is silent on these questions.',
             S['body']),
         Paragraph(
-            'The open commitments are honest. No novel axioms are introduced. Two structural '
-            'commitments, two principles, and one design commitment are stated. The framework does not launder their status. '
+            'The open commitments are honest. No novel axioms are introduced. '
+            'Two structural commitments, two principles, one design commitment, '
+            'one modeling commitment, and two conditional claims are stated. '
+            'The framework does not launder their status. '
             'AX-B1 — binary existence — is not a novel commitment: it is directly verifiable '
             'by computation. Whether a finite type has two distinct elements requires no '
             'classical axioms — it can be decided mechanically. The theorems stand on their '
@@ -387,7 +405,7 @@ def build_foreword(out_path):
     story += [
         Paragraph('VII. A NOTE ON READING THE DOCUMENTS', S['h1']),
         Paragraph(
-            'The technical documents ZP-A through ZP-H are formatted as ontologies, not as '
+            'The technical documents ZP-A through ZP-I are formatted as ontologies, not as '
             'discursive mathematical writing. Each claim appears in a labeled box with its '
             'status — Axiom, Principle, Design Commitment, Defined, Derived, Conditional, '
             'or Remark. Proofs are included inline. Open items are tracked explicitly.',
@@ -442,11 +460,11 @@ def build_foreword(out_path):
             'of the Zero Paradox, not a separate phenomenon requiring separate explanation.',
             S['body']),
         Paragraph(
-            'Further connections — to Leibniz’s question of why there is something '
-            'rather than nothing, to Wigner’s puzzle about the unreasonable effectiveness '
-            'of mathematics, to the fine-tuning problem in cosmology, and to Skolem’s '
+            'Further connections — to Leibniz\'s question of why there is something '
+            'rather than nothing, to Wigner\'s puzzle about the unreasonable effectiveness '
+            'of mathematics, to the fine-tuning problem in cosmology, and to Skolem\'s '
             'paradox in set theory — are developed in the companion document '
-            '‘Generation 2: Applications and Open Problems.’ '
+            '"Generation 2: Applications and Open Problems." '
             'Each case states its required assumptions explicitly, assesses fit honestly, '
             'and names the gaps that remain.',
             S['body']),
