@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.1, new standalone document)
+Build ZP-H Illustrated Companion (v1.2)
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -281,7 +281,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-H Companion  |  Categorical Bridge  |  April 2026  |  v1.1')
+            'Zero Paradox ZP-H Companion  |  Categorical Bridge  |  April 2026  |  v1.2')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -308,7 +308,7 @@ def build():
 
     E += [
         Paragraph('Four maps, one structure', CS['title']),
-        Paragraph('Categorical Bridge | Version 1.1', CS['subtitle']),
+        Paragraph('Categorical Bridge | Version 1.2', CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
@@ -333,7 +333,10 @@ def build():
     E.append(cbody(
         'The result is a verification that all four frameworks are, in a precise sense, '
         'realizations of the same abstract structure. They are not four separate arguments '
-        'for the same conclusion — they are four different windows looking at one thing.'))
+        'for the same conclusion — they are four different windows looking at one thing. '
+        'This agreement is coherence: all four frameworks are built on the same structural '
+        'commitments (A1-A4, AX-B1, CC-1), so the Binary Snap appearing in all of them '
+        'reflects a shared foundation, not independent confirmation from unrelated starting points.'))
     E.append(four_functor_diagram())
     E.append(ccaption(
         'ZP-H constructs four functors from the abstract category C (center) into the four '
@@ -371,23 +374,29 @@ def build():
         '<b>FA (Lattice):</b> The initial object 0 maps to ⊥ (bottom of the lattice). '
         'Each morphism f: A → B maps to the join operation ⊥ ∨ S = S that witnesses the '
         'transition. Composition corresponds to iterated joins. The forward-only structure '
-        'of C maps to the monotone structure of ZP-A.'))
+        'of C maps to the monotone structure of ZP-A. FA is fully verified in Lean 4, sorry-free.'))
     E.append(cbody(
         '<b>FB (p-Adic Topology):</b> The initial object 0 maps to the element 0 ∈ ℚ₂. '
-        'Each morphism maps to a discrete jump across a clopen boundary. Composition '
-        'corresponds to sequential jumps. The irreversibility of ZP-B C3 (no path returns '
-        'to 0 in ℚ₂) is the topological realization of AX-G2.'))
+        'Each morphism maps to a discrete jump across a clopen boundary — formalized as '
+        'antitone depth in Q₂BallDepth. Composition corresponds to sequential jumps. '
+        'The irreversibility of ZP-B C3 (no path returns to 0 in ℚ₂) is the topological '
+        'realization of AX-G2. FB is a full Lean 4 functor (fb_functor, sorry-free) — '
+        'not a proxy witness.'))
     E.append(cbody(
         '<b>FC (Information Theory):</b> The initial object 0 maps to the Null State '
         'distribution P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The informational singularity of ZP-G maps to the diverging '
-        'surprisal of ZP-C T2.'))
+        'surprisal of ZP-C T2. FC has a concrete ZPCategory categorical witness '
+        '(NNRealZPCat, ℝ≥0 with ≤) grounded by T1b. The full abstract Lean functor '
+        'for the information space codomain remains future work.'))
     E.append(cbody(
         '<b>FD (Hilbert Space):</b> The initial object 0 maps to the basis vector e₀. '
         'Each morphism maps to an orthogonal extension — a step to a perpendicular basis '
         'vector. The Binary Snap becomes a right-angle turn in state space. The design '
-        'commitment DP-1 (orthogonality represents topological isolation) is inherited here.'))
+        'commitment DP-1 (orthogonality represents topological isolation) is inherited here. '
+        'FD has a concrete ZPCategory categorical witness (NNRealZPCat) grounded by T4. '
+        'The full abstract Lean functor for the Hilbert space codomain remains future work.'))
 
     E.append(example_box('Real-world analogy — Four instruments, one melody', [
         'Imagine the same musical phrase played on four different instruments: violin, '
@@ -456,12 +465,22 @@ def build():
         'Left: the null state. Right: the first non-null state.'))
     E.append(sp(6))
 
+    E.append(remember_box(
+        'The agreement across four frameworks reflects coherence, not independent confirmation. '
+        'All four share the same structural commitments — A1-A4 (lattice axioms), AX-B1 '
+        '(binary existence), and CC-1 (⊥ as ground state). The Binary Snap appears in all '
+        'four because those commitments are built into each framework, not because four '
+        'separate arguments from unrelated starting points happened to agree.'))
+    E.append(sp(6))
+
     E.append(key_result_box('T-H3: The Binary Snap Under All Four Functors',
         'The four functor images of the Binary Snap are mutually consistent: each framework '
-        'independently establishes that the transition is irreversible, costs something '
+        'establishes that the transition is irreversible, costs something '
         '(informational work, topological separation, orthogonal displacement), and is '
-        'the minimal first step. T-SNAP is a derived theorem inherited here from ZP-E. '
-        'The only design premise is DP-1 (ZP-D).'))
+        'the minimal first step. This agreement is coherence across shared structural '
+        'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
+        'T-SNAP is a derived theorem inherited here from ZP-E. '
+        'The only additional design premise is DP-1 (ZP-D).'))
     E.append(sp(8))
 
     E.append(cbody(
