@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [Zero_Paradox_Foreword-6.pdf](Zero_Paradox_Foreword-6.pdf) | 2026-04-26 | Foreword superseded by v1.2: commitment table updated to include MC-1 (cross-framework identification), CC-1 (S₀ = ⊥), and CC-2 (⊥ = {⊥} Quine atom); layer count corrected from seven to eight throughout; ZP-I closure layer added to Section II; version string added |
 | [ZP-E_Bridge_Document_v3_4-1.pdf](ZP-E_Bridge_Document_v3_4-1.pdf) | 2026-04-26 | ZP-E v3.4 superseded by v3.5: DA-1 Open Items Register status updated to match v3.3 path-hierarchy framing — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" |
 | [ZP-E_Bridge_Document_v3_3-1.pdf](ZP-E_Bridge_Document_v3_3-1.pdf) | 2026-04-26 | ZP-E v3.3 superseded by v3.4: R-AFA "What remains conditional" paragraph expanded with explicit minimality argument — ⊥ = {⊥} is uniquely minimal among AFA non-well-founded sets: exactly one member, no internal differentiation; any extension adds membership chains beyond A4's algebraic constraint |
 | [ZP-H_Categorical_Bridge_v1_6-1.pdf](ZP-H_Categorical_Bridge_v1_6-1.pdf) | 2026-04-26 | ZP-H v1.6 superseded by v1.7: T-H3 consistency note strengthened — independence-of-discovery foregrounded: each framework located its null-analog through its own domain logic prior to cross-framework identification; "frameworks are not independent" framing replaced with explicit independence-of-discovery statement |
