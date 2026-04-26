@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-A_Lattice_Algebra_v1_6-1.pdf](ZP-A_Lattice_Algebra_v1_6-1.pdf) | 2026-04-25 | ZP-A v1.6 superseded by v1.7: R3 dependency note added — "no external interpreter → necessarily executing" requires D7's exhaustive static/executing dichotomy (ZP-E) as background; R3 title updated; all three DA-1 paths share D7 as background |
 | [ZP-E_Bridge_Document_v2_9-1.pdf](ZP-E_Bridge_Document_v2_9-1.pdf) | 2026-04-25 | ZP-E v2.9 superseded by v3.0: DP-2 (Execution Distinguishability) added — TrackedOutput construction formally separates output value from machine state; da1_minimal_path proved axiom-free in Lean (ZPE.lean §VI); first Lean formalization of DA-1, conditional on DP-2 |
 | [ZP-E_Bridge_Document_v2_8-1.pdf](ZP-E_Bridge_Document_v2_8-1.pdf) | 2026-04-25 | ZP-E v2.8 superseded by v2.9: DA-1 Lean scope note added — functional role carried by ZPC.l_run/tq_ih; AIT+ZF+AFA bridge outside Lean scope (same category as ZP-A CC-2); ZPE.lean comment updated to match |
 | [ZP-D_State_Layer_v1_5-1.pdf](ZP-D_State_Layer_v1_5-1.pdf) | 2026-04-25 | ZP-D v1.5 superseded by v1.6: R3 added — topological type of T stated explicitly: locally constant, continuous from (Q2, 2-adic topology) to H; totally-disconnected/connected-space concern resolved |

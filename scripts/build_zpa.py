@@ -1,5 +1,9 @@
 """
-Build ZP-A: Lattice Algebra (v1.6)
+Build ZP-A: Lattice Algebra (v1.7)
+v1.7: R3 dependency note added — the inference "no external interpreter → necessarily executing"
+requires D7's exhaustive static/executing dichotomy (ZP-E) as background. R3 supplies the
+structural route to eliminating the static-description state; D7 supplies the exhaustiveness.
+All three DA-1 paths share D7 as background; independence is among their arguments, not from D7.
 """
 import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -180,18 +184,19 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_6.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.6')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_7.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.7')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.6  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.5  |  CC-2 (Self-Containment of &#8869;) and R3 added; foundation note (ZF + AFA; AC not assumed) added</i>', S['subtitle']),
+          Paragraph('Version 1.7  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.6  |  R3 dependency note added: "no external interpreter &#8594; necessarily executing" requires D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background framework; all three DA-1 paths share D7; independence is among their arguments, not from D7.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
-          body('<i>Version 1.6 changes: CC-2 (Self-Containment of &#8869;) added as a new modeling commitment: &#8869; = {&#8869;} is a Quine atom under ZF + AFA (Aczel&#8217;s Anti-Foundation Axiom). R3 added immediately following CC-2, establishing that DA-1 in ZP-E follows from CC-2 as a derivation rather than a design principle. Foundation note added: the framework is stated over ZF + AFA; the Axiom of Choice is not assumed. Section V dedicated to self-containment of &#8869;; OQ-A1 renumbered VI, Boundary Conditions VII, Validation Status VIII.</i>'),
+          body('<i>Version 1.7 changes: R3 dependency note added. The inference from "no external interpreter" (CC-2) to "necessarily executing" (DA-1) uses D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background. R3 supplies the structural argument for eliminating &#8869;&#8217;s static-description state; it does not independently derive DA-1 without D7. All three DA-1 paths in ZP-E share D7 as background; they provide independent structural, informational, and AIT-based routes to eliminating the static-description alternative. Section V intro and R3 text updated to make this dependency explicit. Boundary Conditions table row for CC-2/R3 updated accordingly.</i>'),
+          body('<i>Version 1.6 changes: CC-2 (Self-Containment of &#8869;) added as a new modeling commitment: &#8869; = {&#8869;} is a Quine atom under ZF + AFA (Aczel&#8217;s Anti-Foundation Axiom). R3 added immediately following CC-2. Foundation note added: the framework is stated over ZF + AFA; the Axiom of Choice is not assumed. Section V dedicated to self-containment of &#8869;; OQ-A1 renumbered VI, Boundary Conditions VII, Validation Status VIII.</i>'),
           body('<i>Version 1.5 changes: (1) Theorem/Proposition/Lemma hierarchy applied throughout: T1 relabelled Proposition (partial order properties are infrastructure), T2 relabelled Lemma (the global minimum result is a stepping stone for CC-1 and T3). T3 retains Theorem (monotonicity is the primary result of ZP-A). (2) Remark R2 added after D3 connecting the term "state sequence" to the standard order-theory term "ascending chain". (3) CC-1 corollary reworded to make explicit that T2 gives &#8869; &#8804; S&#8320; for any initialisation; CC-1 strengthens this to equality.</i>'),
           body('<i>Version 1.4 change: OQ-A1 section heading and box label corrected from "Open Question" to "CLOSED". The resolution was already recorded in the status line (closed by ZP-E T5 via AX-B1) but the section header was misleading. Status line expanded to answer both sub-questions explicitly.</i>'),
           body('<i>Version 1.3 changes: (1) Definition D2: the equivalence statement now makes explicit that &#945; depends on x — "for each x &#8712; L, f(x) = x &#8744; &#945; for some &#945; &#8712; L". (2) Theorem T3 proof: replaced the single spelled-out "iff" with &#10234; for consistency. (3) CC-1: removed circular conditional framing; reframed as a direct modelling commitment; corrected the consequence chain to S&#8320; = &#8869; &#8804; S&#8321; &#8804; &#8230;; replaced informal "constituent" with direct T2 reference.</i>'),
@@ -278,7 +283,7 @@ def build():
 
     E.append(Paragraph('V. The Self-Containment of &#8869;', S['h1']))
     E.append(Paragraph('5.1  Foundational Characterisation', S['h2']))
-    E.append(body('The axioms A1&#8211;A4 establish &#8869; as the additive identity and algebraic minimum of L. The following conditional claim characterises its set-theoretic nature and grounds DA-1 in ZP-E as a derivation rather than a design principle.'))
+    E.append(body('The axioms A1&#8211;A4 establish &#8869; as the additive identity and algebraic minimum of L. The following conditional claim characterises its set-theoretic nature. R3 provides a structural route to DA-1 in ZP-E: CC-2 establishes that &#8869; has no external interpreter position, which — conditional on D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background — eliminates the static-description state for &#8869;. See R3 for the full dependency note.'))
     E.append(body('<i>Foundation note: The framework is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). The classical Axiom of Foundation is replaced by AFA, which permits self-containing sets. The Axiom of Choice is not assumed: T-SNAP is the unique forced first differentiation, not a selection over indistinguishable &#8869; instances.</i>'))
     E.append(sp(4))
     E.append(label_box('Conditional Claim CC-2 — Self-Containment of &#8869;', [
@@ -290,9 +295,9 @@ def build():
         'Lean 4 scope: ZPA.lean verifies the algebraic structure A1&#8211;A4 and all derived results (T1&#8211;T3, CC-1). CC-2 is a metatheoretic commitment at the set-theoretic level. Lean&#8217;s bot field is a term of an abstract typeclass — a structural proxy for the algebraic role of &#8869;. Lean&#8217;s type theory (CIC) is well-founded by construction; Quine atoms cannot be realized as Lean terms. The set-theoretic content of CC-2 is stated as a prose-level commitment in ZF + AFA and is outside the scope of the Lean verification.',
     ]))
     E.append(sp(4))
-    E.append(label_box('Remark R3 — DA-1 Follows from CC-2', [
-        'A self-containing object has no external interpreter by structure: &#8869; = {&#8869;} is its own interpretation. A description requires a describer distinct from the thing described; CC-2 admits no such distinction for &#8869;.',
-        'Therefore &#8869; at P<sub>0</sub> cannot be a static description awaiting external instantiation. This is the formal basis for DA-1 in ZP-E: the claim that instantiation at P<sub>0</sub> is a live execution event becomes a derivation from CC-2, not a freestanding design principle.',
+    E.append(label_box('Remark R3 — CC-2 Eliminates the Static-Description State for &#8869;', [
+        'A self-containing object has no external interpreter by structure: &#8869; = {&#8869;} is its own interpretation. A description requires a describer distinct from the thing described; CC-2 admits no such distinction for &#8869;. Under the Turing model framework (D7, ZP-E), which partitions machine configurations into static-description states and executing states, the absence of any external interpreter position means &#8869; cannot occupy D7&#8217;s static-description category.',
+        'Dependency note: The inference from "no external interpreter" to "necessarily executing" uses D7&#8217;s exhaustiveness in the final step — that static-description and executing are the only two categories. D7 (ZP-E) supplies this exhaustiveness as the shared background framework. R3 provides the structural argument for why &#8869; engages D7&#8217;s transition; it does not independently derive DA-1 without D7. All three DA-1 paths in ZP-E share D7 as background. Their independence is among their arguments — CC-2/R3 (structural), L-INF (informational), K-incompressibility (AIT) — not from D7 itself.',
     ]))
     E.append(sp())
 
@@ -311,7 +316,7 @@ def build():
          ['&#8804; partial order (D1, T1)', 'Derived — ZP-D: ordering on states'],
          ['Monotonicity of state sequences (T3)', 'Derived from A1&#8211;A3 — ZP-D: state layer ordering'],
          ['&#8869; as global minimum (T2, CC-1)', 'Derived / Conditional — ZP-E: ontological grounding claim'],
-         ['&#8869; = {&#8869;} self-containment (CC-2, R3)', 'Conditional / Remark — ZP-E: basis for DA-1 derivation'],
+         ['&#8869; = {&#8869;} self-containment (CC-2, R3)', 'Conditional / Remark — ZP-E: structural route to eliminating static-description state for &#8869;, given D7 exhaustiveness as background'],
          ['No subtraction / additive ontology (R1)', 'Structural — ZP-C: no operation may reduce informational content'],
          ['OQ-A1 — increment selection', 'Open within ZP-A; closed by ZP-E T5']],
         [2.5*inch, 4.0*inch]
