@@ -108,6 +108,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 | File | Description |
 |------|-------------|
+| [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The question that motivated the entire framework - why does something exist rather than nothing? - and what the mathematics discovered about it, including what it dissolves and what it snaps. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 
 ### Formal Verification (Lean 4)
@@ -175,7 +176,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 ## Reading Order
 
-**General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
+**General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
 **Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_7.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_0.pdf) → [ZP-I](ZP-I_Inside_Zero_v1_0.pdf) (framework closure)
 
