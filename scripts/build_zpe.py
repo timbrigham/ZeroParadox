@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.4 | April 2026
+Version 3.5 | April 2026
+v3.5: Open Items Register DA-1 status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT
+(corroboration of precondition)" now matches v3.3 path-hierarchy framing.
 v3.4: R-AFA minimality argument made explicit — added one sentence to "What remains
 conditional" stating that ⊥ = {⊥} is uniquely minimal among AFA non-well-founded sets:
 exactly one member, no internal differentiation; any extension exceeds A4's constraint.
@@ -216,7 +218,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.4  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.5  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -239,10 +241,11 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.4 | April 2026', S['subtitle']),
+        Paragraph('Version 3.5 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.3 | v3.4: R-AFA minimality argument made explicit — &#8869; = {&#8869;} is uniquely minimal among AFA non-well-founded sets: exactly one member, no internal differentiation; any extension exceeds A4\'s constraint. '
-            'v3.3: DA-1 path hierarchy foregrounded — three informal paths explicitly framed as corroboration of DP-2\'s precondition, not parallel proofs. '
+            '<i>Supersedes v3.4 | v3.5: DA-1 Open Items Register status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" now matches v3.3 path-hierarchy framing. '
+            'v3.4: R-AFA minimality explicit — &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets; any extension exceeds A4\'s constraint. '
+            'v3.3: DA-1 path hierarchy foregrounded — three informal paths framed as corroboration of DP-2\'s precondition, not parallel proofs. '
             'v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
             'v3.1: Remark R-&#949;<sub>0</sub> added — notation justification for '
             '&#949;<sub>0</sub> symbol choice; structural correspondence with Cantor-Gentzen '
@@ -775,14 +778,14 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.4', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.5', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP',
          'AX-1 is no longer an axiom. Binary Snap derived via P<sub>0</sub> + DA-1 + L-RUN + TQ-IH + ZP-A D2.'],
         ['DA-1: Derived Proposition (v3.0: DP-2 formal grounding added)',
-         'CLOSED — DP-2 + CC-2 + L-INF',
+         'CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)',
          'Primary formal grounding (v3.0): DP-2 (TrackedOutput, ZPE.lean &#167;VI) — da1_minimal_path proved '
          'axiom-free. Instantiation of &#8869; moves machine from c<sub>0</sub> to c<sub>1</sub>; output value is irrelevant '
          'to whether execution occurred. '
@@ -829,7 +832,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.4', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.5', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -882,7 +885,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.4', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.5', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.0 formal grounding)',
@@ -926,7 +929,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.4 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.5 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
             'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
             'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
@@ -942,5 +945,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_4.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_5.pdf'))
     build_zpe(out)
