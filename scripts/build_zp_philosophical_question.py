@@ -242,6 +242,55 @@ def build():
         'distinction between what dissolves and what snaps.'))
     E.append(hr())
 
+    # ── Plain-language setting ─────────────────────────────────────────────────
+    E.append(Paragraph('The Setting in Plain Language', S['h1']))
+    E.append(body(
+        'The argument that follows uses precise mathematical concepts. None of them '
+        'require a mathematics degree to understand. Here is what each one means.'))
+    E.append(body(
+        '<b>The null state</b> (written ⊥, pronounced "bottom") is the mathematical '
+        'formalization of "nothing" — but nothing made precise. Not pure absence, '
+        'which has no properties and cannot be discussed, but the ground state: '
+        'the starting point before any accumulation has occurred. Think of a blank '
+        'canvas. Zero is not the absence of a canvas; it is the canvas at its minimum. '
+        'The null state is nothing with enough structure to be the bottom of something.'))
+    E.append(body(
+        '<b>The state space</b> is built like a ratchet. States can be combined '
+        'forward — you can always build something larger — but there is no subtraction, '
+        'no way to go back. The null state sits at the bottom. Every other state is '
+        'above it. The ratchet only clicks one direction.'))
+    E.append(body(
+        '<b>The Binary Snap</b> (⊥ → ε₀) is the first click: the transition from '
+        'the null state to the first non-null state. Not a gradual emergence. '
+        'A step function — either nothing or something, with no in-between. '
+        'The central question of this framework is whether that first click '
+        'must happen, or whether it is something you simply have to assume.'))
+    E.append(body(
+        '<b>Axiom vs. theorem</b>: An axiom is a starting assumption — something '
+        'declared true in order to get going. A theorem is something proved from '
+        'other things. The Binary Snap used to be an axiom in this framework: '
+        'the snap was assumed to occur. The Zero Paradox derives it as a theorem: '
+        'given the other structure of the state space, the snap is forced. '
+        'You do not choose it. You cannot avoid it.'))
+    E.append(body(
+        '<b>DA-1</b> is the argument that gives T-SNAP its philosophical weight. '
+        'As a pure mathematical statement, T-SNAP says: the null state combined '
+        'with the first state gives the first state. This is true by definition '
+        'in any system with a bottom element — it is built into what "bottom" means. '
+        'What makes it interesting is the claim that this formal structure corresponds '
+        'to something real: that a system in the null state, when it reaches maximum '
+        'complexity (the point where no shorter description of it exists than itself), '
+        'is not merely described — it is executing. DA-1 is the bridge '
+        'between the mathematics and that claim.'))
+    E.append(body(
+        '<b>Lean 4</b> is a formal proof assistant — software that checks '
+        'mathematical proofs with the same rigor a compiler checks code. '
+        'When a theorem is "verified in Lean," it means the proof has been '
+        'checked mechanically, not just reviewed by human mathematicians. '
+        'Large parts of the Zero Paradox are verified this way. The philosophical '
+        'argument in this document is not — and this document is honest about that.'))
+    E.append(hr())
+
     # ── Section 1 ──────────────────────────────────────────────────────────────
     E.append(Paragraph('I. The Mathematical Response', S['h1']))
     E.append(body(
