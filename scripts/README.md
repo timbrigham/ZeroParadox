@@ -28,6 +28,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_zpe.py` | Builds `ZP-E_Bridge_Document_v2_0.pdf` (DA-1, DA-2, DA-3 bridge inserts) |
 | `build_zpg.py` | Builds `ZP-G_Category_Theory_v1_2.pdf` (category theory layer) |
 | `build_zph.py` | Builds `ZP-H_Categorical_Bridge_v1_2.pdf` |
+| `build_zpi.py` | Builds `ZP-I_Inside_Zero_v1_0.pdf` (T-IZ: ordinal closure of the ascending chain) |
 | `build_zpa_companion.py` | Builds the ZP-A Illustrated Companion |
 | `build_zpb_companion.py` | Builds the ZP-B Illustrated Companion |
 | `build_zpc_companion.py` | Builds the ZP-C Illustrated Companion |
@@ -35,6 +36,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion |
 | `build_zpg_companion.py` | Builds the ZP-G Illustrated Companion |
 | `build_zph_companion.py` | Builds the ZP-H Illustrated Companion |
+| `build_zpi_companion.py` | Builds the ZP-I Illustrated Companion |
 | `build_tools.py` | Builds `ZP_Tools_and_Methods.pdf` |
 | `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
 | `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |

@@ -1,10 +1,8 @@
 """
-Build ZP-D Illustrated Companion (v1.2, revised)
-Changes from original:
-1. New opening section grounds the reader in what a vector space is and what
-   orthogonality means before introducing H = ℂⁿ.
-2. "Superposition" and "direction in an abstract space" are explained concretely.
-3. "Unitary equivalence" is given a plain-language gloss.
+Build ZP-D Illustrated Companion (v1.3)
+Changes from v1.2:
+- n=2 foundational minimum explained in "What Is ZP-D Doing?"
+- R3 (T locally constant and continuous) noted near the T operator key results
 """
 
 import os
@@ -238,7 +236,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  April 2026  |  v1.2')
+            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  April 2026  |  v1.3')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -265,7 +263,7 @@ def build():
 
     E += [
         Paragraph('How topology maps to quantum state space', CS['title']),
-        Paragraph('State Layer (Hilbert Space) | Version 1.2', CS['subtitle']),
+        Paragraph('State Layer (Hilbert Space) | Version 1.3', CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
@@ -318,6 +316,13 @@ def build():
         'ℚ₂ into the state geometry of H. The central insight: topological isolation in ℚ₂ '
         'corresponds to orthogonality in H. States with no continuous path between them are '
         'represented as perpendicular vectors.'))
+    E.append(cbody(
+        'ZP-D works with exactly two foundational states: the Null State (⊥, non-existence) '
+        'and the first non-null state (ε₀, existence). This is not a simplifying assumption — '
+        'it is the irreducible minimum. The core question is whether any transition from ⊥ to '
+        'a first state is possible, and for that question n=2 is the smallest meaningful case. '
+        'No claim in ZP-D requires n > 2. Binary is the logical ground floor, not a placeholder '
+        'for a more general construction.'))
 
     # ── Page 2: T operator ─────────────────────────────────────────────────────
     E.append(Paragraph('The Transition Operator T', CS['h1']))
@@ -357,6 +362,14 @@ def build():
         'equivalence: like choosing different compass orientations for a map, the underlying '
         'geometry is the same. Two maps that agree on distances but point north differently '
         'are equivalent in all the ways that matter.'))
+    E.append(sp(4))
+    E.append(cbody(
+        '<b>R3 — T respects the topology:</b> A map between topological spaces can introduce '
+        'discontinuities that were not present in the original space. R3 establishes that T '
+        'does not do this — T is locally constant and continuous with respect to the p-adic '
+        'topology of ℚ₂. It does not invent jumps or boundaries that are absent from the source '
+        'structure. The orthogonal geometry of H reflects exactly the topological structure of ℚ₂, '
+        'nothing more.'))
     E.append(sp(6))
     E.append(key_result_box('Key Result: The Snap Produces an Orthogonal Shift (T4)',
         'The Binary Snap — 0 → ε₀ in ℚ₂ — maps to a shift from e₀ to e₁ in H such that '

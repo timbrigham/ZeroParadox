@@ -1,10 +1,10 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.1 | April 2026
+Version 1.2 | April 2026
+v1.2: AIT bridge added as third DA-1 motivating path; DP-2 two-layer structure explained;
+da1_minimal_path Lean verification noted. Formal doc at v3.0.
 v1.1: DA-1 diagram label updated (no longer D7-based); DA-1 status clarified as Derived Proposition
 grounded in ZP-A CC-2 (⊥ = {⊥}), not a freestanding design commitment.
-Covers: four-framework convergence diagram, AX-1 → T-SNAP derivation chain,
-remaining structural commitments table.
 """
 
 import os
@@ -285,7 +285,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026')
+            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026  |  v1.2')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -306,7 +306,7 @@ def build():
           Paragraph('Where all four frameworks converge —\nand AX-1 becomes a theorem',
                     CS['title']),
           Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
-          Paragraph('ZP Companion | Version 1.1 | April 2026', CS['meta']),
+          Paragraph('ZP Companion | Version 1.2 | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
               'examples. It is not the formal ontology — every claim here restates a result '
@@ -367,6 +367,28 @@ def build():
         'could be interpreted as a static description. A thing that interprets itself cannot '
         'be waiting for an external interpreter. So ⊥ at P₀ is necessarily executing. '
         'The design commitment has become a derivation.'))
+    E.append(cbody(
+        '<b>The two-layer structure of DA-1 (v3.0):</b> DA-1 now rests on two explicit layers. '
+        'The first is the formal conditional: DP-2 (Execution Distinguishability) establishes '
+        'that machine states carry execution history independently of output values. From DP-2, '
+        'Lean 4 can derive <i>da1_minimal_path</i> — a proof that before and after instantiation '
+        'produce the same output value (c₀) while the machine state changes (c₀ → c₁). '
+        '`#print axioms` confirms zero axiom dependencies. This is the first Lean formalization '
+        'of the core DA-1 claim, not just the surrounding algebra. '
+        'The second layer asks: does ⊥ actually satisfy DP-2\'s precondition? '
+        'That case rests on three converging arguments.'))
+    E.append(cbody(
+        '<b>Three paths to the precondition:</b> '
+        '(1) CC-2/R3 (ZP-A): ⊥ = {⊥} is a Quine atom — it interprets itself, leaving no '
+        'external position from which it could be read as a static description (above). '
+        '(2) L-INF (ZP-C): the surprisal of ⊥ diverges to infinity — no finite static '
+        'distribution can represent the null state. '
+        '(3) AIT bridge (v2.8): at the incompressibility threshold P₀, the description of ⊥ '
+        'is maximally incompressible — K(c₁|n)/|c₁| = 1. A string that cannot be compressed '
+        'beyond itself must be its own execution; a static-description reading is ruled out by '
+        'information theory alone. '
+        'All three share D7\'s static/executing dichotomy as background and none is circular '
+        'with DP-2.'))
     E.append(tsnap_chain_diagram())
     E.append(ccaption(
         'The T-SNAP derivation chain: six steps, no axioms beyond AX-B1 and the definition '
