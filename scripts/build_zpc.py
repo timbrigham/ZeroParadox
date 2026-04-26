@@ -1,5 +1,8 @@
 """
-Build ZP-C: Information Theory (v1.7)
+Build ZP-C: Information Theory (v1.8)
+v1.8: Remark R-BRIDGE added after L-INF — explicit statement of the relationship between
+Kolmogorov complexity K and 2-adic surprisal I(n): distinct measures that converge at P₀;
+used as independent routes to the same conclusion, not as a unified measure.
 """
 import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -179,17 +182,18 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_7.pdf')
-    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.7')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_8.pdf')
+    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.8')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version 1.7  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.6  |  L-INF extended: structural second grounding from ZP-A CC-2 (&#8869; = {&#8869;}) and R3 added; informational extremity and self-containment noted as independent derivations converging on the same conclusion.</i>', S['subtitle']),
+          Paragraph('Version 1.8  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.7  |  v1.8: Remark R-BRIDGE added after L-INF — explicit statement of the relationship between Kolmogorov complexity K and 2-adic surprisal I(n): correlated but distinct measures that converge at P&#8320;; used as independent routes, not a unified measure.</i>', S['subtitle']),
           Paragraph('<i>Version 1.6 change: CC-2 added: c&#8320; = &#8869; labeled as modeling commitment (parallel to CC-1 in ZP-A); RP-2 added: branching measure labeled as representational commitment.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
+          body('<i>Version 1.8 changes: Remark R-BRIDGE added after L-INF. ZP-C uses two distinct complexity measures: K(x|n)/|x| (Kolmogorov complexity, Section I) and I(n) = n (2-adic surprisal, Section III). R-BRIDGE states explicitly that these are not the same measure, where they coincide (at P&#8320;), where they diverge (e.g. K(2<super>n</super>) = O(log n) while v&#8322;(2<super>n</super>) = n), and how ZP-C uses them as independent convergent routes to the same conclusion rather than as a unified measure.</i>'),
           body('<i>Version 1.5 change: Theorem/Corollary hierarchy applied. T1b (JSD = 1 bit) relabelled Corollary T1b — it follows immediately from T1 with no additional proof work. T1, T2, L-RUN, and T-BUF labels unchanged.</i>'),
           body('<i>Version 1.4 changes: (1) Lemma L-RUN formalized: the act of execution is a non-null state change, derived from AX-B1 and D7. (2) Test Question TQ-IH answered negatively by L-RUN — no program outputs &#8869; without a non-null intermediate configuration state. (3) Candidate Theorem T-BUF added: at P<sub>0</sub>, execution is structurally guaranteed and that execution state is &#949;<sub>0</sub> in the semilattice. (4) AX-1 status updated from Axiomatic to Candidate Theorem.</i>'),
           sp()]
@@ -292,6 +296,38 @@ def build():
         'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: ZPC.l_inf (purity check: no non-Mathlib axioms).',
     ]))
     E.append(sp(4))
+    E.append(label_box('Remark R-BRIDGE — On the Relationship Between K and 2-Adic Surprisal', [
+        'ZP-C uses two complexity measures: Kolmogorov complexity K(x|n)/|x| (Section I) and '
+        '2-adic surprisal I(n) = n (Section III). These measure related but distinct structures. '
+        'Their relationship warrants explicit statement.',
+        '<b>What each measures.</b> K(x|n)/|x| = 1 is a property of a specific binary string x: '
+        'no program shorter than x generates it. It is a pointwise statement about a particular '
+        'configuration at the incompressibility threshold. I(n) = n is a property of position in '
+        'the ball hierarchy: the surprisal of any string at 2-adic depth n is n, by the branching '
+        'measure RP-2. It is a structural property of depth, not of any particular string.',
+        '<b>Where they coincide.</b> At P<sub>0</sub>, both conditions hold simultaneously for '
+        'the same configuration: K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 (no shorter external '
+        'description exists) and I(n) = n &#8594; &#8734; (surprisal grows without bound as depth '
+        'increases). This is not a coincidence of definition. The 2-adic limit point 0 &#8712; '
+        'Q<sub>2</sub> is the unique accumulation point of the binary ball hierarchy; algorithmic '
+        'incompressibility is the K-complexity characterisation of the same extremality. Both '
+        'locate the same threshold from independent directions.',
+        '<b>Where they diverge.</b> Away from P<sub>0</sub>, the measures are not interchangeable. '
+        'K(2<super>n</super>) = O(log n): the n-fold power of 2 is compactly described by a '
+        'short program, yet v<sub>2</sub>(2<super>n</super>) = n grows without bound. A string '
+        'can be 2-adically deep without being Kolmogorov-incompressible, and vice versa. The '
+        'two measures agree at the limit but diverge throughout the interior.',
+        '<b>How ZP-C uses them.</b> ZP-C uses K and I as independent convergent routes to the '
+        'same conclusion — that &#8869; at P<sub>0</sub> admits no finite external interpreter — '
+        'not as a single unified measure. L-INF is the 2-adic surprisal argument: I(n) unbounded '
+        '&#8594; no finite interpreter can hold &#8869;. DA-1 Path 3 (ZP-E) is the K-incompressibility '
+        'argument: K = 1 eliminates the static-description state via D7\'s dichotomy. Their '
+        'independence is preserved deliberately. The convergence of two structurally distinct '
+        'complexity measures on the same threshold is part of the argument for DA-1, not a '
+        'circularity within it. Axiomatising an equivalence between K and I would merge these '
+        'two routes into one and eliminate that independence.',
+    ]))
+    E.append(sp(4))
 
     E.append(Paragraph('IV. Execution as State: The Hardware Lemma', S['h1']))
     E.append(label_box('Definition D7 — Machine Configuration', [
@@ -356,7 +392,7 @@ def build():
         'Status label: CANDIDATE THEOREM — gap identified and named (DA-1). Closed in ZP-E DA-1 insert.',
     ]))
 
-    E.append(Paragraph('VI. Open Items Register for ZP-C v1.6', S['h1']))
+    E.append(Paragraph('VI. Open Items Register for ZP-C v1.8', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['S1: Distribution stipulation', 'Closed — T1', 'T1 derives P and Q from AX-B1 and RP-1.'],
@@ -396,7 +432,8 @@ def build():
          ['R4: Configuration vs. output independence', 'Valid — load-bearing distinction for TQ-IH and T-BUF'],
          ['TQ-IH: Test question answered', 'Valid — Derived by L-RUN; no Kolmogorov machinery required'],
          ['T-BUF: Candidate Theorem', 'Candidate — structurally complete in ZP-C; DA-1 bridge in ZP-E closes fully'],
-         ['R5: AX-1 status updated', 'Valid — AX-1 is Candidate Theorem; prior Axiomatic status corrected']],
+         ['R5: AX-1 status updated', 'Valid — AX-1 is Candidate Theorem; prior Axiomatic status corrected'],
+         ['R-BRIDGE: K vs. 2-adic surprisal', 'Valid — Remark; states relationship explicitly: distinct measures converging at P<sub>0</sub>; independence of L-INF and K paths preserved']],
         [2.5*inch, 4.0*inch]
     ))
 
