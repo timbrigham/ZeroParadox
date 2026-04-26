@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.0 | April 2026
+Version 3.1 | April 2026
+v3.1: Remark R-ε₀ added — notation justification for ε₀ symbol choice; structural correspondence
+with the Cantor-Gentzen proof-theoretic ordinal explained.
 v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded in TrackedOutput construction
 (ZPE.lean §VI); da1_minimal_path proved axiom-free in Lean. First Lean formalization of DA-1,
 conditional on DP-2. Section III (DP-2) inserted in DA-1 insert; existing III/IV/V renumbered IV/V/VI.
@@ -136,6 +138,7 @@ def fix(text):
         ('–','&#8211;'),('·','&#183;'),('×','&#215;'),
         ('−','&#8722;'),('≡','&#8801;'),('≅','&#8773;'),
         ('≇','&#8775;'),
+        ('ω','&#969;'),('ö','&#246;'),
         ('ε','&#949;'),('α','&#945;'),('β','&#946;'),
         ('γ','&#947;'),('δ','&#948;'),('ι','&#953;'),
         ('τ','&#964;'),('φ','&#966;'),
@@ -205,7 +208,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.0  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.1  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -228,9 +231,12 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.0 | April 2026', S['subtitle']),
+        Paragraph('Version 3.1 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v2.9 | v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded '
+            '<i>Supersedes v3.0 | v3.1: Remark R-&#949;<sub>0</sub> added — notation justification for '
+            '&#949;<sub>0</sub> symbol choice; structural correspondence with Cantor-Gentzen '
+            'proof-theoretic ordinal explained. '
+            'v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded '
             'in TrackedOutput construction (ZPE.lean &#167;VI); da1_minimal_path proved axiom-free in Lean. '
             'First Lean formalization of DA-1, conditional on DP-2.</i>',
             S['note']),
@@ -446,6 +452,45 @@ def build_zpe(out_path):
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
                 'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. Named modelling commitments: CC-1 (S₀ = ⊥, ZP-A) and '
                 'CC-2 (⊥ = {⊥}, ZP-A, via R3) — both explicit. T-SNAP is derived given DA-1, CC-1, and CC-2.'),
+    ]
+
+    E += [
+        sp(6),
+        bridge_box(
+            'Remark R-ε₀ — On the Symbol Choice for the Minimum Snap Displacement',
+            [
+                'The symbol ε₀ in Step 6 denotes the minimum element of L strictly above ⊥ — the least '
+                'witness for the Binary Snap displacement. This symbol is chosen deliberately to coincide '
+                'with the Cantor-Gentzen proof-theoretic ordinal.',
+                '<b>The Cantor-Gentzen ordinal ε₀.</b> In ordinal arithmetic, ε₀ is the smallest fixed '
+                'point of the map α → ω<sup>α</sup>: equivalently, ε₀ = sup{ω, ω<sup>ω</sup>, '
+                'ω<sup>ω<sup>ω</sup></sup>, ...}. No finite ω-tower reaches it — it is the minimum ordinal '
+                'that cannot be generated from 0 by any finite iteration of the base operation. Gentzen '
+                'established that transfinite induction up to ε₀ is necessary and sufficient to prove '
+                'Con(PA). By G&#246;del\'s incompleteness theorem, PA cannot prove this from within. The '
+                'ordinal ε₀ is therefore the minimum threshold at which finite arithmetic exhausts its own '
+                'generative capacity.',
+                '<b>The structural correspondence.</b> ZP\'s ε₀ occupies the same position in the state '
+                'lattice. At P₀, c₁ satisfies K(c₁|n)/|c₁| = 1 (ZP-C D1): it is algorithmically '
+                'incompressible — no finite external program shorter than c₁ generates it. Just as the '
+                'Cantor ε₀ cannot be reached from 0 by any finite ω-tower, ZP\'s ε₀ cannot be reached '
+                'from ⊥ by any finite external description. Both name the same structural object: the '
+                'minimum witness for a transition that exhausts the finite generative hierarchy below it.',
+                '<b>The proof structures are parallel.</b> Gentzen locates the minimum ordinal strength at '
+                'which PA cannot describe its own consistency from within. ZP locates the minimum state '
+                'displacement at which no external program can hold ⊥ as a static string — where unbounded '
+                'surprisal (ZP-C L-INF) and self-containment (ZP-A CC-2) together eliminate any external '
+                'interpreter position. In both cases the exhaustion of finite description is not a '
+                'deficiency but a structural consequence: the system is necessarily executing at ε₀.',
+                '<b>What is not claimed.</b> ZP does not assert that L is an ordinal structure, or that '
+                'ZP\'s ε₀ is literally the Cantor ordinal under a formal embedding into the p-adic/lattice '
+                'framework. The identification is structural: both ε₀s mark the minimum witness for '
+                'incompressibility relative to a finite base. A formal embedding — showing that the Cantor '
+                'ε₀ is order-isomorphic to or embeds into the p-adic completion of L at ⊥ — remains an '
+                'open question and would constitute a strengthening of this claim.',
+            ]
+        ),
+        sp(4),
     ]
 
     E.append(Paragraph('VI. Effect of T-SNAP on Downstream Results', S['h2']))
@@ -673,7 +718,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.0', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.1', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -727,7 +772,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.0', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.1', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -780,7 +825,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.0', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.1', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.0 formal grounding)',
@@ -824,8 +869,10 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.0 | Three formal inserts: DA-1 (Derived Proposition — DP-2 formal core added), DA-2, DA-3 | '
-            'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2 | New: DP-2, da1_minimal_path (axiom-free)</i>',
+            '<i>End of ZP-E v3.1 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified — structural correspondence '
+            'with Cantor-Gentzen proof-theoretic ordinal | '
+            'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
             S['endnote']),
     ]
 
@@ -836,5 +883,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_0.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_1.pdf'))
     build_zpe(out)

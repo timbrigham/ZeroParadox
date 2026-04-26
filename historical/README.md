@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v3_0-1.pdf](ZP-E_Bridge_Document_v3_0-1.pdf) | 2026-04-26 | ZP-E v3.0 superseded by v3.1: Remark R-ε₀ added — deliberate notation justification for ε₀ symbol choice; structural correspondence with Cantor-Gentzen proof-theoretic ordinal explained |
 | [ZP-H_Categorical_Bridge_v1_5-1.pdf](ZP-H_Categorical_Bridge_v1_5-1.pdf) | 2026-04-25 | ZP-H v1.5 superseded by v1.6: three identical fb/fc/fd_nnreal_initial_grounding Lean defs consolidated into one nnreal_initial_grounding; OQ-G3 register updated to reflect single shared witness; Section III header clarified |
 | [ZP-H_Categorical_Bridge_v1_4-1.pdf](ZP-H_Categorical_Bridge_v1_4-1.pdf) | 2026-04-25 | ZP-H v1.4 superseded by v1.5: OQ-G3 register entry updated — fb/fc/fd_nnreal_initial_grounding share identical proof term (nnrealZPCategory.zpIsInitial); domain theorems C3/T1b/T4 clarified as semantic context, not formal Lean dependencies; full abstract functor terms explicitly deferred |
 | [ZP-G_Category_Theory_v1_3-1.pdf](ZP-G_Category_Theory_v1_3-1.pdf) | 2026-04-25 | ZP-G v1.3 superseded by v1.4: Lean scope note added after T6-c — T6-b strict inequality and T6-c subadditivity are K-specific AIT content outside ZPSurprisal skeleton; Lean proofs reduce to Nat.zero_le _ (structural skeleton only) |
