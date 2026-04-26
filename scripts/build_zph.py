@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.5 | April 2026
+Version 1.6 | April 2026
+Changes from v1.5:
+  - Lean: three identical fb/fc/fd_nnreal_initial_grounding defs consolidated into one
+    nnreal_initial_grounding; OQ-G3 register updated to reflect single shared witness;
+    Section III header updated to state "shared witness" explicitly
 Changes from v1.4:
   - OQ-G3 register entry updated: fb/fc/fd all share proof term nnrealZPCategory.zpIsInitial;
     domain theorems (C3, T1b, T4) clarified as semantic context, not formal Lean dependencies;
@@ -209,7 +213,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.4  |  April 2026  |  Page {doc.page}"
+        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.6  |  April 2026  |  Page {doc.page}"
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -232,7 +236,7 @@ def build_zph(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.4 | April 2026', S['bodyI']),
+        Paragraph('Version 1.6 | April 2026', S['bodyI']),
         Paragraph(
             '<i>Supersedes v1.3 | T-H3 consistency caveat expanded: four-framework agreement '
             'is coherence across representations of shared structural commitments (A1-A4, AX-B1, CC-1), '
@@ -634,9 +638,8 @@ def build_zph(out_path):
          'PDF-level constructions of all four instantiation functors complete (Section III): '
          'object maps, morphism maps, composition and identity preservation verified for F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>. '
          'F<sub>A</sub>: Lean-level full closure (NatSLat appendix); fb_functor provides a concrete Functor &#8469; Q&#8322;BallDepth term. '
-         'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub>: Lean uses the shared proof term nnrealZPCategory.zpIsInitial for all three — '
-         'the three definitions (fb/fc/fd_nnreal_initial_grounding) are identical at the proof level. '
-         'Domain theorems C3, T1b, T4 cited in their docstrings are semantic context, not formal Lean dependencies. '
+         'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub>: One shared Lean witness — nnreal_initial_grounding (nnrealZPCategory.zpIsInitial). '
+         'Domain differentiation carried by domain theorems proved separately in T-H1: C3 (F<sub>B</sub>), T1b (F<sub>C</sub>), T4 (F<sub>D</sub>). '
          'Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work.'],
         ['OQ-G4',
          'Closed — T-H2',
@@ -748,5 +751,5 @@ def build_zph(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_5.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_6.pdf'))
     build_zph(out)
