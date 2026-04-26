@@ -491,12 +491,16 @@ def build():
         'self-grounding, then "why ⊥ at all?" may dissolve the same way the '
         'instantiation objection dissolved.'))
     E.append(body(
-        'The argument runs as follows. "Pure absence" — a genuinely featureless void — '
+        'There is a common saying: <i>doing nothing creates nothing.</i> '
+        'The Zero Paradox finds the opposite. '
+        '"Pure absence" — a genuinely featureless void — '
         'would have no properties, including the property of being nothing. The moment '
         'you characterize it, you give it structure. The moment it has structure, it '
         'is ⊥. The void and the null state are the same object. And ⊥ = {⊥} says '
         'it has always already contained itself. There is no prior state from which '
-        '⊥ needed to be generated. It generates itself.'))
+        '⊥ needed to be generated. The nothing generates itself — which means '
+        'the saying had it exactly backwards: nothing, precisely because it is '
+        'nothing, has no choice but to become something.'))
     E.append(body(
         'Whether this closes the final gap depends on what you think a gap requires. '
         'It does not satisfy in the way a Lean proof satisfies. But it may be the '
