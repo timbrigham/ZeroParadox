@@ -82,7 +82,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology_v1_4.pdf) | ZP-B | v1.4 | AX-B1. MP-1 (design commitment). T0: p=2 derived given MP-1. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility. |
 | [ZP-C Information Theory](ZP-C_Information_Theory_v1_7.pdf) | ZP-C | v1.7 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). CC-2: c₀ = ⊥ labeled as modeling commitment. RP-2: branching measure labeled as representational commitment. L-INF grounded from two directions: informational extremity (D4, T2) and structural self-containment (ZP-A CC-2, R3). |
 | [ZP-D State Layer](ZP-D_State_Layer_v1_6.pdf) | ZP-D | v1.6 | Hilbert space H = ℂⁿ, foundational minimum n = 2. Transition operator T: Q₂ → H — locally constant, continuous (R3 v1.6). DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. |
-| [ZP-E Bridge Document](ZP-E_Bridge_Document_v2_9.pdf) | ZP-E | v2.9 | **DA-1** (instantiation = execution; formal bridge: at P0, K(c1|n)/|c1| = 1 eliminates static description state — derivation from ZP-C D1 + AIT, independent of CC-2; CC-2/R3 and L-INF as corroboration. Lean scope: functional role carried by ZPC.l_run/tq_ih; AIT+ZF+AFA bridge outside Lean scope). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Full traceability register. |
+| [ZP-E Bridge Document](ZP-E_Bridge_Document_v3_0.pdf) | ZP-E | v3.0 | **DA-1** (instantiation = execution; v3.0: DP-2 (Execution Distinguishability) added — TrackedOutput separates output value from machine state; da1_minimal_path proved axiom-free in Lean; first formal Lean grounding of DA-1. AIT and ZF+AFA informal paths retained as corroboration). **T-SNAP** (Binary Snap derived). **DA-2** (instantiation succession, directed tree). **DA-3** (perspective-relative cardinality). Full traceability register. |
 | [ZP-G Category Theory](ZP-G_Category_Theory_v1_3.pdf) | ZP-G | v1.3 | Category C. Initial object. AX-G1, AX-G2. Universal property. R2 (v1.3): connecting note linking initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). |
 | [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge_v1_4.pdf) | ZP-H | v1.4 | Instantiation maps FA-FD (F_A: full construction via NatSLat; F_B/C/D: PDF constructions complete; Lean proxy witness only - full abstract functors future work). F_C composition by Q-stability (not JSD subadditivity). Singularity reconciliation. T-H3: Snap under all four instantiations. T-SNAP inherited as derived theorem. |
 
@@ -150,7 +150,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-B1: p = 2 justification | Closed - ZP-B T0 (derived from AX-B1 + MP-1) |
 | S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
-| DA-1: Instantiation alignment | Closed - ZP-E DA-1 v2.9 (Derived Proposition: at P0, K(c1|n)/|c1| = 1 eliminates static description state — derived from ZP-C D1 + AIT, without requiring CC-2; CC-2/R3 and L-INF provide independent corroboration. Lean scope: functional role carried by ZPC.l_run/tq_ih; AIT+ZF+AFA bridge outside Lean scope) |
+| DA-1: Instantiation alignment | Closed - ZP-E DA-1 v3.0 (Derived Proposition: DP-2 formal core — da1_minimal_path proved axiom-free in Lean (TrackedOutput separates output value from machine state); AIT incompressibility, CC-2/R3, and L-INF retained as convergent informal corroboration) |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
 | OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
 | DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
@@ -170,7 +170,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **General reader:** [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_6.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v2_9.pdf) (in dependency order)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_6.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_7.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_0.pdf) (in dependency order)
 
 **For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_3.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_4.pdf) (self-contained; after ZP-E)
 

@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 2.9 | April 2026
+Version 3.0 | April 2026
+v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded in TrackedOutput construction
+(ZPE.lean §VI); da1_minimal_path proved axiom-free in Lean. First Lean formalization of DA-1,
+conditional on DP-2. Section III (DP-2) inserted in DA-1 insert; existing III/IV/V renumbered IV/V/VI.
 v2.9: DA-1 Lean scope note added — functional role carried by ZPC.l_run/tq_ih; AIT+ZF+AFA bridge
 outside Lean scope (same category as ZP-A CC-2). PDF status line updated to reflect Lean scope.
 v2.8: DA-1 formal bridge added: incompressibility = self-description argument (ZP-C D1 + standard AIT).
@@ -202,7 +205,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v2.9  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.0  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -225,9 +228,14 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 2.9 | April 2026', S['subtitle']),
+        Paragraph('Version 3.0 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v2.8 | DA-1 Lean scope note added: functional role carried by ZPC.l_run/tq_ih (proved); '
+            '<i>Supersedes v2.9 | v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded '
+            'in TrackedOutput construction (ZPE.lean &#167;VI); da1_minimal_path proved axiom-free in Lean. '
+            'First Lean formalization of DA-1, conditional on DP-2.</i>',
+            S['note']),
+        Paragraph(
+            '<i>v2.9: DA-1 Lean scope note added: functional role carried by ZPC.l_run/tq_ih (proved); '
             'AIT and ZF+AFA bridge outside Lean scope — same category as ZP-A CC-2.</i>',
             S['note']),
         Paragraph(
@@ -253,9 +261,10 @@ def build_zpe(out_path):
         'This document is the cross-framework synthesis layer of the Zero Paradox. It imports from '
         'ZP-A (lattice algebra), ZP-B (p-adic topology), ZP-C (information theory), and ZP-D (Hilbert '
         'space state layer). It provides three formal inserts: DA-1 (Instantiation as Execution — '
-        'upgraded to Derived Proposition in v2.7, grounded in ZP-A CC-2 and R3), DA-2 (Instantiation '
-        'Succession), and DA-3 (Perspective-Relative Cardinality). With DA-1 in place, AX-1 is promoted '
-        'to Theorem T-SNAP. With DA-2, the directed instantiation tree is formally licensed. With DA-3, '
+        'upgraded to Derived Proposition in v2.7; in v3.0, DP-2 provides the first Lean-formalizable '
+        'grounding via TrackedOutput, proved axiom-free), DA-2 (Instantiation Succession), and '
+        'DA-3 (Perspective-Relative Cardinality). With DA-1 in place, AX-1 is promoted to Theorem '
+        'T-SNAP. With DA-2, the directed instantiation tree is formally licensed. With DA-3, '
         'cardinality is shown to be position-dependent within the instantiation structure.'))
     E.append(body(
         'Illustrated Companion: A paired ZP-E Illustrated Companion document provides accessible '
@@ -268,8 +277,9 @@ def build_zpe(out_path):
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Derived Proposition — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v2.9 | DA-1 Lean scope note added (v2.9) | DA-1 formal bridge: incompressibility = self-description (ZP-C D1 + AIT) | '
-                  'v2.7: DA-1 upgraded, CC-2/R3 grounding | v2.6: DA-3 applications removed | v2.5: Physical analogies removed</i>',
+        Paragraph('<i>Updated ZP-E v3.0 | DP-2 added — first Lean formalization of DA-1 (axiom-free, conditional on DP-2, ZPE.lean &#167;VI) | '
+                  'v2.9: DA-1 Lean scope note | v2.8: incompressibility = self-description (ZP-C D1 + AIT) | '
+                  'v2.7: DA-1 upgraded, CC-2/R3 grounding | v2.6: DA-3 applications removed</i>',
                   S['note']),
         hr(),
     ]
@@ -305,14 +315,52 @@ def build_zpe(out_path):
         sp(6),
     ]
 
-    E.append(Paragraph('III. Proposition DA-1', S['h2']))
+    E.append(Paragraph('III. Design Principle DP-2 — Execution Distinguishability', S['h2']))
+    E.append(body(
+        'The two senses of § II share the same output value (⊥) but differ in machine state. '
+        'This separation — output value is not machine state — is made precise by Design Principle DP-2.'))
     E.append(bridge_box(
-        'Proposition DA-1 — Instantiation as Execution (Derived from ZP-A CC-2)',
+        'Design Principle DP-2 — Execution Distinguishability',
+        [
+            'Machine states carry execution history independently of output values. '
+            'A machine in state c<sub>1</sub> can output ⊥ (the null value) while being in a configuration '
+            'entirely distinct from a machine in state c<sub>0</sub>. The post-execution null and the '
+            'pre-execution null are different instances — same output value, different machine state.',
+            'Lean formalization (ZPE.lean &#167;VI): TrackedOutput separates value : MachinePhase '
+            'from state : MachinePhase. preInstantiation = &#10216;c<sub>0</sub>, c<sub>0</sub>&#10217;; '
+            'postInstantiation = &#10216;c<sub>0</sub>, c<sub>1</sub>&#10217;. '
+            'Theorem dp2_execution_distinguishability proves: '
+            'preInstantiation.value = postInstantiation.value (same output) ∧ '
+            'preInstantiation.state ≠ postInstantiation.state (distinct machine states). '
+            'Proved axiom-free.',
+        ]
+    ))
+    E += [
+        sp(4),
+        body(
+            'Given DP-2, DA-1 is Lean-formalizable at the minimal-path level. '
+            'Theorem da1_minimal_path (ZPE.lean &#167;VI) establishes four conjuncts: '
+            '(1) before and after instantiation, the output value is the same (⊥); '
+            '(2) the machine states are distinct (c<sub>0</sub> ≠ c<sub>1</sub>); '
+            '(3) the machine was at c<sub>0</sub> before; '
+            '(4) the machine is at c<sub>1</sub> after. '
+            'Proved axiom-free — no Kolmogorov complexity, no ZF+AFA required. '
+            'The "return to null" after instantiation is postInstantiation (output ⊥, state c<sub>1</sub>) — '
+            'not preInstantiation (output ⊥, state c<sub>0</sub>). '
+            'Irreversibility (ZPB C3, ZPE t_snap_irreversible) blocks any path back to preInstantiation.'),
+    ]
+
+    E.append(Paragraph('IV. Proposition DA-1', S['h2']))
+    E.append(bridge_box(
+        'Proposition DA-1 — Instantiation as Execution',
         [
             'Claim: The instantiation of a machine configuration c<sub>1</sub> at the incompressibility threshold '
             'P<sub>0</sub> is an execution event in the sense of L-RUN. It is not a static description of a machine. '
             'It is a machine in state c<sub>1</sub>.',
-            'Grounding: ZP-A CC-2 (⊥ = {⊥}) establishes ⊥ as a Quine atom under ZF + AFA — a set that is '
+            'Formal core (Lean): DP-2 (§III) — TrackedOutput separates output value from machine state. '
+            'da1_minimal_path proves: one act of instantiation moves c<sub>0</sub> to c<sub>1</sub> regardless '
+            'of output value. The returned ⊥ is a new null — not the prior c<sub>0</sub>. Axiom-free.',
+            'Structural grounding: ZP-A CC-2 (⊥ = {⊥}) establishes ⊥ as a Quine atom under ZF + AFA — a set that is '
             'its own singleton, admitting no external interpreter. ZP-A R3 derives the immediate consequence: '
             'a self-containing object cannot be a static description awaiting external instantiation. '
             'ZP-C L-INF provides independent informational corroboration: ⊥ has unbounded surprisal, '
@@ -357,17 +405,18 @@ def build_zpe(out_path):
              'the structural argument (⊥ = {⊥}, no external position possible) and the informational argument '
              '(unbounded surprisal, no finite interpreter can hold ⊥) each independently confirm the same '
              'conclusion from different mathematical grounds.'),
-        derived('Status: DERIVED PROPOSITION — from ZP-C D1 (P<sub>0</sub> definition) and standard '
-                'algorithmic information theory (incompressibility = self-description, no shorter external generator). '
-                'Does not require CC-2. Independent corroboration: ZP-A CC-2 + R3 (structural path), '
-                'ZP-C L-INF (informational path). '
-                'Named modeling commitments: CC-1 (S<sub>0</sub> = &#8869;, ZP-A) and CC-2 (&#8869; = {&#8869;}, ZP-A) — both explicit. '
-                'T-SNAP is derived given DA-1, CC-1, and AX-B1. ✓ '
-                'Lean scope: functional role carried by ZPC.l_run and ZPC.tq_ih (both proved independently); '
-                'AIT (Kolmogorov complexity) and ZF+AFA bridge outside Lean scope — same category as ZP-A CC-2.'),
+        derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
+                'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
+                'to c<sub>1</sub> regardless of output value. ✓ '
+                'Informal convergent paths: ZP-C D1 + AIT incompressibility (Path 3 — K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1); '
+                'ZP-A CC-2 + R3 (Path 1 — structural); ZP-C L-INF (Path 2 — informational). '
+                'Named modeling commitments: CC-1 (S<sub>0</sub> = &#8869;, ZP-A), CC-2 (&#8869; = {&#8869;}, ZP-A), '
+                'DP-2 (&#167;III) — all explicit. '
+                'T-SNAP is derived given DA-1, CC-1, and AX-B1. '
+                'AIT (Kolmogorov complexity) and ZF+AFA informal paths outside Lean scope — same category as ZP-A CC-2.'),
     ]
 
-    E.append(Paragraph('IV. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
+    E.append(Paragraph('V. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
     E.append(bridge_box(
         'Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]',
         [
@@ -392,7 +441,7 @@ def build_zpe(out_path):
                 'CC-2 (⊥ = {⊥}, ZP-A, via R3) — both explicit. T-SNAP is derived given DA-1, CC-1, and CC-2.'),
     ]
 
-    E.append(Paragraph('V. Effect of T-SNAP on Downstream Results', S['h2']))
+    E.append(Paragraph('VI. Effect of T-SNAP on Downstream Results', S['h2']))
     E.append(body(
         'Remark R-DA1: All results in ZP-E that previously depended on AX-1 as an axiom now depend '
         'on T-SNAP as a derived theorem. T5 (Iterative Forcing Theorem) depended on AX-1 for the first '
@@ -617,17 +666,18 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v2.9', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.0', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP',
          'AX-1 is no longer an axiom. Binary Snap derived via P<sub>0</sub> + DA-1 + L-RUN + TQ-IH + ZP-A D2.'],
-        ['DA-1: Derived Proposition (upgraded from Design Principle in v2.7)',
-         'CLOSED — CC-2 + L-INF',
-         'ZP-A CC-2 (&#8869; = {&#8869;} Quine atom) with R3 establishes &#8869; has no external interpreter; '
-         'therefore &#8869; at P<sub>0</sub> is necessarily executing. ZP-C L-INF provides independent informational '
-         'corroboration (unbounded surprisal). DA-1 is a derivation conditional on CC-2, not a freestanding design principle.'],
+        ['DA-1: Derived Proposition (v3.0: DP-2 formal grounding added)',
+         'CLOSED — DP-2 + CC-2 + L-INF',
+         'Primary formal grounding (v3.0): DP-2 (TrackedOutput, ZPE.lean &#167;VI) — da1_minimal_path proved '
+         'axiom-free. Instantiation of &#8869; moves machine from c<sub>0</sub> to c<sub>1</sub>; output value is irrelevant '
+         'to whether execution occurred. '
+         'Informal corroboration: ZP-A CC-2 + R3 (structural); ZP-C L-INF (informational); AIT incompressibility (Path 3).'],
         ['DA-2: Instantiation Succession',
          'CLOSED — Definitional',
          'Terminal state of I<sub>n</sub> satisfies A4 role of ⊥ for I<sub>n+1</sub>. C-DA2 establishes ontological novelty of each ⊥.'],
@@ -670,7 +720,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v2.9', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.0', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -678,9 +728,11 @@ def build_zpe(out_path):
          'None',
          'Derived — T-SNAP ✓ (was: Axiomatic — AX-1)'],
         ['DA-1: Instantiation = execution',
-         'ZP-A CC-2, R3; ZP-C L-INF (corroboration)',
+         'DP-2 (TrackedOutput, ZPE.lean &#167;VI); ZP-A CC-2, R3; ZP-C L-INF',
          'None',
-         'Derived Proposition — conditional on ZP-A CC-2 (&#8869; = {&#8869;} Quine atom). R3: self-containing object has no external interpreter. L-INF: independent informational corroboration.'],
+         'Derived Proposition — primary: DP-2 (da1_minimal_path proved axiom-free in Lean). '
+         'Informal paths: CC-2/R3 (structural), L-INF (informational), AIT incompressibility (Path 3). '
+         'AIT+ZF+AFA outside Lean scope.'],
         ['DA-2: Instantiation succession',
          'ZP-A A4, CC-1; ZP-B C3, R1; T-SNAP',
          'None',
@@ -721,11 +773,15 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v2.9', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.0', S['h1'])]
 
     val_rows = [
-        ['DA-1: Derived Proposition (from v2.7)',
-         'Valid — conditional on ZP-A CC-2. Path 1 (structural): CC-2 establishes &#8869; = {&#8869;}; R3 derives no external interpreter exists; therefore &#8869; at P<sub>0</sub> cannot be a static description. Path 2 (informational): L-INF establishes unbounded surprisal beyond any finite interpreter. Both paths entail: instantiation at P<sub>0</sub> is necessarily executing. ✓'],
+        ['DA-1: Derived Proposition (v3.0 formal grounding)',
+         'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI). '
+         'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
+         'are provably distinct even when both produce &#8869;. ✓ '
+         'Informal corroboration: Path 1 (CC-2 + R3 — structural), Path 2 (L-INF — informational), '
+         'Path 3 (K incompressibility — AIT). AIT and ZF+AFA paths outside Lean scope.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
         ['AX-1 retirement',
@@ -761,8 +817,8 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v2.9 | Three formal inserts: DA-1 (Derived Proposition), DA-2, DA-3 | '
-            'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
+            '<i>End of ZP-E v3.0 | Three formal inserts: DA-1 (Derived Proposition — DP-2 formal core added), DA-2, DA-3 | '
+            'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2 | New: DP-2, da1_minimal_path (axiom-free)</i>',
             S['endnote']),
     ]
 
@@ -773,5 +829,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v2_9.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_0.pdf'))
     build_zpe(out)

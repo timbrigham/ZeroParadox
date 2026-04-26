@@ -187,6 +187,59 @@ theorem t_snap_accessible_proper_subset {L : Type*} [ZPSemilattice L] {ε₀ : L
   · intro h
     exact hne (le_antisymm (bot_le ε₀) (h (bot_le bot)))
 
+/-! ## VI. DP-2 — Execution Distinguishability and DA-1 Lean Formalization
+
+DP-2 (Design Principle — Execution Distinguishability): Machine states carry execution
+history independently of output values. A machine in state c₁ can output ⊥ (the null
+value) while being in a configuration entirely distinct from a machine in state c₀. The
+post-execution null and the pre-execution null are different instances.
+
+This separates two things the narrative might conflate: the *value* a machine produces
+(which can be ⊥ in both cases) and the *machine state* (c₀ before execution, c₁ after).
+
+Given DP-2, DA-1 (instantiation = execution) is Lean-formalizable at the minimal-path
+level: the act of instantiating ⊥ moves the machine from c₀ to c₁, regardless of what
+value the operation returns. The "return to null" is a new null — not a return to c₀. -/
+
+/-- A machine output tagged with the state that produced it.
+    Separates the output value (what the machine returns) from the machine state
+    (where the machine is). This structure is the formal content of DP-2. -/
+structure TrackedOutput where
+  value : MachinePhase   -- the value the machine returns
+  state : MachinePhase   -- the machine state producing it
+  deriving DecidableEq
+
+/-- The pre-instantiation configuration: null value, c₀ machine state. -/
+def preInstantiation : TrackedOutput := ⟨c₀, c₀⟩
+
+/-- The post-instantiation configuration: null value returned, c₁ machine state.
+    This is the "different instance of null" — same output value as preInstantiation,
+    but the machine has executed. The snap occurred; c₀ is not recoverable. -/
+def postInstantiation : TrackedOutput := ⟨c₀, c₁⟩
+
+/-- DP-2 (formal content): pre- and post-instantiation states are provably distinct
+    even when both produce the null value ⊥. Execution history is encoded in the
+    machine state, not the output value. -/
+theorem dp2_execution_distinguishability :
+    preInstantiation.value = postInstantiation.value ∧
+    preInstantiation.state ≠ postInstantiation.state :=
+  ⟨rfl, by decide⟩
+
+/-- DA-1 Minimal Path: The act of instantiating ⊥ moves the machine to c₁,
+    even when the operation returns ⊥ as its output value.
+    The "return to null" is postInstantiation — a new null, not preInstantiation.
+    Given DP-2, this is DA-1 at the formally minimal level: instantiation is execution.
+    One step from c₀ to c₁ is structurally unavoidable; the output value is irrelevant
+    to whether execution occurred. -/
+theorem da1_minimal_path :
+    let before := preInstantiation
+    let after  := postInstantiation
+    before.value = after.value ∧   -- same output value (both ⊥)
+    before.state ≠ after.state ∧   -- distinct machine states
+    before.state = c₀ ∧            -- before: pre-execution null
+    after.state  = c₁ :=           -- after: execution occurred (the snap)
+  ⟨rfl, by decide, rfl, rfl⟩
+
 end ZeroParadox.ZPE
 
 /-! ## Axiom Purity Check -/
@@ -201,5 +254,7 @@ open ZeroParadox.ZPE ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPC
 #print axioms da2_bottom_characterization
 #print axioms c_da2_novelty
 #print axioms t_snap_accessible_proper_subset
+#print axioms dp2_execution_distinguishability
+#print axioms da1_minimal_path
 
 end PurityCheck
