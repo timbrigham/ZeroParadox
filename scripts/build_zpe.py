@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.3 | April 2026
+Version 3.4 | April 2026
+v3.4: R-AFA minimality argument made explicit — added one sentence to "What remains
+conditional" stating that ⊥ = {⊥} is uniquely minimal among AFA non-well-founded sets:
+exactly one member, no internal differentiation; any extension exceeds A4's constraint.
 v3.3: DA-1 path hierarchy foregrounded — added explicit framing before Paths 1–3 stating
 that the three informal paths are corroboration of the precondition DP-2 formalizes, not
 parallel proofs of DA-1 itself. Shrinks attack surface on Angle 1 (DA-1 doing too much work).
@@ -213,7 +216,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.3  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.4  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -236,9 +239,10 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.3 | April 2026', S['subtitle']),
+        Paragraph('Version 3.4 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.2 | v3.3: DA-1 path hierarchy foregrounded — explicit framing added before Paths 1&#8211;3 clarifying that the three informal paths are corroboration of the precondition DP-2 formalizes, not parallel proofs of DA-1. '
+            '<i>Supersedes v3.3 | v3.4: R-AFA minimality argument made explicit — &#8869; = {&#8869;} is uniquely minimal among AFA non-well-founded sets: exactly one member, no internal differentiation; any extension exceeds A4\'s constraint. '
+            'v3.3: DA-1 path hierarchy foregrounded — three informal paths explicitly framed as corroboration of DP-2\'s precondition, not parallel proofs. '
             'v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
             'v3.1: Remark R-&#949;<sub>0</sub> added — notation justification for '
             '&#949;<sub>0</sub> symbol choice; structural correspondence with Cantor-Gentzen '
@@ -533,7 +537,11 @@ def build_zpe(out_path):
                 'results.',
                 '<b>What remains conditional.</b> CC-2 retains Conditional Claim status for two reasons. '
                 'First, AFA admits many non-well-founded sets; we commit to the specific Quine atom form '
-                '&#8869; = {&#8869;} as the minimal option consistent with A4. Second, the identification '
+                '&#8869; = {&#8869;} as the minimal option consistent with A4. Among non-well-founded sets '
+                'permitted by AFA, &#8869; = {&#8869;} is uniquely minimal: it has exactly one member '
+                '(itself) and introduces no internal differentiation — any extension (&#8869; = {&#8869;, x} '
+                'for x &#8800; &#8869;) would add members carrying their own membership chains, exceeding '
+                'what A4\'s purely algebraic additive-identity constraint requires. Second, the identification '
                 'of &#8869; as a set-theoretic object — rather than a purely algebraic element — is itself '
                 'a modelling step beyond A1&#8211;A4. The metatheoretic necessity of AFA is derived; the '
                 'specific realisation as &#8869; = {&#8869;} is minimally committed.',
@@ -767,7 +775,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.3', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.4', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -821,7 +829,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.3', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.4', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -874,7 +882,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.3', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.4', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.0 formal grounding)',
@@ -918,7 +926,8 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.3 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.4 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
             'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
             'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
             'Remark R-AFA: Foundation ruled out by R3 + L-INF; AFA forced | '
@@ -933,5 +942,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_3.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_4.pdf'))
     build_zpe(out)
