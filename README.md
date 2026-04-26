@@ -90,6 +90,8 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 
 One companion per formal document. Plain language, diagrams, real-world examples.
 
+> **Note (April 2026):** The companion documents are currently behind the formal layers. The formal documents (ZP-A through ZP-H) have undergone significant structural revisions - including the addition of DA-1's Lean formalization (DP-2, ZP-E v3.0), the ZF+AFA foundation note (ZP-A v1.7), and Lean scope clarifications in ZP-G and ZP-H. Companion updates are in progress. Until then, treat the companions as introductions to the framework's structure rather than authoritative statements of current result labels or claim statuses.
+
 | File | For Document | Key Diagrams |
 |------|-------------|--------------|
 | [ZP-A Illustrated Companion](ZP-A_Illustrated_Companion.pdf) | ZP-A | Hasse diagram, one-directional transitions |
