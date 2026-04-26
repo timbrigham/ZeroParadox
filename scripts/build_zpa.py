@@ -1,5 +1,8 @@
 """
-Build ZP-A: Lattice Algebra (v1.7)
+Build ZP-A: Lattice Algebra (v1.8)
+v1.8: CC-2 cross-framework note added — Foundation incompatibility with R3 and L-INF noted;
+AFA identified as forced rather than chosen. Foundation note in Section V updated accordingly.
+Cross-reference to ZP-E Remark R-AFA.
 v1.7: R3 dependency note added — the inference "no external interpreter → necessarily executing"
 requires D7's exhaustive static/executing dichotomy (ZP-E) as background. R3 supplies the
 structural route to eliminating the static-description state; D7 supplies the exhaustiveness.
@@ -184,17 +187,18 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_7.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.7')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_8.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.8')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.7  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.6  |  R3 dependency note added: "no external interpreter &#8594; necessarily executing" requires D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background framework; all three DA-1 paths share D7; independence is among their arguments, not from D7.</i>', S['subtitle']),
+          Paragraph('Version 1.8  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.7  |  v1.8: CC-2 cross-framework note added — Foundation incompatibility with R3 and L-INF noted; AFA identified as forced rather than chosen. Foundation note updated. See ZP-E Remark R-AFA.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
+          body('<i>Version 1.8 changes: CC-2 block updated with a cross-framework note: the replacement of Foundation by AFA is not arbitrary — ZF + Foundation is incompatible with R3 (a well-founded &#8869; admits an external interpreter, contradicting CC-2) and with ZP-C L-INF (bounded &#8712;-depth contradicts unbounded surprisal). AFA is forced rather than chosen; the Quine atom form is the minimal commitment within AFA. Foundation note in Section V updated to reflect this. Cross-reference to ZP-E Remark R-AFA added within CC-2.</i>'),
           body('<i>Version 1.7 changes: R3 dependency note added. The inference from "no external interpreter" (CC-2) to "necessarily executing" (DA-1) uses D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background. R3 supplies the structural argument for eliminating &#8869;&#8217;s static-description state; it does not independently derive DA-1 without D7. All three DA-1 paths in ZP-E share D7 as background; they provide independent structural, informational, and AIT-based routes to eliminating the static-description alternative. Section V intro and R3 text updated to make this dependency explicit. Boundary Conditions table row for CC-2/R3 updated accordingly.</i>'),
           body('<i>Version 1.6 changes: CC-2 (Self-Containment of &#8869;) added as a new modeling commitment: &#8869; = {&#8869;} is a Quine atom under ZF + AFA (Aczel&#8217;s Anti-Foundation Axiom). R3 added immediately following CC-2. Foundation note added: the framework is stated over ZF + AFA; the Axiom of Choice is not assumed. Section V dedicated to self-containment of &#8869;; OQ-A1 renumbered VI, Boundary Conditions VII, Validation Status VIII.</i>'),
           body('<i>Version 1.5 changes: (1) Theorem/Proposition/Lemma hierarchy applied throughout: T1 relabelled Proposition (partial order properties are infrastructure), T2 relabelled Lemma (the global minimum result is a stepping stone for CC-1 and T3). T3 retains Theorem (monotonicity is the primary result of ZP-A). (2) Remark R2 added after D3 connecting the term "state sequence" to the standard order-theory term "ascending chain". (3) CC-1 corollary reworded to make explicit that T2 gives &#8869; &#8804; S&#8320; for any initialisation; CC-1 strengthens this to equality.</i>'),
@@ -284,7 +288,7 @@ def build():
     E.append(Paragraph('V. The Self-Containment of &#8869;', S['h1']))
     E.append(Paragraph('5.1  Foundational Characterisation', S['h2']))
     E.append(body('The axioms A1&#8211;A4 establish &#8869; as the additive identity and algebraic minimum of L. The following conditional claim characterises its set-theoretic nature. R3 provides a structural route to DA-1 in ZP-E: CC-2 establishes that &#8869; has no external interpreter position, which — conditional on D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background — eliminates the static-description state for &#8869;. See R3 for the full dependency note.'))
-    E.append(body('<i>Foundation note: The framework is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). The classical Axiom of Foundation is replaced by AFA, which permits self-containing sets. The Axiom of Choice is not assumed: T-SNAP is the unique forced first differentiation, not a selection over indistinguishable &#8869; instances.</i>'))
+    E.append(body('<i>Foundation note: The framework is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). The classical Axiom of Foundation is replaced by AFA, which permits self-containing sets. This replacement is not an arbitrary modelling choice: ZF + Foundation is incompatible with CC-2 (a well-founded &#8869; would admit an external interpreter, contradicting R3) and with ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). See ZP-E Remark R-AFA for the full cross-framework argument. The Axiom of Choice is not assumed.</i>'))
     E.append(sp(4))
     E.append(label_box('Conditional Claim CC-2 — Self-Containment of &#8869;', [
         'The null state &#8869; is its own extension: the collection of all objects bearing the structural property of &#8869; is &#8869; itself.',
@@ -292,6 +296,7 @@ def build():
         'Under ZF + AFA, &#8869; is a Quine atom — a set satisfying x = {x}. By set extensionality, any infinite collection of objects all indistinguishable under the structural property of &#8869; collapses to &#8869; itself. There is no multiplicity, only &#8869;.',
         'This is a modeling commitment. It is not derived from A1&#8211;A4. It requires replacing the classical Axiom of Foundation with AFA in the metatheory.',
         'Status: CONDITIONAL CLAIM — modeling commitment over ZF + AFA; not derived from A1&#8211;A4.',
+        'Cross-framework note: The replacement of Foundation by AFA is not an arbitrary choice — ZF + Foundation is ruled out by R3 (a well-founded &#8869; would admit an external interpreter, contradicting CC-2) and by ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). AFA is the forced metatheoretic replacement; the specific form &#8869; = {&#8869;} is the minimal Quine atom consistent with A4. See ZP-E Remark R-AFA for the full cross-framework argument.',
         'Lean 4 scope: ZPA.lean verifies the algebraic structure A1&#8211;A4 and all derived results (T1&#8211;T3, CC-1). CC-2 is a metatheoretic commitment at the set-theoretic level. Lean&#8217;s bot field is a term of an abstract typeclass — a structural proxy for the algebraic role of &#8869;. Lean&#8217;s type theory (CIC) is well-founded by construction; Quine atoms cannot be realized as Lean terms. The set-theoretic content of CC-2 is stated as a prose-level commitment in ZF + AFA and is outside the scope of the Lean verification.',
     ]))
     E.append(sp(4))
