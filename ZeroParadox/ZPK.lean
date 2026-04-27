@@ -99,15 +99,20 @@ def IsComputationalQuine (c : Code) : Prop :=
 theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
   kleene_fixed_point_exists selfApply selfApply_partrec
 
-/-- Uniqueness of the computational Quine (parallel to AFA quine_unique).
-    Any two codes satisfying the computational fixed-point property compute
-    the same function.
-    Note: this is weaker than set-theoretic uniqueness (equality of codes);
-    it is equality of computed behavior. -/
-theorem computational_quine_unique (c₁ c₂ : Code)
-    (h₁ : IsComputationalQuine c₁) (h₂ : IsComputationalQuine c₂) :
-    eval c₁ = eval c₂ := by
-  sorry
+/- Note on computational quine uniqueness (why it is not stated here):
+    Unlike the AFA quine (ZP-J quine_unique), computational fixed points of
+    selfApply are NOT unique in general. AFA uniqueness follows from the unique
+    decoration theorem: there is literally only one set satisfying x = {x}. The
+    computational setting is richer. A fixed point c of selfApply satisfies:
+      eval c n = eval c (Encodable.encode c + n)  for all n
+    This is a periodicity condition on eval c, not a global identity constraint.
+    Multiple programs can satisfy it independently — including the always-undefined
+    code, constant partial functions, and programs with period dividing encode(c).
+    There is no mechanism forcing two such programs to agree on all inputs.
+    Uniqueness in ZP-K is inherited from ZP-J (set-theoretic side via T-EXEC):
+    any element satisfying IsQuineAtom equals ⊥ — this is kleene_quine_is_bot.
+    The computational witnesses (botCode) are identified with ⊥ through the
+    KleeneStructure bridge, not through behavioral equality of codes. -/
 
 /-! ## § II. KleeneStructure — Bridging Computation and AFA -/
 
