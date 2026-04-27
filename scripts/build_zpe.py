@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.5 | April 2026
+Version 3.6 | April 2026
+v3.6: DA-1 Path 1 rewritten — argument direction reversed. Previously: CC-2 (⊥ = {⊥}) asserted,
+then "no external interpreter" derived. Now: "nothing external to ⊥ can execute ⊥" argued first,
+⊥ = {⊥} derived as the only coherent structure, ZP-J T-EXEC cited as formal verification.
+CC-1 and CC-2 status updated throughout — no longer freestanding commitments; both derived via ZP-J.
 v3.5: Open Items Register DA-1 status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT
 (corroboration of precondition)" now matches v3.3 path-hierarchy framing.
 v3.4: R-AFA minimality argument made explicit — added one sentence to "What remains
@@ -395,13 +399,17 @@ def build_zpe(out_path):
              'DP-2 + da1_minimal_path derive c<sub>0</sub> &#8594; c<sub>1</sub> axiom-free once that '
              'precondition is established. The paths are convergent corroboration of the precondition; '
              'the formal derivation is DP-2\'s.'),
-        body('Path 1 — Structural (ZP-A CC-2 + R3): CC-2 establishes ⊥ = {⊥} under ZF + AFA: ⊥ is a '
-             'Quine atom — a set that is its own singleton. By set extensionality, the collection of all '
-             'objects bearing the structural property of ⊥ collapses to ⊥ itself; there is no multiplicity, '
-             'only ⊥. R3 draws the formal consequence: a self-containing object has no external interpreter '
-             'by structure. A static description requires a describer external to and distinct from what is '
-             'described; ⊥ = {⊥} admits no such external position. Therefore ⊥ at P<sub>0</sub> cannot be a '
-             'static description awaiting external instantiation — it is necessarily executing.'),
+        body('Path 1 — Structural (Self-Execution, ZP-J T-EXEC): Nothing exists outside the null space. '
+             '&#8869; is prior to all differentiation — there is no external state, no prior cause, no position '
+             'from which something else could execute &#8869;. If &#8869; executes at all, the only possible '
+             'executor is &#8869; itself. A thing that executes itself is self-containing: &#8869; &#8712; &#8869;, '
+             'i.e. &#8869; = {&#8869;}. This is not a commitment — it is forced by the impossibility of external '
+             'execution. ZP-A R3 states the structural consequence: a self-containing object admits no external '
+             'interpreter position. ZP-J T-EXEC formally verifies the structure: IsQuineAtom(q) &#8596; q = &#8869;, '
+             'proved axiom-free in Lean 4 (ZeroParadox.ZPJ.t_exec). AFA (ZF + AFA) is the consistent '
+             'set-theoretic home for this structure — chosen because the framework requires it, not the '
+             'reverse. ZP-A CC-2 (&#8869; = {&#8869;}) retains its label for editorial continuity but is now '
+             'a structural consequence, not a freestanding commitment.'),
         body('Path 2 — Informational (ZP-C L-INF): Independently, the surprisal I(n) = n at ball-hierarchy '
              'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. The null state ⊥ corresponds '
              'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
@@ -432,8 +440,9 @@ def build_zpe(out_path):
              'computational distinction between before-first-instruction and after-first-instruction states), '
              'which is prior to and independent of DA-1. The three paths above operate one level down: they '
              'argue for why the precondition holds — why instantiation of ⊥ necessarily constitutes a first '
-             'instruction fetch at all. Path 1 (structural) argues that ⊥ = {⊥} has no external interpreter '
-             'position, so evaluation is necessarily self-executing. Path 2 (informational) argues that '
+             'instruction fetch at all. Path 1 (structural) argues that nothing external to &#8869; can '
+             'execute &#8869; — therefore &#8869; must execute itself, establishing &#8869; = {&#8869;} as a '
+             'structural consequence rather than a commitment (ZP-J T-EXEC, axiom-free). Path 2 (informational) argues that '
              'unbounded surprisal precludes any finite static holding. Path 3 (AIT) argues that '
              'incompressibility eliminates the static-description alternative. All three converge on the same '
              'precondition. The argument is not circular: DP-2 follows from D7; the three paths argue '
@@ -442,11 +451,12 @@ def build_zpe(out_path):
                 'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
                 'Informal convergent paths: ZP-C D1 + AIT incompressibility (Path 3 — K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1); '
-                'ZP-A CC-2 + R3 (Path 1 — structural); ZP-C L-INF (Path 2 — informational). '
-                'Named modeling commitments: CC-1 (S<sub>0</sub> = &#8869;, ZP-A), CC-2 (&#8869; = {&#8869;}, ZP-A), '
-                'DP-2 (&#167;III) — all explicit. '
+                'ZP-J T-EXEC + ZP-A R3 (Path 1 — structural, self-execution); ZP-C L-INF (Path 2 — informational). '
+                'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
+                'CC-2 (&#8869; = {&#8869;}) structurally forced by self-execution argument; ZP-J T-EXEC formally verifies. '
+                'DP-2 (&#167;III) — explicit. '
                 'T-SNAP is derived given DA-1, CC-1, and AX-B1. '
-                'AIT (Kolmogorov complexity) and ZF+AFA informal paths outside Lean scope — same category as ZP-A CC-2.'),
+                'AIT (Kolmogorov complexity) outside Lean scope.'),
     ]
 
     E.append(Paragraph('V. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
@@ -470,8 +480,10 @@ def build_zpe(out_path):
         sp(4),
         body('Conclusion: The Binary Snap is a derived consequence. AX-1 is promoted to Theorem T-SNAP. ✓'),
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
-                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. Named modelling commitments: CC-1 (S₀ = ⊥, ZP-A) and '
-                'CC-2 (⊥ = {⊥}, ZP-A, via R3) — both explicit. T-SNAP is derived given DA-1, CC-1, and CC-2.'),
+                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1; ZP-J T-EXEC. '
+                'CC-1 (S&#8320; = &#8869;) derived via ZP-J cc1_derived (axiom-free). '
+                'CC-2 (&#8869; = {&#8869;}) structurally forced — ZP-J T-EXEC (axiom-free). '
+                'Neither CC-1 nor CC-2 is a freestanding commitment. T-SNAP is derived given DA-1 and AX-B1.'),
     ]
 
     E += [
@@ -885,15 +897,15 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.5', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.6', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.0 formal grounding)',
          'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI). '
          'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
          'are provably distinct even when both produce &#8869;. ✓ '
-         'Informal corroboration: Path 1 (CC-2 + R3 — structural), Path 2 (L-INF — informational), '
-         'Path 3 (K incompressibility — AIT). AIT and ZF+AFA paths outside Lean scope.'],
+         'Informal corroboration: Path 1 (ZP-J T-EXEC + R3 — self-execution, structural), Path 2 (L-INF — informational), '
+         'Path 3 (K incompressibility — AIT). AIT outside Lean scope. CC-1 and CC-2 now derived via ZP-J, not freestanding commitments.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
         ['AX-1 retirement',
@@ -945,5 +957,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_5.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_6.pdf'))
     build_zpe(out)

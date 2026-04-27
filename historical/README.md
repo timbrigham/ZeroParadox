@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v3_5-1.pdf](ZP-E_Bridge_Document_v3_5-1.pdf) | 2026-04-26 | ZP-E v3.5 superseded by v3.6: DA-1 Path 1 rewritten — self-execution argument now leads (nothing external to ⊥ can execute ⊥, therefore ⊥ = {⊥} is forced); ZP-J T-EXEC cited as formal verification; CC-1 and CC-2 status updated to derived rather than freestanding commitments |
 | [ZP-C_Information_Theory_v1_8-1.pdf](ZP-C_Information_Theory_v1_8-1.pdf) | 2026-04-26 | ZP-C v1.8 superseded by v1.9: Remark R-TQ added after TQ-IH — external confirmation by a PhD mathematician (MathOverflow question 510703, April 2026) that TQ-IH holds and is domain-independent; status updated to Closed — Confirmed |
 | [Zero_Paradox_Foreword-6.pdf](Zero_Paradox_Foreword-6.pdf) | 2026-04-26 | Foreword superseded by v1.2: commitment table updated to include MC-1 (cross-framework identification), CC-1 (S₀ = ⊥), and CC-2 (⊥ = {⊥} Quine atom); layer count corrected from seven to eight throughout; ZP-I closure layer added to Section II; version string added |
 | [ZP-E_Bridge_Document_v3_4-1.pdf](ZP-E_Bridge_Document_v3_4-1.pdf) | 2026-04-26 | ZP-E v3.4 superseded by v3.5: DA-1 Open Items Register status updated to match v3.3 path-hierarchy framing — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" |
