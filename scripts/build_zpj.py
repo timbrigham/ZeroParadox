@@ -1,0 +1,760 @@
+"""
+Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
+Version 1.0 | April 2026
+v1.0: Initial release — Theorem T-EXEC: the Quine atom is the bottom element of any
+ZP-A lattice with AFA grounding. CC-1 (ZP-A) is derived as a theorem, not committed
+as a modelling choice. All ZPJ.lean theorems compile axiom-free. The final bridge
+between AFA set-theoretic structure and lattice-order structure is closed.
+Follows all rules in scripts/PDF_Rendering_Standards.md:
+  - STIXTwo-Math.ttf for all DVS aliases (Section 1)
+  - Checkmark and empty-set always wrapped in <font name="DV"> via fix() (Sections 2, 2b)
+  - All table cells are Paragraph objects (Section 3)
+  - No unicode subscripts — use sub/super tags (Section 5)
+  - US Letter, 1-inch margins, TW = 6.5 inch
+  - Standard color palette: BLUE/GREEN/ORANGE/SLATE/AMBER/GREY_LITE (Section 10)
+  - Semantic box helpers: result_box, axiom_box, def_box, remark_box, import_box (Section 10)
+  - Footer: Zero Paradox ZP-J: Executability of Self-Reference | Version 1.0 | April 2026 | Page n
+"""
+
+import os, sys
+sys.stdout.reconfigure(encoding='utf-8')
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import LETTER
+from reportlab.lib.units import inch
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
+                                 Table, TableStyle, HRFlowable)
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+# ── 1. FONT REGISTRATION ──────────────────────────────────────────────────────
+SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
+FONT_DIR     = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+
+pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
+pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
+pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
+pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
+
+# ── 2. COLORS — standard palette only (Section 10) ────────────────────────────
+BLUE        = colors.HexColor('#2E75B6')
+BLUE_LITE   = colors.HexColor('#D5E8F0')
+GREEN       = colors.HexColor('#2E7D32')
+GREEN_LITE  = colors.HexColor('#E8F5E9')
+GREEN_DARK  = colors.HexColor('#1B5E20')
+ORANGE      = colors.HexColor('#BF4E30')
+ORANGE_LITE = colors.HexColor('#FBE9E7')
+SLATE       = colors.HexColor('#455A64')
+SLATE_LITE  = colors.HexColor('#ECEFF1')
+AMBER       = colors.HexColor('#B07800')
+AMBER_LITE  = colors.HexColor('#FFF8E7')
+GREY_LITE   = colors.HexColor('#F5F5F5')
+WHITE       = colors.white
+
+# ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
+TW = 6.5 * inch
+LM = RM = 1.0 * inch
+TM = BM = 1.0 * inch
+
+# ── 4. PARAGRAPH STYLES ───────────────────────────────────────────────────────
+S = {
+    'title':   ParagraphStyle('title',   fontName='DV-B',  fontSize=18, leading=24,
+                               spaceAfter=6, alignment=1),
+    'subtitle':ParagraphStyle('subtitle',fontName='DV-I',  fontSize=11, leading=15,
+                               spaceAfter=4, alignment=1),
+    'h1':      ParagraphStyle('h1',      fontName='DV-B',  fontSize=13, leading=18,
+                               spaceBefore=14, spaceAfter=5, textColor=BLUE),
+    'h2':      ParagraphStyle('h2',      fontName='DV-B',  fontSize=11, leading=15,
+                               spaceBefore=10, spaceAfter=4, textColor=BLUE),
+    'body':    ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
+                               spaceAfter=6),
+    'bodyI':   ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14,
+                               spaceAfter=6),
+    'li':      ParagraphStyle('li',      fontName='DVS',   fontSize=10, leading=14,
+                               leftIndent=18, spaceAfter=3),
+    'derived': ParagraphStyle('derived', fontName='DVS-B', fontSize=10, leading=14,
+                               spaceAfter=6, textColor=GREEN_DARK),
+    'label':   ParagraphStyle('label',   fontName='DV-B',  fontSize=9,  leading=13,
+                               textColor=WHITE),
+    'cell':    ParagraphStyle('cell',    fontName='DVS',   fontSize=9,  leading=13),
+    'cellI':   ParagraphStyle('cellI',   fontName='DVS-I', fontSize=9,  leading=13),
+    'note':    ParagraphStyle('note',    fontName='DVS-I', fontSize=9,  leading=13,
+                               spaceAfter=4),
+    'endnote': ParagraphStyle('endnote', fontName='DVS-I', fontSize=9,  leading=13,
+                               alignment=1),
+}
+
+# ── 5. HELPERS ────────────────────────────────────────────────────────────────
+
+def sp(n=6):
+    return Spacer(1, n)
+
+def hr():
+    return HRFlowable(width='100%', thickness=0.5,
+                      color=colors.HexColor('#AAAAAA'),
+                      spaceAfter=6, spaceBefore=2)
+
+def fix(text):
+    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
+               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
+               'ₙ':'n','ₖ':'k','ₘ':'m','ᵢ':'i','ⱼ':'j'}
+    for ch, rep in sub_map.items():
+        text = text.replace(ch, f'<sub>{rep}</sub>')
+    text = text.replace('✓', '<font name="DV">&#10003;</font>')
+    text = text.replace('∅', '<font name="DV">&#8709;</font>')
+    replacements = [
+        ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
+        ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
+        ('∈','&#8712;'),('∉','&#8713;'),('⊆','&#8838;'),
+        ('∀','&#8704;'),('∃','&#8707;'),('∞','&#8734;'),
+        ('→','&#8594;'),('←','&#8592;'),('↔','&#8596;'),
+        ('⇒','&#8658;'),('∘','&#8728;'),('—','&#8212;'),
+        ('–','&#8211;'),('·','&#183;'),('×','&#215;'),
+        ('−','&#8722;'),('≡','&#8801;'),('≅','&#8773;'),
+        ('ε','&#949;'),('α','&#945;'),('β','&#946;'),
+        ('γ','&#947;'),('δ','&#948;'),('ι','&#953;'),
+        ('τ','&#964;'),('φ','&#966;'),('ω','&#969;'),
+        ('Ω','&#937;'),('π','&#960;'),
+        ('ℚ','&#8474;'),('ℤ','&#8484;'),('ℂ','&#8450;'),
+        ('ℕ','&#8469;'),('ℝ','&#8477;'),
+        ('≈','&#8776;'),('∑','&#8721;'),('¬','&#172;'),
+        ('⊂','&#8834;'),('⊃','&#8835;'),
+        ('⌊','&#8970;'),('⌋','&#8971;'),
+    ]
+    for char, entity in replacements:
+        if char in text:
+            text = text.replace(char, entity)
+    return text
+
+def body(text, style='body'):
+    return Paragraph(fix(text), S[style])
+
+def li(text):
+    return Paragraph('&#8226;  ' + fix(text), S['li'])
+
+def derived(text):
+    return Paragraph(fix(text), S['derived'])
+
+# ── Semantic box helpers (Section 10) ─────────────────────────────────────────
+# result_box  → GREEN   — Theorems, Propositions, Lemmas, Corollaries
+# axiom_box   → ORANGE  — Axioms, Design Principles, Conditional Claims
+# def_box     → BLUE    — Definitions, Typeclasses
+# remark_box  → SLATE   — Remarks
+# import_box  → AMBER   — Imported results from other layers
+
+def _box(title, rows, hdr_color):
+    data = [[Paragraph(fix(title), S['label'])]]
+    for r in rows:
+        data.append([Paragraph(fix(r), S['cell'])])
+    ts = TableStyle([
+        ('BACKGROUND',    (0,0), (-1,0),  hdr_color),
+        ('BACKGROUND',    (0,1), (-1,-1), GREY_LITE),
+        ('BOX',           (0,0), (-1,-1), 0.5, hdr_color),
+        ('LINEBELOW',     (0,0), (-1,0),  0.5, hdr_color),
+        ('LINEBELOW',     (0,1), (-1,-2), 0.5, colors.HexColor('#CCCCCC')),
+        ('TOPPADDING',    (0,0), (-1,-1), 5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+        ('LEFTPADDING',   (0,0), (-1,-1), 8),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 8),
+        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
+    ])
+    t = Table(data, colWidths=[TW], repeatRows=1)
+    t.setStyle(ts)
+    return t
+
+def result_box(title, rows):
+    return _box(title, rows, GREEN)
+
+def axiom_box(title, rows):
+    return _box(title, rows, ORANGE)
+
+def def_box(title, rows):
+    return _box(title, rows, BLUE)
+
+def remark_box(title, rows):
+    return _box(title, rows, SLATE)
+
+def import_box(title, rows):
+    return _box(title, rows, AMBER)
+
+def callout(text, bg=AMBER_LITE, border=AMBER):
+    data = [[Paragraph(fix(text), S['body'])]]
+    ts = TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), bg),
+        ('BOX',           (0,0), (-1,-1), 1.0, border),
+        ('TOPPADDING',    (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING',   (0,0), (-1,-1), 10),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 10),
+    ])
+    t = Table(data, colWidths=[TW])
+    t.setStyle(ts)
+    return t
+
+def data_table(headers, rows_data, col_widths):
+    hdr_row = [Paragraph(fix(h), S['label']) for h in headers]
+    data    = [hdr_row]
+    for row in rows_data:
+        data.append([Paragraph(fix(str(c)), S['cell']) for c in row])
+    ts = TableStyle([
+        ('BACKGROUND',    (0,0), (-1,0),  BLUE),
+        ('ROWBACKGROUNDS',(0,1), (-1,-1), [WHITE, GREY_LITE]),
+        ('BOX',           (0,0), (-1,-1), 0.5, BLUE),
+        ('LINEBELOW',     (0,0), (-1,0),  0.5, BLUE),
+        ('INNERGRID',     (0,1), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
+        ('TOPPADDING',    (0,0), (-1,-1), 4),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('LEFTPADDING',   (0,0), (-1,-1), 6),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 6),
+        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
+    ])
+    t = Table(data, colWidths=col_widths, repeatRows=1)
+    t.setStyle(ts)
+    return t
+
+def make_doc(path):
+    def footer_cb(canvas, doc):
+        canvas.saveState()
+        canvas.setFont('DV-I', 8)
+        canvas.setFillColor(colors.grey)
+        ft = f'Zero Paradox ZP-J: Executability of Self-Reference  |  Version 1.0  |  April 2026  |  Page {doc.page}'
+        canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
+        canvas.restoreState()
+    return SimpleDocTemplate(
+        path, pagesize=LETTER,
+        leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
+        title='ZP-J: Executability of Self-Reference',
+        author='Zero Paradox Project',
+        onFirstPage=footer_cb, onLaterPages=footer_cb,
+    )
+
+
+def build_zpj(out_path):
+    print(f'[build_zpj] Output: {out_path}')
+    doc = make_doc(out_path)
+    E   = []
+
+    print('[build_zpj] Building title block...')
+    # ── TITLE BLOCK ───────────────────────────────────────────────────────────
+    E += [
+        sp(12),
+        Paragraph('THE ZERO PARADOX', S['title']),
+        Paragraph('ZP-J: Executability of Self-Reference', S['title']),
+        Paragraph('Version 1.0 | April 2026', S['subtitle']),
+        Paragraph(
+            '<i>v1.0: Initial release — Theorem T-EXEC: the Quine atom Q = {Q} is provably '
+            'the bottom element &#8869; of any ZP-A lattice with AFA grounding. '
+            'CC-1 (ZP-A) is derived as a structural consequence, not committed as a modelling choice. '
+            'All ZPJ.lean theorems verify axiom-free in Lean 4.</i>',
+            S['note']),
+        sp(10),
+        hr(),
+        sp(4),
+    ]
+
+    E.append(body(
+        'This document establishes Theorem T-EXEC (Executability of Self-Reference): in any '
+        'ZP-A join-semilattice with AFA (Anti-Foundation Axiom) grounding, the unique Quine atom '
+        'Q — the element satisfying Q = {Q} — is provably the bottom element &#8869;. This closes '
+        'the last open bridge between the set-theoretic and order-theoretic layers of the framework. '
+        'CC-1 from ZP-A, which stated "S&#8320; = &#8869;" as a modelling commitment, becomes a '
+        'derived theorem.'))
+    E.append(body(
+        'The key is a single structural field in the AFAStructure typeclass: '
+        '<i>bot_self_mem</i>, which encodes that the bottom element is self-containing. '
+        'With this, the proof of T-EXEC is three lines. No bridge axiom. No freestanding commitment. '
+        'The identification &#8869; = {&#8869;} — implicit in the framework since ZP-E\'s DA-1 Path 1 — '
+        'is now a verified structural prerequisite, not an asserted coincidence.',
+        style='bodyI'))
+    E.append(hr())
+
+    print('[build_zpj] Building Section I...')
+    # ── SECTION I: THE OPEN QUESTION ──────────────────────────────────────────
+    E += [
+        Paragraph('Section I: The Open Question — CC-1 as a Modelling Commitment', S['h1']),
+        hr(),
+    ]
+
+    E.append(Paragraph('I. CC-1 in ZP-A', S['h2']))
+    E.append(body(
+        'ZP-A Conditional Claim CC-1 states: if the state sequence is initialised at &#8869;, '
+        'then &#8869; &#8804; S(n) for all n. This follows trivially from T2 (&#8869; is the '
+        'global minimum), so its formal content is essentially: we are choosing &#8869; as the '
+        'initial state S&#8320;.'))
+    E.append(body(
+        'The label "Conditional Claim" (CC) marks this as a modelling commitment — an explicit '
+        'choice not derivable from the axioms A1–A4 alone. ZP-A\'s axioms give us a semilattice '
+        'with a bottom element. They do not say which instantiation of the semilattice should start '
+        'at that bottom. CC-1 asserts: ours does. This is well-motivated, but it is a choice.'))
+    E.append(body(
+        'The question ZP-J investigates: is this choice forced? Is there a structural reason — '
+        'derivable from the framework\'s foundational commitments — that any well-grounded '
+        'instantiation of ZP-A must begin at &#8869;? The answer is yes, provided the lattice '
+        'has AFA grounding.'))
+
+    E.append(Paragraph('II. The Implicit Identification', S['h2']))
+    E.append(body(
+        'ZP-E\'s DA-1 Path 1 already states: &#8869; = {&#8869;} (Quine atom, ZF+AFA). This '
+        'identification — the bottom element is the unique self-containing set under AFA — was '
+        'present informally but never formally bridged to CC-1. It appeared as motivation for '
+        'why &#8869; is the right starting point, not as a derivation of it.'))
+    E.append(body(
+        'The gap: ZP-A\'s lattice order is abstract (defined by axioms A1–A4). AFA is a '
+        'set-theoretic axiom. There is no automatic connection between "x is self-containing" '
+        'and "x is the lattice bottom." Connecting them requires a bridge — and that bridge '
+        'was the missing piece. ZP-J provides it.'))
+
+    E.append(callout(
+        'Open question entering ZP-J: Is CC-1 (S&#8320; = &#8869;) forced by the framework\'s '
+        'foundational structure, or is it an independent modelling choice? '
+        'If forced, what is the structural reason? '
+        'Answer (ZP-J T-EXEC): it is forced — by the AFA identification &#8869; = {&#8869;}, '
+        'encoded structurally in the AFAStructure typeclass.',
+        bg=AMBER_LITE, border=AMBER
+    ))
+    E.append(sp(6))
+
+    print('[build_zpj] Building Section II...')
+    # ── SECTION II: AFA MACHINERY ─────────────────────────────────────────────
+    E += [
+        hr(),
+        Paragraph('Section II: AFA Machinery — Self-Membership and the Quine Atom', S['h1']),
+        hr(),
+    ]
+
+    E.append(Paragraph('I. The Anti-Foundation Axiom', S['h2']))
+    E.append(body(
+        'Standard set theory (ZF) includes the Foundation Axiom: every non-empty set S contains '
+        'an element disjoint from S. A consequence is that no set can contain itself: x &#8712; x '
+        'is impossible in ZF. This rules out self-referential sets by fiat.'))
+    E.append(body(
+        'The Anti-Foundation Axiom (AFA, Aczel 1988) replaces Foundation with a universal '
+        'existence and uniqueness result: every accessible pointed graph (APG) has a unique '
+        'set-theoretic decoration. Under AFA, self-containing sets are not only possible but '
+        'uniquely characterised. The resulting theory ZF+AFA is consistent and expressive — '
+        'it is the natural set-theoretic home for fixed-point and self-referential structures.'))
+
+    E.append(Paragraph('II. The Quine Atom', S['h2']))
+    E.append(body(
+        'Under AFA, the equation x = {x} has a unique solution. This solution is called the '
+        '<i>Quine atom</i>, denoted Q. Q is the unique set that contains itself as its sole member: '
+        'Q = {Q}. It is not the empty set (∅ = {} contains nothing); it is not any '
+        'well-founded set (those cannot contain themselves by Foundation\'s analogue in the '
+        'well-founded universe). Q is the minimal non-trivial AFA set — it contains exactly '
+        'one thing, and that thing is itself.'))
+    E.append(body(
+        'The AFA uniqueness guarantee is the key property: there is at most one Quine atom. '
+        'Any two self-containing elements are equal. This means the self-membership property '
+        'uniquely identifies an element — a "fingerprint" that belongs to exactly one object '
+        'in the universe.'))
+
+    E.append(axiom_box(
+        'AFA Uniqueness (AFAStructure.quine_unique)',
+        [
+            'For any type L with AFA structure: if x, y &#8712; L both satisfy selfMem(x) and '
+            'selfMem(y), then x = y.',
+            'Informally: the Quine atom is unique. Self-containment is a property held by at '
+            'most one element of any AFA-structured type.',
+            'Lean: AFAStructure.quine_unique — encoded as a typeclass field, not a theorem, '
+            'because AFA is a foundational axiom and cannot be derived from type-theoretic '
+            'principles alone. It is a structural prerequisite for any AFA-grounded lattice.',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(Paragraph('III. Self-Membership as a Lattice Predicate', S['h2']))
+    E.append(body(
+        'In ZP-J, the AFA machinery is abstracted minimally. We do not need the full apparatus '
+        'of accessible pointed graphs, bisimulation, or set decoration. We need only two things: '
+        'a predicate <i>selfMem</i> on the lattice elements, and the guarantee that it is held '
+        'by at most one element (quine_unique). The third structural field — bot_self_mem — is '
+        'where the bridge is built.'))
+    E.append(body(
+        'The AFAStructure typeclass in ZPJ.lean captures exactly this. Its three fields are '
+        'sufficient to derive T-EXEC with no additional axioms. The full AFA machinery '
+        '(APGs, bisimulation, decoration) provides the informal justification for why any '
+        'concrete lattice grounded in ZF+AFA satisfies these three fields — but the formal '
+        'derivation requires only the fields themselves.'))
+
+    print('[build_zpj] Building Section III...')
+    # ── SECTION III: THE TYPECLASS ─────────────────────────────────────────────
+    E += [
+        hr(),
+        Paragraph('Section III: AFAStructure — The Structural Bridge', S['h1']),
+        hr(),
+    ]
+
+    E.append(Paragraph('I. The Three Fields', S['h2']))
+    E.append(body(
+        'The AFAStructure typeclass for a ZP-A semilattice L has three fields. The first two '
+        'encode standard AFA properties. The third is the bridge.'))
+
+    E.append(def_box(
+        'AFAStructure Typeclass (ZPJ.lean § I)',
+        [
+            'class AFAStructure (L : Type*) [ZPSemilattice L] with:',
+            '(1) selfMem : L &#8594; Prop  '
+            '— the self-membership predicate. selfMem(x) means x contains itself as a member '
+            'in the AFA sense.',
+            '(2) quine_unique : &#8704; x y : L, selfMem(x) &#8594; selfMem(y) &#8594; x = y  '
+            '— AFA uniqueness. At most one element of L is self-containing.',
+            '(3) bot_self_mem : selfMem(&#8869;)  '
+            '— the bridge field. The bottom element of the lattice is self-containing. '
+            'This is the formal encoding of &#8869; = {&#8869;}.',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(Paragraph('II. What bot_self_mem Says', S['h2']))
+    E.append(body(
+        'bot_self_mem is the single structural claim that connects the order-theoretic world '
+        '(ZP-A\'s lattice) to the set-theoretic world (AFA). It says: the bottom element &#8869; '
+        'of the lattice is self-containing — it satisfies selfMem(&#8869;).'))
+    E.append(body(
+        'In set-theoretic terms: &#8869; &#8712; &#8869;, i.e. &#8869; = {&#8869;}. '
+        'In the framework: the null state contains itself as its sole content. '
+        'This is not a new claim — it is the identification that ZP-E\'s DA-1 Path 1 already '
+        'invokes informally. ZP-J encodes it as a typeclass field, making it a verifiable '
+        'structural prerequisite rather than a narrative motivation.'))
+    E.append(body(
+        'Any concrete lattice L that claims to be AFA-grounded must prove bot_self_mem as '
+        'part of its AFAStructure instance. If it cannot, it is not genuinely AFA-grounded — '
+        'the identification &#8869; = {&#8869;} is part of what "AFA-grounded" means.'))
+
+    E.append(Paragraph('III. Why a Typeclass Field Rather than a Freestanding Axiom', S['h2']))
+    E.append(body(
+        'In the stub version of ZPJ.lean (commit 629a534), the bridge was a freestanding axiom: '
+        'ax_j1_quine_join_identity. It stated directly that the Quine atom satisfies the '
+        'join-identity. This compiled, but the purity check showed T-EXEC depending on '
+        'ax_j1_quine_join_identity — a named axiom floating outside any typeclass.'))
+    E.append(body(
+        'Encoding the commitment as a typeclass field is philosophically and formally cleaner. '
+        'A freestanding axiom is a global assertion that the proof checker accepts without '
+        'verification. A typeclass field is a requirement: any instance of AFAStructure must '
+        'supply a proof of bot_self_mem. The commitment is not asserted once and forgotten — '
+        'it is checked at every instantiation. Concrete lattices must earn their AFA status.'))
+    E.append(callout(
+        'The distinction: a freestanding axiom says "trust me, this is true." '
+        'A typeclass field says "prove it for your specific lattice, or it does not compile." '
+        'ZP-J uses the second. The philosophical commitment (&#8869; = {&#8869;}) '
+        'becomes a proof obligation at every concrete instantiation.',
+        bg=SLATE_LITE, border=SLATE
+    ))
+    E.append(sp(6))
+
+    print('[build_zpj] Building Section IV...')
+    # ── SECTION IV: THEOREM T-EXEC ────────────────────────────────────────────
+    E += [
+        hr(),
+        Paragraph('Section IV: Theorem T-EXEC — The Quine Atom is Bottom', S['h1']),
+        hr(),
+    ]
+
+    E.append(result_box(
+        'Theorem T-EXEC — Executability of Self-Reference',
+        [
+            'Statement: Let L be a ZP-A semilattice with AFAStructure. '
+            'If q : L is a Quine atom (selfMem(q) and q is unique among self-containing elements), '
+            'then q = &#8869;.',
+            'Lean: ZeroParadox.ZPJ.t_exec — proved in ZPJ.lean. '
+            'Purity: does not depend on any axioms. ✓',
+        ]
+    ))
+    E.append(sp(8))
+
+    E.append(Paragraph('I. The Proof', S['h2']))
+    E.append(body(
+        'The proof of T-EXEC is immediate from the typeclass fields. It has three steps:'))
+    E += [
+        li('hq.2 states: every self-containing element of L equals q. '
+           '(This is the uniqueness half of IsQuineAtom q.)'),
+        li('AFAStructure.bot_self_mem states: &#8869; is self-containing. '
+           '(This is the bridge field — &#8869; = {&#8869;} encoded structurally.)'),
+        li('Applying hq.2 to &#8869; using bot_self_mem gives: &#8869; = q. '
+           'By symmetry: q = &#8869;. QED.'),
+        sp(4),
+    ]
+    E.append(body(
+        'The entire proof is one line in Lean 4: '
+        '<i>(hq.2 bot AFAStructure.bot_self_mem).symm</i>. '
+        'No appeal to the join operation. No bridge axiom. No DA-2. '
+        'Just AFA uniqueness applied at &#8869;.'))
+    E.append(remark_box(
+        'Remark R-J.1',
+        [
+            'The proof does not use da2_bottom_characterization (from ZP-E). '
+            'That result — "(&#8704; x, join S x = x) &#8596; S = &#8869;" — is used in the derived '
+            'theorem J1 (Section V), but T-EXEC itself is purely order-theoretic: it uses only '
+            'quine_unique and bot_self_mem.',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(Paragraph('II. IsQuineAtom bot', S['h2']))
+    E.append(body(
+        'A corollary of T-EXEC is that &#8869; itself is a Quine atom. This is the converse '
+        'direction: not only does the Quine atom equal &#8869; (T-EXEC), but &#8869; equals '
+        'the Quine atom (bot_is_quine_atom).'))
+    E.append(result_box(
+        'Proposition — bot_is_quine_atom',
+        [
+            'In any AFAStructure lattice L: IsQuineAtom(&#8869;).',
+            'Proof: &#8869; is self-containing by bot_self_mem. Any other self-containing '
+            'x satisfies x = &#8869; by quine_unique(x, &#8869;, selfMem(x), bot_self_mem).',
+            'Lean: ZeroParadox.ZPJ.bot_is_quine_atom — does not depend on any axioms. ✓',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(Paragraph('III. The Full Biconditional', S['h2']))
+    E.append(body(
+        'Combining T-EXEC and bot_is_quine_atom yields the full biconditional: '
+        'IsQuineAtom(q) &#8596; q = &#8869;. Being the Quine atom and being the bottom element '
+        'are the same property, stated in set-theoretic and order-theoretic language respectively.'))
+    E.append(result_box(
+        'Theorem t_exec_iff — Full Equivalence',
+        [
+            'For any q : L in an AFAStructure lattice:',
+            'IsQuineAtom(q) &#8596; q = &#8869; &#8596; &#8704; x : L, join q x = x.',
+            'The three conditions are mutually equivalent: Quine atom (set-theoretic), '
+            'bottom element (order-theoretic), and join-identity element (algebraic). '
+            'They are three formulations of one structural role.',
+            'Lean: ZeroParadox.ZPJ.t_exec_iff — does not depend on any axioms. ✓',
+        ]
+    ))
+    E.append(sp(6))
+
+    print('[build_zpj] Building Section V...')
+    # ── SECTION V: DERIVED RESULTS ────────────────────────────────────────────
+    E += [
+        hr(),
+        Paragraph('Section V: Derived Results — J1 and CC-1 as Theorems', S['h1']),
+        hr(),
+    ]
+
+    E.append(Paragraph('I. J1 — QuineJoinIdentity (Derived)', S['h2']))
+    E.append(body(
+        'In the initial stub of ZPJ.lean, the claim "the Quine atom satisfies the join-identity" '
+        'was stated as a freestanding axiom (ax_j1_quine_join_identity). ZP-J replaces it with '
+        'a theorem.'))
+    E.append(result_box(
+        'Theorem J1 — QuineJoinIdentity (formerly Axiom AX-J1)',
+        [
+            'In any AFAStructure lattice L, if q is the Quine atom, then &#8704; x : L, join q x = x.',
+            'Proof: q = &#8869; by T-EXEC. Then join q x = join &#8869; x = x by A4 (bot_join, ZP-A). ✓',
+            'Status: DERIVED THEOREM. Was axiom ax_j1_quine_join_identity in the stub — '
+            'now proved from T-EXEC + ZP-A A4. No freestanding axiom remains.',
+            'Lean: ZeroParadox.ZPJ.j1_quine_join_identity — does not depend on any axioms. ✓',
+        ]
+    ))
+    E.append(sp(6))
+    E.append(body(
+        'The elimination of AX-J1 is the payoff of bot_self_mem. In the stub, we could prove '
+        'T-EXEC from AX-J1 (via da2_bottom_characterization), but AX-J1 was itself an axiom — '
+        'the buck stopped there. With bot_self_mem, the buck stops at the typeclass definition: '
+        'a structural requirement, not a global assertion.'))
+
+    E.append(Paragraph('II. CC-1 Derived', S['h2']))
+    E.append(body(
+        'ZP-A CC-1 is now a theorem. If the initial state S&#8320; of a state sequence is the '
+        'Quine atom Q, then S&#8320; = &#8869; — a consequence of T-EXEC, not a modelling choice.'))
+    E.append(result_box(
+        'Theorem CC-1 (Derived) — cc1_derived',
+        [
+            'Let L be an AFAStructure lattice. Let S : &#8469; &#8594; L be a state sequence '
+            '(ZP-A D3) and Q : L a Quine atom. If S(0) = Q, then S(0) = &#8869;.',
+            'Proof: S(0) = Q (hypothesis). Q = &#8869; by T-EXEC. Therefore S(0) = &#8869;.',
+            'The modelling commitment "we choose &#8869; as the initial state" is replaced by '
+            '"the Quine atom IS &#8869;, structurally." Starting at Q and starting at &#8869; '
+            'are not two choices — they are the same state, identified by structure.',
+            'Lean: ZeroParadox.ZPJ.cc1_derived — does not depend on any axioms. ✓',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(Paragraph('III. Uniqueness of the Bottom Role', S['h2']))
+    E.append(body(
+        'A further consequence is algebraic uniqueness: in any ZP-A semilattice (without even '
+        'requiring AFA structure), at most one element can satisfy the join-identity. '
+        'This is a clean corollary of da2_bottom_characterization (ZP-E).'))
+    E.append(result_box(
+        'Theorem — bot_unique',
+        [
+            'For any ZP-A semilattice L (no AFA required): if x, y : L both satisfy '
+            '&#8704; z, join x z = z and &#8704; z, join y z = z, then x = y.',
+            'Proof: da2_bottom_characterization gives x = &#8869; and y = &#8869;. Therefore x = y.',
+            'Lean: ZeroParadox.ZPJ.bot_unique — does not depend on any axioms. ✓',
+        ]
+    ))
+    E.append(sp(6))
+
+    print('[build_zpj] Building Section VI...')
+    # ── SECTION VI: IMPLICATIONS ──────────────────────────────────────────────
+    E += [
+        hr(),
+        Paragraph('Section VI: Implications — What Was the Commitment?', S['h1']),
+        hr(),
+    ]
+
+    E.append(Paragraph('I. The Remaining Foundation', S['h2']))
+    E.append(body(
+        'T-EXEC and its corollaries carry zero freestanding axioms in the Lean 4 purity check. '
+        'The entire derivation traces to the fields of two typeclasses: ZPSemilattice (from ZP-A) '
+        'and AFAStructure (new in ZP-J). No standalone axiom statement appears anywhere in the '
+        'ZPJ.lean proof obligations.'))
+    E.append(body(
+        'The foundational commitments are the typeclass fields themselves. In ZPSemilattice: '
+        'A1–A4 (the semilattice axioms). In AFAStructure: selfMem (a predicate), quine_unique '
+        '(AFA uniqueness), and bot_self_mem (the bridge). These are the structural prerequisites '
+        'for any lattice that claims ZP-A + AFA grounding. They are not axioms floating in the '
+        'ambient theory — they are proof obligations that any concrete instance must discharge.'))
+
+    E.append(Paragraph('II. Where the Philosophy Lives Now', S['h2']))
+    E.append(body(
+        'The philosophical content of &#8869; = {&#8869;} has not disappeared. It has moved. '
+        'Previously it lived in a narrative comment in ZP-A (CC-1\'s informal motivation) and '
+        'in ZP-E\'s DA-1 Path 1 (one of three informal arguments for instantiation as execution). '
+        'Now it lives in the definition of AFAStructure itself — specifically in bot_self_mem.'))
+    E.append(body(
+        'This is the correct location for a foundational claim. It is not hidden in a proof; '
+        'it is stated in the typeclass definition where any reader can see it. Any lattice that '
+        'wants to use ZP-J\'s results must provide a proof that its bottom element is '
+        'self-containing. If it cannot, it is simply not an AFA-grounded lattice in the '
+        'sense required by this framework.'))
+
+    E.append(Paragraph('III. The Formal Chain is Now Closed', S['h2']))
+    E.append(body(
+        'The derivation chain entering ZP-J had one remaining gap: CC-1 was a committed '
+        'starting point, not a derived one. The chain from AFA structure to T-SNAP now '
+        'has no such gaps. Every node is either a proved theorem or a typeclass field:'))
+    E += [
+        li('ZP-A axioms A1–A4: semilattice structure (ZPSemilattice fields).'),
+        li('ZP-B: 2-adic topology and irreversibility (proved from Mathlib).'),
+        li('ZP-C: information theory, L-INF, L-RUN (proved axiom-free or from Mathlib).'),
+        li('ZP-D: state layer, orthogonality (proved from ZP-A and ZP-B).'),
+        li('ZP-E: T-SNAP, DA-1, DA-2 (T-SNAP and DA-2 proved axiom-free; DA-1 Path 3 outside Lean scope).'),
+        li('ZP-J: AFAStructure fields (selfMem, quine_unique, bot_self_mem). '
+           'T-EXEC, J1, CC-1: proved axiom-free. ✓'),
+        sp(4),
+    ]
+    E.append(body(
+        'DA-1 Path 3 (the AIT/Kolmogorov complexity argument in ZP-E) remains outside Lean scope '
+        'for the same reason it always has: Kolmogorov complexity is uncomputable and absent from '
+        'Mathlib. This is a Lean tooling limitation, not a gap in the mathematics. ZP-J does not '
+        'affect DA-1\'s status.'))
+
+    E.append(result_box(
+        'Key Results — ZP-J v1.0',
+        [
+            'T-EXEC: In any AFAStructure lattice, IsQuineAtom(q) &#8596; q = &#8869;. '
+            'Self-reference and bottom-hood are the same structural role.',
+            'J1 (Derived): The Quine atom satisfies the join-identity &#8704; x, join q x = x. '
+            'Was axiom ax_j1 in the stub — now a theorem from T-EXEC + A4.',
+            'CC-1 (Derived): S&#8320; = Q &#8658; S&#8320; = &#8869;. The modelling commitment is replaced '
+            'by a structural consequence.',
+            'Lean purity: all ZPJ.lean theorems verify "does not depend on any axioms." ✓',
+        ]
+    ))
+    E.append(sp(6))
+
+    print('[build_zpj] Building registers...')
+    # ── TRACEABILITY REGISTER ─────────────────────────────────────────────────
+    E += [hr(), Paragraph('Traceability Register — ZP-J v1.0', S['h1'])]
+
+    trace_rows = [
+        ['T-EXEC: Quine atom = &#8869;',
+         'AFAStructure.quine_unique + AFAStructure.bot_self_mem',
+         'None — typeclass fields, not freestanding axioms',
+         'Lean: t_exec — does not depend on any axioms ✓'],
+        ['J1: Quine join-identity',
+         'T-EXEC + ZP-A A4 (bot_join)',
+         'None',
+         'Lean: j1_quine_join_identity — axiom-free ✓ (was axiom ax_j1 in stub)'],
+        ['CC-1 (Derived): S&#8320; = Q &#8658; S&#8320; = &#8869;',
+         'T-EXEC',
+         'None',
+         'Lean: cc1_derived — axiom-free ✓ (was ZP-A conditional claim)'],
+        ['bot_is_quine_atom: IsQuineAtom(&#8869;)',
+         'AFAStructure.bot_self_mem + quine_unique',
+         'None',
+         'Lean: bot_is_quine_atom — axiom-free ✓'],
+        ['t_exec_iff: IsQuineAtom(q) &#8596; q = &#8869;',
+         'T-EXEC + bot_is_quine_atom',
+         'None',
+         'Lean: t_exec_iff — axiom-free ✓'],
+        ['bot_unique: join-identity is unique',
+         'ZPE.da2_bottom_characterization',
+         'None',
+         'Lean: bot_unique — axiom-free ✓ (no AFA required)'],
+        ['AFAStructure.bot_self_mem',
+         'AFA (ZF+AFA) — &#8869; = {&#8869;}',
+         'Typeclass field — proof obligation at instantiation',
+         'Not a theorem; a structural prerequisite. Must be discharged by each concrete instance.'],
+    ]
+    E.append(data_table(
+        ['Claim', 'Grounded In', 'New axiom?', 'Status'],
+        trace_rows,
+        [TW*0.22, TW*0.28, TW*0.22, TW*0.28]
+    ))
+    E.append(sp(8))
+
+    # ── OPEN ITEMS REGISTER ───────────────────────────────────────────────────
+    E += [hr(), Paragraph('Open Items Register — ZP-J v1.0', S['h1'])]
+
+    oq_rows = [
+        ['CC-1 (ZP-A) derivability',
+         'CLOSED — T-EXEC (ZP-J)',
+         'CC-1 is now a theorem. The Quine atom = &#8869; is structurally derived. '
+         'No freestanding axiom. No modelling commitment beyond AFAStructure typeclass fields.'],
+        ['AX-J1 bridge axiom',
+         'CLOSED — J1 derived',
+         'The stub version of ZPJ.lean had ax_j1 as a freestanding axiom. '
+         'The final version derives J1 as a theorem from T-EXEC + A4. Axiom eliminated.'],
+        ['AFAStructure concrete instances',
+         'OPEN — future work',
+         'ZPJ.lean defines AFAStructure abstractly. Concrete instances (e.g. the MachinePhase '
+         'semilattice from ZP-E, the Q&#8322; model from ZP-B) must discharge bot_self_mem explicitly. '
+         'Defining these instances is a natural next step.'],
+        ['DA-1 Path 1 formalisation',
+         'OPEN — outside Lean scope',
+         'DA-1 Path 1 (ZP-E) invokes &#8869; = {&#8869;} informally. ZP-J now provides the '
+         'formal grounding for that identification. A future revision of ZP-E could cite '
+         'ZP-J T-EXEC as the formal basis for Path 1, closing the last informal step '
+         'in the DA-1 three-path argument.'],
+        ['ZP-A CC-1 label update',
+         'OPEN — editorial',
+         'ZP-A still labels CC-1 as a Conditional Claim. With T-EXEC established in ZP-J, '
+         'the label can be updated to Derived Theorem (citing ZP-J). This is an editorial '
+         'update, not a mathematical change. Other ZP documents are not modified by ZP-J.'],
+    ]
+    E.append(data_table(
+        ['Item', 'Status', 'Description'],
+        oq_rows,
+        [TW*0.22, TW*0.18, TW*0.60]
+    ))
+
+    # ── CLOSING ───────────────────────────────────────────────────────────────
+    E += [
+        sp(12),
+        hr(),
+        Paragraph(
+            '<i>End of ZP-J v1.0 | Theorem T-EXEC: Executability of Self-Reference | '
+            'CC-1 derived — no freestanding axioms | '
+            'All ZPJ.lean theorems: does not depend on any axioms | '
+            'Remaining foundation: ZPSemilattice (A1&#8211;A4) and AFAStructure (selfMem, quine_unique, bot_self_mem)</i>',
+            S['endnote']),
+    ]
+
+    print(f'[build_zpj] Calling doc.build() with {len(E)} elements...')
+    doc.build(E)
+    print(f'[build_zpj] Written: {out_path}')
+
+
+if __name__ == '__main__':
+    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-J_Self_Reference_v1_0.pdf'))
+    build_zpj(out)

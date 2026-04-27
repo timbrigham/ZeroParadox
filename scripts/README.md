@@ -29,6 +29,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_zpg.py` | Builds `ZP-G_Category_Theory_v1_2.pdf` (category theory layer) |
 | `build_zph.py` | Builds `ZP-H_Categorical_Bridge_v1_2.pdf` |
 | `build_zpi.py` | Builds `ZP-I_Inside_Zero_v1_0.pdf` (T-IZ: ordinal closure of the ascending chain) |
+| `build_zpj.py` | Builds `ZP-J_Self_Reference_v1_0.pdf` (T-EXEC: Quine atom = bottom; CC-1 derived) |
 | `build_zpa_companion.py` | Builds the ZP-A Illustrated Companion |
 | `build_zpb_companion.py` | Builds the ZP-B Illustrated Companion |
 | `build_zpc_companion.py` | Builds the ZP-C Illustrated Companion |
