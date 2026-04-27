@@ -47,8 +47,7 @@ Source: Mathlib computability infrastructure — Kleene's theorem (fixed_point�
 Roger's theorem (fixed_point) themselves use classical logic and choice.
 ZP-J T-EXEC (axiom-free) is preserved; the classical axioms enter through
 Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
-The two sorry'd lemmas (selfApply_partrec, computational_quine_unique) are stubs
-pending precise Gödel numbering.
+All theorems are fully proved — no sorry stubs remain.
 -/
 
 namespace ZeroParadox.ZPK
@@ -86,7 +85,11 @@ noncomputable def selfApply : Code → ℕ →. ℕ :=
 
 /-- selfApply is partially computable. -/
 lemma selfApply_partrec : Partrec₂ selfApply := by
-  sorry
+  simp only [Partrec₂, selfApply]
+  exact eval_part.comp Computable.fst
+    (Primrec₂.comp Primrec.nat_add
+      (Primrec.encode.comp Primrec.fst)
+      Primrec.snd).to_comp
 
 /-- A computational Quine is a code that is a fixed point of self-application:
     running c on any input n gives the same result as running c on c's own
@@ -220,5 +223,7 @@ open ZeroParadox.ZPK ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ
 #print axioms description_instantiation_gap_closed
 #print axioms kleene_fixed_point_exists
 #print axioms roger_fixed_point_exists
+#print axioms selfApply_partrec
+#print axioms computational_quine_exists
 
 end PurityCheck
