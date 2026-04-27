@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.7 | April 2026
+Version 3.8 | April 2026
+v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to
+"foundational commitment: a missing principle, not a missing proof." No computability library
+closes the gap between 'system at P₀' and 'system is running.' Forward paths: new axiom,
+Chalmers' implementation notion, or ZP-PQ dissolution argument. ZP-PQ already contains the
+dissolution: the description-instantiation gap assumes a separability the framework dissolves.
 v3.7: DA-1 formally closed via ZP-K — KleeneStructure MachinePhase instance proved in Lean 4.
 da1_closed_concrete : IsQuineAtom (bot : MachinePhase). DA-1 Path 1 (structural/AFA) and
 Path 3 (computational/Kleene) now in Lean scope. Path 2 (informational bridge) remains outside
@@ -422,8 +427,15 @@ def build_zpe(out_path):
              'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. The null state ⊥ corresponds '
              'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
              'Any finite external interpreter can hold only a finite informational bound; ⊥ exceeds every '
-             'such bound. A configuration exceeding the capacity of every possible finite interpreter cannot '
-             'be a static description awaiting interpretation.'),
+             'such bound. '
+             'Note: Path 2 is motivational context, not a formal path to the conclusion. The step '
+             '"exceeds every finite bound → therefore necessarily executing" is a foundational commitment, '
+             'not a derivable claim. It asks what it means for a mathematical structure to <i>instantiate</i> '
+             'rather than merely <i>satisfy</i> conditions — a question no computability library answers. '
+             'Forward paths: (a) a new axiom explicitly committing to this bridge; (b) a connection to '
+             'Chalmers\' notion of implementation; (c) the ZP-PQ dissolution argument — the separability '
+             'of description and instantiation is the assumption the framework dissolves, not a gap it must '
+             'close from the outside.'),
         body('Path 3 — Formal bridge: Incompressibility as Self-Description (ZP-C D1 + standard AIT): '
              'The preceding paths establish that ⊥ admits no external interpreter. This path provides '
              'the formal bridge from that negative claim to the positive claim (necessarily executing). '
@@ -450,16 +462,19 @@ def build_zpe(out_path):
              'argue for why the precondition holds — why instantiation of ⊥ necessarily constitutes a first '
              'instruction fetch at all. Path 1 (structural) argues that nothing external to &#8869; can '
              'execute &#8869; — therefore &#8869; must execute itself, establishing &#8869; = {&#8869;} as a '
-             'structural consequence rather than a commitment (ZP-J T-EXEC, axiom-free). Path 2 (informational) argues that '
-             'unbounded surprisal precludes any finite static holding. Path 3 (AIT) argues that '
-             'incompressibility eliminates the static-description alternative. All three converge on the same '
-             'precondition. The argument is not circular: DP-2 follows from D7; the three paths argue '
-             'independently for why ⊥ engages D7\'s transition. DA-1 is their conjunction.'),
+             'structural consequence rather than a commitment (ZP-J T-EXEC, axiom-free). Path 2 (informational) '
+             'provides motivational context — unbounded surprisal as a pointer toward why static holding is '
+             'incoherent — but the bridge from informational extremity to execution is a foundational '
+             'commitment, not a derived claim. Path 3 (AIT) argues that incompressibility eliminates the '
+             'static-description alternative; this path is now closed by ZP-K\'s Kleene result, which '
+             'handles the computational self-reference claim without requiring AIT. '
+             'Paths 1 and 3 are formally closed. Path 2 identifies a missing principle; '
+             'its forward resolution is ZP-PQ. DA-1 is grounded in Paths 1 and 3; Path 2 is context.'),
         derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
                 'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
                 'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in ZPK.lean. '
-                'Path 2 (informational, L-INF): OUTSIDE LEAN SCOPE — informational bridge claim. '
+                'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: ZP-PQ. '
                 'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
                 'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
                 'CC-2 (&#8869; = {&#8869;}) structurally forced by self-execution argument; ZP-J T-EXEC formally verifies. '
@@ -906,17 +921,20 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.7', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.8', S['h1'])]
 
     val_rows = [
-        ['DA-1: Derived Proposition (v3.7 ZP-K formal closure)',
+        ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',
          'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI). '
          'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
          'are provably distinct even when both produce &#8869;. ✓ '
          'ZP-K formal closure (v3.7): da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in ZPK.lean. '
          'KleeneStructure MachinePhase instance provides botCode_is_quine (Path 3 IN LEAN SCOPE). '
          'machinePhaseAFA gives AFAStructure instance (Path 1 IN LEAN SCOPE). '
-         'Path 2 (informational bridge, L-INF) remains outside Lean scope. '
+         'Path 2 (informational bridge, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a '
+         'missing proof. No computability library closes the gap between \'system at P₀\' and \'system is '
+         'running.\' Forward paths: new axiom, Chalmers\' implementation notion, or ZP-PQ dissolution '
+         'argument. Paths 1 and 3 are formally closed; DA-1 does not depend on Path 2. '
          'CC-1 and CC-2 derived via ZP-J, not freestanding commitments.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
@@ -953,9 +971,9 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.7 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.8 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
-            'Paths 1 and 3 IN LEAN SCOPE; Path 2 (informational bridge) outside Lean scope | '
+            'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward resolution ZP-PQ | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
             'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
             'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
@@ -971,5 +989,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_7.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_8.pdf'))
     build_zpe(out)
