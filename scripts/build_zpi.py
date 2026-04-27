@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.3 | April 2026
+Version 1.4 | April 2026
+v1.4: Remark R-IZ-A added — valuation growth hypothesis v₂(S(n)) ≥ n acknowledged as a
+construction-level assumption (stronger than t_iz_valuation_unbounded). Title block corrected
+to v1.3 (was stuck at v1.2). T-IZ hypothesis text updated from "forced by R1+T2" to
+"construction hypothesis — see R-IZ-A."
 v1.3: Valuation-complexity bridge demoted from "critical step / required for full
 conclusion" to "informational context." The formal spine of T-IZ is Steps 1 and 6
 (Cauchy convergence → DA-2 licensing — both proved axiom-free in Lean). DA-1 is now
@@ -231,7 +235,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.3  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.4  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -254,9 +258,12 @@ def build_zpi(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version 1.2 | April 2026', S['subtitle']),
+        Paragraph('Version 1.4 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.3: Valuation-complexity bridge demoted to informational context — '
+            '<i>v1.4: Remark R-IZ-A added — valuation growth hypothesis v<sub>2</sub>(S(n)) &#8805; n '
+            'acknowledged as a construction-level assumption, stronger than the proved result '
+            't_iz_valuation_unbounded (sup = &#8734;). Title block corrected from v1.2 to v1.3. | '
+            'v1.3: Valuation-complexity bridge demoted to informational context — '
             'formal spine of T-IZ is Steps 1 + 6 (Cauchy convergence + DA-2 licensing, '
             'both proved axiom-free); DA-1 now closed by ZP-K/Kleene, bypassing Kolmogorov. | '
             'v1.2: t_iz_valuation_unbounded added — "sup v<sub>2</sub>(S<sub>n</sub>) = &#8734;" '
@@ -392,6 +399,18 @@ def build_zpi(out_path):
         'As n &#8594; &#8734;, divisibility by arbitrarily large powers of 2 forces &#8214;S(n)&#8214;<sub>2</sub> '
         '&#8594; 0 and therefore S(n) &#8594; 0. This is the formal content of the "chain approaching '
         'the 2-adic depth of zero by forward motion."'))
+    E.append(body(
+        'Remark R-IZ-A — On the valuation growth hypothesis: The hypothesis v<sub>2</sub>(S(n)) &#8805; n '
+        'in T-IZ-A is stronger than the proved result t_iz_valuation_unbounded '
+        '(sup v<sub>2</sub>(S(n)) = &#8734;). It asserts that the valuation grows at least '
+        '<i>linearly</i> — each step in the ascending chain increases 2-adic depth by at least 1. '
+        'ZP-A R1 (no top element) ensures the chain does not terminate and that the valuation is '
+        'unbounded; it does not on its own fix the growth rate. The linear lower bound encodes a '
+        'structural feature of the 2-adic embedding: consecutive chain elements must differ by at '
+        'least one factor of 2 in Q<sub>2</sub>. This holds in the framework\'s construction but '
+        'is a construction-level assumption about the embedding, not a direct consequence of R1+T2 '
+        'alone. The Lean proof t_iz_cauchy takes v<sub>2</sub>(S(n)) &#8805; n as a hypothesis '
+        'and establishes Cauchy convergence axiom-free given that assumption.'))
 
     E.append(Paragraph('B. Informational Path — The Valuation-Complexity Bridge', S['h2']))
     E.append(body(
@@ -452,7 +471,7 @@ def build_zpi(out_path):
             'in the 2-adic metric.',
             'Formal hypotheses: S : &#8469; &#8594; Q<sub>2</sub>, with S(0) = &#8869; (CC-1), '
             'S(n) &#8804; S(n+1) (T3 monotonicity), and v<sub>2</sub>(S(n)) &#8805; n for all n '
-            '(forced by ZP-A R1 + ZP-B T2 — no top means unbounded valuation).',
+            '(construction-level hypothesis — see R-IZ-A).',
             'Conclusion: S(n) &#8594; 0 in Q<sub>2</sub>. At the limit, P<sub>0</sub> is '
             'satisfied; DA-1 fires; T-SNAP fires; a new &#8869;\' is generated. DA-2 licenses '
             '&#8869;\' as the successor null for the next instantiation.',
@@ -464,7 +483,7 @@ def build_zpi(out_path):
     E.append(body('The proof of T-IZ follows six steps, corresponding to the proof obligation table:'))
     E += [
         li('Step 1 — Cauchy convergence: The ascending chain has &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
-           '(from v<sub>2</sub>(S(n)) &#8805; n, forced by R1). By T-IZ-A (§ II.A), S(n) &#8594; 0 '
+           '(from v<sub>2</sub>(S(n)) &#8805; n — construction hypothesis, see R-IZ-A). By T-IZ-A (§ II.A), S(n) &#8594; 0 '
            'in Q<sub>2</sub>. Proved axiom-free in Lean: t_iz_cauchy. ✓'),
         li('Step 2 — Valuation-complexity bridge (informational context): As v<sub>2</sub>(S(n)) &#8594; &#8734;, '
            'K(S(n)|n)/|S(n)| &#8594; 1. Original informational route to DA-1 Path 3. '
@@ -714,11 +733,11 @@ def build_zpi(out_path):
 
     print('[build_zpi] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-I v1.3', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-I v1.4', S['h1'])]
 
     oq_rows = [
         ['T-IZ: Inside Zero Theorem',
-         'DERIVED — T-IZ v1.3',
+         'DERIVED — T-IZ v1.4',
          'Every maximal ascending chain converges to its own successor null in Q<sub>2</sub>. '
          'Formal spine: Step 1 (t_iz_cauchy, axiom-free) + Step 6 (t_iz_limit_is_new_null, '
          'axiom-free via DA-2). Steps 2–5 are informational context — original ZP-E path; '
@@ -760,13 +779,13 @@ def build_zpi(out_path):
     ))
 
     # ── TRACEABILITY REGISTER ─────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Traceability Register — ZP-I v1.3', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Traceability Register — ZP-I v1.4', S['h1'])]
 
     trace_rows = [
         ['T-IZ: Inside Zero',
          'ZP-A R1 (no top — engine); ZP-B T2, completeness; ZP-C L-INF, D1; ZP-E DA-1, T-SNAP, DA-2',
          'None',
-         'Derived — T-IZ v1.3 ✓ (formal spine Steps 1+6: both proved axiom-free; bridge: contextual)'],
+         'Derived — T-IZ v1.4 ✓ (formal spine Steps 1+6: both proved axiom-free; bridge: contextual)'],
         ['Null Balance 0 + x + (&#8722;x) = 0',
          'T-IZ + T-SNAP + DA-2 (ZP-E)',
          'None',
@@ -813,7 +832,7 @@ def build_zpi(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-I v1.3 | Theorem T-IZ: Inside Zero | Framework closure established | '
+            '<i>End of ZP-I v1.4 | Theorem T-IZ: Inside Zero | Framework closure established | '
             'Formal spine: Steps 1 + 6 both proved axiom-free (t_iz_cauchy + t_iz_limit_is_new_null) | '
             'Valuation-complexity bridge: informational context, not load-bearing | '
             'DA-1 formally closed by ZP-K/Kleene | '
@@ -828,5 +847,5 @@ def build_zpi(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_3.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_4.pdf'))
     build_zpi(out)

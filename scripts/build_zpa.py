@@ -1,5 +1,8 @@
 """
-Build ZP-A: Lattice Algebra (v1.8)
+Build ZP-A: Lattice Algebra (v1.9)
+v1.9: CC-1 status updated — now derived as a structural consequence in AFAStructure lattices
+via ZP-J T-EXEC (IsQuineAtom(⊥) is unique; S₀ = ⊥ follows structurally). Status line and
+validation table updated. Remains a modelling commitment at the ZP-A level without AFAStructure.
 v1.8: CC-2 cross-framework note added — Foundation incompatibility with R3 and L-INF noted;
 AFA identified as forced rather than chosen. Foundation note in Section V updated accordingly.
 Cross-reference to ZP-E Remark R-AFA.
@@ -187,17 +190,18 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_8.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.8')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_9.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.9')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.8  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.7  |  v1.8: CC-2 cross-framework note added — Foundation incompatibility with R3 and L-INF noted; AFA identified as forced rather than chosen. Foundation note updated. See ZP-E Remark R-AFA.</i>', S['subtitle']),
+          Paragraph('Version 1.9  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.8  |  v1.9: CC-1 status updated — derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
+          body('<i>Version 1.9 changes: CC-1 status updated — ZP-J T-EXEC establishes IsQuineAtom(&#8869;) as the unique structural identity in any AFAStructure lattice; S<sub>0</sub> = &#8869; follows structurally. Status line in CC-1 block, Validation Status table, and Boundary Conditions table updated to reflect this derivation. At the ZP-A level (no AFAStructure assumed within this document), CC-1 remains a modelling commitment; the derivation is noted as a cross-framework result.</i>'),
           body('<i>Version 1.8 changes: CC-2 block updated with a cross-framework note: the replacement of Foundation by AFA is not arbitrary — ZF + Foundation is incompatible with R3 (a well-founded &#8869; admits an external interpreter, contradicting CC-2) and with ZP-C L-INF (bounded &#8712;-depth contradicts unbounded surprisal). AFA is forced rather than chosen; the Quine atom form is the minimal commitment within AFA. Foundation note in Section V updated to reflect this. Cross-reference to ZP-E Remark R-AFA added within CC-2.</i>'),
           body('<i>Version 1.7 changes: R3 dependency note added. The inference from "no external interpreter" (CC-2) to "necessarily executing" (DA-1) uses D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background. R3 supplies the structural argument for eliminating &#8869;&#8217;s static-description state; it does not independently derive DA-1 without D7. All three DA-1 paths in ZP-E share D7 as background; they provide independent structural, informational, and AIT-based routes to eliminating the static-description alternative. Section V intro and R3 text updated to make this dependency explicit. Boundary Conditions table row for CC-2/R3 updated accordingly.</i>'),
           body('<i>Version 1.6 changes: CC-2 (Self-Containment of &#8869;) added as a new modeling commitment: &#8869; = {&#8869;} is a Quine atom under ZF + AFA (Aczel&#8217;s Anti-Foundation Axiom). R3 added immediately following CC-2. Foundation note added: the framework is stated over ZF + AFA; the Axiom of Choice is not assumed. Section V dedicated to self-containment of &#8869;; OQ-A1 renumbered VI, Boundary Conditions VII, Validation Status VIII.</i>'),
@@ -280,7 +284,7 @@ def build():
         'We commit to initialising every state sequence at the minimum of L: S<sub>0</sub> = &#8869;. This is not derived from A1&#8211;A4 — it is a modelling choice.',
         'Under CC-1 and T3:   S<sub>0</sub> = &#8869; &#8804; S<sub>1</sub> &#8804; S<sub>2</sub> &#8804; &#8230;',
         'Note: By T2, &#8869; &#8804; S<sub>0</sub> for any initialisation — this holds unconditionally from A4. CC-1 strengthens this to equality: S<sub>0</sub> = &#8869;. The commitment is not needed to establish &#8869; &#8804; S<sub>0</sub>; it is needed to fix the starting point precisely.',
-        'Status: CONDITIONAL CLAIM — modelling commitment; not derived from A1&#8211;A4.',
+        'Status: DERIVED (given AFAStructure grounding) — ZP-J T-EXEC establishes IsQuineAtom(&#8869;) as the unique structural identity; S<sub>0</sub> = &#8869; follows as a structural consequence in any AFAStructure lattice. Modelling commitment at the ZP-A level (no AFAStructure assumption is made within this document).',
     ]))
 
     E.append(sp(4))
@@ -320,7 +324,7 @@ def build():
         [['(L, &#8744;, &#8869;) as join-semilattice', 'Derived (A1&#8211;A4) — ZP-D: algebraic structure of state space'],
          ['&#8804; partial order (D1, T1)', 'Derived — ZP-D: ordering on states'],
          ['Monotonicity of state sequences (T3)', 'Derived from A1&#8211;A3 — ZP-D: state layer ordering'],
-         ['&#8869; as global minimum (T2, CC-1)', 'Derived / Conditional — ZP-E: ontological grounding claim'],
+         ['&#8869; as global minimum (T2, CC-1)', 'Derived / Conditional — ZP-E: ontological grounding claim. CC-1 now derived in AFAStructure lattices via ZP-J T-EXEC.'],
          ['&#8869; = {&#8869;} self-containment (CC-2, R3)', 'Conditional / Remark — ZP-E: structural route to eliminating static-description state for &#8869;, given D7 exhaustiveness as background'],
          ['No subtraction / additive ontology (R1)', 'Structural — ZP-C: no operation may reduce informational content'],
          ['OQ-A1 — increment selection', 'Open within ZP-A; closed by ZP-E T5']],
@@ -336,7 +340,7 @@ def build():
          ['Additive ontology / no subtraction (R1)', 'Valid — Structural; signature restriction'],
          ['State transition as join (D2)', 'Valid — Defined; consistent with signature'],
          ['Monotonicity of state sequences (T3)', 'Valid — Derived from A1&#8211;A3 and D3'],
-         ['CC-1: S<sub>0</sub> = &#8869;', 'Conditional Claim — modelling commitment; not derived from A1&#8211;A4'],
+         ['CC-1: S<sub>0</sub> = &#8869;', 'DERIVED (given AFAStructure grounding, ZP-J T-EXEC) — structural consequence in any AFAStructure lattice. Modelling commitment at ZP-A level without AFAStructure assumption.'],
          ['CC-2: &#8869; = {&#8869;}', 'Conditional Claim — modeling commitment over ZF + AFA; not derived from A1&#8211;A4'],
          ['ZF + AFA foundation (no AC)', 'Meta-theoretic — framework-wide; required for CC-2'],
          ['OQ-A1: Sufficiency of monotonicity', 'Open within ZP-A; closed by ZP-E T5']],
