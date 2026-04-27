@@ -231,7 +231,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.7  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.8  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -254,9 +254,13 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.7 | April 2026', S['subtitle']),
+        Paragraph('Version 3.8 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.6 | v3.7: DA-1 formally closed via ZP-K — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4. '
+            '<i>Supersedes v3.7 | v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
+            '"foundational commitment: a missing principle, not a missing proof." No computability library closes the gap '
+            'between \'system at P<sub>0</sub>\' and \'system is running.\' Forward paths: new axiom, Chalmers\' implementation '
+            'notion, or ZP-PQ dissolution argument. '
+            'v3.7: DA-1 formally closed via ZP-K — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4. '
             'KleeneStructure MachinePhase instance added; Paths 1 and 3 now IN LEAN SCOPE. '
             '"Outside Lean Scope" designation removed from ZPE.lean. '
             'v3.6: DA-1 Path 1 rewritten — argument direction reversed; CC-1 and CC-2 now derived via ZP-J (no longer freestanding commitments). '
@@ -814,7 +818,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.7', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.8', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -868,7 +872,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.7', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.8', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',

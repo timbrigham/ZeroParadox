@@ -218,7 +218,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.3  |  April 2026  |'
+        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.4  |  April 2026  |'
               f'  Internal Working Document  |  Page {doc.page}')
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
@@ -242,10 +242,11 @@ def build_zpg(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version 1.3 | April 2026', S['bodyI']),
+        Paragraph('Version 1.4 | April 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.2 | R2 added: categorical expression of ⊥ = {⊥} connecting note | '
-            'All prior results unchanged</i>',
+            '<i>Supersedes v1.3 | v1.4: Lean scope note added after T6-c — T6-b strict inequality '
+            'and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton; '
+            'Lean proofs reduce to Nat.zero_le _ | All prior results unchanged</i>',
             S['note']),
         sp(8),
         hr(),
@@ -284,6 +285,12 @@ def build_zpg(out_path):
             '<i>Version 1.3 changes from v1.2: Remark R2 added (Categorical Expression of Self-Containment). '
             'Connects initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). '
             'All prior results, axioms, and definitions unchanged.</i>',
+            S['note']),
+        Paragraph(
+            '<i>Version 1.4 changes from v1.3: Lean scope note added after T6-c — T6-b strict inequality '
+            'and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton; '
+            'Lean proofs reduce to Nat.zero_le _ (non-negativity by type). '
+            'T6-b and T6-c statements and proofs unchanged.</i>',
             S['note']),
         body('<i>Illustrated Companion: A paired ZP-G Illustrated Companion provides concrete examples '
              'and visual intuitions for the results here. Examples are kept separate from the formal '
@@ -594,7 +601,7 @@ def build_zpg(out_path):
 
     E.append(remark_box(
         'Remark — Lean Scope of T6-b and T6-c',
-        'Status: Scope note — I-KC content; ZPSurprisal captures structural skeleton only',
+        'Status: Scope note — I-KC content; ZPSurprisal captures structural skeleton only [new in v1.4]',
         [
             'The Lean formalization of T6-b and T6-c uses the ZPSurprisal typeclass, which abstracts '
             'only the structural skeleton of K: surp_id (identity morphism has zero surprisal) and '
@@ -815,8 +822,8 @@ def build_zpg(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>Zero Paradox ZP-G: Category Theory | Version 1.3 | April 2026 | '
-            'Supersedes v1.2 | Internal Working Document</i>',
+            '<i>Zero Paradox ZP-G: Category Theory | Version 1.4 | April 2026 | '
+            'Supersedes v1.3 | Internal Working Document</i>',
             S['endnote']),
     ]
 
