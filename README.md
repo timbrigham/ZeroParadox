@@ -140,6 +140,8 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 A commitment marked "not a novel commitment" means its content is formally grounded in prior layers and provable without additional assumptions. It is stated as a local axiom only for the self-containment of that layer — the same pattern by which AX-1 was stated as an axiom before being formally derived as T-SNAP in ZP-E.
 
+**Metatheoretic note:** This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC. AFA permits self-containing sets (x = {x}). This affects only CC-2 below - all other results hold in standard ZF. Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The Axiom of Choice is not assumed.
+
 | Label | Type | Statement |
 |-------|------|-----------|
 | **AX-B1** | Decidable | A state either exists or it does not. Directly verifiable by computation (decidable equality on Fin 2 via `decide`) — not a novel commitment of this framework. |

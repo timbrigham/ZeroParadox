@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.3, revised April 2026)
+Zero Paradox — Foreword PDF Builder (v1.4, revised April 2026)
+v1.4: Metatheoretic note (ZF+AFA) added in Section III before the commitments table.
 v1.3: Fix ∅ rendering — was showing as a rectangle in DejaVuSerif; now forced through DV (DejaVuSans) via <font> tag.
 Follows all rules in pdf rendering standards.md:
   - DejaVu fonts only
@@ -171,7 +172,7 @@ def build_foreword(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('April 2026  |  v1.3', S['date']),
+        Paragraph('April 2026  |  v1.4', S['date']),
         sp(10),
         Paragraph(
             'The paradox is not that zero is nothing.<br/>'
@@ -312,6 +313,15 @@ def build_foreword(out_path):
             'framework introduces no novel axioms. Stated explicitly: two structural commitments '
             '(grounded in prior layers), two methodological principles, one design commitment, '
             'one modeling commitment (MC-1), and two conditional claims (CC-1, CC-2):',
+            S['body']),
+        Paragraph(
+            'A note on metatheory: this framework is stated over ZF + AFA '
+            '(Zermelo–Fraenkel set theory with Aczel’s Anti-Foundation Axiom), '
+            'not standard ZFC. AFA permits self-containing sets — in particular, sets x '
+            'satisfying x = {x}. This matters only for CC-2 in the table below; '
+            'every other result in this framework holds in standard ZF. Standard ZFC is '
+            'incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, '
+            'contradicting the self-execution argument. The Axiom of Choice is not assumed.',
             S['body']),
         commitments_table(),
         sp(8),
