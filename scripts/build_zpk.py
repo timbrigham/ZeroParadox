@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.0 | April 2026
+Version 1.1 | April 2026
+v1.1: Remark R-K.0 added — T-COMP "four-way equivalence" clarified: (1)–(3) are
+equivalent by T-EXEC (ZP-J); (4) is combined by KleeneStructure typeclass requiring
+botCode_is_quine, not derived independently. The equivalence flows through typeclass
+membership, not through independent proofs that AFA self-containment ↔ Kleene
+fixed-point.
 v1.0: Initial release — Four-way equivalence: Quine atom = ⊥ = join identity = Kleene
 fixed point. selfApply_partrec proved (Partrec₂). DA-1 formally closed via
 KleeneStructure MachinePhase instance (da1_closed_concrete : IsQuineAtom (bot :
@@ -14,7 +19,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md:
   - US Letter, 1-inch margins, TW = 6.5 inch
   - Standard color palette: BLUE/GREEN/ORANGE/SLATE/AMBER/GREY_LITE (Section 10)
   - Semantic box helpers: result_box, axiom_box, def_box, remark_box, import_box (Section 10)
-  - Footer: Zero Paradox ZP-K: Computational Grounding | Version 1.0 | April 2026 | Page n
+  - Footer: Zero Paradox ZP-K: Computational Grounding | Version 1.1 | April 2026 | Page n
 """
 
 import os, sys
@@ -206,7 +211,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'Zero Paradox ZP-K: Computational Grounding  |  Version 1.0  |  April 2026  |  Page {doc.page}'
+        ft = f'Zero Paradox ZP-K: Computational Grounding  |  Version 1.1  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -228,9 +233,12 @@ def build_zpk(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-K: Computational Grounding of Self-Reference', S['title']),
-        Paragraph('Version 1.0 | April 2026', S['subtitle']),
+        Paragraph('Version 1.1 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.0: Four-way equivalence proved — Quine atom = ⊥ = join identity = Kleene '
+            '<i>v1.1: Remark R-K.0 added — T-COMP four-way equivalence clarified: (1)–(3) '
+            'equivalent by T-EXEC (derived); (4) combined by KleeneStructure typeclass requirement '
+            '(structural commitment, not independent derivation). | '
+            'v1.0: Four-way equivalence proved — Quine atom = ⊥ = join identity = Kleene '
             'fixed point. KleeneStructure typeclass bridges AFA self-containment to Kleene\'s '
             'second recursion theorem. DA-1 formally closed: da1_closed_concrete : '
             'IsQuineAtom(⊥ : MachinePhase). All ZPK.lean theorems verified in Lean 4.</i>',
@@ -387,7 +395,28 @@ def build_zpk(out_path):
         'ZP-J T-EXEC established a three-way equivalence: Quine atom (set-theoretic) ↔ '
         'bottom element (order-theoretic) ↔ join identity (algebraic). ZP-K adds the '
         'fourth: Kleene fixed point (computational). The four characterisations of ⊥ are '
-        'equivalent in any KleeneStructure lattice.'))
+        'present simultaneously in any KleeneStructure lattice.'))
+    E.append(remark_box(
+        'Remark R-K.0 — What "Four-Way Equivalence" Means',
+        [
+            'The equivalence among (1)–(4) has two distinct sources:',
+            '(1)–(3) are equivalent by T-EXEC (ZP-J): any element that is a Quine atom is also '
+            '⊥ and a join identity, and vice versa. This is a genuine logical derivation — the '
+            'three properties are proved to coincide from the AFAStructure axioms.',
+            '(4) is present in any KleeneStructure instance because KleeneStructure requires it '
+            'as a typeclass field: botCode_is_quine must be supplied at instantiation. There is '
+            'no independent proof that satisfying condition (1) (being a Quine atom in the AFA '
+            'sense) entails satisfying condition (4) (being a Kleene fixed point), or vice versa. '
+            'The two are combined by the typeclass definition — they are required together because '
+            'we take them to be the same structural fact, not because one is derived from the other.',
+            'In short: "four-way equivalence" means "all four hold in any KleeneStructure '
+            'instance." (1)–(3) are independently proved equivalent. (4) is bundled in by the '
+            'typeclass requirement. The philosophical claim — that Kleene computational '
+            'self-reference and AFA set-theoretic self-reference are the same thing — is the '
+            'motivation for the typeclass design, not a consequence derived within it.',
+        ]
+    ))
+    E.append(sp(6))
 
     E.append(result_box(
         'Theorem T-COMP — Computational Grounding (ZPK.lean § III)',
@@ -398,8 +427,9 @@ def build_zpk(out_path):
             '(3) ∀ x : L, join q x = x  — algebraic generator (ZP-A A4)',
             '(4) ∃ botCode : Code, IsComputationalQuine botCode  — computational self-reference',
             '',
-            'The bridge from mathematical self-reference to computational execution is not a '
-            'bridge. These name the same structural role in four formal languages.',
+            'Note on (4): it is present in any KleeneStructure instance by typeclass requirement '
+            '(botCode_is_quine is a required field). The equivalence of (1)–(3) is derived by '
+            'T-EXEC; the presence of (4) follows from the structural commitment of KleeneStructure.',
             'Lean: ZeroParadox.ZPK.t_comp. '
             'Purity: [propext, Classical.choice, Quot.sound] — from Mathlib computability. ✓',
         ]
@@ -595,7 +625,7 @@ def build_zpk(out_path):
     E.append(sp(8))
 
     print('[build_zpk] Building registers...')
-    E += [hr(), Paragraph('Traceability Register — ZP-K v1.0', S['h1'])]
+    E += [hr(), Paragraph('Traceability Register — ZP-K v1.1', S['h1'])]
 
     trace_rows = [
         ['selfApply_partrec',
@@ -638,7 +668,7 @@ def build_zpk(out_path):
     ))
     E.append(sp(8))
 
-    E += [hr(), Paragraph('Open Items Register — ZP-K v1.0', S['h1'])]
+    E += [hr(), Paragraph('Open Items Register — ZP-K v1.1', S['h1'])]
 
     oq_rows = [
         ['DA-1 Path 1 (AFA structural)',
@@ -676,7 +706,7 @@ def build_zpk(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-K v1.0 | Computational Grounding of Self-Reference | '
+            '<i>End of ZP-K v1.1 | Computational Grounding of Self-Reference | '
             'DA-1 closed: da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase) | '
             'Four-way equivalence: Quine atom = ⊥ = join identity = Kleene fixed point | '
             'All ZPK.lean theorems verified. Axioms: [propext, Classical.choice, Quot.sound]</i>',
@@ -690,5 +720,5 @@ def build_zpk(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-K_Computational_Grounding_v1_0.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-K_Computational_Grounding_v1_1.pdf'))
     build_zpk(out)

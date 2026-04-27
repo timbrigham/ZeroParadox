@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 1.0 | April 2026
+Version 1.1 | April 2026
+v1.1: Remark R-J.0 added — CIC encoding of bot_self_mem is a structural analogy, not a
+ZF+AFA set-theoretic derivation. selfMem x := x = ⊥ makes bot_self_mem := rfl a
+definitional tautology; the full set-theoretic content of AFA (⊥ ∈ ⊥) is absent from
+the Lean proof. AFAStructure concrete instances item CLOSED — ZP-K provides
+machinePhaseAFA : AFAStructure MachinePhase.
 v1.0: Initial release — Theorem T-EXEC: the Quine atom is the bottom element of any
 ZP-A lattice with AFA grounding. CC-1 (ZP-A) is derived as a theorem, not committed
 as a modelling choice. All ZPJ.lean theorems compile axiom-free. The final bridge
@@ -13,7 +18,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md:
   - US Letter, 1-inch margins, TW = 6.5 inch
   - Standard color palette: BLUE/GREEN/ORANGE/SLATE/AMBER/GREY_LITE (Section 10)
   - Semantic box helpers: result_box, axiom_box, def_box, remark_box, import_box (Section 10)
-  - Footer: Zero Paradox ZP-J: Executability of Self-Reference | Version 1.0 | April 2026 | Page n
+  - Footer: Zero Paradox ZP-J: Executability of Self-Reference | Version 1.1 | April 2026 | Page n
 """
 
 import os, sys
@@ -221,7 +226,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'Zero Paradox ZP-J: Executability of Self-Reference  |  Version 1.0  |  April 2026  |  Page {doc.page}'
+        ft = f'Zero Paradox ZP-J: Executability of Self-Reference  |  Version 1.1  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -244,9 +249,12 @@ def build_zpj(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J: Executability of Self-Reference', S['title']),
-        Paragraph('Version 1.0 | April 2026', S['subtitle']),
+        Paragraph('Version 1.1 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.0: Initial release — Theorem T-EXEC: the Quine atom Q = {Q} is provably '
+            '<i>v1.1: Remark R-J.0 added — bot_self_mem := rfl in MachinePhase is a structural '
+            'analogy (CIC encoding), not a ZF+AFA set-theoretic derivation; AFAStructure concrete '
+            'instances CLOSED (ZP-K machinePhaseAFA). | '
+            'v1.0: Initial release — Theorem T-EXEC: the Quine atom Q = {Q} is provably '
             'the bottom element &#8869; of any ZP-A lattice with AFA grounding. '
             'CC-1 (ZP-A) is derived as a structural consequence, not committed as a modelling choice. '
             'All ZPJ.lean theorems verify axiom-free in Lean 4.</i>',
@@ -424,6 +432,29 @@ def build_zpj(out_path):
         'Any concrete lattice L that claims to be AFA-grounded must prove bot_self_mem as '
         'part of its AFAStructure instance. If it cannot, it is not genuinely AFA-grounded — '
         'the identification &#8869; = {&#8869;} is part of what "AFA-grounded" means.'))
+    E.append(remark_box(
+        'Remark R-J.0 — CIC Encoding and the AFA Distinction',
+        [
+            'In the MachinePhase concrete instance (ZP-K), selfMem is defined as '
+            'selfMem x := x = &#8869;. With this definition, bot_self_mem is proved by rfl: '
+            '&#8869; = &#8869; holds by reflexivity.',
+            'This is the CIC-compatible encoding of AFA self-containment. In Lean 4 (based on '
+            'the Calculus of Inductive Constructions), the set-theoretic statement &#8869; &#8712; &#8869; '
+            '— meaning &#8869; literally contains itself as a member under ZF+AFA — is not directly '
+            'formalizable. CIC lacks the membership relation &#8712; of set theory. The encoding '
+            'selfMem x := x = &#8869; captures the structural role: "self-containing" means "equals '
+            'the bottom element." The Lean proof compiles by rfl because self-containing is '
+            'defined as equality with &#8869;.',
+            'This is a structural analogy, not a set-theoretic derivation from ZF+AFA. The '
+            'full set-theoretic content of AFA — that &#8869; literally contains itself as a member '
+            'of the AFA universe — is not present in the Lean proof. What the typeclass encodes '
+            'is the structural consequence: there is a unique element playing the Quine role, '
+            'and &#8869; is that element. The AFA grounding provides the informal justification for '
+            'why this structural role belongs to &#8869;; the Lean proof requires only the typeclass '
+            'fields, not the full set-theoretic apparatus of ZF+AFA.',
+        ]
+    ))
+    E.append(sp(6))
 
     E.append(Paragraph('III. Why a Typeclass Field Rather than a Freestanding Axiom', S['h2']))
     E.append(body(
@@ -648,7 +679,7 @@ def build_zpj(out_path):
         'affect DA-1\'s status.'))
 
     E.append(result_box(
-        'Key Results — ZP-J v1.0',
+        'Key Results — ZP-J v1.1',
         [
             'T-EXEC: In any AFAStructure lattice, IsQuineAtom(q) &#8596; q = &#8869;. '
             'Self-reference and bottom-hood are the same structural role.',
@@ -663,7 +694,7 @@ def build_zpj(out_path):
 
     print('[build_zpj] Building registers...')
     # ── TRACEABILITY REGISTER ─────────────────────────────────────────────────
-    E += [hr(), Paragraph('Traceability Register — ZP-J v1.0', S['h1'])]
+    E += [hr(), Paragraph('Traceability Register — ZP-J v1.1', S['h1'])]
 
     trace_rows = [
         ['T-EXEC: Quine atom = &#8869;',
@@ -703,7 +734,7 @@ def build_zpj(out_path):
     E.append(sp(8))
 
     # ── OPEN ITEMS REGISTER ───────────────────────────────────────────────────
-    E += [hr(), Paragraph('Open Items Register — ZP-J v1.0', S['h1'])]
+    E += [hr(), Paragraph('Open Items Register — ZP-J v1.1', S['h1'])]
 
     oq_rows = [
         ['CC-1 (ZP-A) derivability',
@@ -715,10 +746,10 @@ def build_zpj(out_path):
          'The stub version of ZPJ.lean had ax_j1 as a freestanding axiom. '
          'The final version derives J1 as a theorem from T-EXEC + A4. Axiom eliminated.'],
         ['AFAStructure concrete instances',
-         'OPEN — future work',
-         'ZPJ.lean defines AFAStructure abstractly. Concrete instances (e.g. the MachinePhase '
-         'semilattice from ZP-E, the Q&#8322; model from ZP-B) must discharge bot_self_mem explicitly. '
-         'Defining these instances is a natural next step.'],
+         'CLOSED — ZP-K MachinePhase',
+         'ZP-K provides machinePhaseAFA : AFAStructure MachinePhase, discharging bot_self_mem '
+         'for ZP-E\'s two-element machine. selfMem x := x = &#8869;; bot_self_mem := rfl. '
+         'The Q&#8322; model (ZP-B) is a natural extension but not required for T-SNAP or DA-1.'],
         ['DA-1 Path 1 formalisation',
          'OPEN — outside Lean scope',
          'DA-1 Path 1 (ZP-E) invokes &#8869; = {&#8869;} informally. ZP-J now provides the '
@@ -742,7 +773,7 @@ def build_zpj(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-J v1.0 | Theorem T-EXEC: Executability of Self-Reference | '
+            '<i>End of ZP-J v1.1 | Theorem T-EXEC: Executability of Self-Reference | '
             'CC-1 derived — no freestanding axioms | '
             'All ZPJ.lean theorems: does not depend on any axioms | '
             'Remaining foundation: ZPSemilattice (A1&#8211;A4) and AFAStructure (selfMem, quine_unique, bot_self_mem)</i>',
@@ -756,5 +787,5 @@ def build_zpj(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-J_Self_Reference_v1_0.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-J_Self_Reference_v1_1.pdf'))
     build_zpj(out)
