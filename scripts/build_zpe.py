@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.6 | April 2026
+Version 3.7 | April 2026
+v3.7: DA-1 formally closed via ZP-K — KleeneStructure MachinePhase instance proved in Lean 4.
+da1_closed_concrete : IsQuineAtom (bot : MachinePhase). DA-1 Path 1 (structural/AFA) and
+Path 3 (computational/Kleene) now in Lean scope. Path 2 (informational bridge) remains outside
+Lean scope. "Outside Lean Scope" designation removed from ZPE.lean DA-1 section.
 v3.6: DA-1 Path 1 rewritten — argument direction reversed. Previously: CC-2 (⊥ = {⊥}) asserted,
 then "no external interpreter" derived. Now: "nothing external to ⊥ can execute ⊥" argued first,
 ⊥ = {⊥} derived as the only coherent structure, ZP-J T-EXEC cited as formal verification.
@@ -222,7 +226,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.5  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.7  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -245,9 +249,13 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.5 | April 2026', S['subtitle']),
+        Paragraph('Version 3.7 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.4 | v3.5: DA-1 Open Items Register status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" now matches v3.3 path-hierarchy framing. '
+            '<i>Supersedes v3.6 | v3.7: DA-1 formally closed via ZP-K — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4. '
+            'KleeneStructure MachinePhase instance added; Paths 1 and 3 now IN LEAN SCOPE. '
+            '"Outside Lean Scope" designation removed from ZPE.lean. '
+            'v3.6: DA-1 Path 1 rewritten — argument direction reversed; CC-1 and CC-2 now derived via ZP-J (no longer freestanding commitments). '
+            'v3.5: DA-1 Open Items Register status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" now matches v3.3 path-hierarchy framing. '
             'v3.4: R-AFA minimality explicit — &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets; any extension exceeds A4\'s constraint. '
             'v3.3: DA-1 path hierarchy foregrounded — three informal paths framed as corroboration of DP-2\'s precondition, not parallel proofs. '
             'v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
@@ -450,13 +458,14 @@ def build_zpe(out_path):
         derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
                 'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
-                'Informal convergent paths: ZP-C D1 + AIT incompressibility (Path 3 — K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1); '
-                'ZP-J T-EXEC + ZP-A R3 (Path 1 — structural, self-execution); ZP-C L-INF (Path 2 — informational). '
+                'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in ZPK.lean. '
+                'Path 2 (informational, L-INF): OUTSIDE LEAN SCOPE — informational bridge claim. '
+                'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
                 'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
                 'CC-2 (&#8869; = {&#8869;}) structurally forced by self-execution argument; ZP-J T-EXEC formally verifies. '
                 'DP-2 (&#167;III) — explicit. '
                 'T-SNAP is derived given DA-1, CC-1, and AX-B1. '
-                'AIT (Kolmogorov complexity) outside Lean scope.'),
+                'AIT (Kolmogorov complexity) outside Lean scope; Kleene fixed-point is the in-scope formal counterpart.'),
     ]
 
     E.append(Paragraph('V. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
@@ -790,7 +799,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.5', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.7', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -844,7 +853,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.5', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.7', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -897,15 +906,18 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.6', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.7', S['h1'])]
 
     val_rows = [
-        ['DA-1: Derived Proposition (v3.0 formal grounding)',
+        ['DA-1: Derived Proposition (v3.7 ZP-K formal closure)',
          'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI). '
          'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
          'are provably distinct even when both produce &#8869;. ✓ '
-         'Informal corroboration: Path 1 (ZP-J T-EXEC + R3 — self-execution, structural), Path 2 (L-INF — informational), '
-         'Path 3 (K incompressibility — AIT). AIT outside Lean scope. CC-1 and CC-2 now derived via ZP-J, not freestanding commitments.'],
+         'ZP-K formal closure (v3.7): da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in ZPK.lean. '
+         'KleeneStructure MachinePhase instance provides botCode_is_quine (Path 3 IN LEAN SCOPE). '
+         'machinePhaseAFA gives AFAStructure instance (Path 1 IN LEAN SCOPE). '
+         'Path 2 (informational bridge, L-INF) remains outside Lean scope. '
+         'CC-1 and CC-2 derived via ZP-J, not freestanding commitments.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
         ['AX-1 retirement',
@@ -941,7 +953,9 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.5 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.7 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
+            'Paths 1 and 3 IN LEAN SCOPE; Path 2 (informational bridge) outside Lean scope | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
             'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
             'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
@@ -957,5 +971,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_6.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_7.pdf'))
     build_zpe(out)

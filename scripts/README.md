@@ -25,7 +25,8 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_zpb.py` | Builds `ZP-B_pAdic_Topology_v1_4.pdf` |
 | `build_zpc.py` | Builds `ZP-C_Information_Theory_v1_5.pdf` |
 | `build_zpd.py` | Builds `ZP-D_State_Layer_v1_4.pdf` |
-| `build_zpe.py` | Builds `ZP-E_Bridge_Document_v2_0.pdf` (DA-1, DA-2, DA-3 bridge inserts) |
+| `build_zpe.py` | Builds `ZP-E_Bridge_Document_v3_7.pdf` (DA-1, DA-2, DA-3 bridge inserts; DA-1 ZP-K formal closure) |
+| `build_zpk.py` | Builds `ZP-K_Computational_Grounding_v1_0.pdf` (Kleene fixed-point; T-COMP four-way equivalence; DA-1 closure) |
 | `build_zpg.py` | Builds `ZP-G_Category_Theory_v1_2.pdf` (category theory layer) |
 | `build_zph.py` | Builds `ZP-H_Categorical_Bridge_v1_2.pdf` |
 | `build_zpi.py` | Builds `ZP-I_Inside_Zero_v1_0.pdf` (T-IZ: ordinal closure of the ascending chain) |
