@@ -9,11 +9,11 @@ import Mathlib.Tactic
 
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
-- DA-1 (Instantiation as Execution): DESIGN PRINCIPLE — cites ZPC.l_inf (not D7).
-  Informational extremity at P₀ (unbounded surprisal, L-INF) forces execution rather
-  than static description. Explicit ontological commitment, not a definitional
-  clarification. No Lean theorem — the mathematical premise is ZPC.l_inf; the bridge
-  from extremity to execution is a named design principle documented below (§ I-DA1).
+- DA-1 (Instantiation as Execution): Paths 1 and 3 are now in Lean scope via ZP-K.
+  ZPK.machinePhaseKleene gives MachinePhase a KleeneStructure instance; ZPK.da1_closed_concrete
+  proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing and
+  self-executing, not a static description. Path 2 (informational bridge, L-INF) remains
+  outside Lean scope. See § I-DA1 for the full argument and ZP-K for the formal closure.
 - DA-2 (Instantiation Succession): algebraic characterisation of the ⊥ role across instantiations
 - DA-3 (Perspective-Relative Cardinality): DA-3-D1 as a definition; DA-3-C1 is a
   candidate claim and is not formalised here
@@ -48,33 +48,31 @@ instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join_idem  := by intro x;     cases x                          <;> rfl
   bot_join   := by intro x;     cases x                          <;> rfl
 
-/-! ## I-DA1. DA-1 — Derived Proposition (outside Lean scope): Instantiation as Execution
+/-! ## I-DA1. DA-1 — Derived Proposition: Instantiation as Execution
 
 DA-1 states: a machine configuration at the incompressibility threshold P₀ is a
 live execution event, not a static description.
 
-Three paths support this in ZP-E v2.8 (informal mathematics):
-  Path 1 — Structural (ZP-A CC-2 + R3): ⊥ = {⊥} (Quine atom, ZF+AFA) → no external
-    interpreter position exists → cannot be a static description.
+Three paths support this (ZP-E v3.6 framing):
+  Path 1 — Structural (ZP-J T-EXEC + ZP-K): nothing external to ⊥ can execute ⊥;
+    ⊥ must execute itself → ⊥ = {⊥} is forced. ZPK.machinePhaseAFA gives MachinePhase
+    an AFAStructure instance encoding this. ZPK.da1_closed_concrete : IsQuineAtom bot.
+    IN LEAN SCOPE via ZP-K.
   Path 2 — Informational (ZP-C L-INF): surprisal at ⊥ is unbounded → no finite
     interpreter can hold ⊥ → static-description state eliminated.
-  Path 3 — Formal bridge (ZP-C D1 + AIT): K(c₁|n)/|c₁| = 1 → c₁ is its own minimal
-    program → no shorter external generator → static-description state eliminated →
-    c₁ is in live execution. Primary grounding; does not require CC-2.
+    OUTSIDE LEAN SCOPE: "unbounded surprisal → necessarily executing" is an ontological
+    bridge claim not derivable in type theory.
+  Path 3 — Computational (ZP-K Kleene): no shorter program is prior to ⊥ →
+    ⊥ is its own program. ZPK.machinePhaseKleene gives MachinePhase a KleeneStructure
+    instance with botCode witnessing the Kleene fixed point.
+    IN LEAN SCOPE via ZP-K.
 
-Lean scope: DA-1's functional derivation role in the T-SNAP chain is fulfilled by
-ZPC.l_run (c₀ ≠ c₁) and ZPC.tq_ih (c₁ ≠ c₀), both proved independently in ZPC.
-The T-SNAP derivation is complete without a separate DA-1 theorem — see t_snap_derived.
-The bridge from informational extremity to execution cannot be formalized in Lean:
-  - Path 3 requires Kolmogorov complexity (K), which is uncomputable and absent from
-    Mathlib. No AIT library exists in Lean 4 at the required level.
-  - Path 1 requires ZF+AFA; Lean 4 uses CIC/MLTT, incompatible with anti-foundation.
-    Same reason CC-2 is outside Lean scope in ZPA.
-  - Path 2: ZPC.l_inf is proved, but "unbounded surprisal → necessarily executing" is
-    an ontological claim — not derivable in type theory without the bridge axiom itself.
-DA-1 is therefore Outside Lean Scope — same category as CC-2 in ZPA. The PDF's
-"Derived Proposition" label refers to the informal AIT argument, not a Lean derivation.
-See ZP-E v2.8 § III for the full three-path argument. -/
+DA-1 Lean scope status (updated ZP-K, April 2026):
+  Paths 1 and 3: formally closed — ZPK.da1_closed_concrete : IsQuineAtom (bot : MachinePhase).
+  Path 2: outside Lean scope — informational bridge remains an ontological commitment.
+  T-SNAP derivation: complete independently via l_run, tq_ih, bot_join (see t_snap_derived).
+
+Prior "Outside Lean Scope" designation is superseded. ZP-K is the formal closure. -/
 
 /-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
 

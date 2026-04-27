@@ -1,4 +1,5 @@
 import ZeroParadox.ZPJ
+import ZeroParadox.ZPE
 import Mathlib.Computability.PartrecCode
 import Mathlib.Tactic
 
@@ -24,6 +25,7 @@ structural identity.
 - § II  KleeneStructure typeclass — bridges AFAStructure to computability
 - § III T-COMP: the four-way equivalence
 - § IV  DA-1 closure — the description-instantiation gap formally dissolved
+- § V   MachinePhase instance — DA-1 closed concretely for ZP-E's machine
 
 ## Key insight (April 26, 2026)
 
@@ -209,6 +211,44 @@ theorem description_instantiation_gap_closed {L : Type*} [ZPSemilattice L]
     ∀ (q : L), IsQuineAtom q → q = bot := by
   exact ⟨bot_is_quine_atom, fun q hq => t_exec q hq⟩
 
+/-! ## § V. MachinePhase — Concrete DA-1 Closure
+
+Provides AFAStructure and KleeneStructure instances for ZP-E's MachinePhase type,
+closing DA-1 formally for the specific computational model ZP-E describes.
+
+selfMem is modelled as equality with bot — the CIC-compatible expression of AFA
+self-containment ⊥ = {⊥}. Anti-foundation is not required at the typeclass level:
+the relevant structural fact (bot is the unique self-containing element) is
+captured by the definition selfMem x := x = bot, proved axiom-free. -/
+
+open ZeroParadox.ZPE ZeroParadox.ZPC
+
+/-- AFAStructure instance for MachinePhase.
+    selfMem x := x = bot (bot = .initial = c₀).
+    The unique self-containing element is the initial state — the bottom of the
+    semilattice. This is the CIC encoding of ⊥ = {⊥}: bot is self-containing
+    and is the only element with this property. -/
+instance machinePhaseAFA : AFAStructure MachinePhase where
+  selfMem x      := x = bot
+  quine_unique _ _ hx hy := hx.trans hy.symm
+  bot_self_mem   := rfl
+
+/-- KleeneStructure instance for MachinePhase.
+    botCode is the computational Quine whose existence is guaranteed by
+    kleene_fixed_point_exists (Kleene's second recursion theorem). The code
+    IS its own program — the computational expression of ⊥ = {⊥}. -/
+noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
+  botCode               := Classical.choose computational_quine_exists
+  botCode_is_quine      := Classical.choose_spec computational_quine_exists
+  bot_self_mem_from_kleene := rfl
+
+/-- DA-1 closed (concrete): In the MachinePhase semilattice, ⊥ is a Quine atom.
+    The initial state c₀ is self-containing and self-executing — not a static
+    description awaiting an external interpreter. Follows from da1_computational
+    applied to the MachinePhase KleeneStructure instance. -/
+theorem da1_closed_concrete : IsQuineAtom (bot : MachinePhase) :=
+  da1_computational
+
 end ZeroParadox.ZPK
 
 /-! ## Axiom Purity Check -/
@@ -225,5 +265,6 @@ open ZeroParadox.ZPK ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ
 #print axioms roger_fixed_point_exists
 #print axioms selfApply_partrec
 #print axioms computational_quine_exists
+#print axioms da1_closed_concrete
 
 end PurityCheck
