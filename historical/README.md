@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-I_Inside_Zero_v1_2-1.pdf](ZP-I_Inside_Zero_v1_2-1.pdf) | 2026-04-27 | ZP-I v1.2 superseded by v1.3: valuation-complexity bridge demoted from "critical step / required for full conclusion" to informational context — formal spine is Steps 1+6 (both axiom-free); DA-1 closed by ZP-K/Kleene |
 | [ZP-I_Inside_Zero_v1_1-1.pdf](ZP-I_Inside_Zero_v1_1-1.pdf) | 2026-04-27 | ZP-I v1.1 superseded by v1.2: t_iz_valuation_unbounded added — "sup v₂(Sₙ) = ∞" proved axiom-free in Lean; proof obligation table row 3 closed |
 | [ZP-K_Computational_Grounding_v1_0-1.pdf](ZP-K_Computational_Grounding_v1_0-1.pdf) | 2026-04-27 | ZP-K v1.0 superseded by v1.1: Remark R-K.0 added — T-COMP "four-way equivalence" clarified: (1)-(3) equivalent by T-EXEC (derived); (4) combined by KleeneStructure typeclass requirement, not independently derived; equivalence flows through typeclass membership |
 | [ZP-J_Self_Reference_v1_0-1.pdf](ZP-J_Self_Reference_v1_0-1.pdf) | 2026-04-27 | ZP-J v1.0 superseded by v1.1: Remark R-J.0 added — bot_self_mem := rfl in MachinePhase is a structural analogy (CIC encoding of selfMem x := x = ⊥), not a ZF+AFA set-theoretic derivation; AFAStructure concrete instances item CLOSED (ZP-K machinePhaseAFA) |
