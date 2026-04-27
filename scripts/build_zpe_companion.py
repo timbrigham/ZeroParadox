@@ -1,6 +1,8 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.2 | April 2026
+Version 1.3 | April 2026
+v1.3: DA-1 formally closed via ZP-K noted — Paths 1 and 3 now IN LEAN SCOPE;
+da1_closed_concrete : IsQuineAtom(⊥ : MachinePhase) proved in Lean 4. Formal doc at v3.7.
 v1.2: AIT bridge added as third DA-1 motivating path; DP-2 two-layer structure explained;
 da1_minimal_path Lean verification noted. Formal doc at v3.0.
 v1.1: DA-1 diagram label updated (no longer D7-based); DA-1 status clarified as Derived Proposition
@@ -285,7 +287,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026  |  v1.2')
+            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026  |  v1.3')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -306,7 +308,7 @@ def build():
           Paragraph('Where all four frameworks converge —\nand AX-1 becomes a theorem',
                     CS['title']),
           Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
-          Paragraph('ZP Companion | Version 1.2 | April 2026', CS['meta']),
+          Paragraph('ZP Companion | Version 1.3 | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
               'examples. It is not the formal ontology — every claim here restates a result '
@@ -389,6 +391,18 @@ def build():
         'information theory alone. '
         'All three share D7\'s static/executing dichotomy as background and none is circular '
         'with DP-2.'))
+    E.append(cbody(
+        '<b>Lean 4 formal closure (ZP-K, v3.7):</b> The three paths are not only conceptually '
+        'convincing — two of them are now machine-checked. ZP-K adds a KleeneStructure instance '
+        'for MachinePhase: it provides a concrete computational Quine (a code that is its own '
+        'program, via Kleene\'s second recursion theorem), and proves that this Quine and the '
+        'AFA self-containment argument are the same structural fact in two different languages. '
+        'The result is <i>da1_closed_concrete</i>: in Lean 4, '
+        'IsQuineAtom(&#8869; : MachinePhase) is a proved theorem. '
+        'Path 1 (AFA self-execution) and Path 3 (computational Kleene fixed point) are now '
+        'formally IN LEAN SCOPE. Path 2 (informational bridge — unbounded surprisal → necessarily '
+        'executing) remains an ontological claim outside Lean scope. '
+        'The formal grounding of DA-1 is therefore: DP-2 plus two Lean-verified structural paths.'))
     E.append(tsnap_chain_diagram())
     E.append(ccaption(
         'The T-SNAP derivation chain: six steps, no axioms beyond AX-B1 and the definition '

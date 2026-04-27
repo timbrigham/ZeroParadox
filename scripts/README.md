@@ -25,15 +25,19 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_zpb.py` | Builds `ZP-B_pAdic_Topology_v1_4.pdf` |
 | `build_zpc.py` | Builds `ZP-C_Information_Theory_v1_5.pdf` |
 | `build_zpd.py` | Builds `ZP-D_State_Layer_v1_4.pdf` |
-| `build_zpe.py` | Builds `ZP-E_Bridge_Document_v2_0.pdf` (DA-1, DA-2, DA-3 bridge inserts) |
+| `build_zpe.py` | Builds `ZP-E_Bridge_Document_v3_7.pdf` (DA-1, DA-2, DA-3 bridge inserts; DA-1 ZP-K formal closure) |
+| `build_zpk.py` | Builds `ZP-K_Computational_Grounding_v1_0.pdf` (Kleene fixed-point; T-COMP four-way equivalence; DA-1 closure) |
 | `build_zpg.py` | Builds `ZP-G_Category_Theory_v1_2.pdf` (category theory layer) |
 | `build_zph.py` | Builds `ZP-H_Categorical_Bridge_v1_2.pdf` |
 | `build_zpi.py` | Builds `ZP-I_Inside_Zero_v1_0.pdf` (T-IZ: ordinal closure of the ascending chain) |
+| `build_zpj.py` | Builds `ZP-J_Self_Reference_v1_0.pdf` (T-EXEC: Quine atom = bottom; CC-1 derived) |
 | `build_zpa_companion.py` | Builds the ZP-A Illustrated Companion |
 | `build_zpb_companion.py` | Builds the ZP-B Illustrated Companion |
 | `build_zpc_companion.py` | Builds the ZP-C Illustrated Companion |
 | `build_zpd_companion.py` | Builds the ZP-D Illustrated Companion |
-| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion |
+| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion (v1.3: DA-1 ZP-K formal closure noted) |
+| `build_zpj_companion.py` | Builds the ZP-J Illustrated Companion (v1.0: T-EXEC, three-way equivalence, CC-1/CC-2 as theorems) |
+| `build_zpk_companion.py` | Builds the ZP-K Illustrated Companion (v1.0: four-way equivalence, computational Quine, DA-1 closure) |
 | `build_zpg_companion.py` | Builds the ZP-G Illustrated Companion |
 | `build_zph_companion.py` | Builds the ZP-H Illustrated Companion |
 | `build_zpi_companion.py` | Builds the ZP-I Illustrated Companion |

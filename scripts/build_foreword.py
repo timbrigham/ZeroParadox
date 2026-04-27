@@ -1,7 +1,8 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.2, revised April 2026)
+Zero Paradox — Foreword PDF Builder (v1.4, revised April 2026)
+v1.4: Metatheoretic note (ZF+AFA) added in Section III before the commitments table.
+v1.3: Fix ∅ rendering — was showing as a rectangle in DejaVuSerif; now forced through DV (DejaVuSans) via <font> tag.
 Follows all rules in pdf rendering standards.md:
-  - DejaVu fonts only
   - All table cells are Paragraph objects
   - No unicode subscripts — use sub/super tags
   - US Letter, 1-inch margins, TW = 6.5 inch
@@ -25,10 +26,10 @@ pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
 pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'DejaVuSerif.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'DejaVuSerif-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
 
 # ── 2. COLORS ─────────────────────────────────────────────────────────────────
 TEAL      = colors.HexColor('#1E7B74')
@@ -170,7 +171,7 @@ def build_foreword(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('April 2026  |  v1.2', S['date']),
+        Paragraph('April 2026  |  v1.4', S['date']),
         sp(10),
         Paragraph(
             'The paradox is not that zero is nothing.<br/>'
@@ -191,7 +192,7 @@ def build_foreword(out_path):
             'and that role is filled differently depending on the framework. '
             'In arithmetic, zero is the additive identity: the number that leaves everything '
             'unchanged when you add it. '
-            'In set theory, zero is the empty set ∅: the foundation from which the '
+            'In set theory, zero is the empty set <font name="DV">&#8709;</font>: the foundation from which the '
             'hierarchy of numbers is constructed. '
             'In algebra — vector spaces, rings, modules — zero is the neutral element '
             'of addition, inheriting whatever structure the framework provides. '
@@ -311,6 +312,15 @@ def build_foreword(out_path):
             'framework introduces no novel axioms. Stated explicitly: two structural commitments '
             '(grounded in prior layers), two methodological principles, one design commitment, '
             'one modeling commitment (MC-1), and two conditional claims (CC-1, CC-2):',
+            S['body']),
+        Paragraph(
+            'A note on metatheory: this framework is stated over ZF + AFA '
+            '(Zermelo–Fraenkel set theory with Aczel’s Anti-Foundation Axiom), '
+            'not standard ZFC. AFA permits self-containing sets — in particular, sets x '
+            'satisfying x = {x}. This matters only for CC-2 in the table below; '
+            'every other result in this framework holds in standard ZF. Standard ZFC is '
+            'incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, '
+            'contradicting the self-execution argument. The Axiom of Choice is not assumed.',
             S['body']),
         commitments_table(),
         sp(8),

@@ -1,6 +1,22 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.5 | April 2026
+Version 3.9 | April 2026
+v3.9: R-ε₀ reframed — remark now leads with explicit informal-analogy disclaimer; "structural
+correspondence" changed to "structural analogy" throughout R-ε₀. Reviewer feedback: hedge was
+buried at end of remark; readers might miss it after several paragraphs of parallel-drawing.
+v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to
+"foundational commitment: a missing principle, not a missing proof." No computability library
+closes the gap between 'system at P₀' and 'system is running.' Forward paths: new axiom,
+Chalmers' implementation notion, or ZP-PQ dissolution argument. ZP-PQ already contains the
+dissolution: the description-instantiation gap assumes a separability the framework dissolves.
+v3.7: DA-1 formally closed via ZP-K — KleeneStructure MachinePhase instance proved in Lean 4.
+da1_closed_concrete : IsQuineAtom (bot : MachinePhase). DA-1 Path 1 (structural/AFA) and
+Path 3 (computational/Kleene) now in Lean scope. Path 2 (informational bridge) remains outside
+Lean scope. "Outside Lean Scope" designation removed from ZPE.lean DA-1 section.
+v3.6: DA-1 Path 1 rewritten — argument direction reversed. Previously: CC-2 (⊥ = {⊥}) asserted,
+then "no external interpreter" derived. Now: "nothing external to ⊥ can execute ⊥" argued first,
+⊥ = {⊥} derived as the only coherent structure, ZP-J T-EXEC cited as formal verification.
+CC-1 and CC-2 status updated throughout — no longer freestanding commitments; both derived via ZP-J.
 v3.5: Open Items Register DA-1 status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT
 (corroboration of precondition)" now matches v3.3 path-hierarchy framing.
 v3.4: R-AFA minimality argument made explicit — added one sentence to "What remains
@@ -50,10 +66,10 @@ pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'));         
 pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'));    print('  DV-B ok')
 pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf')); print('  DV-I ok')
 pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf')); print('  DV-BI ok')
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'DejaVuSerif.ttf'));         print('  DVS ok')
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'DejaVuSerif-Bold.ttf'));   print('  DVS-B ok')
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'DejaVuSerif-Italic.ttf')); print('  DVS-I ok')
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'DejaVuSerif-BoldItalic.ttf')); print('  DVS-BI ok')
+pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'));         print('  DVS ok')
+pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'));   print('  DVS-B ok')
+pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-I ok')
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-BI ok')
 print('[build_zpe] Fonts registered.')
 
 # Register STIX for ℵ glyph (U+2135, decimal 8501) — missing from DejaVu
@@ -218,7 +234,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.5  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.9  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -241,9 +257,20 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.5 | April 2026', S['subtitle']),
+        Paragraph('Version 3.9 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.4 | v3.5: DA-1 Open Items Register status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" now matches v3.3 path-hierarchy framing. '
+            '<i>Supersedes v3.8 | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
+            'informal-analogy disclaimer; "structural correspondence" changed to "structural analogy" '
+            'throughout R-&#949;<sub>0</sub>. | '
+            'v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
+            '"foundational commitment: a missing principle, not a missing proof." No computability library closes the gap '
+            'between \'system at P<sub>0</sub>\' and \'system is running.\' Forward paths: new axiom, Chalmers\' implementation '
+            'notion, or ZP-PQ dissolution argument. '
+            'v3.7: DA-1 formally closed via ZP-K — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4. '
+            'KleeneStructure MachinePhase instance added; Paths 1 and 3 now IN LEAN SCOPE. '
+            '"Outside Lean Scope" designation removed from ZPE.lean. '
+            'v3.6: DA-1 Path 1 rewritten — argument direction reversed; CC-1 and CC-2 now derived via ZP-J (no longer freestanding commitments). '
+            'v3.5: DA-1 Open Items Register status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" now matches v3.3 path-hierarchy framing. '
             'v3.4: R-AFA minimality explicit — &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets; any extension exceeds A4\'s constraint. '
             'v3.3: DA-1 path hierarchy foregrounded — three informal paths framed as corroboration of DP-2\'s precondition, not parallel proofs. '
             'v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
@@ -395,19 +422,30 @@ def build_zpe(out_path):
              'DP-2 + da1_minimal_path derive c<sub>0</sub> &#8594; c<sub>1</sub> axiom-free once that '
              'precondition is established. The paths are convergent corroboration of the precondition; '
              'the formal derivation is DP-2\'s.'),
-        body('Path 1 — Structural (ZP-A CC-2 + R3): CC-2 establishes ⊥ = {⊥} under ZF + AFA: ⊥ is a '
-             'Quine atom — a set that is its own singleton. By set extensionality, the collection of all '
-             'objects bearing the structural property of ⊥ collapses to ⊥ itself; there is no multiplicity, '
-             'only ⊥. R3 draws the formal consequence: a self-containing object has no external interpreter '
-             'by structure. A static description requires a describer external to and distinct from what is '
-             'described; ⊥ = {⊥} admits no such external position. Therefore ⊥ at P<sub>0</sub> cannot be a '
-             'static description awaiting external instantiation — it is necessarily executing.'),
+        body('Path 1 — Structural (Self-Execution, ZP-J T-EXEC): Nothing exists outside the null space. '
+             '&#8869; is prior to all differentiation — there is no external state, no prior cause, no position '
+             'from which something else could execute &#8869;. If &#8869; executes at all, the only possible '
+             'executor is &#8869; itself. A thing that executes itself is self-containing: &#8869; &#8712; &#8869;, '
+             'i.e. &#8869; = {&#8869;}. This is not a commitment — it is forced by the impossibility of external '
+             'execution. ZP-A R3 states the structural consequence: a self-containing object admits no external '
+             'interpreter position. ZP-J T-EXEC formally verifies the structure: IsQuineAtom(q) &#8596; q = &#8869;, '
+             'proved axiom-free in Lean 4 (ZeroParadox.ZPJ.t_exec). AFA (ZF + AFA) is the consistent '
+             'set-theoretic home for this structure — chosen because the framework requires it, not the '
+             'reverse. ZP-A CC-2 (&#8869; = {&#8869;}) retains its label for editorial continuity but is now '
+             'a structural consequence, not a freestanding commitment.'),
         body('Path 2 — Informational (ZP-C L-INF): Independently, the surprisal I(n) = n at ball-hierarchy '
              'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. The null state ⊥ corresponds '
              'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
              'Any finite external interpreter can hold only a finite informational bound; ⊥ exceeds every '
-             'such bound. A configuration exceeding the capacity of every possible finite interpreter cannot '
-             'be a static description awaiting interpretation.'),
+             'such bound. '
+             'Note: Path 2 is motivational context, not a formal path to the conclusion. The step '
+             '"exceeds every finite bound → therefore necessarily executing" is a foundational commitment, '
+             'not a derivable claim. It asks what it means for a mathematical structure to <i>instantiate</i> '
+             'rather than merely <i>satisfy</i> conditions — a question no computability library answers. '
+             'Forward paths: (a) a new axiom explicitly committing to this bridge; (b) a connection to '
+             'Chalmers\' notion of implementation; (c) the ZP-PQ dissolution argument — the separability '
+             'of description and instantiation is the assumption the framework dissolves, not a gap it must '
+             'close from the outside.'),
         body('Path 3 — Formal bridge: Incompressibility as Self-Description (ZP-C D1 + standard AIT): '
              'The preceding paths establish that ⊥ admits no external interpreter. This path provides '
              'the formal bridge from that negative claim to the positive claim (necessarily executing). '
@@ -432,21 +470,27 @@ def build_zpe(out_path):
              'computational distinction between before-first-instruction and after-first-instruction states), '
              'which is prior to and independent of DA-1. The three paths above operate one level down: they '
              'argue for why the precondition holds — why instantiation of ⊥ necessarily constitutes a first '
-             'instruction fetch at all. Path 1 (structural) argues that ⊥ = {⊥} has no external interpreter '
-             'position, so evaluation is necessarily self-executing. Path 2 (informational) argues that '
-             'unbounded surprisal precludes any finite static holding. Path 3 (AIT) argues that '
-             'incompressibility eliminates the static-description alternative. All three converge on the same '
-             'precondition. The argument is not circular: DP-2 follows from D7; the three paths argue '
-             'independently for why ⊥ engages D7\'s transition. DA-1 is their conjunction.'),
+             'instruction fetch at all. Path 1 (structural) argues that nothing external to &#8869; can '
+             'execute &#8869; — therefore &#8869; must execute itself, establishing &#8869; = {&#8869;} as a '
+             'structural consequence rather than a commitment (ZP-J T-EXEC, axiom-free). Path 2 (informational) '
+             'provides motivational context — unbounded surprisal as a pointer toward why static holding is '
+             'incoherent — but the bridge from informational extremity to execution is a foundational '
+             'commitment, not a derived claim. Path 3 (AIT) argues that incompressibility eliminates the '
+             'static-description alternative; this path is now closed by ZP-K\'s Kleene result, which '
+             'handles the computational self-reference claim without requiring AIT. '
+             'Paths 1 and 3 are formally closed. Path 2 identifies a missing principle; '
+             'its forward resolution is ZP-PQ. DA-1 is grounded in Paths 1 and 3; Path 2 is context.'),
         derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
                 'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
-                'Informal convergent paths: ZP-C D1 + AIT incompressibility (Path 3 — K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1); '
-                'ZP-A CC-2 + R3 (Path 1 — structural); ZP-C L-INF (Path 2 — informational). '
-                'Named modeling commitments: CC-1 (S<sub>0</sub> = &#8869;, ZP-A), CC-2 (&#8869; = {&#8869;}, ZP-A), '
-                'DP-2 (&#167;III) — all explicit. '
+                'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in ZPK.lean. '
+                'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: ZP-PQ. '
+                'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
+                'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
+                'CC-2 (&#8869; = {&#8869;}) structurally forced by self-execution argument; ZP-J T-EXEC formally verifies. '
+                'DP-2 (&#167;III) — explicit. '
                 'T-SNAP is derived given DA-1, CC-1, and AX-B1. '
-                'AIT (Kolmogorov complexity) and ZF+AFA informal paths outside Lean scope — same category as ZP-A CC-2.'),
+                'AIT (Kolmogorov complexity) outside Lean scope; Kleene fixed-point is the in-scope formal counterpart.'),
     ]
 
     E.append(Paragraph('V. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
@@ -470,8 +514,10 @@ def build_zpe(out_path):
         sp(4),
         body('Conclusion: The Binary Snap is a derived consequence. AX-1 is promoted to Theorem T-SNAP. ✓'),
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
-                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1. Named modelling commitments: CC-1 (S₀ = ⊥, ZP-A) and '
-                'CC-2 (⊥ = {⊥}, ZP-A, via R3) — both explicit. T-SNAP is derived given DA-1, CC-1, and CC-2.'),
+                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1; ZP-J T-EXEC. '
+                'CC-1 (S&#8320; = &#8869;) derived via ZP-J cc1_derived (axiom-free). '
+                'CC-2 (&#8869; = {&#8869;}) structurally forced — ZP-J T-EXEC (axiom-free). '
+                'Neither CC-1 nor CC-2 is a freestanding commitment. T-SNAP is derived given DA-1 and AX-B1.'),
     ]
 
     E += [
@@ -479,6 +525,8 @@ def build_zpe(out_path):
         bridge_box(
             'Remark R-ε₀ — On the Symbol Choice for the Minimum Snap Displacement',
             [
+                '<b>Note: this remark draws an informal structural analogy. No formal embedding of '
+                'ZP\'s ε₀ into the Cantor-Gentzen ordinal is claimed or established here.</b> '
                 'The symbol ε₀ in Step 6 denotes the minimum element of L strictly above ⊥ — the least '
                 'witness for the Binary Snap displacement. This symbol is chosen deliberately to coincide '
                 'with the Cantor-Gentzen proof-theoretic ordinal.',
@@ -490,11 +538,11 @@ def build_zpe(out_path):
                 'Con(PA). By G&#246;del\'s incompleteness theorem, PA cannot prove this from within. The '
                 'ordinal ε₀ is therefore the minimum threshold at which finite arithmetic exhausts its own '
                 'generative capacity.',
-                '<b>The structural correspondence.</b> ZP\'s ε₀ occupies the same position in the state '
+                '<b>The structural analogy.</b> ZP\'s ε₀ occupies an analogous position in the state '
                 'lattice. At P₀, c₁ satisfies K(c₁|n)/|c₁| = 1 (ZP-C D1): it is algorithmically '
                 'incompressible — no finite external program shorter than c₁ generates it. Just as the '
                 'Cantor ε₀ cannot be reached from 0 by any finite ω-tower, ZP\'s ε₀ cannot be reached '
-                'from ⊥ by any finite external description. Both name the same structural object: the '
+                'from ⊥ by any finite external description. Both name a structurally analogous object: the '
                 'minimum witness for a transition that exhausts the finite generative hierarchy below it.',
                 '<b>The proof structures are parallel.</b> Gentzen locates the minimum ordinal strength at '
                 'which PA cannot describe its own consistency from within. ZP locates the minimum state '
@@ -504,7 +552,7 @@ def build_zpe(out_path):
                 'deficiency but a structural consequence: the system is necessarily executing at ε₀.',
                 '<b>What is not claimed.</b> ZP does not assert that L is an ordinal structure, or that '
                 'ZP\'s ε₀ is literally the Cantor ordinal under a formal embedding into the p-adic/lattice '
-                'framework. The identification is structural: both ε₀s mark the minimum witness for '
+                'framework. The analogy is motivational: both ε₀s mark the minimum witness for '
                 'incompressibility relative to a finite base. A formal embedding — showing that the Cantor '
                 'ε₀ is order-isomorphic to or embeds into the p-adic completion of L at ⊥ — remains an '
                 'open question and would constitute a strengthening of this claim.',
@@ -778,7 +826,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.5', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.9', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -832,7 +880,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.5', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.9', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -885,15 +933,21 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.5', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.9', S['h1'])]
 
     val_rows = [
-        ['DA-1: Derived Proposition (v3.0 formal grounding)',
+        ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',
          'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI). '
          'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
          'are provably distinct even when both produce &#8869;. ✓ '
-         'Informal corroboration: Path 1 (CC-2 + R3 — structural), Path 2 (L-INF — informational), '
-         'Path 3 (K incompressibility — AIT). AIT and ZF+AFA paths outside Lean scope.'],
+         'ZP-K formal closure (v3.7): da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in ZPK.lean. '
+         'KleeneStructure MachinePhase instance provides botCode_is_quine (Path 3 IN LEAN SCOPE). '
+         'machinePhaseAFA gives AFAStructure instance (Path 1 IN LEAN SCOPE). '
+         'Path 2 (informational bridge, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a '
+         'missing proof. No computability library closes the gap between \'system at P₀\' and \'system is '
+         'running.\' Forward paths: new axiom, Chalmers\' implementation notion, or ZP-PQ dissolution '
+         'argument. Paths 1 and 3 are formally closed; DA-1 does not depend on Path 2. '
+         'CC-1 and CC-2 derived via ZP-J, not freestanding commitments.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
         ['AX-1 retirement',
@@ -929,7 +983,9 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.5 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.9 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
+            'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward resolution ZP-PQ | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
             'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
             'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
@@ -945,5 +1001,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_5.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_9.pdf'))
     build_zpe(out)
