@@ -23,9 +23,10 @@ FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fonts') + o
 pdfmetrics.registerFont(TTFont('DV',    FONT_DIR + 'DejaVuSans.ttf'))
 pdfmetrics.registerFont(TTFont('DV-B',  FONT_DIR + 'DejaVuSans-Bold.ttf'))
 pdfmetrics.registerFont(TTFont('DV-I',  FONT_DIR + 'DejaVuSans-Oblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',   FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B', FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I', FONT_DIR + 'STIXTwo-Math.ttf'))
+pdfmetrics.registerFont(TTFont('DVS',   FONT_DIR + 'STIXTwo-Regular.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-B', FONT_DIR + 'STIXTwo-Bold.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-I', FONT_DIR + 'STIXTwo-Italic.ttf'))
+pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-BoldItalic.ttf'))
 
 GOLD        = colors.HexColor('#A0742A')
 GOLD_LITE   = colors.HexColor('#FDF6E3')
