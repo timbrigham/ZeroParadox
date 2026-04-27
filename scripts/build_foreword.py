@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.2, revised April 2026)
+Zero Paradox — Foreword PDF Builder (v1.3, revised April 2026)
+v1.3: Fix ∅ rendering — was showing as a rectangle in DejaVuSerif; now forced through DV (DejaVuSans) via <font> tag.
 Follows all rules in pdf rendering standards.md:
   - DejaVu fonts only
   - All table cells are Paragraph objects
@@ -170,7 +171,7 @@ def build_foreword(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('April 2026  |  v1.2', S['date']),
+        Paragraph('April 2026  |  v1.3', S['date']),
         sp(10),
         Paragraph(
             'The paradox is not that zero is nothing.<br/>'
@@ -191,7 +192,7 @@ def build_foreword(out_path):
             'and that role is filled differently depending on the framework. '
             'In arithmetic, zero is the additive identity: the number that leaves everything '
             'unchanged when you add it. '
-            'In set theory, zero is the empty set ∅: the foundation from which the '
+            'In set theory, zero is the empty set <font name="DV">&#8709;</font>: the foundation from which the '
             'hierarchy of numbers is constructed. '
             'In algebra — vector spaces, rings, modules — zero is the neutral element '
             'of addition, inheriting whatever structure the framework provides. '

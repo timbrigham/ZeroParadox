@@ -1,5 +1,7 @@
 """
-Build ZP-A: Lattice Algebra (v1.10)
+Build ZP-A: Lattice Algebra (v1.11)
+v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added
+immediately before CC-1 (§4.2). No mathematical content changed.
 v1.10: CC-1 box title updated — "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)"
 to avoid reading inconsistency for readers of ZP-A in isolation. The status row inside the box
 already accurately states the dual status; the title now reflects it at first glance.
@@ -193,14 +195,14 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_10.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.10')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_11.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.11')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.10  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.9  |  v1.10: CC-1 box title updated — "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. Status row inside the box is unchanged. | v1.9: CC-1 status updated — derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
+          Paragraph('Version 1.11  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.10  |  v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added immediately before CC-1 (&#167;4.2). No mathematical content changed. | v1.10: CC-1 box title updated &#8212; "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. | v1.9: CC-1 status updated &#8212; derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
@@ -214,6 +216,14 @@ def build():
           body('<i>Version 1.2 changes: (1) Definition D1: the notation :&#10234; (non-standard) replaced by the standard definitional framing "define the relation &#8804; by". (2) Definition D2: the equivalence between x &#8804; f(x) and f(x) = x &#8744; &#945; is now accompanied by an explicit two-line proof of both directions.</i>'),
           body('<i>Version 1.1 change: Theorem T4 reclassified as Conditional Claim CC-1. The v1.0 label "Theorem" was imprecise: the result holds only given the assumption that the state sequence is initialised at the minimum of L. This assumption is not derived from A1&#8211;A4 — it is a modelling commitment.</i>'),
           sp()]
+
+    E.append(label_box('Metatheoretic Declaration — ZF + AFA', [
+        'This document is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). AFA replaces the classical Axiom of Foundation and permits self-containing sets &#8212; in particular, sets satisfying x = {x}.',
+        'Scope: This declaration affects only CC-2 (Section V), which asserts ⊥ = {⊥}. All algebraic results in Sections I&#8211;IV are independent of AFA and hold in standard ZF.',
+        'Standard concrete models (power sets ordered by inclusion, real intervals ordered by max, etc.) satisfy A1&#8211;A4 but do not satisfy ⊥ = {⊥}. This is expected &#8212; they are models of the algebraic structure, not instantiations of the ZF + AFA metatheory. The self-containment of ⊥ is a set-theoretic claim about what ⊥ is, not an algebraic one.',
+        'The Axiom of Choice is not assumed. AFA is forced rather than chosen &#8212; see Section V and ZP-E Remark R-AFA for the argument.',
+    ]))
+    E.append(sp(8))
 
     E.append(Paragraph('I. Primitives and Axioms', S['h1']))
     E.append(Paragraph('1.1  Signature', S['h2']))
@@ -283,6 +293,7 @@ def build():
     ]))
     E.append(sp(4))
     E.append(Paragraph('4.2  The Initial State', S['h2']))
+    E.append(body('Every state sequence begins somewhere. T2 establishes ⊥ ≤ S₀ for any initialisation &#8212; the bottom element is always below the starting point, whatever that starting point is. But T2 does not fix where S₀ sits; a sequence could legitimately begin above ⊥. CC-1 closes this gap: we commit to initialising at the minimum. This is a modelling choice at ZP-A scope. In the AFAStructure lattices of ZP-J, T-EXEC derives it as a structural consequence rather than an assumption.'))
     E.append(label_box('CC-1 — S₀ = ⊥  |  Derived in AFAStructure lattices (ZP-J T-EXEC); conditional at ZP-A scope', [
         'We commit to initialising every state sequence at the minimum of L: S<sub>0</sub> = &#8869;. This is not derived from A1&#8211;A4 — it is a modelling choice.',
         'Under CC-1 and T3:   S<sub>0</sub> = &#8869; &#8804; S<sub>1</sub> &#8804; S<sub>2</sub> &#8804; &#8230;',
