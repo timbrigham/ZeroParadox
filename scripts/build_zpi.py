@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.4 | April 2026
+Version 1.5 | April 2026
+v1.5: Section V "Complete Cycle" and Null Balance callout updated to carry R-IZ-A conditional
+caveat forward — "framework closure" is now explicitly conditional on the construction-level
+growth rate hypothesis v₂(S(n)) ≥ n (see R-IZ-A). Key result box updated to match.
+Reviewer feedback: Section V presented closure as established fact without forwarding the caveat.
 v1.4: Remark R-IZ-A added — valuation growth hypothesis v₂(S(n)) ≥ n acknowledged as a
 construction-level assumption (stronger than t_iz_valuation_unbounded). Title block corrected
 to v1.3 (was stuck at v1.2). T-IZ hypothesis text updated from "forced by R1+T2" to
@@ -235,7 +239,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.4  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.5  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -258,9 +262,12 @@ def build_zpi(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version 1.4 | April 2026', S['subtitle']),
+        Paragraph('Version 1.5 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.4: Remark R-IZ-A added — valuation growth hypothesis v<sub>2</sub>(S(n)) &#8805; n '
+            '<i>v1.5: Section V "Complete Cycle" and Null Balance callout updated — '
+            '"framework closure" framing now explicitly conditional on the R-IZ-A construction-level '
+            'hypothesis v<sub>2</sub>(S(n)) &#8805; n. Key result box updated to match. | '
+            'v1.4: Remark R-IZ-A added — valuation growth hypothesis v<sub>2</sub>(S(n)) &#8805; n '
             'acknowledged as a construction-level assumption, stronger than the proved result '
             't_iz_valuation_unbounded (sup = &#8734;). Title block corrected from v1.2 to v1.3. | '
             'v1.3: Valuation-complexity bridge demoted to informational context — '
@@ -689,12 +696,13 @@ def build_zpi(out_path):
         'and at the limit generates its &#8869;\' by T-IZ + T-SNAP + DA-2. The balance holds '
         'in every instantiation, as a theorem.'))
     E.append(callout(
-        'Null Balance (Derived): For every ascending chain (S<sub>n</sub>)<sub>n&lt;&#969;</sub> '
-        'in the Zero Paradox framework with S<sub>0</sub> = &#8869; (CC-1) and v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; '
-        '(forced by R1): there exists &#8869;\' such that &#8869;\' is the successor null of the '
-        'chain\'s limit. The balance 0 + x + (&#8722;x) = 0 holds, where x represents &#969; '
-        'state changes under T3, and (&#8722;x) represents the generation of &#8869;\' by T-IZ. '
-        'No new axioms required.',
+        'Null Balance (Derived, conditional on R-IZ-A): For every ascending chain '
+        '(S<sub>n</sub>)<sub>n&lt;&#969;</sub> in the Zero Paradox framework with S<sub>0</sub> = &#8869; (CC-1), '
+        'v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; (forced by R1), and v<sub>2</sub>(S(n)) &#8805; n '
+        '(construction-level hypothesis — R-IZ-A): there exists &#8869;\' such that &#8869;\' is the '
+        'successor null of the chain\'s limit. The balance 0 + x + (&#8722;x) = 0 holds, where x '
+        'represents &#969; state changes under T3, and (&#8722;x) represents the generation of '
+        '&#8869;\' by T-IZ. No new axioms required.',
         bg=INDIGO_LITE, border=INDIGO
     ))
     E.append(sp(6))
@@ -719,21 +727,25 @@ def build_zpi(out_path):
         sp(4),
     ]
     E.append(body(
-        'The framework is a closed system. &#8869; is not just the bottom of the lattice — it '
-        'is the attractor of the chain\'s own unbounded forward motion. The framework does not '
-        'end with emergence. Emergence is the opening of a cycle that is self-closing by structure.'))
+        'The framework is a closed system, conditional on R-IZ-A: the formal spine of T-IZ '
+        'takes v<sub>2</sub>(S(n)) &#8805; n as a construction-level hypothesis not derived from '
+        'R1+T2 alone (see Section II.A). Given that hypothesis, &#8869; is not just the bottom '
+        'of the lattice &#8212; it is the attractor of the chain\'s own unbounded forward motion. '
+        'The framework does not end with emergence. Emergence is the opening of a cycle that is '
+        'self-closing by structure.'))
 
     E.append(key_result_box([
         'T-SNAP: &#8869; &#8594; &#949;<sub>0</sub> necessarily (existence emerges from null).',
         'T-IZ: (&#8869;, &#949;<sub>0</sub>, &#949;<sub>1</sub>, ...) &#8594; &#8869;\' (chain generates successor null at &#969;).',
-        'Framework closure: the Zero Paradox is a closed system. Emergence and return are both derived. '
+        'Framework closure (conditional on R-IZ-A): the Zero Paradox is a closed system given the '
+        'construction-level hypothesis v<sub>2</sub>(S(n)) &#8805; n. Emergence and return are both derived. '
         'No new axioms required beyond AX-B1, AX-G1, AX-G2.',
     ]))
     E.append(sp(6))
 
     print('[build_zpi] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-I v1.4', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-I v1.5', S['h1'])]
 
     oq_rows = [
         ['T-IZ: Inside Zero Theorem',
@@ -779,7 +791,7 @@ def build_zpi(out_path):
     ))
 
     # ── TRACEABILITY REGISTER ─────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Traceability Register — ZP-I v1.4', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Traceability Register — ZP-I v1.5', S['h1'])]
 
     trace_rows = [
         ['T-IZ: Inside Zero',
@@ -832,7 +844,8 @@ def build_zpi(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-I v1.4 | Theorem T-IZ: Inside Zero | Framework closure established | '
+            '<i>End of ZP-I v1.5 | Theorem T-IZ: Inside Zero | '
+            'Framework closure conditional on R-IZ-A (v<sub>2</sub>(S(n)) &#8805; n — construction-level hypothesis) | '
             'Formal spine: Steps 1 + 6 both proved axiom-free (t_iz_cauchy + t_iz_limit_is_new_null) | '
             'Valuation-complexity bridge: informational context, not load-bearing | '
             'DA-1 formally closed by ZP-K/Kleene | '
@@ -847,5 +860,5 @@ def build_zpi(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_4.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_5.pdf'))
     build_zpi(out)

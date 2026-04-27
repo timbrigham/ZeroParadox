@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.8 | April 2026
+Version 3.9 | April 2026
+v3.9: R-ε₀ reframed — remark now leads with explicit informal-analogy disclaimer; "structural
+correspondence" changed to "structural analogy" throughout R-ε₀. Reviewer feedback: hedge was
+buried at end of remark; readers might miss it after several paragraphs of parallel-drawing.
 v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to
 "foundational commitment: a missing principle, not a missing proof." No computability library
 closes the gap between 'system at P₀' and 'system is running.' Forward paths: new axiom,
@@ -231,7 +234,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.8  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.9  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -254,9 +257,12 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.8 | April 2026', S['subtitle']),
+        Paragraph('Version 3.9 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.7 | v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
+            '<i>Supersedes v3.8 | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
+            'informal-analogy disclaimer; "structural correspondence" changed to "structural analogy" '
+            'throughout R-&#949;<sub>0</sub>. | '
+            'v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
             '"foundational commitment: a missing principle, not a missing proof." No computability library closes the gap '
             'between \'system at P<sub>0</sub>\' and \'system is running.\' Forward paths: new axiom, Chalmers\' implementation '
             'notion, or ZP-PQ dissolution argument. '
@@ -519,6 +525,8 @@ def build_zpe(out_path):
         bridge_box(
             'Remark R-ε₀ — On the Symbol Choice for the Minimum Snap Displacement',
             [
+                '<b>Note: this remark draws an informal structural analogy. No formal embedding of '
+                'ZP\'s ε₀ into the Cantor-Gentzen ordinal is claimed or established here.</b> '
                 'The symbol ε₀ in Step 6 denotes the minimum element of L strictly above ⊥ — the least '
                 'witness for the Binary Snap displacement. This symbol is chosen deliberately to coincide '
                 'with the Cantor-Gentzen proof-theoretic ordinal.',
@@ -530,11 +538,11 @@ def build_zpe(out_path):
                 'Con(PA). By G&#246;del\'s incompleteness theorem, PA cannot prove this from within. The '
                 'ordinal ε₀ is therefore the minimum threshold at which finite arithmetic exhausts its own '
                 'generative capacity.',
-                '<b>The structural correspondence.</b> ZP\'s ε₀ occupies the same position in the state '
+                '<b>The structural analogy.</b> ZP\'s ε₀ occupies an analogous position in the state '
                 'lattice. At P₀, c₁ satisfies K(c₁|n)/|c₁| = 1 (ZP-C D1): it is algorithmically '
                 'incompressible — no finite external program shorter than c₁ generates it. Just as the '
                 'Cantor ε₀ cannot be reached from 0 by any finite ω-tower, ZP\'s ε₀ cannot be reached '
-                'from ⊥ by any finite external description. Both name the same structural object: the '
+                'from ⊥ by any finite external description. Both name a structurally analogous object: the '
                 'minimum witness for a transition that exhausts the finite generative hierarchy below it.',
                 '<b>The proof structures are parallel.</b> Gentzen locates the minimum ordinal strength at '
                 'which PA cannot describe its own consistency from within. ZP locates the minimum state '
@@ -544,7 +552,7 @@ def build_zpe(out_path):
                 'deficiency but a structural consequence: the system is necessarily executing at ε₀.',
                 '<b>What is not claimed.</b> ZP does not assert that L is an ordinal structure, or that '
                 'ZP\'s ε₀ is literally the Cantor ordinal under a formal embedding into the p-adic/lattice '
-                'framework. The identification is structural: both ε₀s mark the minimum witness for '
+                'framework. The analogy is motivational: both ε₀s mark the minimum witness for '
                 'incompressibility relative to a finite base. A formal embedding — showing that the Cantor '
                 'ε₀ is order-isomorphic to or embeds into the p-adic completion of L at ⊥ — remains an '
                 'open question and would constitute a strengthening of this claim.',
@@ -818,7 +826,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.8', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.9', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -872,7 +880,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.8', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.9', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -925,7 +933,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.8', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.9', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',
@@ -975,7 +983,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.8 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.9 | Three formal inserts: DA-1, DA-2, DA-3 | '
             'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
             'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward resolution ZP-PQ | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
@@ -993,5 +1001,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_8.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_9.pdf'))
     build_zpe(out)

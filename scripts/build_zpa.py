@@ -1,5 +1,8 @@
 """
-Build ZP-A: Lattice Algebra (v1.9)
+Build ZP-A: Lattice Algebra (v1.10)
+v1.10: CC-1 box title updated — "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)"
+to avoid reading inconsistency for readers of ZP-A in isolation. The status row inside the box
+already accurately states the dual status; the title now reflects it at first glance.
 v1.9: CC-1 status updated — now derived as a structural consequence in AFAStructure lattices
 via ZP-J T-EXEC (IsQuineAtom(⊥) is unique; S₀ = ⊥ follows structurally). Status line and
 validation table updated. Remains a modelling commitment at the ZP-A level without AFAStructure.
@@ -190,14 +193,14 @@ def make_doc(path, title_str, doc_id, version_str):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_9.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.9')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_10.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.10')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.9  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.8  |  v1.9: CC-1 status updated — derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
+          Paragraph('Version 1.10  |  April 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.9  |  v1.10: CC-1 box title updated — "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. Status row inside the box is unchanged. | v1.9: CC-1 status updated — derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
@@ -280,7 +283,7 @@ def build():
     ]))
     E.append(sp(4))
     E.append(Paragraph('4.2  The Initial State', S['h2']))
-    E.append(label_box('Conditional Claim CC-1 — S₀ = &#8869; (Reclassified from T4 in v1.0)', [
+    E.append(label_box('CC-1 — S₀ = ⊥  |  Derived in AFAStructure lattices (ZP-J T-EXEC); conditional at ZP-A scope', [
         'We commit to initialising every state sequence at the minimum of L: S<sub>0</sub> = &#8869;. This is not derived from A1&#8211;A4 — it is a modelling choice.',
         'Under CC-1 and T3:   S<sub>0</sub> = &#8869; &#8804; S<sub>1</sub> &#8804; S<sub>2</sub> &#8804; &#8230;',
         'Note: By T2, &#8869; &#8804; S<sub>0</sub> for any initialisation — this holds unconditionally from A4. CC-1 strengthens this to equality: S<sub>0</sub> = &#8869;. The commitment is not needed to establish &#8869; &#8804; S<sub>0</sub>; it is needed to fix the starting point precisely.',
