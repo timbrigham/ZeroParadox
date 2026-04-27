@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-G_Category_Theory_v1_4-1.pdf](ZP-G_Category_Theory_v1_4-1.pdf) | 2026-04-27 | ZP-G v1.4 superseded by v1.5: Lean scope disclosure for T6-b and T6-c strengthened — Lean proofs verify only Nat.zero_le _ (non-negativity by type, trivially true for any N-valued function); T6-b strict inequality and T6-c subadditivity are not Lean-verified; status lines and validation table updated to make this explicit |
 | [ZP-I_Inside_Zero_v1_4-1.pdf](ZP-I_Inside_Zero_v1_4-1.pdf) | 2026-04-27 | ZP-I v1.4 superseded by v1.5: Section V "Complete Cycle" and Null Balance callout updated to carry R-IZ-A conditional caveat forward — "framework closure" now explicitly conditional on construction-level hypothesis v2(S(n)) >= n; key result box updated to match |
 | [ZP-E_Bridge_Document_v3_8-1.pdf](ZP-E_Bridge_Document_v3_8-1.pdf) | 2026-04-27 | ZP-E v3.8 superseded by v3.9: R-ε₀ remark reframed to lead with explicit informal-analogy disclaimer; "structural correspondence" changed to "structural analogy" throughout R-ε₀; hedge no longer buried at end of remark |
 | [ZP-A_Lattice_Algebra_v1_9-1.pdf](ZP-A_Lattice_Algebra_v1_9-1.pdf) | 2026-04-27 | ZP-A v1.9 superseded by v1.10: CC-1 box title updated from "Conditional Claim CC-1" to "CC-1 (Derived/Conditional)" — reflects dual derived/conditional status at first glance for ZP-A-only readers; status row inside box unchanged |

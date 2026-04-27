@@ -1,6 +1,12 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.4 | April 2026
+Version 1.5 | April 2026
+Changes from v1.4:
+  - Lean scope remark for T6-b/T6-c strengthened: now states explicitly that the Lean proofs
+    verify nothing about Kolmogorov complexity — they prove only that a ℕ-valued function is ≥ 0
+    (Nat.zero_le _), which is true by type for any such function. T6-b strict inequality and
+    T6-c subadditivity have no Lean proofs. T6-b and T6-c status lines and validation table rows
+    updated to remove unqualified ✓ and mark as PDF-level only.
 Changes from v1.3:
   - Lean scope note added after T6-c: T6-b strict inequality and T6-c subadditivity are
     K-specific AIT content outside the ZPSurprisal skeleton; Lean proofs reduce to Nat.zero_le _
@@ -218,7 +224,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.4  |  April 2026  |'
+        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.5  |  April 2026  |'
               f'  Internal Working Document  |  Page {doc.page}')
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
@@ -242,11 +248,15 @@ def build_zpg(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version 1.4 | April 2026', S['bodyI']),
+        Paragraph('Version 1.5 | April 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.3 | v1.4: Lean scope note added after T6-c — T6-b strict inequality '
-            'and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton; '
-            'Lean proofs reduce to Nat.zero_le _ | All prior results unchanged</i>',
+            '<i>Supersedes v1.4 | v1.5: Lean scope disclosure for T6-b and T6-c strengthened — '
+            'Lean proofs verify only that a &#8469;-valued function is &#8805; 0 (Nat.zero_le _), '
+            'which is trivially true by type for any such function and says nothing about Kolmogorov '
+            'complexity. T6-b strict inequality (K &gt; 0 for distinct objects) and T6-c subadditivity '
+            'have no Lean proofs. Status lines and validation table updated accordingly. | '
+            'v1.4: Lean scope note added after T6-c — K-specific AIT content outside ZPSurprisal '
+            'skeleton identified | All prior results unchanged</i>',
             S['note']),
         sp(8),
         hr(),
@@ -291,6 +301,15 @@ def build_zpg(out_path):
             'and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton; '
             'Lean proofs reduce to Nat.zero_le _ (non-negativity by type). '
             'T6-b and T6-c statements and proofs unchanged.</i>',
+            S['note']),
+        Paragraph(
+            '<i>Version 1.5 changes from v1.4: Lean scope disclosure strengthened. The v1.4 note '
+            'correctly identified the limitation but did not make the consequence fully explicit. '
+            'v1.5 states it plainly: the Lean proofs for T6-b and T6-c verify nothing about '
+            'Kolmogorov complexity. Nat.zero_le _ is trivially true for any &#8469;-valued function, '
+            'regardless of mathematical content. T6-b (strict inequality) and T6-c (subadditivity) '
+            'are not Lean-verified. T6-b and T6-c status lines updated from "Derived — ✓" to '
+            '"Derived (PDF-level); not Lean-verified". Validation table updated accordingly.</i>',
             S['note']),
         body('<i>Illustrated Companion: A paired ZP-G Illustrated Companion provides concrete examples '
              'and visual intuitions for the results here. Examples are kept separate from the formal '
@@ -574,7 +593,7 @@ def build_zpg(out_path):
 
     E.append(result_box(
         'Lemma T6-b — Surprisal is Non-Negative for Forward Morphisms',
-        'Status: Derived — from D5, D7\', AX-G2',
+        'Status: Derived — PDF-level (from D5, D7\', AX-G2); NOT Lean-verified — see Lean scope remark below',
         [
             'Claim: For any morphism f: A → B in a forward morphism chain from 0, I(f) ≥ 0 up to c, '
             'with strict inequality when A ≠ B.',
@@ -588,7 +607,7 @@ def build_zpg(out_path):
 
     E.append(result_box(
         'Proposition T6-c — Surprisal Accumulates Along Chains',
-        'Status: Derived — from D5, T6-b, subadditivity of K',
+        'Status: Derived — PDF-level (from D5, T6-b, subadditivity of K); NOT Lean-verified — see Lean scope remark below',
         [
             'Claim: For a morphism chain 0 = X<sub>0</sub> → X<sub>1</sub> → ... → X<sub>n</sub>, the total surprisal '
             '&#8721; I(X<sub>k</sub> → X<sub>k+1</sub>) ≥ 0, with monotone accumulation as n increases.',
@@ -601,19 +620,27 @@ def build_zpg(out_path):
 
     E.append(remark_box(
         'Remark — Lean Scope of T6-b and T6-c',
-        'Status: Scope note — I-KC content; ZPSurprisal captures structural skeleton only [new in v1.4]',
+        'Status: Scope note [strengthened v1.5] — T6-b and T6-c are NOT Lean-verified for their mathematical claims',
         [
-            'The Lean formalization of T6-b and T6-c uses the ZPSurprisal typeclass, which abstracts '
-            'only the structural skeleton of K: surp_id (identity morphism has zero surprisal) and '
-            'surp : hom &#8594; &#8469; (non-negative by type). The Lean proofs reduce to Nat.zero_le _, '
-            'which is trivially true for any &#8469;-valued function.',
-            'The K-specific content of T6-b (strict inequality K(x<sub>B</sub>|x<sub>A</sub>) &gt; 0 when A &#8775; B) '
-            'and T6-c (subadditivity K(x<sub>n</sub>|x<sub>0</sub>) &#8804; &#8721; K(x<sub>k+1</sub>|x<sub>k</sub>) + O(n&#183;c)) '
-            'is not captured by ZPSurprisal and falls outside the current Lean scope.',
-            'This is the same boundary as DA-1 Path 3 (AIT bridge) in ZP-E &#167;VI: the I-KC import '
-            'marks this as mathematically sound external content. A full K-formalization would be '
-            'required to close this gap in Lean. The structural implications of T6 (T6-a, domain-absence '
-            'via AX-G2) are fully Lean-verified.',
+            '<b>T6-b and T6-c are not Lean-verified.</b> The ZPG.lean proofs for these results compile '
+            'without error, but they verify nothing about Kolmogorov complexity. The ZPSurprisal typeclass '
+            'defines surp : hom &#8594; &#8469; (surprisal as a natural number) and the proofs reduce to '
+            'Nat.zero_le _, which states that any natural number is &#8805; 0. This is trivially true by '
+            'type for <i>any</i> &#8469;-valued function, regardless of its mathematical content. '
+            'A compiling Lean proof here does not mean the K-theoretic claims have been verified.',
+            'What the Lean proofs do NOT establish: (1) T6-b strict inequality — '
+            'K(x<sub>B</sub>|x<sub>A</sub>) &gt; 0 when A &#8775; B (distinct objects cannot have zero description length). '
+            '(2) T6-c subadditivity — K(x<sub>n</sub>|x<sub>0</sub>) &#8804; '
+            '&#8721; K(x<sub>k+1</sub>|x<sub>k</sub>) + O(n&#183;c) (total surprisal along a chain). '
+            'These are standard and correct results from algorithmic information theory, but they require '
+            'a K-formalization that does not exist in Lean 4 / Mathlib.',
+            'What IS Lean-verified: T6-a (identity morphism has zero surprisal — from surp_id), '
+            'T6 Part II (inward surprisal is undefined — from AX-G2 and the absence of morphisms to 0), '
+            'and T7 insofar as it depends on Parts II, III, V, VI. T6 Part I (outward accumulation) '
+            'and T7 Part IV rely on T6-b and T6-c and are therefore also PDF-level only.',
+            'Readers citing "the Lean-verified ZP-G framework" should note this boundary. '
+            'The PDF-level arguments for T6-b and T6-c are mathematically valid — these are standard '
+            'K-theoretic results (Li and Vitanyi). The gap is Lean scope, not mathematical correctness.',
         ]
     ))
 
@@ -711,7 +738,7 @@ def build_zpg(out_path):
 
     print('[build_zpg] Building Section IX: Open Items Register...')
     # ── IX. OPEN ITEMS REGISTER FOR ZP-G v1.2 ────────────────────────────────
-    E.append(Paragraph('IX. Open Items Register for ZP-G v1.2', S['h1']))
+    E.append(Paragraph('IX. Open Items Register for ZP-G v1.5', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -802,12 +829,17 @@ def build_zpg(out_path):
         ['Lemma T6-a: Identity surprisal is zero',
          'Valid — Derived [new in v1.1]. Relabelled Lemma in v1.2. K(x<sub>A</sub>|x<sub>A</sub>) = 0 up to c. ✓'],
         ['Lemma T6-b: Non-negative outward surprisal',
-         'Valid — Derived [new in v1.1]. Relabelled Lemma in v1.2. K ≥ 0; strict for distinct objects. ✓'],
+         'Valid (PDF-level) — Derived from D5, D7\', AX-G2. K &#8805; 0; strict inequality for distinct objects. '
+         'NOT Lean-verified: Lean proof reduces to Nat.zero_le _ (trivially true for any &#8469;-valued function; '
+         'verifies nothing about K).'],
         ['Proposition T6-c: Surprisal accumulates along chains',
-         'Valid — Derived [new in v1.1]. Relabelled Proposition in v1.2. Subadditivity of K. ✓'],
+         'Valid (PDF-level) — Derived from D5, T6-b, subadditivity of K. '
+         'NOT Lean-verified: Lean proof reduces to Nat.zero_le _. '
+         'Subadditivity of K is a standard AIT result but requires K-formalization absent from Mathlib.'],
         ['Theorem T6: Informational singularity',
          'Valid — Derived [rebuilt in v1.1]. Does not depend on BA-G1. '
-         'Part II: undefined domain (AX-G2). Parts I, III: accumulation (T6-b, T6-c). ✓'],
+         'Part II: undefined domain (AX-G2) — fully Lean-verified. '
+         'Parts I, III: accumulation via T6-b, T6-c — PDF-level only (T6-b/T6-c not Lean-verified).'],
         ['Theorem T7: Categorical Zero Paradox',
          'Valid — Derived [Part IV strengthened in v1.1]. All six parts derived. BA-G1 not a dependency. ✓'],
         ['OQ-G1: Native surprisal derivation',
@@ -822,8 +854,9 @@ def build_zpg(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>Zero Paradox ZP-G: Category Theory | Version 1.4 | April 2026 | '
-            'Supersedes v1.3 | Internal Working Document</i>',
+            '<i>Zero Paradox ZP-G: Category Theory | Version 1.5 | April 2026 | '
+            'Supersedes v1.4 | T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
+            'not K-theoretic content | T6 Part II: Lean-verified | Internal Working Document</i>',
             S['endnote']),
     ]
 
@@ -834,5 +867,5 @@ def build_zpg(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_4.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_5.pdf'))
     build_zpg(out)
