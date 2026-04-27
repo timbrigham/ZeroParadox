@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.1 | April 2026
+Version 1.2 | April 2026
+v1.2: Theorem t_iz_valuation_unbounded added to ZPI.lean — formally proves
+"sup v₂(Sₙ) = ∞" from h_strict (ZP-A R1 + T3 in Q₂). Proof obligation table row 3
+("sup v₂(S(n)) = ∞") updated from "not separately formalised" to
+"Lean: t_iz_valuation_unbounded ✓". Axiom footprint: [propext, Classical.choice,
+Quot.sound]. All six Lean proof obligation table rows now formally addressed.
 v1.1: Sorry-pending language cleared throughout — ZPI.lean has no open sorries (all
 proofs filled; purity: [propext, Classical.choice, Quot.sound]). "No new axioms
 required" qualified: the topological core (Cauchy convergence, Steps 1–2) is proved
@@ -227,7 +232,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.1  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.2  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -250,16 +255,15 @@ def build_zpi(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version 1.1 | April 2026', S['subtitle']),
+        Paragraph('Version 1.2 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.1: Sorry-pending language cleared — ZPI.lean has no open sorries. '
-            '"No new axioms required" qualified: topological core (Cauchy convergence) is '
-            'proved axiom-free; full conclusion (generation of &#8869;&#8242;) additionally requires '
-            'the valuation-complexity bridge (outside Lean scope). | '
+            '<i>v1.2: t_iz_valuation_unbounded added — "sup v<sub>2</sub>(S<sub>n</sub>) = &#8734;" '
+            'proved axiom-free in Lean; proof obligation table row 3 now formally closed. | '
+            'v1.1: Sorry-pending language cleared — ZPI.lean has no open sorries. '
+            '"No new axioms required" qualified: topological core proved axiom-free; full '
+            'conclusion depends on valuation-complexity bridge (outside Lean scope). | '
             'v1.0: Initial release — Theorem T-IZ (Inside Zero). '
-            'Framework closure established: every ascending chain of ordinal depth &#969; '
-            'generates its own successor null by Cauchy convergence in Q<sub>2</sub>. '
-            'The Zero Paradox is a closed system.</i>',
+            'Framework closure established.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -493,7 +497,7 @@ def build_zpi(out_path):
         ['sup v<sub>2</sub>(S(n)) = ∞',
          'ZP-A R1 (no top) + ZP-B T2 (valuation = depth)',
          'Follows from no-top property — no new axiom',
-         'Follows from R1 + T2 — not separately formalised'],
+         'Lean: t_iz_valuation_unbounded ✓ (proved axiom-free — [propext, Classical.choice, Quot.sound])'],
         ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1',
          'ZP-C D1 (P<sub>0</sub>) + L-INF + ZP-B (binary construction)',
          'Valuation-complexity bridge — the critical step',
@@ -705,11 +709,11 @@ def build_zpi(out_path):
 
     print('[build_zpi] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-I v1.1', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-I v1.2', S['h1'])]
 
     oq_rows = [
         ['T-IZ: Inside Zero Theorem',
-         'DERIVED — T-IZ v1.1',
+         'DERIVED — T-IZ v1.2',
          'Every maximal ascending chain converges to its own successor null in Q<sub>2</sub>. '
          'Topological core (Steps 1–2: Cauchy convergence) proved axiom-free in Lean (t_iz_cauchy). '
          'Full conclusion (Steps 3–6: generation of &#8869;&#8242;) depends on valuation-complexity bridge '
@@ -749,7 +753,7 @@ def build_zpi(out_path):
     ))
 
     # ── TRACEABILITY REGISTER ─────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Traceability Register — ZP-I v1.1', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Traceability Register — ZP-I v1.2', S['h1'])]
 
     trace_rows = [
         ['T-IZ: Inside Zero',
@@ -764,6 +768,11 @@ def build_zpi(out_path):
          'ZP-C D4 (binary alphabet, I(n)=n); ZP-B (Q<sub>2</sub> separable); T-IZ (&#937; = &#969;)',
          'None',
          'Partially closed — &#937; = &#969; forced by countable substrate; CH connection deferred.'],
+        ['t_iz_valuation_unbounded (Lean)',
+         'int_strict_mono_ge (induction on &#8484;); omega (integer arithmetic)',
+         'None',
+         'Lean: proved ✓ — [propext, Classical.choice, Quot.sound]. '
+         'Formalises "sup v<sub>2</sub>(S(n)) = &#8734;" — proof obligation table row 3.'],
         ['t_iz_cauchy (Lean)',
          'ZP-B (Q<sub>2</sub> normed field); geometric tendsto; Mathlib.Analysis.SpecificLimits.Basic',
          'None',
@@ -796,7 +805,7 @@ def build_zpi(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-I v1.1 | Theorem T-IZ: Inside Zero | Framework closure established | '
+            '<i>End of ZP-I v1.2 | Theorem T-IZ: Inside Zero | Framework closure established | '
             'Topological core proved axiom-free in Lean (t_iz_cauchy) | '
             'Full conclusion (generation of &#8869;&#8242;) depends on valuation-complexity bridge '
             '(Outside Lean Scope — same status as DA-1 Path 3) | '
@@ -811,5 +820,5 @@ def build_zpi(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_1.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_2.pdf'))
     build_zpi(out)

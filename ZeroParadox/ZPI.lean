@@ -91,8 +91,7 @@ private lemma int_strict_mono_ge (v : ℕ → ℤ)
 /-- ZP-A R1 + T3 → geometric norm bound in Q₂.
     h_strict is the Lean model of R1 + T3 in Q₂: no top forces the valuation to grow
     strictly at every step. From this we derive ‖Sₙ‖₂ ≤ ‖S₀‖₂ · (2⁻¹)ⁿ — the h_bound
-    hypothesis used in t_iz_cauchy. This is the one remaining inside-Lean proof obligation
-    identified by the T-IZ research review. -/
+    hypothesis used in t_iz_cauchy. -/
 theorem t_iz_r1_t3_geometric_bound
     (S : ℕ → Q₂)
     (hS : ∀ n, S n ≠ 0)
@@ -112,6 +111,24 @@ theorem t_iz_r1_t3_geometric_bound
           congr 1
           rw [zpow_neg (2 : ℝ), zpow_natCast]
           exact (inv_pow 2 n).symm
+
+/-- "sup v₂(Sₙ) = ∞": a strictly increasing ℤ-sequence is unbounded above.
+
+    Given h_strict (the Q₂ expression of R1 + T3: the chain never stabilises),
+    the 2-adic valuation has no ceiling. For any target K, some term Sₙ satisfies
+    v₂(Sₙ) ≥ K.
+
+    This is the formal content of proof obligation table row 3 ("sup v₂(S(n)) = ∞").
+    Proof: int_strict_mono_ge gives (S 0).valuation + n ≤ (S n).valuation; take
+    N = (K − v₀).toNat; then (S N).valuation ≥ v₀ + N ≥ K by integer arithmetic. -/
+theorem t_iz_valuation_unbounded
+    (S : ℕ → Q₂)
+    (h_strict : ∀ n, (S n).valuation < (S (n + 1)).valuation) :
+    ∀ K : ℤ, ∃ N : ℕ, K ≤ (S N).valuation := by
+  intro K
+  have hge : ∀ n : ℕ, (S 0).valuation + (n : ℤ) ≤ (S n).valuation :=
+    int_strict_mono_ge (fun k => (S k).valuation) h_strict
+  exact ⟨(K - (S 0).valuation).toNat, by have := hge (K - (S 0).valuation).toNat; omega⟩
 
 /-! ## II. Valuation-Complexity Bridge — Outside Lean Scope
 
@@ -205,6 +222,8 @@ Verified results (all sorries filled; no sorryAx anywhere):
 - t_inside_zero: propext, Classical.choice, Quot.sound (no sorryAx)
 - t_iz_r1_t3_geometric_bound: propext, Classical.choice, Quot.sound
     (Padic.norm_eq_zpow_neg_valuation + zpow_le_zpow_right₀ — standard Mathlib p-adics)
+- t_iz_valuation_unbounded: propext, Classical.choice, Quot.sound
+    ("sup v₂ = ∞" — proof obligation table row 3, now formally proved)
 - t_iz_limit_is_new_null: does not depend on any axioms (axiom-free!)
 - c_t_iz_null_balance: propext (via c_da2_novelty)
 - t_iz_c3_compatible: propext, Classical.choice, Quot.sound
@@ -218,6 +237,7 @@ open ZeroParadox.ZPI ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPE ZeroParadox.Z
 #print axioms t_iz_cauchy
 #print axioms t_inside_zero
 #print axioms t_iz_r1_t3_geometric_bound
+#print axioms t_iz_valuation_unbounded
 #print axioms t_iz_limit_is_new_null
 #print axioms c_t_iz_null_balance
 #print axioms t_iz_c3_compatible
