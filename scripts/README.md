@@ -35,7 +35,9 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_zpb_companion.py` | Builds the ZP-B Illustrated Companion |
 | `build_zpc_companion.py` | Builds the ZP-C Illustrated Companion |
 | `build_zpd_companion.py` | Builds the ZP-D Illustrated Companion |
-| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion |
+| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion (v1.3: DA-1 ZP-K formal closure noted) |
+| `build_zpj_companion.py` | Builds the ZP-J Illustrated Companion (v1.0: T-EXEC, three-way equivalence, CC-1/CC-2 as theorems) |
+| `build_zpk_companion.py` | Builds the ZP-K Illustrated Companion (v1.0: four-way equivalence, computational Quine, DA-1 closure) |
 | `build_zpg_companion.py` | Builds the ZP-G Illustrated Companion |
 | `build_zph_companion.py` | Builds the ZP-H Illustrated Companion |
 | `build_zpi_companion.py` | Builds the ZP-I Illustrated Companion |

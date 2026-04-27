@@ -105,6 +105,8 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
 | [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across all frameworks |
 | [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |
+| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J | Quine atom diagram (⊥ = {⊥}), three-way equivalence table, CC-1/CC-2 as derived theorems |
+| [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Four-way equivalence diagram, computational Quine, DA-1 formal closure |
 
 ### Supporting Documents
 
