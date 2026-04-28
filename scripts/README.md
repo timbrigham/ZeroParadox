@@ -46,6 +46,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
 | `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |
 | `archive/build_zp_pdfs.py` | Superseded monolith — retained for reference only (contains archived `build_zpe_da1` function) |
+| `zp_utils.py` | Shared utilities: font registration, colour constants, layout constants, style dicts, and all standard component helpers (sp, fix, body, label_box, data_table, make_doc, callout, example_box, remember_box, key_result_box). All other build scripts import this module. |
 | `setup_fonts.py` | Downloads the required DejaVu font files into `scripts/fonts/` |
 | `PDF_Rendering_Standards.md` | Technical reference: font rules, known glyph gaps, rendering conventions |
 

@@ -6,144 +6,9 @@ Changes from original:
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Ellipse
 from reportlab.graphics import renderPDF
-
-FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fonts') + os.sep
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
-
-# Companion palette: 15% white tint on formal document header colors
-COMP_BLUE  = colors.HexColor('#4D89C0')
-COMP_GREEN = colors.HexColor('#4D9050')
-COMP_SLATE = colors.HexColor('#60727B')
-COMP_AMBER = colors.HexColor('#BB8C26')
-SLATE_LITE = colors.HexColor('#ECEFF1')
-AMBER_LITE = colors.HexColor('#FFF8E7')
-BLACK      = colors.black
-WHITE      = colors.white
-
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-CS = {
-    'title':    ParagraphStyle('ctitle',   fontName='DV-B',  fontSize=22, leading=28,
-                               alignment=1, spaceAfter=4, textColor=BLACK),
-    'subtitle': ParagraphStyle('csubtitle',fontName='DV-I',  fontSize=12, leading=16,
-                               alignment=1, spaceAfter=4),
-    'meta':     ParagraphStyle('cmeta',    fontName='DV',    fontSize=9,  leading=13,
-                               alignment=1, spaceAfter=8, textColor=colors.grey),
-    'disc':     ParagraphStyle('cdisc',    fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=10, textColor=colors.HexColor('#555555')),
-    'h1':       ParagraphStyle('ch1',      fontName='DV-B',  fontSize=13, leading=17,
-                               spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
-    'body':     ParagraphStyle('cbody',    fontName='DVS',   fontSize=10, leading=14,
-                               spaceAfter=6),
-    'caption':  ParagraphStyle('ccaption', fontName='DVS-I', fontSize=9,  leading=12,
-                               spaceAfter=8, textColor=colors.HexColor('#555555')),
-    'ex_title': ParagraphStyle('cex_title',fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=COMP_AMBER),
-    'ex_body':  ParagraphStyle('cex_body', fontName='DVS',   fontSize=9,  leading=13),
-    'rem':      ParagraphStyle('crem',     fontName='DVS-I', fontSize=9,  leading=13),
-    'kr_hdr':   ParagraphStyle('ckr_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
-                               textColor=WHITE),
-    'kr_body':  ParagraphStyle('ckr_body', fontName='DVS',   fontSize=9,  leading=13),
-}
-
-def sp(n=6):
-    return Spacer(1, n)
-
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k','ₘ':'m'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    # Characters confirmed missing from DVS-I (italic serif) — must use DV (Sans)
-    text = text.replace('✓', '<font name="DV">&#10003;</font>')
-    text = text.replace('∅', '<font name="DV">&#8709;</font>')
-    # Number-set blackboard bold: present in DV Sans but unreliable in DVS-I
-    for char, entity in [('ℚ','&#8474;'),('ℤ','&#8484;'),('ℂ','&#8450;'),
-                          ('ℕ','&#8469;'),('ℝ','&#8477;')]:
-        text = text.replace(char, f'<font name="DV">{entity}</font>')
-    replacements = [
-        ('⊥', '&#8869;'), ('∨', '&#8744;'), ('≤', '&#8804;'), ('≥', '&#8805;'),
-        ('≠', '&#8800;'), ('∈', '&#8712;'), ('→', '&#8594;'), ('←', '&#8592;'),
-        ('∞', '&#8734;'), ('∑', '&#8721;'), ('⟨', '&#10216;'), ('⟩', '&#10217;'),
-        ('—', '&#8212;'), ('–', '&#8211;'), ('×', '&#215;'), ('−', '&#8722;'),
-        ('ε', '&#949;'),
-    ]
-    for char, entity in replacements:
-        text = text.replace(char, entity)
-    return text
-
-def cbody(text):
-    return Paragraph(fix(text), CS['body'])
-
-def ccaption(text):
-    return Paragraph(fix(text), CS['caption'])
-
-def example_box(title, rows):
-    data = [[Paragraph(title, CS['ex_title'])]]
-    for r in rows:
-        data.append([Paragraph(fix(r), CS['ex_body'])])
-    ts = TableStyle([
-        ('BOX',           (0,0), (-1,-1), 1.5, COMP_AMBER),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, COMP_AMBER),
-        ('BACKGROUND',    (0,0), (-1,-1), AMBER_LITE),
-        ('TOPPADDING',    (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('LEFTPADDING',   (0,0), (-1,-1), 8),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 8),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=[TW])
-    t.setStyle(ts)
-    return t
-
-def remember_box(text):
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), SLATE_LITE),
-        ('BOX',           (0,0), (-1,-1), 0.5, COMP_SLATE),
-        ('TOPPADDING',    (0,0), (-1,-1), 8),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
-        ('LEFTPADDING',   (0,0), (-1,-1), 10),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 10),
-    ])
-    t = Table([[Paragraph(fix(text), CS['rem'])]], colWidths=[TW])
-    t.setStyle(ts)
-    return t
-
-def key_result_box(title, body_text):
-    data = [[Paragraph(fix(title), CS['kr_hdr'])],
-            [Paragraph(fix(body_text), CS['kr_body'])]]
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  COMP_GREEN),
-        ('BACKGROUND',    (0,1), (-1,-1), colors.white),
-        ('BOX',           (0,0), (-1,-1), 0.5, COMP_GREEN),
-        ('TOPPADDING',    (0,0), (-1,-1), 6),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 6),
-        ('LEFTPADDING',   (0,0), (-1,-1), 8),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 8),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=[TW])
-    t.setStyle(ts)
-    return t
 
 def clopen_balls_diagram():
     """Two disjoint clopen balls, completely separated."""
@@ -227,7 +92,7 @@ def nested_balls_diagram():
     return d
 
 def build():
-    out_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    out_path = os.path.join(PROJECT_ROOT,
                             'ZP-B_Illustrated_Companion.pdf')
 
     def footer_cb(canvas, doc):
