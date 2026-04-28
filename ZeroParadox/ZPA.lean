@@ -108,6 +108,18 @@ theorem state_sequence_monotone (S : ℕ → L) (hS : IsStateSequence S) :
   calc S n ⊔ (S n ⊔ α n) = (S n ⊔ S n) ⊔ α n := by rw [join_assoc]
     _ = S n ⊔ α n                               := by rw [join_idem]
 
+/-! ## R1 — No Top Element; Strict State Sequences -/
+
+/-- R1: L has no top element — every state has a strictly greater successor.
+    Algebraic expression of unbounded ascent: the framework never terminates. -/
+def HasNoTop (L : Type*) [ZPSemilattice L] : Prop :=
+  ∀ x : L, ∃ y : L, le x y ∧ x ≠ y
+
+/-- A strict state sequence: monotone by T3 AND every step is a proper ascent.
+    Models a maximal ascending chain in a no-top lattice (R1 prevents stalling). -/
+def IsStrictStateSequence {L : Type*} [ZPSemilattice L] (S : ℕ → L) : Prop :=
+  IsStateSequence S ∧ ∀ n, S n ≠ S (n + 1)
+
 /-! ## Conditional Claim CC-1 — S₀ = ⊥ -/
 
 /-- CC-1: If the sequence is initialised at ⊥, then ⊥ ≼ S(n) for all n.
@@ -133,6 +145,8 @@ open ZeroParadox.ZPA ZPSemilattice
 
 variable {L : Type*} [ZPSemilattice L]
 
+#check @HasNoTop
+#check @IsStrictStateSequence
 #print axioms le_refl
 #print axioms le_antisymm
 #print axioms le_trans

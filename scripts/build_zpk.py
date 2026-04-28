@@ -1,11 +1,12 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.2 | April 2026
+Version 1.3 | April 2026
+v1.3: Forward references to "ZP-PQ" replaced throughout with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label.
 v1.2: DA-1 Path 2 recharacterized in "What Changed for DA-1" section — from "outside Lean
 scope (ontological claim)" to "foundational commitment: a missing principle, not a missing
 proof." The gap between 'system at P₀' and 'system is running' cannot be closed by any
 computability library. Forward paths: new axiom, Chalmers' implementation notion, or
-ZP-PQ dissolution argument. Paths 1 and 3 are formally closed; DA-1 does not depend on
+The Philosophical Question That Started This. Paths 1 and 3 are formally closed; DA-1 does not depend on
 Path 2. Open Items Register updated: Path 2 status changed from OPEN to FOUNDATIONAL COMMITMENT.
 v1.1: Remark R-K.0 added — T-COMP "four-way equivalence" clarified: (1)–(3) are
 equivalent by T-EXEC (ZP-J); (4) is combined by KleeneStructure typeclass requiring
@@ -25,7 +26,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md:
   - US Letter, 1-inch margins, TW = 6.5 inch
   - Standard color palette: BLUE/GREEN/ORANGE/SLATE/AMBER/GREY_LITE (Section 10)
   - Semantic box helpers: result_box, axiom_box, def_box, remark_box, import_box (Section 10)
-  - Footer: Zero Paradox ZP-K: Computational Grounding | Version 1.2 | April 2026 | Page n
+  - Footer: Zero Paradox ZP-K: Computational Grounding | Version 1.3 | April 2026 | Page n
 """
 
 import os, sys
@@ -217,7 +218,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'Zero Paradox ZP-K: Computational Grounding  |  Version 1.2  |  April 2026  |  Page {doc.page}'
+        ft = f'Zero Paradox ZP-K: Computational Grounding  |  Version 1.3  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -239,10 +240,11 @@ def build_zpk(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-K: Computational Grounding of Self-Reference', S['title']),
-        Paragraph('Version 1.2 | April 2026', S['subtitle']),
+        Paragraph('Version 1.3 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.2: DA-1 Path 2 recharacterized — foundational commitment, not missing proof. '
-            'Forward paths: new axiom, Chalmers\' implementation, or ZP-PQ dissolution. '
+            '<i>v1.3: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | '
+            'v1.2: DA-1 Path 2 recharacterized — foundational commitment, not missing proof. '
+            'Forward paths: new axiom, Chalmers\' implementation, or The Philosophical Question That Started This. '
             'DA-1 does not depend on Path 2. | '
             'v1.1: Remark R-K.0 added — T-COMP four-way equivalence clarified: (1)–(3) '
             'equivalent by T-EXEC (derived); (4) combined by KleeneStructure typeclass requirement '
@@ -627,24 +629,24 @@ def build_zpk(out_path):
         'library answers this question. '
         'Forward paths: (a) a new axiom explicitly committing to this bridge; '
         '(b) a connection to Chalmers\' notion of implementation; '
-        '(c) the ZP-PQ dissolution argument — the description-instantiation gap assumes a '
+        '(c) the dissolution argument in The Philosophical Question That Started This — the description-instantiation gap assumes a '
         'separability that the universality of the framework dissolves. '
         'Importantly, DA-1 does not depend on Path 2: Paths 1 and 3 are formally closed, '
         'and the formal spine (DP-2 + da1_minimal_path) is proved axiom-free. '
-        'Path 2 is motivational context; its forward resolution belongs to ZP-PQ.'))
+        'Path 2 is motivational context; its forward resolution is in The Philosophical Question That Started This.'))
 
     E.append(callout(
         'DA-1 Lean scope status after ZP-K:\n'
         'Path 1 (structural, AFA): IN SCOPE — da1_closed_concrete : IsQuineAtom ⊥.\n'
         'Path 3 (computational, Kleene): IN SCOPE — botCode_is_quine witnesses the fixed point.\n'
         'Path 2 (informational, L-INF bridge): FOUNDATIONAL COMMITMENT — a missing principle,\n'
-        'not a missing proof. Forward: ZP-PQ dissolution argument.',
+        'not a missing proof. Forward: The Philosophical Question That Started This.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(8))
 
     print('[build_zpk] Building registers...')
-    E += [hr(), Paragraph('Traceability Register — ZP-K v1.2', S['h1'])]
+    E += [hr(), Paragraph('Traceability Register — ZP-K v1.3', S['h1'])]
 
     trace_rows = [
         ['selfApply_partrec',
@@ -687,7 +689,7 @@ def build_zpk(out_path):
     ))
     E.append(sp(8))
 
-    E += [hr(), Paragraph('Open Items Register — ZP-K v1.2', S['h1'])]
+    E += [hr(), Paragraph('Open Items Register — ZP-K v1.3', S['h1'])]
 
     oq_rows = [
         ['DA-1 Path 1 (AFA structural)',
@@ -702,7 +704,7 @@ def build_zpk(out_path):
          'L-INF (ZPC.l_inf) is proved. The bridge "unbounded surprisal → necessarily executing" '
          'is a missing principle, not a missing proof. The gap between \'system at P₀\' and '
          '\'system is running\' cannot be closed by any computability library. '
-         'Forward paths: new axiom, Chalmers\' implementation notion, or ZP-PQ dissolution argument. '
+         'Forward paths: new axiom, Chalmers\' implementation notion, or The Philosophical Question That Started This. '
          'DA-1 does not depend on Path 2 — Paths 1 and 3 are closed.'],
         ['selfApply uniqueness',
          'CLOSED — not attempted (correct)',
@@ -728,10 +730,10 @@ def build_zpk(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-K v1.2 | Computational Grounding of Self-Reference | '
+            '<i>End of ZP-K v1.3 | Computational Grounding of Self-Reference | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
             'DA-1 closed: da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase) | '
             'Four-way equivalence: Quine atom = ⊥ = join identity = Kleene fixed point | '
-            'Path 2 recharacterized: foundational commitment, not missing proof; forward: ZP-PQ | '
+            'Path 2 recharacterized: foundational commitment, not missing proof; forward: The Philosophical Question That Started This | '
             'All ZPK.lean theorems verified. Axioms: [propext, Classical.choice, Quot.sound]</i>',
             S['endnote']),
     ]
@@ -743,5 +745,5 @@ def build_zpk(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-K_Computational_Grounding_v1_2.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-K_Computational_Grounding_v1_3.pdf'))
     build_zpk(out)

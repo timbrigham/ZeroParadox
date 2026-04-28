@@ -35,6 +35,22 @@ Transparency is a core value of this project. The existence of this private fold
 - The `historical/README.md` tracks all archived files with date moved and description
 - README.md always links to the non-suffixed (current) version
 
+## register.md — Canonical Version Registry
+
+`register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md (and carries a transparency notice per the Transparency Notices policy).
+
+**Schema:** One row per formal document:
+`| Document | Formal Version | Filename | Companion Version | Notes |`
+
+**Rule: update register.md first.** On any version bump — before touching README.md, GUIDE.md, or build script docstrings — update register.md. README.md's Framework table and GUIDE.md's Reading Paths are then verified against it.
+
+**On every version bump, in order:**
+1. Update register.md (formal version, filename, companion version if changed)
+2. Update README.md Framework table (verify against register.md)
+3. Update GUIDE.md Reading Paths links (verify against register.md)
+4. Update build script docstring
+5. Archive old version per archiving convention
+
 ## Companion Document Versioning
 
 Each formal ZP-X document has a paired illustrated companion (`ZP-X_Illustrated_Companion.pdf`). Companion PDFs overwrite in place — no versioned filename, no `historical/` archiving. The current companion version lives only in the title block of the PDF and the docstring of its build script.
@@ -68,14 +84,14 @@ Run this whenever a formal document version changes:
 
 ## README.md Link Restrictions
 
-The following files exist in the repository but **must not be linked from README.md** until the conditions below are met:
+The following files exist in the repository but **must not be linked from README.md or GUIDE.md** until the conditions below are met:
 
 | File | Reason | Condition to lift restriction |
 |------|--------|-------------------------------|
 | `ZP_Gen2_Applications.pdf` | Speculative applications document — depends on Gen 1 being formally complete and bridge documents written. Premature to surface publicly in the index. | All Gen 1 layers (ZP-A through ZP-H) fully tightened; thermodynamic bridge and OQ-E2 resolved; explicit decision by Tim to promote. |
 | `ABOUTME.md` | Not ready for prominent public linking from the main index. | Explicit decision by Tim to promote. |
 
-Do not add links to these files in README.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in the README index.
+Do not add links to these files in README.md or GUIDE.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in either index.
 
 ## scripts/ Folder — Keeping It Current
 
@@ -91,9 +107,19 @@ If a script is new (not yet in `scripts/`), add a row for it to `scripts/README.
 
 The `scripts/` folder is intentionally not a runnable package — the README there sets that expectation explicitly. The goal is source visibility, not distribution.
 
+## Lean↔PDF Consistency — AI-Assisted Workflow
+
+There is no automated tooling that verifies theorem status labels in PDF build scripts (e.g. "Status: DERIVED", "Candidate Theorem") match the actual Lean proof state. This is a known gap.
+
+It is closed by the Claude-assisted session workflow instead. At every session where a Lean proof changes status or a new result is added, Claude cross-checks the corresponding PDF script and companion document as part of the same work. The companion sync checklist and README sync triggers (above) formalize this discipline.
+
+This is a deliberate choice: the mapping between Lean theorem names and PDF prose descriptions is not machine-parseable without a maintained lookup table that would itself require discipline to keep current. The AI workflow catches the same class of errors more flexibly, with lower maintenance overhead, at the project's current scale.
+
+If the framework grows significantly or external contributors join, a lightweight parseable-marker convention (`-- LEAN_STATUS: DERIVED` in Lean files, grepped against PDF scripts) would be worth adding. For now, the session discipline is the mechanism.
+
 ## Transparency Notices on Unlinked Public Documents
 
-Any file that is committed to the public repository but intentionally unlinked from README.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
+Any file that is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
 
 **For Markdown files:** Add a blockquote at the very top of the file:
 ```
@@ -116,26 +142,40 @@ This project runs on **Windows 11**. Shell commands must use PowerShell syntax, 
 - **File moves:** Use `Move-Item` not `mv`
 - **Path separators:** Backslash in PowerShell (`C:\Workspace\ZeroParadox`), forward slash in Lean/lake config
 
-## README.md Maintenance
+## README.md and GUIDE.md Maintenance
 
-### Document Structure
+The project index is split across two files. README.md is the formal index (for mathematicians and reviewers). GUIDE.md is the general reader hub (plain language, companions, reading paths). Both are public.
 
-The README must maintain this section order:
+### README.md Document Structure
 
-1. Title and date — `# The Zero Paradox - Project Index`
-2. "What This Is" — high-level introduction
+README.md must maintain this section order:
+
+1. Title and date — `# The Zero Paradox`
+2. One-line pointer to GUIDE.md — immediately after badges
 3. "The Central Result" — core theorem and derivation chain
+4. "The Framework" — Formal Ontology Documents + Formal Verification (Lean 4) only
+5. "Axiomatic Commitments" — formal commitments and principles
+6. "Question Register" — tracked questions and resolutions
+7. "Notes on Development" — credits and contributor information
+8. "Repository and Version History" — Git/versioning guidance
+9. "Purpose of This Repository"
+10. "License"
+11. "Citation"
+12. "Contact"
+
+### GUIDE.md Document Structure
+
+GUIDE.md must maintain this section order:
+
+1. Title — `# The Zero Paradox: A Reader's Guide`
+2. One-line pointer to README.md — immediately after subtitle
+3. "What This Is" — high-level introduction
 4. "What This Is Not" — explicit clarifications
-5. "The Framework" — tables of all available documents
-6. "Axiomatic Commitments" — formal commitments and principles
-7. "Question Register" — tracked questions and resolutions
-8. "Reading Order" — paths for different reader types with clickable links
-9. "Notes on Development" — credits and contributor information
-10. "Repository and Version History" — Git/versioning guidance
-11. "Purpose of This Repository"
-12. "License"
-13. "Citation"
-14. "Contact"
+5. "Reading Paths" — four paths for different reader types with clickable links
+6. "Entry Point" — Foreword table
+7. "Illustrated Companion Documents" — companion table with staleness note
+8. "Supporting Documents" — Philosophical Question + Tools
+9. Footer pointer to README.md
 
 ### Formatting Standards
 
@@ -152,11 +192,11 @@ The README must maintain this section order:
 - Consistent column alignment; meaningful headers (File, Document, Version, Contents)
 - Version numbers go in the Version column only, not in display text
 
-### Reading Order Structure
+### Reading Paths Structure (GUIDE.md)
 
-Include four distinct paths:
-1. **General reader** — Foreword → any Illustrated Companion → ZP-E Companion
-2. **Mathematician** — formal path ZP-A through ZP-E
+GUIDE.md's "Reading Paths" section must include four distinct paths:
+1. **General reader** — Philosophical Question → Foreword → any Illustrated Companion → ZP-E Companion → ZP-I Companion
+2. **Mathematician** — formal path ZP-A through ZP-I (via ZP-J and ZP-K); pointer to README.md for full formal index
 3. **Category theory extension** — ZP-G and ZP-H (after ZP-E)
 4. **Process/methods** — ZP Tools and Methods
 
@@ -164,20 +204,30 @@ All entries must be clickable links, not plain text.
 
 ### Validation Checklist
 
-Before committing any README update:
+**Before committing any README.md update:**
 - [ ] All linked files verified to exist (use `Glob` tool, pattern `*.pdf`)
 - [ ] No file extensions in display text
 - [ ] No version numbers in display text
 - [ ] No em dashes — regular hyphens only
-- [ ] Reading Order has clickable links for all documents
 - [ ] All four terminal sections present: License, Citation, Contact, Purpose
-- [ ] "What This Is Not" section present after "The Central Result"
+- [ ] Pointer to GUIDE.md present after badges
 - [ ] Axiomatic Commitments matches current framework state (AX-1 is T-SNAP, not an axiom)
 - [ ] Open questions table reflects actual current status
 
-### README Sync Requirements — Triggers and Checklist
+**Before committing any GUIDE.md update:**
+- [ ] All linked files verified to exist (use `Glob` tool, pattern `*.pdf`)
+- [ ] No file extensions in display text
+- [ ] No version numbers in display text
+- [ ] No em dashes — regular hyphens only
+- [ ] Reading Paths has clickable links for all four paths
+- [ ] Reading Paths version numbers match register.md
+- [ ] "What This Is Not" section present
+- [ ] Pointer to README.md present after title
+- [ ] Companion staleness note is current
 
-Certain changes require README.md to be audited for consistency. Apply this checklist whenever any of the following occur:
+### Document Sync Requirements — Triggers and Checklist
+
+Certain changes require both README.md and GUIDE.md to be audited for consistency. Apply this checklist whenever any of the following occur:
 
 **Triggers:**
 - A document is versioned up (e.g. ZP-A v1.3 → v1.4)
@@ -185,26 +235,33 @@ Certain changes require README.md to be audited for consistency. Apply this chec
 - A claim's status changes (axiom → theorem, candidate → derived, etc.)
 - A new document is added or archived
 
-**On each trigger, verify:**
-1. **Framework table** — version number matches the current file in the root
-2. **Reading Order links** — all version numbers in Reading Order match Framework table (these get out of sync when only the table is updated)
-3. **Question Register** — every OQ/item that changed status is updated; newly closed items are added if missing
-4. **Document descriptions** — any "Candidate Theorem", "Open", or status language in the Framework table description column still accurately reflects the document's current state
+**On each trigger, verify in README.md:**
+1. **Framework table** — version number matches the current file in the root and matches register.md
+2. **Question Register** — every OQ/item that changed status is updated; newly closed items are added if missing
+3. **Document descriptions** — any "Candidate Theorem", "Open", or status language in the Framework table description column still accurately reflects the document's current state
 
-**Known pattern to watch:** Reading Order links are hardcoded with version numbers separately from the Framework table. Updating the table does not update Reading Order — both must be changed together. This has caused stale links on ZP-A (v1.2 in Reading Order while Framework showed v1.4) and ZP-H (v1.0 in Reading Order while Framework showed v1.1).
+**On each trigger, verify in GUIDE.md:**
+1. **Reading Paths links** — all version numbers in Reading Paths match register.md (and therefore the Framework table in README.md)
+2. **Companion table** — if a companion was updated, its row reflects current diagram list
+3. **Companion staleness note** — still accurate; update or remove if companions are brought current
+
+**Known pattern to watch:** Version numbers now appear in three places: register.md (canonical), README.md Framework table, and GUIDE.md Reading Paths. Updating any one does not update the others. Always update register.md first, then propagate to README.md and GUIDE.md in the same session. Stale reading path version numbers have caused errors before.
 
 ### Common Updates
 
-**Adding a new document:**
-1. Add to the appropriate The Framework section
-2. Use clean display name (no extension, no version)
-3. Link to the current version (no `-1`, `-2` suffix)
-4. Put version number in the Version column only
-5. Verify file exists with `Glob` before committing
+**Adding a new formal document:**
+1. Add to the Formal Ontology Documents table in README.md
+2. Add a companion row to the Illustrated Companion Documents table in GUIDE.md (if companion exists)
+3. Add to the Mathematician reading path in GUIDE.md
+4. Use clean display name (no extension, no version) in both files
+5. Link to the current version (no `-1`, `-2` suffix)
+6. Put version number in the Version column only
+7. Verify file exists with `Glob` before committing
 
 **Removing a broken link:**
 - Verify with `Glob` tool (never `ls`) before removing
 - Ask: should this file be created, or is it genuinely absent?
+- Check both README.md and GUIDE.md for the broken link
 
 **Historical folder table format** (`historical/README.md`):
 ```
@@ -220,7 +277,9 @@ When a document is superseded:
 1. Add a numeric suffix to the old file and move it: `Move-Item ZP-X_Title_vN_N.pdf historical\ZP-X_Title_vN_N-1.pdf`
 2. Add the new version to the root (no suffix)
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
-4. Update the version number in README.md's The Framework table
+4. Update register.md with the new version number and filename
+5. Update the version number in README.md's The Framework table
+6. Update any version-hardcoded links in GUIDE.md's Reading Paths
 
 ## Theorem/Proposition/Lemma Naming Convention
 

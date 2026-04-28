@@ -1,14 +1,15 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.9 | April 2026
+Version 3.10 | April 2026
+v3.10: Forward references to "ZP-PQ" replaced throughout with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label.
 v3.9: R-ε₀ reframed — remark now leads with explicit informal-analogy disclaimer; "structural
 correspondence" changed to "structural analogy" throughout R-ε₀. Reviewer feedback: hedge was
 buried at end of remark; readers might miss it after several paragraphs of parallel-drawing.
 v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to
 "foundational commitment: a missing principle, not a missing proof." No computability library
 closes the gap between 'system at P₀' and 'system is running.' Forward paths: new axiom,
-Chalmers' implementation notion, or ZP-PQ dissolution argument. ZP-PQ already contains the
-dissolution: the description-instantiation gap assumes a separability the framework dissolves.
+Chalmers' implementation notion, or The Philosophical Question That Started This. That document already contains
+the dissolution: the description-instantiation gap assumes a separability the framework dissolves.
 v3.7: DA-1 formally closed via ZP-K — KleeneStructure MachinePhase instance proved in Lean 4.
 da1_closed_concrete : IsQuineAtom (bot : MachinePhase). DA-1 Path 1 (structural/AFA) and
 Path 3 (computational/Kleene) now in Lean scope. Path 2 (informational bridge) remains outside
@@ -234,7 +235,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.9  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.10  |  April 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -257,15 +258,15 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.9 | April 2026', S['subtitle']),
+        Paragraph('Version 3.10 | April 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.8 | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
+            '<i>Supersedes v3.9 | v3.10: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
             'informal-analogy disclaimer; "structural correspondence" changed to "structural analogy" '
             'throughout R-&#949;<sub>0</sub>. | '
             'v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
             '"foundational commitment: a missing principle, not a missing proof." No computability library closes the gap '
             'between \'system at P<sub>0</sub>\' and \'system is running.\' Forward paths: new axiom, Chalmers\' implementation '
-            'notion, or ZP-PQ dissolution argument. '
+            'notion, or The Philosophical Question That Started This. '
             'v3.7: DA-1 formally closed via ZP-K — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4. '
             'KleeneStructure MachinePhase instance added; Paths 1 and 3 now IN LEAN SCOPE. '
             '"Outside Lean Scope" designation removed from ZPE.lean. '
@@ -443,7 +444,7 @@ def build_zpe(out_path):
              'not a derivable claim. It asks what it means for a mathematical structure to <i>instantiate</i> '
              'rather than merely <i>satisfy</i> conditions — a question no computability library answers. '
              'Forward paths: (a) a new axiom explicitly committing to this bridge; (b) a connection to '
-             'Chalmers\' notion of implementation; (c) the ZP-PQ dissolution argument — the separability '
+             'Chalmers\' notion of implementation; (c) the dissolution argument in The Philosophical Question That Started This — the separability '
              'of description and instantiation is the assumption the framework dissolves, not a gap it must '
              'close from the outside.'),
         body('Path 3 — Formal bridge: Incompressibility as Self-Description (ZP-C D1 + standard AIT): '
@@ -479,12 +480,12 @@ def build_zpe(out_path):
              'static-description alternative; this path is now closed by ZP-K\'s Kleene result, which '
              'handles the computational self-reference claim without requiring AIT. '
              'Paths 1 and 3 are formally closed. Path 2 identifies a missing principle; '
-             'its forward resolution is ZP-PQ. DA-1 is grounded in Paths 1 and 3; Path 2 is context.'),
+             'its forward resolution is in The Philosophical Question That Started This. DA-1 is grounded in Paths 1 and 3; Path 2 is context.'),
         derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
                 'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
                 'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in ZPK.lean. '
-                'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: ZP-PQ. '
+                'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: The Philosophical Question That Started This. '
                 'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
                 'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
                 'CC-2 (&#8869; = {&#8869;}) structurally forced by self-execution argument; ZP-J T-EXEC formally verifies. '
@@ -826,7 +827,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.9', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.10', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -880,7 +881,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.9', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.10', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -933,7 +934,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.9', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.10', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',
@@ -945,8 +946,8 @@ def build_zpe(out_path):
          'machinePhaseAFA gives AFAStructure instance (Path 1 IN LEAN SCOPE). '
          'Path 2 (informational bridge, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a '
          'missing proof. No computability library closes the gap between \'system at P₀\' and \'system is '
-         'running.\' Forward paths: new axiom, Chalmers\' implementation notion, or ZP-PQ dissolution '
-         'argument. Paths 1 and 3 are formally closed; DA-1 does not depend on Path 2. '
+         'running.\' Forward paths: new axiom, Chalmers\' implementation notion, or '
+         'The Philosophical Question That Started This. Paths 1 and 3 are formally closed; DA-1 does not depend on Path 2. '
          'CC-1 and CC-2 derived via ZP-J, not freestanding commitments.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],
@@ -983,9 +984,9 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.9 | Three formal inserts: DA-1, DA-2, DA-3 | '
+            '<i>End of ZP-E v3.10 | Three formal inserts: DA-1, DA-2, DA-3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
             'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
-            'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward resolution ZP-PQ | '
+            'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward: The Philosophical Question That Started This | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
             'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
             'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
@@ -1001,5 +1002,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_9.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_10.pdf'))
     build_zpe(out)
