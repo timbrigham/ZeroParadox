@@ -72,6 +72,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 |------|-------------|
 | [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The question that motivated the entire framework - why does something exist rather than nothing? - and what the mathematics discovered about it, including what it dissolves and what it snaps. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
+| [Outside Observer Review Protocol](Outside_Observer_CLAUDE.md) | The protocol governing adversarial AI-assisted review of the framework - how the outside observer role is structured, what it has access to, and how findings are classified. |
 
 ---
 
