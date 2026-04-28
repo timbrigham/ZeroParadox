@@ -28,8 +28,6 @@ The **Binary Snap** (the first transition from nothing to something) - the trans
 
 The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. This cross-framework identification is a modeling commitment (MC-1) — the foundational design choice that makes multi-layer synthesis possible. It is not derived; it is chosen. See [Axiomatic Commitments](#axiomatic-commitments). Similarly, ε₀ is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration. This identification is named and motivated in ZP-E; formal embedding of the framework's state lattice into ordinal theory is deferred pending OQ-E2 (see Question Register).
 
-Most frameworks for describing the first emergence of something assume it. This framework does not. The Binary Snap is not a starting assumption - it is a structural consequence of standard mathematical commitments of the kind any model of additive states would adopt independently. No snap-specific axioms appear anywhere in the framework. The Binary Snap is the moment the transition is forced: when the mathematics demands that something emerge from the null state.
-
 The derivation chain is:
 
 **P₀** (incompressibility threshold, ZP-C D1)  
@@ -40,7 +38,7 @@ The derivation chain is:
 → **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap follows from A4, the standard bottom element axiom; AX-1 was redundant)
 
-This framework introduces no snap-specific axioms. T-SNAP follows from A4 — the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x) — a natural axiom for modeling additive state accumulation, not an assumption crafted to produce the snap. Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
+This framework introduces no snap-specific axioms. T-SNAP follows from A4 — the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
 
 ---
 

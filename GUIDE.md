@@ -14,6 +14,8 @@ The Zero Paradox is a rigorous proof, spread across ten mathematical disciplines
 
 The answer developed here is yes. Each layer of the proof is internally closed before any cross-framework claim is made.
 
+Most frameworks for describing the first emergence of something assume it. This framework does not. The Binary Snap is not a starting assumption - it is a structural consequence of standard mathematical commitments of the kind any model of additive states would adopt independently. No snap-specific axioms appear anywhere in the framework. The Binary Snap is the moment the transition is forced: when the mathematics demands that something emerge from the null state.
+
 ---
 
 ## What This Is Not
