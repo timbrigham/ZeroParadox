@@ -117,7 +117,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 ### Formal Verification (Lean 4)
 
-Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives on the `illustrated` branch under `ZeroParadox/`.
+Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives under `ZeroParadox/` in this repository.
 
 | Document | Lean Source | Theorems Verified | Build |
 |----------|-------------|-------------------|-------|
@@ -213,7 +213,7 @@ This project is hosted on GitHub at [timbrigham/ZeroParadox](https://github.com/
 To view older versions of this README or the associated documents as the framework progressed:
 - **Via GitHub web interface**: Navigate to the repository, click on the file, then "History" to browse commits.
 - **Locally**: Use `git log` to see commit history and `git checkout <commit-hash>` to view specific versions.
-- **Branches**: Different branches may contain snapshots at various stages (e.g., compare "main" vs. "illustrated" branches).
+- **Branches**: The main branch is the canonical public version; earlier stages are visible in commit history.
 
 This ensures transparency in the development of the Zero Paradox.
 
