@@ -35,6 +35,22 @@ Transparency is a core value of this project. The existence of this private fold
 - The `historical/README.md` tracks all archived files with date moved and description
 - README.md always links to the non-suffixed (current) version
 
+## register.md — Canonical Version Registry
+
+`register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md (and carries a transparency notice per the Transparency Notices policy).
+
+**Schema:** One row per formal document:
+`| Document | Formal Version | Filename | Companion Version | Notes |`
+
+**Rule: update register.md first.** On any version bump — before touching README.md, GUIDE.md, or build script docstrings — update register.md. README.md's Framework table and GUIDE.md's Reading Paths are then verified against it.
+
+**On every version bump, in order:**
+1. Update register.md (formal version, filename, companion version if changed)
+2. Update README.md Framework table (verify against register.md)
+3. Update GUIDE.md Reading Paths links (verify against register.md)
+4. Update build script docstring
+5. Archive old version per archiving convention
+
 ## Companion Document Versioning
 
 Each formal ZP-X document has a paired illustrated companion (`ZP-X_Illustrated_Companion.pdf`). Companion PDFs overwrite in place — no versioned filename, no `historical/` archiving. The current companion version lives only in the title block of the PDF and the docstring of its build script.
@@ -204,6 +220,7 @@ All entries must be clickable links, not plain text.
 - [ ] No version numbers in display text
 - [ ] No em dashes — regular hyphens only
 - [ ] Reading Paths has clickable links for all four paths
+- [ ] Reading Paths version numbers match register.md
 - [ ] "What This Is Not" section present
 - [ ] Pointer to README.md present after title
 - [ ] Companion staleness note is current
@@ -219,16 +236,16 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 - A new document is added or archived
 
 **On each trigger, verify in README.md:**
-1. **Framework table** — version number matches the current file in the root
+1. **Framework table** — version number matches the current file in the root and matches register.md
 2. **Question Register** — every OQ/item that changed status is updated; newly closed items are added if missing
 3. **Document descriptions** — any "Candidate Theorem", "Open", or status language in the Framework table description column still accurately reflects the document's current state
 
 **On each trigger, verify in GUIDE.md:**
-1. **Reading Paths links** — all version numbers in Reading Paths match Framework table in README (these get out of sync when only the table is updated)
+1. **Reading Paths links** — all version numbers in Reading Paths match register.md (and therefore the Framework table in README.md)
 2. **Companion table** — if a companion was updated, its row reflects current diagram list
 3. **Companion staleness note** — still accurate; update or remove if companions are brought current
 
-**Known pattern to watch:** Reading Paths links in GUIDE.md are hardcoded with version numbers separately from the Framework table in README.md. Updating the README table does not update GUIDE.md — both must be changed together. This pattern (stale version numbers in reading paths) has caused errors before.
+**Known pattern to watch:** Version numbers now appear in three places: register.md (canonical), README.md Framework table, and GUIDE.md Reading Paths. Updating any one does not update the others. Always update register.md first, then propagate to README.md and GUIDE.md in the same session. Stale reading path version numbers have caused errors before.
 
 ### Common Updates
 
@@ -260,8 +277,9 @@ When a document is superseded:
 1. Add a numeric suffix to the old file and move it: `Move-Item ZP-X_Title_vN_N.pdf historical\ZP-X_Title_vN_N-1.pdf`
 2. Add the new version to the root (no suffix)
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
-4. Update the version number in README.md's The Framework table
-5. Update any version-hardcoded links in GUIDE.md's Reading Paths
+4. Update register.md with the new version number and filename
+5. Update the version number in README.md's The Framework table
+6. Update any version-hardcoded links in GUIDE.md's Reading Paths
 
 ## Theorem/Proposition/Lemma Naming Convention
 
