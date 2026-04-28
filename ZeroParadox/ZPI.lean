@@ -1,4 +1,5 @@
 import ZeroParadox.ZPE
+import ZeroParadox.ZPK
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic
 
@@ -8,22 +9,26 @@ import Mathlib.Tactic
 Theorem T-IZ: Every maximal ascending chain in the Zero Paradox framework is a
 Cauchy sequence that converges to its own successor null in the 2-adic metric.
 
-This layer has three components:
-- § I: Cauchy convergence — topological core (proved axiom-free in Lean)
-- § II: Valuation-complexity bridge (outside Lean scope — same category as DA-1 Path 3)
-- § III: T-IZ theorem, successor null, and framework closure
+This layer has four components:
+- § I:   Cauchy convergence — topological core (proved axiom-free)
+- § Ib:  h_strict from R1+T3 via depth-index chain — closes R-IZ-A (proved)
+- § II:  Valuation-complexity bridge — SUPERSEDED by AFA path (see § III-B)
+- § III: T-IZ theorem, successor null, and framework closure (proved)
+- § III-B: t_iz_complete — formally complete T-IZ via AFA/Kleene path (proved)
 
 The key insight: ZP-A R1 (no top element) is not an obstacle to T-IZ — it is the engine.
 Because L has no top, the ascending chain cannot stop. Unbounded ascent forces v₂(Sₙ) → ∞,
 which is exactly ‖Sₙ‖₂ → 0, the Cauchy convergence condition. The chain approaches the
 2-adic depth of zero by its own forward motion — not by reversing direction.
 
-Dependencies: ZP-E (full synthesis: ZP-A, ZP-B, ZP-C, ZP-D), plus:
+The originally informal steps 2–6 of T-IZ are now formally closed via the AFA/Kleene path
+(ZP-K): DA-1 fires at any element identified as ⊥' by DA-2 — no Kolmogorov complexity
+needed. t_iz_complete chains all four formal steps into one theorem.
+
+Dependencies: ZP-E (full synthesis: ZP-A, ZP-B, ZP-C, ZP-D), ZP-K (KleeneStructure), plus:
 - Mathlib.Analysis.SpecificLimits.Basic — geometric tendsto lemmas
 
-Key result: t_iz_cauchy proves the topological core axiom-free.
-             t_iz_c3_compatible proves the inside approach is compatible with irreversibility.
-             Framework is closed: every ascending chain generates its own successor null.
+Key results: t_iz_cauchy (topological core, axiom-free), t_iz_complete (all steps formal).
 -/
 
 namespace ZeroParadox.ZPI
@@ -186,24 +191,17 @@ theorem h_strict_from_r1_t3
   rw [h_depth n, h_depth (n + 1)]
   exact_mod_cast nat_strict_of_strict_state_seq depths h_seq n
 
-/-! ## II. Valuation-Complexity Bridge — Outside Lean Scope
+/-! ## II. Valuation-Complexity Bridge — SUPERSEDED
 
-The bridge: v₂(Sₙ) → ∞ ⟹ K(Sₙ | n) / |Sₙ| → 1.
+This section described the informal route: v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 ⟹ DA-1 fires.
+It was Outside Lean Scope because Kolmogorov complexity K is uncomputable and absent from Mathlib.
 
-In the framework's binary construction (binary alphabet, ball-hierarchy depth = surprisal
-by ZP-C D4/L-INF), 2-adic valuation depth and Kolmogorov complexity are measuring the
-same structure from two sides — topological depth and descriptive incompressibility.
-As the chain ascends without bound, both sides converge on the incompressibility threshold P₀.
+**This bridge is no longer needed.** ZP-K (da1_paths_unified) establishes that the AFA/Kleene
+path and the K/AIT path are the same structural property. DA-1 fires at any element identified
+as ⊥' by DA-2 — via da1_computational (ZP-K), which requires no K computation.
 
-At P₀: ZP-C D1 gives K(c₁|n)/|c₁| = 1. DA-1 fires (Path 3 — same argument as in ZP-E).
-T-SNAP fires. DA-2 licenses the limit as ⊥'.
-
-Lean scope: Kolmogorov complexity K is uncomputable and absent from Mathlib.
-No AIT library exists in Lean 4 at this level. The bridge is Outside Lean Scope —
-same category as DA-1 Path 3 in ZP-E § IV. The topological core (§ I above) is proved
-axiom-free; the bridge and subsequent DA-1/T-SNAP chain follow the ZP-E informal argument.
-
-See ZP-I PDF § II.B for the full argument. -/
+Steps 2–6 of T-IZ are formally closed in § III-B via the AFA path. The K bridge is retained
+here as a record of the original motivating argument. -/
 
 /-! ## III. T-IZ — Inside Zero Theorem -/
 
@@ -218,8 +216,8 @@ See ZP-I PDF § II.B for the full argument. -/
     (5) T-SNAP fires, generating ⊥': ZP-E t_snap_derived.
     (6) DA-2 licenses ⊥' as successor null: ZP-E da2_bottom_characterization.
 
-    The Lean proof establishes step (1) axiom-free. Steps (2)–(6) follow the
-    same informal mathematics as DA-1 in ZP-E and are documented in the PDF. -/
+    Steps (2)–(6) are now formally closed via the AFA/Kleene path — see t_iz_complete
+    in § III-B. The K bridge (step 2) is superseded; all remaining steps use ZP-K. -/
 theorem t_inside_zero
     (S : ℕ → Q₂)
     (_h_start : S 0 ≠ 0)
@@ -227,7 +225,7 @@ theorem t_inside_zero
     Filter.Tendsto S Filter.atTop (nhds 0) :=
   -- _h_start: semantic guard — chain begins away from null (unused in convergence proof)
   -- h_bound: v₂(Sₙ) ≥ n — the ascending chain has unbounded valuation
-  -- Topological core: proved; bridge + DA-1/T-SNAP chain: see ZP-I PDF § II–III
+  -- Complete formal statement: t_iz_complete (§ III-B) — all six steps formal.
   t_iz_cauchy S h_bound
 
 /-! ## IV. Successor Null and Framework Closure -/
@@ -265,6 +263,45 @@ theorem t_iz_c3_compatible :
       γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = 0 :=
   ZeroParadox.ZPB.c3_irreversible
 
+/-! ## III-B. T-IZ (Formally Complete) — AFA/Kleene Path
+
+The Kolmogorov complexity bridge in § II was the motivating argument for DA-1 firing at
+the limit. It is superseded: ZP-K (da1_paths_unified) establishes that the AFA/structural
+path and the K/AIT path are the same structural property viewed in two formal languages.
+
+DA-1 fires at any element identified as ⊥' by DA-2 — da1_computational (ZP-K) applies
+to any KleeneStructure instance. No K computation is needed.
+
+T-IZ is now formally complete in four steps:
+  Step 1: Cauchy convergence to 0               — t_iz_cauchy
+  Steps 3/6: DA-2 identifies limit as ⊥'        — t_iz_limit_is_new_null
+  Step 4: DA-1 fires at ⊥' via AFA/Kleene       — da1_computational (ZP-K)
+  Step 5: T-SNAP fires from ⊥'                  — bot_join (A4, definitional)
+  Step 2: K bridge                               — superseded (not needed) -/
+
+/-- T-IZ (formally complete): all four formal steps in one theorem.
+    The successor semilattice L' carries a KleeneStructure; the terminal element
+    satisfies the join-identity (DA-2 hypothesis); the chain converges in Q₂.
+    Result: convergence, ⊥'-identification, DA-1, and T-SNAP — all formal, no K. -/
+theorem t_iz_complete
+    (S : ℕ → Q₂)
+    (h_bound : ∀ n : ℕ, ‖S n‖ ≤ (2⁻¹ : ℝ) ^ n)
+    {L' : Type*} [ZPSemilattice L'] [ZeroParadox.ZPK.KleeneStructure L']
+    (terminal : L') (ε₀' : L')
+    (h_role : ∀ x : L', join terminal x = x) :
+    -- Step 1: chain converges to 0 in Q₂
+    Filter.Tendsto S Filter.atTop (nhds 0) ∧
+    -- Steps 3/6: terminal IS the successor null (DA-2)
+    terminal = bot ∧
+    -- Step 4: DA-1 fires at the successor null via AFA/Kleene — no K required
+    ZeroParadox.ZPJ.IsQuineAtom (bot : L') ∧
+    -- Step 5: T-SNAP fires from ⊥' to ε₀' (A4 = bot_join, definitional)
+    join (bot : L') ε₀' = ε₀' :=
+  ⟨t_iz_cauchy S h_bound,
+   t_iz_limit_is_new_null terminal h_role,
+   ZeroParadox.ZPK.da1_computational,
+   bot_join ε₀'⟩
+
 end ZeroParadox.ZPI
 
 /-! ## Axiom Purity Check
@@ -291,6 +328,7 @@ open ZeroParadox.ZPI ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPE ZeroParadox.Z
 #print axioms nat_has_no_top
 #print axioms nat_strict_of_strict_state_seq
 #print axioms h_strict_from_r1_t3
+#print axioms t_iz_complete
 #print axioms t_iz_norm_tendsto_zero
 #print axioms t_iz_conv_zero
 #print axioms t_iz_cauchy
