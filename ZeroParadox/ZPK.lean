@@ -79,9 +79,9 @@ theorem kleene_fixed_point_exists (f : Code → ℕ →. ℕ) (hf : Partrec₂ f
     A fixed point of selfApply is a code that computes its own behavior —
     the computational Quine atom, the code that IS its own program.
 
-    Note: the precise definition requires the Gödel numbering of Code into ℕ.
-    The placeholder below captures the intended type; the exact encoding is
-    filled once the numbering convention is fixed. -/
+    The Gödel numbering uses Mathlib's `Encodable.encode : Code → ℕ`, which gives
+    each code a canonical index. Running c on (encode c + n) is the standard
+    self-application construction; selfApply_partrec confirms this is computable. -/
 noncomputable def selfApply : Code → ℕ →. ℕ :=
   fun c n => eval c (Encodable.encode c + n)
 
