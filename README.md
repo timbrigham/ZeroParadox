@@ -5,33 +5,20 @@
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham)
 
+For plain-language introduction, illustrated companions, and reading paths, see [GUIDE.md](GUIDE.md).
+
 ---
 
 ## Contents
 
-- [What This Is](#what-this-is)
 - [The Central Result](#the-central-result)
-- [What This Is Not](#what-this-is-not)
 - [The Framework](#the-framework)
-  - [Entry Point](#entry-point)
   - [Formal Ontology Documents](#formal-ontology-documents)
-  - [Illustrated Companion Documents](#illustrated-companion-documents-general-reader)
-  - [Supporting Documents](#supporting-documents)
   - [Formal Verification (Lean 4)](#formal-verification-lean-4)
 - [Axiomatic Commitments](#axiomatic-commitments)
 - [Question Register](#question-register)
-- [Reading Order](#reading-order)
 - [Notes on Development](#notes-on-development)
 - [License](#license) · [Citation](#citation) · [Contact](#contact)
-
----
-
-## What This Is
-
-The Zero Paradox is a rigorous multi-framework mathematical ontology addressing a single question: can the emergence of state from a null condition be given a formally complete, cross-disciplinary account?
-
-The answer developed here is yes. The proof is distributed across eight self-contained mathematical layers, each internally closed before any cross-framework claim is made.
-
 
 ---
 
@@ -57,22 +44,7 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 
 ---
 
-## What This Is Not
-
-- **Not a physical theory** - the framework is instantiation-independent; physical theories are recovered by fixing ε₀
-- **Not a claim about consciousness or the hard problem** - the framework is silent on these questions
-- **Not a claim that zero is paradoxical in all of mathematics** - the paradox is local to this framework's structure
-- **Not a logical contradiction** - no theorem in ZP-A through ZP-D contradicts any other
-
----
-
 ## The Framework
-
-### Entry Point
-
-| File | Description |
-|------|-------------|
-| [Zero Paradox Foreword](Zero_Paradox_Foreword.pdf) | Plain-language introduction for any reader. Start here. |
 
 ### Formal Ontology Documents
 
@@ -88,32 +60,6 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 — th
 | [ZP-I Inside Zero](ZP-I_Inside_Zero_v1_5.pdf) | ZP-I | v1.5 | **T-IZ (Inside Zero):** every maximal ascending chain is a Cauchy sequence converging to its own successor null in Q2. **R-IZ-A closed (Lean, April 2026):** h_strict_from_r1_t3 derives strict valuation growth from IsDepthChain + IsStrictStateSequence — it is no longer a construction-level hypothesis. **t_iz_complete** chains all four formal T-IZ steps (Cauchy convergence, DA-2, DA-1 via Kleene, T-SNAP) in a single theorem with no K computation required. Valuation-complexity bridge superseded by AFA/Kleene path (ZP-K). OQ-E2 partially closed — ordinal indexing Omega = omega forced by countable binary substrate. Note: PDF v1.5 predates R-IZ-A closure; Section V "conditional on R-IZ-A" language is superseded by the Lean proof. |
 | [ZP-J Self-Reference](ZP-J_Self_Reference_v1_1.pdf) | ZP-J | v1.1 | **T-EXEC (Executability of Self-Reference):** in any ZP-A lattice with AFA grounding, the unique Quine atom Q = {Q} is provably the bottom element ⊥. CC-1 (S₀ = ⊥) derived as theorem (cc1_derived, axiom-free). CC-2 (⊥ = {⊥}) structurally forced. Three-way equivalence: Quine atom = ⊥ = join-identity element. All theorems verified axiom-free in Lean 4. v1.1: Remark R-J.0 added — bot_self_mem := rfl in MachinePhase is a structural analogy (CIC encoding), not a ZF+AFA set-theoretic derivation; AFAStructure concrete instances item CLOSED (ZP-K machinePhaseAFA). |
 | [ZP-K Computational Grounding](ZP-K_Computational_Grounding_v1_3.pdf) | ZP-K | v1.3 | **T-COMP (Computational Grounding):** (1)-(3) equivalent by T-EXEC (Quine atom = ⊥ = join identity); (4) Kleene fixed point combined by KleeneStructure typeclass requirement. KleeneStructure typeclass bridges AFAStructure to computability. MachinePhase instances: machinePhaseAFA + machinePhaseKleene. **DA-1 closed concretely:** da1_closed_concrete : IsQuineAtom(⊥ : MachinePhase). selfApply_partrec proved via Kleene's second recursion theorem. v1.3: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. v1.2: DA-1 Path 2 recharacterized — foundational commitment, not missing proof; Open Items Register updated from OPEN to FOUNDATIONAL COMMITMENT. v1.1: Remark R-K.0 added — four-way equivalence clarified. |
-
-### Illustrated Companion Documents (General Reader)
-
-One companion per formal document. Plain language, diagrams, real-world examples.
-
-> **Note (April 2026):** The companion documents are currently behind the formal layers. The formal documents (ZP-A through ZP-H) have undergone significant structural revisions - including the addition of DA-1's Lean formalization (DP-2, ZP-E v3.0), the ZF+AFA foundation note (ZP-A v1.7), and Lean scope clarifications in ZP-G and ZP-H. Companion updates are in progress. Until then, treat the companions as introductions to the framework's structure rather than authoritative statements of current result labels or claim statuses.
-
-| File | For Document | Key Diagrams |
-|------|-------------|--------------|
-| [ZP-A Illustrated Companion](ZP-A_Illustrated_Companion.pdf) | ZP-A | Hasse diagram, one-directional transitions |
-| [ZP-B Illustrated Companion](ZP-B_Illustrated_Companion.pdf) | ZP-B | Nested clopen balls, disjoint ball separation |
-| [ZP-C Illustrated Companion](ZP-C_Illustrated_Companion.pdf) | ZP-C | Surprisal field singularity, 1-bit Snap cost, L-RUN execution trace |
-| [ZP-D Illustrated Companion](ZP-D_Illustrated_Companion.pdf) | ZP-D | T map: topology → orthogonality |
-| [ZP-E Illustrated Companion](ZP-E_Illustrated_Companion.pdf) | ZP-E | Four-framework convergence, T-SNAP derivation chain |
-| [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
-| [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across all frameworks |
-| [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |
-| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J | Quine atom diagram (⊥ = {⊥}), three-way equivalence table, CC-1/CC-2 as derived theorems |
-| [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Four-way equivalence diagram, computational Quine, DA-1 formal closure |
-
-### Supporting Documents
-
-| File | Description |
-|------|-------------|
-| [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The question that motivated the entire framework - why does something exist rather than nothing? - and what the mathematics discovered about it, including what it dissolves and what it snaps. |
-| [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 
 ### Formal Verification (Lean 4)
 
@@ -184,21 +130,9 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 ---
 
-## Reading Order
-
-**General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents-general-reader) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
-
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_11.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_4.pdf) → [ZP-C](ZP-C_Information_Theory_v1_9.pdf) → [ZP-D](ZP-D_State_Layer_v1_6.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_10.pdf) → [ZP-J](ZP-J_Self_Reference_v1_1.pdf) → [ZP-K](ZP-K_Computational_Grounding_v1_3.pdf) → [ZP-I](ZP-I_Inside_Zero_v1_5.pdf) (framework closure)
-
-**For the category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_5.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_7.pdf) (self-contained; after ZP-E)
-
-**For process/methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
-
----
-
 ## Notes on Development
 
-This framework was developed by a human researcher in collaboration with Claude (Anthropic, April 2026). Claude served as research assistant, formal scribe, and gap identifier. All mathematical content and theoretical direction originated with the researcher. See `ZP_Tools_and_Methods.pdf` for a complete account.
+This framework was developed by a human researcher in collaboration with Claude (Anthropic, April 2026). Claude served as research assistant, formal scribe, and gap identifier. All mathematical content and theoretical direction originated with the researcher. See [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) for a complete account.
 
 The PDF build tooling is publicly available in the [`scripts/`](scripts/) folder. Those scripts were generated by Claude and are included for transparency about how the documents were produced.
 
