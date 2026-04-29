@@ -43,7 +43,7 @@ Each file contains a `section PurityCheck ... end PurityCheck` block with `#prin
 
 The framework is explicit about what is and is not Lean-verified. Two boundaries are worth noting upfront:
 
-**ZPG.lean T6-b/c** — The Lean proofs for T6-b (strict surprisal inequality) and T6-c (subadditivity along chains) verify only `Nat.zero_le _` (non-negativity by type). The mathematical content — which requires Kolmogorov complexity results not yet in Mathlib — is **not** Lean-verified. This is stated explicitly in the file's inline scope note and in the PDF validation table.
+**ZPG.lean T6-b/c** — The Lean proofs for T6-b (strict surprisal inequality) and T6-c (subadditivity along chains) verify only `Nat.zero_le _` (non-negativity by type). The K-specific content — strict inequality and subadditivity of Kolmogorov complexity — is outside Lean scope and explicitly noted as such in the file's inline scope note. Importantly, T6-b/c are **not load-bearing for any subsequent formal result**. The load-bearing singularity claim — that surprisal diverges along sequences approaching ⊥ — is separately proved in `ZPC.t2_diverges` using Q₂'s specific structure, without K.
 
 **ZPE.lean / ZPC.lean — DA-1 Path 2** — L-INF formally proves that surprisal is unbounded at ⊥. The inference from unbounded surprisal to "necessarily executing" is an ontological bridge claim, not a mathematical consequence of L-INF alone. ZPC.lean's L-INF docstring states this explicitly: "L-INF supplies the formal premise; DA-1 supplies the ontological bridge." DA-1 is formally closed through independent paths (AFA/self-containment and Kleene fixed point) in ZPK.lean.
 
