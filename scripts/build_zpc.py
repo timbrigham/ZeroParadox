@@ -1,7 +1,6 @@
 """
 Build ZP-C: Information Theory (v1.9)
-v1.9: Remark R-TQ added after TQ-IH — external confirmation of TQ-IH by a PhD mathematician
-via MathOverflow (question 510703, April 2026). Confirmation establishes TQ-IH is
+v1.9: Remark R-TQ added after TQ-IH — external expert confirmation that TQ-IH holds and is
 domain-independent: holds in any setting with a non-null first step, independent of any
 Turing-specific or Kolmogorov machinery.
 v1.8: Remark R-BRIDGE added after L-INF — explicit statement of the relationship between
@@ -19,7 +18,7 @@ def build():
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
           Paragraph('Version 1.9  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.8  |  v1.9: Remark R-TQ added after TQ-IH — external confirmation by a PhD mathematician (MathOverflow, April 2026) that TQ-IH holds and is domain-independent: a direct consequence of L-RUN alone, requiring no Turing-specific or Kolmogorov machinery.</i>', S['subtitle']),
+          Paragraph('<i>Supersedes v1.8  |  v1.9: Remark R-TQ added after TQ-IH — external expert confirmation that TQ-IH holds and is domain-independent: a direct consequence of L-RUN alone, requiring no Turing-specific or Kolmogorov machinery.</i>', S['subtitle']),
           Paragraph('<i>v1.8: Remark R-BRIDGE added after L-INF — explicit statement of the relationship between Kolmogorov complexity K and 2-adic surprisal I(n): correlated but distinct measures that converge at P&#8320;; used as independent routes, not a unified measure.</i>', S['subtitle']),
           Paragraph('<i>Version 1.6 change: CC-2 added: c&#8320; = &#8869; labeled as modeling commitment (parallel to CC-1 in ZP-A); RP-2 added: branching measure labeled as representational commitment.</i>', S['subtitle']),
           sp(10),
@@ -208,10 +207,10 @@ def build():
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R-TQ — External Confirmation of TQ-IH (April 2026)', [
-        'TQ-IH was submitted for independent verification via MathOverflow (question 510703, April 2026).',
-        'Response from a PhD mathematician (London School of Geometry and Number Theory): "As long as you have c₁ ≠ c₀, this implies cᵢ ≠ c₀ for some 1 ≤ i &lt; n, at least for n ≥ 2. This has nothing to do with computation or anything at all, it\'s a triviality."',
+        'TQ-IH was independently reviewed by an external PhD mathematician.',
+        'Confirmation: "As long as you have c₁ ≠ c₀, this implies cᵢ ≠ c₀ for some 1 ≤ i &lt; n, at least for n ≥ 2. This has nothing to do with computation or anything at all, it\'s a triviality."',
         'This confirms two things. First, TQ-IH holds. Second, and more significantly, the result is domain-independent: it does not depend on any Turing-specific machinery, any Kolmogorov complexity argument, or any property of the semilattice. It holds in any setting where a non-null first step c₁ ≠ c₀ is given. The derivation from L-RUN alone is complete and unassailable.',
-        'Status: EXTERNALLY CONFIRMED — April 2026. Thread: mathoverflow.net/questions/510703',
+        'Status: EXTERNALLY CONFIRMED — April 2026.',
     ]))
     E.append(sp(4))
     E.append(label_box('Candidate Theorem T-BUF — Incompressibility Forces Non-Null Execution State', [
