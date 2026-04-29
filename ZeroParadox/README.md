@@ -1,5 +1,7 @@
 # Zero Paradox — Lean 4 Source
 
+[![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
+
 Lean 4 + Mathlib proofs for the Zero Paradox framework. The central result is **T-SNAP** (Binary Snap: `join c₀ c₁ = c₁`), derived from standard join-semilattice axioms. For full project context see [README.md](../README.md) at the repository root.
 
 ## Build
