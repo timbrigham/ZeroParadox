@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.4, revised April 2026)
+Zero Paradox — Foreword PDF Builder (v1.5, revised April 2026)
+v1.5: Layer count updated throughout — framework now has ten formal layers (ZP-J, ZP-K added).
 v1.4: Metatheoretic note (ZF+AFA) added in Section III before the commitments table.
 v1.3: Fix ∅ rendering — was showing as a rectangle in DejaVuSerif; now forced through DV (DejaVuSans) via <font> tag.
 Follows all rules in pdf rendering standards.md:
@@ -230,7 +231,7 @@ def build_foreword(out_path):
             'This is true, and it is not in conflict with ZP\'s thesis. '
             'The question ZP is asking is how minimal the framework needs to be before ⊥ '
             'still has non-trivial properties. '
-            'The answer, across eight independent layers, is: very minimal. That is the surprise.',
+            'The answer, across ten independent layers, is: very minimal. That is the surprise.',
             S['body']),
     ]
 
@@ -238,7 +239,7 @@ def build_foreword(out_path):
     story += [
         Paragraph('II. THE ARCHITECTURE', S['h1']),
         Paragraph(
-            'The framework is built in eight layers, each self-contained within its own '
+            'The framework is built in ten layers, each self-contained within its own '
             'mathematical discipline, each contributing one dimension of the full picture. '
             'No layer is allowed to borrow from another until that other is internally closed.',
             S['body']),
@@ -291,7 +292,7 @@ def build_foreword(out_path):
             'F<sub>C</sub>: C → InfoSp (information theory), and '
             'F<sub>D</sub>: C → Hilb (Hilbert space). '
             'Each functor preserves the initial object and the singularity structure, '
-            'proving that all eight layers are consistent accounts of the same foundational fact.',
+            'proving that all ten layers are consistent accounts of the same foundational fact.',
             S['body']),
         Paragraph(
             'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem: every '
@@ -366,9 +367,10 @@ def build_foreword(out_path):
             'informational content.',
             S['body']),
         Paragraph(
-            'The framework lives at that boundary intentionally. The eight layers — '
-            'algebra, topology, information theory, Hilbert space, bridge, category theory, '
-            'categorical bridge, and closure — each arrive independently at the same boundary '
+            'The framework lives at that boundary intentionally. The ten layers — '
+            'algebra, topology, information theory, Hilbert space, bridge, self-reference, '
+            'computational grounding, category theory, categorical bridge, and closure — '
+            'each arrive independently at the same boundary '
             'from their own direction. That convergence is the framework\'s central result.',
             S['body']),
     ]

@@ -87,7 +87,10 @@ theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
    This is the same category as DA-1 Path 3 (AIT bridge) in ZPE.lean §VI: the
    K-specific content is mathematically sound and drives the PDF derivation, but
    requires a full K-formalization to verify in Lean. The I-KC import marks this
-   boundary: structural implications are Lean-verified; AIT content is not. -/
+   boundary: structural implications are Lean-verified; AIT content is not.
+   T6-b/c are not load-bearing for any subsequent formal result. The load-bearing
+   singularity claim — that surprisal diverges along sequences approaching ⊥ — is
+   separately proved in ZPC.t2_diverges using Q₂'s specific structure, without K. -/
 
 /-- T6-a — Surprisal of Identity is Zero.
     I(id_A) = K(x_A | x_A) = 0 (up to c): the empty program reproduces x_A given x_A.

@@ -383,8 +383,9 @@ def build():
         'The Zero Paradox is a human-originated mathematical framework, developed through '
         'iterative collaboration with an AI research assistant, documented in a rigorous '
         'ontology format, rendered as publication-quality PDFs using open-source Python '
-        'tooling, and formally verified in Lean 4 + Mathlib. All seven layers (ZP-A through '
-        'ZP-H) build clean. Proofs are machine-checked.',
+        'tooling, and formally verified in Lean 4 + Mathlib. All ten formal layers '
+        '(ZP-A, ZP-B, ZP-C, ZP-D, ZP-E, ZP-G, ZP-H, ZP-I, ZP-J, ZP-K) build clean. '
+        'Proofs are machine-checked.',
         bg=GREEN, hdr_bg=GREEN))
 
     print(f'Building: {out_path}')
