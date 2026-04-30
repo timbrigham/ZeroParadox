@@ -285,7 +285,8 @@ noncomputable instance nnrealZPCategory : ZPCategory NNReal where
       F_D: th1_fd (T4 — orthogonal snap shift in Hilb)
     This is one concrete witness, not three independent verifications. The domain facts above
     are proved separately; this definition establishes only the shared categorical structure.
-    Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work (OQ-G3). -/
+    Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work
+    (OQ-G3). -/
 noncomputable def nnreal_initial_grounding : IsInitial (0 : NNReal) :=
   nnrealZPCategory.zpIsInitial
 
@@ -336,7 +337,7 @@ instance : Zero Q₂BallDepth := ⟨⟨0⟩⟩
     Descending to a deeper ball (smaller radius, closer to 0) is the forward direction. -/
 instance q2BallCat : Category Q₂BallDepth where
   Hom n m     := ULift (PLift (n.val ≤ m.val))
-  id  n       := ⟨⟨Nat.le_refl _⟩⟩
+  id  _       := ⟨⟨Nat.le_refl _⟩⟩
   comp f g    := ⟨⟨Nat.le_trans f.down.down g.down.down⟩⟩
   id_comp _   := Subsingleton.elim _ _
   comp_id _   := Subsingleton.elim _ _
