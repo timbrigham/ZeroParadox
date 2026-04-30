@@ -22,14 +22,25 @@ namespace ZeroParadox.ZPC
 
 /-! ## Setup: Binary States (AX-B1) -/
 
-/-- The two ontological states from AX-B1: 0 = non-existence, 1 = existence. -/
-abbrev BinaryState := Fin 2
+/-- The two ontological states: non-existence (⊥) and existence.
+    A free inductive type — no natural-number dependency. -/
+inductive BinaryState where
+  | null  : BinaryState
+  | exist : BinaryState
+  deriving DecidableEq, Fintype
 
-/-- Null State: 0 ∈ BinaryState (non-existence, ⊥). -/
-def nullSt : BinaryState := 0
+/-- Null State: non-existence, ⊥. -/
+def nullSt : BinaryState := .null
 
-/-- First Atomic State: 1 ∈ BinaryState (existence). -/
-def firstSt : BinaryState := 1
+/-- First Atomic State: existence. -/
+def firstSt : BinaryState := .exist
+
+/-- Unfold finite sums over BinaryState (replaces Fin.sum_univ_two). -/
+@[simp] theorem BinaryState.sum_univ {M : Type*} [AddCommMonoid M] (f : BinaryState → M) :
+    ∑ i : BinaryState, f i = f .null + f .exist := by
+  rw [show (Finset.univ : Finset BinaryState) = {.null, .exist} from by decide]
+  rw [Finset.sum_insert (by decide : BinaryState.null ∉ ({.exist} : Finset BinaryState))]
+  simp
 
 /-! ## Section II: State Representations and JSD -/
 
@@ -66,13 +77,11 @@ noncomputable def klDiv (p q : BinaryState → ℝ) : ℝ :=
 
 /-- T1b: KL(P ‖ M) = log 2. -/
 theorem t1b_kl_P : klDiv P_real mixtureM = Real.log 2 := by
-  simp only [klDiv, Fin.sum_univ_two, P_real, mixtureM, nullSt]
-  norm_num
+  simp [klDiv, P_real, mixtureM, nullSt]
 
 /-- T1b: KL(Q ‖ M) = log 2. -/
 theorem t1b_kl_Q : klDiv Q_real mixtureM = Real.log 2 := by
-  simp only [klDiv, Fin.sum_univ_two, Q_real, mixtureM, firstSt]
-  norm_num
+  simp [klDiv, Q_real, mixtureM, firstSt]
 
 /-- JSD(P, Q) = (1/2)·KL(P ‖ M) + (1/2)·KL(Q ‖ M). -/
 noncomputable def jsdPQ : ℝ :=
