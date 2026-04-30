@@ -191,7 +191,17 @@ theorem t5_totallyDisconnected : TotallyDisconnectedSpace Q₂ := inferInstance
 
 No continuous path γ: [0,1] → Q₂ can go from any x ≠ 0 back to 0.
 Proof: γ([0,1]) is a continuous image of the connected set [0,1] in the totally
-disconnected Q₂, hence a singleton; so γ(0) = γ(1), contradicting x ≠ 0. -/
+disconnected Q₂, hence a singleton; so γ(0) = γ(1), contradicting x ≠ 0.
+
+Note on the role of `(0 : Q₂)`: unlike the `OntologicalStates` refactor (where
+`Fin 2` was replaced by a free inductive because ⊥ = ℕ's 0 was a purely
+conventional label), the use of `0 : Q₂` here is structurally motivated and
+deliberately retained. Q₂'s additive identity is the **unique limit point** of
+the nested clopen ball hierarchy B(0, 2⁻ⁿ) ↘ {0}: no other point in Q₂ sits at
+the base of an infinite convergent nesting of clopen sets. This is what gives C3
+its content — the irreversibility is a theorem of Q₂'s ultrametric geometry, not
+a labelling convention. The identification ⊥ ↦ (0 : Q₂) is warranted by that
+metric structure (T2, T5), not by 0 being the first natural number. -/
 
 /-- C3: There is no continuous path from x ≠ 0 to 0 in Q₂. -/
 theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
