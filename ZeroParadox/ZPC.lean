@@ -162,7 +162,7 @@ theorem t2_diverges : ∀ M : ℝ, ∃ n : ℕ, M < circPartial n := by
 theorem l_inf : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n := by
   intro M
   obtain ⟨n, hn⟩ := exists_nat_gt M
-  exact ⟨n, by simp [surprisal]; exact_mod_cast hn⟩
+  exact ⟨n, by simp only [surprisal]; exact_mod_cast hn⟩
 
 /-! ## Section IV: The Hardware Lemma (L-RUN) -/
 
