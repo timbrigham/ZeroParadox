@@ -26,20 +26,25 @@ notation "Q₂" => (ℚ_[2] : Type)
 
 /-! ## AX-B1 — Binary Existence
 
-The foundational distinction is binary: a state either exists (1) or does not (0).
-Modelled as Fin 2. Status: DERIVED — follows from decidable equality on Fin 2,
-which requires no classical axioms beyond propext. Not a novel commitment of this framework. -/
+The foundational distinction is binary: a state either exists or does not.
+Modelled as a free two-constructor inductive type with no natural-number dependency.
+AX-B1 is a modelling commitment (the choice of binary structure); distinctness of
+the two states is then verified by decidable equality, requiring no classical axioms. -/
 
-abbrev OntologicalStates := Fin 2
+/-- The two ontological states: non-existence (⊥ in ZP-A) and existence. -/
+inductive OntologicalStates where
+  | null  : OntologicalStates
+  | exist : OntologicalStates
+  deriving DecidableEq, Fintype
 
-/-- 0 ∈ OntologicalStates: non-existence (the Null State, ⊥ in ZP-A). -/
-def nullState : OntologicalStates := 0
+/-- The Null State: non-existence, ⊥ in ZP-A. -/
+def nullState : OntologicalStates := .null
 
-/-- 1 ∈ OntologicalStates: existence (the First Atomic State). -/
-def firstAtomicState : OntologicalStates := 1
+/-- The First Atomic State: existence. -/
+def firstAtomicState : OntologicalStates := .exist
 
-/-- AX-B1: null and first atomic states are distinct. Proved by decidable equality on Fin 2 —
-    no classical axioms required. -/
+/-- AX-B1: null and first atomic states are distinct.
+    Proved by decidable equality — no classical axioms required. -/
 theorem ax_b1_distinct : nullState ≠ firstAtomicState := by decide
 
 /-! ## Theorem T0 — p = 2 is the Unique Minimum Sufficient Base
@@ -54,10 +59,11 @@ theorem t0_no_prime_below_two (p : ℕ) (hp : Nat.Prime p) : 2 ≤ p := hp.two_l
 /-- 2 is prime — the minimum prime encoding the binary distinction of AX-B1. -/
 theorem t0_two_is_prime : Nat.Prime 2 := by decide
 
-/-- Any prime p > 2 has p coefficient values; the extras beyond {0,1} violate MP-1. -/
+/-- Any prime p > 2 has p coefficient values; extras beyond the binary distinction violate MP-1. -/
 theorem t0_redundancy (p : ℕ) (_hp : Nat.Prime p) (hgt : 2 < p) :
-    Fintype.card (Fin 2) < Fintype.card (Fin p) := by
-  simp [hgt]
+    Fintype.card OntologicalStates < Fintype.card (Fin p) := by
+  have hcard : Fintype.card OntologicalStates = 2 := by decide
+  simp [hcard, hgt]
 
 /-! ## Why Q₂ Rather Than a Discrete Two-Point Space
 
@@ -185,7 +191,17 @@ theorem t5_totallyDisconnected : TotallyDisconnectedSpace Q₂ := inferInstance
 
 No continuous path γ: [0,1] → Q₂ can go from any x ≠ 0 back to 0.
 Proof: γ([0,1]) is a continuous image of the connected set [0,1] in the totally
-disconnected Q₂, hence a singleton; so γ(0) = γ(1), contradicting x ≠ 0. -/
+disconnected Q₂, hence a singleton; so γ(0) = γ(1), contradicting x ≠ 0.
+
+Note on the role of `(0 : Q₂)`: unlike the `OntologicalStates` refactor (where
+`Fin 2` was replaced by a free inductive because ⊥ = ℕ's 0 was a purely
+conventional label), the use of `0 : Q₂` here is structurally motivated and
+deliberately retained. Q₂'s additive identity is the **unique limit point** of
+the nested clopen ball hierarchy B(0, 2⁻ⁿ) ↘ {0}: no other point in Q₂ sits at
+the base of an infinite convergent nesting of clopen sets. This is what gives C3
+its content — the irreversibility is a theorem of Q₂'s ultrametric geometry, not
+a labelling convention. The identification ⊥ ↦ (0 : Q₂) is warranted by that
+metric structure (T2, T5), not by 0 being the first natural number. -/
 
 /-- C3: There is no continuous path from x ≠ 0 to 0 in Q₂. -/
 theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :

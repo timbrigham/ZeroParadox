@@ -19,8 +19,8 @@ Clean build: zero errors, zero warnings across all files. Some files set `maxHea
 | File | Key result | Depends on |
 |------|------------|------------|
 | `ZPA.lean` | `ZPSemilattice` typeclass (A1–A4); partial order (T1); ⊥ minimum (T2); monotonicity (T3) | — |
-| `ZPB.lean` | `Q₂BallDepth`; AX-B1 (binary decidability); ultrametric (T1); clopen balls (T2); topological irreversibility (C3) | ZPA |
-| `ZPC.lean` | `DiscreteStateSpace`; L-RUN (execution is non-null); TQ-IH (no program avoids non-null state); L-INF (informational extremity at ⊥) | ZPA, ZPB |
+| `ZPB.lean` | `OntologicalStates` free inductive (AX-B1 — modelling commitment, not derived); ultrametric (T1); clopen balls (T2); topological irreversibility (C3) | ZPA |
+| `ZPC.lean` | `BinaryState` free inductive; `MachinePhase`; L-RUN (execution is non-null); TQ-IH (no program avoids non-null state); L-INF (informational extremity at ⊥) | ZPA, ZPB |
 | `ZPD.lean` | `TransitionMap`; transition operator T: Q₂ → ℂⁿ; orthogonal snap shift (T4); non-decreasing norms (T5) | ZPA, ZPB |
 | `ZPE.lean` | `MachinePhase` ZPSemilattice instance; **T-SNAP** (`join c₀ c₁ = c₁`); DA-2 (successor null); `da1_minimal_path` (axiom-free) | ZPA–ZPD |
 | `ZPJ.lean` | `AFAStructure` typeclass; **T-EXEC** (Quine atom = ⊥, axiom-free); `cc1_derived` (CC-1 as theorem); three-way equivalence: Quine atom = ⊥ = join-identity | ZPA |

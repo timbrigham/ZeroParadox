@@ -52,6 +52,17 @@ theorem dp1_orthogonality (n : ℕ) (i j : Fin n) (h : i ≠ j) :
 noncomputable def transitionOp (n : ℕ) : Fin n → StateSpace n :=
   basisVec n
 
+/-! ### Note on Fin n Indexing
+
+`Fin n` is used as the standard dimension index for `EuclideanSpace`, not as an
+ontological identification of ⊥ with the natural number 0. Labelling index 0 as
+"null" and index 1 as "ε₀" is a naming convention — the structural content lives
+in the orthogonality relation (DP-1) and unitary equivalence (T3), not in the
+numeric values of the indices. This was considered alongside the ZP-B/ZP-C
+`OntologicalStates` refactor and deliberately retained: T2(iii) (injectivity) and
+T3 (unitary equivalence) guarantee the construction is labelling-agnostic, so a
+custom index type would add no structural benefit here. -/
+
 /-! ### T2 — Existence of T: All Five D2 Requirements -/
 
 /-- T2(i): T maps the null index (representing 0 ∈ Q₂) to e₀. -/
