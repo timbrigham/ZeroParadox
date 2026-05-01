@@ -17,6 +17,8 @@ structure. The one-directionness itself is precisely why you can't return to
 the initial state. Zero is simultaneously the universal source and the one
 thing you can never get back to.
 
+---
+
 Formal verification of ZP-G v1.1 (Category Theory layer).
 Self-contained in category theory with one named import (I-KC, Kolmogorov complexity).
 

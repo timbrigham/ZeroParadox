@@ -19,6 +19,8 @@ like a step function. You're in or you're out. There's a hard gap between the
 two sides and no way to approach the boundary from either direction. C3 follows
 from the totally disconnected structure of Q₂.
 
+---
+
 Formalizes the Zero Paradox p-adic framework over Q₂ (the 2-adic rationals).
 Proves: ultrametric T1, clopen balls T2, topological isolation T3,
 total disconnectedness T5, and irreversibility of the Snap C3.

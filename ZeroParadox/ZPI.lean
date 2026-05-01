@@ -16,6 +16,8 @@ reaching that limit has occurred, you are transitioning to the next bottom, alon
 the next axis. Bottom n goes to bottom n+1, ad infinitum. T-IZ is the formal
 proof that this transition is not assumed. It is derived.
 
+---
+
 Theorem T-IZ: Every maximal ascending chain in the Zero Paradox framework is a
 Cauchy sequence that converges to its own successor null in the 2-adic metric.
 

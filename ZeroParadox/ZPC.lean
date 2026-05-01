@@ -26,6 +26,8 @@ configuration and when it's running. Crossing from the initial to the running is
 a state change in and of itself. It's a non-null value. You cannot execute
 without that crossing having occurred.
 
+---
+
 Formalizes the Zero Paradox information-theoretic framework over binary
 ontological states. Proves: T1 (unique state distributions), T1b (JSD = log 2),
 D5 (DF antisymmetry), T2 (non-conservative circulation), L-RUN (execution is

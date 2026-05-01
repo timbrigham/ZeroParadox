@@ -17,6 +17,8 @@ bootstrapping. There is no prior version to fall back on. ZPK extends this to
 the computational setting. The question of whether there are infinitely many
 such bottom elements across instantiations is addressed in ZPI.
 
+---
+
 Establishes T-EXEC: in any ZP-A lattice with AFA set-theoretic grounding, the
 unique Quine atom Q (satisfying Q = {Q} under AFA) is provably the bottom element
 ⊥ — deriving CC-1 from ZP-A rather than committing to it.

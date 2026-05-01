@@ -17,6 +17,8 @@ to it. At this level it looks like a modeling choice. It's not something the
 algebra forces here. Bottom is where we define the starting point to be. ZPJ
 derives it from structure.
 
+---
+
 Formalizes the Zero Paradox join-semilattice with bottom (L, ∨, ⊥).
 Axioms A1–A4, definitions D1–D3, and theorems T1–T3 are proved directly
 from the axioms. CC-1 is stated as a conditional claim.

@@ -20,6 +20,8 @@ equivalence. Being bottom, being the Quine atom, satisfying the join identity,
 and being a Kleene fixed point are all the same structural fact stated in four
 different formal languages. DA-1 Paths 1 and 3 were always naming the same thing.
 
+---
+
 Establishes the four-way equivalence between the structural roles of ⊥:
 
   (1) Quine atom       — set-theoretic self-reference (ZF + AFA)

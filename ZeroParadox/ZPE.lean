@@ -17,6 +17,8 @@ that it executed at one point in the past. DA-1, DA-2, and DA-3 need to be
 treated as forward references. These were not solved until a much later point.
 DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
+---
+
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
 - DA-1 (Instantiation as Execution): Paths 1 and 3 are now in Lean scope via ZP-K.

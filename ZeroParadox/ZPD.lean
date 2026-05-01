@@ -19,6 +19,8 @@ lands on orthogonal axes, they're going completely separate directions. The snap
 from null to ε₀ is the payoff. Before and after point in completely orthogonal
 directions inside H.
 
+---
+
 Formalizes the Zero Paradox Hilbert space state layer H = ℂⁿ and the
 transition operator T: Q₂ → H. Q₂'s clopen-ball partition is abstracted
 as `Fin n`, keeping this file self-contained within functional analysis
