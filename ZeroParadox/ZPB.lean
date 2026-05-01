@@ -8,6 +8,17 @@ import Mathlib.Tactic
 /-!
 # ZP-B: p-Adic Topology
 
+## Engineer's Take
+
+The states that we defined in ZPA either exist or they don't. There's no in
+between or half existing. This models that logic. In order to model a binary
+state two is the minimum number of states required. Anything else will
+eventually reduce down to one of the two. The transitive relationship for
+closeness doesn't degrade because of the triangle inequality. The balls behave
+like a step function. You're in or you're out. There's a hard gap between the
+two sides and no way to approach the boundary from either direction. C3 follows
+from the totally disconnected structure of Q₂.
+
 Formalizes the Zero Paradox p-adic framework over Q₂ (the 2-adic rationals).
 Proves: ultrametric T1, clopen balls T2, topological isolation T3,
 total disconnectedness T5, and irreversibility of the Snap C3.

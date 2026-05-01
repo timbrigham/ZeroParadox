@@ -8,6 +8,24 @@ import Mathlib.Tactic
 /-!
 # ZP-C: Information Theory
 
+## Engineer's Take
+
+ZPC doesn't build on ZPA or ZPB. It just follows the same conceptual ground.
+Each state can be represented by a distribution of probability. All probability
+exists either on null or all on the first state, where all mass exists. We're
+then looking at the way that the distribution between the two of them lays out
+mathematically. Specifically, this comes back to log two or exactly one bit,
+which is the information distance between existence and nonexistence. The deeper
+that you go requires more information. Just like you would in computer
+programming. You need n bits to describe your position if you're n steps away.
+The null state is the limit in the hierarchy. Basically infinite depth. The
+surprisal isn't finite. You cannot describe it with any fixed number of bits.
+There's no finite external description. No limited number of entries covers an
+infinite value. L-RUN and TQ-IH look at this like a machine. An initial
+configuration and when it's running. Crossing from the initial to the running is
+a state change in and of itself. It's a non-null value. You cannot execute
+without that crossing having occurred.
+
 Formalizes the Zero Paradox information-theoretic framework over binary
 ontological states. Proves: T1 (unique state distributions), T1b (JSD = log 2),
 D5 (DF antisymmetry), T2 (non-conservative circulation), L-RUN (execution is

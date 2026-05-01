@@ -3,6 +3,20 @@ import Mathlib.Tactic
 /-!
 # ZP-A: Lattice Algebra
 
+## Engineer's Take
+
+When you join bottom to itself, it doesn't change. Anytime you join zero to
+something above it, it likewise doesn't change. Joining anything to itself
+returns you back to the same thing. You get the partial order from A1, A2,
+and A3, which we can leverage later. Bottom isn't algebraic zero. It's the
+bottom of a series of actions, the null state, where nothing has occurred yet.
+D2 says that states always have to grow. If you take the null action you stay
+where you are. Any other action moves you forward. Bottom is literally the
+bottom value. Start at null, take any non-null action, and you cannot get back
+to it. At this level it looks like a modeling choice. It's not something the
+algebra forces here. Bottom is where we define the starting point to be. ZPJ
+derives it from structure.
+
 Formalizes the Zero Paradox join-semilattice with bottom (L, ∨, ⊥).
 Axioms A1–A4, definitions D1–D3, and theorems T1–T3 are proved directly
 from the axioms. CC-1 is stated as a conditional claim.

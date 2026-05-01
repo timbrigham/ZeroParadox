@@ -4,6 +4,19 @@ import Mathlib.Tactic
 /-!
 # ZP-J: Executability of Self-Reference
 
+## Engineer's Take
+
+Bottom is self-containing. It is the only element inside of Q. Quine uniqueness
+means there can only be one such element, and it is bottom. There is nothing
+outside of bottom because bottom is the starting point. There is no prior state.
+If bottom is going to do anything, the only thing that can do it is itself.
+Self-contained plus forced execution means bottom is effectively its own program.
+Much like a bootstrapping C compiler. The language could expand to future states,
+but at some point it needed to understand enough about itself to perform the
+bootstrapping. There is no prior version to fall back on. ZPK extends this to
+the computational setting. The question of whether there are infinitely many
+such bottom elements across instantiations is addressed in ZPI.
+
 Establishes T-EXEC: in any ZP-A lattice with AFA set-theoretic grounding, the
 unique Quine atom Q (satisfying Q = {Q} under AFA) is provably the bottom element
 ⊥ — deriving CC-1 from ZP-A rather than committing to it.
