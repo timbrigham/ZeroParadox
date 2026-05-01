@@ -19,6 +19,8 @@ such bottom elements across instantiations is addressed in ZPI.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Establishes T-EXEC: in any ZP-A lattice with AFA set-theoretic grounding, the
 unique Quine atom Q (satisfying Q = {Q} under AFA) is provably the bottom element
 ⊥ — deriving CC-1 from ZP-A rather than committing to it.

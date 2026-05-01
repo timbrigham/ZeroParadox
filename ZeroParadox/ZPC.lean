@@ -28,6 +28,8 @@ without that crossing having occurred.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Formalizes the Zero Paradox information-theoretic framework over binary
 ontological states. Proves: T1 (unique state distributions), T1b (JSD = log 2),
 D5 (DF antisymmetry), T2 (non-conservative circulation), L-RUN (execution is

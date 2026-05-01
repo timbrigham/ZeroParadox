@@ -21,6 +21,8 @@ directions inside H.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Formalizes the Zero Paradox Hilbert space state layer H = ℂⁿ and the
 transition operator T: Q₂ → H. Q₂'s clopen-ball partition is abstracted
 as `Fin n`, keeping this file self-contained within functional analysis

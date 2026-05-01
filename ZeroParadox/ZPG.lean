@@ -19,6 +19,8 @@ thing you can never get back to.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Formal verification of ZP-G v1.1 (Category Theory layer).
 Self-contained in category theory with one named import (I-KC, Kolmogorov complexity).
 

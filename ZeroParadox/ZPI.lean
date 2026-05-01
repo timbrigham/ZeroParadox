@@ -18,6 +18,8 @@ proof that this transition is not assumed. It is derived.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Theorem T-IZ: Every maximal ascending chain in the Zero Paradox framework is a
 Cauchy sequence that converges to its own successor null in the 2-adic metric.
 

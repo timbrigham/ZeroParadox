@@ -21,6 +21,8 @@ from the totally disconnected structure of Q₂.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Formalizes the Zero Paradox p-adic framework over Q₂ (the 2-adic rationals).
 Proves: ultrametric T1, clopen balls T2, topological isolation T3,
 total disconnectedness T5, and irreversibility of the Snap C3.

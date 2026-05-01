@@ -19,6 +19,8 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
 - DA-1 (Instantiation as Execution): Paths 1 and 3 are now in Lean scope via ZP-K.

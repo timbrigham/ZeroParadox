@@ -20,6 +20,8 @@ derivations, same snap, same verdict.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Connects ZP-G (Category Theory) to ZP-A through ZP-E. Every cross-framework claim
 is traced to a theorem in ZP-G or ZP-A through ZP-E, plus an explicit bridge axiom
 where required. No floating connections.

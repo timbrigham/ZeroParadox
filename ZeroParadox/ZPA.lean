@@ -19,6 +19,8 @@ derives it from structure.
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Formalizes the Zero Paradox join-semilattice with bottom (L, ∨, ⊥).
 Axioms A1–A4, definitions D1–D3, and theorems T1–T3 are proved directly
 from the axioms. CC-1 is stated as a conditional claim.

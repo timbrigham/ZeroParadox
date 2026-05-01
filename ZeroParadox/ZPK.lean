@@ -22,6 +22,8 @@ different formal languages. DA-1 Paths 1 and 3 were always naming the same thing
 
 ---
 
+## Formal Overview (AI-assisted)
+
 Establishes the four-way equivalence between the structural roles of ⊥:
 
   (1) Quine atom       — set-theoretic self-reference (ZF + AFA)
