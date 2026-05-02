@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v3_10-1.pdf](ZP-E_Bridge_Document_v3_10-1.pdf) | 2026-05-02 | ZP-E v3.10 superseded by v3.11: T-SNAP Step 7 corrected — ZP-G AX-G2 removed as formal dependency of T-SNAP; now labelled conceptual correspondence only. ZP-G is downstream of ZP-E; irreversibility grounded in ZP-A R1 and ZP-B C3 alone. No mathematical content changed. |
 | [ZP-B_pAdic_Topology_v1_4-1.pdf](ZP-B_pAdic_Topology_v1_4-1.pdf) | 2026-05-02 | ZP-B v1.4 superseded by v1.5: T3 ZP interpretation bullets labelled explicitly — "ZP Interpretation:" prefix separates pure topology (theorem statement) from ZP-specific framing (Binary Snap). No mathematical content changed. |
 | [ZP-G_Category_Theory_v1_5-1.pdf](ZP-G_Category_Theory_v1_5-1.pdf) | 2026-05-02 | ZP-G v1.5 superseded by v1.6: D7' well-definedness note corrected — additive constant invariance now explicitly scoped to ZP-G's qualitative claims (finite/zero/undefined), not stated as a general AIT property. No mathematical content changed. |
 | [ZP-C_Information_Theory_v1_10-1.pdf](ZP-C_Information_Theory_v1_10-1.pdf) | 2026-05-02 | ZP-C v1.10 superseded by v1.11: L-INF semantic content corrected — "compressed limit of all possible binary programs" replaced with "limit point of the binary ball hierarchy under the 2-adic metric"; Section I (K-complexity) framing removed from a Section III (ball-hierarchy) result. No mathematical content changed. |

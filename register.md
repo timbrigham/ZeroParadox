@@ -10,7 +10,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-B p-Adic Topology | v1.5 | ZP-B_pAdic_Topology_v1_5.pdf | v1.2 | |
 | ZP-C Information Theory | v1.11 | ZP-C_Information_Theory_v1_11.pdf | v1.6 | |
 | ZP-D State Layer | v1.7 | ZP-D_State_Layer_v1_7.pdf | v1.3 | |
-| ZP-E Bridge Document | v3.10 | ZP-E_Bridge_Document_v3_10.pdf | v1.3 | |
+| ZP-E Bridge Document | v3.11 | ZP-E_Bridge_Document_v3_11.pdf | v1.3 | |
 | ZP-G Category Theory | v1.6 | ZP-G_Category_Theory_v1_6.pdf | v1.2 | |
 | ZP-H Categorical Bridge | v1.9 | ZP-H_Categorical_Bridge_v1_9.pdf | v1.2 | |
 | ZP-I Inside Zero | v1.6 | ZP-I_Inside_Zero_v1_6.pdf | v1.0 | Companion predates R-IZ-A closure (April 2026) |

@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.10 | April 2026
+Version 3.11 | May 2026
+v3.11: T-SNAP Step 7 corrected — AX-G2 removed as formal dependency; now labelled as conceptual
+correspondence only. ZP-G is downstream of ZP-E and cannot be a formal dependency of T-SNAP.
+Irreversibility proof rests on ZP-A R1 and ZP-B C3 alone, which are sufficient.
 v3.10: Forward references to "ZP-PQ" replaced throughout with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label.
 v3.9: R-ε₀ reframed — remark now leads with explicit informal-analogy disclaimer; "structural
 correspondence" changed to "structural analogy" throughout R-ε₀. Reviewer feedback: hedge was
@@ -235,7 +238,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.10  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.11  |  May 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -258,9 +261,11 @@ def build_zpe(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.10 | April 2026', S['subtitle']),
+        Paragraph('Version 3.11 | May 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.9 | v3.10: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
+            '<i>Supersedes v3.10 | v3.11: T-SNAP Step 7 corrected — ZP-G AX-G2 removed as formal dependency; '
+            'now labelled conceptual correspondence only. ZP-G is downstream of ZP-E; irreversibility rests '
+            'on ZP-A R1 and ZP-B C3 alone. | v3.10: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
             'informal-analogy disclaimer; "structural correspondence" changed to "structural analogy" '
             'throughout R-&#949;<sub>0</sub>. | '
             'v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
@@ -511,14 +516,15 @@ def build_zpe(out_path):
         li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-null state)'),
         li('Step 5 — No program that executes produces only null configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
         li('Step 6 — In (L, ∨, ⊥), c<sub>1</sub> is an element strictly above ⊥. By ZP-A D2, the transition ⊥ → c<sub>1</sub> is a valid state transition: c<sub>1</sub> = ⊥ ∨ ε<sub>0</sub> for some ε<sub>0</sub> ∈ L with ε<sub>0</sub> > ⊥. This transition is the Binary Snap.'),
-        li('Step 7 — The transition is irreversible: algebraically by ZP-A R1 (no subtraction operator); topologically by ZP-B C3 (no continuous return path to 0 in Q<sub>2</sub>); categorically by AX-G2 (hom(X, 0) = ∅ for X ≠ 0).'),
+        li('Step 7 — The transition is irreversible: algebraically by ZP-A R1 (no subtraction operator); topologically by ZP-B C3 (no continuous return path to 0 in Q<sub>2</sub>). These two grounds are sufficient. Conceptual correspondence: ZP-G AX-G2 (hom(X, 0) = ∅ for X ≠ 0) expresses the same irreversibility in categorical language — ZP-G is downstream of ZP-E and is not a formal dependency of this proof.'),
         sp(4),
         body('Conclusion: The Binary Snap is a derived consequence. AX-1 is promoted to Theorem T-SNAP. ✓'),
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
-                'ZP-A D2, R1; ZP-G AX-G2; ZP-E DA-1; ZP-J T-EXEC. '
+                'ZP-A D2, R1; ZP-E DA-1; ZP-J T-EXEC. '
                 'CC-1 (S&#8320; = &#8869;) derived via ZP-J cc1_derived (axiom-free). '
                 'CC-2 (&#8869; = {&#8869;}) structurally forced — ZP-J T-EXEC (axiom-free). '
-                'Neither CC-1 nor CC-2 is a freestanding commitment. T-SNAP is derived given DA-1 and AX-B1.'),
+                'Neither CC-1 nor CC-2 is a freestanding commitment. T-SNAP is derived given DA-1 and AX-B1. '
+                'Conceptual correspondence only: ZP-G AX-G2 (downstream of ZP-E; not a formal dependency).'),
     ]
 
     E += [
@@ -827,7 +833,7 @@ def build_zpe(out_path):
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.10', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.11', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -881,7 +887,7 @@ def build_zpe(out_path):
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.10', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.11', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -934,7 +940,7 @@ def build_zpe(out_path):
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.10', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.11', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',
@@ -984,7 +990,7 @@ def build_zpe(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.10 | Three formal inserts: DA-1, DA-2, DA-3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
+            '<i>End of ZP-E v3.11 | Three formal inserts: DA-1, DA-2, DA-3 | T-SNAP Step 7: AX-G2 removed as formal dependency; ZP-G is downstream, irreversibility grounded in ZP-A R1 and ZP-B C3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
             'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
             'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward: The Philosophical Question That Started This | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
@@ -1002,5 +1008,5 @@ def build_zpe(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_10.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_11.pdf'))
     build_zpe(out)
