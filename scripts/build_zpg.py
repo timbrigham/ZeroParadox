@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.5 | April 2026
+Version 1.6 | May 2026
+Changes from v1.5:
+  - D7' well-definedness note corrected: "all structural claims below are invariant under this
+    additive constant" replaced with explicit scoping — invariance is a consequence of what
+    ZP-G chooses to claim (finite/zero/undefined), not a general AIT property.
 Changes from v1.4:
   - Lean scope remark for T6-b/T6-c strengthened: now states explicitly that the Lean proofs
     verify nothing about Kolmogorov complexity — they prove only that a ℕ-valued function is ≥ 0
@@ -224,7 +228,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.5  |  April 2026  |'
+        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.6  |  May 2026  |'
               f'  Internal Working Document  |  Page {doc.page}')
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
@@ -248,7 +252,7 @@ def build_zpg(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version 1.5 | April 2026', S['bodyI']),
+        Paragraph('Version 1.6 | May 2026', S['bodyI']),
         Paragraph(
             '<i>Supersedes v1.4 | v1.5: Lean scope disclosure for T6-b and T6-c strengthened — '
             'Lean proofs verify only that a &#8469;-valued function is &#8805; 0 (Nat.zero_le _), '
@@ -301,6 +305,12 @@ def build_zpg(out_path):
             'and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton; '
             'Lean proofs reduce to Nat.zero_le _ (non-negativity by type). '
             'T6-b and T6-c statements and proofs unchanged.</i>',
+            S['note']),
+        Paragraph(
+            '<i>Version 1.6 changes from v1.5: D7\' well-definedness note corrected — '
+            '"all structural claims below are invariant under this additive constant" replaced '
+            'with explicit scoping: invariance holds because of what ZP-G chooses to claim '
+            '(finite/zero/undefined), not as a general property of K-complexity.</i>',
             S['note']),
         Paragraph(
             '<i>Version 1.5 changes from v1.4: Lean scope disclosure strengthened. The v1.4 note '
@@ -567,9 +577,11 @@ def build_zpg(out_path):
             'Interpretation: I(f) measures the minimum description length of B given knowledge of A. It is the '
             'irreducible informational content added by the transition f: A → B, independent of any probability distribution.',
             'Well-definedness: K(x<sub>B</sub>|x<sub>A</sub>) depends on the encoding of objects as strings. Different encodings '
-            'yield values differing by at most an additive constant c (the coding theorem constant of I-KC). All '
-            'structural claims below are invariant under this additive constant: they concern whether I(f) is '
-            'finite, zero, or undefined — not its precise numerical value.',
+            'yield values differing by at most an additive constant c (the coding theorem constant of I-KC). '
+            'All claims in ZP-G are stated in terms of whether I(f) is finite, zero, or undefined — qualitative '
+            'properties that are invariant under any additive constant. This invariance is a consequence of what '
+            'ZP-G chooses to claim, not a general property of K-complexity (additive constants can matter '
+            'for precise K-complexity comparisons in AIT).',
             'Relationship to v1.0 D7: By the coding theorem (I-KC), K(x<sub>B</sub>|x<sub>A</sub>) ≈ &#8722;log<sub>2</sub> P(x<sub>B</sub>|x<sub>A</sub>) + O(c) '
             'for any computable measure P. Therefore D7\' and D7 are equivalent up to O(c). The choice of D7\' '
             'over D7 is not a change in what is being measured; it is a change in how the measure is defined — '
@@ -854,7 +866,7 @@ def build_zpg(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>Zero Paradox ZP-G: Category Theory | Version 1.5 | April 2026 | '
+            '<i>Zero Paradox ZP-G: Category Theory | Version 1.6 | May 2026 | '
             'Supersedes v1.4 | T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
             'not K-theoretic content | T6 Part II: Lean-verified | Internal Working Document</i>',
             S['endnote']),
@@ -867,5 +879,5 @@ def build_zpg(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_5.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_6.pdf'))
     build_zpg(out)
