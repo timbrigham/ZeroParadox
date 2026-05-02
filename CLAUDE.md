@@ -321,22 +321,7 @@ This log is the authoritative record of what has been reviewed and why. Future s
 
 ## Reviewer Feedback Tracking
 
-### Dan — ZP-A Review (April 2026)
-
-Feedback received and reviewed. Status of each point:
-
-| Feedback | Status | Resolution |
-|----------|--------|------------|
-| `:⟺` notation is non-standard for definitional biconditional | **Fixed in v1.2** | Changed to `⟺` with "define the relation ≤ by:" framing |
-| D2 "Equivalently" claim has no proof | **Fixed in v1.2** | Explicit two-line proof of both directions added |
-| Illustrated companion needs more concrete examples | **Fixed in v1.2** | Power set with union, [0,∞) with max, document edit history added |
-| "Axiom Block A" — Dan prefers "properties" over "axioms" | Deferred — keep | A1–A4 are axioms in the standard algebraic sense; defensible |
-| "State space" / "states" language feels loaded | Deferred — keep | Intentional framing for the ZP ontology; L is explicitly called a "non-empty set" in 1.1 |
-| Dual structure (top/meet operator) as future work | Noted | Already addressed in R1; no action needed |
-| Theorem/proposition/lemma hierarchy missing | **Fixed in v1.5** | Full naming convention added to CLAUDE.md and all formal docs updated |
-| "State sequence" doesn't convey monotone condition | **Fixed in v1.5** | Remark R2 added after D3 connecting "state sequence" to "ascending chain" |
-| CC-1: ⊥ ≤ S₀ should be free from T2, not a commitment | **Fixed in v1.5** | CC-1 corollary reworded: T2 gives ⊥ ≤ S₀ unconditionally; CC-1 strengthens to equality |
-| Add examples for state sequences | Deferred to Companion | Companion already has power set and document history examples; formal doc adds companion cross-reference note |
+Reviewer feedback and correspondence are tracked in `.claude-local/feedback/reviewer_feedback_tracking.md`. That file is private and gitignored. Do not include reviewer names or feedback details in this file.
 
 ## License
 
