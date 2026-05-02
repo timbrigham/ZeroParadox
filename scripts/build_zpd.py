@@ -1,5 +1,7 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.6)
+Build ZP-D: State Layer (Hilbert Space) (v1.7)
+v1.7: T5 DP-1 dependency made explicit — status line, Open Items Register, and Validation
+      Status table now consistently state "given DP-1" for T5, matching T4's treatment.
 v1.6: R3 added — topological type of T stated explicitly: locally constant, continuous from
       (Q2, 2-adic topology) to H; connected-space concern addressed.
 v1.5: D1 updated — n = 2 foundational minimum; higher n derived, not foundational.
@@ -10,13 +12,13 @@ import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_6.pdf')
-    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.6')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_7.pdf')
+    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.7')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version 1.6  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.5  |  R3 added: topological type of T stated explicitly — '
+          Paragraph('Version 1.7  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.6  |  v1.7: T5 DP-1 dependency made explicit — status line, Open Items Register, and Validation Status table now state "given DP-1" for T5, consistent with T4\'s treatment. No mathematical content changed. | v1.6: R3 added: topological type of T stated explicitly — '
                     'locally constant; continuous from (Q<sub>2</sub>, 2-adic topology) to H; '
                     'totally-disconnected/connected-space concern addressed</i>', S['subtitle']),
           Paragraph('<i>v1.5: D1 updated — n = 2 foundational minimum. '
@@ -139,7 +141,8 @@ def build():
         'If S<sub>n</sub> and S<sub>n+1</sub> lie in different clopen balls, T(S<sub>n+1</sub>) carries an additional basis component, giving &#8214;T(S<sub>n+1</sub>)&#8214; > &#8214;T(S<sub>n</sub>)&#8214;. '
         'If they lie in the same ball, T(S<sub>n</sub>) = T(S<sub>n+1</sub>), giving equality. '
         'In both cases &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214;. '
-        'Note: D2(v) gives a global lower bound &#8214;T(x)&#8214; &#8805; &#8214;T(0)&#8214; — this does not imply sequence monotonicity; the ball-boundary argument above is the correct proof. <font name="DV">&#10003;</font>',
+        'Note: D2(v) gives a global lower bound &#8214;T(x)&#8214; &#8805; &#8214;T(0)&#8214; — this does not imply sequence monotonicity; the ball-boundary argument above is the correct proof. <font name="DV">&#10003;</font> '
+        'Status: Derived — unconditional given DP-1. The ball-boundary argument relies on DP-1 (orthogonality represents topological isolation): each clopen ball maps to a distinct basis vector precisely because DP-1 identifies topological separation with orthogonality.',
     ]))
 
     E.append(Paragraph('V. Open Items Register for ZP-D v1.6', S['h1']))
@@ -149,7 +152,7 @@ def build():
          ['T2: Existence of T', 'Closed', 'Basis assignment construction. All five requirements verified.'],
          ['T3: Uniqueness of T', 'Closed', 'Unique up to unitary equivalence.'],
          ['T4: Snap &#8594; orthogonal shift', 'Closed — unconditional', 'Proven from T2 and ZP-B T3. Depends on DP-1 as premise.'],
-         ['T5: Monotone norms', 'Closed — unconditional', 'Proven from T2 and ZP-A T3.']],
+         ['T5: Monotone norms', 'Closed — unconditional given DP-1', 'Proven from T2 and ZP-A T3. Depends on DP-1 as premise (same as T4).']],
         [1.6*inch, 1.5*inch, 3.4*inch]
     ))
 
@@ -167,7 +170,7 @@ def build():
           'R3 (v1.6) names topological type: locally constant, continuous'],
          ['T3: Uniqueness of T', 'Valid — Proposition; derived; unique up to unitary equivalence'],
          ['T4: Snap &#8594; orthogonal shift', 'Valid — Theorem; derived; unconditional; depends on DP-1'],
-         ['T5: Monotone norms', 'Valid — Proposition; derived; unconditional; from T2 and ZP-A T3']],
+         ['T5: Monotone norms', 'Valid — Proposition; derived; unconditional given DP-1; from T2 and ZP-A T3']],
         [2.5*inch, 4.0*inch]
     ))
 

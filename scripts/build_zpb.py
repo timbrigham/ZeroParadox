@@ -1,18 +1,21 @@
 """
-Build ZP-B: p-Adic Topology (v1.4)
+Build ZP-B: p-Adic Topology (v1.5)
+v1.5: T3 ZP interpretation bullets labelled explicitly — "ZP Interpretation:" prefix added to
+distinguish pure topology (the theorem statement) from ZP-specific framing (the Binary Snap).
 """
 
 import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_4.pdf')
-    doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.4')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_5.pdf')
+    doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.5')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
-          Paragraph('Version 1.4  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.3  |  T0 reframed: derived given MP-1 (design commitment); MP-1 acknowledged as load-bearing choice</i>', S['subtitle']),
+          Paragraph('Version 1.5  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.4  |  v1.5: T3 ZP interpretation bullets labelled explicitly — pure topology and ZP-specific framing now separated with "ZP Interpretation:" prefix.</i>', S['subtitle']),
+          Paragraph('<i>v1.4: T0 reframed: derived given MP-1 (design commitment); MP-1 acknowledged as load-bearing choice.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within p-adic analysis and topology. No abstract algebra from ZP-A, no probability, and no Hilbert space is imported. Cross-framework connections are deferred to ZP-D and ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-B Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
@@ -111,8 +114,8 @@ def build():
     E.append(Paragraph('IV. Topological Isolation of Zero', S['h1']))
     E.append(label_box('Theorem T3 — Topological Isolation of 0', [
         'For any r = 2<super>&#8722;k</super>, the ball B(0,r) = { x &#8712; Q<sub>2</sub> : v<sub>2</sub>(x) &#8805; k }. Any x outside this ball has d(0,x) &#8805; 2<super>&#8722;k+1</super> > r. B(0,r) and its complement are separated by a gap of at least 2<super>&#8722;k</super>.',
-        'The transition from 0 to any non-zero element is a discrete jump across a clopen boundary — the topological identity of the Snap.',
-        'Relationship to &#949;<sub>0</sub>: &#949;<sub>0</sub> = 2<super>k</super> is the smallest non-zero element outside the tightest ball around 0. The Snap crosses exactly this gap. <font name="DV">&#10003;</font>',
+        'ZP Interpretation: this discrete jump across a clopen boundary is the topological expression of the Binary Snap (defined in ZP-E).',
+        'Relationship to &#949;<sub>0</sub>: &#949;<sub>0</sub> = 2<super>k</super> is the smallest non-zero element outside the tightest ball around 0. ZP Interpretation: this is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
     ]))
 
     E.append(Paragraph('V. Topological Structure of Q₂', S['h1']))

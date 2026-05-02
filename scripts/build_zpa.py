@@ -1,5 +1,9 @@
 """
-Build ZP-A: Lattice Algebra (v1.11)
+Build ZP-A: Lattice Algebra (v1.12)
+v1.12: OQ-A1b dual-status clarification. The closure note now distinguishes between the
+ZP-specific result (bounded by AX-B1 via T5) and the general semilattice case (unbounded
+chains are permitted in a bare join-semilattice without AX-B1). Section header updated to
+"CLOSED within ZP". No algebraic content changed.
 v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added
 immediately before CC-1 (§4.2). No mathematical content changed.
 v1.10: CC-1 box title updated — "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)"
@@ -21,17 +25,18 @@ import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_11.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.11')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_12.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.12')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.11  |  April 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.10  |  v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added immediately before CC-1 (&#167;4.2). No mathematical content changed. | v1.10: CC-1 box title updated &#8212; "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. | v1.9: CC-1 status updated &#8212; derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
+          Paragraph('Version 1.12  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.11  |  v1.12: OQ-A1b dual-status clarification — closure note now distinguishes the ZP-specific result (bounded by AX-B1 via T5) from the general semilattice case (unbounded chains are permitted without AX-B1). No algebraic content changed. | v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added immediately before CC-1 (&#167;4.2). No mathematical content changed. | v1.10: CC-1 box title updated &#8212; "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. | v1.9: CC-1 status updated &#8212; derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
+          body('<i>Version 1.12 changes: OQ-A1b dual-status clarification. The closure note now explicitly distinguishes two cases: within ZP, AX-B1\'s binary constraint bounds ascending chains via ZP-E T5; in general semilattice theory without AX-B1, unbounded ascending chains are permitted — a bare join-semilattice (A1&#8211;A4 alone) imposes no such bound. Section header updated to "CLOSED within ZP". No algebraic content changed.</i>'),
           body('<i>Version 1.9 changes: CC-1 status updated — ZP-J T-EXEC establishes IsQuineAtom(&#8869;) as the unique structural identity in any AFAStructure lattice; S<sub>0</sub> = &#8869; follows structurally. Status line in CC-1 block, Validation Status table, and Boundary Conditions table updated to reflect this derivation. At the ZP-A level (no AFAStructure assumed within this document), CC-1 remains a modelling commitment; the derivation is noted as a cross-framework result.</i>'),
           body('<i>Version 1.8 changes: CC-2 block updated with a cross-framework note: the replacement of Foundation by AFA is not arbitrary — ZF + Foundation is incompatible with R3 (a well-founded &#8869; admits an external interpreter, contradicting CC-2) and with ZP-C L-INF (bounded &#8712;-depth contradicts unbounded surprisal). AFA is forced rather than chosen; the Quine atom form is the minimal commitment within AFA. Foundation note in Section V updated to reflect this. Cross-reference to ZP-E Remark R-AFA added within CC-2.</i>'),
           body('<i>Version 1.7 changes: R3 dependency note added. The inference from "no external interpreter" (CC-2) to "necessarily executing" (DA-1) uses D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background. R3 supplies the structural argument for eliminating &#8869;&#8217;s static-description state; it does not independently derive DA-1 without D7. All three DA-1 paths in ZP-E share D7 as background; they provide independent structural, informational, and AIT-based routes to eliminating the static-description alternative. Section V intro and R3 text updated to make this dependency explicit. Boundary Conditions table row for CC-2/R3 updated accordingly.</i>'),
@@ -151,11 +156,11 @@ def build():
     E.append(sp())
 
     E.append(Paragraph('VI. OQ-A1 — Sufficiency of Monotonicity', S['h1']))
-    E.append(label_box('OQ-A1 — Sufficiency of Monotonicity  [CLOSED — ZP-E T5]', [
+    E.append(label_box('OQ-A1 — Sufficiency of Monotonicity  [CLOSED within ZP — ZP-E T5]', [
         'Is the monotonicity constraint (T3) sufficient to characterise all valid state sequences, or are additional axioms required?',
         'OQ-A1a: Is there algebraic reason to restrict &#945;<sub>n</sub> to join-irreducible elements (not expressible as joins of strictly smaller elements)?',
         'OQ-A1b: Does the open-ended semilattice (without top element &#8868;) permit unbounded ascending chains?',
-        'Status: CLOSED — Both sub-questions resolved by ZP-E Theorem T5 (Iterative Forcing Theorem) via AX-B1 from ZP-B. OQ-A1a: &#945;<sub>n</sub> = &#949;(S<sub>n</sub>), the minimum viable deviation. OQ-A1b: AX-B1\'s binary constraint bounds ascending chains.',
+        'Status: CLOSED within ZP — Both sub-questions resolved by ZP-E Theorem T5 (Iterative Forcing Theorem) via AX-B1 from ZP-B. OQ-A1a: &#945;<sub>n</sub> = &#949;(S<sub>n</sub>), the minimum viable deviation (ZP-specific). OQ-A1b: Within ZP, AX-B1\'s binary constraint bounds ascending chains via T5. Note: in general semilattice theory without AX-B1, unbounded ascending chains are permitted — a bare join-semilattice imposes no bound. The closure here is a consequence of ZP\'s binary existence commitment, not of A1&#8211;A4 alone.',
     ]))
 
     E.append(Paragraph('VII. Boundary Conditions', S['h1']))

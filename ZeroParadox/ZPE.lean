@@ -7,6 +7,20 @@ import Mathlib.Tactic
 /-!
 # ZP-E: Bridge Document
 
+## Engineer's Take
+
+By wiring together the state changes out of ZPC and the mandatory increments in
+ZPA, it turned AX-1 into a theorem we can prove instead of an axiom. In
+programming you can have a state change eventually return to non-running.
+However, once a program is executed, it's executed. It doesn't change the fact
+that it executed at one point in the past. DA-1, DA-2, and DA-3 need to be
+treated as forward references. These were not solved until a much later point.
+DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
+
+---
+
+## Formal Overview (AI-assisted)
+
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
 - DA-1 (Instantiation as Execution): Paths 1 and 3 are now in Lean scope via ZP-K.

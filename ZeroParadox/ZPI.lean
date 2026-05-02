@@ -6,6 +6,20 @@ import Mathlib.Tactic
 /-!
 # ZP-I: Inside Zero
 
+## Engineer's Take
+
+Everything up to this point has been from the perspective of one bottom reaching
+upward. Because there is no top element, the chain cannot stop. In the 2-adic
+metric, going higher in the lattice means getting closer to zero. The chain
+approaches zero not by reversing but by continuing forward. When the action of
+reaching that limit has occurred, you are transitioning to the next bottom, along
+the next axis. Bottom n goes to bottom n+1, ad infinitum. T-IZ is the formal
+proof that this transition is not assumed. It is derived.
+
+---
+
+## Formal Overview (AI-assisted)
+
 Theorem T-IZ: Every maximal ascending chain in the Zero Paradox framework is a
 Cauchy sequence that converges to its own successor null in the 2-adic metric.
 

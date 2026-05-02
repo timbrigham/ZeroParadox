@@ -6,6 +6,24 @@ import Mathlib.Tactic
 /-!
 # ZP-K: Computational Grounding of Self-Reference
 
+## Engineer's Take
+
+ZPJ established the set-theoretic case. ZPK adds the computational grounding.
+Existence is itself an action away from null. Action by definition is not null.
+There is nothing prior to bottom that could trigger it. So if bottom is going
+to do anything, it has to do it itself. Kleene's theorem is basically saying
+that there is always a version of that logic. It isn't specific to one
+programming language or way of looking at things. Much like the bootstrapping
+problem in any sufficiently powerful language. It is not specific to one system.
+Any language powerful enough eventually has to face it. T-COMP is the four-way
+equivalence. Being bottom, being the Quine atom, satisfying the join identity,
+and being a Kleene fixed point are all the same structural fact stated in four
+different formal languages. DA-1 Paths 1 and 3 were always naming the same thing.
+
+---
+
+## Formal Overview (AI-assisted)
+
 Establishes the four-way equivalence between the structural roles of ⊥:
 
   (1) Quine atom       — set-theoretic self-reference (ZF + AFA)

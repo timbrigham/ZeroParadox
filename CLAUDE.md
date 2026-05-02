@@ -305,24 +305,23 @@ The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap 
 
 Each formal document has a paired illustrated companion for general readers. AX-G1 and AX-G2 are the two structural commitments of ZP-G's categorical layer. Neither is a novel commitment: AX-G1 is grounded in ZP-A's bottom element ⊥; AX-G2 follows from ZP-A antisymmetry and ZP-B C3 (topological irreversibility). ZP-G is self-contained by design and states them explicitly within that layer. AX-B1 (binary existence) is not a novel commitment — it is directly verifiable by computation (decidable equality on Fin 2 via `decide`) and depends only on `propext`, not `Classical.em`. AX-1 (Binary Snap Causality) is now Theorem T-SNAP, derived in ZP-E — do not refer to it as an axiom.
 
+## Four-Fingerprint Scan — Decision Log Requirement
+
+When a four-fingerprint scan is conducted (see memory: `feedback_reader_orientation.md`), the session notes file in `.claude-local/notes/` must be updated before the session ends with:
+
+1. **Each item reviewed** — the finding, the decision (FIXED / NO FIX / PENDING), and the version bump if fixed.
+2. **Rationale for no-fix decisions** — e.g., "already addressed in vX.Y", "standard result in the relevant literature", "Lean scope already disclosed."
+3. **Any technique notes** — e.g., "read the Lean file before fixing to confirm the actual proof argument."
+
+This log is the authoritative record of what has been reviewed and why. Future sessions must read it before starting a new scan pass to avoid re-reviewing already-settled items.
+
+**File convention:** `.claude-local/notes/framing_scan_YYYY-MM-DD.md` — one file per scan pass, named by the date the scan was run. The decision log lives at the bottom of that file under a `## Decision Log` header.
+
+**Standing rule:** A scan pass is not complete until all reviewed items have a decision recorded. "PENDING" is a valid decision for items deferred to a future session.
+
 ## Reviewer Feedback Tracking
 
-### Dan — ZP-A Review (April 2026)
-
-Feedback received and reviewed. Status of each point:
-
-| Feedback | Status | Resolution |
-|----------|--------|------------|
-| `:⟺` notation is non-standard for definitional biconditional | **Fixed in v1.2** | Changed to `⟺` with "define the relation ≤ by:" framing |
-| D2 "Equivalently" claim has no proof | **Fixed in v1.2** | Explicit two-line proof of both directions added |
-| Illustrated companion needs more concrete examples | **Fixed in v1.2** | Power set with union, [0,∞) with max, document edit history added |
-| "Axiom Block A" — Dan prefers "properties" over "axioms" | Deferred — keep | A1–A4 are axioms in the standard algebraic sense; defensible |
-| "State space" / "states" language feels loaded | Deferred — keep | Intentional framing for the ZP ontology; L is explicitly called a "non-empty set" in 1.1 |
-| Dual structure (top/meet operator) as future work | Noted | Already addressed in R1; no action needed |
-| Theorem/proposition/lemma hierarchy missing | **Fixed in v1.5** | Full naming convention added to CLAUDE.md and all formal docs updated |
-| "State sequence" doesn't convey monotone condition | **Fixed in v1.5** | Remark R2 added after D3 connecting "state sequence" to "ascending chain" |
-| CC-1: ⊥ ≤ S₀ should be free from T2, not a commitment | **Fixed in v1.5** | CC-1 corollary reworded: T2 gives ⊥ ≤ S₀ unconditionally; CC-1 strengthens to equality |
-| Add examples for state sequences | Deferred to Companion | Companion already has power set and document history examples; formal doc adds companion cross-reference note |
+Reviewer feedback and correspondence are tracked in `.claude-local/feedback/reviewer_feedback_tracking.md`. That file is private and gitignored. Do not include reviewer names or feedback details in this file.
 
 ## License
 
