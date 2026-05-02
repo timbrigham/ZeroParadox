@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-H_Categorical_Bridge_v1_7-1.pdf](ZP-H_Categorical_Bridge_v1_7-1.pdf) | 2026-05-02 | ZP-H v1.7 superseded by v1.8: C-H1 AX-G2 verification note added — ⊥-to-0 identification depends on CC-1/DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. |
 | [ZP-I_Inside_Zero_v1_5-1.pdf](ZP-I_Inside_Zero_v1_5-1.pdf) | 2026-05-02 | ZP-I v1.5 superseded by v1.6: key result box first bullet qualified with R-IZ-A — "forces v₂(Sₙ) → ∞ given construction hypothesis R-IZ-A" — consistent with body text. No mathematical content changed. |
 | [ZP-D_State_Layer_v1_6-1.pdf](ZP-D_State_Layer_v1_6-1.pdf) | 2026-05-02 | ZP-D v1.6 superseded by v1.7: T5 DP-1 dependency made explicit in status line, Open Items Register, and Validation Status table — consistent with T4's existing treatment. No mathematical content changed. |
 | [ZP-A_Lattice_Algebra_v1_11-1.pdf](ZP-A_Lattice_Algebra_v1_11-1.pdf) | 2026-05-02 | ZP-A v1.11 superseded by v1.12: OQ-A1b dual-status clarification — closure note now distinguishes ZP-specific result (bounded by AX-B1 via T5) from general semilattice case (unbounded chains permitted in bare join-semilattice without AX-B1). No algebraic content changed. |

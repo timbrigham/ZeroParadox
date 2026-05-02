@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.7 | April 2026
+Version 1.8 | May 2026
+Changes from v1.7:
+  - C-H1 AX-G2 verification: added note that the ⊥-to-0 identification depends on
+    CC-1 / DA-2 — a modelling commitment, not derived from ZP-A alone. No mathematical
+    content changed.
 Changes from v1.6:
   - T-H3 consistency note strengthened: "independence of null-analog discovery" foregrounded —
     each framework located its null-analog through its own domain logic prior to and without
@@ -219,7 +223,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.7  |  April 2026  |  Page {doc.page}"
+        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.8  |  May 2026  |  Page {doc.page}"
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -242,9 +246,10 @@ def build_zph(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.7 | April 2026', S['bodyI']),
+        Paragraph('Version 1.8 | May 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.6 | v1.7: T-H3 consistency note strengthened — independence of null-analog '
+            '<i>Supersedes v1.7 | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
+            'v1.7: T-H3 consistency note strengthened — independence of null-analog '
             'discovery foregrounded: each framework located its null-analog through its own domain logic '
             '(A4 for ZP-A, T3 for ZP-B, D1/AIT for ZP-C, T2/T3 for ZP-D) prior to any cross-framework '
             'identification. The modeling commitment is identification of independently-discovered objects '
@@ -419,7 +424,9 @@ def build_zph(out_path):
             'AX-G1 respected: F<sub>A</sub>(0) = &#8869; is the global minimum of L (ZP-A T2). No element of SLat is a terminal '
             'object because L has no top element &#8868; (ZP-A R1). <font name="DV">&#10003;</font>',
             'AX-G2 respected: No join operation in L can return to &#8869; from a strictly larger state (ZP-A T3, '
-            'monotonicity). Therefore F<sub>A</sub> sends no non-initial morphism to a map terminating at &#8869;. <font name="DV">&#10003;</font>',
+            'monotonicity). Therefore F<sub>A</sub> sends no non-initial morphism to a map terminating at &#8869;. '
+            'Note: this verification depends on CC-1 / DA-2 to identify L\'s &#8869; with C\'s initial object 0 — '
+            'that identification is a modelling commitment, not derived from ZP-A alone. <font name="DV">&#10003;</font>',
         ]
     ))
     E.append(sp(6))
@@ -632,7 +639,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.7', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.8', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -747,7 +754,7 @@ def build_zph(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.7 | Four instantiation functors constructed | '
+            '<i>End of ZP-H v1.8 | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 closed | '
             'F<sub>A</sub>/F<sub>B</sub> full Lean functors (sorry-free); '
             'F<sub>C</sub>/F<sub>D</sub> concrete ZPCategory witness — full abstract functors future work | '
@@ -764,5 +771,5 @@ def build_zph(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_7.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_8.pdf'))
     build_zph(out)
