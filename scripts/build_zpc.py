@@ -1,5 +1,8 @@
 """
-Build ZP-C: Information Theory (v1.10)
+Build ZP-C: Information Theory (v1.11)
+v1.11: L-INF semantic content corrected — "compressed limit of all possible binary programs"
+replaced with "limit point of the binary ball hierarchy under the 2-adic metric"; stays within
+what the proof actually establishes (ball-hierarchy depth, not Kolmogorov programs).
 v1.10: R-BRIDGE "not a coincidence" clause given cross-reference to ZP-E R-AFA, where the
 structural argument for why K and I(n) converge at the same threshold is made explicitly.
 v1.9: Remark R-TQ added after TQ-IH — external expert confirmation that TQ-IH holds and is
@@ -14,13 +17,14 @@ import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_10.pdf')
-    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.10')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_11.pdf')
+    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.11')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version 1.10  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.9  |  v1.10: R-BRIDGE cross-reference added — the structural argument for why K and 2-adic surprisal converge at P<sub>0</sub> is developed in ZP-E Remark R-AFA.</i>', S['subtitle']),
+          Paragraph('Version 1.11  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.10  |  v1.11: L-INF semantic content corrected — &#8869; described as the limit point of the binary ball hierarchy under the 2-adic metric; the "all possible binary programs" characterisation (Section I framing) removed from a Section III result.</i>', S['subtitle']),
+          Paragraph('<i>v1.10: R-BRIDGE cross-reference added — the structural argument for why K and 2-adic surprisal converge at P<sub>0</sub> is developed in ZP-E Remark R-AFA.</i>', S['subtitle']),
           Paragraph('<i>v1.9: Remark R-TQ added after TQ-IH — external expert confirmation that TQ-IH holds and is domain-independent: a direct consequence of L-RUN alone, requiring no Turing-specific or Kolmogorov machinery.</i>', S['subtitle']),
           Paragraph('<i>v1.8: Remark R-BRIDGE added after L-INF — explicit statement of the relationship between Kolmogorov complexity K and 2-adic surprisal I(n): correlated but distinct measures that converge at P&#8320;; used as independent routes, not a unified measure.</i>', S['subtitle']),
           Paragraph('<i>Version 1.6 change: CC-2 added: c&#8320; = &#8869; labeled as modeling commitment (parallel to CC-1 in ZP-A); RP-2 added: branching measure labeled as representational commitment.</i>', S['subtitle']),
@@ -125,7 +129,7 @@ def build():
         'The null state &#8869; = c<sub>0</sub> corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2). At this limit, no finite bound M contains the informational content of &#8869;.',
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
-        'Semantic content: &#8869; is informationally extreme — the compressed limit of all possible binary programs, approached by the perfectly balanced binary branching hierarchy. No finite external program bounds its informational content; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1). ZP-A CC-2 (&#8869; = {&#8869;}) provides a structural second grounding for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent derivations converging on the same fact.',
+        'Semantic content: &#8869; is informationally extreme — it is the limit point of the binary ball hierarchy under the 2-adic metric, the accumulation point approached by sequences of increasing depth. No finite bound M contains the surprisal at that limit; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1). ZP-A CC-2 (&#8869; = {&#8869;}) provides a structural second grounding for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent derivations converging on the same fact.',
         'Note: the connection from informational extremity to forced execution is a named design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
         'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: ZPC.l_inf (purity check: no non-Mathlib axioms).',
     ]))

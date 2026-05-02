@@ -8,7 +8,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 |----------|---------------|----------|-------------------|-------|
 | ZP-A Lattice Algebra | v1.12 | ZP-A_Lattice_Algebra_v1_12.pdf | v1.3 | |
 | ZP-B p-Adic Topology | v1.4 | ZP-B_pAdic_Topology_v1_4.pdf | v1.2 | |
-| ZP-C Information Theory | v1.10 | ZP-C_Information_Theory_v1_10.pdf | v1.6 | |
+| ZP-C Information Theory | v1.11 | ZP-C_Information_Theory_v1_11.pdf | v1.6 | |
 | ZP-D State Layer | v1.7 | ZP-D_State_Layer_v1_7.pdf | v1.3 | |
 | ZP-E Bridge Document | v3.10 | ZP-E_Bridge_Document_v3_10.pdf | v1.3 | |
 | ZP-G Category Theory | v1.5 | ZP-G_Category_Theory_v1_5.pdf | v1.2 | |
