@@ -5,6 +5,24 @@ import Mathlib.Tactic
 /-!
 # ZP-D: State Layer (Hilbert Space)
 
+## Engineer's Take
+
+This file builds on the Q₂ ball structure and represents the balls as vectors.
+We use DP-1 to make sure we're mapping from Q₂ into H while faithfully
+representing the Q₂ ball structure. The disjointness lives in Q₂. Orthogonality
+preserves that property inside H. That's a design choice. It's not forced, but
+if you don't make it you're no longer faithfully representing the topology. T2
+keeps the balls unique. Every vector comes out the same length, just orthogonal
+to each other. That makes this a valid representation rather than just any
+generic map. There's essentially one way to lay this out. Because of how it
+lands on orthogonal axes, they're going completely separate directions. The snap
+from null to ε₀ is the payoff. Before and after point in completely orthogonal
+directions inside H.
+
+---
+
+## Formal Overview (AI-assisted)
+
 Formalizes the Zero Paradox Hilbert space state layer H = ℂⁿ and the
 transition operator T: Q₂ → H. Q₂'s clopen-ball partition is abstracted
 as `Fin n`, keeping this file self-contained within functional analysis

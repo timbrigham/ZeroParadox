@@ -6,6 +6,21 @@ import Mathlib.Tactic
 /-!
 # ZP-G: Category Theory
 
+## Engineer's Take
+
+In category theory terms, this is essentially the most abstract form of a
+directed graph. Objects are nodes. Morphisms are directed edges. Zero is the
+initial object. It has exactly one outbound edge to every other node in the
+graph. It has no inbound edges from anything outside itself. Both of those
+are structural axioms, not consequences. The paradox comes from being a step
+structure. The one-directionness itself is precisely why you can't return to
+the initial state. Zero is simultaneously the universal source and the one
+thing you can never get back to.
+
+---
+
+## Formal Overview (AI-assisted)
+
 Formal verification of ZP-G v1.1 (Category Theory layer).
 Self-contained in category theory with one named import (I-KC, Kolmogorov complexity).
 
