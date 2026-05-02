@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.5 | April 2026
+Version 1.6 | May 2026
+v1.6: Key result box first bullet qualified with R-IZ-A — "forces v₂(Sₙ) → ∞ (given
+construction hypothesis R-IZ-A)" — consistent with body text and Section V treatment.
+No mathematical content changed.
 v1.5: Section V "Complete Cycle" and Null Balance callout updated to carry R-IZ-A conditional
 caveat forward — "framework closure" is now explicitly conditional on the construction-level
 growth rate hypothesis v₂(S(n)) ≥ n (see R-IZ-A). Key result box updated to match.
@@ -239,7 +242,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.5  |  April 2026  |  Page {doc.page}'
+        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.6  |  May 2026  |  Page {doc.page}'
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -262,9 +265,10 @@ def build_zpi(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version 1.5 | April 2026', S['subtitle']),
+        Paragraph('Version 1.6 | May 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.5: Section V "Complete Cycle" and Null Balance callout updated — '
+            '<i>v1.6: Key result box first bullet qualified with R-IZ-A — "forces v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; given construction hypothesis R-IZ-A" — consistent with body text and Section V. No mathematical content changed. | '
+            'v1.5: Section V "Complete Cycle" and Null Balance callout updated — '
             '"framework closure" framing now explicitly conditional on the R-IZ-A construction-level '
             'hypothesis v<sub>2</sub>(S(n)) &#8805; n. Key result box updated to match. | '
             'v1.4: Remark R-IZ-A added — valuation growth hypothesis v<sub>2</sub>(S(n)) &#8805; n '
@@ -346,7 +350,8 @@ def build_zpi(out_path):
         'is not a step within L — it is the closure of L and the opening of L\'.'))
 
     E.append(key_result_box([
-        'ZP-A R1 (no top element) forces v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734;.',
+        'ZP-A R1 (no top element) forces v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; '
+        '(given construction hypothesis R-IZ-A: v<sub>2</sub>(S(n)) &#8805; n — see Section III).',
         '&#8214;S<sub>n</sub>&#8214;<sub>2</sub> = 2<sup>-v<sub>2</sub>(S<sub>n</sub>)</sup> &#8594; 0 '
         '(Cauchy condition).',
         'The engine of T-IZ is the impossibility of reaching a ceiling within L.',
@@ -860,5 +865,5 @@ def build_zpi(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_5.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_6.pdf'))
     build_zpi(out)
