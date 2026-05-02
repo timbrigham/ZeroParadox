@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.8 | May 2026
+Version 1.9 | May 2026
+Changes from v1.8:
+  - C-H3 AX-G1 no-terminal argument corrected: replaced "unbounded upward over larger
+    alphabets" (outside the binary framework) with the argument the Lean proof actually
+    makes — ℝ≥0 has no greatest element (t + 1 > t), the categorical expression of
+    ZP-A R1. Verified in Lean: ax_g1_no_terminal (nnrealZPCategory).
 Changes from v1.7:
   - C-H1 AX-G2 verification: added note that the ⊥-to-0 identification depends on
     CC-1 / DA-2 — a modelling commitment, not derived from ZP-A alone. No mathematical
@@ -223,7 +228,7 @@ def make_doc(path):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.8  |  May 2026  |  Page {doc.page}"
+        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.9  |  May 2026  |  Page {doc.page}"
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -246,9 +251,9 @@ def build_zph(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.8 | May 2026', S['bodyI']),
+        Paragraph('Version 1.9 | May 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.7 | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
+            '<i>Supersedes v1.8 | v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal (outside the binary framework) with the Lean-verified argument: &#8477;&#8805;0 has no greatest element (t + 1 &gt; t), the categorical expression of ZP-A R1 (ax_g1_no_terminal). | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
             'v1.7: T-H3 consistency note strengthened — independence of null-analog '
             'discovery foregrounded: each framework located its null-analog through its own domain logic '
             '(A4 for ZP-A, T3 for ZP-B, D1/AIT for ZP-C, T2/T3 for ZP-D) prior to any cross-framework '
@@ -471,8 +476,10 @@ def build_zph(out_path):
             'the equality holds here as a structural consequence of the binary framework.) <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>C</sub>(id<sub>A</sub>) = JSD(P<sub>A</sub> &#8741; P<sub>A</sub>) = 0. No informational work is done by a trivial transition. <font name="DV">&#10003;</font>',
             'AX-G1 respected: The Null State P = (1, 0) is the unique distribution of minimum entropy (H(P) = 0 bits). '
-            'No terminal object exists in InfoSp because there is no maximum entropy distribution that all transitions '
-            'converge to — entropy is unbounded upward over larger alphabets. <font name="DV">&#10003;</font>',
+            'No terminal object exists: the shared NNRealZPCat witness (&#8477;&#8805;0 with &#8804;) has no greatest element '
+            '— t + 1 &gt; t for all t &#8805; 0 — so no terminal object can exist in the ordered structure. '
+            'This is the categorical expression of ZP-A R1 (no top element), applied to the concrete model. '
+            'Verified in Lean: ax_g1_no_terminal (nnrealZPCategory). <font name="DV">&#10003;</font>',
             'AX-G2 respected: JSD &#8805; 0. A transition returning to P = (1, 0) from any Q &#8800; P would require JSD(Q &#8741; P) = 0, '
             'which holds only if Q = P. Since Q &#8800; P by assumption, no such transition exists. <font name="DV">&#10003;</font>',
             'Inherited label: The distributions P = (1, 0) and Q = (0, 1) are derived from AX-B1 and RP-1 (ZP-C T1, ZP-E T6). '
@@ -639,7 +646,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.8', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.9', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -754,7 +761,7 @@ def build_zph(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.8 | Four instantiation functors constructed | '
+            '<i>End of ZP-H v1.9 | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 closed | '
             'F<sub>A</sub>/F<sub>B</sub> full Lean functors (sorry-free); '
             'F<sub>C</sub>/F<sub>D</sub> concrete ZPCategory witness — full abstract functors future work | '
@@ -771,5 +778,5 @@ def build_zph(out_path):
 
 if __name__ == '__main__':
     repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_8.pdf'))
+    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_9.pdf'))
     build_zph(out)
