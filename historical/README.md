@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-A_Lattice_Algebra_v1_11-1.pdf](ZP-A_Lattice_Algebra_v1_11-1.pdf) | 2026-05-02 | ZP-A v1.11 superseded by v1.12: OQ-A1b dual-status clarification — closure note now distinguishes ZP-specific result (bounded by AX-B1 via T5) from general semilattice case (unbounded chains permitted in bare join-semilattice without AX-B1). No algebraic content changed. |
 | [ZP-K_Computational_Grounding_v1_2-1.pdf](ZP-K_Computational_Grounding_v1_2-1.pdf) | 2026-04-27 | ZP-K v1.2 superseded by v1.3: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label |
 | [ZP-E_Bridge_Document_v3_9-1.pdf](ZP-E_Bridge_Document_v3_9-1.pdf) | 2026-04-27 | ZP-E v3.9 superseded by v3.10: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label |
 | [ZP-A_Lattice_Algebra_v1_10-1.pdf](ZP-A_Lattice_Algebra_v1_10-1.pdf) | 2026-04-27 | ZP-A v1.10 superseded by v1.11: ZF+AFA metatheoretic declaration added before Section I (scope and plain-language explanation of AFA); plain English preface added immediately before CC-1 (§4.2) explaining T2 vs. CC-1 gap. No mathematical content changed. |

@@ -6,7 +6,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 
 | Document | Formal Version | Filename | Companion Version | Notes |
 |----------|---------------|----------|-------------------|-------|
-| ZP-A Lattice Algebra | v1.11 | ZP-A_Lattice_Algebra_v1_11.pdf | v1.3 | |
+| ZP-A Lattice Algebra | v1.12 | ZP-A_Lattice_Algebra_v1_12.pdf | v1.3 | |
 | ZP-B p-Adic Topology | v1.4 | ZP-B_pAdic_Topology_v1_4.pdf | v1.2 | |
 | ZP-C Information Theory | v1.9 | ZP-C_Information_Theory_v1_9.pdf | v1.6 | |
 | ZP-D State Layer | v1.6 | ZP-D_State_Layer_v1_6.pdf | v1.3 | |
@@ -17,4 +17,4 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J Self-Reference | v1.1 | ZP-J_Self_Reference_v1_1.pdf | v1.0 | |
 | ZP-K Computational Grounding | v1.3 | ZP-K_Computational_Grounding_v1_3.pdf | v1.0 | |
 
-*Last updated: April 2026*
+*Last updated: May 2026*
