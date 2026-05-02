@@ -17,7 +17,8 @@ to each other. That makes this a valid representation rather than just any
 generic map. There's essentially one way to lay this out. Because of how it
 lands on orthogonal axes, they're going completely separate directions. The snap
 from null to ε₀ is the payoff. Before and after point in completely orthogonal
-directions inside H.
+directions inside H. Every genuine transition does the same thing. Each distinct
+step in the state sequence produces an orthogonal shift.
 
 ---
 
@@ -30,8 +31,10 @@ as `Fin n`, keeping this file self-contained within functional analysis
 Lean dependencies.
 
 Proves: T2 (existence of T by basis assignment, all five D2 requirements),
-T4 (Snap → orthogonal shift in H), T5 (monotone sequences → non-decreasing
-norms). T3 (uniqueness up to unitary equivalence) is stated; proof deferred
+T4 (Snap → orthogonal shift in H), T5 (monotone norms — tautology of the
+unit-norm construction), T5-b (distinct consecutive states → orthogonal
+T-images, using DP-1 via t2_orthogonal — the non-trivial content of T5).
+T3 (uniqueness up to unitary equivalence) is stated; proof deferred
 pending OrthonormalBasis API. DP-1 (orthogonality) is proved as a theorem
 of the construction — reflecting the design commitment, not a bare axiom.
 -/
@@ -178,6 +181,16 @@ theorem t5_monotone_norms (n : ℕ) (S : ℕ → Fin n) (k : ℕ) :
     ‖transitionOp n (S k)‖ ≤ ‖transitionOp n (S (k + 1))‖ := by
   simp [t2_norm_eq_one]
 
+/-- T5-b: For a strictly monotone state sequence (consecutive states distinct),
+    consecutive T-images are orthogonal in H.
+    This is the non-trivial content of T5: distinct state indices map to orthogonal
+    vectors via DP-1. Unlike t5_monotone_norms (which is a norm-equality tautology),
+    this result genuinely uses the design principle and is load-bearing for the
+    interpretation that state transitions produce orthogonal shifts in H. -/
+theorem t5_strict_orthogonal (n : ℕ) (S : ℕ → Fin n) (k : ℕ) (h : S k ≠ S (k + 1)) :
+    @inner ℂ (StateSpace n) _ (transitionOp n (S k)) (transitionOp n (S (k + 1))) = 0 :=
+  t2_orthogonal n (S k) (S (k + 1)) h
+
 end ZeroParadox.ZPD
 
 /-! ## Axiom Purity Check -/
@@ -192,5 +205,6 @@ open ZeroParadox.ZPD
 #print axioms t2_existence
 #print axioms t4_snap_orthogonal
 #print axioms t5_monotone_norms
+#print axioms t5_strict_orthogonal
 
 end PurityCheck

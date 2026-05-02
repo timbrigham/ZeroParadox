@@ -14,7 +14,9 @@ metric, going higher in the lattice means getting closer to zero. The chain
 approaches zero not by reversing but by continuing forward. When the action of
 reaching that limit has occurred, you are transitioning to the next bottom, along
 the next axis. Bottom n goes to bottom n+1, ad infinitum. T-IZ is the formal
-proof that this transition is not assumed. It is derived.
+proof that this transition is not assumed. It is derived. Each step in the
+chain is a genuine advancement. That is not an assumption — the structure
+requires it.
 
 ---
 

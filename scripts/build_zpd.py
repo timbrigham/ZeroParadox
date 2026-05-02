@@ -1,5 +1,8 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.7)
+Build ZP-D: State Layer (Hilbert Space) (v1.8)
+v1.8: T5 strengthened — T5-b (t5_strict_orthogonal) added in Lean and PDF. T5-b is the
+      non-trivial content of T5: distinct consecutive states map to orthogonal T-images via
+      DP-1. T5 norm result disclosed as tautology of construction (all norms = 1).
 v1.7: T5 DP-1 dependency made explicit — status line, Open Items Register, and Validation
       Status table now consistently state "given DP-1" for T5, matching T4's treatment.
 v1.6: R3 added — topological type of T stated explicitly: locally constant, continuous from
@@ -12,15 +15,17 @@ import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_7.pdf')
-    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.7')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_8.pdf')
+    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.8')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version 1.7  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.6  |  v1.7: T5 DP-1 dependency made explicit — status line, Open Items Register, and Validation Status table now state "given DP-1" for T5, consistent with T4\'s treatment. No mathematical content changed. | v1.6: R3 added: topological type of T stated explicitly — '
-                    'locally constant; continuous from (Q<sub>2</sub>, 2-adic topology) to H; '
-                    'totally-disconnected/connected-space concern addressed</i>', S['subtitle']),
+          Paragraph('Version 1.8  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.7  |  v1.8: T5 strengthened — T5-b (strict orthogonality) added. '
+                    'T5-b is the non-trivial Lean-verified content of T5: distinct consecutive states map to orthogonal T-images via DP-1 (Lean: ZPD.t5_strict_orthogonal). '
+                    'T5 norm result disclosed as tautology of construction. | '
+                    'v1.7: T5 DP-1 dependency made explicit. | v1.6: R3 added: topological type of T stated explicitly — '
+                    'locally constant; continuous from (Q<sub>2</sub>, 2-adic topology) to H.</i>', S['subtitle']),
           Paragraph('<i>v1.5: D1 updated — n = 2 foundational minimum. '
                     'v1.4: T5 proof corrected — ball-boundary argument.</i>', S['subtitle']),
           sp(10),
@@ -137,22 +142,28 @@ def build():
     E.append(sp(4))
     E.append(label_box('Proposition T5 — Monotone Sequences Map to Non-Decreasing Norms', [
         'Let (S<sub>n</sub>) be a monotone state sequence in L (ZP-A T3). Then &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214; for all n.',
-        'Proof: By ZP-A T3, S<sub>n</sub> &#8804; S<sub>n+1</sub>. T maps each clopen ball of Q<sub>2</sub> to a single basis vector (D2). '
-        'If S<sub>n</sub> and S<sub>n+1</sub> lie in different clopen balls, T(S<sub>n+1</sub>) carries an additional basis component, giving &#8214;T(S<sub>n+1</sub>)&#8214; > &#8214;T(S<sub>n</sub>)&#8214;. '
-        'If they lie in the same ball, T(S<sub>n</sub>) = T(S<sub>n+1</sub>), giving equality. '
-        'In both cases &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214;. '
-        'Note: D2(v) gives a global lower bound &#8214;T(x)&#8214; &#8805; &#8214;T(0)&#8214; — this does not imply sequence monotonicity; the ball-boundary argument above is the correct proof. <font name="DV">&#10003;</font> '
-        'Status: Derived — unconditional given DP-1. The ball-boundary argument relies on DP-1 (orthogonality represents topological isolation): each clopen ball maps to a distinct basis vector precisely because DP-1 identifies topological separation with orthogonality.',
+        'T5 norm result: Derived — unconditional given DP-1. '
+        'Note: in the basis-assignment construction (D2), all T-images are unit basis vectors — all norms equal 1. '
+        'The norm inequality &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214; is therefore satisfied trivially (1 &#8804; 1). '
+        'The Lean proof (ZPD.t5_monotone_norms) verifies this tautology; it does not verify the ball-boundary argument. '
+        '<font name="DV">&#10003;</font>',
+        'T5-b — Strict Orthogonality (non-trivial content, Lean-verified): For any strictly monotone state sequence — where S<sub>n</sub> &#8800; S<sub>n+1</sub> — consecutive T-images are orthogonal: '
+        '&#10216;T(S<sub>n</sub>), T(S<sub>n+1</sub>)&#10217; = 0. '
+        'Proof: S<sub>n</sub> &#8800; S<sub>n+1</sub> implies they index distinct clopen balls. By DP-1, distinct ball-indices map to orthogonal basis vectors. Therefore T(S<sub>n</sub>) &#8869; T(S<sub>n+1</sub>). '
+        'Lean: ZPD.t5_strict_orthogonal (uses DP-1 via t2_orthogonal; axiom-free). <font name="DV">&#10003;</font>',
+        'T5-b is the load-bearing result: it captures the genuine content of the ball-boundary structure and is the Hilbert-space expression of ZP-B C3 (topological irreversibility) applied to consecutive states.',
     ]))
 
-    E.append(Paragraph('V. Open Items Register for ZP-D v1.6', S['h1']))
+    E.append(Paragraph('V. Open Items Register for ZP-D v1.8', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],
          ['T2: Existence of T', 'Closed', 'Basis assignment construction. All five requirements verified.'],
          ['T3: Uniqueness of T', 'Closed', 'Unique up to unitary equivalence.'],
          ['T4: Snap &#8594; orthogonal shift', 'Closed — unconditional', 'Proven from T2 and ZP-B T3. Depends on DP-1 as premise.'],
-         ['T5: Monotone norms', 'Closed — unconditional given DP-1', 'Proven from T2 and ZP-A T3. Depends on DP-1 as premise (same as T4).']],
+         ['T5: Monotone norms + T5-b: Strict orthogonality', 'Closed — unconditional given DP-1',
+          'T5 norm result: trivially satisfied (all norms = 1 by construction). '
+          'T5-b: distinct consecutive states produce orthogonal T-images — non-trivial, Lean-verified (ZPD.t5_strict_orthogonal).']],
         [1.6*inch, 1.5*inch, 3.4*inch]
     ))
 
@@ -170,7 +181,9 @@ def build():
           'R3 (v1.6) names topological type: locally constant, continuous'],
          ['T3: Uniqueness of T', 'Valid — Proposition; derived; unique up to unitary equivalence'],
          ['T4: Snap &#8594; orthogonal shift', 'Valid — Theorem; derived; unconditional; depends on DP-1'],
-         ['T5: Monotone norms', 'Valid — Proposition; derived; unconditional given DP-1; from T2 and ZP-A T3']],
+         ['T5 / T5-b: Monotone norms + strict orthogonality',
+          'Valid — T5 norm result: tautology of construction (all norms = 1); Lean: ZPD.t5_monotone_norms. '
+          'T5-b: non-trivial Lean-verified result — distinct consecutive states produce orthogonal T-images via DP-1; Lean: ZPD.t5_strict_orthogonal (axiom-free).']],
         [2.5*inch, 4.0*inch]
     ))
 

@@ -1,5 +1,8 @@
 """
-Build ZP-D Illustrated Companion (v1.3)
+Build ZP-D Illustrated Companion (v1.4)
+Changes from v1.3:
+- T5-b added: every genuine state transition produces an orthogonal shift
+  (not just the Binary Snap). Key result box added after T4.
 Changes from v1.2:
 - n=2 foundational minimum explained in "What Is ZP-D Doing?"
 - R3 (T locally constant and continuous) noted near the T operator key results
@@ -103,7 +106,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  April 2026  |  v1.3')
+            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  May 2026  |  v1.4')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -130,8 +133,8 @@ def build():
 
     E += [
         Paragraph('How topology maps to quantum state space', CS['title']),
-        Paragraph('State Layer (Hilbert Space) | Version 1.3', CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('State Layer (Hilbert Space) | Version 1.4', CS['subtitle']),
+        Paragraph('ZP Companion | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal ontology — every claim here restates a result already '
@@ -241,6 +244,13 @@ def build():
     E.append(key_result_box('Key Result: The Snap Produces an Orthogonal Shift (T4)',
         'The Binary Snap — 0 → ε₀ in ℚ₂ — maps to a shift from e₀ to e₁ in H such that '
         '⟨e₀, e₁⟩ = 0. The Snap is a right-angle turn in state space.'))
+    E.append(sp(4))
+    E.append(key_result_box('Key Result: Every Genuine Transition Produces an Orthogonal Shift (T5-b)',
+        'The Snap is not a special case. For any state sequence, whenever two consecutive '
+        'states are distinct — meaning the sequence actually moved — their T-images in H '
+        'are orthogonal. Each genuine transition opens a new direction. The whole ascending '
+        'chain, not just the first step, unfolds through orthogonal shifts. '
+        'Lean: ZPD.t5_strict_orthogonal (axiom-free, via DP-1).'))
     E.append(sp(8))
 
     E.append(cbody(
