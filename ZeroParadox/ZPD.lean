@@ -17,7 +17,8 @@ to each other. That makes this a valid representation rather than just any
 generic map. There's essentially one way to lay this out. Because of how it
 lands on orthogonal axes, they're going completely separate directions. The snap
 from null to ε₀ is the payoff. Before and after point in completely orthogonal
-directions inside H.
+directions inside H. Every genuine transition does the same thing. Each distinct
+step in the state sequence produces an orthogonal shift.
 
 ---
 
