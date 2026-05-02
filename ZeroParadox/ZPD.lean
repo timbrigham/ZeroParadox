@@ -30,8 +30,10 @@ as `Fin n`, keeping this file self-contained within functional analysis
 Lean dependencies.
 
 Proves: T2 (existence of T by basis assignment, all five D2 requirements),
-T4 (Snap → orthogonal shift in H), T5 (monotone sequences → non-decreasing
-norms). T3 (uniqueness up to unitary equivalence) is stated; proof deferred
+T4 (Snap → orthogonal shift in H), T5 (monotone norms — tautology of the
+unit-norm construction), T5-b (distinct consecutive states → orthogonal
+T-images, using DP-1 via t2_orthogonal — the non-trivial content of T5).
+T3 (uniqueness up to unitary equivalence) is stated; proof deferred
 pending OrthonormalBasis API. DP-1 (orthogonality) is proved as a theorem
 of the construction — reflecting the design commitment, not a bare axiom.
 -/
