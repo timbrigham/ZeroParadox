@@ -178,6 +178,16 @@ theorem t5_monotone_norms (n : ℕ) (S : ℕ → Fin n) (k : ℕ) :
     ‖transitionOp n (S k)‖ ≤ ‖transitionOp n (S (k + 1))‖ := by
   simp [t2_norm_eq_one]
 
+/-- T5-b: For a strictly monotone state sequence (consecutive states distinct),
+    consecutive T-images are orthogonal in H.
+    This is the non-trivial content of T5: distinct state indices map to orthogonal
+    vectors via DP-1. Unlike t5_monotone_norms (which is a norm-equality tautology),
+    this result genuinely uses the design principle and is load-bearing for the
+    interpretation that state transitions produce orthogonal shifts in H. -/
+theorem t5_strict_orthogonal (n : ℕ) (S : ℕ → Fin n) (k : ℕ) (h : S k ≠ S (k + 1)) :
+    @inner ℂ (StateSpace n) _ (transitionOp n (S k)) (transitionOp n (S (k + 1))) = 0 :=
+  t2_orthogonal n (S k) (S (k + 1)) h
+
 end ZeroParadox.ZPD
 
 /-! ## Axiom Purity Check -/
@@ -192,5 +202,6 @@ open ZeroParadox.ZPD
 #print axioms t2_existence
 #print axioms t4_snap_orthogonal
 #print axioms t5_monotone_norms
+#print axioms t5_strict_orthogonal
 
 end PurityCheck
