@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-C_Information_Theory_v1_9-1.pdf](ZP-C_Information_Theory_v1_9-1.pdf) | 2026-05-02 | ZP-C v1.9 superseded by v1.10: R-BRIDGE "not a coincidence" clause given cross-reference to ZP-E R-AFA — the structural argument for why K and 2-adic surprisal converge at P₀ belongs to ZP-E, not ZP-C. No mathematical content changed. |
 | [ZP-H_Categorical_Bridge_v1_8-1.pdf](ZP-H_Categorical_Bridge_v1_8-1.pdf) | 2026-05-02 | ZP-H v1.8 superseded by v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal with the Lean-verified argument: ℝ≥0 has no greatest element (t + 1 > t), the categorical expression of ZP-A R1. |
 | [ZP-H_Categorical_Bridge_v1_7-1.pdf](ZP-H_Categorical_Bridge_v1_7-1.pdf) | 2026-05-02 | ZP-H v1.7 superseded by v1.8: C-H1 AX-G2 verification note added — ⊥-to-0 identification depends on CC-1/DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. |
 | [ZP-I_Inside_Zero_v1_5-1.pdf](ZP-I_Inside_Zero_v1_5-1.pdf) | 2026-05-02 | ZP-I v1.5 superseded by v1.6: key result box first bullet qualified with R-IZ-A — "forces v₂(Sₙ) → ∞ given construction hypothesis R-IZ-A" — consistent with body text. No mathematical content changed. |
