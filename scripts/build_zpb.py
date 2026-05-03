@@ -1,5 +1,7 @@
 """
-Build ZP-B: p-Adic Topology (v1.5)
+Build ZP-B: p-Adic Topology (v1.6)
+v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects;
+"existence" in AX-B1 is a property the states represent, not a statement about set membership.
 v1.5: T3 ZP interpretation bullets labelled explicitly — "ZP Interpretation:" prefix added to
 distinguish pure topology (the theorem statement) from ZP-specific framing (the Binary Snap).
 """
@@ -8,13 +10,14 @@ import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_5.pdf')
-    doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.5')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_6.pdf')
+    doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.6')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
-          Paragraph('Version 1.5  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.4  |  v1.5: T3 ZP interpretation bullets labelled explicitly — pure topology and ZP-specific framing now separated with "ZP Interpretation:" prefix.</i>', S['subtitle']),
+          Paragraph('Version 1.6  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.5  |  v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects; existence is a property the states represent, not a statement about set membership. Lean encoding note added (OntologicalStates).</i>', S['subtitle']),
+          Paragraph('<i>v1.5: T3 ZP interpretation bullets labelled explicitly — pure topology and ZP-specific framing now separated with "ZP Interpretation:" prefix.</i>', S['subtitle']),
           Paragraph('<i>v1.4: T0 reframed: derived given MP-1 (design commitment); MP-1 acknowledged as load-bearing choice.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within p-adic analysis and topology. No abstract algebra from ZP-A, no probability, and no Hilbert space is imported. Cross-framework connections are deferred to ZP-D and ZP-E.'),
@@ -33,6 +36,20 @@ def build():
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',
     ]))
+    E.append(body(
+        'Note on set membership: both 0 and 1 are fully present as mathematical objects — '
+        'neither is absent from the formal structure. The set is not a collection of things '
+        'that happen to exist; it is a model of an ontological situation. '
+        '0 names the null condition: the state in which nothing has been instantiated. '
+        '1 names the first non-null condition: the state in which something has. '
+        'Existence in AX-B1 is a property the states represent, not a statement about set membership.'))
+    E.append(body(
+        '<i>Lean encoding: AX-B1 is encoded as <b>OntologicalStates</b> — a free inductive type '
+        'with two named constructors: <b>.null</b> (non-existence) and <b>.exist</b> (existence). '
+        'This avoids tying the null state to any numeric convention such as &#8469;\'s 0. '
+        'Distinctness (null &#8800; exist) is verified by <b>decide</b> via deriving DecidableEq — '
+        'no classical axioms required. Lean identifiers do not appear in the companion documents, '
+        'which are Lean-free by design.</i>'))
     E.append(sp(4))
     E.append(Paragraph('1.2  The Minimality Principle', S['h2']))
     E.append(label_box('Principle MP-1 — Minimality of Representation', [
