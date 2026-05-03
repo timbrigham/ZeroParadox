@@ -12,6 +12,12 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
+TEAL      = colors.HexColor('#1E7B74')
+TEAL_LITE = colors.HexColor('#D0EDED')
+INDIGO      = colors.HexColor('#3949AB')
+INDIGO_LITE = colors.HexColor('#E8EAF6')
+GREY_TEXT   = colors.HexColor('#555555')
+
 def four_way_diagram():
     """Diamond diagram: four descriptions of ⊥ as the same structural role."""
     dw, dh = TW, 3.2 * inch
@@ -80,9 +86,9 @@ def four_way_diagram():
 
 def four_way_table():
     """Table of the four descriptions."""
-    hdr = [Paragraph('Language', CS['tbl_hdr']),
-           Paragraph('Property', CS['tbl_hdr']),
-           Paragraph('Intuition', CS['tbl_hdr'])]
+    hdr = [Paragraph('Language', CS['kr_hdr']),
+           Paragraph('Property', CS['kr_hdr']),
+           Paragraph('Intuition', CS['kr_hdr'])]
     rows = [
         ['Set theory (AFA)',
          '&#8869; = {&#8869;} — Quine atom',
@@ -97,9 +103,9 @@ def four_way_table():
          'eval botCode = selfApply botCode — fixed point',
          '⊥ is its own program; no shorter external generator exists'],
     ]
-    data = [hdr] + [[Paragraph(fix(r[0]), CS['tbl_cell']),
-                     Paragraph(fix(r[1]), CS['tbl_cell']),
-                     Paragraph(fix(r[2]), CS['tbl_cell'])] for r in rows]
+    data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
+                     Paragraph(fix(r[1]), CS['kr_body']),
+                     Paragraph(fix(r[2]), CS['kr_body'])] for r in rows]
     ts = TableStyle([
         ('BACKGROUND',    (0,0),(-1,0),  TEAL),
         ('ROWBACKGROUNDS',(0,1),(-1,-1), [WHITE, TEAL_LITE]),
@@ -202,8 +208,8 @@ def build():
         'they are projections of a single structural identity. The Kleene fixed-point property '
         'is not analogous to the AFA Quine atom property. They are the same property, stated '
         'in different mathematical vocabularies. ZP-K makes this explicit by constructing a '
-        'KleeneStructure typeclass that formally bridges AFAStructure (set-theoretic) to '
-        'computability (Kleene).'))
+        'KleeneStructure — a formal bridge connecting the set-theoretic (AFAStructure) '
+        'and computational (Kleene fixed-point) descriptions.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: T-COMP is not saying that set theory and computability theory are the same. '
@@ -234,7 +240,7 @@ def build():
         '⊥ is its own program — a Kleene fixed point of self-application. '
         '<b>Now IN LEAN SCOPE via ZP-K:</b> machinePhaseKleene provides botCode_is_quine — '
         'a concrete computational Quine whose existence is guaranteed by Kleene\'s second '
-        'recursion theorem (Mathlib fixed_point₂). The code IS its own program.'))
+        'recursion theorem. The code IS its own program.'))
     E.append(sp(4))
     E.append(key_result_box(
         'da1_closed_concrete (ZPK.lean)',
@@ -268,11 +274,9 @@ def build():
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
         'The computability machinery in ZP-K (Kleene\'s theorem, Roger\'s fixed-point theorem) '
-        'requires classical logic — specifically, Lean\'s Classical.choice axiom. This is '
-        'a standard Mathlib infrastructure dependency, not a novel Zero Paradox commitment. '
-        'The #print axioms check for ZP-K theorems reports [propext, Classical.choice, '
-        'Quot.sound] — the same footprint as any theorem that uses Mathlib\'s computability '
-        'library. The ZP-A, ZP-J, and core ZP-E results remain classical-choice-free.'))
+        'requires classical logic — a standard dependency for any theorem that uses '
+        'Mathlib\'s computability library, not a novel Zero Paradox commitment. '
+        'The ZP-A, ZP-J, and core ZP-E results remain free of this dependency.'))
     E.append(cbody(
         'This is analogous to a proof that invokes the intermediate value theorem: IVT '
         'itself depends on completeness of the reals, which depends on choice. Using IVT '

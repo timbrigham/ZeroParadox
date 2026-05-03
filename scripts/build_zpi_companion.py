@@ -563,9 +563,9 @@ def build():
     E.append(Paragraph('Lean 4 Verification', CS['h1']))
     E.append(cbody(
         'The topological core of T-IZ is fully verified in Lean 4 (ZPI.lean v1.1). '
-        'All proofs are complete — no sorry. The purity check (#print axioms) '
-        'confirms the theorems depend only on standard Mathlib axioms '
-        '(propext, Classical.choice, Quot.sound), not on any domain-specific assumption.'))
+        'All proofs are complete. The purity check confirms the theorems depend only '
+        'on standard foundational axioms shared by all Mathlib theorems — '
+        'no domain-specific assumptions.'))
 
     E.append(lean_status_box([
         'h_strict_from_r1_t3 (§Ib) — derives strict per-step valuation growth from '
