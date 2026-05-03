@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.7 | May 2026
+Version 1.8 | May 2026
+v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms
+added to Lean Scope section and traceability register. Optional transparency additions
+exposing pure ZP-A lattice hypotheses for reviewer auditability; primary narrative
+unchanged.
 v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect
 that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain
 modeling commitment (h_strict_from_r1_t3, ZPI.lean §Ib). R-IZ-A is no longer a
@@ -79,10 +83,10 @@ def key_result_box(rows):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-I_Inside_Zero_v1_7.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-I_Inside_Zero_v1_8.pdf')
     print(f'[build_zpi] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-I: Inside Zero', 'ZP-I: Inside Zero',
-                   'Version 1.7', date_str='May 2026')
+                   'Version 1.8', date_str='May 2026')
     E   = []
 
     print('[build_zpi] Building title block...')
@@ -91,9 +95,10 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version 1.7 | May 2026', S['subtitle']),
+        Paragraph('Version 1.8 | May 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain modeling commitment (h_strict_from_r1_t3, §Ib). | '
+            '<i>v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms added to Lean Scope section and traceability register; optional transparency additions for reviewer auditability; primary narrative unchanged. | '
+            'v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain modeling commitment (h_strict_from_r1_t3, §Ib). | '
             'v1.6: Key result box first bullet qualified with R-IZ-A — "forces v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; given construction hypothesis R-IZ-A" — consistent with body text and Section V. No mathematical content changed. | '
             'v1.5: Section V "Complete Cycle" and Null Balance callout updated — '
             '"framework closure" framing now explicitly conditional on the R-IZ-A construction-level '
@@ -395,6 +400,12 @@ def build():
         li('t_iz_limit_is_new_null: the Cauchy limit satisfies the DA-2 &#8869; role (proved directly).'),
         li('c_t_iz_null_balance: a non-bottom state cannot satisfy the &#8869; role (proved directly).'),
         li('t_iz_c3_compatible: C3 irreversibility is preserved — Cauchy sequences &#8800; continuous paths (proved directly).'),
+        li('t_iz_h_bound_from_depth_chain: h_bound derived from IsDepthChain + IsStrictStateSequence — '
+           'pure ZP-A lattice conditions. Closes the &#8214;S<sub>0</sub>&#8214; factor gap between '
+           '&#167;Ib and t_iz_complete (optional transparency lemma).'),
+        li('t_iz_complete_from_axioms: T-IZ complete variant taking lattice hypotheses instead of bare h_bound — '
+           'full R1+T3 &#8594; convergence chain auditable in one theorem '
+           '(optional transparency variant; t_iz_complete is the canonical theorem).'),
         sp(4),
     ]
     E.append(derived(
@@ -402,6 +413,9 @@ def build():
         't_iz_limit_is_new_null (Step 6, proved axiom-free via DA-2). These two steps '
         'constitute the complete formal proof of T-IZ. '
         't_iz_valuation_unbounded, c_t_iz_null_balance, t_iz_c3_compatible also proved. '
+        'Transparency variants: t_iz_h_bound_from_depth_chain + t_iz_complete_from_axioms '
+        'expose pure ZP-A lattice hypotheses for reviewer auditability — t_iz_complete '
+        'is the canonical theorem. '
         'Steps 2–5 (valuation-complexity bridge + DA-1/T-SNAP) are informational context — '
         'DA-1 formally closed by ZP-K/Kleene, no Kolmogorov complexity required. '
         'No new axioms. ✓'))
@@ -663,6 +677,19 @@ def build():
          'N/A',
          'Informational context — not load-bearing. DA-1 closed by ZP-K/Kleene. '
          'Outside Lean scope (Kolmogorov complexity absent from standard proof libraries).'],
+        ['t_iz_h_bound_from_depth_chain (Lean)',
+         'h_strict_from_r1_t3 (&#167;Ib); t_iz_r1_t3_geometric_bound; '
+         'Padic.norm_eq_zpow_neg_valuation (depths 0 : &#8469; &#8658; &#8214;S<sub>0</sub>&#8214;<sub>2</sub> &#8804; 1)',
+         'None',
+         'Lean: proved ✓ — optional transparency lemma. Derives h_bound from pure '
+         'ZP-A lattice conditions, closing the &#8214;S<sub>0</sub>&#8214; factor gap '
+         'between &#167;Ib and t_iz_complete.'],
+        ['t_iz_complete_from_axioms (Lean)',
+         't_iz_h_bound_from_depth_chain; t_iz_complete',
+         'None',
+         'Lean: proved ✓ — optional transparency variant. Full R1+T3 &#8594; convergence '
+         'chain auditable without ungrounded hypothesis. '
+         'Canonical theorem: t_iz_complete.'],
     ]
     E.append(data_table(
         ['Claim', 'Grounded In', 'Bridge Axiom?', 'Status'],
@@ -675,7 +702,7 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-I v1.7 | Theorem T-IZ: Inside Zero | '
+            '<i>End of ZP-I v1.8 | Theorem T-IZ: Inside Zero | '
             'R-IZ-A closed: strict valuation growth derived from ZP-A R1 + T3 via IsDepthChain (h_strict_from_r1_t3, &#167;Ib) | '
             'Framework closure: no construction-level hypothesis required | '
             'Formal spine: Steps 1 + 6 both proved axiom-free (t_iz_cauchy + t_iz_limit_is_new_null) | '

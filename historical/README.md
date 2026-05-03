@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-I_Inside_Zero_v1_7-1.pdf](ZP-I_Inside_Zero_v1_7-1.pdf) | 2026-05-03 | ZP-I v1.7 superseded by v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms added to Lean Scope section and traceability register as optional transparency variants; primary narrative unchanged. |
 | [ZP-B_pAdic_Topology_v1_5-1.pdf](ZP-B_pAdic_Topology_v1_5-1.pdf) | 2026-05-03 | ZP-B v1.5 superseded by v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects; "existence" in AX-B1 is a property the states represent, not a statement about set membership. No mathematical content changed. |
 | [ZP-I_Inside_Zero_v1_6-1.pdf](ZP-I_Inside_Zero_v1_6-1.pdf) | 2026-05-02 | ZP-I v1.6 superseded by v1.7: R-IZ-A formally closed — key result box, Remark R-IZ-A, Step 1, Null Balance callout, and Section V closure text updated to reflect that strict valuation growth is Lean-derived from ZP-A R1 + T3 via IsDepthChain (h_strict_from_r1_t3, §Ib). "Conditional on R-IZ-A" language replaced throughout. |
 | [ZP-D_State_Layer_v1_7-1.pdf](ZP-D_State_Layer_v1_7-1.pdf) | 2026-05-02 | ZP-D v1.7 superseded by v1.8: T5 strengthened — T5-b (strict orthogonality) added and Lean-verified (ZPD.t5_strict_orthogonal); T5 norm result disclosed as tautology of construction (all norms = 1). |
