@@ -10,93 +10,43 @@ April 2026.
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from zp_utils import *
 
-FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fonts') + os.sep
-pdfmetrics.registerFont(TTFont('DV',    FONT_DIR + 'DejaVuSans.ttf'))
-pdfmetrics.registerFont(TTFont('DV-B',  FONT_DIR + 'DejaVuSans-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DV-I',  FONT_DIR + 'DejaVuSans-Oblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',   FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B', FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I', FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
+# ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
+GOLD      = colors.HexColor('#A0742A')
+GOLD_LITE = colors.HexColor('#FDF6E3')
+GOLD_MED  = colors.HexColor('#F0E0A0')
+AMBER     = colors.HexColor('#F9A825')   # override — PhilQ uses brighter amber
 
-GOLD        = colors.HexColor('#A0742A')
-GOLD_LITE   = colors.HexColor('#FDF6E3')
-GOLD_MED    = colors.HexColor('#F0E0A0')
-SLATE       = colors.HexColor('#455A64')
-SLATE_LITE  = colors.HexColor('#ECEFF1')
-INDIGO      = colors.HexColor('#3949AB')
-INDIGO_LITE = colors.HexColor('#E8EAF6')
-GREEN_DARK  = colors.HexColor('#1B5E20')
-GREEN_LITE  = colors.HexColor('#E8F5E9')
-AMBER       = colors.HexColor('#F9A825')
-AMBER_LITE  = colors.HexColor('#FFF8E1')
-WHITE       = colors.white
-BLACK       = colors.black
-
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-S = {
-    'title':    ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
-                               spaceAfter=6, alignment=1, textColor=BLACK),
-    'subtitle': ParagraphStyle('subtitle', fontName='DVS-I', fontSize=12, leading=17,
-                               spaceAfter=4, alignment=1, textColor=SLATE),
-    'meta':     ParagraphStyle('meta',     fontName='DV-I',  fontSize=9,  leading=13,
-                               spaceAfter=10, alignment=1, textColor=colors.grey),
-    'h1':       ParagraphStyle('h1',       fontName='DV-B',  fontSize=13, leading=18,
-                               spaceBefore=16, spaceAfter=6, textColor=GOLD),
-    'body':     ParagraphStyle('body',     fontName='DVS',   fontSize=10.5, leading=16,
-                               spaceAfter=8, alignment=4),
-    'bodyI':    ParagraphStyle('bodyI',    fontName='DVS-I', fontSize=10.5, leading=16,
-                               spaceAfter=8, alignment=4, textColor=SLATE),
-    'note':     ParagraphStyle('note',     fontName='DVS-I', fontSize=9,   leading=13,
-                               spaceAfter=4, textColor=colors.HexColor('#666666')),
-    'lbl':      ParagraphStyle('lbl',      fontName='DV-B',  fontSize=9,   leading=13,
-                               textColor=WHITE),
-    'cell':     ParagraphStyle('cell',     fontName='DVS',   fontSize=10,  leading=14),
-    'cellI':    ParagraphStyle('cellI',    fontName='DVS-I', fontSize=10,  leading=14),
-    'snap':     ParagraphStyle('snap',     fontName='DVS-B', fontSize=11,  leading=16,
-                               spaceAfter=4, textColor=INDIGO, alignment=1),
-    'endnote':  ParagraphStyle('endnote',  fontName='DVS-I', fontSize=9,   leading=13,
-                               alignment=1, textColor=SLATE),
-}
-
-def sp(n=6):
-    return Spacer(1, n)
+# ── Local style overrides: GOLD theme, larger body text ──────────────────────
+S['title']   = ParagraphStyle('title',   fontName='DV-B',  fontSize=20, leading=26,
+                               spaceAfter=6, alignment=1, textColor=BLACK)
+S['subtitle'] = ParagraphStyle('subtitle', fontName='DVS-I', fontSize=12, leading=17,
+                               spaceAfter=4, alignment=1, textColor=SLATE)
+S['meta']    = ParagraphStyle('meta',    fontName='DV-I',  fontSize=9,  leading=13,
+                               spaceAfter=10, alignment=1, textColor=colors.grey)
+S['h1']      = ParagraphStyle('h1',      fontName='DV-B',  fontSize=13, leading=18,
+                               spaceBefore=16, spaceAfter=6, textColor=GOLD)
+S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10.5, leading=16,
+                               spaceAfter=8, alignment=4)
+S['bodyI']   = ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10.5, leading=16,
+                               spaceAfter=8, alignment=4, textColor=SLATE)
+S['note']    = ParagraphStyle('note',    fontName='DVS-I', fontSize=9,   leading=13,
+                               spaceAfter=4, textColor=colors.HexColor('#666666'))
+S['lbl']     = ParagraphStyle('lbl',     fontName='DV-B',  fontSize=9,   leading=13,
+                               textColor=WHITE)
+S['cell']    = ParagraphStyle('cell',    fontName='DVS',   fontSize=10,  leading=14)
+S['cellI']   = ParagraphStyle('cellI',   fontName='DVS-I', fontSize=10,  leading=14)
+S['snap']    = ParagraphStyle('snap',    fontName='DVS-B', fontSize=11,  leading=16,
+                               spaceAfter=4, textColor=INDIGO, alignment=1)
+S['endnote'] = ParagraphStyle('endnote', fontName='DVS-I', fontSize=9,   leading=13,
+                               alignment=1, textColor=SLATE)
 
 def hr():
     return HRFlowable(width='100%', thickness=0.5,
                       color=colors.HexColor('#BBBBBB'),
                       spaceAfter=6, spaceBefore=4)
 
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k','ₘ':'m'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    text = text.replace('✓','<font name="DV">&#10003;</font>')
-    replacements = [
-        ('⊥','&#8869;'),('∨','&#8744;'),('≤','&#8804;'),('≥','&#8805;'),
-        ('≠','&#8800;'),('∈','&#8712;'),('→','&#8594;'),('∞','&#8734;'),
-        ('—','&#8212;'),('–','&#8211;'),('×','&#215;'),('−','&#8722;'),
-        ('ε','&#949;'),('∀','&#8704;'),('∃','&#8707;'),('′','&#8242;'),
-        ('ω','&#969;'),('⊂','&#8834;'),('≡','&#8801;'),
-        ('ℚ','&#8474;'),('ℝ','&#8477;'),('ℕ','&#8469;'),
-    ]
-    for ch, ent in replacements:
-        text = text.replace(ch, ent)
-    return text
 
 def body(text):
     return Paragraph(fix(text), S['body'])
@@ -196,9 +146,7 @@ def amber_note(text):
 
 
 def build():
-    out_path = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        'ZP_Philosophical_Question.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP_Philosophical_Question.pdf')
 
     def footer_cb(canvas, doc):
         canvas.saveState()

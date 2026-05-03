@@ -1,173 +1,47 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.7 | May 2026
+Version 1.8 | May 2026
+v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms
+added to Lean Scope section and traceability register. Optional transparency additions
+exposing pure ZP-A lattice hypotheses for reviewer auditability; primary narrative
+unchanged.
 v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect
 that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain
 modeling commitment (h_strict_from_r1_t3, ZPI.lean §Ib). R-IZ-A is no longer a
 bare construction-level assumption.
-v1.6: Key result box first bullet qualified with R-IZ-A — "forces v₂(Sₙ) → ∞ (given
-construction hypothesis R-IZ-A)" — consistent with body text and Section V treatment.
-No mathematical content changed.
+v1.6: Key result box first bullet qualified with R-IZ-A. No mathematical content changed.
 v1.5: Section V "Complete Cycle" and Null Balance callout updated to carry R-IZ-A conditional
-caveat forward — "framework closure" is now explicitly conditional on the construction-level
-growth rate hypothesis v₂(S(n)) ≥ n (see R-IZ-A). Key result box updated to match.
-Reviewer feedback: Section V presented closure as established fact without forwarding the caveat.
+caveat forward. Key result box updated to match.
 v1.4: Remark R-IZ-A added — valuation growth hypothesis v₂(S(n)) ≥ n acknowledged as a
-construction-level assumption (stronger than t_iz_valuation_unbounded). Title block corrected
-to v1.3 (was stuck at v1.2). T-IZ hypothesis text updated from "forced by R1+T2" to
-"construction hypothesis — see R-IZ-A."
-v1.3: Valuation-complexity bridge demoted from "critical step / required for full
-conclusion" to "informational context." The formal spine of T-IZ is Steps 1 and 6
-(Cauchy convergence → DA-2 licensing — both proved axiom-free in Lean). DA-1 is now
-formally closed by ZP-K via Kleene's second recursion theorem, bypassing the Kolmogorov
-complexity route. Steps 2–5 describe the original ZP-E informational argument and
-remain as historical/motivational context, not as a proof dependency.
-v1.2: t_iz_valuation_unbounded added — "sup v₂(Sₙ) = ∞" proved axiom-free; proof
-obligation table row 3 closed.
-v1.1: Sorry-pending language cleared throughout; "no new axioms required" qualified.
+construction-level assumption. Title block corrected to v1.3. T-IZ hypothesis text updated.
+v1.3: Valuation-complexity bridge demoted to informational context. Formal spine is Steps 1+6.
+v1.2: t_iz_valuation_unbounded added — proved axiom-free.
+v1.1: Sorry-pending language cleared.
 v1.0: Initial release — Theorem T-IZ (Inside Zero).
-v1.0: Initial release — Theorem T-IZ (Inside Zero): every maximal ascending chain in
-the Zero Paradox framework is a Cauchy sequence that converges to its own successor null
-in the 2-adic metric. Framework closure established: the structure is a closed system,
-not merely an emergence theorem.
-Follows all rules in pdf rendering standards:
-  - DejaVu fonts only
-  - Checkmark always wrapped in <font name="DV">
-  - All table cells are Paragraph objects
-  - No unicode subscripts — use sub/super tags
-  - US Letter, 1-inch margins, TW = 6.5 inch
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from zp_utils import *
 
-# ── 1. FONT REGISTRATION ──────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR   = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+# ZP-I uses justified body text; override the left-aligned zp_utils defaults
+S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
+                               spaceAfter=6, alignment=4)
+S['bodyI']   = ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14,
+                               spaceAfter=6, alignment=4)
+S['li']      = ParagraphStyle('li',      fontName='DVS',   fontSize=10, leading=14,
+                               leftIndent=18, spaceAfter=3, alignment=4)
+S['derived'] = ParagraphStyle('derived', fontName='DVS-B', fontSize=10, leading=14,
+                               spaceAfter=6, textColor=GREEN_DARK, alignment=4)
+S['key']     = ParagraphStyle('key',     fontName='DVS-B', fontSize=10, leading=14,
+                               spaceAfter=4, textColor=INDIGO, alignment=4)
 
-print(f'[build_zpi] SCRIPT_DIR: {SCRIPT_DIR}')
-print(f'[build_zpi] FONT_DIR:   {FONT_DIR}')
-print('[build_zpi] Registering fonts...')
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'));         print('  DV ok')
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'));    print('  DV-B ok')
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf')); print('  DV-I ok')
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf')); print('  DV-BI ok')
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'));         print('  DVS ok')
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'));   print('  DVS-B ok')
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-I ok')
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-BI ok')
-print('[build_zpi] Fonts registered.')
-
-# ── 2. COLORS ─────────────────────────────────────────────────────────────────
-BLUE        = colors.HexColor('#2E75B6')
-SLATE       = colors.HexColor('#455A64')
-SLATE_LITE  = colors.HexColor('#ECEFF1')
-GREEN_DARK  = colors.HexColor('#1B5E20')
-GREEN_LITE  = colors.HexColor('#E8F5E9')
-INDIGO      = colors.HexColor('#3949AB')
-INDIGO_LITE = colors.HexColor('#E8EAF6')
-GREY_LITE   = colors.HexColor('#F5F5F5')
-AMBER_LITE  = colors.HexColor('#FFF8E1')
-AMBER       = colors.HexColor('#F9A825')
-WHITE       = colors.white
-
-# ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-# ── 4. PARAGRAPH STYLES ───────────────────────────────────────────────────────
-S = {
-    'title':   ParagraphStyle('title',   fontName='DV-B',  fontSize=18, leading=24,
-                               spaceAfter=6, alignment=1),
-    'subtitle':ParagraphStyle('subtitle',fontName='DV-I',  fontSize=11, leading=15,
-                               spaceAfter=4, alignment=1),
-    'h1':      ParagraphStyle('h1',      fontName='DV-B',  fontSize=13, leading=18,
-                               spaceBefore=14, spaceAfter=5, textColor=BLUE),
-    'h2':      ParagraphStyle('h2',      fontName='DV-B',  fontSize=11, leading=15,
-                               spaceBefore=10, spaceAfter=4, textColor=BLUE),
-    'body':    ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
-                               spaceAfter=6, alignment=4),
-    'bodyI':   ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14,
-                               spaceAfter=6, alignment=4),
-    'li':      ParagraphStyle('li',      fontName='DVS',   fontSize=10, leading=14,
-                               leftIndent=18, spaceAfter=3, alignment=4),
-    'derived': ParagraphStyle('derived', fontName='DVS-B', fontSize=10, leading=14,
-                               spaceAfter=6, textColor=GREEN_DARK, alignment=4),
-    'label':   ParagraphStyle('label',   fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=WHITE),
-    'cell':    ParagraphStyle('cell',    fontName='DVS',   fontSize=9,  leading=13),
-    'cellI':   ParagraphStyle('cellI',   fontName='DVS-I', fontSize=9,  leading=13),
-    'note':    ParagraphStyle('note',    fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=4),
-    'endnote': ParagraphStyle('endnote', fontName='DVS-I', fontSize=9,  leading=13,
-                               alignment=1),
-    'key':     ParagraphStyle('key',     fontName='DVS-B', fontSize=10, leading=14,
-                               spaceAfter=4, textColor=INDIGO, alignment=4),
-}
-
-# ── 5. HELPERS ────────────────────────────────────────────────────────────────
-
-def sp(n=6):
-    return Spacer(1, n)
-
-def hr():
-    return HRFlowable(width='100%', thickness=0.5,
-                      color=colors.HexColor('#AAAAAA'),
-                      spaceAfter=6, spaceBefore=2)
-
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k','ₘ':'m','ᵢ':'i','ⱼ':'j'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    text = text.replace('✓', '<font name="DV">&#10003;</font>')
-    text = text.replace('∅', '<font name="DV">&#8709;</font>')
-    replacements = [
-        ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
-        ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
-        ('∈','&#8712;'),('∉','&#8713;'),('⊆','&#8838;'),
-        ('∀','&#8704;'),('∃','&#8707;'),('∞','&#8734;'),
-        ('→','&#8594;'),('←','&#8592;'),('↔','&#8596;'),
-        ('⇒','&#8658;'),('∘','&#8728;'),('—','&#8212;'),
-        ('–','&#8211;'),('·','&#183;'),('×','&#215;'),
-        ('−','&#8722;'),('≡','&#8801;'),('≅','&#8773;'),
-        ('ε','&#949;'),('α','&#945;'),('β','&#946;'),
-        ('γ','&#947;'),('δ','&#948;'),('ι','&#953;'),
-        ('τ','&#964;'),('φ','&#966;'),('ω','&#969;'),
-        ('Ω','&#937;'),('π','&#960;'),
-        ('ℚ','&#8474;'),('ℤ','&#8484;'),('ℂ','&#8450;'),
-        ('ℕ','&#8469;'),('ℝ','&#8477;'),
-        ('≈','&#8776;'),('∑','&#8721;'),('¬','&#172;'),
-        ('⊂','&#8834;'),('⊃','&#8835;'),
-        ('⌊','&#8970;'),('⌋','&#8971;'),
-    ]
-    for char, entity in replacements:
-        if char in text:
-            text = text.replace(char, entity)
-    return text
-
-def body(text, style='body'):
-    return Paragraph(fix(text), S[style])
-
-def li(text):
-    return Paragraph('&#8226;  ' + fix(text), S['li'])
-
-def derived(text):
-    return Paragraph(fix(text), S['derived'])
 
 def key(text):
     return Paragraph(fix(text), S['key'])
 
+
 def theorem_box(title, rows, color=SLATE):
+    """Colored box for theorems/lemmas — default SLATE, can be INDIGO."""
     data = [[Paragraph(fix(title), S['label'])]]
     for r in rows:
         data.append([Paragraph(fix(r), S['cell'])])
@@ -187,19 +61,6 @@ def theorem_box(title, rows, color=SLATE):
     t.setStyle(ts)
     return t
 
-def callout(text, bg=AMBER_LITE, border=AMBER):
-    data = [[Paragraph(fix(text), S['body'])]]
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), bg),
-        ('BOX',           (0,0), (-1,-1), 1.0, border),
-        ('TOPPADDING',    (0,0), (-1,-1), 8),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
-        ('LEFTPADDING',   (0,0), (-1,-1), 10),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 10),
-    ])
-    t = Table(data, colWidths=[TW])
-    t.setStyle(ts)
-    return t
 
 def key_result_box(rows):
     data = [[Paragraph(fix('Key Result'), S['label'])]]
@@ -220,47 +81,12 @@ def key_result_box(rows):
     t.setStyle(ts)
     return t
 
-def data_table(headers, rows_data, col_widths):
-    hdr_row = [Paragraph(fix(h), S['label']) for h in headers]
-    data    = [hdr_row]
-    for row in rows_data:
-        data.append([Paragraph(fix(str(c)), S['cell']) for c in row])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  BLUE),
-        ('ROWBACKGROUNDS',(0,1), (-1,-1), [WHITE, GREY_LITE]),
-        ('BOX',           (0,0), (-1,-1), 0.5, BLUE),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, BLUE),
-        ('INNERGRID',     (0,1), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 4),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
-        ('LEFTPADDING',   (0,0), (-1,-1), 6),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 6),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=col_widths, repeatRows=1)
-    t.setStyle(ts)
-    return t
 
-def make_doc(path):
-    def footer_cb(canvas, doc):
-        canvas.saveState()
-        canvas.setFont('DV-I', 8)
-        canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-I: Inside Zero v1.6  |  May 2026  |  Page {doc.page}'
-        canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
-        canvas.restoreState()
-    return SimpleDocTemplate(
-        path, pagesize=LETTER,
-        leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
-        title='ZP-I: Inside Zero',
-        author='Zero Paradox Project',
-        onFirstPage=footer_cb, onLaterPages=footer_cb,
-    )
-
-
-def build_zpi(out_path):
+def build():
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-I_Inside_Zero_v1_8.pdf')
     print(f'[build_zpi] Output: {out_path}')
-    doc = make_doc(out_path)
+    doc = make_doc(out_path, 'ZP-I: Inside Zero', 'ZP-I: Inside Zero',
+                   'Version 1.8', date_str='May 2026')
     E   = []
 
     print('[build_zpi] Building title block...')
@@ -269,9 +95,10 @@ def build_zpi(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version 1.7 | May 2026', S['subtitle']),
+        Paragraph('Version 1.8 | May 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain modeling commitment (h_strict_from_r1_t3, §Ib). | '
+            '<i>v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms added to Lean Scope section and traceability register; optional transparency additions for reviewer auditability; primary narrative unchanged. | '
+            'v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain modeling commitment (h_strict_from_r1_t3, §Ib). | '
             'v1.6: Key result box first bullet qualified with R-IZ-A — "forces v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; given construction hypothesis R-IZ-A" — consistent with body text and Section V. No mathematical content changed. | '
             'v1.5: Section V "Complete Cycle" and Null Balance callout updated — '
             '"framework closure" framing now explicitly conditional on the R-IZ-A construction-level '
@@ -452,11 +279,10 @@ def build_zpi(out_path):
             'Kolmogorov complexity (informational) are two descriptions of the same structure. '
             'At the Cauchy limit, both converge on P<sub>0</sub>: the incompressibility threshold '
             'K(c<sub>1</sub> | n) / |c<sub>1</sub>| = 1 (ZP-C D1).',
-            'Lean scope: Kolmogorov complexity K is uncomputable and absent from Mathlib. '
-            'No AIT library exists in Lean 4. Bridge is Outside Lean Scope — same category as '
-            'DA-1 Path 3 (ZP-C D1 + AIT) in ZP-E. The topological core (§ A above) is proved '
-            'axiom-free; the bridge follows the ZP-E informal argument. See ZP-E § IV for the '
-            'full DA-1 Path 3 treatment that the bridge extends.',
+            'Lean scope: Kolmogorov complexity K is uncomputable and absent from standard proof '
+            'libraries. Bridge is Outside Lean Scope — same category as DA-1 Path 3 (ZP-C D1 + AIT) '
+            'in ZP-E. The topological core (§ A above) is proved axiom-free; the bridge follows the '
+            'ZP-E informal argument. See ZP-E § IV for the full DA-1 Path 3 treatment that the bridge extends.',
         ],
         color=INDIGO
     ))
@@ -534,7 +360,7 @@ def build_zpi(out_path):
         ['sup v<sub>2</sub>(S(n)) = ∞',
          'ZP-A R1 (no top) + ZP-B T2 (valuation = depth)',
          'Follows from no-top property — no new axiom',
-         'Lean: t_iz_valuation_unbounded ✓ (proved axiom-free — [propext, Classical.choice, Quot.sound])'],
+         'Lean: t_iz_valuation_unbounded ✓ (proved axiom-free)'],
         ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1',
          'ZP-C D1 (P<sub>0</sub>) + L-INF + ZP-B (binary construction)',
          'Informational context — not a proof dependency',
@@ -574,6 +400,12 @@ def build_zpi(out_path):
         li('t_iz_limit_is_new_null: the Cauchy limit satisfies the DA-2 &#8869; role (proved directly).'),
         li('c_t_iz_null_balance: a non-bottom state cannot satisfy the &#8869; role (proved directly).'),
         li('t_iz_c3_compatible: C3 irreversibility is preserved — Cauchy sequences &#8800; continuous paths (proved directly).'),
+        li('t_iz_h_bound_from_depth_chain: h_bound derived from IsDepthChain + IsStrictStateSequence — '
+           'pure ZP-A lattice conditions. Closes the &#8214;S<sub>0</sub>&#8214; factor gap between '
+           '&#167;Ib and t_iz_complete (optional transparency lemma).'),
+        li('t_iz_complete_from_axioms: T-IZ complete variant taking lattice hypotheses instead of bare h_bound — '
+           'full R1+T3 &#8594; convergence chain auditable in one theorem '
+           '(optional transparency variant; t_iz_complete is the canonical theorem).'),
         sp(4),
     ]
     E.append(derived(
@@ -581,6 +413,9 @@ def build_zpi(out_path):
         't_iz_limit_is_new_null (Step 6, proved axiom-free via DA-2). These two steps '
         'constitute the complete formal proof of T-IZ. '
         't_iz_valuation_unbounded, c_t_iz_null_balance, t_iz_c3_compatible also proved. '
+        'Transparency variants: t_iz_h_bound_from_depth_chain + t_iz_complete_from_axioms '
+        'expose pure ZP-A lattice hypotheses for reviewer auditability — t_iz_complete '
+        'is the canonical theorem. '
         'Steps 2–5 (valuation-complexity bridge + DA-1/T-SNAP) are informational context — '
         'DA-1 formally closed by ZP-K/Kleene, no Kolmogorov complexity required. '
         'No new axioms. ✓'))
@@ -781,12 +616,12 @@ def build_zpi(out_path):
          'DA-1 formally closed by ZP-K via Kleene\'s second recursion theorem. '
          'Retained as motivational context documenting convergence of the topological and '
          'informational layers at P<sub>0</sub>. Outside Lean scope (Kolmogorov complexity '
-         'absent from Mathlib) — but no longer load-bearing.'],
+         'absent from standard proof libraries) — but no longer load-bearing.'],
         ['T-IZ Lean sorry fill',
          'CLOSED — ZPI.lean v1.1',
          't_iz_norm_tendsto_zero and t_iz_conv_zero filled; t_iz_cauchy proved axiom-free. '
          'All ZPI.lean theorems compile with no sorry. '
-         'Axiom footprint: [propext, Classical.choice, Quot.sound] (no sorryAx).'],
+         'Axiom footprint: standard foundational axioms only (no domain-specific assumptions).'],
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP (ZP-E)',
          'AX-1 retired. T-SNAP is derived. T-IZ extends T-SNAP to the ordinal limit.'],
@@ -819,7 +654,7 @@ def build_zpi(out_path):
         ['t_iz_valuation_unbounded (Lean)',
          'int_strict_mono_ge (induction on &#8484;); omega (integer arithmetic)',
          'None',
-         'Lean: proved ✓ — [propext, Classical.choice, Quot.sound]. '
+         'Lean: proved ✓ — standard foundational axioms only. '
          'Formalises "sup v<sub>2</sub>(S(n)) = &#8734;" — proof obligation table row 3.'],
         ['t_iz_cauchy (Lean)',
          'ZP-B (Q<sub>2</sub> normed field); geometric tendsto; Mathlib.Analysis.SpecificLimits.Basic',
@@ -841,7 +676,20 @@ def build_zpi(out_path):
          'ZP-C D1, L-INF; ZP-B T2; AIT (standard)',
          'N/A',
          'Informational context — not load-bearing. DA-1 closed by ZP-K/Kleene. '
-         'Outside Lean scope (Kolmogorov complexity absent from Mathlib).'],
+         'Outside Lean scope (Kolmogorov complexity absent from standard proof libraries).'],
+        ['t_iz_h_bound_from_depth_chain (Lean)',
+         'h_strict_from_r1_t3 (&#167;Ib); t_iz_r1_t3_geometric_bound; '
+         'Padic.norm_eq_zpow_neg_valuation (depths 0 : &#8469; &#8658; &#8214;S<sub>0</sub>&#8214;<sub>2</sub> &#8804; 1)',
+         'None',
+         'Lean: proved ✓ — optional transparency lemma. Derives h_bound from pure '
+         'ZP-A lattice conditions, closing the &#8214;S<sub>0</sub>&#8214; factor gap '
+         'between &#167;Ib and t_iz_complete.'],
+        ['t_iz_complete_from_axioms (Lean)',
+         't_iz_h_bound_from_depth_chain; t_iz_complete',
+         'None',
+         'Lean: proved ✓ — optional transparency variant. Full R1+T3 &#8594; convergence '
+         'chain auditable without ungrounded hypothesis. '
+         'Canonical theorem: t_iz_complete.'],
     ]
     E.append(data_table(
         ['Claim', 'Grounded In', 'Bridge Axiom?', 'Status'],
@@ -854,7 +702,7 @@ def build_zpi(out_path):
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-I v1.7 | Theorem T-IZ: Inside Zero | '
+            '<i>End of ZP-I v1.8 | Theorem T-IZ: Inside Zero | '
             'R-IZ-A closed: strict valuation growth derived from ZP-A R1 + T3 via IsDepthChain (h_strict_from_r1_t3, &#167;Ib) | '
             'Framework closure: no construction-level hypothesis required | '
             'Formal spine: Steps 1 + 6 both proved axiom-free (t_iz_cauchy + t_iz_limit_is_new_null) | '
@@ -870,6 +718,4 @@ def build_zpi(out_path):
 
 
 if __name__ == '__main__':
-    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-I_Inside_Zero_v1_7.pdf'))
-    build_zpi(out)
+    build()

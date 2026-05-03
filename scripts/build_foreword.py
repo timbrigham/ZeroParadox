@@ -11,85 +11,38 @@ Follows all rules in pdf rendering standards.md:
   - US Letter, 1-inch margins, TW = 6.5 inch
 """
 
-import os, sys
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+import os
+from zp_utils import *
 
-# ── 1. FONT REGISTRATION ─────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+# ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
+S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
+                                spaceAfter=4, alignment=1)
+S['date']     = ParagraphStyle('date',     fontName='DV',    fontSize=10, leading=14,
+                                spaceAfter=6, alignment=1)
+S['epigraph'] = ParagraphStyle('epigraph', fontName='DVS-I', fontSize=11, leading=17,
+                                spaceAfter=4, alignment=1, textColor=TEAL)
+S['h1']       = ParagraphStyle('h1',       fontName='DV-B',  fontSize=13, leading=18,
+                                spaceBefore=16, spaceAfter=6, textColor=TEAL)
+S['body']     = ParagraphStyle('body',     fontName='DVS',   fontSize=10, leading=15,
+                                spaceAfter=8)
+S['bodyI']    = ParagraphStyle('bodyI',    fontName='DVS-I', fontSize=10, leading=15,
+                                spaceAfter=8, alignment=1, textColor=TEAL)
 
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
-
-# ── 2. COLORS ─────────────────────────────────────────────────────────────────
-TEAL      = colors.HexColor('#1E7B74')
-TEAL_LITE = colors.HexColor('#D0EDED')
-BLACK     = colors.black
-WHITE     = colors.white
-
-# ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-# ── 4. PARAGRAPH STYLES ───────────────────────────────────────────────────────
-S = {
-    'title':    ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
-                               spaceAfter=4, alignment=1),
-    'subtitle': ParagraphStyle('subtitle', fontName='DV-I',  fontSize=12, leading=16,
-                               spaceAfter=4, alignment=1),
-    'date':     ParagraphStyle('date',     fontName='DV',    fontSize=10, leading=14,
-                               spaceAfter=6, alignment=1),
-    'epigraph': ParagraphStyle('epigraph', fontName='DVS-I', fontSize=11, leading=17,
-                               spaceAfter=4, alignment=1, textColor=TEAL),
-    'h1':       ParagraphStyle('h1',       fontName='DV-B',  fontSize=13, leading=18,
-                               spaceBefore=16, spaceAfter=6, textColor=TEAL),
-    'body':     ParagraphStyle('body',     fontName='DVS',   fontSize=10, leading=15,
-                               spaceAfter=8),
-    'bodyI':    ParagraphStyle('bodyI',    fontName='DVS-I', fontSize=10, leading=15,
-                               spaceAfter=8, alignment=1, textColor=TEAL),
-    'label':    ParagraphStyle('label',    fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=WHITE),
-    'cell':     ParagraphStyle('cell',     fontName='DVS',   fontSize=9,  leading=13),
-    'cellB':    ParagraphStyle('cellB',    fontName='DVS-B', fontSize=9,  leading=13),
-    'cellI':    ParagraphStyle('cellI',    fontName='DVS-I', fontSize=9,  leading=13),
-    'note':     ParagraphStyle('note',     fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=4),
-}
-
-def sp(n=6):
-    return Spacer(1, n)
-
-def hr():
-    return HRFlowable(width='100%', thickness=0.5, color=colors.HexColor('#AAAAAA'),
-                      spaceAfter=6, spaceBefore=2)
 
 def box(text):
     """Teal-bordered italic callout box."""
     data = [[Paragraph(text, S['bodyI'])]]
     t = Table(data, colWidths=[TW - 0.4*inch])
     t.setStyle(TableStyle([
-        ('BOX',         (0,0), (-1,-1), 1.0, TEAL),
-        ('BACKGROUND',  (0,0), (-1,-1), TEAL_LITE),
-        ('TOPPADDING',  (0,0), (-1,-1), 10),
-        ('BOTTOMPADDING',(0,0),(-1,-1), 10),
-        ('LEFTPADDING', (0,0), (-1,-1), 14),
-        ('RIGHTPADDING',(0,0), (-1,-1), 14),
+        ('BOX',          (0,0), (-1,-1), 1.0, TEAL),
+        ('BACKGROUND',   (0,0), (-1,-1), TEAL_LITE),
+        ('TOPPADDING',   (0,0), (-1,-1), 10),
+        ('BOTTOMPADDING',(0,0), (-1,-1), 10),
+        ('LEFTPADDING',  (0,0), (-1,-1), 14),
+        ('RIGHTPADDING', (0,0), (-1,-1), 14),
     ]))
     return t
+
 
 def commitments_table():
     headers = [
@@ -110,7 +63,7 @@ def commitments_table():
          'Not a novel commitment — follows from antisymmetry of the ZP-A partial order and ZP-B C3 (topological irreversibility).'),
         ('MP-1',  'Principle',
          'Minimality of Representation. The representational base must be the minimum '
-         'sufficient base for AX-B1. Derives p = 2.'),
+         'sufficient base for AX-B1. Derives p = 2.'),
         ('RP-1',  'Principle',
          'Minimum Sufficient Probabilistic Representation. The probabilistic form of a '
          'binary ontological state is a point-mass distribution.'),
@@ -149,21 +102,22 @@ def commitments_table():
     col_w = [TW * x for x in (0.10, 0.20, 0.70)]
     t = Table(table_data, colWidths=col_w, repeatRows=1)
     t.setStyle(TableStyle([
-        ('BACKGROUND',   (0,0), (-1,0),  TEAL),
-        ('TEXTCOLOR',    (0,0), (-1,0),  WHITE),
-        ('ROWBACKGROUNDS',(0,1),(-1,-1), [WHITE, colors.HexColor('#F5F9F9')]),
-        ('BOX',          (0,0), (-1,-1), 0.5, colors.HexColor('#AAAAAA')),
-        ('INNERGRID',    (0,0), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',   (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING',(0,0), (-1,-1), 5),
-        ('LEFTPADDING',  (0,0), (-1,-1), 6),
-        ('RIGHTPADDING', (0,0), (-1,-1), 6),
-        ('VALIGN',       (0,0), (-1,-1), 'TOP'),
+        ('BACKGROUND',    (0,0), (-1,0),  TEAL),
+        ('TEXTCOLOR',     (0,0), (-1,0),  WHITE),
+        ('ROWBACKGROUNDS',(0,1), (-1,-1), [WHITE, colors.HexColor('#F5F9F9')]),
+        ('BOX',           (0,0), (-1,-1), 0.5, colors.HexColor('#AAAAAA')),
+        ('INNERGRID',     (0,0), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
+        ('TOPPADDING',    (0,0), (-1,-1), 5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+        ('LEFTPADDING',   (0,0), (-1,-1), 6),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 6),
+        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
     ]))
     return t
 
 
-def build_foreword(out_path):
+def build():
+    out_path = os.path.join(PROJECT_ROOT, 'Zero_Paradox_Foreword.pdf')
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
                             leftMargin=LM, rightMargin=RM,
                             topMargin=TM, bottomMargin=BM)
@@ -191,7 +145,7 @@ def build_foreword(out_path):
         Paragraph('I. THE QUESTION', S['h1']),
         Paragraph(
             'Mathematics has always had a complicated relationship with zero. '
-            'The word “zero” does not name a single object — it names a role, '
+            'The word "zero" does not name a single object — it names a role, '
             'and that role is filled differently depending on the framework. '
             'In arithmetic, zero is the additive identity: the number that leaves everything '
             'unchanged when you add it. '
@@ -317,10 +271,10 @@ def build_foreword(out_path):
             'one modeling commitment (MC-1), and two conditional claims (CC-1, CC-2):',
             S['body']),
         Paragraph(
-            'A note on metatheory: this framework is stated over ZF + AFA '
-            '(Zermelo–Fraenkel set theory with Aczel’s Anti-Foundation Axiom), '
+            'A note on metatheory: this framework is stated over ZF + AFA '
+            '(Zermelo–Fraenkel set theory with Aczel\'s Anti-Foundation Axiom), '
             'not standard ZFC. AFA permits self-containing sets — in particular, sets x '
-            'satisfying x = {x}. This matters only for CC-2 in the table below; '
+            'satisfying x = {x}. This matters only for CC-2 in the table below; '
             'every other result in this framework holds in standard ZF. Standard ZFC is '
             'incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, '
             'contradicting the self-execution argument. The Axiom of Choice is not assumed.',
@@ -485,10 +439,8 @@ def build_foreword(out_path):
     ]
 
     doc.build(story)
-    print(f'Written: {out_path}')
+    print(f'[build_foreword] Written: {out_path}')
 
 
 if __name__ == '__main__':
-    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'Zero_Paradox_Foreword.pdf'))
-    build_foreword(out)
+    build()

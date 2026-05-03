@@ -58,6 +58,17 @@ AMBER_LITE = colors.HexColor('#FFF8E7')
 AMBER      = COMP_AMBER          # alias for callout() clarity
 RED        = colors.HexColor('#CC0000')
 GREY       = colors.HexColor('#888888')
+GREY_TEXT  = colors.HexColor('#555555')
+TEAL       = colors.HexColor('#1E7B74')
+TEAL_LITE  = colors.HexColor('#D0EDED')
+GREEN      = colors.HexColor('#2E7D32')
+GREEN_LITE = colors.HexColor('#E8F5E9')
+GREEN_DARK = colors.HexColor('#1B5E20')
+ORANGE     = colors.HexColor('#BF4E30')
+ORANGE_LITE= colors.HexColor('#FBE9E7')
+SLATE      = colors.HexColor('#455A64')
+INDIGO     = colors.HexColor('#3949AB')
+INDIGO_LITE= colors.HexColor('#E8EAF6')
 
 # ── Layout constants ──────────────────────────────────────────────────────────
 TW         = 6.5 * inch          # text width
@@ -89,6 +100,12 @@ S = {
                                textColor=colors.grey, alignment=1),
     'note':     ParagraphStyle('note',     fontName='DVS-I', fontSize=9,  leading=13,
                                spaceAfter=4),
+    'li':       ParagraphStyle('li',       fontName='DVS',   fontSize=10, leading=14,
+                               leftIndent=18, spaceAfter=3),
+    'derived':  ParagraphStyle('derived',  fontName='DVS-B', fontSize=10, leading=14,
+                               spaceAfter=6, textColor=GREEN_DARK),
+    'endnote':  ParagraphStyle('endnote',  fontName='DVS-I', fontSize=9,  leading=13,
+                               alignment=1),
 }
 
 # ── Companion styles (CS) ─────────────────────────────────────────────────────
@@ -145,11 +162,12 @@ def fix(text):
     text = text.replace('✓', '<font name="DV">&#10003;</font>')
     text = text.replace('✗', '<font name="DV">&#10007;</font>')
     text = text.replace('∅', '<font name="DV">&#8709;</font>')
+    text = text.replace('ℵ', '<font name="DVS">&#8501;</font>')
     for char, entity in [
         ('⊥','&#8869;'),  ('∨','&#8744;'),  ('∧','&#8743;'),
         ('≤','&#8804;'),  ('≥','&#8805;'),  ('≠','&#8800;'),
         ('∈','&#8712;'),  ('∉','&#8713;'),  ('⊆','&#8838;'),
-        ('∪','&#8746;'),  ('∩','&#8745;'),  ('∀','&#8704;'),
+        ('∪','&#8746;'),  ('∩','&#8745;'),  ('⊂','&#8834;'),  ('∀','&#8704;'),
         ('∃','&#8707;'),  ('∞','&#8734;'),  ('∑','&#8721;'),
         ('→','&#8594;'),  ('←','&#8592;'),  ('↔','&#8596;'),
         ('⇒','&#8658;'),  ('⟺','&#10234;'), ('⟹','&#10233;'),
@@ -158,9 +176,11 @@ def fix(text):
         ('×','&#215;'),   ('−','&#8722;'),  ('≡','&#8801;'),
         ('∘','&#8728;'),  ('⊗','&#8855;'),  ('⊕','&#8853;'),
         ('∥','&#8741;'),  ('≺','&#8826;'),  ('≻','&#8827;'),
+        ('′','&#8242;'),  ('″','&#8243;'),
         ('ε','&#949;'),   ('α','&#945;'),   ('β','&#946;'),
         ('γ','&#947;'),   ('δ','&#948;'),   ('η','&#951;'),
-        ('σ','&#963;'),   ('π','&#960;'),   ('λ','&#955;'),
+        ('ω','&#969;'),   ('τ','&#964;'),   ('φ','&#966;'),
+        ('ι','&#953;'),   ('σ','&#963;'),   ('π','&#960;'),   ('λ','&#955;'),
         ('Δ','&#916;'),   ('Σ','&#931;'),   ('Γ','&#915;'),   ('Λ','&#923;'),
         ('ℚ','&#8474;'),  ('ℤ','&#8484;'),  ('ℂ','&#8450;'),
         ('ℕ','&#8469;'),  ('ℝ','&#8477;'),
@@ -173,6 +193,20 @@ def body(text, style='body'):
     """Paragraph in the given S style key (default: body)."""
     return Paragraph(fix(text), S[style])
 
+def hr():
+    """Thin horizontal rule."""
+    return HRFlowable(width='100%', thickness=0.5,
+                      color=colors.HexColor('#AAAAAA'),
+                      spaceAfter=6, spaceBefore=2)
+
+def li(text):
+    """Bullet list item."""
+    return Paragraph('&#8226;  ' + fix(text), S['li'])
+
+def derived(text):
+    """Green bold paragraph for derived results."""
+    return Paragraph(fix(text), S['derived'])
+
 def cbody(t):
     """Companion body paragraph."""
     return Paragraph(fix(t), CS['body'])
@@ -182,6 +216,39 @@ def ccaption(t):
     return Paragraph(fix(t), CS['caption'])
 
 # ── Formal document components ────────────────────────────────────────────────
+def _colored_box(title, rows, hdr_color):
+    """Generic colored-header single-column box for formal documents."""
+    data = [[Paragraph(fix(title), S['label'])]]
+    for r in rows:
+        data.append([Paragraph(fix(r), S['cell'])])
+    ts = TableStyle([
+        ('BACKGROUND',    (0,0), (-1,0),  hdr_color),
+        ('BACKGROUND',    (0,1), (-1,-1), GREY_LITE),
+        ('BOX',           (0,0), (-1,-1), 0.5, hdr_color),
+        ('LINEBELOW',     (0,0), (-1,0),  0.5, hdr_color),
+        ('LINEBELOW',     (0,1), (-1,-2), 0.5, colors.HexColor('#CCCCCC')),
+        ('TOPPADDING',    (0,0), (-1,-1), 5),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
+        ('LEFTPADDING',   (0,0), (-1,-1), 8),
+        ('RIGHTPADDING',  (0,0), (-1,-1), 8),
+        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
+    ])
+    t = Table(data, colWidths=[TW], repeatRows=1)
+    t.setStyle(ts)
+    return t
+
+# Semantic box helpers:
+# result_box  → GREEN   — Theorems, Propositions, Lemmas, Corollaries
+# axiom_box   → ORANGE  — Axioms, Design Principles, Conditional Claims
+# def_box     → BLUE    — Definitions, Typeclasses
+# remark_box  → SLATE   — Remarks
+# import_box  → AMBER   — Imported results from other layers
+def result_box(title, rows): return _colored_box(title, rows, GREEN)
+def axiom_box(title, rows):  return _colored_box(title, rows, ORANGE)
+def def_box(title, rows):    return _colored_box(title, rows, BLUE)
+def remark_box(title, rows): return _colored_box(title, rows, SLATE)
+def import_box(title, rows): return _colored_box(title, rows, AMBER)
+
 def label_box(title, rows_list):
     """Blue-header single-column info box used throughout formal documents."""
     data = [[Paragraph(fix(title), S['label'])]]
@@ -232,7 +299,7 @@ def data_table(headers, rows_data, col_widths, header_bg=None):
     t.setStyle(ts)
     return t
 
-def make_doc(path, title_str, doc_id, version_str):
+def make_doc(path, title_str, doc_id, version_str, date_str='April 2026'):
     """SimpleDocTemplate with standard Zero Paradox footer."""
     def footer_cb(canvas, doc):
         canvas.saveState()
@@ -240,7 +307,7 @@ def make_doc(path, title_str, doc_id, version_str):
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            f'Zero Paradox {doc_id}  |  {version_str}  |  April 2026  |  Page {doc.page}',
+            f'Zero Paradox {doc_id}  |  {version_str}  |  {date_str}  |  Page {doc.page}',
         )
         canvas.restoreState()
     return SimpleDocTemplate(

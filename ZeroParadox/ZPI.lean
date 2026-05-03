@@ -25,12 +25,13 @@ requires it.
 Theorem T-IZ: Every maximal ascending chain in the Zero Paradox framework is a
 Cauchy sequence that converges to its own successor null in the 2-adic metric.
 
-This layer has four components:
+This layer has five components:
 - § I:   Cauchy convergence — topological core (proved axiom-free)
 - § Ib:  h_strict from R1+T3 via depth-index chain — closes R-IZ-A (proved)
 - § II:  Valuation-complexity bridge — SUPERSEDED by AFA path (see § III-B)
 - § III: T-IZ theorem, successor null, and framework closure (proved)
 - § III-B: t_iz_complete — formally complete T-IZ via AFA/Kleene path (proved)
+- § III-C: t_iz_complete_from_axioms — depth-chain bridge; pure ZP-A hypotheses (proved)
 
 The key insight: ZP-A R1 (no top element) is not an obstacle to T-IZ — it is the engine.
 Because L has no top, the ascending chain cannot stop. Unbounded ascent forces v₂(Sₙ) → ∞,
@@ -318,6 +319,61 @@ theorem t_iz_complete
    ZeroParadox.ZPK.da1_computational,
    bot_join ε₀'⟩
 
+/-! ## III-C. Depth-Chain Bridge — Closing the R1+T3 → t_iz_complete Chain
+
+`t_iz_complete` (§ III-B) is already formally complete and verifies as-is.
+This section adds an *optional transparency layer* for peer reviewers who want
+to trace the full chain from ZP-A lattice axioms all the way to convergence
+without encountering an ungrounded hypothesis.
+
+The gap being bridged: `t_iz_complete` takes `h_bound : ∀ n, ‖Sₙ‖ ≤ (2⁻¹)ⁿ`
+as a hypothesis. The §Ib theorems derive strict valuation growth from R1+T3, but
+`t_iz_r1_t3_geometric_bound` produces `‖Sₙ‖ ≤ ‖S₀‖ · (2⁻¹)ⁿ` — one `‖S₀‖`
+factor short. The bridge absorbs that factor: `IsDepthChain` forces
+`(S 0).valuation = depths 0 ≥ 0`, which in Q₂ means `‖S 0‖₂ = 2^{-depths(0)} ≤ 1`.
+Multiplying through by `‖S 0‖ ≤ 1` recovers the exact `(2⁻¹)ⁿ` bound. -/
+
+/-- h_bound derived from ZP-A axioms via depth chain.
+    Optional transparency lemma — t_iz_complete functions without it.
+    `IsDepthChain` ties v₂(Sₙ) to a ℕ depth index; `IsStrictStateSequence` (R1+T3)
+    gives strict growth; `depths 0 : ℕ` forces ‖S 0‖₂ ≤ 1, absorbing the S₀ factor. -/
+theorem t_iz_h_bound_from_depth_chain
+    (S : ℕ → Q₂) (depths : ℕ → ℕ)
+    (hS : ∀ n, S n ≠ 0)
+    (h_depth : IsDepthChain S depths)
+    (h_seq : IsStrictStateSequence depths) :
+    ∀ n : ℕ, ‖S n‖ ≤ (2⁻¹ : ℝ) ^ n := by
+  have h_strict := h_strict_from_r1_t3 S depths h_depth h_seq
+  have h_geom   := t_iz_r1_t3_geometric_bound S hS h_strict
+  have h0_le_one : ‖S 0‖ ≤ 1 := by
+    rw [Padic.norm_eq_zpow_neg_valuation (hS 0), h_depth 0]
+    calc (2 : ℝ) ^ (-(depths 0 : ℤ))
+        ≤ (2 : ℝ) ^ (0 : ℤ) := zpow_le_zpow_right₀ (by norm_num) (by omega)
+      _ = 1                  := zpow_zero _
+  intro n
+  calc ‖S n‖ ≤ ‖S 0‖ * (2⁻¹ : ℝ) ^ n := h_geom n
+    _ ≤ 1    * (2⁻¹ : ℝ) ^ n          := mul_le_mul_of_nonneg_right h0_le_one (by positivity)
+    _ = (2⁻¹ : ℝ) ^ n                 := one_mul _
+
+/-- T-IZ (from first principles): replaces the bare h_bound hypothesis in t_iz_complete
+    with `IsDepthChain` + `IsStrictStateSequence` — pure ZP-A lattice conditions.
+    Optional transparency variant — t_iz_complete is the canonical theorem.
+    A peer reviewer can now trace the full chain from R1+T3 to convergence
+    without encountering an ungrounded hypothesis. -/
+theorem t_iz_complete_from_axioms
+    (S : ℕ → Q₂) (depths : ℕ → ℕ)
+    (hS : ∀ n, S n ≠ 0)
+    (h_depth : IsDepthChain S depths)
+    (h_seq : IsStrictStateSequence depths)
+    {L' : Type*} [ZPSemilattice L'] [ZeroParadox.ZPK.KleeneStructure L']
+    (terminal : L') (ε₀' : L')
+    (h_role : ∀ x : L', join terminal x = x) :
+    Filter.Tendsto S Filter.atTop (nhds 0) ∧
+    terminal = bot ∧
+    ZeroParadox.ZPJ.IsQuineAtom (bot : L') ∧
+    join (bot : L') ε₀' = ε₀' :=
+  t_iz_complete S (t_iz_h_bound_from_depth_chain S depths hS h_depth h_seq) terminal ε₀' h_role
+
 end ZeroParadox.ZPI
 
 /-! ## Axiom Purity Check
@@ -336,7 +392,13 @@ Verified results (all sorries filled; no sorryAx anywhere):
 - t_iz_limit_is_new_null: does not depend on any axioms (axiom-free!)
 - c_t_iz_null_balance: propext (via c_da2_novelty)
 - t_iz_c3_compatible: propext, Classical.choice, Quot.sound
-    (inherited from ZPB.c3_irreversible — standard Mathlib topology axioms) -/
+    (inherited from ZPB.c3_irreversible — standard Mathlib topology axioms)
+- t_iz_h_bound_from_depth_chain: propext, Classical.choice, Quot.sound
+    (Padic.norm_eq_zpow_neg_valuation + zpow_le_zpow_right₀ + mul_le_mul_of_nonneg_right;
+     optional transparency lemma — t_iz_complete verified without it)
+- t_iz_complete_from_axioms: propext, Classical.choice, Quot.sound
+    (delegates to t_iz_h_bound_from_depth_chain + t_iz_complete — same axiom set;
+     optional transparency variant — t_iz_complete is the canonical theorem) -/
 
 section PurityCheck
 open ZeroParadox.ZPI ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPE ZeroParadox.ZPB
@@ -354,5 +416,7 @@ open ZeroParadox.ZPI ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPE ZeroParadox.Z
 #print axioms t_iz_limit_is_new_null
 #print axioms c_t_iz_null_balance
 #print axioms t_iz_c3_compatible
+#print axioms t_iz_h_bound_from_depth_chain
+#print axioms t_iz_complete_from_axioms
 
 end PurityCheck

@@ -15,10 +15,6 @@ New in v1.0: t_iz_r1_t3_geometric_bound (geometric norm bound from R1+T3).
 import os, math
 from zp_utils import *
 
-GREEN_LITE  = colors.HexColor('#D6EDD6')
-GREEN_DARK  = colors.HexColor('#2E6B31')
-INDIGO      = colors.HexColor('#3949AB')
-INDIGO_LITE = colors.HexColor('#E8EAF6')
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
@@ -563,9 +559,9 @@ def build():
     E.append(Paragraph('Lean 4 Verification', CS['h1']))
     E.append(cbody(
         'The topological core of T-IZ is fully verified in Lean 4 (ZPI.lean v1.1). '
-        'All proofs are complete — no sorry. The purity check (#print axioms) '
-        'confirms the theorems depend only on standard Mathlib axioms '
-        '(propext, Classical.choice, Quot.sound), not on any domain-specific assumption.'))
+        'All proofs are complete. The purity check confirms the theorems depend only '
+        'on standard foundational axioms shared by all Mathlib theorems — '
+        'no domain-specific assumptions.'))
 
     E.append(lean_status_box([
         'h_strict_from_r1_t3 (§Ib) — derives strict per-step valuation growth from '

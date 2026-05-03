@@ -10,241 +10,21 @@ v1.0: Initial release — Theorem T-EXEC: the Quine atom is the bottom element o
 ZP-A lattice with AFA grounding. CC-1 (ZP-A) is derived as a theorem, not committed
 as a modelling choice. All ZPJ.lean theorems compile axiom-free. The final bridge
 between AFA set-theoretic structure and lattice-order structure is closed.
-Follows all rules in scripts/PDF_Rendering_Standards.md:
-  - STIXTwo-Math.ttf for all DVS aliases (Section 1)
-  - Checkmark and empty-set always wrapped in <font name="DV"> via fix() (Sections 2, 2b)
-  - All table cells are Paragraph objects (Section 3)
-  - No unicode subscripts — use sub/super tags (Section 5)
-  - US Letter, 1-inch margins, TW = 6.5 inch
-  - Standard color palette: BLUE/GREEN/ORANGE/SLATE/AMBER/GREY_LITE (Section 10)
-  - Semantic box helpers: result_box, axiom_box, def_box, remark_box, import_box (Section 10)
-  - Footer: Zero Paradox ZP-J: Executability of Self-Reference | Version 1.1 | April 2026 | Page n
 """
 
-import os, sys
-sys.stdout.reconfigure(encoding='utf-8')
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-
-# ── 1. FONT REGISTRATION ──────────────────────────────────────────────────────
-SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR     = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
-
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
-
-# ── 2. COLORS — standard palette only (Section 10) ────────────────────────────
-BLUE        = colors.HexColor('#2E75B6')
-BLUE_LITE   = colors.HexColor('#D5E8F0')
-GREEN       = colors.HexColor('#2E7D32')
-GREEN_LITE  = colors.HexColor('#E8F5E9')
-GREEN_DARK  = colors.HexColor('#1B5E20')
-ORANGE      = colors.HexColor('#BF4E30')
-ORANGE_LITE = colors.HexColor('#FBE9E7')
-SLATE       = colors.HexColor('#455A64')
-SLATE_LITE  = colors.HexColor('#ECEFF1')
-AMBER       = colors.HexColor('#B07800')
-AMBER_LITE  = colors.HexColor('#FFF8E7')
-GREY_LITE   = colors.HexColor('#F5F5F5')
-WHITE       = colors.white
-
-# ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-# ── 4. PARAGRAPH STYLES ───────────────────────────────────────────────────────
-S = {
-    'title':   ParagraphStyle('title',   fontName='DV-B',  fontSize=18, leading=24,
-                               spaceAfter=6, alignment=1),
-    'subtitle':ParagraphStyle('subtitle',fontName='DV-I',  fontSize=11, leading=15,
-                               spaceAfter=4, alignment=1),
-    'h1':      ParagraphStyle('h1',      fontName='DV-B',  fontSize=13, leading=18,
-                               spaceBefore=14, spaceAfter=5, textColor=BLUE),
-    'h2':      ParagraphStyle('h2',      fontName='DV-B',  fontSize=11, leading=15,
-                               spaceBefore=10, spaceAfter=4, textColor=BLUE),
-    'body':    ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
-                               spaceAfter=6),
-    'bodyI':   ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14,
-                               spaceAfter=6),
-    'li':      ParagraphStyle('li',      fontName='DVS',   fontSize=10, leading=14,
-                               leftIndent=18, spaceAfter=3),
-    'derived': ParagraphStyle('derived', fontName='DVS-B', fontSize=10, leading=14,
-                               spaceAfter=6, textColor=GREEN_DARK),
-    'label':   ParagraphStyle('label',   fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=WHITE),
-    'cell':    ParagraphStyle('cell',    fontName='DVS',   fontSize=9,  leading=13),
-    'cellI':   ParagraphStyle('cellI',   fontName='DVS-I', fontSize=9,  leading=13),
-    'note':    ParagraphStyle('note',    fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=4),
-    'endnote': ParagraphStyle('endnote', fontName='DVS-I', fontSize=9,  leading=13,
-                               alignment=1),
-}
-
-# ── 5. HELPERS ────────────────────────────────────────────────────────────────
-
-def sp(n=6):
-    return Spacer(1, n)
-
-def hr():
-    return HRFlowable(width='100%', thickness=0.5,
-                      color=colors.HexColor('#AAAAAA'),
-                      spaceAfter=6, spaceBefore=2)
-
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k','ₘ':'m','ᵢ':'i','ⱼ':'j'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    text = text.replace('✓', '<font name="DV">&#10003;</font>')
-    text = text.replace('∅', '<font name="DV">&#8709;</font>')
-    replacements = [
-        ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
-        ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
-        ('∈','&#8712;'),('∉','&#8713;'),('⊆','&#8838;'),
-        ('∀','&#8704;'),('∃','&#8707;'),('∞','&#8734;'),
-        ('→','&#8594;'),('←','&#8592;'),('↔','&#8596;'),
-        ('⇒','&#8658;'),('∘','&#8728;'),('—','&#8212;'),
-        ('–','&#8211;'),('·','&#183;'),('×','&#215;'),
-        ('−','&#8722;'),('≡','&#8801;'),('≅','&#8773;'),
-        ('ε','&#949;'),('α','&#945;'),('β','&#946;'),
-        ('γ','&#947;'),('δ','&#948;'),('ι','&#953;'),
-        ('τ','&#964;'),('φ','&#966;'),('ω','&#969;'),
-        ('Ω','&#937;'),('π','&#960;'),
-        ('ℚ','&#8474;'),('ℤ','&#8484;'),('ℂ','&#8450;'),
-        ('ℕ','&#8469;'),('ℝ','&#8477;'),
-        ('≈','&#8776;'),('∑','&#8721;'),('¬','&#172;'),
-        ('⊂','&#8834;'),('⊃','&#8835;'),
-        ('⌊','&#8970;'),('⌋','&#8971;'),
-    ]
-    for char, entity in replacements:
-        if char in text:
-            text = text.replace(char, entity)
-    return text
-
-def body(text, style='body'):
-    return Paragraph(fix(text), S[style])
-
-def li(text):
-    return Paragraph('&#8226;  ' + fix(text), S['li'])
-
-def derived(text):
-    return Paragraph(fix(text), S['derived'])
-
-# ── Semantic box helpers (Section 10) ─────────────────────────────────────────
-# result_box  → GREEN   — Theorems, Propositions, Lemmas, Corollaries
-# axiom_box   → ORANGE  — Axioms, Design Principles, Conditional Claims
-# def_box     → BLUE    — Definitions, Typeclasses
-# remark_box  → SLATE   — Remarks
-# import_box  → AMBER   — Imported results from other layers
-
-def _box(title, rows, hdr_color):
-    data = [[Paragraph(fix(title), S['label'])]]
-    for r in rows:
-        data.append([Paragraph(fix(r), S['cell'])])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  hdr_color),
-        ('BACKGROUND',    (0,1), (-1,-1), GREY_LITE),
-        ('BOX',           (0,0), (-1,-1), 0.5, hdr_color),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, hdr_color),
-        ('LINEBELOW',     (0,1), (-1,-2), 0.5, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('LEFTPADDING',   (0,0), (-1,-1), 8),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 8),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=[TW], repeatRows=1)
-    t.setStyle(ts)
-    return t
-
-def result_box(title, rows):
-    return _box(title, rows, GREEN)
-
-def axiom_box(title, rows):
-    return _box(title, rows, ORANGE)
-
-def def_box(title, rows):
-    return _box(title, rows, BLUE)
-
-def remark_box(title, rows):
-    return _box(title, rows, SLATE)
-
-def import_box(title, rows):
-    return _box(title, rows, AMBER)
-
-def callout(text, bg=AMBER_LITE, border=AMBER):
-    data = [[Paragraph(fix(text), S['body'])]]
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,-1), bg),
-        ('BOX',           (0,0), (-1,-1), 1.0, border),
-        ('TOPPADDING',    (0,0), (-1,-1), 8),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
-        ('LEFTPADDING',   (0,0), (-1,-1), 10),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 10),
-    ])
-    t = Table(data, colWidths=[TW])
-    t.setStyle(ts)
-    return t
-
-def data_table(headers, rows_data, col_widths):
-    hdr_row = [Paragraph(fix(h), S['label']) for h in headers]
-    data    = [hdr_row]
-    for row in rows_data:
-        data.append([Paragraph(fix(str(c)), S['cell']) for c in row])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  BLUE),
-        ('ROWBACKGROUNDS',(0,1), (-1,-1), [WHITE, GREY_LITE]),
-        ('BOX',           (0,0), (-1,-1), 0.5, BLUE),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, BLUE),
-        ('INNERGRID',     (0,1), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 4),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
-        ('LEFTPADDING',   (0,0), (-1,-1), 6),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 6),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=col_widths, repeatRows=1)
-    t.setStyle(ts)
-    return t
-
-def make_doc(path):
-    def footer_cb(canvas, doc):
-        canvas.saveState()
-        canvas.setFont('DV-I', 8)
-        canvas.setFillColor(colors.grey)
-        ft = f'Zero Paradox ZP-J: Executability of Self-Reference  |  Version 1.1  |  April 2026  |  Page {doc.page}'
-        canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
-        canvas.restoreState()
-    return SimpleDocTemplate(
-        path, pagesize=LETTER,
-        leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
-        title='ZP-J: Executability of Self-Reference',
-        author='Zero Paradox Project',
-        onFirstPage=footer_cb, onLaterPages=footer_cb,
-    )
+import os
+from zp_utils import *
 
 
-def build_zpj(out_path):
-    print(f'[build_zpj] Output: {out_path}')
-    doc = make_doc(out_path)
-    E   = []
+def build():
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Self_Reference_v1_1.pdf')
+    doc = make_doc(out_path,
+                   'ZP-J: Executability of Self-Reference',
+                   'ZP-J: Executability of Self-Reference',
+                   'Version 1.1')
+    E = []
 
     print('[build_zpj] Building title block...')
-    # ── TITLE BLOCK ───────────────────────────────────────────────────────────
     E += [
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
@@ -281,7 +61,6 @@ def build_zpj(out_path):
     E.append(hr())
 
     print('[build_zpj] Building Section I...')
-    # ── SECTION I: THE OPEN QUESTION ──────────────────────────────────────────
     E += [
         Paragraph('Section I: The Open Question — CC-1 as a Modelling Commitment', S['h1']),
         hr(),
@@ -327,7 +106,6 @@ def build_zpj(out_path):
     E.append(sp(6))
 
     print('[build_zpj] Building Section II...')
-    # ── SECTION II: AFA MACHINERY ─────────────────────────────────────────────
     E += [
         hr(),
         Paragraph('Section II: AFA Machinery — Self-Membership and the Quine Atom', S['h1']),
@@ -389,7 +167,6 @@ def build_zpj(out_path):
         'derivation requires only the fields themselves.'))
 
     print('[build_zpj] Building Section III...')
-    # ── SECTION III: THE TYPECLASS ─────────────────────────────────────────────
     E += [
         hr(),
         Paragraph('Section III: AFAStructure — The Structural Bridge', S['h1']),
@@ -478,7 +255,6 @@ def build_zpj(out_path):
     E.append(sp(6))
 
     print('[build_zpj] Building Section IV...')
-    # ── SECTION IV: THEOREM T-EXEC ────────────────────────────────────────────
     E += [
         hr(),
         Paragraph('Section IV: Theorem T-EXEC — The Quine Atom is Bottom', S['h1']),
@@ -560,7 +336,6 @@ def build_zpj(out_path):
     E.append(sp(6))
 
     print('[build_zpj] Building Section V...')
-    # ── SECTION V: DERIVED RESULTS ────────────────────────────────────────────
     E += [
         hr(),
         Paragraph('Section V: Derived Results — J1 and CC-1 as Theorems', S['h1']),
@@ -624,7 +399,6 @@ def build_zpj(out_path):
     E.append(sp(6))
 
     print('[build_zpj] Building Section VI...')
-    # ── SECTION VI: IMPLICATIONS ──────────────────────────────────────────────
     E += [
         hr(),
         Paragraph('Section VI: Implications — What Was the Commitment?', S['h1']),
@@ -693,7 +467,6 @@ def build_zpj(out_path):
     E.append(sp(6))
 
     print('[build_zpj] Building registers...')
-    # ── TRACEABILITY REGISTER ─────────────────────────────────────────────────
     E += [hr(), Paragraph('Traceability Register — ZP-J v1.1', S['h1'])]
 
     trace_rows = [
@@ -733,7 +506,6 @@ def build_zpj(out_path):
     ))
     E.append(sp(8))
 
-    # ── OPEN ITEMS REGISTER ───────────────────────────────────────────────────
     E += [hr(), Paragraph('Open Items Register — ZP-J v1.1', S['h1'])]
 
     oq_rows = [
@@ -768,7 +540,6 @@ def build_zpj(out_path):
         [TW*0.22, TW*0.18, TW*0.60]
     ))
 
-    # ── CLOSING ───────────────────────────────────────────────────────────────
     E += [
         sp(12),
         hr(),
@@ -786,6 +557,4 @@ def build_zpj(out_path):
 
 
 if __name__ == '__main__':
-    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-J_Self_Reference_v1_1.pdf'))
-    build_zpj(out)
+    build()

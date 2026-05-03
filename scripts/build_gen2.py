@@ -7,99 +7,22 @@ Follows all rules in pdf rendering standards.md.
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from zp_utils import *
 
-# ── 1. FONTS ──────────────────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR   = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+# ── Local additions ────────────────────────────────────────────────────────────
+AMBER    = colors.HexColor('#B07800')   # override — Gen2 uses darker amber
+RED_LITE = colors.HexColor('#FFEBEE')
 
-print(f'[build_gen2] SCRIPT_DIR: {SCRIPT_DIR}')
-print(f'[build_gen2] FONT_DIR:   {FONT_DIR}')
-print('[build_gen2] Registering fonts...')
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'));          print('  DV ok')
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'));     print('  DV-B ok')
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf')); print('  DV-I ok')
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf')); print('  DV-BI ok')
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'));          print('  DVS ok')
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'));    print('  DVS-B ok')
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-I ok')
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-BI ok')
-print('[build_gen2] Fonts registered.')
-
-# ── 2. COLORS ─────────────────────────────────────────────────────────────────
-BLUE      = colors.HexColor('#2E75B6')
-BLUE_LITE = colors.HexColor('#D5E8F0')
-GREY_LITE = colors.HexColor('#F5F5F5')
-GREEN     = colors.HexColor('#2E7D32')
-GREEN_LITE= colors.HexColor('#E8F5E9')
-AMBER_LITE= colors.HexColor('#FFF8E7')
-AMBER     = colors.HexColor('#B07800')
-RED_LITE  = colors.HexColor('#FFEBEE')
-WHITE     = colors.white
-
-# ── 3. GEOMETRY ───────────────────────────────────────────────────────────────
-TW = 6.5 * inch
-LM = RM = TM = BM = 1.0 * inch
-
-# ── 4. STYLES ─────────────────────────────────────────────────────────────────
-S = {
-    'title':   ParagraphStyle('title',   fontName='DV-B',  fontSize=18, leading=24,
-                              spaceAfter=6, alignment=1),
-    'sub':     ParagraphStyle('sub',     fontName='DV-I',  fontSize=11, leading=15,
-                              spaceAfter=4, alignment=1),
-    'h1':      ParagraphStyle('h1',      fontName='DV-B',  fontSize=13, leading=18,
-                              spaceBefore=14, spaceAfter=5, textColor=BLUE),
-    'h2':      ParagraphStyle('h2',      fontName='DV-B',  fontSize=11, leading=15,
-                              spaceBefore=10, spaceAfter=4, textColor=BLUE),
-    'body':    ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
-                              spaceAfter=6),
-    'bodyI':   ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14,
-                              spaceAfter=6),
-    'label':   ParagraphStyle('label',   fontName='DV-B',  fontSize=9,  leading=13,
-                              textColor=WHITE),
-    'cell':    ParagraphStyle('cell',    fontName='DVS',   fontSize=9,  leading=13),
-    'cellB':   ParagraphStyle('cellB',   fontName='DVS-B', fontSize=9,  leading=13),
-    'cellI':   ParagraphStyle('cellI',   fontName='DVS-I', fontSize=9,  leading=13),
-    'note':    ParagraphStyle('note',    fontName='DVS-I', fontSize=9,  leading=13,
-                              spaceAfter=4),
-    'green':   ParagraphStyle('green',   fontName='DVS-B', fontSize=10, leading=14,
-                              spaceAfter=6, textColor=GREEN),
-}
-
-# ── 5. HELPERS ────────────────────────────────────────────────────────────────
-def sp(n=6):  return Spacer(1, n)
-def hr():     return HRFlowable(width='100%', thickness=0.5,
-                                color=colors.HexColor('#AAAAAA'),
-                                spaceAfter=6, spaceBefore=2)
-
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    replacements = [
-        ('⊥','&#8869;'),('∨','&#8744;'),('→','&#8594;'),('≠','&#8800;'),
-        ('∈','&#8712;'),('∀','&#8704;'),('∃','&#8707;'),('∞','&#8734;'),
-        ('ε','&#949;'),('≤','&#8804;'),('≥','&#8805;'),('—','&#8212;'),
-        ('✓','<font name="DV">&#10003;</font>'),
-        ('∅','<font name="DV">&#8709;</font>'),
-    ]
-    for char, ent in replacements:
-        text = text.replace(char, ent)
-    return text
+S['sub']   = ParagraphStyle('sub',   fontName='DV-I',  fontSize=11, leading=15,
+                             spaceAfter=4, alignment=1)
+S['green'] = ParagraphStyle('green', fontName='DVS-B', fontSize=10, leading=14,
+                             spaceAfter=6, textColor=GREEN)
 
 def body(text, style='body'):
     return Paragraph(fix(text), S[style])
 
 def callout(text, bg=BLUE_LITE, border=BLUE):
+    """Gen2 callout uses BLUE by default (override of zp_utils AMBER default)."""
     data = [[Paragraph(fix(text), S['bodyI'])]]
     t = Table(data, colWidths=[TW - 0.4*inch])
     t.setStyle(TableStyle([
@@ -128,26 +51,7 @@ def case_header(title, fit, status_bg=BLUE_LITE, status_border=BLUE):
     ]))
     return t
 
-def data_table(headers, rows, col_widths):
-    hdr = [Paragraph(fix(h), S['label']) for h in headers]
-    data = [hdr] + [[Paragraph(fix(str(c)), S['cell']) for c in row] for row in rows]
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0),(-1,0),  BLUE),
-        ('ROWBACKGROUNDS',(0,1),(-1,-1), [WHITE, GREY_LITE]),
-        ('BOX',           (0,0),(-1,-1), 0.5, BLUE),
-        ('LINEBELOW',     (0,0),(-1,0),  0.5, BLUE),
-        ('INNERGRID',     (0,1),(-1,-1), 0.3, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0),(-1,-1), 4),
-        ('BOTTOMPADDING', (0,0),(-1,-1), 4),
-        ('LEFTPADDING',   (0,0),(-1,-1), 6),
-        ('RIGHTPADDING',  (0,0),(-1,-1), 6),
-        ('VALIGN',        (0,0),(-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=col_widths, repeatRows=1)
-    t.setStyle(ts)
-    return t
-
-def make_doc(path):
+def _make_doc(path):
     def footer(canvas, doc):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
@@ -163,9 +67,10 @@ def make_doc(path):
                              onFirstPage=footer, onLaterPages=footer)
 
 
-def build_gen2(out_path):
+def build():
+    out_path = os.path.join(PROJECT_ROOT, 'ZP_Gen2_Applications.pdf')
     print(f'[build_gen2] Output: {out_path}')
-    doc = make_doc(out_path)
+    doc = _make_doc(out_path)
     E = []
 
     # ── TRANSPARENCY NOTICE ───────────────────────────────────────────────────
@@ -513,6 +418,4 @@ def build_gen2(out_path):
 
 
 if __name__ == '__main__':
-    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP_Gen2_Applications.pdf'))
-    build_gen2(out)
+    build()

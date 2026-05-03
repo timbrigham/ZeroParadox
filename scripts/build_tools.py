@@ -4,72 +4,33 @@ Updated April 2026: Lean 4 formal verification now complete for all layers.
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.graphics.shapes import Drawing, Rect, String
-from reportlab.graphics import renderPDF
+from zp_utils import *
 
-FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fonts') + os.sep
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'))
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'))
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf'))
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf'))
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf'))
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf'))
-
-BLUE      = colors.HexColor('#2E75B6')
+# ── Local additions: Tools document uses unique visual style ──────────────────
 BLUE_DARK = colors.HexColor('#1A4A7A')
-BLUE_LITE = colors.HexColor('#D5E8F0')
 AMBER_C   = colors.HexColor('#B07800')
-AMBER_LITE= colors.HexColor('#FFF8E7')
-GREEN     = colors.HexColor('#1B5E20')
-GREEN_LITE= colors.HexColor('#E8F5E9')
-GREY_LITE = colors.HexColor('#F5F5F5')
-WHITE     = colors.white
-BLACK     = colors.black
-GREY      = colors.HexColor('#555555')
+GREEN     = colors.HexColor('#1B5E20')   # override — Tools uses GREEN_DARK value
+GREY      = colors.HexColor('#555555')   # override — Tools uses darker grey
 
-TW = 6.5 * inch
-LM = RM = TM = BM = 1.0 * inch
-
-S = {
-    'title':   ParagraphStyle('title',  fontName='DV-B',  fontSize=20, leading=26,
-                              alignment=1, spaceAfter=4),
-    'sub':     ParagraphStyle('sub',    fontName='DV-I',  fontSize=11, leading=15,
-                              alignment=1, spaceAfter=4),
-    'meta':    ParagraphStyle('meta',   fontName='DV',    fontSize=9,  leading=13,
-                              alignment=1, spaceAfter=10, textColor=colors.grey),
-    'intro':   ParagraphStyle('intro',  fontName='DVS',   fontSize=10, leading=14,
-                              spaceAfter=10),
-    'h1':      ParagraphStyle('h1',     fontName='DV-B',  fontSize=13, leading=17,
-                              spaceBefore=14, spaceAfter=5, textColor=BLUE),
-    'body':    ParagraphStyle('body',   fontName='DVS',   fontSize=10, leading=14,
-                              spaceAfter=6),
-    'caption': ParagraphStyle('caption',fontName='DVS-I', fontSize=9,  leading=12,
-                              spaceAfter=8, textColor=GREY),
-    'tbl_hdr': ParagraphStyle('tbl_hdr',fontName='DV-B',  fontSize=9,  leading=13,
-                              textColor=WHITE),
-    'tbl_cell':ParagraphStyle('tbl_cell',fontName='DVS',  fontSize=9,  leading=13),
-    'kr_hdr':  ParagraphStyle('kr_hdr', fontName='DVS-B', fontSize=9,  leading=13,
-                              textColor=WHITE),
-    'kr_body': ParagraphStyle('kr_body',fontName='DVS',   fontSize=9,  leading=13,
-                              textColor=WHITE),
-}
-
-def sp(n=6): return Spacer(1, n)
-
-def fix(text):
-    for char, ent in [('→','&#8594;'),('—','&#8212;'),('⊥','&#8869;'),
-                      ('ε','&#949;'),('≤','&#8804;')]:
-        text = text.replace(char, ent)
-    return text
+S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
+                                alignment=1, spaceAfter=4)
+S['h1']       = ParagraphStyle('h1',       fontName='DV-B',  fontSize=13, leading=17,
+                                spaceBefore=14, spaceAfter=5, textColor=BLUE)
+S['sub']      = ParagraphStyle('sub',      fontName='DV-I',  fontSize=11, leading=15,
+                                alignment=1, spaceAfter=4)
+S['meta']     = ParagraphStyle('meta',     fontName='DV',    fontSize=9,  leading=13,
+                                alignment=1, spaceAfter=10, textColor=colors.grey)
+S['intro']    = ParagraphStyle('intro',    fontName='DVS',   fontSize=10, leading=14,
+                                spaceAfter=10)
+S['caption']  = ParagraphStyle('caption',  fontName='DVS-I', fontSize=9,  leading=12,
+                                spaceAfter=8, textColor=GREY)
+S['tbl_hdr']  = S['label']    # alias — white-on-BLUE header (same as label)
+S['tbl_cell'] = S['cell']     # alias — body-text cell (same as cell)
+S['kr_hdr']   = ParagraphStyle('kr_hdr',   fontName='DVS-B', fontSize=9,  leading=13,
+                                textColor=WHITE)
+S['kr_body']  = ParagraphStyle('kr_body',  fontName='DVS',   fontSize=9,  leading=13,
+                                textColor=WHITE)
 
 def body(t): return Paragraph(fix(t), S['body'])
 
@@ -142,8 +103,7 @@ def tool_stack_diagram():
     return d
 
 def build():
-    out_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                            'ZP_Tools_and_Methods.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP_Tools_and_Methods.pdf')
 
     def footer_cb(canvas, doc):
         canvas.saveState(); canvas.setFont('DV-I', 8)

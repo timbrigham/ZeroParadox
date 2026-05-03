@@ -1,180 +1,23 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.9 | May 2026
-Changes from v1.8:
-  - C-H3 AX-G1 no-terminal argument corrected: replaced "unbounded upward over larger
-    alphabets" (outside the binary framework) with the argument the Lean proof actually
-    makes — ℝ≥0 has no greatest element (t + 1 > t), the categorical expression of
-    ZP-A R1. Verified in Lean: ax_g1_no_terminal (nnrealZPCategory).
-Changes from v1.7:
-  - C-H1 AX-G2 verification: added note that the ⊥-to-0 identification depends on
-    CC-1 / DA-2 — a modelling commitment, not derived from ZP-A alone. No mathematical
-    content changed.
-Changes from v1.6:
-  - T-H3 consistency note strengthened: "independence of null-analog discovery" foregrounded —
-    each framework located its null-analog through its own domain logic prior to and without
-    reference to the others; the modeling commitment is the identification of independently-located
-    objects, not derived agreement. Replaces "frameworks are not independent" framing that
-    partially conceded the circularity objection.
-Changes from v1.5:
-  - Lean: three identical fb/fc/fd_nnreal_initial_grounding defs consolidated into one
-    nnreal_initial_grounding; OQ-G3 register updated to reflect single shared witness;
-    Section III header updated to state "shared witness" explicitly
-Changes from v1.4:
-  - OQ-G3 register entry updated: fb/fc/fd all share proof term nnrealZPCategory.zpIsInitial;
-    domain theorems (C3, T1b, T4) clarified as semantic context, not formal Lean dependencies;
-    full abstract functor terms explicitly deferred as future work
-Changes from v1.3:
-  - T-H3 cross-framework consistency caveat expanded: added explicit acknowledgment
-    that the four frameworks share common structural commitments (A1-A4, AX-B1, CC-1)
-    and that their agreement is coherence across representations, not external replication.
-Changes from v1.0:
-  - AX-1 status updated throughout: now T-SNAP (Derived — ZP-E v2.0)
-  - Import Registry updated to ZP-G v1.1 (BA-G1 demoted to compatibility remark)
-  - OQ-G1 status updated: closed in ZP-G v1.1
-  - OQ-G4 intro text corrected (it IS resolved in Section V)
-Follows all rules in pdf rendering standards.md:
-  - DejaVu fonts only
-  - Checkmark always wrapped in <font name="DV">
-  - All table cells are Paragraph objects
-  - No unicode subscripts — use sub/super tags
-  - US Letter, 1-inch margins, TW = 6.5 inch
+Version 1.10 | May 2026
+v1.10: fc_functor and fd_functor added — F_C and F_D now have concrete Lean Functor terms
+(InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors.
+C-H3/C-H4 status, OQ-G3 register, and Validation table updated to reflect sorry-free status.
+v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal with
+Lean-verified argument: ℝ≥0 has no greatest element (t + 1 > t), categorical expression of ZP-A R1.
+v1.8: C-H1 AX-G2 verification note added — ⊥-to-0 identification depends on CC-1/DA-2.
+v1.7: T-H3 consistency note strengthened — independence of null-analog discovery foregrounded.
+v1.5: fb/fc/fd shared witness consolidated into nnreal_initial_grounding.
+v1.4: OQ-G3 register updated — fb/fc/fd share proof term nnrealZPCategory.zpIsInitial.
+v1.3: T-H3 cross-framework consistency caveat expanded.
+v1.1: AX-1 updated to T-SNAP; Import Registry updated to ZP-G v1.1; OQ-G1 closed.
+v1.0: Initial release.
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, PageBreak, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from zp_utils import *
 
-# ── 1. FONT REGISTRATION ─────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
-
-print(f'[build_zph] SCRIPT_DIR: {SCRIPT_DIR}')
-print(f'[build_zph] FONT_DIR:   {FONT_DIR}')
-print('[build_zph] Registering fonts...')
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'));     print('  DV ok')
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'));    print('  DV-B ok')
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf')); print('  DV-I ok')
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf')); print('  DV-BI ok')
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'));     print('  DVS ok')
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'));   print('  DVS-B ok')
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-I ok')
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-BI ok')
-print('[build_zph] Fonts registered.')
-
-# ── 2. COLORS ─────────────────────────────────────────────────────────────────
-BLUE      = colors.HexColor('#2E75B6')
-BLUE_LITE = colors.HexColor('#D5E8F0')
-GREY_LITE = colors.HexColor('#F5F5F5')
-GREEN_LITE= colors.HexColor('#E8F5E9')
-BLACK     = colors.black
-WHITE     = colors.white
-
-# ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-# ── 4. PARAGRAPH STYLES ───────────────────────────────────────────────────────
-S = {
-    'title':    ParagraphStyle('title',    fontName='DV-B',  fontSize=18, leading=24,
-                               spaceAfter=6,  alignment=1),
-    'subtitle': ParagraphStyle('subtitle', fontName='DV-I',  fontSize=11, leading=15,
-                               spaceAfter=4,  alignment=1),
-    'h1':       ParagraphStyle('h1',       fontName='DV-B',  fontSize=13, leading=18,
-                               spaceBefore=14, spaceAfter=5, textColor=BLUE),
-    'h2':       ParagraphStyle('h2',       fontName='DV-B',  fontSize=11, leading=15,
-                               spaceBefore=10, spaceAfter=4, textColor=BLUE),
-    'body':     ParagraphStyle('body',     fontName='DVS',   fontSize=10, leading=14,
-                               spaceAfter=6),
-    'bodyI':    ParagraphStyle('bodyI',    fontName='DVS-I', fontSize=10, leading=14,
-                               spaceAfter=6),
-    'label':    ParagraphStyle('label',    fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=WHITE),
-    'labelG':   ParagraphStyle('labelG',   fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=colors.HexColor('#1B5E20')),
-    'cell':     ParagraphStyle('cell',     fontName='DVS',   fontSize=9,  leading=13),
-    'cellB':    ParagraphStyle('cellB',    fontName='DVS-B', fontSize=9,  leading=13),
-    'cellI':    ParagraphStyle('cellI',    fontName='DVS-I', fontSize=9,  leading=13),
-    'note':     ParagraphStyle('note',     fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=4),
-    'derived':  ParagraphStyle('derived',  fontName='DVS-B', fontSize=10, leading=14,
-                               spaceAfter=6, textColor=colors.HexColor('#1B5E20')),
-}
-
-# ── 5. HELPERS ────────────────────────────────────────────────────────────────
-
-def sp(n=6):
-    return Spacer(1, n)
-
-def hr():
-    return HRFlowable(width='100%', thickness=0.5,
-                      color=colors.HexColor('#AAAAAA'),
-                      spaceAfter=6, spaceBefore=2)
-
-def chk():
-    return '<font name="DV">&#10003;</font>'
-
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k','ₘ':'m','ᵢ':'i','ⱼ':'j'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    text = text.replace('✓', '<font name="DV">&#10003;</font>')
-    text = text.replace('∅', '<font name="DV">&#8709;</font>')
-    replacements = [
-        ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
-        ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
-        ('∈','&#8712;'),('∉','&#8713;'),('⊆','&#8838;'),
-        ('∀','&#8704;'),('∃','&#8707;'),('∞','&#8734;'),
-        ('→','&#8594;'),('←','&#8592;'),('↔','&#8596;'),
-        ('⇒','&#8658;'),('∘','&#8728;'),('—','&#8212;'),
-        ('–','&#8211;'),('·','&#183;'),('×','&#215;'),
-        ('−','&#8722;'),('≡','&#8801;'),('≅','&#8773;'),
-        ('ε','&#949;'),('α','&#945;'),('β','&#946;'),
-        ('γ','&#947;'),('δ','&#948;'),('ι','&#953;'),
-        ('τ','&#964;'),('φ','&#966;'),
-        ('ℚ','&#8474;'),('ℤ','&#8484;'),('ℂ','&#8450;'),
-        ('ℕ','&#8469;'),('ℝ','&#8477;'),
-        ('‖','&#8214;'),('∥','&#8741;'),
-    ]
-    for char, entity in replacements:
-        if char in text:
-            text = text.replace(char, entity)
-    return text
-
-def body(text, style='body'):
-    return Paragraph(fix(text), S[style])
-
-def label_box(title, rows_list, title_style='label', bg=None):
-    if bg is None:
-        bg = BLUE
-    data = [[Paragraph(fix(title), S[title_style])]]
-    for r in rows_list:
-        data.append([Paragraph(fix(r), S['cell'])])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  bg),
-        ('BACKGROUND',    (0,1), (-1,-1), GREY_LITE),
-        ('TEXTCOLOR',     (0,0), (-1,0),  WHITE),
-        ('BOX',           (0,0), (-1,-1), 0.5, BLUE),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, BLUE),
-        ('LINEBELOW',     (0,1), (-1,-2), 0.5, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('LEFTPADDING',   (0,0), (-1,-1), 8),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 8),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=[TW], repeatRows=1)
-    t.setStyle(ts)
-    return t
 
 def label_box_status(title, status_line, rows_list):
     """Box with blue header, italic status sub-row, then content rows."""
@@ -202,47 +45,12 @@ def label_box_status(title, status_line, rows_list):
     t.setStyle(ts)
     return t
 
-def data_table(headers, rows_data, col_widths):
-    hdr_row = [Paragraph(fix(h), S['label']) for h in headers]
-    data = [hdr_row]
-    for row in rows_data:
-        data.append([Paragraph(fix(str(c)), S['cell']) for c in row])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  BLUE),
-        ('ROWBACKGROUNDS',(0,1),(-1,-1),  [WHITE, GREY_LITE]),
-        ('BOX',           (0,0), (-1,-1), 0.5, BLUE),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, BLUE),
-        ('INNERGRID',     (0,1), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 4),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
-        ('LEFTPADDING',   (0,0), (-1,-1), 6),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 6),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=col_widths, repeatRows=1)
-    t.setStyle(ts)
-    return t
 
-def make_doc(path):
-    def footer_cb(canvas, doc):
-        canvas.saveState()
-        canvas.setFont('DV-I', 8)
-        canvas.setFillColor(colors.grey)
-        ft = f"Zero Paradox ZP-H: Categorical Bridge  |  Version 1.9  |  May 2026  |  Page {doc.page}"
-        canvas.drawCentredString(LETTER[0]/2, 0.6*inch, ft)
-        canvas.restoreState()
-    return SimpleDocTemplate(
-        path, pagesize=LETTER,
-        leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
-        title='ZP-H: Categorical Bridge',
-        author='Zero Paradox Project',
-        onFirstPage=footer_cb, onLaterPages=footer_cb,
-    )
-
-
-def build_zph(out_path):
+def build():
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_10.pdf')
     print(f'[build_zph] Output: {out_path}')
-    doc = make_doc(out_path)
+    doc = make_doc(out_path, 'ZP-H: Categorical Bridge', 'ZP-H: Categorical Bridge',
+                   'Version 1.10', date_str='May 2026')
     E = []
 
     print('[build_zph] Building title block...')
@@ -251,9 +59,10 @@ def build_zph(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.9 | May 2026', S['bodyI']),
+        Paragraph('Version 1.10 | May 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.8 | v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal (outside the binary framework) with the Lean-verified argument: &#8477;&#8805;0 has no greatest element (t + 1 &gt; t), the categorical expression of ZP-A R1 (ax_g1_no_terminal). | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
+            '<i>Supersedes v1.9 | v1.10: fc_functor and fd_functor added — F<sub>C</sub> and F<sub>D</sub> now have concrete Lean Functor terms (InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors. C-H3/C-H4 status and Validation table updated. | '
+            'v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal (outside the binary framework) with the Lean-verified argument: &#8477;&#8805;0 has no greatest element (t + 1 &gt; t), the categorical expression of ZP-A R1 (ax_g1_no_terminal). | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
             'v1.7: T-H3 consistency note strengthened — independence of null-analog '
             'discovery foregrounded: each framework located its null-analog through its own domain logic '
             '(A4 for ZP-A, T3 for ZP-B, D1/AIT for ZP-C, T2/T3 for ZP-D) prior to any cross-framework '
@@ -415,7 +224,7 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.1 F<sub>A</sub>: C &#8594; SLat (Join-Semilattices)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H1 — Functor F<sub>A</sub>: C → SLat',
+        'Construction C-H1 — Functor FA: C → SLat',
         'Status: Derived — OQ-G3 partially closed',
         [
             'Object map: F<sub>A</sub> sends each object X &#8712; ob(C) to the state S<sub>X</sub> &#8712; L in the '
@@ -438,7 +247,7 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.2 F<sub>B</sub>: C &#8594; pTop (p-Adic Topological Spaces)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H2 — Functor Fв: C → pTop',
+        'Construction C-H2 — Functor FB: C → pTop',
         'Status: PDF construction complete — Lean: full functor (fb_functor, sorry-free)',
         [
             'Object map: F<sub>B</sub> sends each object X &#8712; ob(C) to an element x &#8712; Q<sub>2</sub>. The initial object 0 maps to '
@@ -459,8 +268,8 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.3 F<sub>C</sub>: C &#8594; InfoSp (Information-Theoretic Spaces)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H3 — Functor FС: C → InfoSp',
-        'Status: PDF construction complete — Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work',
+        'Construction C-H3 — Functor FC: C → InfoSp',
+        'Status: PDF construction complete — Lean: full functor (fc_functor, sorry-free)',
         [
             'Object map: F<sub>C</sub> sends each object X &#8712; ob(C) to a probability distribution P<sub>X</sub> over {0, 1}. The initial '
             'object 0 maps to the Null State distribution: F<sub>C</sub>(0) = P = (1, 0) (derived from AX-B1 and RP-1 in ZP-C T1).',
@@ -490,8 +299,8 @@ def build_zph(out_path):
 
     E.append(Paragraph('3.4 F<sub>D</sub>: C &#8594; Hilb (Hilbert Spaces)', S['h2']))
     E.append(label_box_status(
-        'Construction C-H4 — Functor FĐ: C → Hilb',
-        'Status: PDF construction complete — Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work',
+        'Construction C-H4 — Functor FD: C → Hilb',
+        'Status: PDF construction complete — Lean: full functor (fd_functor, sorry-free)',
         [
             'Object map: F<sub>D</sub> sends each object X &#8712; ob(C) to a state vector T(x) &#8712; H = &#8450;<sup>n</sup> via the transition '
             'operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2). The initial object 0 maps to: F<sub>D</sub>(0) = T(0) = e<sub>0</sub>.',
@@ -646,7 +455,7 @@ def build_zph(out_path):
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.9', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.10', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -660,13 +469,15 @@ def build_zph(out_path):
          'Left adjoint verification for instantiation functors. Resolved in Section IV by '
          'direct verification of the universal property for each of the four functors.'],
         ['OQ-G3',
-         'Closed (PDF)\n/ Open (Lean\nfull functors)',
-         'PDF-level constructions of all four instantiation functors complete (Section III): '
-         'object maps, morphism maps, composition and identity preservation verified for F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>. '
-         'F<sub>A</sub>: Lean-level full closure (NatSLat appendix); fb_functor provides a concrete Functor &#8469; Q&#8322;BallDepth term. '
-         'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub>: One shared Lean witness — nnreal_initial_grounding (nnrealZPCategory.zpIsInitial). '
-         'Domain differentiation carried by domain theorems proved separately in T-H1: C3 (F<sub>B</sub>), T1b (F<sub>C</sub>), T4 (F<sub>D</sub>). '
-         'Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work.'],
+         'Closed — all four\nfunctors (Lean)',
+         'PDF-level constructions of all four instantiation functors complete (Section III). '
+         'All four now have concrete Lean Functor terms (sorry-free): '
+         'F<sub>A</sub>: fa via NatSLat (Functor &#8469; &#8469;, effectively). '
+         'F<sub>B</sub>: fb_functor (Functor &#8469; Q&#8322;BallDepth), snap grounded in C3. '
+         'F<sub>C</sub>: fc_functor (Functor &#8469; InfoDepth), snap grounded in T1b. '
+         'F<sub>D</sub>: fd_functor (Functor &#8469; HilbDimDepth), snap grounded in T4. '
+         'Each domain type has a distinct ZPCategory instance and preserves_initial definition. '
+         'OQ-G3 fully closed.'],
         ['OQ-G4',
          'Closed — T-H2',
          'Reconciliation of categorical (undefined domain) and ZP-C (infinite accumulation) '
@@ -728,9 +539,9 @@ def build_zph(out_path):
         ['C-H2: F<sub>B</sub>: C &#8594; pTop',
          'Valid — all four requirements verified. Lean: full functor (fb_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['C-H3: F<sub>C</sub>: C &#8594; InfoSp',
-         'Valid (PDF level) — from AX-B1, RP-1; all four requirements verified. Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work. <font name="DV">&#10003;</font>'],
+         'Valid — from AX-B1, RP-1; all four requirements verified. Lean: full functor (fc_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['C-H4: F<sub>D</sub>: C &#8594; Hilb',
-         'Valid (PDF level) — from DP-1; all four requirements verified. Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work. <font name="DV">&#10003;</font>'],
+         'Valid — from DP-1; all four requirements verified. Lean: full functor (fd_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['T-H1: Universal property preserved',
          'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors. <font name="DV">&#10003;</font>'],
         ['T-H2: Singularity reconciliation',
@@ -761,10 +572,11 @@ def build_zph(out_path):
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.9 | Four instantiation functors constructed | '
+            '<i>End of ZP-H v1.10 | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 closed | '
-            'F<sub>A</sub>/F<sub>B</sub> full Lean functors (sorry-free); '
-            'F<sub>C</sub>/F<sub>D</sub> concrete ZPCategory witness — full abstract functors future work | '
+            'All four functors have concrete Lean Functor terms (sorry-free): '
+            'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth), F<sub>A</sub> via NatSLat | '
+            'OQ-G3 fully closed | '
             'T-SNAP inherited as derived theorem | '
             'T-H3 independence-of-discovery note: null-analog in each domain located independently | '
             'No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers</i>',
@@ -777,6 +589,4 @@ def build_zph(out_path):
 
 
 if __name__ == '__main__':
-    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-H_Categorical_Bridge_v1_9.pdf'))
-    build_zph(out)
+    build()
