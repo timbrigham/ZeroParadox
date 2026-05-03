@@ -296,7 +296,7 @@ def data_table(headers, rows_data, col_widths, header_bg=None):
     t.setStyle(ts)
     return t
 
-def make_doc(path, title_str, doc_id, version_str):
+def make_doc(path, title_str, doc_id, version_str, date_str='April 2026'):
     """SimpleDocTemplate with standard Zero Paradox footer."""
     def footer_cb(canvas, doc):
         canvas.saveState()
@@ -304,7 +304,7 @@ def make_doc(path, title_str, doc_id, version_str):
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            f'Zero Paradox {doc_id}  |  {version_str}  |  April 2026  |  Page {doc.page}',
+            f'Zero Paradox {doc_id}  |  {version_str}  |  {date_str}  |  Page {doc.page}',
         )
         canvas.restoreState()
     return SimpleDocTemplate(
