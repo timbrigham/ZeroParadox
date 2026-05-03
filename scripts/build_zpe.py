@@ -50,209 +50,21 @@ Follows all rules in pdf rendering standards:
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from zp_utils import *
 
-# ── 1. FONT REGISTRATION ──────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR   = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+# ── Local overrides: ZP-E uses justified body text ────────────────────────────
+S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
+S['bodyI']   = ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14, spaceAfter=6, alignment=4)
+S['li']      = ParagraphStyle('li',      fontName='DVS',   fontSize=10, leading=14, leftIndent=18, spaceAfter=3, alignment=4)
+S['derived'] = ParagraphStyle('derived', fontName='DVS-B', fontSize=10, leading=14, spaceAfter=6, textColor=GREEN_DARK, alignment=4)
 
-print(f'[build_zpe] SCRIPT_DIR: {SCRIPT_DIR}')
-print(f'[build_zpe] FONT_DIR:   {FONT_DIR}')
-print('[build_zpe] Registering fonts...')
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'));         print('  DV ok')
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'));    print('  DV-B ok')
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf')); print('  DV-I ok')
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf')); print('  DV-BI ok')
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'));         print('  DVS ok')
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'));   print('  DVS-B ok')
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-I ok')
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-BI ok')
-print('[build_zpe] Fonts registered.')
-
-# Register STIX for ℵ glyph (U+2135, decimal 8501) — missing from DejaVu
-_stix_registered = False
-for _stix_path in [
-    FONT_DIR + 'STIXTwo-Math.ttf',
-    FONT_DIR + 'STIX-Regular.ttf',
-    FONT_DIR + 'seguisym.ttf',
-    r'C:\Windows\Fonts\seguisym.ttf',
-    '/usr/share/fonts/opentype/stix/STIX-Regular.ttf',
-    '/usr/share/fonts/truetype/stix/STIX-Regular.ttf',
-]:
-    if os.path.exists(_stix_path):
-        try:
-            pdfmetrics.registerFont(TTFont('STIX', _stix_path))
-            _stix_registered = True
-            print(f'  STIX ok ({_stix_path})')
-            break
-        except Exception as e:
-            print(f'  STIX failed: {e}')
-if not _stix_registered:
-    print('  WARNING: STIX not found — ℵ (U+2135) will not render correctly')
-ALEPH_FONT = 'STIX' if _stix_registered else 'DV'
-
-# ── 2. COLORS ─────────────────────────────────────────────────────────────────
-BLUE        = colors.HexColor('#2E75B6')
-SLATE       = colors.HexColor('#455A64')
-SLATE_LITE  = colors.HexColor('#ECEFF1')
-GREEN_DARK  = colors.HexColor('#1B5E20')
-GREY_LITE   = colors.HexColor('#F5F5F5')
-WHITE       = colors.white
-
-# ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-# ── 4. PARAGRAPH STYLES ───────────────────────────────────────────────────────
-S = {
-    'title':   ParagraphStyle('title',   fontName='DV-B',  fontSize=18, leading=24,
-                               spaceAfter=6, alignment=1),
-    'subtitle':ParagraphStyle('subtitle',fontName='DV-I',  fontSize=11, leading=15,
-                               spaceAfter=4, alignment=1),
-    'h1':      ParagraphStyle('h1',      fontName='DV-B',  fontSize=13, leading=18,
-                               spaceBefore=14, spaceAfter=5, textColor=BLUE),
-    'h2':      ParagraphStyle('h2',      fontName='DV-B',  fontSize=11, leading=15,
-                               spaceBefore=10, spaceAfter=4, textColor=BLUE),
-    'body':    ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
-                               spaceAfter=6, alignment=4),
-    'bodyI':   ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14,
-                               spaceAfter=6, alignment=4),
-    'li':      ParagraphStyle('li',      fontName='DVS',   fontSize=10, leading=14,
-                               leftIndent=18, spaceAfter=3, alignment=4),
-    'derived': ParagraphStyle('derived', fontName='DVS-B', fontSize=10, leading=14,
-                               spaceAfter=6, textColor=GREEN_DARK, alignment=4),
-    'label':   ParagraphStyle('label',   fontName='DV-B',  fontSize=9,  leading=13,
-                               textColor=WHITE),
-    'cell':    ParagraphStyle('cell',    fontName='DVS',   fontSize=9,  leading=13),
-    'cellI':   ParagraphStyle('cellI',   fontName='DVS-I', fontSize=9,  leading=13),
-    'note':    ParagraphStyle('note',    fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=4),
-    'endnote': ParagraphStyle('endnote', fontName='DVS-I', fontSize=9,  leading=13,
-                               alignment=1),
-}
-
-# ── 5. HELPERS ────────────────────────────────────────────────────────────────
-
-def sp(n=6):
-    return Spacer(1, n)
-
-def hr():
-    return HRFlowable(width='100%', thickness=0.5,
-                      color=colors.HexColor('#AAAAAA'),
-                      spaceAfter=6, spaceBefore=2)
-
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k','ₘ':'m','ᵢ':'i','ⱼ':'j'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    text = text.replace('✓', '<font name="DV">&#10003;</font>')
-    text = text.replace('∅', '<font name="DV">&#8709;</font>')
-    text = text.replace('ℵ', f'<font name="{ALEPH_FONT}">&#8501;</font>')
-    replacements = [
-        ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
-        ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
-        ('∈','&#8712;'),('∉','&#8713;'),('⊆','&#8838;'),
-        ('∀','&#8704;'),('∃','&#8707;'),('∞','&#8734;'),
-        ('→','&#8594;'),('←','&#8592;'),('↔','&#8596;'),
-        ('⇒','&#8658;'),('∘','&#8728;'),('—','&#8212;'),
-        ('–','&#8211;'),('·','&#183;'),('×','&#215;'),
-        ('−','&#8722;'),('≡','&#8801;'),('≅','&#8773;'),
-        ('≇','&#8775;'),
-        ('ω','&#969;'),('ö','&#246;'),
-        ('ε','&#949;'),('α','&#945;'),('β','&#946;'),
-        ('γ','&#947;'),('δ','&#948;'),('ι','&#953;'),
-        ('τ','&#964;'),('φ','&#966;'),
-        ('ℚ','&#8474;'),('ℤ','&#8484;'),('ℂ','&#8450;'),
-        ('ℕ','&#8469;'),('ℝ','&#8477;'),
-        ('≈','&#8776;'),('∑','&#8721;'),('¬','&#172;'),
-        ('Ö','&#214;'),
-    ]
-    for char, entity in replacements:
-        if char in text:
-            text = text.replace(char, entity)
-    return text
-
-def body(text, style='body'):
-    return Paragraph(fix(text), S[style])
-
-def li(text):
-    return Paragraph('&#8226;  ' + fix(text), S['li'])
-
-def derived(text):
-    return Paragraph(fix(text), S['derived'])
-
-def bridge_box(title, rows):
-    """Grey-slate header box for DA-X formal claims — bridge document style."""
-    data = [[Paragraph(fix(title), S['label'])]]
-    for r in rows:
-        data.append([Paragraph(fix(r), S['cell'])])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  SLATE),
-        ('BACKGROUND',    (0,1), (-1,-1), GREY_LITE),
-        ('BOX',           (0,0), (-1,-1), 0.5, SLATE),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, SLATE),
-        ('LINEBELOW',     (0,1), (-1,-2), 0.5, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 5),
-        ('LEFTPADDING',   (0,0), (-1,-1), 8),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 8),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=[TW], repeatRows=1)
-    t.setStyle(ts)
-    return t
-
-def data_table(headers, rows_data, col_widths):
-    hdr_row = [Paragraph(fix(h), S['label']) for h in headers]
-    data    = [hdr_row]
-    for row in rows_data:
-        data.append([Paragraph(fix(str(c)), S['cell']) for c in row])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  BLUE),
-        ('ROWBACKGROUNDS',(0,1), (-1,-1), [WHITE, GREY_LITE]),
-        ('BOX',           (0,0), (-1,-1), 0.5, BLUE),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, BLUE),
-        ('INNERGRID',     (0,1), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 4),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
-        ('LEFTPADDING',   (0,0), (-1,-1), 6),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 6),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=col_widths, repeatRows=1)
-    t.setStyle(ts)
-    return t
-
-def make_doc(path):
-    def footer_cb(canvas, doc):
-        canvas.saveState()
-        canvas.setFont('DV-I', 8)
-        canvas.setFillColor(colors.grey)
-        ft = f'THE ZERO PARADOX  |  ZP-E Bridge Document v3.11  |  May 2026  |  Page {doc.page}'
-        canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
-        canvas.restoreState()
-    return SimpleDocTemplate(
-        path, pagesize=LETTER,
-        leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
-        title='ZP-E: Bridge Document',
-        author='Zero Paradox Project',
-        onFirstPage=footer_cb, onLaterPages=footer_cb,
-    )
+bridge_box = remark_box  # SLATE header — ZP-E bridge document style
 
 
-def build_zpe(out_path):
+def build():
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document_v3_11.pdf')
     print(f'[build_zpe] Output: {out_path}')
-    doc = make_doc(out_path)
+    doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version 3.11', date_str='May 2026')
     E   = []
 
     print('[build_zpe] Building title block...')
@@ -1007,6 +819,4 @@ def build_zpe(out_path):
 
 
 if __name__ == '__main__':
-    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-E_Bridge_Document_v3_11.pdf'))
-    build_zpe(out)
+    build()
