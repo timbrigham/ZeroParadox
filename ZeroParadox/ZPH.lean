@@ -31,11 +31,13 @@ Key results:
   domain-specific extremality property.
   - F_A (ZPA/ZPE): fully categorical — ℕ with max/0 is a concrete ZPCategory instance
     (see NatSLat appendix); ⊥ satisfies the universal property of an initial object.
-  - F_B, F_C, F_D: ℝ≥0 with ≤ (NNRealZPCat appendix) provides a concrete ZPCategory
-    grounding all three. Domain properties (irreversibility/C3, JSD cost/T1b,
-    orthogonality/T4) close OQ-G3 for F_B, F_C, F_D. Full abstract functor objects
-    (Lean Functor terms C → pTop/InfoSp/Hilb) remain future work, but the concrete
-    categorical and domain grounding is complete. See NNRealZPCat appendix.
+  - F_B: Q₂BallDepth appendix — concrete Functor ℕ → Q₂BallDepth (fb_functor),
+    preserves initial object, snap grounded in C3. OQ-G3 closed for F_B.
+  - F_C: InfoDepth appendix — concrete Functor ℕ → InfoDepth (fc_functor),
+    preserves initial object, snap grounded in T1b (JSD = log 2). OQ-G3 closed for F_C.
+  - F_D: HilbDimDepth appendix — concrete Functor ℕ → HilbDimDepth (fd_functor),
+    preserves initial object, snap grounded in T4 (orthogonal shift). OQ-G3 closed for F_D.
+  All four functors now have concrete Lean Functor terms. OQ-G3 fully closed.
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
   accumulation) are compatible — jointly derivable (OQ-G4 closed).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved
@@ -73,12 +75,12 @@ plus the domain-specific theorem grounding the initial-object claim.
 
 - **F_A (SLat)**: NatSLat appendix — ℕ with max/0 as ZPSemilattice, ≤ as poset-category.
   0 is categorical initial. Distinct concrete instance. OQ-G3 closed for F_A.
-- **F_B / F_C / F_D**: NNRealZPCat appendix — ℝ≥0 with ≤ is the **shared** concrete ZPCategory
-  witness for all three. One concrete instance; three distinct domain contexts. The domain
-  differentiation is carried by the per-domain theorems proved separately in T-H1 above:
-  C3 (ZPB) for F_B, T1b (ZPC) for F_C, T4 (ZPD) for F_D. `nnreal_initial_grounding` is the
-  single Lean definition establishing 0 : NNReal as a categorical initial object.
-  Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work (OQ-G3). -/
+- **F_B**: Q₂BallDepth appendix — `fb_functor : Functor ℕ Q₂BallDepth`, grounded in C3.
+- **F_C**: InfoDepth appendix — `fc_functor : Functor ℕ InfoDepth`, grounded in T1b.
+- **F_D**: HilbDimDepth appendix — `fd_functor : Functor ℕ HilbDimDepth`, grounded in T4.
+  Each has a distinct depth-index type, ZPCategory instance, concrete Functor term,
+  preserves_initial definition, and snap grounding theorem. OQ-G3 fully closed.
+  NNRealZPCat appendix remains as the shared categorical witness underlying all three. -/
 
 /-! ## T-H1 — Initial-Object Properties Under Each Instantiation Functor -/
 

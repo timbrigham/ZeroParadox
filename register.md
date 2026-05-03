@@ -12,7 +12,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-D State Layer | v1.8 | ZP-D_State_Layer_v1_8.pdf | v1.4 | |
 | ZP-E Bridge Document | v3.11 | ZP-E_Bridge_Document_v3_11.pdf | v1.3 | |
 | ZP-G Category Theory | v1.6 | ZP-G_Category_Theory_v1_6.pdf | v1.2 | |
-| ZP-H Categorical Bridge | v1.9 | ZP-H_Categorical_Bridge_v1_9.pdf | v1.2 | |
+| ZP-H Categorical Bridge | v1.10 | ZP-H_Categorical_Bridge_v1_10.pdf | v1.2 | |
 | ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero_v1_8.pdf | v1.1 | |
 | ZP-J Self-Reference | v1.1 | ZP-J_Self_Reference_v1_1.pdf | v1.0 | |
 | ZP-K Computational Grounding | v1.3 | ZP-K_Computational_Grounding_v1_3.pdf | v1.0 | |

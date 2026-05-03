@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.9 | May 2026
+Version 1.10 | May 2026
+v1.10: fc_functor and fd_functor added — F_C and F_D now have concrete Lean Functor terms
+(InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors.
+C-H3/C-H4 status, OQ-G3 register, and Validation table updated to reflect sorry-free status.
 v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal with
 Lean-verified argument: ℝ≥0 has no greatest element (t + 1 > t), categorical expression of ZP-A R1.
 v1.8: C-H1 AX-G2 verification note added — ⊥-to-0 identification depends on CC-1/DA-2.
@@ -44,10 +47,10 @@ def label_box_status(title, status_line, rows_list):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_9.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_10.pdf')
     print(f'[build_zph] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-H: Categorical Bridge', 'ZP-H: Categorical Bridge',
-                   'Version 1.9', date_str='May 2026')
+                   'Version 1.10', date_str='May 2026')
     E = []
 
     print('[build_zph] Building title block...')
@@ -56,9 +59,10 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.9 | May 2026', S['bodyI']),
+        Paragraph('Version 1.10 | May 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.8 | v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal (outside the binary framework) with the Lean-verified argument: &#8477;&#8805;0 has no greatest element (t + 1 &gt; t), the categorical expression of ZP-A R1 (ax_g1_no_terminal). | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
+            '<i>Supersedes v1.9 | v1.10: fc_functor and fd_functor added — F<sub>C</sub> and F<sub>D</sub> now have concrete Lean Functor terms (InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors. C-H3/C-H4 status and Validation table updated. | '
+            'v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal (outside the binary framework) with the Lean-verified argument: &#8477;&#8805;0 has no greatest element (t + 1 &gt; t), the categorical expression of ZP-A R1 (ax_g1_no_terminal). | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
             'v1.7: T-H3 consistency note strengthened — independence of null-analog '
             'discovery foregrounded: each framework located its null-analog through its own domain logic '
             '(A4 for ZP-A, T3 for ZP-B, D1/AIT for ZP-C, T2/T3 for ZP-D) prior to any cross-framework '
@@ -265,7 +269,7 @@ def build():
     E.append(Paragraph('3.3 F<sub>C</sub>: C &#8594; InfoSp (Information-Theoretic Spaces)', S['h2']))
     E.append(label_box_status(
         'Construction C-H3 — Functor FC: C → InfoSp',
-        'Status: PDF construction complete — Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work',
+        'Status: PDF construction complete — Lean: full functor (fc_functor, sorry-free)',
         [
             'Object map: F<sub>C</sub> sends each object X &#8712; ob(C) to a probability distribution P<sub>X</sub> over {0, 1}. The initial '
             'object 0 maps to the Null State distribution: F<sub>C</sub>(0) = P = (1, 0) (derived from AX-B1 and RP-1 in ZP-C T1).',
@@ -296,7 +300,7 @@ def build():
     E.append(Paragraph('3.4 F<sub>D</sub>: C &#8594; Hilb (Hilbert Spaces)', S['h2']))
     E.append(label_box_status(
         'Construction C-H4 — Functor FD: C → Hilb',
-        'Status: PDF construction complete — Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work',
+        'Status: PDF construction complete — Lean: full functor (fd_functor, sorry-free)',
         [
             'Object map: F<sub>D</sub> sends each object X &#8712; ob(C) to a state vector T(x) &#8712; H = &#8450;<sup>n</sup> via the transition '
             'operator T: Q<sub>2</sub> &#8594; H constructed in ZP-D (T2). The initial object 0 maps to: F<sub>D</sub>(0) = T(0) = e<sub>0</sub>.',
@@ -451,7 +455,7 @@ def build():
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.9', S['h1']))
+    E.append(Paragraph('VIII. Open Items Register for ZP-H v1.10', S['h1']))
 
     oq_rows = [
         ['OQ-G1',
@@ -465,13 +469,15 @@ def build():
          'Left adjoint verification for instantiation functors. Resolved in Section IV by '
          'direct verification of the universal property for each of the four functors.'],
         ['OQ-G3',
-         'Closed (PDF)\n/ Open (Lean\nfull functors)',
-         'PDF-level constructions of all four instantiation functors complete (Section III): '
-         'object maps, morphism maps, composition and identity preservation verified for F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>. '
-         'F<sub>A</sub>: Lean-level full closure (NatSLat appendix); fb_functor provides a concrete Functor &#8469; Q&#8322;BallDepth term. '
-         'F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub>: One shared Lean witness — nnreal_initial_grounding (nnrealZPCategory.zpIsInitial). '
-         'Domain differentiation carried by domain theorems proved separately in T-H1: C3 (F<sub>B</sub>), T1b (F<sub>C</sub>), T4 (F<sub>D</sub>). '
-         'Full abstract Lean Functor terms to pTop/InfoSp/Hilb as CategoryTheory categories remain future work.'],
+         'Closed — all four\nfunctors (Lean)',
+         'PDF-level constructions of all four instantiation functors complete (Section III). '
+         'All four now have concrete Lean Functor terms (sorry-free): '
+         'F<sub>A</sub>: fa via NatSLat (Functor &#8469; &#8469;, effectively). '
+         'F<sub>B</sub>: fb_functor (Functor &#8469; Q&#8322;BallDepth), snap grounded in C3. '
+         'F<sub>C</sub>: fc_functor (Functor &#8469; InfoDepth), snap grounded in T1b. '
+         'F<sub>D</sub>: fd_functor (Functor &#8469; HilbDimDepth), snap grounded in T4. '
+         'Each domain type has a distinct ZPCategory instance and preserves_initial definition. '
+         'OQ-G3 fully closed.'],
         ['OQ-G4',
          'Closed — T-H2',
          'Reconciliation of categorical (undefined domain) and ZP-C (infinite accumulation) '
@@ -533,9 +539,9 @@ def build():
         ['C-H2: F<sub>B</sub>: C &#8594; pTop',
          'Valid — all four requirements verified. Lean: full functor (fb_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['C-H3: F<sub>C</sub>: C &#8594; InfoSp',
-         'Valid (PDF level) — from AX-B1, RP-1; all four requirements verified. Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work. <font name="DV">&#10003;</font>'],
+         'Valid — from AX-B1, RP-1; all four requirements verified. Lean: full functor (fc_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['C-H4: F<sub>D</sub>: C &#8594; Hilb',
-         'Valid (PDF level) — from DP-1; all four requirements verified. Lean: concrete ZPCategory witness (NNRealZPCat); full abstract Lean functor future work. <font name="DV">&#10003;</font>'],
+         'Valid — from DP-1; all four requirements verified. Lean: full functor (fd_functor, sorry-free). <font name="DV">&#10003;</font>'],
         ['T-H1: Universal property preserved',
          'Valid — OQ-G2 closed. ZP-G T5 is now unconditional for all four instantiation functors. <font name="DV">&#10003;</font>'],
         ['T-H2: Singularity reconciliation',
@@ -566,10 +572,11 @@ def build():
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.9 | Four instantiation functors constructed | '
+            '<i>End of ZP-H v1.10 | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 closed | '
-            'F<sub>A</sub>/F<sub>B</sub> full Lean functors (sorry-free); '
-            'F<sub>C</sub>/F<sub>D</sub> concrete ZPCategory witness — full abstract functors future work | '
+            'All four functors have concrete Lean Functor terms (sorry-free): '
+            'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth), F<sub>A</sub> via NatSLat | '
+            'OQ-G3 fully closed | '
             'T-SNAP inherited as derived theorem | '
             'T-H3 independence-of-discovery note: null-analog in each domain located independently | '
             'No novel axioms: AX-B1 decidable, AX-G1 and AX-G2 grounded in prior layers</i>',
