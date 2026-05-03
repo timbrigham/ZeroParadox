@@ -1,150 +1,30 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
 Version 1.6 | May 2026
-Changes from v1.5:
-  - D7' well-definedness note corrected: "all structural claims below are invariant under this
-    additive constant" replaced with explicit scoping — invariance is a consequence of what
-    ZP-G chooses to claim (finite/zero/undefined), not a general AIT property.
-Changes from v1.4:
-  - Lean scope remark for T6-b/T6-c strengthened: now states explicitly that the Lean proofs
-    verify nothing about Kolmogorov complexity — they prove only that a ℕ-valued function is ≥ 0
-    (Nat.zero_le _), which is true by type for any such function. T6-b strict inequality and
-    T6-c subadditivity have no Lean proofs. T6-b and T6-c status lines and validation table rows
-    updated to remove unqualified ✓ and mark as PDF-level only.
-Changes from v1.3:
-  - Lean scope note added after T6-c: T6-b strict inequality and T6-c subadditivity are
-    K-specific AIT content outside the ZPSurprisal skeleton; Lean proofs reduce to Nat.zero_le _
-Changes from v1.2:
-  - R2 added: Remark connecting initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥})
-  - All prior results, axioms, and definitions unchanged
-Changes from v1.1:
-  - Theorem/Proposition/Lemma hierarchy applied: T1→Proposition, T2/T3→Lemma,
-    T4/T5→Proposition, T6-a/T6-b→Lemma, T6-c→Proposition; T6/T7 remain Theorems
-  - Companion cross-reference note added after intro paragraphs
-Follows all rules in pdf rendering standards:
-  - DejaVu fonts only
-  - Checkmark always wrapped in <font name="DV">
-  - All table cells are Paragraph objects
-  - No unicode subscripts — use sub/super tags
-  - US Letter, 1-inch margins, TW = 6.5 inch
+v1.6: D7' well-definedness note corrected — invariance scoped to what ZP-G claims
+(finite/zero/undefined), not asserted as a general AIT property.
+v1.5: T6-b/T6-c Lean scope disclosure strengthened — Lean proofs verify only
+Nat.zero_le _ (non-negativity by type); K-theoretic content not Lean-verified.
+v1.4: Lean scope note added after T6-c.
+v1.3: Remark R2 added (Categorical Expression of Self-Containment).
+v1.2: Theorem/Proposition/Lemma hierarchy applied throughout.
+v1.1: D7 replaced by D7' (native Kolmogorov surprisal); BA-G1 demoted to Remark.
+v1.0: Initial release.
 """
 
 import os
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import LETTER
-from reportlab.lib.units import inch
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer,
-                                 Table, TableStyle, HRFlowable)
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from zp_utils import *
 
-# ── 1. FONT REGISTRATION ──────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-FONT_DIR   = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+# ZP-G uses a slightly different amber shade; override zp_utils default
+AMBER = colors.HexColor('#B07800')
 
-print(f'[build_zpg] SCRIPT_DIR: {SCRIPT_DIR}')
-print(f'[build_zpg] FONT_DIR:   {FONT_DIR}')
-print('[build_zpg] Registering fonts...')
-pdfmetrics.registerFont(TTFont('DV',     FONT_DIR + 'DejaVuSans.ttf'));         print('  DV ok')
-pdfmetrics.registerFont(TTFont('DV-B',   FONT_DIR + 'DejaVuSans-Bold.ttf'));    print('  DV-B ok')
-pdfmetrics.registerFont(TTFont('DV-I',   FONT_DIR + 'DejaVuSans-Oblique.ttf')); print('  DV-I ok')
-pdfmetrics.registerFont(TTFont('DV-BI',  FONT_DIR + 'DejaVuSans-BoldOblique.ttf')); print('  DV-BI ok')
-pdfmetrics.registerFont(TTFont('DVS',    FONT_DIR + 'STIXTwo-Math.ttf'));         print('  DVS ok')
-pdfmetrics.registerFont(TTFont('DVS-B',  FONT_DIR + 'STIXTwo-Math.ttf'));   print('  DVS-B ok')
-pdfmetrics.registerFont(TTFont('DVS-I',  FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-I ok')
-pdfmetrics.registerFont(TTFont('DVS-BI', FONT_DIR + 'STIXTwo-Math.ttf')); print('  DVS-BI ok')
-print('[build_zpg] Fonts registered.')
+# ZP-G import box uses amber-colored label text (not white)
+S['labelAmber'] = ParagraphStyle('labelAmber', fontName='DV-B', fontSize=9, leading=13,
+                                  textColor=AMBER)
 
-# ── 2. COLORS ─────────────────────────────────────────────────────────────────
-BLUE        = colors.HexColor('#2E75B6')
-BLUE_LITE   = colors.HexColor('#D5E8F0')
-GREEN       = colors.HexColor('#2E7D32')
-GREEN_LITE  = colors.HexColor('#E8F5E9')
-ORANGE      = colors.HexColor('#BF4E30')
-ORANGE_LITE = colors.HexColor('#FBE9E7')
-SLATE       = colors.HexColor('#455A64')
-SLATE_LITE  = colors.HexColor('#ECEFF1')
-AMBER       = colors.HexColor('#B07800')
-AMBER_LITE  = colors.HexColor('#FFF8E7')
-GREY_LITE   = colors.HexColor('#F5F5F5')
-WHITE       = colors.white
-
-# ── 3. PAGE GEOMETRY ──────────────────────────────────────────────────────────
-TW = 6.5 * inch
-LM = RM = 1.0 * inch
-TM = BM = 1.0 * inch
-
-# ── 4. PARAGRAPH STYLES ───────────────────────────────────────────────────────
-S = {
-    'title':      ParagraphStyle('title',      fontName='DV-B',  fontSize=18, leading=24,
-                                 spaceAfter=6, alignment=1),
-    'subtitle':   ParagraphStyle('subtitle',   fontName='DV-I',  fontSize=11, leading=15,
-                                 spaceAfter=4, alignment=1),
-    'h1':         ParagraphStyle('h1',         fontName='DV-B',  fontSize=13, leading=18,
-                                 spaceBefore=14, spaceAfter=5, textColor=BLUE),
-    'h2':         ParagraphStyle('h2',         fontName='DV-B',  fontSize=11, leading=15,
-                                 spaceBefore=10, spaceAfter=4, textColor=BLUE),
-    'body':       ParagraphStyle('body',       fontName='DVS',   fontSize=10, leading=14,
-                                 spaceAfter=6),
-    'bodyI':      ParagraphStyle('bodyI',      fontName='DVS-I', fontSize=10, leading=14,
-                                 spaceAfter=6),
-    'label':      ParagraphStyle('label',      fontName='DV-B',  fontSize=9,  leading=13,
-                                 textColor=WHITE),
-    'labelAmber': ParagraphStyle('labelAmber', fontName='DV-B',  fontSize=9,  leading=13,
-                                 textColor=AMBER),
-    'cell':       ParagraphStyle('cell',       fontName='DVS',   fontSize=9,  leading=13),
-    'cellI':      ParagraphStyle('cellI',      fontName='DVS-I', fontSize=9,  leading=13),
-    'note':       ParagraphStyle('note',       fontName='DVS-I', fontSize=9,  leading=13,
-                                 spaceAfter=4),
-    'endnote':    ParagraphStyle('endnote',    fontName='DVS-I', fontSize=9,  leading=13,
-                                 alignment=1),
-}
-
-# ── 5. HELPERS ────────────────────────────────────────────────────────────────
-
-def sp(n=6):
-    return Spacer(1, n)
-
-def hr():
-    return HRFlowable(width='100%', thickness=0.5,
-                      color=colors.HexColor('#AAAAAA'),
-                      spaceAfter=6, spaceBefore=2)
-
-def fix(text):
-    sub_map = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4',
-               '₅':'5','₆':'6','₇':'7','₈':'8','₉':'9',
-               'ₙ':'n','ₖ':'k','ₘ':'m','ᵢ':'i','ⱼ':'j'}
-    for ch, rep in sub_map.items():
-        text = text.replace(ch, f'<sub>{rep}</sub>')
-    text = text.replace('✓', '<font name="DV">&#10003;</font>')
-    text = text.replace('∅', '<font name="DV">&#8709;</font>')
-    replacements = [
-        ('⊥','&#8869;'),('∨','&#8744;'),('∧','&#8743;'),
-        ('≤','&#8804;'),('≥','&#8805;'),('≠','&#8800;'),
-        ('∈','&#8712;'),('∉','&#8713;'),('⊆','&#8838;'),
-        ('∀','&#8704;'),('∃','&#8707;'),('∞','&#8734;'),
-        ('→','&#8594;'),('←','&#8592;'),('↔','&#8596;'),
-        ('⇒','&#8658;'),('∘','&#8728;'),('—','&#8212;'),
-        ('–','&#8211;'),('·','&#183;'),('×','&#215;'),
-        ('−','&#8722;'),('≡','&#8801;'),('≅','&#8773;'),
-        ('≇','&#8775;'),('≇','&#8775;'),
-        ('ε','&#949;'),('α','&#945;'),('β','&#946;'),
-        ('γ','&#947;'),('δ','&#948;'),('ι','&#953;'),
-        ('τ','&#964;'),('φ','&#966;'),
-        ('ℚ','&#8474;'),('ℤ','&#8484;'),('ℂ','&#8450;'),
-        ('ℕ','&#8469;'),('ℝ','&#8477;'),
-        ('≈','&#8776;'),('∑','&#8721;'),('¬','&#172;'),
-    ]
-    for char, entity in replacements:
-        if char in text:
-            text = text.replace(char, entity)
-    return text
-
-def body(text, style='body'):
-    return Paragraph(fix(text), S[style])
 
 def _box(title, title_style, hdr_bg, status, status_bg, rows):
+    """ZP-G box with a status row between header and content rows."""
     data = [
         [Paragraph(fix(title), S[title_style])],
         [Paragraph(fix(status), S['cellI'])],
@@ -168,19 +48,15 @@ def _box(title, title_style, hdr_bg, status, status_bg, rows):
     t.setStyle(ts)
     return t
 
-def def_box(title, status, rows):
-    return _box(title, 'label', BLUE, status, BLUE_LITE, rows)
 
-def result_box(title, status, rows):
-    return _box(title, 'label', GREEN, status, GREEN_LITE, rows)
+def def_box(title, status, rows):    return _box(title, 'label', BLUE,   status, BLUE_LITE,   rows)
+def result_box(title, status, rows): return _box(title, 'label', GREEN,  status, GREEN_LITE,  rows)
+def axiom_box(title, status, rows):  return _box(title, 'label', ORANGE, status, ORANGE_LITE, rows)
+def remark_box(title, status, rows): return _box(title, 'label', SLATE,  status, SLATE_LITE,  rows)
 
-def axiom_box(title, status, rows):
-    return _box(title, 'label', ORANGE, status, ORANGE_LITE, rows)
-
-def remark_box(title, status, rows):
-    return _box(title, 'label', SLATE, status, SLATE_LITE, rows)
 
 def import_box(title, status, rows):
+    """ZP-G import box — amber background, amber-text header (not white)."""
     data = [
         [Paragraph(fix(title), S['labelAmber'])],
         [Paragraph(fix(status), S['cellI'])],
@@ -202,48 +78,29 @@ def import_box(title, status, rows):
     t.setStyle(ts)
     return t
 
-def data_table(headers, rows_data, col_widths):
-    hdr_row = [Paragraph(fix(h), S['label']) for h in headers]
-    data    = [hdr_row]
-    for row in rows_data:
-        data.append([Paragraph(fix(str(c)), S['cell']) for c in row])
-    ts = TableStyle([
-        ('BACKGROUND',    (0,0), (-1,0),  BLUE),
-        ('ROWBACKGROUNDS',(0,1), (-1,-1), [WHITE, GREY_LITE]),
-        ('BOX',           (0,0), (-1,-1), 0.5, BLUE),
-        ('LINEBELOW',     (0,0), (-1,0),  0.5, BLUE),
-        ('INNERGRID',     (0,1), (-1,-1), 0.3, colors.HexColor('#CCCCCC')),
-        ('TOPPADDING',    (0,0), (-1,-1), 4),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
-        ('LEFTPADDING',   (0,0), (-1,-1), 6),
-        ('RIGHTPADDING',  (0,0), (-1,-1), 6),
-        ('VALIGN',        (0,0), (-1,-1), 'TOP'),
-    ])
-    t = Table(data, colWidths=col_widths, repeatRows=1)
-    t.setStyle(ts)
-    return t
 
-def make_doc(path):
+def make_doc(path, title_str, doc_id, version_str, date_str='May 2026'):
+    """ZP-G footer includes 'Internal Working Document' marker."""
     def footer_cb(canvas, doc):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = (f'Zero Paradox ZP-G: Category Theory  |  Version 1.6  |  May 2026  |'
+        ft = (f'Zero Paradox {doc_id}  |  {version_str}  |  {date_str}  |'
               f'  Internal Working Document  |  Page {doc.page}')
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
         path, pagesize=LETTER,
         leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
-        title='ZP-G: Category Theory',
-        author='Zero Paradox Project',
+        title=title_str, author='Zero Paradox Project',
         onFirstPage=footer_cb, onLaterPages=footer_cb,
     )
 
 
-def build_zpg(out_path):
+def build():
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory_v1_6.pdf')
     print(f'[build_zpg] Output: {out_path}')
-    doc = make_doc(out_path)
+    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version 1.6')
     E   = []
 
     print('[build_zpg] Building title block...')
@@ -878,6 +735,4 @@ def build_zpg(out_path):
 
 
 if __name__ == '__main__':
-    repo_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    out = os.path.abspath(os.path.join(repo_root, 'ZP-G_Category_Theory_v1_6.pdf'))
-    build_zpg(out)
+    build()
