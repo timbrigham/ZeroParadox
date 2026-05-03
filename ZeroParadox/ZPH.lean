@@ -424,3 +424,198 @@ open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
 #print axioms fb_snap_q2_grounded
 
 end PurityCheckQ₂BallFunctor
+
+/-! ## Appendix — InfoDepthCat and fc_functor: Full Functor for F_C
+
+The surprisal hierarchy in the information domain — I(0) = 0, I(1) = 1, I(2) = 2, … —
+gives a natural category grounding F_C concretely in ZPC's information structure.
+
+InfoDepth indexes this hierarchy: depth n corresponds to n bits of surprisal.
+A morphism n → m (n ≤ m) advances to higher surprisal — informationally forward, not back.
+AX-G2 (no morphism m → 0 for m ≠ 0) is the categorical encoding of informational
+irreversibility: once surprisal is positive, no morphism reduces it to zero.
+
+fc_functor : Functor ℕ InfoDepth is the concrete F_C Lean term.
+The snap morphism 0 → 1 in ℕ maps to the depth-0 → depth-1 surprisal transition;
+fc_snap_info_grounded connects this to T1b (JSD = log 2). -/
+
+section InfoDepthFunctor
+
+open ZeroParadox.ZPC ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+/-- InfoDepth: surprisal-level index for the information hierarchy.
+    A distinct type (not ℕ) so its Category and ZPCategory instances
+    do not conflict with NatSLat's or Q₂BallDepth's instances. -/
+structure InfoDepth where
+  val : ℕ
+  deriving DecidableEq
+
+instance : Zero InfoDepth := ⟨⟨0⟩⟩
+
+@[ext] theorem InfoDepth.ext {a b : InfoDepth} (h : a.val = b.val) : a = b := by
+  cases a; cases b; simp_all
+
+/-- Category on InfoDepth: morphisms n → m are proofs of n.val ≤ m.val.
+    Advancing to higher surprisal (more informational content) is the forward direction. -/
+instance infoDepthCat : Category InfoDepth where
+  Hom n m     := ULift (PLift (n.val ≤ m.val))
+  id  _       := ⟨⟨Nat.le_refl _⟩⟩
+  comp f g    := ⟨⟨Nat.le_trans f.down.down g.down.down⟩⟩
+  id_comp _   := Subsingleton.elim _ _
+  comp_id _   := Subsingleton.elim _ _
+  assoc _ _ _ := Subsingleton.elim _ _
+
+/-- Every morphism out of depth 0 exists and is unique (Nat.zero_le). -/
+instance infoDepthHom0Unique (n : InfoDepth) : Unique ((0 : InfoDepth) ⟶ n) where
+  default := ⟨⟨Nat.zero_le _⟩⟩
+  uniq    := fun _ => Subsingleton.elim _ _
+
+/-- InfoDepth is a ZPCategory with depth 0 as the initial object.
+    AX-G1: surprisal has no maximum — n + 1 > n always.
+    AX-G2: m.val ≤ 0 forces m = 0; once surprisal is positive no morphism returns to 0. -/
+noncomputable instance infoDepthZPCat : ZPCategory InfoDepth where
+  zpInitial         := 0
+  zpIsInitial       := IsInitial.ofUnique 0
+  ax_g1_no_terminal := fun t => ⟨fun ht => by
+    have h : t.val + 1 ≤ t.val := (ht.from ⟨t.val + 1⟩).down.down
+    omega⟩
+  ax_g2             := fun n hne => ⟨fun f => by
+    have h0 : n.val = 0 := Nat.le_zero.mp f.down.down
+    have hn : n = 0     := InfoDepth.ext h0
+    subst hn
+    exact hne.elim (Iso.refl _)⟩
+
+/-- Semantic grounding of fc_functor's snap morphism 0 → ⟨1⟩:
+    T1b (ZPC) establishes that the P → Q snap costs exactly log 2 (1 bit of JSD).
+    This is the informational content of AX-G2 in InfoDepth: the snap irreversibly
+    advances from zero surprisal to one bit, and no morphism returns to depth 0. -/
+theorem fc_snap_info_grounded :
+    Nonempty ((0 : InfoDepth) ⟶ ⟨1⟩) ∧ jsdPQ = Real.log 2 :=
+  ⟨⟨⟨⟨Nat.zero_le 1⟩⟩⟩, t1b_jsd⟩
+
+/-- fc_functor: the concrete Lean Functor term for F_C.
+    Source: ℕ with ≤ (NatSLat / NatOrderCat).
+    Target: InfoDepth with ≤ (infoDepthCat), grounded in surprisal via T1b.
+    Object map: n ↦ ⟨n⟩ (each ℕ index wraps to the corresponding surprisal depth).
+    Morphism map: carries the ≤ proof across; functor laws hold by Subsingleton. -/
+noncomputable def fc_functor : Functor ℕ InfoDepth where
+  obj n        := ⟨n⟩
+  map f        := ⟨⟨f.down.down⟩⟩
+  map_id _     := Subsingleton.elim _ _
+  map_comp _ _ := Subsingleton.elim _ _
+
+/-- fc_functor maps the NatSLat initial object to the InfoDepth initial object. -/
+noncomputable def fc_preserves_initial : IsInitial (fc_functor.obj 0) :=
+  show IsInitial (0 : InfoDepth) from IsInitial.ofUnique 0
+
+end InfoDepthFunctor
+
+/-! ## Axiom Purity Check — InfoDepthFunctor -/
+
+section PurityCheckInfoDepthFunctor
+open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+#print axioms fc_preserves_initial
+#print axioms fc_snap_info_grounded
+
+end PurityCheckInfoDepthFunctor
+
+/-! ## Appendix — HilbDimCat and fd_functor: Full Functor for F_D
+
+The state space dimension hierarchy in the Hilbert domain —
+StateSpace 2 ⊂ StateSpace 3 ⊂ ⋯ with orthogonal snap transitions —
+gives a natural category grounding F_D concretely in ZPD's Hilbert structure.
+
+HilbDimDepth indexes this hierarchy: depth n corresponds to the state space of dimension n.
+A morphism n → m (n ≤ m) advances to a larger state space — more distinguishable states,
+higher dimension, forward not back.
+AX-G2 (no morphism m → 0 for m ≠ 0) is the categorical encoding of orthogonal
+irreversibility: an orthogonal transition cannot be undone within the same dimension.
+
+fd_functor : Functor ℕ HilbDimDepth is the concrete F_D Lean term.
+The snap morphism 0 → 1 in ℕ maps to the depth-0 → depth-1 dimension transition;
+fd_snap_hilb_grounded connects this to T4 (⟪T(0), T(ε₀)⟫_ℂ = 0). -/
+
+section HilbDimFunctor
+
+open ZeroParadox.ZPD ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+/-- HilbDimDepth: dimension index for the Hilbert state space hierarchy.
+    A distinct type (not ℕ) so its Category and ZPCategory instances
+    do not conflict with NatSLat's, Q₂BallDepth's, or InfoDepth's instances. -/
+structure HilbDimDepth where
+  val : ℕ
+  deriving DecidableEq
+
+instance : Zero HilbDimDepth := ⟨⟨0⟩⟩
+
+@[ext] theorem HilbDimDepth.ext {a b : HilbDimDepth} (h : a.val = b.val) : a = b := by
+  cases a; cases b; simp_all
+
+/-- Category on HilbDimDepth: morphisms n → m are proofs of n.val ≤ m.val.
+    Advancing to a higher-dimensional state space is the forward direction. -/
+instance hilbDimCat : Category HilbDimDepth where
+  Hom n m     := ULift (PLift (n.val ≤ m.val))
+  id  _       := ⟨⟨Nat.le_refl _⟩⟩
+  comp f g    := ⟨⟨Nat.le_trans f.down.down g.down.down⟩⟩
+  id_comp _   := Subsingleton.elim _ _
+  comp_id _   := Subsingleton.elim _ _
+  assoc _ _ _ := Subsingleton.elim _ _
+
+/-- Every morphism out of depth 0 exists and is unique (Nat.zero_le). -/
+instance hilbDimHom0Unique (n : HilbDimDepth) : Unique ((0 : HilbDimDepth) ⟶ n) where
+  default := ⟨⟨Nat.zero_le _⟩⟩
+  uniq    := fun _ => Subsingleton.elim _ _
+
+/-- HilbDimDepth is a ZPCategory with depth 0 as the initial object.
+    AX-G1: dimension has no maximum — n + 1 > n always.
+    AX-G2: m.val ≤ 0 forces m = 0; orthogonal transitions cannot be reversed to dimension 0. -/
+noncomputable instance hilbDimZPCat : ZPCategory HilbDimDepth where
+  zpInitial         := 0
+  zpIsInitial       := IsInitial.ofUnique 0
+  ax_g1_no_terminal := fun t => ⟨fun ht => by
+    have h : t.val + 1 ≤ t.val := (ht.from ⟨t.val + 1⟩).down.down
+    omega⟩
+  ax_g2             := fun n hne => ⟨fun f => by
+    have h0 : n.val = 0 := Nat.le_zero.mp f.down.down
+    have hn : n = 0     := HilbDimDepth.ext h0
+    subst hn
+    exact hne.elim (Iso.refl _)⟩
+
+/-- Semantic grounding of fd_functor's snap morphism 0 → ⟨1⟩:
+    T4 (ZPD) establishes that the snap produces an orthogonal shift in StateSpace n (n ≥ 2):
+    ⟪T(0), T(ε₀)⟫_ℂ = 0. The dimension advance 0 → 1 in HilbDimDepth corresponds to
+    the transition from the null state to the first orthogonal post-snap state. -/
+theorem fd_snap_hilb_grounded (n : ℕ) (hn : 2 ≤ n) :
+    Nonempty ((0 : HilbDimDepth) ⟶ ⟨1⟩) ∧
+    @inner ℂ (StateSpace n) _
+      (transitionOp n ⟨0, by omega⟩)
+      (transitionOp n ⟨1, by omega⟩) = 0 :=
+  ⟨⟨⟨⟨Nat.zero_le 1⟩⟩⟩, t4_snap_orthogonal n hn⟩
+
+/-- fd_functor: the concrete Lean Functor term for F_D.
+    Source: ℕ with ≤ (NatSLat / NatOrderCat).
+    Target: HilbDimDepth with ≤ (hilbDimCat), grounded in StateSpace via T4.
+    Object map: n ↦ ⟨n⟩ (each ℕ index wraps to the corresponding dimension depth).
+    Morphism map: carries the ≤ proof across; functor laws hold by Subsingleton. -/
+noncomputable def fd_functor : Functor ℕ HilbDimDepth where
+  obj n        := ⟨n⟩
+  map f        := ⟨⟨f.down.down⟩⟩
+  map_id _     := Subsingleton.elim _ _
+  map_comp _ _ := Subsingleton.elim _ _
+
+/-- fd_functor maps the NatSLat initial object to the HilbDimDepth initial object. -/
+noncomputable def fd_preserves_initial : IsInitial (fd_functor.obj 0) :=
+  show IsInitial (0 : HilbDimDepth) from IsInitial.ofUnique 0
+
+end HilbDimFunctor
+
+/-! ## Axiom Purity Check — HilbDimFunctor -/
+
+section PurityCheckHilbDimFunctor
+open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+
+#print axioms fd_preserves_initial
+#print axioms fd_snap_hilb_grounded
+
+end PurityCheckHilbDimFunctor
