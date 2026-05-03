@@ -1,5 +1,7 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.5, revised April 2026)
+Zero Paradox — Foreword PDF Builder (v1.6, revised May 2026)
+v1.6: AX-B1 status changed from "Decidable" to "Directly Verifiable"; plain-language description
+replaces Lean jargon ("decidable equality on finite types"); in-PDF date corrected to May 2026.
 v1.5: Layer count updated throughout — framework now has ten formal layers (ZP-J, ZP-K added).
 v1.4: Metatheoretic note (ZF+AFA) added in Section III before the commitments table.
 v1.3: Fix ∅ rendering — was showing as a rectangle in DejaVuSerif; now forced through DV (DejaVuSans) via <font> tag.
@@ -96,10 +98,10 @@ def commitments_table():
         Paragraph('Statement', S['label']),
     ]
     rows = [
-        ('AX-B1', 'Decidable',
+        ('AX-B1', 'Directly Verifiable',
          'Binary Existence. A state either exists or it does not. '
-         'Directly verifiable by computation (decidable equality on finite types) — '
-         'not a novel commitment of this framework.'),
+         'Not a novel commitment — directly verifiable by computation rather than requiring '
+         'a leap of faith. The distinction between null and exist can be checked by a finite procedure.'),
         ('AX-G1', 'Axiom',
          'Initial Object Exists. There is a starting point that reaches every other object. '
          'Not a novel commitment — the existence of ⊥ as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language.'),
@@ -172,7 +174,7 @@ def build_foreword(out_path):
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('April 2026  |  v1.4', S['date']),
+        Paragraph('May 2026  |  v1.6', S['date']),
         sp(10),
         Paragraph(
             'The paradox is not that zero is nothing.<br/>'
