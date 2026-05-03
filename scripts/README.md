@@ -19,36 +19,58 @@ If you are primarily interested in the mathematical content, the PDF documents t
 
 ## Contents
 
+### Shared utilities
+
 | File | Purpose |
 |------|---------|
-| `build_zpa.py` | Builds `ZP-A_Lattice_Algebra_v1_5.pdf` |
-| `build_zpb.py` | Builds `ZP-B_pAdic_Topology_v1_4.pdf` |
-| `build_zpc.py` | Builds `ZP-C_Information_Theory_v1_5.pdf` |
-| `build_zpd.py` | Builds `ZP-D_State_Layer_v1_4.pdf` |
-| `build_zpe.py` | Builds `ZP-E_Bridge_Document_v3_7.pdf` (DA-1, DA-2, DA-3 bridge inserts; DA-1 ZP-K formal closure) |
-| `build_zpk.py` | Builds `ZP-K_Computational_Grounding_v1_0.pdf` (Kleene fixed-point; T-COMP four-way equivalence; DA-1 closure) |
-| `build_zpg.py` | Builds `ZP-G_Category_Theory_v1_2.pdf` (category theory layer) |
-| `build_zph.py` | Builds `ZP-H_Categorical_Bridge_v1_2.pdf` |
-| `build_zpi.py` | Builds `ZP-I_Inside_Zero_v1_0.pdf` (T-IZ: ordinal closure of the ascending chain) |
-| `build_zpj.py` | Builds `ZP-J_Self_Reference_v1_0.pdf` (T-EXEC: Quine atom = bottom; CC-1 derived) |
-| `build_zpa_companion.py` | Builds the ZP-A Illustrated Companion |
-| `build_zpb_companion.py` | Builds the ZP-B Illustrated Companion |
-| `build_zpc_companion.py` | Builds the ZP-C Illustrated Companion |
-| `build_zpd_companion.py` | Builds the ZP-D Illustrated Companion |
-| `build_zpe_companion.py` | Builds the ZP-E Illustrated Companion (v1.3: DA-1 ZP-K formal closure noted) |
-| `build_zpj_companion.py` | Builds the ZP-J Illustrated Companion (v1.0: T-EXEC, three-way equivalence, CC-1/CC-2 as theorems) |
-| `build_zpk_companion.py` | Builds the ZP-K Illustrated Companion (v1.0: four-way equivalence, computational Quine, DA-1 closure) |
-| `build_zpg_companion.py` | Builds the ZP-G Illustrated Companion |
-| `build_zph_companion.py` | Builds the ZP-H Illustrated Companion |
-| `build_zpi_companion.py` | Builds the ZP-I Illustrated Companion |
-| `build_zp_philosophical_question.py` | Builds `ZP_Philosophical_Question.pdf` — philosophical essay on the question that started the project |
-| `build_tools.py` | Builds `ZP_Tools_and_Methods.pdf` |
-| `build_foreword.py` | Builds `Zero_Paradox_Foreword.pdf` |
-| `build_gen2.py` | Builds `ZP_Gen2_Applications.pdf` (Generation 2 speculative applications) |
-| `archive/build_zp_pdfs.py` | Superseded monolith — retained for reference only (contains archived `build_zpe_da1` function) |
-| `zp_utils.py` | Shared utilities: font registration, colour constants, layout constants, style dicts, and all standard component helpers (sp, fix, body, label_box, data_table, make_doc, callout, example_box, remember_box, key_result_box). All other build scripts import this module. |
-| `setup_fonts.py` | Downloads the required DejaVu font files into `scripts/fonts/` |
-| `PDF_Rendering_Standards.md` | Technical reference: font rules, known glyph gaps, rendering conventions |
+| [zp_utils.py](zp_utils.py) | Shared utility module imported by all build scripts. Provides font registration, colour constants, layout constants, style dicts, and all standard component helpers: `sp`, `fix`, `body`, `li`, `derived`, `label_box`, `data_table`, `make_doc`, `callout`, `result_box`, `axiom_box`, `def_box`, `remark_box`, `import_box`. |
+| [setup_fonts.py](setup_fonts.py) | Downloads the required font files into `scripts/fonts/` |
+| [scan_pdfs.py](scan_pdfs.py) | Pre-push validation: checks DVS font registrations, STIXTwo-Math glyph coverage, and presence of all expected output PDFs |
+
+### Formal layer builders
+
+| File | Current output |
+|------|---------------|
+| [build_zpa.py](build_zpa.py) | `ZP-A_Lattice_Algebra_v1_12.pdf` |
+| [build_zpb.py](build_zpb.py) | `ZP-B_pAdic_Topology_v1_6.pdf` |
+| [build_zpc.py](build_zpc.py) | `ZP-C_Information_Theory_v1_11.pdf` |
+| [build_zpd.py](build_zpd.py) | `ZP-D_State_Layer_v1_8.pdf` |
+| [build_zpe.py](build_zpe.py) | `ZP-E_Bridge_Document_v3_11.pdf` |
+| [build_zpg.py](build_zpg.py) | `ZP-G_Category_Theory_v1_6.pdf` |
+| [build_zph.py](build_zph.py) | `ZP-H_Categorical_Bridge_v1_10.pdf` |
+| [build_zpi.py](build_zpi.py) | `ZP-I_Inside_Zero_v1_8.pdf` |
+| [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference_v1_1.pdf` |
+| [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding_v1_3.pdf` |
+
+### Illustrated companion builders
+
+| File | Companion for |
+|------|--------------|
+| [build_zpa_companion.py](build_zpa_companion.py) | ZP-A |
+| [build_zpb_companion.py](build_zpb_companion.py) | ZP-B |
+| [build_zpc_companion.py](build_zpc_companion.py) | ZP-C |
+| [build_zpd_companion.py](build_zpd_companion.py) | ZP-D |
+| [build_zpe_companion.py](build_zpe_companion.py) | ZP-E |
+| [build_zpg_companion.py](build_zpg_companion.py) | ZP-G |
+| [build_zph_companion.py](build_zph_companion.py) | ZP-H |
+| [build_zpi_companion.py](build_zpi_companion.py) | ZP-I |
+| [build_zpj_companion.py](build_zpj_companion.py) | ZP-J |
+| [build_zpk_companion.py](build_zpk_companion.py) | ZP-K |
+
+### Supporting document builders
+
+| File | Current output |
+|------|---------------|
+| [build_foreword.py](build_foreword.py) | `Zero_Paradox_Foreword.pdf` |
+| [build_tools.py](build_tools.py) | `ZP_Tools_and_Methods.pdf` |
+| [build_zp_philosophical_question.py](build_zp_philosophical_question.py) | `ZP_Philosophical_Question.pdf` |
+| [build_gen2.py](build_gen2.py) | `ZP_Gen2_Applications.pdf` |
+
+### Archive
+
+| File | Notes |
+|------|-------|
+| [archive/build_zp_pdfs.py](archive/build_zp_pdfs.py) | Superseded monolith — retained for reference only |
 
 ## Setup
 
