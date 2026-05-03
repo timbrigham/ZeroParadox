@@ -467,7 +467,7 @@ def build_zph(out_path):
             'Morphism map: F<sub>C</sub> sends each morphism f: A &#8594; B to the informational transition from P<sub>A</sub> to P<sub>B</sub>, '
             'with informational work E = JSD(P<sub>A</sub> &#8741; P<sub>B</sub>) &#8805; 0. The fundamental transition (0 &#8594; first non-initial '
             'object) maps to JSD(P &#8741; Q) = 1 bit (ZP-C T1b).',
-            'Preservation of composition: In the binary framework (Fin 2), only two non-trivial distributions exist: '
+            'Preservation of composition: In the binary framework (two outcome states), only two non-trivial distributions exist: '
             'P = (1, 0) and Q = (0, 1). The snap f: 0 &#8594; &#949;<sub>0</sub> is the unique morphism mapping P &#8594; Q at cost '
             'JSD(P &#8741; Q) = 1 bit. All successor morphisms g: &#949;<sub>n</sub> &#8594; &#949;<sub>n+1</sub> map Q &#8594; Q (Q-stability of the '
             'post-snap codomain), giving F<sub>C</sub>(g) = JSD(Q &#8741; Q) = 0. Therefore F<sub>C</sub>(g &#8728; f) = 1 bit = '

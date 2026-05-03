@@ -90,7 +90,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 | Label | Type | Statement |
 |-------|------|-----------|
-| **AX-B1** | Decidable | A state either exists or it does not. Directly verifiable by computation (decidable equality on Fin 2 via `decide`) — not a novel commitment of this framework. |
+| **AX-B1** | Directly Verifiable | A state either exists or it does not. Directly verifiable by computation (OntologicalStates derives DecidableEq; ax_b1_distinct proved by `decide` without classical axioms) — not a novel commitment of this framework. |
 | **AX-G1** | Axiom | An initial object exists in the category C. The null state is the universal origin of all structure: a unique object from which every other object is reachable, and to which no morphism returns. Not a novel commitment — ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Once something emerges, it cannot return to nothing. Not a novel commitment — follows from antisymmetry of the ZP-A partial order and is independently confirmed by ZP-B C3 (topological irreversibility). |
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |

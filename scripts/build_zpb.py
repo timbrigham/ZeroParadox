@@ -16,7 +16,7 @@ def build():
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
           Paragraph('Version 1.6  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.5  |  v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects; existence is a property the states represent, not a statement about set membership. Lean encoding note added (Fin 2).</i>', S['subtitle']),
+          Paragraph('<i>Supersedes v1.5  |  v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects; existence is a property the states represent, not a statement about set membership. Lean encoding note added (OntologicalStates).</i>', S['subtitle']),
           Paragraph('<i>v1.5: T3 ZP interpretation bullets labelled explicitly — pure topology and ZP-specific framing now separated with "ZP Interpretation:" prefix.</i>', S['subtitle']),
           Paragraph('<i>v1.4: T0 reframed: derived given MP-1 (design commitment); MP-1 acknowledged as load-bearing choice.</i>', S['subtitle']),
           sp(10),
@@ -44,10 +44,11 @@ def build():
         '1 names the first non-null condition: the state in which something has. '
         'Existence in AX-B1 is a property the states represent, not a statement about set membership.'))
     E.append(body(
-        '<i>Lean encoding: AX-B1 is encoded as <b>Fin 2</b> — the two-element finite type {0, 1}. '
-        'Fin 2 does not assert that 0 "exists" and 1 "doesn\'t" in the set-theoretic sense; '
-        'both elements are present as objects. The 0/1 distinction is what the framework names '
-        'as null and exist. Lean identifiers do not appear in the companion documents, '
+        '<i>Lean encoding: AX-B1 is encoded as <b>OntologicalStates</b> — a free inductive type '
+        'with two named constructors: <b>.null</b> (non-existence) and <b>.exist</b> (existence). '
+        'This avoids tying the null state to any numeric convention such as &#8469;\'s 0. '
+        'Distinctness (null &#8800; exist) is verified by <b>decide</b> via deriving DecidableEq — '
+        'no classical axioms required. Lean identifiers do not appear in the companion documents, '
         'which are Lean-free by design.</i>'))
     E.append(sp(4))
     E.append(Paragraph('1.2  The Minimality Principle', S['h2']))
