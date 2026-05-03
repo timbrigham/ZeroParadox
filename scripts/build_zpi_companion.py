@@ -15,10 +15,6 @@ New in v1.0: t_iz_r1_t3_geometric_bound (geometric norm bound from R1+T3).
 import os, math
 from zp_utils import *
 
-GREEN_LITE  = colors.HexColor('#D6EDD6')
-GREEN_DARK  = colors.HexColor('#2E6B31')
-INDIGO      = colors.HexColor('#3949AB')
-INDIGO_LITE = colors.HexColor('#E8EAF6')
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 

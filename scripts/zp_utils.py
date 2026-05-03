@@ -58,6 +58,13 @@ AMBER_LITE = colors.HexColor('#FFF8E7')
 AMBER      = COMP_AMBER          # alias for callout() clarity
 RED        = colors.HexColor('#CC0000')
 GREY       = colors.HexColor('#888888')
+GREY_TEXT  = colors.HexColor('#555555')
+TEAL       = colors.HexColor('#1E7B74')
+TEAL_LITE  = colors.HexColor('#D0EDED')
+GREEN_LITE = colors.HexColor('#E8F5E9')
+GREEN_DARK = colors.HexColor('#1B5E20')
+INDIGO     = colors.HexColor('#3949AB')
+INDIGO_LITE= colors.HexColor('#E8EAF6')
 
 # ── Layout constants ──────────────────────────────────────────────────────────
 TW         = 6.5 * inch          # text width

@@ -12,11 +12,6 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-TEAL      = colors.HexColor('#1E7B74')
-TEAL_LITE = colors.HexColor('#D0EDED')
-INDIGO      = colors.HexColor('#3949AB')
-INDIGO_LITE = colors.HexColor('#E8EAF6')
-GREY_TEXT   = colors.HexColor('#555555')
 
 def four_way_diagram():
     """Diamond diagram: four descriptions of ⊥ as the same structural role."""
