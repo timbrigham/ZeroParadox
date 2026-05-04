@@ -15,6 +15,6 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-H Categorical Bridge | v1.11 | ZP-H_Categorical_Bridge_v1_11.pdf | v1.2 | |
 | ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero_v1_8.pdf | v1.1 | |
 | ZP-J Self-Reference | v1.1 | ZP-J_Self_Reference_v1_1.pdf | v1.0 | |
-| ZP-K Computational Grounding | v1.3 | ZP-K_Computational_Grounding_v1_3.pdf | v1.0 | |
+| ZP-K Computational Grounding | v1.3 | ZP-K_Computational_Grounding_v1_3.pdf | v1.1 | |
 
 *Last updated: May 2026*
