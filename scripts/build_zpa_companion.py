@@ -1,8 +1,10 @@
 """
-Build ZP-A Illustrated Companion (v1.3)
+Build ZP-A Illustrated Companion (v1.4)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples.
 New in v1.3: CC-2 self-containment of ⊥ (Quine atom, ZF+AFA); R3 (DA-1 follows from CC-2).
+v1.4: AFA technical note now includes forward reference to ZP-J companion for plain-language
+Foundation/AFA explanation.
 """
 
 import os
@@ -117,7 +119,7 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('How state accumulates without ever going backwards', CS['title']),
-          Paragraph('Lattice Algebra | Version 1.3', CS['subtitle']),
+          Paragraph('Lattice Algebra | Version 1.4', CS['subtitle']),
           Paragraph('ZP Companion | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
@@ -259,7 +261,9 @@ def build():
         'Technical note (CC-2): the Quine atom property requires replacing the classical Axiom '
         'of Foundation (which rules out self-containing sets) with Aczel\'s Anti-Foundation Axiom '
         '(AFA). The Axiom of Choice is not assumed. This is a framework-level commitment — A1&#8211;A4 '
-        'are unaffected, but it changes what &#8869; is allowed to be.'))
+        'are unaffected, but it changes what &#8869; is allowed to be. '
+        'For a plain-language explanation of why Foundation is incompatible with &#8869; = {&#8869;} '
+        'and why AFA is the minimal required change, see the ZP-J Illustrated Companion.'))
     E.append(sp(8))
 
     E.append(remember_box(
