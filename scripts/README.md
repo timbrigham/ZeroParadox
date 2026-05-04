@@ -33,11 +33,11 @@ If you are primarily interested in the mathematical content, the PDF documents t
 |------|---------------|
 | [build_zpa.py](build_zpa.py) | `ZP-A_Lattice_Algebra_v1_12.pdf` |
 | [build_zpb.py](build_zpb.py) | `ZP-B_pAdic_Topology_v1_6.pdf` |
-| [build_zpc.py](build_zpc.py) | `ZP-C_Information_Theory_v1_11.pdf` |
+| [build_zpc.py](build_zpc.py) | `ZP-C_Information_Theory_v1_12.pdf` |
 | [build_zpd.py](build_zpd.py) | `ZP-D_State_Layer_v1_8.pdf` |
-| [build_zpe.py](build_zpe.py) | `ZP-E_Bridge_Document_v3_11.pdf` |
-| [build_zpg.py](build_zpg.py) | `ZP-G_Category_Theory_v1_6.pdf` |
-| [build_zph.py](build_zph.py) | `ZP-H_Categorical_Bridge_v1_10.pdf` |
+| [build_zpe.py](build_zpe.py) | `ZP-E_Bridge_Document_v3_12.pdf` |
+| [build_zpg.py](build_zpg.py) | `ZP-G_Category_Theory_v1_7.pdf` |
+| [build_zph.py](build_zph.py) | `ZP-H_Categorical_Bridge_v1_11.pdf` |
 | [build_zpi.py](build_zpi.py) | `ZP-I_Inside_Zero_v1_8.pdf` |
 | [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference_v1_1.pdf` |
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding_v1_3.pdf` |
