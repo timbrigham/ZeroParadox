@@ -153,7 +153,10 @@ def build():
         'from 0 to 1 through a continuous path of intermediate values — the geometry has no room '
         'for partial existence. The binary distinction is enforced by the geometry itself, not '
         'imposed on top of it. This is why p-adic topology — specifically &#8474;&#8322; — is the '
-        'natural mathematical language for a framework built on AX-B1.'))
+        'natural mathematical language for a framework built on AX-B1. '
+        'Note: this framework makes no claims about physical cosmology. '
+        'The emergence described is formal — it concerns the logical structure of state '
+        'in a mathematical ontology, not a theory of how the physical universe began.'))
     E.append(example_box('The key property', [
         'Mathematical object: 2-adic valuation v₂(x).',
         'Ontological function: depth of binary structure — how many times 2 divides x.',
