@@ -1,5 +1,9 @@
 """
-Build ZP-C: Information Theory (v1.11)
+Build ZP-C: Information Theory (v1.12)
+v1.12: Encoding commitment and information-theoretic failure mode added to preamble — makes
+the conditionality of the 1-bit claim (T1b) visible before the result appears, and states the
+unbounded-surprisal failure mode at ⊥ (L-INF) upfront as the information-theoretic instance of
+the foundational claim.
 v1.11: L-INF semantic content corrected — "compressed limit of all possible binary programs"
 replaced with "limit point of the binary ball hierarchy under the 2-adic metric"; stays within
 what the proof actually establishes (ball-hierarchy depth, not Kolmogorov programs).
@@ -17,19 +21,21 @@ import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_11.pdf')
-    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.11')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_12.pdf')
+    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.12')
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version 1.11  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.10  |  v1.11: L-INF semantic content corrected — &#8869; described as the limit point of the binary ball hierarchy under the 2-adic metric; the "all possible binary programs" characterisation (Section I framing) removed from a Section III result.</i>', S['subtitle']),
+          Paragraph('Version 1.12  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.11  |  v1.12: Encoding commitment and information-theoretic failure mode added to preamble — the conditionality of T1b (1 bit) is now stated before the result appears; the unbounded-surprisal failure at &#8869; (L-INF) is stated upfront as the information-theoretic instance of the foundational claim.</i>', S['subtitle']),
+          Paragraph('<i>v1.11: L-INF semantic content corrected — &#8869; described as the limit point of the binary ball hierarchy under the 2-adic metric; the "all possible binary programs" characterisation (Section I framing) removed from a Section III result.</i>', S['subtitle']),
           Paragraph('<i>v1.10: R-BRIDGE cross-reference added — the structural argument for why K and 2-adic surprisal converge at P<sub>0</sub> is developed in ZP-E Remark R-AFA.</i>', S['subtitle']),
           Paragraph('<i>v1.9: Remark R-TQ added after TQ-IH — external expert confirmation that TQ-IH holds and is domain-independent: a direct consequence of L-RUN alone, requiring no Turing-specific or Kolmogorov machinery.</i>', S['subtitle']),
           Paragraph('<i>v1.8: Remark R-BRIDGE added after L-INF — explicit statement of the relationship between Kolmogorov complexity K and 2-adic surprisal I(n): correlated but distinct measures that converge at P&#8320;; used as independent routes, not a unified measure.</i>', S['subtitle']),
           Paragraph('<i>Version 1.6 change: CC-2 added: c&#8320; = &#8869; labeled as modeling commitment (parallel to CC-1 in ZP-A); RP-2 added: branching measure labeled as representational commitment.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
+          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between the null state and the first atomic state is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, at &#8869;, the primary descriptive tool of information theory — surprisal — is unbounded above (L-INF, Section III): no finite external description can contain the null state. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic form of the foundational claim.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
           body('<i>Version 1.8 changes: Remark R-BRIDGE added after L-INF. ZP-C uses two distinct complexity measures: K(x|n)/|x| (Kolmogorov complexity, Section I) and I(n) = n (2-adic surprisal, Section III). R-BRIDGE states explicitly that these are not the same measure, where they coincide (at P&#8320;), where they diverge (e.g. K(2<super>n</super>) = O(log n) while v&#8322;(2<super>n</super>) = n), and how ZP-C uses them as independent convergent routes to the same conclusion rather than as a unified measure.</i>'),
           body('<i>Version 1.5 change: Theorem/Corollary hierarchy applied. T1b (JSD = 1 bit) relabelled Corollary T1b — it follows immediately from T1 with no additional proof work. T1, T2, L-RUN, and T-BUF labels unchanged.</i>'),

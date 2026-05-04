@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.10 | May 2026
+Version 1.11 | May 2026
+v1.11: Remark R-FORCING added between Sections V and VI — addresses the "renaming" concern;
+explains that the four domain functors each independently ground the snap through their own
+domain logic, verified sorry-free in Lean 4; structural forcing, not categorical re-description.
 v1.10: fc_functor and fd_functor added — F_C and F_D now have concrete Lean Functor terms
 (InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors.
 C-H3/C-H4 status, OQ-G3 register, and Validation table updated to reflect sorry-free status.
@@ -47,10 +50,10 @@ def label_box_status(title, status_line, rows_list):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_10.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_11.pdf')
     print(f'[build_zph] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-H: Categorical Bridge', 'ZP-H: Categorical Bridge',
-                   'Version 1.10', date_str='May 2026')
+                   'Version 1.11', date_str='May 2026')
     E = []
 
     print('[build_zph] Building title block...')
@@ -59,9 +62,10 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.10 | May 2026', S['bodyI']),
+        Paragraph('Version 1.11 | May 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.9 | v1.10: fc_functor and fd_functor added — F<sub>C</sub> and F<sub>D</sub> now have concrete Lean Functor terms (InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors. C-H3/C-H4 status and Validation table updated. | '
+            '<i>Supersedes v1.10 | v1.11: Remark R-FORCING added between Sections V and VI — explains that the four domain functors independently ground the snap through domain logic, verified sorry-free in Lean 4; structural forcing, not categorical re-description. | '
+            'v1.10: fc_functor and fd_functor added — F<sub>C</sub> and F<sub>D</sub> now have concrete Lean Functor terms (InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors. C-H3/C-H4 status and Validation table updated. | '
             'v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal (outside the binary framework) with the Lean-verified argument: &#8477;&#8805;0 has no greatest element (t + 1 &gt; t), the categorical expression of ZP-A R1 (ax_g1_no_terminal). | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
             'v1.7: T-H3 consistency note strengthened — independence of null-analog '
             'discovery foregrounded: each framework located its null-analog through its own domain logic '
@@ -384,6 +388,22 @@ def build():
             'Precise statement: Under F<sub>C</sub>, the statement hom(X, 0) = <font name="DV">&#8709;</font> in C corresponds to the statement that '
             'no finite informational path from P<sub>X</sub> to P = (1, 0) has finite total surprisal — which is exactly the '
             'content of ZP-C T2 restricted to finite paths. OQ-G4 is closed. <font name="DV">&#10003;</font>',
+        ]
+    ))
+
+    E.append(remark_box(
+        'Remark R-FORCING — Structural Forcing vs. Re-Description [new in v1.11]',
+        [
+            'The four functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>) established in '
+            'Sections III-V do not merely translate the Binary Snap into categorical language. Each functor '
+            'independently grounds the snap in its own domain: F<sub>A</sub> shows the lattice join forces '
+            '&#949;<sub>0</sub> above &#8869;; F<sub>B</sub> shows the 2-adic topology forces an irreversible '
+            'jump at 0; F<sub>C</sub> shows the information-theoretic transition costs exactly 1 bit; '
+            'F<sub>D</sub> shows the Hilbert space snap is an orthogonal shift.',
+            'That the same structural singularity appears across four independently grounded domain categories '
+            '— each confirmed sorry-free in Lean 4 (fb_snap_q2_grounded, fc_snap_info_grounded, '
+            'fd_snap_hilb_grounded) — is not re-description. It is the theorem: the phenomenon is '
+            'structurally forced across all four canonical mathematical languages for state description.',
         ]
     ))
 

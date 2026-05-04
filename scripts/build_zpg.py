@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.6 | May 2026
+Version 1.7 | May 2026
+v1.7: Remark R-AX added after AX-G2 — addresses non-triviality of the axioms; explains that
+the initial object is not an abstract placeholder but is grounded in ZP-H via four concrete
+domain functors; distinguishes categorical generalisation from trivial initial-object renaming.
 v1.6: D7' well-definedness note corrected — invariance scoped to what ZP-G claims
 (finite/zero/undefined), not asserted as a general AIT property.
 v1.5: T6-b/T6-c Lean scope disclosure strengthened — Lean proofs verify only
@@ -98,9 +101,9 @@ def make_doc(path, title_str, doc_id, version_str, date_str='May 2026'):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory_v1_6.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory_v1_7.pdf')
     print(f'[build_zpg] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version 1.6')
+    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version 1.7')
     E   = []
 
     print('[build_zpg] Building title block...')
@@ -109,9 +112,16 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version 1.6 | May 2026', S['bodyI']),
+        Paragraph('Version 1.7 | May 2026', S['bodyI']),
         Paragraph(
-            '<i>Supersedes v1.4 | v1.5: Lean scope disclosure for T6-b and T6-c strengthened — '
+            '<i>Supersedes v1.6 | v1.7: Remark R-AX added after AX-G2 — explains why AX-G1 and AX-G2 '
+            'are not trivially satisfied placeholder conditions; the initial object is independently '
+            'grounded in ZP-H via four concrete domain functors (F<sub>A</sub>, F<sub>B</sub>, '
+            'F<sub>C</sub>, F<sub>D</sub>).</i>',
+            S['note']),
+        Paragraph(
+            '<i>v1.6 changes from v1.5: D7\' well-definedness note corrected. | '
+            'v1.5: Lean scope disclosure for T6-b and T6-c strengthened — '
             'Lean proofs verify only that a &#8469;-valued function is &#8805; 0 (Nat.zero_le _), '
             'which is trivially true by type for any such function and says nothing about Kolmogorov '
             'complexity. T6-b strict inequality (K &gt; 0 for distinct objects) and T6-c subadditivity '
@@ -276,6 +286,21 @@ def build():
             'Motivation: The categorical expression of irreversibility. Morphisms '
             '&#953;<sub>X</sub>: 0 → X exist for all X. Their reversal does not exist. '
             'AX-G2 is consistent with AX-G1 but not derivable from it.',
+        ]
+    ))
+    E.append(remark_box(
+        'Remark R-AX — On the Non-Triviality of AX-G1 and AX-G2',
+        'Status: Remark [new in v1.7]',
+        [
+            'AX-G1 and AX-G2 are satisfied by many categories — they are structural conditions, not exotic ones. '
+            'What distinguishes ZP-G from a trivial application of initial-object asymmetry is that the initial '
+            'object here is not an abstract placeholder: it is &#8869;, the algebraically minimal element of '
+            'ZP-A\'s lattice. This identification is not asserted in ZP-G; it is demonstrated in ZP-H via '
+            'four concrete domain functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>), '
+            'each of which maps the natural number depth hierarchy into its domain category and preserves '
+            'the initial object. The axioms are not postulated in isolation; they are shown to hold in each '
+            'of the four domain categories that constitute the framework\'s subject matter. The categorical '
+            'layer generalises a phenomenon that is independently grounded in four distinct mathematical domains.',
         ]
     ))
 
@@ -723,7 +748,7 @@ def build():
     E += [
         sp(12),
         Paragraph(
-            '<i>Zero Paradox ZP-G: Category Theory | Version 1.6 | May 2026 | '
+            '<i>Zero Paradox ZP-G: Category Theory | Version 1.7 | May 2026 |'
             'Supersedes v1.4 | T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
             'not K-theoretic content | T6 Part II: Lean-verified | Internal Working Document</i>',
             S['endnote']),

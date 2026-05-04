@@ -1,9 +1,11 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.0 | April 2026
+Version 1.1 | April 2026
 v1.0: Initial release. Covers T-COMP (four-way equivalence: Quine atom = bottom = join
 identity = Kleene fixed point), the computational Quine, and da1_closed_concrete
 (DA-1 formally closed — ⊥ IS the universal Turing machine in ground state).
+v1.1: Added explicit note that Kleene's theorem is an existence proof, not a convergent
+iteration — the halting question does not arise.
 Formal doc: ZP-K Computational Grounding v1.0.
 """
 
@@ -122,7 +124,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  April 2026  |  v1.0')
+            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  April 2026  |  v1.1')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -141,7 +143,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Four Languages, One Structure', CS['title']),
           Paragraph('The Computational Grounding of &#8869;', CS['subtitle']),
-          Paragraph('ZP Companion | Version 1.0 | April 2026', CS['meta']),
+          Paragraph('ZP Companion | Version 1.1 | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'ontology — every claim here restates a result already proved in the technical '
@@ -176,6 +178,12 @@ def build():
         'such that running c produces the same output as running c on its own source code. '
         'In other words, c\'s behavior is determined entirely by c itself — no external program '
         'shorter than c generates it. The program IS its own description.'))
+    E.append(cbody(
+        'This is not a running computation that might loop forever. Kleene\'s theorem is an '
+        'existence proof — it guarantees the fixed point exists before any execution takes '
+        'place, by a direct construction, not by iterating toward a limit. The question '
+        '"will it halt?" does not arise: the fixed point is identified by the theorem '
+        'itself, not discovered by running a potentially divergent process.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy — A self-printing program', [
         'A Quine program in computer science is a program that, when run, outputs its own '

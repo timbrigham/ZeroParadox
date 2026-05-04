@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.11 | May 2026
+Version 3.12 | May 2026
+v3.12: Framework scope and failure-mode framing added to preamble — "coverage not exhaustion"
+paragraph addresses the "why these four?" question; cross-framework failure-mode paragraph names
+the domain-specific limit at ⊥ for each layer (lattice minimum, p-adic isolation, unbounded
+surprisal, orthogonal basis vector) and positions DA-1 as the unifying argument.
 v3.11: T-SNAP Step 7 corrected — AX-G2 removed as formal dependency; now labelled as conceptual
 correspondence only. ZP-G is downstream of ZP-E and cannot be a formal dependency of T-SNAP.
 Irreversibility proof rests on ZP-A R1 and ZP-B C3 alone, which are sufficient.
@@ -62,9 +66,9 @@ bridge_box = remark_box  # SLATE header — ZP-E bridge document style
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document_v3_11.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document_v3_12.pdf')
     print(f'[build_zpe] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version 3.11', date_str='May 2026')
+    doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version 3.12', date_str='May 2026')
     E   = []
 
     print('[build_zpe] Building title block...')
@@ -73,11 +77,17 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.11 | May 2026', S['subtitle']),
+        Paragraph('Version 3.12 | May 2026', S['subtitle']),
         Paragraph(
-            '<i>Supersedes v3.10 | v3.11: T-SNAP Step 7 corrected — ZP-G AX-G2 removed as formal dependency; '
+            '<i>Supersedes v3.11 | v3.12: Framework scope and failure-mode framing added to preamble — '
+            '"why these four?" addressed (coverage not exhaustion); cross-framework failure-mode paragraph '
+            'names the domain-specific limit at &#8869; for each layer and positions DA-1 as the unifying argument. | '
+            'v3.11: T-SNAP Step 7 corrected — ZP-G AX-G2 removed as formal dependency; '
             'now labelled conceptual correspondence only. ZP-G is downstream of ZP-E; irreversibility rests '
-            'on ZP-A R1 and ZP-B C3 alone. | v3.10: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
+            'on ZP-A R1 and ZP-B C3 alone.</i>',
+            S['note']),
+        Paragraph(
+            '<i>v3.10: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
             'informal-analogy disclaimer; "structural correspondence" changed to "structural analogy" '
             'throughout R-&#949;<sub>0</sub>. | '
             'v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
@@ -136,6 +146,22 @@ def build():
         'explanations and visual summaries of the bridge derivations in this document. Readers new '
         'to the framework are encouraged to start with the companion.',
         style='bodyI'))
+    E.append(body(
+        '<b>A note on framework scope.</b> The four layers (ZP-A through ZP-D) are not claimed to be '
+        'the only mathematical domains in which the Zero Paradox structure appears. They are chosen '
+        'because they cover the canonical mathematical languages for describing state: algebraic order '
+        'structure (ZP-A), topology and metric geometry (ZP-B), information and complexity theory (ZP-C), '
+        'and functional/Hilbert space analysis (ZP-D). The claim is universality — the same structural '
+        'limit at &#8869; appears wherever standard mathematical language for state description is applied '
+        '— not uniqueness of these four as the only possible witnesses.'))
+    E.append(body(
+        'Across all four layers, the same structural limit appears at &#8869; — but each framework names '
+        'it differently: ZP-A identifies &#8869; as the global minimum, below which the lattice\'s ordering '
+        'relation cannot descend; ZP-B finds the p-adic valuation undefined (or +&#8734;) at 0, where '
+        'topological isolation is maximal; ZP-C finds surprisal unbounded above at &#8869;, so no finite '
+        'external description can contain the null state; ZP-D maps 0 to a basis vector orthogonal to '
+        'every non-null state, from which no return is possible. DA-1 unifies these as the same phenomenon '
+        'seen through four lenses.'))
     E.append(hr())
 
     print('[build_zpe] Building DA-1...')

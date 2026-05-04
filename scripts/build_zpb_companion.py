@@ -1,8 +1,10 @@
 """
-Build ZP-B Illustrated Companion (v1.2, revised)
-Changes from original:
-1. "Non-Archimedean" is now defined in plain language near the top.
-2. "2-adic valuation" is briefly explained when the isolation of 0 is discussed.
+Build ZP-B Illustrated Companion (v1.3)
+v1.3: "Why p-Adic Geometry?" section added as the opening section — Conceptual Rosetta Stone
+mapping 2-adic valuation to ontological function; explains why the real line fails for binary
+existence and why ℚ₂ is the natural language for AX-B1. Key property example box added.
+v1.2: "Non-Archimedean" defined in plain language near the top.
+"2-adic valuation" briefly explained when isolation of 0 is discussed.
 """
 
 import os
@@ -127,7 +129,7 @@ def build():
 
     E += [
         Paragraph('Why the geometry of state space is non-Archimedean', CS['title']),
-        Paragraph('p-Adic Topology | Version 1.2', CS['subtitle']),
+        Paragraph('p-Adic Topology | Version 1.3', CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
@@ -138,6 +140,31 @@ def build():
     ]
 
     # ── Page 1 ─────────────────────────────────────────────────────────────────
+    E.append(Paragraph('Why p-Adic Geometry?', CS['h1']))
+    E.append(cbody(
+        'The standard choice for modeling distance — the real number line — is the wrong tool for '
+        'binary existence. On the real line, between any two distinct points there is always a third: '
+        'you can be "halfway between" existing and not existing. AX-B1 rules this out. A state either '
+        'exists or it does not; there is no intermediate.'))
+    E.append(cbody(
+        'The 2-adic metric inverts this. In &#8474;&#8322;, the two ontological states — null (0) '
+        'and first atomic state (1) — are at maximum distance from each other: d(0, 1) = 1. More '
+        'importantly, there is no point between them in the 2-adic topology. You cannot travel '
+        'from 0 to 1 through a continuous path of intermediate values — the geometry has no room '
+        'for partial existence. The binary distinction is enforced by the geometry itself, not '
+        'imposed on top of it. This is why p-adic topology — specifically &#8474;&#8322; — is the '
+        'natural mathematical language for a framework built on AX-B1. '
+        'Note: this framework makes no claims about physical cosmology. '
+        'The emergence described is formal — it concerns the logical structure of state '
+        'in a mathematical ontology, not a theory of how the physical universe began.'))
+    E.append(example_box('The key property', [
+        'Mathematical object: 2-adic valuation v₂(x).',
+        'Ontological function: depth of binary structure — how many times 2 divides x.',
+        'The crucial point: d(0, 1) = 1 in ℚ₂, with no path through an intermediate '
+        'value. You cannot be half-way between existing and not existing.',
+    ]))
+    E.append(sp(8))
+
     E.append(Paragraph('What Is ZP-B Doing?', CS['h1']))
     E.append(cbody(
         'ZP-B puts the Zero Paradox on a specific geometric foundation: the 2-adic number field '
