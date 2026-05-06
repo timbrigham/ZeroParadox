@@ -1,5 +1,9 @@
 """
-Build ZP-A: Lattice Algebra (v1.12)
+Build ZP-A: Lattice Algebra (v1.13)
+v1.13: OQ-A1b note added distinguishing bounded chains from existence of minimal element
+above ⊥. Bounded chains (closed by ZP-E T5 via AX-B1) do not guarantee ε₀ exists as a
+minimal non-null element — that is a metric result established by ZP-B, not A1-A4. No
+algebraic content changed.
 v1.12: OQ-A1b dual-status clarification. The closure note now distinguishes between the
 ZP-specific result (bounded by AX-B1 via T5) and the general semilattice case (unbounded
 chains are permitted in a bare join-semilattice without AX-B1). Section header updated to
@@ -25,14 +29,14 @@ import os
 from zp_utils import *
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_12.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.12')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_13.pdf')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.13')
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.12  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.11  |  v1.12: OQ-A1b dual-status clarification — closure note now distinguishes the ZP-specific result (bounded by AX-B1 via T5) from the general semilattice case (unbounded chains are permitted without AX-B1). No algebraic content changed. | v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added immediately before CC-1 (&#167;4.2). No mathematical content changed. | v1.10: CC-1 box title updated &#8212; "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. | v1.9: CC-1 status updated &#8212; derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
+          Paragraph('Version 1.13  |  May 2026', S['subtitle']),
+          Paragraph('<i>Supersedes v1.12  |  v1.13: OQ-A1b note added distinguishing bounded chains from existence of minimal element above &#8869;. Bounded chains do not guarantee &#949;&#8320; exists as a minimal non-null element &#8212; that is a metric result from ZP-B, outside the scope of A1&#8211;A4. No algebraic content changed. | v1.12: OQ-A1b dual-status clarification — closure note now distinguishes the ZP-specific result (bounded by AX-B1 via T5) from the general semilattice case (unbounded chains are permitted without AX-B1). No algebraic content changed. | v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added immediately before CC-1 (&#167;4.2). No mathematical content changed. | v1.10: CC-1 box title updated &#8212; "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. | v1.9: CC-1 status updated &#8212; derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
@@ -161,6 +165,7 @@ def build():
         'OQ-A1a: Is there algebraic reason to restrict &#945;<sub>n</sub> to join-irreducible elements (not expressible as joins of strictly smaller elements)?',
         'OQ-A1b: Does the open-ended semilattice (without top element &#8868;) permit unbounded ascending chains?',
         'Status: CLOSED within ZP — Both sub-questions resolved by ZP-E Theorem T5 (Iterative Forcing Theorem) via AX-B1 from ZP-B. OQ-A1a: &#945;<sub>n</sub> = &#949;(S<sub>n</sub>), the minimum viable deviation (ZP-specific). OQ-A1b: Within ZP, AX-B1\'s binary constraint bounds ascending chains via T5. Note: in general semilattice theory without AX-B1, unbounded ascending chains are permitted — a bare join-semilattice imposes no bound. The closure here is a consequence of ZP\'s binary existence commitment, not of A1&#8211;A4 alone.',
+        'Note on minimal element above &#8869;: Bounded chains do not in themselves guarantee a minimal element above &#8869;. In a dense structure, for any &#949; > 0, &#949;/2 also exists &#8212; chains may be bounded yet have no first step. The closure of OQ-A1b establishes that ascending chains are bounded within ZP; it does not establish that &#949;&#8320; exists as a specific minimal non-null element. That existence is a metric result, established by ZP-B&#8217;s 2-adic structure, which places 0 at infinite valuation and every non-zero element at finite valuation. The gap between them is not bridgeable by halving. This is outside the scope of A1&#8211;A4.',
     ]))
 
     E.append(Paragraph('VII. Boundary Conditions', S['h1']))

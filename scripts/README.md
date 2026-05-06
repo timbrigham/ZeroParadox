@@ -31,7 +31,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 
 | File | Current output |
 |------|---------------|
-| [build_zpa.py](build_zpa.py) | `ZP-A_Lattice_Algebra_v1_12.pdf` |
+| [build_zpa.py](build_zpa.py) | `ZP-A_Lattice_Algebra_v1_13.pdf` |
 | [build_zpb.py](build_zpb.py) | `ZP-B_pAdic_Topology_v1_6.pdf` |
 | [build_zpc.py](build_zpc.py) | `ZP-C_Information_Theory_v1_12.pdf` |
 | [build_zpd.py](build_zpd.py) | `ZP-D_State_Layer_v1_8.pdf` |
