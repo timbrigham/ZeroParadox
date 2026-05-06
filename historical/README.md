@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-A_Lattice_Algebra_v1_12-1.pdf](ZP-A_Lattice_Algebra_v1_12-1.pdf) | 2026-05-06 | ZP-A v1.12 superseded by v1.13: OQ-A1b note added distinguishing bounded chains from existence of minimal element above ⊥ — bounded chains do not guarantee ε₀ exists as a minimal non-null element; that is a metric result from ZP-B, outside the scope of A1-A4. No algebraic content changed. |
 | [ZP-H_Categorical_Bridge_v1_10-1.pdf](ZP-H_Categorical_Bridge_v1_10-1.pdf) | 2026-05-03 | ZP-H v1.10 superseded by v1.11: Remark R-FORCING added between Sections V and VI — explains structural forcing vs. categorical re-description; four domain functors each independently ground the snap, verified sorry-free in Lean 4. |
 | [ZP-G_Category_Theory_v1_6-1.pdf](ZP-G_Category_Theory_v1_6-1.pdf) | 2026-05-03 | ZP-G v1.6 superseded by v1.7: Remark R-AX added after AX-G2 — explains non-triviality of the structural axioms; initial object is independently grounded via four concrete domain functors in ZP-H. |
 | [ZP-E_Bridge_Document_v3_11-1.pdf](ZP-E_Bridge_Document_v3_11-1.pdf) | 2026-05-03 | ZP-E v3.11 superseded by v3.12: Framework scope and failure-mode framing added to preamble — "why these four?" addressed (coverage not exhaustion); cross-framework failure-mode paragraph names the domain-specific limit at ⊥ for each layer. |
