@@ -12,6 +12,8 @@ April 2026.
 import os
 from zp_utils import *
 
+VERSION = '1.1'
+
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')
 GOLD_LITE = colors.HexColor('#FDF6E3')
@@ -154,7 +156,7 @@ def build():
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            'Zero Paradox  |  The Philosophical Question That Started This  |  April 2026  |  v1.1')
+            'Zero Paradox  |  The Philosophical Question That Started This  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -173,7 +175,7 @@ def build():
             'On the gap between formal description and instantiation, '
             'what the framework dissolves, and what it snaps.',
             S['subtitle']),
-        Paragraph('Version 1.1  |  April 2026', S['meta']),
+        Paragraph('Version ' + VERSION + '  |  April 2026', S['meta']),
         hr(),
         sp(4),
     ]
@@ -505,7 +507,7 @@ def build():
         sp(14), hr(),
         Paragraph(
             '<i>End of document  |  The Philosophical Question That Started This  |  '
-            'Zero Paradox Project  |  April 2026  |  v1.1  |  '
+            'Zero Paradox Project  |  April 2026  |  v' + VERSION + '  |  '
             'Not a formal result — a philosophical essay. '
             'The formal mathematics lives in the committed PDFs, ZP-A through ZP-I.</i>',
             S['endnote']),

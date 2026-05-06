@@ -14,6 +14,8 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
+VERSION = '1.6'
+
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
                                 spaceAfter=4, alignment=1)
@@ -128,7 +130,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('May 2026  |  v1.6', S['date']),
+        Paragraph('May 2026  |  v' + VERSION, S['date']),
         sp(10),
         Paragraph(
             'The paradox is not that zero is nothing.<br/>'

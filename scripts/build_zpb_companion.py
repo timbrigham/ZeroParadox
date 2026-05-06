@@ -93,6 +93,9 @@ def nested_balls_diagram():
                  fontSize=8, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
+VERSION = '1.3'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-B_Illustrated_Companion.pdf')
@@ -102,7 +105,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-B Companion  |  p-Adic Topology  |  April 2026  |  v1.2')
+            'Zero Paradox ZP-B Companion  |  p-Adic Topology  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -129,7 +132,7 @@ def build():
 
     E += [
         Paragraph('Why the geometry of state space is non-Archimedean', CS['title']),
-        Paragraph('p-Adic Topology | Version 1.3', CS['subtitle']),
+        Paragraph('p-Adic Topology | Version ' + VERSION, CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '

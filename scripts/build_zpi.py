@@ -23,6 +23,8 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
+VERSION = '1.8'
+
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
                                spaceAfter=6, alignment=4)
@@ -86,7 +88,7 @@ def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-I_Inside_Zero_v1_8.pdf')
     print(f'[build_zpi] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-I: Inside Zero', 'ZP-I: Inside Zero',
-                   'Version 1.8', date_str='May 2026')
+                   'Version ' + VERSION, date_str='May 2026')
     E   = []
 
     print('[build_zpi] Building title block...')
@@ -95,7 +97,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version 1.8 | May 2026', S['subtitle']),
+        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
         Paragraph(
             '<i>v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms added to Lean Scope section and traceability register; optional transparency additions for reviewer auditability; primary narrative unchanged. | '
             'v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain modeling commitment (h_strict_from_r1_t3, §Ib). | '

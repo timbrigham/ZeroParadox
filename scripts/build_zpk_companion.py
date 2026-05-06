@@ -116,6 +116,9 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
+VERSION = '1.1'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-K_Illustrated_Companion.pdf')
@@ -124,7 +127,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  April 2026  |  v1.1')
+            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -143,7 +146,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Four Languages, One Structure', CS['title']),
           Paragraph('The Computational Grounding of &#8869;', CS['subtitle']),
-          Paragraph('ZP Companion | Version 1.1 | April 2026', CS['meta']),
+          Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'ontology — every claim here restates a result already proved in the technical '

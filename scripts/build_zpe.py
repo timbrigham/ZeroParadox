@@ -56,6 +56,8 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
+VERSION = '3.12'
+
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
 S['bodyI']   = ParagraphStyle('bodyI',   fontName='DVS-I', fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -68,7 +70,7 @@ bridge_box = remark_box  # SLATE header — ZP-E bridge document style
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document_v3_12.pdf')
     print(f'[build_zpe] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version 3.12', date_str='May 2026')
+    doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version ' + VERSION, date_str='May 2026')
     E   = []
 
     print('[build_zpe] Building title block...')
@@ -77,7 +79,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version 3.12 | May 2026', S['subtitle']),
+        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
         Paragraph(
             '<i>Supersedes v3.11 | v3.12: Framework scope and failure-mode framing added to preamble — '
             '"why these four?" addressed (coverage not exhaustion); cross-framework failure-mode paragraph '

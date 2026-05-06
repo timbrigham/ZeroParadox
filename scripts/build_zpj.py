@@ -15,13 +15,15 @@ between AFA set-theoretic structure and lattice-order structure is closed.
 import os
 from zp_utils import *
 
+VERSION = '1.1'
+
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Self_Reference_v1_1.pdf')
     doc = make_doc(out_path,
                    'ZP-J: Executability of Self-Reference',
                    'ZP-J: Executability of Self-Reference',
-                   'Version 1.1')
+                   'Version ' + VERSION)
     E = []
 
     print('[build_zpj] Building title block...')
@@ -29,7 +31,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J: Executability of Self-Reference', S['title']),
-        Paragraph('Version 1.1 | April 2026', S['subtitle']),
+        Paragraph('Version ' + VERSION + ' | April 2026', S['subtitle']),
         Paragraph(
             '<i>v1.1: Remark R-J.0 added — bot_self_mem := rfl in MachinePhase is a structural '
             'analogy (CIC encoding), not a ZF+AFA set-theoretic derivation; AFAStructure concrete '

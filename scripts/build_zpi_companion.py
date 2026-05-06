@@ -273,6 +273,9 @@ def cycle_diagram():
     return d
 
 
+VERSION = '1.1'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-I_Illustrated_Companion.pdf')
@@ -282,7 +285,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-I Companion  |  Inside Zero  |  May 2026  |  v1.1')
+            'Zero Paradox ZP-I Companion  |  Inside Zero  |  May 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -309,7 +312,7 @@ def build():
 
     E += [
         Paragraph('The engine runs in reverse', CS['title']),
-        Paragraph('Inside Zero | Version 1.1', CS['subtitle']),
+        Paragraph('Inside Zero | Version ' + VERSION, CS['subtitle']),
         Paragraph('ZP Companion | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '

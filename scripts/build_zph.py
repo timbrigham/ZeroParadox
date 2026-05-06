@@ -21,6 +21,8 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
+VERSION = '1.11'
+
 
 def label_box_status(title, status_line, rows_list):
     """Box with blue header, italic status sub-row, then content rows."""
@@ -53,7 +55,7 @@ def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_11.pdf')
     print(f'[build_zph] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-H: Categorical Bridge', 'ZP-H: Categorical Bridge',
-                   'Version 1.11', date_str='May 2026')
+                   'Version ' + VERSION, date_str='May 2026')
     E = []
 
     print('[build_zph] Building title block...')
@@ -62,7 +64,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version 1.11 | May 2026', S['bodyI']),
+        Paragraph('Version ' + VERSION + ' | May 2026', S['bodyI']),
         Paragraph(
             '<i>Supersedes v1.10 | v1.11: Remark R-FORCING added between Sections V and VI — explains that the four domain functors independently ground the snap through domain logic, verified sorry-free in Lean 4; structural forcing, not categorical re-description. | '
             'v1.10: fc_functor and fd_functor added — F<sub>C</sub> and F<sub>D</sub> now have concrete Lean Functor terms (InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors. C-H3/C-H4 status and Validation table updated. | '

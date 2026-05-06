@@ -85,6 +85,9 @@ def three_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
     t.setStyle(ts); return t
 
+VERSION = '1.0'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-J_Illustrated_Companion.pdf')
@@ -93,7 +96,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-J Companion  |  Self-Reference  |  April 2026  |  v1.0')
+            'Zero Paradox ZP-J Companion  |  Self-Reference  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -112,7 +115,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
           Paragraph('What &#8869; = {&#8869;} Really Means — and Why It Matters', CS['subtitle']),
-          Paragraph('ZP Companion | Version 1.0 | April 2026', CS['meta']),
+          Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'ontology — every claim here restates a result already proved in the technical '

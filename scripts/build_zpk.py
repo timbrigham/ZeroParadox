@@ -24,12 +24,14 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
+VERSION = '1.3'
+
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-K_Computational_Grounding_v1_3.pdf')
     print(f'[build_zpk] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-K: Computational Grounding of Self-Reference',
-                   'ZP-K: Computational Grounding', 'Version 1.3')
+                   'ZP-K: Computational Grounding', 'Version ' + VERSION)
     E   = []
 
     print('[build_zpk] Building title block...')
@@ -37,7 +39,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-K: Computational Grounding of Self-Reference', S['title']),
-        Paragraph('Version 1.3 | April 2026', S['subtitle']),
+        Paragraph('Version ' + VERSION + ' | April 2026', S['subtitle']),
         Paragraph(
             '<i>v1.3: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | '
             'v1.2: DA-1 Path 2 recharacterized — foundational commitment, not missing proof. '

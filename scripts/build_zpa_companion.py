@@ -92,6 +92,9 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
+VERSION = '1.4'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-A_Illustrated_Companion.pdf')
@@ -100,7 +103,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026  |  v1.3')
+            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -119,7 +122,7 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('How state accumulates without ever going backwards', CS['title']),
-          Paragraph('Lattice Algebra | Version 1.4', CS['subtitle']),
+          Paragraph('Lattice Algebra | Version ' + VERSION, CS['subtitle']),
           Paragraph('ZP Companion | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
