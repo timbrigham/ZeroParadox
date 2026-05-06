@@ -1,13 +1,17 @@
 """
 Build ZP-Reals Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.2 | May 2026
+Version 1.3 | May 2026
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
 v1.2: Section V geometry note revised — floor tile / sqrt(2) argument
       correctly scoped to macroscopic scales; at the minimum unit itself,
       discrete geometry applies and irrational multiples cannot be realised.
+v1.3: Section V Planck paragraph replaced with single sentence — prior
+      framing overclaimed discrete geometry and integer multiples; correct
+      framing is that current models break down at that scale, and the
+      argument does not depend on what replaces them.
 """
 
 import os, math
@@ -142,7 +146,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Where the Snap Fails', CS['title']),
           Paragraph('The Real Numbers as Counterexample', CS['subtitle']),
-          Paragraph('ZP Companion  |  Version 1.2  |  May 2026', CS['meta']),
+          Paragraph('ZP Companion  |  Version 1.3  |  May 2026', CS['meta']),
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
@@ -245,35 +249,10 @@ def build():
     # ── V. The Curve of a Perfect Pi ────────────────────────────────────────────
     E.append(Paragraph('V. The Curve of a Perfect &#960;', CS['h1']))
     E.append(cbody(
-        'There is a physical version of this argument. If the Planck length is a '
-        'genuine minimum — if anything smaller is physically indistinguishable from '
-        'zero — then even the curve of a perfect &#960;, zoomed in past that scale, '
-        'would show discrete jumps rather than smooth continuity. The infinite '
-        'decimal expansion becomes physically meaningless below that threshold. '
-        'The real number is smooth because we allowed the decimal to run forever. '
-        'If the universe does not, the real number line is an idealization of '
-        'something that is actually discrete.'))
-    E.append(cbody(
-        'The Planck length may or may not be the correct value for that minimum. '
-        'The specific number is a question for physics, and it remains open. '
-        'But the structural claim is independent of it: some minimum deviation '
-        'from zero must exist in any physical system where zero and non-zero are '
-        'genuinely distinct conditions. If the continuum ran all the way down '
-        'with no floor, the difference between something and nothing would be a '
-        'matter of infinite precision, not a real physical distinction. '
-        'The minimum does not have to be the Planck length. It just has to exist.'))
-    E.append(cbody(
-        'A note on geometry: at macroscopic scales, irrational lengths arise '
-        'naturally — a floor tile with rational side lengths has a diagonal of '
-        '&#8730;2 tile-lengths, a straightforward consequence of the Pythagorean '
-        'theorem. But this works because the minimum unit (say, a millimetre) is '
-        'far smaller than the lengths involved, leaving room for the irrational to '
-        'be approximated arbitrarily closely. At the minimum unit itself the picture '
-        'changes: &#8730;2 Planck lengths is not a valid physical length if the '
-        'Planck length admits no subdivision. The geometry at that scale is discrete, '
-        'and irrational multiples of the minimum unit cannot be realised. The floor '
-        'tile argument applies at scales well above the minimum; it dissolves at '
-        'the minimum itself — which is precisely where this argument lives.'))
+        'There is a physical version of this argument. At scales approaching the '
+        'Planck length, current mathematical models including the real number line '
+        'are understood to break down — what replaces them at that regime is an '
+        'open question in physics, and the argument here does not depend on the answer.'))
     E.append(sp(8))
 
     # ── VI. Mathematical Constants and Forcing ──────────────────────────────────
