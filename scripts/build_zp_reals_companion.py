@@ -1,16 +1,13 @@
 """
 Build ZP-Reals Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.1 | May 2026
+Version 1.2 | May 2026
 v1.0: Initial release.
-v1.1: Three clarifications following reviewer feedback:
-      - Section IV: "exceptional case" language softened; rationals noted as
-        sharing the same density property as reals.
-      - Section V: added note that minimum physical units do not prevent
-        irrationals from arising via geometry (floor tile diagonal = sqrt(2)).
-      - Section VI: clarified that "any desired precision" has no upper bound,
-        but the information-theoretic point concerns algorithm length, not
-        output length.
+v1.1: Three clarifications following reviewer feedback (density/rationals,
+      Planck/geometry, pi/algorithm length).
+v1.2: Section V geometry note revised — floor tile / sqrt(2) argument
+      correctly scoped to macroscopic scales; at the minimum unit itself,
+      discrete geometry applies and irrational multiples cannot be realised.
 """
 
 import os, math
@@ -119,7 +116,7 @@ def build():
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
             'Zero Paradox | Where the Snap Fails: The Real Numbers as Counterexample'
-            '  |  May 2026  |  v1.1')
+            '  |  May 2026  |  v1.2')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
@@ -145,7 +142,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Where the Snap Fails', CS['title']),
           Paragraph('The Real Numbers as Counterexample', CS['subtitle']),
-          Paragraph('ZP Companion  |  Version 1.1  |  May 2026', CS['meta']),
+          Paragraph('ZP Companion  |  Version 1.2  |  May 2026', CS['meta']),
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
@@ -266,12 +263,17 @@ def build():
         'matter of infinite precision, not a real physical distinction. '
         'The minimum does not have to be the Planck length. It just has to exist.'))
     E.append(cbody(
-        'A note on geometry: minimum physical units do not in themselves prevent '
-        'irrational numbers from appearing. A floor tile with rational side lengths '
-        'has an irrational diagonal — &#8730;2 arises from the simplest integer '
-        'geometry, before any question of precision. The Planck length argument '
-        'concerns whether physical space has a minimum unit of departure from zero, '
-        'not whether irrational lengths can be constructed. These are separate questions.'))
+        'A note on geometry: at macroscopic scales, irrational lengths arise '
+        'naturally — a floor tile with rational side lengths has a diagonal of '
+        '&#8730;2 tile-lengths, a straightforward consequence of the Pythagorean '
+        'theorem. But this works because the minimum unit (say, a millimetre) is '
+        'far smaller than the lengths involved, leaving room for the irrational to '
+        'be approximated arbitrarily closely. At the minimum unit itself the picture '
+        'changes: &#8730;2 Planck lengths is not a valid physical length if the '
+        'Planck length admits no subdivision. The geometry at that scale is discrete, '
+        'and irrational multiples of the minimum unit cannot be realised. The floor '
+        'tile argument applies at scales well above the minimum; it dissolves at '
+        'the minimum itself — which is precisely where this argument lives.'))
     E.append(sp(8))
 
     # ── VI. Mathematical Constants and Forcing ──────────────────────────────────
