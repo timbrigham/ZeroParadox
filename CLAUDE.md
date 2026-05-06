@@ -297,6 +297,36 @@ All formal ZP documents use the following hierarchy for naming results. Apply th
 
 When assigning a label, ask: "Is this result the central claim of its section, or is it infrastructure for something else?" Central claims are Theorems; infrastructure is Propositions or Lemmas.
 
+## GitHub Issues — Transparency and Engagement Policy
+
+The Zero Paradox project treats GitHub Issues as a public transparency mechanism, consistent with the project's core transparency commitment. Issues are not just a bug tracker — they are the public record of what is open, contested, or unresolved in the framework.
+
+### When to check
+
+- At the start of any session where a PR is being created or merged
+- At the start of any session where outreach responses are being processed
+- Any time Tim asks about external engagement or project status
+
+### When to file a public issue
+
+- Framework open questions that are genuinely unresolved and would benefit from external input (e.g. OQ-E2 cardinality question, AFA/CH tractability)
+- Substantive technical questions that arose in review and were not closed within the session
+- Questions where the framework explicitly flags something as open and outside the authors' expertise
+
+### When NOT to file
+
+- Anything sourced from private correspondence (Dan, outreach responses, Berkeley group)
+- Reviewer identity or feedback details
+- Outreach strategy, sending schedules, or draft emails
+- Editorial or prose decisions
+- Anything that belongs in `.claude-local/`
+
+### Issue framing standard
+
+Public issues should read as genuine open questions to the mathematical community — not as requests for validation. Frame them as specific, honest about uncertainty, and standalone without requiring knowledge of the full framework.
+
+---
+
 ## Framework Structure (for context)
 
 The Zero Paradox is a multi-layer mathematical ontology proving the Binary Snap (⊥ → ε₀) as a theorem. The dependency order of the formal layers is:
