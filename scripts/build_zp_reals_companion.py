@@ -1,12 +1,16 @@
 """
 Build ZP-Reals Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.0 | May 2026
-v1.0: Initial release. Explains why the real number line cannot serve as the
-      mathematical substrate for the Binary Snap, and why Q2 (2-adic metric)
-      is required. Covers: density symmetry, where infinity lives, finite
-      precision forcing, the Planck scale angle, mathematical constants as
-      forced values, and structural vs. statistical incompressibility (L-INF).
+Version 1.1 | May 2026
+v1.0: Initial release.
+v1.1: Three clarifications following reviewer feedback:
+      - Section IV: "exceptional case" language softened; rationals noted as
+        sharing the same density property as reals.
+      - Section V: added note that minimum physical units do not prevent
+        irrationals from arising via geometry (floor tile diagonal = sqrt(2)).
+      - Section VI: clarified that "any desired precision" has no upper bound,
+        but the information-theoretic point concerns algorithm length, not
+        output length.
 """
 
 import os, math
@@ -115,7 +119,7 @@ def build():
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
             'Zero Paradox | Where the Snap Fails: The Real Numbers as Counterexample'
-            '  |  May 2026  |  v1.0')
+            '  |  May 2026  |  v1.1')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
@@ -141,7 +145,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Where the Snap Fails', CS['title']),
           Paragraph('The Real Numbers as Counterexample', CS['subtitle']),
-          Paragraph('ZP Companion  |  Version 1.0  |  May 2026', CS['meta']),
+          Paragraph('ZP Companion  |  Version 1.1  |  May 2026', CS['meta']),
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
@@ -234,9 +238,11 @@ def build():
     E.append(remember_box(
         'Every finite computational system is already subject to the Binary Snap by '
         'construction. The minimum representable positive value exists; the density '
-        'argument fails there. The real numbers are the exceptional case — the one '
-        'structure that removes the floor by allowing infinite precision. Q&#8322; '
-        'puts the floor back in, mathematically rather than by truncation.'))
+        'argument fails there. The real numbers are the most familiar example of a '
+        'structure that removes this floor — but any dense ordered set has the same '
+        'property, including the rational numbers: for any &#949;&#8320; > 0, '
+        '&#949;&#8320; / 2 also exists. Q&#8322; puts the floor back in, '
+        'mathematically rather than by truncation.'))
     E.append(sp(8))
 
     # ── V. The Curve of a Perfect Pi ────────────────────────────────────────────
@@ -259,6 +265,13 @@ def build():
         'with no floor, the difference between something and nothing would be a '
         'matter of infinite precision, not a real physical distinction. '
         'The minimum does not have to be the Planck length. It just has to exist.'))
+    E.append(cbody(
+        'A note on geometry: minimum physical units do not in themselves prevent '
+        'irrational numbers from appearing. A floor tile with rational side lengths '
+        'has an irrational diagonal — &#8730;2 arises from the simplest integer '
+        'geometry, before any question of precision. The Planck length argument '
+        'concerns whether physical space has a minimum unit of departure from zero, '
+        'not whether irrational lengths can be constructed. These are separate questions.'))
     E.append(sp(8))
 
     # ── VI. Mathematical Constants and Forcing ──────────────────────────────────
@@ -270,10 +283,13 @@ def build():
     E.append(cbody(
         'No — and the reason matters. &#960; is infinitely long in its decimal '
         'expansion, but it is <i>computable</i>. Finite algorithms — the Leibniz '
-        'formula, the BBP algorithm, dozens of others — generate &#960; to any '
-        'desired precision. The Kolmogorov complexity of the first n digits of '
-        '&#960; is tiny relative to n: the short algorithm is the information, '
-        'not the infinite decimal.'))
+        'formula, the BBP algorithm, dozens of others — can generate &#960; to any '
+        'precision you specify, however large. There is no bound on the precision '
+        'you can ask for. But this is the point, not a problem: the Kolmogorov '
+        'complexity of the first n digits of &#960; is tiny relative to n. '
+        'The short algorithm is the information, not the infinite decimal. '
+        'You can demand arbitrarily many digits; the specification of &#960; '
+        'remains short regardless.'))
     E.append(cbody(
         'This is what makes &#960; a <i>constant</i> rather than an arbitrary '
         'number. It is the necessary consequence of a geometric relationship — '
