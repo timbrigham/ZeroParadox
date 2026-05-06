@@ -103,7 +103,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026  |  v1.3')
+            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

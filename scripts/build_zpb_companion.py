@@ -105,7 +105,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-B Companion  |  p-Adic Topology  |  April 2026  |  v1.2')
+            'Zero Paradox ZP-B Companion  |  p-Adic Topology  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
