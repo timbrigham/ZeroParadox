@@ -20,13 +20,15 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
+VERSION = '1.12'
+
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_12.pdf')
-    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version 1.12')
+    doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version ' + VERSION)
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version 1.12  |  May 2026', S['subtitle']),
+          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
           Paragraph('<i>Supersedes v1.11  |  v1.12: Encoding commitment and information-theoretic failure mode added to preamble — the conditionality of T1b (1 bit) is now stated before the result appears; the unbounded-surprisal failure at &#8869; (L-INF) is stated upfront as the information-theoretic instance of the foundational claim.</i>', S['subtitle']),
           Paragraph('<i>v1.11: L-INF semantic content corrected — &#8869; described as the limit point of the binary ball hierarchy under the 2-adic metric; the "all possible binary programs" characterisation (Section I framing) removed from a Section III result.</i>', S['subtitle']),
           Paragraph('<i>v1.10: R-BRIDGE cross-reference added — the structural argument for why K and 2-adic surprisal converge at P<sub>0</sub> is developed in ZP-E Remark R-AFA.</i>', S['subtitle']),

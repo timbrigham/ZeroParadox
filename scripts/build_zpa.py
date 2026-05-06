@@ -28,14 +28,16 @@ All three DA-1 paths share D7 as background; independence is among their argumen
 import os
 from zp_utils import *
 
+VERSION = '1.13'
+
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_13.pdf')
-    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version 1.13')
+    doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version ' + VERSION)
     E = []
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version 1.13  |  May 2026', S['subtitle']),
+          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
           Paragraph('<i>Supersedes v1.12  |  v1.13: OQ-A1b note added distinguishing bounded chains from existence of minimal element above &#8869;. Bounded chains do not guarantee &#949;&#8320; exists as a minimal non-null element &#8212; that is a metric result from ZP-B, outside the scope of A1&#8211;A4. No algebraic content changed. | v1.12: OQ-A1b dual-status clarification — closure note now distinguishes the ZP-specific result (bounded by AX-B1 via T5) from the general semilattice case (unbounded chains are permitted without AX-B1). No algebraic content changed. | v1.11: ZF+AFA metatheoretic declaration added before Section I; plain English preface added immediately before CC-1 (&#167;4.2). No mathematical content changed. | v1.10: CC-1 box title updated &#8212; "Conditional Claim CC-1" replaced with "CC-1 (Derived/Conditional)" to reflect dual status at first glance for ZP-A-only readers. | v1.9: CC-1 status updated &#8212; derived as structural consequence in AFAStructure lattices via ZP-J T-EXEC; modelling commitment at ZP-A level without AFAStructure assumption.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),

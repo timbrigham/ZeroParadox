@@ -184,6 +184,9 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
+VERSION = '1.6'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-C_Illustrated_Companion.pdf')
@@ -193,7 +196,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            f'Zero Paradox ZP-C Companion  |  Information Theory  |  April 2026  |  v1.6')
+            'Zero Paradox ZP-C Companion  |  Information Theory  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -220,7 +223,7 @@ def build():
 
     E += [
         Paragraph('Why zero is an informational singularity', CS['title']),
-        Paragraph('Information Theory | Version 1.6', CS['subtitle']),
+        Paragraph('Information Theory | Version ' + VERSION, CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '

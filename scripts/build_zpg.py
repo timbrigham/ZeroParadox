@@ -18,6 +18,8 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
+VERSION = '1.7'
+
 # ZP-G uses a slightly different amber shade; override zp_utils default
 AMBER = colors.HexColor('#B07800')
 
@@ -103,7 +105,7 @@ def make_doc(path, title_str, doc_id, version_str, date_str='May 2026'):
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory_v1_7.pdf')
     print(f'[build_zpg] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version 1.7')
+    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version ' + VERSION)
     E   = []
 
     print('[build_zpg] Building title block...')
@@ -112,7 +114,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version 1.7 | May 2026', S['bodyI']),
+        Paragraph('Version ' + VERSION + ' | May 2026', S['bodyI']),
         Paragraph(
             '<i>Supersedes v1.6 | v1.7: Remark R-AX added after AX-G2 — explains why AX-G1 and AX-G2 '
             'are not trivially satisfied placeholder conditions; the initial object is independently '
@@ -748,7 +750,7 @@ def build():
     E += [
         sp(12),
         Paragraph(
-            '<i>Zero Paradox ZP-G: Category Theory | Version 1.7 | May 2026 |'
+            '<i>Zero Paradox ZP-G: Category Theory | Version ' + VERSION + ' | May 2026 |'
             'Supersedes v1.4 | T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
             'not K-theoretic content | T6 Part II: Lean-verified | Internal Working Document</i>',
             S['endnote']),

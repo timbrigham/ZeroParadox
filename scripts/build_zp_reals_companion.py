@@ -110,6 +110,9 @@ def comparison_table():
     return t
 
 
+VERSION = '1.3'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP_Reals_Companion.pdf')
 
@@ -120,7 +123,7 @@ def build():
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
             'Zero Paradox | Where the Snap Fails: The Real Numbers as Counterexample'
-            '  |  May 2026  |  v1.3')
+            '  |  May 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
@@ -146,7 +149,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Where the Snap Fails', CS['title']),
           Paragraph('The Real Numbers as Counterexample', CS['subtitle']),
-          Paragraph('ZP Companion  |  Version 1.3  |  May 2026', CS['meta']),
+          Paragraph('ZP Companion  |  Version ' + VERSION + '  |  May 2026', CS['meta']),
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '

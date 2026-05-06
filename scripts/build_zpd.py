@@ -14,13 +14,15 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
+VERSION = '1.8'
+
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_8.pdf')
-    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version 1.8')
+    doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version ' + VERSION)
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version 1.8  |  May 2026', S['subtitle']),
+          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
           Paragraph('<i>Supersedes v1.7  |  v1.8: T5 strengthened — T5-b (strict orthogonality) added. '
                     'T5-b is the non-trivial Lean-verified content of T5: distinct consecutive states map to orthogonal T-images via DP-1 (Lean: ZPD.t5_strict_orthogonal). '
                     'T5 norm result disclosed as tautology of construction. | '

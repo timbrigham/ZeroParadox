@@ -166,6 +166,9 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
+VERSION = '1.3'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-E_Illustrated_Companion.pdf')
@@ -174,7 +177,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026  |  v1.3')
+            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -195,7 +198,7 @@ def build():
           Paragraph('Where all four frameworks converge —\nand AX-1 becomes a theorem',
                     CS['title']),
           Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
-          Paragraph('ZP Companion | Version 1.3 | April 2026', CS['meta']),
+          Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
               'examples. It is not the formal ontology — every claim here restates a result '

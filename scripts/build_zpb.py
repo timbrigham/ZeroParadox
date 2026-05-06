@@ -9,13 +9,15 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
+VERSION = '1.6'
+
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_6.pdf')
-    doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version 1.6')
+    doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version ' + VERSION)
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
-          Paragraph('Version 1.6  |  May 2026', S['subtitle']),
+          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
           Paragraph('<i>Supersedes v1.5  |  v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects; existence is a property the states represent, not a statement about set membership. Lean encoding note added (OntologicalStates).</i>', S['subtitle']),
           Paragraph('<i>v1.5: T3 ZP interpretation bullets labelled explicitly — pure topology and ZP-specific framing now separated with "ZP Interpretation:" prefix.</i>', S['subtitle']),
           Paragraph('<i>v1.4: T0 reframed: derived given MP-1 (design commitment); MP-1 acknowledged as load-bearing choice.</i>', S['subtitle']),

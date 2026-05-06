@@ -142,6 +142,9 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
+VERSION = '1.2'
+
+
 def build():
     out_path = os.path.join(PROJECT_ROOT,
                             'ZP-G_Illustrated_Companion.pdf')
@@ -151,7 +154,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-G Companion  |  Category Theory  |  April 2026  |  v1.2')
+            'Zero Paradox ZP-G Companion  |  Category Theory  |  April 2026  |  v' + VERSION)
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -178,7 +181,7 @@ def build():
 
     E += [
         Paragraph('Structure without substance', CS['title']),
-        Paragraph('Category Theory | Version 1.2', CS['subtitle']),
+        Paragraph('Category Theory | Version ' + VERSION, CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '

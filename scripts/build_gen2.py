@@ -9,6 +9,8 @@ Follows all rules in pdf rendering standards.md.
 import os
 from zp_utils import *
 
+VERSION = '1.0'
+
 # ── Local additions ────────────────────────────────────────────────────────────
 AMBER    = colors.HexColor('#B07800')   # override — Gen2 uses darker amber
 RED_LITE = colors.HexColor('#FFEBEE')
@@ -96,7 +98,7 @@ def build():
         sp(6),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('Generation 2: Applications and Open Problems', S['sub']),
-        Paragraph('Version 1.0 | April 2026', S['bodyI']),
+        Paragraph('Version ' + VERSION + ' | April 2026', S['bodyI']),
         sp(6),
         body(
             'The Generation 1 framework — ZP-A through ZP-H — establishes a single central '
@@ -408,7 +410,7 @@ def build():
             bg=BLUE_LITE, border=BLUE),
         sp(12),
         Paragraph(
-            '<i>Zero Paradox Generation 2 | Applications and Open Problems | April 2026 | v1.0</i>',
+            '<i>Zero Paradox Generation 2 | Applications and Open Problems | April 2026 | v' + VERSION + '</i>',
             S['note']),
     ]
 
