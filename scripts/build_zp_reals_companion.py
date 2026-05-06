@@ -120,7 +120,7 @@ def build():
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
             'Zero Paradox | Where the Snap Fails: The Real Numbers as Counterexample'
-            '  |  May 2026  |  v1.2')
+            '  |  May 2026  |  v1.3')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
