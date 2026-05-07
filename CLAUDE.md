@@ -435,6 +435,11 @@ All work — Lean 4 proofs and PDF rendering — happens on the `illustrated` br
    gh pr create --title "..." --body-file ".claude-local\pr_body_<name>.md"
    ```
 
+8. **Keep PR description current:** If additional commits are pushed to a branch after the PR is opened, update the PR body to reflect the new content. Update `.claude-local\pr_body_<name>.md` first, then run:
+   ```powershell
+   gh pr edit <number> --body-file ".claude-local\pr_body_<name>.md"
+   ```
+
 ## File Priority
 - Both `.lean` files and PDF build scripts are first-class on `illustrated`.
 - All other conventions (versioning, archiving, scripts/ sync) apply as documented above.
