@@ -1,12 +1,12 @@
 > **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. It is the release history for GitHub releases and Zenodo snapshots. The main entry point for the Zero Paradox is [README.md](README.md).
 
-# Zero Paradox — Release History
+# Zero Paradox - Release History
 
 Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. This file is the human-readable record of what warranted each release and what the next threshold is.
 
 ---
 
-## v1.0 — 2026-05-07
+## v1.0 - 2026-05-07
 
 **Why this release:** First public Zenodo snapshot. The framework is complete across ten formal layers with all core theorems verified sorry-free in Lean 4 + Mathlib. Zenodo integration established via `.zenodo.json`.
 

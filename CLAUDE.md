@@ -41,7 +41,7 @@ GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASE
 
 ### Release naming
 
-`v<major>.<minor>` — e.g. `v1.0`, `v1.1`, `v2.0`
+`v<major>.<minor>` - e.g. `v1.0`, `v1.1`, `v2.0`
 
 ### What triggers a release
 
@@ -54,8 +54,8 @@ GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASE
 
 1. Update `RELEASES.md` with the new version entry (version, date, why, what's included, document versions, next threshold)
 2. Commit and merge to main via PR
-3. Draft the GitHub Release body (Claude drafts this — see below)
-4. Tim creates the GitHub Release with the drafted body — Zenodo fires automatically
+3. Draft the GitHub Release body (Claude drafts this - see below)
+4. Tim creates the GitHub Release with the drafted body - Zenodo fires automatically
 5. Grab the Zenodo DOI badge and add to README.md in a follow-up commit
 
 ### Claude's role in drafting releases
@@ -70,13 +70,13 @@ When Tim says it's time for a release, Claude will:
 ### RELEASES.md entry format
 
 ```
-## vX.Y — YYYY-MM-DD
+## vX.Y - YYYY-MM-DD
 
-**Why this release:** [one sentence — what milestone this represents]
+**Why this release:** [one sentence - what milestone this represents]
 
 **What changed:** [bullet list of significant changes since last release]
 
-**Document versions at this release:** [table — only documents that changed since last release, or full table for major versions]
+**Document versions at this release:** [table - only documents that changed since last release, or full table for major versions]
 
 **Next threshold:** [what would trigger v(X.Y+1) vs v(X+1.0)]
 ```
