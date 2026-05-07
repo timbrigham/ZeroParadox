@@ -1,0 +1,25 @@
+{
+  "title": "The Zero Paradox: A Multi-Framework Mathematical Ontology",
+  "description": "A formal mathematical ontology proving the Binary Snap as a theorem across lattice algebra, p-adic topology, information theory, functional analysis, and category theory. The central result — that a specific state transition from null to first determinate state is structurally forced by standard mathematical commitments — is derived across five formal layers (ZP-A through ZP-E) and extended categorically (ZP-G, ZP-H). All core theorems are verified sorry-free in Lean 4 + Mathlib.",
+  "creators": [
+    {
+      "name": "Brigham, Tim"
+    }
+  ],
+  "license": "cc-by-nc-nd-4.0",
+  "keywords": [
+    "mathematical ontology",
+    "lattice algebra",
+    "p-adic topology",
+    "information theory",
+    "category theory",
+    "Lean 4",
+    "formal verification",
+    "foundational mathematics",
+    "binary snap",
+    "join-semilattice"
+  ],
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "access_right": "open"
+}
