@@ -35,6 +35,52 @@ Transparency is a core value of this project. The existence of this private fold
 - The `historical/README.md` tracks all archived files with date moved and description
 - README.md always links to the non-suffixed (current) version
 
+## GitHub Releases and Zenodo Snapshots
+
+GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASES.md` is the human-readable record of each release.
+
+### Release naming
+
+`v<major>.<minor>` - e.g. `v1.0`, `v1.1`, `v2.0`
+
+### What triggers a release
+
+- **Major version** (`v1.0 → v2.0`): a new formal layer added, or a theorem status changes (candidate → derived), or a significant structural revision to the framework
+- **Minor version** (`v1.0 → v1.1`): a substantive reviewer feedback round addressed, or accumulated document/companion updates that represent a meaningful state of the framework
+
+**Do not release on:** every individual PR. Releases should feel like milestones worth timestamping.
+
+### Release workflow
+
+1. Update `RELEASES.md` with the new version entry (version, date, why, what's included, document versions, next threshold)
+2. Commit and merge to main via PR
+3. Draft the GitHub Release body (Claude drafts this - see below)
+4. Tim creates the GitHub Release with the drafted body - Zenodo fires automatically
+5. Grab the Zenodo DOI badge and add to README.md in a follow-up commit
+
+### Claude's role in drafting releases
+
+When Tim says it's time for a release, Claude will:
+1. Read `RELEASES.md` and the merged PR history since the last release
+2. Draft the `RELEASES.md` entry for the new version
+3. Draft the full GitHub Release body (title, description, changelog) ready to paste into GitHub
+4. Open a PR with the `RELEASES.md` update
+5. After merge, provide the exact GitHub Release body for Tim to paste
+
+### RELEASES.md entry format
+
+```
+## vX.Y - YYYY-MM-DD
+
+**Why this release:** [one sentence - what milestone this represents]
+
+**What changed:** [bullet list of significant changes since last release]
+
+**Document versions at this release:** [table - only documents that changed since last release, or full table for major versions]
+
+**Next threshold:** [what would trigger v(X.Y+1) vs v(X+1.0)]
+```
+
 ## register.md — Canonical Version Registry
 
 `register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md (and carries a transparency notice per the Transparency Notices policy).
