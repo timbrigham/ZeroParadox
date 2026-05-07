@@ -55,7 +55,7 @@ GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASE
 1. Update `RELEASES.md` with the new version entry (version, date, why, what's included, document versions, next threshold)
 2. Commit and merge to main via PR
 3. Draft the GitHub Release body and present it to Tim for approval
-4. On explicit approval, execute `gh release create` directly - do not ask Tim to do it manually
+4. On explicit approval, execute `gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"` directly - do not ask Tim to do it manually
 5. Grab the Zenodo DOI badge and add to README.md in a follow-up commit
 
 ### Claude's role in drafting releases
@@ -66,7 +66,7 @@ When Tim says it's time for a release, Claude will:
 3. Open a PR with the `RELEASES.md` update
 4. After merge, draft the full GitHub Release body and present it to Tim
 5. **Wait for explicit approval before executing** - do not run `gh release create` until Tim confirms the language
-6. On approval, run `gh release create` with `--notes-file` automatically - no further prompting needed
+6. On approval, run `gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"` - no further prompting needed
 
 ### RELEASES.md entry format
 
