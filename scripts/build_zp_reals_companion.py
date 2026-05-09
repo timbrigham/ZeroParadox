@@ -1,7 +1,7 @@
 """
 Build ZP-Reals Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.3 | May 2026
+Version 1.4 | May 2026
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
@@ -12,6 +12,10 @@ v1.3: Section V Planck paragraph replaced with single sentence — prior
       framing overclaimed discrete geometry and integer multiples; correct
       framing is that current models break down at that scale, and the
       argument does not depend on what replaces them.
+v1.4: Section V renamed "The Wrong Kind of Zero" — new structural argument
+      that R models zero as a reachable point while any state-change domain
+      requires zero to be an unrealizable asymptotic floor; Q2 is more
+      honest because valuation +inf encodes this structurally.
 """
 
 import os, math
@@ -110,7 +114,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
@@ -249,13 +253,32 @@ def build():
         'mathematically rather than by truncation.'))
     E.append(sp(8))
 
-    # ── V. The Curve of a Perfect Pi ────────────────────────────────────────────
-    E.append(Paragraph('V. The Curve of a Perfect &#960;', CS['h1']))
+    # ── V. The Wrong Kind of Zero ────────────────────────────────────────────────
+    E.append(Paragraph('V. The Wrong Kind of Zero', CS['h1']))
     E.append(cbody(
-        'There is a physical version of this argument. At scales approaching the '
-        'Planck length, current mathematical models including the real number line '
-        'are understood to break down — what replaces them at that regime is an '
-        'open question in physics, and the argument here does not depend on the answer.'))
+        'The real number line is not wrong. It is internally consistent and '
+        'extraordinarily useful. But for any domain in which state changes are a '
+        'structural requirement, it is modeling the wrong kind of zero.'))
+    E.append(cbody(
+        'State changes require finite nonzero duration &#8212; not as an empirical '
+        'observation, but as a structural feature of what change means. A change that '
+        'takes zero time is not a change. That is definitional. In any domain where '
+        'genuine state changes occur, perfect zero is therefore only an asymptotic '
+        'floor: the limit toward which processes tend without arriving. '
+        'It cannot be stably occupied.'))
+    E.append(cbody(
+        'The real number line models zero as an ordinary reachable point &#8212; '
+        'topologically identical to 1 or &#960;, no flags raised. It includes perfect '
+        'zero as a legitimate member of the space. In a state-change domain, that is '
+        'the wrong kind of zero. &#8477; is a less-than-perfect model not because its '
+        'mathematics is incorrect but because it quietly includes an unrealizable '
+        'idealization.'))
+    E.append(cbody(
+        'Q&#8322; is more honest. The 2-adic valuation assigns zero the address '
+        '+&#8734; &#8212; explicitly encoding what any state-change domain requires: '
+        'zero is structurally inaccessible, not a reachable point but the asymptotic '
+        'floor the metric itself refuses to cross. There is a physical version of this '
+        'argument, but the argument does not depend on it.'))
     E.append(sp(8))
 
     # ── VI. Mathematical Constants and Forcing ──────────────────────────────────
