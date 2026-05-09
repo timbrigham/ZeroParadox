@@ -463,7 +463,9 @@ def build():
             'Was axiom ax_j1 in the stub — now a theorem from T-EXEC + A4.',
             'CC-1 (Derived): S&#8320; = Q &#8658; S&#8320; = &#8869;. The modelling commitment is replaced '
             'by a structural consequence.',
-            'Lean purity: all ZPJ.lean theorems verify "does not depend on any axioms." ✓',
+            'Lean purity: all ZPJ.lean theorems verify "does not depend on any axioms" ✓ '
+            '(modulo AFAStructure typeclass fields quine_unique and bot_self_mem, which carry '
+            'the same logical status as axioms but are not surfaced by &#35;print axioms).',
         ]
     ))
     E.append(sp(6))
@@ -548,7 +550,7 @@ def build():
         Paragraph(
             '<i>End of ZP-J v1.1 | Theorem T-EXEC: Executability of Self-Reference | '
             'CC-1 derived — no freestanding axioms | '
-            'All ZPJ.lean theorems: does not depend on any axioms | '
+            'All ZPJ.lean theorems: does not depend on any axioms (modulo AFAStructure fields quine_unique, bot_self_mem — same logical status as axioms; not surfaced by &#35;print axioms) | '
             'Remaining foundation: ZPSemilattice (A1&#8211;A4) and AFAStructure (selfMem, quine_unique, bot_self_mem)</i>',
             S['endnote']),
     ]

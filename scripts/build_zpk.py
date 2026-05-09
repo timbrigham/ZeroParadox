@@ -479,7 +479,9 @@ def build():
         ['da1_closed_concrete',
          'da1_computational + machinePhaseKleene',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.da1_closed_concrete ✓ DA-1 closed'],
+         'Lean: ZPK.da1_closed_concrete ✓ DA-1 closed (definitionally: under selfMem x := x = &#8869;, '
+         'reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;); '
+         'structural closure by typeclass design — see R-K.0)'],
     ]
     E.append(data_table(
         ['Claim', 'Grounded In', 'Axioms', 'Status'],
