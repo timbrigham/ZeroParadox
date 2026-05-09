@@ -237,11 +237,11 @@ def build():
             ['Python 3',    'General scripting',
              'All PDF build scripts. Environment: Windows 11 with system Python.'],
             ['ReportLab',   'PDF generation',
-             'All technical PDFs (ZP-A through ZP-H, companions, foreword, this document). '
+             'All technical PDFs (ZP-A through ZP-K plus ZP-F, companions, foreword, this document). '
              'Used for Paragraph layout, Table construction, and Drawing (vector diagrams).'],
             ['Lean 4 + Mathlib', 'Formal proof verification',
-             'Machine-checked proofs for all seven layers. Source on lake_testing branch. '
-             'Built with lake build. Purity checks via #print axioms.'],
+             'Machine-checked proofs for all eleven layers (ZP-A through ZP-K, plus ZP-F). '
+             'Source on illustrated branch. Built with lake build. Purity checks via #print axioms.'],
             ['DejaVu fonts','Typography',
              'DejaVuSerif (body text) and DejaVuSans (headers, labels, diagrams). '
              'Selected for broadest Unicode math coverage.'],
@@ -330,12 +330,12 @@ def build():
         'installed and the DejaVu fonts in scripts/fonts/.'))
     E.append(body(
         'The mathematical content is fully specified in the formal ontology documents '
-        '(ZP-A through ZP-H). The companion documents and foreword are narrative '
+        '(ZP-A through ZP-K, plus ZP-F). The companion documents and foreword are narrative '
         'restatements of the same content. If the formal documents change, the companions '
         'and foreword require updating to match.'))
     E.append(body(
         'Lean 4 proofs are fully reproducible: clone the repository, switch to the '
-        'lake_testing branch, and run lake build from the ZeroParadox/ directory. '
+        'illustrated branch, and run lake build from the ZeroParadox/ directory. '
         'All proofs build clean against Mathlib.'))
     E.append(sp(6))
     E.append(key_result_box(

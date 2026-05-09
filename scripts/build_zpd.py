@@ -156,7 +156,7 @@ def build():
         'T5-b is the load-bearing result: it captures the genuine content of the ball-boundary structure and is the Hilbert-space expression of ZP-B C3 (topological irreversibility) applied to consecutive states.',
     ]))
 
-    E.append(Paragraph('V. Open Items Register for ZP-D v1.8', S['h1']))
+    E.append(Paragraph('V. Open Items Register for ZP-D v' + VERSION, S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],

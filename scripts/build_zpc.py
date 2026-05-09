@@ -248,7 +248,7 @@ def build():
         'Status label: CANDIDATE THEOREM — gap identified and named (DA-1). Closed in ZP-E DA-1 insert.',
     ]))
 
-    E.append(Paragraph('VI. Open Items Register for ZP-C v1.9', S['h1']))
+    E.append(Paragraph('VI. Open Items Register for ZP-C v' + VERSION, S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['S1: Distribution stipulation', 'Closed — T1', 'T1 derives P and Q from AX-B1 and RP-1.'],

@@ -1,7 +1,15 @@
 """
-Build ZP-Reals Illustrated Companion
+Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.4 | May 2026
+Version 1.6 | May 2026
+v1.5: Renamed to ZP-F Illustrated Companion; disclaimer updated to cite ZP-F
+      Lean verification (F-SNAP-IMPOSSIBLE and general ordered field result).
+v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
+      membership status rather than "wrong kind of zero"; directionality argument
+      added: return paths are structurally blocked only when zero is categorically
+      off the field, not a peer member of the space.
+v1.7: Section IV phrasing naturalised — "Below δ you cannot go" replaced with
+      "Below that, there's nowhere to go."
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
@@ -114,11 +122,11 @@ def comparison_table():
     return t
 
 
-VERSION = '1.4'
+VERSION = '1.7'
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP_Reals_Companion.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-F_Illustrated_Companion.pdf')
 
     def footer_cb(canvas, doc):
         canvas.saveState()
@@ -126,7 +134,7 @@ def build():
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            'Zero Paradox | Where the Snap Fails: The Real Numbers as Counterexample'
+            'Zero Paradox ZP-F Companion | Where the Snap Fails: The Real Numbers as Counterexample'
             '  |  May 2026  |  v' + VERSION)
         canvas.restoreState()
 
@@ -153,13 +161,14 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Where the Snap Fails', CS['title']),
           Paragraph('The Real Numbers as Counterexample', CS['subtitle']),
-          Paragraph('ZP Companion  |  Version ' + VERSION + '  |  May 2026', CS['meta']),
+          Paragraph('ZP-F Companion  |  Version ' + VERSION + '  |  May 2026', CS['meta']),
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
-              'for the Binary Snap, and why the 2-adic metric Q&#8322; is required. No Lean '
-              'verification is associated with this document; the relevant formal results are '
-              'in ZP-B (p-adic topology) and ZP-C (information theory).',
+              'for the Binary Snap, and why the 2-adic metric Q&#8322; is required. '
+              'The formal results are machine-verified in Lean 4 as part of ZP-F '
+              '(F-SNAP-IMPOSSIBLE and the general ordered field result); see also '
+              'ZP-B (p-adic topology) for the positive case.',
               CS['disc'])]
 
     # ── I. The Natural Question ─────────────────────────────────────────────────
@@ -230,8 +239,8 @@ def build():
     E.append(cbody(
         'Every computer already knows this. Any number system with a maximum number '
         'of decimal places — any fixed-point arithmetic system, any discretized '
-        'simulation — has a smallest representable positive number. Call it &#948;. '
-        'Below &#948; you cannot go. The density argument fails at &#948;. The snap '
+        'simulation — has a smallest representable positive number — call it &#948;. '
+        'Below that, there\'s nowhere to go. The density argument fails at &#948;. The snap '
         'is forced: there is a genuine first step, and halving it is not possible.'))
     E.append(cbody(
         'The real numbers are the idealization in which this floor is removed — the '
@@ -253,32 +262,38 @@ def build():
         'mathematically rather than by truncation.'))
     E.append(sp(8))
 
-    # ── V. The Wrong Kind of Zero ────────────────────────────────────────────────
-    E.append(Paragraph('V. The Wrong Kind of Zero', CS['h1']))
+    # ── V. The Coach and the Players ─────────────────────────────────────────────
+    E.append(Paragraph('V. The Coach and the Players', CS['h1']))
     E.append(cbody(
         'The real number line is not wrong. It is internally consistent and '
         'extraordinarily useful. But for any domain in which state changes are a '
-        'structural requirement, it is modeling the wrong kind of zero.'))
+        'structural requirement, it is modeling zero with the wrong membership status.'))
     E.append(cbody(
-        'State changes require finite nonzero duration &#8212; not as an empirical '
-        'observation, but as a structural feature of what change means. A change that '
-        'takes zero time is not a change. That is definitional. In any domain where '
-        'genuine state changes occur, perfect zero is therefore only an asymptotic '
-        'floor: the limit toward which processes tend without arriving. '
-        'It cannot be stably occupied.'))
+        'Consider a sports team. The coach and the players are not peers. The coach '
+        'is not on the field, does not wear the same uniform, and cannot be substituted '
+        'in. The role is categorically different — the coach is the origin and '
+        'organising principle of the game, not a participant in it. You cannot return '
+        'to the coach the way you move between players. That path does not exist.'))
     E.append(cbody(
-        'The real number line models zero as an ordinary reachable point &#8212; '
-        'topologically identical to 1 or &#960;, no flags raised. It includes perfect '
-        'zero as a legitimate member of the space. In a state-change domain, that is '
-        'the wrong kind of zero. &#8477; is a less-than-perfect model not because its '
-        'mathematics is incorrect but because it quietly includes an unrealizable '
-        'idealization.'))
+        'Zero has the same relationship to the states above it. It is not a peer. '
+        'It is the floor from which everything departs — structurally off the field. '
+        'In any domain where genuine state changes occur, zero cannot be stably '
+        'occupied. It is the asymptotic limit toward which processes tend without '
+        'arriving. A return to zero is not a valid move; it is a category error.'))
     E.append(cbody(
-        'Q&#8322; is more honest. The 2-adic valuation assigns zero the address '
-        '+&#8734; &#8212; explicitly encoding what any state-change domain requires: '
-        'zero is structurally inaccessible, not a reachable point but the asymptotic '
-        'floor the metric itself refuses to cross. There is a physical version of this '
-        'argument, but the argument does not depend on it.'))
+        'The real number line gives zero the wrong membership status. It admits zero '
+        'as an ordinary point &#8212; topologically identical to 1 or &#960;, a peer '
+        'of every other element. That is why return paths are permitted in &#8477;: '
+        'if zero is just another player, nothing structurally blocks the path back. '
+        'Directionality &#8212; the one-way ratchet the framework requires &#8212; '
+        'cannot be grounded in a space where zero sits on the same continuum as '
+        'everything else.'))
+    E.append(cbody(
+        'Q&#8322; gets the membership status right. The 2-adic valuation assigns zero '
+        'the address +&#8734; &#8212; not a limit the other elements approach, but a '
+        'categorical distinction built into the metric itself. Zero is in Q&#8322; but '
+        'it is not a peer. Every non-zero element carries a finite valuation; zero does '
+        'not. The coach is not on the field. The path back does not exist.'))
     E.append(sp(8))
 
     # ── VI. Mathematical Constants and Forcing ──────────────────────────────────

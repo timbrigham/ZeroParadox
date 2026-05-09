@@ -673,7 +673,7 @@ def build():
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v3.11', S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v' + VERSION, S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -727,7 +727,7 @@ def build():
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v3.11', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v' + VERSION, S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -780,7 +780,7 @@ def build():
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v3.11', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v' + VERSION, S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',
