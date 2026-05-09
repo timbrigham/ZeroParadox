@@ -1,5 +1,7 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.6, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v1.7, revised May 2026)
+v1.7: Added note to Section III clarifying ZP-K's Classical.choice dependency is a standard
+Lean infrastructure axiom, not a novel framework commitment — addresses 4.7 from outside review.
 v1.6: AX-B1 status changed from "Decidable" to "Directly Verifiable"; plain-language description
 replaces Lean jargon ("decidable equality on finite types"); in-PDF date corrected to May 2026.
 v1.5: Layer count updated throughout — framework now has ten formal layers (ZP-J, ZP-K added).
@@ -14,7 +16,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -279,7 +281,11 @@ def build():
             'satisfying x = {x}. This matters only for CC-2 in the table below; '
             'every other result in this framework holds in standard ZF. Standard ZFC is '
             'incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, '
-            'contradicting the self-execution argument. The Axiom of Choice is not assumed.',
+            'contradicting the self-execution argument. The Axiom of Choice is not assumed '
+            'as a framework commitment. One exception at the infrastructure level: ZP-K\'s '
+            'Kleene computability machinery depends on Classical.choice as a standard Lean '
+            'library axiom — the same dependency carried by any theorem using Mathlib\'s '
+            'computability library, not a novel Zero Paradox commitment.',
             S['body']),
         commitments_table(),
         sp(8),

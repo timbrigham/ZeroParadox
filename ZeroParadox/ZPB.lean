@@ -233,6 +233,30 @@ theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
   rw [hγ0, hγ1] at heq
   exact hx heq
 
+/-! ## Classification Note: Non-Archimedean Fields and the Snap
+
+The ultrametric property (T1) is the metric expression of non-Archimedean structure.
+C3 (irreversibility) is the positive complement to ZP-F's f_snap_impossible:
+
+- In Archimedean fields (ZP-F): halving is always available, no minimal positive
+  element exists — the snap is impossible.
+- In Q₂ (this file): the ultrametric creates a genuine topological gap at zero
+  (T2, T3, C3) — the snap is forced.
+
+**ZP-B / ZP-F Classification (Ostrowski's theorem):**
+
+Ostrowski's theorem states that every complete valued field extending ℚ is either
+Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p).
+ZP-B covers the non-Archimedean case (p = 2, forced by AX-B1 and minimality).
+ZP-F covers the Archimedean case. Together the classification is complete:
+the snap is possible if and only if the field is non-Archimedean.
+
+The ultrametric is not a technical convenience — it is the structural fact that
+the Archimedean property would erase. C3's irreversibility is Ostrowski's
+non-Archimedean case made topologically explicit.
+
+See: ZPF.lean (f_snap_impossible) for the Archimedean side. -/
+
 end ZeroParadox.ZPB
 
 /-! ## Axiom Purity Check

@@ -1,9 +1,11 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.0 | April 2026
+Version 1.1 | May 2026
 v1.0: Initial release. Covers T-EXEC (Quine atom = ⊥), the three-way equivalence,
 and the closure of CC-1 and CC-2 as derived theorems rather than freestanding commitments.
-Formal doc: ZP-J Self-Reference v1.0.
+v1.1: Corrected CC-2 status to metatheoretic commitment within ZF+AFA; commitment shifts
+to the AFA setting itself. CC-1 remains fully discharged axiom-free. Aligns with R-J.0.
+Formal doc: ZP-J Self-Reference v1.1.
 """
 
 import os
@@ -85,7 +87,7 @@ def three_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
     t.setStyle(ts); return t
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 def build():
@@ -119,7 +121,7 @@ def build():
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'ontology — every claim here restates a result already proved in the technical '
-              'document ZP-J Self-Reference v1.0. Consult that document for the authoritative '
+              'document ZP-J Self-Reference v1.1. Consult that document for the authoritative '
               'mathematics.', CS['disc'])]
 
     # What Is ZP-J Doing?
@@ -133,8 +135,10 @@ def build():
         'ZP-J makes that argument formal. It proves, in Lean 4 with no axioms beyond the '
         'standard mathematical infrastructure, that in any ZP-A semilattice with anti-foundation '
         'grounding, the unique self-containing set — the Quine atom — is provably the bottom '
-        'element ⊥. CC-2 (⊥ = {⊥}) is no longer a modelling commitment. It is a theorem. '
-        'So is CC-1 (S₀ = ⊥). Both are derived consequences of the algebra itself.'))
+        'element &#8869;. CC-2 (&#8869; = {&#8869;}) is no longer a freestanding modelling assumption — within '
+        'ZF+AFA, it is a derived consequence of T-EXEC, not a choice. The commitment shifts one '
+        'level up: it is the AFA setting itself. CC-1 (S<sub>0</sub> = &#8869;) is a derived consequence of '
+        'the algebra with no additional axioms.'))
     E.append(sp(4))
 
     # What Is a Quine Atom?
@@ -226,23 +230,27 @@ def build():
         'Before ZP-J, the framework carried two Conditional Claims — honest admissions that '
         'certain structural facts were assumed rather than derived:'))
     E.append(cbody(
-        '<b>CC-2 (⊥ = {⊥}):</b> Previously stated as a modelling commitment in ZP-A: '
+        '<b>CC-2 (&#8869; = {&#8869;}):</b> Previously stated as a modelling commitment in ZP-A: '
         '"the null state is a self-containing set — a Quine atom under ZF + AFA." '
         'This was the right choice structurally, but it was taken as given rather than proved. '
-        'ZP-J T-EXEC changes this: ⊥ = {⊥} is now a proved consequence of the ZP-A axioms '
-        'together with the AFA setting. It is no longer a commitment — it is forced.'))
+        'ZP-J T-EXEC changes the nature of the claim. Within ZF+AFA, &#8869; = {&#8869;} is a proved '
+        'consequence of the ZP-A axioms — forced, not assumed. The commitment does not '
+        'disappear; it shifts. The AFA setting is the metatheoretic choice. CC-2 is what '
+        'that choice entails.'))
     E.append(cbody(
-        '<b>CC-1 (S₀ = ⊥):</b> The claim that the initial machine state S₀ equals the '
-        'algebraic bottom ⊥ was also a modelling commitment. ZP-J proves <i>cc1_derived</i> '
-        'in Lean 4: given T-EXEC and A4, the unique element satisfying ⊥ ≤ x for all x also '
+        '<b>CC-1 (S<sub>0</sub> = &#8869;):</b> The claim that the initial machine state S<sub>0</sub> equals the '
+        'algebraic bottom &#8869; was also a modelling commitment. ZP-J proves <i>cc1_derived</i> '
+        'in Lean 4: given T-EXEC and A4, the unique element satisfying &#8869; &#8804; x for all x also '
         'satisfies the self-containment property. The initial state that admits no external '
-        'interpreter is uniquely the bottom. S₀ = ⊥ is derived, not assumed.'))
+        'interpreter is uniquely the bottom. S<sub>0</sub> = &#8869; is derived, not assumed.'))
     E.append(sp(4))
     E.append(cbody(
         'This matters because it shrinks the axiom footprint. Every assumption a framework '
         'makes is a potential point of attack — something a sceptic can push back on. '
-        'ZP-J removes two such points. The framework makes no claim about ⊥ = {⊥} '
-        'that is not forced by the algebra itself.'))
+        'ZP-J converts one freestanding assumption into a consequence of a named foundation. '
+        'A sceptic can no longer attack CC-2 on its own terms — they must contest the AFA '
+        'setting, which is a well-studied and explicit mathematical commitment. CC-1 is '
+        'fully discharged with no residual.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: ZP-J does not prove that ⊥ is self-referential by definition. '
@@ -256,8 +264,9 @@ def build():
         'Key Result — ZP-J',
         'T-EXEC (axiom-free, Lean 4): IsQuineAtom(q) ↔ q = ⊥. '
         'The Quine atom, the order minimum, and the join identity are the same element. '
-        'CC-1 (S&#8320; = &#8869;) and CC-2 (&#8869; = {&#8869;}) are derived theorems, '
-        'not freestanding commitments. ✓'))
+        'CC-1 (S<sub>0</sub> = &#8869;) is a derived theorem — axiom-free in Lean 4. '
+        'CC-2 (&#8869; = {&#8869;}) is proved within ZF+AFA: forced by T-EXEC, not assumed. '
+        'The metatheoretic commitment is the AFA setting itself. ✓'))
     E.append(sp(6))
 
     print(f'Building: {out_path}')

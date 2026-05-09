@@ -26,6 +26,14 @@ The original purpose was mundane, and as I fed more and more content into that s
 
 The moment I realized this might be more than a thought experiment came from something deeply personal. I do not make impulse purchases - not for entertainment, not for hobbies, not even on vacation. So when I hit the limits of what Gemini could handle and moved through other systems like Copilot and Claude, I expected to stop when the free tiers ran out. But I did not. Without hesitation, I paid for more context, more clarity, more space to think. That was the moment I understood: this work mattered enough to override a lifetime of caution.
 
+## An Early Signal
+
+One of the observations that pointed me toward the formal structure before I had the language for it came from complex analysis. On the Riemann sphere — a way of visualizing the complex numbers as a globe — zero and infinity sit at opposite poles, and a single map (z → 1/z) swaps them completely. They are the same kind of object, just viewed from different ends of the same axis.
+
+I did not know the name for that structure at the time. But the observation stayed with me: if zero and infinity are interchangeable under the simplest possible transformation, then zero is not just an absence. It has a counterpart, a mirror, a structural address. The question was what kind of mathematical rules would make that relationship not just visible but unavoidable — built into the metric rather than drawn on a picture.
+
+That question is what eventually led to the p-adic framework. The valuations were not the input. They were where the math arrived after I kept asking what kind of space takes the Riemann sphere's geometry seriously as a structural fact.
+
 ## Convergence
 
 As an engineer, you look for the single point of failure - or the single point of truth - that governs a system. My commitment to this project became absolute when I recognized that zero was that point. I tracked its behavior through calculus, differential equations, and p-adic topology, expecting my logic to break as the context shifted. It never did. Seeing that universal consistency across disparate systems was the ultimate "root cause" discovery. It proved that this wasn't just a quirk of one branch of math, but a fundamental property of the logical universe.
