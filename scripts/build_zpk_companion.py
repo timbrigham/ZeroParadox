@@ -150,7 +150,7 @@ def build():
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'ontology — every claim here restates a result already proved in the technical '
-              'document ZP-K Computational Grounding v1.0. Consult that document for the '
+              'document ZP-K Computational Grounding v1.3. Consult that document for the '
               'authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-K Doing?
