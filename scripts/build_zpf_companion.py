@@ -8,6 +8,8 @@ v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
       membership status rather than "wrong kind of zero"; directionality argument
       added: return paths are structurally blocked only when zero is categorically
       off the field, not a peer member of the space.
+v1.7: Section IV phrasing naturalised — "Below δ you cannot go" replaced with
+      "Below that, there's nowhere to go."
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
@@ -120,7 +122,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
@@ -237,8 +239,8 @@ def build():
     E.append(cbody(
         'Every computer already knows this. Any number system with a maximum number '
         'of decimal places — any fixed-point arithmetic system, any discretized '
-        'simulation — has a smallest representable positive number. Call it &#948;. '
-        'Below &#948; you cannot go. The density argument fails at &#948;. The snap '
+        'simulation — has a smallest representable positive number — call it &#948;. '
+        'Below that, there\'s nowhere to go. The density argument fails at &#948;. The snap '
         'is forced: there is a genuine first step, and halving it is not possible.'))
     E.append(cbody(
         'The real numbers are the idealization in which this floor is removed — the '
