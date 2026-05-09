@@ -58,7 +58,9 @@ def build():
         '<i>bot_self_mem</i>, which encodes that the bottom element is self-containing. '
         'With this, the proof of T-EXEC is three lines. No bridge axiom. No freestanding commitment. '
         'The identification &#8869; = {&#8869;} — implicit in the framework since ZP-E\'s DA-1 Path 1 — '
-        'is now a verified structural prerequisite, not an asserted coincidence.',
+        'is now a verified structural prerequisite, not an asserted coincidence. '
+        '(See Remark R-J.0 for the precise scope of this verification: the Lean proof encodes '
+        'AFA as a typeclass field, not as a ZF+AFA set-theoretic derivation.)',
         style='bodyI'))
     E.append(hr())
 

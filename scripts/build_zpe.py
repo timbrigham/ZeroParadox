@@ -351,6 +351,12 @@ def build():
     E += [
         sp(4),
         body('Proof:'),
+        body('<i>Note on Lean scope: the formal Lean proof of T-SNAP is a single term — '
+             '&#10216;l_run, tq_ih, rfl&#10217; — two decide calls confirming c&#8320; &#8800; c&#8321; '
+             'and the A4 (bot_join) axiom applied to the MachinePhase semilattice. '
+             'What follows is the informal motivation for the modelling choices that give that term '
+             'its intended ontological meaning.</i>'),
+        sp(4),
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. When K(x|n)/n = 1, the configuration string x is algorithmically random. (ZP-C D1)'),
         li('Step 2 — A configuration at P<sub>0</sub> is necessarily executing: At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 (ZP-C D1) — c<sub>1</sub> is incompressible, its own minimal program. No shorter external generator exists; the static description state is eliminated; c<sub>1</sub> is in live execution (DA-1 Path 3 — from ZP-C D1 + AIT). Corroboration: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF). (DA-1 &#167; III — Derived Proposition)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
