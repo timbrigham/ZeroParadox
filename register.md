@@ -6,8 +6,9 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 
 | Document | Formal Version | Filename | Companion Version | Notes |
 |----------|---------------|----------|-------------------|-------|
-| ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra_v1_13.pdf | v1.4 | |
+| ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra_v1_13.pdf | v1.5 | Companion v1.5: forward reference to ZP-F added |
 | ZP-B p-Adic Topology | v1.6 | ZP-B_pAdic_Topology_v1_6.pdf | v1.3 | |
+| ZP-F The Counterexamples | v1.0 | ZP-F_The_Counterexamples_v1_0.pdf | v1.5 | New layer — ordered field counterexample; Lean-verified |
 | ZP-C Information Theory | v1.12 | ZP-C_Information_Theory_v1_12.pdf | v1.6 | |
 | ZP-D State Layer | v1.8 | ZP-D_State_Layer_v1_8.pdf | v1.4 | |
 | ZP-E Bridge Document | v3.12 | ZP-E_Bridge_Document_v3_12.pdf | v1.3 | |

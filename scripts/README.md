@@ -32,6 +32,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | File | Current output |
 |------|---------------|
 | [build_zpa.py](build_zpa.py) | `ZP-A_Lattice_Algebra_v1_13.pdf` |
+| [build_zpf.py](build_zpf.py) | `ZP-F_The_Counterexamples_v1_0.pdf` |
 | [build_zpb.py](build_zpb.py) | `ZP-B_pAdic_Topology_v1_6.pdf` |
 | [build_zpc.py](build_zpc.py) | `ZP-C_Information_Theory_v1_12.pdf` |
 | [build_zpd.py](build_zpd.py) | `ZP-D_State_Layer_v1_8.pdf` |
@@ -47,6 +48,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | File | Companion for |
 |------|--------------|
 | [build_zpa_companion.py](build_zpa_companion.py) | ZP-A |
+| [build_zpf_companion.py](build_zpf_companion.py) | ZP-F |
 | [build_zpb_companion.py](build_zpb_companion.py) | ZP-B |
 | [build_zpc_companion.py](build_zpc_companion.py) | ZP-C |
 | [build_zpd_companion.py](build_zpd_companion.py) | ZP-D |
@@ -65,7 +67,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_tools.py](build_tools.py) | `ZP_Tools_and_Methods.pdf` |
 | [build_zp_philosophical_question.py](build_zp_philosophical_question.py) | `ZP_Philosophical_Question.pdf` |
 | [build_gen2.py](build_gen2.py) | `ZP_Gen2_Applications.pdf` |
-| [build_zp_reals_companion.py](build_zp_reals_companion.py) | `ZP_Reals_Companion.pdf` |
+| [build_zp_reals_companion.py](build_zp_reals_companion.py) | Superseded by build_zpf_companion.py — retained for reference |
 
 ### Archive
 

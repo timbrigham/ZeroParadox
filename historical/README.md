@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP_Reals_Companion-1.pdf](ZP_Reals_Companion-1.pdf) | 2026-05-08 | Standalone reals companion (v1.4) superseded by ZP-F_Illustrated_Companion.pdf — promoted to formal ZP-F layer with Lean verification. |
 | [ZP_Reals_Companion_v1_3-1.pdf](ZP_Reals_Companion_v1_3-1.pdf) | 2026-05-08 | Reals Companion v1.3 superseded by v1.4: Section V renamed "The Wrong Kind of Zero" — new structural argument that R models zero as a reachable point while any state-change domain requires zero to be an unrealizable asymptotic floor; Q2's valuation +inf encodes this structurally. |
 | [ZP-A_Lattice_Algebra_v1_12-1.pdf](ZP-A_Lattice_Algebra_v1_12-1.pdf) | 2026-05-06 | ZP-A v1.12 superseded by v1.13: OQ-A1b note added distinguishing bounded chains from existence of minimal element above ⊥ — bounded chains do not guarantee ε₀ exists as a minimal non-null element; that is a metric result from ZP-B, outside the scope of A1-A4. No algebraic content changed. |
 | [ZP-H_Categorical_Bridge_v1_10-1.pdf](ZP-H_Categorical_Bridge_v1_10-1.pdf) | 2026-05-03 | ZP-H v1.10 superseded by v1.11: Remark R-FORCING added between Sections V and VI — explains structural forcing vs. categorical re-description; four domain functors each independently ground the snap, verified sorry-free in Lean 4. |

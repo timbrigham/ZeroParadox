@@ -54,6 +54,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | File | For Document | Key Diagrams |
 |------|-------------|--------------|
 | [ZP-A Illustrated Companion](ZP-A_Illustrated_Companion.pdf) | ZP-A | Hasse diagram, one-directional transitions |
+| [ZP-F Illustrated Companion](ZP-F_Illustrated_Companion.pdf) | ZP-F | ℝ vs Q₂ structural comparison, pi curve density diagram |
 | [ZP-B Illustrated Companion](ZP-B_Illustrated_Companion.pdf) | ZP-B | Nested clopen balls, disjoint ball separation |
 | [ZP-C Illustrated Companion](ZP-C_Illustrated_Companion.pdf) | ZP-C | Surprisal field singularity, 1-bit Snap cost, L-RUN execution trace |
 | [ZP-D Illustrated Companion](ZP-D_Illustrated_Companion.pdf) | ZP-D | T map: topology → orthogonality |
@@ -71,7 +72,6 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | File | Description |
 |------|-------------|
 | [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The question that motivated the entire framework - why does something exist rather than nothing? - and what the mathematics discovered about it, including what it dissolves and what it snaps. |
-| [Where the Snap Fails](ZP_Reals_Companion.pdf) | Why the real number line cannot serve as the substrate for the Binary Snap, and why the 2-adic metric is required. Covers the density symmetry of the reals, where infinity lives in each metric, finite precision forcing, the Planck scale angle, and why the incompressibility of ⊥ is structural rather than statistical. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 | [Outside Observer Review Protocol](Outside_Observer_CLAUDE.md) | The protocol governing adversarial AI-assisted review of the framework - how the outside observer role is structured, what it has access to, and how findings are classified. |
 

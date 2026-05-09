@@ -1,10 +1,12 @@
 """
-Build ZP-A Illustrated Companion (v1.4)
+Build ZP-A Illustrated Companion (v1.5)
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples.
 New in v1.3: CC-2 self-containment of ⊥ (Quine atom, ZF+AFA); R3 (DA-1 follows from CC-2).
 v1.4: AFA technical note now includes forward reference to ZP-J companion for plain-language
 Foundation/AFA explanation.
+v1.5: Forward reference to ZP-F added after [0,∞) example — ℝ as join-semilattice is fine
+      algebraically, but as a metric substrate for the snap it fails (ZP-F result).
 """
 
 import os
@@ -92,7 +94,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -230,6 +232,15 @@ def build():
         '≤ g(x) for all x ∈ X. This is a function-space version of the previous '
         'example — one level up in abstraction.',
     ]))
+    E.append(sp(4))
+    E.append(remember_box(
+        'Note: [0, &#8734;) with maximum is a valid join-semilattice, and &#8477; '
+        'works perfectly well as an algebraic structure here. But as a <i>metric substrate '
+        'for the Binary Snap</i>, &#8477; fails — for any positive &#949;, the element '
+        '&#949;/2 is always smaller, so no minimal first step can exist. This is the '
+        'subject of ZP-F (The Counterexamples), which establishes formally that no '
+        'linearly ordered field can host the snap. Q&#8322; is required precisely because '
+        'it is not a linearly ordered field in the same sense.'))
     E.append(sp(4))
     E.append(example_box('Example — Document edit history', [
         'Open a document and start making edits. Even hitting Backspace does not erase from the '
