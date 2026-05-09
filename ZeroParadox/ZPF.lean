@@ -93,6 +93,28 @@ theorem r_snap_impossible : ¬∃ ε₀ : ℝ, 0 < ε₀ ∧ ¬∃ δ : ℝ, 0 <
 
 end Reals
 
+/-! ## Classification Note: Archimedean Fields and the Snap
+
+The results above establish that the Binary Snap cannot occur in any
+LinearOrderedField. The underlying reason is the Archimedean property:
+in any ordered field where halving is always available, no minimal positive
+element exists — there is no "first step" from zero.
+
+**ZP-F / ZP-B Classification (Ostrowski's theorem):**
+
+- Archimedean fields (ℝ, ℚ, any LinearOrderedField): snap impossible — this file.
+- Non-Archimedean fields (ℚ₂): snap forced — ZP-B (C3, t5_totallyDisconnected).
+
+Ostrowski's theorem states that every complete valued field extending ℚ is either
+Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p).
+ZP-F covers the Archimedean case. ZP-B covers the non-Archimedean case (p = 2, forced
+by binary existence and minimality). Together they constitute a completeness result:
+the snap's domain of validity is exactly the non-Archimedean completions of ℚ.
+
+The Archimedean/non-Archimedean split is the structural boundary of the paradox.
+
+See: ZPB.lean (c3_irreversible, t5_totallyDisconnected) for the non-Archimedean side. -/
+
 section PurityCheck
 #print axioms f_density
 #print axioms f_no_minimal_positive
