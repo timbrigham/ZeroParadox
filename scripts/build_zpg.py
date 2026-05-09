@@ -634,7 +634,7 @@ def build():
 
     print('[build_zpg] Building Section IX: Open Items Register...')
     # ── IX. OPEN ITEMS REGISTER FOR ZP-G v1.2 ────────────────────────────────
-    E.append(Paragraph('IX. Open Items Register for ZP-G v1.5', S['h1']))
+    E.append(Paragraph('IX. Open Items Register for ZP-G v' + VERSION, S['h1']))
 
     oq_rows = [
         ['OQ-G1',
