@@ -44,9 +44,13 @@ def build():
         'smaller. There is no floor. The Binary Snap requires a floor. Therefore '
         'the snap is structurally impossible in any linearly ordered field.'))
     E.append(body(
-        'This result contextualises the choice of Q&#8322; in ZP-B: Q&#8322; is not '
-        'chosen arbitrarily or for novelty. It is the minimal metric structure in '
-        'which the structural isolation of zero is built in rather than excluded.'))
+        'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
+        'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
+        '(such as &#8477;, where zero is a limit point and density excludes any floor) and '
+        'non-Archimedean completions (&#8474;&#8346;, where zero is topologically isolated by '
+        'the p-adic valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
+        'the minimum prime compatible with binary existence (AX-B1). '
+        'The structural isolation of zero is not imposed from outside; it follows from the completion.'))
     E.append(sp(4))
 
     # ── II. The General Result ────────────────────────────────────────────────
