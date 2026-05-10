@@ -465,7 +465,7 @@ def build():
         'Proposition: grounded in ZP-A CC-2 (⊥ = {⊥}) and R3, with ZP-C L-INF as independent corroboration. '
         'The intentional axioms of the system are now: AX-B1 (binary existence), '
         'AX-G1 (initial object), AX-G2 (source asymmetry). AX-1 is no longer an axiom. '
-        'Additional structural commitments are carried as typeclass class fields: A4 (bot_join, '
+        'Additional structural commitments are carried as typeclass fields: A4 (bot_join, '
         'ZPSemilattice — standard semilattice algebra), AFAStructure.quine_unique and bot_self_mem '
         '(AFA grounding), KleeneStructure.botCode_is_quine (computational closure). These have the '
         'same logical status as named axioms; &#35;print axioms does not surface typeclass fields.'))
