@@ -1,18 +1,21 @@
 """
-Build ZP-F: The Counterexamples (v1.0)
+Build ZP-F: The Counterexamples (v1.1)
 v1.0: Initial release. Establishes formally that any linearly ordered field —
       notably ℝ and ℚ — is structurally incapable of hosting the Binary Snap.
       General case ([Field F] [LinearOrder F] [IsStrictOrderedRing F]) proved
       first; ℝ given as the canonical instance.
+v1.1: Added §VI — philosophical note on why ℝ is the wrong setting: the
+      inversion of richness, the Ostrowski forcing argument, and zero as limit
+      point versus structural origin.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples_v1_0.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples_v1_1.pdf')
     doc = make_doc(out_path, 'ZP-F: The Counterexamples', 'ZP-F', 'Version ' + VERSION)
     E = []
 
@@ -163,8 +166,40 @@ def build():
     ))
     E.append(sp(4))
 
-    # ── VI. Validation Status ────────────────────────────────────────────────
-    E.append(Paragraph('VI. Validation Status', S['h1']))
+    # ── VI. A Philosophical Note: The Wrong Setting ───────────────────────────
+    E.append(Paragraph('VI. A Philosophical Note: The Wrong Setting', S['h1']))
+    E.append(body(
+        'The real numbers are the most natural and familiar number line precisely because '
+        'they fill every gap. Density — the property established in F-DENSITY: for any '
+        '&#949; > 0 there exists &#948; with 0 < &#948; < &#949; — is not a deficiency in '
+        '&#8477;; it is one of &#8477;\'s defining virtues. The counterexample above shows '
+        'that this virtue is exactly what disqualifies &#8477; as a host for the Binary Snap. '
+        'The richer the number line, the more completely it excludes the structural floor '
+        'the snap requires. Familiarity here misleads: the setting that feels most natural '
+        'for foundational mathematics is precisely the wrong one.'))
+    E.append(body(
+        'The exclusion of &#8477; is not an isolated fact about one number system. '
+        'F-SNAP-IMPOSSIBLE applies to any linearly ordered field. By Ostrowski\'s theorem, '
+        'every completion of &#8474; falls into exactly one of two classes: Archimedean '
+        '(including &#8477;) or non-Archimedean (the p-adic fields &#8474;&#8346;). '
+        'The theorems of this document eliminate the entire Archimedean class. '
+        'What remains is the non-Archimedean class. The framework\'s binary existence '
+        'constraint (AX-B1) then selects p&#160;=&#160;2 as the minimum prime. '
+        'Q&#8322; is not chosen against &#8477;; it is what remains after &#8477; — '
+        'and every Archimedean completion — has been ruled out.'))
+    E.append(body(
+        'The structural difference that the Ostrowski classification makes precise can be '
+        'stated directly. In any Archimedean completion, zero is a limit point: every '
+        'neighbourhood of zero contains a smaller positive element. The snap requires zero '
+        'to be something different — a structural origin from which the first departure is '
+        'forced, with no smaller departure possible. In Q&#8322;, zero carries the infinite '
+        '2-adic valuation; it is topologically isolated in exactly the sense required. '
+        'The snap does not fail in &#8477; by accident. It fails because &#8477; and the '
+        'snap require incompatible roles for zero: limit point versus structural origin.'))
+    E.append(sp(4))
+
+    # ── VII. Validation Status ────────────────────────────────────────────────
+    E.append(Paragraph('VII. Validation Status', S['h1']))
     E.append(data_table(
         ['Component', 'Status / Notes'],
         [['F-DENSITY', 'DERIVED — Lean-verified; general case'],

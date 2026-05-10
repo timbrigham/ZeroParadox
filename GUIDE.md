@@ -31,7 +31,7 @@ Most frameworks for describing the first emergence of something assume it. This 
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_13.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_6.pdf) → [ZP-C](ZP-C_Information_Theory_v1_12.pdf) → [ZP-D](ZP-D_State_Layer_v1_8.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_12.pdf) → [ZP-F](ZP-F_The_Counterexamples_v1_0.pdf) → [ZP-I](ZP-I_Inside_Zero_v1_8.pdf) (via [ZP-J](ZP-J_Self_Reference_v1_1.pdf) and [ZP-K](ZP-K_Computational_Grounding_v1_3.pdf)) - see [README.md](README.md) for the full formal index and Lean verification record
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_13.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_6.pdf) → [ZP-C](ZP-C_Information_Theory_v1_12.pdf) → [ZP-D](ZP-D_State_Layer_v1_8.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_12.pdf) → [ZP-F](ZP-F_The_Counterexamples_v1_1.pdf) → [ZP-I](ZP-I_Inside_Zero_v1_8.pdf) (via [ZP-J](ZP-J_Self_Reference_v1_1.pdf) and [ZP-K](ZP-K_Computational_Grounding_v1_3.pdf)) - see [README.md](README.md) for the full formal index and Lean verification record
 
 **Category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_7.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_11.pdf) (self-contained after ZP-E)
 
