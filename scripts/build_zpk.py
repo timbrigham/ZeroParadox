@@ -70,7 +70,9 @@ def build():
         '(set-theoretic), bottom element (order-theoretic), join identity (algebraic), and '
         'Kleene fixed point (computational) — are not analogies. They name the same structural '
         'object in four formal languages. The bridge from mathematical self-reference to '
-        'computational execution is not a bridge. It is a recognition of identity.',
+        'computational execution is not a bridge. It is a recognition of identity. '
+        '(See Remark R-K.0 for the precise scope: equivalences (1)&#8211;(3) are derived via T-EXEC; '
+        'equivalence (4) is combined by KleeneStructure\'s typeclass requirement, not derived independently.)',
         style='bodyI'))
     E.append(hr())
 
@@ -479,7 +481,9 @@ def build():
         ['da1_closed_concrete',
          'da1_computational + machinePhaseKleene',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.da1_closed_concrete ✓ DA-1 closed'],
+         'Lean: ZPK.da1_closed_concrete ✓ DA-1 closed (definitionally: under selfMem x := x = &#8869;, '
+         'reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;); '
+         'structural closure by typeclass design — see R-K.0)'],
     ]
     E.append(data_table(
         ['Claim', 'Grounded In', 'Axioms', 'Status'],

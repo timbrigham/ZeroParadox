@@ -10,7 +10,7 @@ For the formal framework index, Lean verification, and complete question registe
 
 ## What This Is
 
-The Zero Paradox is a rigorous proof, spread across ten mathematical disciplines, addressing a single question: can the emergence of something from nothing be given a complete, cross-disciplinary account?
+The Zero Paradox is a rigorous proof, spread across eleven mathematical disciplines, addressing a single question: can the emergence of something from nothing be given a complete, cross-disciplinary account?
 
 The answer developed here is yes. Each layer of the proof is internally closed before any cross-framework claim is made.
 
@@ -31,9 +31,11 @@ Most frameworks for describing the first emergence of something assume it. This 
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
-**For process and methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra_v1_13.pdf) → [ZP-B](ZP-B_pAdic_Topology_v1_6.pdf) → [ZP-C](ZP-C_Information_Theory_v1_12.pdf) → [ZP-D](ZP-D_State_Layer_v1_8.pdf) → [ZP-E](ZP-E_Bridge_Document_v3_12.pdf) → [ZP-F](ZP-F_The_Counterexamples_v1_1.pdf) → [ZP-I](ZP-I_Inside_Zero_v1_8.pdf) (via [ZP-J](ZP-J_Self_Reference_v1_1.pdf) and [ZP-K](ZP-K_Computational_Grounding_v1_3.pdf)) - see [README.md](README.md) for the full formal index and Lean verification record
 
-**For mathematicians and the formal proof:** see [README.md](README.md) for the complete formal index, document dependency chain, and Lean verification record.
+**Category theory extension:** [ZP-G](ZP-G_Category_Theory_v1_7.pdf) → [ZP-H](ZP-H_Categorical_Bridge_v1_11.pdf) (self-contained after ZP-E)
+
+**For process and methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 
 ---
 
@@ -54,11 +56,11 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | File | For Document | Key Diagrams |
 |------|-------------|--------------|
 | [ZP-A Illustrated Companion](ZP-A_Illustrated_Companion.pdf) | ZP-A | Hasse diagram, one-directional transitions |
-| [ZP-F Illustrated Companion](ZP-F_Illustrated_Companion.pdf) | ZP-F | ℝ vs Q₂ structural comparison, pi curve density diagram |
 | [ZP-B Illustrated Companion](ZP-B_Illustrated_Companion.pdf) | ZP-B | Nested clopen balls, disjoint ball separation |
 | [ZP-C Illustrated Companion](ZP-C_Illustrated_Companion.pdf) | ZP-C | Surprisal field singularity, 1-bit Snap cost, L-RUN execution trace |
 | [ZP-D Illustrated Companion](ZP-D_Illustrated_Companion.pdf) | ZP-D | T map: topology → orthogonality |
 | [ZP-E Illustrated Companion](ZP-E_Illustrated_Companion.pdf) | ZP-E | Four-framework convergence, T-SNAP derivation chain |
+| [ZP-F Illustrated Companion](ZP-F_Illustrated_Companion.pdf) | ZP-F | ℝ vs Q₂ structural comparison, pi curve density diagram |
 | [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
 | [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across all frameworks |
 | [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |

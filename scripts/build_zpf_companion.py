@@ -370,9 +370,13 @@ def build():
         'cannot occur. Zero is a limit point, density is symmetric, and every '
         'candidate first step admits an infinite sequence of smaller steps below it.'))
     E.append(cbody(
-        'Q&#8322; is not an exotic choice. It is the minimal metric structure in '
-        'which the structural isolation of zero is built in — not imposed by finite '
-        'precision, not approximated, but present in the 2-adic valuation itself. '
+        'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
+        'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
+        '(like &#8477;, where zero is a limit point — always approachable, never a floor) '
+        'and non-Archimedean ones (&#8474;&#8346;, where zero is topologically isolated by '
+        'the p-adic valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
+        'the minimum prime compatible with binary existence. '
+        'The structural isolation of zero is not imposed; it follows from the completion. '
         'The framework did not choose unusual mathematics for its own sake. '
         'It followed the result to the structure the result required.'))
     E.append(sp(6))

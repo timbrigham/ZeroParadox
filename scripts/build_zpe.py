@@ -330,6 +330,7 @@ def build():
                 'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
                 'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in ZPK.lean. '
+                '(Under MachinePhase\'s selfMem x := x = &#8869;, this reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;) — structural closure enforced by typeclass design, not a set-theoretic derivation from ZF+AFA. See R-K.0.) '
                 'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: The Philosophical Question That Started This. '
                 'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
                 'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
@@ -350,6 +351,12 @@ def build():
     E += [
         sp(4),
         body('Proof:'),
+        body('<i>Note on Lean scope: the formal Lean proof of T-SNAP is a single term — '
+             '&#10216;l_run, tq_ih, rfl&#10217; — two decide calls confirming c&#8320; &#8800; c&#8321; '
+             'and the A4 (bot_join) axiom applied to the MachinePhase semilattice. '
+             'What follows is the informal motivation for the modelling choices that give that term '
+             'its intended ontological meaning.</i>'),
+        sp(4),
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. When K(x|n)/n = 1, the configuration string x is algorithmically random. (ZP-C D1)'),
         li('Step 2 — A configuration at P<sub>0</sub> is necessarily executing: At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 (ZP-C D1) — c<sub>1</sub> is incompressible, its own minimal program. No shorter external generator exists; the static description state is eliminated; c<sub>1</sub> is in live execution (DA-1 Path 3 — from ZP-C D1 + AIT). Corroboration: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF). (DA-1 &#167; III — Derived Proposition)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
@@ -457,7 +464,11 @@ def build():
         'to Derived — T-SNAP. From v2.7, DA-1 is additionally upgraded from Design Principle to Derived '
         'Proposition: grounded in ZP-A CC-2 (⊥ = {⊥}) and R3, with ZP-C L-INF as independent corroboration. '
         'The intentional axioms of the system are now: AX-B1 (binary existence), '
-        'AX-G1 (initial object), AX-G2 (source asymmetry). AX-1 is no longer an axiom.'))
+        'AX-G1 (initial object), AX-G2 (source asymmetry). AX-1 is no longer an axiom. '
+        'Additional structural commitments are carried as typeclass fields: A4 (bot_join, '
+        'ZPSemilattice — standard semilattice algebra), AFAStructure.quine_unique and bot_self_mem '
+        '(AFA grounding), KleeneStructure.botCode_is_quine (computational closure). These have the '
+        'same logical status as named axioms; &#35;print axioms does not surface typeclass fields.'))
 
     print('[build_zpe] Building DA-2...')
     # ── FORMAL INSERT DA-2 ────────────────────────────────────────────────────
@@ -714,8 +725,12 @@ def build():
          'Do specific semilattice structures correspond to specific cardinality regimes? Can the framework '
          'make predictions about which instantiations satisfy CH and which do not?'],
         ['Remaining axioms',
-         'INTENTIONAL — AX-B1, AX-G1, AX-G2',
-         'These are the three foundational commitments of the system. No further reduction is claimed.'],
+         'INTENTIONAL — AX-B1, AX-G1, AX-G2 (named); A4, quine_unique, bot_self_mem, botCode_is_quine (typeclass fields)',
+         'Named commitments: AX-B1 (binary existence), AX-G1 (initial object), AX-G2 (source asymmetry). '
+         'Structural commitments as typeclass fields: A4/bot_join (ZPSemilattice), '
+         'AFAStructure.quine_unique and bot_self_mem (AFA grounding), '
+         'KleeneStructure.botCode_is_quine (computational closure). '
+         'Typeclass fields carry the same logical status as named axioms; &#35;print axioms does not surface them.'],
         ['Temperature T in BA-1',
          'PARAMETER — intentional',
          'Universe-contingent. Physical predictions explicitly conditional on instantiation-specific T.'],
@@ -815,8 +830,10 @@ def build():
          'Valid (definitional components: DA-3-D1, R-DA3-1). Candidate (DA-3-C1: connection to specific set-theoretic independence results). OQ-E2 open.'],
         ['DA-3-C1 — outside-view inaccessibility',
          'Candidate — no position within any instantiation can replicate the meta-level view of the branching structure. Formal derivation deferred to OQ-E2.'],
-        ['Remaining axioms: AX-B1, AX-G1, AX-G2',
-         'Intentional foundational commitments. No further reduction claimed.'],
+        ['Remaining axioms: AX-B1, AX-G1, AX-G2; typeclass fields A4, quine_unique, bot_self_mem, botCode_is_quine',
+         'Named: AX-B1, AX-G1, AX-G2. Typeclass: A4/bot_join (ZPSemilattice), '
+         'quine_unique + bot_self_mem (AFAStructure), botCode_is_quine (KleeneStructure). '
+         'Same logical status as named axioms; not surfaced by &#35;print axioms.'],
         ['All other ZP-E theorems (T1–T7, T2-C)',
          'Unaffected in content. T4 and T5 carry upgraded status labels (AX-1 → T-SNAP).'],
     ]
