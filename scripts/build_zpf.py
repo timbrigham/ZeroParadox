@@ -174,8 +174,9 @@ def build():
         '&#949; > 0 there exists &#948; with 0 < &#948; < &#949; — is not a deficiency in '
         '&#8477;; it is one of &#8477;\'s defining virtues. The counterexample above shows '
         'that this virtue is exactly what disqualifies &#8477; as a host for the Binary Snap. '
-        'The richer the number line, the more completely it excludes the structural floor '
-        'the snap requires. Familiarity here misleads: the setting that feels most natural '
+        'The exclusion is not a matter of degree: density follows from the ordered field axioms, '
+        'so every linearly ordered field is ruled out by exactly the same argument. '
+        'Familiarity here misleads: the setting that feels most natural '
         'for foundational mathematics is precisely the wrong one.'))
     E.append(body(
         'The exclusion of &#8477; is not an isolated fact about one number system. '
