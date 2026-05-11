@@ -7,11 +7,11 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | Document | Formal Version | Filename | Companion Version | Notes |
 |----------|---------------|----------|-------------------|-------|
 | ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra_v1_13.pdf | v1.5 | Companion v1.5: forward reference to ZP-F added |
-| ZP-B p-Adic Topology | v1.6 | ZP-B_pAdic_Topology_v1_6.pdf | v1.3 | |
-| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples_v1_1.pdf | v1.7 | v1.1: §VI philosophical note added — wrong setting, Ostrowski forcing, zero as limit vs. origin |
+| ZP-B p-Adic Topology | v1.6 | ZP-B_pAdic_Topology_v1_6.pdf | v1.4 | Companion v1.4: "isolation of 0" corrected to "clopen separation of 0" throughout |
+| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples_v1_1.pdf | v1.8 | Companion v1.8: topological/valuative distinction corrected; Riemann sphere analogy added |
 | ZP-C Information Theory | v1.12 | ZP-C_Information_Theory_v1_12.pdf | v1.6 | |
-| ZP-D State Layer | v1.8 | ZP-D_State_Layer_v1_8.pdf | v1.4 | |
-| ZP-E Bridge Document | v3.12 | ZP-E_Bridge_Document_v3_12.pdf | v1.3 | |
+| ZP-D State Layer | v1.8 | ZP-D_State_Layer_v1_8.pdf | v1.5 | Companion v1.5: "topologically isolated" replaced with "clopen-separated" throughout |
+| ZP-E Bridge Document | v3.12 | ZP-E_Bridge_Document_v3_12.pdf | v1.4 | Companion v1.4: "topological isolation" replaced with "clopen separation" in remember box |
 | ZP-G Category Theory | v1.7 | ZP-G_Category_Theory_v1_7.pdf | v1.2 | |
 | ZP-H Categorical Bridge | v1.11 | ZP-H_Categorical_Bridge_v1_11.pdf | v1.2 | |
 | ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero_v1_8.pdf | v1.1 | |

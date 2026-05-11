@@ -1,5 +1,9 @@
 """
-Build ZP-B Illustrated Companion (v1.3)
+Build ZP-B Illustrated Companion (v1.4)
+v1.4: "isolation of 0" and "0 is isolated" corrected to "clopen separation of 0"
+throughout — 0 in Q2 is not a topologically isolated point; the correct claim is
+clopen-ball separation (v2(0) = +inf places 0 in its own clopen class, distinct
+from all non-zero elements). Diagram caption and remember box updated.
 v1.3: "Why p-Adic Geometry?" section added as the opening section — Conceptual Rosetta Stone
 mapping 2-adic valuation to ontological function; explains why the real line fails for binary
 existence and why ℚ₂ is the natural language for AX-B1. Key property example box added.
@@ -89,11 +93,11 @@ def nested_balls_diagram():
                  fontName='DV-I', fillColor=COMP_AMBER))
 
     d.add(String(cx - 85, dh - 14,
-                 '0 is isolated — no continuous path reaches it from outside',
+                 '0 is clopen-separated — no continuous path reaches it from outside',
                  fontSize=8, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
@@ -264,7 +268,7 @@ def build():
     E.append(sp(8))
 
     E.append(remember_box(
-        'Remember: The topological structure — ultrametric, clopen balls, isolation of 0 — is '
+        'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
         'universal across all instantiations. The numerical value of ε₀ (the Snap threshold) is '
         'universe-contingent: it depends on physical constants. The Zero Paradox is a structural '
         'ontology, not a physical theory of our particular universe.'))
