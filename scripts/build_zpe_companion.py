@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.4 | May 2026
+Version 1.5 | May 2026
+v1.5: four_framework_diagram: "0 is isolated" label in ZP-B box replaced with "Clopen structure".
 v1.4: "topological isolation" in the closing remember box replaced with "clopen separation" —
 consistent with ZP-B/D fixes; "topological isolation" evokes isolated-point topology, which is
 incorrect for 0 in Q2. The correct structural property is clopen-ball separation.
@@ -73,7 +74,7 @@ def four_framework_diagram():
     # Left: ZP-B
     bxl = cx - cr - 16 - bw; byl = cy - bh/2
     framework_box(bxl, byl, bw, bh,
-                  'ZP-B: Topology', '0 is isolated', 'No path returns',
+                  'ZP-B: Topology', 'Clopen structure', 'No path returns',
                   bxl + bw, cy, cx - cr - 2, cy)
 
     # Right: ZP-D
@@ -169,7 +170,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
