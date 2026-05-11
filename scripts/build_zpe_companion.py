@@ -1,6 +1,10 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.3 | April 2026
+Version 1.5 | May 2026
+v1.5: four_framework_diagram: "0 is isolated" label in ZP-B box replaced with "Clopen structure".
+v1.4: "topological isolation" in the closing remember box replaced with "clopen separation" —
+consistent with ZP-B/D fixes; "topological isolation" evokes isolated-point topology, which is
+incorrect for 0 in Q2. The correct structural property is clopen-ball separation.
 v1.3: DA-1 formally closed via ZP-K noted — Paths 1 and 3 now IN LEAN SCOPE;
 da1_closed_concrete : IsQuineAtom(⊥ : MachinePhase) proved in Lean 4. Formal doc at v3.7.
 v1.2: AIT bridge added as third DA-1 motivating path; DP-2 two-layer structure explained;
@@ -70,7 +74,7 @@ def four_framework_diagram():
     # Left: ZP-B
     bxl = cx - cr - 16 - bw; byl = cy - bh/2
     framework_box(bxl, byl, bw, bh,
-                  'ZP-B: Topology', '0 is isolated', 'No path returns',
+                  'ZP-B: Topology', 'Clopen structure', 'No path returns',
                   bxl + bw, cy, cx - cr - 2, cy)
 
     # Right: ZP-D
@@ -107,7 +111,7 @@ def tsnap_chain_diagram():
 
     for i, (label, sub) in enumerate(steps):
         bx = x0 + i * (bw + gap)
-        fill = AMBER_BOX if i == n-1 else COMP_BLUE
+        fill = COMP_AMBER if i == n-1 else COMP_BLUE
         d.add(Rect(bx, by, bw, bh, fillColor=fill, strokeColor=COMP_BLUE,
                    strokeWidth=0.8, rx=3, ry=3))
         lw = len(label) * 6.2
@@ -132,7 +136,7 @@ def tsnap_chain_diagram():
 
     d.add(String(14, dh - 14,
                  'AX-1 (Binary Snap Causality) is now Theorem T-SNAP — derived, not assumed.',
-                 fontSize=8, fontName='DV-B', fillColor=AMBER_BOX))
+                 fontSize=8, fontName='DV-B', fillColor=COMP_AMBER))
     return d
 
 def axioms_table():
@@ -166,7 +170,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.3'
+VERSION = '1.5'
 
 
 def build():
@@ -317,7 +321,7 @@ def build():
         'AX-1 is no longer on this list. The framework makes no stronger claim than it has to.'))
     E.append(sp(8))
     E.append(remember_box(
-        'Remember: The structural results — monotonicity, topological isolation, '
+        'Remember: The structural results — monotonicity, clopen separation, '
         'informational singularity, orthogonal shifts — hold in any instantiation of the '
         'framework. The Zero Paradox is a universal ontology of state emergence, not a '
         'physical theory of our particular universe.'))

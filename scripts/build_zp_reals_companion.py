@@ -1,7 +1,7 @@
 """
 Build ZP-Reals Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.4 | May 2026
+Version 1.5 | May 2026
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
@@ -16,6 +16,9 @@ v1.4: Section V renamed "The Wrong Kind of Zero" — new structural argument
       that R models zero as a reachable point while any state-change domain
       requires zero to be an unrealizable asymptotic floor; Q2 is more
       honest because valuation +inf encodes this structurally.
+v1.5: "topologically identical to 1 or pi" replaced with plain language —
+      non-standard phrase; replaced with "an ordinary point with the same
+      local structure as 1 or pi" to avoid misleading mathematical register.
 """
 
 import os, math
@@ -114,7 +117,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -268,11 +271,11 @@ def build():
         'It cannot be stably occupied.'))
     E.append(cbody(
         'The real number line models zero as an ordinary reachable point &#8212; '
-        'topologically identical to 1 or &#960;, no flags raised. It includes perfect '
-        'zero as a legitimate member of the space. In a state-change domain, that is '
-        'the wrong kind of zero. &#8477; is a less-than-perfect model not because its '
-        'mathematics is incorrect but because it quietly includes an unrealizable '
-        'idealization.'))
+        'a peer of 1 or &#960; with the same local structure, no flags raised. '
+        'It includes perfect zero as a legitimate member of the space. In a state-change '
+        'domain, that is the wrong kind of zero. &#8477; is a less-than-perfect model '
+        'not because its mathematics is incorrect but because it quietly includes an '
+        'unrealizable idealization.'))
     E.append(cbody(
         'Q&#8322; is more honest. The 2-adic valuation assigns zero the address '
         '+&#8734; &#8212; explicitly encoding what any state-change domain requires: '

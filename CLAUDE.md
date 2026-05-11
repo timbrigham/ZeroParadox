@@ -20,7 +20,7 @@ This is a **mathematical publication repository**, not a software project. There
 
 ## Private Working Folder
 
-A `.claude-local/` folder exists locally and is **gitignored** — it does not appear in the public repository. This is intentional. It serves as a private working space for the core collaborators (Tim, Daniel, and Claude) during active development, before material is ready for public discourse. It contains:
+A `.claude-local/` folder exists locally and is **gitignored** — it does not appear in the public repository. This is intentional. It serves as a private working space for the project's core collaborators during active development, before material is ready for public discourse. It contains:
 
 - Reviewer feedback and correspondence (e.g. `feedback/`)
 - In-progress build scripts and draft outputs
@@ -128,6 +128,53 @@ Run this whenever a formal document version changes:
 - [ ] New results relevant to a general reader added with plain-language explanation
 - [ ] Internal version string bumped if any changes were made
 - [ ] Build script docstring updated to match
+
+### Companion prose precision checklist
+
+Apply this when drafting or reviewing any companion section that makes claims about mathematical structures, properties, or comparisons. The same errors can appear in formal document preambles and contextual sections — it does not apply to formal theorem statements, which are held to a separate standard via Lean verification.
+
+**Category 1 — Precision errors:** Using the wrong technical term for the actual mathematical property being claimed. Common risk: describing a valuative property (e.g., v₂(0) = +∞) using topological vocabulary (e.g., "topologically isolated"), or using metric language for an algebraic property. Before using any technical term, verify it names the correct property in the correct sub-field.
+
+**Category 2 — Invented terminology:** Using informal or invented phrases as if they were recognized mathematical concepts. Any non-standard term that sounds technical risks confusing readers who know the actual vocabulary. Use standard terminology or explicitly flag non-standard usage as informal/metaphorical.
+
+**Category 3 — Directional ambiguity:** Claims where it is unclear whether the sentence is describing a property a structure has (and saying that's bad) or prescribing what a structure should have (and saying it falls short). Any sentence of the form "X is Y" near a comparison between two mathematical structures should make the normative/descriptive distinction explicit.
+
+**Category 4 — Context-free structural claims:** Asserting something as universally true that is only true within the ZP framework. Claims about zero or ⊥ that are true in the ZP context may be false in most mathematical frameworks. Scope all such claims explicitly to the ZP setting.
+
+**Category 5 — Scope overclaiming:** A statement implying a broader negative conclusion than intended. Universal quantifiers ("any domain," "every structure") applied to a ZP-specific limitation overstate the claim. Narrow the scope to what is actually proved.
+
+## PDF Build Standards
+
+**Before building any PDF in this project** — formal layer, companion, or otherwise — read `.claude-local/PDF_Rendering_Standards.md`. It is the single authoritative source for font stack, glyph rendering, table cell formatting, HTML entities, subscript/superscript rules, and pre-build verification. All rules there apply to every PDF build without exception.
+
+## Companion PDF Diagram Layout Standards
+
+These rules apply to every `Drawing` object in every companion build script. Violations cause diagram content to overflow the declared bounding box and render over surrounding text — a recurring issue that has required multiple retroactive fixes.
+
+### Diagram height and cy rules
+
+**Rule 1 — Never derive `cy` from `dh` when the diagram contains fixed-size elements (circles, boxes, labels at fixed offsets).** `cy = dh * fraction` is only safe when all content scales with `dh`. If any element has a fixed radius `r` or a fixed offset, use a fixed numeric `cy` instead.
+
+**Rule 2 — Verify bounds before committing.** After placing all elements, check:
+- `max_y = max content y` must satisfy `max_y < dh - 10`
+- `min_y = min content y` must satisfy `min_y > 5`
+
+The minimum margin is 10 pts top and 5 pts bottom. If either fails, increase `dh` or adjust `cy`.
+
+**Rule 3 — Common overflow sources to check explicitly:**
+- Labels below circles: `cy - r - label_offset` — goes negative when `cy` is too small
+- Labels above circles: `cy + r + label_offset` — exceeds `dh` when `cy` is too large  
+- Internal title strings at `dh - N` — conflict with top circle labels when both are near the top
+- Caption strings at fixed `y=10` inside the drawing — safe, but check nothing else sits at the same y
+
+**Rule 4 — Internal title strings are usually redundant.** Diagrams that have both a title string inside the `Drawing` and a `ccaption()` below it should drop the internal title. It adds clutter and occupies the same crowded top zone as circle labels.
+
+### Pre-build checklist for new diagrams
+
+- [ ] `cy` is a fixed value, not `dh * fraction` (unless all elements scale with `dh`)
+- [ ] Calculated `max_y < dh - 10` and `min_y > 5` for all content
+- [ ] No internal title string that duplicates the caption
+- [ ] `dh` expressed in inches with comment: `# N * 72 = M pts; content top = X, content bottom = Y`
 
 ## README.md Link Restrictions
 
@@ -362,7 +409,7 @@ The Zero Paradox project treats GitHub Issues as a public transparency mechanism
 
 ### When NOT to file
 
-- Anything sourced from private correspondence (Dan, outreach responses, Berkeley group)
+- Anything sourced from private correspondence (reviewer feedback, outreach responses, academic group correspondence)
 - Reviewer identity or feedback details
 - Outreach strategy, sending schedules, or draft emails
 - Editorial or prose decisions
@@ -397,6 +444,10 @@ This log is the authoritative record of what has been reviewed and why. Future s
 **File convention:** `.claude-local/notes/framing_scan_YYYY-MM-DD.md` — one file per scan pass, named by the date the scan was run. The decision log lives at the bottom of that file under a `## Decision Log` header.
 
 **Standing rule:** A scan pass is not complete until all reviewed items have a decision recorded. "PENDING" is a valid decision for items deferred to a future session.
+
+## Communication Quality Feedback
+
+During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1/CC-2 (both now derived via ZP-J, not freestanding commitments).
 
 ## Reviewer Feedback Tracking
 

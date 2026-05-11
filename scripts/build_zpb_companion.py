@@ -1,5 +1,14 @@
 """
-Build ZP-B Illustrated Companion (v1.3)
+Build ZP-B Illustrated Companion (v1.6)
+v1.6: nested_balls_diagram cy fixed (was dh*0.42=90.7; ry_outer=101.2 → min_y=-10.5 overflow);
+      dh 3.0→3.2 in, cy fixed at 112 (min_y=10.8, top label=218 < dh-10=220.4)
+v1.5: nested_balls_diagram height increased (2.6 → 3.0 in) and cy lowered so outermost
+      ellipse and labels no longer overflow the drawing box; internal title string removed
+      (redundant with caption); caption "0 is isolated" corrected to match v1.4 terminology.
+v1.4: "isolation of 0" and "0 is isolated" corrected to "clopen separation of 0"
+throughout — 0 in Q2 is not a topologically isolated point; the correct claim is
+clopen-ball separation (v2(0) = +inf places 0 in its own clopen class, distinct
+from all non-zero elements). Diagram caption and remember box updated.
 v1.3: "Why p-Adic Geometry?" section added as the opening section — Conceptual Rosetta Stone
 mapping 2-adic valuation to ontological function; explains why the real line fails for binary
 existence and why ℚ₂ is the natural language for AX-B1. Key property example box added.
@@ -50,10 +59,10 @@ def clopen_balls_diagram():
 
 def nested_balls_diagram():
     """Nested balls B(0,1) ⊃ B(0,1/2) ⊃ B(0,1/4) ⊃ B(0,1/8) converging on 0."""
-    dw, dh = TW, 2.6 * inch
+    dw, dh = TW, 3.2 * inch      # 3.2 * 72 = 230.4 pts; top=218, bottom=10.8
     d = Drawing(dw, dh)
     cx = dw / 2
-    cy = dh * 0.48
+    cy = 112  # fixed — cy - ry_outer = 112 - 101.2 = 10.8 > 5; cy + r_outer - 4 = 218 < 220.4
 
     radii   = [110, 85, 62, 42]
     labels  = ['B(0, 1)', 'B(0, 1/2)', 'B(0, 1/4)', 'B(0, 1/8)']
@@ -88,12 +97,9 @@ def nested_balls_diagram():
     d.add(String(cx + snap_r + 34, cy + 14, '(Snap boundary)', fontSize=7,
                  fontName='DV-I', fillColor=COMP_AMBER))
 
-    d.add(String(cx - 85, dh - 14,
-                 '0 is isolated — no continuous path reaches it from outside',
-                 fontSize=8, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.3'
+VERSION = '1.6'
 
 
 def build():
@@ -241,7 +247,7 @@ def build():
     E.append(nested_balls_diagram())
     E.append(ccaption(
         'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold marks the Snap boundary. '
-        '0 is isolated — no continuous path reaches it from outside.'))
+        '0 is clopen-separated — no continuous path from outside ever reaches it.'))
 
     E.append(key_result_box('Key Result: Total Disconnectedness (T5)',
         'The only connected subsets of ℚ₂ are single points. There are no curves, no paths, no '
@@ -264,7 +270,7 @@ def build():
     E.append(sp(8))
 
     E.append(remember_box(
-        'Remember: The topological structure — ultrametric, clopen balls, isolation of 0 — is '
+        'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
         'universal across all instantiations. The numerical value of ε₀ (the Snap threshold) is '
         'universe-contingent: it depends on physical constants. The Zero Paradox is a structural '
         'ontology, not a physical theory of our particular universe.'))

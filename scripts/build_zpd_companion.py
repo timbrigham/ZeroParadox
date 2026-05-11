@@ -1,5 +1,14 @@
 """
-Build ZP-D Illustrated Companion (v1.4)
+Build ZP-D Illustrated Companion (v1.6)
+Changes from v1.5:
+- t_map_diagram: dh increased (2.2 → 2.8 in), cy changed to fixed value 108 so bottom
+  labels (cy - r_outer - 30 = 8) no longer overflow below y=0; internal title string removed
+  (redundant with caption); "isolation → orthogonality" label corrected to
+  "clopen separation → orthogonality".
+Changes from v1.4:
+- "topologically isolated in ℚ₂" replaced with "clopen-separated in ℚ₂" in body text and
+  diagram caption — 0 is not a topologically isolated point in ℚ₂; the correct property is
+  clopen-ball separation (total disconnectedness). DP-1 formal name references unchanged.
 Changes from v1.3:
 - T5-b added: every genuine state transition produces an orthogonal shift
   (not just the Binary Snap). Key result box added after T4.
@@ -15,12 +24,12 @@ from reportlab.graphics import renderPDF
 
 def t_map_diagram():
     """Q₂ (totally disconnected) → T → H=ℂⁿ (orthogonality). Two panels."""
-    dw, dh = TW, 2.2 * inch
+    dw, dh = TW, 2.8 * inch
     d = Drawing(dw, dh)
 
     # Left panel: Q2 with nested circles (topology)
     lx = dw * 0.22
-    cy = dh * 0.50
+    cy = 108  # fixed — do not derive from dh; bottom labels sit at cy-r_outer-30 = 8 > 0
 
     r_outer = 70
     r_inner = 35
@@ -89,15 +98,12 @@ def t_map_diagram():
     # Labels
     d.add(String(rx - 28, cy - r_outer - 18, 'H = Cn (state space)', fontSize=9,
                  fontName='DV-B', fillColor=COMP_BLUE))
-    d.add(String(rx - 28, cy - r_outer - 30, 'isolation → orthogonality', fontSize=7.5,
+    d.add(String(rx - 28, cy - r_outer - 30, 'clopen separation → orthogonality', fontSize=7.5,
                  fontName='DV-I', fillColor=colors.HexColor('#555555')))
 
-    d.add(String(dw/2 - 155, dh - 14,
-                 'T maps topological isolation to orthogonality — a 90° turn in state space',
-                 fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.4'
+VERSION = '1.6'
 
 
 def build():
@@ -168,9 +174,9 @@ def build():
     E.append(example_box('Real-world example — Compass directions', [
         'North and East are orthogonal — perpendicular, sharing nothing. If you know how far '
         'north something is, that tells you nothing about how far east it is. ZP-D says: states '
-        'that are topologically isolated in ℚ₂ (no continuous path connects them) should be '
-        'represented as orthogonal vectors in H (no shared component). Geometric independence '
-        'matches topological isolation.',
+        'that are clopen-separated in ℚ₂ (placed in different open-and-closed sets, with no '
+        'continuous path between them) should be represented as orthogonal vectors in H '
+        '(no shared component). Geometric independence matches clopen separation.',
     ]))
     E.append(sp(4))
 
@@ -186,7 +192,7 @@ def build():
         'carries over directly.)'))
     E.append(cbody(
         'ZP-D constructs an explicit map T: ℚ₂ → H that carries the topological structure of '
-        'ℚ₂ into the state geometry of H. The central insight: topological isolation in ℚ₂ '
+        'ℚ₂ into the state geometry of H. The central insight: clopen separation in ℚ₂ '
         'corresponds to orthogonality in H. States with no continuous path between them are '
         'represented as perpendicular vectors.'))
     E.append(cbody(
@@ -210,8 +216,8 @@ def build():
         'clopen balls are completely separated (ZP-B), their images under T are orthogonal in H.'))
     E.append(t_map_diagram())
     E.append(ccaption(
-        'T maps topological isolation (left, ℚ₂) to orthogonality (right, H = ℂⁿ). '
-        '0 (amber) maps to e₀. Non-zero point x maps to e₁. Topological isolation '
+        'T maps clopen separation (left, ℚ₂) to orthogonality (right, H = ℂⁿ). '
+        '0 (amber) maps to e₀. Non-zero point x maps to e₁. Clopen separation '
         'becomes orthogonality: ⟨e₀, e₁⟩ = 0.'))
     E.append(sp(6))
 

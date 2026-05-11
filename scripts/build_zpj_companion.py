@@ -1,11 +1,13 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.1 | May 2026
-v1.0: Initial release. Covers T-EXEC (Quine atom = ⊥), the three-way equivalence,
-and the closure of CC-1 and CC-2 as derived theorems rather than freestanding commitments.
+Version 1.2 | May 2026
+v1.2: quine_atom_diagram: dh increased (2.0 → 2.8 in), cy changed to fixed 110 so the
+      "⊥ = {⊥}" label (cy - r_outer - 18) no longer falls at y=-18 below the drawing box.
 v1.1: Corrected CC-2 status to metatheoretic commitment within ZF+AFA; commitment shifts
 to the AFA setting itself. CC-1 remains fully discharged axiom-free. Aligns with R-J.0.
 Formal doc: ZP-J Self-Reference v1.1.
+v1.0: Initial release. Covers T-EXEC (Quine atom = ⊥), the three-way equivalence,
+and the closure of CC-1 and CC-2 as derived theorems rather than freestanding commitments.
 """
 
 import os
@@ -15,10 +17,11 @@ from reportlab.graphics import renderPDF
 
 def quine_atom_diagram():
     """Diagram showing ⊥ ∈ ⊥ — the self-containing null state."""
-    dw, dh = TW, 2.0 * inch
+    dw, dh = TW, 2.8 * inch
     d = Drawing(dw, dh)
 
-    cx, cy = dw / 2, dh / 2
+    cx = dw / 2
+    cy = 110  # fixed — do not derive from dh; label at cy-r_outer-18 = 20 > 0
 
     # Outer circle (the set {⊥})
     r_outer = 72
@@ -87,7 +90,7 @@ def three_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
     t.setStyle(ts); return t
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 
 def build():

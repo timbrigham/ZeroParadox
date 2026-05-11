@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.6 | May 2026
+Version 1.8 | May 2026
 v1.5: Renamed to ZP-F Illustrated Companion; disclaimer updated to cite ZP-F
       Lean verification (F-SNAP-IMPOSSIBLE and general ordered field result).
 v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
@@ -10,6 +10,14 @@ v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
       off the field, not a peer member of the space.
 v1.7: Section IV phrasing naturalised — "Below δ you cannot go" replaced with
       "Below that, there's nowhere to go."
+v1.8: Multiple fixes following reviewer feedback: (1) Section II "cleanly getting
+      away" rewritten for clarity; (2) Section V "membership status" and
+      "topologically identical" language replaced throughout — zero is valuatively
+      distinguished in Q₂, not topologically isolated; (3) asymptotic limit
+      sentence direction clarified; (4) Section III Riemann sphere analogy added;
+      (5) closing "topologically isolated" replaced with correct valuative framing;
+      (6) scope note added: ZP-F targets ordered fields as comparison class, not
+      the most general setting where the phenomenon occurs.
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
@@ -122,7 +130,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -188,12 +196,13 @@ def build():
     # ── II. The Density Symmetry ────────────────────────────────────────────────
     E.append(Paragraph('II. The Density Symmetry', CS['h1']))
     E.append(cbody(
-        'The smooth nature of the real numbers comes from the fact that numbers like '
-        '&#960; can have infinitely long decimal expansions. In that framework, there '
-        'is no cleanly getting away from zero for the same reason there is no cleanly '
-        'approaching it. The density is symmetric: approaching and departing from zero '
-        'both have the same property. Between any two real numbers — no matter how '
-        'close — there is always another one.'))
+        'The smooth nature of the real numbers comes from the fact that between any '
+        'two real numbers — no matter how close — there is always another one. '
+        'This density applies uniformly: for any proposed first step &#949; > 0 away '
+        'from zero, the value &#949;/2 is smaller and also positive. There is no '
+        'minimal departure. The density that prevents a closest real number to zero '
+        'is the same density that prevents a smallest positive real number — '
+        'it works in every direction.'))
     E.append(cbody(
         'Zero in &#8477; is not a special topological location. It is an ordinary point '
         'on a continuum that looks the same from every direction. For any candidate '
@@ -230,6 +239,15 @@ def build():
         'but as its actual value. Every non-zero element carries a finite integer '
         'valuation. The gap between infinite valuation and any finite valuation is '
         'not a limit. It is a structural discontinuity built into the metric itself.'))
+    E.append(cbody(
+        'A geometric analogy: the Riemann sphere maps the entire complex plane onto '
+        'a sphere of diameter 1, placing the origin at one pole and the point at '
+        'infinity at the other. The two are antipodal — as far apart as any two '
+        'points on the sphere can be. The 2-adic valuation does something '
+        'structurally similar: it places zero at infinite valuation and every '
+        'non-zero element at finite valuation, making zero and the rest of the '
+        'number line antipodal in the valuative sense. What the Riemann sphere '
+        'shows geometrically, the 2-adic valuation encodes algebraically.'))
     E.append(sp(4))
     E.append(comparison_table())
     E.append(sp(8))
@@ -266,8 +284,9 @@ def build():
     E.append(Paragraph('V. The Coach and the Players', CS['h1']))
     E.append(cbody(
         'The real number line is not wrong. It is internally consistent and '
-        'extraordinarily useful. But for any domain in which state changes are a '
-        'structural requirement, it is modeling zero with the wrong membership status.'))
+        'extraordinarily useful for calculus, analysis, and modeling continuous '
+        'change. But it cannot host the Binary Snap — not because it fails as '
+        'a mathematical structure, but because of how it treats zero.'))
     E.append(cbody(
         'Consider a sports team. The coach and the players are not peers. The coach '
         'is not on the field, does not wear the same uniform, and cannot be substituted '
@@ -275,25 +294,31 @@ def build():
         'organising principle of the game, not a participant in it. You cannot return '
         'to the coach the way you move between players. That path does not exist.'))
     E.append(cbody(
-        'Zero has the same relationship to the states above it. It is not a peer. '
-        'It is the floor from which everything departs — structurally off the field. '
-        'In any domain where genuine state changes occur, zero cannot be stably '
-        'occupied. It is the asymptotic limit toward which processes tend without '
-        'arriving. A return to zero is not a valid move; it is a category error.'))
+        'Zero has the same relationship to the states above it. It is the floor '
+        'from which everything departs — not a peer of the states, but their origin. '
+        'In the ZP framework, zero is the asymptotic limit that the system moves '
+        'away from, not a state it can stably occupy or return to. In &#8477;, zero '
+        'has no such character: it is a regular limit point, reachable from any '
+        'direction, indistinguishable in structure from 1 or &#960;. That is '
+        'exactly what disqualifies it.'))
     E.append(cbody(
-        'The real number line gives zero the wrong membership status. It admits zero '
-        'as an ordinary point &#8212; topologically identical to 1 or &#960;, a peer '
-        'of every other element. That is why return paths are permitted in &#8477;: '
-        'if zero is just another player, nothing structurally blocks the path back. '
+        'The real number line treats zero as an ordinary point — a peer of every '
+        'other element, with the same local structure as 1 or &#960;. '
+        'In &#8477;, zero is not valuatively distinct from any other element; '
+        'every point looks the same from the perspective of the metric. '
+        'That is why return paths are permitted: if zero is just another player, '
+        'nothing distinguishes the path back from any other movement on the line. '
         'Directionality &#8212; the one-way ratchet the framework requires &#8212; '
-        'cannot be grounded in a space where zero sits on the same continuum as '
-        'everything else.'))
+        'cannot be grounded in a space where zero is indistinguishable in kind '
+        'from everything else.'))
     E.append(cbody(
-        'Q&#8322; gets the membership status right. The 2-adic valuation assigns zero '
-        'the address +&#8734; &#8212; not a limit the other elements approach, but a '
-        'categorical distinction built into the metric itself. Zero is in Q&#8322; but '
-        'it is not a peer. Every non-zero element carries a finite valuation; zero does '
-        'not. The coach is not on the field. The path back does not exist.'))
+        'Q&#8322; gives zero a genuinely different role. The 2-adic valuation assigns '
+        'zero the address +&#8734; &#8212; not a limit the other elements approach, '
+        'but a categorical distinction built into the structure itself: v&#8322;(0) = '
+        '+&#8734;, while every non-zero element carries a finite integer valuation. '
+        'Zero is in Q&#8322; but it is not a peer. The gap between infinite and finite '
+        'valuation is not a limit. It is a structural discontinuity. '
+        'The coach is not on the field. The path back does not exist.'))
     E.append(sp(8))
 
     # ── VI. Mathematical Constants and Forcing ──────────────────────────────────
@@ -373,21 +398,30 @@ def build():
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
         '(like &#8477;, where zero is a limit point — always approachable, never a floor) '
-        'and non-Archimedean ones (&#8474;&#8346;, where zero is topologically isolated by '
-        'the p-adic valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
+        'and non-Archimedean ones (&#8474;&#8346;, where the p-adic valuation assigns '
+        'zero infinite valuation while every non-zero element has finite valuation). '
+        'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
         'the minimum prime compatible with binary existence. '
-        'The structural isolation of zero is not imposed; it follows from the completion. '
+        'The valuative distinction of zero is not imposed; it follows from the completion. '
         'The framework did not choose unusual mathematics for its own sake. '
         'It followed the result to the structure the result required.'))
+    E.append(cbody(
+        'A note on scope: ZP-F establishes this result for linearly ordered fields — '
+        'the class that contains &#8477; and &#8474; — because that is the natural '
+        'comparison class for the most familiar number systems. The blocking '
+        'phenomenon is not unique to fields; simpler structures with a limit point '
+        'at zero show the same property. The ordered field result is the right '
+        'frame for the &#8477; comparison. The broader phenomenon is the same.'))
     E.append(sp(6))
     E.append(key_result_box(
         'Where the Snap Fails',
         'The Binary Snap is impossible in &#8477;: for any &#949;&#8320; > 0, '
         '&#949;&#8320; / 2 also exists, and the density argument shows no '
         'discrete departure from zero can occur. Q&#8322; is required because '
-        'the 2-adic valuation structurally isolates zero — its valuation is '
-        '+&#8734;, while every non-zero element carries a finite valuation. '
-        'The gap between them is not a limit. It is the theorem.'))
+        'the 2-adic valuation valuatively distinguishes zero — v&#8322;(0) = +&#8734;, '
+        'while every non-zero element carries a finite valuation. '
+        'The gap between infinite and finite valuation is not a limit. '
+        'It is the theorem.'))
 
     print(f'Building: {out_path}')
     doc.build(E)
