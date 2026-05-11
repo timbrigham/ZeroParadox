@@ -1,5 +1,7 @@
 """
-Build ZP-B Illustrated Companion (v1.5)
+Build ZP-B Illustrated Companion (v1.6)
+v1.6: nested_balls_diagram cy fixed (was dh*0.42=90.7; ry_outer=101.2 → min_y=-10.5 overflow);
+      dh 3.0→3.2 in, cy fixed at 112 (min_y=10.8, top label=218 < dh-10=220.4)
 v1.5: nested_balls_diagram height increased (2.6 → 3.0 in) and cy lowered so outermost
       ellipse and labels no longer overflow the drawing box; internal title string removed
       (redundant with caption); caption "0 is isolated" corrected to match v1.4 terminology.
@@ -57,10 +59,10 @@ def clopen_balls_diagram():
 
 def nested_balls_diagram():
     """Nested balls B(0,1) ⊃ B(0,1/2) ⊃ B(0,1/4) ⊃ B(0,1/8) converging on 0."""
-    dw, dh = TW, 3.0 * inch
+    dw, dh = TW, 3.2 * inch      # 3.2 * 72 = 230.4 pts; top=218, bottom=10.8
     d = Drawing(dw, dh)
     cx = dw / 2
-    cy = dh * 0.42  # lower cy so outermost circle and labels stay within declared height
+    cy = 112  # fixed — cy - ry_outer = 112 - 101.2 = 10.8 > 5; cy + r_outer - 4 = 218 < 220.4
 
     radii   = [110, 85, 62, 42]
     labels  = ['B(0, 1)', 'B(0, 1/2)', 'B(0, 1/4)', 'B(0, 1/8)']
@@ -97,7 +99,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():
