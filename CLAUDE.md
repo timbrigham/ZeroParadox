@@ -143,6 +143,10 @@ Apply this when drafting or reviewing any companion section that makes claims ab
 
 **Category 5 — Scope overclaiming:** A statement implying a broader negative conclusion than intended. Universal quantifiers ("any domain," "every structure") applied to a ZP-specific limitation overstate the claim. Narrow the scope to what is actually proved.
 
+## PDF Build Standards
+
+**Before building any PDF in this project** — formal layer, companion, or otherwise — read `.claude-local/PDF_Rendering_Standards.md`. It is the single authoritative source for font stack, glyph rendering, table cell formatting, HTML entities, subscript/superscript rules, and pre-build verification. All rules there apply to every PDF build without exception.
+
 ## Companion PDF Diagram Layout Standards
 
 These rules apply to every `Drawing` object in every companion build script. Violations cause diagram content to overflow the declared bounding box and render over surrounding text — a recurring issue that has required multiple retroactive fixes.
@@ -440,6 +444,10 @@ This log is the authoritative record of what has been reviewed and why. Future s
 **File convention:** `.claude-local/notes/framing_scan_YYYY-MM-DD.md` — one file per scan pass, named by the date the scan was run. The decision log lives at the bottom of that file under a `## Decision Log` header.
 
 **Standing rule:** A scan pass is not complete until all reviewed items have a decision recorded. "PENDING" is a valid decision for items deferred to a future session.
+
+## Communication Quality Feedback
+
+During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1/CC-2 (both now derived via ZP-J, not freestanding commitments).
 
 ## Reviewer Feedback Tracking
 
