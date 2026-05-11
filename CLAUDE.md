@@ -20,7 +20,7 @@ This is a **mathematical publication repository**, not a software project. There
 
 ## Private Working Folder
 
-A `.claude-local/` folder exists locally and is **gitignored** — it does not appear in the public repository. This is intentional. It serves as a private working space for the core collaborators (Tim, Daniel, and Claude) during active development, before material is ready for public discourse. It contains:
+A `.claude-local/` folder exists locally and is **gitignored** — it does not appear in the public repository. This is intentional. It serves as a private working space for the project's core collaborators during active development, before material is ready for public discourse. It contains:
 
 - Reviewer feedback and correspondence (e.g. `feedback/`)
 - In-progress build scripts and draft outputs
@@ -128,6 +128,20 @@ Run this whenever a formal document version changes:
 - [ ] New results relevant to a general reader added with plain-language explanation
 - [ ] Internal version string bumped if any changes were made
 - [ ] Build script docstring updated to match
+
+### Companion prose precision checklist
+
+Apply this when drafting or reviewing any companion section that makes claims about mathematical structures, properties, or comparisons. The same errors can appear in formal document preambles and contextual sections — it does not apply to formal theorem statements, which are held to a separate standard via Lean verification.
+
+**Category 1 — Precision errors:** Using the wrong technical term for the actual mathematical property being claimed. Common risk: describing a valuative property (e.g., v₂(0) = +∞) using topological vocabulary (e.g., "topologically isolated"), or using metric language for an algebraic property. Before using any technical term, verify it names the correct property in the correct sub-field.
+
+**Category 2 — Invented terminology:** Using informal or invented phrases as if they were recognized mathematical concepts. Any non-standard term that sounds technical risks confusing readers who know the actual vocabulary. Use standard terminology or explicitly flag non-standard usage as informal/metaphorical.
+
+**Category 3 — Directional ambiguity:** Claims where it is unclear whether the sentence is describing a property a structure has (and saying that's bad) or prescribing what a structure should have (and saying it falls short). Any sentence of the form "X is Y" near a comparison between two mathematical structures should make the normative/descriptive distinction explicit.
+
+**Category 4 — Context-free structural claims:** Asserting something as universally true that is only true within the ZP framework. Claims about zero or ⊥ that are true in the ZP context may be false in most mathematical frameworks. Scope all such claims explicitly to the ZP setting.
+
+**Category 5 — Scope overclaiming:** A statement implying a broader negative conclusion than intended. Universal quantifiers ("any domain," "every structure") applied to a ZP-specific limitation overstate the claim. Narrow the scope to what is actually proved.
 
 ## README.md Link Restrictions
 
@@ -362,7 +376,7 @@ The Zero Paradox project treats GitHub Issues as a public transparency mechanism
 
 ### When NOT to file
 
-- Anything sourced from private correspondence (Dan, outreach responses, Berkeley group)
+- Anything sourced from private correspondence (reviewer feedback, outreach responses, academic group correspondence)
 - Reviewer identity or feedback details
 - Outreach strategy, sending schedules, or draft emails
 - Editorial or prose decisions
