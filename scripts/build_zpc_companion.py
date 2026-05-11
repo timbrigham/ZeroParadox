@@ -1,5 +1,10 @@
 """
-Build ZP-C Illustrated Companion (v1.6)
+Build ZP-C Illustrated Companion (v1.7)
+v1.7: Dual-route framing added — "What Is ZP-C Doing?" rewritten to name both routes
+      (Kolmogorov complexity and 2-adic surprisal) explicitly upfront as independent measures
+      that converge at the same threshold. "Where the Two Routes Converge" callout box added
+      between the surprisal graph and L-INF section to make the convergence explicit and explain
+      why it is not a coincidence.
 v1.6: CC-2 and RP-2 added — c0 = bottom labeled as modeling commitment (CC-2, parallel to CC-1
       in ZP-A); branching measure labeled as representational commitment (RP-2). Plain-language
       explanations of both added to companion.
@@ -184,7 +189,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
@@ -236,18 +241,25 @@ def build():
     # ── Page 1 ─────────────────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-C Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-C establishes the informational cost of the Binary Snap. It uses Kolmogorov '
-        'complexity — a measure of how much information is needed to describe something — and '
-        'shows that approaching zero requires unbounded informational content.'))
+        'ZP-C establishes that zero is informationally unreachable — using two completely '
+        'independent measures that arrive at the same conclusion from different starting points.'))
     E.append(cbody(
-        'The key object is the incompressibility threshold P₀: the point at which a configuration '
-        'string cannot be described by any shorter program. ZP-C operates in ℚ₂ (from ZP-B) — '
-        'not smooth Euclidean space — because smooth calculus tools are not valid on a totally '
-        'disconnected space.'))
+        '<b>Route 1 — Kolmogorov complexity (algorithmic):</b> How long must a program be to '
+        'describe a configuration? At the incompressibility threshold P₀, no shorter description '
+        'exists — the string must be specified in full, every bit. Algorithmic depth is unbounded.'))
+    E.append(cbody(
+        '<b>Route 2 — 2-adic surprisal (probabilistic):</b> How much probability mass does a '
+        'state carry? As a state approaches zero in ℚ₂, its probability approaches zero, and '
+        'its surprisal I(x) = −log₂ P(x) approaches infinity. Informational cost is unbounded.'))
+    E.append(cbody(
+        'Neither measure knows about the other. K counts program lengths; I(x) counts probability. '
+        'Both go to infinity at the same threshold. ZP-C operates in ℚ₂ (from ZP-B) throughout — '
+        'smooth calculus tools are not valid on a totally disconnected space.'))
     E.append(example_box('Real-world example — ZIP compression hitting a wall', [
         'Some files compress a lot; others barely at all. A file that cannot be compressed further '
-        'has hit its incompressibility threshold. That\'s P₀: the point where there are no more '
-        'shortcuts. The string must be described in full, every bit.',
+        'has hit its incompressibility threshold — Route 1. A truly random file also has maximum '
+        'surprisal: every bit is equally likely, nothing is predictable — Route 2. '
+        'Both descriptions identify the same extreme: the point where no shortcut exists.',
     ]))
     E.append(sp(8))
 
@@ -268,7 +280,23 @@ def build():
         'summarize it. That\'s maximum surprisal: the information content equals the full length '
         'of the string. Zero in ℚ₂ is the limit of this — infinite depth, infinite surprisal.',
     ]))
-    E.append(sp(10))
+    E.append(sp(6))
+
+    E.append(Paragraph('Where the Two Routes Converge', CS['h1']))
+    E.append(cbody(
+        'Kolmogorov complexity K and 2-adic surprisal I(x) are genuinely different tools. '
+        'K measures how long a program must be to reproduce a string — it is a property of '
+        'algorithms. I(x) measures how rare a state is — it is a property of probability '
+        'distributions. They share no common definition and were developed in entirely separate '
+        'branches of mathematics.'))
+    E.append(remember_box(
+        'Yet both diverge to infinity at the same point: zero. K(x|n)/n &#8594; 1 as '
+        'configurations approach the incompressibility threshold. I(x) &#8594; &#8734; as '
+        'states approach 0 in &#8474;&#8322;. The convergence is not engineered — it reflects '
+        'something structurally real about &#8869;. Zero is not merely hard to reach in one '
+        'sense; it is the limit of unreachability from two independent directions simultaneously. '
+        'ZP-C uses both routes as independent confirmation of the same structural fact.'))
+    E.append(sp(8))
 
     E.append(Paragraph('Why the Singularity Forces Execution (L-INF)', CS['h1']))
     E.append(cbody(
