@@ -1,5 +1,8 @@
 """
-Build ZP-B Illustrated Companion (v1.4)
+Build ZP-B Illustrated Companion (v1.5)
+v1.5: nested_balls_diagram height increased (2.6 → 3.0 in) and cy lowered so outermost
+      ellipse and labels no longer overflow the drawing box; internal title string removed
+      (redundant with caption); caption "0 is isolated" corrected to match v1.4 terminology.
 v1.4: "isolation of 0" and "0 is isolated" corrected to "clopen separation of 0"
 throughout — 0 in Q2 is not a topologically isolated point; the correct claim is
 clopen-ball separation (v2(0) = +inf places 0 in its own clopen class, distinct
@@ -54,10 +57,10 @@ def clopen_balls_diagram():
 
 def nested_balls_diagram():
     """Nested balls B(0,1) ⊃ B(0,1/2) ⊃ B(0,1/4) ⊃ B(0,1/8) converging on 0."""
-    dw, dh = TW, 2.6 * inch
+    dw, dh = TW, 3.0 * inch
     d = Drawing(dw, dh)
     cx = dw / 2
-    cy = dh * 0.48
+    cy = dh * 0.42  # lower cy so outermost circle and labels stay within declared height
 
     radii   = [110, 85, 62, 42]
     labels  = ['B(0, 1)', 'B(0, 1/2)', 'B(0, 1/4)', 'B(0, 1/8)']
@@ -92,12 +95,9 @@ def nested_balls_diagram():
     d.add(String(cx + snap_r + 34, cy + 14, '(Snap boundary)', fontSize=7,
                  fontName='DV-I', fillColor=COMP_AMBER))
 
-    d.add(String(cx - 85, dh - 14,
-                 '0 is clopen-separated — no continuous path reaches it from outside',
-                 fontSize=8, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -245,7 +245,7 @@ def build():
     E.append(nested_balls_diagram())
     E.append(ccaption(
         'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold marks the Snap boundary. '
-        '0 is isolated — no continuous path reaches it from outside.'))
+        '0 is clopen-separated — no continuous path from outside ever reaches it.'))
 
     E.append(key_result_box('Key Result: Total Disconnectedness (T5)',
         'The only connected subsets of ℚ₂ are single points. There are no curves, no paths, no '
