@@ -143,6 +143,35 @@ Apply this when drafting or reviewing any companion section that makes claims ab
 
 **Category 5 — Scope overclaiming:** A statement implying a broader negative conclusion than intended. Universal quantifiers ("any domain," "every structure") applied to a ZP-specific limitation overstate the claim. Narrow the scope to what is actually proved.
 
+## Companion PDF Diagram Layout Standards
+
+These rules apply to every `Drawing` object in every companion build script. Violations cause diagram content to overflow the declared bounding box and render over surrounding text — a recurring issue that has required multiple retroactive fixes.
+
+### Diagram height and cy rules
+
+**Rule 1 — Never derive `cy` from `dh` when the diagram contains fixed-size elements (circles, boxes, labels at fixed offsets).** `cy = dh * fraction` is only safe when all content scales with `dh`. If any element has a fixed radius `r` or a fixed offset, use a fixed numeric `cy` instead.
+
+**Rule 2 — Verify bounds before committing.** After placing all elements, check:
+- `max_y = max content y` must satisfy `max_y < dh - 10`
+- `min_y = min content y` must satisfy `min_y > 5`
+
+The minimum margin is 10 pts top and 5 pts bottom. If either fails, increase `dh` or adjust `cy`.
+
+**Rule 3 — Common overflow sources to check explicitly:**
+- Labels below circles: `cy - r - label_offset` — goes negative when `cy` is too small
+- Labels above circles: `cy + r + label_offset` — exceeds `dh` when `cy` is too large  
+- Internal title strings at `dh - N` — conflict with top circle labels when both are near the top
+- Caption strings at fixed `y=10` inside the drawing — safe, but check nothing else sits at the same y
+
+**Rule 4 — Internal title strings are usually redundant.** Diagrams that have both a title string inside the `Drawing` and a `ccaption()` below it should drop the internal title. It adds clutter and occupies the same crowded top zone as circle labels.
+
+### Pre-build checklist for new diagrams
+
+- [ ] `cy` is a fixed value, not `dh * fraction` (unless all elements scale with `dh`)
+- [ ] Calculated `max_y < dh - 10` and `min_y > 5` for all content
+- [ ] No internal title string that duplicates the caption
+- [ ] `dh` expressed in inches with comment: `# N * 72 = M pts; content top = X, content bottom = Y`
+
 ## README.md Link Restrictions
 
 The following files exist in the repository but **must not be linked from README.md or GUIDE.md** until the conditions below are met:
