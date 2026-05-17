@@ -1,7 +1,7 @@
 # The Zero Paradox
 **April 2026 | Closed Formalism**
 
-*A formal mathematical proof that the emergence of something from nothing is not a starting assumption — it can be derived.*
+*A Lean 4 proof that the bottom element of a join-semilattice forces a minimal non-bottom state — without snap-specific axioms.*
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
@@ -24,7 +24,7 @@ For plain-language introduction, illustrated companions, and reading paths, see 
 
 ## The Central Result
 
-The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
+The **Binary Snap** — the forced transition from the null state ⊥ to the first atomic state ε₀ — is a **theorem**, not an axiom.
 
 This result directly addresses the "nothing from nothing" problem: the emergence of determinate state is not posited as a starting assumption but derived from the structure of the null state itself, using only the standard bottom-element axiom of join-semilattice theory. The derivation is machine-verified in Lean 4 — independent reviewers can check the conclusion mechanically, without relying on the argument's prose presentation.
 

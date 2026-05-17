@@ -49,4 +49,4 @@ The framework is explicit about what is and is not Lean-verified. Two boundaries
 
 **ZPE.lean / ZPC.lean — DA-1 Path 2** — L-INF formally proves that surprisal is unbounded at ⊥. The inference from unbounded surprisal to "necessarily executing" is an ontological bridge claim, not a mathematical consequence of L-INF alone. ZPC.lean's L-INF docstring states this explicitly: "L-INF supplies the formal premise; DA-1 supplies the ontological bridge." DA-1 is formally closed through independent paths (AFA/self-containment and Kleene fixed point) in ZPK.lean.
 
-Findings that engage these boundaries without reading the inline disclosures first are likely already addressed.
+The inline scope notes in each file document what is and is not Lean-verified.
