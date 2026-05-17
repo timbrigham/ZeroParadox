@@ -1,5 +1,18 @@
 """
-Build ZP-B Illustrated Companion (v1.6)
+Build ZP-B Illustrated Companion (v1.7)
+v1.7: Dan feedback (2026-05-17) — PhD in metrics:
+      (1) removed "halfway between existing and not existing" (category error — existence
+          is not a quantity that can be averaged); replaced with density argument
+          (ε/2 always exists in ℝ; no first nonzero step possible);
+      (2) "first atomic state (1)" replaced with "ε₀" throughout to avoid confusion
+          with the rational number 1 in ℚ₂;
+      (3) "no point between them in the 2-adic topology" — topology does not deal with
+          betweenness; replaced with clopen ball separation language;
+      (4) "0 itself remains isolated" (line missed by v1.4 fix) corrected to
+          "clopen-separated";
+      (5) added sequences-vs-paths note box: sequences can converge to 0 in ℚ₂
+          (e.g. (2/3)ⁿ has 2-adic norm 2⁻ⁿ → 0), but continuous paths cannot reach 0
+          (total disconnectedness). These are different objects.
 v1.6: nested_balls_diagram cy fixed (was dh*0.42=90.7; ry_outer=101.2 → min_y=-10.5 overflow);
       dh 3.0→3.2 in, cy fixed at 112 (min_y=10.8, top label=218 < dh-10=220.4)
 v1.5: nested_balls_diagram height increased (2.6 → 3.0 in) and cy lowered so outermost
@@ -99,7 +112,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
@@ -151,26 +164,26 @@ def build():
     # ── Page 1 ─────────────────────────────────────────────────────────────────
     E.append(Paragraph('Why p-Adic Geometry?', CS['h1']))
     E.append(cbody(
-        'The standard choice for modeling distance — the real number line — is the wrong tool for '
-        'binary existence. On the real line, between any two distinct points there is always a third: '
-        'you can be "halfway between" existing and not existing. AX-B1 rules this out. A state either '
-        'exists or it does not; there is no intermediate.'))
+        'The standard choice for modeling distance — the real number line — is the wrong tool here. '
+        'The real line is dense: between any two distinct values there is always a third. This means '
+        'there is no first nonzero step: for any candidate smallest distance ε, the value ε/2 is '
+        'smaller and also positive. A framework that requires a definite first departure from null '
+        'needs a geometry that can enforce one — the real line structurally cannot.'))
     E.append(cbody(
-        'The 2-adic metric inverts this. In &#8474;&#8322;, the two ontological states — null (0) '
-        'and first atomic state (1) — are at maximum distance from each other: d(0, 1) = 1. More '
-        'importantly, there is no point between them in the 2-adic topology. You cannot travel '
-        'from 0 to 1 through a continuous path of intermediate values — the geometry has no room '
-        'for partial existence. The binary distinction is enforced by the geometry itself, not '
-        'imposed on top of it. This is why p-adic topology — specifically &#8474;&#8322; — is the '
-        'natural mathematical language for a framework built on AX-B1. '
+        'The 2-adic metric provides exactly this structure. In &#8474;&#8322;, the null state (0) '
+        'and ε₀ (the first nonzero state) lie in separate clopen components — completely disjoint '
+        'regions with no continuous path between them. This is not a boundary crossed by accumulating '
+        'small steps; 0 and ε₀ are in entirely distinct parts of the space. The binary gap is a '
+        'feature of the geometry itself, not imposed on top of it. This is why &#8474;&#8322; — the '
+        '2-adic number field — is the natural mathematical language for a framework built on AX-B1. '
         'Note: this framework makes no claims about physical cosmology. '
         'The emergence described is formal — it concerns the logical structure of state '
         'in a mathematical ontology, not a theory of how the physical universe began.'))
     E.append(example_box('The key property', [
         'Mathematical object: 2-adic valuation v₂(x).',
         'Ontological function: depth of binary structure — how many times 2 divides x.',
-        'The crucial point: d(0, 1) = 1 in ℚ₂, with no path through an intermediate '
-        'value. You cannot be half-way between existing and not existing.',
+        'The crucial point: 0 and ε₀ lie in separate clopen components of ℚ₂. '
+        'No continuous path connects them — the geometry enforces the binary gap.',
     ]))
     E.append(sp(8))
 
@@ -228,9 +241,10 @@ def build():
 
     E.append(Paragraph('The Ball Hierarchy Around Zero', CS['h1']))
     E.append(cbody(
-        'The element 0 ∈ ℚ₂ is surrounded by nested balls B(0,1), B(0,½), B(0,¼), … converging '
-        'on 0. But 0 itself remains isolated. To understand why, we need the concept of a '
-        '<b>2-adic valuation</b>.'))
+        'The element 0 ∈ ℚ₂ is surrounded by nested clopen balls B(0,1), B(0,½), B(0,¼), … '
+        'getting smaller and smaller. While sequences of nonzero elements can approach 0 along '
+        'these nested balls, 0 is clopen-separated from every nonzero element. To understand why, '
+        'we need the concept of a <b>2-adic valuation</b>.'))
     # NEW: define valuation before invoking it
     E.append(cbody(
         'The 2-adic valuation of a number counts how many times 2 divides it. For example: '
@@ -259,6 +273,15 @@ def build():
         'There is no continuous path from any non-zero point back to 0. This follows directly '
         'from total disconnectedness (T5). Irreversibility is a corollary of the geometry, '
         'not a postulate.'))
+    E.append(sp(6))
+
+    E.append(example_box('Note: sequences vs. continuous paths', [
+        'Sequences of nonzero numbers can converge to 0 in ℚ₂. For example, the numbers '
+        '(2/3), (2/3)², (2/3)³, … have 2-adic norms 1/2, 1/4, 1/8, … approaching 0. '
+        'This does not contradict C3. A sequence is a list of points; a continuous path is '
+        'a curve connecting them. Total disconnectedness (T5) rules out continuous paths, '
+        'not convergent sequences. The snap boundary is a barrier to paths, not to limits.',
+    ]))
     E.append(sp(8))
 
     E.append(example_box('Real-world example — Crossing a river with no bridge', [
