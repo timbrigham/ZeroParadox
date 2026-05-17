@@ -155,9 +155,8 @@ def build():
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal ontology — every claim here restates a result already '
-            'proven in the corresponding technical document. Consult that document for the '
-            'authoritative mathematics.',
+            'examples. It is not the formal document — every claim here restates a result already '
+            'proved there. Consult that document for the authoritative mathematics.',
             CS['disc']),
     ]
 
@@ -171,18 +170,19 @@ def build():
         'needs a geometry that can enforce one — the real line structurally cannot.'))
     E.append(cbody(
         'The 2-adic metric provides exactly this structure. In &#8474;&#8322;, the null state (0) '
-        'and ε₀ (the first nonzero state) lie in separate clopen components — completely disjoint '
+        'and the first nonzero state lie in separate clopen components — completely disjoint '
         'regions with no continuous path between them. This is not a boundary crossed by accumulating '
-        'small steps; 0 and ε₀ are in entirely distinct parts of the space. The binary gap is a '
+        'small steps; the two states are in entirely distinct parts of the space. The binary gap is a '
         'feature of the geometry itself, not imposed on top of it. This is why &#8474;&#8322; — the '
-        '2-adic number field — is the natural mathematical language for a framework built on AX-B1. '
+        '2-adic number field — is the natural mathematical language for a framework built on '
+        'AX-B1 (the claim that a state either exists or it does not). '
         'Note: this framework makes no claims about physical cosmology. '
-        'The emergence described is formal — it concerns the logical structure of state '
-        'in a mathematical ontology, not a theory of how the physical universe began.'))
+        'The framework concerns the logical structure of states — '
+        'it is not a physical theory of how the universe began.'))
     E.append(example_box('The key property', [
         'Mathematical object: 2-adic valuation v₂(x).',
-        'Ontological function: depth of binary structure — how many times 2 divides x.',
-        'The crucial point: 0 and ε₀ lie in separate clopen components of ℚ₂. '
+        'What it measures in this framework: depth of binary structure — how many times 2 divides x.',
+        'The crucial point: 0 and the first nonzero state lie in separate clopen components of ℚ₂. '
         'No continuous path connects them — the geometry enforces the binary gap.',
     ]))
     E.append(sp(8))
@@ -260,7 +260,8 @@ def build():
 
     E.append(nested_balls_diagram())
     E.append(ccaption(
-        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold marks the Snap boundary. '
+        'Balls in ℚ₂ converging on 0 (amber). The ε₀ threshold (the first nonzero state in '
+        'the framework) marks the Snap boundary. '
         '0 is clopen-separated — no continuous path from outside ever reaches it.'))
 
     E.append(key_result_box('Key Result: Total Disconnectedness (T5)',
