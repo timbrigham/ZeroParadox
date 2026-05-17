@@ -10,11 +10,11 @@ For the formal framework index, Lean verification, and complete question registe
 
 ## What This Is
 
-The Zero Paradox is a rigorous proof, spread across eleven mathematical disciplines, addressing a single question: can the emergence of something from nothing be given a complete, cross-disciplinary account?
+The Zero Paradox proves that the first non-null state in a join-semilattice is forced — not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the null element across several mathematical frameworks; each one independently locates the same forcing.
 
-The answer developed here is yes. Each layer of the proof is internally closed before any cross-framework claim is made.
+Each layer of the proof is internally closed before any cross-framework claim is made.
 
-Most frameworks for describing the first emergence of something assume it. This framework does not. The Binary Snap is not a starting assumption - it is a structural consequence of standard mathematical commitments of the kind any model of additive states would adopt independently. No snap-specific axioms appear anywhere in the framework. The Binary Snap is the moment the transition is forced: when the mathematics demands that something emerge from the null state.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap is a structural consequence of the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) — a commitment any model of additive states would adopt independently.
 
 ---
 
@@ -75,7 +75,6 @@ One companion per formal document. Plain language, diagrams, real-world examples
 |------|-------------|
 | [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The question that motivated the entire framework - why does something exist rather than nothing? - and what the mathematics discovered about it, including what it dissolves and what it snaps. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
-| [Outside Observer Review Protocol](Outside_Observer_CLAUDE.md) | The protocol governing adversarial AI-assisted review of the framework - how the outside observer role is structured, what it has access to, and how findings are classified. |
 
 ---
 

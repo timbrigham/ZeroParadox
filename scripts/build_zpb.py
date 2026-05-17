@@ -18,15 +18,9 @@ def build():
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
           Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.5  |  v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects; existence is a property the states represent, not a statement about set membership. Lean encoding note added (OntologicalStates).</i>', S['subtitle']),
-          Paragraph('<i>v1.5: T3 ZP interpretation bullets labelled explicitly — pure topology and ZP-specific framing now separated with "ZP Interpretation:" prefix.</i>', S['subtitle']),
-          Paragraph('<i>v1.4: T0 reframed: derived given MP-1 (design commitment); MP-1 acknowledged as load-bearing choice.</i>', S['subtitle']),
           sp(10),
           body('This document is self-contained within p-adic analysis and topology. No abstract algebra from ZP-A, no probability, and no Hilbert space is imported. Cross-framework connections are deferred to ZP-D and ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-B Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
-          body('<i>Version 1.4 change: T0 status updated from "DERIVED from AX-B1 and MP-1" to "DERIVED given MP-1 (design commitment)". MP-1 is the load-bearing design choice; T0 is a valid derivation given MP-1. OQ-B1 closed given MP-1.</i>'),
-          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T1 and T2 relabelled Proposition. T5 relabelled Proposition. T0 and T3 retain Theorem labels.</i>'),
-          body('<i>Version 1.2 changes: T0 strengthened with MP-1; C2 fixed to derive from T2 only; T4 reclassified as C3 (corollary of T5).</i>'),
           sp()]
 
     E.append(Paragraph('I. The Foundational Distinction', S['h1']))

@@ -180,7 +180,7 @@ def build():
     story.append(box(
         'The central claim is this: zero is not the absence of mathematical structure. It is '
         'the presence of structure at its most fundamental — the element that is '
-        'constituent of everything and directly describable by nothing.'
+        'algebraically present in every state and directly describable by nothing.'
     ))
     story.append(sp(6))
 
@@ -191,7 +191,7 @@ def build():
             'This is true, and it is not in conflict with ZP\'s thesis. '
             'The question ZP is asking is how minimal the framework needs to be before ⊥ '
             'still has non-trivial properties. '
-            'The answer, across ten independent layers, is: very minimal. That is the surprise.',
+            'The answer, across eleven independent layers, is: very minimal. That is the surprise.',
             S['body']),
     ]
 

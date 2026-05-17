@@ -115,22 +115,6 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['bodyI']),
-        Paragraph(
-            '<i>Supersedes v1.6 | v1.7: Remark R-AX added after AX-G2 — explains why AX-G1 and AX-G2 '
-            'are not trivially satisfied placeholder conditions; the initial object is independently '
-            'grounded in ZP-H via four concrete domain functors (F<sub>A</sub>, F<sub>B</sub>, '
-            'F<sub>C</sub>, F<sub>D</sub>).</i>',
-            S['note']),
-        Paragraph(
-            '<i>v1.6 changes from v1.5: D7\' well-definedness note corrected. | '
-            'v1.5: Lean scope disclosure for T6-b and T6-c strengthened — '
-            'Lean proofs verify only that a &#8469;-valued function is &#8805; 0 (Nat.zero_le _), '
-            'which is trivially true by type for any such function and says nothing about Kolmogorov '
-            'complexity. T6-b strict inequality (K &gt; 0 for distinct objects) and T6-c subadditivity '
-            'have no Lean proofs. Status lines and validation table updated accordingly. | '
-            'v1.4: Lean scope note added after T6-c — K-specific AIT content outside ZPSurprisal '
-            'skeleton identified | All prior results unchanged</i>',
-            S['note']),
         sp(8),
         hr(),
         sp(4),
@@ -146,56 +130,9 @@ def build():
              'Cross-framework connections are deferred to ZP-H.'),
         body('Honest labelling is the governing discipline. Every claim is marked as Axiom, Definition, '
              'Derived, Import, Design Commitment, or Remark. Nothing slides between categories.'),
-        Paragraph(
-            '<i>Version 1.1 changes from v1.0: '
-            '(1) D7 replaced by D7\' (conditional Kolmogorov complexity K(B|A) as native categorical surprisal). '
-            '(2) Import I-KC added: K(x|y) and the Kolmogorov coding theorem imported from ZP-C as a named dependency. '
-            '(3) BA-G1 (Leinster Bridge Axiom) demoted to Remark R-BA: a compatibility result, no longer a theorem premise. '
-            '(4) T6 rebuilt on D7\'; proof is now self-contained within ZP-G plus the named ZP-C import. OQ-G1 closed. '
-            '(5) All theorems from v1.0 that did not depend on BA-G1 (T1 through T5, T7) are unchanged in statement and proof.</i>',
-            S['note']),
-        Paragraph(
-            '<i>Version 1.2 changes from v1.1: Theorem/Proposition/Lemma hierarchy applied throughout. '
-            'T1 relabelled Proposition (subsidiary uniqueness result). '
-            'T2, T3 relabelled Lemma (stepping-stone results for T6/T7). '
-            'T4, T5 relabelled Proposition (derived but subsidiary). '
-            'T6-a, T6-b relabelled Lemma (helpers for T6). '
-            'T6-c relabelled Proposition (supports T6 but not the central claim). '
-            'T6 and T7 remain Theorems — central claims of their sections. '
-            'All statements and proofs are unchanged.</i>',
-            S['note']),
-        Paragraph(
-            '<i>Version 1.3 changes from v1.2: Remark R2 added (Categorical Expression of Self-Containment). '
-            'Connects initial object structure (T2 + AX-G2) to ZP-A CC-2 (⊥ = {⊥}). '
-            'All prior results, axioms, and definitions unchanged.</i>',
-            S['note']),
-        Paragraph(
-            '<i>Version 1.4 changes from v1.3: Lean scope note added after T6-c — T6-b strict inequality '
-            'and T6-c subadditivity are K-specific AIT content outside the ZPSurprisal skeleton; '
-            'Lean proofs reduce to Nat.zero_le _ (non-negativity by type). '
-            'T6-b and T6-c statements and proofs unchanged.</i>',
-            S['note']),
-        Paragraph(
-            '<i>Version 1.6 changes from v1.5: D7\' well-definedness note corrected — '
-            '"all structural claims below are invariant under this additive constant" replaced '
-            'with explicit scoping: invariance holds because of what ZP-G chooses to claim '
-            '(finite/zero/undefined), not as a general property of K-complexity.</i>',
-            S['note']),
-        Paragraph(
-            '<i>Version 1.5 changes from v1.4: Lean scope disclosure strengthened. The v1.4 note '
-            'correctly identified the limitation but did not make the consequence fully explicit. '
-            'v1.5 states it plainly: the Lean proofs for T6-b and T6-c verify nothing about '
-            'Kolmogorov complexity. Nat.zero_le _ is trivially true for any &#8469;-valued function, '
-            'regardless of mathematical content. T6-b (strict inequality) and T6-c (subadditivity) '
-            'are not Lean-verified. T6-b and T6-c status lines updated from "Derived — ✓" to '
-            '"Derived (PDF-level); not Lean-verified". Validation table updated accordingly.</i>',
-            S['note']),
         body('<i>Illustrated Companion: A paired ZP-G Illustrated Companion provides concrete examples '
              'and visual intuitions for the results here. Examples are kept separate from the formal '
              'layers to distinguish illustrative material from proofs.</i>', 'bodyI'),
-        body('<i>Note on sequencing: The Zero Paradox framework labels its layers A through H, '
-             'intentionally omitting F. ZP-G follows ZP-E directly; there is no missing document.</i>',
-             'bodyI'),
         sp(4),
         hr(),
     ]

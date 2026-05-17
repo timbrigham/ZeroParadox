@@ -65,27 +65,6 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['bodyI']),
-        Paragraph(
-            '<i>Supersedes v1.10 | v1.11: Remark R-FORCING added between Sections V and VI — explains that the four domain functors independently ground the snap through domain logic, verified sorry-free in Lean 4; structural forcing, not categorical re-description. | '
-            'v1.10: fc_functor and fd_functor added — F<sub>C</sub> and F<sub>D</sub> now have concrete Lean Functor terms (InfoDepth and HilbDimDepth appendices in ZPH.lean). OQ-G3 fully closed for all four functors. C-H3/C-H4 status and Validation table updated. | '
-            'v1.9: C-H3 AX-G1 no-terminal argument corrected — replaced "larger alphabets" appeal (outside the binary framework) with the Lean-verified argument: &#8477;&#8805;0 has no greatest element (t + 1 &gt; t), the categorical expression of ZP-A R1 (ax_g1_no_terminal). | v1.8: C-H1 AX-G2 verification note added — &#8869;-to-0 identification depends on CC-1 / DA-2 (modelling commitment, not derived from ZP-A alone). No mathematical content changed. | '
-            'v1.7: T-H3 consistency note strengthened — independence of null-analog '
-            'discovery foregrounded: each framework located its null-analog through its own domain logic '
-            '(A4 for ZP-A, T3 for ZP-B, D1/AIT for ZP-C, T2/T3 for ZP-D) prior to any cross-framework '
-            'identification. The modeling commitment is identification of independently-discovered objects '
-            'under the functors, not derived agreement.</i>',
-            S['note']),
-        Paragraph(
-            '<i>v1.3: F<sub>B</sub>/F<sub>C</sub>/F<sub>D</sub> framing corrected: PDF constructions complete; '
-            'Lean formalization uses proxy witness — full abstract Lean functors future work. '
-            'OQ-G3 status updated to honest "closed (concrete witness) / open (full Lean)" framing. '
-            'v1.2: F<sub>C</sub> composition preservation corrected — Q-stability argument replaces JSD subadditivity. '
-            'v1.1: AX-1 updated to T-SNAP (ZP-E v2.0); Import Registry updated to ZP-G v1.1; OQ-G1 closed.</i>',
-            S['note']),
-        Paragraph(
-            '<i>v1.2: F<sub>C</sub> composition preservation corrected — Q-stability argument replaces JSD subadditivity. '
-            'v1.1: AX-1 updated to T-SNAP (ZP-E v2.0); Import Registry updated to ZP-G v1.1; OQ-G1 closed.</i>',
-            S['note']),
         sp(8),
         hr(),
         sp(4),
@@ -107,12 +86,6 @@ def build():
              'was deliberately omitted from ZP-G to keep that document domain-independent. This '
              'definition belongs here because it is instantiation-specific: the morphisms of C are '
              'defined by what the functor constructions require, not by the abstract category itself.'),
-        body('Version 1.1 changes: (1) AX-1 (Binary Snap Causality) is no longer an axiom — it is '
-             'Theorem T-SNAP, derived in ZP-E v2.0 via the P₀ / L-RUN / TQ-IH / DA-1 chain. '
-             'All references to AX-1 as an axiom are updated to T-SNAP (Derived). '
-             '(2) Import Registry updated from ZP-G v1.0 to ZP-G v1.1: BA-G1 is now a '
-             'compatibility remark, not a bridge axiom premise. '
-             '(3) OQ-G1 status updated: closed in ZP-G v1.1.'),
         sp(4),
         hr(),
     ]

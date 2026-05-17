@@ -23,19 +23,9 @@ def build():
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
           Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
-          Paragraph('<i>Supersedes v1.7  |  v1.8: T5 strengthened — T5-b (strict orthogonality) added. '
-                    'T5-b is the non-trivial Lean-verified content of T5: distinct consecutive states map to orthogonal T-images via DP-1 (Lean: ZPD.t5_strict_orthogonal). '
-                    'T5 norm result disclosed as tautology of construction. | '
-                    'v1.7: T5 DP-1 dependency made explicit. | v1.6: R3 added: topological type of T stated explicitly — '
-                    'locally constant; continuous from (Q<sub>2</sub>, 2-adic topology) to H.</i>', S['subtitle']),
-          Paragraph('<i>v1.5: D1 updated — n = 2 foundational minimum. '
-                    'v1.4: T5 proof corrected — ball-boundary argument.</i>', S['subtitle']),
           sp(10),
           body('This document operates within functional analysis. It imports from ZP-A and ZP-B and constructs the Hilbert space state layer on top of them. No information theory from ZP-C is imported. Cross-framework synthesis is deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-D Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
-          body('<i>Version 1.4 change: T5 proof corrected. Prior proof cited D2(v) (global lower bound ‖T(x)‖ ≥ ‖T(0)‖) as justification for sequence monotonicity — this does not follow. Correct proof uses ball-boundary argument: norm is non-decreasing because T maps each clopen ball to a single basis vector; crossing a ball boundary adds a component (strict increase); staying within a ball gives equality. T5 is renamed "Non-Decreasing Norms" to reflect this precisely.</i>'),
-          body('<i>Version 1.3 change: Theorem/Proposition hierarchy applied. T3 relabelled Proposition. T5 relabelled Proposition. T2 and T4 retain Theorem labels.</i>'),
-          body('<i>Version 1.2 change: Theorem T1 is reclassified as Design Principle DP-1. Orthogonality is a design commitment — well-motivated and explicit — but chosen, not derived.</i>'),
           sp()]
 
     E.append(Paragraph('I. Imported Structure', S['h1']))

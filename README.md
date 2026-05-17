@@ -1,7 +1,7 @@
 # The Zero Paradox
-**April 2026 | Closed Formalism**
+**April 2026**
 
-*A formal mathematical proof that the emergence of something from nothing is not a starting assumption — it can be derived.*
+*A Lean 4 proof that the bottom element of a join-semilattice forces a minimal non-bottom state — without snap-specific axioms.*
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
@@ -24,11 +24,11 @@ For plain-language introduction, illustrated companions, and reading paths, see 
 
 ## The Central Result
 
-The **Binary Snap** (the first transition from nothing to something) - the transition from the Null State ⊥ to the first atomic state ε₀ - is a **theorem**, not an axiom.
+The **Binary Snap** — the forced transition from the null state ⊥ to the first atomic state ε₀ — is a **theorem**, not an axiom.
 
-This result directly addresses the "nothing from nothing" problem: the emergence of determinate state is not posited as a starting assumption but derived from the structure of the null state itself, using only the standard bottom-element axiom of join-semilattice theory. The derivation is machine-verified in Lean 4 — independent reviewers can check the conclusion mechanically, without relying on the argument's prose presentation.
+The emergence of determinate state is not posited as a starting assumption — it is derived from the structure of the null state itself, using only the standard bottom-element axiom of join-semilattice theory. The derivation is machine-verified in Lean 4 — independent reviewers can check the conclusion mechanically, without relying on the argument's prose presentation.
 
-The symbol ⊥ is not overloaded by analogy: the framework identifies logical falsum, order-theoretic bottom, and the ontological null state as a single object. These are three descriptions of the same null state. MC-1 is not a hidden premise — it is the explicit modeling commitment that external reviewers are invited to scrutinize. This cross-framework identification (MC-1) was originally framed as a chosen modeling commitment, but subsequent formal work has substantially grounded it: each domain locates its null-analog through its own logic prior to identification (ZP-H v1.7); ZP-E gives `MachinePhase` a `ZPSemilattice` instance enforcing the algebraic ↔ machine identification; AX-G1 grounds the categorical initial in ZP-A ⊥; and ZP-H T-H3 proves the Binary Snap consistent across all four functors. What remains as a chosen element is the interpretive unification — naming the four "the null state" — over the derived structural correspondence. See [Axiomatic Commitments](#axiomatic-commitments). Similarly, ε₀ is intentionally identified with the Cantor/Gentzen proof-theoretic ordinal (least fixed point of α ↦ ω^α; the proof-theoretic strength of Peano Arithmetic) - both name the minimal threshold that transcends finite iteration. This identification is named and motivated in ZP-E; formal embedding of the framework's state lattice into ordinal theory is deferred pending OQ-E2 (see Question Register).
+The cross-framework identification of ⊥ across layers — how the algebraic, topological, information-theoretic, and categorical null-analogs are unified under a single object — and its grounding status are detailed in [Axiomatic Commitments](#axiomatic-commitments) (MC-1). The identification of the framework's ε₀ with the Cantor/Gentzen proof-theoretic ordinal is addressed in the [Question Register](#question-register).
 
 The derivation chain is:
 

@@ -4,11 +4,13 @@
 
 ## Origins and Motivation
 
-The Zero Paradox did not begin as a grand theory. It started with a small discomfort: a sense that I did not actually understand zero in the deep, structural way I required. I kept circling this simple observation: you can add or subtract any number from zero and it remains zero. 
+The entry point came from complex analysis. On the Riemann sphere — a way of visualizing the complex numbers as a globe — zero and infinity sit at opposite poles, and a single map (z → 1/z) swaps them completely. They are the same kind of object, just viewed from different ends of the same axis.
 
-That symmetry felt too perfect, too frictionless, like a trick of the light. If zero could absorb arbitrary operations without changing, then the number line was not just symmetric. It was hiding something, and I as an individual did not understand it.
+If zero and infinity are interchangeable under the simplest possible transformation, then zero is not just an absence. It has a counterpart, a mirror, a structural address. The question was what kind of mathematical rules would make that relationship not just visible but unavoidable — built into the metric rather than drawn on a picture.
 
-Most evenings, I would sit on the porch, letting the world quiet down while I focused on the problem. For years, this was the philosophical ramifications of a true zero state. What began as a persistent observation evolved into a rigorous investigation of a systemic anomaly. Every time I returned to the problem, I found zero behaving not as a placeholder, but as a mechanism with its own internal, non-negotiable logic. Those quiet evenings were where the architectural roots of this project were established.
+That question eventually led to the p-adic framework. But before the formal structure arrived, there was a simpler discomfort: you can add or subtract any number from zero and it remains zero. That symmetry felt too perfect. If zero could absorb arbitrary operations without changing, the number line was hiding something.
+
+Most evenings, I would sit on the porch, letting the world quiet down while I worked through the problem. Every time I returned to zero, I found it behaving not as a placeholder but as a mechanism with its own internal logic. Those sessions were where the formal questions began to take shape.
 
 ## Technical Pedigree and Systems Architecture
 
@@ -16,7 +18,7 @@ My approach to the Zero Paradox is informed by twenty-plus years working as an e
 
 In that field, "existence" is not a philosophical abstraction; it is a binary state defined by strict logical boundaries, permissions, and the integrity of data structures. I have spent my career designing and debugging "rules of truth." This work requires a relentless focus on internal consistency; the understanding that if any base-tier object is misconfigured, the entire downstream architecture inherits the error.
 
-The Zero Paradox is the application of that same architectural rigor to a larger system. I am approaching the question of "how a state emerges from nothing" as a debugger would approach a system-level logic error. My expertise is not in theoretical academia, but in functional engineering. I am treating the universe as a system - and not necessarily a computer system, a physical system, or otherwise - as a logical system that must be architecturally sound to function. My work on the Zero Paradox is the process of mapping the "Initial Object" of that system.
+The Zero Paradox is the application of that same architectural rigor to a formal structure. I am approaching the question of how a null state forces a non-null successor as a debugger would approach a system-level logic error. My expertise is not in theoretical academia, but in functional engineering. I am treating the formal structure as a logical system that must be internally consistent to function. My work on the Zero Paradox is the process of characterising what the minimum element of that system is structurally required to be.
 
 ## The Shift to Precision
 
@@ -26,19 +28,11 @@ The original purpose was mundane, and as I fed more and more content into that s
 
 The moment I realized this might be more than a thought experiment came from something deeply personal. I do not make impulse purchases - not for entertainment, not for hobbies, not even on vacation. So when I hit the limits of what Gemini could handle and moved through other systems like Copilot and Claude, I expected to stop when the free tiers ran out. But I did not. Without hesitation, I paid for more context, more clarity, more space to think. That was the moment I understood: this work mattered enough to override a lifetime of caution.
 
-## An Early Signal
-
-One of the observations that pointed me toward the formal structure before I had the language for it came from complex analysis. On the Riemann sphere — a way of visualizing the complex numbers as a globe — zero and infinity sit at opposite poles, and a single map (z → 1/z) swaps them completely. They are the same kind of object, just viewed from different ends of the same axis.
-
-I did not know the name for that structure at the time. But the observation stayed with me: if zero and infinity are interchangeable under the simplest possible transformation, then zero is not just an absence. It has a counterpart, a mirror, a structural address. The question was what kind of mathematical rules would make that relationship not just visible but unavoidable — built into the metric rather than drawn on a picture.
-
-That question is what eventually led to the p-adic framework. The valuations were not the input. They were where the math arrived after I kept asking what kind of space takes the Riemann sphere's geometry seriously as a structural fact.
-
 ## Convergence
 
-As an engineer, you look for the single point of failure - or the single point of truth - that governs a system. My commitment to this project became absolute when I recognized that zero was that point. I tracked its behavior through calculus, differential equations, and p-adic topology, expecting my logic to break as the context shifted. It never did. Seeing that universal consistency across disparate systems was the ultimate "root cause" discovery. It proved that this wasn't just a quirk of one branch of math, but a fundamental property of the logical universe.
+As an engineer, you look for the single point of failure - or the single point of truth - that governs a system. My commitment to this project became absolute when I recognized that zero was that point. I tracked its behavior through calculus, differential equations, and p-adic topology, expecting my logic to break as the context shifted. It never did. Seeing that universal consistency across disparate systems was the ultimate "root cause" discovery. It proved that this wasn't just a quirk of one branch of math, but a structural property consistent across multiple mathematical frameworks.
 
 ## Equilibrium
 
-Today, the Zero Paradox means something simple and profound to me: balance. Absolute, perfect balance. A kind of neutrality that is not passive but structural - the equilibrium point at the center of everything. There is a strange sense of finality in that. Not only an ending, but a grounding, and a beginning all in one. This system is not just a mathematical curiosity; it is a way of understanding symmetry, identity, and equilibrium at the deepest level I know how to express.
+Today, the Zero Paradox means something simple and profound to me: balance. Absolute, perfect balance. A kind of neutrality that is not passive but structural - a structural equilibrium, the ground from which the framework's order structure grows. There is a strange sense of finality in that. Not only an ending, but a grounding, and a beginning all in one.
 

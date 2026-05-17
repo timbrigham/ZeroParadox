@@ -8,7 +8,7 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 
 ## v1.0 - 2026-05-07
 
-**Why this release:** First public Zenodo snapshot. The framework is complete across ten formal layers with all core theorems verified sorry-free in Lean 4 + Mathlib. Zenodo integration established via `.zenodo.json`.
+**Why this release:** First public Zenodo snapshot. Ten formal layers fully verified sorry-free in Lean 4 + Mathlib. Zenodo integration established via `.zenodo.json`.
 
 **What is included:**
 - ZP-A through ZP-K (ten layers; ZP-F intentionally skipped)
