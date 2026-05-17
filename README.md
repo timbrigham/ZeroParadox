@@ -116,7 +116,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-B1: p = 2 justification | Closed - ZP-B T0 (derived from AX-B1 + MP-1) |
 | S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
-| DA-1: Instantiation alignment | **Closed - ZP-E / ZP-K** — da1_minimal_path proved axiom-free in Lean; Paths 1 and 3 closed via da1_closed_concrete (ZP-K). Path 2 recharacterized as foundational commitment (DP-2) — a missing principle, not a missing proof. |
+| DA-1: Instantiation alignment | **Closed - ZP-E / ZP-K** — DA-1 formally grounded in DP-2 (Execution Distinguishability); da1_minimal_path proved axiom-free in Lean. Paths 1 and 3 closed via da1_closed_concrete (ZP-K). Path 2 (informational bridge) recharacterized as foundational commitment — a missing principle, not a missing proof. |
 | CC-1 (S₀ = ⊥) derivability | **Closed - ZP-J cc1_derived (axiom-free, Lean)** — was ZP-A Conditional Claim; now derived via ZP-J T-EXEC in any AFAStructure lattice; ZP-A v1.11 declaration and preface added for clarity |
 | CC-2 (⊥ = {⊥}) as commitment | **Closed - ZP-J T-EXEC** — ⊥ = {⊥} is structurally forced by self-execution argument; not a freestanding modelling choice |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
