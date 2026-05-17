@@ -80,55 +80,6 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
-        Paragraph(
-            '<i>Supersedes v3.11 | v3.12: Framework scope and failure-mode framing added to preamble — '
-            '"why these four?" addressed (coverage not exhaustion); cross-framework failure-mode paragraph '
-            'names the domain-specific limit at &#8869; for each layer and positions DA-1 as the unifying argument. | '
-            'v3.11: T-SNAP Step 7 corrected — ZP-G AX-G2 removed as formal dependency; '
-            'now labelled conceptual correspondence only. ZP-G is downstream of ZP-E; irreversibility rests '
-            'on ZP-A R1 and ZP-B C3 alone.</i>',
-            S['note']),
-        Paragraph(
-            '<i>v3.10: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | v3.9: R-&#949;<sub>0</sub> reframed — remark now leads with explicit '
-            'informal-analogy disclaimer; "structural correspondence" changed to "structural analogy" '
-            'throughout R-&#949;<sub>0</sub>. | '
-            'v3.8: DA-1 Path 2 recharacterized — from "outside Lean scope (informational bridge)" to '
-            '"foundational commitment: a missing principle, not a missing proof." No computability library closes the gap '
-            'between \'system at P<sub>0</sub>\' and \'system is running.\' Forward paths: new axiom, Chalmers\' implementation '
-            'notion, or The Philosophical Question That Started This. '
-            'v3.7: DA-1 formally closed via ZP-K — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4. '
-            'KleeneStructure MachinePhase instance added; Paths 1 and 3 now IN LEAN SCOPE. '
-            '"Outside Lean Scope" designation removed from ZPE.lean. '
-            'v3.6: DA-1 Path 1 rewritten — argument direction reversed; CC-1 and CC-2 now derived via ZP-J (no longer freestanding commitments). '
-            'v3.5: DA-1 Open Items Register status updated — "CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)" now matches v3.3 path-hierarchy framing. '
-            'v3.4: R-AFA minimality explicit — &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets; any extension exceeds A4\'s constraint. '
-            'v3.3: DA-1 path hierarchy foregrounded — three informal paths framed as corroboration of DP-2\'s precondition, not parallel proofs. '
-            'v3.2: Remark R-AFA added — Foundation ruled out by R3 + L-INF; AFA forced rather than chosen; CC-2 metatheoretic status clarified. '
-            'v3.1: Remark R-&#949;<sub>0</sub> added — notation justification for '
-            '&#949;<sub>0</sub> symbol choice; structural correspondence with Cantor-Gentzen '
-            'proof-theoretic ordinal explained. '
-            'v3.0: DP-2 (Execution Distinguishability) added — DA-1 formally grounded '
-            'in TrackedOutput construction (ZPE.lean &#167;VI); da1_minimal_path proved axiom-free in Lean. '
-            'First Lean formalization of DA-1, conditional on DP-2.</i>',
-            S['note']),
-        Paragraph(
-            '<i>v2.9: DA-1 Lean scope note added: functional role carried by ZPC.l_run/tq_ih (proved); '
-            'AIT and ZF+AFA bridge outside Lean scope — same category as ZP-A CC-2.</i>',
-            S['note']),
-        Paragraph(
-            '<i>v2.8: DA-1 formal bridge added: incompressibility = self-description argument '
-            '(ZP-C D1 + standard AIT). At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 means description '
-            'and execution coincide; CC-2/R3 and L-INF are independent corroboration of the same conclusion.</i>',
-            S['subtitle']),
-        Paragraph(
-            '<i>v2.7: DA-1 upgraded from Design Principle to Derived Proposition — grounded in ZP-A CC-2 (&#8869; = {&#8869;}) and R3. '
-            'v2.6: DA-3 candidate applications removed. '
-            'v2.5: Physical analogies removed from formal sections. '
-            'v2.4: R-DA2 framing corrected. '
-            'v2.3: CC-1 added to T-SNAP dependency list. '
-            'v2.2: DA-1 redesigned to L-INF-based Design Principle. '
-            'v2.1: Adds DA-2 and DA-3.</i>',
-            S['subtitle']),
         sp(10),
         hr(),
         sp(4),
