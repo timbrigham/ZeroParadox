@@ -125,9 +125,9 @@ def build():
         'This document establishes Theorem T-IZ (Inside Zero): every maximal ascending chain '
         'in the Zero Paradox framework is a Cauchy sequence that converges to its own successor '
         'null in the 2-adic metric. T-IZ is a structural consequence of ZP-A through ZP-E — no '
-        'new axioms are required. The framework does not merely describe the emergence of existence '
-        'from null (T-SNAP). It describes the complete cycle: emergence, ascent for &#969; state '
-        'changes, and the generation of a successor null by the chain\'s own unbounded forward motion.'))
+        'new axioms are required. T-IZ extends T-SNAP: where T-SNAP establishes the first transition '
+        '&#8869; &#8594; &#949;<sub>0</sub>, T-IZ establishes the full trajectory — ascent through &#969; state '
+        'changes and convergence back to a successor null — as a single Cauchy sequence result.'))
     E.append(body(
         'The key insight: ZP-A R1 (no top element) is not an obstacle to T-IZ. It is the engine. '
         'Because L has no top, the ascending chain cannot stop. Unbounded ascent forces the 2-adic '

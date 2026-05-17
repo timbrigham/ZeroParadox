@@ -194,7 +194,7 @@ def build():
         'a null state seriously? If that is true, then the Binary Snap (⊥ → ε₀, '
         'the first transition from nothing to something) is not an axiom. It is a theorem.'))
     E.append(body(
-        'Eight formal layers later — ZP-A through ZP-I, partially verified in Lean 4 '
+        'Eleven formal layers later — ZP-A through ZP-K, verified sorry-free in Lean 4 '
         '— the framework has an answer. But the answer is more interesting than either '
         '"yes, fully proved" or "no, still assumed." What the framework found is a '
         'third possibility: the question itself, applied with sufficient precision, '

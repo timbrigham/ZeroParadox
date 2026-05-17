@@ -104,9 +104,9 @@ def build():
         'the only mathematical domains in which the Zero Paradox structure appears. They are chosen '
         'because they cover the canonical mathematical languages for describing state: algebraic order '
         'structure (ZP-A), topology and metric geometry (ZP-B), information and complexity theory (ZP-C), '
-        'and functional/Hilbert space analysis (ZP-D). The claim is universality — the same structural '
-        'limit at &#8869; appears wherever standard mathematical language for state description is applied '
-        '— not uniqueness of these four as the only possible witnesses.'))
+        'and functional/Hilbert space analysis (ZP-D). The claim is that the same structural '
+        'limit appears across each of the four frameworks addressed here — not that these four '
+        'are the only possible witnesses.'))
     E.append(body(
         'Across all four layers, the same structural limit appears at &#8869; — but each framework names '
         'it differently: ZP-A identifies &#8869; as the global minimum, below which the lattice\'s ordering '

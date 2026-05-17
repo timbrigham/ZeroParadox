@@ -61,16 +61,15 @@ def build():
     E.append(body(
         'This document establishes the computational grounding of the Zero Paradox\'s central '
         'self-reference structure. The key insight (April 2026): ⊥ in the computational '
-        'instantiation is not a state of a Turing machine. ⊥ IS the universal Turing machine '
-        'in its ground state — the executor for which no external executor exists. Kleene\'s '
-        'second recursion theorem provides the formal witness: a code that IS its own program, '
+        'instantiation is not a state of a Turing machine. ⊥ is the ground state of a universal '
+        'Turing machine — the state from which no external executor is required. Kleene\'s '
+        'second recursion theorem provides the formal witness: a code that is its own program, '
         'the computational expression of ⊥ = {⊥}.'))
     E.append(body(
         'The central result is a four-way equivalence. The structural roles of ⊥ — Quine atom '
         '(set-theoretic), bottom element (order-theoretic), join identity (algebraic), and '
         'Kleene fixed point (computational) — are not analogies. They name the same structural '
-        'object in four formal languages. The bridge from mathematical self-reference to '
-        'computational execution is not a bridge. It is a recognition of identity. '
+        'object in four formal languages. '
         '(See Remark R-K.0 for the precise scope: equivalences (1)&#8211;(3) are derived via T-EXEC; '
         'equivalence (4) is combined by KleeneStructure\'s typeclass requirement, not derived independently.)',
         style='bodyI'))

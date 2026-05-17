@@ -30,9 +30,9 @@ The moment I realized this might be more than a thought experiment came from som
 
 ## Convergence
 
-As an engineer, you look for the single point of failure - or the single point of truth - that governs a system. My commitment to this project became absolute when I recognized that zero was that point. I tracked its behavior through calculus, differential equations, and p-adic topology, expecting my logic to break as the context shifted. It never did. Seeing that universal consistency across disparate systems was the ultimate "root cause" discovery. It proved that this wasn't just a quirk of one branch of math, but a fundamental property of the logical universe.
+As an engineer, you look for the single point of failure - or the single point of truth - that governs a system. My commitment to this project became absolute when I recognized that zero was that point. I tracked its behavior through calculus, differential equations, and p-adic topology, expecting my logic to break as the context shifted. It never did. Seeing that universal consistency across disparate systems was the ultimate "root cause" discovery. It proved that this wasn't just a quirk of one branch of math, but a structural property consistent across multiple mathematical frameworks.
 
 ## Equilibrium
 
-Today, the Zero Paradox means something simple and profound to me: balance. Absolute, perfect balance. A kind of neutrality that is not passive but structural - the equilibrium point at the center of everything. There is a strange sense of finality in that. Not only an ending, but a grounding, and a beginning all in one. This system is not just a mathematical curiosity; it is a way of understanding symmetry, identity, and equilibrium at the deepest level I know how to express.
+Today, the Zero Paradox means something simple and profound to me: balance. Absolute, perfect balance. A kind of neutrality that is not passive but structural - a structural equilibrium, the ground from which the framework's order structure grows. There is a strange sense of finality in that. Not only an ending, but a grounding, and a beginning all in one.
 

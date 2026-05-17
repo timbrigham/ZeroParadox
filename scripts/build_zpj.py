@@ -50,7 +50,7 @@ def build():
         'This document establishes Theorem T-EXEC (Executability of Self-Reference): in any '
         'ZP-A join-semilattice with AFA (Anti-Foundation Axiom) grounding, the unique Quine atom '
         'Q — the element satisfying Q = {Q} — is provably the bottom element &#8869;. This closes '
-        'the last open bridge between the set-theoretic and order-theoretic layers of the framework. '
+        'the bridge between the set-theoretic and order-theoretic layers of the framework. '
         'CC-1 from ZP-A, which stated "S&#8320; = &#8869;" as a modelling commitment, becomes a '
         'derived theorem.'))
     E.append(body(
