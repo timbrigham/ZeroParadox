@@ -1,5 +1,6 @@
 """
-Build ZP-H Illustrated Companion (v1.2)
+Build ZP-H Illustrated Companion (v1.3)
+v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
 
@@ -131,7 +132,7 @@ def snap_convergence_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 def build():
@@ -174,8 +175,8 @@ def build():
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal ontology — every claim here restates a result already '
-            'proven in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — every claim here restates a result already '
+            'proved in the corresponding technical document. Consult that document for the '
             'authoritative mathematics. This document assumes familiarity with the ZP-G '
             'Illustrated Companion.',
             CS['disc']),

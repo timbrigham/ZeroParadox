@@ -1,5 +1,6 @@
 """
-Build ZP-C Illustrated Companion (v1.7)
+Build ZP-C Illustrated Companion (v1.8)
+v1.8: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 v1.7: Dual-route framing added — "What Is ZP-C Doing?" rewritten to name both routes
       (Kolmogorov complexity and 2-adic surprisal) explicitly upfront as independent measures
       that converge at the same threshold. "Where the Two Routes Converge" callout box added
@@ -189,7 +190,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -232,8 +233,8 @@ def build():
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal ontology — every claim here restates a result already '
-            'proven in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — every claim here restates a result already '
+            'proved in the corresponding technical document. Consult that document for the '
             'authoritative mathematics.',
             CS['disc']),
     ]

@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.5 | May 2026
+Version 1.6 | May 2026
+v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 v1.5: four_framework_diagram: "0 is isolated" label in ZP-B box replaced with "Clopen structure".
 v1.4: "topological isolation" in the closing remember box replaced with "clopen separation" —
 consistent with ZP-B/D fixes; "topological isolation" evokes isolated-point topology, which is
@@ -170,7 +171,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():
@@ -205,8 +206,8 @@ def build():
           Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
-              'examples. It is not the formal ontology — every claim here restates a result '
-              'already proven in the corresponding technical document. Consult that document for '
+              'examples. It is not the formal document — every claim here restates a result '
+              'already proved in the corresponding technical document. Consult that document for '
               'the authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-E Doing?

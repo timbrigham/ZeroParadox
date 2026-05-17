@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.1 | April 2026
+Version 1.2 | May 2026
+v1.2: Disclaimer updated — "formal ontology" replaced with "formal document".
 v1.0: Initial release. Covers T-COMP (four-way equivalence: Quine atom = bottom = join
 identity = Kleene fixed point), the computational Quine, and da1_closed_concrete
 (DA-1 formally closed — ⊥ IS the universal Turing machine in ground state).
@@ -116,7 +117,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 
 def build():
@@ -149,7 +150,7 @@ def build():
           Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
-              'ontology — every claim here restates a result already proved in the technical '
+              'document — every claim here restates a result already proved in the technical '
               'document ZP-K Computational Grounding v1.3. Consult that document for the '
               'authoritative mathematics.', CS['disc'])]
 
