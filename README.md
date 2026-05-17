@@ -1,5 +1,5 @@
 # The Zero Paradox
-**April 2026 | Closed Formalism**
+**April 2026**
 
 *A Lean 4 proof that the bottom element of a join-semilattice forces a minimal non-bottom state — without snap-specific axioms.*
 
