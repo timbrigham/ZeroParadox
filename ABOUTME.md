@@ -18,7 +18,7 @@ My approach to the Zero Paradox is informed by twenty-plus years working as an e
 
 In that field, "existence" is not a philosophical abstraction; it is a binary state defined by strict logical boundaries, permissions, and the integrity of data structures. I have spent my career designing and debugging "rules of truth." This work requires a relentless focus on internal consistency; the understanding that if any base-tier object is misconfigured, the entire downstream architecture inherits the error.
 
-The Zero Paradox is the application of that same architectural rigor to a larger system. I am approaching the question of "how a state emerges from nothing" as a debugger would approach a system-level logic error. My expertise is not in theoretical academia, but in functional engineering. I am treating the universe as a system - and not necessarily a computer system, a physical system, or otherwise - as a logical system that must be architecturally sound to function. My work on the Zero Paradox is the process of mapping the "Initial Object" of that system.
+The Zero Paradox is the application of that same architectural rigor to a formal structure. I am approaching the question of how a null state forces a non-null successor as a debugger would approach a system-level logic error. My expertise is not in theoretical academia, but in functional engineering. I am treating the formal structure as a logical system that must be internally consistent to function. My work on the Zero Paradox is the process of characterising what the minimum element of that system is structurally required to be.
 
 ## The Shift to Precision
 
