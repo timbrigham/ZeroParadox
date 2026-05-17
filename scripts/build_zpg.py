@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.7 | May 2026
+Version 1.8 | May 2026
+v1.8: "Internal Working Document" marker removed from footer and endnote — not a working
+document; removing public-facing scaffolding label.
 v1.7: Remark R-AX added after AX-G2 — addresses non-triviality of the axioms; explains that
 the initial object is not an abstract placeholder but is grounded in ZP-H via four concrete
 domain functors; distinguishes categorical generalisation from trivial initial-object renaming.
@@ -18,7 +20,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
 AMBER = colors.HexColor('#B07800')
@@ -85,13 +87,11 @@ def import_box(title, status, rows):
 
 
 def make_doc(path, title_str, doc_id, version_str, date_str='May 2026'):
-    """ZP-G footer includes 'Internal Working Document' marker."""
     def footer_cb(canvas, doc):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
-        ft = (f'Zero Paradox {doc_id}  |  {version_str}  |  {date_str}  |'
-              f'  Internal Working Document  |  Page {doc.page}')
+        ft = (f'Zero Paradox {doc_id}  |  {version_str}  |  {date_str}  |  Page {doc.page}')
         canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
         canvas.restoreState()
     return SimpleDocTemplate(
@@ -103,7 +103,7 @@ def make_doc(path, title_str, doc_id, version_str, date_str='May 2026'):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory_v1_7.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory_v1_8.pdf')
     print(f'[build_zpg] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version ' + VERSION)
     E   = []
@@ -689,7 +689,7 @@ def build():
         Paragraph(
             '<i>Zero Paradox ZP-G: Category Theory | Version ' + VERSION + ' | May 2026 |'
             'Supersedes v1.4 | T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
-            'not K-theoretic content | T6 Part II: Lean-verified | Internal Working Document</i>',
+            'not K-theoretic content | T6 Part II: Lean-verified</i>',
             S['endnote']),
     ]
 

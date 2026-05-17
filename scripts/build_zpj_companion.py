@@ -1,6 +1,8 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.2 | May 2026
+Version 1.3 | May 2026
+v1.3: Disclaimer updated — "formal ontology" replaced with "formal document". Opening paragraph
+      revised — DA-1 glossed on first use instead of using internal label alone.
 v1.2: quine_atom_diagram: dh increased (2.0 → 2.8 in), cy changed to fixed 110 so the
       "⊥ = {⊥}" label (cy - r_outer - 18) no longer falls at y=-18 below the drawing box.
 v1.1: Corrected CC-2 status to metatheoretic commitment within ZF+AFA; commitment shifts
@@ -90,7 +92,7 @@ def three_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
     t.setStyle(ts); return t
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 def build():
@@ -123,15 +125,16 @@ def build():
           Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
-              'ontology — every claim here restates a result already proved in the technical '
+              'document — every claim here restates a result already proved in the technical '
               'document ZP-J Self-Reference v1.1. Consult that document for the authoritative '
               'mathematics.', CS['disc'])]
 
     # What Is ZP-J Doing?
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E established that DA-1 (Instantiation as Execution) rests on three converging '
-        'arguments. The structural argument — Path 1 — says: nothing external to ⊥ can execute '
+        'ZP-E established that DA-1 — the claim that instantiating a configuration constitutes '
+        'an execution event — rests on three converging arguments. The structural argument — '
+        'Path 1 — says: nothing external to ⊥ can execute '
         '⊥, therefore ⊥ must execute itself, which forces ⊥ = {⊥}. ZP-E cited this as ZP-A '
         'CC-2, a "Conditional Claim."'))
     E.append(cbody(

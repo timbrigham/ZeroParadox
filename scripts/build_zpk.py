@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.3 | April 2026
+Version 1.4 | May 2026
+v1.4: Four-way equivalence claim scoped to this framework in preamble; version history in
+title block trimmed to brief summary.
 v1.3: Forward references to "ZP-PQ" replaced throughout with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label.
 v1.2: DA-1 Path 2 recharacterized in "What Changed for DA-1" section — from "outside Lean
 scope (ontological claim)" to "foundational commitment: a missing principle, not a missing
@@ -24,11 +26,11 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-K_Computational_Grounding_v1_3.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-K_Computational_Grounding_v1_4.pdf')
     print(f'[build_zpk] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-K: Computational Grounding of Self-Reference',
                    'ZP-K: Computational Grounding', 'Version ' + VERSION)
@@ -41,17 +43,10 @@ def build():
         Paragraph('ZP-K: Computational Grounding of Self-Reference', S['title']),
         Paragraph('Version ' + VERSION + ' | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.3: Forward references to "ZP-PQ" replaced with "The Philosophical Question That Started This" — that document already contained the dissolution argument. | '
-            'v1.2: DA-1 Path 2 recharacterized — foundational commitment, not missing proof. '
-            'Forward paths: new axiom, Chalmers\' implementation, or The Philosophical Question That Started This. '
-            'DA-1 does not depend on Path 2. | '
-            'v1.1: Remark R-K.0 added — T-COMP four-way equivalence clarified: (1)–(3) '
-            'equivalent by T-EXEC (derived); (4) combined by KleeneStructure typeclass requirement '
-            '(structural commitment, not independent derivation). | '
-            'v1.0: Four-way equivalence proved — Quine atom = ⊥ = join identity = Kleene '
-            'fixed point. KleeneStructure typeclass bridges AFA self-containment to Kleene\'s '
-            'second recursion theorem. DA-1 formally closed: da1_closed_concrete : '
-            'IsQuineAtom(⊥ : MachinePhase). All ZPK.lean theorems verified in Lean 4.</i>',
+            '<i>v1.4: Four-way equivalence claim scoped to this framework; version history trimmed. | '
+            'v1.3: ZP-PQ forward references updated. | '
+            'v1.0–1.2: Initial release; R-K.0; DA-1 Path 2 recharacterization. '
+            'All ZPK.lean theorems verified in Lean 4.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -66,9 +61,9 @@ def build():
         'second recursion theorem provides the formal witness: a code that is its own program, '
         'the computational expression of ⊥ = {⊥}.'))
     E.append(body(
-        'The central result is a four-way equivalence. The structural roles of ⊥ — Quine atom '
-        '(set-theoretic), bottom element (order-theoretic), join identity (algebraic), and '
-        'Kleene fixed point (computational) — are not analogies. They name the same structural '
+        'The central result is a four-way equivalence within this framework. The structural '
+        'roles of ⊥ — Quine atom (set-theoretic), bottom element (order-theoretic), join identity '
+        '(algebraic), and Kleene fixed point (computational) — are shown to be the same structural '
         'object in four formal languages. '
         '(See Remark R-K.0 for the precise scope: equivalences (1)&#8211;(3) are derived via T-EXEC; '
         'equivalence (4) is combined by KleeneStructure\'s typeclass requirement, not derived independently.)',

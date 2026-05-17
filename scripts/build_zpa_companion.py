@@ -1,5 +1,6 @@
 """
-Build ZP-A Illustrated Companion (v1.5)
+Build ZP-A Illustrated Companion (v1.6)
+v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples.
 New in v1.3: CC-2 self-containment of ⊥ (Quine atom, ZF+AFA); R3 (DA-1 follows from CC-2).
@@ -94,7 +95,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():
@@ -128,8 +129,8 @@ def build():
           Paragraph('ZP Companion | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
-              'examples. It is not the formal ontology — every claim here restates a result '
-              'already proven in the corresponding technical document. Consult that document for '
+              'examples. It is not the formal document — every claim here restates a result '
+              'already proved in the corresponding technical document. Consult that document for '
               'the authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-A Doing?

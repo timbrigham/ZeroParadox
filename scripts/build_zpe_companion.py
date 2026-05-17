@@ -1,6 +1,10 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.5 | May 2026
+Version 1.7 | May 2026
+v1.7: Title "AX-1 becomes a theorem" → "the main causality axiom becomes a theorem"; remember
+box 1 "emergence of any state from a null condition" → scoped to ⊥→ε₀ transition; remember
+box 2 "universal ontology of state emergence" removed — replaced with scoped no-claims statement.
+v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 v1.5: four_framework_diagram: "0 is isolated" label in ZP-B box replaced with "Clopen structure".
 v1.4: "topological isolation" in the closing remember box replaced with "clopen separation" —
 consistent with ZP-B/D fixes; "topological isolation" evokes isolated-point topology, which is
@@ -170,7 +174,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.5'
+VERSION = '1.7'
 
 
 def build():
@@ -199,14 +203,14 @@ def build():
                 colWidths=[TW])
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
-          Paragraph('Where all four frameworks converge —\nand AX-1 becomes a theorem',
+          Paragraph('Where all four frameworks converge —\nand the main causality axiom becomes a theorem',
                     CS['title']),
           Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
           Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
-              'examples. It is not the formal ontology — every claim here restates a result '
-              'already proven in the corresponding technical document. Consult that document for '
+              'examples. It is not the formal document — every claim here restates a result '
+              'already proved in the corresponding technical document. Consult that document for '
               'the authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-E Doing?
@@ -240,8 +244,8 @@ def build():
     ]))
     E.append(remember_box(
         'Remember: The car crash illustrates what it means to describe one event in multiple '
-        'frameworks. The Zero Paradox is not about car crashes — it is about the emergence '
-        'of any state from a null condition.'))
+        'frameworks. The Zero Paradox is not about car crashes — the car crash is an analogy '
+        'for the forced first transition from &#8869; to &#949;&#8320; in any join-semilattice.'))
     E.append(sp(6))
 
     # AX-1 → T-SNAP
@@ -323,8 +327,8 @@ def build():
     E.append(remember_box(
         'Remember: The structural results — monotonicity, clopen separation, '
         'informational singularity, orthogonal shifts — hold in any instantiation of the '
-        'framework. The Zero Paradox is a universal ontology of state emergence, not a '
-        'physical theory of our particular universe.'))
+        'framework. The framework makes no claims about which physical theory, if any, '
+        'instantiates it.'))
 
     print(f'Building: {out_path}')
     doc.build(E)

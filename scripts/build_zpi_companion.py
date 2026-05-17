@@ -1,5 +1,8 @@
 """
-Build ZP-I Illustrated Companion (v1.1)
+Build ZP-I Illustrated Companion (v1.2)
+v1.2: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
+      Opening paragraph revised — "existence necessarily emerges from null" replaced with
+      structural consequence framing.
 Standalone companion for ZP-I: Inside Zero.
 
 Accessibility target: 2 years of college math.
@@ -273,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 
 def build():
@@ -316,8 +319,8 @@ def build():
         Paragraph('ZP Companion | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal ontology — every claim here restates a result already '
-            'proven in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — every claim here restates a result already '
+            'proved in the corresponding technical document. Consult that document for the '
             'authoritative mathematics. This document assumes familiarity with the ZP-E '
             'Illustrated Companion.',
             CS['disc']),
@@ -326,8 +329,9 @@ def build():
     # ── What ZP-I Is Doing ─────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-I Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E proved that existence necessarily emerges from null: the Binary Snap '
-        '(⊥ → ε₀) is derived, not assumed. But ZP-E left a question open: what happens '
+        'ZP-E proved that the transition from null (⊥) to the first non-null state (ε₀) '
+        'is a structural consequence of the lattice axioms — derived, not assumed. But '
+        'ZP-E left a question open: what happens '
         'after the Snap? The chain of states ascends — but does it ascend forever? And if '
         'not, what comes next?'))
     E.append(cbody(

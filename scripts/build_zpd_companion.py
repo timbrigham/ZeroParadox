@@ -1,5 +1,6 @@
 """
-Build ZP-D Illustrated Companion (v1.6)
+Build ZP-D Illustrated Companion (v1.7)
+v1.7: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Changes from v1.5:
 - t_map_diagram: dh increased (2.2 → 2.8 in), cy changed to fixed value 108 so bottom
   labels (cy - r_outer - 30 = 8) no longer overflow below y=0; internal title string removed
@@ -103,7 +104,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
@@ -146,8 +147,8 @@ def build():
         Paragraph('ZP Companion | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal ontology — every claim here restates a result already '
-            'proven in the corresponding technical document. Consult that document for the '
+            'examples. It is not the formal document — every claim here restates a result already '
+            'proved in the corresponding technical document. Consult that document for the '
             'authoritative mathematics.',
             CS['disc']),
     ]
