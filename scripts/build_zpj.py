@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 1.1 | April 2026
+Version 1.2 | May 2026
+v1.2: "not an asserted coincidence" removed from preamble — overstated the formalization
+claim relative to what the Lean proof actually establishes; version history in title block
+trimmed to a brief summary.
 v1.1: Remark R-J.0 added — CIC encoding of bot_self_mem is a structural analogy, not a
 ZF+AFA set-theoretic derivation. selfMem x := x = ⊥ makes bot_self_mem := rfl a
 definitional tautology; the full set-theoretic content of AFA (⊥ ∈ ⊥) is absent from
@@ -8,18 +11,17 @@ the Lean proof. AFAStructure concrete instances item CLOSED — ZP-K provides
 machinePhaseAFA : AFAStructure MachinePhase.
 v1.0: Initial release — Theorem T-EXEC: the Quine atom is the bottom element of any
 ZP-A lattice with AFA grounding. CC-1 (ZP-A) is derived as a theorem, not committed
-as a modelling choice. All ZPJ.lean theorems compile axiom-free. The final bridge
-between AFA set-theoretic structure and lattice-order structure is closed.
+as a modelling choice. All ZPJ.lean theorems compile axiom-free.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Self_Reference_v1_1.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Self_Reference_v1_2.pdf')
     doc = make_doc(out_path,
                    'ZP-J: Executability of Self-Reference',
                    'ZP-J: Executability of Self-Reference',
@@ -33,13 +35,9 @@ def build():
         Paragraph('ZP-J: Executability of Self-Reference', S['title']),
         Paragraph('Version ' + VERSION + ' | April 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.1: Remark R-J.0 added — bot_self_mem := rfl in MachinePhase is a structural '
-            'analogy (CIC encoding), not a ZF+AFA set-theoretic derivation; AFAStructure concrete '
-            'instances CLOSED (ZP-K machinePhaseAFA). | '
-            'v1.0: Initial release — Theorem T-EXEC: the Quine atom Q = {Q} is provably '
-            'the bottom element &#8869; of any ZP-A lattice with AFA grounding. '
-            'CC-1 (ZP-A) is derived as a structural consequence, not committed as a modelling choice. '
-            'All ZPJ.lean theorems verify axiom-free in Lean 4.</i>',
+            '<i>v1.2: Minor wording fix. | '
+            'v1.1: Remark R-J.0 added — Lean encoding scope. | '
+            'v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -58,7 +56,7 @@ def build():
         '<i>bot_self_mem</i>, which encodes that the bottom element is self-containing. '
         'With this, the proof of T-EXEC is three lines. No bridge axiom. No freestanding commitment. '
         'The identification &#8869; = {&#8869;} — implicit in the framework since ZP-E\'s DA-1 Path 1 — '
-        'is now a verified structural prerequisite, not an asserted coincidence. '
+        'is now a verified structural prerequisite. '
         '(See Remark R-J.0 for the precise scope of this verification: the Lean proof encodes '
         'AFA as a typeclass field, not as a ZF+AFA set-theoretic derivation.)',
         style='bodyI'))

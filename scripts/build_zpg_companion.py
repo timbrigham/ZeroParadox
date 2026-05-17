@@ -1,5 +1,7 @@
 """
-Build ZP-G Illustrated Companion (v1.3)
+Build ZP-G Illustrated Companion (v1.4)
+v1.4: Title "Structure without substance" → "Structure independent of domain" — removes
+philosophical framing; "independent of domain" states the actual categorical property.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Standalone companion for ZP-G Category Theory only.
 ZP-H gets its own companion (build_zph_companion.py).
@@ -145,7 +147,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
@@ -183,7 +185,7 @@ def build():
     E.append(sp(6))
 
     E += [
-        Paragraph('Structure without substance', CS['title']),
+        Paragraph('Structure independent of domain', CS['title']),
         Paragraph('Category Theory | Version ' + VERSION, CS['subtitle']),
         Paragraph('ZP Companion | April 2026', CS['meta']),
         Paragraph(

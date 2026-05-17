@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.12 | May 2026
+Version 3.13 | May 2026
+v3.13: Precision fix — "topological isolation is maximal" replaced with "clopen separation is
+total — 0 and every nonzero element lie in disjoint clopen classes" (0 in ℚ₂ is not topologically
+isolated; the correct property is clopen separation). "DA-1 unifies" replaced with "DA-1
+establishes these as descriptions of the same structural event across four independent
+mathematical languages."
 v3.12: Framework scope and failure-mode framing added to preamble — "coverage not exhaustion"
 paragraph addresses the "why these four?" question; cross-framework failure-mode paragraph names
 the domain-specific limit at ⊥ for each layer (lattice minimum, p-adic isolation, unbounded
@@ -56,7 +61,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.12'
+VERSION = '3.13'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -68,7 +73,7 @@ bridge_box = remark_box  # SLATE header — ZP-E bridge document style
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document_v3_12.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document_v3_13.pdf')
     print(f'[build_zpe] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version ' + VERSION, date_str='May 2026')
     E   = []
@@ -111,10 +116,11 @@ def build():
         'Across all four layers, the same structural limit appears at &#8869; — but each framework names '
         'it differently: ZP-A identifies &#8869; as the global minimum, below which the lattice\'s ordering '
         'relation cannot descend; ZP-B finds the p-adic valuation undefined (or +&#8734;) at 0, where '
-        'topological isolation is maximal; ZP-C finds surprisal unbounded above at &#8869;, so no finite '
+        'clopen separation is total — 0 and every nonzero element lie in disjoint clopen classes; '
+        'ZP-C finds surprisal unbounded above at &#8869;, so no finite '
         'external description can contain the null state; ZP-D maps 0 to a basis vector orthogonal to '
-        'every non-null state, from which no return is possible. DA-1 unifies these as the same phenomenon '
-        'seen through four lenses.'))
+        'every non-null state, from which no return is possible. DA-1 establishes these as descriptions '
+        'of the same structural event across four independent mathematical languages.'))
     E.append(hr())
 
     print('[build_zpe] Building DA-1...')

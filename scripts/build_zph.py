@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.11 | May 2026
+Version 1.12 | May 2026
+v1.12: Scaffolding note removed from preamble — "ZP-H cannot be written until ZP-G is internally
+closed" was a development artifact not appropriate in a public document.
 v1.11: Remark R-FORCING added between Sections V and VI — addresses the "renaming" concern;
 explains that the four domain functors each independently ground the snap through their own
 domain logic, verified sorry-free in Lean 4; structural forcing, not categorical re-description.
@@ -21,7 +23,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 
 
 def label_box_status(title, status_line, rows_list):
@@ -52,7 +54,7 @@ def label_box_status(title, status_line, rows_list):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_11.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_12.pdf')
     print(f'[build_zph] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-H: Categorical Bridge', 'ZP-H: Categorical Bridge',
                    'Version ' + VERSION, date_str='May 2026')
@@ -77,9 +79,8 @@ def build():
              'those four domain documents. Every cross-framework claim is traced to a theorem in '
              'ZP-G or ZP-A through ZP-E, plus an explicit bridge axiom where required. No floating '
              'connections.'),
-        body('ZP-H cannot be written until ZP-G is internally closed. ZP-G v1.1 is closed. ZP-H '
-             'inherits all open items from ZP-G with their original labels. The four open questions '
-             'from ZP-G — OQ-G1 through OQ-G4 — are the primary targets of this document. '
+        body('ZP-H inherits all open items from ZP-G with their original labels. The four open '
+             'questions from ZP-G — OQ-G1 through OQ-G4 — are the primary targets of this document. '
              'OQ-G2, OQ-G3, and OQ-G4 are resolved here. OQ-G1 is resolved in ZP-G v1.1 via '
              'D7\' and I-KC. All four OQ-G items are now closed.'),
         body('Sequencing note: ZP-H introduces one new definition (D-H1: the morphisms of C) that '
