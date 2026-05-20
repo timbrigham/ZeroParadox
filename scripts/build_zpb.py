@@ -1,5 +1,9 @@
 """
-Build ZP-B: p-Adic Topology (v1.6)
+Build ZP-B: p-Adic Topology (v1.7)
+v1.7: "Topological isolation of 0" renamed to "Clopen gap at 0" throughout — "isolated" has a
+specific topological meaning ({p} is open) that does not hold for {0} in Q2. The correct claim
+is clopen-ball separation: v2(0) = +inf places 0 in a distinct clopen class from every nonzero
+element. Section header IV, label_box, export table, and validation table all updated.
 v1.6: Remark added after AX-B1 clarifying that 0 and 1 are both present as mathematical objects;
 "existence" in AX-B1 is a property the states represent, not a statement about set membership.
 v1.5: T3 ZP interpretation bullets labelled explicitly — "ZP Interpretation:" prefix added to
@@ -9,10 +13,10 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_6.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_7.pdf')
     doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version ' + VERSION)
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
@@ -124,8 +128,8 @@ def build():
         'Proof: By T2, B(a, r) is clopen in Q<sub>2</sub>. Any continuous f: [0,1] &#8594; Q<sub>2</sub> with f(0) &#8712; B(a,r) and f(1) &#8712; B(b,r) would require f to map the connected set [0,1] onto a subset intersecting both B(a,r) and its clopen complement. The preimage of a clopen set under a continuous function is clopen in [0,1]. Since [0,1] is connected, the preimage is either empty or all of [0,1]. It cannot be all of [0,1] (since f(1) &#8713; B(a,r)) and cannot be empty (since f(0) &#8712; B(a,r)). Contradiction. <font name="DV">&#10003;</font>',
     ]))
 
-    E.append(Paragraph('IV. Topological Isolation of Zero', S['h1']))
-    E.append(label_box('Theorem T3 — Topological Isolation of 0', [
+    E.append(Paragraph('IV. Clopen Gap at Zero', S['h1']))
+    E.append(label_box('Theorem T3 — Clopen Gap at 0', [
         'For any r = 2<super>&#8722;k</super>, the ball B(0,r) = { x &#8712; Q<sub>2</sub> : v<sub>2</sub>(x) &#8805; k }. Any x outside this ball has d(0,x) &#8805; 2<super>&#8722;k+1</super> > r. B(0,r) and its complement are separated by a gap of at least 2<super>&#8722;k</super>.',
         'ZP Interpretation: this discrete jump across a clopen boundary is the topological expression of the Binary Snap (defined in ZP-E).',
         'Relationship to &#949;<sub>0</sub>: &#949;<sub>0</sub> = 2<super>k</super> is the smallest non-zero element outside the tightest ball around 0. ZP Interpretation: this is the gap the Binary Snap crosses. <font name="DV">&#10003;</font>',
@@ -164,8 +168,8 @@ def build():
          ['T0: p = 2', 'Derived from AX-B1 + MP-1', 'ZP-D: domain of T is Q<sub>2</sub>'],
          ['Q<sub>2</sub> with 2-adic metric (D1, D2)', 'Defined', 'ZP-D: topological domain of T'],
          ['T1: Ultrametric', 'Derived', 'ZP-D: non-Archimedean structure'],
-         ['T2: Clopen balls', 'Derived', 'ZP-D: topological isolation maps to orthogonality in H'],
-         ['T3: Topological isolation of 0', 'Derived', 'ZP-E: grounds ontological claim about the Snap'],
+         ['T2: Clopen balls', 'Derived', 'ZP-D: clopen gap maps to orthogonality in H'],
+         ['T3: Clopen gap at 0', 'Derived', 'ZP-E: grounds ontological claim about the Snap'],
          ['T5: Total disconnectedness', 'Derived', 'ZP-E: supports C3'],
          ['C3: Snap topologically irreversible', 'Derived — Corollary of T5', 'ZP-E: cross-framework irreversibility'],
          ['&#949;<sub>0</sub> (D5)', 'Defined — contingent', 'ZP-E: Snap threshold; value depends on instantiation'],
@@ -185,7 +189,7 @@ def build():
          ['C1: All triangles isosceles', 'Valid — Corollary of T1'],
          ['T2: Every ball is clopen', 'Valid — Derived from T1'],
          ['C2: Disjoint balls do not communicate', 'Valid — Derived from T2 only; forward citation to T5 removed'],
-         ['T3: Topological isolation of 0', 'Valid — Derived from D1 and D2'],
+         ['T3: Clopen gap at 0', 'Valid — Derived from D1 and D2'],
          ['T5: Q<sub>2</sub> totally disconnected', 'Valid — Derived from T2; proven before C3'],
          ['C3: Snap topologically irreversible', 'Valid — Corollary of T5; reclassified from Theorem T4'],
          ['D5: &#949;<sub>0</sub>', 'Valid — Defined; structural role universal; value contingent'],

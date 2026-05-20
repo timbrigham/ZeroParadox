@@ -143,6 +143,33 @@ Apply this when drafting or reviewing any companion section that makes claims ab
 
 **Category 5 — Scope overclaiming:** A statement implying a broader negative conclusion than intended. Universal quantifiers ("any domain," "every structure") applied to a ZP-specific limitation overstate the claim. Narrow the scope to what is actually proved.
 
+## Vocabulary Reference Guide — Standing Update Rule
+
+A vocabulary reference guide lives at `.claude-local/vocabulary_reference.md`. It is the authoritative list of:
+- Terms to avoid or replace (technically loaded words used incorrectly, or invented ZP jargon)
+- Terms requiring a plain-language gloss for non-specialist audiences
+- ZP-internal vocabulary and how to describe it externally
+
+**Standing rule:** Whenever a vocabulary problem is surfaced — by Dan, by an adversary review kill-list, or by any external reviewer — update `.claude-local/vocabulary_reference.md` in the same session before the session ends. Add a row to the Update Log with the date, source, and term. Do not leave vocabulary fixes as one-off edits without capturing the general rule.
+
+This rule applies to both directions:
+- A term flagged as wrong (e.g., "isolated," "membership status") → add to Section 1
+- A term flagged as needing a gloss (e.g., "valuation," "clopen") → add or verify in Section 2
+
+## Build Script Hash Integrity
+
+`register.md` records a SHA-256 fingerprint (first 8 chars) of every formal and companion build script in the `formal:XXXXXXXX comp:XXXXXXXX` token embedded in each row's Notes field.
+
+**Standing rule — any script change requires all four steps in the same commit:**
+1. Make the change and bump the internal version number
+2. Rebuild the PDF and archive the old version
+3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('.claude-local/build_X.py','rb').read()).hexdigest()[:8])"`
+4. Update the hash token in `register.md`
+
+**Session start check:** Run `python .claude-local/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing the full four-step workflow — version bump and PDF rebuild are overdue.
+
+A hash mismatch is not just a "rebuild needed" signal — it means the version bump step was skipped. Do not rebuild without incrementing the version number.
+
 ## PDF Build Standards
 
 **Before building any PDF in this project** — formal layer, companion, or otherwise — read `.claude-local/PDF_Rendering_Standards.md`. It is the single authoritative source for font stack, glyph rendering, table cell formatting, HTML entities, subscript/superscript rules, and pre-build verification. All rules there apply to every PDF build without exception.
