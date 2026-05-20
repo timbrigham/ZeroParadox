@@ -24,7 +24,7 @@ from the totally disconnected structure of Q₂.
 ## Formal Overview (AI-assisted)
 
 Formalizes the Zero Paradox p-adic framework over Q₂ (the 2-adic rationals).
-Proves: ultrametric T1, clopen balls T2, topological isolation T3,
+Proves: ultrametric T1, clopen balls T2, clopen gap at 0 T3,
 total disconnectedness T5, and irreversibility of the Snap C3.
 
 Self-contained within p-adic analysis and topology; no ZP-A algebra imported.
@@ -180,12 +180,12 @@ theorem c2_disjoint_no_path (a b : Q₂) (r : ℝ)
   have hmem_b : γ ⟨0, by norm_num⟩ ∈ Metric.closedBall b r := by rw [heq]; exact hγb
   exact Set.disjoint_left.mp hdisj hγa hmem_b
 
-/-! ## Theorem T3 — Topological Isolation of Zero
+/-! ## Theorem T3 — Clopen Gap at Zero
 
 For any r > 0, the ball B(0,r) is clopen: any element outside it is separated
 from 0 by a discrete gap — the topological identity of the Snap. -/
 
-/-- T3: B(0,r) is clopen in Q₂ for nonzero r; 0 is isolated from its complement by a gap. -/
+/-- T3: B(0,r) is clopen in Q₂ for nonzero r; 0 is separated from its complement by a clopen gap. -/
 theorem t3_isolation (r : ℝ) (hr : r ≠ 0) : IsClopen (Metric.closedBall (0 : Q₂) r) :=
   t2_closedBall_isClopen 0 r hr
 
