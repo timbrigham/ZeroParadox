@@ -1,5 +1,7 @@
 """
-Build ZP-H Illustrated Companion (v1.3)
+Build ZP-H Illustrated Companion (v1.4)
+v1.4: Add structural floor section — power set lattice as primary example; bridge to ZP-specific
+      structural floor; new section placed before morphism/functor content.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Standalone companion for ZP-H: Categorical Bridge only.
 ZP-G has its own companion (build_zpg_companion.py).
@@ -132,7 +134,7 @@ def snap_convergence_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
@@ -172,7 +174,7 @@ def build():
     E += [
         Paragraph('Four maps, one structure', CS['title']),
         Paragraph('Categorical Bridge | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('ZP Companion | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '
@@ -205,6 +207,48 @@ def build():
         'ZP-H constructs four functors from the abstract category C (center) into the four '
         'domain frameworks. Each functor F carries objects and morphisms faithfully, '
         'preserving the initial object and the forward-only structure.'))
+    E.append(sp(6))
+
+    # ── The structural floor ───────────────────────────────────────────────────
+    E.append(Paragraph('The Structural Floor', CS['h1']))
+    E.append(cbody(
+        'Before the categorical machinery, it helps to understand one key property that ⊥ '
+        'has in every ZP framework: the bottom element is not a limit point of the elements '
+        'above it. There is a gap — a structural floor — that nothing above ⊥ can close.'))
+    E.append(cbody(
+        'The simplest example of this property is one most readers have already encountered: '
+        'the collection of all subsets of a set. Take any set S — say <i>{a, b, c}</i> — '
+        'and collect every possible subset: ∅, {a}, {b}, {c}, {a, b}, and so on up to S '
+        'itself. Order them by inclusion: A ≤ B means A is contained in B. The empty set ∅ '
+        'sits at the bottom, below everything.'))
+    E.append(cbody(
+        'Now ask: can a sequence of nonempty subsets get "closer and closer" to ∅? No. Every '
+        'nonempty subset has at least one element — its size is at least 1. There is no subset '
+        'with size between 0 and 1, because you cannot have half an element. The gap between ∅ '
+        'and every nonempty subset is exactly 1, a discrete, combinatorial gap with no room to '
+        'subdivide. In this discrete setting, no element is a limit point of elements above it — '
+        'there is no way to subdivide the gap of one element. ∅ has this property in its most '
+        'extreme form: it sits below the entire lattice, so the minimum gap is between nothing '
+        'and something. No sequence of nonempty sets closes that gap.'))
+    E.append(cbody(
+        'The same property appears in the ZP framework, but for deeper reasons. In ZP-B, the '
+        '2-adic valuation v₂ assigns 0 the value +∞: v₂(0) = +∞, meaning 0 is divisible by '
+        'every power of 2. Every nonzero element has a finite v₂. No sequence of nonzero '
+        'elements can close this valuation gap: a nonzero element always has finite v₂, while '
+        '0 has infinite v₂, and no finite accumulation of finite values reaches infinity. '
+        'In ℚ₂, sequences can get metrically close to 0, but the valuation gap cannot be closed. '
+        'In ZP-A, ⊥ is the bottom of the lattice and the axioms forbid any non-trivial return. '
+        'In ZP-C, the informational cost of approaching the null state diverges — infinite '
+        'cost means no finite path reaches it. In ZP-D, the basis vector e₀ is orthogonal to '
+        'every non-null state — a right-angle separation that cannot be gradually closed.'))
+    E.append(remember_box(
+        'The power set example shows that the structural floor property is not exotic: it appears '
+        'in the most elementary object in set theory. What is non-trivial about the ZP framework '
+        'is that the same property appears in four analytic settings — topology, algebra, '
+        'information theory, Hilbert space — each with its own structural reason for why the '
+        'bottom cannot be approached. These settings are not independent: they share the '
+        'foundational commitments (A1-A4, AX-B1, CC-1) that produce this behavior in all four. '
+        'ZP-H verifies that these four reasons are consistent.'))
     E.append(sp(6))
 
     # ── Morphisms of C ─────────────────────────────────────────────────────────

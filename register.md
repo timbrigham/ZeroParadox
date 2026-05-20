@@ -13,7 +13,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-D State Layer | v1.8 | ZP-D_State_Layer.pdf | v1.7 | Companion v1.7: disclaimer updated — formal:255b169c comp:85c6e4d9 |
 | ZP-E Bridge Document | v3.13 | ZP-E_Bridge_Document.pdf | v1.7 | Companion v1.7: title, remember boxes updated; "universal ontology" removed — formal:be86fe89 comp:074c2c2f |
 | ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.4 | Companion v1.4: title "Structure independent of domain"; formal doc: "Internal Working Document" removed — formal:bde00483 comp:b0e98acc |
-| ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.3 | Companion v1.3: disclaimer updated; formal doc: scaffolding note removed — formal:d14f2b36 comp:0f1c7362 |
+| ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Companion v1.4: structural floor section added — power set lattice as primary example, ℚ₂ valuation precision fixes, independence framing corrected — formal:d14f2b36 comp:13af3a5c |
 | ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero.pdf | v1.2 | Companion v1.2: disclaimer + opener updated — formal:b3138d52 comp:78767395 |
 | ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
 | ZP-K Computational Grounding | v1.5 | ZP-K_Computational_Grounding.pdf | v1.2 | Companion v1.2: disclaimer updated; v1.5: precision fixes (periodicity framing, typeclass commitment language, Kolmogorov claims scoped) — PDF rebuild pending — formal:d11d3565 comp:20f7004b |
