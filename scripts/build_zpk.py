@@ -81,8 +81,8 @@ def build():
         'Kleene\'s second recursion theorem is the computational fixed-point theorem. '
         'For any partially computable transformation f of programs, there exists a program '
         'e such that e and f(e) compute the same function. Applied to the identity: there '
-        'exists a program that computes the same function as itself — a program that is its '
-        'own program.'))
+        'exists a program whose output at any input n equals its output at its own Gödel '
+        'number plus n — a periodicity fixed point.'))
     E.append(body(
         'In Lean 4, this is formalized in Mathlib\'s computability library. '
         'For any partially computable transformation f of codes, '
@@ -95,9 +95,9 @@ def build():
         [
             'For any partially computable f : Code → ℕ →. ℕ, '
             'there exists c : Code such that eval c = f c.',
-            'This is the computational expression of the Quine atom. A code whose behavior '
-            'is determined by itself alone — no external description shorter than c generates '
-            'it. The computational analogue of ⊥ = {⊥}.',
+            'Applied to the selfApply transformation, this yields a code c satisfying '
+            'eval c n = eval c (encode c + n) for all n — a periodicity condition with '
+            'period equal to c\'s own Gödel number. Multiple such codes exist.',
         ]
     ))
     E.append(sp(6))
@@ -105,9 +105,11 @@ def build():
     E.append(Paragraph('II. The Self-Application Map', S['h2']))
     E.append(body(
         'The self-application map sends each code c to the partial function that runs c on '
-        'c\'s own Gödel number plus an offset. A fixed point of self-application is a code '
-        'that computes its own behavior — running it on any input gives the same result as '
-        'running it on its own encoding plus that input.'))
+        'c\'s own Gödel number plus an offset. A fixed point of self-application satisfies '
+        'a periodicity condition: eval c n = eval c (encode c + n) for all n, with period '
+        'equal to c\'s own Gödel number. Non-uniqueness is expected: distinct codes have '
+        'distinct Gödel numbers, so each generates a fixed point with a distinct period — '
+        'the family of fixed points is infinite and its members are not mutually constrained.'))
 
     E.append(def_box(
         'Definition: selfApply and IsComputationalQuine (ZPK.lean § I)',
@@ -154,9 +156,10 @@ def build():
         'bot_self_mem (⊥ is self-containing). T-EXEC follows: the Quine atom equals ⊥.'))
     E.append(body(
         'ZP-K\'s KleeneStructure extends AFAStructure with a computational witness: a code '
-        'botCode that IS its own program, whose existence is guaranteed by Kleene\'s theorem. '
-        'The AFA self-containment (⊥ = {⊥}) and the Kleene fixed point (botCode is its own '
-        'program) are the same structural fact stated in two formal languages.'))
+        'botCode satisfying the selfApply periodicity condition, whose existence is guaranteed '
+        'by Kleene\'s theorem. The typeclass commitment takes AFA self-containment (⊥ = {⊥}) '
+        'and the Kleene fixed point to be the same structural role stated in two formal '
+        'languages — this is the motivating claim, not a consequence derived by the theorems.'))
 
     E.append(def_box(
         'KleeneStructure Typeclass (ZPK.lean § II)',

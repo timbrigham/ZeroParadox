@@ -32,10 +32,10 @@ Establishes the four-way equivalence between the structural roles of ⊥:
   (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
 
 The central result (T-COMP): in any ZP-K structure, ⊥ satisfies the Kleene
-fixed-point property. The bridge from mathematical self-reference to computational
-execution is not a bridge — (1)–(4) name the same structural role in four formal
-languages. DA-1's three informal argument paths are three projections of one
-structural identity.
+fixed-point property. The KleeneStructure typeclass takes (1)–(4) to name the same
+structural role in four formal languages — this is the motivating commitment, not a
+consequence derived by the theorems. T-COMP establishes (1)↔(2)↔(3) via T-EXEC;
+(4) is present by typeclass requirement.
 
 ## Structure
 
@@ -51,8 +51,9 @@ structural identity.
 ⊥ IS the universal Turing machine in its ground state. U is not a description awaiting
 an external executor — U IS the executor. Kleene's second recursion theorem
 (Mathlib: Nat.Partrec.Code.fixed_point₂) guarantees the existence of this fixed point
-for any partially computable transformation. The AFA Quine atom (⊥ = {⊥}) and the
-Kleene computational Quine (∃ c, eval c = f c) are the same structural property.
+for any partially computable transformation. The KleeneStructure typeclass takes the AFA Quine atom (⊥ = {⊥}) and the
+Kleene computational Quine (∃ c, eval c = f c) to be the same structural property —
+the motivating commitment, not a theorem proved here.
 
 ## Dependencies
 
@@ -93,13 +94,15 @@ theorem kleene_fixed_point_exists (f : Code → ℕ →. ℕ) (hf : Partrec₂ f
   fixed_point₂ hf
 
 /-- The self-application transformation: the map sending each code c to the
-    partial function encoding "run c on c's own Gödel number."
-    A fixed point of selfApply is a code that computes its own behavior —
-    the computational Quine atom, the code that IS its own program.
+    partial function encoding "run c on c's own Gödel number plus offset n."
+    A fixed point of selfApply satisfies a periodicity condition with period encode(c):
+    eval c n = eval c (encode c + n) for all n. The period is the code's own Gödel
+    number. Non-uniqueness is expected: distinct codes have distinct Gödel numbers,
+    so each generates a fixed point with a distinct period — the family of fixed
+    points is infinite and its members are not mutually constrained.
 
     The Gödel numbering uses Mathlib's `Encodable.encode : Code → ℕ`, which gives
-    each code a canonical index. Running c on (encode c + n) is the standard
-    self-application construction; selfApply_partrec confirms this is computable. -/
+    each code a canonical index. selfApply_partrec confirms this is computable. -/
 noncomputable def selfApply : Code → ℕ →. ℕ :=
   fun c n => eval c (Encodable.encode c + n)
 
@@ -111,10 +114,10 @@ lemma selfApply_partrec : Partrec₂ selfApply := by
       (Primrec.encode.comp Primrec.fst)
       Primrec.snd).to_comp
 
-/-- A computational Quine is a code that is a fixed point of self-application:
-    running c on any input n gives the same result as running c on c's own
-    encoding plus n. This is the computational expression of ⊥ = {⊥}:
-    c is its own program; no prior description generates it. -/
+/-- A computational Quine is a code satisfying the selfApply periodicity condition:
+    eval c n = eval c (encode c + n) for all n. Existence is guaranteed by Kleene's
+    second recursion theorem. Non-uniqueness is expected — multiple codes with distinct
+    Gödel numbers satisfy the condition independently. -/
 def IsComputationalQuine (c : Code) : Prop :=
   IsKleeneFixedPoint selfApply c
 
@@ -129,9 +132,12 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
     computational setting is richer. A fixed point c of selfApply satisfies:
       eval c n = eval c (Encodable.encode c + n)  for all n
     This is a periodicity condition on eval c, not a global identity constraint.
-    Multiple programs can satisfy it independently — including the always-undefined
-    code, constant partial functions, and programs with period dividing encode(c).
-    There is no mechanism forcing two such programs to agree on all inputs.
+    Multiple programs can satisfy it independently — and this is structurally expected:
+    each bottom element in the DA-2 instantiation succession carries its own Gödel
+    number, so each generates a distinct fixed point with a distinct period. The
+    infinite family of computational fixed points corresponds to the infinite family
+    of bottom elements across instantiation chains. A single unique quine would
+    contradict DA-2.
     Uniqueness in ZP-K is inherited from ZP-J (set-theoretic side via T-EXEC):
     any element satisfying IsQuineAtom equals ⊥ — this is kleene_quine_is_bot.
     The computational witnesses (botCode) are identified with ⊥ through the
