@@ -2,6 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Adversary Review Gate — Hard Rule
+
+**Any public-facing action requires adversary review to have completed before execution.** This is non-negotiable and applies to every action that puts content in front of an external reader:
+
+- `git push` containing changes to prose in any tracked file (Lean source docstrings, build script `body()` calls, README.md, GUIDE.md, any companion script)
+- Sending an email to any external party
+- Posting or editing a GitHub Discussion body or follow-up comment
+- Posting or editing a GitHub Issue
+- Any other action that surfaces content outside this repository
+
+**The protocol:**
+1. Before executing any of the above, Claude must explicitly ask: "Adversary review complete for this content?"
+2. Wait for Tim's confirmation before proceeding — do not self-assess whether review is needed
+3. If review has not been run, offer to run `/adversary-review` on the relevant content first
+4. Only after explicit confirmation may the public-facing action execute
+
+Same-session self-review does not satisfy this requirement. The review must be a separate adversarial context (spawned Agent with no conversation history).
+
+**What triggered this rule:** Lean docstring and build script prose changes were pushed on 2026-05-20 before adversary review ran. The review subsequently found two additional precision errors in the already-committed content.
+
 ## Guiding Principles (from Project Instructions)
 
 - **Logical Rigor First:** The primary goal is logical consistency and rigor. 
