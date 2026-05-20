@@ -1,6 +1,12 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.4 | May 2026
+Version 1.5 | May 2026
+v1.5: Precision fixes — periodicity framing throughout (selfApply fixed-point stated
+as periodicity condition eval c n = eval c (encode c + n), not "computes itself");
+typeclass commitment language for KleeneStructure (AFA and Kleene fixed point "taken
+to be" the same structural role, not derived as equivalent); Kolmogorov/AIT claims
+removed from preamble and def_box (those belong to Path 3 as informal motivation,
+not to Kleene's theorem statement); Section II framing updated accordingly.
 v1.4: Four-way equivalence claim scoped to this framework in preamble; version history in
 title block trimmed to brief summary.
 v1.3: Forward references to "ZP-PQ" replaced throughout with "The Philosophical Question That Started This" — that document already contained the dissolution argument; ZP-PQ was always a placeholder label.
@@ -26,7 +32,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -41,9 +47,10 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-K: Computational Grounding of Self-Reference', S['title']),
-        Paragraph('Version ' + VERSION + ' | April 2026', S['subtitle']),
+        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.4: Four-way equivalence claim scoped to this framework; version history trimmed. | '
+            '<i>v1.5: Precision fixes — periodicity framing, typeclass commitment language, Kolmogorov claims removed from preamble. | '
+            'v1.4: Four-way equivalence claim scoped to this framework; version history trimmed. | '
             'v1.3: ZP-PQ forward references updated. | '
             'v1.0–1.2: Initial release; R-K.0; DA-1 Path 2 recharacterization. '
             'All ZPK.lean theorems verified in Lean 4.</i>',
@@ -444,7 +451,7 @@ def build():
     E.append(sp(8))
 
     print('[build_zpk] Building registers...')
-    E += [hr(), Paragraph('Traceability Register — ZP-K v1.3', S['h1'])]
+    E += [hr(), Paragraph('Traceability Register — ZP-K v1.5', S['h1'])]
 
     trace_rows = [
         ['selfApply_partrec',
@@ -489,7 +496,7 @@ def build():
     ))
     E.append(sp(8))
 
-    E += [hr(), Paragraph('Open Items Register — ZP-K v1.3', S['h1'])]
+    E += [hr(), Paragraph('Open Items Register — ZP-K v1.5', S['h1'])]
 
     oq_rows = [
         ['DA-1 Path 1 (AFA structural)',
@@ -530,7 +537,7 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-K v1.3 | Computational Grounding of Self-Reference | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
+            '<i>End of ZP-K v1.5 | Computational Grounding of Self-Reference | Precision fixes: periodicity framing, typeclass commitment language, Kolmogorov claims scoped. | '
             'DA-1 closed: da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase) | '
             'Four-way equivalence: Quine atom = ⊥ = join identity = Kleene fixed point | '
             'Path 2 recharacterized: foundational commitment, not missing proof; forward: The Philosophical Question That Started This | '
