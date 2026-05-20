@@ -30,10 +30,11 @@ Transparency is a core value of this project. The existence of this private fold
 
 ## Document Versioning Conventions
 
-- Current documents live at the root: `ZP-X_Title_vN_N.pdf` (no numeric suffix)
-- Superseded versions are moved to `historical/` and get a numeric suffix: `ZP-X_Title_vN_N-1.pdf`
+- Current documents live at the root with **flat (version-free) filenames**: `ZP-X_Title.pdf`
+- Version numbers are tracked in `register.md` (Formal Version column) and in each PDF's title block — not in the filename
+- Superseded versions are moved to `historical/` **with the version number added**: `ZP-X_Title_vN_N.pdf` (no `-1` suffix needed since the root filename is flat)
 - The `historical/README.md` tracks all archived files with date moved and description
-- README.md always links to the non-suffixed (current) version
+- README.md and GUIDE.md always link to the flat root filename
 
 ## GitHub Releases and Zenodo Snapshots
 
@@ -388,7 +389,7 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 
 **Historical folder table format** (`historical/README.md`):
 ```
-| [ZP-A_Lattice_Algebra_v1_1-1.pdf](ZP-A_Lattice_Algebra_v1_1-1.pdf) | YYYY-MM-DD | Brief description of what this version was |
+| [ZP-A_Lattice_Algebra_v1_1.pdf](ZP-A_Lattice_Algebra_v1_1.pdf) | YYYY-MM-DD | Brief description of what this version was |
 ```
 - File column: use the actual archived filename in both display text and link
 - Date: YYYY-MM-DD (date moved, not date of document)
@@ -397,12 +398,11 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 ## Archiving Old Document Versions
 
 When a document is superseded:
-1. Add a numeric suffix to the old file and move it: `Move-Item ZP-X_Title_vN_N.pdf historical\ZP-X_Title_vN_N-1.pdf`
-2. Add the new version to the root (no suffix)
+1. Move the current flat root file to historical with the version number: `Move-Item ZP-X_Title.pdf historical\ZP-X_Title_vN_N.pdf`
+2. Rebuild the new version into the flat root name: `ZP-X_Title.pdf`
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
-4. Update register.md with the new version number and filename
+4. Update register.md with the new version number (Filename column stays flat — `ZP-X_Title.pdf`)
 5. Update the version number in README.md's The Framework table
-6. Update any version-hardcoded links in GUIDE.md's Reading Paths
 
 ## Theorem/Proposition/Lemma Naming Convention
 
