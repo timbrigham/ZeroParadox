@@ -90,7 +90,8 @@ def four_functor_diagram():
 
 def snap_convergence_diagram():
     """Shows the Binary Snap described by all four frameworks."""
-    dw, dh = TW, 1.6 * inch
+    # 1.9 * 72 = 136.8 pts; content top = T-SNAP at cy+44 = 112.4, bottom = snap line at cy-40 = 28.4
+    dw, dh = TW, 1.9 * inch
     d = Drawing(dw, dh)
 
     cy = dh / 2
@@ -129,9 +130,6 @@ def snap_convergence_diagram():
         y = cy + yoff
         d.add(String(rx - 16, y - 5, lbl, fontSize=7, fontName='DV-I', fillColor=col))
 
-    d.add(String(dw/2 - 165, dh - 12,
-                 'All four frameworks describe the same Binary Snap — each from its own perspective',
-                 fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
 VERSION = '1.4'
