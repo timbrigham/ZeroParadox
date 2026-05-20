@@ -16,13 +16,13 @@ FONT_DIR    = os.path.join(SCRIPT_DIR, 'fonts')
 
 BUILD_SCRIPTS = [
     'build_foreword.py', 'build_tools.py', 'build_gen2.py',
-    'build_zpe.py', 'build_zpg.py', 'build_zph.py', 'build_zpi.py',
+    'build_zpe.py', 'build_zpf.py', 'build_zpg.py', 'build_zph.py', 'build_zpi.py',
     'build_zpa.py', 'build_zpb.py', 'build_zpc.py', 'build_zpd.py',
     'build_zpj.py', 'build_zpk.py',
     'build_zpa_companion.py', 'build_zpb_companion.py', 'build_zpc_companion.py',
-    'build_zpd_companion.py', 'build_zpe_companion.py', 'build_zpg_companion.py',
-    'build_zph_companion.py', 'build_zpi_companion.py', 'build_zpj_companion.py',
-    'build_zpk_companion.py', 'build_zp_philosophical_question.py',
+    'build_zpd_companion.py', 'build_zpe_companion.py', 'build_zpf_companion.py',
+    'build_zpg_companion.py', 'build_zph_companion.py', 'build_zpi_companion.py',
+    'build_zpj_companion.py', 'build_zpk_companion.py', 'build_zp_philosophical_question.py',
 ]
 
 EXPECTED_PDFS = [
@@ -30,16 +30,17 @@ EXPECTED_PDFS = [
     'ZP_Tools_and_Methods.pdf',
     'ZP_Gen2_Applications.pdf',
     'ZP_Philosophical_Question.pdf',
-    'ZP-A_Lattice_Algebra_v1_12.pdf',   'ZP-A_Illustrated_Companion.pdf',
-    'ZP-B_pAdic_Topology_v1_6.pdf',     'ZP-B_Illustrated_Companion.pdf',
-    'ZP-C_Information_Theory_v1_12.pdf', 'ZP-C_Illustrated_Companion.pdf',
-    'ZP-D_State_Layer_v1_8.pdf',        'ZP-D_Illustrated_Companion.pdf',
-    'ZP-E_Bridge_Document_v3_12.pdf',   'ZP-E_Illustrated_Companion.pdf',
-    'ZP-G_Category_Theory_v1_7.pdf',    'ZP-G_Illustrated_Companion.pdf',
-    'ZP-H_Categorical_Bridge_v1_11.pdf', 'ZP-H_Illustrated_Companion.pdf',
-    'ZP-I_Inside_Zero_v1_8.pdf',        'ZP-I_Illustrated_Companion.pdf',
-    'ZP-J_Self_Reference_v1_1.pdf',     'ZP-J_Illustrated_Companion.pdf',
-    'ZP-K_Computational_Grounding_v1_3.pdf', 'ZP-K_Illustrated_Companion.pdf',
+    'ZP-A_Lattice_Algebra.pdf',         'ZP-A_Illustrated_Companion.pdf',
+    'ZP-B_pAdic_Topology.pdf',          'ZP-B_Illustrated_Companion.pdf',
+    'ZP-C_Information_Theory.pdf',      'ZP-C_Illustrated_Companion.pdf',
+    'ZP-D_State_Layer.pdf',             'ZP-D_Illustrated_Companion.pdf',
+    'ZP-E_Bridge_Document.pdf',         'ZP-E_Illustrated_Companion.pdf',
+    'ZP-F_The_Counterexamples.pdf',     'ZP-F_Illustrated_Companion.pdf',
+    'ZP-G_Category_Theory.pdf',         'ZP-G_Illustrated_Companion.pdf',
+    'ZP-H_Categorical_Bridge.pdf',      'ZP-H_Illustrated_Companion.pdf',
+    'ZP-I_Inside_Zero.pdf',             'ZP-I_Illustrated_Companion.pdf',
+    'ZP-J_Self_Reference.pdf',          'ZP-J_Illustrated_Companion.pdf',
+    'ZP-K_Computational_Grounding.pdf', 'ZP-K_Illustrated_Companion.pdf',
 ]
 
 # Regex: font registration lines for DVS* slots

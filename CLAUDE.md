@@ -30,10 +30,11 @@ Transparency is a core value of this project. The existence of this private fold
 
 ## Document Versioning Conventions
 
-- Current documents live at the root: `ZP-X_Title_vN_N.pdf` (no numeric suffix)
-- Superseded versions are moved to `historical/` and get a numeric suffix: `ZP-X_Title_vN_N-1.pdf`
+- Current documents live at the root with **flat (version-free) filenames**: `ZP-X_Title.pdf`
+- Version numbers are tracked in `register.md` (Formal Version column) and in each PDF's title block — not in the filename
+- Superseded versions are moved to `historical/` **with the version number added**: `ZP-X_Title_vN_N.pdf` (no `-1` suffix needed since the root filename is flat)
 - The `historical/README.md` tracks all archived files with date moved and description
-- README.md always links to the non-suffixed (current) version
+- README.md and GUIDE.md always link to the flat root filename
 
 ## GitHub Releases and Zenodo Snapshots
 
@@ -142,6 +143,33 @@ Apply this when drafting or reviewing any companion section that makes claims ab
 **Category 4 — Context-free structural claims:** Asserting something as universally true that is only true within the ZP framework. Claims about zero or ⊥ that are true in the ZP context may be false in most mathematical frameworks. Scope all such claims explicitly to the ZP setting.
 
 **Category 5 — Scope overclaiming:** A statement implying a broader negative conclusion than intended. Universal quantifiers ("any domain," "every structure") applied to a ZP-specific limitation overstate the claim. Narrow the scope to what is actually proved.
+
+## Vocabulary Reference Guide — Standing Update Rule
+
+A vocabulary reference guide lives at `.claude-local/vocabulary_reference.md`. It is the authoritative list of:
+- Terms to avoid or replace (technically loaded words used incorrectly, or invented ZP jargon)
+- Terms requiring a plain-language gloss for non-specialist audiences
+- ZP-internal vocabulary and how to describe it externally
+
+**Standing rule:** Whenever a vocabulary problem is surfaced — by Dan, by an adversary review kill-list, or by any external reviewer — update `.claude-local/vocabulary_reference.md` in the same session before the session ends. Add a row to the Update Log with the date, source, and term. Do not leave vocabulary fixes as one-off edits without capturing the general rule.
+
+This rule applies to both directions:
+- A term flagged as wrong (e.g., "isolated," "membership status") → add to Section 1
+- A term flagged as needing a gloss (e.g., "valuation," "clopen") → add or verify in Section 2
+
+## Build Script Hash Integrity
+
+`register.md` records a SHA-256 fingerprint (first 8 chars) of every formal and companion build script in the `formal:XXXXXXXX comp:XXXXXXXX` token embedded in each row's Notes field.
+
+**Standing rule — any script change requires all four steps in the same commit:**
+1. Make the change and bump the internal version number
+2. Rebuild the PDF and archive the old version
+3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('.claude-local/build_X.py','rb').read()).hexdigest()[:8])"`
+4. Update the hash token in `register.md`
+
+**Session start check:** Run `python .claude-local/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing the full four-step workflow — version bump and PDF rebuild are overdue.
+
+A hash mismatch is not just a "rebuild needed" signal — it means the version bump step was skipped. Do not rebuild without incrementing the version number.
 
 ## PDF Build Standards
 
@@ -361,7 +389,7 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 
 **Historical folder table format** (`historical/README.md`):
 ```
-| [ZP-A_Lattice_Algebra_v1_1-1.pdf](ZP-A_Lattice_Algebra_v1_1-1.pdf) | YYYY-MM-DD | Brief description of what this version was |
+| [ZP-A_Lattice_Algebra_v1_1.pdf](ZP-A_Lattice_Algebra_v1_1.pdf) | YYYY-MM-DD | Brief description of what this version was |
 ```
 - File column: use the actual archived filename in both display text and link
 - Date: YYYY-MM-DD (date moved, not date of document)
@@ -370,12 +398,11 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 ## Archiving Old Document Versions
 
 When a document is superseded:
-1. Add a numeric suffix to the old file and move it: `Move-Item ZP-X_Title_vN_N.pdf historical\ZP-X_Title_vN_N-1.pdf`
-2. Add the new version to the root (no suffix)
+1. Move the current flat root file to historical with the version number: `Move-Item ZP-X_Title.pdf historical\ZP-X_Title_vN_N.pdf`
+2. Rebuild the new version into the flat root name: `ZP-X_Title.pdf`
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
-4. Update register.md with the new version number and filename
+4. Update register.md with the new version number (Filename column stays flat — `ZP-X_Title.pdf`)
 5. Update the version number in README.md's The Framework table
-6. Update any version-hardcoded links in GUIDE.md's Reading Paths
 
 ## Theorem/Proposition/Lemma Naming Convention
 

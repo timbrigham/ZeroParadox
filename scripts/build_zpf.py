@@ -15,7 +15,7 @@ from zp_utils import *
 VERSION = '1.1'
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples_v1_1.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples.pdf')
     doc = make_doc(out_path, 'ZP-F: The Counterexamples', 'ZP-F', 'Version ' + VERSION)
     E = []
 

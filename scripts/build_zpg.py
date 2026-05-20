@@ -103,7 +103,7 @@ def make_doc(path, title_str, doc_id, version_str, date_str='May 2026'):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory_v1_8.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory.pdf')
     print(f'[build_zpg] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version ' + VERSION)
     E   = []

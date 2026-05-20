@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-B_pAdic_Topology_v1_6-1.pdf](ZP-B_pAdic_Topology_v1_6-1.pdf) | 2026-05-20 | ZP-B v1.6 superseded by v1.7: T3 renamed from "Topological isolation of 0" to "Clopen gap at 0" — {0} is not open in ℚ₂ so the topological-isolation label was incorrect; clopen-ball separation is the accurate claim. |
 | [ZP-K_Computational_Grounding_v1_3-1.pdf](ZP-K_Computational_Grounding_v1_3-1.pdf) | 2026-05-17 | ZP-K v1.3 superseded by v1.4: four-way equivalence claim scoped to this framework; verbose version history removed from PDF title block. |
 | [ZP-J_Self_Reference_v1_1-1.pdf](ZP-J_Self_Reference_v1_1-1.pdf) | 2026-05-17 | ZP-J v1.1 superseded by v1.2: "not an asserted coincidence" removed — overstated the Lean formalization claim; version history trimmed. |
 | [ZP-H_Categorical_Bridge_v1_11-1.pdf](ZP-H_Categorical_Bridge_v1_11-1.pdf) | 2026-05-17 | ZP-H v1.11 superseded by v1.12: scaffolding note "ZP-H cannot be written until ZP-G is internally closed" removed from preamble — development artifact not appropriate in a public document. |

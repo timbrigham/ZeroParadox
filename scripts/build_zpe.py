@@ -73,7 +73,7 @@ bridge_box = remark_box  # SLATE header — ZP-E bridge document style
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document_v3_13.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document.pdf')
     print(f'[build_zpe] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version ' + VERSION, date_str='May 2026')
     E   = []

@@ -21,7 +21,7 @@ VERSION = '1.2'
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Self_Reference_v1_2.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Self_Reference.pdf')
     doc = make_doc(out_path,
                    'ZP-J: Executability of Self-Reference',
                    'ZP-J: Executability of Self-Reference',

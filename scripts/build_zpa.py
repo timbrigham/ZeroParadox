@@ -31,7 +31,7 @@ from zp_utils import *
 VERSION = '1.13'
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra_v1_13.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra.pdf')
     doc = make_doc(out_path, 'ZP-A: Lattice Algebra', 'ZP-A', 'Version ' + VERSION)
     E = []
 

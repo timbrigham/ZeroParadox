@@ -54,7 +54,7 @@ def label_box_status(title, status_line, rows_list):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge_v1_12.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge.pdf')
     print(f'[build_zph] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-H: Categorical Bridge', 'ZP-H: Categorical Bridge',
                    'Version ' + VERSION, date_str='May 2026')
