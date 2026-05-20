@@ -16,7 +16,7 @@ from zp_utils import *
 VERSION = '1.7'
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology_v1_7.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology.pdf')
     doc = make_doc(out_path, 'ZP-B: p-Adic Topology', 'ZP-B', 'Version ' + VERSION)
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),

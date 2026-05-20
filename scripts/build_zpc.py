@@ -23,7 +23,7 @@ from zp_utils import *
 VERSION = '1.12'
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory_v1_12.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
     doc = make_doc(out_path, 'ZP-C: Information Theory', 'ZP-C', 'Version ' + VERSION)
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),

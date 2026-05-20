@@ -17,7 +17,7 @@ from zp_utils import *
 VERSION = '1.8'
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer_v1_8.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer.pdf')
     doc = make_doc(out_path, 'ZP-D: State Layer (Hilbert Space)', 'ZP-D', 'Version ' + VERSION)
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),

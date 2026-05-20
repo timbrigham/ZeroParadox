@@ -85,7 +85,7 @@ def key_result_box(rows):
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-I_Inside_Zero_v1_8.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-I_Inside_Zero.pdf')
     print(f'[build_zpi] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-I: Inside Zero', 'ZP-I: Inside Zero',
                    'Version ' + VERSION, date_str='May 2026')

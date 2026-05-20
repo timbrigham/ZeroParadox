@@ -30,7 +30,7 @@ VERSION = '1.4'
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-K_Computational_Grounding_v1_4.pdf')
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-K_Computational_Grounding.pdf')
     print(f'[build_zpk] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-K: Computational Grounding of Self-Reference',
                    'ZP-K: Computational Grounding', 'Version ' + VERSION)
