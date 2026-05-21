@@ -24,6 +24,18 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 
 ---
 
-## Script Hash Verification
+## Script Hash Verification + AR Tracking
 
-The `formal:XXXXXXXX comp:XXXXXXXX` tokens in the Notes column above are SHA-256 (first 8 chars) fingerprints of the corresponding build scripts in `.claude-local/`. Run `.claude-local/check_hashes.py` at the start of any session touching build scripts to confirm scripts and register are in sync. A mismatch means a script was modified without a version bump and PDF rebuild — not just a rebuild, a full version bump with archive step.
+The `formal:XXXXXXXX comp:XXXXXXXX` tokens in the Notes column above are SHA-256 (first 8 chars) fingerprints of the corresponding build scripts in `.claude-local/`. The `Comp AR` column tracks adversary-review status for each companion, backed by `.claude-local/ar_status.json`.
+
+**Session start** — run once before touching any build script:
+```
+python .claude-local/check_hashes.py
+```
+A hash `MISMATCH` means a script was modified without a version bump and PDF rebuild. An AR status of `STALE` means the companion script changed since its last adversary review — re-review required before merge.
+
+**Post-fix workflow** — after applying adversary-review fixes, rebuilding the PDF, and updating the hash in register.md, run one command to close the loop:
+```
+python .claude-local/check_hashes.py --mark-remediated ZP-X
+```
+This computes the current comp hash, writes it to `ar_status.json` as remediated, and updates the `Comp AR` column in this file automatically. For fixes identified but not yet applied, use `--mark-reviewed ZP-X` instead (sets Y/N).
