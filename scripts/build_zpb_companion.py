@@ -1,5 +1,9 @@
 """
-Build ZP-B Illustrated Companion (v1.7)
+Build ZP-B Illustrated Companion (v1.8)
+v1.8: Dan feedback (2026-05-21): "dense" → "densely ordered"; rewrite para 2 of "Why p-Adic
+      Geometry?" to acknowledge ℚ₂ also has no minimum nonzero element — difference is topology
+      (clopen), not field arithmetic; add ε₀ note in key property box clarifying ε₀ is a
+      framework threshold, not a specific 2-adic number.
 v1.7: Dan feedback (2026-05-17) — PhD in metrics:
       (1) removed "halfway between existing and not existing" (category error — existence
           is not a quantity that can be averaged); replaced with density argument
@@ -112,7 +116,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -164,18 +168,19 @@ def build():
     E.append(Paragraph('Why p-Adic Geometry?', CS['h1']))
     E.append(cbody(
         'The standard choice for modeling distance — the real number line — is the wrong tool here. '
-        'The real line is dense: between any two distinct values there is always a third. This means '
-        'there is no first nonzero step: for any candidate smallest distance ε, the value ε/2 is '
-        'smaller and also positive. A framework that requires a definite first departure from null '
-        'needs a geometry that can enforce one — the real line structurally cannot.'))
+        'The real line is densely ordered: between any two distinct values there is always a third. '
+        'This means there is no first nonzero step: for any candidate smallest distance ε, the value '
+        'ε/2 is smaller and also positive. A framework that requires a definite first departure from '
+        'null needs a geometry that can enforce one — the real line structurally cannot.'))
     E.append(cbody(
-        'The 2-adic metric provides exactly this structure. In &#8474;&#8322;, the null state (0) '
-        'and the first nonzero state lie in separate clopen components — completely disjoint '
-        'regions with no continuous path between them. This is not a boundary crossed by accumulating '
-        'small steps; the two states are in entirely distinct parts of the space. The binary gap is a '
-        'feature of the geometry itself, not imposed on top of it. This is why &#8474;&#8322; — the '
-        '2-adic number field — is the natural mathematical language for a framework built on '
-        'AX-B1 (the claim that a state either exists or it does not). '
+        'The 2-adic numbers take a different route. As a number system, &#8474;&#8322; also has no '
+        'smallest nonzero element — you can always find something smaller. What changes is the '
+        '<i>topology</i>: in &#8474;&#8322;, the null state (0) and every nonzero state live in '
+        'completely separate clopen regions — entirely disjoint, with no continuous path between them. '
+        'The gap is not enforced by the number system running out of small values. It is built into '
+        'the geometry as a hard topological barrier. This is why &#8474;&#8322; — the 2-adic number '
+        'field — is the natural mathematical language for a framework built on AX-B1 (the claim that '
+        'a state either exists or it does not). '
         'Note: this framework makes no claims about physical cosmology. '
         'The framework concerns the logical structure of states — '
         'it is not a physical theory of how the universe began.'))
@@ -184,6 +189,10 @@ def build():
         'What it measures in this framework: depth of binary structure — how many times 2 divides x.',
         'The crucial point: 0 and the first nonzero state lie in separate clopen components of ℚ₂. '
         'No continuous path connects them — the geometry enforces the binary gap.',
+        'Note on ε₀: the first nonzero state is not a specific number you can look up in ℚ₂ — '
+        'the 2-adic number system has no smallest nonzero element. ε₀ is the framework\'s name '
+        'for the minimum viable departure from null, defined by structural constraints. '
+        'The geometry provides the right topology; it does not fix the specific value.',
     ]))
     E.append(sp(8))
 
@@ -191,7 +200,8 @@ def build():
     E.append(cbody(
         'ZP-B puts the Zero Paradox on a specific geometric foundation: the 2-adic number field '
         'ℚ₂. This is not standard Euclidean geometry. In ℚ₂, distance works in a fundamentally '
-        'different way — one that makes the singularity at zero structurally unavoidable.'))
+        'different way — one that places zero at infinite valuation distance from every nonzero element, '
+        'enforcing a hard structural gap.'))
     E.append(cbody(
         'The starting point is a single axiom: AX-B1 (Binary Existence) — a state either exists '
         'or it does not. From this, together with a minimality principle (MP-1), the document '
@@ -295,9 +305,9 @@ def build():
 
     E.append(remember_box(
         'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
-        'universal across all instantiations. The numerical value of ε₀ (the Snap threshold) is '
-        'universe-contingent: it depends on physical constants. The Zero Paradox is a structural '
-        'ontology, not a physical theory of our particular universe.'))
+        'fixed by the framework\'s axioms. ε₀ (the Snap threshold) is a structural concept: '
+        'the minimum nonzero state required by those axioms, not a specific physical constant. '
+        'The Zero Paradox is a structural argument, not a physical theory of our particular universe.'))
 
     print(f'Building: {out_path}')
     doc.build(E)

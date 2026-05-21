@@ -4,24 +4,38 @@
 
 Update this file first on any version bump. README.md Framework table and GUIDE.md Reading Paths are verified against this register.
 
-| Document | Formal Version | Filename | Companion Version | Notes |
-|----------|---------------|----------|-------------------|-------|
-| ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra.pdf | v1.6 | Companion v1.6: disclaimer "formal ontology" → "formal document" — formal:130d0acd comp:3d8b14d5 |
-| ZP-B p-Adic Topology | v1.7 | ZP-B_pAdic_Topology.pdf | v1.7 | Formal v1.7: "Topological isolation of 0" → "Clopen gap at 0" throughout. Companion v1.7: stale PDF rebuilt — script had been updated with isolation fixes (v1.4-v1.7) but PDF was never regenerated. — formal:84db2ad4 comp:2ee84380 |
-| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.8 | Companion v1.8: topological/valuative distinction corrected; Riemann sphere analogy added — formal:8b35d28e comp:ef61332d |
-| ZP-C Information Theory | v1.12 | ZP-C_Information_Theory.pdf | v1.8 | Companion v1.8: disclaimer updated — formal:4a59f304 comp:d376d5cf |
-| ZP-D State Layer | v1.8 | ZP-D_State_Layer.pdf | v1.7 | Companion v1.7: disclaimer updated — formal:255b169c comp:85c6e4d9 |
-| ZP-E Bridge Document | v3.13 | ZP-E_Bridge_Document.pdf | v1.7 | Companion v1.7: title, remember boxes updated; "universal ontology" removed — formal:be86fe89 comp:074c2c2f |
-| ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.4 | Companion v1.4: title "Structure independent of domain"; formal doc: "Internal Working Document" removed — formal:bde00483 comp:b0e98acc |
-| ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
-| ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero.pdf | v1.2 | Companion v1.2: disclaimer + opener updated — formal:b3138d52 comp:78767395 |
-| ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
-| ZP-K Computational Grounding | v1.5 | ZP-K_Computational_Grounding.pdf | v1.2 | Companion v1.2: disclaimer updated; v1.5: precision fixes (periodicity framing, typeclass commitment language, Kolmogorov claims scoped) — PDF rebuild pending — formal:d11d3565 comp:20f7004b |
+| Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
+|----------|---------------|----------|-------------------|---------|-------|
+| ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra.pdf | v1.6 | Y/Y | Companion v1.6: disclaimer "formal ontology" → "formal document" — formal:130d0acd comp:b47e99d6 |
+| ZP-B p-Adic Topology | v1.8 | ZP-B_pAdic_Topology.pdf | v1.8 | Y/Y | Companion v1.8: "dense" → "densely ordered"; ℚ₂ no-minimum clarification added; ε₀ framework note added; VERSION bump fix; "singularity" → valuation gap; remember box universe-contingent claim removed — formal:42af38ce comp:454decc4 |
+| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.9 | Y/Y | Companion v1.9: comparison table "isolated" → "valuatively distinct" (kill-level AR fix) — formal:8b35d28e comp:ea91ad01 |
+| ZP-C Information Theory | v1.13 | ZP-C_Information_Theory.pdf | v1.9 | Y/Y | Companion v1.9: "informational singularity" defined in first paragraph — formal:45164ac2 comp:af22429f |
+| ZP-D State Layer | v1.9 | ZP-D_State_Layer.pdf | v1.7 | Y/Y | Companion v1.7: disclaimer updated — formal:a80de810 comp:198ff647 |
+| ZP-E Bridge Document | v3.14 | ZP-E_Bridge_Document.pdf | v1.8 | Y/Y | Companion v1.8: title "converge" → "four frameworks, one event"; diagram captions "independent proof" → "independent mathematical description" — formal:f6326831 comp:a4cf4aa1 |
+| ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.5 | Y/Y | Companion v1.5: "Informational Singularity" section renamed/rewritten — structural surprisal definition; section title → "Informational Asymmetry of 0" — formal:bde00483 comp:869c0ccc |
+| ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
+| ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.2 | Y/Y | Companion v1.2: disclaimer + opener updated — formal:298f2e30 comp:2b408089 |
+| ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Y/Y | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
+| ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.3 | Y/Y | Companion v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — formal:8c00d4aa comp:409a45d1 |
+
+**Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
 *Last updated: May 2026*
 
 ---
 
-## Script Hash Verification
+## Script Hash Verification + AR Tracking
 
-The `formal:XXXXXXXX comp:XXXXXXXX` tokens in the Notes column above are SHA-256 (first 8 chars) fingerprints of the corresponding build scripts in `.claude-local/`. Run `.claude-local/check_hashes.py` at the start of any session touching build scripts to confirm scripts and register are in sync. A mismatch means a script was modified without a version bump and PDF rebuild — not just a rebuild, a full version bump with archive step.
+The `formal:XXXXXXXX comp:XXXXXXXX` tokens in the Notes column above are SHA-256 (first 8 chars) fingerprints of the corresponding build scripts in `.claude-local/`. The `Comp AR` column tracks adversary-review status for each companion, backed by `.claude-local/ar_status.json`.
+
+**Session start** — run once before touching any build script:
+```
+python .claude-local/check_hashes.py
+```
+A hash `MISMATCH` means a script was modified without a version bump and PDF rebuild. An AR status of `STALE` means the companion script changed since its last adversary review — re-review required before merge.
+
+**Post-fix workflow** — after applying adversary-review fixes, rebuilding the PDF, and updating the hash in register.md, run one command to close the loop:
+```
+python .claude-local/check_hashes.py --mark-remediated ZP-X
+```
+This computes the current comp hash, writes it to `ar_status.json` as remediated, and updates the `Comp AR` column in this file automatically. For fixes identified but not yet applied, use `--mark-reviewed ZP-X` instead (sets Y/N).

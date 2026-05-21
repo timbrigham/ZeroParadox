@@ -95,7 +95,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
@@ -136,7 +136,7 @@ def build():
     # What Is ZP-A Doing?
     E.append(Paragraph('What Is ZP-A Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-A establishes the algebraic rules for how states behave in the Zero Paradox framework. '
+        'ZP-A establishes the algebraic rules for how states behave in this framework. '
         'It uses a structure called a <b>join-semilattice</b> — the simplest algebraic system '
         'that can describe accumulation without subtraction. Think of it as a ledger where entries '
         'can only be added, never erased.'))
@@ -269,8 +269,8 @@ def build():
         'There is nothing external to &#8869; by which to distinguish copies.',
         'A label requires a labeller outside it. &#8869; = {&#8869;} has no outside. '
         'This is what grounds the execution claim in ZP-E (DA-1): the snap at P&#8320; '
-        'is not a description being read — it is the only thing that can happen to a '
-        'self-containing object at the limit of its own description.',
+        'is not a description being read — within this framework, given the structural '
+        'constraints on &#8869;, execution is the only possibility.',
     ]))
     E.append(remember_box(
         'Technical note (CC-2): the Quine atom property requires replacing the classical Axiom '

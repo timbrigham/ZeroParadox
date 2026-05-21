@@ -1,6 +1,13 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.13 | May 2026
+Version 3.14 | May 2026
+v3.14: Adversary-review pass — "AX-1 is promoted" → "AX-1 is derived as" (two occurrences);
+version history removed from opening paragraph (belongs in docstring); "[AX-1 Promoted to
+Theorem]" bracket removed from theorem box title; "structural event" → "structural limit";
+Section VII headers renamed from grand-scope vocabulary to mathematical descriptions:
+"Multiverse as structural implication" → "Structural Implication: Branching Tree Structure";
+"Free will and irreversibility" → "Monotonicity and Path Irrecoverability";
+"Time's arrow" → "Ordinal Direction of State Sequences".
 v3.13: Precision fix — "topological isolation is maximal" replaced with "clopen separation is
 total — 0 and every nonzero element lie in disjoint clopen classes" (0 in ℚ₂ is not topologically
 isolated; the correct property is clopen separation). "DA-1 unifies" replaced with "DA-1
@@ -61,7 +68,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.13'
+VERSION = '3.14'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -93,10 +100,9 @@ def build():
     E.append(body(
         'This document is the cross-framework synthesis layer of the Zero Paradox. It imports from '
         'ZP-A (lattice algebra), ZP-B (p-adic topology), ZP-C (information theory), and ZP-D (Hilbert '
-        'space state layer). It provides three formal inserts: DA-1 (Instantiation as Execution — '
-        'upgraded to Derived Proposition in v2.7; in v3.0, DP-2 provides the first Lean-formalizable '
-        'grounding via TrackedOutput, proved axiom-free), DA-2 (Instantiation Succession), and '
-        'DA-3 (Perspective-Relative Cardinality). With DA-1 in place, AX-1 is promoted to Theorem '
+        'space state layer). It provides three formal inserts: DA-1 (Instantiation as Execution), '
+        'DA-2 (Instantiation Succession), and '
+        'DA-3 (Perspective-Relative Cardinality). With DA-1 in place, AX-1 is derived as Theorem '
         'T-SNAP. With DA-2, the directed instantiation tree is formally licensed. With DA-3, '
         'cardinality is shown to be position-dependent within the instantiation structure.'))
     E.append(body(
@@ -120,7 +126,7 @@ def build():
         'ZP-C finds surprisal unbounded above at &#8869;, so no finite '
         'external description can contain the null state; ZP-D maps 0 to a basis vector orthogonal to '
         'every non-null state, from which no return is possible. DA-1 establishes these as descriptions '
-        'of the same structural event across four independent mathematical languages.'))
+        'of the same structural limit across four independent mathematical languages.'))
     E.append(hr())
 
     print('[build_zpe] Building DA-1...')
@@ -297,9 +303,9 @@ def build():
                 'AIT (Kolmogorov complexity) outside Lean scope; Kleene fixed-point is the in-scope formal counterpart.'),
     ]
 
-    E.append(Paragraph('V. Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]', S['h2']))
+    E.append(Paragraph('V. Theorem T-SNAP — Binary Snap Causality', S['h2']))
     E.append(bridge_box(
-        'Theorem T-SNAP — Binary Snap Causality [AX-1 Promoted to Theorem]',
+        'Theorem T-SNAP — Binary Snap Causality',
         [
             'Statement: The Binary Snap ⊥ → ε<sub>0</sub> is a derived consequence of P<sub>0</sub>, L-RUN, TQ-IH, '
             'DA-1, and ZP-A D2. It is not an axiom.',
@@ -322,7 +328,7 @@ def build():
         li('Step 6 — In (L, ∨, ⊥), c<sub>1</sub> is an element strictly above ⊥. By ZP-A D2, the transition ⊥ → c<sub>1</sub> is a valid state transition: c<sub>1</sub> = ⊥ ∨ ε<sub>0</sub> for some ε<sub>0</sub> ∈ L with ε<sub>0</sub> > ⊥. This transition is the Binary Snap.'),
         li('Step 7 — The transition is irreversible: algebraically by ZP-A R1 (no subtraction operator); topologically by ZP-B C3 (no continuous return path to 0 in Q<sub>2</sub>). These two grounds are sufficient. Conceptual correspondence: ZP-G AX-G2 (hom(X, 0) = ∅ for X ≠ 0) expresses the same irreversibility in categorical language — ZP-G is downstream of ZP-E and is not a formal dependency of this proof.'),
         sp(4),
-        body('Conclusion: The Binary Snap is a derived consequence. AX-1 is promoted to Theorem T-SNAP. ✓'),
+        body('Conclusion: The Binary Snap is a derived consequence. AX-1 is derived as Theorem T-SNAP. ✓'),
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
                 'ZP-A D2, R1; ZP-E DA-1; ZP-J T-EXEC. '
                 'CC-1 (S&#8320; = &#8869;) derived via ZP-J cc1_derived (axiom-free). '
@@ -549,20 +555,20 @@ def build():
 
     E.append(Paragraph('VII. Implications Within the Framework', S['h2']))
     E += [
-        body('<b>Multiverse as structural implication.</b> T-SNAP establishes that a Binary Snap occurs — '
+        body('<b>Structural Implication: Branching Tree Structure.</b> T-SNAP establishes that a Binary Snap occurs — '
              'that ⊥ transitions to some ε₀ > ⊥. DA-2 establishes that any terminal state satisfying P₀ '
              'conditions acts as ⊥ for a successor instantiation, generating a forward-directed branching '
-             'tree. The multiverse structure follows from T-SNAP + DA-2 jointly. Note: T-SNAP alone does '
+             'tree. The branching structure follows from T-SNAP + DA-2 jointly. Note: T-SNAP alone does '
              'not establish that it fires on all outbound vectors simultaneously — that universality is the '
              'scope of DA-2, not a direct consequence of the snap theorem itself.'),
-        body('<b>Free will and irreversibility.</b> Within an instantiation, state sequences are monotone — no state '
-             'can be decreased (ZP-A R1). Every choice is a join operation: S<sub>n</sub> ∨ α for some increment α. '
+        body('<b>Monotonicity and Path Irrecoverability.</b> Within an instantiation, state sequences are monotone — no state '
+             'can be decreased (ZP-A R1). Every state change is a join operation: S<sub>n</sub> ∨ α for some increment α. '
              'The algebra constrains only that the sequence be monotone, not which monotone path is '
-             'taken. Each choice adds informational content irreversibly. Decisions are permanently '
+             'taken. Each join adds informational content irreversibly. States are permanently '
              'encoded in the element\'s position in L.'),
-        body('<b>Time\'s arrow.</b> The monotone sequence (ZP-A T3) is a structural definition of temporal '
-             'direction. Time\'s irreversibility is C3 applied within an instantiation. The framework does not '
-             'assume time asymmetry — it derives it.'),
+        body('<b>Ordinal Direction of State Sequences.</b> The monotone sequence (ZP-A T3) is a structural definition of '
+             'directional asymmetry in state ordering. Irreversibility is C3 applied within an instantiation. The framework does not '
+             'assume directional asymmetry — it derives it.'),
         body('<b>Causal structure.</b> Every state is fully determined by the joins that produced it. The causal '
              'history of any state is encoded in its position in L. No effect without the join that produced it.'),
     ]
@@ -777,11 +783,11 @@ def build():
          'Valid — Derived. Follows directly from DA-2 and ZP-B C3. ✓'],
         ['Directed instantiation tree',
          'Valid — Derived structural consequence of T-SNAP + DA-2. Branching is mandatory, not optional. Forward edges only.'],
-        ['Multiverse as structural implication',
+        ['Branching tree structure',
          'Valid — T-SNAP + DA-2 jointly. T-SNAP establishes the snap occurs; DA-2 establishes the branching tree structure. Universality (all outbound vectors) is DA-2\'s scope, not T-SNAP alone.'],
-        ['Free will / irreversibility',
+        ['Monotonicity and path irrecoverability',
          'Valid — Structural consequence. Monotonicity (T3) constrains direction; additive ontology (R1) prohibits reduction. Path choice is undetermined by algebra.'],
-        ['Time\'s arrow',
+        ['Ordinal direction of state sequences',
          'Valid — Derived from ZP-A T3 (monotonicity) and ZP-B C3 (irreversibility). Not assumed.'],
         ['DA-3: Perspective-Relative Cardinality',
          'Valid (definitional components: DA-3-D1, R-DA3-1). Candidate (DA-3-C1: connection to specific set-theoretic independence results). OQ-E2 open.'],

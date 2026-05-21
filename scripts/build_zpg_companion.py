@@ -147,7 +147,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -318,18 +318,19 @@ def build():
         'Forward movement is the only possibility. The structure of C is strictly directed.'))
     E.append(sp(6))
 
-    # ── Surprisal and the informational singularity ────────────────────────────
-    E.append(Paragraph('The Informational Singularity', CS['h1']))
+    # ── Informational asymmetry of the initial object ──────────────────────────
+    E.append(Paragraph('The Informational Asymmetry of 0', CS['h1']))
     E.append(cbody(
-        'ZP-G also introduces a notion of <b>surprisal</b> for morphisms. Informally: '
-        'a morphism from a common object to a rare object is surprising; a morphism from '
-        'a rare object to a common one is less so. The surprisal of a morphism f: A → B '
-        'measures how much informational content the transition from A to B carries.'))
+        'ZP-G introduces an informal notion of <b>surprisal</b> for morphisms — how much '
+        'informational content a transition carries. The definition is structural, not '
+        'probabilistic: it counts the number of distinct paths from 0 to an object. As the '
+        'category grows and more objects are added, the number of morphisms departing from 0 '
+        'grows with them, and the surprisal of leaving 0 increases without bound.'))
     E.append(cbody(
-        'The initial object 0 has a special status: outward surprisal (from 0 to anything) '
-        'grows without bound as we consider more and more objects in C. But inward surprisal '
-        '(from anything to 0) is undefined — because no such morphism exists (T3). '
-        'This asymmetry is the <b>informational singularity</b> of 0.'))
+        'The initial object 0 has a built-in directional asymmetry: outward surprisal '
+        '(from 0 to anything) grows without bound, while inward surprisal '
+        '(from anything to 0) is undefined — no such morphism exists (T3). '
+        '0 is a one-way origin: reachable as a source, unreachable as a destination.'))
     E.append(cbody(
         'T6 formalizes this: the surprisal associated with leaving 0 accumulates with each '
         'step, and the morphisms pointing back to 0 are absent by AX-G2. 0 is a one-way '

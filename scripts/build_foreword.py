@@ -1,5 +1,9 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.7, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v1.8, revised May 2026)
+v1.8: Adversary-review pass — epigraph removed; Section VIII (WHERE THE FRAMEWORK REACHES)
+cut entirely (applications content belongs in Gen2 document); Planck-scale analogy removed
+from Section VI (ε₀ is a structural threshold, not a physical constant); callout box in
+Section I rewritten ("directly describable by nothing" → precise algebraic description).
 v1.7: Added note to Section III clarifying ZP-K's Classical.choice dependency is a standard
 Lean infrastructure axiom, not a novel framework commitment — addresses 4.7 from outside review.
 v1.6: AX-B1 status changed from "Decidable" to "Directly Verifiable"; plain-language description
@@ -16,7 +20,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -134,12 +138,6 @@ def build():
         Paragraph('A Foreword for the General Reader', S['subtitle']),
         Paragraph('May 2026  |  v' + VERSION, S['date']),
         sp(10),
-        Paragraph(
-            'The paradox is not that zero is nothing.<br/>'
-            'The paradox is that zero is the one thing<br/>'
-            'that has to be there for everything else to exist —<br/>'
-            'and is the one thing the tools of everything else cannot reach.',
-            S['epigraph']),
         sp(8),
         hr(),
     ]
@@ -179,8 +177,8 @@ def build():
 
     story.append(box(
         'The central claim is this: zero is not the absence of mathematical structure. It is '
-        'the presence of structure at its most fundamental — the element that is '
-        'algebraically present in every state and directly describable by nothing.'
+        'the unique minimal element of the induced partial order — the element below which '
+        'no other state exists, and from which every state is reachable by joins.'
     ))
     story.append(sp(6))
 
@@ -355,11 +353,10 @@ def build():
             'with explicit bridge axioms where required.',
             S['body']),
         Paragraph(
-            'This is not a physical theory. The framework is instantiation-independent. '
-            'Physical theories are recovered by instantiating the free parameters. '
-            'The minimum viable deviation ε₀ plays the structural role of a '
-            'Planck-scale quantity, but its numerical value depends on the physical constants '
-            'of the universe.',
+            'This is not a physical theory. The framework is instantiation-independent — '
+            'its results hold for any structure satisfying the axioms, not for our universe '
+            'specifically. ε₀ is a structural threshold defined by the framework\'s axioms, '
+            'not a physical constant.',
             S['body']),
         Paragraph(
             'This is not a claim about consciousness, qualia, or the hard problem. '
@@ -414,35 +411,6 @@ def build():
             'one element that every state inherits, that every measurement is taken from, that '
             'every description presupposes, and that no description, in the standard sense, '
             'can reach.',
-            S['body']),
-    ]
-
-    # ── VIII. WHERE THE FRAMEWORK REACHES ────────────────────────────────────
-    story += [
-        Paragraph('VIII. WHERE THE FRAMEWORK REACHES', S['h1']),
-        Paragraph(
-            'The Generation 1 result — the Binary Snap as a derived theorem — '
-            'has structural consequences beyond the framework itself. Under stated conditions '
-            'and with explicit assumptions, it bears on several problems that have remained '
-            'open in physics, mathematics, and philosophy.',
-            S['body']),
-        Paragraph(
-            'The most direct connection is to the arrow of time. The irreversibility of the '
-            'Binary Snap — derived independently in ZP-A (monotonicity), ZP-B '
-            '(topological irreversibility), and ZP-G (source asymmetry) — provides a '
-            'structural account of temporal asymmetry that does not import the arrow of time '
-            'as an assumption. Under the condition that the physical universe instantiates '
-            '⊥ and ε₀ as its boundary states, the arrow of time is an instance '
-            'of the Zero Paradox, not a separate phenomenon requiring separate explanation.',
-            S['body']),
-        Paragraph(
-            'Further connections — to Leibniz\'s question of why there is something '
-            'rather than nothing, to Wigner\'s puzzle about the unreasonable effectiveness '
-            'of mathematics, to the fine-tuning problem in cosmology, and to Skolem\'s '
-            'paradox in set theory — are developed in the companion document '
-            '"Generation 2: Applications and Open Problems." '
-            'Each case states its required assumptions explicitly, assesses fit honestly, '
-            'and names the gaps that remain.',
             S['body']),
     ]
 

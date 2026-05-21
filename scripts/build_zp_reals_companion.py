@@ -1,7 +1,9 @@
 """
 Build ZP-Reals Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.5 | May 2026
+Version 1.6 | May 2026
+v1.6: Adversary-review pass — "That is definitional" removed from Section V state-change
+claim; replaced with explicit scope to domains where state changes have nonzero extent.
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
@@ -117,7 +119,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():
@@ -265,7 +267,8 @@ def build():
     E.append(cbody(
         'State changes require finite nonzero duration &#8212; not as an empirical '
         'observation, but as a structural feature of what change means. A change that '
-        'takes zero time is not a change. That is definitional. In any domain where '
+        'takes zero time is not a change — within any domain where state changes are '
+        'modeled as having nonzero extent. In any domain where '
         'genuine state changes occur, perfect zero is therefore only an asymptotic '
         'floor: the limit toward which processes tend without arriving. '
         'It cannot be stably occupied.'))

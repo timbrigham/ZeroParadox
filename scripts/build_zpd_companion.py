@@ -104,7 +104,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -142,7 +142,7 @@ def build():
     E.append(sp(6))
 
     E += [
-        Paragraph('How topology maps to quantum state space', CS['title']),
+        Paragraph('How topology maps to Hilbert space geometry', CS['title']),
         Paragraph('State Layer (Hilbert Space) | Version ' + VERSION, CS['subtitle']),
         Paragraph('ZP Companion | May 2026', CS['meta']),
         Paragraph(

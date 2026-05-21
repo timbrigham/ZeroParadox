@@ -1,6 +1,9 @@
 """
-Build: The Philosophical Question That Started This (v1.1)
-A standalone philosophical document in the Zero Paradox project.
+Build: The Philosophical Question That Started This (v1.2)
+v1.2: Adversary-review pass — opening rewritten to lead with Theorem T-SNAP (machine-verified
+artifact) before the Leibniz framing; Leibniz question repositioned as philosophical
+interpretation of the formal result rather than the document's opening claim.
+v1.1: Initial release.
 
 Not a formal layer. Not a companion. An essay on the question
 that generated the framework and what the framework discovered
@@ -12,7 +15,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')
@@ -182,21 +185,21 @@ def build():
 
     # ── Opening ────────────────────────────────────────────────────────────────
     E.append(body(
-        'The Zero Paradox began with a philosophical question, not a mathematical one. '
-        'The question was Leibniz\'s: <i>why is there something rather than nothing?</i> '
+        'Theorem T-SNAP — verified sorry-free in Lean 4, at github.com/timbrigham/ZeroParadox '
+        '— establishes that the first state-transition from a null state to a non-null state '
+        'is a structural consequence of any null-containing state space, not an assumption. '
+        'The proof is machine-checked; it requires no special snap axiom.'))
+    E.append(body(
+        'Leibniz asked: <i>why is there something rather than nothing?</i> '
         'The standard response — in philosophy and in physics — is that this question '
-        'has no formal answer. Existence must be assumed somewhere. Every formal system '
-        'has a starting point it does not derive.'))
+        'has no formal answer. Existence must be assumed somewhere. T-SNAP bears directly '
+        'on that assumption: if the null state (⊥, the bottom of a join-semilattice) is '
+        'taken as the mathematical formalization of "nothing," then the Binary Snap '
+        '(⊥ → ε₀, the first transition from nothing to something) is structurally '
+        'compelled — not assumed, not answered, compelled.'))
     E.append(body(
-        'The Zero Paradox does not accept this. It asks: what if the emergence of '
-        'something from nothing is not a starting assumption but a structural '
-        'consequence — something the mathematics forces on any model that takes '
-        'a null state seriously? If that is true, then the Binary Snap (⊥ → ε₀, '
-        'the first transition from nothing to something) is not an axiom. It is a theorem.'))
-    E.append(body(
-        'Eleven formal layers later — ZP-A through ZP-K, verified sorry-free in Lean 4 '
-        '— the framework has an answer. But the answer is more interesting than either '
-        '"yes, fully proved" or "no, still assumed." What the framework found is a '
+        'Eleven formal layers later — ZP-A through ZP-K — the picture is more nuanced '
+        'than "yes, fully proved" or "no, still assumed." What the framework found is a '
         'third possibility: the question itself, applied with sufficient precision, '
         'dissolves. This document is about that dissolution — and about the precise '
         'distinction between what dissolves and what snaps.'))
