@@ -190,7 +190,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '1.9'
+VERSION = '2.0'
 
 
 def build():
@@ -295,9 +295,10 @@ def build():
         'Yet both diverge to infinity at the same point: zero. K(x|n)/n &#8594; 1 as '
         'configurations approach the incompressibility threshold. I(x) &#8594; &#8734; as '
         'states approach 0 in &#8474;&#8322;. The convergence is not engineered — it reflects '
-        'something structurally real about &#8869;. Zero is not merely hard to reach in one '
-        'sense; it is the limit of unreachability from two independent directions simultaneously. '
-        'ZP-C uses both routes as independent confirmation of the same structural fact.'))
+        'something structurally real about &#8869;. Kolmogorov complexity and Shannon surprisal '
+        'were developed in separate branches of mathematics with no shared definition, yet both '
+        'hit the same barrier at zero. ZP-C uses both as independent confirmation of the same '
+        'structural fact.'))
     E.append(sp(8))
 
     E.append(Paragraph('Why the Singularity Forces Execution (L-INF)', CS['h1']))
