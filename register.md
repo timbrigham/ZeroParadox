@@ -14,7 +14,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-E Bridge Document | v3.13 | ZP-E_Bridge_Document.pdf | v1.8 | Y/Y | Companion v1.8: title "converge" → "four frameworks, one event"; diagram captions "independent proof" → "independent mathematical description" — formal:be86fe89 comp:a4cf4aa1 |
 | ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.5 | Y/Y | Companion v1.5: "Informational Singularity" section renamed/rewritten — structural surprisal definition; section title → "Informational Asymmetry of 0" — formal:bde00483 comp:869c0ccc |
 | ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
-| ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero.pdf | v1.2 | Y/N | Companion v1.2: disclaimer + opener updated — formal:b3138d52 comp:78767395 |
+| ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero.pdf | v1.2 | Y/Y | Companion v1.2: disclaimer + opener updated — formal:b3138d52 comp:2b408089 |
 | ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Y/Y | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
 | ZP-K Computational Grounding | v1.5 | ZP-K_Computational_Grounding.pdf | v1.3 | Y/Y | Companion v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — formal:d11d3565 comp:409a45d1 |
 

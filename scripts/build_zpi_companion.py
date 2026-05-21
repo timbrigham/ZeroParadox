@@ -276,7 +276,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 def build():
@@ -336,7 +336,7 @@ def build():
         'not, what comes next?'))
     E.append(cbody(
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
-        'Every maximal ascending chain in the Zero Paradox framework converges — in the '
+        'Every maximal ascending chain in this framework converges — in the '
         '2-adic metric — to its own successor null. The chain does not go on forever; it '
         'generates a new null at the ordinal limit, and the cycle begins again. The '
         'framework is not just a description of emergence. It is a closed system.'))
@@ -597,7 +597,7 @@ def build():
         'The topological core is proved axiom-free in Lean 4 (ZPI.lean v1.1, all proofs filled). '
         'The valuation-complexity bridge uses the same informal argument as DA-1 '
         'Path 3 in ZP-E (outside Lean scope: Kolmogorov complexity absent from Mathlib). '
-        'The Zero Paradox framework is a closed system: T-SNAP opens each branch; '
+        'This framework is a closed system: T-SNAP opens each branch; '
         'T-IZ closes it and generates the next null; DA-2 licenses the successor. '
         'Emergence and return are both derived, not assumed.'))
 
