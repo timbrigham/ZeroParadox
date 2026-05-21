@@ -116,7 +116,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -200,7 +200,8 @@ def build():
     E.append(cbody(
         'ZP-B puts the Zero Paradox on a specific geometric foundation: the 2-adic number field '
         'ℚ₂. This is not standard Euclidean geometry. In ℚ₂, distance works in a fundamentally '
-        'different way — one that makes the singularity at zero structurally unavoidable.'))
+        'different way — one that places zero at infinite valuation distance from every nonzero element, '
+        'enforcing a hard structural gap.'))
     E.append(cbody(
         'The starting point is a single axiom: AX-B1 (Binary Existence) — a state either exists '
         'or it does not. From this, together with a minimality principle (MP-1), the document '
@@ -304,9 +305,9 @@ def build():
 
     E.append(remember_box(
         'Remember: The 2-adic structure — ultrametric, clopen balls, clopen separation of 0 — is '
-        'universal across all instantiations. The numerical value of ε₀ (the Snap threshold) is '
-        'universe-contingent: it depends on physical constants. The Zero Paradox is a structural '
-        'ontology, not a physical theory of our particular universe.'))
+        'fixed by the framework\'s axioms. ε₀ (the Snap threshold) is a structural concept: '
+        'the minimum nonzero state required by those axioms, not a specific physical constant. '
+        'The Zero Paradox is a structural argument, not a physical theory of our particular universe.'))
 
     print(f'Building: {out_path}')
     doc.build(E)
