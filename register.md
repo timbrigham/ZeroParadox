@@ -7,7 +7,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | Document | Formal Version | Filename | Companion Version | Notes |
 |----------|---------------|----------|-------------------|-------|
 | ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra.pdf | v1.6 | Companion v1.6: disclaimer "formal ontology" → "formal document" — formal:130d0acd comp:3d8b14d5 |
-| ZP-B p-Adic Topology | v1.7 | ZP-B_pAdic_Topology.pdf | v1.7 | Formal v1.7: "Topological isolation of 0" → "Clopen gap at 0" throughout. Companion v1.7: stale PDF rebuilt — script had been updated with isolation fixes (v1.4-v1.7) but PDF was never regenerated. — formal:84db2ad4 comp:2ee84380 |
+| ZP-B p-Adic Topology | v1.7 | ZP-B_pAdic_Topology.pdf | v1.8 | Companion v1.8: "dense" → "densely ordered"; ℚ₂ no-minimum clarification added; ε₀ framework note added — formal:84db2ad4 comp:451d2d65 |
 | ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.8 | Companion v1.8: topological/valuative distinction corrected; Riemann sphere analogy added — formal:8b35d28e comp:ef61332d |
 | ZP-C Information Theory | v1.12 | ZP-C_Information_Theory.pdf | v1.8 | Companion v1.8: disclaimer updated — formal:4a59f304 comp:d376d5cf |
 | ZP-D State Layer | v1.8 | ZP-D_State_Layer.pdf | v1.7 | Companion v1.7: disclaimer updated — formal:255b169c comp:85c6e4d9 |
