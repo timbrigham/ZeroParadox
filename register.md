@@ -12,7 +12,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-C Information Theory | v1.12 | ZP-C_Information_Theory.pdf | v1.9 | Y/Y | Companion v1.9: "informational singularity" defined in first paragraph — formal:4a59f304 comp:385e3ad3 |
 | ZP-D State Layer | v1.8 | ZP-D_State_Layer.pdf | v1.7 | Y/N | Companion v1.7: disclaimer updated — formal:255b169c comp:85c6e4d9 |
 | ZP-E Bridge Document | v3.13 | ZP-E_Bridge_Document.pdf | v1.8 | Y/Y | Companion v1.8: title "converge" → "four frameworks, one event"; diagram captions "independent proof" → "independent mathematical description" — formal:be86fe89 comp:a4cf4aa1 |
-| ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.4 | Y/N | Companion v1.4: title "Structure independent of domain"; formal doc: "Internal Working Document" removed — formal:bde00483 comp:b0e98acc |
+| ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.5 | Y/Y | Companion v1.5: "Informational Singularity" section renamed/rewritten — structural surprisal definition; section title → "Informational Asymmetry of 0" — formal:bde00483 comp:869c0ccc |
 | ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
 | ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero.pdf | v1.2 | Y/N | Companion v1.2: disclaimer + opener updated — formal:b3138d52 comp:78767395 |
 | ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Y/Y | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
