@@ -1,5 +1,7 @@
 """
-Build ZP-C: Information Theory (v1.12)
+Build ZP-C: Information Theory (v1.13)
+v1.13: Adversary-review pass — "forcing result" terminology replaced with "structural
+constraint" (avoids incorrect borrowing of set-theoretic forcing vocabulary).
 v1.12: Encoding commitment and information-theoretic failure mode added to preamble — makes
 the conditionality of the 1-bit claim (T1b) visible before the result appears, and states the
 unbounded-surprisal failure mode at ⊥ (L-INF) upfront as the information-theoretic instance of
@@ -20,7 +22,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
@@ -31,7 +33,7 @@ def build():
           Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
-          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between the null state and the first atomic state is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, at &#8869;, the primary descriptive tool of information theory — surprisal — is unbounded above (L-INF, Section III): no finite external description can contain the null state. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic form of the forcing result.'),
+          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between the null state and the first atomic state is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, at &#8869;, the primary descriptive tool of information theory — surprisal — is unbounded above (L-INF, Section III): no finite external description can contain the null state. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint on the null state.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
           sp()]
 

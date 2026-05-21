@@ -1,5 +1,7 @@
 """
 Build ZP Tools and Methods document.
+Updated May 2026 (adversary-review pass): repo URL added to reproducibility section;
+key result box updated to acknowledge ZP-F as a non-Lean-verified layer and correct layer count.
 Updated April 2026: Lean 4 formal verification now complete for all layers.
 """
 
@@ -334,8 +336,8 @@ def build():
         'restatements of the same content. If the formal documents change, the companions '
         'and foreword require updating to match.'))
     E.append(body(
-        'Lean 4 proofs are fully reproducible: clone the repository, switch to the '
-        'illustrated branch, and run lake build from the ZeroParadox/ directory. '
+        'Lean 4 proofs are fully reproducible: clone github.com/timbrigham/ZeroParadox, '
+        'switch to the illustrated branch, and run lake build from the ZeroParadox/ directory. '
         'All proofs build clean against Mathlib.'))
     E.append(sp(6))
     E.append(key_result_box(
@@ -343,8 +345,9 @@ def build():
         'The Zero Paradox is a human-originated mathematical framework, developed through '
         'iterative collaboration with an AI research assistant, documented in a rigorous '
         'ontology format, rendered as publication-quality PDFs using open-source Python '
-        'tooling, and formally verified in Lean 4 + Mathlib. All ten formal layers '
+        'tooling, and formally verified in Lean 4 + Mathlib. All ten Lean-verified formal layers '
         '(ZP-A, ZP-B, ZP-C, ZP-D, ZP-E, ZP-G, ZP-H, ZP-I, ZP-J, ZP-K) build clean. '
+        'ZP-F (The Counterexamples) provides a classical mathematical argument without a Lean component. '
         'Proofs are machine-checked.',
         bg=GREEN, hdr_bg=GREEN))
 

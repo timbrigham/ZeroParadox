@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.5 | May 2026
+Version 1.6 | May 2026
+v1.6: Adversary-review pass — "(April 2026)" date removed from PDF body (belongs in
+docstring); "last philosophical vulnerability" → "remaining informal gap in the DA-1 argument".
 v1.5: Precision fixes — periodicity framing throughout (selfApply fixed-point stated
 as periodicity condition eval c n = eval c (encode c + n), not "computes itself");
 typeclass commitment language for KleeneStructure (AFA and Kleene fixed point "taken
@@ -32,7 +34,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():
@@ -62,7 +64,7 @@ def build():
 
     E.append(body(
         'This document establishes the computational grounding of the Zero Paradox\'s central '
-        'self-reference structure. The key insight (April 2026): ⊥ in the computational '
+        'self-reference structure. The key insight: ⊥ in the computational '
         'instantiation is not a state of a Turing machine. ⊥ is the ground state of a universal '
         'Turing machine — the state from which no external executor is required. Kleene\'s '
         'second recursion theorem provides the formal witness: a code that is its own program, '
@@ -282,7 +284,7 @@ def build():
 
     E.append(Paragraph('II. The Description-Instantiation Gap', S['h2']))
     E.append(body(
-        'The last philosophical vulnerability in the framework was the "description-instantiation '
+        'The remaining informal gap in the DA-1 argument concerned the "description-instantiation '
         'gap": why does mathematical self-reference imply computational execution? The '
         'gap assumed the two were different things connected by a philosophical bridge.'))
     E.append(body(

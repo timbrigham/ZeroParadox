@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.8 | May 2026
+Version 1.9 | May 2026
+v1.9: Adversary-review pass — version changelog removed from PDF title block (moved to
+docstring only); "DA-1 fires, T-SNAP fires, and a new ⊥' is born" replaced with
+mathematical language: "DA-1 and T-SNAP apply, yielding a successor null ⊥'".
 v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms
 added to Lean Scope section and traceability register. Optional transparency additions
 exposing pure ZP-A lattice hypotheses for reviewer auditability; primary narrative
@@ -23,7 +26,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
@@ -98,24 +101,6 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
-        Paragraph(
-            '<i>v1.8: Lean scope updated — t_iz_h_bound_from_depth_chain and t_iz_complete_from_axioms added to Lean Scope section and traceability register; optional transparency additions for reviewer auditability; primary narrative unchanged. | '
-            'v1.7: R-IZ-A formally closed — key result box and Remark R-IZ-A updated to reflect that strict valuation growth is Lean-derived from ZP-A R1 + T3 via the IsDepthChain modeling commitment (h_strict_from_r1_t3, §Ib). | '
-            'v1.6: Key result box first bullet qualified with R-IZ-A — "forces v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734; given construction hypothesis R-IZ-A" — consistent with body text and Section V. No mathematical content changed. | '
-            'v1.5: Section V "Complete Cycle" and Null Balance callout updated — '
-            '"framework closure" framing now explicitly conditional on the R-IZ-A construction-level '
-            'hypothesis v<sub>2</sub>(S(n)) &#8805; n. Key result box updated to match. | '
-            'v1.4: Remark R-IZ-A added — valuation growth hypothesis v<sub>2</sub>(S(n)) &#8805; n '
-            'acknowledged as a construction-level assumption, stronger than the proved result '
-            't_iz_valuation_unbounded (sup = &#8734;). Title block corrected from v1.2 to v1.3. | '
-            'v1.3: Valuation-complexity bridge demoted to informational context — '
-            'formal spine of T-IZ is Steps 1 + 6 (Cauchy convergence + DA-2 licensing, '
-            'both proved axiom-free); DA-1 now closed by ZP-K/Kleene, bypassing Kolmogorov. | '
-            'v1.2: t_iz_valuation_unbounded added — "sup v<sub>2</sub>(S<sub>n</sub>) = &#8734;" '
-            'proved axiom-free. | '
-            'v1.1: Sorry-pending language cleared. | '
-            'v1.0: Initial release — Theorem T-IZ.</i>',
-            S['note']),
         sp(10),
         hr(),
         sp(4),
@@ -134,7 +119,7 @@ def build():
         'valuation v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734;, which is exactly the Cauchy convergence condition '
         '&#8214;S<sub>n</sub>&#8214;<sub>2</sub> &#8594; 0. The chain approaches the 2-adic depth of zero by going '
         'deeper into the p-adic structure — not by reversing direction. When maximum complexity '
-        'is reached, DA-1 fires, T-SNAP fires, and a new &#8869;\' is born.',
+        'is reached, DA-1 and T-SNAP apply, yielding a successor null &#8869;\'.',
         style='bodyI'))
     E.append(hr())
 

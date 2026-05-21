@@ -1,5 +1,7 @@
 """
-Build ZP-B: p-Adic Topology (v1.7)
+Build ZP-B: p-Adic Topology (v1.8)
+v1.8: Adversary-review pass — R1 remark (Section VI) "universal ontology of state emergence"
+replaced with precise scope statement: results hold for any AX-B1 + MP-1 instantiation.
 v1.7: "Topological isolation of 0" renamed to "Clopen gap at 0" throughout — "isolated" has a
 specific topological meaning ({p} is open) that does not hold for {0} in Q2. The correct claim
 is clopen-ball separation: v2(0) = +inf places 0 in a distinct clopen class from every nonzero
@@ -13,7 +15,7 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology.pdf')
@@ -157,7 +159,7 @@ def build():
     E.append(label_box('Remark R1 — Universal Structure vs. Universe-Contingent Parameters', [
         'Universal (invariant across all instantiations): AX-B1 (binary distinction — logical, not physical). MP-1 (methodological commitment). T0 (p=2 derived). T1, T2, T3, T5, C1, C2, C3 (all topological results). Structural role of &#949;<sub>0</sub>.',
         'Universe-contingent (varies across instantiations): Numerical value of &#949;<sub>0</sub> (determined by physical constants). Physical predictions invoking &#949;<sub>0</sub> numerically.',
-        'Consequence: The Zero Paradox is a universal ontology of state emergence, not a physical theory of our universe specifically.',
+        'The topological and algebraic results of this document hold for any instantiation satisfying AX-B1 and MP-1 — they are not specific to our universe.',
     ]))
 
     E.append(Paragraph('VII. Boundary Conditions for ZP-D and ZP-E', S['h1']))

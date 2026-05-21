@@ -1,5 +1,7 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.8)
+Build ZP-D: State Layer (Hilbert Space) (v1.9)
+v1.9: Adversary-review pass — Import I-B stale reference "Topological isolation of 0"
+corrected to "Clopen gap at 0" to match ZP-B v1.7+ terminology throughout.
 v1.8: T5 strengthened — T5-b (t5_strict_orthogonal) added in Lean and PDF. T5-b is the
       non-trivial content of T5: distinct consecutive states map to orthogonal T-images via
       DP-1. T5 norm result disclosed as tautology of construction (all norms = 1).
@@ -14,7 +16,7 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer.pdf')
@@ -47,7 +49,7 @@ def build():
         'Q<sub>2</sub> with 2-adic metric d (D1, D2).',
         'T1: Ultrametric (strong triangle inequality).',
         'T2: Every ball is clopen.',
-        'T3: Topological isolation of 0.',
+        'T3: Clopen gap at 0.',
         'T5: Q<sub>2</sub> is totally disconnected.',
         'C3: Snap is topologically irreversible (corollary of T5).',
         '&#949;<sub>0</sub>: Minimum viable deviation, universe-contingent parameter (D5).',
