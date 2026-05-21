@@ -2,6 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Adversary Review Gate — Hard Rule
+
+**Any public-facing action requires adversary review to have completed before execution.** This is non-negotiable and applies to every action that puts content in front of an external reader:
+
+- `git push` containing changes to prose in any tracked file (Lean source docstrings, build script `body()` calls, README.md, GUIDE.md, any companion script)
+- Sending an email to any external party
+- Posting or editing a GitHub Discussion body or follow-up comment
+- Posting or editing a GitHub Issue
+- Any other action that surfaces content outside this repository
+
+**The protocol:**
+1. Before executing any of the above, Claude must explicitly ask: "Adversary review complete for this content?"
+2. Wait for Tim's confirmation before proceeding — do not self-assess whether review is needed
+3. If review has not been run, offer to run `/adversary-review` on the relevant content first
+4. Only after explicit confirmation may the public-facing action execute
+
+Same-session self-review does not satisfy this requirement. The review must be a separate adversarial context (spawned Agent with no conversation history).
+
+**What triggered this rule:** Lean docstring and build script prose changes were pushed on 2026-05-20 before adversary review ran. The review subsequently found two additional precision errors in the already-committed content.
+
 ## Guiding Principles (from Project Instructions)
 
 - **Logical Rigor First:** The primary goal is logical consistency and rigor. 
@@ -508,7 +528,8 @@ All work — Lean 4 proofs and PDF rendering — happens on the `illustrated` br
 4. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
 5. **Sync before starting work:** At the start of any session, always run `git fetch origin main` then `git merge origin/main` before making any changes. Never make edits against a stale base.
 6. **Verify no conflict markers after any merge:** Before committing after a merge, run `git diff --check` to confirm no conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) remain in any file. A file with unresolved markers will commit silently and corrupt the document. This has happened twice on this project.
-7. **Pull request body — always use `--body-file`:** PowerShell cannot reliably pass multiline PR bodies inline (special characters, arrows, backticks, and asterisks all cause parse errors). Always write the body to `.claude-local\pr_body_<name>.md` first, then create the PR with:
+7. **5-minute timeout on all external tool calls:** Every `PowerShell` or `Bash` call that invokes an external process (PDF build scripts, `lake build`, `python <script>`, long-running `git` or `gh` operations) must use `timeout: 300000` (5 minutes). If the command exceeds this limit, kill it and report back — never wait indefinitely. If it times out, diagnose the cause rather than retrying blindly.
+8. **Pull request body — always use `--body-file`:** PowerShell cannot reliably pass multiline PR bodies inline (special characters, arrows, backticks, and asterisks all cause parse errors). Always write the body to `.claude-local\pr_body_<name>.md` first, then create the PR with:
    ```powershell
    gh pr create --title "..." --body-file ".claude-local\pr_body_<name>.md"
    ```
