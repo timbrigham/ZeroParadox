@@ -1,10 +1,12 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.2 | May 2026
+Version 1.3 | May 2026
+v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — preserves the
+direct comparison while distinguishing structural instantiation from literal identity.
 v1.2: Disclaimer updated — "formal ontology" replaced with "formal document".
 v1.0: Initial release. Covers T-COMP (four-way equivalence: Quine atom = bottom = join
 identity = Kleene fixed point), the computational Quine, and da1_closed_concrete
-(DA-1 formally closed — ⊥ IS the universal Turing machine in ground state).
+(DA-1 formally closed — ⊥ instantiates a Turing machine in ground state).
 v1.1: Added explicit note that Kleene's theorem is an existence proof, not a convergent
 iteration — the halting question does not arise.
 Formal doc: ZP-K Computational Grounding v1.0.
@@ -117,7 +119,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 def build():
@@ -164,7 +166,7 @@ def build():
         'four descriptions name the same structural role.'))
     E.append(cbody(
         'The consequence for DA-1 is direct: ⊥ is not a description of a Turing machine. '
-        '⊥ IS the Turing machine — in its ground state, serving as its own program. '
+        '⊥ IS an instance of a Turing machine — specifically its ground state, serving as its own program. '
         'The "description vs. execution" gap that DA-1 had to close is structurally '
         'dissolved: there is no gap, because ⊥ in every formal language is the same '
         'self-executing object.'))
@@ -257,7 +259,7 @@ def build():
         'DA-1 Paths 1 and 3: IN LEAN SCOPE. Path 2: outside Lean scope (ontological bridge). ✓'))
     E.append(sp(6))
     E.append(cbody(
-        'What does it mean that ⊥ IS the Turing machine in its ground state? '
+        'What does it mean that ⊥ IS an instance of a Turing machine in its ground state? '
         'In ZP-C, the model distinguishes c₀ (the initial configuration, before any '
         'instruction executes) from c₁ (after the first instruction fetch). '
         'DP-2 (ZP-E) proved that these are distinct machine states even when both '

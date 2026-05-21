@@ -16,7 +16,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
 | ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero.pdf | v1.2 | Y/N | Companion v1.2: disclaimer + opener updated — formal:b3138d52 comp:78767395 |
 | ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Y/Y | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
-| ZP-K Computational Grounding | v1.5 | ZP-K_Computational_Grounding.pdf | v1.2 | Y/N | Companion v1.2: disclaimer updated; v1.5: precision fixes (periodicity framing, typeclass commitment language, Kolmogorov claims scoped) — PDF rebuild pending — formal:d11d3565 comp:20f7004b |
+| ZP-K Computational Grounding | v1.5 | ZP-K_Computational_Grounding.pdf | v1.3 | Y/Y | Companion v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — formal:d11d3565 comp:409a45d1 |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
