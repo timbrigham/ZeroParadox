@@ -89,7 +89,7 @@ def four_framework_diagram():
 
     d.add(String(14, 10,
                  'The Binary Snap (amber) described simultaneously in all four frameworks. '
-                 'Each arrow is an independent proof of the same structural fact.',
+                 'Each arrow is an independent mathematical description of the same event.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
@@ -174,7 +174,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -203,7 +203,7 @@ def build():
                 colWidths=[TW])
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
-          Paragraph('Where all four frameworks converge —\nand the main causality axiom becomes a theorem',
+          Paragraph('Four frameworks, one event —\nand the main causality axiom becomes a theorem',
                     CS['title']),
           Paragraph('Bridge Document | DA-1 / T-SNAP Update', CS['subtitle']),
           Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
@@ -234,7 +234,7 @@ def build():
     E.append(four_framework_diagram())
     E.append(ccaption(
         'The Binary Snap (amber center) described simultaneously in all four frameworks. '
-        'Each arrow represents an independent proof of the same structural fact.'))
+        'Each arrow represents an independent mathematical description of the same event.'))
     E.append(sp(4))
     E.append(example_box('Real-world example — A car crash described by four witnesses', [
         'An engineer (forces), a doctor (injuries), a lawyer (liability), and a physicist '

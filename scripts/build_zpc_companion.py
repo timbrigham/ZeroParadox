@@ -190,7 +190,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -242,8 +242,9 @@ def build():
     # ── Page 1 ─────────────────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-C Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-C establishes that zero is informationally unreachable — using two completely '
-        'independent measures that arrive at the same conclusion from different starting points.'))
+        'ZP-C establishes that zero is an informational singularity — a point where the cost '
+        'of describing or reaching it becomes unbounded, no matter how you measure it. '
+        'Two completely independent measures arrive at the same conclusion from different starting points.'))
     E.append(cbody(
         '<b>Route 1 — Kolmogorov complexity (algorithmic):</b> How long must a program be to '
         'describe a configuration? At the incompressibility threshold P₀, no shorter description '

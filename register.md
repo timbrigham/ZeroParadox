@@ -8,10 +8,10 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 |----------|---------------|----------|-------------------|---------|-------|
 | ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra.pdf | v1.6 | Y/N | Companion v1.6: disclaimer "formal ontology" → "formal document" — formal:130d0acd comp:3d8b14d5 |
 | ZP-B p-Adic Topology | v1.7 | ZP-B_pAdic_Topology.pdf | v1.8 | Y/Y | Companion v1.8: "dense" → "densely ordered"; ℚ₂ no-minimum clarification added; ε₀ framework note added; VERSION bump fix; "singularity" → valuation gap; remember box universe-contingent claim removed — formal:84db2ad4 comp:454decc4 |
-| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.8 | Y/N | Companion v1.8: topological/valuative distinction corrected; Riemann sphere analogy added — formal:8b35d28e comp:ef61332d |
-| ZP-C Information Theory | v1.12 | ZP-C_Information_Theory.pdf | v1.8 | Y/N | Companion v1.8: disclaimer updated — formal:4a59f304 comp:d376d5cf |
+| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.9 | Y/Y | Companion v1.9: comparison table "isolated" → "valuatively distinct" (kill-level AR fix) — formal:8b35d28e comp:ea91ad01 |
+| ZP-C Information Theory | v1.12 | ZP-C_Information_Theory.pdf | v1.9 | Y/Y | Companion v1.9: "informational singularity" defined in first paragraph — formal:4a59f304 comp:385e3ad3 |
 | ZP-D State Layer | v1.8 | ZP-D_State_Layer.pdf | v1.7 | Y/N | Companion v1.7: disclaimer updated — formal:255b169c comp:85c6e4d9 |
-| ZP-E Bridge Document | v3.13 | ZP-E_Bridge_Document.pdf | v1.7 | Y/N | Companion v1.7: title, remember boxes updated; "universal ontology" removed — formal:be86fe89 comp:074c2c2f |
+| ZP-E Bridge Document | v3.13 | ZP-E_Bridge_Document.pdf | v1.8 | Y/Y | Companion v1.8: title "converge" → "four frameworks, one event"; diagram captions "independent proof" → "independent mathematical description" — formal:be86fe89 comp:a4cf4aa1 |
 | ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.4 | Y/N | Companion v1.4: title "Structure independent of domain"; formal doc: "Internal Working Document" removed — formal:bde00483 comp:b0e98acc |
 | ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
 | ZP-I Inside Zero | v1.8 | ZP-I_Inside_Zero.pdf | v1.2 | Y/N | Companion v1.2: disclaimer + opener updated — formal:b3138d52 comp:78767395 |

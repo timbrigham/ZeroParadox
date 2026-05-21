@@ -101,7 +101,7 @@ def comparison_table():
            Paragraph('Q&#8322; 2-adic Numbers', CS['kr_hdr'])]
     rows = [
         ['0 is a limit point — surrounded by non-zero reals on all sides',
-         '0 is isolated — 2-adic valuation of 0 is +&#8734;'],
+         '0 is valuatively distinct — v&#8322;(0) = +&#8734;; every nonzero element has a finite valuation'],
         ['Infinity lives in the representation (infinite decimal = finite magnitude)',
          'Infinity is the address of 0 (the valuation itself is +&#8734;)'],
         ['Departure from 0 is continuous — always subdivisible',
@@ -130,7 +130,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
