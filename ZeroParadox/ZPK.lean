@@ -72,10 +72,9 @@ Roger's theorem (fixed_point) themselves use classical logic and choice.
 ZP-J T-EXEC (axiom-free) is preserved; the classical axioms enter through
 Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
 
-§ VI theorems (self_halting_undecidable, isComputationalQuine_undecidable,
-infinite_quine_family) are sorry-stubbed pending full proofs. Their proof sketches
-are in the section comments. quine_period_is_goedel and quine_goedel_injective
-are fully proved.
+§ VI theorems: self_halting_undecidable, isComputationalQuine_undecidable,
+quine_period_is_goedel, and quine_goedel_injective are fully proved.
+infinite_quine_family is sorry-stubbed pending a Code padding lemma not yet in Mathlib.
 -/
 
 namespace ZeroParadox.ZPK
@@ -514,8 +513,8 @@ open ZeroParadox.ZPK ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ
 #print axioms selfApply_partrec
 #print axioms computational_quine_exists
 #print axioms da1_closed_concrete
--- §VI theorems (sorry'd pending ZPL development):
--- #print axioms isComputationalQuine_undecidable  -- depends on roger_incompressibility (ZPL)
--- #print axioms infinite_quine_family             -- depends on Code padding lemma
+#print axioms isComputationalQuine_undecidable
+-- §VI sorry stubs (pending external dependencies):
+-- #print axioms infinite_quine_family  -- depends on Code padding lemma (not in Mathlib)
 
 end PurityCheck
