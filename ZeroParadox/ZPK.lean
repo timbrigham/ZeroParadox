@@ -1,6 +1,7 @@
 import ZeroParadox.ZPJ
 import ZeroParadox.ZPE
 import Mathlib.Computability.PartrecCode
+import Mathlib.Computability.Halting
 import Mathlib.Tactic
 
 /-!
@@ -44,6 +45,7 @@ consequence derived by the theorems. T-COMP establishes (1)↔(2)↔(3) via T-EX
 - § III T-COMP: the four-way equivalence
 - § IV  DA-1 closure — the description-instantiation gap formally dissolved
 - § V   MachinePhase instance — DA-1 closed concretely for ZP-E's machine
+- § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
 
 ## Key insight (April 26, 2026)
 
@@ -51,8 +53,9 @@ consequence derived by the theorems. T-COMP establishes (1)↔(2)↔(3) via T-EX
 ⊥ IS the universal Turing machine in its ground state. U is not a description awaiting
 an external executor — U IS the executor. Kleene's second recursion theorem
 (Mathlib: Nat.Partrec.Code.fixed_point₂) guarantees the existence of this fixed point
-for any partially computable transformation. The KleeneStructure typeclass takes the AFA Quine atom (⊥ = {⊥}) and the
-Kleene computational Quine (∃ c, eval c = f c) to be the same structural property —
+for any partially computable transformation. The KleeneStructure typeclass takes the
+AFA Quine atom (⊥ = {⊥}) and the Kleene computational Quine (∃ c, eval c = f c) to
+be the same structural property —
 the motivating commitment, not a theorem proved here.
 
 ## Dependencies
@@ -63,12 +66,16 @@ Mathlib: Nat.Partrec.Code.fixed_point (Roger's fixed-point theorem).
 
 ## Axiom footprint (verified)
 
-All ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
+All proved ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
 Source: Mathlib computability infrastructure — Kleene's theorem (fixed_point₂) and
 Roger's theorem (fixed_point) themselves use classical logic and choice.
 ZP-J T-EXEC (axiom-free) is preserved; the classical axioms enter through
 Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
-All theorems are fully proved — no sorry stubs remain.
+
+§ VI theorems (self_halting_undecidable, isComputationalQuine_undecidable,
+infinite_quine_family) are sorry-stubbed pending full proofs. Their proof sketches
+are in the section comments. quine_period_is_goedel and quine_goedel_injective
+are fully proved.
 -/
 
 namespace ZeroParadox.ZPK
@@ -272,6 +279,99 @@ noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
     applied to the MachinePhase KleeneStructure instance. -/
 theorem da1_closed_concrete : IsQuineAtom (bot : MachinePhase) :=
   da1_computational
+
+/-! ## § VI. Function-Gödel-Number Correspondence
+
+Every computational quine c has a Gödel number encode(c) that is not external
+metadata — it is the period of the function computed by c in the selfApply sense.
+The DA-2 instantiation succession generates an infinite family of quines with
+distinct Gödel numbers. For each quine cᵢ in this family, the pair (eval cᵢ, encode cᵢ)
+is the unique signature of cᵢ: the function and the index are inseparable.
+
+Three formal results capture this structure:
+  (1) quine_period_is_goedel — the period IS the Gödel number (definitionally)
+  (2) self_halting_undecidable and isComputationalQuine_undecidable — the boundary
+      between computation and self-reference is genuinely non-computable, not merely
+      unimplemented; Classical.choose in machinePhaseKleene reflects this
+  (3) infinite_quine_family — the quine family is infinite, confirming that DA-2
+      instantiation succession generates unboundedly many distinct (function, index) pairs
+
+The noncomputable marker on machinePhaseKleene is therefore load-bearing, not a
+proof artifact. No algorithm can identify which code IS the botCode for a given
+KleeneStructure instance — the choice is structurally outside classical computation. -/
+
+/-- For any computational quine c, the Gödel number encode(c) is the period of
+    eval c in the selfApply sense: eval c n = eval c (encode(c) + n) for all n.
+    This makes explicit what IsComputationalQuine encodes definitionally: the function
+    and the Gödel number are not independently specifiable. The index IS the period. -/
+theorem quine_period_is_goedel (c : Code) (hc : IsComputationalQuine c) :
+    ∀ n : ℕ, eval c n = eval c (Encodable.encode c + n) := by
+  intro n
+  have h := congr_fun hc n
+  simp only [selfApply] at h
+  exact h
+
+/-- Among computational quines, distinct Gödel numbers imply distinct codes.
+    The encoding is injective on all of Code, hence on quines.
+    Across the DA-2 instantiation succession, each ⊥ₙ has a distinct botCodeₙ with
+    a distinct Gödel number — the map instantiation-index ↦ encode(botCodeₙ) is injective. -/
+theorem quine_goedel_injective (c₁ c₂ : Code)
+    (_ : IsComputationalQuine c₁) (_ : IsComputationalQuine c₂)
+    (h : Encodable.encode c₁ = Encodable.encode c₂) : c₁ = c₂ :=
+  Encodable.encode_inj.mp h
+
+/-- The predicate "c halts on its own Gödel number" is undecidable.
+    Proof: reduce from halting_problem 0. The function φ(c) = Code.comp c (Code.const 0)
+    satisfies eval (φ c) k = eval c 0 for all k, so if the self-halting predicate were
+    computable, composing with φ would decide "c halts on 0" — contradicting halting_problem 0.
+    For a quine c, quine_period_is_goedel ties halting at encode(c) to halting at any
+    encode(c) + n, so undecidability reaches directly into the period structure. -/
+theorem self_halting_undecidable :
+    ¬ComputablePred (fun c : Code => (eval c (Encodable.encode c)).Dom) := by
+  intro h
+  apply ComputablePred.halting_problem 0
+  -- φ(c) = Code.comp c (Code.const 0): run c on 0 regardless of actual input
+  have φ_comp : Computable (fun c : Code => Code.comp c (Code.const 0)) :=
+    (primrec₂_comp.comp Primrec.id (Primrec.const _)).to_comp
+  -- eval (φ c) k = eval c 0 for all k, c  (const 0 feeds 0 to c regardless of k)
+  have φ_eval : ∀ (c : Code) (k : ℕ), eval (Code.comp c (Code.const 0)) k = eval c 0 := by
+    intro c k
+    change eval (Code.const 0) k >>= eval c = eval c 0
+    simp [eval_const]
+  -- Compose h (deciding self-halting) with φ to get ComputablePred for halting-at-0
+  -- Use the same DecidablePred instance w that h carries, composed with φ
+  obtain ⟨w, hdec⟩ := h
+  have h_phi : ComputablePred (fun c : Code =>
+      (eval (Code.comp c (Code.const 0)) (Encodable.encode (Code.comp c (Code.const 0)))).Dom) :=
+    ⟨fun c => w (Code.comp c (Code.const 0)), hdec.comp φ_comp⟩
+  exact h_phi.of_eq fun c => by simp [φ_eval]
+
+/-- The predicate IsComputationalQuine is undecidable: no algorithm identifies
+    which codes are Kleene fixed points of selfApply.
+    Proof sketch: if IsComputationalQuine c were decidable by D : Code → Bool, define
+      g(c, n) = if D(c) then Part.none else selfApply c n
+    Apply fixed_point₂ to g: get c* with eval c* = g(c*).
+    If D(c*) = true (c* is a quine): eval c* = Part.none everywhere, but selfApply c* n =
+      eval c* (encode c* + n) = Part.none, so eval c* = selfApply c*: c* IS a quine. ✓
+    If D(c*) = false (c* not a quine): eval c* = selfApply c*, so c* IS a quine. Contradiction.
+    Therefore the second case is impossible, which means D cannot be correct for all c — it
+    misclassifies c* in the second case. Formalising this requires care with Part.none totality.
+    TODO: complete the diagonalization; the sketch above is not yet a full contradiction. -/
+theorem isComputationalQuine_undecidable :
+    ¬ComputablePred (fun c : Code => IsComputationalQuine c) := by
+  sorry
+
+/-- The family of computational quines is infinite: for any n, a quine with
+    Gödel number greater than n exists.
+    Combined with quine_goedel_injective, this gives an infinite injection into quines.
+    The DA-2 instantiation succession has no finite bound.
+    Proof sketch: by the padding lemma for Nat.Partrec.Code, any code c can be replaced
+    by c' with encode(c') > n and eval c' = eval c; applying kleene_fixed_point_exists
+    to the padded selfApply gives quines with arbitrarily large Gödel numbers.
+    TODO: requires padding lemma (Nat.Partrec.Code.smn or similar). -/
+theorem infinite_quine_family :
+    ∀ n : ℕ, ∃ c : Code, IsComputationalQuine c ∧ n < Encodable.encode c := by
+  sorry
 
 end ZeroParadox.ZPK
 
