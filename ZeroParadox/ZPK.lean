@@ -72,9 +72,9 @@ Roger's theorem (fixed_point) themselves use classical logic and choice.
 ZP-J T-EXEC (axiom-free) is preserved; the classical axioms enter through
 Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
 
-§ VI theorems: self_halting_undecidable, isComputationalQuine_undecidable,
-quine_period_is_goedel, and quine_goedel_injective are fully proved.
-infinite_quine_family is sorry-stubbed pending a Code padding lemma not yet in Mathlib.
+§ VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
+quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
+No sorry stubs remain in ZPK.
 -/
 
 namespace ZeroParadox.ZPK
@@ -488,13 +488,35 @@ theorem isComputationalQuine_undecidable :
     Gödel number greater than n exists.
     Combined with quine_goedel_injective, this gives an infinite injection into quines.
     The DA-2 instantiation succession has no finite bound.
-    Proof sketch: by the padding lemma for Nat.Partrec.Code, any code c can be replaced
-    by c' with encode(c') > n and eval c' = eval c; applying kleene_fixed_point_exists
-    to the padded selfApply gives quines with arbitrarily large Gödel numbers.
-    TODO: requires padding lemma (Nat.Partrec.Code.smn or similar). -/
+    Proof: Code.const k is a quine for every k (constant functions satisfy the selfApply
+    condition: both sides reduce to Part.some k). Code.const is injective (Mathlib:
+    const_inj) and Encodable.encode is injective, so encode ∘ Code.const is an injective
+    map ℕ → ℕ with infinite range — hence unbounded. No padding lemma required. -/
 theorem infinite_quine_family :
     ∀ n : ℕ, ∃ c : Code, IsComputationalQuine c ∧ n < Encodable.encode c := by
-  sorry
+  intro n
+  -- Code.const k always returns k regardless of input, so both sides of eval c = selfApply c
+  -- reduce to Part.some k: constant functions are quines.
+  have hconst_quine : ∀ k : ℕ, IsComputationalQuine (Code.const k) := fun k => by
+    show eval (Code.const k) = selfApply (Code.const k)
+    funext m
+    simp [selfApply, eval_const]
+  -- encode ∘ Code.const is injective: const_inj (Mathlib) + encode_inj
+  have hinj : Function.Injective (fun k : ℕ => Encodable.encode (Code.const k)) :=
+    fun a b h => const_inj (Encodable.encode_inj.mp h)
+  -- Injective ℕ → ℕ has infinite range, hence unbounded
+  have hinf : (Set.range (fun k : ℕ => Encodable.encode (Code.const k))).Infinite :=
+    Set.infinite_range_of_injective hinj
+  obtain ⟨k, hk⟩ : ∃ k : ℕ, n < Encodable.encode (Code.const k) := by
+    by_contra h
+    push_neg at h
+    apply hinf
+    apply Set.Finite.subset (Finset.finite_toSet (Finset.range (n + 1)))
+    intro x hx
+    obtain ⟨k, rfl⟩ := hx
+    simp only [Finset.mem_coe, Finset.mem_range]
+    exact Nat.lt_succ_of_le (h k)
+  exact ⟨Code.const k, hconst_quine k, hk⟩
 
 end ZeroParadox.ZPK
 
@@ -514,7 +536,6 @@ open ZeroParadox.ZPK ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ
 #print axioms computational_quine_exists
 #print axioms da1_closed_concrete
 #print axioms isComputationalQuine_undecidable
--- §VI sorry stubs (pending external dependencies):
--- #print axioms infinite_quine_family  -- depends on Code padding lemma (not in Mathlib)
+#print axioms infinite_quine_family
 
 end PurityCheck
