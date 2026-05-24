@@ -316,12 +316,24 @@ What this does NOT claim:
   - Any statement about formal provability in PA
   - A "solution" to the continuum hypothesis or other independent questions
   - Anything outside the structural identification of the snap with the ordinal limit
+  - That ε₀ is the UNIQUE minimal snap boundary: snap_threshold_is_epsilon_zero
+    shows no ordinal below ε₀ works (for maps satisfying the stated hypotheses),
+    but does not rule out maps satisfying those hypotheses that snap at some ordinal
+    strictly above ε₀
+  - That the snap threshold result applies to all maps Ordinal → MachinePhase,
+    regardless of the monotonicity and tower-alignment hypotheses
 
-What is proved here (§ III + § IV + tower_converges_to_zero):
+What is proved here (§ III + § IV + §V):
   - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
   - ZPB: cnfToZp2(towerNONote n).valuation = n; for n ≥ 1, cnfToZp2(towerNONote n) = 2^n
     in ℤ_[2]; norm = ‖2‖^n → 0, so the tower encodings converge to 0 = ⊥ in ℤ_[2]
     (tower_converges_to_zero)
+  - Cofinality: the fundamental sequence is cofinal in ε₀ — for any α < ε₀,
+    some tower stage exceeds α (fundamentalSeq_cofinal)
+  - Snap lower bound: any order-non-decreasing φ that maps all tower stages to c₀
+    maps every ordinal below ε₀ to c₀ (snap_threshold_is_epsilon_zero). This is a
+    lower bound on the snap threshold, not a uniqueness result. A witness snapping
+    exactly at ε₀ is provided by c1_epsilon_zero_identification.
 
 The remaining gap: connecting ZPE's MachinePhase element c₁ to the ordinal
 epsilonZero via a type bridge. The ordinal and ZPB sides are fully proved.
@@ -361,18 +373,28 @@ theorem c1_epsilon_zero_identification :
 
 /-- The fundamental sequence is cofinal in ε₀: for any ordinal below ε₀,
     some tower stage exceeds it.
-    Proof: ε₀ = nfp (ω^·) 0, and lt_nfp says a < nfp f b ↔ ∃ n, a < f^[n] b. -/
+    Proof: ε₀ = nfp (ω^·) 0 (epsilonZero_eq_nfp), and the Mathlib lemma
+    `lt_nfp_iff` gives a < nfp f b ↔ ∃ n, a < f^[n] b. -/
 theorem fundamentalSeq_cofinal {α : Ordinal} (hα : α < epsilonZero) :
     ∃ n : ℕ, α < fundamentalSeq n := by
   rw [epsilonZero_eq_nfp, lt_nfp_iff] at hα
   simpa [fundamentalSeq] using hα
 
-/-- The snap cannot occur before ε₀: any monotone map consistent with the tower
-    sends every ordinal strictly below ε₀ to c₀.
-    Proof: cofinality (fundamentalSeq_cofinal) gives a tower stage above any α < ε₀;
-    monotonicity then forces φ α ≤ φ(stage) = c₀; since c₀ = ⊥, φ α = c₀.
-    Combined with c1_epsilon_zero_identification, the correspondence ε₀ ↔ c₁ is
-    forced — no ordinal below ε₀ is a valid snap point for any monotone consistent map. -/
+/-- Lower bound on snap threshold: for any map φ : Ordinal → MachinePhase satisfying
+    (a) hmono: φ is order-non-decreasing (∀ α ≤ β, φ α ≤ φ β in MachinePhase, expressed
+        via the ZPSemilattice join condition join (φ α) (φ β) = φ β), and
+    (b) h0: every tower stage maps to c₀,
+    every ordinal strictly below ε₀ maps to c₀.
+
+    Proof: cofinality (fundamentalSeq_cofinal) gives a tower stage n above any α < ε₀;
+    hmono gives φ α ≤ φ (fundamentalSeq n); h0 gives φ (fundamentalSeq n) = c₀;
+    since c₀ = ⊥ is the bottom of MachinePhase, φ α = c₀.
+
+    Note: this is a lower bound result — it shows no ordinal below ε₀ is a snap point
+    for maps satisfying (a) and (b). It does not show ε₀ is the unique minimal snap
+    threshold or that all such maps snap at ε₀ rather than later.
+    c1_epsilon_zero_identification provides a witness (one specific φ) that snaps
+    exactly at ε₀. -/
 theorem snap_threshold_is_epsilon_zero
     (φ : Ordinal → MachinePhase)
     (hmono : ∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β)
@@ -420,7 +442,8 @@ open ZeroParadox.ZPL
 #print axioms c1_epsilon_zero_identification
 -- § V: proved — tower cofinality in ε₀
 #print axioms fundamentalSeq_cofinal
--- § V: proved — snap cannot occur before ε₀ under any monotone consistent map
+-- § V: proved — for any order-non-decreasing φ mapping all tower stages to c₀,
+--      every ordinal below ε₀ also maps to c₀ (lower bound on snap threshold)
 #print axioms snap_threshold_is_epsilon_zero
 
 end PurityCheck
