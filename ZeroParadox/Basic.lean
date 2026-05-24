@@ -9,17 +9,18 @@ import ZeroParadox.ZPH
 import ZeroParadox.ZPI
 import ZeroParadox.ZPJ
 import ZeroParadox.ZPK
+import ZeroParadox.ZPL
 
 /-!
 # Zero Paradox — Library Root
 
 Umbrella import for the full Zero Paradox Lean library. Importing this single file
-pulls in all formalized layers (ZP-A through ZP-K, plus ZP-F). For per-file summaries,
+pulls in all formalized layers (ZP-A through ZP-L, plus ZP-F). For per-file summaries,
 dependency order, axiom profile, and honest scope boundaries, see `ZeroParadox/README.md`.
 
 Dependency order of the layers:
 
-  ZP-A → ZP-B → ZP-C → ZP-D → ZP-E → ZP-J → ZP-K → ZP-I
+  ZP-A → ZP-B → ZP-C → ZP-D → ZP-E → ZP-J → ZP-K → ZP-L → ZP-I
 
   ZP-F (self-contained — real numbers counterexample)
 
