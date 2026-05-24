@@ -301,8 +301,9 @@ def build():
 
     E.append(body(
         'Every ordinal below &#949;&#8320; has a unique Cantor normal form — a finite '
-        'expression a&#8321;&#183;&#969;^e&#8321; + a&#8322;&#183;&#969;^e&#8322; + &#8230; + a&#8345;&#183;&#969;^e&#8345; '
-        'with e&#8321; > e&#8322; > &#8230; > e&#8345; and a&#7522; < &#969;. In Lean: '
+        'sum a&#8321;&#183;&#969;^e&#8321; + a&#8322;&#183;&#969;^e&#8322; + &#8230; '
+        'with strictly decreasing exponents e&#8321; > e&#8322; > &#8230; and each '
+        'coefficient a positive natural number less than &#969;. In Lean: '
         'NONote (Mathlib.SetTheory.Ordinal.Notation). '
         'The encoding cnfToZp2 maps each such ordinal to &#8484;&#8322; via structural '
         'recursion on the Cantor normal form.'))
