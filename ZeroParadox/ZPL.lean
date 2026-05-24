@@ -413,9 +413,9 @@ theorem snap_threshold_is_epsilon_zero
 /-! ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
 The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational
-fixed-point structure (Kleene's recursion theorem, roger_fixed_point_stability) both express
-the same non-constructive diagonal: Classical.choice is the forcing axiom in both. This is
-the content of §I Axiom Footprint Convergence.
+fixed-point structure (Kleene's recursion theorem, roger_fixed_point_stability) both require
+Classical.choice at their non-constructive step — parallel structure, not a proved isomorphism.
+This is the content of §I Axiom Footprint Convergence.
 
 The hypothesis
   hfp : ∀ α, ω^α = α → φ α = c₁
@@ -428,7 +428,7 @@ tower alignment (h0), the snap is forced to occur at ε₀ as the minimal thresh
 
 The computational side — that the snap MUST occur — is proved in ZPE (T-SNAP). The bridge
 here is structural: IF maps aligned with the fixed-point structure snap at fixed points,
-THEN ε₀ is the minimal snap threshold and the snap is uniquely determined at ε₀. -/
+THEN ε₀ is the minimal snap threshold (no snap before ε₀, and φ ε₀ = c₁). -/
 
 /-- ε₀ is the minimal snap threshold: for any map φ : Ordinal → MachinePhase satisfying
     (a) hmono: φ is order-non-decreasing (join (φ α) (φ β) = φ β for α ≤ β),
@@ -436,9 +436,12 @@ THEN ε₀ is the minimal snap threshold and the snap is uniquely determined at 
     (c) hfp: every fixed point of ω^· maps to c₁,
     φ ε₀ = c₁ AND no ordinal below ε₀ maps to c₁.
 
-    This is the full bridge: the two-sided forcing result. The lower bound (no snap before ε₀)
-    comes from snap_threshold_is_epsilon_zero. The snap at ε₀ comes from hfp applied to
-    epsilonZero_fixedPoint. Together they force ε₀ as the unique minimal snap threshold. -/
+    This is the two-sided result. The lower bound (no snap before ε₀) comes from
+    snap_threshold_is_epsilon_zero. The snap at ε₀ comes from hfp applied to
+    epsilonZero_fixedPoint. Together they establish ε₀ as the minimal snap threshold:
+    φ assigns c₁ first at ε₀, not before.
+    (Note: "minimal" not "unique" — a map satisfying these hypotheses could also assign c₁
+    to ordinals above ε₀; what is ruled out is any snap strictly before ε₀.) -/
 theorem snap_exactly_at_epsilon_zero
     (φ : Ordinal → MachinePhase)
     (hmono : ∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β)
@@ -454,11 +457,14 @@ theorem snap_exactly_at_epsilon_zero
     rw [hc0] at hα
     exact absurd hα (by simp [c₀, c₁])
 
-/-- A canonical witness map with all bridge properties.
+/-- A canonical witness map satisfying all four ordinal-side bridge properties.
     Witness: φ α = if α < ε₀ then c₀ else c₁.
     This map: assigns c₀ to all tower stages; assigns c₁ to all fixed points of ω^·
     (since all such α satisfy ε₀ ≤ α by epsilonZero_le_fixedPoint); assigns c₁ to ε₀
-    (since ε₀ is not strictly less than itself); and ε₀ is its minimal c₁ assignment. -/
+    (since ε₀ is not strictly less than itself); and ε₀ is its minimal c₁ assignment.
+    Note: the theorem name refers to the informal §VI conceptual parallel between Kleene
+    recursion fixed points and ordinal fixed points of ω^·; no Kleene-side content
+    (Code, eval) appears in this theorem. The theorem is purely ordinal. -/
 theorem kleene_ordinal_snap_bridge :
     ∃ (φ : Ordinal → MachinePhase),
       (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧
@@ -486,9 +492,10 @@ The three conditions:
   (h0)    every tower stage maps to c₀ — from kleene_ordinal_snap_bridge
   (hfp)   every fixed point of ω^· maps to c₁ — from kleene_ordinal_snap_bridge
 
-snap_zp2_correspondence then states both sides together: the ordinal tower approach
-to ε₀ and the 2-adic tower convergence to 0 = ⊥ are parallel witnesses to the same
-structural boundary, unified in a single theorem. -/
+snap_zp2_correspondence then records both sides together: every stage of the tower is
+below ε₀ in ordinals, the canonical map assigns c₀ to those stages and c₁ to ε₀,
+and the 2-adic encodings converge to 0. These are independent proved facts about the
+same tower sequence — not a formal structural isomorphism between ordinal and 2-adic limits. -/
 
 /-- The canonical snap map is order-non-decreasing in the ZPSemilattice sense.
     For α ≤ β, join (φ α) (φ β) = φ β where φ = if · < ε₀ then c₀ else c₁.
@@ -507,10 +514,11 @@ theorem snap_map_mono :
   · exact absurd (lt_of_le_of_lt hab hβ) hα  -- α ≥ ε₀ and α ≤ β < ε₀: impossible
   · simp only [if_neg hα, if_neg hβ]; rfl   -- join c₁ c₁ = c₁
 
-/-- The snap is unconditionally forced at ε₀: there exists a map satisfying ALL five
-    conditions simultaneously — monotone, tower-aligned, fixed-point-respecting,
-    snaps at ε₀, and ε₀ is minimal. This is the full closure: no free hypotheses remain.
-    Witness: φ α = if α < ε₀ then c₀ else c₁.
+/-- There exists a map satisfying all five conditions simultaneously: order-non-decreasing,
+    tower-aligned (every stage maps to c₀), fixed-point-respecting (every fixed point of ω^·
+    maps to c₁), snapping at ε₀ (φ ε₀ = c₁), and minimal (ε₀ ≤ any c₁-assigned ordinal).
+    All five are verified for the explicit witness φ α = if α < ε₀ then c₀ else c₁,
+    with no free hypotheses remaining for this witness.
     Monotonicity (hmono) comes from snap_map_mono. The other four conditions are direct
     consequences of ε₀'s ordinal properties. -/
 theorem epsilon_zero_snap_canonical :
@@ -531,14 +539,15 @@ theorem epsilon_zero_snap_canonical :
     simp only [if_pos h] at hα
     exact absurd hα (by simp [c₀, c₁])
 
-/-- Two-sided snap correspondence: the ordinal approach to ε₀ and the 2-adic convergence
-    to 0 = ⊥ in ℤ_[2] are both formal witnesses to the same structural snap boundary.
+/-- Four independent facts about the same tower sequence, stated together:
     (i)   Every tower stage is strictly below ε₀ in ordinals (epsilonZero_tower_lt)
     (ii)  The canonical map sends every tower stage to c₀ (pre-snap zone)
     (iii) The 2-adic encodings of the tower converge to 0 = ⊥ (tower_converges_to_zero)
     (iv)  The canonical map sends ε₀ to c₁ (the snap)
-    All four are provable from already-established theorems. The theorem names them
-    together as a formal statement of the zero-infinity identification. -/
+    All four are provable from already-established theorems. The theorem records that the
+    same tower sequence witnesses both the ordinal approach to ε₀ and the 2-adic approach
+    to 0. The full structural identification (ε₀ ↔ ⊥ via a type bridge) remains outside
+    Lean scope — see §V. -/
 theorem snap_zp2_correspondence :
     (∀ n : ℕ, fundamentalSeq n < epsilonZero) ∧
     (∀ n : ℕ, (fun α : Ordinal =>
