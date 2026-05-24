@@ -199,6 +199,54 @@ def build():
         'snap require incompatible roles for zero: limit point versus structural origin.'))
     E.append(sp(4))
 
+    E.append(remark_box(
+        'Remark: The Dual Limit Condition',
+        [
+            'The results of §II–§III and ZP-L together admit an informal '
+            'structural account of why the snap is domain-specific.',
+            'In any dense ordered field, 0 has no nearest neighbour from above: for any '
+            '&#949; > 0 there exists &#948; with 0 < &#948; < &#949; (F-DENSITY). Zero is '
+            'a topological limit point from above with no minimum positive element. The snap '
+            'requires a discrete first step above 0; density forbids it. This is the blocking '
+            'condition established in this document.',
+            '&#949;&#8320; (the snap threshold, established in ZP-L) is the least fixed '
+            'point of &#945; &#8614; &#969;^&#945;: it is not reachable by any finite '
+            'iteration of the &#969;^(&#183;) operation, only by the limit of the tower '
+            '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; The snap is possible '
+            'at &#949;&#8320; precisely because it has no predecessor in the ordinal '
+            'hierarchy: no ordinal &#945; satisfies &#945; + 1 = &#949;&#8320;.',
+            'Both cases are limit-type conditions: the field case is a topological limit '
+            'point with no minimum positive neighbour above 0; the ordinal case is a limit '
+            'ordinal (specifically, the least fixed point of &#945; &#8614; &#969;^&#945;) '
+            'with no predecessor below &#949;&#8320;. The analogy is structural &#8212; '
+            'both describe a boundary approached but not reachable by finite steps on one '
+            'side &#8212; but it is not a proved identification. The two structures live in '
+            'different mathematical categories.',
+            'A domain that can host the snap must satisfy two conditions simultaneously: '
+            '(1) the boundary is a genuine limit (no nearest neighbour &#8212; what makes '
+            'the threshold non-arbitrary) and (2) the crossing is discrete (a step, not a '
+            'continuous transition). Dense ordered fields have condition (1) but density '
+            'makes condition (2) impossible. In the non-standard naturals *&#8469; with '
+            'the order topology, every element has an immediate predecessor, so there is '
+            'no limit point at infinity in the order-topology sense; condition (1) fails '
+            'informally. (This *&#8469; observation is informal &#8212; not a proved result '
+            'of this document or ZP-L.)',
+            'The tower encodings cnfToZp2(towerNONote n) converge to 0 in &#8484;&#8322; '
+            'as n &#8594; &#8734; (proved in ZP-L), and &#949;&#8320; is the minimal '
+            'snap threshold in the ordinal setting (proved in ZP-L). The structural '
+            'identification of these two results &#8212; that &#8484;&#8322;\'s limit at 0 '
+            'and the ordinal threshold at &#949;&#8320; reflect the same boundary &#8212; '
+            'has a remaining gap: no type bridge between the ordinal and p-adic types '
+            'is established in ZP-L (see ZP-L §V, Remaining Gap).',
+            'This is an observation, not a proved theorem. The blocking result '
+            '(F-SNAP-IMPOSSIBLE) is proved here; the threshold and convergence results '
+            'are proved in ZP-L. The claim that both conditions reflect a common structural '
+            'property is interpretive &#8212; it does not follow from their conjunction '
+            'alone. The *&#8469; example above is informal.',
+        ]
+    ))
+    E.append(sp(4))
+
     # ── VII. Validation Status ────────────────────────────────────────────────
     E.append(Paragraph('VII. Validation Status', S['h1']))
     E.append(data_table(

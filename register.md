@@ -8,7 +8,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 |----------|---------------|----------|-------------------|---------|-------|
 | ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra.pdf | v1.6 | Y/Y | Companion v1.6: disclaimer "formal ontology" → "formal document" — formal:130d0acd comp:b47e99d6 |
 | ZP-B p-Adic Topology | v1.8 | ZP-B_pAdic_Topology.pdf | v1.8 | Y/Y | Companion v1.8: "dense" → "densely ordered"; ℚ₂ no-minimum clarification added; ε₀ framework note added; VERSION bump fix; "singularity" → valuation gap; remember box universe-contingent claim removed — formal:42af38ce comp:454decc4 |
-| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.9 | Y/Y | Companion v1.9: comparison table "isolated" → "valuatively distinct" (kill-level AR fix) — formal:8b35d28e comp:ea91ad01 |
+| ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.9 | Y/Y | Companion v1.9: comparison table "isolated" → "valuatively distinct" (kill-level AR fix) — formal:52672134 comp:ea91ad01 |
 | ZP-C Information Theory | v1.13 | ZP-C_Information_Theory.pdf | v1.9 | Y/Y | Companion v1.9: "informational singularity" defined in first paragraph — formal:45164ac2 comp:af22429f |
 | ZP-D State Layer | v1.9 | ZP-D_State_Layer.pdf | v1.7 | Y/Y | Companion v1.7: disclaimer updated — formal:a80de810 comp:198ff647 |
 | ZP-E Bridge Document | v3.14 | ZP-E_Bridge_Document.pdf | v1.8 | Y/Y | Companion v1.8: title "converge" → "four frameworks, one event"; diagram captions "independent proof" → "independent mathematical description" — formal:f6326831 comp:a4cf4aa1 |
