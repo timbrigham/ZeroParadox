@@ -17,24 +17,19 @@ import Mathlib.Tactic
 
 Every layer in ZP uses a standard mathematical tool — but inverted. ZPB uses 2-adic
 numbers, where the standard question is "how does arithmetic behave at finite primes?"
-ZP asks what happens at the prime that IS zero. ZPC uses information theory, where
-the standard question is "what is the minimum description length?" ZP asks what happens
-when the description length is infinite. ZPK uses the recursion theorem, where the
-standard question is "what programs can compute what functions?" ZP asks what the
-fixed point of self-application is. In every case, the answer is the same object: ⊥.
+ZP asks what happens when the 2-adic valuation is +∞ — that is, at 0 itself. ZPC
+uses information theory, where the standard question is "what is the minimum description
+length?" ZP asks what happens when the description length is infinite. ZPK uses the
+recursion theorem, where the standard question is "what programs can compute what
+functions?" ZP asks what the fixed point of self-application is.
 
-ZPL closes the loop. The incomputabilities scattered across the framework — C3
-(topological), bot_self_mem (set-theoretic), botCode (computational), L-INF
-(information-theoretic) — are the same diagonal argument appearing in four formal
-languages. The axiom footprint [Classical.choice, Quot.sound, propext] common to
-all ZP layers is the Lean formalization of this fact.
-
-The deepest result here is the Cantor Normal Form bridge: ordinals below ε₀ encode
-as finite binary sequences in ℤ₂, and as the ordinal tower ω, ω^ω, ω^(ω^ω), ...
-approaches ε₀, the 2-adic valuation of these encodings goes to +∞ — meaning they
-converge to 0 = ⊥ in ℤ₂. The snap ⊥ → ε₀ is this limit, viewed in reverse.
-Gentzen says this ordinal bounds PA's proof-theoretic strength. That is not our
-claim. Our claim is that ε₀ is the ordinal whose ZPB image is ⊥.
+ZPL maps these structurally. The central result is the Cantor Normal Form bridge:
+ordinals below ε₀ encode as finite binary sequences in ℤ_[2], and as the ordinal
+tower ω, ω^ω, ω^(ω^ω), ... approaches ε₀, the 2-adic valuation of these encodings
+goes to +∞ — meaning they converge to 0 = ⊥ in ℤ_[2]. The snap ⊥ → ε₀ is this
+limit, viewed in reverse. Gentzen says this ordinal bounds PA's proof-theoretic
+strength. That is not our claim. Our claim is that ε₀ is the ordinal whose ZPB
+image is ⊥.
 
 ---
 
@@ -81,9 +76,8 @@ open Ordinal
 /-! ## § I. Axiom Footprint Convergence
 
 Non-constructibility appears in four formal languages across the ZP framework.
-The axiom footprint [Classical.choice, Quot.sound, propext] is common to every
-proved theorem in every layer. This is not coincidence — it is the Lean encoding
-of the same diagonal argument appearing in four disguises.
+Each proved theorem in each layer requires Classical.choice at the diagonal step
+where a non-constructive choice is forced.
 
 | Layer | Formal Language | Expression of non-constructibility |
 |-------|----------------|--------------------------------------|
@@ -92,10 +86,9 @@ of the same diagonal argument appearing in four disguises.
 | ZPJ/K | Set + Compute  | bot_self_mem (AFA); botCode (Kleene) |
 | ZPI   | Algorithmic IT  | K(Sₙ|n)/|Sₙ| → 1; K uncomputable    |
 
-The reason K is absent from Lean is that its existence requires Classical.choice —
-exactly the axiom Nat.Partrec.Code.fixed_point₂ already uses in ZPK. The switch
-from K-bridge to AFA/Kleene was not a workaround. It was finding the formal shadow
-of the same diagonal. -/
+The reason K is absent from Lean: its existence requires Classical.choice —
+exactly the axiom Nat.Partrec.Code.fixed_point₂ already uses in ZPK. The
+AFA/Kleene route reaches the same fixed-point structure via a provable path. -/
 
 -- Axiom footprint evidence: all load-bearing ZPK theorems share this footprint.
 -- The Classical.choice entry is the computational expression of the diagonal.
@@ -108,31 +101,22 @@ section AxiomFootprintEvidence
 
 end AxiomFootprintEvidence
 
-/-! ## § II. Roger Incompressibility
+/-! ## § II. Roger Fixed-Point Stability
 
-Any computable transformation of the quine family lands within the quine family.
-This is the formal content of K-incompressibility within the computable domain:
-the quine class is closed under the orbit of any computable function.
+Any computable transformation of a Code has a behavioral fixed point — a code c
+such that eval (f c) = eval c. This is Roger's fixed-point theorem (Kleene's
+second recursion theorem): the fixed-point structure is stable under any
+computable transformation.
 
-The key is that the recursion theorem (Roger's fixed-point theorem) is not just
-an existence result — it says the fixed-point construction is stable under
-computable transformations. Any f you apply, a quine survives.
+Note on scope: the ZPL architecture initially proposed that eval (f botCode) =
+eval botCode for ALL computable f. This overclaims — botCode is one specific
+Classical.choose witness and carries no special stability under arbitrary f.
+The existential version is the correct formalization. -/
 
-Correctly stated: for any computable f, there exists a quine c such that c is
-also a fixed point of f (eval (f c) = eval c). This is strictly stronger than
-roger_fixed_point_exists because it demands the fixed point also be a quine.
-
-Note on the stronger claim: the ZPL architecture initially proposed that
-eval (f botCode) = eval botCode for ALL computable f. This overclaims — botCode
-is one specific Classical.choose witness and carries no special stability under
-arbitrary f. The existential version is the correct formalization. -/
-
-/-- Roger's fixed-point theorem (Kleene's second recursion theorem): for any computable
-    transformation f, some code is behaviorally fixed by f.
-    This is the ZPL expression of incompressibility: no computable transformation can
-    avoid producing a behavioral fixed point — the quine structure is preserved.
-    Proved directly as a wrapper around ZPK's roger_fixed_point_exists. -/
-theorem roger_incompressibility (f : Code → Code) (hf : Computable f) :
+/-- Roger's fixed-point theorem (Kleene's second recursion theorem): for any
+    computable transformation f, some code is behaviorally fixed by f.
+    Proved as a wrapper around ZPK's roger_fixed_point_exists. -/
+theorem roger_fixed_point_stability (f : Code → Code) (hf : Computable f) :
     ∃ c : Code, eval (f c) = eval c :=
   roger_fixed_point_exists f hf
 
@@ -316,17 +300,7 @@ theorem fundamentalSeq_zp2_converges :
   rw [hα_eq, cnfToZp2_tower_valuation]
   exact hn
 
-/-! ## § V. Gödel-ZP Connection
-
-The structural identification:
-
-  ZPE: join c₀ c₁ = c₁  (T-SNAP: the Binary Snap, proved by rfl)
-  Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}  (§ III, proved)
-  ZPB: lim_{n→∞} cnfToZp2((ω^·)^[n] 0) = 0  (§ IV, sorry'd)
-
-Under the CNF→ℤ_[2] encoding, the ordinal tower approaching ε₀ maps to the
-2-adic sequence approaching 0. ε₀ is the ordinal whose ZPB image is ⊥ = 0.
-The snap c₀ → c₁ in ZPE is the ordinal-tower limit, read from the ZPB side.
+/-! ## § V. Ordinal Tower Limit and ZPB Pre-image
 
 What this does NOT claim:
   - Gentzen's theorem: that ε₀ is the proof-theoretic ordinal of PA (not claimed)
@@ -334,24 +308,27 @@ What this does NOT claim:
   - A "solution" to the continuum hypothesis or other independent questions
   - Anything outside the structural identification of the snap with the ordinal limit
 
-The sorry below is located: it requires completing § IV (the CNF→ℤ_[2] encoding)
-and connecting ZPE's MachinePhase element c₁ to the ordinal epsilonZero via the
-encoding. The ordinal side (§ III) is fully proved. The ZPB side (§ IV) is the gap.
+What is proved here (§ III + § IV):
+  - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
+  - ZPB: the CNF→ℤ_[2] encoding sends the tower stages to sequences with
+    valuations n → +∞, converging to 0 = ⊥ in ℤ_[2]
 
-Once § IV is complete, this theorem may be provable without requiring Gentzen,
-using only 2-adic analysis and ordinal arithmetic — both in Lean scope. -/
+The remaining gap: connecting ZPE's MachinePhase element c₁ to the ordinal
+epsilonZero via the CNF encoding. The ordinal and ZPB sides are both fully proved.
+The identification requires 2-adic analysis and ordinal arithmetic, not Gentzen. -/
 
 /-- The ordinal tower result: all finite stages lie strictly below ε₀,
     and ε₀ is a fixed point of ω^·.
-    This is the proved core of the Gödel-ZP connection — the ZPB side is §IV. -/
+    Proved component of the ordinal-ZPB bridge — both tower bound and fixed point. -/
 theorem zpe_snap_ordinal_correspondence :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero ∧
     Ordinal.omega0 ^ epsilonZero = epsilonZero :=
   fun n => ⟨epsilonZero_tower_lt n, epsilonZero_fixedPoint⟩
 
-/-- The Gödel-ZP structural claim: ZPE's snap target (c₁ : MachinePhase) corresponds
-    to the ordinal epsilonZero under the CNF→ℤ_[2] bridge.
-    The sorry here is the ZPB encoding gap (§ IV). Gentzen not required. -/
+/-- Tower-stage bound: every finite stage of the ε₀ fundamental sequence is
+    strictly below ε₀. This is the proved ordinal component of the ZPB bridge;
+    the structural correspondence between epsilonZero and ZPE's c₁ is the
+    gap requiring the CNF encoding identification from § IV. -/
 theorem godel_zp_connection :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero := fun n => epsilonZero_tower_lt n
 
@@ -377,7 +354,7 @@ open ZeroParadox.ZPL
 #print axioms cnfToZp2_valuation_unbounded
 #print axioms fundamentalSeq_zp2_converges
 -- § II: proved (wrapper around roger_fixed_point_exists)
-#print axioms roger_incompressibility
+#print axioms roger_fixed_point_stability
 -- § V: proved
 #print axioms zpe_snap_ordinal_correspondence
 #print axioms godel_zp_connection
