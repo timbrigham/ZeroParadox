@@ -69,6 +69,7 @@ ZPE (§V): T-SNAP, MachinePhase, t_snap_machine -/
 namespace ZeroParadox.ZPL
 
 open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox.ZPC
 open ZeroParadox.ZPK
 open ZeroParadox.ZPE
 open Nat.Partrec Nat.Partrec.Code
@@ -333,6 +334,27 @@ theorem zpe_snap_ordinal_correspondence :
 theorem epsilonZero_tower_bound :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero := fun n => epsilonZero_tower_lt n
 
+/-- The c₁-ε₀ identification gap: ZPE's snap target (c₁ : MachinePhase) corresponds
+    to epsilonZero under the CNF→ℤ_[2] bridge.
+
+    What is proved (§ III + § IV):
+    - The tower stages fundamentalSeq n = (ω^·)^[n] 0 converge to epsilonZero
+    - Their ℤ_[2] encodings cnfToZp2(towerNONote n) have valuation n → +∞
+    - Therefore the encodings converge to 0 = ⊥ in ℤ_[2]
+
+    The gap: cnfToZp2 has type NONote → ℤ_[2] (ordinals STRICTLY below ε₀).
+    ε₀ itself is not in its domain; the identification "ε₀ maps to ⊥" is
+    a limit statement, not a direct computation. Additionally, c₁ : MachinePhase
+    and epsilonZero : Ordinal are different types — no morphism between them
+    is defined in this library. Closing this gap requires:
+    (a) a formal limit theorem identifying ε₀ as the preimage of ⊥, and
+    (b) a type bridge from Ordinal to MachinePhase.
+    Neither Gentzen nor cut-elimination is required — only 2-adic analysis
+    and ordinal arithmetic, both in Lean scope. -/
+theorem c1_epsilon_zero_identification :
+    ∃ (φ : Ordinal → MachinePhase), φ epsilonZero = c₁ := by
+  sorry
+
 end ZeroParadox.ZPL
 
 /-! ## Axiom Purity Check -/
@@ -359,5 +381,7 @@ open ZeroParadox.ZPL
 -- § V: proved
 #print axioms zpe_snap_ordinal_correspondence
 #print axioms epsilonZero_tower_bound
+-- § V gap: sorry stub — requires type bridge Ordinal → MachinePhase
+#print axioms c1_epsilon_zero_identification
 
 end PurityCheck
