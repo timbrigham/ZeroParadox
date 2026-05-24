@@ -500,20 +500,36 @@ theorem snap_map_mono :
       join (if α < epsilonZero then (c₀ : MachinePhase) else c₁)
            (if β < epsilonZero then c₀ else c₁) =
       if β < epsilonZero then c₀ else c₁ := by
-  sorry
+  intro α β hab
+  by_cases hα : α < epsilonZero <;> by_cases hβ : β < epsilonZero
+  · simp only [if_pos hα, if_pos hβ]; rfl   -- join c₀ c₀ = c₀
+  · simp only [if_pos hα, if_neg hβ]; rfl   -- join c₀ c₁ = c₁
+  · exact absurd (lt_of_le_of_lt hab hβ) hα  -- α ≥ ε₀ and α ≤ β < ε₀: impossible
+  · simp only [if_neg hα, if_neg hβ]; rfl   -- join c₁ c₁ = c₁
 
-/-- The snap is unconditionally forced at ε₀ for the canonical map.
-    The canonical map satisfies all three conditions of snap_exactly_at_epsilon_zero:
-    - snap_map_mono provides hmono
-    - kleene_ordinal_snap_bridge provides h0 and hfp
-    Result: ε₀ is the minimal snap threshold with no remaining free hypotheses. -/
+/-- The snap is unconditionally forced at ε₀: there exists a map satisfying ALL five
+    conditions simultaneously — monotone, tower-aligned, fixed-point-respecting,
+    snaps at ε₀, and ε₀ is minimal. This is the full closure: no free hypotheses remain.
+    Witness: φ α = if α < ε₀ then c₀ else c₁.
+    Monotonicity (hmono) comes from snap_map_mono. The other four conditions are direct
+    consequences of ε₀'s ordinal properties. -/
 theorem epsilon_zero_snap_canonical :
-    (fun α : Ordinal => if α < epsilonZero then (c₀ : MachinePhase) else c₁)
-      epsilonZero = c₁ ∧
-    ∀ α : Ordinal,
-      (fun α : Ordinal => if α < epsilonZero then (c₀ : MachinePhase) else c₁) α = c₁ →
-      epsilonZero ≤ α := by
-  sorry
+    ∃ (φ : Ordinal → MachinePhase),
+      (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
+      (∀ n : ℕ, φ (fundamentalSeq n) = c₀) ∧
+      (∀ α : Ordinal, Ordinal.omega0 ^ α = α → φ α = c₁) ∧
+      φ epsilonZero = c₁ ∧
+      ∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α := by
+  refine ⟨fun α => if α < epsilonZero then c₀ else c₁, ?_, ?_, ?_, ?_, ?_⟩
+  · intro α β hab; exact snap_map_mono α β hab
+  · intro n; exact if_pos (epsilonZero_tower_lt n)
+  · intro α hfp; exact if_neg (not_lt.mpr (epsilonZero_le_fixedPoint hfp))
+  · exact if_neg (lt_irrefl epsilonZero)
+  · intro α hα
+    by_contra h
+    push_neg at h
+    simp only [if_pos h] at hα
+    exact absurd hα (by simp [c₀, c₁])
 
 /-- Two-sided snap correspondence: the ordinal approach to ε₀ and the 2-adic convergence
     to 0 = ⊥ in ℤ_[2] are both formal witnesses to the same structural snap boundary.
@@ -529,8 +545,11 @@ theorem snap_zp2_correspondence :
       if α < epsilonZero then (c₀ : MachinePhase) else c₁) (fundamentalSeq n) = c₀) ∧
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0) ∧
     (fun α : Ordinal =>
-      if α < epsilonZero then (c₀ : MachinePhase) else c₁) epsilonZero = c₁ := by
-  sorry
+      if α < epsilonZero then (c₀ : MachinePhase) else c₁) epsilonZero = c₁ :=
+  ⟨epsilonZero_tower_lt,
+   fun n => if_pos (epsilonZero_tower_lt n),
+   tower_converges_to_zero,
+   if_neg (lt_irrefl epsilonZero)⟩
 
 end ZeroParadox.ZPL
 
