@@ -36,18 +36,20 @@ def build():
     ]
 
     E.append(body(
-        'ZP-L establishes four components of the incomputability convergence argument. '
+        'ZP-L establishes four results connecting the formal axioms of the ZP framework '
+        'to standard results in ordinal theory and computability. '
         'First, Classical.choice appears at the non-constructive diagonal step in each '
-        'of the four ZP formal languages — topology, information theory, set theory, and '
-        'computation. Second, Roger\'s fixed-point theorem (Kleene\'s second recursion '
-        'theorem) is formalized as a wrapper, grounding the computational fixed-point '
-        'structure. Third, the ordinal &#949;&#8320; is fully characterized as the first '
-        'fixed point of &#945; &#8614; &#969;^&#945; and the limit of the tower '
-        '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230;. Fourth, ordinals below '
-        '&#949;&#8320; encode into &#8484;&#8322; via their Cantor normal form, and as the '
-        'tower stages approach &#949;&#8320;, their 2-adic encodings converge to 0 = &#8869;.'))
+        'of the four mathematical settings of the ZP framework — topology, information '
+        'theory, set theory, and computation. Second, Roger\'s fixed-point theorem '
+        '(Kleene\'s second recursion theorem) is formalized as a wrapper, formalizing the '
+        'computational fixed-point structure. Third, the ordinal &#949;&#8320; is fully '
+        'characterized as the first fixed point of &#945; &#8614; &#969;^&#945; and the '
+        'limit of the tower &#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230;. '
+        'Fourth, ordinals below &#949;&#8320; encode into &#8484;&#8322; via their Cantor '
+        'normal form, and as the tower stages approach &#949;&#8320;, their 2-adic '
+        'encodings converge to 0 = &#8869;.'))
     E.append(body(
-        'The central result is the canonical snap closure (§VII): the map '
+        'The central result (§VII) is the canonical snap map: '
         '&#981; &#945; = if &#945; < &#949;&#8320; then c&#8320; else c&#8321; '
         'simultaneously satisfies all five conditions — monotone, tower-aligned, '
         'fixed-point-respecting, snapping at &#949;&#8320;, and &#949;&#8320; minimal. '
@@ -64,11 +66,9 @@ def build():
     ]
 
     E.append(body(
-        'Non-constructibility appears in four formal languages across the ZP framework. '
-        'In each proved layer, Classical.choice is required at the diagonal step where '
-        'a non-constructive choice is forced. This is not a contingent feature of the '
-        'proofs — it is the formal expression of the claim that the diagonal argument '
-        'cannot be eliminated.'))
+        'Non-constructibility appears in four mathematical settings across the ZP framework. '
+        'Classical.choice is required at each diagonal step in these proofs — '
+        'a constructive alternative was not found in any of the four settings.'))
 
     E.append(data_table(
         headers=['Layer', 'Formal Language', 'Expression of non-constructibility'],
@@ -114,7 +114,7 @@ def build():
         'Roger\'s fixed-point theorem (also known as Kleene\'s second recursion theorem) '
         'states that any computable transformation of a code has a behavioral fixed point: '
         'a code c such that running f(c) and running c produce the same partial function. '
-        'The fixed-point structure is stable under any computable transformation.'))
+        'For any computable transformation, at least one fixed-point code exists.'))
 
     E.append(result_box(
         'Theorem: roger_fixed_point_stability (ZPL.lean §II)',
@@ -232,12 +232,9 @@ def build():
             'induction for any ordinal strictly below &#949;&#8320;, but not for '
             '&#949;&#8320; itself. This is not claimed or proved here.',
             'ZP-L derives &#949;&#8320; as the snap threshold from ordinal fixed-point '
-            'structure, independently of proof theory. The coincidence with PA\'s '
-            'proof-theoretic ordinal is a structural alignment: both derivations locate '
-            'the same boundary — the ordinal where &#969;-tower self-iteration becomes '
-            'self-limiting. Two independent formal derivations converging on the same '
-            'ordinal is corroborating evidence that &#949;&#8320; is the structurally '
-            'correct threshold, not an arbitrary choice.',
+            'structure, independently of proof theory. Both derivations locate the same '
+            'boundary: the ordinal where &#969;-tower self-iteration becomes self-limiting. '
+            'No claim is made that this alignment is more than a structural observation.',
         ]
     ))
     E.append(sp(6))
