@@ -445,7 +445,14 @@ theorem snap_exactly_at_epsilon_zero
     (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀)
     (hfp : ∀ α : Ordinal, Ordinal.omega0 ^ α = α → φ α = c₁) :
     φ epsilonZero = c₁ ∧ ∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α := by
-  sorry
+  constructor
+  · exact hfp epsilonZero epsilonZero_fixedPoint
+  · intro α hα
+    by_contra h
+    push_neg at h
+    have hc0 : φ α = c₀ := snap_threshold_is_epsilon_zero φ hmono h0 α h
+    rw [hc0] at hα
+    exact absurd hα (by simp [c₀, c₁])
 
 /-- A canonical witness map with all bridge properties.
     Witness: φ α = if α < ε₀ then c₀ else c₁.
@@ -458,7 +465,15 @@ theorem kleene_ordinal_snap_bridge :
       (∀ α : Ordinal, Ordinal.omega0 ^ α = α → φ α = c₁) ∧
       (φ epsilonZero = c₁) ∧
       (∀ α : Ordinal, φ α = c₁ → epsilonZero ≤ α) := by
-  sorry
+  refine ⟨fun α => if α < epsilonZero then c₀ else c₁, ?_, ?_, ?_, ?_⟩
+  · intro n; exact if_pos (epsilonZero_tower_lt n)
+  · intro α hfp; exact if_neg (not_lt.mpr (epsilonZero_le_fixedPoint hfp))
+  · exact if_neg (lt_irrefl epsilonZero)
+  · intro α hα
+    by_contra h
+    push_neg at h
+    simp only [if_pos h] at hα
+    exact absurd hα (by simp [c₀, c₁])
 
 end ZeroParadox.ZPL
 
