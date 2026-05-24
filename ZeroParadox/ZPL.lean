@@ -13,26 +13,7 @@ import Mathlib.Tactic
 /-!
 # ZP-L: Incomputability Convergence
 
-## Engineer's Take
-
-Every layer in ZP (Zero Paradox) uses a standard mathematical tool — but inverted.
-ZPB uses 2-adic numbers, where the standard question is "how does arithmetic behave
-at finite primes?" ZP asks what happens when the 2-adic valuation is +∞ — that is,
-at 0 itself. ZPC uses information theory, where the standard question is "what is
-the minimum description length?" ZP asks what happens when the description length
-is infinite. ZPK uses the recursion theorem, where the standard question is "what
-programs can compute what functions?" ZP asks what the fixed point of self-application
-is.
-
-ZPL maps these structurally. The central result is the Cantor Normal Form bridge:
-ordinals below ε₀ encode as finite binary sequences in ℤ_[2], and as the ordinal
-tower ω, ω^ω, ω^(ω^ω), ... approaches ε₀, the 2-adic valuation of these encodings
-goes to +∞ — meaning they converge to 0 = ⊥ in ℤ_[2]. The ZPE T-SNAP (⊥ → ε₀,
-join c₀ c₁ = c₁) is this limit, viewed in reverse. Gentzen says this ordinal bounds
-PA's proof-theoretic strength. That is not our claim. The target identification
-(not yet a proved Lean theorem) is that ε₀ is the ordinal whose ZPB image is ⊥.
-
----
+-- TODO: Engineer's Take section to be written by Tim in his own voice.
 
 ## Formal Overview
 
