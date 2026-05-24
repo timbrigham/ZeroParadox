@@ -32,9 +32,9 @@ ZPL has four components:
     such fixed point above 0. Fully in Lean scope via Mathlib ordinals.
 
 (4) Cantor Normal Form Bridge — ordinals below ε₀ (NONote) encode into ℤ₂
-    via their Cantor normal form; the tower converges to 0 in ℤ₂; ε₀
-    corresponds to ⊥ under this encoding. The snap ⊥ → ε₀ is the ordinal
-    tower limit, read from ZPB. Proof partially in Lean scope.
+    via their Cantor normal form; as the tower stages approach ε₀, their encodings
+    converge to 0 = ⊥ in ℤ₂. The identification of these two limits is the
+    remaining gap. Proof partially in Lean scope.
 
 Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.
 The Classical.choice dependency is load-bearing — it is the formal non-constructivity.
@@ -293,8 +293,7 @@ private theorem cnfToZp2_tower_explicit (n : ℕ) :
 
 /-- The tower encodings converge to 0 = ⊥ in ℤ_[2].
     Each stage cnfToZp2(towerNONote (n+1)) = 2^(n+1) in ℤ_[2], so its 2-adic norm is
-    ‖2‖^(n+1) = (1/2)^(n+1) → 0. This is the zero-infinity identification in Lean:
-    the ordinal tower limit maps to ⊥ in ℤ_[2]. -/
+    ‖2‖^(n+1) = (1/2)^(n+1) → 0. -/
 theorem tower_converges_to_zero :
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0) := by
   rw [Metric.tendsto_atTop]
@@ -320,8 +319,9 @@ What this does NOT claim:
 
 What is proved here (§ III + § IV + tower_converges_to_zero):
   - Ordinal: ε₀ = sup{(ω^·)^[n] 0 | n : ℕ}, every finite stage strictly below ε₀
-  - ZPB: cnfToZp2(towerNONote n) = 2^n in ℤ_[2]; norm = ‖2‖^n → 0, so the
-    tower encodings converge to 0 = ⊥ in ℤ_[2] (tower_converges_to_zero)
+  - ZPB: cnfToZp2(towerNONote n).valuation = n; for n ≥ 1, cnfToZp2(towerNONote n) = 2^n
+    in ℤ_[2]; norm = ‖2‖^n → 0, so the tower encodings converge to 0 = ⊥ in ℤ_[2]
+    (tower_converges_to_zero)
 
 The remaining gap: connecting ZPE's MachinePhase element c₁ to the ordinal
 epsilonZero via a type bridge. The ordinal and ZPB sides are fully proved.
@@ -342,13 +342,12 @@ theorem zpe_snap_ordinal_correspondence :
 theorem epsilonZero_tower_bound :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero := fun n => epsilonZero_tower_lt n
 
-/-- The c₁-ε₀ snap identification: there exists a map Ordinal → MachinePhase that sends
-    every finite tower stage to c₀ (pre-snap) and ε₀ itself to c₁ (post-snap).
+/-- Snap boundary threshold: there exists a map Ordinal → MachinePhase that sends
+    every finite tower stage to c₀ and ε₀ itself to c₁.
 
-    Witness: φ α = if α < ε₀ then c₀ else c₁. This is the structural snap boundary —
-    all ordinals strictly below ε₀ map to c₀; ε₀ and beyond map to c₁. The
-    ∀ n condition pins the boundary at ε₀: no finite stage triggers the snap (each
-    fundamentalSeq n < ε₀ by epsilonZero_tower_lt), while ε₀ itself does.
+    Witness: φ α = if α < ε₀ then c₀ else c₁. Every finite tower stage satisfies
+    fundamentalSeq n < ε₀ (epsilonZero_tower_lt), so maps to c₀. ε₀ itself fails
+    the strict inequality (lt_irrefl), so maps to c₁.
 
     The stronger structural claim — an order-preserving morphism (Ordinal →o MachinePhase)
     compatible with the CNF→ℤ_[2] encoding — remains outside Lean scope: no type bridge
@@ -383,7 +382,7 @@ open ZeroParadox.ZPL
 #print axioms fundamentalSeq_zp2_converges
 -- § II: proved (wrapper around roger_fixed_point_exists)
 #print axioms roger_fixed_point_stability
--- § IV: tower_converges_to_zero (proved — zero-infinity identification)
+-- § IV: tower_converges_to_zero (proved — tower encodings converge to ⊥ in ℤ_[2])
 #print axioms tower_converges_to_zero
 -- § V: proved
 #print axioms zpe_snap_ordinal_correspondence
