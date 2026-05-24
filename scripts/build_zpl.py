@@ -239,6 +239,58 @@ def build():
     ))
     E.append(sp(6))
 
+    E.append(remark_box(
+        'Remark R-L.2: Surreal Numbers',
+        [
+            'Every ordinal is a surreal number (Conway, 1976), so &#949;&#8320; lives in '
+            'the surreal number field No. No satisfies the axioms of a real-closed field, '
+            'and by Tarski\'s completeness theorem for the theory of real-closed fields, '
+            'every first-order sentence in the language of ordered fields that holds in '
+            '&#8477; also holds in No, and vice versa.',
+            'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the forced '
+            'transition from &#8869; to the first non-null ordinal threshold (&#949;&#8320;, '
+            'established in §V&#8211;§VII above) &#8212; cannot occur in any linearly ordered '
+            'field. This result applies directly to No considered as a linearly ordered field.',
+            'The surreals therefore contain &#949;&#8320; as an ordinal while simultaneously '
+            'satisfying the density condition that blocks the Binary Snap in their ordered '
+            'field structure. Both structures coexist in No: &#949;&#8320; is present as an '
+            'ordinal, and the field density that blocks the snap is present in the field '
+            'structure. The two results apply to different structural aspects of No.',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(remark_box(
+        'Remark R-L.3: Hyperreals and &#321;o&#347;\'s Theorem',
+        [
+            'The hyperreals *&#8477; = &#8477;&#8319;/U (ultrafilter U on &#8469;) satisfy '
+            'a transfer result: by &#321;o&#347;\'s theorem, every first-order sentence '
+            'true in &#8477; holds in *&#8477;. &#321;o&#347;\'s theorem applies to the '
+            'full first-order theory, so any first-order property of &#8477; &#8212; '
+            'including field density &#8212; transfers.',
+            'Field density transfers: between any two hyperreals there is another. The '
+            'density condition that blocks the Binary Snap in &#8477; (proved in ZP-F) '
+            'therefore holds in *&#8477; as well.',
+            'The non-standard naturals *&#8469; contain infinite elements, but every '
+            'infinite H &#8712; *&#8469; has a predecessor H&#8722;1 in *&#8469;. '
+            '&#949;&#8320; is a limit ordinal: it has no predecessor and is the supremum '
+            'of the tower below it. *&#8469; cannot host the Binary Snap not only because '
+            'of field density, but because its infinite elements are successor-like rather '
+            'than limit-like. The snap requires genuine limit ordinal structure.',
+            'The monad of 0 in *&#8477; &#8212; the external set {&#949; : |&#949;| < 1/n '
+            'for all standard n} &#8212; is external to the ultrapower. Between any two '
+            'distinct elements of the monad there is another (their arithmetic mean in '
+            '*&#8477;), so no discrete jump at 0 is possible in *&#8477;.',
+            'Field density is an internal property of the ordered field structure of *&#8477; '
+            'and transfers by &#321;o&#347;\'s theorem. Limit ordinal structure is '
+            'set-theoretic and is not preserved by the ultrapower construction: *&#8469; '
+            'contains only successor-like infinite elements, not limit-like ones. '
+            'The two results &#8212; transfer of density, failure of limit-ordinal structure '
+            '&#8212; come from different theorems.',
+        ]
+    ))
+    E.append(sp(6))
+
     # ── Section IV: Cantor Normal Form Bridge ──────────────────────────────────
     print('[build_zpl] Building Section IV...')
     E += [
