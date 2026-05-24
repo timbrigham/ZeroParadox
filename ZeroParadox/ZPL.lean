@@ -359,6 +359,35 @@ theorem c1_epsilon_zero_identification :
    fun n => if_pos (epsilonZero_tower_lt n),
    if_neg (lt_irrefl epsilonZero)⟩
 
+/-- The fundamental sequence is cofinal in ε₀: for any ordinal below ε₀,
+    some tower stage exceeds it.
+    Proof: ε₀ = nfp (ω^·) 0, and lt_nfp says a < nfp f b ↔ ∃ n, a < f^[n] b. -/
+theorem fundamentalSeq_cofinal {α : Ordinal} (hα : α < epsilonZero) :
+    ∃ n : ℕ, α < fundamentalSeq n := by
+  rw [epsilonZero_eq_nfp, lt_nfp_iff] at hα
+  simpa [fundamentalSeq] using hα
+
+/-- The snap cannot occur before ε₀: any monotone map consistent with the tower
+    sends every ordinal strictly below ε₀ to c₀.
+    Proof: cofinality (fundamentalSeq_cofinal) gives a tower stage above any α < ε₀;
+    monotonicity then forces φ α ≤ φ(stage) = c₀; since c₀ = ⊥, φ α = c₀.
+    Combined with c1_epsilon_zero_identification, the correspondence ε₀ ↔ c₁ is
+    forced — no ordinal below ε₀ is a valid snap point for any monotone consistent map. -/
+theorem snap_threshold_is_epsilon_zero
+    (φ : Ordinal → MachinePhase)
+    (hmono : ∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β)
+    (h0 : ∀ n : ℕ, φ (fundamentalSeq n) = c₀) :
+    ∀ α : Ordinal, α < epsilonZero → φ α = c₀ := by
+  intro α hα
+  obtain ⟨n, hn⟩ := fundamentalSeq_cofinal hα
+  have hle : join (φ α) (φ (fundamentalSeq n)) = φ (fundamentalSeq n) :=
+    hmono α (fundamentalSeq n) hn.le
+  rw [h0 n] at hle
+  -- hle : join (φ α) c₀ = c₀
+  -- join (φ α) c₀ = φ α since c₀ = bot (both cases of MachinePhase reduce by rfl)
+  have hjoin : join (φ α) (c₀ : MachinePhase) = φ α := by cases (φ α) <;> rfl
+  exact hjoin.symm.trans hle
+
 end ZeroParadox.ZPL
 
 /-! ## Axiom Purity Check -/
@@ -389,5 +418,9 @@ open ZeroParadox.ZPL
 #print axioms epsilonZero_tower_bound
 -- § V: proved — structural snap boundary (all stages < ε₀ map to c₀; ε₀ maps to c₁)
 #print axioms c1_epsilon_zero_identification
+-- § V: proved — tower cofinality in ε₀
+#print axioms fundamentalSeq_cofinal
+-- § V: proved — snap cannot occur before ε₀ under any monotone consistent map
+#print axioms snap_threshold_is_epsilon_zero
 
 end PurityCheck
