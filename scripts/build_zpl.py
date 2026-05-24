@@ -303,7 +303,7 @@ def build():
         'Every ordinal below &#949;&#8320; has a unique Cantor normal form — a finite '
         'sum a&#8321;&#183;&#969;^e&#8321; + a&#8322;&#183;&#969;^e&#8322; + &#8230; '
         'with strictly decreasing exponents e&#8321; > e&#8322; > &#8230; and each '
-        'coefficient a positive natural number less than &#969;. In Lean: '
+        'coefficient a nonzero natural number (a nonzero ordinal strictly below &#969;). In Lean: '
         'NONote (Mathlib.SetTheory.Ordinal.Notation). '
         'The encoding cnfToZp2 maps each such ordinal to &#8484;&#8322; via structural '
         'recursion on the Cantor normal form.'))
@@ -314,10 +314,10 @@ def build():
             'cnfToZp2 : NONote &#8594; &#8484;&#8322;',
             'Base: cnfToZp2(0) = 0',
             'Recursive: cnfToZp2(&#969;^e &#183; n + a) = '
-            '2^(v&#8322;(cnfToZp2(e)) + 1) &#183; n + cnfToZp2(a)',
+            '2^(v&#8322;(cnfToZp2(e)) + 1) &#183; n + cnfToZp2(a)   [n : &#8469;&#8314;]',
             'where v&#8322; denotes the 2-adic valuation.',
             'Valuation of the n-th tower stage:',
-            '  cnfToZp2(towerNONote 0) = 0           (valuation 0)',
+            '  cnfToZp2(towerNONote 0) = 0           (Lean: PadicInt.valuation 0 = 0; standard: v&#8322;(0) = +&#8734;)',
             '  cnfToZp2(towerNONote 1) = 2            (valuation 1)',
             '  cnfToZp2(towerNONote 2) = 4            (valuation 2)',
             '  cnfToZp2(towerNONote n) = 2^n          (valuation n)',

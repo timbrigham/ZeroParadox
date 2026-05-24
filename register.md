@@ -17,7 +17,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.2 | Y/Y | Companion v1.2: disclaimer + opener updated — formal:298f2e30 comp:2b408089 |
 | ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Y/Y | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
 | ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.3 | Y/Y | Companion v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — formal:8c00d4aa comp:409a45d1 |
-| ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | — | N/— | Initial release: axiom footprint convergence, Roger fixed-point stability, ε₀ as snap threshold, CNF bridge, Kleene-ordinal bridge, canonical snap map — formal:fa910101 comp:— |
+| ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | — | N/— | Initial release: axiom footprint convergence, Roger fixed-point stability, ε₀ as snap threshold, CNF bridge, Kleene-ordinal bridge, canonical snap map — formal:7825902f comp:— |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
