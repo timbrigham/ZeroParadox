@@ -15,21 +15,22 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-Every layer in ZP uses a standard mathematical tool — but inverted. ZPB uses 2-adic
-numbers, where the standard question is "how does arithmetic behave at finite primes?"
-ZP asks what happens when the 2-adic valuation is +∞ — that is, at 0 itself. ZPC
-uses information theory, where the standard question is "what is the minimum description
-length?" ZP asks what happens when the description length is infinite. ZPK uses the
-recursion theorem, where the standard question is "what programs can compute what
-functions?" ZP asks what the fixed point of self-application is.
+Every layer in ZP (Zero Paradox) uses a standard mathematical tool — but inverted.
+ZPB uses 2-adic numbers, where the standard question is "how does arithmetic behave
+at finite primes?" ZP asks what happens when the 2-adic valuation is +∞ — that is,
+at 0 itself. ZPC uses information theory, where the standard question is "what is
+the minimum description length?" ZP asks what happens when the description length
+is infinite. ZPK uses the recursion theorem, where the standard question is "what
+programs can compute what functions?" ZP asks what the fixed point of self-application
+is.
 
 ZPL maps these structurally. The central result is the Cantor Normal Form bridge:
 ordinals below ε₀ encode as finite binary sequences in ℤ_[2], and as the ordinal
 tower ω, ω^ω, ω^(ω^ω), ... approaches ε₀, the 2-adic valuation of these encodings
-goes to +∞ — meaning they converge to 0 = ⊥ in ℤ_[2]. The snap ⊥ → ε₀ is this
-limit, viewed in reverse. Gentzen says this ordinal bounds PA's proof-theoretic
-strength. That is not our claim. Our claim is that ε₀ is the ordinal whose ZPB
-image is ⊥.
+goes to +∞ — meaning they converge to 0 = ⊥ in ℤ_[2]. The ZPE T-SNAP (⊥ → ε₀,
+join c₀ c₁ = c₁) is this limit, viewed in reverse. Gentzen says this ordinal bounds
+PA's proof-theoretic strength. That is not our claim. The target identification
+(not yet a proved Lean theorem) is that ε₀ is the ordinal whose ZPB image is ⊥.
 
 ---
 
@@ -37,12 +38,12 @@ image is ⊥.
 
 ZPL has four components:
 
-(1) Axiom Footprint Convergence — the meta-theorem that Classical.choice is the
-    common formal signature of non-constructibility across all ZP layers.
-    Not a Lean proposition — evidenced by #print axioms across §I.
+(1) Axiom Footprint Convergence — the informal observation that Classical.choice
+    appears at the non-constructive diagonal step in each of the four ZP layers
+    listed in §I. Not a Lean proposition — evidenced by #print axioms.
 
-(2) Roger Incompressibility — any computable transformation of the quine family
-    lands in the quine family (a fixed-point stability result).
+(2) Roger Fixed-Point Stability — for any computable f, some code is behaviorally
+    fixed by f (eval (f c) = eval c).
     In Lean scope. Follows from ZPK's roger_fixed_point_exists.
 
 (3) Ordinal ε₀ tower — ε₀ = nfp (ω^·) 0 is the supremum of the tower
@@ -206,10 +207,10 @@ This recursion ensures that the tower stages get valuation = stage index:
 
 As n → ∞, valuation → +∞, so the sequence converges to 0 = ⊥ in ℤ_[2].
 
-The snap ⊥ → ε₀ is this limit viewed in reverse:
-  ε₀ is the ordinal whose ZPB encoding is ⊥.
+The target identification is that ε₀ is the ordinal whose ZPB encoding is ⊥ —
+the ZPE T-SNAP (⊥ → ε₀) is this limit, viewed in reverse.
 
-This section is fully in Lean scope:
+The valuation and convergence results in this section are fully in Lean scope:
 - `cnfToZp2` is defined by structural recursion on the underlying ONote
 - `towerNONote n` lifts each fundamentalSeq n to a NONote via NONote.oadd
 - The valuation formula is proved by induction using PadicInt.valuation_pow -/
@@ -317,9 +318,9 @@ The remaining gap: connecting ZPE's MachinePhase element c₁ to the ordinal
 epsilonZero via the CNF encoding. The ordinal and ZPB sides are both fully proved.
 The identification requires 2-adic analysis and ordinal arithmetic, not Gentzen. -/
 
-/-- The ordinal tower result: all finite stages lie strictly below ε₀,
-    and ε₀ is a fixed point of ω^·.
-    Proved component of the ordinal-ZPB bridge — both tower bound and fixed point. -/
+/-- Tower-stage bound and fixed-point: every finite stage of the ε₀ tower is
+    strictly below ε₀, and ω^ε₀ = ε₀. The ZPB encoding identification
+    (ε₀ maps to ⊥) is the remaining gap in § IV. -/
 theorem zpe_snap_ordinal_correspondence :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero ∧
     Ordinal.omega0 ^ epsilonZero = epsilonZero :=
@@ -329,7 +330,7 @@ theorem zpe_snap_ordinal_correspondence :
     strictly below ε₀. This is the proved ordinal component of the ZPB bridge;
     the structural correspondence between epsilonZero and ZPE's c₁ is the
     gap requiring the CNF encoding identification from § IV. -/
-theorem godel_zp_connection :
+theorem epsilonZero_tower_bound :
     ∀ n : ℕ, fundamentalSeq n < epsilonZero := fun n => epsilonZero_tower_lt n
 
 end ZeroParadox.ZPL
@@ -357,6 +358,6 @@ open ZeroParadox.ZPL
 #print axioms roger_fixed_point_stability
 -- § V: proved
 #print axioms zpe_snap_ordinal_correspondence
-#print axioms godel_zp_connection
+#print axioms epsilonZero_tower_bound
 
 end PurityCheck
