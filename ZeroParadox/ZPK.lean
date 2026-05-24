@@ -348,15 +348,21 @@ theorem self_halting_undecidable :
 
 /-- The predicate IsComputationalQuine is undecidable: no algorithm identifies
     which codes are Kleene fixed points of selfApply.
-    Proof sketch: if IsComputationalQuine c were decidable by D : Code → Bool, define
-      g(c, n) = if D(c) then Part.none else selfApply c n
-    Apply fixed_point₂ to g: get c* with eval c* = g(c*).
-    If D(c*) = true (c* is a quine): eval c* = Part.none everywhere, but selfApply c* n =
-      eval c* (encode c* + n) = Part.none, so eval c* = selfApply c*: c* IS a quine. ✓
-    If D(c*) = false (c* not a quine): eval c* = selfApply c*, so c* IS a quine. Contradiction.
-    Therefore the second case is impossible, which means D cannot be correct for all c — it
-    misclassifies c* in the second case. Formalising this requires care with Part.none totality.
-    TODO: complete the diagonalization; the sketch above is not yet a full contradiction. -/
+
+    The naive diagonalization (define g(c,n) = Part.none if D(c), else selfApply c n;
+    apply fixed_point₂; derive contradiction) does not close: the "D(c*) = true" case
+    is consistent rather than contradictory, because Part.none is a valid quine
+    (eval c = ⊥ everywhere trivially satisfies eval c = selfApply c when selfApply also
+    diverges everywhere). Both branches are satisfiable, so no contradiction.
+
+    The correct proof route runs through Roger Incompressibility (ZPL):
+    any computable f : Code → Code satisfies eval (f botCode) = eval botCode.
+    A decision procedure for IsComputationalQuine would constitute a computable
+    transformation that selects or rejects botCode by behavior — contradicting the
+    fact that no computable function can distinguish botCode from its own image.
+    This argument is available once ZPL's roger_incompressibility is in scope.
+
+    Status: sorry pending ZPL development. See .claude-local/notes/zpl_architecture_2026-05-24.md -/
 theorem isComputationalQuine_undecidable :
     ¬ComputablePred (fun c : Code => IsComputationalQuine c) := by
   sorry
@@ -390,5 +396,8 @@ open ZeroParadox.ZPK ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ
 #print axioms selfApply_partrec
 #print axioms computational_quine_exists
 #print axioms da1_closed_concrete
+-- §VI theorems (sorry'd pending ZPL development):
+-- #print axioms isComputationalQuine_undecidable  -- depends on roger_incompressibility (ZPL)
+-- #print axioms infinite_quine_family             -- depends on Code padding lemma
 
 end PurityCheck
