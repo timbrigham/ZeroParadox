@@ -42,6 +42,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpi.py](build_zpi.py) | `ZP-I_Inside_Zero_v1_8.pdf` |
 | [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference_v1_1.pdf` |
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding_v1_3.pdf` |
+| [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 
 ### Illustrated companion builders
 

@@ -31,7 +31,7 @@ No snap-specific axioms appear anywhere in the framework. The Binary Snap is a s
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra.pdf) → [ZP-B](ZP-B_pAdic_Topology.pdf) → [ZP-C](ZP-C_Information_Theory.pdf) → [ZP-D](ZP-D_State_Layer.pdf) → [ZP-E](ZP-E_Bridge_Document.pdf) → [ZP-F](ZP-F_The_Counterexamples.pdf) → [ZP-I](ZP-I_Inside_Zero.pdf) (via [ZP-J](ZP-J_Self_Reference.pdf) and [ZP-K](ZP-K_Computational_Grounding.pdf)) - see [README.md](README.md) for the full formal index and Lean verification record
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra.pdf) → [ZP-B](ZP-B_pAdic_Topology.pdf) → [ZP-C](ZP-C_Information_Theory.pdf) → [ZP-D](ZP-D_State_Layer.pdf) → [ZP-E](ZP-E_Bridge_Document.pdf) → [ZP-F](ZP-F_The_Counterexamples.pdf) → [ZP-I](ZP-I_Inside_Zero.pdf) (via [ZP-J](ZP-J_Self_Reference.pdf) and [ZP-K](ZP-K_Computational_Grounding.pdf)) → [ZP-L](ZP-L_Incomputability_Convergence.pdf) (axiom footprint convergence, ε₀ as snap threshold, canonical snap map) - see [README.md](README.md) for the full formal index and Lean verification record
 
 **Category theory extension:** [ZP-G](ZP-G_Category_Theory.pdf) → [ZP-H](ZP-H_Categorical_Bridge.pdf) (self-contained after ZP-E)
 
