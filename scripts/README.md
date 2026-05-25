@@ -59,6 +59,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpi_companion.py](build_zpi_companion.py) | ZP-I |
 | [build_zpj_companion.py](build_zpj_companion.py) | ZP-J |
 | [build_zpk_companion.py](build_zpk_companion.py) | ZP-K |
+| [build_zpl_companion.py](build_zpl_companion.py) | ZP-L |
 
 ### Supporting document builders
 
