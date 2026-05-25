@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.2 | May 2026
+Version 1.3 | May 2026
+v1.3: Add "Convergence with Proof Theory" section — Gentzen (1936), ε₀ as PA's proof-theoretic ordinal, structural alignment with ZPL's independent derivation.
 v1.2: Strip version number from disclaimer cross-reference to ZP-L formal document.
 v1.0: Initial release. Covers ε₀ as the ordinal snap threshold, 2-adic tower
 convergence, and Kleene-ordinal structural homology.
@@ -221,7 +222,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 def build():
@@ -421,6 +422,42 @@ def build():
         'ZPM formalizes this parallel with a type bridge between the two settings. '
         'The two rooms share the same floor plan.',
     ]))
+    E.append(sp(8))
+
+    # ── Proof-Theoretic Connection ────────────────────────────────────────────
+    E.append(Paragraph('Convergence with Proof Theory', CS['h1']))
+    E.append(cbody(
+        'ZP-L derives &#949;&#8320; as the snap threshold from ordinal fixed-point structure '
+        'alone &#8212; &#969;-tower iteration, the fixed-point property of '
+        '&#945; &#8614; &#969;^&#945;, and Cantor normal form encodings into &#8484;&#8322;. '
+        'Remark R-L.1 in the formal document notes a structural alignment with an independent '
+        'result from proof theory.'))
+    E.append(cbody(
+        'Gentzen (1936) proved that &#949;&#8320; is the proof-theoretic ordinal of Peano '
+        'Arithmetic: PA can prove transfinite induction up to any ordinal strictly below '
+        '&#949;&#8320;, but not for &#949;&#8320; itself. &#949;&#8320; is the exact ordinal '
+        'boundary of PA&#8217;s own proof machinery &#8212; the furthest point its provability '
+        'reaches before requiring a strictly stronger system.'))
+    E.append(cbody(
+        'ZP-L and Gentzen arrive at &#949;&#8320; from entirely separate starting points. '
+        'ZP-L starts from ordinal fixed-point structure: &#949;&#8320; is where &#969;-tower '
+        'self-iteration closes on itself. Gentzen starts from proof theory: &#949;&#8320; is '
+        'where PA&#8217;s provability tower runs out. Neither derivation references the '
+        'other&#8217;s domain. Both locate the same boundary.'))
+    E.append(cbody(
+        'The convergence is notable. ZP-L&#8217;s fixed-point derivation and Gentzen&#8217;s '
+        'proof-theoretic analysis were conducted in separate domains with separate machinery. '
+        'That both locate &#949;&#8320; is a structural observation, not an argument for '
+        'either result. Both stand or fall on their own proofs.'))
+    E.append(sp(4))
+    E.append(remember_box(
+        'ZP does not prove any part of G&#246;del&#8217;s incompleteness theorems, and does '
+        'not reprove Gentzen&#8217;s ordinal analysis of PA. The connection is a structural '
+        'observation: two independent formal derivations arrive at the same ordinal boundary. '
+        'Gentzen (1936) established that &#949;&#8320; is the specific ordinal where '
+        'PA&#8217;s proof-theoretic strength is exhausted. ZP-L established &#949;&#8320; as '
+        'the snap threshold from ordinal fixed-point structure. No formal equivalence '
+        'between the two derivations is claimed.'))
     E.append(sp(8))
 
     # ── Axiom Footprint Note ──────────────────────────────────────────────────

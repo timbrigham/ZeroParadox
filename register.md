@@ -16,8 +16,8 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
 | ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.4 | Y/Y | Companion v1.4: strip ZPI.lean version refs; disclaimer updated — formal:298f2e30 comp:a5d6bdee |
 | ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.4 | Y/Y | Companion v1.4: strip version from disclaimer cross-ref — formal:1dd8e34f comp:0a72dda0 |
-| ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.5 | Y/Y | Companion v1.5: strip version from disclaimer cross-ref — formal:8c00d4aa comp:f485ef8f |
-| ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.2 | Y/Y | Companion v1.2: strip version from disclaimer cross-ref — formal:7825902f comp:a3077cdc |
+| ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.6 | Y/Y | Companion v1.6: Gödel diagonal lemma / fixed-point vs. liar section added; AR-clean — formal:8c00d4aa comp:35d33d58 |
+| ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.3 | Y/Y | Companion v1.3: Gentzen/ε₀ proof-theoretic ordinal section added; AR-clean — formal:7825902f comp:812be345 |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
