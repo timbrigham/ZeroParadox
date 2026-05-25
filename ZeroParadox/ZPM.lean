@@ -20,7 +20,20 @@
       snapEmbed c₀ = 1    (pre-snap state maps to 2-adic unit)
       snapEmbed c₁ = 0    (snap state maps to 2-adic zero = limit of tower encodings)
 
-  Engineer's Take (TODO: Tim to fill in)
+  Engineer's Take:
+
+  ZPM is a consolidation layer, doing for the snap state what the earlier layers did for ⊥.
+  The pattern is the same: one object showing up in multiple mathematical domains with
+  different names and different notation, and the job is to build a formal map proving
+  they're the same topological structure.
+
+  The mechanism is straightforward once you see it. You define the map, you show the
+  structure holds on all three edges, and you confirm that Kleene diagonalization and
+  ordinal diagonalization are the same operation running in two different rooms. Same
+  inputs, same outputs, different address.
+
+  If ZPK and ZPL each proved a piece of the picture, ZPM is the layer where you step
+  back and see that the pieces were always the same picture.
 -/
 
 import ZeroParadox.ZPK
