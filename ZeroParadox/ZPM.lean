@@ -12,7 +12,7 @@
   **Gap 2 (ZP-K / ZP-L):** The Kleene quine construction (ZP-K) establishes that
   the quine atom IS ⊥ = c₀ (bottom of MachinePhase). The ZP-L snap establishes that
   ε₀ forces the transition to c₁. The formal path from c₀ = ⊥ (Kleene, ZP-K)
-  through the snap to c₁ = ε₀-image (ZP-L), mediated by the 2-adic encoding,
+  through the snap at ε₀ to c₁ (ZP-L), mediated by the 2-adic encoding,
   is the missing structural triangle: ⊥ → ε₀ → c₁.
 
   The central formal object is:
@@ -29,8 +29,10 @@
 
   The mechanism is straightforward once you see it. You define the map, you show the
   structure holds on all three edges, and you confirm that Kleene diagonalization and
-  ordinal diagonalization are the same operation running in two different rooms. Same
-  inputs, same outputs, different address.
+  ordinal diagonalization follow the same structural pattern: a self-referential
+  operation produces a forced fixed point. The two domains are formally separate —
+  one over Gödel codes, one over ordinals — but the diagonalization schema is
+  identical.
 
   If ZPK and ZPL each proved a piece of the picture, ZPM is the layer where you step
   back and see that the pieces were always the same picture.
@@ -54,7 +56,9 @@ open Ordinal
 snapEmbed sends the snap state c₁ to 0 in ℤ_[2] (the 2-adic limit of the tower
 encodings) and the pre-snap state c₀ to 1 (a nonzero 2-adic integer).
 
-This formalizes the identification: c₁ ↔ 0 = ⊥ in ℤ_[2].
+This formalizes the embedding: c₁ maps to 0 ∈ ℤ_[2], the 2-adic limit of the tower
+encodings. Within the ZP framework, 0 here plays the role of ⊥; ℤ_[2] itself has
+no lattice ⊥ — the identification is a modelling commitment, not a ring-theoretic fact.
 
 The morphism property: join on MachinePhase (c₁ is absorbing) corresponds to
 multiplication on ℤ_[2] (0 is absorbing). Both structures have the same absorbing
@@ -167,7 +171,7 @@ theorem zpm_triangle :
    tower_converges_to_zero,
    snap_state_zp2_is_zero⟩
 
-/-! ## §IV. The Structural Homology
+/-! ## §IV. Shared Diagonalization Pattern
 
 Both the Kleene recursion theorem (ZP-K) and ε₀'s fixed-point property (ZP-L) follow
 the same diagonalization pattern: a self-referential operation has a fixed point.
@@ -196,9 +200,9 @@ the same structural pattern running in two different domains. Both are forced fi
 points of a self-referential operation.
 
 L-INF (ZP-C Lemma L-INF: ⊥ has divergent surprisal — unbounded information content,
-incompressible by any finite description) is a third instance of the same pattern:
-a fixed point of information divergence at the structural limit. All three are
-manifestations of diagonalization.
+incompressible by any finite description) is structurally analogous. The Kleene and
+ordinal cases are both textbook instances of the diagonalization schema; whether
+L-INF fits the same schema formally is the open question this remark is tracking.
 
 The formally unconnected instance is L-INF. This gap is DA-1 Path 2 — the
 informational bridge. The reason Path 2 resisted formalization is now visible from
@@ -208,15 +212,16 @@ computability-theoretic statement (partial recursive functions, Gödel encoding)
 The two frameworks share no mathematical machinery. The diagonalization frame
 established here provides the common conceptual ground, but the formal bridge
 requires the Kolmogorov complexity connection: incompressibility is the concept
-that lives in both worlds simultaneously (a string is incompressible iff no program
-shorter than itself computes it — measure theory meets computation). That bridge
+that lives in both worlds simultaneously (a string x is incompressible iff K(x) ≥ |x| − O(1) —
+Kolmogorov complexity meets measure theory). That bridge
 is outside the current Lean scope, pending AIT infrastructure not yet available
 in Mathlib.
 
 DA-1 Path 2 was recharacterized in ZP-E/ZP-K as a foundational commitment rather
-than a missing proof. ZPM retrospectively explains why: the gap was not a proof
-step that was skipped but a framework boundary that had no formal crossing point
-until the diagonalization structure was made explicit here. -/
+than a missing proof. The diagonalization frame established here makes the boundary
+precise: the gap is not a skipped proof step but a genuine framework separation —
+measure-theoretic surprisal on one side, computability-theoretic encoding on the
+other, with no shared machinery in current Mathlib. -/
 
 end ZeroParadox.ZPM
 
