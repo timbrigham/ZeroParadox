@@ -1,6 +1,8 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.5 | May 2026
+Version 1.7 | May 2026
+v1.7: Fix four_way_diagram String() HTML entity encoding — raw Unicode for ⊥, ≤, ∨.
+v1.6: Add "Self-Reference: Fixed Point vs. Oscillation" section — Gödel diagonal lemma, fixed-point vs. liar-type self-reference, ZPE irreversibility excludes oscillation.
 v1.5: Strip version number from disclaimer cross-reference to ZP-K formal document.
 v1.4: AR fix — "⊥ in every formal language" → "⊥ in the four formal languages of this
 framework" — scopes the cross-framework identity claim to the four ZP languages.
@@ -33,7 +35,7 @@ def four_way_diagram():
     d.add(Circle(cx, cy, cr, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
     d.add(String(cx - 22, cy + 5,  'The Null', fontSize=8.5, fontName='DV-B', fillColor=WHITE))
     d.add(String(cx - 18, cy - 8, 'Ground', fontSize=8.5, fontName='DV-B', fillColor=WHITE))
-    d.add(String(cx - 12, cy - 20, '&#8869;', fontSize=10,  fontName='DV-B', fillColor=WHITE))
+    d.add(String(cx - 12, cy - 20, '⊥', fontSize=10,  fontName='DV-B', fillColor=WHITE))
 
     bw, bh = 1.3 * inch, 0.72 * inch
 
@@ -63,7 +65,7 @@ def four_way_diagram():
 
     # Top: Set theory / AFA
     node(cx - bw/2, cy + cr + 10, INDIGO, INDIGO_LITE,
-         'Set Theory (AFA)', '&#8869; = {&#8869;}', 'Quine atom',
+         'Set Theory (AFA)', '⊥ = {⊥}', 'Quine atom',
          cx, cy + cr + 10, cx, cy + cr + 2)
 
     # Bottom: Computation / Kleene
@@ -73,12 +75,12 @@ def four_way_diagram():
 
     # Left: Order theory
     node(cx - cr - 14 - bw, cy - bh/2, COMP_BLUE, colors.HexColor('#E3F0FA'),
-         'Order Theory', '&#8869; &#8804; x for all x', 'Minimum element',
+         'Order Theory', '⊥ ≤ x for all x', 'Minimum element',
          cx - cr - 14, cy, cx - cr - 2, cy)
 
     # Right: Algebra
     node(cx + cr + 14, cy - bh/2, COMP_AMBER, AMBER_LITE,
-         'Algebra (A4)', '&#8869; &#8744; x = x', 'Join identity',
+         'Algebra (A4)', '⊥ ∨ x = x', 'Join identity',
          cx + cr + 14, cy, cx + cr + 2, cy)
 
     d.add(String(14, 10,
@@ -122,7 +124,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.5'
+VERSION = '1.7'
 
 
 def build():
@@ -302,6 +304,44 @@ def build():
         'Lean 4, that the structural role ⊥ plays in the algebra is the same role it plays '
         'in AFA set theory and in computability theory. The gap was never a gap — '
         '⊥ in all three settings is the same self-referential fixed point.'))
+    E.append(sp(8))
+
+    # ── Fixed-Point vs. Oscillation ───────────────────────────────────────────
+    E.append(Paragraph('Self-Reference: Fixed Point vs. Oscillation', CS['h1']))
+    E.append(cbody(
+        'Not all self-reference is the same. The liar paradox &#8212; "this sentence is '
+        'false" &#8212; produces a statement x with the property x = NOT x. In Boolean '
+        'logic this has no fixed point: the sequence true, false, true, false, &#8230; '
+        'oscillates without resolving. This is the liar structure.'))
+    E.append(cbody(
+        'G&#246;del&#8217;s incompleteness proof (1931) uses a different kind of '
+        'self-reference. Using the diagonal lemma &#8212; a fixed-point theorem for formal '
+        'languages &#8212; he constructed a sentence G satisfying G &#8596; &#172;Prov(G): '
+        '"this sentence is not provable in PA." The key move: he changed the predicate from '
+        '"true" to "provable." Provability is asymmetric in a way truth is not, so G does '
+        'not oscillate. In a consistent system, G is true in the standard model of arithmetic '
+        'but unprovable in PA &#8212; a fixed point, not an oscillation.'))
+    E.append(cbody(
+        'ZP-K&#8217;s construction achieves the same structural form in the setting of &#8869;. '
+        '&#8869; = {&#8869;} (the AFA Quine atom, proved via da1_closed_concrete) is '
+        'self-containing, not self-negating: x = f(x) where f is set-membership, not '
+        'x = NOT x. The Kleene fixed point gives the same structure computationally: '
+        'a code whose behavior is determined entirely by itself. Both witnesses resolve '
+        'at a fixed point. Neither oscillates.'))
+    E.append(cbody(
+        'ZP-E&#8217;s t_snap_irreversible goes further: it formally proves that the '
+        'liar-type trajectory is structurally impossible in this framework, not merely '
+        'absent. Once c&#8320; transitions to c&#8321;, the semilattice axioms guarantee '
+        'no path returns. The sequence c&#8320; &#8594; c&#8321; &#8594; c&#8320; &#8594; &#8230; '
+        'cannot occur &#8212; the algebra forbids it.'))
+    E.append(sp(4))
+    E.append(remember_box(
+        'This is a structural observation, not a claim that ZP proves G&#246;del&#8217;s '
+        'theorems. G&#246;del applied the diagonal lemma in formal arithmetic; '
+        'ZP-K&#8217;s construction achieves the same structural form &#8212; '
+        'x = f(x) rather than x = &#172;x &#8212; for the bottom element &#8869;. '
+        'Both constructions use x = f(x) rather than x = &#172;x, and both yield '
+        'a stable fixed point rather than an oscillating sequence.'))
     E.append(sp(8))
 
     E.append(key_result_box(
