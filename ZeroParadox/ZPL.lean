@@ -484,18 +484,19 @@ theorem kleene_ordinal_snap_bridge :
 /-! ## § VII. Canonical Snap Map — Full Closure
 
 The canonical threshold map φ α = if α < ε₀ then c₀ else c₁ satisfies ALL three
-conditions of snap_exactly_at_epsilon_zero (hmono, h0, hfp). This makes the snap
-identification unconditional for this specific map — no free hypotheses remain.
+conditions of snap_exactly_at_epsilon_zero (hmono, h0, hfp). This removes the free
+hypotheses for this specific witness: the threshold, monotonicity, and fixed-point
+conditions all hold by construction of φ, without additional assumptions.
 
 The three conditions:
   (hmono) φ is order-non-decreasing — proved here as snap_map_mono
   (h0)    every tower stage maps to c₀ — from kleene_ordinal_snap_bridge
   (hfp)   every fixed point of ω^· maps to c₁ — from kleene_ordinal_snap_bridge
 
-snap_zp2_correspondence then records both sides together: every stage of the tower is
-below ε₀ in ordinals, the canonical map assigns c₀ to those stages and c₁ to ε₀,
-and the 2-adic encodings converge to 0. These are independent proved facts about the
-same tower sequence — not a formal structural isomorphism between ordinal and 2-adic limits. -/
+snap_zp2_correspondence collects four already-proved facts about the same tower
+sequence into one theorem: the ordinal bound, the canonical map values at tower
+stages and at ε₀, and the 2-adic convergence. These are independent results — no
+structural isomorphism between ordinal and 2-adic domains is claimed or proved. -/
 
 /-- The canonical snap map is order-non-decreasing in the ZPSemilattice sense.
     For α ≤ β, join (φ α) (φ β) = φ β where φ = if · < ε₀ then c₀ else c₁.
@@ -518,9 +519,12 @@ theorem snap_map_mono :
     tower-aligned (every stage maps to c₀), fixed-point-respecting (every fixed point of ω^·
     maps to c₁), snapping at ε₀ (φ ε₀ = c₁), and minimal (ε₀ ≤ any c₁-assigned ordinal).
     All five are verified for the explicit witness φ α = if α < ε₀ then c₀ else c₁,
-    with no free hypotheses remaining for this witness.
+    with all five conditions verified by direct computation on this witness — no
+    additional assumptions are needed to establish any of the five properties.
     Monotonicity (hmono) comes from snap_map_mono. The other four conditions are direct
-    consequences of ε₀'s ordinal properties. -/
+    consequences of ε₀'s ordinal properties.
+    ('Canonical' here refers to this specific indicator map; it does not assert ε₀ is
+    the unique snap threshold for all maps Ordinal → MachinePhase.) -/
 theorem epsilon_zero_snap_canonical :
     ∃ (φ : Ordinal → MachinePhase),
       (∀ α β : Ordinal, α ≤ β → join (φ α) (φ β) = φ β) ∧
@@ -541,13 +545,14 @@ theorem epsilon_zero_snap_canonical :
 
 /-- Four independent facts about the same tower sequence, stated together:
     (i)   Every tower stage is strictly below ε₀ in ordinals (epsilonZero_tower_lt)
-    (ii)  The canonical map sends every tower stage to c₀ (pre-snap zone)
+    (ii)  The canonical map sends every tower stage to c₀
     (iii) The 2-adic encodings of the tower converge to 0 = ⊥ (tower_converges_to_zero)
-    (iv)  The canonical map sends ε₀ to c₁ (the snap)
-    All four are provable from already-established theorems. The theorem records that the
-    same tower sequence witnesses both the ordinal approach to ε₀ and the 2-adic approach
-    to 0. The full structural identification (ε₀ ↔ ⊥ via a type bridge) remains outside
-    Lean scope — see §V. -/
+    (iv)  The canonical map sends ε₀ to c₁
+    All four are provable from already-established theorems. The same indexing sequence
+    (n : ℕ) drives the ordinal tower (fundamentalSeq n < ε₀ for all n) and the 2-adic
+    tower (cnfToZp2(towerNONote n) → 0). The limits are limits in different types; no
+    type bridge between them is established here. The full structural identification
+    (ε₀ ↔ ⊥ via a type bridge) remains outside Lean scope — see §V. -/
 theorem snap_zp2_correspondence :
     (∀ n : ℕ, fundamentalSeq n < epsilonZero) ∧
     (∀ n : ℕ, (fun α : Ordinal =>
@@ -602,9 +607,9 @@ open ZeroParadox.ZPL
 #print axioms kleene_ordinal_snap_bridge
 -- § VII: proved — canonical map is order-non-decreasing (fills hmono gap)
 #print axioms snap_map_mono
--- § VII: proved — snap unconditionally forced at ε₀ for the canonical map
+-- § VII: proved — explicit canonical map satisfies all five snap properties simultaneously
 #print axioms epsilon_zero_snap_canonical
--- § VII: proved — two-sided correspondence: ordinal and 2-adic witnesses to the snap boundary
+-- § VII: proved — four independent facts about the tower: ordinal bound, canonical map values, 2-adic convergence
 #print axioms snap_zp2_correspondence
 
 end PurityCheck
