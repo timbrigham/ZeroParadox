@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.4 | May 2026
+Version 1.5 | May 2026
+v1.5: Strip version number from disclaimer cross-reference to ZP-K formal document.
 v1.4: AR fix — "⊥ in every formal language" → "⊥ in the four formal languages of this
 framework" — scopes the cross-framework identity claim to the four ZP languages.
 v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — preserves the
@@ -121,7 +122,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -155,7 +156,7 @@ def build():
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'document — every claim here restates a result already proved in the technical '
-              'document ZP-K Computational Grounding v1.6. Consult that document for the '
+              'document ZP-K Computational Grounding. Consult that document for the '
               'authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-K Doing?

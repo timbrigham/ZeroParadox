@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.7 | May 2026
+Version 1.9 | May 2026
+v1.9: Strip version numbers from DA-1 historical narrative in body prose.
 v1.7: Title "AX-1 becomes a theorem" → "the main causality axiom becomes a theorem"; remember
 box 1 "emergence of any state from a null condition" → scoped to ⊥→ε₀ transition; remember
 box 2 "universal ontology of state emergence" removed — replaced with scoped no-claims statement.
@@ -174,7 +175,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -260,7 +261,7 @@ def build():
         '(definition). c₁ is non-null (L-RUN). No program avoids this (TQ-IH). A non-null '
         'state change from ⊥ is the Binary Snap (ZP-A D2). The Snap is derived — not assumed.'))
     E.append(cbody(
-        'In v2.7, DA-1 itself is upgraded from a Design Principle to a Derived Proposition. '
+        'DA-1 is now a Derived Proposition rather than a freestanding Design Principle. '
         'Previously DA-1 was an honest but freestanding commitment: "a configuration at P₀ '
         'is necessarily executing." Now it follows from ZP-A CC-2: ⊥ = {⊥}. The null state '
         'is a Quine atom — a self-containing object with no external position from which it '
@@ -268,7 +269,7 @@ def build():
         'be waiting for an external interpreter. So ⊥ at P₀ is necessarily executing. '
         'The design commitment has become a derivation.'))
     E.append(cbody(
-        '<b>The two-layer structure of DA-1 (v3.0):</b> DA-1 now rests on two explicit layers. '
+        '<b>The two-layer structure of DA-1:</b> DA-1 rests on two explicit layers. '
         'The first is the formal conditional: DP-2 (Execution Distinguishability) establishes '
         'that machine states carry execution history independently of output values. From DP-2, '
         'Lean 4 can derive <i>da1_minimal_path</i> — a proof that before and after instantiation '
@@ -283,14 +284,14 @@ def build():
         'external position from which it could be read as a static description (above). '
         '(2) L-INF (ZP-C): the surprisal of ⊥ diverges to infinity — no finite static '
         'distribution can represent the null state. '
-        '(3) AIT bridge (v2.8): at the incompressibility threshold P₀, the description of ⊥ '
+        '(3) AIT bridge: at the incompressibility threshold P₀, the description of ⊥ '
         'is maximally incompressible — K(c₁|n)/|c₁| = 1. A string that cannot be compressed '
         'beyond itself must be its own execution; a static-description reading is ruled out by '
         'information theory alone. '
         'All three share D7\'s static/executing dichotomy as background and none is circular '
         'with DP-2.'))
     E.append(cbody(
-        '<b>Lean 4 formal closure (ZP-K, v3.7):</b> The three paths are not only conceptually '
+        '<b>Lean 4 formal closure (ZP-K):</b> The three paths are not only conceptually '
         'convincing — two of them are now machine-checked. ZP-K adds a KleeneStructure instance '
         'for MachinePhase: it provides a concrete computational Quine (a code that is its own '
         'program, via Kleene\'s second recursion theorem), and proves that this Quine and the '

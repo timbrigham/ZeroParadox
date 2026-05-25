@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.1 | May 2026
+Version 1.2 | May 2026
+v1.2: Strip version number from disclaimer cross-reference to ZP-L formal document.
 v1.0: Initial release. Covers ε₀ as the ordinal snap threshold, 2-adic tower
 convergence, and Kleene-ordinal structural homology.
 v1.1: Adversary review fixes — 6 precision corrections: removed grand-unification
@@ -220,7 +221,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 
 def build():
@@ -264,7 +265,7 @@ def build():
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and examples. '
             'It is not the formal document &#8212; every claim here restates a result already '
-            'proved in ZP-L Incomputability Convergence v1.0. Consult that document for the '
+            'proved in ZP-L Incomputability Convergence. Consult that document for the '
             'authoritative mathematics.',
             CS['disc']),
     ]

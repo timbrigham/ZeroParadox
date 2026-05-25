@@ -1,8 +1,10 @@
 """
-Build ZP-I Illustrated Companion (v1.2)
-v1.2: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
+Build ZP-I Illustrated Companion (v1.4)
+v1.4: Strip Lean file version numbers from Lean 4 Verification section.
+v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
       Opening paragraph revised — "existence necessarily emerges from null" replaced with
       structural consequence framing.
+v1.2: (prior)
 Standalone companion for ZP-I: Inside Zero.
 
 Accessibility target: 2 years of college math.
@@ -276,7 +278,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
@@ -565,7 +567,7 @@ def build():
     # ── Lean 4 Status ─────────────────────────────────────────────────────────
     E.append(Paragraph('Lean 4 Verification', CS['h1']))
     E.append(cbody(
-        'The topological core of T-IZ is fully verified in Lean 4 (ZPI.lean v1.1). '
+        'The topological core of T-IZ is fully verified in Lean 4 (ZPI.lean). '
         'All proofs are complete. The purity check confirms the theorems depend only '
         'on standard foundational axioms shared by all Mathlib theorems — '
         'no domain-specific assumptions.'))
@@ -594,7 +596,7 @@ def build():
 
     E.append(key_result_box('ZP-I Summary',
         'T-IZ is derived from ZP-A through ZP-E — no new axioms required. '
-        'The topological core is proved axiom-free in Lean 4 (ZPI.lean v1.1, all proofs filled). '
+        'The topological core is proved axiom-free in Lean 4 (ZPI.lean, all proofs filled). '
         'The valuation-complexity bridge uses the same informal argument as DA-1 '
         'Path 3 in ZP-E (outside Lean scope: Kolmogorov complexity absent from Mathlib). '
         'This framework is a closed system: T-SNAP opens each branch; '

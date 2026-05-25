@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.3 | May 2026
+Version 1.4 | May 2026
+v1.4: Strip version number from disclaimer cross-reference to ZP-J formal document.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document". Opening paragraph
       revised — DA-1 glossed on first use instead of using internal label alone.
 v1.2: quine_atom_diagram: dh increased (2.0 → 2.8 in), cy changed to fixed 110 so the
@@ -92,7 +93,7 @@ def three_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
     t.setStyle(ts); return t
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
@@ -126,7 +127,7 @@ def build():
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'document — every claim here restates a result already proved in the technical '
-              'document ZP-J Self-Reference v1.1. Consult that document for the authoritative '
+              'document ZP-J Self-Reference. Consult that document for the authoritative '
               'mathematics.', CS['disc'])]
 
     # What Is ZP-J Doing?
