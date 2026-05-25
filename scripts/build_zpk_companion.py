@@ -1,6 +1,9 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.3 | May 2026
+Version 1.5 | May 2026
+v1.5: Strip version number from disclaimer cross-reference to ZP-K formal document.
+v1.4: AR fix — "⊥ in every formal language" → "⊥ in the four formal languages of this
+framework" — scopes the cross-framework identity claim to the four ZP languages.
 v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — preserves the
 direct comparison while distinguishing structural instantiation from literal identity.
 v1.2: Disclaimer updated — "formal ontology" replaced with "formal document".
@@ -119,7 +122,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.3'
+VERSION = '1.5'
 
 
 def build():
@@ -153,7 +156,7 @@ def build():
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'document — every claim here restates a result already proved in the technical '
-              'document ZP-K Computational Grounding v1.3. Consult that document for the '
+              'document ZP-K Computational Grounding. Consult that document for the '
               'authoritative mathematics.', CS['disc'])]
 
     # What Is ZP-K Doing?
@@ -168,8 +171,8 @@ def build():
         'The consequence for DA-1 is direct: ⊥ is not a description of a Turing machine. '
         '⊥ IS an instance of a Turing machine — specifically its ground state, serving as its own program. '
         'The "description vs. execution" gap that DA-1 had to close is structurally '
-        'dissolved: there is no gap, because ⊥ in every formal language is the same '
-        'self-executing object.'))
+        'dissolved: there is no gap, because ⊥ in the four formal languages of this framework '
+        'is shown to be the same structural object — and that structural identity is what dissolves the gap.'))
     E.append(sp(4))
 
     # What Is a Kleene Fixed Point?

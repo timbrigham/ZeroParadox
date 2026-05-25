@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.14 | May 2026
+Version 3.15 | May 2026
+v3.15: DA-1 Path 2 forward reference to ZP-M R-M.1 added at three locations — retrospective
+structural analysis of why the informational bridge resisted formalization.
 v3.14: Adversary-review pass — "AX-1 is promoted" → "AX-1 is derived as" (two occurrences);
 version history removed from opening paragraph (belongs in docstring); "[AX-1 Promoted to
 Theorem]" bracket removed from theorem box title; "structural event" → "structural limit";
@@ -68,7 +70,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.14'
+VERSION = '3.15'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -288,13 +290,14 @@ def build():
              'static-description alternative; this path is now closed by ZP-K\'s Kleene result, which '
              'handles the computational self-reference claim without requiring AIT. '
              'Paths 1 and 3 are formally closed. Path 2 identifies a missing principle; '
-             'its forward resolution is in The Philosophical Question That Started This. DA-1 is grounded in Paths 1 and 3; Path 2 is context.'),
+             'its forward resolution is in The Philosophical Question That Started This. DA-1 is grounded in Paths 1 and 3; Path 2 is context. '
+             '(ZP-M R-M.1 provides a retrospective structural analysis of why the gap resisted formalization.)'),
         derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
                 'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
                 'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in ZPK.lean. '
                 '(Under MachinePhase\'s selfMem x := x = &#8869;, this reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;) — structural closure enforced by typeclass design, not a set-theoretic derivation from ZF+AFA. See R-K.0.) '
-                'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: The Philosophical Question That Started This. '
+                'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: The Philosophical Question That Started This; ZP-M R-M.1 (retrospective structural analysis). '
                 'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
                 'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
                 'CC-2 (&#8869; = {&#8869;}) structurally forced by self-execution argument; ZP-J T-EXEC formally verifies. '
@@ -771,7 +774,8 @@ def build():
          'Path 2 (informational bridge, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a '
          'missing proof. No computability library closes the gap between \'system at P₀\' and \'system is '
          'running.\' Forward paths: new axiom, Chalmers\' implementation notion, or '
-         'The Philosophical Question That Started This. Paths 1 and 3 are formally closed; DA-1 does not depend on Path 2. '
+         'The Philosophical Question That Started This. ZP-M R-M.1 provides a retrospective structural analysis of why the gap resisted formalization. '
+         'Paths 1 and 3 are formally closed; DA-1 does not depend on Path 2. '
          'CC-1 and CC-2 derived via ZP-J, not freestanding commitments.'],
         ['T-SNAP: Binary Snap derived',
          'Valid — Derived. Seven-step proof. All dependencies are closed theorems in their own documents. ✓'],

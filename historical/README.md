@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v3_14.pdf](ZP-E_Bridge_Document_v3_14.pdf) | 2026-05-24 | ZP-E v3.14 superseded by v3.15: DA-1 Path 2 forward reference to ZP-M R-M.1 added at three locations. |
 | [ZP-E_Bridge_Document_v3_13.pdf](ZP-E_Bridge_Document_v3_13.pdf) | 2026-05-21 | ZP-E v3.13 superseded by v3.14: AR fixes — preamble version history removed; "AX-1 promoted to Theorem T-SNAP" → "AX-1 derived as Theorem T-SNAP"; "[AX-1 Promoted to Theorem]" tag removed from header; Section VII headers renamed to mathematical descriptions; "structural event" → "structural limit". |
 | [ZP-C_Information_Theory_v1_12.pdf](ZP-C_Information_Theory_v1_12.pdf) | 2026-05-21 | ZP-C v1.12 superseded by v1.13: AR fix — "forcing result" replaced with "structural constraint on the null state" to avoid borrowing set-theoretic forcing vocabulary. |
 | [ZP-B_pAdic_Topology_v1_7.pdf](ZP-B_pAdic_Topology_v1_7.pdf) | 2026-05-21 | ZP-B v1.7 superseded by v1.8: AR fix — R1 consequence reworded; "universal ontology" language scoped to ZP-B algebraic and topological results only. |

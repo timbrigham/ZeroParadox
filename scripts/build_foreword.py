@@ -1,5 +1,8 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.8, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v1.9, revised May 2026)
+v1.9: AR fix — callout box "from which every state is reachable by joins" →
+"the element below which no other state exists" — corrects imprecise constructive
+reachability phrasing to match what T2 actually proves.
 v1.8: Adversary-review pass — epigraph removed; Section VIII (WHERE THE FRAMEWORK REACHES)
 cut entirely (applications content belongs in Gen2 document); Planck-scale analogy removed
 from Section VI (ε₀ is a structural threshold, not a physical constant); callout box in
@@ -20,7 +23,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -178,7 +181,7 @@ def build():
     story.append(box(
         'The central claim is this: zero is not the absence of mathematical structure. It is '
         'the unique minimal element of the induced partial order — the element below which '
-        'no other state exists, and from which every state is reachable by joins.'
+        'no other state exists.'
     ))
     story.append(sp(6))
 

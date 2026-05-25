@@ -1,5 +1,6 @@
 """
-Build ZP-A Illustrated Companion (v1.6)
+Build ZP-A Illustrated Companion (v1.8)
+v1.8: Strip version number from ZP-A cross-reference in CC-2 section.
 v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
 monotonicity (T3), bottom-as-constituent (T2), four concrete examples.
@@ -95,7 +96,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -255,7 +256,7 @@ def build():
     E.append(Paragraph('&#8869; Contains Itself (CC-2)', CS['h1']))
     E.append(cbody(
         'Every state sits above &#8869;. But what exactly <i>is</i> &#8869;? The standard '
-        'answer: the additive identity, the algebraic zero, the starting point. ZP-A v1.6 '
+        'answer: the additive identity, the algebraic zero, the starting point. ZP-A '
         'adds a sharper answer: &#8869; is a <b>Quine atom</b> — a set that equals its '
         'own singleton.'))
     E.append(cbody(

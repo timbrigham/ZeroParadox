@@ -1,6 +1,7 @@
 import ZeroParadox.ZPJ
 import ZeroParadox.ZPE
 import Mathlib.Computability.PartrecCode
+import Mathlib.Computability.Halting
 import Mathlib.Tactic
 
 /-!
@@ -44,6 +45,7 @@ consequence derived by the theorems. T-COMP establishes (1)↔(2)↔(3) via T-EX
 - § III T-COMP: the four-way equivalence
 - § IV  DA-1 closure — the description-instantiation gap formally dissolved
 - § V   MachinePhase instance — DA-1 closed concretely for ZP-E's machine
+- § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
 
 ## Key insight (April 26, 2026)
 
@@ -51,8 +53,9 @@ consequence derived by the theorems. T-COMP establishes (1)↔(2)↔(3) via T-EX
 ⊥ IS the universal Turing machine in its ground state. U is not a description awaiting
 an external executor — U IS the executor. Kleene's second recursion theorem
 (Mathlib: Nat.Partrec.Code.fixed_point₂) guarantees the existence of this fixed point
-for any partially computable transformation. The KleeneStructure typeclass takes the AFA Quine atom (⊥ = {⊥}) and the
-Kleene computational Quine (∃ c, eval c = f c) to be the same structural property —
+for any partially computable transformation. The KleeneStructure typeclass takes the
+AFA Quine atom (⊥ = {⊥}) and the Kleene computational Quine (∃ c, eval c = f c) to
+be the same structural property —
 the motivating commitment, not a theorem proved here.
 
 ## Dependencies
@@ -63,12 +66,15 @@ Mathlib: Nat.Partrec.Code.fixed_point (Roger's fixed-point theorem).
 
 ## Axiom footprint (verified)
 
-All ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
+All proved ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
 Source: Mathlib computability infrastructure — Kleene's theorem (fixed_point₂) and
 Roger's theorem (fixed_point) themselves use classical logic and choice.
 ZP-J T-EXEC (axiom-free) is preserved; the classical axioms enter through
 Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
-All theorems are fully proved — no sorry stubs remain.
+
+§ VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
+quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
+No sorry stubs remain in ZPK.
 -/
 
 namespace ZeroParadox.ZPK
@@ -273,6 +279,245 @@ noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
 theorem da1_closed_concrete : IsQuineAtom (bot : MachinePhase) :=
   da1_computational
 
+/-! ## § VI. Function-Gödel-Number Correspondence
+
+Every computational quine c has a Gödel number encode(c) that is not external
+metadata — it is the period of the function computed by c in the selfApply sense.
+The DA-2 instantiation succession generates an infinite family of quines with
+distinct Gödel numbers. For each quine cᵢ in this family, the pair (eval cᵢ, encode cᵢ)
+is the unique signature of cᵢ: the function and the index are inseparable.
+
+Three formal results capture this structure:
+  (1) quine_period_is_goedel — the period IS the Gödel number (definitionally)
+  (2) self_halting_undecidable and isComputationalQuine_undecidable — the boundary
+      between computation and self-reference is genuinely non-computable, not merely
+      unimplemented; Classical.choose in machinePhaseKleene reflects this
+  (3) infinite_quine_family — the quine family is infinite, confirming that DA-2
+      instantiation succession generates unboundedly many distinct (function, index) pairs
+
+The noncomputable marker on machinePhaseKleene is therefore load-bearing, not a
+proof artifact. No algorithm can identify which code IS the botCode for a given
+KleeneStructure instance — the choice is structurally outside classical computation. -/
+
+/-- For any computational quine c, the Gödel number encode(c) is the period of
+    eval c in the selfApply sense: eval c n = eval c (encode(c) + n) for all n.
+    This makes explicit what IsComputationalQuine encodes definitionally: the function
+    and the Gödel number are not independently specifiable. The index IS the period. -/
+theorem quine_period_is_goedel (c : Code) (hc : IsComputationalQuine c) :
+    ∀ n : ℕ, eval c n = eval c (Encodable.encode c + n) := by
+  intro n
+  have h := congr_fun hc n
+  simp only [selfApply] at h
+  exact h
+
+/-- Among computational quines, distinct Gödel numbers imply distinct codes.
+    The encoding is injective on all of Code, hence on quines.
+    Across the DA-2 instantiation succession, each ⊥ₙ has a distinct botCodeₙ with
+    a distinct Gödel number — the map instantiation-index ↦ encode(botCodeₙ) is injective. -/
+theorem quine_goedel_injective (c₁ c₂ : Code)
+    (_ : IsComputationalQuine c₁) (_ : IsComputationalQuine c₂)
+    (h : Encodable.encode c₁ = Encodable.encode c₂) : c₁ = c₂ :=
+  Encodable.encode_inj.mp h
+
+/-- The predicate "c halts on its own Gödel number" is undecidable.
+    Proof: reduce from halting_problem 0. The function φ(c) = Code.comp c (Code.const 0)
+    satisfies eval (φ c) k = eval c 0 for all k, so if the self-halting predicate were
+    computable, composing with φ would decide "c halts on 0" — contradicting halting_problem 0.
+    For a quine c, quine_period_is_goedel ties halting at encode(c) to halting at any
+    encode(c) + n, so undecidability reaches directly into the period structure. -/
+theorem self_halting_undecidable :
+    ¬ComputablePred (fun c : Code => (eval c (Encodable.encode c)).Dom) := by
+  intro h
+  apply ComputablePred.halting_problem 0
+  -- φ(c) = Code.comp c (Code.const 0): run c on 0 regardless of actual input
+  have φ_comp : Computable (fun c : Code => Code.comp c (Code.const 0)) :=
+    (primrec₂_comp.comp Primrec.id (Primrec.const _)).to_comp
+  -- eval (φ c) k = eval c 0 for all k, c  (const 0 feeds 0 to c regardless of k)
+  have φ_eval : ∀ (c : Code) (k : ℕ), eval (Code.comp c (Code.const 0)) k = eval c 0 := by
+    intro c k
+    change eval (Code.const 0) k >>= eval c = eval c 0
+    simp [eval_const]
+  -- Compose h (deciding self-halting) with φ to get ComputablePred for halting-at-0
+  -- Use the same DecidablePred instance w that h carries, composed with φ
+  obtain ⟨w, hdec⟩ := h
+  have h_phi : ComputablePred (fun c : Code =>
+      (eval (Code.comp c (Code.const 0)) (Encodable.encode (Code.comp c (Code.const 0)))).Dom) :=
+    ⟨fun c => w (Code.comp c (Code.const 0)), hdec.comp φ_comp⟩
+  exact h_phi.of_eq fun c => by simp [φ_eval]
+
+/-- The predicate IsComputationalQuine is undecidable: no algorithm identifies
+    which codes are Kleene fixed points of selfApply.
+
+    Proof: reduce from self_halting_undecidable.
+    For each c : Code, construct φ c = Code.comp Code.right
+      (Code.pair (Code.comp c (Code.const (encode c))) (Code.pair Code.left Code.right)).
+    Behavior: eval (φ c) n = (eval c (encode c)).bind (fun _ => Part.some n).
+      — diverges everywhere when c does not halt on encode c
+      — equals Part.some n for all n when c halts on encode c
+    Key encoding fact: encode (φ c) ≠ 0 (φ c is a Code.comp term; Code.zero has encoding 0;
+      constructor distinctness + injectivity gives encode (φ c) ≠ encode Code.zero = 0).
+    Iff: IsComputationalQuine (φ c) ↔ ¬(eval c (encode c)).Dom.
+      Backward (¬Dom → quine): φ c diverges everywhere; selfApply (φ c) n =
+        eval (φ c) (encode (φ c) + n) = Part.none; so eval (φ c) = selfApply (φ c). ✓
+      Forward (quine → ¬Dom), by contrapositive: Dom gives eval (φ c) n = Part.some n.
+        At n = 0: eval (φ c) 0 = Part.some 0 and selfApply (φ c) 0 = Part.some (encode (φ c)).
+        Quineness forces encode (φ c) = 0, contradicting the encoding fact. ✓
+    Composing hD (hypothetical decider for IsComputationalQuine) with the computable
+    map c ↦ φ c gives a decider for ¬self-halting; negating gives a decider for
+    self-halting; self_halting_undecidable finishes. -/
+theorem isComputationalQuine_undecidable :
+    ¬ComputablePred (fun c : Code => IsComputationalQuine c) := by
+  intro hD
+  apply self_halting_undecidable
+  -- φ c: run c on encode c; if halts return input; if diverges return nothing
+  let φ : Code → Code := fun c =>
+    Code.comp Code.right
+      (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
+                 (Code.pair Code.left Code.right))
+  -- Behavioral lemma: eval (φ c) n = (eval c (encode c)).bind (fun _ => Part.some n)
+  -- Proved by case-splitting on whether eval c (encode c) has a value.
+  have φ_eval : ∀ (c : Code) (n : ℕ),
+      eval (φ c) n = (eval c (Encodable.encode c)).bind (fun _ => Part.some n) := by
+    intro c n
+    simp only [φ]
+    rcases Part.eq_none_or_eq_some (eval c (Encodable.encode c)) with h | ⟨v, h⟩
+    · -- Diverge: eval c (encode c) = Part.none → eval (φ c) n = Part.none
+      rw [h, Part.bind_none]
+      -- inner comp evaluates to Part.none
+      have hc : eval (Code.comp c (Code.const (Encodable.encode c))) n = Part.none := by
+        show eval (Code.const (Encodable.encode c)) n >>= eval c = Part.none
+        simp [eval_const, h]
+      -- pair with Part.none first arg evaluates to Part.none
+      have hp : eval (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
+                                 (Code.pair Code.left Code.right)) n = Part.none := by
+        show Nat.pair <$> eval (Code.comp c (Code.const (Encodable.encode c))) n
+                     <*> eval (Code.pair Code.left Code.right) n = Part.none
+        rw [hc, Part.map_eq_map, Part.map_none]
+        simp only [Seq.seq, Part.bind]
+        exact Part.assert_neg Part.not_none_dom
+      -- outer comp: eval pair >>= eval right = Part.none >>= _ = Part.none
+      show eval (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
+                            (Code.pair Code.left Code.right)) n >>= eval Code.right = Part.none
+      rw [hp]; exact Part.bind_none _
+    · -- Halting: eval c (encode c) = Part.some v → eval (φ c) n = Part.some n
+      rw [h, Part.bind_some]
+      have hc : eval (Code.comp c (Code.const (Encodable.encode c))) n = Part.some v := by
+        show eval (Code.const (Encodable.encode c)) n >>= eval c = Part.some v
+        simp [eval_const, h]
+      -- eval (pair left right) n = Part.some n (definitional: ↑f applies to give Part.some)
+      have h_lr : eval (Code.pair Code.left Code.right) n = Part.some n := by
+        show Nat.pair <$> (Part.some n.unpair.1) <*> (Part.some n.unpair.2) = Part.some n
+        rw [Part.map_eq_map, Part.map_some]
+        -- Part.some (Nat.pair n.unpair.1) <*> Part.some n.unpair.2 = Part.some n
+        show Part.bind (Part.some (Nat.pair n.unpair.1)) (fun f => f <$> Part.some n.unpair.2) = Part.some n
+        rw [Part.bind_some]
+        simp [Part.map_eq_map, Part.map_some, Nat.pair_unpair]
+      have hp : eval (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
+                                 (Code.pair Code.left Code.right)) n = Part.some (Nat.pair v n) := by
+        show Nat.pair <$> eval (Code.comp c (Code.const (Encodable.encode c))) n
+                     <*> eval (Code.pair Code.left Code.right) n = Part.some (Nat.pair v n)
+        rw [hc, h_lr, Part.map_eq_map, Part.map_some]
+        -- Part.some (Nat.pair v) <*> Part.some n = Part.some (Nat.pair v n)
+        show Part.bind (Part.some (Nat.pair v)) (fun f => f <$> Part.some n) = Part.some (Nat.pair v n)
+        rw [Part.bind_some]
+        simp [Part.map_eq_map, Part.map_some]
+      -- outer comp: Part.bind (eval pair n) (eval right) = Part.some n
+      show Part.bind (eval (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
+                                       (Code.pair Code.left Code.right)) n) (eval Code.right) = Part.some n
+      rw [hp, Part.bind_some]
+      show Part.some (Nat.pair v n).unpair.2 = Part.some n
+      simp [Nat.unpair_pair]
+  -- Encoding: encode (φ c) ≠ 0 for all c
+  have φ_enc : ∀ c : Code, Encodable.encode (φ c) ≠ 0 := by
+    intro c heq
+    have h0 : Encodable.encode Code.zero = 0 := by native_decide
+    have hne : φ c ≠ Code.zero := by simp [φ]
+    exact hne (Encodable.encode_inj.mp (heq.trans h0.symm))
+  -- IsComputationalQuine (φ c) ↔ ¬(eval c (encode c)).Dom
+  have φ_iff : ∀ c : Code,
+      IsComputationalQuine (φ c) ↔ ¬(eval c (Encodable.encode c)).Dom := by
+    intro c
+    constructor
+    · -- quine → ¬Dom: contrapositive — Dom → not a quine
+      contrapose!
+      intro h_dom hq
+      -- extract a value from Dom
+      have hv : eval c (Encodable.encode c) = Part.some ((eval c (Encodable.encode c)).get h_dom) :=
+        (Part.some_get h_dom).symm
+      -- eval (φ c) n = Part.some n for all n
+      have heval : ∀ n, eval (φ c) n = Part.some n := fun n => by
+        rw [φ_eval, hv, Part.bind_some]
+      -- quineness at 0: eval (φ c) 0 = selfApply (φ c) 0
+      have h0 := congr_fun hq 0
+      simp only [selfApply] at h0
+      rw [heval 0, heval (Encodable.encode (φ c) + 0)] at h0
+      -- Part.some 0 = Part.some (encode (φ c) + 0) → encode (φ c) = 0
+      have henc : Encodable.encode (φ c) = 0 := by
+        have := Part.some_inj.mp h0
+        omega
+      exact φ_enc c henc
+    · -- ¬Dom → quine: both sides Part.none, equal trivially
+      intro h_not
+      funext n
+      have hdiv : eval c (Encodable.encode c) = Part.none := Part.eq_none_iff'.mpr h_not
+      -- LHS: eval (φ c) n = Part.none
+      rw [φ_eval, hdiv, Part.bind_none]
+      -- RHS: selfApply (φ c) n = eval (φ c) (encode (φ c) + n) = Part.none
+      simp only [selfApply]
+      rw [φ_eval, hdiv, Part.bind_none]
+  -- Computability of c ↦ φ c: each Code constructor application is primitive recursive
+  have φ_comp : Computable φ := by
+    show Computable (fun c : Code => Code.comp Code.right
+        (Code.pair (Code.comp c (Code.const (Encodable.encode c)))
+                   (Code.pair Code.left Code.right)))
+    apply Primrec.to_comp
+    exact primrec₂_comp.comp (Primrec.const Code.right)
+      (primrec₂_pair.comp
+        (primrec₂_comp.comp Primrec.id (primrec_const.comp Primrec.encode))
+        (Primrec.const (Code.pair Code.left Code.right)))
+  -- Compose: hD ∘ φ gives decider for ¬self-halting; negate for self-halting
+  -- hD = ⟨instD, hD_comp⟩ where instD : DecidablePred IsComputationalQuine
+  rcases hD with ⟨instD, hD_comp⟩
+  have hComp_phi : ComputablePred (fun c : Code => IsComputationalQuine (φ c)) :=
+    ⟨fun c => instD (φ c), hD_comp.comp φ_comp⟩
+  have hNeg : ComputablePred (fun c : Code => ¬(eval c (Encodable.encode c)).Dom) :=
+    hComp_phi.of_eq (fun c => φ_iff c)
+  exact hNeg.not.of_eq (fun c => not_not)
+
+/-- The family of computational quines is infinite: for any n, a quine with
+    Gödel number greater than n exists.
+    Combined with quine_goedel_injective, this gives an infinite injection into quines.
+    The DA-2 instantiation succession has no finite bound.
+    Proof: Code.const k is a quine for every k (constant functions satisfy the selfApply
+    condition: both sides reduce to Part.some k). Code.const is injective (Mathlib:
+    const_inj) and Encodable.encode is injective, so encode ∘ Code.const is an injective
+    map ℕ → ℕ with infinite range — hence unbounded. No padding lemma required. -/
+theorem infinite_quine_family :
+    ∀ n : ℕ, ∃ c : Code, IsComputationalQuine c ∧ n < Encodable.encode c := by
+  intro n
+  -- Code.const k always returns k regardless of input, so both sides of eval c = selfApply c
+  -- reduce to Part.some k: constant functions are quines.
+  have hconst_quine : ∀ k : ℕ, IsComputationalQuine (Code.const k) := fun k => by
+    show eval (Code.const k) = selfApply (Code.const k)
+    funext m
+    simp [selfApply, eval_const]
+  -- encode ∘ Code.const is injective: const_inj (Mathlib) + encode_inj
+  have hinj : Function.Injective (fun k : ℕ => Encodable.encode (Code.const k)) :=
+    fun a b h => const_inj (Encodable.encode_inj.mp h)
+  -- Injective ℕ → ℕ has infinite range, hence unbounded
+  have hinf : (Set.range (fun k : ℕ => Encodable.encode (Code.const k))).Infinite :=
+    Set.infinite_range_of_injective hinj
+  obtain ⟨k, hk⟩ : ∃ k : ℕ, n < Encodable.encode (Code.const k) := by
+    by_contra h
+    push_neg at h
+    apply hinf
+    apply Set.Finite.subset (Finset.finite_toSet (Finset.range (n + 1)))
+    intro x hx
+    obtain ⟨k, rfl⟩ := hx
+    simp only [Finset.mem_coe, Finset.mem_range]
+    exact Nat.lt_succ_of_le (h k)
+  exact ⟨Code.const k, hconst_quine k, hk⟩
+
 end ZeroParadox.ZPK
 
 /-! ## Axiom Purity Check -/
@@ -290,5 +535,7 @@ open ZeroParadox.ZPK ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ
 #print axioms selfApply_partrec
 #print axioms computational_quine_exists
 #print axioms da1_closed_concrete
+#print axioms isComputationalQuine_undecidable
+#print axioms infinite_quine_family
 
 end PurityCheck

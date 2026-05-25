@@ -73,35 +73,13 @@ GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASE
 
 ### Release workflow
 
-1. Update `RELEASES.md` with the new version entry (version, date, why, what's included, document versions, next threshold)
-2. Commit and merge to main via PR
-3. Draft the GitHub Release body and present it to Tim for approval
-4. On explicit approval, execute `gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"` directly - do not ask Tim to do it manually
-5. Grab the Zenodo DOI badge and add to README.md in a follow-up commit
-
-### Claude's role in drafting releases
-
-When Tim says it's time for a release, Claude will:
-1. Read `RELEASES.md` and the merged PR history since the last release
-2. Draft the `RELEASES.md` entry for the new version
-3. Open a PR with the `RELEASES.md` update
-4. After merge, draft the full GitHub Release body and present it to Tim
-5. **Wait for explicit approval before executing** - do not run `gh release create` until Tim confirms the language
-6. On approval, run `gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"` - no further prompting needed
-
-### RELEASES.md entry format
-
+When Tim initiates a release: draft the `RELEASES.md` entry → PR → after merge, draft the GitHub Release body → **wait for explicit approval** → execute:
 ```
-## vX.Y - YYYY-MM-DD
-
-**Why this release:** [one sentence - what milestone this represents]
-
-**What changed:** [bullet list of significant changes since last release]
-
-**Document versions at this release:** [table - only documents that changed since last release, or full table for major versions]
-
-**Next threshold:** [what would trigger v(X.Y+1) vs v(X+1.0)]
+gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"
 ```
+Then grab the Zenodo DOI badge and add to README.md in a follow-up commit.
+
+**RELEASES.md format:** `## vX.Y - YYYY-MM-DD` header, then **Why this release** (one sentence), **What changed** (bullets), **Document versions at this release** (table), **Next threshold**. Match existing entries in RELEASES.md for exact formatting.
 
 ## register.md — Canonical Version Registry
 
@@ -137,9 +115,12 @@ If yes to any of these, update the companion and bump its internal version numbe
 When updating a companion, change:
 1. The subtitle paragraph in `build()`: e.g., `'Information Theory | Version 1.4'` → `'Version 1.5'`
 2. The docstring at the top of the build script
-3. Any section headers of the form `'New in v1.X: ...'` that now refer to an old version — either drop the "New in" framing or update the version number
 
-Companion version numbers are independent of formal version numbers — ZP-C companion v1.5 pairing with ZP-C formal v1.6 is fine. What matters is that the companion is not materially stale.
+Companion version numbers are independent of formal version numbers. What matters is that the companion is not materially stale.
+
+### Version numbers in rendered companion content
+
+**Version numbers must appear in exactly one place in every companion PDF: the tagline meta line** (`'ZP Companion | Version ' + VERSION + ' | ...'`). Nowhere else in rendered content — not in disclaimers, section headers, body prose, or cross-document references. Patterns like `"ZP-J Self-Reference v1.1"`, `"New in v1.6"`, and `"In v2.7, DA-1 was upgraded"` are all violations. Strip them on discovery and bump the companion version.
 
 ### Companion sync checklist
 
@@ -290,36 +271,9 @@ This project runs on **Windows 11**. Shell commands must use PowerShell syntax, 
 
 The project index is split across two files. README.md is the formal index (for mathematicians and reviewers). GUIDE.md is the general reader hub (plain language, companions, reading paths). Both are public.
 
-### README.md Document Structure
+### README.md and GUIDE.md Document Structure
 
-README.md must maintain this section order:
-
-1. Title and date — `# The Zero Paradox`
-2. One-line pointer to GUIDE.md — immediately after badges
-3. "The Central Result" — core theorem and derivation chain
-4. "The Framework" — Formal Ontology Documents + Formal Verification (Lean 4) only
-5. "Axiomatic Commitments" — formal commitments and principles
-6. "Question Register" — tracked questions and resolutions
-7. "Notes on Development" — credits and contributor information
-8. "Repository and Version History" — Git/versioning guidance
-9. "Purpose of This Repository"
-10. "License"
-11. "Citation"
-12. "Contact"
-
-### GUIDE.md Document Structure
-
-GUIDE.md must maintain this section order:
-
-1. Title — `# The Zero Paradox: A Reader's Guide`
-2. One-line pointer to README.md — immediately after subtitle
-3. "What This Is" — high-level introduction
-4. "What This Is Not" — explicit clarifications
-5. "Reading Paths" — four paths for different reader types with clickable links
-6. "Entry Point" — Foreword table
-7. "Illustrated Companion Documents" — companion table with staleness note
-8. "Supporting Documents" — Philosophical Question + Tools
-9. Footer pointer to README.md
+Preserve the existing section order in both files. Do not add top-level sections, reorder sections, or remove terminal sections (License, Citation, Contact, Purpose in README.md; footer pointer in GUIDE.md) without agreement. README.md is the formal index for mathematicians; GUIDE.md is the general reader hub. Both must have a cross-pointer to the other near the top.
 
 ### Formatting Standards
 
@@ -336,38 +290,15 @@ GUIDE.md must maintain this section order:
 - Consistent column alignment; meaningful headers (File, Document, Version, Contents)
 - Version numbers go in the Version column only, not in display text
 
-### Reading Paths Structure (GUIDE.md)
+### Validation Checklist (both files)
 
-GUIDE.md's "Reading Paths" section must include four distinct paths:
-1. **General reader** — Philosophical Question → Foreword → any Illustrated Companion → ZP-E Companion → ZP-I Companion
-2. **Mathematician** — formal path ZP-A through ZP-I (via ZP-J and ZP-K); pointer to README.md for full formal index
-3. **Category theory extension** — ZP-G and ZP-H (after ZP-E)
-4. **Process/methods** — ZP Tools and Methods
-
-All entries must be clickable links, not plain text.
-
-### Validation Checklist
-
-**Before committing any README.md update:**
-- [ ] All linked files verified to exist (use `Glob` tool, pattern `*.pdf`)
-- [ ] No file extensions in display text
-- [ ] No version numbers in display text
+Before committing any README.md or GUIDE.md update:
+- [ ] All linked files exist (verify with `Glob` tool, pattern `*.pdf`)
+- [ ] No file extensions in display text; no version numbers in display text
 - [ ] No em dashes — regular hyphens only
-- [ ] All four terminal sections present: License, Citation, Contact, Purpose
-- [ ] Pointer to GUIDE.md present after badges
-- [ ] Axiomatic Commitments matches current framework state (AX-1 is T-SNAP, not an axiom)
-- [ ] Open questions table reflects actual current status
-
-**Before committing any GUIDE.md update:**
-- [ ] All linked files verified to exist (use `Glob` tool, pattern `*.pdf`)
-- [ ] No file extensions in display text
-- [ ] No version numbers in display text
-- [ ] No em dashes — regular hyphens only
-- [ ] Reading Paths has clickable links for all four paths
-- [ ] Reading Paths version numbers match register.md
-- [ ] "What This Is Not" section present
-- [ ] Pointer to README.md present after title
-- [ ] Companion staleness note is current
+- [ ] README.md: Axiomatic Commitments current (AX-1 is T-SNAP, not an axiom); Question Register reflects actual status
+- [ ] GUIDE.md: Reading Paths version numbers match register.md; "What This Is Not" section present
+- [ ] Cross-pointer to the other file present near top of each
 
 ### Document Sync Requirements — Triggers and Checklist
 
@@ -402,18 +333,7 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 6. Put version number in the Version column only
 7. Verify file exists with `Glob` before committing
 
-**Removing a broken link:**
-- Verify with `Glob` tool (never `ls`) before removing
-- Ask: should this file be created, or is it genuinely absent?
-- Check both README.md and GUIDE.md for the broken link
-
-**Historical folder table format** (`historical/README.md`):
-```
-| [ZP-A_Lattice_Algebra_v1_1.pdf](ZP-A_Lattice_Algebra_v1_1.pdf) | YYYY-MM-DD | Brief description of what this version was |
-```
-- File column: use the actual archived filename in both display text and link
-- Date: YYYY-MM-DD (date moved, not date of document)
-- Keep entries newest-first
+**Historical folder table format** (`historical/README.md`): `| [filename](filename) | YYYY-MM-DD | description |` — use actual archived filename in both display text and link; date moved (not date of document); newest-first.
 
 ## Archiving Old Document Versions
 
@@ -466,6 +386,20 @@ The Zero Paradox project treats GitHub Issues as a public transparency mechanism
 
 Public issues should read as genuine open questions to the mathematical community — not as requests for validation. Frame them as specific, honest about uncertainty, and standalone without requiring knowledge of the full framework.
 
+### Identifier tracking — standing requirement
+
+Every outreach item must have its external identifier recorded in `.claude-local/outreach/tracker.md` at the time it is created or sent. No exceptions.
+
+**What counts as an identifier:**
+- GitHub Discussion: `#N` (e.g. `#77`)
+- GitHub Issue: `#N`
+- MathOverflow question: full URL
+- Email thread: date sent + recipient (email threads have no stable ID — date + recipient is the key)
+- Zulip post: stream + topic slug
+- arXiv submission: arXiv ID
+
+**When to record it:** At the moment the item is created or sent — not after the fact. If an identifier is missing from the tracker, add it before doing any other work in that outreach session.
+
 ---
 
 ## Framework Structure (for context)
@@ -496,6 +430,10 @@ This log is the authoritative record of what has been reviewed and why. Future s
 
 During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1/CC-2 (both now derived via ZP-J, not freestanding commitments).
 
+## Session Handoff File
+
+`.claude-local/handoff.md` is the standardized session state file. At the start of every session, read it first. At the end of every session (or before a planned context switch), overwrite it with the current state: what was just done, the immediate next action, and anything deferred. Always use this exact filename — one file, always current, always overwritten.
+
 ## Reviewer Feedback Tracking
 
 Reviewer feedback and correspondence are tracked in `.claude-local/feedback/reviewer_feedback_tracking.md`. That file is private and gitignored. Do not include reviewer names or feedback details in this file.
@@ -506,14 +444,11 @@ CC BY-NC-ND 4.0 — share with attribution; no modifications; no commercial use.
 
 
 # .claudecodes instructions for Lean 4 development
-- Always run lake build as two separate PowerShell calls to avoid allowlist prompt issues: first `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then `Get-Content build.log | Select-Object -Last 1` (or with a `-match` filter). Never combine them with `;` in a single call.
-- **Logging Rule:** Always run lake build as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
+- Always run lake build as two separate PowerShell calls: first `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8`, then `Get-Content build.log | Select-Object -Last 1` (or with a `-match` filter). Never combine them with `;` in a single call.
 - Ignore PDF rendering assets and website build artifacts in the root.
 - Always check 'lake-manifest.json' for dependency updates before adding new imports.
 
 - When searching for Lean source files in this project, always use the pattern ZeroParadox/**/*.lean, never **/*.lean. The .lake/ folder contains thousands of Mathlib library files that aren't mine."
-
-# Zero Paradox Project Standards
 
 # Zero Paradox Project Standards
 
@@ -534,10 +469,16 @@ All work — Lean 4 proofs and PDF rendering — happens on the `illustrated` br
    gh pr create --title "..." --body-file ".claude-local\pr_body_<name>.md"
    ```
 
-8. **Keep PR description current:** If additional commits are pushed to a branch after the PR is opened, update the PR body to reflect the new content. Update `.claude-local\pr_body_<name>.md` first, then run:
+9. **Keep PR description current:** If additional commits are pushed to a branch after the PR is opened, update the PR body to reflect the new content. Update `.claude-local\pr_body_<name>.md` first, then run:
    ```powershell
    gh pr edit <number> --body-file ".claude-local\pr_body_<name>.md"
    ```
+
+10. **GitHub Discussion body updates — always use `-F body=@file`:** Passing Unicode body content through PowerShell string interpolation (`$body = Get-Content -Raw; -F body="$body"`) corrupts multi-byte UTF-8 characters (arrows, subscripts, math symbols). Always write the body to `.claude-local\temp_body.md` first, then pass the file directly:
+   ```powershell
+   gh api graphql -F query=@.claude-local\mutation_update_discussion.graphql -F id="NODE_ID" -F body=@.claude-local\temp_body.md
+   ```
+   After every update, verify the live body via `mcp__github__get_discussion` before proceeding to the next thread. This issue was discovered 2026-05-23 when ZP-C (#69) was posted with garbled math.
 
 ## File Priority
 - Both `.lean` files and PDF build scripts are first-class on `illustrated`.

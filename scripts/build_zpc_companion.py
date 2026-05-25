@@ -1,5 +1,6 @@
 """
-Build ZP-C Illustrated Companion (v1.8)
+Build ZP-C Illustrated Companion (v2.1)
+v2.1: Strip version numbers from in-document cross-references; "New in v1.6" section header simplified.
 v1.8: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 v1.7: Dual-route framing added — "What Is ZP-C Doing?" rewritten to name both routes
       (Kolmogorov complexity and 2-adic surprisal) explicitly upfront as independent measures
@@ -190,7 +191,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.0'
+VERSION = '2.1'
 
 
 def build():
@@ -303,7 +304,7 @@ def build():
 
     E.append(Paragraph('Why the Singularity Forces Execution (L-INF)', CS['h1']))
     E.append(cbody(
-        'The surprisal graph shows that I(x) goes to infinity as x approaches 0. ZP-C v1.5 '
+        'The surprisal graph shows that I(x) goes to infinity as x approaches 0. ZP-C '
         'makes this precise with Lemma L-INF (Informational Extremity of ⊥): at the '
         'incompressibility threshold P₀, the configuration\'s surprisal is not just very large — '
         'it is formally infinite. The branching measure assigns probability approaching zero to any '
@@ -316,7 +317,7 @@ def build():
         'the surprisal singularity to the L-RUN argument below.'))
     E.append(remember_box(
         'The branching measure — the way ZP-C assigns probabilities to states in D4 — is a '
-        'representational commitment (RP-2 in ZP-C v1.6). It is well-motivated by the binary '
+        'representational commitment (RP-2 in ZP-C). It is well-motivated by the binary '
         'structure of AX-B1, but it is a choice, not a derivation. The framework labels it '
         'explicitly so readers know where a design decision is being made.'))
     E.append(example_box('Analogy — A file that cannot be described', [
@@ -348,7 +349,7 @@ def build():
         'non-null. The output being null does not mean the intermediate states were null.'))
     E.append(remember_box(
         'The identification of c₀ with the null state ⊥ is a modeling commitment (CC-2 in '
-        'ZP-C v1.6) — a choice made explicit in the formal document, parallel to CC-1 in ZP-A '
+        'ZP-C) — a choice made explicit in the formal document, parallel to CC-1 in ZP-A '
         '(which identifies the initial state S₀ with ⊥). It is not derived from the machine '
         'definition; it is chosen. Labeling it CC-2 keeps that choice visible.'))
 
@@ -372,9 +373,9 @@ def build():
     E.append(sp(6))
 
     # ── v1.6: Named commitments section ────────────────────────────────────────
-    E.append(Paragraph('New in v1.6: Two Named Commitments', CS['h1']))
+    E.append(Paragraph('Two Named Commitments', CS['h1']))
     E.append(cbody(
-        'ZP-C v1.6 adds explicit labels to two choices the framework makes. Labeling them is not '
+        'ZP-C adds explicit labels to two choices the framework makes. Labeling them is not '
         'a weakness — it is how the framework keeps track of what is proven versus what is chosen.'))
     E.append(cbody(
         'CC-2 (Modeling Commitment): The Turing machine initial configuration c₀ is identified '
