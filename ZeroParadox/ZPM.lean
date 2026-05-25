@@ -5,9 +5,9 @@
 
   **Gap 1 (ZP-L):** `snap_exactly_at_epsilon_zero` carries a free hypothesis
       hfp : ∀ α, ω^α = α → φ α = c₁
-  which states that ordinal fixed points of ω^· map to c₁. This layer derives hfp
-  from a formal type bridge — snapEmbed : MachinePhase → ℤ_[2] — making the snap
-  theorem unconditional for zp2-aligned maps.
+  which states that ordinal fixed points of ω^· map to c₁. This layer proves hfp
+  follows from φ epsilonZero = c₁ alone (given monotonicity), via the snapEmbed bridge
+  and c₁'s absorbing property in MachinePhase.
 
   **Gap 2 (ZP-K / ZP-L):** The Kleene quine construction (ZP-K) establishes that
   the quine atom IS ⊥ = c₀ (bottom of MachinePhase). The ZP-L snap establishes that
@@ -181,7 +181,12 @@ end ZeroParadox.ZPM
 section PurityCheck
 open ZeroParadox.ZPM
 
+#print axioms snapEmbed_injective
+#print axioms snapEmbed_mul_morphism
+#print axioms hfp_from_epsilon_zero
+#print axioms snap_unconditional
 #print axioms snap_state_zp2_is_zero
 #print axioms zpm_triangle
+#print axioms both_fixed_points_exist
 
 end PurityCheck
