@@ -11,7 +11,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-F The Counterexamples | v1.1 | ZP-F_The_Counterexamples.pdf | v1.9 | Y/Y | Companion v1.9: comparison table "isolated" → "valuatively distinct" (kill-level AR fix) — formal:52672134 comp:ea91ad01 |
 | ZP-C Information Theory | v1.13 | ZP-C_Information_Theory.pdf | v1.9 | Y/Y | Companion v1.9: "informational singularity" defined in first paragraph — formal:45164ac2 comp:af22429f |
 | ZP-D State Layer | v1.9 | ZP-D_State_Layer.pdf | v1.7 | Y/Y | Companion v1.7: disclaimer updated — formal:a80de810 comp:198ff647 |
-| ZP-E Bridge Document | v3.14 | ZP-E_Bridge_Document.pdf | v1.8 | Y/Y | Companion v1.8: title "converge" → "four frameworks, one event"; diagram captions "independent proof" → "independent mathematical description" — formal:f6326831 comp:a4cf4aa1 |
+| ZP-E Bridge Document | v3.15 | ZP-E_Bridge_Document.pdf | v1.8 | Y/Y | DA-1 Path 2 forward reference to ZP-M R-M.1 added — formal:70610c39 comp:a4cf4aa1 |
 | ZP-G Category Theory | v1.8 | ZP-G_Category_Theory.pdf | v1.5 | Y/Y | Companion v1.5: "Informational Singularity" section renamed/rewritten — structural surprisal definition; section title → "Informational Asymmetry of 0" — formal:bde00483 comp:869c0ccc |
 | ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
 | ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.2 | Y/Y | Companion v1.2: disclaimer + opener updated — formal:298f2e30 comp:2b408089 |
