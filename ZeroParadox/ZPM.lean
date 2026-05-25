@@ -188,6 +188,36 @@ theorem both_fixed_points_exist :
     exact ⟨c, hc⟩,
    ⟨epsilonZero, epsilonZero_fixedPoint, fun β hβ => epsilonZero_le_fixedPoint hβ⟩⟩
 
+/-! ### Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame
+
+`both_fixed_points_exist` establishes that Kleene diagonalization (a code acting on
+its own Gödel number) and ordinal diagonalization (ε₀ = ω^ε₀, least fixed point) are
+the same structural pattern running in two different domains. Both are forced fixed
+points of a self-referential operation.
+
+L-INF (ZP-C Lemma L-INF: ⊥ has divergent surprisal — unbounded information content,
+incompressible by any finite description) is a third instance of the same pattern:
+a fixed point of information divergence at the structural limit. All three are
+manifestations of diagonalization.
+
+The formally unconnected instance is L-INF. This gap is DA-1 Path 2 — the
+informational bridge. The reason Path 2 resisted formalization is now visible from
+this layer: L-INF is a measure-theoretic statement (Shannon entropy, probability
+distributions over ZP-B's binary space) while the Kleene quine is a
+computability-theoretic statement (partial recursive functions, Gödel encoding).
+The two frameworks share no mathematical machinery. The diagonalization frame
+established here provides the common conceptual ground, but the formal bridge
+requires the Kolmogorov complexity connection: incompressibility is the concept
+that lives in both worlds simultaneously (a string is incompressible iff no program
+shorter than itself computes it — measure theory meets computation). That bridge
+is outside the current Lean scope, pending AIT infrastructure not yet available
+in Mathlib.
+
+DA-1 Path 2 was recharacterized in ZP-E/ZP-K as a foundational commitment rather
+than a missing proof. ZPM retrospectively explains why: the gap was not a proof
+step that was skipped but a framework boundary that had no formal crossing point
+until the diagonalization structure was made explicit here. -/
+
 end ZeroParadox.ZPM
 
 /-! ## Purity Check -/
