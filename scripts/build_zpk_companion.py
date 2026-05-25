@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.6 | May 2026
+Version 1.7 | May 2026
+v1.7: Fix four_way_diagram String() HTML entity encoding — raw Unicode for ⊥, ≤, ∨.
 v1.6: Add "Self-Reference: Fixed Point vs. Oscillation" section — Gödel diagonal lemma, fixed-point vs. liar-type self-reference, ZPE irreversibility excludes oscillation.
 v1.5: Strip version number from disclaimer cross-reference to ZP-K formal document.
 v1.4: AR fix — "⊥ in every formal language" → "⊥ in the four formal languages of this
@@ -34,7 +35,7 @@ def four_way_diagram():
     d.add(Circle(cx, cy, cr, fillColor=TEAL, strokeColor=TEAL, strokeWidth=0))
     d.add(String(cx - 22, cy + 5,  'The Null', fontSize=8.5, fontName='DV-B', fillColor=WHITE))
     d.add(String(cx - 18, cy - 8, 'Ground', fontSize=8.5, fontName='DV-B', fillColor=WHITE))
-    d.add(String(cx - 12, cy - 20, '&#8869;', fontSize=10,  fontName='DV-B', fillColor=WHITE))
+    d.add(String(cx - 12, cy - 20, '⊥', fontSize=10,  fontName='DV-B', fillColor=WHITE))
 
     bw, bh = 1.3 * inch, 0.72 * inch
 
@@ -64,7 +65,7 @@ def four_way_diagram():
 
     # Top: Set theory / AFA
     node(cx - bw/2, cy + cr + 10, INDIGO, INDIGO_LITE,
-         'Set Theory (AFA)', '&#8869; = {&#8869;}', 'Quine atom',
+         'Set Theory (AFA)', '⊥ = {⊥}', 'Quine atom',
          cx, cy + cr + 10, cx, cy + cr + 2)
 
     # Bottom: Computation / Kleene
@@ -74,12 +75,12 @@ def four_way_diagram():
 
     # Left: Order theory
     node(cx - cr - 14 - bw, cy - bh/2, COMP_BLUE, colors.HexColor('#E3F0FA'),
-         'Order Theory', '&#8869; &#8804; x for all x', 'Minimum element',
+         'Order Theory', '⊥ ≤ x for all x', 'Minimum element',
          cx - cr - 14, cy, cx - cr - 2, cy)
 
     # Right: Algebra
     node(cx + cr + 14, cy - bh/2, COMP_AMBER, AMBER_LITE,
-         'Algebra (A4)', '&#8869; &#8744; x = x', 'Join identity',
+         'Algebra (A4)', '⊥ ∨ x = x', 'Join identity',
          cx + cr + 14, cy, cx + cr + 2, cy)
 
     d.add(String(14, 10,
@@ -123,7 +124,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
