@@ -1,5 +1,8 @@
 """
-Build: The Philosophical Question That Started This (v1.2)
+Build: The Philosophical Question That Started This (v1.3)
+v1.3: AR fix — "structural consequence of any null-containing state space" →
+"structural consequence of the join-semilattice axioms (∀ x, ⊥ ∨ x = x)" — scopes
+the universal claim to the actual algebraic structure proved in Lean.
 v1.2: Adversary-review pass — opening rewritten to lead with Theorem T-SNAP (machine-verified
 artifact) before the Leibniz framing; Leibniz question repositioned as philosophical
 interpretation of the formal result rather than the document's opening claim.
@@ -15,7 +18,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')

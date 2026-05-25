@@ -16,7 +16,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-H Categorical Bridge | v1.12 | ZP-H_Categorical_Bridge.pdf | v1.4 | Y/Y | Companion v1.4: structural floor section added; snap diagram overlap fixed (internal title removed, dh increased) — formal:d14f2b36 comp:8f504038 |
 | ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.2 | Y/Y | Companion v1.2: disclaimer + opener updated — formal:298f2e30 comp:2b408089 |
 | ZP-J Self-Reference | v1.2 | ZP-J_Self_Reference.pdf | v1.3 | Y/Y | Companion v1.3: disclaimer updated; formal doc: "asserted coincidence" removed — formal:1dd8e34f comp:39ff4bac |
-| ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.3 | Y/Y | Companion v1.3: "IS the Turing machine" → "IS an instance of a Turing machine" — formal:8c00d4aa comp:409a45d1 |
+| ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.4 | Y/Y | Companion v1.4: AR fix — "⊥ in every formal language" → scoped to four ZP languages; formal doc version ref updated v1.3→v1.6 — formal:8c00d4aa comp:58cad78a |
 | ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.1 | N/N | Companion v1.1: 6 AR precision fixes (grand-unification phrase removed, Kleene gloss corrected, Classical.choice parallel reframed as open question, p-adic "from above" fixed, ZPM jargon simplified, "independently" → "jointly") — formal:7825902f comp:3a5dc27f |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
