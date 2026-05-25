@@ -34,14 +34,14 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpa.py](build_zpa.py) | `ZP-A_Lattice_Algebra.pdf` |
 | [build_zpf.py](build_zpf.py) | `ZP-F_The_Counterexamples.pdf` |
 | [build_zpb.py](build_zpb.py) | `ZP-B_pAdic_Topology.pdf` |
-| [build_zpc.py](build_zpc.py) | `ZP-C_Information_Theory_v1_12.pdf` |
-| [build_zpd.py](build_zpd.py) | `ZP-D_State_Layer_v1_8.pdf` |
+| [build_zpc.py](build_zpc.py) | `ZP-C_Information_Theory.pdf` |
+| [build_zpd.py](build_zpd.py) | `ZP-D_State_Layer.pdf` |
 | [build_zpe.py](build_zpe.py) | `ZP-E_Bridge_Document.pdf` |
-| [build_zpg.py](build_zpg.py) | `ZP-G_Category_Theory_v1_7.pdf` |
-| [build_zph.py](build_zph.py) | `ZP-H_Categorical_Bridge_v1_11.pdf` |
-| [build_zpi.py](build_zpi.py) | `ZP-I_Inside_Zero_v1_8.pdf` |
-| [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference_v1_1.pdf` |
-| [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding_v1_3.pdf` |
+| [build_zpg.py](build_zpg.py) | `ZP-G_Category_Theory.pdf` |
+| [build_zph.py](build_zph.py) | `ZP-H_Categorical_Bridge.pdf` |
+| [build_zpi.py](build_zpi.py) | `ZP-I_Inside_Zero.pdf` |
+| [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference.pdf` |
+| [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding.pdf` |
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 
 ### Illustrated companion builders
