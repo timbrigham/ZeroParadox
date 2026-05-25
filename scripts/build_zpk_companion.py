@@ -168,8 +168,8 @@ def build():
         'The consequence for DA-1 is direct: ⊥ is not a description of a Turing machine. '
         '⊥ IS an instance of a Turing machine — specifically its ground state, serving as its own program. '
         'The "description vs. execution" gap that DA-1 had to close is structurally '
-        'dissolved: there is no gap, because ⊥ in every formal language is the same '
-        'self-executing object.'))
+        'dissolved: there is no gap, because ⊥ in the four formal languages of this framework '
+        'is shown to be the same structural object — and that structural identity is what dissolves the gap.'))
     E.append(sp(4))
 
     # What Is a Kleene Fixed Point?

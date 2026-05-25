@@ -178,7 +178,7 @@ def build():
     story.append(box(
         'The central claim is this: zero is not the absence of mathematical structure. It is '
         'the unique minimal element of the induced partial order — the element below which '
-        'no other state exists, and from which every state is reachable by joins.'
+        'no other state exists.'
     ))
     story.append(sp(6))
 

@@ -187,7 +187,7 @@ def build():
     E.append(body(
         'Theorem T-SNAP — verified sorry-free in Lean 4, at github.com/timbrigham/ZeroParadox '
         '— establishes that the first state-transition from a null state to a non-null state '
-        'is a structural consequence of any null-containing state space, not an assumption. '
+        'is a structural consequence of the join-semilattice axioms (specifically, of the bottom element axiom ∀ x, ⊥ ∨ x = x), not an assumption. '
         'The proof is machine-checked; it requires no special snap axiom.'))
     E.append(body(
         'Leibniz asked: <i>why is there something rather than nothing?</i> '
