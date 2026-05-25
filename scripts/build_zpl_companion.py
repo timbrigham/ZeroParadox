@@ -1,9 +1,13 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.0 | May 2026
+Version 1.1 | May 2026
 v1.0: Initial release. Covers ε₀ as the ordinal snap threshold, 2-adic tower
-convergence, and Kleene-ordinal structural homology. Notes that ZPM closes the
-snapEmbed type bridge identified in ZPL's Remaining Gap section.
+convergence, and Kleene-ordinal structural homology.
+v1.1: Adversary review fixes — 6 precision corrections: removed grand-unification
+phrasing ("same object at the bottom of every formal language"), corrected Kleene
+fixed-point gloss, rewrote Classical.choice parallel as open question per ZPL §I,
+fixed "from above" p-adic directional error, removed opaque ZPM jargon from example
+box, changed "independently proved" to "jointly established", updated key result box.
 Formal doc: ZP-L Incomputability Convergence v1.0.
 """
 
@@ -216,7 +220,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 def build():
@@ -268,9 +272,9 @@ def build():
     # ── What Is ZP-L Doing? ───────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-L Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-K proved that the initial machine state c&#8320; is its own program &#8212; '
-        'a Kleene fixed point, a self-executing Quine, the same object at the bottom of '
-        'every formal language in the framework. ZP-L picks up the thread from a different '
+        'ZP-K proved that the initial machine state c&#8320; is a Kleene fixed point: '
+        'a program whose behavior is determined entirely by its own index, guaranteed to exist '
+        'by the second recursion theorem. ZP-L picks up the thread from a different '
         'direction: the ordinal direction. If a map &#981; assigns machine phases to ordinals '
         '&#8212; sending c&#8320; to everything below a certain point and c&#8321; above it '
         '&#8212; what is that threshold ordinal? ZP-L establishes the answer: &#949;&#8320;, '
@@ -369,7 +373,8 @@ def build():
         'The encoding (cnfToZp2 in ZPL.lean) maps the n-th tower stage to 2<sup>n</sup> '
         'in &#8484;&#8322;. The 2-adic norm of 2<sup>n</sup> is (1/2)<sup>n</sup>, which '
         'goes to 0 as n increases. So as the ordinal tower climbs toward &#949;&#8320; from '
-        'below, its 2-adic image descends toward 0 = &#8869; from above. Two convergences, '
+        'below, its 2-adic image converges to 0 = &#8869; in the 2-adic metric '
+        '(the norms (1/2)<sup>n</sup> decrease monotonically and converge to 0). Two convergences, '
         'one tower.'))
     E.append(sp(4))
     E.append(dual_convergence_diagram())
@@ -381,7 +386,7 @@ def build():
     E.append(sp(4))
     E.append(cbody(
         'This dual convergence is what snap_zp2_correspondence formalizes in ZP-L &#167;VII: '
-        'four independently proved facts about the same tower sequence &#8212; '
+        'four jointly established facts about the same tower sequence &#8212; '
         'all stages below &#949;&#8320; in ordinal order, all assigned c&#8320; by the '
         'canonical map, all encoding to 2<sup>n</sup> in &#8484;&#8322; with 2-adic norm '
         '(1/2)<sup>n</sup> &#8594; 0, and the canonical map snapping to c&#8321; at &#949;&#8320;.'))
@@ -394,8 +399,11 @@ def build():
         'guaranteed to exist by Kleene\'s second recursion theorem. ZP-L identifies '
         '&#949;&#8320; as an ordinal fixed point: the first ordinal satisfying &#969;^&#945; = &#945;, '
         'guaranteed to exist by the fixed-point theorem for normal functions. Both fixed-point '
-        'proofs require Classical.choice at the same non-constructive step &#8212; the '
-        'diagonal step where the fixed point is selected from an infinite collection.'))
+        'proofs require Classical.choice in their Lean formalizations. In each case, the choice '
+        'axiom enters at a non-constructive selection step: the ordinal proof uses it for the '
+        'supremum that defines &#949;&#8320;; the Kleene proof uses it for the fixed-point '
+        'selection. Whether these reflect the same underlying mathematical phenomenon &#8212; '
+        'or are coincidentally parallel &#8212; is the open question ZPL.lean &#167;I poses.'))
     E.append(cbody(
         'ZP-L &#167;VI (kleene_ordinal_snap_bridge) names this structural parallel explicitly. '
         'The theorem itself is purely ordinal &#8212; no Code or eval object appears in it. '
@@ -409,10 +417,8 @@ def build():
         'knows what the other is doing. When they compare notes, they find the same proof '
         'structure: the same diagonal argument, the same non-constructive selection step, '
         'the same kind of fixed-point existence result.',
-        'ZPM (released with ZP-L) makes this precise by constructing a formal type bridge '
-        '(snapEmbed) between the machine-phase and 2-adic settings, closing the gap that '
-        'ZP-L\'s "Remaining Gap" section identified as outside Lean scope at time of '
-        'writing. The two rooms share the same floor plan.',
+        'ZPM formalizes this parallel with a type bridge between the two settings. '
+        'The two rooms share the same floor plan.',
     ]))
     E.append(sp(8))
 
@@ -444,7 +450,8 @@ def build():
         'and &#949;&#8320; minimal &#8212; with no free hypotheses. '
         'snap_zp2_correspondence co-proves that the same tower witnesses both the '
         'ordinal approach to &#949;&#8320; and the 2-adic convergence to 0 = &#8869;. '
-        '24 theorems, zero sorry. ZPM closes the snapEmbed type bridge gap. &#10003;'))
+        'All theorems proved without sorry. ZPM formalizes the type bridge between the '
+        'ordinal and machine-phase encodings. &#10003;'))
 
     print(f'Building: {out_path}')
     doc.build(E)

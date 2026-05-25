@@ -466,6 +466,20 @@ The Zero Paradox project treats GitHub Issues as a public transparency mechanism
 
 Public issues should read as genuine open questions to the mathematical community — not as requests for validation. Frame them as specific, honest about uncertainty, and standalone without requiring knowledge of the full framework.
 
+### Identifier tracking — standing requirement
+
+Every outreach item must have its external identifier recorded in `.claude-local/outreach/tracker.md` at the time it is created or sent. No exceptions.
+
+**What counts as an identifier:**
+- GitHub Discussion: `#N` (e.g. `#77`)
+- GitHub Issue: `#N`
+- MathOverflow question: full URL
+- Email thread: date sent + recipient (email threads have no stable ID — date + recipient is the key)
+- Zulip post: stream + topic slug
+- arXiv submission: arXiv ID
+
+**When to record it:** At the moment the item is created or sent — not after the fact. If an identifier is missing from the tracker, add it before doing any other work in that outreach session.
+
 ---
 
 ## Framework Structure (for context)
@@ -495,6 +509,10 @@ This log is the authoritative record of what has been reviewed and why. Future s
 ## Communication Quality Feedback
 
 During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1/CC-2 (both now derived via ZP-J, not freestanding commitments).
+
+## Session Handoff File
+
+`.claude-local/handoff.md` is the standardized session state file. At the start of every session, read it first. At the end of every session (or before a planned context switch), overwrite it with the current state: what was just done, the immediate next action, and anything deferred. Always use this exact filename — one file, always current, always overwritten.
 
 ## Reviewer Feedback Tracking
 
@@ -538,6 +556,12 @@ All work — Lean 4 proofs and PDF rendering — happens on the `illustrated` br
    ```powershell
    gh pr edit <number> --body-file ".claude-local\pr_body_<name>.md"
    ```
+
+9. **GitHub Discussion body updates — always use `-F body=@file`:** Passing Unicode body content through PowerShell string interpolation (`$body = Get-Content -Raw; -F body="$body"`) corrupts multi-byte UTF-8 characters (arrows, subscripts, math symbols). Always write the body to `.claude-local\temp_body.md` first, then pass the file directly:
+   ```powershell
+   gh api graphql -F query=@.claude-local\mutation_update_discussion.graphql -F id="NODE_ID" -F body=@.claude-local\temp_body.md
+   ```
+   After every update, verify the live body via `mcp__github__get_discussion` before proceeding to the next thread. This issue was discovered 2026-05-23 when ZP-C (#69) was posted with garbled math.
 
 ## File Priority
 - Both `.lean` files and PDF build scripts are first-class on `illustrated`.
