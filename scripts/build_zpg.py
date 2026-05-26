@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.8 | May 2026
+Version 1.9 | May 2026
+v1.9: Version number removed from Open Items Register section header.
 v1.8: "Internal Working Document" marker removed from footer and endnote — not a working
 document; removing public-facing scaffolding label.
 v1.7: Remark R-AX added after AX-G2 — addresses non-triviality of the axioms; explains that
@@ -20,7 +21,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
 AMBER = colors.HexColor('#B07800')
@@ -571,7 +572,7 @@ def build():
 
     print('[build_zpg] Building Section IX: Open Items Register...')
     # ── IX. OPEN ITEMS REGISTER FOR ZP-G v1.2 ────────────────────────────────
-    E.append(Paragraph('IX. Open Items Register for ZP-G v' + VERSION, S['h1']))
+    E.append(Paragraph('IX. Open Items Register', S['h1']))
 
     oq_rows = [
         ['OQ-G1',

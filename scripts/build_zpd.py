@@ -1,5 +1,6 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.9)
+Build ZP-D: State Layer (Hilbert Space) (v1.10)
+v1.10: Version number removed from Open Items Register section header.
 v1.9: Adversary-review pass — Import I-B stale reference "Topological isolation of 0"
 corrected to "Clopen gap at 0" to match ZP-B v1.7+ terminology throughout.
 v1.8: T5 strengthened — T5-b (t5_strict_orthogonal) added in Lean and PDF. T5-b is the
@@ -16,7 +17,7 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer.pdf')
@@ -148,7 +149,7 @@ def build():
         'T5-b is the load-bearing result: it captures the genuine content of the ball-boundary structure and is the Hilbert-space expression of ZP-B C3 (topological irreversibility) applied to consecutive states.',
     ]))
 
-    E.append(Paragraph('V. Open Items Register for ZP-D v' + VERSION, S['h1']))
+    E.append(Paragraph('V. Open Items Register', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['DP-1: Orthogonality commitment', 'Design Principle — explicit', 'Reclassified from Theorem T1. Orthogonality is chosen, not derived. Content unchanged.'],
