@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v3_15.pdf](ZP-E_Bridge_Document_v3_15.pdf) | 2026-05-26 | ZP-E v3.15 superseded by v3.16: version numbers removed from three internal register section headers (Open Items, Traceability, Validation Status). |
+| [ZP-F_The_Counterexamples_v1_1.pdf](ZP-F_The_Counterexamples_v1_1.pdf) | 2026-05-26 | ZP-F v1.1 superseded by v1.2: vocabulary fix ("topologically isolated" → "valuatively distinguished" in §VI); three new bullets in Remark: The Dual Limit Condition — squeeze pattern as structural necessity, surreals as boundary test case, development path toward formal duality theorem. |
 | [ZP-E_Bridge_Document_v3_14.pdf](ZP-E_Bridge_Document_v3_14.pdf) | 2026-05-24 | ZP-E v3.14 superseded by v3.15: DA-1 Path 2 forward reference to ZP-M R-M.1 added at three locations. |
 | [ZP-E_Bridge_Document_v3_13.pdf](ZP-E_Bridge_Document_v3_13.pdf) | 2026-05-21 | ZP-E v3.13 superseded by v3.14: AR fixes — preamble version history removed; "AX-1 promoted to Theorem T-SNAP" → "AX-1 derived as Theorem T-SNAP"; "[AX-1 Promoted to Theorem]" tag removed from header; Section VII headers renamed to mathematical descriptions; "structural event" → "structural limit". |
 | [ZP-C_Information_Theory_v1_12.pdf](ZP-C_Information_Theory_v1_12.pdf) | 2026-05-21 | ZP-C v1.12 superseded by v1.13: AR fix — "forcing result" replaced with "structural constraint on the null state" to avoid borrowing set-theoretic forcing vocabulary. |

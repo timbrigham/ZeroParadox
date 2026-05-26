@@ -131,6 +131,9 @@ CS = {
     'kr_hdr':   ParagraphStyle('ckr_hdr',   fontName='DVS-B', fontSize=9,  leading=13,
                                textColor=WHITE),
     'kr_body':  ParagraphStyle('ckr_body',  fontName='DVS',   fontSize=9,  leading=13),
+    'tbl_hdr':  ParagraphStyle('ctbl_hdr',  fontName='DVS-B', fontSize=9,  leading=13,
+                               textColor=WHITE),
+    'tbl_cell': ParagraphStyle('ctbl_cell', fontName='DVS',   fontSize=9,  leading=13),
 }
 
 # ── Universal helpers ─────────────────────────────────────────────────────────
@@ -390,3 +393,23 @@ def key_result_box(title, body_text):
     t = Table(data, colWidths=[TW])
     t.setStyle(ts)
     return t
+
+
+# ── Build standards reminder (stdout only — not rendered) ─────────────────────
+print()
+print('=' * 70)
+print('  ZP BUILD LOADED — did you read PDF_Rendering_Standards.md first?')
+print('  .claude-local/PDF_Rendering_Standards.md')
+print()
+print('  Pre-build checklist:')
+print('  [ ] Font stack: DV (sans UI) / DVS (body + math) — never raw Unicode')
+print('  [ ] All body paragraphs go through cbody()/body() — never Paragraph() direct')
+print('  [ ] Table cells are Paragraph objects — never plain strings')
+print('  [ ] Version numbers: COMPANION = tagline meta line ONLY (CLAUDE.md wins)')
+print('      Companion footers must NOT contain version — remove v\' + VERSION')
+print('      Formal doc footers via make_doc() are OK')
+print('  [ ] No version numbers in body prose, disclaimers, or cross-doc refs')
+print()
+print('  Post-build: run null-char verification (Standards doc Section 7)')
+print('=' * 70)
+print()
