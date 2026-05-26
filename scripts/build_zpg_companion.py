@@ -1,5 +1,6 @@
 """
-Build ZP-G Illustrated Companion (v1.4)
+Build ZP-G Illustrated Companion (v1.6)
+v1.6: Strip version number from companion footer.
 v1.4: Title "Structure without substance" → "Structure independent of domain" — removes
 philosophical framing; "independent of domain" states the actual categorical property.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
@@ -147,7 +148,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():
@@ -159,7 +160,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-G Companion  |  Category Theory  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-G Companion  |  Category Theory  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.3 | May 2026
+Version 1.4 | May 2026
+v1.4: Strip version number from companion footer.
 v1.3: Add "Convergence with Proof Theory" section — Gentzen (1936), ε₀ as PA's proof-theoretic ordinal, structural alignment with ZPL's independent derivation.
 v1.2: Strip version number from disclaimer cross-reference to ZP-L formal document.
 v1.0: Initial release. Covers ε₀ as the ordinal snap threshold, 2-adic tower
@@ -222,7 +223,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 
 def build():
@@ -234,7 +235,7 @@ def build():
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            'Zero Paradox ZP-L Companion  |  Incomputability Convergence  |  May 2026  |  v' + VERSION)
+            'Zero Paradox ZP-L Companion  |  Incomputability Convergence  |  May 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(

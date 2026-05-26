@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.4 | May 2026
+Version 1.5 | May 2026
+v1.5: Strip version number from companion footer.
 v1.4: Strip version number from disclaimer cross-reference to ZP-J formal document.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document". Opening paragraph
       revised — DA-1 glossed on first use instead of using internal label alone.
@@ -93,7 +94,7 @@ def three_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.28, TW*0.50])
     t.setStyle(ts); return t
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -104,7 +105,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-J Companion  |  Self-Reference  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-J Companion  |  Self-Reference  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

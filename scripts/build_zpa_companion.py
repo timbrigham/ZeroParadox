@@ -1,5 +1,6 @@
 """
-Build ZP-A Illustrated Companion (v1.8)
+Build ZP-A Illustrated Companion (v1.9)
+v1.9: Strip version number from companion footer.
 v1.8: Strip version number from ZP-A cross-reference in CC-2 section.
 v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Covers: join-semilattice, partial order, Hasse diagram, one-directional transitions,
@@ -96,7 +97,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -107,7 +108,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

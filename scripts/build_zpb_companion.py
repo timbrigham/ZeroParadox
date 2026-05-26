@@ -1,5 +1,6 @@
 """
-Build ZP-B Illustrated Companion (v1.8)
+Build ZP-B Illustrated Companion (v1.9)
+v1.9: Strip version number from companion footer.
 v1.8: Dan feedback (2026-05-21): "dense" → "densely ordered"; rewrite para 2 of "Why p-Adic
       Geometry?" to acknowledge ℚ₂ also has no minimum nonzero element — difference is topology
       (clopen), not field arithmetic; add ε₀ note in key property box clarifying ε₀ is a
@@ -116,7 +117,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -128,7 +129,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-B Companion  |  p-Adic Topology  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-B Companion  |  p-Adic Topology  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

@@ -1,5 +1,6 @@
 """
-Build: The Philosophical Question That Started This (v1.3)
+Build: The Philosophical Question That Started This (v1.4)
+v1.4: Strip version number from footer and body endnote.
 v1.3: AR fix — "structural consequence of any null-containing state space" →
 "structural consequence of the join-semilattice axioms (∀ x, ⊥ ∨ x = x)" — scopes
 the universal claim to the actual algebraic structure proved in Lean.
@@ -18,7 +19,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')
@@ -162,7 +163,7 @@ def build():
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            'Zero Paradox  |  The Philosophical Question That Started This  |  April 2026  |  v' + VERSION)
+            'Zero Paradox  |  The Philosophical Question That Started This  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -513,7 +514,7 @@ def build():
         sp(14), hr(),
         Paragraph(
             '<i>End of document  |  The Philosophical Question That Started This  |  '
-            'Zero Paradox Project  |  April 2026  |  v' + VERSION + '  |  '
+            'Zero Paradox Project  |  April 2026  |  '
             'Not a formal result — a philosophical essay. '
             'The formal mathematics lives in the committed PDFs, ZP-A through ZP-I.</i>',
             S['endnote']),

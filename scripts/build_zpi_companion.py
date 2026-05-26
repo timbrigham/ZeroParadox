@@ -1,5 +1,6 @@
 """
-Build ZP-I Illustrated Companion (v1.4)
+Build ZP-I Illustrated Companion (v1.5)
+v1.5: Strip version number from companion footer.
 v1.4: Strip Lean file version numbers from Lean 4 Verification section.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
       Opening paragraph revised — "existence necessarily emerges from null" replaced with
@@ -278,7 +279,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -290,7 +291,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-I Companion  |  Inside Zero  |  May 2026  |  v' + VERSION)
+            'Zero Paradox ZP-I Companion  |  Inside Zero  |  May 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
