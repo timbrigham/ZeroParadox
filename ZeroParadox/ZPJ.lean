@@ -49,7 +49,7 @@ structural definition of what it means for a lattice to have AFA grounding.
 ## Axiom footprint
 
 T-EXEC depends only on:
-- `AFAStructure.quine_unique` (AFA uniqueness — class field)
+- `AFAStructure.quine_unique` (AFA uniqueness — class field; follows directly from AFA's "every graph has a unique decoration" clause in ZF+AFA; Aczel 1988 ch. 1)
 - `AFAStructure.bot_self_mem` (bottom is self-containing — class field)
 - No freestanding axioms. No kernel axioms beyond propext.
 
@@ -77,7 +77,16 @@ open ZeroParadox.ZPE
 class AFAStructure (L : Type*) [ZPSemilattice L] where
   /-- x is self-containing: x contains itself as a member under AFA. -/
   selfMem : L → Prop
-  /-- Quine uniqueness: any two self-containing elements are equal. -/
+  /-- Quine uniqueness: any two self-containing elements are equal.
+      In ZF+AFA this follows directly from AFA's own statement ("every graph has a unique
+      decoration") — any self-containing set q satisfying q = {q} is a decoration of the
+      one-node self-loop apg (a graph with one node and one self-edge, accessible from its
+      root); AFA uniqueness then forces at most one such set. This field encodes what AFA
+      already provides in ZF+AFA, not a new axiom beyond that — though in the Lean encoding
+      it must be asserted as a class field, since the abstract lattice lacks the
+      graph-decoration semantics and set-membership infrastructure that give AFA's uniqueness
+      clause its content.
+      Source: Aczel, Non-Well-Founded Sets (CSLI 1988), ch. 1. -/
   quine_unique : ∀ x y : L, selfMem x → selfMem y → x = y
   /-- The bottom element is self-containing: ⊥ = {⊥}.
       This is the structural encoding of the AFA identification — ⊥ is the Quine atom.
