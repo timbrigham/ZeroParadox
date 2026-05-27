@@ -11,6 +11,7 @@ import ZeroParadox.ZPJ
 import ZeroParadox.ZPJ_AczelConn
 import ZeroParadox.ZPJ_SelfApp
 import ZeroParadox.ZPJ_Scale
+import ZeroParadox.ZPJ_Model
 import ZeroParadox.ZPK
 import ZeroParadox.ZPL
 
