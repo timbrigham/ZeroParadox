@@ -16,6 +16,7 @@ import ZeroParadox.ZPJ_Model
 import ZeroParadox.ZPK
 import ZeroParadox.ZPL
 import ZeroParadox.ZPM
+import ZeroParadox.ZPJ_OntBridge
 
 /-!
 # Zero Paradox — Library Root
