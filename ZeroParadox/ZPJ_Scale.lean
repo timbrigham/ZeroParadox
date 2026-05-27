@@ -1,4 +1,5 @@
 import ZeroParadox.ZPJ_SelfApp
+import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Tactic
 
 /-!
@@ -130,53 +131,64 @@ theorem val_selfMem_singleton :
     selfMemFromVal bot val_bot_self_mem
     (fun x hx => scale_unique_fp x hx)
 
-/-! ## § V. The 2-Adic Parallel — Q₂ Satisfies ValuationStructure Conditions
+/-! ## § V. The 2-Adic Parallel — ℤ_[2] Satisfies ValuationStructure Conditions
 
-    ℚ_[2] is not a ZPSemilattice (it is a field), so it cannot be a formal instance.
-    These standalone theorems show every ValuationStructure axiom holds in ℚ_[2]
-    with scale = ×2 and val = 2-adic valuation.
+    ℤ_[2] is not a ZPSemilattice (it is a ring, not a join-semilattice), so it cannot
+    be a formal ValuationStructure instance. These standalone theorems show every
+    ValuationStructure axiom holds in ℤ_[2] with scale = ×2 and val = 2-adic valuation.
 
-    The formal connection — a ZPSemilattice instance for a ZPB structure carrying
+    ℤ_[2] is used (not ℚ_[2]) because PadicInt.valuation : ℤ_[2] → ℕ is ℕ-valued,
+    making q2Val_scale provable. In ℚ_[2], valuation : ℚ_[2] → ℤ can be negative,
+    and the .toNat truncation makes the key identity false (e.g. x = 2⁻¹).
+
+    The formal connection — a ZPSemilattice instance for a concrete type carrying
     a ValuationStructure — is the remaining open gap. -/
 
 section PadicParallel
 
-noncomputable instance instDecidableEqQ2 : DecidableEq ℚ_[2] := Classical.decEq _
+noncomputable instance instDecidableEqZ2 : DecidableEq ℤ_[2] := Classical.decEq _
 
-/-- The 2-adic valuation as a function ℚ_[2] → ℕ∞.
-    0 maps to ⊤ (infinite valuation); nonzero x maps to its 2-adic valuation. -/
-noncomputable def q2Val (x : ℚ_[2]) : ℕ∞ :=
-  if x = 0 then ⊤ else (x.valuation.toNat : ℕ∞)
+/-- The 2-adic valuation as a function ℤ_[2] → ℕ∞.
+    0 maps to ⊤ (infinite valuation); nonzero x maps to its 2-adic valuation.
+    PadicInt.valuation : ℤ_[2] → ℕ is ℕ-valued (ℤ_[2] elements always have
+    non-negative valuation), so no .toNat truncation is needed and the key
+    identity v₂(2x) = v₂(x) + 1 is provable without sorry. -/
+noncomputable def q2Val (x : ℤ_[2]) : ℕ∞ :=
+  if x = 0 then ⊤ else (x.valuation : ℕ∞)
 
 /-- q2Val 0 = ⊤ — zero has infinite 2-adic valuation. -/
-theorem q2Val_bot : q2Val (0 : ℚ_[2]) = ⊤ := by
+theorem q2Val_bot : q2Val (0 : ℤ_[2]) = ⊤ := by
   simp [q2Val]
 
 /-- q2Val x = ⊤ → x = 0 — only zero has infinite valuation. -/
-theorem q2Val_unique (x : ℚ_[2]) (h : q2Val x = ⊤) : x = 0 := by
+theorem q2Val_unique (x : ℤ_[2]) (h : q2Val x = ⊤) : x = 0 := by
   simp only [q2Val] at h
   split_ifs at h with hx
   · exact hx
   · simp at h
 
 /-- scale = ×2 fixes 0. -/
-theorem q2Scale_bot : (2 : ℚ_[2]) * 0 = 0 := by ring
+theorem q2Scale_bot : (2 : ℤ_[2]) * 0 = 0 := by ring
 
-/-- The key valuation property: v₂(2x) = v₂(x) + 1 for x ≠ 0.
-    This follows from v₂(2) = 1 and the ultrametric multiplicativity of v₂.
-    Full Lean proof requires connecting padicNormE to the discrete valuation
-    via the Mathlib p-adic API — deferred as a known result. -/
-theorem q2Val_scale (x : ℚ_[2]) (hx : x ≠ 0) :
+/-- v₂(2x) = v₂(x) + 1 for x ≠ 0 in ℤ_[2].
+    Proof: valuation_mul gives v(2x) = v(2) + v(x); valuation_p gives v(2) = 1.
+    Note: valuation_p expects the cast form ((2:ℕ) : ℤ_[2]), so we rewrite the
+    numeral (2 : ℤ_[2]) via Nat.cast_ofNat.symm before applying valuation_p. -/
+theorem q2Val_scale (x : ℤ_[2]) (hx : x ≠ 0) :
     q2Val (2 * x) = q2Val x + 1 := by
   have h2x : 2 * x ≠ 0 := mul_ne_zero two_ne_zero hx
   simp only [q2Val, if_neg h2x, if_neg hx]
-  -- v₂(2x) = v₂(x) + 1: follows from v₂(2) = 1 and multiplicativity
-  -- This is the p-adic identity: padicValRat.mul + padicValRat.prime_pow_self
-  sorry
+  have key : (2 * x).valuation = x.valuation + 1 := by
+    have h1 : (2 * x).valuation = (2 : ℤ_[2]).valuation + x.valuation :=
+      PadicInt.valuation_mul two_ne_zero hx
+    have h2 : (2 : ℤ_[2]).valuation = 1 := by
+      rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) from Nat.cast_ofNat.symm]
+      exact PadicInt.valuation_p
+    omega
+  exact_mod_cast key
 
-/-- The unique fixed point of ×2 in ℚ_[2] is 0.
-    Proved directly (no sorry) via linear algebra — same as q2_unique_fp. -/
-theorem q2Scale_unique_fp (x : ℚ_[2]) (h : 2 * x = x) : x = 0 := by
+/-- The unique fixed point of ×2 in ℤ_[2] is 0. -/
+theorem q2Scale_unique_fp (x : ℤ_[2]) (h : 2 * x = x) : x = 0 := by
   linear_combination h
 
 end PadicParallel
@@ -194,6 +206,7 @@ open ZeroParadox.Scale
 #print axioms val_bot_self_mem
 #print axioms val_quine_unique
 #print axioms val_selfMem_singleton
+#print axioms q2Val_scale
 #print axioms q2Scale_unique_fp
 
 end PurityCheck
