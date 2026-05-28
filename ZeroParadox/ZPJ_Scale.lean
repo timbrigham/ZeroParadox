@@ -30,14 +30,15 @@ val strictly increases under scale. Unique fixed point = unique element with val
 
 AFA content is derived from the valuation structure — not imported from Aczel.
 
-## What remains open
+## What ZPJ_ScaleBridge resolved
 
-The ZPSemilattice instance: giving a concrete ZP structure a ValuationStructure
-requires identifying the scale operation and val function on that structure. The
-Q₂ parallel below shows the p-adic instance satisfies all conditions (val_scale
-for Q₂ follows from v₂(2x) = v₂(x) + 1, a standard p-adic result). The formal
-instance connecting OntologicalStates or ℤ_[2] to ZPSemilattice remains the
-final gap — a bridge file importing both ZPA and ZPB.
+The ZPSemilattice constraint was an encoding artefact: ValuationStructure required
+[ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms.
+ZPJ_ScaleBridge.lean resolves this by defining ValBridge — the same four axioms
+with bot as a plain field — and builds a formal ℤ_[2] instance using the standalone
+theorems in §V below. A toValBridge instance makes any ZPSemilattice+ValuationStructure
+type also a ValBridge instance, unifying both tracks under a common ancestor.
+The formal gap described here is closed.
 -/
 
 namespace ZeroParadox.Scale

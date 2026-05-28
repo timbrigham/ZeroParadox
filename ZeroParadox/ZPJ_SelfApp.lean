@@ -35,12 +35,15 @@ The 2-adic parallel is then proved standalone: `singleton_from_unique_witness`
 (already proved in ZPJ_AczelConn) closes the Q₂ case with the same proof term.
 Both domains are formally instances of the same abstract pattern.
 
-## What remains open
+## What ZPJ_Scale and ZPJ_ScaleBridge resolved
 
-The formal map connecting the two domains — deriving selfApp on ZPSemilattice
-from the p-adic valuative structure — requires an abstract valuation typeclass
-not yet defined. That is the remaining ZPB→ZPJ gap. See:
-  .claude-local/notes/fixed_point_identification_2026-05-26.md
+The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap
+was defined in ZPJ_Scale.lean as ValuationStructure. ZPJ_Scale derives the
+unique-fixed-point chain without AFA import:
+  ValuationStructure → scale_ne_fixed → AbstractSelfApp (unique_fp as theorem)
+ZPJ_ScaleBridge.lean further extends this: ValBridge drops the ZPSemilattice
+constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
+of a common ancestor. The formal gap described here is closed.
 -/
 
 namespace ZeroParadox.SelfApp
