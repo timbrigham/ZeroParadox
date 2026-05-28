@@ -51,6 +51,7 @@ running) satisfies all four ZPA axioms A1–A4. Under this instance:
 - ε₀   = running = c₁  (the First Atomic State)
 This makes T-SNAP type-theoretically grounded: ⊥ ∨ ε₀ = ε₀ is definitional. -/
 
+-- [ZP-CUSTOM] instance: ZPSemilattice MachinePhase | reason: The cross-framework bridge. MachinePhase is ZPC's two-element type; giving it a ZPSemilattice instance makes T-SNAP (bot_join applied to MachinePhase) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for MachinePhase.
 instance machinePhaseZPS : ZPSemilattice MachinePhase where
   join x y := match x, y with
     | .initial, y       => y

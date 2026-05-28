@@ -32,6 +32,7 @@ namespace ZeroParadox.ZPA
 
 /-- The ZP-A algebraic structure: a join-semilattice with bottom.
     Corresponds to Axiom Block A (A1–A4) in ZP-A §1.1. -/
+-- [ZP-CUSTOM] replaces: Mathlib SemilatticeSup + OrderBot | reason: Mathlib's semilattice hierarchy ties ⊔ to its order typeclass infrastructure (LE, Preorder) via hundreds of instances; importing it contaminates #print axioms with unrelated classical dependencies. ZPSemilattice states A1–A4 axiomatically from scratch so every theorem's axiom footprint is auditable.
 class ZPSemilattice (L : Type*) where
   join : L → L → L
   bot  : L

@@ -43,6 +43,7 @@ open ZeroParadox.Scale
 
 /-- Same four axioms as ValuationStructure, but `bot` is a plain field.
     No ZPSemilattice required — the join operation ⊔ never appears in any axiom. -/
+-- [ZP-CUSTOM] replaces: ValuationStructure (ZPJ_Scale) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (a ring, not a ZPSemilattice) to be a formal instance. Unifies both tracks under one ancestor.
 class ValBridge (L : Type*) where
   bot : L
   scale : L → L
@@ -92,6 +93,7 @@ theorem selfMem_eq_singleton_free :
     This is the formal instance that ZPJ_Scale could not build because
     ℤ_[2] is not a ZPSemilattice — showing the ZPSemilattice constraint
     was an encoding artefact, not a mathematical requirement. -/
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: ℤ_[2] is a ring — it cannot be a ZPSemilattice instance and could not satisfy ValuationStructure. ValBridge's bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in ZPJ_Scale §V (q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale).
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)

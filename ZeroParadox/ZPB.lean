@@ -47,6 +47,7 @@ AX-B1 is a modelling commitment (the choice of binary structure); distinctness o
 the two states is then verified by decidable equality, requiring no classical axioms. -/
 
 /-- The two ontological states: non-existence (⊥ in ZP-A) and existence. -/
+-- [ZP-CUSTOM] replaces: Fin 2 | reason: Fin 2's constructors are ⟨0,_⟩ and ⟨1,_⟩ — natural numbers. nullState ≠ ℕ's 0 by convention; it is a semantic state with no numeric meaning. Free inductive eliminates the ℕ dependency and makes ⊥ ↦ null a structural fact, not a labelling choice.
 inductive OntologicalStates where
   | null  : OntologicalStates
   | exist : OntologicalStates

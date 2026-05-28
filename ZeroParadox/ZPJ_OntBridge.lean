@@ -42,6 +42,7 @@ null is the bottom element (identity for join). exist absorbs: joining anything
 with exist gives exist. The ZP partial order: null ≤_ZP exist. -/
 
 /-- OntologicalStates with null-identity join and bot = null is a ZPSemilattice. -/
+-- [ZP-CUSTOM] instance: ZPSemilattice OntologicalStates | reason: OntologicalStates carries no Mathlib lattice structure. The join (null-identity, exist-absorbing) matches ZP-A's A1–A4 but doesn't correspond to any Mathlib-provided instance on a two-element type.
 instance instOntZPS : ZPSemilattice OntologicalStates where
   join       := fun a b => match a with | .null => b | .exist => .exist
   bot        := .null
@@ -56,6 +57,7 @@ selfApp is the constant-to-null function. null maps to itself (fixed_bot).
 exist maps to null and is therefore not a fixed point (unique_fp holds vacuously). -/
 
 /-- OntologicalStates carries an AbstractSelfApp structure via the constant-to-null map. -/
+-- [ZP-CUSTOM] instance: AbstractSelfApp OntologicalStates via constant-to-null | reason: OntologicalStates (two elements) cannot satisfy ValuationStructure's val_scale axiom — a finite two-element type has no room for val to strictly increase. Direct AbstractSelfApp instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
 instance instOntSelfApp : AbstractSelfApp OntologicalStates where
   selfApp   := fun _ => .null
   fixed_bot := rfl

@@ -44,6 +44,7 @@ namespace ZeroParadox.ZPC
 
 /-! ## Setup: Binary States (AX-B1) -/
 
+-- [ZP-CUSTOM] replaces: Fin 2 | reason: ZPC is self-contained (no ZPB import); BinaryState is a local copy of the same free-inductive encoding used by OntologicalStates in ZPB. Fin 2 would import ℕ arithmetic into an information-theoretic file whose proofs should not depend on it.
 /-- The two ontological states: non-existence (⊥) and existence.
     A free inductive type — no natural-number dependency. -/
 inductive BinaryState where

@@ -58,6 +58,7 @@ open ZeroParadox.AczelConn
 
     In ℚ_[2]: scale = ×2, val = 2-adic valuation. All four hold.
     In ZPSemilattice: abstract encoding of the same structure. -/
+-- [ZP-CUSTOM] replaces: Mathlib.RingTheory.Valuation.Valued | reason: Mathlib's Valued typeclass requires ring/field structure (it formalizes algebraic valuations over rings). ZPSemilattice has join only — no ring. ValuationStructure uses val : L → ℕ∞ (not a GroupWithZero target) and the single axiom val_scale (val strictly increases under scale), which is the only machinery needed for the fixed-point uniqueness argument.
 class ValuationStructure (L : Type*) [ZPSemilattice L] where
   scale : L → L
   val        : L → ℕ∞

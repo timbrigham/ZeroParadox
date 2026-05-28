@@ -74,6 +74,7 @@ open ZeroParadox.ZPE
     This encodes structurally that ⊥ = {⊥}: the bottom of the lattice is the
     unique Quine atom. No separate bridge axiom is needed — T-EXEC follows from
     (1) and (2) by pure logic. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet uses the Axiom of Foundation (ZFSet.regularity), which forbids x ∈ x. AFA content (self-containing sets, Quine atoms) cannot be encoded using ZFSet. AFAStructure is the lattice-level encoding of what ZF+AFA provides set-theoretically, with selfMem/quine_unique/bot_self_mem as the three minimal class fields.
 class AFAStructure (L : Type*) [ZPSemilattice L] where
   /-- x is self-containing: x contains itself as a member under AFA. -/
   selfMem : L → Prop
@@ -94,6 +95,7 @@ class AFAStructure (L : Type*) [ZPSemilattice L] where
   bot_self_mem : selfMem bot
 
 /-- Q is a Quine atom if it is self-containing and is the unique such element. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Lattice-level analog of Aczel's Quine atom (the unique set satisfying x = {x}). No Mathlib definition covers this: it requires AFAStructure context and encodes the conjunction of self-containment + uniqueness as a single predicate.
 def IsQuineAtom {L : Type*} [ZPSemilattice L] [AFAStructure L] (q : L) : Prop :=
   AFAStructure.selfMem q ∧ ∀ x : L, AFAStructure.selfMem x → x = q
 

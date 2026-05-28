@@ -38,6 +38,7 @@ open CategoryTheory CategoryTheory.Limits
 
 /-! ## I. ZPCategory — AX-G1 + AX-G2 -/
 
+-- [ZP-CUSTOM] extends: Mathlib CategoryTheory.Limits.IsInitial | reason: Mathlib has IsInitial and IsTerminal as separate structures; it has no typeclass bundling them together with AX-G2 (source asymmetry: hom(X,0) = ∅ for non-isomorphic X). ZPCategory bundles both ZP-G axioms so they can be assumed uniformly across all ZP-G theorems without threading separate hypotheses.
 /-- ZPCategory bundles the two ZP-G foundational axioms onto a given category.
     AX-G1: there is an initial object 0; there is no terminal object.
     AX-G2: hom(X, 0) = ∅ for any X not isomorphic to 0 (source asymmetry). -/
@@ -49,6 +50,7 @@ class ZPCategory (C : Type*) [Category C] where
 
 /-! ## II. ZPSurprisal — I-KC Import (D7') -/
 
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib has no formalization of Kolmogorov complexity. ZPSurprisal is an import stub for the I-KC axiom (D7'): it models conditional K-complexity as an abstract ℕ-valued morphism assignment. The one field (surp_id: identity morphisms have zero surprisal) is the only structurally usable I-KC axiom in the ZP-G theorems; the rest of K-complexity is outside Lean scope.
 /-- ZPSurprisal models the I-KC import: conditional Kolmogorov complexity K(x_B | x_A).
     D7' assigns surprisal I(f) = K(x_B | x_A) to each morphism f: A → B.
     K is well-defined up to additive constant c; structural claims (zero/undefined/finite)

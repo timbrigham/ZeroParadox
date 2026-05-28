@@ -59,6 +59,7 @@ open ZeroParadox.Scale
 
 /-- ℕ∞ with join = min and bot = ⊤ is a ZPSemilattice.
     The ZP partial order (x ≤_ZP y ↔ min x y = y) reverses ℕ∞'s natural ordering. -/
+-- [ZP-CUSTOM] instance: ZPSemilattice ℕ∞ with inverted order | reason: Mathlib's WithTop ℕ has ≤ as its standard order (⊤ is maximum). Here join = min and bot = ⊤ — a deliberate reversal. The ZP partial order x ≤_ZP y ↔ min x y = y makes ⊤ the bottom (valuation ∞) and 0 the maximum (fully constrained). No Mathlib instance covers this inverted reading.
 noncomputable instance instNatInfZPS : ZPSemilattice ℕ∞ where
   join       := min
   bot        := ⊤
@@ -71,6 +72,7 @@ noncomputable instance instNatInfZPS : ZPSemilattice ℕ∞ where
 
 /-- ℕ∞ carries a ValuationStructure with scale = (· + 1) and val = id.
     All four axioms reduce to one-line ℕ∞ arithmetic. -/
+-- [ZP-CUSTOM] instance: ValuationStructure ℕ∞ (scale = +1, val = id) | reason: The concrete model witnessing that ValuationStructure's abstract gap (a type satisfying all four axioms) has an actual inhabitant. val = id works because ℕ∞ already carries its own depth as its value; scale = +1 satisfies val_scale by rfl.
 noncomputable instance instNatInfVal : ValuationStructure ℕ∞ where
   scale      := fun x => x + 1
   val        := id

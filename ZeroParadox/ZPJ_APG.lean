@@ -80,6 +80,7 @@ open ZeroParadox.Scale ZeroParadox.SelfApp ZeroParadox.ZPA ZPSemilattice
 
 /-- An Accessible Pointed Graph: a Quiver with a distinguished root vertex
     from which every vertex is reachable via directed paths. -/
+-- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Quiver.Basic | reason: Mathlib's Quiver is a bare directed graph (objects + edges) with no distinguished root or accessibility requirement. APG adds root : V and the accessibility proof (every vertex reachable from root), matching Aczel's definition of Accessible Pointed Graph. These two fields are not optional — they are what AFA's decoration theorem requires.
 structure APG (V : Type*) [Quiver V] where
   /-- Distinguished root vertex. -/
   root : V
@@ -133,6 +134,7 @@ end APGBasics
     ZFSet is NOT a valid instance: Foundation forbids x ∈ x, which any cyclic APG requires.
     OntologicalStates (ZPJ_OntBridge) has AbstractSelfApp but not ValuationStructure —
     decoration of cyclic APGs specifically requires val_scale for the k>1 argument. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation, providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
 class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] where
   /-- Assembles a parent's value from the set of its children's values. -/
   collect : Set U → U
