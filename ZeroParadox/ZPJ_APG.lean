@@ -23,11 +23,13 @@ agree" statement is the universal quantification of that: each one must independ
 they agree as a consequence, not as a coincidence.
 
 Cyclic vertices have a finite period k — the path returns in k steps. Acyclic vertices have an
-infinite period — the path never returns. So acyclic is the infinite-period case.
+"infinite period" — the path never returns, so there is no cycle length k to close the equation.
+This is the same zero-versus-infinity identification that runs throughout the framework: the finite
+k of a cycle is the zero side; its absence is the infinity side.
 
-The hardness of the acyclic proof is that infinite period gives you nothing to induct on. Reach
-cardinality is a finite proxy that encodes the infinite period as a strictly decreasing natural
-number. Proving it strictly decreases was where the formalization work lived.
+The hardness of the acyclic proof is that "infinite period" gives you nothing to induct on. Reach
+cardinality is a finite proxy that encodes it as a strictly decreasing natural number. Proving it
+strictly decreases was where the formalization work lived.
 
 ## The conjecture
 
