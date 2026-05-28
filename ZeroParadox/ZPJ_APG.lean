@@ -10,7 +10,24 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim to fill in)
+The zero paradox approaches ε₀ from two distinct directions concurrently — from infinity and from
+zero. That same squeeze operates here. The valuation chain is one way of representing it, not the
+whole picture.
+
+Getting to self-containing was easy. The harder question — and the reason this document exists — is
+why ⊥ has to be the *only* case where this can occur.
+
+For cyclic vertices, the infinitude-of-zeros forces every decoration to ⊥. Agreement between any
+two decorations is then trivial, because neither has anywhere else to go. The "any two decorations
+agree" statement is the universal quantification of that: each one must independently equal ⊥, so
+they agree as a consequence, not as a coincidence.
+
+Cyclic vertices have a finite period k — the path returns in k steps. Acyclic vertices have an
+infinite period — the path never returns. So acyclic is the infinite-period case.
+
+The hardness of the acyclic proof is that infinite period gives you nothing to induct on. Reach
+cardinality is a finite proxy that encodes the infinite period as a strictly decreasing natural
+number. Proving it strictly decreases was where the formalization work lived.
 
 ## The conjecture
 
