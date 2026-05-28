@@ -31,7 +31,7 @@ The hardness of the acyclic proof is that "infinite period" gives you nothing to
 cardinality is a finite proxy that encodes it as a strictly decreasing natural number. Proving it
 strictly decreases was where the formalization work lived.
 
-## The conjecture
+## The theorem
 
 For any finite APG, any two valid decorations into any DecorationUniverse are equal.
 The proof uses the three typeclass axioms (collect_singleton, collect_ext, collect_val_ge)
