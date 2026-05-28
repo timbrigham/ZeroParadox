@@ -1,5 +1,8 @@
 """
-Zero Paradox — Foreword PDF Builder (v1.9, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v2.0, revised May 2026)
+v2.0: §III metatheory note extended — orthogonal frameworks / contact point framing.
+      ZF+AFA and ZFC are mutually exclusive but meet at one contact point: v₂(0) = ∞.
+      Clarifies that ZP is not a bridge between them but an identification of that point.
 v1.9: AR fix — callout box "from which every state is reachable by joins" →
 "the element below which no other state exists" — corrects imprecise constructive
 reachability phrasing to match what T2 actually proves.
@@ -23,7 +26,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '2.0'
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -287,6 +290,19 @@ def build():
             'Kleene computability machinery depends on Classical.choice as a standard Lean '
             'library axiom — the same dependency carried by any theorem using Mathlib\'s '
             'computability library, not a novel Zero Paradox commitment.',
+            S['body']),
+        Paragraph(
+            'ZF+Foundation and ZF+AFA are not two theories this work bridges — '
+            'they are mutually exclusive foundational choices. Choosing one forecloses '
+            'the other. The right description of their relationship is orthogonality: '
+            'they are independent, sharing a single mathematical object. '
+            'That object is zero. In the 2-adic integers, zero is divisible by 2 '
+            'infinitely many times — a provable fact in standard ZFC. In ZF+AFA, '
+            'the same fact carries additional weight: infinite 2-adic divisibility '
+            'is the formal signature of a set that contains only itself. '
+            'This work is built in ZF+AFA because the question it asks is about '
+            'that second reading — what the arithmetic of zero means at the '
+            'foundation, not just what it computes.',
             S['body']),
         commitments_table(),
         sp(8),
