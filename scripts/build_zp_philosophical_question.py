@@ -1,5 +1,9 @@
 """
-Build: The Philosophical Question That Started This (v1.3)
+Build: The Philosophical Question That Started This (v1.5)
+v1.5: §II extended — orthogonal frameworks / contact point framing following ZPJ_ScaleBridge.
+      v₂(0)=∞ named as the contact point between ZFC and AFA; AFA dependency in DA-1
+      restated more precisely as interpretive rather than computational.
+v1.4: Strip version number from footer and body endnote.
 v1.3: AR fix — "structural consequence of any null-containing state space" →
 "structural consequence of the join-semilattice axioms (∀ x, ⊥ ∨ x = x)" — scopes
 the universal claim to the actual algebraic structure proved in Lean.
@@ -18,7 +22,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.5'
 
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')
@@ -162,7 +166,7 @@ def build():
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            'Zero Paradox  |  The Philosophical Question That Started This  |  April 2026  |  v' + VERSION)
+            'Zero Paradox  |  The Philosophical Question That Started This  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -342,6 +346,25 @@ def build():
         'Paradox. It is the wall every formal ontological argument hits. The question '
         'is whether the Zero Paradox hits it differently.',
         bg=GOLD_LITE, border=GOLD))
+    E.append(sp(8))
+    E.append(body(
+        'ZFC and ZFC+AFA are mutually exclusive extensions of the same base theory: '
+        'you cannot derive AFA from ZFC, or ZFC from AFA. But mutual exclusivity is '
+        'not isolation. The better description is <b>orthogonality</b> — they are '
+        'independent, meeting at exactly one shared mathematical object.'))
+    E.append(body(
+        'That object is zero. In the 2-adic integers, v₂(0) = ∞: zero is divisible '
+        'by 2 infinitely many times. This is a theorem of standard ZFC, with no AFA '
+        'import, and it is machine-verified (ZPJ_ScaleBridge.lean: '
+        '{x : ℤ₂ | 2x = x} = {0}). In ZFC+AFA, the same computation carries '
+        'additional weight: infinite 2-adic depth is the formal signature of ⊥ = {⊥} '
+        '— the null state containing itself. Same computation, same result, different '
+        'interpretation depending on which foundational framework you are standing in.'))
+    E.append(body(
+        'This makes the AFA dependency precise. The fixed-point content is derivable '
+        'in ZFC; the gap is <i>interpretive</i>. ZFC provides the computation. '
+        'AFA provides the meaning. The dependency is not a tooling limitation — '
+        'it is a claim about what the shared object signifies.'))
     E.append(hr())
 
     # ── Section 3 ──────────────────────────────────────────────────────────────
@@ -513,7 +536,7 @@ def build():
         sp(14), hr(),
         Paragraph(
             '<i>End of document  |  The Philosophical Question That Started This  |  '
-            'Zero Paradox Project  |  April 2026  |  v' + VERSION + '  |  '
+            'Zero Paradox Project  |  April 2026  |  '
             'Not a formal result — a philosophical essay. '
             'The formal mathematics lives in the committed PDFs, ZP-A through ZP-I.</i>',
             S['endnote']),

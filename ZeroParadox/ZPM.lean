@@ -189,7 +189,7 @@ theorem both_fixed_points_exist :
       ∀ β : Ordinal, omega0 ^ β = β → α ≤ β) :=
   ⟨by
     obtain ⟨c, hc⟩ := computational_quine_exists
-    exact ⟨c, hc⟩,
+    exact ⟨c, quine_period_is_goedel c hc⟩,
    ⟨epsilonZero, epsilonZero_fixedPoint, fun β hβ => epsilonZero_le_fixedPoint hβ⟩⟩
 
 /-! ### Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame

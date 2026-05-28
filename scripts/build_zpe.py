@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.15 | May 2026
+Version 3.16 | May 2026
+v3.16: Version numbers removed from three internal register section headers (Open Items,
+Traceability, Validation Status) — version numbers belong in the title block only.
 v3.15: DA-1 Path 2 forward reference to ZP-M R-M.1 added at three locations — retrospective
 structural analysis of why the informational bridge resisted formalization.
 v3.14: Adversary-review pass — "AX-1 is promoted" → "AX-1 is derived as" (two occurrences);
@@ -70,7 +72,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.15'
+VERSION = '3.16'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -650,7 +652,7 @@ def build():
 
     print('[build_zpe] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-E v' + VERSION, S['h1'])]
+    E += [hr(), Paragraph('Updated Open Items Register', S['h1'])]
 
     oq_rows = [
         ['AX-1: Binary Snap Causality',
@@ -708,7 +710,7 @@ def build():
     ))
 
     # ── UPDATED TRACEABILITY REGISTER ─────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Updated Traceability Register — ZP-E v' + VERSION, S['h1'])]
+    E += [sp(8), hr(), Paragraph('Updated Traceability Register', S['h1'])]
 
     trace_rows = [
         ['Binary Snap causality',
@@ -761,7 +763,7 @@ def build():
     ))
 
     # ── VALIDATION STATUS ─────────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Validation Status — ZP-E v' + VERSION, S['h1'])]
+    E += [sp(8), hr(), Paragraph('Validation Status', S['h1'])]
 
     val_rows = [
         ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',

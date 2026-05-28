@@ -88,6 +88,7 @@ open Nat.Partrec Nat.Partrec.Code
 /-- A code c is a Kleene fixed point for f if c's computed behavior equals f(c).
     This is the computational expression of self-containment: c's behavior is
     determined by c itself, with no external description shorter than c. -/
+-- [ZP-CUSTOM] replaces: Mathlib Function.IsFixedPt | reason: Function.IsFixedPt works on total functions α → α. Here f : Code → ℕ →. ℕ (partial function) and the fixed-point condition is eval c = f c — equality of partial functions. No Mathlib predicate covers this; IsKleeneFixedPoint is the partial-function analog needed for the computability layer.
 def IsKleeneFixedPoint (f : Code → ℕ →. ℕ) (c : Code) : Prop :=
   eval c = f c
 
@@ -124,6 +125,7 @@ lemma selfApply_partrec : Partrec₂ selfApply := by
     eval c n = eval c (encode c + n) for all n. Existence is guaranteed by Kleene's
     second recursion theorem. Non-uniqueness is expected — multiple codes with distinct
     Gödel numbers satisfy the condition independently. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Named alias for IsKleeneFixedPoint selfApply c. Makes the connection to Quine atoms explicit in type signatures and theorem statements; not a raw Mathlib concept. Unlike the AFA Quine (unique by AFA), computational quines are NOT unique — each has a distinct Gödel number, giving the infinite family of §VI.
 def IsComputationalQuine (c : Code) : Prop :=
   IsKleeneFixedPoint selfApply c
 
@@ -162,6 +164,7 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
     KleeneStructure is the formal identification of:
       AFA self-containment (bot_self_mem) ↔ Kleene fixed point (botCode_is_quine)
     These are the same structural property in two formal languages. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure asserts that the AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) name the same structural property — this identification is the motivating commitment, not a derived theorem.
 class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
   /-- The code witnessing ⊥'s computational self-reference. -/
   botCode : Code
@@ -258,6 +261,7 @@ open ZeroParadox.ZPE ZeroParadox.ZPC
     The unique self-containing element is the initial state — the bottom of the
     semilattice. This is the CIC encoding of ⊥ = {⊥}: bot is self-containing
     and is the only element with this property. -/
+-- [ZP-CUSTOM] instance: AFAStructure MachinePhase | reason: selfMem x := x = bot is the CIC-compatible encoding of AFA self-containment (⊥ = {⊥} cannot be stated in Lean's well-founded type theory). Quine uniqueness and bot_self_mem are provable by rfl. This is the concrete closure of DA-1 for ZP-E's machine model.
 instance machinePhaseAFA : AFAStructure MachinePhase where
   selfMem x      := x = bot
   quine_unique _ _ hx hy := hx.trans hy.symm
@@ -267,6 +271,7 @@ instance machinePhaseAFA : AFAStructure MachinePhase where
     botCode is the computational Quine whose existence is guaranteed by
     kleene_fixed_point_exists (Kleene's second recursion theorem). The code
     IS its own program — the computational expression of ⊥ = {⊥}. -/
+-- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — no algorithm can identify which Code IS the botCode (isComputationalQuine_undecidable). The noncomputable marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Stripping it would misrepresent the result.
 noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
   botCode               := Classical.choose computational_quine_exists
   botCode_is_quine      := Classical.choose_spec computational_quine_exists

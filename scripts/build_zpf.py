@@ -1,5 +1,5 @@
 """
-Build ZP-F: The Counterexamples (v1.1)
+Build ZP-F: The Counterexamples (v1.2)
 v1.0: Initial release. Establishes formally that any linearly ordered field —
       notably ℝ and ℚ — is structurally incapable of hosting the Binary Snap.
       General case ([Field F] [LinearOrder F] [IsStrictOrderedRing F]) proved
@@ -7,12 +7,16 @@ v1.0: Initial release. Establishes formally that any linearly ordered field —
 v1.1: Added §VI — philosophical note on why ℝ is the wrong setting: the
       inversion of richness, the Ostrowski forcing argument, and zero as limit
       point versus structural origin.
+v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
+      necessary (recurrence across ZPL/ZPM); surreal numbers as boundary test
+      case; theorem development pathway noted. Vocabulary fix: 'topologically
+      isolated' → 'valuatively distinguished' in §VI body.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples.pdf')
@@ -194,7 +198,7 @@ def build():
         'neighbourhood of zero contains a smaller positive element. The snap requires zero '
         'to be something different — a structural origin from which the first departure is '
         'forced, with no smaller departure possible. In Q&#8322;, zero carries the infinite '
-        '2-adic valuation; it is topologically isolated in exactly the sense required. '
+        '2-adic valuation; it is valuatively distinguished in exactly the sense required. '
         'The snap does not fail in &#8477; by accident. It fails because &#8477; and the '
         'snap require incompatible roles for zero: limit point versus structural origin.'))
     E.append(sp(4))
@@ -243,6 +247,27 @@ def build():
             'are proved in ZP-L. The claim that both conditions reflect a common structural '
             'property is interpretive &#8212; it does not follow from their conjunction '
             'alone. The *&#8469; example above is informal.',
+            'The dual-approach structure recurs across the ZP layers: in ZP-L, '
+            '&#949;&#8320; is located from above as the least fixed point of '
+            '&#945; &#8614; &#969;^&#945; and from below as the limit of the CNF tower; '
+            'in ZP-M, the computability and ordinal fixed points are argued to converge to the '
+            'same 2-adic limit. This recurrence is not coincidental. The snap is the point '
+            'where a domain\'s own measurement framework exhausts itself; no single framework '
+            'can locate it from inside because the framework runs out exactly there. '
+            'This suggests a dual approach is required in each case: each framework reaches the '
+            'boundary from its own direction, and the snap is the point they agree on. '
+            'No general theorem to this effect is established here.',
+            'The surreal numbers (No) satisfy both conditions &#8212; non-Archimedean '
+            'structure (containing &#949;&#8320; as an ordinal) and genuine limit ordinals '
+            '&#8212; and are the natural boundary test case for any duality theorem. Whether '
+            'the surreals admit a snap-like result, or whether a third structural condition '
+            'is required to exclude them, has not been determined. '
+            '(Informal &#8212; not a result of this document.)',
+            'Development path toward a formal theorem: prove the two conditions as '
+            'independent Lean results (density impossibility established here; limit ordinal '
+            'necessity established in ZP-L), then prove they agree on the same structural '
+            'point. The surreal case is the critical test of whether two conditions are '
+            'jointly sufficient.',
         ]
     ))
     E.append(sp(4))

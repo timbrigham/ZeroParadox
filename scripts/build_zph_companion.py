@@ -1,5 +1,6 @@
 """
-Build ZP-H Illustrated Companion (v1.4)
+Build ZP-H Illustrated Companion (v1.5)
+v1.5: Strip version number from companion footer.
 v1.4: Add structural floor section — power set lattice as primary example; bridge to ZP-specific
       structural floor; new section placed before morphism/functor content.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
@@ -132,7 +133,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.4'
+VERSION = '1.5'
 
 
 def build():
@@ -144,7 +145,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-H Companion  |  Categorical Bridge  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-H Companion  |  Categorical Bridge  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

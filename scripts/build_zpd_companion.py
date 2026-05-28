@@ -1,5 +1,6 @@
 """
-Build ZP-D Illustrated Companion (v1.7)
+Build ZP-D Illustrated Companion (v1.9)
+v1.9: Strip version number from companion footer.
 v1.7: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Changes from v1.5:
 - t_map_diagram: dh increased (2.2 → 2.8 in), cy changed to fixed value 108 so bottom
@@ -104,7 +105,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -116,7 +117,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  May 2026  |  v' + VERSION)
+            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  May 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

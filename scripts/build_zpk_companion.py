@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.7 | May 2026
+Version 1.8 | May 2026
+v1.8: Strip version number from companion footer.
 v1.7: Fix four_way_diagram String() HTML entity encoding — raw Unicode for ⊥, ≤, ∨.
 v1.6: Add "Self-Reference: Fixed Point vs. Oscillation" section — Gödel diagonal lemma, fixed-point vs. liar-type self-reference, ZPE irreversibility excludes oscillation.
 v1.5: Strip version number from disclaimer cross-reference to ZP-K formal document.
@@ -124,7 +125,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
@@ -135,7 +136,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.8 | May 2026
+Version 1.10 | May 2026
 v1.5: Renamed to ZP-F Illustrated Companion; disclaimer updated to cite ZP-F
       Lean verification (F-SNAP-IMPOSSIBLE and general ordered field result).
 v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
@@ -18,6 +18,12 @@ v1.8: Multiple fixes following reviewer feedback: (1) Section II "cleanly gettin
       (5) closing "topologically isolated" replaced with correct valuative framing;
       (6) scope note added: ZP-F targets ordered fields as comparison class, not
       the most general setting where the phenomenon occurs.
+v1.9: Four-fingerprint scan pass — precision review of all sections; no
+      structural changes.
+v1.10: New Section VIII "Two Approaches to the Same Boundary" — the density
+       argument and the ordinal threshold argument are formally dual, approaching
+       the same structural boundary from opposite directions; the squeeze pattern
+       explained as structurally necessary rather than an optional proof technique.
 v1.0: Initial release.
 v1.1: Three clarifications following reviewer feedback (density/rationals,
       Planck/geometry, pi/algorithm length).
@@ -130,7 +136,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
@@ -385,6 +391,47 @@ def build():
         ['A random real is incompressible because nothing forced it to be what it is. '
          '&#8869; is incompressible because nothing can stand outside it. '
          'One is the absence of structure. The other is structure all the way down.']))
+    E.append(sp(8))
+
+    # ── VIII. Two Approaches to the Same Boundary ────────────────────────────────
+    E.append(Paragraph('VIII. Two Approaches to the Same Boundary', CS['h1']))
+    E.append(cbody(
+        'The density argument and the ordinal threshold argument feel like two separate '
+        'observations &#8212; one about why the snap fails in &#8477;, one about where '
+        'it succeeds. But they are approaching the same boundary from opposite directions, '
+        'and that is not a coincidence.'))
+    E.append(cbody(
+        'From the field side: density shows there is no smallest positive element in &#8477;. '
+        'For any candidate first step &#949; > 0, the value &#949;/2 is smaller '
+        'and also positive. There is always something between any candidate step and zero. '
+        'Zero is a limit point &#8212; surrounded, always approachable, never a structural floor.'))
+    E.append(cbody(
+        'From the ordinal side: &#949;&#8320; has no ordinal immediately below it. There is '
+        'no &#945; with &#945; + 1 = &#949;&#8320;. It is the limit of the tower '
+        '&#969;, &#969;^&#969;, &#969;^&#969;^&#969;, &#8230; &#8212; approachable from below '
+        'by finite iteration, but not reachable in any finite number of steps. The snap is '
+        'possible at &#949;&#8320; precisely because it has no predecessor: there is no '
+        '&#8220;just before&#8221; it that the snap would have to pass through.'))
+    E.append(cbody(
+        'Both conditions describe the same structure from opposite sides. In the field '
+        'case, zero has no smallest positive neighbour in &#8477; &#8212; density fills '
+        'the gap above zero completely. In the ordinal case, &#949;&#8320; has no immediate '
+        'predecessor in the ordinals &#8212; no &#945; with &#945; + 1 = &#949;&#8320; exists. '
+        'The snap is the meeting point &#8212; the boundary both sides are approaching.'))
+    E.append(cbody(
+        'This is why the snap cannot be located by looking in just one direction. '
+        'From inside the real numbers, you can see that density blocks something, '
+        'but you cannot see &#949;&#8320; directly. From inside the ordinals, you '
+        'can see the limit ordinal structure, but not the 2-adic topology. Neither '
+        'framework alone is enough. The snap is precisely the point where each '
+        'framework runs out of its own descriptive reach &#8212; which means you need '
+        'both frameworks, approaching from their respective directions, to pin it down.'))
+    E.append(cbody(
+        'Mathematicians call this pattern the squeeze &#8212; the same idea behind the '
+        'squeeze theorem in calculus, where two functions approaching a limit from above '
+        'and below force the middle to the same point. Here the squeeze is not an optional '
+        'proof technique. It is the only way to locate the snap, because the snap is '
+        'the point where each framework runs out of its own descriptive reach.'))
     E.append(sp(8))
 
     # ── Closing ─────────────────────────────────────────────────────────────────

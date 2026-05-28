@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.12 | May 2026
+Version 1.13 | May 2026
+v1.13: Version number removed from Open Items Register section header.
 v1.12: Scaffolding note removed from preamble — "ZP-H cannot be written until ZP-G is internally
 closed" was a development artifact not appropriate in a public document.
 v1.11: Remark R-FORCING added between Sections V and VI — addresses the "renaming" concern;
@@ -23,7 +24,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 
 
 def label_box_status(title, status_line, rows_list):
@@ -451,7 +452,7 @@ def build():
 
     print('[build_zph] Building Section VIII: Open Items Register...')
     # ── VIII. OPEN ITEMS REGISTER ─────────────────────────────────────────────
-    E.append(Paragraph('VIII. Open Items Register for ZP-H v' + VERSION, S['h1']))
+    E.append(Paragraph('VIII. Open Items Register', S['h1']))
 
     oq_rows = [
         ['OQ-G1',

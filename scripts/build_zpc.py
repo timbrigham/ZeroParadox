@@ -1,5 +1,6 @@
 """
-Build ZP-C: Information Theory (v1.13)
+Build ZP-C: Information Theory (v1.14)
+v1.14: Version number removed from Open Items Register section header.
 v1.13: Adversary-review pass — "forcing result" terminology replaced with "structural
 constraint" (avoids incorrect borrowing of set-theoretic forcing vocabulary).
 v1.12: Encoding commitment and information-theoretic failure mode added to preamble — makes
@@ -22,7 +23,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
@@ -241,7 +242,7 @@ def build():
         'Status label: CANDIDATE THEOREM — gap identified and named (DA-1). Closed in ZP-E DA-1 insert.',
     ]))
 
-    E.append(Paragraph('VI. Open Items Register for ZP-C v' + VERSION, S['h1']))
+    E.append(Paragraph('VI. Open Items Register', S['h1']))
     E.append(data_table(
         ['Item', 'Status', 'Description'],
         [['S1: Distribution stipulation', 'Closed — T1', 'T1 derives P and Q from AX-B1 and RP-1.'],

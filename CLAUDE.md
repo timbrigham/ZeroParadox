@@ -434,6 +434,34 @@ During working sessions, apply the Communication Quality Rubric to evaluate Tim'
 
 `.claude-local/handoff.md` is the standardized session state file. At the start of every session, read it first. At the end of every session (or before a planned context switch), overwrite it with the current state: what was just done, the immediate next action, and anything deferred. Always use this exact filename — one file, always current, always overwritten.
 
+## High-Value Insight Capture — Standing Rule
+
+Any observation made during a session that could lead to a new theorem, new layer,
+new conjecture, or significant axiom relationship must be written to `.claude-local/notes/`
+immediately — without waiting to be asked. Do not defer to the end of the session.
+
+**Triggers — capture automatically when any of these arise:**
+- A structural connection between two existing layers that hasn't been formalized
+- An identification of two mathematical objects as "the same fact in different languages"
+- A conjecture about axiom derivability or necessity (e.g. deriving a class field from
+  upstream structure)
+- An argument that could become a new ZP layer or bridge layer
+- A DC-free, choice-free, or purity result not yet in a Lean file
+- A new justification for an existing axiom or design principle
+- Any observation that directly answers or partially closes an open question in the framework
+
+**What the note must contain:**
+1. The insight in plain language (one paragraph — legible without session context)
+2. The precise mathematical claim (what exactly is being asserted)
+3. What is formal vs. what is still philosophical/conjectural
+4. Status: open conjecture / partial proof / architecture clear but unbuilt / etc.
+5. Connected notes (link to related `.claude-local/notes/` files)
+
+**File naming:** `.claude-local/notes/<topic>_YYYY-MM-DD.md`
+
+**The test:** Would a future session miss something important if this wasn't written down?
+If yes, write it now.
+
 ## Reviewer Feedback Tracking
 
 Reviewer feedback and correspondence are tracked in `.claude-local/feedback/reviewer_feedback_tracking.md`. That file is private and gitignored. Do not include reviewer names or feedback details in this file.

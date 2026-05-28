@@ -1,5 +1,6 @@
 """
-Build ZP-C Illustrated Companion (v2.1)
+Build ZP-C Illustrated Companion (v2.2)
+v2.2: Strip version number from companion footer.
 v2.1: Strip version numbers from in-document cross-references; "New in v1.6" section header simplified.
 v1.8: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 v1.7: Dual-route framing added — "What Is ZP-C Doing?" rewritten to name both routes
@@ -191,7 +192,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.1'
+VERSION = '2.2'
 
 
 def build():
@@ -203,7 +204,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-C Companion  |  Information Theory  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-C Companion  |  Information Theory  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,

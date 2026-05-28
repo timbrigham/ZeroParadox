@@ -43,6 +43,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference.pdf` |
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding.pdf` |
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
+| [build_zpm.py](build_zpm.py) | `ZP-M_Kleene_Ordinal_Bridge.pdf` |
 
 ### Illustrated companion builders
 
@@ -60,6 +61,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpj_companion.py](build_zpj_companion.py) | ZP-J |
 | [build_zpk_companion.py](build_zpk_companion.py) | ZP-K |
 | [build_zpl_companion.py](build_zpl_companion.py) | ZP-L |
+| [build_zpm_companion.py](build_zpm_companion.py) | ZP-M |
 
 ### Supporting document builders
 

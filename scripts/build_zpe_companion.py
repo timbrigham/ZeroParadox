@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.9 | May 2026
+Version 1.10 | May 2026
+v1.10: Strip version number from companion footer.
 v1.9: Strip version numbers from DA-1 historical narrative in body prose.
 v1.7: Title "AX-1 becomes a theorem" → "the main causality axiom becomes a theorem"; remember
 box 1 "emergence of any state from a null condition" → scoped to ⊥→ε₀ transition; remember
@@ -175,7 +176,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
@@ -186,7 +187,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026  |  v' + VERSION)
+            'Zero Paradox ZP-E Companion  |  Bridge Document  |  April 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
