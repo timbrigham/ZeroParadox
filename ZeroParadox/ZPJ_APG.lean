@@ -10,16 +10,7 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-Every APG (accessible pointed graph) under ZF+AFA has a unique decoration:
-a labeling of vertices such that each vertex's label equals the collection of its
-children's labels. Two mechanisms establish uniqueness here.
-Cyclic vertices: applying scale (the singleton-set operation) strictly increases
-valuation by 1 each step. Composing k decoration equations gives d(v) = scale^k(d(v));
-val(scale^k x) = val x + k for x ≠ ⊥ then forces val x = val x + k — impossible for
-finite val. Only ⊥ has infinite valuation, so d(v) = ⊥ for any k ≥ 1.
-Acyclic vertices: if two decorations agree on all children of v they agree on v
-(the decoration equation + collect_ext). Uniqueness follows by strong induction on
-the cardinality of {w | path v ↝ w} — acyclicity makes it strictly smaller for each child.
+TODO (Tim to fill in)
 
 ## The conjecture
 
