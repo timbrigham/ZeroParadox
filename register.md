@@ -6,7 +6,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.13 | ZP-A_Lattice_Algebra.pdf | v1.9 | Y/Y | Companion v1.9: strip version number from companion footer — formal:130d0acd comp:d83fd4c7 |
+| ZP-A Lattice Algebra | v1.14 | ZP-A_Lattice_Algebra.pdf | v1.9 | Y/Y | v1.14: CC-2 label → Forced Metatheoretic Commitment; ZPJ_ScaleBridge reference added — formal:6c437558 comp:d83fd4c7 |
 | ZP-B p-Adic Topology | v1.8 | ZP-B_pAdic_Topology.pdf | v1.9 | Y/Y | Companion v1.9: strip version number from companion footer — formal:42af38ce comp:8e7b73c6 |
 | ZP-F The Counterexamples | v1.2 | ZP-F_The_Counterexamples.pdf | v1.10 | Y/Y | v1.2: vocab fix + dual-limit remark bullets (AR-clean); companion v1.10: new §VIII squeeze-as-structural-necessity (AR-clean) — formal:72f2aed0 comp:6935af00 |
 | ZP-C Information Theory | v1.14 | ZP-C_Information_Theory.pdf | v2.2 | Y/Y | v1.14: version number removed from Open Items Register header; comp v2.2: strip footer version — formal:273410c8 comp:8912617c |

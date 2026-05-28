@@ -1,5 +1,10 @@
 """
-Build ZP-A: Lattice Algebra (v1.13)
+Build ZP-A: Lattice Algebra (v1.14)
+v1.14: CC-2 label updated — "Conditional Claim" → "Forced Metatheoretic Commitment".
+Metatheoretic choice of ZF+AFA over Foundation is not free: ruled out by R3 and ZP-C L-INF.
+Lean 4 scope note extended — ZPJ_ScaleBridge formally verifies the fixed-point content
+(selfMem_eq_singleton_free, z2_selfMem_singleton) in ZFC; set-theoretic interpretation
+remains outside Lean scope. Both validation tables updated. No algebraic content changed.
 v1.13: OQ-A1b note added distinguishing bounded chains from existence of minimal element
 above ⊥. Bounded chains (closed by ZP-E T5 via AX-B1) do not guarantee ε₀ exists as a
 minimal non-null element — that is a metric result established by ZP-B, not A1-A4. No
@@ -28,7 +33,7 @@ All three DA-1 paths share D7 as background; independence is among their argumen
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra.pdf')
@@ -131,17 +136,17 @@ def build():
 
     E.append(Paragraph('V. The Self-Containment of &#8869;', S['h1']))
     E.append(Paragraph('5.1  Foundational Characterisation', S['h2']))
-    E.append(body('The axioms A1&#8211;A4 establish &#8869; as the additive identity and algebraic minimum of L. The following conditional claim characterises its set-theoretic nature. R3 provides a structural route to DA-1 in ZP-E: CC-2 establishes that &#8869; has no external interpreter position, which — conditional on D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background — eliminates the static-description state for &#8869;. See R3 for the full dependency note.'))
+    E.append(body('The axioms A1&#8211;A4 establish &#8869; as the additive identity and algebraic minimum of L. The following forced metatheoretic commitment characterises its set-theoretic nature. R3 provides a structural route to DA-1 in ZP-E: CC-2 establishes that &#8869; has no external interpreter position, which — conditional on D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background — eliminates the static-description state for &#8869;. See R3 for the full dependency note.'))
     E.append(body('<i>Foundation note: The framework is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). The classical Axiom of Foundation is replaced by AFA, which permits self-containing sets. This replacement is not an arbitrary modelling choice: ZF + Foundation is incompatible with CC-2 (a well-founded &#8869; would admit an external interpreter, contradicting R3) and with ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). See ZP-E Remark R-AFA for the full cross-framework argument. The Axiom of Choice is not assumed.</i>'))
     E.append(sp(4))
-    E.append(label_box('Conditional Claim CC-2 — Self-Containment of &#8869;', [
+    E.append(label_box('Forced Metatheoretic Commitment CC-2 — Self-Containment of &#8869;', [
         'The null state &#8869; is its own extension: the collection of all objects bearing the structural property of &#8869; is &#8869; itself.',
         'Formally: &#8869; = {&#8869;}',
         'Under ZF + AFA, &#8869; is a Quine atom — a set satisfying x = {x}. By set extensionality, any infinite collection of objects all indistinguishable under the structural property of &#8869; collapses to &#8869; itself. There is no multiplicity, only &#8869;.',
-        'This is a modeling commitment. It is not derived from A1&#8211;A4. It requires replacing the classical Axiom of Foundation with AFA in the metatheory.',
-        'Status: CONDITIONAL CLAIM — modeling commitment over ZF + AFA; not derived from A1&#8211;A4.',
-        'Cross-framework note: The replacement of Foundation by AFA is not an arbitrary choice — ZF + Foundation is ruled out by R3 (a well-founded &#8869; would admit an external interpreter, contradicting CC-2) and by ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). AFA is the forced metatheoretic replacement; the specific form &#8869; = {&#8869;} is the minimal Quine atom consistent with A4. See ZP-E Remark R-AFA for the full cross-framework argument.',
-        'Lean 4 scope: ZPA.lean verifies the algebraic structure A1&#8211;A4 and all derived results (T1&#8211;T3, CC-1). CC-2 is a metatheoretic commitment at the set-theoretic level. Lean&#8217;s bot field is a term of an abstract typeclass — a structural proxy for the algebraic role of &#8869;. Lean&#8217;s type theory (CIC) is well-founded by construction; Quine atoms cannot be realized as Lean terms. The set-theoretic content of CC-2 is stated as a prose-level commitment in ZF + AFA and is outside the scope of the Lean verification.',
+        'This is a forced metatheoretic commitment, not a freely chosen modeling decision. The replacement of Foundation by AFA is structurally required — Foundation is ruled out by R3 and ZP-C L-INF. It is not derived from A1&#8211;A4 at the algebraic level; the metatheoretic choice is forced at the framework level.',
+        'Status: FORCED METATHEORETIC COMMITMENT — AFA over Foundation is structurally required, not freely chosen. Algebraic fixed-point content formally verified in ZFC by ZP-J (ZPJ_ScaleBridge); set-theoretic interpretation outside Lean scope.',
+        'Cross-framework note: The replacement of Foundation by AFA is not an arbitrary choice — ZF + Foundation is ruled out by R3 (a well-founded &#8869; would admit an external interpreter, contradicting CC-2) and by ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). Foundation and AFA are dual framings of the same object: Foundation excludes the Quine atom; AFA uniquely permits it. Both axioms converge on the identical object with zero gap between them. AFA is the forced metatheoretic replacement; the specific form &#8869; = {&#8869;} is the minimal Quine atom consistent with A4. See ZP-E Remark R-AFA for the full cross-framework argument.',
+        'Lean 4 scope: ZPA.lean verifies the algebraic structure A1&#8211;A4 and all derived results (T1&#8211;T3, CC-1). CC-2 is a metatheoretic commitment at the set-theoretic level. Lean&#8217;s bot field is a term of an abstract typeclass — a structural proxy for the algebraic role of &#8869;. Lean&#8217;s type theory (CIC) is well-founded by construction; Quine atoms cannot be realized as Lean terms. The set-theoretic content of CC-2 is stated as a prose-level commitment in ZF + AFA and is outside the scope of the Lean verification. ZP-J (ZPJ_ScaleBridge.lean) formally verifies the fixed-point content in ZFC: {x : &#8484;&#8322; | 2&#183;x = x} = {0} (selfMem_eq_singleton_free, z2_selfMem_singleton). The set-theoretic interpretation — that this fixed point is the Quine atom &#8869; = {&#8869;} — remains at the prose level in ZF + AFA.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R3 — CC-2 Eliminates the Static-Description State for &#8869;', [
@@ -166,7 +171,7 @@ def build():
          ['&#8804; partial order (D1, T1)', 'Derived — ZP-D: ordering on states'],
          ['Monotonicity of state sequences (T3)', 'Derived from A1&#8211;A3 — ZP-D: state layer ordering'],
          ['&#8869; as global minimum (T2, CC-1)', 'Derived / Conditional — ZP-E: ontological grounding claim. CC-1 now derived in AFAStructure lattices via ZP-J T-EXEC.'],
-         ['&#8869; = {&#8869;} self-containment (CC-2, R3)', 'Conditional / Remark — ZP-E: structural route to eliminating static-description state for &#8869;, given D7 exhaustiveness as background'],
+         ['&#8869; = {&#8869;} self-containment (CC-2, R3)', 'Forced Metatheoretic / Remark — ZP-E: structural route to eliminating static-description state for &#8869;, given D7 exhaustiveness as background. Fixed-point content verified in ZFC by ZP-J.'],
          ['No subtraction / additive ontology (R1)', 'Structural — ZP-C: no operation may reduce informational content'],
          ['OQ-A1 — increment selection', 'Open within ZP-A; closed by ZP-E T5']],
         [2.5*inch, 4.0*inch]
@@ -182,7 +187,7 @@ def build():
          ['State transition as join (D2)', 'Valid — Defined; consistent with signature'],
          ['Monotonicity of state sequences (T3)', 'Valid — Derived from A1&#8211;A3 and D3'],
          ['CC-1: S<sub>0</sub> = &#8869;', 'DERIVED (given AFAStructure grounding, ZP-J T-EXEC) — structural consequence in any AFAStructure lattice. Modelling commitment at ZP-A level without AFAStructure assumption.'],
-         ['CC-2: &#8869; = {&#8869;}', 'Conditional Claim — modeling commitment over ZF + AFA; not derived from A1&#8211;A4'],
+         ['CC-2: &#8869; = {&#8869;}', 'Forced Metatheoretic Commitment — AFA over Foundation structurally required; fixed-point content verified in ZFC by ZPJ_ScaleBridge'],
          ['ZF + AFA foundation (no AC)', 'Meta-theoretic — framework-wide; required for CC-2'],
          ['OQ-A1: Sufficiency of monotonicity', 'Open within ZP-A; closed by ZP-E T5']],
         [2.5*inch, 4.0*inch]

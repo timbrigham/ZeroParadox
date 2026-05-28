@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-A_Lattice_Algebra_v1_13.pdf](ZP-A_Lattice_Algebra_v1_13.pdf) | 2026-05-28 | ZP-A v1.13 superseded by v1.14: CC-2 label updated from "Conditional Claim" to "Forced Metatheoretic Commitment"; Lean 4 scope extended with ZPJ_ScaleBridge fixed-point verification; dual-framing note added to cross-framework section; both validation tables updated. |
 | [ZP-J_Self_Reference_v1_2.pdf](ZP-J_Self_Reference_v1_2.pdf) | 2026-05-27 | ZP-J v1.2 superseded by v2.0: four new sections added — Aczel DC-free connection (§ VII), abstraction chain ValuationStructure → AbstractSelfApp → AFAStructure (§ VIII), concrete instances ℕ∞ and OntologicalStates (§ IX), APG decoration uniqueness (§ X). All new results sorry-free in Lean 4. |
 | [ZP-H_Categorical_Bridge_v1_12.pdf](ZP-H_Categorical_Bridge_v1_12.pdf) | 2026-05-26 | ZP-H v1.12 superseded by v1.13: version number removed from Open Items Register section header. |
 | [ZP-G_Category_Theory_v1_8.pdf](ZP-G_Category_Theory_v1_8.pdf) | 2026-05-26 | ZP-G v1.8 superseded by v1.9: version number removed from Open Items Register section header. |

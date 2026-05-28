@@ -98,11 +98,13 @@ def commitments_table():
          'T2 establishes ⊥ ≤ S₀ unconditionally; CC-1 strengthens this to equality '
          'as an explicit modeling choice. Conditional on this identification '
          'holding in a given instantiation.'),
-        ('CC-2',  'Conditional Claim',
+        ('CC-2',  'Forced Metatheoretic Commitment',
          '⊥ = {⊥}. The null state is self-containing — a Quine atom under ZF+AFA. '
-         'Requires the Anti-Foundation Axiom in place of the Foundation Axiom. '
-         'Grounds the self-referential structure of ⊥ and supports DA-1. '
-         'Incompatible with standard ZFC.'),
+         'The metatheoretic choice of AFA over Foundation is not free: Foundation is ruled out '
+         'by R3 and ZP-C L-INF. Foundation and AFA are dual framings of the same object — '
+         'Foundation excludes the Quine atom; AFA uniquely permits it. '
+         'Fixed-point content formally verified in ZFC by ZP-J (ZPJ_ScaleBridge). '
+         'Set-theoretic interpretation requires ZF+AFA.'),
     ]
 
     table_data = [headers]
