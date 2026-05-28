@@ -297,26 +297,31 @@ def build():
         '<i>why</i> is &#8869; the unique fixed point? The valuation argument answers this, '
         'and it is the insight behind ZP-J v2.0\'s abstraction chain.'))
     E.append(cbody(
-        'Imagine every element of the lattice has a "depth" &#8212; a natural number measuring '
-        'how far it is from &#8869;. &#8869; itself has infinite depth. Applying scale &#8212; '
-        'the self-application operation &#8212; increases depth by exactly 1 at every '
-        'non-&#8869; element. So if scale(x) = x, then depth(x) = depth(x) + 1. '
-        'That equation has no finite solution. Only &#8869;, whose depth is already infinite '
-        '(&#8734; + 1 = &#8734;), can satisfy it. &#8869; is the only fixed point.'))
+        'Imagine every element of the lattice has a "depth" &#8212; a value in the extended '
+        'naturals {0, 1, 2, &#8230;, &#8734;} measuring how far it is from &#8869;. '
+        '&#8869; itself has depth &#8734;. Applying scale &#8212; the self-application '
+        'operation &#8212; increases depth by exactly 1 at every non-&#8869; element. '
+        'So if scale(x) = x, then depth(x) = depth(x) + 1. '
+        'That equation has no finite solution. Only &#8869;, whose depth is already &#8734; '
+        '(and &#8734; + 1 = &#8734; in the extended naturals), can satisfy it. '
+        '&#8869; is the only fixed point.'))
     E.append(cbody(
         'The same argument appears in 2-adic arithmetic. Multiplication by 2 is the scale '
         'operation. The 2-adic valuation v&#8322;(x) measures how many times 2 divides x &#8212; '
         'a kind of depth. v&#8322;(2x) = v&#8322;(x) + 1 for any x &#8800; 0. So 2x = x '
         'forces v&#8322;(x) = v&#8322;(x) + 1 &#8212; impossible for finite valuation. '
         'Only 0, with v&#8322;(0) = &#8734;, satisfies 2 &#215; 0 = 0. '
-        'The same proof closes both cases.'))
+        'The proof structure is the same in both cases; the formal bridge connecting '
+        'the 2-adic type to the abstract ZPSemilattice framework is identified as future work.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy &#8212; The elevator that only goes up', [
         'Imagine an elevator that, when you press a button, moves one floor higher &#8212; '
         'unless you are already at the top floor, in which case it stays put. '
         'The top floor is the only "fixed point": pressing the button leaves you there. '
-        'Every other floor gets nudged upward. ⊥ is the top floor &#8212; the only place '
-        'where one more application of scale changes nothing.',
+        'Every other floor gets nudged upward. In the &#8469;&#8734; model, &#8869; is the '
+        'top floor (&#8734;, the largest extended natural) &#8212; the only value where '
+        'adding 1 changes nothing. The ZP lattice order runs in the opposite direction '
+        'to the usual number line, so this largest value is simultaneously the lattice bottom.',
     ]))
     E.append(sp(8))
 
@@ -330,9 +335,10 @@ def build():
     E.append(sp(6))
     E.append(cbody(
         'Reading the table bottom-up: AFAStructure requires the most direct commitment. '
-        'AbstractSelfApp requires less &#8212; unique_fp is strong enough to derive all '
-        'three AFA fields. ValuationStructure requires even less &#8212; four axioms '
-        'about a depth measure, from which unique_fp becomes a theorem.'))
+        'AbstractSelfApp requires less &#8212; its selfApp operation with fixed_bot and '
+        'unique_fp together are sufficient to derive all three AFA fields as theorems. '
+        'ValuationStructure requires even less &#8212; four axioms about a depth measure, '
+        'from which unique_fp becomes a theorem and AbstractSelfApp follows.'))
     E.append(cbody(
         'Each layer of the chain removes one more thing you have to assume. At the bottom '
         'of the chain, you are left with the valuation argument: scale increases depth by 1, '
@@ -371,7 +377,7 @@ def build():
     E.append(Paragraph('Aczel\'s Open Question &#8212; Closed', CS['h1']))
     E.append(cbody(
         'In 1988, Peter Aczel proved that the set of self-containing elements &#8212; '
-        'J&#8721; in his notation &#8212; is the largest fixed point of the self-membership '
+        'J&#934; in his notation &#8212; is the largest pre-fixed-point of the self-membership '
         'operator. His proof used the axiom of Dependent Choice (DC) to build a sequence '
         'of approximations converging to the fixed point. He then noted: '
         '"I do not know if this use of the axiom of dependent choices was essential."'))
@@ -381,7 +387,8 @@ def build():
         'self-containing element (quine_unique), you do not need to construct anything &#8212; '
         'you identify. The self-containing set is {&#8869;}, and you know this immediately '
         'from the uniqueness field. The &#969;-chain that DC was needed to build is simply '
-        'never constructed.'))
+        'never constructed. (Whether DC can be eliminated for other fixed-point operators '
+        'remains open &#8212; see the scope note in the formal document.)'))
     E.append(sp(4))
     E.append(example_box('Plain language &#8212; When you know there\'s only one answer', [
         'If you are asked to find the only even prime number, you do not need to search '
@@ -408,8 +415,8 @@ def build():
         'of all its immediate successors.'))
     E.append(cbody(
         'ZP-J v2.0 proves this for abstract DecorationUniverses &#8212; types that carry '
-        'the ValuationStructure and a collect operation. The result: any two valid decorations '
-        'of the same finite APG must agree at every vertex.'))
+        'the ValuationStructure and a collect operation. The result: for any '
+        '<b>finite</b> APG, any two valid decorations must agree at every vertex.'))
     E.append(cbody(
         'The proof follows the same two-direction logic as T-EXEC:'))
     E.append(cbody(
@@ -443,7 +450,8 @@ def build():
         'with no Dependent Choice. '
         'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure &#8212; '
         'each layer derives the fields of the one above it. '
-        'Concrete instances: &#8469;&#8734; and OntologicalStates both satisfy the chain. '
+        'Concrete instances: &#8469;&#8734; satisfies the full ValuationStructure chain; '
+        'OntologicalStates connects at the AbstractSelfApp level directly. '
         'decoration_unique: any two valid decorations of a finite APG agree. '
         'All results sorry-free in Lean 4. &#10003;'))
     E.append(sp(6))

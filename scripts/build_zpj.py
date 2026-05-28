@@ -468,8 +468,8 @@ def build():
 
     E.append(Paragraph('I. Aczel\'s Use of Dependent Choice', S['h2']))
     E.append(body(
-        'Aczel (Non-Well-Founded Sets, 1988, ch. 6) proves that J&#8721; = &#8899;{x | x &#8838; '
-        '&#934;x} is the largest fixed point of a set-continuous operator &#934;. The proof uses '
+        'Aczel (Non-Well-Founded Sets, 1988, ch. 6) proves that J&#934; = &#8899;{x | x &#8838; '
+        '&#934;x} is the largest pre-fixed-point of a set-continuous operator &#934;. The proof uses '
         'the axiom of Dependent Choice (DC) to construct an &#969;-chain, and Aczel explicitly '
         'notes: "I do not know if this use of the axiom of dependent choices was essential."'))
     E.append(body(
@@ -482,7 +482,8 @@ def build():
     E.append(body(
         'In ZP\'s encoding, the analogue of Aczel\'s J&#8721; for the self-membership operator '
         'is J_self = {x : L | selfMem(x)} &#8212; the set of self-containing elements. '
-        'The key results about J_self follow immediately from AFAStructure:'))
+        'The key results about J_self follow immediately from AFAStructure '
+        '(Lean: ZPJ_AczelConn.lean &#167; I):'))
     E.append(result_box(
         'J_self Theorems (ZPJ_AczelConn.lean &#167; I)',
         [
@@ -491,7 +492,7 @@ def build():
             '(One step: quine_unique x &#8869; hx bot_self_mem.)',
             'J_self_eq_singleton_bot: J_self = {&#8869;}. Proved without DC. &#10003;',
             'J_self_is_largest: for any set S of self-containing elements, S &#8838; J_self. '
-            '(Aczel 6.5 part (2) &#8212; without DC.) &#10003;',
+            '(Aczel 6.5 part (2), self-membership case &#8212; without DC.) &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -549,9 +550,10 @@ def build():
         'instance must discharge. The abstraction chain asks: can these three commitments '
         'themselves be derived from something more primitive?'))
     E.append(body(
-        'The answer is yes, in two steps. First, AbstractSelfApp reduces the three fields to '
-        'two. Then ValuationStructure explains <i>why</i> &#8869; is the unique fixed point, '
-        'making even unique_fp a theorem rather than a field.'))
+        'The answer is yes, in two steps. First, AbstractSelfApp provides a self-application '
+        'operation and proves unique_fp, from which all three AFAStructure fields become '
+        'derived theorems. Then ValuationStructure explains <i>why</i> &#8869; is the unique '
+        'fixed point, making even unique_fp a theorem rather than a field.'))
 
     E.append(Paragraph('II. AbstractSelfApp &#8212; The Minimal Fixed-Point Structure', S['h2']))
     E.append(body(
@@ -711,7 +713,7 @@ def build():
             'All four axioms proved by case analysis. &#10003;',
             'instOntSelfApp: AbstractSelfApp OntologicalStates with selfApp = constant-to-null. '
             'fixed_bot: null &#8614; null = null (rfl). '
-            'unique_fp: null &#8614; rfl; exist &#8614; contradiction by decide. &#10003;',
+            'unique_fp: null &#8614; rfl; exist &#8614; absurd hx (by decide). &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -784,7 +786,7 @@ def build():
     E.append(result_box(
         'Cyclic Vertex Theorems (ZPJ_APG.lean &#167;&#167; III&#8211;VII\')',
         [
-            'val_iterate: val(scale&#7503;(x)) = val(x) + k for x &#8800; &#8869;. (KEY LEMMA) &#10003;',
+            'val_iterate: val(scale&#7503;(x)) = val(x) + k for x &#8800; &#8869;. &#10003;',
             'scale_iterate_unique_fp: scale&#7503;(x) = x &#8658; x = &#8869; for k &#8805; 1. &#10003;',
             'pureSelfLoop_decoration_eq_bot: any valid decoration assigns &#8869; to a pure '
             'self-loop vertex. &#10003;',
@@ -824,11 +826,11 @@ def build():
     ))
     E.append(sp(6))
     E.append(callout(
-        'decoration_unique is the ZP version of AFA\'s central uniqueness theorem: every APG '
-        'has at most one valid decoration into any DecorationUniverse. The proof uses only the '
-        'three typeclass axioms and ValuationStructure &#8212; it characterises when decoration '
-        'uniqueness holds. It does not construct a specific AFA model or derive AFA\'s axioms '
-        'from ZP\'s.',
+        'decoration_unique is the ZP version of AFA\'s decoration uniqueness theorem: for any '
+        '<b>finite</b> APG, at most one valid decoration exists into any DecorationUniverse. '
+        'The proof uses only the three typeclass axioms and ValuationStructure &#8212; it '
+        'characterises when decoration uniqueness holds. It does not construct a specific AFA '
+        'model or derive AFA\'s axioms from ZP\'s.',
         bg=AMBER_LITE, border=AMBER
     ))
     E.append(sp(6))
