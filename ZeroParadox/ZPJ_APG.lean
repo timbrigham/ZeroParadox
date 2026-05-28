@@ -34,7 +34,7 @@ strictly decreases was where the formalization work lived.
 ## The theorem
 
 For any finite APG, any two valid decorations into any DecorationUniverse are equal.
-The proof uses the three typeclass axioms (collect_singleton, collect_ext, collect_val_ge)
+The proof uses the two typeclass axioms (collect_singleton, collect_val_ge)
 together with ValuationStructure. This characterizes when decoration uniqueness holds;
 it does not construct a specific AFA model or derive AFA's axioms from ZP's.
 
@@ -62,7 +62,7 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 
 ## What remains
 
-- Acyclic case (§ VIII): structurally clear — induct on depth, use collect_ext —
+- Acyclic case (§ VIII): structurally clear — induct on depth, congrArg on collect —
   but requires [Fintype V] and a WellFounded instance on acyclic vertices.
   Currently sorry'd but not load-bearing: decoration_unique bypasses it entirely.
 
@@ -129,21 +129,16 @@ end APGBasics
 
     Key constraints:
     - collect_singleton: collect {x} = scale x (links collect to the valuation structure)
-    - collect_ext: same children set → same collect result (needed for acyclic induction)
 
     ZFSet is NOT a valid instance: Foundation forbids x ∈ x, which any cyclic APG requires.
     OntologicalStates (ZPJ_OntBridge) has AbstractSelfApp but not ValuationStructure —
     decoration of cyclic APGs specifically requires val_scale for the k>1 argument. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation, providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
 class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] where
   /-- Assembles a parent's value from the set of its children's values. -/
   collect : Set U → U
   /-- On a singleton input, collect = scale (the one-step operation from ValuationStructure). -/
   collect_singleton : ∀ x : U, collect {x} = ValuationStructure.scale x
-  /-- Extensionality: same input set → same collect result.
-      Required for acyclic uniqueness: if d₁ and d₂ agree on all children of v,
-      then collect(d₁ '' children v) = collect(d₂ '' children v). -/
-  collect_ext : ∀ {s t : Set U}, s = t → collect s = collect t
   /-- Valuation lower bound: collecting any non-empty set increases val by ≥ 1.
       Each set-membership level adds depth — collect strictly increases valuation.
       Independent axiom: not derivable from collect_singleton alone. -/
@@ -382,7 +377,7 @@ theorem cyclic_decoration_eq_bot
     For acyclic vertices, the induction step is clear:
       - IH: d₁ and d₂ agree on all children of v
       - d₁ '' children v = d₂ '' children v    [image equality from IH]
-      - collect(d₁ '' children v) = collect(d₂ '' children v)  [collect_ext]
+      - collect(d₁ '' children v) = collect(d₂ '' children v)  [congrArg collect]
       - d₁ v = collect(d₁ '' children v) = collect(d₂ '' children v) = d₂ v
 
     What's missing: the well-founded induction principle itself. For [Fintype V],
@@ -404,7 +399,7 @@ theorem acyclic_induction_step
     constructor
     · rintro ⟨w, hw, rfl⟩; exact ⟨w, hw, (ih w hw).symm⟩
     · rintro ⟨w, hw, rfl⟩; exact ⟨w, hw, ih w hw⟩
-  rw [hd₁ v, hd₂ v, DecorationUniverse.collect_ext himage_eq]
+  rw [hd₁ v, hd₂ v, himage_eq]
 
 -- /-- Two decorations agree on any acyclic vertex. -/
 -- theorem acyclic_decoration_unique

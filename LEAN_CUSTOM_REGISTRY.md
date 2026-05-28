@@ -80,7 +80,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 **Relationship to Mathlib:** No Mathlib analog
 
-**Reason:** Mathlib's `ZFSet` (the only set-theory formalization) uses Foundation — `x ∈ x` is forbidden, making it invalid as a decoration target for any APG with a self-loop. `DecorationUniverse` is an abstract type with `ValuationStructure` plus a `collect` operation, providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
+**Reason:** Mathlib's `ZFSet` (the only set-theory formalization) uses Foundation — `x ∈ x` is forbidden, making it invalid as a decoration target for any APG with a self-loop. `DecorationUniverse` is an abstract type with `ValuationStructure` plus a `collect` operation and two axioms (`collect_singleton`, `collect_val_ge`), providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
 
 ---
 
