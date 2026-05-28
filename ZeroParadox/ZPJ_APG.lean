@@ -130,6 +130,11 @@ class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] wh
       Required for acyclic uniqueness: if d₁ and d₂ agree on all children of v,
       then collect(d₁ '' children v) = collect(d₂ '' children v). -/
   collect_ext : ∀ {s t : Set U}, s = t → collect s = collect t
+  /-- Valuation lower bound: collecting any non-empty set increases val by ≥ 1.
+      Each set-membership level adds depth — collect strictly increases valuation.
+      Generalizes collect_singleton + val_scale to multi-element sets. -/
+  collect_val_ge : ∀ (S : Set U) (x : U), x ∈ S →
+      ValuationStructure.val (collect S) ≥ ValuationStructure.val x + 1
 
 /-! ## § III. val_iterate — The Key Lemma
 
@@ -282,6 +287,71 @@ theorem kCycle_node_unique
   rw [kCycle_node_eq_bot d₁ hd₁ v k hk hcycle₁,
       kCycle_node_eq_bot d₂ hd₂ v k hk hcycle₂]
 
+/-- Valuation chain along a path: for any path p : u ↝ v, decoration at u has valuation
+    ≥ decoration at v plus the path length. Each edge step uses collect_val_ge:
+    if b ⟶ c then d(b) = collect(d '' children b) and d(c) ∈ d '' children b. -/
+private theorem path_val_chain
+    {V : Type*} [Quiver V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d : V → U) (hd : IsDecoration d)
+    {u v : V} (p : Quiver.Path u v) :
+    ValuationStructure.val (d u) ≥ ValuationStructure.val (d v) + (p.length : ℕ∞) := by
+  induction p with
+  | nil => simp
+  | cons p e ih =>
+    -- rename_i names inaccessibles in introduction order (first = intermediate, second = endpoint)
+    rename_i b c
+    -- p : Path u b, e : b ⟶ c, ih : val(d u) ≥ val(d b) + ↑p.length
+    simp only [Quiver.Path.length_cons, Nat.cast_add, Nat.cast_one]
+    -- goal : val(d u) ≥ val(d c) + (↑p.length + 1)
+    have hc_child : c ∈ children b := ⟨e⟩
+    have hc_img : d c ∈ d '' children b := Set.mem_image_of_mem d hc_child
+    have hstep : ValuationStructure.val (d b) ≥ ValuationStructure.val (d c) + 1 := by
+      rw [hd b]
+      exact DecorationUniverse.collect_val_ge _ (d c) hc_img
+    calc ValuationStructure.val (d u)
+        ≥ ValuationStructure.val (d b) + (p.length : ℕ∞) := ih
+      _ ≥ (ValuationStructure.val (d c) + 1) + (p.length : ℕ∞) :=
+          add_le_add hstep (le_refl _)
+      _ = ValuationStructure.val (d c) + ((p.length : ℕ∞) + 1) := by
+          rw [add_assoc, add_comm (1 : ℕ∞) (p.length : ℕ∞)]
+
+/-- Any valid decoration assigns ⊥ to any vertex with a directed cycle through itself.
+    Proof: chain collect_val_ge along the cycle to derive val(d v) ≥ val(d v) + (cycle_len + 1),
+    impossible for finite val. -/
+theorem cyclic_decoration_eq_bot
+    {V : Type*} [Quiver V]
+    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+    (d : V → U) (hd : IsDecoration d) (v : V) (hcyc : HasSelfCycle v) :
+    d v = bot := by
+  obtain ⟨w, ⟨e⟩, ⟨p⟩⟩ := hcyc
+  by_contra hdv
+  have hfin := val_finite_of_ne_bot (d v) hdv
+  -- val(d v) ≥ val(d w) + 1: w ∈ children v, d v = collect, collect_val_ge
+  have hw_child : w ∈ children v := ⟨e⟩
+  have hdw_mem : d w ∈ d '' children v := Set.mem_image_of_mem d hw_child
+  have hge1 : ValuationStructure.val (d v) ≥ ValuationStructure.val (d w) + 1 := by
+    have hcoll := DecorationUniverse.collect_val_ge (d '' children v) (d w) hdw_mem
+    rwa [← hd v] at hcoll
+  -- val(d w) ≥ val(d v) + p.length: path from w to v
+  have hge2 : ValuationStructure.val (d w) ≥ ValuationStructure.val (d v) + p.length :=
+    path_val_chain d hd p
+  -- rcases on ℕ∞ = WithTop ℕ gives `some m` form; use `change` to normalize to coercion form
+  rcases hval : ValuationStructure.val (d v) with _ | m
+  · exact hfin hval
+  · rcases hvalw : ValuationStructure.val (d w) with _ | k
+    · -- val(d w) = none = ⊤; none + 1 = ⊤ definitionally, so change normalizes directly
+      rw [hval, hvalw] at hge1
+      change (m : ℕ∞) ≥ ⊤ at hge1
+      exact absurd hge1 (not_le.mpr (WithTop.coe_lt_top m))
+    · -- Both finite; some m = ↑m definitionally, so change normalizes to cast form
+      rw [hval, hvalw] at hge1 hge2
+      change (m : ℕ∞) ≥ (k : ℕ∞) + 1 at hge1
+      change (k : ℕ∞) ≥ (m : ℕ∞) + p.length at hge2
+      have h1 : m ≥ k + 1 := by exact_mod_cast hge1
+      have h2 : k ≥ m + p.length := by exact_mod_cast hge2
+      omega
+
 /-! ## § VIII. Acyclic Vertex Uniqueness (sorry)
 
     For acyclic vertices, the induction step is clear:
@@ -323,25 +393,59 @@ theorem acyclic_decoration_unique
   -- For [Fintype V], this follows from finiteness + acyclicity (DAG structure).
   sorry
 
-/-! ## § IX. Global Decoration Uniqueness (sorry)
+/-! ## § IX. Global Decoration Uniqueness
 
-    Full proof requires combining:
-    (a) § VII: SCC nodes all get ⊥ via scale_iterate_unique_fp
-    (b) § VIII: acyclic nodes by induction using collect_ext
-    (c) Step 3 of build plan: SCC decomposition — split the APG into SCCs + DAG of SCCs,
-        identify which vertices are in k-cycles vs. acyclic, derive the cycle hypothesis
-        (d(v) = scale^k(d(v))) from the graph structure for SCC nodes.
+    Proved directly by strong induction on |{w | Path u w}| (reachable set cardinality).
+    No SCC decomposition needed — the valuation argument handles cyclic vertices directly:
 
-    The mathematics for (a) and (b) is complete. (c) is the remaining scaffolding. -/
+    - Cyclic u: d₁ u = ⊥ = d₂ u by cyclic_decoration_eq_bot
+    - Acyclic u: for each child w, reach w ⊊ reach u (since v ∉ reach w by acyclicity),
+      so IH gives d₁ w = d₂ w for all children, and acyclic_induction_step closes the goal.
 
-/-- Global decoration uniqueness: any two valid decorations of G are equal.
-    Pending: SCC decomposition (Step 3). -/
+    Requires [Fintype V] to bound the reachable set cardinality. -/
+
+/-- Global decoration uniqueness: any two valid decorations of a finite APG are equal. -/
 theorem decoration_unique
-    {V : Type*} [Quiver V]
+    {V : Type*} [Quiver V] [Fintype V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
     (G : APG V) (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) :
     d₁ = d₂ := by
-  sorry
+  funext v
+  suffices key : ∀ n : ℕ, ∀ u : V,
+      ({x : V | Nonempty (Quiver.Path u x)}).ncard ≤ n → d₁ u = d₂ u from
+    key _ v le_rfl
+  intro n
+  induction n with
+  | zero =>
+    intro u hcard
+    -- u reaches itself via nil, so the reachable set is nonempty, ncard ≥ 1 > 0
+    have hpos : 0 < ({x : V | Nonempty (Quiver.Path u x)}).ncard := by
+      rw [Set.ncard_pos]; exact ⟨u, ⟨Quiver.Path.nil⟩⟩
+    omega
+  | succ n ih =>
+    intro u hcard
+    by_cases hcyc : HasSelfCycle u
+    · rw [cyclic_decoration_eq_bot d₁ hd₁ u hcyc, cyclic_decoration_eq_bot d₂ hd₂ u hcyc]
+    · -- u is acyclic: use acyclic_induction_step (no IsAcyclic param needed)
+      apply acyclic_induction_step d₁ d₂ hd₁ hd₂ u
+      intro w hw
+      -- unfold children membership to get hw : Nonempty (u ⟶ w)
+      simp only [children, Set.mem_setOf_eq] at hw
+      apply ih w
+      -- reach w ⊂ reach u because: ⊆ via edge u→w, and u ∈ reach u but u ∉ reach w (acyclicity)
+      have hreach_mono : {x : V | Nonempty (Quiver.Path w x)} ⊆
+          {x : V | Nonempty (Quiver.Path u x)} :=
+        fun _ ⟨p⟩ => ⟨(Quiver.Path.nil.cons hw.some).comp p⟩
+      have hv_in : u ∈ {x : V | Nonempty (Quiver.Path u x)} := ⟨Quiver.Path.nil⟩
+      have hv_not : u ∉ {x : V | Nonempty (Quiver.Path w x)} :=
+        fun ⟨p⟩ => hcyc ⟨w, hw, ⟨p⟩⟩
+      have hstrict : {x : V | Nonempty (Quiver.Path w x)} ⊂
+          {x : V | Nonempty (Quiver.Path u x)} := by
+        constructor
+        · exact hreach_mono
+        · intro hsub; exact hv_not (hsub hv_in)
+      have hlt := Set.ncard_lt_ncard hstrict
+      omega
 
 end ZeroParadox.APG
 
@@ -364,5 +468,7 @@ open ZeroParadox.APG
 #print axioms pureSelfLoop_decoration_eq_bot
 #print axioms kCycle_node_eq_bot
 #print axioms acyclic_induction_step
+#print axioms cyclic_decoration_eq_bot
+#print axioms decoration_unique
 
 end PurityCheck
