@@ -10,20 +10,23 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-Every APG (accessible pointed graph) in AFA set theory has a unique decoration:
-a labeling of vertices with sets such that each vertex's label equals the
-collection of its children's labels. The key is the valuation argument: applying
-scale (the singleton-set operation) strictly increases valuation by 1 each step.
-For a k-cycle, composing k decoration equations gives d(v) = scale^k(d(v)), and
-val(scale^k x) = val x + k for x ≠ ⊥. The fixed-point equation forces val x to
-equal itself plus k — impossible for finite val. Only ⊥ has infinite valuation,
-so d(v) = ⊥. Same argument for k=1 and k>1; no new mathematics for larger cycles.
+Every APG (accessible pointed graph) under ZF+AFA has a unique decoration:
+a labeling of vertices such that each vertex's label equals the collection of its
+children's labels. Two mechanisms establish uniqueness here.
+Cyclic vertices: applying scale (the singleton-set operation) strictly increases
+valuation by 1 each step. Composing k decoration equations gives d(v) = scale^k(d(v));
+val(scale^k x) = val x + k for x ≠ ⊥ then forces val x = val x + k — impossible for
+finite val. Only ⊥ has infinite valuation, so d(v) = ⊥ for any k ≥ 1.
+Acyclic vertices: if two decorations agree on all children of v they agree on v
+(the decoration equation + collect_ext). Uniqueness follows by strong induction on
+the cardinality of {w | path v ↝ w} — acyclicity makes it strictly smaller for each child.
 
 ## The conjecture
 
-AFA universality: for any APG, any two valid decorations in any DecorationUniverse
-are equal. This derives AFA's decoration uniqueness clause from ZP's valuation
-structure rather than asserting it as an independent axiom.
+For any finite APG, any two valid decorations into any DecorationUniverse are equal.
+The proof uses the three typeclass axioms (collect_singleton, collect_ext, collect_val_ge)
+together with ValuationStructure. This characterizes when decoration uniqueness holds;
+it does not construct a specific AFA model or derive AFA's axioms from ZP's.
 
 ## Architecture note: why not ZFSet
 
@@ -38,7 +41,7 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 
 - § I    APG definition (Quiver + root + accessibility)
 - § II   Decoration universe typeclass (ValuationStructure + collect)
-- § III  val_iterate: val(scale^k x) = val x + k for x ≠ ⊥ (KEY LEMMA)
+- § III  val_iterate: val(scale^k x) = val x + k for x ≠ ⊥ (PROVED)
 - § IV   scale_iterate_unique_fp: scale^k(x) = x → x = ⊥ (k-cycle resolved)
 - § V    Decoration predicate
 - § VI   Self-loop uniqueness (PROVED)
@@ -131,7 +134,7 @@ class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] wh
   collect_ext : ∀ {s t : Set U}, s = t → collect s = collect t
   /-- Valuation lower bound: collecting any non-empty set increases val by ≥ 1.
       Each set-membership level adds depth — collect strictly increases valuation.
-      Generalizes collect_singleton + val_scale to multi-element sets. -/
+      Independent axiom: not derivable from collect_singleton alone. -/
   collect_val_ge : ∀ (S : Set U) (x : U), x ∈ S →
       ValuationStructure.val (collect S) ≥ ValuationStructure.val x + 1
 
@@ -285,6 +288,17 @@ theorem kCycle_node_unique
     d₁ v = d₂ v := by
   rw [kCycle_node_eq_bot d₁ hd₁ v k hk hcycle₁,
       kCycle_node_eq_bot d₂ hd₂ v k hk hcycle₂]
+
+/-! ## § VII'. Cyclic Vertex Uniqueness
+
+    Any vertex with a directed cycle through itself must receive ⊥ under any valid
+    decoration. The argument generalizes § VII to arbitrary cycle lengths without
+    needing the explicit scale^k formulation:
+
+    - path_val_chain: for any path u ↝ v of length n, val(d u) ≥ val(d v) + n
+      (chain collect_val_ge along each edge)
+    - cyclic_decoration_eq_bot: if v ⟶ w ↝ v then val(d v) ≥ val(d v) + (cycle_len + 1),
+      impossible for finite val, so d v = ⊥ -/
 
 /-- Valuation chain along a path: for any path p : u ↝ v, decoration at u has valuation
     ≥ decoration at v plus the path length. Each edge step uses collect_val_ge:
