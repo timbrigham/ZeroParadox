@@ -15,7 +15,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-G Category Theory | v1.9 | ZP-G_Category_Theory.pdf | v1.6 | Y/Y | v1.9: version number removed from Open Items Register header; comp v1.6: strip footer version — formal:e6c366d4 comp:9ecf37e9 |
 | ZP-H Categorical Bridge | v1.13 | ZP-H_Categorical_Bridge.pdf | v1.5 | Y/Y | v1.13: version number removed from Open Items Register header; comp v1.5: strip footer version — formal:1f9d6ae2 comp:3d10d767 |
 | ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.5 | Y/Y | Companion v1.5: strip footer version — formal:298f2e30 comp:c78d212d |
-| ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.5 | N/— | v2.0: Sections VII-X added — Aczel DC-free, abstraction chain, concrete instances, APG decoration uniqueness; companion not yet updated — formal:39220697 comp:681ffbbb |
+| ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.6 | N/— | v2.0: Sections VII-X added; comp v1.6: five new sections matching v2.0 content — formal:39220697 comp:53228d96 |
 | ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.8 | Y/Y | Companion v1.8: strip footer version — formal:8c00d4aa comp:1286a4a7 |
 | ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.4 | Y/Y | Companion v1.4: strip footer version — formal:7825902f comp:3a10ee7b |
 
