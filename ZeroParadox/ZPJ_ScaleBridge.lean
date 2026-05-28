@@ -114,6 +114,36 @@ theorem z2_selfMem_singleton :
     {x : ℤ_[2] | 2 * x = x} = ({0} : Set ℤ_[2]) :=
   selfMem_eq_singleton_free
 
+/-! ## § V. Unification — ZPSemilattice+ValuationStructure is a ValBridge
+
+    Any type carrying both ZPSemilattice and ValuationStructure satisfies ValBridge.
+    Combined with the ℤ_[2] instance above, this makes ValBridge the common ancestor:
+    both tracks are now instances of one structure, not parallel analogies.
+
+    Consequence: every ValBridge theorem (scale_unique_fp_free, selfMem_eq_singleton_free,
+    etc.) applies uniformly to abstract ZP semilattice types AND to ℤ_[2] — a single
+    proof serves both. -/
+
+/-- Any ZPSemilattice with a ValuationStructure is a ValBridge.
+    Proof: all four fields come directly from ZPSemilattice.bot and ValuationStructure. -/
+instance toValBridge (L : Type*) [ZeroParadox.ZPA.ZPSemilattice L]
+    [ValuationStructure L] : ValBridge L where
+  bot := ZeroParadox.ZPA.ZPSemilattice.bot
+  scale := ValuationStructure.scale
+  val := ValuationStructure.val
+  scale_bot := ValuationStructure.scale_bot
+  val_bot := ValuationStructure.val_bot
+  val_unique := ValuationStructure.val_unique
+  val_scale := ValuationStructure.val_scale
+
+/-- Both tracks produce the same singleton theorem via a single ValBridge proof.
+    For any ZPSemilattice L with ValuationStructure: {x | scale x = x} = {bot}. -/
+theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPA.ZPSemilattice L]
+    [ValuationStructure L] :
+    {x : L | ValuationStructure.scale x = x} =
+      ({ZeroParadox.ZPA.ZPSemilattice.bot} : Set L) :=
+  selfMem_eq_singleton_free
+
 end ZeroParadox.ScaleBridge
 
 /-! ## Axiom Purity Check -/
@@ -126,5 +156,7 @@ open ZeroParadox.ScaleBridge
 #print axioms selfMem_eq_singleton_free
 #print axioms z2_scale_unique_fp
 #print axioms z2_selfMem_singleton
+#print axioms toValBridge
+#print axioms zp_selfMem_singleton
 
 end PurityCheck
