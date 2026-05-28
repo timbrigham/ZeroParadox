@@ -85,7 +85,7 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP-J Self-Reference | v1.2 |
 | ZP-K Computational Grounding | v1.6 |
 | ZP-L Incomputability Convergence | v1.0 (new) |
-| ZP-M Kleene-Ordinal Bridge | Lean source only (ZPM.lean) — PDF pending |
+| ZP-M Kleene-Ordinal Bridge | Lean source only (ZPM.lean) at v2.0 — PDF added in v2.1 |
 
 **Next threshold:** v2.1 on first substantive reviewer feedback round addressed after v2.0; v3.0 if another new formal layer is added (ZP-N constructive ordinal validation is the current candidate).
 
@@ -96,6 +96,7 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 **Why this release:** ZP-J v2.0 is a major document update (seven new sections added: Aczel DC-free connection, ValuationStructure→AbstractSelfApp→AFAStructure abstraction chain, concrete instances, APG decoration uniqueness). The ZPJ Lean sub-layer is correspondingly expanded with a complete sorry-free chain from valuation structure through APG decoration uniqueness — the most substantial new formal content since v2.0.
 
 **What changed:**
+- ZP-M Kleene-Ordinal Bridge: Lean source only → v1.0 full document — formal PDF and illustrated companion added. snapEmbed type bridge (MachinePhase → ℤ_[2]), hfp gap closed (hfp_from_epsilon_zero), zpm_triangle (all three triangle edges co-proved), both_fixed_points_exist, Remark R-M.1 (DA-1 Path 2 boundary). Companion v1.0 with triangle diagram and diagonalization pattern diagram.
 - ZP-J Self-Reference: v1.2 → v2.0 — Sections VII-X added covering the DC-free Aczel fixed-point connection (ZPJ_AczelConn), the full abstraction chain (ZPJ_SelfApp, ZPJ_Scale, ZPJ_ScaleBridge, ZPJ_Model, ZPJ_OntBridge), and APG decoration uniqueness (ZPJ_APG). Companion v1.4 → v1.6 with five new sections matching the document. All adversary-reviewed.
 - ZPJ Lean sub-layer (new sorry-free files): `ZPJ_SelfApp` (AbstractSelfApp typeclass), `ZPJ_Scale` (ValuationStructure + ℤ_[2] parallel), `ZPJ_ScaleBridge` (ValBridge drops ZPSemilattice constraint; formal ℤ_[2] instance closes AFA/ZFC gap), `ZPJ_Model` (ℕ∞ concrete instance with inverted order), `ZPJ_OntBridge` (OntologicalStates direct AbstractSelfApp path), `ZPJ_APG` (Accessible Pointed Graph definition + DecorationUniverse + decoration uniqueness proved via strong induction on reach cardinality)
 - ZP-A Lattice Algebra: v1.13 → v1.14 — CC-2 label updated from "Conditional Claim" to "Forced Metatheoretic Commitment"; three-layer Lean scope note distinguishing ZFC-clean results, AFAStructure-conditional results, and prose-level set-theoretic commitment
@@ -121,6 +122,6 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP-J Self-Reference | v2.0 |
 | ZP-K Computational Grounding | v1.6 |
 | ZP-L Incomputability Convergence | v1.0 |
-| ZP-M Kleene-Ordinal Bridge | Lean source only (ZPM.lean) — PDF pending |
+| ZP-M Kleene-Ordinal Bridge | v1.0 (new) |
 
 **Next threshold:** v2.2 on next substantive reviewer feedback round; v3.0 on new formal layer (ZP-N constructive ordinal validation remains the current candidate).
