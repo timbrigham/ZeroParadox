@@ -380,17 +380,17 @@ theorem acyclic_induction_step
     · rintro ⟨w, hw, rfl⟩; exact ⟨w, hw, ih w hw⟩
   rw [hd₁ v, hd₂ v, DecorationUniverse.collect_ext himage_eq]
 
-/-- Two decorations agree on any acyclic vertex (pending: WellFounded instance). -/
-theorem acyclic_decoration_unique
-    {V : Type*} [Quiver V]
-    {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
-    (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂)
-    (v : V) (hv : IsAcyclic v) :
-    d₁ v = d₂ v := by
-  -- The induction step is proved in acyclic_induction_step.
-  -- The missing piece: WellFounded (fun v w => v ∈ children w ∧ IsAcyclic v ∧ IsAcyclic w).
-  -- For [Fintype V], this follows from finiteness + acyclicity (DAG structure).
-  sorry
+-- /-- Two decorations agree on any acyclic vertex. -/
+-- theorem acyclic_decoration_unique
+--     {V : Type*} [Quiver V] [Fintype V]
+--     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
+--     (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂)
+--     (v : V) (hv : IsAcyclic v) :
+--     d₁ v = d₂ v := by
+--   -- Not load-bearing: decoration_unique proves global uniqueness directly via
+--   -- strong induction on reach cardinality, handling acyclic vertices inline.
+--   -- Proof when needed: same strong-induction argument, restricted to acyclic case.
+--   sorry
 
 /-! ## § IX. Global Decoration Uniqueness
 
@@ -459,7 +459,6 @@ open ZeroParadox.APG
 #check @pureSelfLoop_decoration_eq_bot
 #check @kCycle_node_eq_bot
 #check @acyclic_induction_step
-#check @acyclic_decoration_unique
 #check @decoration_unique
 
 #print axioms val_iterate
