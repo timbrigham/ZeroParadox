@@ -88,3 +88,39 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP-M Kleene-Ordinal Bridge | Lean source only (ZPM.lean) — PDF pending |
 
 **Next threshold:** v2.1 on first substantive reviewer feedback round addressed after v2.0; v3.0 if another new formal layer is added (ZP-N constructive ordinal validation is the current candidate).
+
+---
+
+## v2.1 - 2026-05-28
+
+**Why this release:** ZP-J v2.0 is a major document update (seven new sections added: Aczel DC-free connection, ValuationStructure→AbstractSelfApp→AFAStructure abstraction chain, concrete instances, APG decoration uniqueness). The ZPJ Lean sub-layer is correspondingly expanded with a complete sorry-free chain from valuation structure through APG decoration uniqueness — the most substantial new formal content since v2.0.
+
+**What changed:**
+- ZP-J Self-Reference: v1.2 → v2.0 — Sections VII-X added covering the DC-free Aczel fixed-point connection (ZPJ_AczelConn), the full abstraction chain (ZPJ_SelfApp, ZPJ_Scale, ZPJ_ScaleBridge, ZPJ_Model, ZPJ_OntBridge), and APG decoration uniqueness (ZPJ_APG). Companion v1.4 → v1.6 with five new sections matching the document. All adversary-reviewed.
+- ZPJ Lean sub-layer (new sorry-free files): `ZPJ_SelfApp` (AbstractSelfApp typeclass), `ZPJ_Scale` (ValuationStructure + ℤ_[2] parallel), `ZPJ_ScaleBridge` (ValBridge drops ZPSemilattice constraint; formal ℤ_[2] instance closes AFA/ZFC gap), `ZPJ_Model` (ℕ∞ concrete instance with inverted order), `ZPJ_OntBridge` (OntologicalStates direct AbstractSelfApp path), `ZPJ_APG` (Accessible Pointed Graph definition + DecorationUniverse + decoration uniqueness proved via strong induction on reach cardinality)
+- ZP-A Lattice Algebra: v1.13 → v1.14 — CC-2 label updated from "Conditional Claim" to "Forced Metatheoretic Commitment"; three-layer Lean scope note distinguishing ZFC-clean results, AFAStructure-conditional results, and prose-level set-theoretic commitment
+- Foreword: v1.8 → v2.1 — orthogonal/contact-point framing for the ZFC/AFA relationship; CC-2 row updated to Forced Metatheoretic Commitment with Foundation/AFA dual framing
+- Philosophical Question: v1.3 → v1.5 — §II addition: orthogonal framing, contact point v₂(0)=∞, machine-verified ZPJ_ScaleBridge result, AFA dependency made precise
+- LEAN_CUSTOM_REGISTRY.md: new public document — register of all custom Lean definitions, typeclasses, and instances with Mathlib relationship and engineering rationale for each
+- `[ZP-CUSTOM]` inline comments: 23 structured comments added across 13 Lean files, greppable format for register regeneration
+- Companion fixes (across all layers): version numbers stripped from companion body prose and cross-document references per CLAUDE.md standing rule; ZP-C v1.13→v1.14, ZP-D v1.9→v1.10, ZP-E v3.15→v3.16, ZP-G v1.8→v1.9, ZP-H v1.12→v1.13 (Open Items Register header cleanup)
+- scripts/: all modified build scripts synced to scripts/ folder
+
+**Document versions at v2.1:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.14 |
+| ZP-B p-Adic Topology | v1.8 |
+| ZP-C Information Theory | v1.14 |
+| ZP-D State Layer | v1.10 |
+| ZP-E Bridge Document | v3.16 |
+| ZP-F The Counterexamples | v1.2 |
+| ZP-G Category Theory | v1.9 |
+| ZP-H Categorical Bridge | v1.13 |
+| ZP-I Inside Zero | v1.9 |
+| ZP-J Self-Reference | v2.0 |
+| ZP-K Computational Grounding | v1.6 |
+| ZP-L Incomputability Convergence | v1.0 |
+| ZP-M Kleene-Ordinal Bridge | Lean source only (ZPM.lean) — PDF pending |
+
+**Next threshold:** v2.2 on next substantive reviewer feedback round; v3.0 on new formal layer (ZP-N constructive ordinal validation remains the current candidate).
