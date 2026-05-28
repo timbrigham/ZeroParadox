@@ -43,21 +43,20 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 - § V    Decoration predicate
 - § VI   Self-loop uniqueness (PROVED)
 - § VII  k-cycle node uniqueness (PROVED: corollary of § IV)
+- § VII' Cyclic vertex uniqueness (PROVED: cyclic_decoration_eq_bot)
 - § VIII Acyclic vertex uniqueness (sorry: needs WellFounded on finite graphs)
-- § IX   Global decoration uniqueness (sorry: needs SCC decomposition, Step 3)
+- § IX   Global decoration uniqueness (PROVED: direct strong induction on reach cardinality)
 
 ## What remains
 
 - Acyclic case (§ VIII): structurally clear — induct on depth, use collect_ext —
   but requires [Fintype V] and a WellFounded instance on acyclic vertices.
-- Global uniqueness (§ IX): needs SCC decomposition (Step 3 of build plan) to
-  split every APG into SCC components + DAG of SCCs, then combine § IV and § VIII.
+  Currently sorry'd but not load-bearing: decoration_unique bypasses it entirely.
 
 ## Dependencies
 
 - ZPJ_Scale.lean: ValuationStructure, val_scale, scale_unique_fp, val_finite_of_ne_bot
 - Mathlib.Combinatorics.Quiver.Path: directed graph paths
-- Mathlib.Combinatorics.Quiver.ConnectedComponent: SCC infrastructure (Step 3)
 -/
 
 namespace ZeroParadox.APG
