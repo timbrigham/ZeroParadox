@@ -12,7 +12,7 @@ Usage (companion docs):
     from zp_utils import *
     # CS styles, example_box, remember_box, key_result_box are all available.
 """
-import os, sys
+import os, sys, re, inspect
 sys.stdout.reconfigure(encoding='utf-8')
 
 from reportlab.lib import colors
@@ -69,6 +69,10 @@ ORANGE_LITE= colors.HexColor('#FBE9E7')
 SLATE      = colors.HexColor('#455A64')
 INDIGO     = colors.HexColor('#3949AB')
 INDIGO_LITE= colors.HexColor('#E8EAF6')
+# Structural / diagram neutrals — use these instead of inline HexColor
+GRID       = colors.HexColor('#CCCCCC')   # table grid and rule lines
+ARROW      = GREY                         # diagram arrows (alias)
+LABEL_DIM  = GREY_TEXT                    # dim label text in diagrams (alias)
 
 # ── Layout constants ──────────────────────────────────────────────────────────
 TW         = 6.5 * inch          # text width
@@ -117,13 +121,13 @@ CS = {
     'meta':     ParagraphStyle('cmeta',     fontName='DV',    fontSize=9,  leading=13,
                                alignment=1, spaceAfter=8, textColor=colors.grey),
     'disc':     ParagraphStyle('cdisc',     fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=10, textColor=colors.HexColor('#555555')),
+                               spaceAfter=10, textColor=GREY_TEXT),
     'h1':       ParagraphStyle('ch1',       fontName='DV-B',  fontSize=13, leading=17,
                                spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
     'body':     ParagraphStyle('cbody',     fontName='DVS',   fontSize=10, leading=14,
                                spaceAfter=6),
     'caption':  ParagraphStyle('ccaption',  fontName='DVS-I', fontSize=9,  leading=12,
-                               spaceAfter=8, textColor=colors.HexColor('#555555')),
+                               spaceAfter=8, textColor=GREY_TEXT),
     'ex_title': ParagraphStyle('cex_title', fontName='DV-B',  fontSize=9,  leading=13,
                                textColor=COMP_AMBER),
     'ex_body':  ParagraphStyle('cex_body',  fontName='DVS',   fontSize=9,  leading=13),
@@ -395,21 +399,86 @@ def key_result_box(title, body_text):
     return t
 
 
-# ── Build standards reminder (stdout only — not rendered) ─────────────────────
-print()
-print('=' * 70)
-print('  ZP BUILD LOADED — did you read PDF_Rendering_Standards.md first?')
-print('  .claude-local/PDF_Rendering_Standards.md')
-print()
-print('  Pre-build checklist:')
-print('  [ ] Font stack: DV (sans UI) / DVS (body + math) — never raw Unicode')
-print('  [ ] All body paragraphs go through cbody()/body() — never Paragraph() direct')
-print('  [ ] Table cells are Paragraph objects — never plain strings')
-print('  [ ] Version numbers: COMPANION = tagline meta line ONLY (CLAUDE.md wins)')
-print('      Companion footers must NOT contain version — remove v\' + VERSION')
-print('      Formal doc footers via make_doc() are OK')
-print('  [ ] No version numbers in body prose, disclaimers, or cross-doc refs')
-print()
-print('  Post-build: run null-char verification (Standards doc Section 7)')
-print('=' * 70)
-print()
+# ── Palette enforcement gate ──────────────────────────────────────────────────
+# Protected palette names: redefining these in a build script without a
+# # ZP-OVERRIDE: comment is a hard error that aborts the build.
+_PROTECTED_PALETTE = frozenset({
+    'BLUE', 'BLUE_LITE', 'GREEN', 'GREEN_LITE', 'GREEN_DARK',
+    'ORANGE', 'ORANGE_LITE', 'AMBER', 'AMBER_LITE',
+    'SLATE', 'SLATE_LITE', 'INDIGO', 'INDIGO_LITE',
+    'RED', 'GREY', 'GREY_TEXT', 'GREY_LITE',
+    'TEAL', 'TEAL_LITE', 'WHITE', 'BLACK',
+    'COMP_BLUE', 'COMP_GREEN', 'COMP_SLATE', 'COMP_AMBER',
+    'GRID', 'ARROW', 'LABEL_DIM',
+})
+_SHADOW_PAT = re.compile(
+    r'^(' + '|'.join(re.escape(n) for n in _PROTECTED_PALETTE) + r')\s*=\s*colors\.'
+)
+
+def _palette_gate():
+    """
+    Hard gate — called at import time. Reads the importing build script's source
+    and aborts (SystemExit 1) if any protected palette constant is redefined
+    without a  # ZP-OVERRIDE: <reason>  comment on the same line.
+
+    To add a legitimate exception: append  # ZP-OVERRIDE: <reason>  to the line.
+    """
+    caller_path = None
+    for frame in inspect.stack():
+        fp = frame.filename
+        if not fp:
+            continue
+        if '<frozen' in fp or 'importlib' in fp:
+            continue
+        if os.path.basename(fp) == 'zp_utils.py':
+            continue
+        caller_path = fp
+        break
+    if not caller_path or not os.path.isfile(caller_path):
+        return
+
+    try:
+        with open(caller_path, encoding='utf-8') as fh:
+            lines = fh.readlines()
+    except OSError:
+        return
+
+    violations = []
+    for i, line in enumerate(lines, 1):
+        if _SHADOW_PAT.match(line) and '# ZP-OVERRIDE' not in line:
+            violations.append(f'  line {i}: {line.rstrip()}')
+
+    if violations:
+        name = os.path.basename(caller_path)
+        print()
+        print('!' * 70)
+        print(f'  ZP BUILD BLOCKED — {name}')
+        print('  Unapproved palette constant shadowing detected:')
+        for v in violations:
+            print(v)
+        print()
+        print('  Each flagged line must end with:  # ZP-OVERRIDE: <reason here>')
+        print('  See .claude-local/PDF_Rendering_Standards.md §Palette Enforcement.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+
+    # Advisory checklist (informational only — palette has already passed)
+    print()
+    print('=' * 70)
+    print(f'  ZP BUILD — palette OK ({os.path.basename(caller_path)})')
+    print()
+    print('  Remaining checklist (not auto-checked):')
+    print('  [ ] Font stack: DV (sans UI) / DVS (body + math) — never raw Unicode')
+    print('  [ ] Body paragraphs through body()/cbody() — not bare Paragraph()')
+    print('  [ ] Table cells are Paragraph objects — never plain strings')
+    print('  [ ] Version number: companion tagline meta line ONLY')
+    print('  [ ] No version numbers in body prose, disclaimers, or cross-doc refs')
+    print('  [ ] Table grid lines use GRID constant, not inline HexColor')
+    print()
+    print('  Post-build: null-char verification (Standards doc §7)')
+    print('=' * 70)
+    print()
+
+
+_palette_gate()

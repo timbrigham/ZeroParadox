@@ -23,7 +23,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 
 | File | Purpose |
 |------|---------|
-| [zp_utils.py](zp_utils.py) | Shared utility module imported by all build scripts. Provides font registration, colour constants, layout constants, style dicts, and all standard component helpers: `sp`, `fix`, `body`, `li`, `derived`, `label_box`, `data_table`, `make_doc`, `callout`, `result_box`, `axiom_box`, `def_box`, `remark_box`, `import_box`. |
+| [zp_utils.py](zp_utils.py) | Shared utility module imported by all build scripts. Provides font registration, colour constants (including palette enforcement gate), layout constants, style dicts, and all standard component helpers: `sp`, `fix`, `body`, `li`, `derived`, `label_box`, `data_table`, `make_doc`, `callout`, `result_box`, `axiom_box`, `def_box`, `remark_box`, `import_box`. The palette gate runs at import time and aborts the build if a script redefines a protected colour constant without an explicit `# ZP-OVERRIDE:` annotation. |
 | [setup_fonts.py](setup_fonts.py) | Downloads the required font files into `scripts/fonts/` |
 | [scan_pdfs.py](scan_pdfs.py) | Pre-push validation: checks DVS font registrations, STIXTwo-Math glyph coverage, and presence of all expected output PDFs |
 
