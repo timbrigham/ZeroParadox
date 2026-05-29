@@ -12,12 +12,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Changes to register.md
 
 **The protocol:**
-1. Before committing any of the above, run `/editorial` (pre-commit mode — no arguments needed; it reads `git diff --staged` automatically)
+1. Before committing any of the above, run `/editorial-review` (pre-commit mode — no arguments needed; it reads `git diff --staged` automatically)
 2. Wait for the editorial agent to return a verdict
 3. If FAIL: resolve every item in the kill list before committing
 4. If PASS: proceed with the commit
 
-Same-session self-review does not satisfy this requirement. `/editorial` spawns a fresh agent with no conversation history.
+Same-session self-review does not satisfy this requirement. `/editorial-review` spawns a fresh agent with no conversation history.
 
 ## Adversary Review Gate — Hard Rule
 
