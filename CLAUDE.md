@@ -2,6 +2,23 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Editorial Review Gate — Hard Rule
+
+**Any commit touching document prose requires editorial review to have completed before the commit is made.** This applies to:
+
+- Changes to any build script `body()`, `cbody()`, `sp()`, or box-helper string content
+- Changes to README.md, GUIDE.md, RELEASES.md, or any `.md` file in the repo root
+- Changes to any companion or formal document build script
+- Changes to register.md
+
+**The protocol:**
+1. Before committing any of the above, run `/editorial` (pre-commit mode — no arguments needed; it reads `git diff --staged` automatically)
+2. Wait for the editorial agent to return a verdict
+3. If FAIL: resolve every item in the kill list before committing
+4. If PASS: proceed with the commit
+
+Same-session self-review does not satisfy this requirement. `/editorial` spawns a fresh agent with no conversation history.
+
 ## Adversary Review Gate — Hard Rule
 
 **Any public-facing action requires adversary review to have completed before execution.** This is non-negotiable and applies to every action that puts content in front of an external reader:
