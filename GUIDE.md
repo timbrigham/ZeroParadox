@@ -41,6 +41,14 @@ No snap-specific axioms appear anywhere in the framework. The Binary Snap is a s
 
 ## Entry Point
 
+**Ask questions about the framework**
+
+This repository is connected to a Copilot Space - a GitHub AI chat with the documents and Lean source indexed. It has been given project-specific context, so it can help orient you to the layer structure and terminology.
+
+[Open Copilot Space](https://github.com/copilot/spaces/timbrigham/1) - GitHub account required.
+
+---
+
 | File | Description |
 |------|-------------|
 | [Zero Paradox Foreword](Zero_Paradox_Foreword.pdf) | Plain-language introduction for any reader. Start here. |
