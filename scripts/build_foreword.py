@@ -1,5 +1,14 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.2, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v2.5, revised May 2026)
+v2.5: AR fix — "provable fact in standard ZFC" → "standard ZF" in §III porthole passage.
+      AR fix — residual "DA-1 is the bridge" → "connecting argument" (in PhilQ; Foreword unaffected).
+v2.4: fix() guard added via Paragraph override — all rendered text now goes through unicode-to-entity conversion.
+      ER kills: "v1.4" version refs removed; "categorical bridge" → "ZP-H"; CC-1 conditionality qualified;
+      "All 24" → "All 25"; "ZP-A through ZP-I" → "ZP-A through ZP-M" in §VII; "ZFC/AFA" → "ZF+Foundation/ZF+AFA";
+      "binary ontological state" → "binary state"; null state gloss added at first occurrence.
+v2.3: ER/AR fixes — "linearly ordered field" → "densely ordered field" (F-1/F-2).
+      §V "ten layers" → "thirteen" with simplified enumeration (F-6).
+      AR scoping: "formal signature" clauses qualified with "in ZP's reading" (both passages).
 v2.2: §II architecture updated to thirteen layers — ZP-F, ZP-J, ZP-K, ZP-L, ZP-M added.
       Layer counts corrected throughout (was eleven/ten). "Topological isolation" →
       "clopen separation" (vocabulary fix). "Seven structures" count corrected.
@@ -33,7 +42,14 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.2'
+VERSION = '2.5'
+
+# ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
+# PDF Rendering Standards require fix() on all rendered text. Rather than updating
+# every call site, patch Paragraph here so it applies fix() automatically.
+_Paragraph_orig = Paragraph
+def Paragraph(text, style):
+    return _Paragraph_orig(fix(text) if isinstance(text, str) else text, style)
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -87,13 +103,13 @@ def commitments_table():
          'sufficient base for AX-B1. Derives p = 2.'),
         ('RP-1',  'Principle',
          'Minimum Sufficient Probabilistic Representation. The probabilistic form of a '
-         'binary ontological state is a point-mass distribution.'),
+         'binary state is a point-mass distribution.'),
         ('DP-1',  'Design Commitment',
          'Orthogonality. Clopen separation in Q₂ is represented by orthogonality '
          'in H. Chosen, not derived. Stated explicitly.'),
         ('AX-1',  'Retired axiom → Theorem T-SNAP',
          'Binary Snap Causality. Previously an axiom; now derived as Theorem T-SNAP via '
-         'the L-RUN / TQ-IH / DA-1 chain in ZP-C v1.4 and ZP-E.'),
+         'the L-RUN / TQ-IH / DA-1 chain in ZP-C and ZP-E.'),
         ('MC-1',  'Modeling Commitment',
          'Cross-Framework Identification. The four concrete frameworks (ZP-A semilattice, '
          'ZP-B p-adic topology, ZP-C information theory, ZP-D Hilbert space) are '
@@ -178,9 +194,9 @@ def build():
             'This raises two questions that are easy to state and surprisingly hard to answer. '
             'The first is structural: what are the properties of that starting element itself? '
             'Not what comes after it — that is the story of mathematics as we know it. '
-            'But the ground floor. The state before any state. '
+            'But the ground floor. The state before any state — called the null state (written ⊥). '
             'The second question is generative: across all these frameworks, is there a common '
-            'account of what it means to transition from the null element to the first non-trivial '
+            'account of what it means to transition from the null state to the first non-trivial '
             'state? Can that emergence be given a rigorous, multi-framework description?',
             S['body']),
         Paragraph(
@@ -234,7 +250,7 @@ def build():
             'The information-theoretic layer (ZP-C) works within algorithmic information '
             'theory and discrete analysis on Q₂. It introduces the incompressibility '
             'threshold and establishes the informational cost of the null-to-first-state '
-            'transition as exactly one bit. It also establishes — in v1.4 — that the '
+            'transition as exactly one bit. It also establishes that the '
             'act of execution is itself a non-null state, which allows the Binary Snap to be '
             'derived rather than assumed.',
             S['body']),
@@ -258,7 +274,7 @@ def build():
             'structurally different direction.',
             S['body']),
         Paragraph(
-            'The categorical bridge (ZP-H) constructs four instantiation functors connecting '
+            'ZP-H constructs four instantiation functors connecting '
             'the categorical framework to each of the prior layers: '
             'F<sub>A</sub>: C → SLat (lattice algebra), '
             'F<sub>B</sub>: C → pTop (p-adic topology), '
@@ -277,17 +293,18 @@ def build():
             S['body']),
         Paragraph(
             'The counterexample layer (ZP-F) establishes the negative boundary: '
-            'the Binary Snap cannot occur in any linearly ordered field. '
-            'ℝ and ℚ are given as canonical instances. The proof is self-contained — '
+            'the Binary Snap cannot occur in any densely ordered field — '
+            'structures where zero is a limit point of the nonzero elements. '
+            'ℝ and ℚ are canonical instances. The proof is self-contained — '
             'no dependencies on the other layers — and answers the question of why Q₂ '
             'is structurally necessary by showing precisely where snap-geometry fails.',
             S['body']),
         Paragraph(
             'The self-reference layer (ZP-J) proves T-EXEC: in any ZP-A lattice with '
             'AFA grounding, the Quine atom Q = {Q} is provably identical to ⊥, axiom-free. '
-            'CC-1 (S₀ = ⊥) follows as a derived theorem. The layer also formalises the '
-            'ZFC/AFA relationship and proves APG decoration uniqueness — every '
-            'self-referential graph has at most one consistent decoration into the lattice.',
+            'CC-1 (S₀ = ⊥) follows as a derived theorem given that S₀ is identified with the Quine atom. The layer also formalises the '
+            'ZF+Foundation / ZF+AFA relationship and proves APG decoration uniqueness — every '
+            'finite self-referential graph has at most one consistent decoration into the lattice.',
             S['body']),
         Paragraph(
             'The computational grounding layer (ZP-K) proves T-COMP: a four-way equivalence '
@@ -299,7 +316,7 @@ def build():
             'The incomputability convergence layer (ZP-L) establishes ε₀ — the first '
             'ordinal fixed point of ω^x — as the formal snap threshold. It connects '
             'ordinal arithmetic, p-adic convergence, and Roger\'s fixed-point stability '
-            'in a single canonical snap map. All 24 theorems are Lean-verified.',
+            'in a single canonical snap map. All 25 theorems are Lean-verified.',
             S['body']),
         Paragraph(
             'The Kleene-ordinal bridge (ZP-M) constructs an explicit type bridge '
@@ -339,9 +356,9 @@ def build():
             'solid and opaque everywhere except one piece of glass. The glass does not '
             'open. Through it, both frameworks share the same arithmetic fact. '
             'That object is zero. In the 2-adic integers, zero is divisible by 2 '
-            'infinitely many times — a provable fact in standard ZFC. In ZF+AFA, '
+            'infinitely many times — a provable fact in standard ZF. In ZF+AFA, '
             'the same fact carries additional weight: infinite 2-adic divisibility '
-            'is the formal signature of a set that contains only itself. '
+            'is, in ZP\'s reading, the formal signature of a set that contains only itself. '
             'This work is built in ZF+AFA because the question it asks is about '
             'that second reading — what the arithmetic of zero means at the '
             'foundation, not just what it computes.',
@@ -390,10 +407,8 @@ def build():
             'informational content.',
             S['body']),
         Paragraph(
-            'The framework lives at that boundary intentionally. The ten layers — '
-            'algebra, topology, information theory, Hilbert space, bridge, self-reference, '
-            'computational grounding, category theory, categorical bridge, and closure — '
-            'each arrive independently at the same boundary '
+            'The framework lives at that boundary intentionally. '
+            'Thirteen independent layers each arrive at the same boundary '
             'from their own direction. That convergence is the framework\'s central result.',
             S['body']),
     ]
@@ -439,7 +454,7 @@ def build():
     story += [
         Paragraph('VII. A NOTE ON READING THE DOCUMENTS', S['h1']),
         Paragraph(
-            'The technical documents ZP-A through ZP-I are formatted as ontologies, not as '
+            'The technical documents ZP-A through ZP-M are formatted as ontologies, not as '
             'discursive mathematical writing. Each claim appears in a labeled box with its '
             'status — Axiom, Principle, Design Commitment, Defined, Derived, Conditional, '
             'or Remark. Proofs are included inline. Open items are tracked explicitly.',

@@ -19,6 +19,8 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.8 | Y/Y | Companion v1.8: strip footer version — formal:8c00d4aa comp:1286a4a7 |
 | ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.4 | Y/Y | Companion v1.4: strip footer version — formal:7825902f comp:3a10ee7b |
 | ZP-M Kleene-Ordinal Bridge | v1.0 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.0 | N/— | v1.0: Initial release — snapEmbed type bridge, hfp gap closed, zpm_triangle, R-M.1. Lean source promoted to full document — formal:24dd8909 comp:702ff724 |
+| Zero Paradox Foreword | v2.5 | Zero_Paradox_Foreword.pdf | N/A | N/A | v2.5: AR/ER fixes — "standard ZFC" → "ZF" in porthole; fix() guard; "every" → "every finite" self-referential graph (Fintype scope) — formal:e475b28a |
+| ZP Philosophical Question | v1.11 | ZP_Philosophical_Question.pdf | N/A | N/A | v1.11: fix() guard via Paragraph override; "bridge" → "connecting argument"; "in ZP's reading" de-duplicated — formal:9b4905de |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 
