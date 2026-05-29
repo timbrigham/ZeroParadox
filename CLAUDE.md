@@ -15,9 +15,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 1. Before committing any of the above, run `/editorial-review` (pre-commit mode — no arguments needed; it reads `git diff --staged` automatically)
 2. Wait for the editorial agent to return a verdict
 3. If FAIL: resolve every item in the kill list before committing
-4. If PASS: proceed with the commit
+4. If PASS: the agent writes `.claude-local/er_cleared.txt` with the current HEAD hash — proceed with the commit
 
 Same-session self-review does not satisfy this requirement. `/editorial-review` spawns a fresh agent with no conversation history.
+
+The pre-push hook checks `.claude-local/er_cleared.txt` and `.claude-local/ar_cleared.txt` against HEAD before allowing any push. If either signal is missing or stale the push is blocked. Override with `git push --no-verify` only when both reviews have been run and the signal files are stale due to a trivial amendment.
 
 ## Adversary Review Gate — Hard Rule
 
@@ -33,7 +35,8 @@ Same-session self-review does not satisfy this requirement. `/editorial-review` 
 1. Before executing any of the above, Claude must explicitly ask: "Adversary review complete for this content?"
 2. Wait for Tim's confirmation before proceeding — do not self-assess whether review is needed
 3. If review has not been run, offer to run `/adversary-review` on the relevant content first
-4. Only after explicit confirmation may the public-facing action execute
+4. If PASS: the agent writes `.claude-local/ar_cleared.txt` with the current HEAD hash
+5. Only after explicit confirmation may the public-facing action execute
 
 Same-session self-review does not satisfy this requirement. The review must be a separate adversarial context (spawned Agent with no conversation history).
 
