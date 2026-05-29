@@ -1,5 +1,8 @@
 """
-Build: The Philosophical Question That Started This (v1.6)
+Build: The Philosophical Question That Started This (v1.7)
+v1.7: Layer counts updated to thirteen (ZP-A through ZP-M) throughout.
+      AR fix: "see the same mathematical object" → "share the same arithmetic fact" + trailing clause.
+      "Structurally compelled" qualified with DA-1 condition.
 v1.6: §II porthole metaphor — "orthogonality" replaced with porthole image in prose.
       Wall solid and opaque; one piece of glass (v₂(0) = ∞) that does not open.
 v1.5: §II extended — orthogonal frameworks / contact point framing following ZPJ_ScaleBridge.
@@ -24,7 +27,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')
@@ -205,9 +208,10 @@ def build():
         'on that assumption: if the null state (⊥, the bottom of a join-semilattice) is '
         'taken as the mathematical formalization of "nothing," then the Binary Snap '
         '(⊥ → ε₀, the first transition from nothing to something) is structurally '
-        'compelled — not assumed, not answered, compelled.'))
+        'compelled given the framework\'s minimal axiomatic commitments — '
+        'not assumed, not answered, but derived from those commitments.'))
     E.append(body(
-        'Eleven formal layers later — ZP-A through ZP-K — the picture is more nuanced '
+        'Thirteen formal layers later — ZP-A through ZP-M — the picture is more nuanced '
         'than "yes, fully proved" or "no, still assumed." What the framework found is a '
         'third possibility: the question itself, applied with sufficient precision, '
         'dissolves. This document is about that dissolution — and about the precise '
@@ -279,7 +283,7 @@ def build():
         'The theorem needed category theory to show it wasn\'t an artifact of one '
         'particular mathematical language. And the whole structure needed a closure '
         'result to show it wasn\'t just a description of emergence but a complete cycle. '
-        'Eight layers, added one at a time, each forced by what the layer before it '
+        'Thirteen layers, added one at a time, each forced by what the layer before it '
         'could not yet say.'))
     E.append(body(
         'Two features of the construction matter for what follows. First, '
@@ -354,7 +358,9 @@ def build():
         'you cannot derive AFA from ZFC, or ZFC from AFA. This is not a bridge situation — '
         'no crossing is possible in either direction. The better image is a porthole: '
         'a wall that is solid and opaque everywhere except one piece of glass. '
-        'The glass does not open. Through it, both frameworks see the same mathematical object.'))
+        'The glass does not open. Through it, both frameworks share the same arithmetic fact — '
+        'that zero is divisible by 2 infinitely many times — but interpret it differently: '
+        'a number-theoretic result in ZFC, and the formal signature of a self-membered set in ZF+AFA.'))
     E.append(body(
         'That object is zero. In the 2-adic integers, v₂(0) = ∞: zero is divisible '
         'by 2 infinitely many times. This is a theorem of standard ZFC, with no AFA '

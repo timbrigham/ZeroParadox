@@ -1,5 +1,9 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.1, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v2.2, revised May 2026)
+v2.2: §II architecture updated to thirteen layers — ZP-F, ZP-J, ZP-K, ZP-L, ZP-M added.
+      Layer counts corrected throughout (was eleven/ten). "Topological isolation" →
+      "clopen separation" (vocabulary fix). "Seven structures" count corrected.
+      AR fix: "see the same mathematical object" → "share the same arithmetic fact."
 v2.1: §III porthole metaphor — "orthogonal" replaced with porthole image in prose.
       Wall is solid and opaque; one piece of glass (v₂(0) = ∞) does not open but lets
       both frameworks see the same object. "Orthogonal" retained in technical contexts.
@@ -29,7 +33,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.1'
+VERSION = '2.2'
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -85,7 +89,7 @@ def commitments_table():
          'Minimum Sufficient Probabilistic Representation. The probabilistic form of a '
          'binary ontological state is a point-mass distribution.'),
         ('DP-1',  'Design Commitment',
-         'Orthogonality. Topological isolation in Q₂ is represented by orthogonality '
+         'Orthogonality. Clopen separation in Q₂ is represented by orthogonality '
          'in H. Chosen, not derived. Stated explicitly.'),
         ('AX-1',  'Retired axiom → Theorem T-SNAP',
          'Binary Snap Causality. Previously an axiom; now derived as Theorem T-SNAP via '
@@ -200,7 +204,7 @@ def build():
             'This is true, and it is not in conflict with ZP\'s thesis. '
             'The question ZP is asking is how minimal the framework needs to be before ⊥ '
             'still has non-trivial properties. '
-            'The answer, across eleven independent layers, is: very minimal. That is the surprise.',
+            'The answer, across thirteen independent layers, is: very minimal. That is the surprise.',
             S['body']),
     ]
 
@@ -208,7 +212,7 @@ def build():
     story += [
         Paragraph('II. THE ARCHITECTURE', S['h1']),
         Paragraph(
-            'The framework is built in ten layers, each self-contained within its own '
+            'The framework is built in thirteen layers, each self-contained within its own '
             'mathematical discipline, each contributing one dimension of the full picture. '
             'No layer is allowed to borrow from another until that other is internally closed.',
             S['body']),
@@ -236,7 +240,7 @@ def build():
             S['body']),
         Paragraph(
             'The Hilbert space layer (ZP-D) constructs an explicit map T from Q₂ into a '
-            'complex Hilbert space H = ℂⁿ, with topological isolation in Q₂ '
+            'complex Hilbert space H = ℂⁿ, with clopen separation in Q₂ '
             'corresponding to orthogonality in H. T is proven to exist and to be unique up to '
             'unitary equivalence.',
             S['body']),
@@ -261,7 +265,7 @@ def build():
             'F<sub>C</sub>: C → InfoSp (information theory), and '
             'F<sub>D</sub>: C → Hilb (Hilbert space). '
             'Each functor preserves the initial object and the singularity structure, '
-            'proving that all ten layers are consistent accounts of the same foundational fact.',
+            'proving that the four constituent frameworks are consistent accounts of the same foundational fact.',
             S['body']),
         Paragraph(
             'The closure layer (ZP-I) proves T-IZ — the Inside Zero theorem: every '
@@ -270,6 +274,38 @@ def build():
             'theorem but a closed cycle: the Snap produces states, states accumulate, '
             'and the accumulation eventually produces a new ⊥. '
             'The framework contains its own recurrence.',
+            S['body']),
+        Paragraph(
+            'The counterexample layer (ZP-F) establishes the negative boundary: '
+            'the Binary Snap cannot occur in any linearly ordered field. '
+            'ℝ and ℚ are given as canonical instances. The proof is self-contained — '
+            'no dependencies on the other layers — and answers the question of why Q₂ '
+            'is structurally necessary by showing precisely where snap-geometry fails.',
+            S['body']),
+        Paragraph(
+            'The self-reference layer (ZP-J) proves T-EXEC: in any ZP-A lattice with '
+            'AFA grounding, the Quine atom Q = {Q} is provably identical to ⊥, axiom-free. '
+            'CC-1 (S₀ = ⊥) follows as a derived theorem. The layer also formalises the '
+            'ZFC/AFA relationship and proves APG decoration uniqueness — every '
+            'self-referential graph has at most one consistent decoration into the lattice.',
+            S['body']),
+        Paragraph(
+            'The computational grounding layer (ZP-K) proves T-COMP: a four-way equivalence '
+            'connecting the Quine atom, ⊥, the join-identity element, and Kleene\'s fixed '
+            'point. DA-1 is closed concretely here via da1_closed_concrete, grounding '
+            'the framework in the theory of computation through Kleene\'s second recursion theorem.',
+            S['body']),
+        Paragraph(
+            'The incomputability convergence layer (ZP-L) establishes ε₀ — the first '
+            'ordinal fixed point of ω^x — as the formal snap threshold. It connects '
+            'ordinal arithmetic, p-adic convergence, and Roger\'s fixed-point stability '
+            'in a single canonical snap map. All 24 theorems are Lean-verified.',
+            S['body']),
+        Paragraph(
+            'The Kleene-ordinal bridge (ZP-M) constructs an explicit type bridge '
+            '(MachinePhase → ℤ₂), closes the free hypothesis gap from ZP-L, and '
+            'co-proves the ordinal-2adic-phase triangle in a single theorem — '
+            'the Kleene quine and ε₀ simultaneously witnessed in the same formal context.',
             S['body']),
     ]
 
@@ -301,7 +337,7 @@ def build():
             'they are mutually exclusive foundational choices. Choosing one forecloses '
             'the other. The right image is a porthole, not a bridge: a wall that is '
             'solid and opaque everywhere except one piece of glass. The glass does not '
-            'open. Through it, both frameworks see the same mathematical object. '
+            'open. Through it, both frameworks share the same arithmetic fact. '
             'That object is zero. In the 2-adic integers, zero is divisible by 2 '
             'infinitely many times — a provable fact in standard ZFC. In ZF+AFA, '
             'the same fact carries additional weight: infinite 2-adic divisibility '
@@ -425,10 +461,10 @@ def build():
             'The mathematics here is not new in its parts. Join-semilattices, p-adic numbers, '
             'Jensen-Shannon divergence, Hilbert space basis assignment, initial objects in '
             'category theory — these are established structures with well-understood '
-            'properties. What is new is the conjunction: the claim that these seven structures, '
+            'properties. What is new is the conjunction: the claim that these structures, '
             'independently developed within their own disciplines, converge on the same '
             'foundational point, characterise the same transition, and illuminate the same '
-            'paradox from seven different directions.',
+            'paradox from thirteen different directions.',
             S['body']),
         Paragraph(
             'The answer, if the framework holds, is that zero is not the absence of everything. '
