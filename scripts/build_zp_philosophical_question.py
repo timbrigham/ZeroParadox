@@ -1,5 +1,7 @@
 """
-Build: The Philosophical Question That Started This (v1.5)
+Build: The Philosophical Question That Started This (v1.6)
+v1.6: §II porthole metaphor — "orthogonality" replaced with porthole image in prose.
+      Wall solid and opaque; one piece of glass (v₂(0) = ∞) that does not open.
 v1.5: §II extended — orthogonal frameworks / contact point framing following ZPJ_ScaleBridge.
       v₂(0)=∞ named as the contact point between ZFC and AFA; AFA dependency in DA-1
       restated more precisely as interpretive rather than computational.
@@ -22,13 +24,13 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')
 GOLD_LITE = colors.HexColor('#FDF6E3')
 GOLD_MED  = colors.HexColor('#F0E0A0')
-AMBER     = colors.HexColor('#F9A825')   # override — PhilQ uses brighter amber
+AMBER     = colors.HexColor('#F9A825')   # ZP-OVERRIDE: PhilQ essay uses brighter amber for accent
 
 # ── Local style overrides: GOLD theme, larger body text ──────────────────────
 S['title']   = ParagraphStyle('title',   fontName='DV-B',  fontSize=20, leading=26,
@@ -349,9 +351,10 @@ def build():
     E.append(sp(8))
     E.append(body(
         'ZFC and ZFC+AFA are mutually exclusive extensions of the same base theory: '
-        'you cannot derive AFA from ZFC, or ZFC from AFA. But mutual exclusivity is '
-        'not isolation. The better description is <b>orthogonality</b> — they are '
-        'independent, meeting at exactly one shared mathematical object.'))
+        'you cannot derive AFA from ZFC, or ZFC from AFA. This is not a bridge situation — '
+        'no crossing is possible in either direction. The better image is a porthole: '
+        'a wall that is solid and opaque everywhere except one piece of glass. '
+        'The glass does not open. Through it, both frameworks see the same mathematical object.'))
     E.append(body(
         'That object is zero. In the 2-adic integers, v₂(0) = ∞: zero is divisible '
         'by 2 infinitely many times. This is a theorem of standard ZFC, with no AFA '

@@ -1,5 +1,8 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.0, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v2.1, revised May 2026)
+v2.1: §III porthole metaphor — "orthogonal" replaced with porthole image in prose.
+      Wall is solid and opaque; one piece of glass (v₂(0) = ∞) does not open but lets
+      both frameworks see the same object. "Orthogonal" retained in technical contexts.
 v2.0: §III metatheory note extended — orthogonal frameworks / contact point framing.
       ZF+AFA and ZFC are mutually exclusive but meet at one contact point: v₂(0) = ∞.
       Clarifies that ZP is not a bridge between them but an identification of that point.
@@ -26,7 +29,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.0'
+VERSION = '2.1'
 
 # ── Local overrides: Foreword uses TEAL theme and slightly larger body text ──
 S['title']    = ParagraphStyle('title',    fontName='DV-B',  fontSize=20, leading=26,
@@ -296,8 +299,9 @@ def build():
         Paragraph(
             'ZF+Foundation and ZF+AFA are not two theories this work bridges — '
             'they are mutually exclusive foundational choices. Choosing one forecloses '
-            'the other. The right description of their relationship is orthogonality: '
-            'they are independent, sharing a single mathematical object. '
+            'the other. The right image is a porthole, not a bridge: a wall that is '
+            'solid and opaque everywhere except one piece of glass. The glass does not '
+            'open. Through it, both frameworks see the same mathematical object. '
             'That object is zero. In the 2-adic integers, zero is divisible by 2 '
             'infinitely many times — a provable fact in standard ZFC. In ZF+AFA, '
             'the same fact carries additional weight: infinite 2-adic divisibility '
