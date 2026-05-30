@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-H_Illustrated_Companion_v1_12.pdf](ZP-H_Illustrated_Companion_v1_12.pdf) | 2026-05-30 | ZP-H companion v1.12 superseded by v1.13: "any state change" scoped to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix from editorial review. |
 | [ZP-J_Illustrated_Companion_v1_9.pdf](ZP-J_Illustrated_Companion_v1_9.pdf) | 2026-05-30 | ZP-J companion v1.9 superseded by v1.10: header banner color corrected from INDIGO to COMP_BLUE (template consistency fix). |
 | [ZP-J_AFA_Addendum_v1_0.pdf](ZP-J_AFA_Addendum_v1_0.pdf) | 2026-05-30 | ZP-J AFA Addendum v1.0 superseded by v1.1: COMP_BLUE header banner added — color template was not applied in initial release. |
 | [ZP-I_Illustrated_Companion_v1_7.pdf](ZP-I_Illustrated_Companion_v1_7.pdf) | 2026-05-30 | ZP-I companion v1.7 superseded by v1.8: well diagram state labels given black outline for visibility; DA-2 label centered (was overflowing right edge). |

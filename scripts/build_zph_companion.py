@@ -1,5 +1,6 @@
 """
-Build ZP-H Illustrated Companion (v1.12)
+Build ZP-H Illustrated Companion (v1.13)
+v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
 v1.12: T-SNAP endpoint circles — open (white fill, colored stroke) with colored text for legibility.
 v1.11: subtitle/footer 'Categorical Bridge' → 'Functor Coherence'; footer date April → May 2026.
 v1.10: CC-1 described as derived (not free commitment) throughout; 'independent' → 'distinct'; T-H2 surprisal claim descoped.
@@ -140,7 +141,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.12'
+VERSION = '1.13'
 
 
 def build():
@@ -368,7 +369,7 @@ def build():
         'irreversible by the topological structure of ℚ₂.'
         '<br/>'
         '• In information theory: an informational transition costing exactly 1 bit — the '
-        'minimum possible information cost for any state change.'
+        'minimum possible information cost for a transition from the bottom state in this framework (ZP-C T1b).'
         '<br/>'
         '• In Hilbert space: an orthogonal shift from basis vector e₀ to e₁, with '
         'inner product ⟨e₀, e₁⟩ = 0.'))
