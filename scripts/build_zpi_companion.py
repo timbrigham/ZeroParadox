@@ -285,7 +285,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -323,7 +323,7 @@ def build():
     E.append(sp(6))
 
     E += [
-        Paragraph('The engine runs in reverse', CS['title']),
+        Paragraph('Going Forward Brings You Back to Zero', CS['title']),
         Paragraph('Inside Zero', CS['subtitle']),
         Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(

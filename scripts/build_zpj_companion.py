@@ -136,7 +136,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.10'
+VERSION = '1.11'
 
 
 def build():
@@ -165,7 +165,7 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
-          Paragraph('What &#8869; = {&#8869;} Really Means &#8212; and Why It Matters', CS['subtitle']),
+          Paragraph('What &#8869; = {&#8869;} Really Means, and Why It Matters', CS['subtitle']),
           Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It covers both '
@@ -178,8 +178,8 @@ def build():
     # ── What Is ZP-J Doing? ──────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E established that DA-1 &#8212; the claim that instantiating a configuration '
-        'constitutes an execution event &#8212; rests on three converging arguments. '
+        'ZP-E established that DA-1 (the claim that instantiating a configuration '
+        'constitutes an execution event) rests on three converging arguments. '
         'The structural argument says: nothing external to &#8869; can execute &#8869;, '
         'therefore &#8869; must execute itself, which forces &#8869; = {&#8869;}. '
         'ZP-E cited this as a "Conditional Claim."'))
