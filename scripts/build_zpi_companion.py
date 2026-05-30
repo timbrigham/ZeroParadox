@@ -1,5 +1,8 @@
 """
-Build ZP-I Illustrated Companion (v1.5)
+Build ZP-I Illustrated Companion (v1.7)
+v1.7: depth diagram legibility — font sizes 6.5 → 7.5–8pt; proper Unicode math
+      notation (‖·‖, ≤, 2⁻ⁿ); removed duplicate S3 norm label; simplified
+      limit annotation to single line "(depth → ∞)".
 v1.6: vocab fix: null state → ⊥.
 v1.5: Strip version number from companion footer.
 v1.4: Strip Lean file version numbers from Lean 4 Verification section.
@@ -77,10 +80,10 @@ def depth_diagram():
     d.add(Line(ax, TOP_Y, ax, BOT_Y + 6, strokeColor=COMP_SLATE, strokeWidth=1.5))
     d.add(Polygon([ax, BOT_Y, ax - 4, BOT_Y + 8, ax + 4, BOT_Y + 8],
                   fillColor=COMP_SLATE, strokeColor=COMP_SLATE, strokeWidth=0))
-    d.add(String(2, TOP_Y - 8, 'shallow', fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(2, BOT_Y + 2, 'deep',    fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(0, dh / 2 + 6,  '2-adic', fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(0, dh / 2 - 5,  'depth',  fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(2, TOP_Y - 8, 'shallow', fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(2, BOT_Y + 2, 'deep',    fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(0, dh / 2 + 6,  '2-adic', fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(0, dh / 2 - 5,  'depth',  fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
 
     # 4 states at fixed, safe y-coordinates: 165, 128, 91, 54 (all within [14, 187])
     # x-coordinates step left-to-right so the chain goes upper-left → lower-right
@@ -110,16 +113,17 @@ def depth_diagram():
             d.add(String(sx + 12, sy - 3, state_subs[i], fontSize=8, fontName='DVS',
                          fillColor=COMP_SLATE))
 
-    # Norm labels (to the right of each circle, short strings — all within dw)
-    norms = [(0, '||S0||=1'), (1, '||S1||<=2^-1'), (3, '||S3||<=2^-3')]
-    for i_s, ns in norms:
+    # Norm labels: one per state, placed to the right of S0/S1, above-left of S3.
+    # S2 omitted (crowded zone). No duplicate for S3.
+    norms_right = [(0, '‖S₀‖ = 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
+    for i_s, ns in norms_right:
         sx, sy = state_xs[i_s], state_ys[i_s]
-        d.add(String(sx + 12, sy - 4, ns, fontSize=6.5, fontName='DV-I',
-                     fillColor=colors.HexColor('#888888')))
-    # S3 norm label above-left to avoid crowding with the limit indicator
+        d.add(String(sx + 12, sy - 4, ns, fontSize=8, fontName='DV-I',
+                     fillColor=colors.HexColor('#666666')))
+    # S3 norm label above-left (limit indicator occupies the right side)
     sx3, sy3 = state_xs[3], state_ys[3]
-    d.add(String(sx3 - 60, sy3 + 12, '||S3||<=2^-3', fontSize=6.5, fontName='DV-I',
-                 fillColor=colors.HexColor('#888888')))
+    d.add(String(sx3 - 72, sy3 + 14, '‖S₃‖ ≤ 2⁻³', fontSize=8, fontName='DV-I',
+                 fillColor=colors.HexColor('#666666')))
 
     # Limit indicator: dotted line + arrow pointing right from S3, then "→ 0"
     # Arrow: from S3.x+10 to S3.x+10+40, at S3.y level
@@ -138,13 +142,9 @@ def depth_diagram():
     # arr_x2 ≈ 366, text at ≈ 370; '0 (limit)' ~9 chars × 5pt = 45pt → ends at 415 ≪ 468 ✓
     d.add(String(arr_x2 + 5, arr_y + 3, '0',
                  fontSize=11, fontName='DVS-B', fillColor=COMP_AMBER))
-    d.add(String(arr_x2 + 18, arr_y + 3, '(null limit,',
-                 fontSize=7.5, fontName='DVS-I', fillColor=COMP_SLATE))
-    d.add(String(arr_x2 + 18, arr_y - 9, 'infinite depth)',
-                 fontSize=7.5, fontName='DVS-I', fillColor=COMP_SLATE))
-    # Lowest text baseline: arr_y - 9 = 54 - 9 = 45, text top ≈ 45 + 8 = 53.
-    # Circle bottom of S3: sy3 - 8 = 46. Text top 53 > 46. No overlap. ✓
-    # Arrow and all annotation elements: y in [37, 62]. Well within [14, 187] ✓
+    d.add(String(arr_x2 + 18, arr_y + 3, '(depth → ∞)',
+                 fontSize=8, fontName='DVS-I', fillColor=COMP_SLATE))
+    # Annotation at arr_y + 3 = 57. Arrow elements: y in [46, 62]. Within [14, 187] ✓
 
     # Bottom caption (within drawing, at y=4; text occupies y=[4, 12] — below all circles)
     d.add(String(30, 4,
@@ -280,7 +280,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():

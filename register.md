@@ -14,7 +14,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-E Bridge Document | v3.17 | ZP-E_Bridge_Document.pdf | v1.11 | Y/Y | v1.11 comp: Goodstein/proof-theoretic context for ε₀; K-3/K-4 vocab fixes (null state → ⊥; ontological → structural) — formal:323bd69e comp:1b4c17b0 |
 | ZP-G Category Theory | v1.10 | ZP-G_Category_Theory.pdf | v1.7 | Y/Y | v1.10: hash sync — script modified without full workflow; rebuilt to sync; comp v1.7: vocab sweep — null state + categorical bridge fixes — formal:f9ceca3f comp:05f8a69d |
 | ZP-H Categorical Bridge | v1.14 | ZP-H_Categorical_Bridge.pdf | v1.7 | Y/Y | v1.14: K-13 vocab fix + endnote version corrected (v1.10→v1.14); comp v1.7: vocab sweep — null state + non-null fixes — formal:1e26ca53 comp:48becd87 |
-| ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.6 | Y/Y | Companion v1.6: vocab sweep — null state fix — formal:298f2e30 comp:c7957dea |
+| ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.7 | Y/Y | Companion v1.7: depth diagram legibility — larger fonts, Unicode math notation, duplicate label removed — formal:298f2e30 comp:ac8c2ac0 |
 | ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.7 | Y/Y | v2.0: Sections VII-X added; comp v1.7: vocab sweep — "ZP-J v2.0" → "ZP-J" (5 occurrences) — formal:f39311c3 comp:09e724df |
 | ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.8 | Y/Y | Companion v1.8: strip footer version — formal:8c00d4aa comp:1286a4a7 |
 | ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.4 | Y/Y | Companion v1.4: strip footer version — formal:7825902f comp:3a10ee7b |
