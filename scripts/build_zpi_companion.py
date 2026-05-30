@@ -1,5 +1,6 @@
 """
 Build ZP-I Illustrated Companion (v1.5)
+v1.6: vocab fix: null state → ⊥.
 v1.5: Strip version number from companion footer.
 v1.4: Strip Lean file version numbers from Lean 4 Verification section.
 v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
@@ -279,7 +280,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():

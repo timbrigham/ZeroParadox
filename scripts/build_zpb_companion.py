@@ -1,5 +1,6 @@
 """
 Build ZP-B Illustrated Companion (v1.9)
+v1.10: vocab fix: null state → ⊥.
 v1.9: Strip version number from companion footer.
 v1.8: Dan feedback (2026-05-21): "dense" → "densely ordered"; rewrite para 2 of "Why p-Adic
       Geometry?" to acknowledge ℚ₂ also has no minimum nonzero element — difference is topology
@@ -117,7 +118,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():

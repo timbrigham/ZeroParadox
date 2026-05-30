@@ -1,5 +1,6 @@
 """
 Build ZP-C Illustrated Companion (v2.5)
+v2.6: vocab fix: null state → ⊥.
 v2.5: "First Atomic State Q = (0,1)" → "minimum nonzero state ε₀, Q = (0,1)" in JSD section body prose.
 v2.4: K-20 continued — "Lemma L-INF (Informational Extremity of ⊥)" → "Lemma L-INF (Unbounded Surprisal of ⊥)" in body prose (missed by K-20 diagram-only fix).
 v2.3: K-20 vocabulary fix — "First Atomic State" → "ε₀" in section III diagram label.
@@ -195,7 +196,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.5'
+VERSION = '2.6'
 
 
 def build():

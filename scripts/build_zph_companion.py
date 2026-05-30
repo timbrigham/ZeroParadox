@@ -1,5 +1,6 @@
 """
 Build ZP-H Illustrated Companion (v1.6)
+v1.7: vocab fix: null state → ⊥.
 v1.6: K-15 vocabulary fix — "topological isolation" → "clopen separation" in DP-1 description.
 v1.5: Strip version number from companion footer.
 v1.4: Add structural floor section — power set lattice as primary example; bridge to ZP-specific
@@ -134,7 +135,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():

@@ -1,7 +1,8 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.11 | May 2026
+Version 1.12 | May 2026
+v1.12: vocab fix: null state → ⊥.
 v1.11: Hash sync — script was modified without full workflow; rebuilt to bring
 hash into alignment with register.md.
 v1.5: Renamed to ZP-F Illustrated Companion; disclaimer updated to cite ZP-F
@@ -138,7 +139,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.11'
+VERSION = '1.12'
 
 
 def build():

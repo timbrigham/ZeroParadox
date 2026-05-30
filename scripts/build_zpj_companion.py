@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.6 | May 2026
+Version 1.7 | May 2026
+v1.7: vocab fix: ZP-J v2.0 → ZP-J.
 v1.6: Five new sections added for ZP-J content — the valuation argument,
       the abstraction chain, two concrete models, Aczel's DC question, and
       APG decoration uniqueness. Key result box updated.
@@ -130,7 +131,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():

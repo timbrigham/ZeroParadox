@@ -1,6 +1,7 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.0 | May 2026
+Version 1.1 | May 2026
+v1.1: vocab fix: null state → ⊥.
 v1.0: Initial release. Covers snapEmbed type bridge, triangle diagram,
       diagonalization unification, and R-M.1 on DA-1 Path 2 boundary.
 """
@@ -10,7 +11,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 def triangle_diagram():

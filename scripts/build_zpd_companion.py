@@ -1,5 +1,6 @@
 """
 Build ZP-D Illustrated Companion (v1.10)
+v1.11: vocab fix: null state → ⊥.
 v1.10: K-12 vocab fix — "topological isolation" -> "clopen separation" in DP-1 body text.
 v1.9: Strip version number from companion footer.
 v1.7: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
@@ -106,7 +107,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.10'
+VERSION = '1.11'
 
 
 def build():

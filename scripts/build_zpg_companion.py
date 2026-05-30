@@ -1,5 +1,6 @@
 """
 Build ZP-G Illustrated Companion (v1.6)
+v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
 v1.6: Strip version number from companion footer.
 v1.4: Title "Structure without substance" → "Structure independent of domain" — removes
 philosophical framing; "independent of domain" states the actual categorical property.
@@ -148,7 +149,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
