@@ -1,5 +1,6 @@
 """
-Build ZP-H Illustrated Companion (v1.5)
+Build ZP-H Illustrated Companion (v1.6)
+v1.6: K-15 vocabulary fix — "topological isolation" → "clopen separation" in DP-1 description.
 v1.5: Strip version number from companion footer.
 v1.4: Add structural floor section — power set lattice as primary example; bridge to ZP-specific
       structural floor; new section placed before morphism/functor content.
@@ -133,7 +134,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.5'
+VERSION = '1.6'
 
 
 def build():
@@ -300,7 +301,7 @@ def build():
         '<b>FD (Hilbert Space):</b> The initial object 0 maps to the basis vector e₀. '
         'Each morphism maps to an orthogonal extension — a step to a perpendicular basis '
         'vector. The Binary Snap becomes a right-angle turn in state space. The design '
-        'commitment DP-1 (orthogonality represents topological isolation) is inherited here. '
+        'commitment DP-1 (orthogonality represents clopen separation) is inherited here. '
         'FD has a concrete ZPCategory categorical witness (NNRealZPCat) grounded by T4. '
         'The full abstract Lean functor for the Hilbert space codomain remains future work.'))
 

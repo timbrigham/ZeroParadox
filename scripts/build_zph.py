@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.13 | May 2026
+Version 1.14 | May 2026
+v1.14: K-13 vocabulary fix — "topological isolation" → "clopen separation" throughout;
+updated DP-1 and related prose to use precise vocabulary.
 v1.13: Version number removed from Open Items Register section header.
 v1.12: Scaffolding note removed from preamble — "ZP-H cannot be written until ZP-G is internally
 closed" was a development artifact not appropriate in a public document.
@@ -24,7 +26,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 
 
 def label_box_status(title, status_line, rows_list):
@@ -134,7 +136,7 @@ def build():
             '&#8869; &#8804; x for all x &#8712; L (T2). State sequences are monotone (T3). No subtraction operator.',
             'From ZP-B: Q<sub>2</sub> with ultrametric d. AX-B1 (binary existence). MP-1 (minimality principle). '
             'p = 2 derived (T0). Every ball is clopen (T2). Q<sub>2</sub> totally disconnected (T5). '
-            'Topological isolation of 0 (T3). Snap irreversibility (C3).',
+            'Clopen separation of 0 from all nonzero elements (T3). Snap irreversibility (C3).',
             'From ZP-C: Incompressibility threshold P<sub>0</sub> (D1). RP-1 (representation principle). '
             'State representations derived from AX-B1 (T1). JSD = 1 bit (T1b). Discrete surprisal operator DF (D5, D6). '
             'Non-conservatism of DF on infinite sequences approaching 0 (T2). L-RUN (execution is non-null state change). '
@@ -239,7 +241,7 @@ def build():
             'Preservation of composition: Sequential discrete jumps in Q<sub>2</sub> compose by transitivity of the ball '
             'structure. x<sub>A</sub> &#8594; x<sub>B</sub> &#8594; x<sub>C</sub> is a valid sequence of clopen transitions. <font name="DV">&#10003;</font>',
             'Preservation of identity: F<sub>B</sub>(id<sub>A</sub>) is the trivial jump x<sub>A</sub> &#8594; x<sub>A</sub>, which is the identity on Q<sub>2</sub>. <font name="DV">&#10003;</font>',
-            'AX-G1 respected: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub> is topologically isolated (ZP-B T3). No terminal object exists in '
+            'AX-G1 respected: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub> is clopen-separated from all nonzero elements (ZP-B T3). No terminal object exists in '
             'pTop because Q<sub>2</sub> is totally disconnected (ZP-B T5) — there is no single element to which all paths converge. <font name="DV">&#10003;</font>',
             'AX-G2 respected: ZP-B C3 establishes that no continuous path in Q<sub>2</sub> returns to 0 from any '
             'non-zero element. F<sub>B</sub> maps no non-initial morphism to a transition terminating at 0 &#8712; Q<sub>2</sub>. <font name="DV">&#10003;</font>',
@@ -294,7 +296,7 @@ def build():
             'extensions (ZP-D T3). No terminal object exists in Hilb under this construction because the orthogonal extension sequence is unbounded in norm (ZP-D T5). <font name="DV">&#10003;</font>',
             'AX-G2 respected: ZP-D T4 establishes that the Snap produces an orthogonal shift that cannot be '
             'reversed without violating the additive ontology (ZP-A R1). No orthogonal extension terminates back at e<sub>0</sub> from a non-initial vector. <font name="DV">&#10003;</font>',
-            'Design commitment inherited: DP-1 (orthogonality as representation of topological isolation) is a '
+            'Design commitment inherited: DP-1 (orthogonality as representation of clopen separation) is a '
             'design commitment in ZP-D v1.2. F<sub>D</sub> inherits this label. T4 and T5 of ZP-D depend on DP-1 as a premise.',
         ]
     ))
@@ -320,7 +322,7 @@ def build():
             'F<sub>A</sub>: F<sub>A</sub>(0) = &#8869;. For any S<sub>Y</sub> &#8712; L, the unique morphism &#8869; &#8594; S<sub>Y</sub> is the join &#8869; &#8744; S<sub>Y</sub> = S<sub>Y</sub> (ZP-A A4). '
             'Uniqueness: &#8869; is the global minimum (ZP-A T2), so the only order-preserving map from &#8869; to S<sub>Y</sub> is the join with S<sub>Y</sub>. <font name="DV">&#10003;</font>',
             'F<sub>B</sub>: F<sub>B</sub>(0) = 0 &#8712; Q<sub>2</sub>. For any x &#8712; Q<sub>2</sub>, the unique morphism 0 &#8594; x is the discrete jump from 0 to x '
-            'across the clopen boundary. Uniqueness: 0 is topologically isolated (ZP-B T3); the only clopen-respecting transition from 0 to x is the direct jump. <font name="DV">&#10003;</font>',
+            'across the clopen boundary. Uniqueness: 0 is clopen-separated from all nonzero elements (ZP-B T3); the only clopen-respecting transition from 0 to x is the direct jump. <font name="DV">&#10003;</font>',
             'F<sub>C</sub>: F<sub>C</sub>(0) = P = (1, 0). For any distribution P<sub>Y</sub>, the unique morphism P &#8594; P<sub>Y</sub> is the informational '
             'transition with work E = JSD(P &#8741; P<sub>Y</sub>). Uniqueness: JSD is symmetric and uniquely determined by P '
             'and P<sub>Y</sub>; there is exactly one value of informational work for any pair of distributions. <font name="DV">&#10003;</font>',
@@ -505,7 +507,7 @@ def build():
          'different functors. Explicitly stated and not laundered as a derivation.'],
         ['DP-1',
          'Design\nCommitment —\ninherited',
-         'Orthogonality as representation of topological isolation. Inherited from ZP-D v1.2. '
+         'Orthogonality as representation of clopen separation. Inherited from ZP-D v1.1. '
          'F<sub>D</sub> and T-H3 depend on it as a premise.'],
     ]
 
@@ -569,7 +571,7 @@ def build():
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.10 | Four instantiation functors constructed | '
+            '<i>End of ZP-H v1.14 | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 closed | '
             'All four functors have concrete Lean Functor terms (sorry-free): '
             'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth), F<sub>A</sub> via NatSLat | '

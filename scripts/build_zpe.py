@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.16 | May 2026
+Version 3.17 | May 2026
+v3.17: K-22 vocabulary fix — "informational extremity" → "unbounded surprisal (L-INF)"
+in DA-1 Section II bridge prose.
 v3.16: Version numbers removed from three internal register section headers (Open Items,
 Traceability, Validation Status) — version numbers belong in the title block only.
 v3.15: DA-1 Path 2 forward reference to ZP-M R-M.1 added at three locations — retrospective
@@ -72,7 +74,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.16'
+VERSION = '3.17'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -287,7 +289,7 @@ def build():
              'execute &#8869; — therefore &#8869; must execute itself, establishing &#8869; = {&#8869;} as a '
              'structural consequence rather than a commitment (ZP-J T-EXEC, axiom-free). Path 2 (informational) '
              'provides motivational context — unbounded surprisal as a pointer toward why static holding is '
-             'incoherent — but the bridge from informational extremity to execution is a foundational '
+             'incoherent — but the bridge from unbounded surprisal (L-INF) to execution is a foundational '
              'commitment, not a derived claim. Path 3 (AIT) argues that incompressibility eliminates the '
              'static-description alternative; this path is now closed by ZP-K\'s Kleene result, which '
              'handles the computational self-reference claim without requiring AIT. '
@@ -816,7 +818,7 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.11 | Three formal inserts: DA-1, DA-2, DA-3 | T-SNAP Step 7: AX-G2 removed as formal dependency; ZP-G is downstream, irreversibility grounded in ZP-A R1 and ZP-B C3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
+            '<i>End of ZP-E v3.17 | Three formal inserts: DA-1, DA-2, DA-3 | T-SNAP Step 7: AX-G2 removed as formal dependency; ZP-G is downstream, irreversibility grounded in ZP-A R1 and ZP-B C3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
             'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
             'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward: The Philosophical Question That Started This | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '

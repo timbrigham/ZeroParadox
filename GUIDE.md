@@ -10,11 +10,11 @@ For the formal framework index, Lean verification, and complete question registe
 
 ## What This Is
 
-The Zero Paradox proves that the first non-null state in a join-semilattice is forced — not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the null element across several mathematical frameworks; each one independently locates the same forcing.
+The Zero Paradox proves that the first non-null state in a join-semilattice is forced - not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the null element across several mathematical frameworks; each one independently locates the same forcing.
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 
-No snap-specific axioms appear anywhere in the framework. The Binary Snap is a structural consequence of the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) — a commitment any model of additive states would adopt independently.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap is a structural consequence of the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - a commitment any model of additive states would adopt independently.
 
 ---
 

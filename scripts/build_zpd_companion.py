@@ -1,5 +1,6 @@
 """
-Build ZP-D Illustrated Companion (v1.9)
+Build ZP-D Illustrated Companion (v1.10)
+v1.10: K-12 vocab fix — "topological isolation" -> "clopen separation" in DP-1 body text.
 v1.9: Strip version number from companion footer.
 v1.7: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Changes from v1.5:
@@ -105,7 +106,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
@@ -265,7 +266,7 @@ def build():
     E.append(sp(8))
 
     E.append(cbody(
-        '<b>Design Commitment DP-1:</b> The choice to represent topological isolation as '
+        '<b>Design Commitment DP-1:</b> The choice to represent clopen separation as '
         'orthogonality is a design commitment — the natural and consistent choice, stated '
         'explicitly. Other faithful representations exist in principle. This honesty about '
         'what is chosen versus derived is central to the framework.'))

@@ -1,7 +1,9 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.10 | May 2026
+Version 1.11 | May 2026
+v1.11: Hash sync — script was modified without full workflow; rebuilt to bring
+hash into alignment with register.md.
 v1.5: Renamed to ZP-F Illustrated Companion; disclaimer updated to cite ZP-F
       Lean verification (F-SNAP-IMPOSSIBLE and general ordered field result).
 v1.6: Section V retitled "The Coach and the Players" — reframed around zero's
@@ -136,7 +138,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.10'
+VERSION = '1.11'
 
 
 def build():
@@ -149,7 +151,7 @@ def build():
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
             'Zero Paradox ZP-F Companion | Where the Snap Fails: The Real Numbers as Counterexample'
-            '  |  May 2026  |  v' + VERSION)
+            '  |  May 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(

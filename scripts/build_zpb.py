@@ -1,5 +1,6 @@
 """
-Build ZP-B: p-Adic Topology (v1.8)
+Build ZP-B: p-Adic Topology (v1.9)
+v1.9: K-17 vocab fix — "First Atomic State" -> "minimum nonzero state (ε₀)" in AX-B1 box.
 v1.8: Adversary-review pass — R1 remark (Section VI) "universal ontology of state emergence"
 replaced with precise scope statement: results hold for any AX-B1 + MP-1 instantiation.
 v1.7: "Topological isolation of 0" renamed to "Clopen gap at 0" throughout — "isolated" has a
@@ -15,7 +16,7 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology.pdf')
@@ -34,7 +35,7 @@ def build():
     E.append(label_box('Axiom AX-B1 — Binary Existence', [
         'The foundational distinction of the Zero Paradox framework is binary: a state either exists or it does not. There is no third option at this level.',
         '0 — non-existence (the Null State, corresponding to &#8869; in ZP-A)',
-        '1 — existence (the First Atomic State, the minimal non-zero element)',
+        '1 — existence (the minimum nonzero state, &#949;<sub>0</sub>)',
         'Status: AXIOM. This is the only non-topological commitment in ZP-B. It precedes p-adic analysis and is the premise from which the field selection is derived.',
         'Scope: AX-B1 asserts the structure of the ontological distinction, not its physical realisation. It is invariant across all instantiations.',
     ]))

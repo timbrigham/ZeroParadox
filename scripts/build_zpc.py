@@ -1,5 +1,6 @@
 """
-Build ZP-C: Information Theory (v1.14)
+Build ZP-C: Information Theory (v1.15)
+v1.15: K-19/K-21 vocab fixes — "First Atomic State" -> "Minimum Nonzero State" in T1; "Informational Extremity" -> "Unbounded Surprisal" in L-INF section header, label, and status lines.
 v1.14: Version number removed from Open Items Register section header.
 v1.13: Adversary-review pass — "forcing result" terminology replaced with "structural
 constraint" (avoids incorrect borrowing of set-theoretic forcing vocabulary).
@@ -23,7 +24,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
@@ -64,8 +65,8 @@ def build():
     E.append(label_box('Theorem T1 — State Representations are Uniquely Derived', [
         'Given AX-B1 and RP-1, the distributions are unique:',
         'P  =  (1, 0)   (Null State: all mass at 0 — non-existence)',
-        'Q  =  (0, 1)   (First Atomic State: all mass at 1 — existence)',
-        'Proof: AX-B1 establishes two ontological states. RP-1 requires point-mass representation of each. The Null State occupies value 0: P = (1,0). The First Atomic State occupies value 1: Q = (0,1). No distribution (p, 1&#8722;p) with 0 < p < 1 is consistent with AX-B1. P and Q are unique. Status: DERIVED from AX-B1 and RP-1. <font name="DV">&#10003;</font>',
+        'Q  =  (0, 1)   (Minimum Nonzero State: all mass at 1 — existence)',
+        'Proof: AX-B1 establishes two ontological states. RP-1 requires point-mass representation of each. The Null State occupies value 0: P = (1,0). The minimum nonzero state occupies value 1: Q = (0,1). No distribution (p, 1&#8722;p) with 0 < p < 1 is consistent with AX-B1. P and Q are unique. Status: DERIVED from AX-B1 and RP-1. <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
     E.append(label_box('Corollary T1b — JSD = 1 bit', [
@@ -125,14 +126,14 @@ def build():
         'Status: DERIVED from ZP-B ball hierarchy structure and branching measure on Q<sub>2</sub>. OQ-C1 closed. <font name="DV">&#10003;</font>',
     ]))
 
-    E.append(Paragraph('III-B. Informational Extremity of the Null State', S['h1']))
-    E.append(label_box('Lemma L-INF — Informational Extremity of &#8869;', [
+    E.append(Paragraph('III-B. Unbounded Surprisal of the Bottom Element', S['h1']))
+    E.append(label_box('Lemma L-INF — Unbounded Surprisal of &#8869;', [
         'The surprisal I(n) = n at ball-hierarchy depth n is unbounded above: for any finite bound M, there exist depths n with I(n) > M.',
         'The null state &#8869; = c<sub>0</sub> corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2). At this limit, no finite bound M contains the informational content of &#8869;.',
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
         'Semantic content: &#8869; is informationally extreme — it is the limit point of the binary ball hierarchy under the 2-adic metric, the accumulation point approached by sequences of increasing depth. No finite bound M contains the surprisal at that limit; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1). ZP-A CC-2 (&#8869; = {&#8869;}) provides a structural second grounding for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent derivations converging on the same fact.',
-        'Note: the connection from informational extremity to forced execution is a named design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
+        'Note: the connection from unbounded surprisal (L-INF) to forced execution is a named design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
         'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: ZPC.l_inf (purity check: no non-Mathlib axioms).',
     ]))
     E.append(sp(4))
@@ -232,7 +233,7 @@ def build():
         'Step 3 — Any execution passes through c<sub>1</sub> (L-RUN). c<sub>1</sub> &#8800; &#8869; (L-RUN conclusion).',
         'Step 4 — In (L, &#8744;, &#8869;), this non-null configuration state is c<sub>1</sub> = &#8869; &#8744; &#949;<sub>0</sub>. By ZP-A D2, this is the Binary Snap.',
         'Conclusion: At P<sub>0</sub>, execution is structurally guaranteed. Execution guarantees a non-null configuration state. That state is &#949;<sub>0</sub> in the semilattice. The derivation pathway is open: P<sub>0</sub> + L-RUN + TQ-IH + ZP-A D2, pending cross-framework integration via DA-1 in ZP-E. <font name="DV">&#10003;</font>',
-        'Status: CANDIDATE THEOREM — structurally complete within ZP-C. The step from informational extremity (L-INF) to forced execution (DA-1) is a design principle, not a mathematical consequence. Full derivation owned by ZP-E.',
+        'Status: CANDIDATE THEOREM — structurally complete within ZP-C. The step from unbounded surprisal (L-INF) to forced execution (DA-1) is a design principle, not a mathematical consequence. Full derivation owned by ZP-E.',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [
