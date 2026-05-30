@@ -3,7 +3,9 @@ Build ZP-M Illustrated Companion
 Version 1.2 | May 2026
 v1.2: fix HTML entities in String() drawing primitives (rendered literally);
       add validate_drawing() to both diagram functions; increase triangle_diagram
-      dh 3.2→3.5 in to clear top-circle geometry overflow.
+      dh 3.2→3.5 in to clear top-circle geometry overflow; remove duplicate
+      internal caption from triangle_diagram (overlapped "2-adic convergence"
+      edge label at same y).
 v1.1: vocab fix: null state → ⊥.
 v1.0: Initial release. Covers snapEmbed type bridge, triangle diagram,
       diagonalization unification, and R-M.1 on DA-1 Path 2 boundary.
@@ -59,13 +61,11 @@ def triangle_diagram():
     d.add(String(right_x + 8, (top_y + right_y) / 2,
                  'snapEmbed',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
-    d.add(String(cx - 55, left_y - 18,
+    # Bottom edge label — y=16 clears the caption zone; internal caption removed
+    # (ccaption() in build() already provides it externally)
+    d.add(String(cx - 55, 16,
                  '2-adic convergence',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
-
-    d.add(String(14, 10,
-                 'Three objects, three edges, one formal context — zpm_triangle co-proves all three.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
 
     return validate_drawing(d, dh, 'triangle_diagram')
 

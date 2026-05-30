@@ -18,7 +18,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.8 | Y/Y | v2.0: Sections VII-X added; comp v1.8: fix HTML entities in String() drawing primitives (rendered literally) — formal:f39311c3 comp:774fe3ad |
 | ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.8 | Y/Y | Companion v1.8: strip footer version — formal:8c00d4aa comp:1286a4a7 |
 | ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.4 | Y/Y | Companion v1.4: strip footer version — formal:7825902f comp:3a10ee7b |
-| ZP-M Kleene-Ordinal Bridge | v1.0 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.2 | N/— | v1.0: Initial release — snapEmbed type bridge, hfp gap closed, zpm_triangle, R-M.1. Lean source promoted to full document; comp v1.2: HTML entity fix in String() primitives; validate_drawing wired; triangle dh increased — formal:24dd8909 comp:f5a75de0 |
+| ZP-M Kleene-Ordinal Bridge | v1.0 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.2 | N/— | v1.0: Initial release — snapEmbed type bridge, hfp gap closed, zpm_triangle, R-M.1. Lean source promoted to full document; comp v1.2: HTML entity fix; validate_drawing wired; triangle dh increased; internal caption removed (overlapped edge label) — formal:24dd8909 comp:d264b283 |
 | Zero Paradox Foreword | v2.5 | Zero_Paradox_Foreword.pdf | N/A | N/A | v2.5: AR/ER fixes — "standard ZFC" → "ZF" in porthole; fix() guard; "every" → "every finite" self-referential graph (Fintype scope) — formal:e475b28a |
 | ZP Philosophical Question | v1.11 | ZP_Philosophical_Question.pdf | N/A | N/A | v1.11: fix() guard via Paragraph override; "bridge" → "connecting argument"; "in ZP's reading" de-duplicated — formal:9b4905de |
 
