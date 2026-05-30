@@ -34,7 +34,8 @@ def build():
         Paragraph(
             '<i>v1.0: Initial release. Presents the derivation chain from '
             'ValuationStructure to AFA decoration uniqueness for finite Accessible '
-            'Pointed Graphs. All theorems proved sorry-free in Lean 4. '
+            'Pointed Graphs. All active theorems sorry-free in Lean 4 '
+            '(one commented-out stub; see §V). '
             'Reads after ZP-J Self-Reference. '
             'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
             S['note']),
@@ -123,9 +124,10 @@ def build():
         'ValuationStructure generates two further typeclasses by successive derivation. '
         'AbstractSelfApp extracts the fixed-point structure from ValuationStructure, '
         'replacing scale with an abstract selfApp operation. AFAStructure &#8212; '
-        'Aczel\'s three-field characterisation of the Quine atom property &#8212; '
+        'the three-field typeclass encoding the Quine atom properties &#8212; '
         'is then derived from AbstractSelfApp. At each step, the fields of the target '
-        'typeclass are proved as theorems from the source. No new axioms are introduced.'))
+        'typeclass are proved as theorems from the source. No new axioms are introduced. '
+        'The relationship to Aczel\'s theorem in ZF+AFA is discussed in Remark R-J.A (§V).'))
 
     E.append(def_box(
         'Typeclass: AbstractSelfApp (ZPJ_SelfApp.lean)',
@@ -148,9 +150,13 @@ def build():
         'AFAStructure is the lattice-level encoding of the three structural facts that '
         'ZF+AFA provides set-theoretically: that &#8869; contains itself, that it is '
         'the only self-containing element, and the self-membership predicate itself. '
-        'In ZF+AFA these follow from AFA\'s own decoration uniqueness clause. In the '
-        'ZP encoding they are class fields &#8212; asserted once at the typeclass level '
-        'rather than proved from the graph-decoration semantics.'))
+        'In ZF+AFA, the existence of a self-containing set follows from AFA\'s existence '
+        'clause applied to the one-node self-loop graph; uniqueness follows from AFA\'s '
+        'uniqueness clause. In the ZP encoding, the existence field '
+        '(<i>bot_self_mem</i>) is supplied directly by <i>fixed_bot</i> from '
+        'AbstractSelfApp. The uniqueness field (<i>quine_unique</i>) is proved as a '
+        'theorem from <i>unique_fp</i> &#8212; no new axioms are introduced at this '
+        'step.'))
 
     E.append(def_box(
         'Typeclass: AFAStructure (ZPJ.lean)',
@@ -188,7 +194,9 @@ def build():
             'AFAStructure\'s three fields within the ZP typeclass hierarchy. It does not '
             'show that AFA is derivable from ZF: Foundation and AFA remain mutually '
             'exclusive set-theoretic frameworks. The chain is internal to the ZP lattice '
-            'abstraction and says nothing about which set-theoretic axioms hold.',
+            'abstraction and says nothing about which set-theoretic axioms hold. '
+            'The precise relationship to Aczel\'s decoration theorem is discussed in '
+            'Remark R-J.A (§V).',
         ]
     ))
     E.append(sp(6))
@@ -264,7 +272,7 @@ def build():
         [
             '&#8704; {V : Type*} [Quiver V] [Fintype V]',
             '  {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]',
-            '  (d&#8321; d&#8322; : V &#8594; U),',
+            '  (G : APG V) (d&#8321; d&#8322; : V &#8594; U),',
             '  IsDecoration d&#8321; &#8594; IsDecoration d&#8322; &#8594; d&#8321; = d&#8322;',
             '',
             'For any finite APG, any two valid decorations into a DecorationUniverse agree '
@@ -315,7 +323,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: cyclic_decoration_eq_bot (ZPJ_APG.lean §VIII)',
+        'Theorem: cyclic_decoration_eq_bot (ZPJ_APG.lean §VII\')',
         [
             '&#8704; (d : V &#8594; U), IsDecoration d &#8594;',
             '  (v lies on a directed cycle) &#8594; d v = &#8869;',
@@ -328,20 +336,24 @@ def build():
     E.append(Paragraph('IV.2 — Acyclic Vertices', S['h2']))
     E.append(body(
         'A vertex v is acyclic if no directed cycle passes through it. The argument '
-        'uses strong induction on |Reach(v)|.'))
-    E.append(body(
-        '<b>Base case.</b> If v has no successors, children(v) = &#8709;. The '
-        'decoration equation gives d(v) = collect(&#8709;). Both d&#8321; and d&#8322; '
-        'are constrained to the same value and agree at v.'))
+        'uses strong induction on |Reach(v)|. Every vertex reaches itself via the '
+        'empty path, so |Reach(v)| &#8805; 1 for every v; the n = 0 branch is vacuous. '
+        'All actual vertices fall into the inductive step.'))
     E.append(body(
         '<b>Inductive step.</b> Suppose d&#8321; and d&#8322; agree on every vertex w '
-        'with |Reach(w)| &lt; n, and suppose |Reach(v)| = n. For each successor '
-        'w &#8712; children(v): since v is acyclic, v is not reachable from w, so '
-        'w &#8800; v and Reach(w) &#8842; Reach(v), giving |Reach(w)| &lt; n. '
+        'with |Reach(w)| &lt; n, and suppose |Reach(v)| = n with v acyclic. '
+        'For each successor w &#8712; children(v): since v is acyclic, v is not '
+        'reachable from w, so Reach(w) &#8842; Reach(v), giving |Reach(w)| &lt; n. '
         'By the induction hypothesis, d&#8321;(w) = d&#8322;(w) for every '
-        'w &#8712; children(v). The decoration equation then gives '
+        'w &#8712; children(v). When children(v) = &#8709; this hypothesis is '
+        'vacuously satisfied: collect is a function, the image of &#8709; under any '
+        'decoration is &#8709;, so both d&#8321;(v) and d&#8322;(v) equal collect(&#8709;) '
+        'and agree. When children(v) &#8800; &#8709;, the induction hypothesis gives '
+        'd&#8321; &#8220;&#8242; children(v) = d&#8322; &#8220;&#8242; children(v), and '
+        'the decoration equation then gives '
         'd&#8321;(v) = collect(d&#8321; &#8220;&#8242; children(v)) = '
-        'collect(d&#8322; &#8220;&#8242; children(v)) = d&#8322;(v).'))
+        'collect(d&#8322; &#8220;&#8242; children(v)) = d&#8322;(v). '
+        'In both sub-cases, acyclic_induction_step formalises the argument.'))
 
     E.append(result_box(
         'Lemma: acyclic_induction_step (ZPJ_APG.lean §VIII)',
@@ -388,6 +400,14 @@ def build():
         'to infinite APGs would require an ordinal induction or a well-foundedness '
         'argument on the reachability relation, and is not addressed here.'))
 
+    E.append(body(
+        '<b>Commented-out stub.</b> ZPJ_APG.lean contains a commented-out theorem '
+        '<i>acyclic_decoration_unique</i> with a sorry placeholder. That stub is not '
+        'used by the proof of decoration_unique: the final proof proceeds by direct '
+        'strong induction using acyclic_induction_step, without using the stub. '
+        'All active (non-commented-out) theorems in the seven source files are '
+        'sorry-free.'))
+
     E.append(label_box(
         'Lean Source Files',
         [
@@ -427,13 +447,15 @@ def build():
         'Remark R-J.A &#8212; Relationship to Aczel\'s Theorem',
         [
             'Aczel\'s decoration theorem (Non-Well-Founded Sets, CSLI 1988) states that '
-            'every APG has a unique decoration into the universe of non-well-founded sets, '
-            'proved using the AFA axiom itself. ZP-J derives the uniqueness half for '
-            'abstract DecorationUniverses from ValuationStructure alone &#8212; without '
-            'importing set-theoretic AFA. The mechanism differs: Aczel takes AFA as a '
-            'hypothesis; ZP-J derives the same uniqueness property from the depth-measure '
-            'structure. Whether Aczel\'s existence half can be similarly derived for '
-            'abstract DecorationUniverses is an open question.',
+            'every APG has a unique decoration into the universe of non-well-founded sets. '
+            'The result here is not a re-proof of Aczel\'s theorem by different methods. '
+            'The objects are different: Aczel\'s target is a specific set-theoretic '
+            'universe; the target here is any type carrying ValuationStructure and a '
+            'collect operation, with no set-membership semantics required. '
+            'The contribution is the generalisation: decoration uniqueness holds for any '
+            'abstract DecorationUniverse satisfying the depth-measure axioms, independently '
+            'of set-theoretic content. Whether the existence half of Aczel\'s theorem '
+            'generalises to abstract DecorationUniverses is an open question.',
         ]
     ))
     E.append(sp(6))
@@ -443,7 +465,8 @@ def build():
         'it. The derivation chain (ValuationStructure &#8594; AbstractSelfApp &#8594; '
         'AFAStructure) is established in ZP-J; this document applies it to the APG '
         'decoration problem. Version 1.0 covers the uniqueness result for finite graphs. '
-        'All results sorry-free in Lean 4 as of May 2026.',
+        'All active theorems sorry-free in Lean 4 as of May 2026 '
+        '(one commented-out stub; see §V).',
         S['endnote']))
 
     print(f'[build_zpj_afa_addendum] Assembling document ({len(E)} elements)...')

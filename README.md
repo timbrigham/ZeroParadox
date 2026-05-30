@@ -28,7 +28,7 @@ The **Binary Snap** - the forced transition from the bottom element ⊥ to the m
 
 The existence of a minimum nonzero element is not assumed - it follows from the structure of the bottom element itself, using only the standard bottom-element axiom of join-semilattice theory. The derivation is machine-verified in Lean 4 - independent reviewers can check the conclusion mechanically, without relying on the argument's prose presentation.
 
-The identification of ⊥ across the framework's layers - algebraic, topological, information-theoretic, and categorical - is a modeling commitment, detailed in [Axiomatic Commitments](#axiomatic-commitments). The identification of the framework's ε₀ with the proof-theoretic ordinal of PA (Gentzen 1936) is addressed in the [Question Register](#question-register).
+The identification of ⊥ across the framework's layers - algebraic, topological, information-theoretic, and categorical - is a modeling commitment, detailed in [Axiomatic Commitments](#axiomatic-commitments). The relationship between the framework's ε₀ and the proof-theoretic ordinal of PA (Gentzen 1936) is addressed in the [Question Register](#question-register).
 
 The derivation chain is:
 
@@ -40,7 +40,7 @@ The derivation chain is:
 → **ZP-A D2** (a nonzero state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap follows from A4, the standard bottom element axiom; AX-1 was redundant)
 
-The snap is also irreversible: ZP-B C3 (Lean-verified) establishes that there is no continuous path from any nonzero state back to ⊥. This follows, through the MC-1 identification of ⊥ with the 2-adic zero, from the ultrametric topology of Q₂ as a corollary of the same clopen ball structure that forces the snap.
+The snap is also irreversible: ZP-B C3 (Lean-verified) establishes that there is no continuous path from any nonzero state back to ⊥. This follows from the ultrametric structure of Q₂: the total disconnectedness of Q₂ (established via the clopen ball structure in C3) makes any return path discontinuous. The connection to the lattice layer relies on the MC-1 identification of ⊥ with the 2-adic zero, detailed in [Axiomatic Commitments](#axiomatic-commitments).
 
 This framework introduces no snap-specific axioms. T-SNAP follows from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
 

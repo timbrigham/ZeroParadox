@@ -10,11 +10,11 @@ For the formal framework index, Lean verification, and complete question registe
 
 ## What This Is
 
-The Zero Paradox proves that a minimum non-bottom element in a join-semilattice is structurally forced - not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint, confirmed by an additional hypothesis not derivable from the axioms alone (see Axiomatic Commitments in README.md).
+The Zero Paradox proves that a minimum non-bottom element in a join-semilattice is structurally forced - not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 
-No snap-specific axioms appear anywhere in the framework. The Binary Snap is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap - the forced transition from the bottom element ⊥ to the minimum non-bottom state - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
 
 ---
 
@@ -47,7 +47,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra.pdf) → [ZP-B](ZP-B_pAdic_Topology.pdf) → [ZP-C](ZP-C_Information_Theory.pdf) → [ZP-D](ZP-D_State_Layer.pdf) → [ZP-E](ZP-E_Bridge_Document.pdf) → [ZP-F](ZP-F_The_Counterexamples.pdf) → [ZP-I](ZP-I_Inside_Zero.pdf) (via [ZP-J](ZP-J_Self_Reference.pdf) and [ZP-J AFA Addendum](ZP-J_AFA_Addendum.pdf) and [ZP-K](ZP-K_Computational_Grounding.pdf)) → [ZP-L](ZP-L_Incomputability_Convergence.pdf) (axiom footprint convergence, ε₀ as snap threshold, canonical snap map) → [ZP-M](ZP-M_Kleene_Ordinal_Bridge.pdf) (Kleene-ordinal-2-adic bridge, hereditary fixed-point gap closure) - see [README](README.md) for the full formal index and Lean verification record
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra.pdf) → [ZP-B](ZP-B_pAdic_Topology.pdf) → [ZP-C](ZP-C_Information_Theory.pdf) → [ZP-D](ZP-D_State_Layer.pdf) → [ZP-E](ZP-E_Bridge_Document.pdf) → [ZP-F](ZP-F_The_Counterexamples.pdf) → [ZP-J](ZP-J_Self_Reference.pdf) → [ZP-J AFA Addendum](ZP-J_AFA_Addendum.pdf) → [ZP-K](ZP-K_Computational_Grounding.pdf) → [ZP-I](ZP-I_Inside_Zero.pdf) → [ZP-L](ZP-L_Incomputability_Convergence.pdf) (axiom footprint convergence, ε₀ as snap threshold, canonical snap map) → [ZP-M](ZP-M_Kleene_Ordinal_Bridge.pdf) (Kleene-ordinal-2-adic bridge, hereditary fixed-point gap closure) - see [README](README.md) for the full formal index and Lean verification record
 
 **Category theory extension:** [ZP-G](ZP-G_Category_Theory.pdf) → [ZP-H](ZP-H_Categorical_Bridge.pdf) (self-contained after ZP-E)
 
