@@ -402,9 +402,30 @@ def key_result_box(title, body_text):
 
 
 # ── Prose vocabulary and version gate ─────────────────────────────────────────
-# HTML entity pattern — used by validate_drawing() to catch entities in String() primitives.
-# String() does not parse HTML; entities render literally. Use Unicode characters directly.
+# HTML entity pattern — entities in String() drawing primitives render literally.
+# The patch below fires at d.add() time, no per-diagram call required.
 _HTML_ENT_PAT = re.compile(r'&(?:#\d+|#x[0-9a-fA-F]+|[a-zA-Z]\w*);')
+
+def _zp_patched_drawing_add(self, shape, *args, **kwargs):
+    """Drop-in replacement for Drawing.add() — checks for HTML entities in String text."""
+    from reportlab.graphics.shapes import String as _S
+    if isinstance(shape, _S) and _HTML_ENT_PAT.search(shape.text or ''):
+        print()
+        print('!' * 70)
+        print('  ZP BUILD BLOCKED — HTML entity in String() drawing primitive')
+        print(f'  ↳ {shape.text!r}')
+        print()
+        print('  String() does not parse HTML — entities render literally in the PDF.')
+        print('  Fix: replace &#NNNN; / &name; with the actual Unicode character.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+    return _orig_drawing_add(self, shape, *args, **kwargs)
+
+# Patch at import time — fires for every d.add(String(...)) across all build scripts.
+from reportlab.graphics.shapes import Drawing as _Drawing
+_orig_drawing_add = _Drawing.add
+_Drawing.add = _zp_patched_drawing_add
 
 # Terms banned from rendered prose. Source: vocabulary_reference.md §1.
 # To suppress on a specific call site: append  # ZP-NOCHECK: <reason>

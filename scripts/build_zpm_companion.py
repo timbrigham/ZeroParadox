@@ -1,6 +1,9 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.1 | May 2026
+Version 1.2 | May 2026
+v1.2: fix HTML entities in String() drawing primitives (rendered literally);
+      add validate_drawing() to both diagram functions; increase triangle_diagram
+      dh 3.2→3.5 in to clear top-circle geometry overflow.
 v1.1: vocab fix: null state → ⊥.
 v1.0: Initial release. Covers snapEmbed type bridge, triangle diagram,
       diagonalization unification, and R-M.1 on DA-1 Path 2 boundary.
@@ -11,13 +14,13 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 
 def triangle_diagram():
     """The Kleene-Ordinal-2adic triangle."""
     dw = TW
-    dh = 3.2 * inch  # 3.2 * 72 = 230 pts; content top ~210, bottom ~30
+    dh = 3.5 * inch  # 3.5 * 72 = 252 pts; top circle top = 222, dh-10 = 242 ✓
 
     d = Drawing(dw, dh)
 
@@ -41,34 +44,30 @@ def triangle_diagram():
         d.add(Circle(vx, vy, r, fillColor=INDIGO_LITE,
                      strokeColor=INDIGO, strokeWidth=1.5))
 
-    # Vertex labels (inside circles)
-    d.add(String(top_x - 14,   top_y - 6,   '&#949;&#8320; / c&#8321;',
+    # Vertex labels (inside circles) — Unicode directly; String() does not parse entities
+    d.add(String(top_x - 14,   top_y - 6,   'ε₀ / c₁',
                  fontSize=10, fontName='DV-B', fillColor=INDIGO))
-    d.add(String(left_x - 18,  left_y - 6,  'c&#8320; = &#8869;',
+    d.add(String(left_x - 18,  left_y - 6,  'c₀ = ⊥',
                  fontSize=10, fontName='DV-B', fillColor=INDIGO))
-    d.add(String(right_x - 18, right_y - 6, '0 &#8712; &#8484;&#8322;',
+    d.add(String(right_x - 18, right_y - 6, '0 ∈ ℤ₂',
                  fontSize=10, fontName='DV-B', fillColor=INDIGO))
 
     # Edge labels
-    # Left edge: ordinal snap
     d.add(String(left_x - 80, (top_y + left_y) / 2,
                  'ordinal snap',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
-    # Right edge: snapEmbed
     d.add(String(right_x + 8, (top_y + right_y) / 2,
                  'snapEmbed',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
-    # Bottom edge: 2-adic convergence
     d.add(String(cx - 55, left_y - 18,
                  '2-adic convergence',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
 
-    # Layer labels
     d.add(String(14, 10,
                  'Three objects, three edges, one formal context — zpm_triangle co-proves all three.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
 
-    return d
+    return validate_drawing(d, dh, 'triangle_diagram')
 
 
 def diag_pattern_diagram():
@@ -109,13 +108,13 @@ def diag_pattern_diagram():
                  'Ordinal (set theory)',
                  fontSize=9, fontName='DV-B', fillColor=INDIGO))
     d.add(String(mid + 18, box_y + box_h - 44,
-                 'Operation: &#945; &#8614; &#969;^&#945;',
+                 'Operation: α ↦ ω^α',
                  fontSize=8, fontName='DV', fillColor=GREY_TEXT))
     d.add(String(mid + 18, box_y + box_h - 60,
-                 'Fixed point: &#949;&#8320; = &#969;^&#949;&#8320; (minimal)',
+                 'Fixed point: ε₀ = ω^ε₀ (minimal)',
                  fontSize=8, fontName='DV', fillColor=GREY_TEXT))
     d.add(String(mid + 18, box_y + box_h - 76,
-                 'Domain: ordinals + &#969;-tower iteration',
+                 'Domain: ordinals + ω-tower iteration',
                  fontSize=8, fontName='DV', fillColor=GREY_TEXT))
     d.add(String(mid + 18, box_y + box_h - 92,
                  'Forced by: least fixed-point theorem',
@@ -126,7 +125,7 @@ def diag_pattern_diagram():
                  'Same schema, different domains — no shared machinery between the two.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
 
-    return d
+    return validate_drawing(d, dh, 'diag_pattern_diagram')
 
 
 def build():
