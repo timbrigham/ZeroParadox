@@ -235,8 +235,8 @@ def build():
 
     E += [
         Paragraph('Why zero is an informational singularity', CS['title']),
-        Paragraph('Information Theory | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('Information Theory', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '

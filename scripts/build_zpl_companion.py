@@ -262,8 +262,8 @@ def build():
     # ── Title block ───────────────────────────────────────────────────────────
     E += [
         Paragraph('The Ordinal Summit', CS['title']),
-        Paragraph('Where the Tower Snaps to c&#8321; | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion  |  May 2026', CS['meta']),
+        Paragraph('Where the Tower Snaps to c&#8321;', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and examples. '
             'It is not the formal document &#8212; every claim here restates a result already '

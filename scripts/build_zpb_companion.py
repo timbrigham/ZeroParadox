@@ -157,8 +157,8 @@ def build():
 
     E += [
         Paragraph('Why the geometry of state space is non-Archimedean', CS['title']),
-        Paragraph('p-Adic Topology | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('p-Adic Topology', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '

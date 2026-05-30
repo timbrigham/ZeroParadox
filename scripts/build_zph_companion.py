@@ -174,8 +174,8 @@ def build():
 
     E += [
         Paragraph('Four maps, one structure', CS['title']),
-        Paragraph('Categorical Bridge | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | May 2026', CS['meta']),
+        Paragraph('Categorical Bridge', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '

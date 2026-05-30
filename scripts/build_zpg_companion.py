@@ -188,8 +188,8 @@ def build():
 
     E += [
         Paragraph('Structure independent of domain', CS['title']),
-        Paragraph('Category Theory | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('Category Theory', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '

@@ -321,8 +321,8 @@ def build():
 
     E += [
         Paragraph('The engine runs in reverse', CS['title']),
-        Paragraph('Inside Zero | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | May 2026', CS['meta']),
+        Paragraph('Inside Zero', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '
