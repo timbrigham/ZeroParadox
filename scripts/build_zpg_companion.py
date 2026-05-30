@@ -1,5 +1,6 @@
 """
 Build ZP-G Illustrated Companion (v1.6)
+v1.8: category_diagram — fix overlapping text: use fixed cy=68, dh=2.2in, remove redundant internal title string.
 v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
 v1.6: Strip version number from companion footer.
 v1.4: Title "Structure without substance" → "Structure independent of domain" — removes
@@ -22,12 +23,12 @@ PURPLE = colors.HexColor('#7B2FBE')
 
 def category_diagram():
     """Diagram: objects as dots, morphisms as arrows, initial object 0."""
-    dw, dh = TW, 2.0 * inch
+    dw, dh = TW, 2.2 * inch  # 2.2*72=158 pts; content top ~135, content bottom ~20
     d = Drawing(dw, dh)
 
     # Positions for objects
     cx = dw / 2
-    cy = dh / 2
+    cy = 68  # fixed — do not derive from dh; A/B labels at cy+67=135 < dh-10=148 ✓
 
     # Object 0 (initial) at left
     ox = cx - 160
@@ -81,10 +82,6 @@ def category_diagram():
     d.add(String(bx - 4, by + 12, 'B', fontSize=10, fontName='DV-B', fillColor=PURPLE))
     d.add(String(cx2 - 4, cy2 - 18, 'C', fontSize=10, fontName='DV-B', fillColor=PURPLE))
 
-    # Title
-    d.add(String(dw/2 - 155, dh - 14,
-                 'A category: objects (dots), morphisms (arrows), one initial object 0',
-                 fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
 def functor_diagram():
@@ -149,7 +146,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
