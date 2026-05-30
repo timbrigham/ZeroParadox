@@ -137,7 +137,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.11'
+VERSION = '1.12'
 
 
 def build():
@@ -166,10 +166,11 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
-          Paragraph('What &#8869; = {&#8869;} Really Means, and Why It Matters', CS['subtitle']),
+          Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
           Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
           Paragraph(
-              'This companion explains the ideas in plain language. It covers both '
+              'This companion explains the ideas in plain language for ZP-J, one layer of '
+              'the Zero Paradox framework. It covers both '
               'ZP-J Self-Reference and the ZP-J AFA Addendum. Every formal result stated '
               'here restates a theorem already proved in those technical documents. '
               'Informal analogies and illustrative parallels are included to build '
