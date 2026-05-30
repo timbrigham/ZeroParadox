@@ -1,6 +1,8 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.8 | May 2026
+Version 1.9 | May 2026
+v1.9: Cover and disclaimer updated to reflect that this companion serves both
+      ZP-J Self-Reference and ZP-J AFA Addendum.
 v1.8: quine_atom_diagram — replace HTML entities (&#8869;) with literal ⊥ in
       String() drawing primitives; entities render literally there, not as glyphs.
 v1.7: vocab fix: ZP-J v2.0 → ZP-J.
@@ -133,7 +135,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -165,10 +167,12 @@ def build():
           Paragraph('What &#8869; = {&#8869;} Really Means &#8212; and Why It Matters', CS['subtitle']),
           Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
           Paragraph(
-              'This companion explains the ideas in plain language. It is not the formal '
-              'document &#8212; every claim here restates a result already proved in the technical '
-              'document ZP-J Self-Reference. Consult that document for the authoritative '
-              'mathematics.', CS['disc'])]
+              'This companion explains the ideas in plain language. It covers both '
+              'ZP-J Self-Reference and the ZP-J AFA Addendum. Every formal result stated '
+              'here restates a theorem already proved in those technical documents. '
+              'Informal analogies and illustrative parallels are included to build '
+              'intuition, not as proof claims. Consult the technical documents for '
+              'the authoritative mathematics.', CS['disc'])]
 
     # ── What Is ZP-J Doing? ──────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
@@ -187,7 +191,7 @@ def build():
         'of T-EXEC, not a choice. CC-1 (S&#8320; = &#8869;) is a derived consequence of '
         'the algebra with no additional axioms.'))
     E.append(cbody(
-        'Version 2.0 of ZP-J extends the original result in four directions: it shows that '
+        'ZP-J extends the original result in four directions: it shows that '
         'the proof requires no appeal to the axiom of Dependent Choice; it reduces the '
         'typeclass commitments layer by layer down to a pure valuation argument; it '
         'demonstrates the structure on two concrete types; and it proves the full '
@@ -314,8 +318,9 @@ def build():
         'a kind of depth. v&#8322;(2x) = v&#8322;(x) + 1 for any x &#8800; 0. So 2x = x '
         'forces v&#8322;(x) = v&#8322;(x) + 1 &#8212; impossible for finite valuation. '
         'Only 0, with v&#8322;(0) = &#8734;, satisfies 2 &#215; 0 = 0. '
-        'The proof structure is the same in both cases; the formal bridge connecting '
-        'the 2-adic type to the abstract ZPSemilattice framework is identified as future work.'))
+        'Informally, the argument has the same shape in both settings. The formal bridge '
+        'between the 2-adic type and the abstract ZPSemilattice framework is future work, '
+        'not a proved result in the current documents.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy &#8212; The elevator that only goes up', [
         'Imagine an elevator that, when you press a button, moves one floor higher &#8212; '
