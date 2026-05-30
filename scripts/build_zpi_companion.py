@@ -2,7 +2,8 @@
 Build ZP-I Illustrated Companion (v1.7)
 v1.7: depth diagram legibility — font sizes 6.5 → 7.5–8pt; proper Unicode math
       notation (‖·‖, ≤, 2⁻ⁿ); removed duplicate S3 norm label; simplified
-      limit annotation to single line "(depth → ∞)".
+      limit annotation to single line "(depth → ∞)"; moved norm labels below
+      circles to eliminate overlap with "= ⊥" sub-label.
 v1.6: vocab fix: null state → ⊥.
 v1.5: Strip version number from companion footer.
 v1.4: Strip Lean file version numbers from Lean 4 Verification section.
@@ -113,17 +114,18 @@ def depth_diagram():
             d.add(String(sx + 12, sy - 3, state_subs[i], fontSize=8, fontName='DVS',
                          fillColor=COMP_SLATE))
 
-    # Norm labels: one per state, placed to the right of S0/S1, above-left of S3.
-    # S2 omitted (crowded zone). No duplicate for S3.
-    norms_right = [(0, '‖S₀‖ = 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
-    for i_s, ns in norms_right:
+    # Norm labels: placed BELOW each circle (sy - 8 radius - 3 gap - text baseline).
+    # This avoids collision with the "= ⊥" sub-label which sits to the right of the circle.
+    # S2 omitted (S3 norm nearby). S3 placed above-left (limit indicator owns the right).
+    norms_below = [(0, '‖S₀‖ = 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
+    for i_s, ns in norms_below:
         sx, sy = state_xs[i_s], state_ys[i_s]
-        d.add(String(sx + 12, sy - 4, ns, fontSize=8, fontName='DV-I',
-                     fillColor=colors.HexColor('#666666')))
-    # S3 norm label above-left (limit indicator occupies the right side)
+        d.add(String(sx - len(ns) * 2.4, sy - 22, ns, fontSize=8, fontName='DV-I',
+                     fillColor=colors.HexColor('#555555')))
+    # S3: above-left so it doesn't collide with the limit-indicator arrow
     sx3, sy3 = state_xs[3], state_ys[3]
     d.add(String(sx3 - 72, sy3 + 14, '‖S₃‖ ≤ 2⁻³', fontSize=8, fontName='DV-I',
-                 fillColor=colors.HexColor('#666666')))
+                 fillColor=colors.HexColor('#555555')))
 
     # Limit indicator: dotted line + arrow pointing right from S3, then "→ 0"
     # Arrow: from S3.x+10 to S3.x+10+40, at S3.y level
