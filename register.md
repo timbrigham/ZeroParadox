@@ -14,8 +14,8 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-E Bridge Document | v3.17 | ZP-E_Bridge_Document.pdf | v1.11 | STALE | v1.11 comp: Goodstein/proof-theoretic context for ε₀; K-3/K-4 vocab fixes (null state → ⊥; ontological → structural) — formal:323bd69e comp:1b4c17b0 |
 | ZP-G Category Theory | v1.10 | ZP-G_Category_Theory.pdf | v1.8 | STALE | v1.10: hash sync — script modified without full workflow; rebuilt to sync; comp v1.8: category_diagram overlap fix — fixed cy, dh increased, redundant title removed — formal:f9ceca3f comp:0673dc77 |
 | ZP-H Categorical Bridge | v1.14 | ZP-H_Categorical_Bridge.pdf | v1.13 | STALE | v1.14: K-13 vocab fix + endnote version corrected (v1.10→v1.14); comp v1.13: "any state change" scoped to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix — formal:1e26ca53 comp:5e23b02f |
-| ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.11 | STALE | Companion v1.11: "Zero Paradox" expanded in disclaimer (AR fix) — formal:298f2e30 comp:230bb099 |
-| ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.12 | STALE | v2.0: Sections VII-X added; comp v1.12: "Zero Paradox" expanded; "Really" dropped from subtitle (AR fix) — formal:f39311c3 comp:3f13006e |
+| ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.11 | STALE | Companion v1.11: docstring updated; KleeneStructure condition in key result box (ER fix) — formal:298f2e30 comp:0396b4ff |
+| ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.12 | STALE | v2.0: Sections VII-X added; comp v1.12: docstring version corrected; stale formal-doc version removed (ER fix) — formal:f39311c3 comp:d7dfa3c9 |
 | ZP-J AFA Addendum | v1.1 | ZP-J_AFA_Addendum.pdf | N/A | N/— | v1.1: COMP_BLUE header banner added — formal:c6be6b33 |
 | ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.8 | STALE | Companion v1.8: strip footer version — formal:8c00d4aa comp:1286a4a7 |
 | ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.4 | STALE | Companion v1.4: strip footer version — formal:7825902f comp:fb745d9b |

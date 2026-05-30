@@ -1,7 +1,9 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.11 | May 2026
-v1.11: Em-dashes removed from subtitle and first body paragraph (AR fix).
+Version 1.12 | May 2026
+v1.12: "Zero Paradox" expanded in disclaimer; "Really" dropped from subtitle (AR fix).
+v1.11: Em-dashes removed from subtitle and first body paragraph; opening paragraph
+       rewritten to lead with AFA mathematical content (AR/ER fix).
 v1.10: Header banner color corrected INDIGO → COMP_BLUE (matches all other companions).
 v1.9: Cover and disclaimer updated to reflect that this companion serves both
       ZP-J Self-Reference and ZP-J AFA Addendum.
@@ -19,7 +21,6 @@ v1.2: quine_atom_diagram: dh increased (2.0 → 2.8 in), cy changed to fixed 110
       "⊥ = {⊥}" label (cy - r_outer - 18) no longer falls at y=-18 below the drawing box.
 v1.1: Corrected CC-2 status to metatheoretic commitment within ZF+AFA; commitment shifts
 to the AFA setting itself. CC-1 remains fully discharged axiom-free. Aligns with R-J.0.
-Formal doc: ZP-J Self-Reference v1.1.
 v1.0: Initial release. Covers T-EXEC (Quine atom = ⊥), the three-way equivalence,
 and the closure of CC-1 and CC-2 as derived theorems rather than freestanding commitments.
 """

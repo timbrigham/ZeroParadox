@@ -1,27 +1,23 @@
 """
-Build ZP-I Illustrated Companion (v1.8)
-v1.8: well diagram — black outline on white state labels; DA-2 label centered horizontally.
-v1.7: depth diagram legibility — font sizes 6.5 → 7.5–8pt; proper Unicode math
-      notation (‖·‖, ≤, 2⁻ⁿ); removed duplicate S3 norm label; simplified
-      limit annotation to single line "(depth → ∞)"; moved norm labels below
-      circles to eliminate overlap with "= ⊥" sub-label.
-v1.6: vocab fix: null state → ⊥.
+Build ZP-I Illustrated Companion
+Version 1.11 | May 2026
+v1.11: "Zero Paradox" expanded in disclaimer (AR fix).
+v1.10: T-IZ step table updated to 4 steps all proved via t_iz_complete (AFA/Kleene path);
+       disclaimer rewritten as self-contained; KleeneStructure condition added to key result box.
+v1.9: Cover title retitled "Going Forward Brings You Back to Zero" (AR fix).
+v1.8: Well diagram state labels — black outline for visibility; DA-2 label centered.
+v1.7: Depth diagram legibility — font sizes, Unicode math notation, norm labels below circles.
+v1.6: Vocab fix: null state → ⊥.
 v1.5: Strip version number from companion footer.
 v1.4: Strip Lean file version numbers from Lean 4 Verification section.
-v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
-      Opening paragraph revised — "existence necessarily emerges from null" replaced with
-      structural consequence framing.
+v1.3: Disclaimer and opening paragraph updated.
 v1.2: (prior)
+v1.1: R-IZ-A closure explained; engine section and Step 1 source updated.
+v1.0: Initial release.
+
 Standalone companion for ZP-I: Inside Zero.
-
 Accessibility target: 2 years of college math.
-Assumes reader has read ZP-E companion. Builds on T-SNAP vocabulary.
-
 Lean status reflected: ZPI.lean (current) — all proofs filled, no sorryAx.
-New in v1.1: R-IZ-A closure explained — each step in the chain is a genuine
-advance, derived from ZP-A axioms via h_strict_from_r1_t3 + IsDepthChain.
-Engine section and Step 1 source updated. Lean status box updated.
-New in v1.0: t_iz_r1_t3_geometric_bound (geometric norm bound from R1+T3).
 """
 
 import os, math
@@ -480,7 +476,8 @@ def build():
         'Every maximal ascending chain (S₀, S₁, S₂, ...) in the Zero '
         'Paradox framework — starting at ⊥, ascending monotonically by ZP-A T3, '
         'and unbounded by ZP-A R1 — converges to a successor null ⊥′ in the 2-adic '
-        'metric. At the limit: DA-1 fires, T-SNAP fires, ⊥′ is born. The chain '
+        'metric. At the limit: DA-1 fires (the successor semilattice carries a '
+        'KleeneStructure, per ZP-K), T-SNAP fires, ⊥′ is born. The chain '
         'generates its own successor by forward motion alone. No new axioms required.'))
     E.append(sp(6))
 
