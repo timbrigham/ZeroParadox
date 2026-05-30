@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.10 | May 2026
+Version 1.11 | May 2026
+v1.11: Add Goodstein/proof-theoretic context for ε₀ in Four Descriptions section.
 v1.10: Strip version number from companion footer.
 v1.9: Strip version numbers from DA-1 historical narrative in body prose.
 v1.7: Title "AX-1 becomes a theorem" → "the main causality axiom becomes a theorem"; remember
@@ -176,7 +177,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.10'
+VERSION = '1.11'
 
 
 def build():
@@ -233,6 +234,14 @@ def build():
         'The Binary Snap — the transition from nothing (⊥) to the first state (ε₀) — looks '
         'different depending on which mathematical language you use. ZP-E\'s central result is '
         'that all four descriptions are consistent: one event, four angles.'))
+    E.append(cbody(
+        'ε₀ is the proof-theoretic ordinal of Peano Arithmetic, the minimum ordinal whose '
+        'well-ordering PA cannot prove. Goodstein\'s theorem is the standard witness: every '
+        'Goodstein sequence eventually terminates, but PA cannot prove this; the proof requires '
+        'transfinite induction up to ε₀. The same object has a second characterization as the '
+        'minimum fixed point of the map α ↦ ω^α. The Binary Snap arrives at ε₀ via this '
+        'fixed-point route, reaching the same object that the PA strength analysis identifies '
+        'from the proof-theoretic side.'))
     E.append(four_framework_diagram())
     E.append(ccaption(
         'The Binary Snap (amber center) described simultaneously in all four frameworks. '
@@ -264,7 +273,7 @@ def build():
     E.append(cbody(
         'DA-1 is now a Derived Proposition rather than a freestanding Design Principle. '
         'Previously DA-1 was an honest but freestanding commitment: "a configuration at P₀ '
-        'is necessarily executing." Now it follows from ZP-A CC-2: ⊥ = {⊥}. The null state '
+        'is necessarily executing." Now it follows from ZP-A CC-2: ⊥ = {⊥}. The bottom element ⊥ '
         'is a Quine atom — a self-containing object with no external position from which it '
         'could be interpreted as a static description. A thing that interprets itself cannot '
         'be waiting for an external interpreter. So ⊥ at P₀ is necessarily executing. '
@@ -284,7 +293,7 @@ def build():
         '(1) CC-2/R3 (ZP-A): ⊥ = {⊥} is a Quine atom — it interprets itself, leaving no '
         'external position from which it could be read as a static description (above). '
         '(2) L-INF (ZP-C): the surprisal of ⊥ diverges to infinity — no finite static '
-        'distribution can represent the null state. '
+        'distribution can represent ⊥. '
         '(3) AIT bridge: at the incompressibility threshold P₀, the description of ⊥ '
         'is maximally incompressible — K(c₁|n)/|c₁| = 1. A string that cannot be compressed '
         'beyond itself must be its own execution; a static-description reading is ruled out by '
@@ -301,7 +310,7 @@ def build():
         'IsQuineAtom(&#8869; : MachinePhase) is a proved theorem. '
         'Path 1 (AFA self-execution) and Path 3 (computational Kleene fixed point) are now '
         'formally IN LEAN SCOPE. Path 2 (informational bridge — unbounded surprisal → necessarily '
-        'executing) remains an ontological claim outside Lean scope. '
+        'executing) remains a structural claim outside current Lean formalization. '
         'The formal grounding of DA-1 is therefore: DP-2 plus two Lean-verified structural paths.'))
     E.append(tsnap_chain_diagram())
     E.append(ccaption(

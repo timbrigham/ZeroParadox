@@ -11,7 +11,7 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 | ZP-F The Counterexamples | v1.3 | ZP-F_The_Counterexamples.pdf | v1.11 | Y/Y | v1.3: K-16 vocab fix; comp v1.11: hash sync rebuild — formal:ed2402fd comp:c6961e53 |
 | ZP-C Information Theory | v1.15 | ZP-C_Information_Theory.pdf | v2.5 | Y/Y | v1.15: K-19/K-21 vocab fixes; comp v2.5: "First Atomic State" → "minimum nonzero state ε₀" in JSD prose; "Informational Extremity" → "Unbounded Surprisal" — formal:a7dbf220 comp:07a9fa41 |
 | ZP-D State Layer | v1.11 | ZP-D_State_Layer.pdf | v1.10 | Y/Y | v1.11: K-11/K-18 vocab fixes — "Topological Isolation" → "Clopen Separation" in DP-1; "first atomic state" → "minimum nonzero state"; comp v1.10: K-12 — formal:7f432037 comp:44f708e2 |
-| ZP-E Bridge Document | v3.17 | ZP-E_Bridge_Document.pdf | v1.10 | Y/Y | v3.17: K-22 vocab fix + endnote version corrected (v3.11→v3.17) — formal:323bd69e comp:f877b143 |
+| ZP-E Bridge Document | v3.17 | ZP-E_Bridge_Document.pdf | v1.11 | Y/Y | v1.11 comp: Goodstein/proof-theoretic context for ε₀; K-3/K-4 vocab fixes (null state → ⊥; ontological → structural) — formal:323bd69e comp:1b4c17b0 |
 | ZP-G Category Theory | v1.10 | ZP-G_Category_Theory.pdf | v1.6 | Y/Y | v1.10: hash sync — script modified without full workflow; rebuilt to sync; comp v1.6: strip footer version — formal:f9ceca3f comp:9ecf37e9 |
 | ZP-H Categorical Bridge | v1.14 | ZP-H_Categorical_Bridge.pdf | v1.6 | Y/Y | v1.14: K-13 vocab fix + endnote version corrected (v1.10→v1.14); comp v1.6: K-15 — formal:1e26ca53 comp:b3c6f1fb |
 | ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.5 | Y/Y | Companion v1.5: strip footer version — formal:298f2e30 comp:c78d212d |
