@@ -402,6 +402,10 @@ def key_result_box(title, body_text):
 
 
 # ── Prose vocabulary and version gate ─────────────────────────────────────────
+# HTML entity pattern — used by validate_drawing() to catch entities in String() primitives.
+# String() does not parse HTML; entities render literally. Use Unicode characters directly.
+_HTML_ENT_PAT = re.compile(r'&(?:#\d+|#x[0-9a-fA-F]+|[a-zA-Z]\w*);')
+
 # Terms banned from rendered prose. Source: vocabulary_reference.md §1.
 # To suppress on a specific call site: append  # ZP-NOCHECK: <reason>
 _BANNED_PROSE = (
@@ -509,6 +513,7 @@ def validate_drawing(drawing, dh, name='diagram'):
     """
     from reportlab.graphics.shapes import Circle, Rect, String, Line, PolyLine, Group
     ys = []
+    entity_violations = []
 
     def _collect(shapes):
         for shape in shapes:
@@ -520,6 +525,8 @@ def validate_drawing(drawing, dh, name='diagram'):
                 elif isinstance(shape, String):
                     fs = getattr(shape, 'fontSize', 10) or 10
                     ys.extend([shape.y, shape.y + fs])
+                    if _HTML_ENT_PAT.search(shape.text or ''):
+                        entity_violations.append(shape.text)
                 elif isinstance(shape, Line):
                     ys.extend([shape.y1, shape.y2])
                 elif isinstance(shape, PolyLine):
@@ -532,6 +539,20 @@ def validate_drawing(drawing, dh, name='diagram'):
                 pass
 
     _collect(drawing.contents)
+
+    if entity_violations:
+        print()
+        print('!' * 70)
+        print(f'  ZP BUILD BLOCKED — HTML entities in String() in "{name}"')
+        for v in entity_violations:
+            print(f'  ↳ {v!r}')
+        print()
+        print('  String() primitives do not parse HTML entities — they render literally.')
+        print('  Fix: replace &#NNNN; / &name; with the actual Unicode character.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+
     if not ys:
         return drawing
 
@@ -634,6 +655,7 @@ def _palette_gate():
     print('  [x] Banned vocabulary in body()/cbody() prose')
     print('  [x] Version numbers in body()/cbody() prose')
     print('  [x] Diagram geometry — call validate_drawing(d, dh, name) in each diagram fn')
+    print('  [x] HTML entities in String() drawing primitives — use Unicode directly')
     print()
     print('  Remaining checklist (not auto-checked):')
     print('  [ ] Font stack: DV (sans UI) / DVS (body + math) — never raw Unicode')

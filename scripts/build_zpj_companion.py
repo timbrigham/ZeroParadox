@@ -1,6 +1,8 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.7 | May 2026
+Version 1.8 | May 2026
+v1.8: quine_atom_diagram — replace HTML entities (&#8869;) with literal ⊥ in
+      String() drawing primitives; entities render literally there, not as glyphs.
 v1.7: vocab fix: ZP-J v2.0 → ZP-J.
 v1.6: Five new sections added for ZP-J content — the valuation argument,
       the abstraction chain, two concrete models, Aczel's DC question, and
@@ -44,11 +46,11 @@ def quine_atom_diagram():
     r_inner = 28
     d.add(Circle(cx, cy, r_inner, fillColor=INDIGO,
                  strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(cx - 9, cy - 6, '&#8869;',
+    d.add(String(cx - 9, cy - 6, '⊥',
                  fontSize=16, fontName='DV-B', fillColor=WHITE))
 
     # Label: ⊥ = {⊥}
-    d.add(String(cx - 28, cy - r_outer - 18, '&#8869;  =  {&#8869;}',
+    d.add(String(cx - 28, cy - r_outer - 18, '⊥  =  {⊥}',
                  fontSize=13, fontName='DV-B', fillColor=INDIGO))
 
     # Self-membership arrow
@@ -59,8 +61,8 @@ def quine_atom_diagram():
     d.add(Line(bx + 5, by - 6, bx, by, strokeColor=INDIGO, strokeWidth=1.5))
 
     d.add(String(14, 10,
-                 'The Quine atom: &#8869; is a member of itself. '
-                 'The outer ring is the set {&#8869;}; the inner disk is &#8869; as an element.',
+                 'The Quine atom: ⊥ is a member of itself. '
+                 'The outer ring is the set {⊥}; the inner disk is ⊥ as an element.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
@@ -131,7 +133,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
