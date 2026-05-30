@@ -138,7 +138,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.12'
+VERSION = '1.13'
 
 
 def build():
@@ -170,8 +170,11 @@ def build():
           Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
           Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
           Paragraph(
-              'This companion explains the ideas in plain language for ZP-J, one layer of '
-              'the Zero Paradox framework. It covers both '
+              'This companion explains in plain language the proof that &#8869; = {&#8869;} '
+              '(the Quine atom of AFA set theory) is the unique bottom element of a lattice. '
+              'This is one result in the Zero Paradox project (ZP-J), connecting '
+              'AFA set theory, p-adic topology, and lattice algebra. '
+              'It covers both '
               'ZP-J Self-Reference and the ZP-J AFA Addendum. Every formal result stated '
               'here restates a theorem already proved in those technical documents. '
               'Informal analogies and illustrative parallels are included to build '
