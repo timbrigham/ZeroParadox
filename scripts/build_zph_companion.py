@@ -238,9 +238,9 @@ def build():
         '0 has infinite v₂, and no finite accumulation of finite values reaches infinity. '
         'In ℚ₂, sequences can get metrically close to 0, but the valuation gap cannot be closed. '
         'In ZP-A, ⊥ is the bottom of the lattice and the axioms forbid any non-trivial return. '
-        'In ZP-C, the informational cost of approaching the null state diverges — infinite '
+        'In ZP-C, the informational cost of approaching ⊥ diverges — infinite '
         'cost means no finite path reaches it. In ZP-D, the basis vector e₀ is orthogonal to '
-        'every non-null state — a right-angle separation that cannot be gradually closed.'))
+        'every nonzero state — a right-angle separation that cannot be gradually closed.'))
     E.append(remember_box(
         'The power set example shows that the structural floor property is not exotic: it appears '
         'in the most elementary object in set theory. What is non-trivial about the ZP framework '
@@ -290,8 +290,8 @@ def build():
         'realization of AX-G2. FB is a full Lean 4 functor (fb_functor, sorry-free) — '
         'not a proxy witness.'))
     E.append(cbody(
-        '<b>FC (Information Theory):</b> The initial object 0 maps to the Null State '
-        'distribution P = (1, 0). Each morphism maps to an informational transition with '
+        '<b>FC (Information Theory):</b> The initial object 0 maps to the zero distribution '
+        'P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The informational singularity of ZP-G maps to the diverging '
         'surprisal of ZP-C T2. FC has a concrete ZPCategory categorical witness '
@@ -369,7 +369,7 @@ def build():
     E.append(ccaption(
         'All four frameworks describe the Binary Snap (T-SNAP) in their own language. '
         'The vertical line marks the moment of the Snap. '
-        'Left: the null state. Right: the first non-null state.'))
+        'Left: ⊥. Right: the minimum nonzero state.'))
     E.append(sp(6))
 
     E.append(remember_box(

@@ -334,7 +334,7 @@ def build():
 
     E.append(Paragraph('The Binary Snap Costs Exactly 1 Bit', CS['h1']))
     E.append(cbody(
-        'The Jensen-Shannon Divergence (JSD) between the Null State P = (1,0) and the minimum '
+        'The Jensen-Shannon Divergence (JSD) between the zero distribution P = (1,0) and the minimum '
         'nonzero state &#949;<sub>0</sub>, Q = (0,1), is exactly 1 bit. These distributions are derived from AX-B1 - '
         'not assumed. The Snap is the minimum informational event possible.'))
     E.append(jsd_diagram())
@@ -345,7 +345,7 @@ def build():
 
     E.append(Paragraph('Turning On Is a State (L-RUN)', CS['h1']))
     E.append(cbody(
-        'Can a program output the null state ⊥ without passing through any non-null intermediate '
+        'Can a program output ⊥ without passing through any nonzero intermediate '
         'state? The answer is no — because the act of turning on is itself a state.'))
     E.append(cbody(
         'Any program that executes must pass through a "first instruction fetched" configuration '
@@ -383,7 +383,7 @@ def build():
         'a weakness — it is how the framework keeps track of what is proven versus what is chosen.'))
     E.append(cbody(
         'CC-2 (Modeling Commitment): The Turing machine initial configuration c₀ is identified '
-        'with the null state ⊥. This is the same pattern as CC-1 in ZP-A, which identifies the '
+        'with ⊥. This is the same pattern as CC-1 in ZP-A, which identifies the '
         'initial state S₀ with ⊥. Neither identification is forced by the definitions — both are '
         'deliberate choices that make the multi-layer framework cohere.'))
     E.append(cbody(

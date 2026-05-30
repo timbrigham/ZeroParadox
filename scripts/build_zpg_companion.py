@@ -284,7 +284,7 @@ def build():
         'Not a new assumption: it follows from antisymmetry of the ZP-A partial order '
         'and is independently confirmed by ZP-B C3 (topological irreversibility in ℚ₂).'))
     E.append(cbody(
-        '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes the null state as a '
+        '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes ⊥ as a '
         '<i>Quine atom</i> — ⊥ = {⊥}, meaning ⊥ is its own only member. '
         'A self-containing object has no external interpreter: it IS its own interpretation. '
         'In categorical terms, this is exactly what AX-G1 and AX-G2 together express: '
@@ -295,7 +295,7 @@ def build():
         'Remember: 0 here is not the number zero. It is a label for the initial object of the '
         'category — the privileged starting point from which all structure originates. '
         'The label was chosen because 0 plays the same role as ⊥ (bottom) in ZP-A, '
-        '0 ∈ ℚ₂ in ZP-B, and the Null State in ZP-C.'))
+        '0 ∈ ℚ₂ in ZP-B, and ⊥ in ZP-C.'))
     E.append(sp(6))
 
     # ── Key results ────────────────────────────────────────────────────────────
@@ -347,7 +347,7 @@ def build():
     E.append(sp(8))
 
     E.append(cbody(
-        '<b>What comes next:</b> ZP-H (the Categorical Bridge) constructs four concrete '
+        '<b>What comes next:</b> ZP-H constructs four concrete '
         'functors from C to the four domain frameworks of the Zero Paradox, verifying that '
         'the abstract categorical structure is faithfully realized in lattice algebra, '
         'p-adic topology, information theory, and Hilbert space. See the ZP-H Illustrated '

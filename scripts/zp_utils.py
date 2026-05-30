@@ -198,6 +198,7 @@ def fix(text):
 
 def body(text, style='body'):
     """Paragraph in the given S style key (default: body)."""
+    prose_check(text)
     return Paragraph(fix(text), S[style])
 
 def hr():
@@ -216,6 +217,7 @@ def derived(text):
 
 def cbody(t):
     """Companion body paragraph."""
+    prose_check(t)
     return Paragraph(fix(t), CS['body'])
 
 def ccaption(t):
@@ -399,6 +401,165 @@ def key_result_box(title, body_text):
     return t
 
 
+# ── Prose vocabulary and version gate ─────────────────────────────────────────
+# Terms banned from rendered prose. Source: vocabulary_reference.md §1.
+# To suppress on a specific call site: append  # ZP-NOCHECK: <reason>
+_BANNED_PROSE = (
+    'null state',
+    'null distribution',
+    'first atomic state',
+    'informational extremity',
+    'informational incompressibility',
+    'state-transition structure',
+    'description-instantiation gap',
+    'gödel ceiling',
+    'categorical bridge',
+    'cross-framework bridge',
+    'assembly step',
+    'topologically isolated',
+    'metric isolation',
+    'converging at the bottom element',
+)
+_VERSION_IN_PROSE = re.compile(r'\bv\d+\.\d+\b', re.IGNORECASE)
+
+def _caller_nocheck():
+    """Return True if the first non-zp_utils call site has # ZP-NOCHECK."""
+    for frame in inspect.stack():
+        fp = frame.filename
+        if not fp or os.path.basename(fp) == 'zp_utils.py':
+            continue
+        try:
+            with open(fp, encoding='utf-8') as fh:
+                lines = fh.readlines()
+            if 0 < frame.lineno <= len(lines):
+                return '# ZP-NOCHECK' in lines[frame.lineno - 1]
+        except OSError:
+            pass
+        return False
+    return False
+
+def prose_check(text, name=''):
+    """
+    Vocabulary and version gate — called automatically by body() and cbody().
+    Fails the build on banned terms or version numbers in rendered prose.
+    Suppress on a specific call site with:  # ZP-NOCHECK: <reason>
+    """
+    low = text.lower()
+    violations = []
+    for term in _BANNED_PROSE:
+        if term in low:
+            violations.append(f'  banned term: "{term}"')
+    m = _VERSION_IN_PROSE.search(text)
+    if m:
+        violations.append(f'  version number in prose: "{m.group()}"')
+    if not violations:
+        return
+
+    # Find caller location for reporting and ZP-NOCHECK detection
+    caller_file, caller_line_no, caller_line = '', 0, ''
+    for frame in inspect.stack():
+        fp = frame.filename
+        if not fp or os.path.basename(fp) == 'zp_utils.py':
+            continue
+        caller_file = os.path.basename(fp)
+        caller_line_no = frame.lineno
+        try:
+            with open(fp, encoding='utf-8') as fh:
+                lines = fh.readlines()
+            if 0 < frame.lineno <= len(lines):
+                caller_line = lines[frame.lineno - 1].rstrip()
+        except OSError:
+            pass
+        break
+
+    if '# ZP-NOCHECK' in caller_line:
+        label = name or 'prose'
+        print(f'  [ZP-NOCHECK suppressed {len(violations)} violation(s) in {label}]')
+        return
+
+    print()
+    print('!' * 70)
+    label = f'"{name}"' if name else 'prose'
+    print(f'  ZP BUILD BLOCKED — prose violation in {label}')
+    print(f'  Location: {caller_file}:{caller_line_no}')
+    if caller_line:
+        print(f'  Line: {caller_line[:120]}')
+    for v in violations:
+        print(v)
+    print()
+    print('  Fix the term or append  # ZP-NOCHECK: <reason>  to the call site.')
+    print('  See .claude-local/vocabulary_reference.md Section 1.')
+    print('!' * 70)
+    print()
+    raise SystemExit(1)
+
+
+# ── Diagram geometry gate ──────────────────────────────────────────────────────
+def validate_drawing(drawing, dh, name='diagram'):
+    """
+    Geometry bounds gate for companion diagram Drawing objects.
+    Call at the end of every diagram function:
+        return validate_drawing(d, dh, 'diagram_name')
+
+    Enforces the CLAUDE.md layout rules:
+        max content y  <  dh - 10   (top margin)
+        min content y  >  5         (bottom margin)
+
+    Raises SystemExit(1) on violation.
+    """
+    from reportlab.graphics.shapes import Circle, Rect, String, Line, PolyLine, Group
+    ys = []
+
+    def _collect(shapes):
+        for shape in shapes:
+            try:
+                if isinstance(shape, Circle):
+                    ys.extend([shape.cy - shape.r, shape.cy + shape.r])
+                elif isinstance(shape, Rect):
+                    ys.extend([shape.y, shape.y + shape.height])
+                elif isinstance(shape, String):
+                    fs = getattr(shape, 'fontSize', 10) or 10
+                    ys.extend([shape.y, shape.y + fs])
+                elif isinstance(shape, Line):
+                    ys.extend([shape.y1, shape.y2])
+                elif isinstance(shape, PolyLine):
+                    pts = shape.points
+                    for i in range(1, len(pts), 2):
+                        ys.append(pts[i])
+                elif isinstance(shape, Group):
+                    _collect(shape.contents)
+            except AttributeError:
+                pass
+
+    _collect(drawing.contents)
+    if not ys:
+        return drawing
+
+    min_y, max_y = min(ys), max(ys)
+    violations = []
+    if max_y > dh - 10:
+        violations.append(
+            f'  top overflow: max_y={max_y:.1f} > dh-10={dh-10:.1f}  (dh={dh:.1f})')
+    if min_y < 5:
+        violations.append(
+            f'  bottom overflow: min_y={min_y:.1f} < 5')
+
+    if violations:
+        print()
+        print('!' * 70)
+        print(f'  ZP BUILD BLOCKED — diagram geometry "{name}"')
+        for v in violations:
+            print(v)
+        print()
+        print('  Fix: increase dh or adjust element positions (cy, r, label offsets).')
+        print('  See CLAUDE.md §Companion PDF Diagram Layout Standards.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+
+    return drawing
+
+
 # ── Palette enforcement gate ──────────────────────────────────────────────────
 # Protected palette names: redefining these in a build script without a
 # # ZP-OVERRIDE: comment is a hard error that aborts the build.
@@ -468,12 +629,16 @@ def _palette_gate():
     print('=' * 70)
     print(f'  ZP BUILD — palette OK ({os.path.basename(caller_path)})')
     print()
+    print('  Auto-checked (hard failures):')
+    print('  [x] Palette constants — no unapproved shadowing')
+    print('  [x] Banned vocabulary in body()/cbody() prose')
+    print('  [x] Version numbers in body()/cbody() prose')
+    print('  [x] Diagram geometry — call validate_drawing(d, dh, name) in each diagram fn')
+    print()
     print('  Remaining checklist (not auto-checked):')
     print('  [ ] Font stack: DV (sans UI) / DVS (body + math) — never raw Unicode')
     print('  [ ] Body paragraphs through body()/cbody() — not bare Paragraph()')
     print('  [ ] Table cells are Paragraph objects — never plain strings')
-    print('  [ ] Version number: companion tagline meta line ONLY')
-    print('  [ ] No version numbers in body prose, disclaimers, or cross-doc refs')
     print('  [ ] Table grid lines use GRID constant, not inline HexColor')
     print()
     print('  Post-build: null-char verification (Standards doc §7)')

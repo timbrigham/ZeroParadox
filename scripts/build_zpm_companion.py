@@ -181,7 +181,7 @@ def build():
         'proved separately in ZP-K and ZP-L and show that they are looking at the same '
         'structure from different angles.'))
     E.append(cbody(
-        'ZP-K proved that the initial state c₀ (the null state, ⊥) is a '
+        'ZP-K proved that the initial state c₀ (⊥) is a '
         'Kleene fixed point — a program that is its own program, with no external '
         'executor required. ZP-L proved that the ordinal ε₀ is the exact snap '
         'threshold: the tower ω, ω^ω, ω^ω^ω, … approaches ε₀ from below, and '
@@ -313,7 +313,7 @@ def build():
         'the frame with the ordinal result.'))
     E.append(cbody(
         'Path 2 (informational) remains outside this frame. L-INF (ZP-C) says that '
-        'the null state has unbounded information content — no finite description can '
+        '⊥ has unbounded information content — no finite description can '
         'capture it. This is structurally analogous to the diagonalization pattern, '
         'but the analogy has not been made formal.'))
     E.append(cbody(

@@ -125,3 +125,42 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP-M Kleene-Ordinal Bridge | v1.0 (new) |
 
 **Next threshold:** v2.2 on next substantive reviewer feedback round; v3.0 on new formal layer (ZP-N constructive ordinal validation remains the current candidate).
+
+---
+
+## v2.2 - PENDING
+
+**Why this release:** K-series vocabulary round (K-11 through K-24) applied across all layers — systematic replacement of imprecise terms (topological isolation → clopen separation, first atomic state → minimum nonzero state, null state → ⊥). New sorry-free Lean proofs in ZPJ_APG. ZP-E companion Goodstein/proof-theoretic context for ε₀.
+
+**What changed:**
+- ZP-B p-Adic Topology: v1.8 → v1.9 — K-17 vocab fix ("First Atomic State" → "minimum nonzero state, ε₀")
+- ZP-C Information Theory: v1.14 → v1.15 — K-19/K-21 vocab fixes; companion v2.4 → v2.5
+- ZP-D State Layer: v1.10 → v1.11 — K-11/K-18 vocab fixes; companion v1.9 → v1.10
+- ZP-E Bridge Document: v3.16 → v3.17 — K-22 vocab fix; companion v1.10 → v1.11 (Goodstein/proof-theoretic context for ε₀)
+- ZP-F The Counterexamples: v1.2 → v1.3 — K-16 vocab fix; companion v1.10 → v1.11
+- ZP-G Category Theory: v1.9 → v1.10 — hash sync rebuild; companion v1.5 → v1.6
+- ZP-H Categorical Bridge: v1.13 → v1.14 — K-13 vocab fix; companion v1.5 → v1.6
+- ZP-J Self-Reference: ZPJ_APG.lean — val_iterate and scale_iterate_unique_fp proved sorry-free
+- Foreword: v2.1 → v2.5 — porthole precision, ZF/ZFC scope, fix() coverage
+- Philosophical Question: v1.5 → v1.11 — bridge → connecting argument, scope fixes
+- README/GUIDE: Question Register Open Questions link; vocabulary and prose precision pass
+- LEAN_CUSTOM_REGISTRY.md: [ZP-CUSTOM] inline comments across 13 Lean files
+
+**Document versions at v2.2:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.14 |
+| ZP-B p-Adic Topology | v1.9 |
+| ZP-C Information Theory | v1.15 |
+| ZP-D State Layer | v1.11 |
+| ZP-E Bridge Document | v3.17 |
+| ZP-F The Counterexamples | v1.3 |
+| ZP-G Category Theory | v1.10 |
+| ZP-H Categorical Bridge | v1.14 |
+| ZP-I Inside Zero | v1.9 |
+| ZP-J Self-Reference | v2.0 |
+| ZP-K Computational Grounding | v1.6 |
+| ZP-L Incomputability Convergence | v1.0 |
+| ZP-M Kleene-Ordinal Bridge | v1.0 |
+
+**Next threshold:** v2.3 on next substantive reviewer feedback round; v3.0 on new formal layer.

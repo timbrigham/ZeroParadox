@@ -199,8 +199,8 @@ def build():
         'corresponds to orthogonality in H. States with no continuous path between them are '
         'represented as perpendicular vectors.'))
     E.append(cbody(
-        'ZP-D works with exactly two foundational states: the Null State (⊥, non-existence) '
-        'and the first non-null state (ε₀, existence). This is not a simplifying assumption — '
+        'ZP-D works with exactly two foundational states: ⊥ (non-existence) '
+        'and the minimum nonzero state (ε₀, existence). This is not a simplifying assumption — '
         'it is the irreducible minimum. The core question is whether any transition from ⊥ to '
         'a first state is possible, and for that question n=2 is the smallest meaningful case. '
         'No claim in ZP-D requires n > 2. Binary is the logical ground floor, not a placeholder '

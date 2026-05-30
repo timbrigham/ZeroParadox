@@ -176,7 +176,7 @@ def build():
     E.append(cbody(
         'The 2-adic numbers take a different route. As a number system, &#8474;&#8322; also has no '
         'smallest nonzero element — you can always find something smaller. What changes is the '
-        '<i>topology</i>: in &#8474;&#8322;, the null state (0) and every nonzero state live in '
+        '<i>topology</i>: in &#8474;&#8322;, zero (0) and every nonzero state live in '
         'completely separate clopen regions — entirely disjoint, with no continuous path between them. '
         'The gap is not enforced by the number system running out of small values. It is built into '
         'the geometry as a hard topological barrier. This is why &#8474;&#8322; — the 2-adic number '

@@ -332,7 +332,7 @@ def build():
     # ── What ZP-I Is Doing ─────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-I Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E proved that the transition from null (⊥) to the first non-null state (ε₀) '
+        'ZP-E proved that the transition from ⊥ to the minimum nonzero state (ε₀) '
         'is a structural consequence of the lattice axioms — derived, not assumed. But '
         'ZP-E left a question open: what happens '
         'after the Snap? The chain of states ascends — but does it ascend forever? And if '

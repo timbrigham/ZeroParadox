@@ -365,7 +365,7 @@ def build():
     E.append(Paragraph('VII. Two Kinds of Incompressibility', CS['h1']))
     E.append(cbody(
         'This brings us to a subtle but important point. ZP-C includes the result '
-        'L-INF: the null state &#8869; has unbounded surprisal — no finite external '
+        'L-INF: &#8869; has unbounded surprisal — no finite external '
         'description can capture it. A careful reader might ask: is this the same '
         'as saying &#8869; is algorithmically incompressible, like a random real number?'))
     E.append(cbody(

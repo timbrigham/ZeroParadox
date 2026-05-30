@@ -1,7 +1,7 @@
 """
 Build ZP-J Illustrated Companion
 Version 1.6 | May 2026
-v1.6: Five new sections added for ZP-J v2.0 content — the valuation argument,
+v1.6: Five new sections added for ZP-J content — the valuation argument,
       the abstraction chain, two concrete models, Aczel's DC question, and
       APG decoration uniqueness. Key result box updated.
 v1.5: Strip version number from companion footer.
@@ -295,7 +295,7 @@ def build():
     E.append(cbody(
         'T-EXEC uses the AFA typeclass fields directly. But there is a deeper question: '
         '<i>why</i> is &#8869; the unique fixed point? The valuation argument answers this, '
-        'and it is the insight behind ZP-J v2.0\'s abstraction chain.'))
+        'and it is the insight behind ZP-J\'s abstraction chain.'))
     E.append(cbody(
         'Imagine every element of the lattice has a "depth" &#8212; a value in the extended '
         'naturals {0, 1, 2, &#8230;, &#8734;} measuring how far it is from &#8869;. '
@@ -329,7 +329,7 @@ def build():
     E.append(Paragraph('The Abstraction Chain: Peeling Back the Layers', CS['h1']))
     E.append(cbody(
         'AFAStructure has three typeclass fields &#8212; three things you must prove for '
-        'your lattice before ZP-J\'s results apply. ZP-J v2.0 shows that these three fields '
+        'your lattice before ZP-J\'s results apply. ZP-J shows that these three fields '
         'can themselves be derived from something simpler, in two steps:'))
     E.append(abstraction_chain_table())
     E.append(sp(6))
@@ -348,7 +348,7 @@ def build():
     # ── Two Concrete Models ──────────────────────────────────────────────────
     E.append(Paragraph('Two Concrete Models', CS['h1']))
     E.append(cbody(
-        'The abstract chain is only useful if real types can actually run it. ZP-J v2.0 '
+        'The abstract chain is only useful if real types can actually run it. ZP-J '
         'demonstrates two concrete instances, taking different paths through the chain.'))
     E.append(cbody(
         '<b>&#8469;&#8734; (the extended naturals):</b> Take the natural numbers extended '
@@ -414,7 +414,7 @@ def build():
         'labelling each vertex so that the label at each vertex is assembled from the labels '
         'of all its immediate successors.'))
     E.append(cbody(
-        'ZP-J v2.0 proves this for abstract DecorationUniverses &#8212; types that carry '
+        'ZP-J proves this for abstract DecorationUniverses &#8212; types that carry '
         'the ValuationStructure and a collect operation. The result: for any '
         '<b>finite</b> APG, any two valid decorations must agree at every vertex.'))
     E.append(cbody(
@@ -441,7 +441,7 @@ def build():
 
     # ── Key Result Box ───────────────────────────────────────────────────────
     E.append(key_result_box(
-        'Key Results &#8212; ZP-J v2.0',
+        'Key Results &#8212; ZP-J',
         'T-EXEC (axiom-free, Lean 4): IsQuineAtom(q) &#8596; q = &#8869;. '
         'The Quine atom, the order minimum, and the join identity are the same element. '
         'CC-1 (S&#8320; = &#8869;) is a derived theorem &#8212; axiom-free in Lean 4. '
