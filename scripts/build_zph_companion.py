@@ -1,5 +1,9 @@
 """
-Build ZP-H Illustrated Companion (v1.6)
+Build ZP-H Illustrated Companion (v1.11)
+v1.11: subtitle/footer 'Categorical Bridge' → 'Functor Coherence'; footer date April → May 2026.
+v1.10: CC-1 described as derived (not free commitment) throughout; 'independent' → 'distinct'; T-H2 surprisal claim descoped.
+v1.9: snap diagram — '(null)' → '(⊥)'; scope 'any sequence' to Q₂ in T-H2 prose; fix four_functor cy to constant.
+v1.8: T-SNAP diagram — ε₀ Unicode label; shorten right-side framework labels; fix cy to constant.
 v1.7: vocab fix: null state → ⊥.
 v1.6: K-15 vocabulary fix — "topological isolation" → "clopen separation" in DP-1 description.
 v1.5: Strip version number from companion footer.
@@ -25,8 +29,8 @@ def four_functor_diagram():
     d = Drawing(dw, dh)
 
     cx = dw / 2
-    # Shift cy up slightly so bottom boxes have clearance for caption string
-    cy = dh / 2 + 14
+    # fixed — do not derive from dh; boxes at cy±65±17=135/55 pts; dh-10=235, min=5 ✓
+    cy = 136
 
     # Central C box
     box_w, box_h = 64, 36
@@ -97,13 +101,13 @@ def snap_convergence_diagram():
     dw, dh = TW, 1.9 * inch
     d = Drawing(dw, dh)
 
-    cy = dh / 2
+    cy = 68  # fixed — do not derive from dh; T-SNAP label at cy+44=112 < dh-10=127 ✓
     lx = 30
     rx = dw - 30
     snap_x = dw / 2
 
     domain_colors = [TEAL, GREEN, RED, INDIGO]
-    domain_labels = ['Lattice: first join', 'p-Adic: clopen jump', 'Info: 1-bit cost', 'Hilbert: right-angle shift']
+    domain_labels = ['Lattice', 'p-Adic', 'Info', 'Hilbert']
     y_offsets = [30, 10, -10, -30]
 
     # Draw lines from left (0) to snap, then snap to right (e0)
@@ -115,7 +119,7 @@ def snap_convergence_diagram():
     # Left dot: 0
     d.add(Circle(lx + 18, cy, 8, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
     d.add(String(lx + 12, cy - 6, '0', fontSize=9, fontName='DV-B', fillColor=WHITE))
-    d.add(String(lx + 4, cy - 20, '(null)', fontSize=7.5, fontName='DV-I',
+    d.add(String(lx + 4, cy - 20, '(⊥)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
 
     # Snap marker (vertical line)
@@ -124,7 +128,7 @@ def snap_convergence_diagram():
 
     # Right dot: e0
     d.add(Circle(rx - 18, cy, 8, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(rx - 26, cy - 6, 'e0', fontSize=8, fontName='DV-B', fillColor=WHITE))
+    d.add(String(rx - 26, cy - 6, 'ε₀', fontSize=8, fontName='DV-B', fillColor=WHITE))
     d.add(String(rx - 30, cy - 20, '(first state)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
 
@@ -135,7 +139,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.7'
+VERSION = '1.11'
 
 
 def build():
@@ -147,7 +151,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-H Companion  |  Categorical Bridge  |  April 2026')
+            'Zero Paradox ZP-H Companion  |  Functor Coherence  |  May 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -174,7 +178,7 @@ def build():
 
     E += [
         Paragraph('Four maps, one structure', CS['title']),
-        Paragraph('Categorical Bridge', CS['subtitle']),
+        Paragraph('Functor Coherence', CS['subtitle']),
         Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
@@ -201,7 +205,8 @@ def build():
         'realizations of the same abstract structure. They are not four separate arguments '
         'for the same conclusion — they are four different windows looking at one thing. '
         'This agreement is coherence: all four frameworks are built on the same structural '
-        'commitments (A1-A4, AX-B1, CC-1), so the Binary Snap appearing in all of them '
+        'axioms (A1-A4, AX-B1) and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J), '
+        'so the Binary Snap appearing in all of them '
         'reflects a shared foundation, not independent confirmation from unrelated starting points.'))
     E.append(four_functor_diagram())
     E.append(ccaption(
@@ -248,7 +253,8 @@ def build():
         'is that the same property appears in four analytic settings — topology, algebra, '
         'information theory, Hilbert space — each with its own structural reason for why the '
         'bottom cannot be approached. These settings are not independent: they share the '
-        'foundational commitments (A1-A4, AX-B1, CC-1) that produce this behavior in all four. '
+        'axioms (A1-A4, AX-B1) and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J) '
+        'that produce this behavior in all four. '
         'ZP-H verifies that these four reasons are consistent.'))
     E.append(sp(6))
 
@@ -327,8 +333,8 @@ def build():
     E.append(Paragraph('Two Descriptions of One Obstruction', CS['h1']))
     E.append(cbody(
         'ZP-G said: there is no morphism from any non-initial object back to 0 (AX-G2). '
-        'ZP-C said: the surprisal along any sequence approaching 0 diverges — the '
-        'accumulated informational cost grows without bound. These look like two different '
+        'ZP-C said: the informational cost of approaching 0 is unbounded '
+        '— the accumulated surprisal grows without bound. These look like two different '
         'statements about the same thing. Are they compatible?'))
     E.append(cbody(
         'T-H2 proves they are. The two characterizations are the same obstruction seen from '
@@ -375,10 +381,10 @@ def build():
 
     E.append(remember_box(
         'The agreement across four frameworks reflects coherence, not independent confirmation. '
-        'All four share the same structural commitments — A1-A4 (lattice axioms), AX-B1 '
-        '(binary existence), and CC-1 (⊥ as ground state). The Binary Snap appears in all '
-        'four because those commitments are built into each framework, not because four '
-        'separate arguments from unrelated starting points happened to agree.'))
+        'All four share the same axioms — A1-A4 (lattice axioms), AX-B1 (binary existence) '
+        '— and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J). The Binary '
+        'Snap appears in all four because those foundations are built into each framework, '
+        'not because four separate arguments from unrelated starting points happened to agree.'))
     E.append(sp(6))
 
     E.append(key_result_box('T-H3: The Binary Snap Under All Four Functors',
@@ -388,12 +394,13 @@ def build():
         'the minimal first step. This agreement is coherence across shared structural '
         'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
         'T-SNAP is a derived theorem inherited here from ZP-E. '
-        'The only additional design premise is DP-1 (ZP-D).'))
+        'The only additional design premise is DP-1 (ZP-D). '
+        'CC-1 (S₀ = ⊥) is derived in ZP-J, not a free commitment.'))
     E.append(sp(8))
 
     E.append(cbody(
         '<b>What this means:</b> The Binary Snap is not a construct of any one framework. '
-        'It is a structural fact that survives translation into four independent mathematical '
+        'It is a structural fact that survives translation into four distinct mathematical '
         'languages. ZP-H is the document that verifies this translation is faithful.'))
 
     print(f'Building: {out_path}')

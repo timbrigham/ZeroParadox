@@ -6,6 +6,10 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-H_Illustrated_Companion_v1_10.pdf](ZP-H_Illustrated_Companion_v1_10.pdf) | 2026-05-30 | ZP-H companion v1.10 superseded by v1.11: subtitle/footer 'Categorical Bridge' replaced with 'Functor Coherence'; footer date corrected to May 2026. |
+| [ZP-H_Illustrated_Companion_v1_9.pdf](ZP-H_Illustrated_Companion_v1_9.pdf) | 2026-05-30 | ZP-H companion v1.9 superseded by v1.10: CC-1 described as derived throughout; 'independent' → 'distinct' mathematical languages; T-H2 surprisal claim descoped. |
+| [ZP-H_Illustrated_Companion_v1_8.pdf](ZP-H_Illustrated_Companion_v1_8.pdf) | 2026-05-30 | ZP-H companion v1.8 superseded by v1.9: '(null)' → '(⊥)' in snap diagram; Q₂ scope added to T-H2 sequence claim; four_functor cy fixed to constant. |
+| [ZP-H_Illustrated_Companion_v1_7.pdf](ZP-H_Illustrated_Companion_v1_7.pdf) | 2026-05-30 | ZP-H companion v1.7 superseded by v1.8: T-SNAP diagram — ε₀ Unicode label (was ASCII 'e0'), shortened framework labels to prevent overflow, fixed cy to constant. |
 | [ZP-G_Category_Theory_v1_9.pdf](ZP-G_Category_Theory_v1_9.pdf) | 2026-05-29 | ZP-G v1.9 superseded by v1.10: hash sync rebuild — script had been modified without going through the full workflow; no substantive content change. |
 | [ZP-H_Categorical_Bridge_v1_13.pdf](ZP-H_Categorical_Bridge_v1_13.pdf) | 2026-05-29 | ZP-H v1.13 superseded by v1.14: K-13 vocabulary fix — "topological isolation" replaced with "clopen separation" throughout DP-1 and related prose. |
 | [ZP-E_Bridge_Document_v3_16.pdf](ZP-E_Bridge_Document_v3_16.pdf) | 2026-05-29 | ZP-E v3.16 superseded by v3.17: K-22 vocabulary fix — "informational extremity" replaced with "unbounded surprisal (L-INF)" in DA-1 Section II bridge prose. |
