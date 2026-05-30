@@ -139,6 +139,8 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | Formal verification (Lean/Rocq) | ZP-A through ZP-M verified; ZP-M adds snapEmbed type bridge (MachinePhase → ℤ_[2]), hfp closure, zpm_triangle (ordinal-2adic-phase triangle), both_fixed_points_exist (Kleene-ordinal structural homology) - May 2026 |
 | Classical.choice necessity | **Open** - ZP-L and ZP-M inherit Classical.choice via Mathlib ordinal and analysis infrastructure. Whether the dependency is structurally forced by ZP snap geometry or incidental to Mathlib's implementation is an open question. Testable via constructive ordinal fixed-point theory over ONote/NONote (Lean 4 CNF notation). Future ZP-N (constructive validation layer). |
 
+Open questions are discussed publicly in the [GitHub Discussions Open Questions category](https://github.com/timbrigham/ZeroParadox/discussions/categories/open-questions).
+
 ---
 
 ## Version History
