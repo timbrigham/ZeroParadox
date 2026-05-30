@@ -4,17 +4,17 @@
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
-For the formal framework index, Lean verification, and complete question register, see [README.md](README.md).
+For the formal framework index, Lean verification, and complete question register, see [README](README.md).
 
 ---
 
 ## What This Is
 
-The Zero Paradox proves that the first non-null state in a join-semilattice is forced - not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the null element across several mathematical frameworks; each one independently locates the same forcing.
+The Zero Paradox proves that a minimum non-bottom element in a join-semilattice is structurally forced - not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint, confirmed by an additional hypothesis not derivable from the axioms alone (see Axiomatic Commitments in README.md).
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 
-No snap-specific axioms appear anywhere in the framework. The Binary Snap is a structural consequence of the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - a commitment any model of additive states would adopt independently.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
 
 ---
 
@@ -47,7 +47,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
-**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra.pdf) → [ZP-B](ZP-B_pAdic_Topology.pdf) → [ZP-C](ZP-C_Information_Theory.pdf) → [ZP-D](ZP-D_State_Layer.pdf) → [ZP-E](ZP-E_Bridge_Document.pdf) → [ZP-F](ZP-F_The_Counterexamples.pdf) → [ZP-I](ZP-I_Inside_Zero.pdf) (via [ZP-J](ZP-J_Self_Reference.pdf) and [ZP-K](ZP-K_Computational_Grounding.pdf)) → [ZP-L](ZP-L_Incomputability_Convergence.pdf) (axiom footprint convergence, ε₀ as snap threshold, canonical snap map) - see [README.md](README.md) for the full formal index and Lean verification record
+**Mathematician:** [ZP-A](ZP-A_Lattice_Algebra.pdf) → [ZP-B](ZP-B_pAdic_Topology.pdf) → [ZP-C](ZP-C_Information_Theory.pdf) → [ZP-D](ZP-D_State_Layer.pdf) → [ZP-E](ZP-E_Bridge_Document.pdf) → [ZP-F](ZP-F_The_Counterexamples.pdf) → [ZP-I](ZP-I_Inside_Zero.pdf) (via [ZP-J](ZP-J_Self_Reference.pdf) and [ZP-K](ZP-K_Computational_Grounding.pdf)) → [ZP-L](ZP-L_Incomputability_Convergence.pdf) (axiom footprint convergence, ε₀ as snap threshold, canonical snap map) → [ZP-M](ZP-M_Kleene_Ordinal_Bridge.pdf) (Kleene-ordinal-2-adic bridge, hereditary fixed-point gap closure) - see [README](README.md) for the full formal index and Lean verification record
 
 **Category theory extension:** [ZP-G](ZP-G_Category_Theory.pdf) → [ZP-H](ZP-H_Categorical_Bridge.pdf) (self-contained after ZP-E)
 
@@ -70,10 +70,12 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-E Illustrated Companion](ZP-E_Illustrated_Companion.pdf) | ZP-E | Four-framework convergence, T-SNAP derivation chain |
 | [ZP-F Illustrated Companion](ZP-F_Illustrated_Companion.pdf) | ZP-F | ℝ vs Q₂ structural comparison, pi curve density diagram |
 | [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
-| [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across all frameworks |
+| [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across the four ZP frameworks |
 | [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |
-| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J | Quine atom diagram (⊥ = {⊥}), three-way equivalence table, CC-1/CC-2 as derived theorems |
-| [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Four-way equivalence diagram, computational Quine, DA-1 formal closure |
+| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J | Quine atom diagram (⊥ = {⊥}), three-way equivalence table, CC-1/CC-2 as derived propositions |
+| [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Four-way equivalence diagram, computational Quine, execution argument Lean verification |
+| [ZP-L Illustrated Companion](ZP-L_Illustrated_Companion.pdf) | ZP-L | Ordinal tower with ε₀ snap threshold, dual convergence diagram |
+| [ZP-M Illustrated Companion](ZP-M_Illustrated_Companion.pdf) | ZP-M | Kleene-Ordinal-2-adic triangle, diagonalization schema |
 
 ---
 
@@ -81,7 +83,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 
 | File | Description |
 |------|-------------|
-| [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The question that motivated the entire framework - why does something exist rather than nothing? - and what the mathematics discovered about it, including what it dissolves and what it snaps. |
+| [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The philosophical question that motivated the framework, and what the formal results say about it. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
 
 ---
@@ -108,6 +110,6 @@ Previous document versions are also kept in the [historical/](historical/) folde
 
 ---
 
-*For the formal framework index, axiomatic commitments, question register, and Lean verification, see [README.md](README.md).*
+*For the formal framework index, axiomatic commitments, question register, and Lean verification, see [README](README.md).*
 
 *Zero Paradox | April 2026*

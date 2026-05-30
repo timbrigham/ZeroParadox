@@ -345,7 +345,7 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 ### Common Updates
 
 **Adding a new formal document:**
-1. Add to the Formal Ontology Documents table in README.md
+1. Add to the Formal Framework Documents table in README.md
 2. Add a companion row to the Illustrated Companion Documents table in GUIDE.md (if companion exists)
 3. Add to the Mathematician reading path in GUIDE.md
 4. Use clean display name (no extension, no version) in both files

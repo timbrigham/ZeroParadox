@@ -13,7 +13,7 @@ For plain-language introduction, illustrated companions, and reading paths, see 
 
 - [The Central Result](#the-central-result)
 - [The Framework](#the-framework)
-  - [Formal Ontology Documents](#formal-ontology-documents)
+  - [Formal Framework Documents](#formal-framework-documents)
   - [Formal Verification (Lean 4)](#formal-verification-lean-4)
 - [Axiomatic Commitments](#axiomatic-commitments)
 - [Question Register](#question-register)
@@ -24,23 +24,23 @@ For plain-language introduction, illustrated companions, and reading paths, see 
 
 ## The Central Result
 
-The **Binary Snap** - the forced transition from the null state ⊥ to the minimum nonzero state ε₀ - is a **theorem**, not an axiom.
+The **Binary Snap** - the forced transition from the bottom element ⊥ to the minimum nonzero state ε₀ - is a **theorem**, not an axiom.
 
-The emergence of determinate state is not posited as a starting assumption - it is derived from the structure of the null state itself, using only the standard bottom-element axiom of join-semilattice theory. The derivation is machine-verified in Lean 4 - independent reviewers can check the conclusion mechanically, without relying on the argument's prose presentation.
+The existence of a minimum nonzero element is not assumed - it follows from the structure of the bottom element itself, using only the standard bottom-element axiom of join-semilattice theory. The derivation is machine-verified in Lean 4 - independent reviewers can check the conclusion mechanically, without relying on the argument's prose presentation.
 
-The cross-framework identification of ⊥ across layers - how the algebraic, topological, information-theoretic, and categorical null-analogs are identified as a single object (MC-1) - and its grounding status are detailed in [Axiomatic Commitments](#axiomatic-commitments). The identification of the framework's ε₀ with the Cantor/Gentzen proof-theoretic ordinal is addressed in the [Question Register](#question-register).
+The identification of ⊥ across the framework's layers - algebraic, topological, information-theoretic, and categorical - is a modeling commitment, detailed in [Axiomatic Commitments](#axiomatic-commitments). The identification of the framework's ε₀ with the proof-theoretic ordinal of PA (Gentzen 1936) is addressed in the [Question Register](#question-register).
 
 The derivation chain is:
 
 **P₀** (incompressibility threshold, ZP-C D1)  
 → **DA-1** (instantiation of a configuration at P₀ constitutes an execution event, ZP-E)  
 → **D7** (machine configuration definition, ZP-C)  
-→ **L-RUN** (execution is a non-null state change, ZP-C)  
-→ **TQ-IH** (no program outputs ⊥ without a non-null intermediate state, ZP-C)  
-→ **ZP-A D2** (a non-null state change from ⊥ is a join - the Binary Snap)  
+→ **L-RUN** (execution is a nonzero state change, ZP-C)  
+→ **TQ-IH** (no program outputs ⊥ without a nonzero intermediate state, ZP-C)  
+→ **ZP-A D2** (a nonzero state change from ⊥ is a join - the Binary Snap)  
 → **T-SNAP** (Binary Snap follows from A4, the standard bottom element axiom; AX-1 was redundant)
 
-The snap is also irreversible: ZP-B C3 (Lean-verified) establishes that there is no continuous path from any non-zero state back to ⊥. This follows from the ultrametric topology of Q₂ as a corollary of the same clopen ball structure that forces the snap - no additional axiom required.
+The snap is also irreversible: ZP-B C3 (Lean-verified) establishes that there is no continuous path from any nonzero state back to ⊥. This follows, through the MC-1 identification of ⊥ with the 2-adic zero, from the ultrametric topology of Q₂ as a corollary of the same clopen ball structure that forces the snap.
 
 This framework introduces no snap-specific axioms. T-SNAP follows from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
 
@@ -50,11 +50,11 @@ This framework introduces no snap-specific axioms. T-SNAP follows from A4 - the 
 
 ## The Framework
 
-### Formal Ontology Documents
+### Formal Framework Documents
 
 | File | Document | Version | Contents |
 |------|----------|---------|----------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.14 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. Additive ontology. CC-2: ⊥ = {⊥} (Quine atom, ZF + AFA, Forced Metatheoretic Commitment). R3: CC-2 eliminates static-description state for ⊥, given D7 exhaustiveness (ZP-E) as background. |
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.14 | Join-semilattice (L, ∨, ⊥). Axioms A1-A4. Monotonicity. CC-2: ⊥ = {⊥} (Quine atom, ZF + AFA, Forced Metatheoretic Commitment). R3: CC-2 eliminates static-description state for ⊥, given D7 exhaustiveness (ZP-E) as background. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.9 | AX-B1. MP-1 (design commitment). T0: p=2 derived given MP-1. Q₂ ultrametric. Clopen balls. Total disconnectedness. Topological irreversibility (C3). |
 | [ZP-C Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.15 | P₀. State representations from AX-B1. JSD = 1 bit. Discrete surprisal field. **L-RUN. TQ-IH. T-BUF** (AX-1 derivability pathway complete within ZP-C; closed as T-SNAP in ZP-E). CC-2: c₀ = ⊥ labeled as modeling commitment. RP-2: branching measure labeled as representational commitment. L-INF grounded from two directions: unbounded surprisal (D4, T2) and structural self-containment (ZP-A CC-2, R3). |
 | [ZP-D State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.11 | Hilbert space H = ℂⁿ, foundational minimum n = 2. Transition operator T: Q₂ → H - locally constant, continuous. DP-1. Existence and uniqueness of T. Snap → orthogonal shift. Non-decreasing norms. T5-b: distinct consecutive states produce orthogonal T-images (Lean-verified). |
@@ -76,8 +76,8 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 |----------|-------------|-------------------|-------|
 | ZP-A Lattice Algebra | [ZPA.lean](ZeroParadox/ZPA.lean) | T1 (partial order), T2 (⊥ minimum), D2 equivalence, T3 (monotonicity), CC-1 (derived in ZP-J) | Clean - April 2026 |
 | ZP-F The Counterexamples | [ZPF.lean](ZeroParadox/ZPF.lean) | F-DENSITY, F-NO-MIN, F-SNAP-BLOCKED, F-SNAP-IMPOSSIBLE (general ordered field); R-DENSITY, R-NO-MIN, R-SNAP-BLOCKED, R-SNAP-IMPOSSIBLE (ℝ corollaries) | Clean - May 2026 |
-| ZP-B p-Adic Topology | [ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (isolation of 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 |
-| ZP-C Information Theory | [ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution non-null), TQ-IH, L-INF (unbounded surprisal at ⊥) | Clean - April 2026 |
+| ZP-B p-Adic Topology | [ZPB.lean](ZeroParadox/ZPB.lean) | AX-B1, T0 (p=2 unique), T1 (ultrametric), C1 (isosceles), T2 (clopen balls), C2 (no path), T3 (clopen gap at 0), T5 (totally disconnected), C3 (Snap irreversible) | Clean - April 2026 |
+| ZP-C Information Theory | [ZPC.lean](ZeroParadox/ZPC.lean) | T1 (distinct distributions), T1b (KL/JSD = log 2), D5 (DF antisymmetry), T2 (telescoping + divergent circulation), L-RUN (execution nonzero), TQ-IH, L-INF (unbounded surprisal at ⊥) | Clean - April 2026 |
 | ZP-D State Layer | [ZPD.lean](ZeroParadox/ZPD.lean) | DP-1 (orthogonality), T2 (existence of T: injective, orthogonal, norm-preserving), T3 (uniqueness up to unitary equivalence), T4 (Snap → orthogonal shift in H), T5 (non-decreasing norms) | Clean - April 2026 |
 | ZP-E Bridge Document | [ZPE.lean](ZeroParadox/ZPE.lean) | MachinePhase ZPSemilattice instance, T-SNAP (join + machine + derived + irreversibility + accessible proper subset), DA-2 (bottom characterization + novelty corollary), DA-3-D1 (accessible cardinality definition), DP-2 (TrackedOutput + da1_minimal_path axiom-free) | Clean - April 2026 |
 | ZP-G Category Theory | [ZPG.lean](ZeroParadox/ZPG.lean) | ZPCategory class (AX-G1 + AX-G2), ZPSurprisal class (I-KC / D7'), T1 (initial uniqueness), T2 (universal constituent), T3 (unreachability), T4 (forward-only chains), T6-a/b/c (surprisal), T6 (informational singularity), T7 (Categorical Zero Paradox), ForkCat (concrete ZPCategory instance) | Clean - April 2026 |
@@ -94,19 +94,19 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 
 ## Axiomatic Commitments
 
-A commitment marked "not a novel commitment" means its content is formally grounded in prior layers and provable without additional assumptions. It is stated as a local axiom only for the self-containment of that layer - the same pattern by which AX-1 was stated as an axiom before being formally derived as T-SNAP in ZP-E.
+A commitment marked "not a novel commitment" means its content is formally grounded in prior layers and derivable from results established there. It is stated as a local axiom only for the self-containment of that layer - the same pattern by which AX-1 was stated as an axiom before being formally derived as T-SNAP in ZP-E.
 
-**Metatheoretic note:** This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC. AFA permits self-containing sets (x = {x}). This affects only CC-2 below - all other results hold in standard ZF. Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which the Foundation axiom would permit by allowing an external membership-check. AFA is the minimal metatheoretic change consistent with those results. The full argument is developed in ZP-E Remark R-AFA.
+**Metatheoretic note:** This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC. AFA permits self-containing sets (x = {x}). This affects only CC-2 below - the remaining results do not depend on non-well-founded sets. Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which is incompatible with the Foundation axiom's well-foundedness requirement (no infinite descending ∈-chains). The full argument for why AFA specifically is the appropriate extension - rather than simply removing Foundation - is developed in ZP-E Remark R-AFA.
 
 | Label | Type | Statement |
 |-------|------|-----------|
 | **AX-B1** | Directly Verifiable | A state either exists or it does not. Directly verifiable by computation (OntologicalStates derives DecidableEq; ax_b1_distinct proved by `decide` without classical axioms) - not a novel commitment of this framework. |
-| **AX-G1** | Axiom | An initial object exists in the category C. The null state is the universal origin of all structure: a unique object from which every other object is reachable, and to which no morphism returns. Not a novel commitment - ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language. |
+| **AX-G1** | Axiom | An initial object exists in the category C. The bottom element ⊥ is the universal origin of all structure: a unique object from which every other object is reachable, and to which no morphism returns. Not a novel commitment - ⊥'s existence as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language. |
 | **AX-G2** | Axiom | Source asymmetry: hom(X, 0) = ∅ for X ≠ 0. Once something emerges, it cannot return to nothing. Not a novel commitment - follows from antisymmetry of the ZP-A partial order and is independently confirmed by ZP-B C3 (topological irreversibility). |
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
-| **RP-1** | Principle | The probabilistic representation of a binary ontological state is a point-mass distribution. |
+| **RP-1** | Principle | The probabilistic representation of a state in the two-element state space is a point-mass distribution. |
 | **DP-1** | Design Commitment | Clopen separation in Q₂ is represented by orthogonality in H. |
-| **MC-1** | Modeling Commitment (Substantially Derived) | The null states across all framework layers - algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as a single object. Substantially grounded by independent formal work: each domain locates its null-analog through its own logic prior to identification (ZP-H v1.7); ZP-E typeclass instance enforces ZP-A ⊥ ↔ ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves Binary Snap consistency across all four functors. What remains is the interpretive choice to unify the four under one name. |
+| **MC-1** | Modeling Commitment (Substantially Derived) | The bottom elements across all framework layers - algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as a single object. Substantially grounded by independent formal work: each domain locates its bottom element through its own logic prior to identification (ZP-H v1.7); ZP-E typeclass instance enforces ZP-A ⊥ ↔ ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves Binary Snap consistency across all four functors. What remains is the interpretive choice to unify the four under one name. |
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure - it is a consequence of it.
 
@@ -120,13 +120,13 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | OQ-B1: p = 2 justification | Closed - ZP-B T0 (derived from AX-B1 + MP-1) |
 | S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
-| DA-1: Instantiation alignment | **Closed - ZP-E / ZP-K** - DA-1 formally grounded in DP-2 (Execution Distinguishability); da1_minimal_path proved axiom-free in Lean. Paths 1 and 3 closed via da1_closed_concrete (ZP-K). Path 2 (informational bridge) recharacterized as foundational commitment - a missing principle, not a missing proof. |
+| DA-1: Instantiation alignment | **Closed - ZP-E / ZP-K** - DA-1 formally grounded in DP-2 (Execution Distinguishability); da1_minimal_path proved axiom-free in Lean. Paths 1 and 3 closed via da1_closed_concrete (ZP-K). Path 2 (AIT bridge between ZP-C and computability) is an open foundational question, explicitly flagged as such - the framework locates the boundary but does not close it. |
 | CC-1 (S₀ = ⊥) derivability | **Closed - ZP-J cc1_derived (axiom-free, Lean)** - was ZP-A Conditional Claim; now derived via ZP-J T-EXEC in any AFAStructure lattice; ZP-A v1.11 declaration and preface added for clarity |
 | CC-2 (⊥ = {⊥}) as commitment | **Closed - ZP-J T-EXEC** - ⊥ = {⊥} is structurally forced by self-execution argument; not a freestanding modelling choice |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
 | OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
-| DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives ontological novelty of each ⊥) |
-| DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (Skolem, CH independence, Russell accounted for structurally; formal derivation deferred to OQ-E2) |
+| DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives that each instantiation produces a provably distinct ⊥) |
+| DA-3: Perspective-relative cardinality | Closed (definitional) / Candidate (DA-3-C1) - ZP-E DA-3 (definitional closure via D7 exhaustiveness; formal cardinality derivation deferred to OQ-E2) |
 | OQ-E2: Cardinality-semilattice correspondence | **Partially closed - ZP-I T-IZ v1.5** - ordinal indexing Omega = omega forced by countable binary substrate (ZP-C D4, Q2 separability, binary alphabet). Internal/external perspective relativity is ordinal, not set-theoretically free. Formal connection between specific semilattice structures and specific CH instances remains open. |
 | OQ-G1: Native categorical surprisal | Closed - ZP-G v1.1 D7' and I-KC (Kolmogorov import; BA-G1 demoted to compatibility remark R-BA) |
 | OQ-G2: Left adjoint verification | Closed - ZP-H T-H1 (initial-object universal property verified for all four domain instantiations: F_A via NatSLat; F_B/C/D via ℝ≥0 proxy witness) |
@@ -135,7 +135,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | ε₀ / proof-theoretic ordinal | **Partially closed - ZP-L May 2026.** c1_epsilon_zero_identification establishes the canonical snap map (MachinePhase → Ordinal) with ε₀ as the exact transition point. snap_zp2_correspondence proves the four-way conjunction (ordinal bound, phase assignment, p-adic convergence, snap assignment). Structural alignment with Gentzen's proof-theoretic ordinal (PA consistency) documented in ZP-L Remark R-L.1. Full type-theoretic identity across type universes (MachinePhase vs. Ordinal) is outside Lean scope and deferred pending OQ-E2. |
 | Temperature T in BA-1 | Parameter - intentional; universe-contingent |
 | T-IZ: Inside Zero Theorem | **Fully derived - Lean, April 2026** - every maximal ascending chain converges to its own successor null. R-IZ-A closed: h_strict_from_r1_t3 derives v2(S(n)) strictly increasing from IsDepthChain + IsStrictStateSequence (ZP-A lattice axioms) - no longer a construction-level hypothesis. t_iz_complete formally chains all four T-IZ steps: Cauchy convergence (t_iz_cauchy), DA-2 successor null identification (t_iz_limit_is_new_null), DA-1 via AFA/Kleene (da1_computational, ZP-K), T-SNAP (bot_join). Kolmogorov complexity bridge superseded. |
-| Null balance: 0 + x + (-x) = 0 | **Closed - T-IZ + DA-2** - exact and derived: every branch starts at bottom, ascends omega state changes (T3), generates successor null at ordinal limit (T-IZ + T-SNAP + DA-2). |
+| Null balance | **Closed - T-IZ + DA-2** - exact and derived: every branch starts at ⊥, ascends omega state changes (T3), generates a successor ⊥ at the ordinal limit (T-IZ + T-SNAP + DA-2). |
 | Formal verification (Lean/Rocq) | ZP-A through ZP-M verified; ZP-M adds snapEmbed type bridge (MachinePhase → ℤ_[2]), hfp closure, zpm_triangle (ordinal-2adic-phase triangle), both_fixed_points_exist (Kleene-ordinal structural homology) - May 2026 |
 | Classical.choice necessity | **Open** - ZP-L and ZP-M inherit Classical.choice via Mathlib ordinal and analysis infrastructure. Whether the dependency is structurally forced by ZP snap geometry or incidental to Mathlib's implementation is an open question. Testable via constructive ordinal fixed-point theory over ONote/NONote (Lean 4 CNF notation). Future ZP-N (constructive validation layer). |
 
