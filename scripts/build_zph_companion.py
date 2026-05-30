@@ -1,5 +1,6 @@
 """
-Build ZP-H Illustrated Companion (v1.11)
+Build ZP-H Illustrated Companion (v1.12)
+v1.12: T-SNAP endpoint circles — open (white fill, colored stroke) with colored text for legibility.
 v1.11: subtitle/footer 'Categorical Bridge' → 'Functor Coherence'; footer date April → May 2026.
 v1.10: CC-1 described as derived (not free commitment) throughout; 'independent' → 'distinct'; T-H2 surprisal claim descoped.
 v1.9: snap diagram — '(null)' → '(⊥)'; scope 'any sequence' to Q₂ in T-H2 prose; fix four_functor cy to constant.
@@ -116,9 +117,9 @@ def snap_convergence_diagram():
         d.add(Line(lx + 20, y, snap_x - 10, y, strokeColor=col, strokeWidth=1.5))
         d.add(Line(snap_x + 10, y, rx - 20, y, strokeColor=col, strokeWidth=1.5))
 
-    # Left dot: 0
-    d.add(Circle(lx + 18, cy, 8, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
-    d.add(String(lx + 12, cy - 6, '0', fontSize=9, fontName='DV-B', fillColor=WHITE))
+    # Left dot: 0 — open circle (white fill, amber stroke) so dark amber text is legible
+    d.add(Circle(lx + 18, cy, 8, fillColor=WHITE, strokeColor=COMP_AMBER, strokeWidth=2))
+    d.add(String(lx + 12, cy - 6, '0', fontSize=9, fontName='DV-B', fillColor=COMP_AMBER))
     d.add(String(lx + 4, cy - 20, '(⊥)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
 
@@ -126,9 +127,9 @@ def snap_convergence_diagram():
     d.add(Line(snap_x, cy - 40, snap_x, cy + 40, strokeColor=BLACK, strokeWidth=2))
     d.add(String(snap_x - 18, cy + 44, 'T-SNAP', fontSize=8, fontName='DV-B', fillColor=BLACK))
 
-    # Right dot: e0
-    d.add(Circle(rx - 18, cy, 8, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(rx - 26, cy - 6, 'ε₀', fontSize=8, fontName='DV-B', fillColor=WHITE))
+    # Right dot: ε₀ — open circle (white fill, indigo stroke) so indigo text is legible
+    d.add(Circle(rx - 18, cy, 8, fillColor=WHITE, strokeColor=INDIGO, strokeWidth=2))
+    d.add(String(rx - 26, cy - 6, 'ε₀', fontSize=8, fontName='DV-B', fillColor=INDIGO))
     d.add(String(rx - 30, cy - 20, '(first state)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
 
@@ -139,7 +140,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.11'
+VERSION = '1.12'
 
 
 def build():

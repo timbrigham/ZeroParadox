@@ -6,6 +6,10 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-J_Illustrated_Companion_v1_9.pdf](ZP-J_Illustrated_Companion_v1_9.pdf) | 2026-05-30 | ZP-J companion v1.9 superseded by v1.10: header banner color corrected from INDIGO to COMP_BLUE (template consistency fix). |
+| [ZP-J_AFA_Addendum_v1_0.pdf](ZP-J_AFA_Addendum_v1_0.pdf) | 2026-05-30 | ZP-J AFA Addendum v1.0 superseded by v1.1: COMP_BLUE header banner added — color template was not applied in initial release. |
+| [ZP-I_Illustrated_Companion_v1_7.pdf](ZP-I_Illustrated_Companion_v1_7.pdf) | 2026-05-30 | ZP-I companion v1.7 superseded by v1.8: well diagram state labels given black outline for visibility; DA-2 label centered (was overflowing right edge). |
+| [ZP-H_Illustrated_Companion_v1_11.pdf](ZP-H_Illustrated_Companion_v1_11.pdf) | 2026-05-30 | ZP-H companion v1.11 superseded by v1.12: T-SNAP diagram circles converted to open style (white fill, colored stroke) for legibility. |
 | [ZP-H_Illustrated_Companion_v1_10.pdf](ZP-H_Illustrated_Companion_v1_10.pdf) | 2026-05-30 | ZP-H companion v1.10 superseded by v1.11: subtitle/footer 'Categorical Bridge' replaced with 'Functor Coherence'; footer date corrected to May 2026. |
 | [ZP-H_Illustrated_Companion_v1_9.pdf](ZP-H_Illustrated_Companion_v1_9.pdf) | 2026-05-30 | ZP-H companion v1.9 superseded by v1.10: CC-1 described as derived throughout; 'independent' → 'distinct' mathematical languages; T-H2 surprisal claim descoped. |
 | [ZP-H_Illustrated_Companion_v1_8.pdf](ZP-H_Illustrated_Companion_v1_8.pdf) | 2026-05-30 | ZP-H companion v1.8 superseded by v1.9: '(null)' → '(⊥)' in snap diagram; Q₂ scope added to T-H2 sequence claim; four_functor cy fixed to constant. |

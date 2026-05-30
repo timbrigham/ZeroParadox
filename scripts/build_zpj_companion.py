@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.9 | May 2026
+Version 1.10 | May 2026
+v1.10: Header banner color corrected INDIGO → COMP_BLUE (matches all other companions).
 v1.9: Cover and disclaimer updated to reflect that this companion serves both
       ZP-J Self-Reference and ZP-J AFA Addendum.
 v1.8: quine_atom_diagram — replace HTML entities (&#8869;) with literal ⊥ in
@@ -135,7 +136,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
@@ -155,7 +156,7 @@ def build():
                             onFirstPage=footer_cb, onLaterPages=footer_cb)
     E = []
 
-    hdr_ts = TableStyle([('BACKGROUND',(0,0),(-1,-1),INDIGO),
+    hdr_ts = TableStyle([('BACKGROUND',(0,0),(-1,-1),COMP_BLUE),
                          ('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8),
                          ('LEFTPADDING',(0,0),(-1,-1),10)])
     hdr = Table([[Paragraph('ZP-J Illustrated Companion',

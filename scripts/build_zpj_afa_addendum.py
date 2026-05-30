@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.0 | May 2026
+Version 1.1 | May 2026
+v1.1: Add COMP_BLUE header banner matching companion template.
 v1.0: Initial release. Presents the formal derivation chain from ValuationStructure
       to AFA decoration uniqueness for finite Accessible Pointed Graphs.
       All theorems proved sorry-free in Lean 4.
@@ -13,7 +14,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 def build():
@@ -24,15 +25,30 @@ def build():
                    date_str='May 2026')
     E = []
 
+    # ── Header banner (matches companion template) ─────────────────────────────
+    hdr_ts = TableStyle([
+        ('BACKGROUND',    (0,0), (-1,-1), COMP_BLUE),
+        ('TOPPADDING',    (0,0), (-1,-1), 8),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING',   (0,0), (-1,-1), 10),
+    ])
+    hdr = Table([[Paragraph('ZP-J AFA Addendum',
+                            ParagraphStyle('hdr', fontName='DV-B', fontSize=11,
+                                           textColor=WHITE))]], colWidths=[TW])
+    hdr.setStyle(hdr_ts)
+    E.append(hdr)
+    E.append(sp(6))
+
     print('[build_zpj_afa_addendum] Building title block...')
     E += [
-        sp(12),
+        sp(4),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J AFA Addendum', S['title']),
         Paragraph('Decoration Uniqueness from Valuation Structure', S['subtitle']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.0: Initial release. Presents the derivation chain from '
+            '<i>v1.1: Header banner added. '
+            'v1.0: Initial release. Presents the derivation chain from '
             'ValuationStructure to AFA decoration uniqueness for finite Accessible '
             'Pointed Graphs. All active theorems sorry-free in Lean 4 '
             '(one commented-out stub; see §V). '

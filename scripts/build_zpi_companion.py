@@ -1,5 +1,6 @@
 """
-Build ZP-I Illustrated Companion (v1.7)
+Build ZP-I Illustrated Companion (v1.8)
+v1.8: well diagram — black outline on white state labels; DA-2 label centered horizontally.
 v1.7: depth diagram legibility — font sizes 6.5 → 7.5–8pt; proper Unicode math
       notation (‖·‖, ≤, 2⁻ⁿ); removed duplicate S3 norm label; simplified
       limit annotation to single line "(depth → ∞)"; moved norm labels below
@@ -109,7 +110,8 @@ def depth_diagram():
     for i in range(4):
         sx, sy = state_xs[i], state_ys[i]
         d.add(Circle(sx, sy, 8, fillColor=COMP_BLUE, strokeColor=WHITE, strokeWidth=1.5))
-        d.add(String(sx - 10, sy - 4, state_lbls[i], fontSize=8, fontName='DVS', fillColor=WHITE))
+        d.add(String(sx - 10, sy - 4, state_lbls[i], fontSize=8, fontName='DVS',
+                     fillColor=WHITE, strokeColor=colors.black, strokeWidth=0.4))
         if state_subs[i]:
             d.add(String(sx + 12, sy - 3, state_subs[i], fontSize=8, fontName='DVS',
                          fillColor=COMP_SLATE))
@@ -273,7 +275,8 @@ def cycle_diagram():
         d.add(String(nx - len(sub) * 2.8, cy - 26, sub,
                      fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
 
-    d.add(String(xs[-1] + 4, cy + 6, '➤ DA-2: cycle repeats',
+    # Centered below the arrow-label row (cy+17) so it doesn't overflow the right edge
+    d.add(String(dw / 2 - 52, cy + 28, 'DA-2: cycle repeats',
                  fontSize=7, fontName='DV-I', fillColor=COMP_GREEN))
 
     d.add(String(40, 4,
@@ -282,7 +285,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.7'
+VERSION = '1.8'
 
 
 def build():
