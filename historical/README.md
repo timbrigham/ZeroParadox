@@ -6,7 +6,9 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-J_Illustrated_Companion_v1_11.pdf](ZP-J_Illustrated_Companion_v1_11.pdf) | 2026-05-30 | ZP-J companion v1.11 superseded by v1.11 (rebuilt): opening paragraph rewritten to lead with AFA mathematical content; docstring version corrected (AR/ER fix). |
 | [ZP-J_Illustrated_Companion_v1_10.pdf](ZP-J_Illustrated_Companion_v1_10.pdf) | 2026-05-30 | ZP-J companion v1.10 superseded by v1.11: em-dashes removed from subtitle and first body paragraph (AR fix). |
+| [ZP-I_Illustrated_Companion_v1_9.pdf](ZP-I_Illustrated_Companion_v1_9.pdf) | 2026-05-30 | ZP-I companion v1.9 superseded by v1.10: T-IZ step table updated to 4 steps all proved via t_iz_complete (AFA/Kleene path); disclaimer rewritten as self-contained (AR/ER fix). |
 | [ZP-I_Illustrated_Companion_v1_8.pdf](ZP-I_Illustrated_Companion_v1_8.pdf) | 2026-05-30 | ZP-I companion v1.8 superseded by v1.9: cover title retitled "Going Forward Brings You Back to Zero" (AR fix — original title contradicted thesis). |
 | [ZP-H_Illustrated_Companion_v1_12.pdf](ZP-H_Illustrated_Companion_v1_12.pdf) | 2026-05-30 | ZP-H companion v1.12 superseded by v1.13: "any state change" scoped to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix from editorial review. |
 | [ZP-J_Illustrated_Companion_v1_9.pdf](ZP-J_Illustrated_Companion_v1_9.pdf) | 2026-05-30 | ZP-J companion v1.9 superseded by v1.10: header banner color corrected from INDIGO to COMP_BLUE (template consistency fix). |

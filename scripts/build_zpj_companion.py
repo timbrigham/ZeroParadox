@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.10 | May 2026
+Version 1.11 | May 2026
+v1.11: Em-dashes removed from subtitle and first body paragraph (AR fix).
 v1.10: Header banner color corrected INDIGO → COMP_BLUE (matches all other companions).
 v1.9: Cover and disclaimer updated to reflect that this companion serves both
       ZP-J Self-Reference and ZP-J AFA Addendum.
@@ -29,7 +30,7 @@ from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle
 from reportlab.graphics import renderPDF
 
 def quine_atom_diagram():
-    """Diagram showing ⊥ ∈ ⊥ — the self-containing null state."""
+    """Diagram showing ⊥ ∈ ⊥ — the self-containing bottom element."""
     dw, dh = TW, 2.8 * inch
     d = Drawing(dw, dh)
 
@@ -178,11 +179,13 @@ def build():
     # ── What Is ZP-J Doing? ──────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E established that DA-1 (the claim that instantiating a configuration '
-        'constitutes an execution event) rests on three converging arguments. '
-        'The structural argument says: nothing external to &#8869; can execute &#8869;, '
-        'therefore &#8869; must execute itself, which forces &#8869; = {&#8869;}. '
-        'ZP-E cited this as a "Conditional Claim."'))
+        'In AFA set theory, the Quine atom &#8869; = {&#8869;} is provably the unique '
+        'bottom element of the ZP lattice. This turns what ZP-E carried as a modelling '
+        'assumption into a derived theorem. ZP-J is the document that proves it, using '
+        'the valuation structure of Q&#8322; and the AFA uniqueness result. '
+        'The structural argument: nothing external to &#8869; can execute &#8869;, '
+        'so &#8869; must execute itself, which forces &#8869; = {&#8869;} '
+        '(see ZP-E for the full three-path argument).'))
     E.append(cbody(
         'ZP-J makes that argument formal. It proves, in Lean 4 with no axioms beyond the '
         'standard mathematical infrastructure, that in any ZP-A semilattice with '

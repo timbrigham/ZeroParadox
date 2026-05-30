@@ -285,7 +285,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
@@ -328,10 +328,11 @@ def build():
         Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
-            'authoritative mathematics. This document assumes familiarity with the ZP-E '
-            'Illustrated Companion.',
+            'examples. It is self-contained: ZP-A through ZP-E results used here are '
+            'briefly introduced on first appearance. Every claim restates a result already '
+            'proved in the corresponding technical document — consult that document for the '
+            'authoritative mathematics. (The ZP-E Illustrated Companion covers the upstream '
+            'results in more depth if needed.)',
             CS['disc']),
     ]
 
@@ -431,34 +432,27 @@ def build():
     # ── T-IZ in Plain Language ─────────────────────────────────────────────────
     E.append(Paragraph('T-IZ in Plain Language', CS['h1']))
     E.append(cbody(
-        'The theorem has six steps. Here is each one in plain language:'))
+        'The theorem has four steps. All four are formally proved in Lean 4 '
+        'via <tt>t_iz_complete</tt> (ZPI.lean §III-B) — no step is outside Lean scope:'))
 
     step_rows = [
         ['1. Cauchy convergence',
          'The chain has 2-adic norm ≤ 2⁻ⁿ at step n. Both the norm and the chain '
          'converge to 0. This is the topological core.',
-         'R1 + ZP-B completeness — proved axiom-free in Lean ✓. '
-         'Strict per-step growth derived (not assumed) via h_strict_from_r1_t3 + IsDepthChain — R-IZ-A closed.'],
-        ['2. Valuation-complexity bridge',
-         'As 2-adic depth → ∞, the Kolmogorov complexity ratio → 1. '
-         'The chain approaches the incompressibility threshold P₀.',
-         'ZP-C L-INF + ZP-B (binary construction) — informal argument; outside Lean scope'],
-        ['3. P₀ is satisfied',
-         'At the limit, the state is algorithmically incompressible. '
-         'The incompressibility threshold is reached.',
-         'ZP-C D1 — follows from step 2'],
-        ['4. DA-1 fires',
-         'A state at P₀ is a live execution event. The deterministic argument '
-         'DA-1 (from ZP-E) applies.',
-         'ZP-E DA-1 — already in framework ✓'],
-        ['5. T-SNAP fires again',
-         'DA-1 establishes that instantiation = execution. T-SNAP fires: ⊥ ∨ ε₀ = ε₀. '
-         'A new null ⊥′ is generated.',
-         'ZP-E T-SNAP — proved axiom-free in Lean (t_snap_derived) ✓'],
-        ['6. DA-2 licenses ⊥′',
-         'DA-2 recognizes ⊥′ as the structural null of the next instantiation. '
-         'The Cauchy limit 0 ∈ Q₂ satisfies the bottom-characterization condition.',
-         'ZP-E DA-2 — proved in Lean (t_iz_limit_is_new_null) ✓'],
+         'R1 + ZP-B completeness — proved axiom-free (t_iz_cauchy). '
+         'Strict per-step growth derived via h_strict_from_r1_t3 + IsDepthChain — R-IZ-A closed. ✓'],
+        ['2. ⊥′-identification',
+         'The Cauchy limit 0 ∈ Q₂ satisfies the join-identity condition — '
+         'the structural role of a bottom element. The limit is ⊥′.',
+         'ZP-E DA-2 — proved in Lean (t_iz_limit_is_new_null, axiom-free). ✓'],
+        ['3. DA-1 fires',
+         'The successor semilattice carries a KleeneStructure (ZP-K). '
+         'DA-1 applies at ⊥′ via the computational fixed-point argument.',
+         'ZP-K KleeneStructure — proved in Lean (da1_computational). ✓'],
+        ['4. T-SNAP fires, ⊥′ is born',
+         'DA-1 establishes that instantiation = execution. T-SNAP fires: '
+         'join ⊥ ε₀′ = ε₀′. The successor null ⊥′ is generated.',
+         'ZP-A bot_join — proved in Lean. ✓'],
     ]
 
     col_widths = [TW * 0.21, TW * 0.49, TW * 0.30]
@@ -574,10 +568,9 @@ def build():
     # ── Lean 4 Status ─────────────────────────────────────────────────────────
     E.append(Paragraph('Lean 4 Verification', CS['h1']))
     E.append(cbody(
-        'The topological core of T-IZ is fully verified in Lean 4 (ZPI.lean). '
-        'All proofs are complete. The purity check confirms the theorems depend only '
-        'on standard foundational axioms shared by all Mathlib theorems — '
-        'no domain-specific assumptions.'))
+        'T-IZ is fully verified in Lean 4 (ZPI.lean). All four steps are formally proved. '
+        'The purity check confirms the theorems depend only on standard foundational axioms '
+        'shared by all Mathlib theorems — no domain-specific assumptions.'))
 
     E.append(lean_status_box([
         'h_strict_from_r1_t3 (§Ib) — derives strict per-step valuation growth from '
@@ -590,22 +583,27 @@ def build():
         't_iz_r1_t3_geometric_bound — derives &#8214;S(n)&#8214; ≤ &#8214;S(0)&#8214; ⋅ 2⁻ⁿ '
         'from R1 + T3. Uses Padic.norm_eq_zpow_neg_valuation + zpow_le_zpow_right₀. ✓',
         't_iz_cauchy — the complete topological convergence result. ✓ (axiom-free)',
-        't_iz_limit_is_new_null — Cauchy limit satisfies the DA-2 null role. '
-        'Proved directly from da2_bottom_characterization. ✓ (depends on no axioms)',
+        't_iz_limit_is_new_null — Cauchy limit satisfies the DA-2 null role (⊥′-identification). '
+        'Proved directly from da2_bottom_characterization. ✓ (axiom-free)',
+        'da1_computational (ZP-K KleeneStructure) — DA-1 fires at ⊥′ via the '
+        'computational fixed-point argument. ✓',
+        't_iz_complete (§III-B) — chains all four steps into one theorem: convergence, '
+        '⊥′-identification, DA-1, T-SNAP. All formal, no Kolmogorov complexity needed. ✓',
+        't_iz_complete_from_axioms (§III-C, optional) — replaces the h_bound hypothesis '
+        'with IsDepthChain + IsStrictStateSequence (pure ZP-A lattice conditions). '
+        'Closes the chain from R1+T3 all the way to T-SNAP without any ungrounded hypothesis. ✓',
         'c_t_iz_null_balance — a non-bottom state cannot be the successor null. '
         'Proved from c_da2_novelty. ✓',
         't_iz_c3_compatible — C3 irreversibility and T-IZ coexist. '
         'Cauchy sequences ≠ continuous paths. ✓',
-        'Valuation-complexity bridge (Steps 2–4): outside Lean scope. Kolmogorov '
-        'complexity is uncomputable and absent from Mathlib — same category as DA-1 Path 3 in ZP-E.',
     ]))
     E.append(sp(8))
 
     E.append(key_result_box('ZP-I Summary',
-        'T-IZ is derived from ZP-A through ZP-E — no new axioms required. '
-        'The topological core is proved axiom-free in Lean 4 (ZPI.lean, all proofs filled). '
-        'The valuation-complexity bridge uses the same informal argument as DA-1 '
-        'Path 3 in ZP-E (outside Lean scope: Kolmogorov complexity absent from Mathlib). '
+        'T-IZ is derived from ZP-A through ZP-E and ZP-K — no new axioms required. '
+        'All four steps are formally proved in Lean 4 (ZPI.lean, t_iz_complete). '
+        'The Kolmogorov complexity route is superseded: the AFA/Kleene path via '
+        'ZP-K KleeneStructure closes Steps 2–4 without Kolmogorov complexity. '
         'This framework is a closed system: T-SNAP opens each branch; '
         'T-IZ closes it and generates the next null; DA-2 licenses the successor. '
         'Emergence and return are both derived, not assumed.'))
