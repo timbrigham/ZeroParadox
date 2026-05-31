@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-J_Illustrated_Companion_v1_16.pdf](ZP-J_Illustrated_Companion_v1_16.pdf) | 2026-05-30 | ZP-J companion v1.16 superseded by v1.17: em-dashes removed; Quine Atom added to tagline; 2-adic analogy caveat moved to front. |
+| [ZP-I_Illustrated_Companion_v1_14.pdf](ZP-I_Illustrated_Companion_v1_14.pdf) | 2026-05-30 | ZP-I companion v1.14 superseded by v1.15: em-dashes removed; "closed system" language scoped to derivation chain. |
 | [ZP-J_Illustrated_Companion_v1_15.pdf](ZP-J_Illustrated_Companion_v1_15.pdf) | 2026-05-30 | ZP-J companion v1.15 superseded by v1.16: title reverted to "The Self-Containing Null". |
 | [ZP-I_Illustrated_Companion_v1_13.pdf](ZP-I_Illustrated_Companion_v1_13.pdf) | 2026-05-30 | ZP-I companion v1.13 superseded by v1.14: norm description clarified (2-adic depth n → norm 2^{-n}). |
 | [ZP-I_Illustrated_Companion_v1_12.pdf](ZP-I_Illustrated_Companion_v1_12.pdf) | 2026-05-30 | ZP-I companion v1.12 superseded by v1.13: disclaimer rewritten — "successor null" replaced with standard math (converges to zero in 2-adic metric). |
