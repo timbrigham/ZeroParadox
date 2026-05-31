@@ -322,7 +322,7 @@ theorem zpw_zero_ne_bot : ZPWheelElem.fin 0 ≠ .bot := by
 
 /-- The valuation on ZPWheelElem: fin(0) has infinite valuation (the porthole),
     all other finite rationals have valuation 1, bot and inf have valuation 0. -/
-noncomputable def zpwVal : ZPWheelElem → ℕ∞
+def zpwVal : ZPWheelElem → ℕ∞
   | .bot   => 0
   | .inf   => 0
   | .fin q => if q = 0 then ⊤ else 1
