@@ -283,8 +283,9 @@ def build():
     E.append(three_way_table())
     E.append(sp(4))
     E.append(cbody(
-        'T-EXEC makes this identification explicit and machine-checked: '
-        'these are three descriptions of the same structural role.'))
+        'These are not three separate properties that happen to coincide. They are three '
+        'descriptions of the same structural role. T-EXEC makes this explicit and '
+        'machine-checked.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - Zero in arithmetic', [
         '0 is the additive identity (x + 0 = x), the smallest non-negative integer '
@@ -462,10 +463,11 @@ def build():
         'set of reachable vertices strictly shrinks at each child.'))
     E.append(sp(4))
     E.append(remember_box(
-        'Analogous to the uniqueness half of AFA\'s decoration theorem, decoration_unique proves '
-        'that any two valid decorations of a finite APG must agree  - without importing '
-        'set-theoretic AFA axioms. It does not construct a decoration or prove one exists: '
-        'it is a constraint on what valid decorations must be, proved for abstract DecorationUniverses.'))
+        'decoration_unique is the ZP version of AFA\'s central uniqueness theorem. '
+        'It does not construct a decoration or prove one exists  - it proves that '
+        'any two valid decorations must be identical. This is the uniqueness half of AFA\'s '
+        'decoration theorem, proved here for abstract DecorationUniverses without importing '
+        'set-theoretic AFA axioms.'))
     E.append(sp(8))
 
     # ── Key Result Box ───────────────────────────────────────────────────────
