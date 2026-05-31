@@ -403,9 +403,11 @@ def build():
     # ── Aczel's Open Question ────────────────────────────────────────────────
     E.append(Paragraph('Aczel\'s DC Question  - Closed for Self-Membership', CS['h1']))
     E.append(cbody(
-        'Earlier proofs of related AFA fixed-point results used the axiom of Dependent Choice (DC)  - '
-        'building sequences of approximations converging to a fixed point. '
-        'Whether DC is essential to arguments of this type in general is an open question.'))
+        'In proving that J&#934; is the largest fixed point of a set-continuous operator, '
+        'Aczel (Non-Well-Founded Sets, 1988, ch. 6, p. 77) used the axiom of Dependent Choice (DC) '
+        'to construct an &#969;-chain. He noted explicitly: '
+        '"I do not know if this use of the axiom of dependent choices was essential." '
+        'Whether DC is essential to arguments of this type in general remains open.'))
     E.append(cbody(
         'ZP-J answers this question for the self-membership case: DC is not essential. '
         'The proof is one step, not a sequence. Once you know there is at most one '
