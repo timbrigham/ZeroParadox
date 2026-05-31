@@ -99,6 +99,8 @@ gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".c
 ```
 Then grab the Zenodo DOI badge and add to README.md in a follow-up commit.
 
+**`.zenodo.json` check — mandatory before every release:** Read `.zenodo.json` and verify the `description` field accurately reflects the current layer count and layer list. Update it in the same PR as `RELEASES.md` if anything is stale. Zenodo reads this file at release creation time; it cannot be updated retroactively via the repo (only via the Zenodo web UI).
+
 **RELEASES.md format:** `## vX.Y - YYYY-MM-DD` header, then **Why this release** (one sentence), **What changed** (bullets), **Document versions at this release** (table), **Next threshold**. Match existing entries in RELEASES.md for exact formatting.
 
 ## register.md — Canonical Version Registry
