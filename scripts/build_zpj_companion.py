@@ -196,7 +196,7 @@ def build():
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
     E.append(cbody(
         'In AFA set theory, the Quine atom &#8869; = {&#8869;} is provably the unique '
-        'bottom element of the join-semilattice structure defined in this framework. This turns what ZP-E carried as a modelling '
+        'bottom element of the join-semilattice structure defined in ZP-A. This turns what ZP-E carried as a modelling '
         'assumption into a derived theorem. ZP-J is the document that proves it, using '
         'the valuation structure of Q&#8322; and the AFA uniqueness result. '
         'The structural argument: nothing external to &#8869; can execute &#8869;, '
