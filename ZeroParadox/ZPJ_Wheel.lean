@@ -14,23 +14,29 @@ import Mathlib.Tactic
 
 ## Formal Overview (AI-assisted)
 
+**Terminology — porthole (shorthand):** The zero-infinity identification point: the
+element where `val(x) = ∞` and `/x = ∞` coincide, corresponding to `⊥ = {⊥}` in
+ZF+AFA and `v₂(0) = ∞` in the 2-adic valuation. In wheel theory this is the element
+where `/0` is a first-class defined value rather than an error. Used throughout as
+shorthand for "the ZFC/AFA contact point where these structural identifications hold."
+
 Wheel theory (Carlström 2004) extends a commutative ring by making division by zero
 a defined first-class operation. The resulting structure has two special elements:
   - `∞ = /0`       — the multiplicative inverse of zero
   - `⊥ₗ = 0 · /0`  — the absorbing "undefined" element
 
-**The ZP Conjecture:** Wheel theory is not an independent framework that happens to
-touch the zero/infinity duality. It is the algebraic formalization of operating at
-the ZFC/AFA contact point — the porthole — where `v₂(0) = ∞` and `⊥ = {⊥}`.
+**The ZP Conjecture:** The wheel axioms for /0 are derivable from the ZP structural
+constraints (`val(⊥) = ∞` and `⊥ = {⊥}`) rather than independently assumed — making
+wheel theory the algebraic representation of the porthole rather than a coincidence.
 
-**Evidence:**
-- In ZFC (Foundation): 1/0 is undefined, `⊥ ≠ {⊥}` is forced
-- In ZF+AFA: `⊥ = {⊥}` (Quine atom) is admitted
-- Wheel theory: /0 is a first-class element, not an error — i.e., the porthole is open
+**Structural alignment (not proof):**
+- In ZFC+Foundation: division by zero is undefined; the Axiom of Regularity prohibits
+  x ∈ x for all sets x, ruling out self-containing elements
+- In ZF+AFA: `⊥ = {⊥}` (the Quine atom) is admitted as the unique self-containing set
+- In wheel theory: /0 is a first-class defined element — the porthole is structurally open
 
-**The testable claim:** The wheel axioms for /0 should be *derivable* from the ZP
-structural constraints (`val(⊥) = ∞` and `⊥ = {⊥}`) rather than independently assumed.
-If so, wheel theory is the algebraic representation of the porthole, not a coincidence.
+**The gap:** Derivation requires ring structure not present in the current ZP typeclasses.
+`WheelValuationStructure` (§VII) is the correct bridge. See §VIII for the full status.
 
 This file:
   § I.   Wheel typeclass (11 axioms after Carlström)
@@ -204,7 +210,7 @@ def zpwInv : ZPWheelElem → ZPWheelElem
 -- ============================================================
 
 /-- ZPWheelElem is a Wheel. The 11 axioms encode the rational wheel extended
-    with ∞ and ⊥ₗ. All proofs are sorry in this stub — to be filled by cases
+    with ∞ and ⊥ₗ. All 11 axiom proofs are sorry-free, proceeding by cases
     on the three constructors (bot / fin / inf). -/
 instance : Wheel ZPWheelElem where
   wadd  := zpwAdd
@@ -325,9 +331,11 @@ theorem zpwVal_zero_eq_top : zpwVal (.fin 0) = ⊤ := by
 theorem zpwVal_inv_zero : zpwVal (zpwInv (.fin 0)) = 0 := by
   simp [zpwInv, zpwVal]
 
-/-- Key alignment: the element with infinite valuation (fin 0) is exactly the element
-    whose wheel-inverse is ∞ (inf). This is the porthole identification in ZP:
-    val(⊥) = ∞  ↔  /⊥ = ∞ (as algebraic objects, not just symbols). -/
+/-- For ZPWheelElem: the element with infinite valuation (fin 0) is exactly the element
+    whose wheel-inverse is ∞ (inf). This proves the porthole correspondence concretely:
+    val(x) = ⊤  ↔  winv(x) = ∞  holds in ZPWheelElem.
+    The abstract version — that this holds in any wheel satisfying the ZP structural
+    constraints — is the content of the §VIII conjecture. -/
 theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     zpwVal x = ⊤ ↔ zpwInv x = .inf := by
   cases x with
@@ -374,10 +382,11 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
   wvs_val : L → ℕ∞
   /-- Multiplicativity: val is a semiring homomorphism to (ℕ∞, +). -/
   wvs_val_mul : ∀ x y : L, wvs_val (x * y) = wvs_val x + wvs_val y
-  /-- Porthole condition: val(0_L) = ⊤. Forced by "infinitudes of zero" — the ring's
-      zero is the Quine atom ⊥ = {⊥}, whose valuation is necessarily infinite.
-      This is the algebraic expression of ValuationStructure.val_bot, now with ring
-      structure available to construct wmul and complete the Wheel instance. -/
+  /-- Porthole condition: val(0_L) = ⊤. This typeclass axiom formally asserts what the
+      ZP "infinitudes of zero" argument establishes structurally — that in any
+      ZP-compatible algebraic extension, the ring's zero has infinite valuation because
+      it is the Quine atom ⊥ = {⊥}. The axiom makes this a requirement; the ZP
+      argument is why that requirement is the right one to impose. -/
   wvs_val_zero : wvs_val 0 = ⊤
 
 -- ============================================================
@@ -412,8 +421,8 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
     Formalizing this construction is Tier 3 — comparable in scale to FractionRing
     universality. Not a near-term Lean target.
 
-    See `.claude-local/notes/wheel_conjecture_proof_gap_2026-05-31.md` for the full
-    three-tier diagnosis. -/
+    The full three-tier diagnosis (Tier 1 proved, Tier 2 tractable, Tier 3 substantial)
+    is documented in the session notes for this file. -/
 theorem zp_porthole_forces_wheel_axioms
     (L : Type*) [ZPSemilattice L] [AFAStructure L] [ValuationStructure L]
     (_h_top : ValuationStructure.val (ZPSemilattice.bot : L) = ⊤)
