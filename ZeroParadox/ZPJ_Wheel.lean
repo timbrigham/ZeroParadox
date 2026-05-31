@@ -50,7 +50,8 @@ This file:
   § VIII. Main conjecture statement (architecture-level placeholder)
   § IX.   Purity check
 
-Status: Sorry-free. All instance proofs, porthole theorems, and val bridge proved.
+Status: Sorry-free for all proved results. §VIII conjecture proves `True := trivial` —
+a philosophical placeholder with no mathematical content in this file.
 §VII defines WheelValuationStructure — the typeclass that identifies the bridge needed
 a commutative ring + multiplicative valuation with val(0) = ⊤, forced by the
 "infinitudes of zero" argument (⊥ = {⊥} structurally requires val(⊥) = ∞).
@@ -370,12 +371,13 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
 
     **From a WheelValuationStructure, the wheel of fractions construction**
       Wh(L) = (L × L) / ~  where  (a, b) ~ (c, d)  iff  a · d = b · c
-    yields a Wheel instance where:
-      - wzero  = [0, 1]          — porthole element; wvs_val_zero forces this choice
+    would yield a Wheel instance where:
+      - wzero  = [0, 1]          — porthole element; wvs_val_zero pins this choice
       - winv([a, b]) = [b, a]    — involution is pair-swap
       - wmul([a,b],[c,d]) = [a·c, b·d] — inherited from ring multiplication
-    The 11 wheel axioms follow from ring axioms on L plus wvs_val_mul and wvs_val_zero.
-    Formalizing this construction is Tier 3 of the porthole conjecture. -/
+    The 11 wheel axioms would follow from ring axioms on L plus wvs_val_mul and
+    wvs_val_zero. This construction is not formalized here — it is Tier 3 of the
+    porthole conjecture (§VIII). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: bridge typeclass connecting ZP structural
 -- hierarchy to Wheel theory via the wheel of fractions construction.
 class WheelValuationStructure (L : Type*) extends CommRing L where
@@ -383,11 +385,11 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
   wvs_val : L → ℕ∞
   /-- Multiplicativity: val is a semiring homomorphism to (ℕ∞, +). -/
   wvs_val_mul : ∀ x y : L, wvs_val (x * y) = wvs_val x + wvs_val y
-  /-- Porthole condition: val(0_L) = ⊤. This typeclass axiom formally asserts what the
-      ZP "infinitudes of zero" argument establishes structurally — that in any
-      ZP-compatible algebraic extension, the ring's zero has infinite valuation because
-      it is the Quine atom ⊥ = {⊥}. The axiom makes this a requirement; the ZP
-      argument is why that requirement is the right one to impose. -/
+  /-- Porthole condition: val(0_L) = ⊤. This is an axiom — an assumed requirement,
+      not a derived result. The motivation: in ZP-compatible extensions the ring's zero
+      is the Quine atom ⊥ = {⊥}, whose valuation is infinite; this axiom encodes that
+      as a formal requirement on any instance. The ZP argument motivates the choice;
+      the type-checker does not verify the necessity. -/
   wvs_val_zero : wvs_val 0 = ⊤
 
 -- ============================================================
