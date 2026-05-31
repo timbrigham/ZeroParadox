@@ -184,7 +184,7 @@ def build():
               'This companion explains in plain language the proof that &#8869; = {&#8869;} '
               '(the Quine atom of AFA set theory) is the unique bottom element of a lattice. '
               'This is one result in the Zero Paradox project (ZP-J), connecting '
-              'AFA set theory and lattice algebra. '
+              'AFA set theory, p-adic topology, and lattice algebra. '
               'It covers both '
               'ZP-J Self-Reference and the ZP-J AFA Addendum. Every formal result stated '
               'here restates a theorem already proved in those technical documents. '
