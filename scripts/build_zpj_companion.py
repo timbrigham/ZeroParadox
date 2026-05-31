@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
 Version 1.15 | May 2026
+v1.16: Title reverted to "The Self-Containing Null".
 v1.15: Title changed to "The Quine Atom" (standard AFA term).
 v1.14: "full AFA decoration" scoped to finite APGs; Aczel quote paraphrased; sorry-free claim scoped (ER fixes).
 v1.13: Disclaimer leads with AFA math before brand name (AR fix).
@@ -141,7 +142,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.15'
+VERSION = '1.16'
 
 
 def build():
@@ -169,7 +170,7 @@ def build():
                 colWidths=[TW])
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
-          Paragraph('The Quine Atom', CS['title']),
+          Paragraph('The Self-Containing Null', CS['title']),
           Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
           Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
           Paragraph(

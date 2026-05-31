@@ -281,7 +281,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.13'
+VERSION = '1.14'
 
 
 def build():
@@ -378,8 +378,9 @@ def build():
         'chain\'s 2-adic depth tracks its position. '
         'Lean: <tt>h_strict_from_r1_t3</tt> (ZPI.lean §Ib).'))
     E.append(cbody(
-        'In the 2-adic metric, a state with depth n has norm 2<sup>−1</sup> per unit '
-        'depth. As n → ∞, the 2-adic norm → 0. The chain converges to 0 in the 2-adic '
+        'In the 2-adic metric, a state at 2-adic depth n has norm 2<sup>−n</sup> — '
+        'each additional unit of depth multiplies the norm by 2<sup>−1</sup>. '
+        'As n → ∞, the 2-adic norm → 0. The chain converges to 0 in the 2-adic '
         'sense — the element of infinite depth. That element is ⊥′: the successor null.'))
 
     E.append(example_box('Real-world analogy — The deepest point in the well', [
