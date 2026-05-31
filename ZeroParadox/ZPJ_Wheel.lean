@@ -34,14 +34,16 @@ If so, wheel theory is the algebraic representation of the porthole, not a coinc
 
 This file:
   § I.   Wheel typeclass (11 axioms after Carlström)
-  § II.  Derived elements: wheelInf, wheelBot
+  § II.  Derived elements: wheelInf, wheelBot; winv_one proved abstractly
   § III. Concrete carrier: ZPWheelElem (ℚ extended with ∞ and ⊥ₗ)
-  § IV.  Operations and Wheel instance (all axiom proofs sorry — stub)
-  § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved without sorry)
-  § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (sorry)
-  § VII. Main conjecture statement
+  § IV.  Operations and Wheel instance (all 11 axiom proofs sorry-free)
+  § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved)
+  § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
+  § VII. Main conjecture statement (architecture-level placeholder)
 
-Status: Stub — Wheel axiom proofs sorry. Architecture validated by lake build.
+Status: Sorry-free. All instance proofs, porthole theorems, and val bridge proved.
+§VII remains a philosophical placeholder — the abstract derivability claim requires
+ring structure not present in the current ZP typeclasses (see notes/wheel_conjecture_proof_gap_2026-05-31.md).
 -/
 
 namespace ZeroParadox.WheelTheory
@@ -334,18 +336,28 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
 -- § VII. The Main Conjecture
 -- ============================================================
 
-/-- **ZP Wheel Conjecture:** Any type satisfying ValuationStructure (with val(⊥) = ∞)
-    and AFAStructure (with bot = {bot}) carries a canonical Wheel instance in which
-    the 11 wheel axioms are *consequences* of the ZP structural constraints, not
-    independently assumed.
+/-- **ZP Wheel Conjecture (philosophical placeholder).**
 
-    If true: wheel theory is not a separate framework — it is the algebraic
-    formalization of operating at the ZFC/AFA contact point (the porthole).
+    The intuition: wheel theory is the algebraic formalization of operating at the
+    ZFC/AFA contact point (the porthole), where val(⊥) = ∞ and ⊥ = {⊥}.
 
-    Proof path: extend L with a formal ∞ element (WithTop L), define wmul and winv
-    using val and selfApp, and derive W7–W11 from val_bot and bot_self_mem.
+    The concrete evidence is already in §V–VI: for ZPWheelElem, the porthole condition
+    (val(x) = ⊤) and the wheel condition (winv(x) = ∞) coincide — proved by
+    `zpw_top_val_iff_inv_is_inf`. That is the core of the conjecture, formalized.
 
-    Status: architecture only — trivial placeholder pending proof development. -/
+    **Why the abstract statement is blocked:** ZPSemilattice + AFAStructure +
+    ValuationStructure supply no algebraic operations (wmul, winv, wone). A Wheel
+    instance cannot be constructed from order/valuation structure alone — ring structure
+    is a missing hypothesis. The suggested proof path (WithTop L, wmul from selfApp)
+    does not close.
+
+    **The correct generalization** requires a `WheelValuationStructure` typeclass
+    extending L with a commutative ring and a multiplicative valuation, from which
+    the wheel of fractions construction yields a Wheel instance. This is the right
+    universality result but substantial new infrastructure.
+
+    See `.claude-local/notes/wheel_conjecture_proof_gap_2026-05-31.md` for the full
+    diagnosis. -/
 theorem zp_porthole_forces_wheel_axioms
     (L : Type*) [ZPSemilattice L] [AFAStructure L] [ValuationStructure L]
     (_h_top : ValuationStructure.val (ZPSemilattice.bot : L) = ⊤)
