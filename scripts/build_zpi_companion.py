@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.20 | May 2026
+Version 1.21 | May 2026
+v1.21: "(no sorryAx)" applied to step 1 source; ZP-internal labels removed from step table; "No new axioms" clarified to scope; "the framework" scoped to ZP-I (ER/AR fixes).
 v1.20: Conditions scoped in prose ("every" → conditional); "(axiom-free)" corrected to "(no sorryAx)" for theorems using propext/Classical.choice (ER/AR fixes).
 v1.19: Norm bound includes S(0) factor; IsDepthChain/IsStrictStateSequence added to key result box; ZP-internal framing replaced with standard math (AR fixes).
 v1.18: IsDepthChain hypothesis added to strict growth claim (AR fix).
@@ -287,7 +288,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.20'
+VERSION = '1.21'
 
 
 def build():
@@ -445,8 +446,8 @@ def build():
         ['1. Cauchy convergence',
          'The chain has 2-adic norm ≤ 2⁻ⁿ at step n. Both the norm and the chain '
          'converge to 0. This is the topological core.',
-         'R1 + ZP-B completeness  - proved axiom-free (t_iz_cauchy). '
-         'Strict per-step growth derived via h_strict_from_r1_t3 + IsDepthChain  - R-IZ-A closed. ✓'],
+         'R1 + ZP-B completeness  - proved (no sorryAx) (t_iz_cauchy). '
+         'Strict per-step growth follows from h_strict_from_r1_t3 + IsDepthChain  - verified as a derived condition. ✓'],
         ['2. ⊥′-identification',
          'The Cauchy limit 0 ∈ Q₂ satisfies the join-identity condition  - '
          'the structural role of a bottom element. The limit is ⊥′.',
@@ -456,7 +457,7 @@ def build():
          'DA-1 applies at ⊥′ via the computational fixed-point argument.',
          'ZP-K KleeneStructure  - proved in Lean (da1_computational). ✓'],
         ['4. T-SNAP fires, ⊥′ is born',
-         'DA-1 establishes that instantiation = execution. T-SNAP fires: '
+         'At the computational fixed point, T-SNAP fires: '
          'join ⊥ ε₀′ = ε₀′. The successor null ⊥′ is generated.',
          'ZP-A bot_join  - proved in Lean. ✓'],
     ]
@@ -488,7 +489,7 @@ def build():
         'converges to a successor null ⊥′ in the 2-adic metric. '
         'At the limit: DA-1 fires (the successor semilattice carries a '
         'KleeneStructure, per ZP-K), T-SNAP fires, ⊥′ is born. The chain '
-        'generates its own successor by forward motion alone. No new axioms required.'))
+        'generates its own successor by forward motion alone. No axioms beyond those already proved in ZP-A through ZP-K.'))
     E.append(sp(6))
 
     # ── Three Doors, One Passage ───────────────────────────────────────────────
@@ -537,7 +538,7 @@ def build():
     E.append(cbody(
         'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀, necessarily). ZP-I gives us '
         'the end that is also a beginning: T-IZ (the chain → ⊥′). Together, they '
-        'describe a self-contained derivation cycle. The framework is not merely an emergence theorem  - '
+        'describe a self-contained derivation cycle. ZP-I is not merely an emergence result  - '
         'it is a structural account of a repeating pattern:'))
     E.append(cbody(
         '1. <b>T-SNAP</b> fires: ⊥ and ε₀ emerge. The branch opens.'

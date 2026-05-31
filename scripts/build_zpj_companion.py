@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.22 | May 2026
+Version 1.23 | May 2026
+v1.23: "his question" pronoun fixed; abstraction chain direction clarified; remember_box leads with analogy; p-adic removed from disclaimer (future work); "Not three separate" prose replaced; T-EXEC antecedent named (ER/AR fixes).
 v1.22: "ZP lattice" replaced with structural description; "bounded semilattice" corrected to join-semilattice; AFAStructure typeclass used directly; Aczel specific claims replaced with generic AFA fixed-point framing (ER/AR fixes).
 v1.21: ZP-A semilattice replaced with standard structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous (AR fixes).
 v1.20: Aczel attribution removed; open question stated without attribution (AR fix).
@@ -148,7 +149,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.22'
+VERSION = '1.23'
 
 
 def build():
@@ -183,7 +184,7 @@ def build():
               'This companion explains in plain language the proof that &#8869; = {&#8869;} '
               '(the Quine atom of AFA set theory) is the unique bottom element of a lattice. '
               'This is one result in the Zero Paradox project (ZP-J), connecting '
-              'AFA set theory, p-adic topology, and lattice algebra. '
+              'AFA set theory and lattice algebra. '
               'It covers both '
               'ZP-J Self-Reference and the ZP-J AFA Addendum. Every formal result stated '
               'here restates a theorem already proved in those technical documents. '
@@ -211,7 +212,7 @@ def build():
         'of T-EXEC, not a choice. CC-1 (S&#8320; = &#8869;) is a derived consequence of '
         'the algebra with no additional axioms.'))
     E.append(cbody(
-        'ZP-J extends the original result in four directions: it shows that '
+        'ZP-J extends the T-EXEC result in four directions: it shows that '
         'the proof requires no appeal to the axiom of Dependent Choice; it reduces the '
         'typeclass commitments layer by layer down to a pure valuation argument; it '
         'demonstrates the structure on two concrete types; and it proves a '
@@ -282,9 +283,8 @@ def build():
     E.append(three_way_table())
     E.append(sp(4))
     E.append(cbody(
-        'These are not three separate properties that happen to coincide. They are three '
-        'descriptions of the same structural role. T-EXEC makes this explicit and '
-        'machine-checked.'))
+        'T-EXEC makes this identification explicit and machine-checked: '
+        'these are three descriptions of the same structural role.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - Zero in arithmetic', [
         '0 is the additive identity (x + 0 = x), the smallest non-negative integer '
@@ -407,7 +407,7 @@ def build():
         'building sequences of approximations converging to a fixed point. '
         'Whether DC is essential to arguments of this type in general is an open question.'))
     E.append(cbody(
-        'ZP-J answers his question for the self-membership case: DC is not essential. '
+        'ZP-J answers this question for the self-membership case: DC is not essential. '
         'The proof is one step, not a sequence. Once you know there is at most one '
         'self-containing element (quine_unique), you do not need to construct anything  - '
         'you identify. The self-containing set is {&#8869;}, and you know this immediately '
@@ -460,10 +460,10 @@ def build():
         'set of reachable vertices strictly shrinks at each child.'))
     E.append(sp(4))
     E.append(remember_box(
-        'decoration_unique is the ZP version of AFA\'s central uniqueness theorem. '
-        'It does not construct a decoration or prove one exists  - it proves that '
-        'any two valid decorations must be identical. This is analogous to the uniqueness half of AFA\'s '
-        'decoration theorem, proved here for abstract DecorationUniverses without importing set-theoretic AFA axioms.'))
+        'Analogous to the uniqueness half of AFA\'s decoration theorem, decoration_unique proves '
+        'that any two valid decorations of a finite APG must agree  - without importing '
+        'set-theoretic AFA axioms. It does not construct a decoration or prove one exists: '
+        'it is a constraint on what valid decorations must be, proved for abstract DecorationUniverses.'))
     E.append(sp(8))
 
     # ── Key Result Box ───────────────────────────────────────────────────────
@@ -476,7 +476,7 @@ def build():
         'DC-free: the self-containing set {&#8869;} is identified in one step, '
         'with no Dependent Choice. '
         'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure  - '
-        'each layer derives the fields of the one above it. '
+        'each more specialized layer\'s results follow from the simpler layers beneath it. '
         'Concrete instances: &#8469;&#8734; satisfies the full ValuationStructure chain; '
         'OntologicalStates connects at the AbstractSelfApp level directly. '
         'decoration_unique: any two valid decorations of a finite APG agree. '
