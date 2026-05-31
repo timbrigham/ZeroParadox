@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-E_Bridge_Document_v3_18.pdf](ZP-E_Bridge_Document_v3_18.pdf) | 2026-05-31 | ZP-E v3.18 superseded by v3.19: version string removed from T-BUF li() call (Gemini review catch — li/label_box calls not covered by prose gate). |
+| [ZP-C_Information_Theory_v1_16.pdf](ZP-C_Information_Theory_v1_16.pdf) | 2026-05-31 | ZP-C v1.16 superseded by v1.17: version strings removed from Remark R5 label_box (Gemini review catch — li/label_box calls not covered by prose gate). |
 | [ZP-K_Computational_Grounding_v1_6.pdf](ZP-K_Computational_Grounding_v1_6.pdf) | 2026-05-31 | ZP-K v1.6 superseded by v1.7: version changelog removed from preamble; stale v1.5 refs stripped; palette rebuild. |
 | [ZP-J_AFA_Addendum_v1_1.pdf](ZP-J_AFA_Addendum_v1_1.pdf) | 2026-05-31 | ZP-J AFA Addendum v1.1 superseded by v1.2: version changelog removed from preamble; palette rebuild. |
 | [ZP-J_Self_Reference_v2_0.pdf](ZP-J_Self_Reference_v2_0.pdf) | 2026-05-31 | ZP-J Self-Reference v2.0 superseded by v2.1: version changelog removed from preamble; version strings stripped from section headers and endnote; "null state" → "⊥"; palette rebuild. |

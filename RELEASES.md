@@ -134,9 +134,9 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 
 **What changed:**
 - ZP-B p-Adic Topology: v1.8 → v1.9 — K-17 vocab fix ("First Atomic State" → "minimum nonzero state, ε₀")
-- ZP-C Information Theory: v1.14 → v1.16 — K-19/K-21 vocab fixes; null state → ⊥ throughout body prose; palette rebuild; companion v2.4 → v2.6
+- ZP-C Information Theory: v1.14 → v1.17 — K-19/K-21 vocab fixes; null state → ⊥ throughout body prose; palette rebuild; companion v2.4 → v2.6; version strings removed from Remark R5 label_box
 - ZP-D State Layer: v1.10 → v1.11 — K-11/K-18 vocab fixes; companion v1.9 → v1.11
-- ZP-E Bridge Document: v3.16 → v3.18 — K-22 vocab fix; null state → ⊥ and version refs removed from body prose; palette rebuild; companion v1.10 → v1.11 (Goodstein/proof-theoretic context for ε₀)
+- ZP-E Bridge Document: v3.16 → v3.19 — K-22 vocab fix; null state → ⊥ and version refs removed from body prose; palette rebuild; companion v1.10 → v1.11 (Goodstein/proof-theoretic context for ε₀); version string removed from T-BUF li() call
 - ZP-F The Counterexamples: v1.2 → v1.4 — K-16 vocab fix; null state → ⊥ in preamble; palette rebuild; companion v1.10 → v1.12
 - ZP-G Category Theory: v1.9 → v1.11 — local make_doc override removed; version subheader style fixed; version refs stripped from body prose; palette rebuild; companion v1.5 → v1.8
 - ZP-H Categorical Bridge: v1.13 → v1.15 — K-13 vocab fix; CC-1 framing updated (derived theorem in ZP-J, not freestanding modelling commitment); version ref stripped; palette rebuild; companion v1.5 → v1.13
@@ -157,9 +157,9 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 |----------|---------|
 | ZP-A Lattice Algebra | v1.14 |
 | ZP-B p-Adic Topology | v1.9 |
-| ZP-C Information Theory | v1.16 |
+| ZP-C Information Theory | v1.17 |
 | ZP-D State Layer | v1.11 |
-| ZP-E Bridge Document | v3.18 |
+| ZP-E Bridge Document | v3.19 |
 | ZP-F The Counterexamples | v1.4 |
 | ZP-G Category Theory | v1.11 |
 | ZP-H Categorical Bridge | v1.15 |
