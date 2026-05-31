@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.15 | May 2026
+Version 1.16 | May 2026
+v1.16: Norm claim corrected to inequality ("at most 2^{-n}" — matches proved bound).
 v1.15: Em-dashes removed; "closed system" language scoped to derivation chain (AR/ER fixes).
 v1.11: "Zero Paradox" expanded in disclaimer (AR fix).
 v1.10: T-IZ step table updated to 4 steps all proved via t_iz_complete (AFA/Kleene path);
@@ -282,7 +283,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.15'
+VERSION = '1.16'
 
 
 def build():
@@ -379,7 +380,7 @@ def build():
         'chain\'s 2-adic depth tracks its position. '
         'Lean: <tt>h_strict_from_r1_t3</tt> (ZPI.lean §Ib).'))
     E.append(cbody(
-        'In the 2-adic metric, a state at 2-adic depth n has norm 2<sup>−n</sup>  - '
+        'In the 2-adic metric, a state at 2-adic depth n has norm at most 2<sup>−n</sup>  - '
         'each additional unit of depth multiplies the norm by 2<sup>−1</sup>. '
         'As n → ∞, the 2-adic norm → 0. The chain converges to 0 in the 2-adic '
         'sense  - the element of infinite depth. That element is ⊥′: the successor null.'))

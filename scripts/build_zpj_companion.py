@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.17 | May 2026
+Version 1.18 | May 2026
+v1.18: Three residual em-dashes in three_way_table() removed (ER fix).
 v1.17: Em-dashes removed; Quine Atom added to tagline; 2-adic analogy caveat moved to front (AR/ER fixes).
 v1.16: Title reverted to "The Self-Containing Null".
 v1.15: Title changed to "The Quine Atom" (standard AFA term).
@@ -85,13 +86,13 @@ def three_way_table():
     rows = [
         ['Set theory (AFA)',
          '&#8869; &#8712; &#8869;  (i.e. &#8869; = {&#8869;})',
-         '⊥ contains itself — self-referential, no external interpreter possible'],
+         '⊥ contains itself - self-referential, no external interpreter possible'],
         ['Order theory (ZP-A)',
          '&#8869; &#8804; x  for all x',
-         '⊥ is below everything — the universal starting point'],
+         '⊥ is below everything - the universal starting point'],
         ['Algebra (ZP-A A4)',
          '&#8869; &#8744; x = x  for all x',
-         '⊥ contributes nothing to any join — the additive zero'],
+         '⊥ contributes nothing to any join - the additive zero'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['tbl_cell']),
                      Paragraph(fix(r[1]), CS['tbl_cell']),
@@ -143,7 +144,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.17'
+VERSION = '1.18'
 
 
 def build():
