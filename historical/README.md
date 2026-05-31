@@ -6,6 +6,7 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-J_Illustrated_Companion_v1_14.pdf](ZP-J_Illustrated_Companion_v1_14.pdf) | 2026-05-30 | ZP-J companion v1.14 superseded by v1.15: title changed to "The Quine Atom" (standard AFA term; replaces "The Self-Containing Null"). |
 | [ZP-J_Illustrated_Companion_v1_13.pdf](ZP-J_Illustrated_Companion_v1_13.pdf) | 2026-05-30 | ZP-J companion v1.13 superseded by v1.14: "full AFA decoration" scoped to finite APGs; Aczel quote paraphrased; sorry-free claim scoped (ER fixes). |
 | [ZP-J_Illustrated_Companion_v1_12b.pdf](ZP-J_Illustrated_Companion_v1_12b.pdf) | 2026-05-30 | ZP-J companion v1.12 superseded by v1.13: disclaimer rewritten to lead with AFA math before brand name (AR fix). |
 | [ZP-J_Illustrated_Companion_v1_12.pdf](ZP-J_Illustrated_Companion_v1_12.pdf) | 2026-05-30 | ZP-J companion v1.12 superseded by final v1.12: docstring version corrected; stale formal-doc version string removed (ER fix). |
