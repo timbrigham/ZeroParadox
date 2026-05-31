@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.21 | May 2026
+Version 1.22 | May 2026
+v1.22: "ZP lattice" replaced with structural description; "bounded semilattice" corrected to join-semilattice; AFAStructure typeclass used directly; Aczel specific claims replaced with generic AFA fixed-point framing (ER/AR fixes).
 v1.21: ZP-A semilattice replaced with standard structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous (AR fixes).
 v1.20: Aczel attribution removed; open question stated without attribution (AR fix).
 v1.19: Plain-meaning table corrected; AFA/ZP-J scope clarified; sorry note added to key result box (AR/ER fixes).
@@ -147,7 +148,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.21'
+VERSION = '1.22'
 
 
 def build():
@@ -194,7 +195,7 @@ def build():
     E.append(Paragraph('What Is ZP-J Doing?', CS['h1']))
     E.append(cbody(
         'In AFA set theory, the Quine atom &#8869; = {&#8869;} is provably the unique '
-        'bottom element of the ZP lattice. This turns what ZP-E carried as a modelling '
+        'bottom element of the join-semilattice structure defined in this framework. This turns what ZP-E carried as a modelling '
         'assumption into a derived theorem. ZP-J is the document that proves it, using '
         'the valuation structure of Q&#8322; and the AFA uniqueness result. '
         'The structural argument: nothing external to &#8869; can execute &#8869;, '
@@ -202,8 +203,8 @@ def build():
         '(see ZP-E for the full three-path argument).'))
     E.append(cbody(
         'ZP-J makes that argument formal. It proves, in Lean 4 with no axioms beyond the '
-        'standard mathematical infrastructure, that in any bounded semilattice with '
-        'anti-foundation (AFA) set-theoretic grounding satisfying the ZP-A axioms, '
+        'standard mathematical infrastructure, that in any join-semilattice with a bottom element '
+        'carrying an AFAStructure typeclass (in the ZF+AFA setting), '
         'the unique self-containing set  - the Quine atom  - '
         'is provably the bottom element &#8869;. CC-2 (&#8869; = {&#8869;}) is no longer a '
         'freestanding modelling assumption  - within ZF+AFA, it is a derived consequence '
@@ -252,7 +253,7 @@ def build():
         'The central theorem of ZP-J is T-EXEC (Executability of Self-Reference). It states:'))
     E.append(key_result_box(
         'Theorem T-EXEC',
-        'In any AFA-grounded bounded semilattice satisfying the ZP-A axioms (A1-A4), an element q is a Quine atom '
+        'In any type carrying the AFAStructure typeclass (in the ZF+AFA setting), an element q is a Quine atom '
         '(q = {q}, i.e. q ∈ q) if and only if q = ⊥. '
         'The Quine atom property uniquely identifies the bottom element. '
         'Proved axiom-free in Lean 4 (ZeroParadox.ZPJ.t_exec).'))
@@ -402,10 +403,8 @@ def build():
     # ── Aczel's Open Question ────────────────────────────────────────────────
     E.append(Paragraph('Aczel\'s DC Question  - Closed for Self-Membership', CS['h1']))
     E.append(cbody(
-        'In 1988, Peter Aczel proved that the set of self-containing elements  - '
-        'J&#934; in his notation  - is the largest pre-fixed-point of the self-membership '
-        'operator. His proof used the axiom of Dependent Choice (DC) to build a sequence '
-        'of approximations converging to the fixed point. '
+        'Earlier proofs of related AFA fixed-point results used the axiom of Dependent Choice (DC)  - '
+        'building sequences of approximations converging to a fixed point. '
         'Whether DC is essential to arguments of this type in general is an open question.'))
     E.append(cbody(
         'ZP-J answers his question for the self-membership case: DC is not essential. '

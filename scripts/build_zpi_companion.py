@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.19 | May 2026
+Version 1.20 | May 2026
+v1.20: Conditions scoped in prose ("every" → conditional); "(axiom-free)" corrected to "(no sorryAx)" for theorems using propext/Classical.choice (ER/AR fixes).
 v1.19: Norm bound includes S(0) factor; IsDepthChain/IsStrictStateSequence added to key result box; ZP-internal framing replaced with standard math (AR fixes).
 v1.18: IsDepthChain hypothesis added to strict growth claim (AR fix).
 v1.17: Blanket purity claim replaced with per-theorem scoping (AR fix).
@@ -286,7 +287,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.19'
+VERSION = '1.20'
 
 
 def build():
@@ -351,8 +352,8 @@ def build():
         'not, what comes next?'))
     E.append(cbody(
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
-        'Every maximal ascending chain in this framework converges  - in the '
-        '2-adic metric  - to its own successor null. The chain does not go on forever; it '
+        'Every maximal ascending chain satisfying the IsDepthChain and IsStrictStateSequence conditions converges  - in the '
+        '2-adic metric  - to a successor null. The chain does not go on forever; it '
         'generates a new null at the ordinal limit, and the cycle begins again. The '
         'framework is not just a description of emergence. The derivation chain from T-SNAP through T-IZ is self-contained within the framework\'s axioms.'))
     E.append(cbody(
@@ -377,7 +378,7 @@ def build():
         'depth grows without bound.'))
     E.append(cbody(
         'More than that: each step is a genuine advance. The depth does not merely grow '
-        'eventually  - it increases by at least 1 at every transition. This is not an '
+        'eventually  - given the IsDepthChain condition, it increases by at least 1 at every transition. This is not an '
         'assumption about the chain. It follows from the ZP-A lattice axioms together with '
         'the IsDepthChain condition (which requires the chain\'s 2-adic depth to strictly '
         'track position): no top element, monotonicity, and IsDepthChain together force strict depth growth at every step. '
@@ -583,12 +584,12 @@ def build():
         'ZP-A R1 + T3, given IsDepthChain (2-adic depth tracks position index). '
         'Closes R-IZ-A: strict growth is no longer a construction hypothesis. ✓',
         't_iz_norm_tendsto_zero  - norm bound ≤ 2⁻ⁿ implies norms converge to 0. '
-        'Proved via squeeze_zero + tendsto_pow_atTop_nhds_zero_of_lt_one. ✓ (axiom-free)',
+        'Proved via squeeze_zero + tendsto_pow_atTop_nhds_zero_of_lt_one. ✓ (no sorryAx)',
         't_iz_conv_zero  - norm convergence implies sequence convergence in Q₂. '
-        'Proved via tendsto_zero_iff_norm_tendsto_zero. ✓ (axiom-free)',
+        'Proved via tendsto_zero_iff_norm_tendsto_zero. ✓ (no sorryAx)',
         't_iz_r1_t3_geometric_bound  - derives &#8214;S(n)&#8214; ≤ &#8214;S(0)&#8214; ⋅ 2⁻ⁿ '
         'from R1 + T3. Uses Padic.norm_eq_zpow_neg_valuation + zpow_le_zpow_right₀. ✓',
-        't_iz_cauchy  - the complete topological convergence result. ✓ (axiom-free)',
+        't_iz_cauchy  - the complete topological convergence result. ✓ (no sorryAx)',
         't_iz_limit_is_new_null  - Cauchy limit satisfies the DA-2 null role (⊥′-identification). '
         'Proved directly from da2_bottom_characterization. ✓ (axiom-free)',
         'da1_computational (ZP-K KleeneStructure)  - DA-1 fires at ⊥′ via the '

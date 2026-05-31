@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-J_Illustrated_Companion_v1_21.pdf](ZP-J_Illustrated_Companion_v1_21.pdf) | 2026-05-30 | ZP-J companion v1.21 superseded by v1.22: "ZP lattice" and "bounded semilattice" replaced; AFAStructure typeclass used directly in key result box; Aczel specific claims replaced with generic AFA fixed-point framing. |
+| [ZP-I_Illustrated_Companion_v1_19.pdf](ZP-I_Illustrated_Companion_v1_19.pdf) | 2026-05-30 | ZP-I companion v1.19 superseded by v1.20: conditions added to "every chain" prose; "(axiom-free)" corrected to "(no sorryAx)" for theorems using Classical.choice. |
 | [ZP-J_Illustrated_Companion_v1_20.pdf](ZP-J_Illustrated_Companion_v1_20.pdf) | 2026-05-30 | ZP-J companion v1.20 superseded by v1.21: "ZP-A semilattice" replaced with structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous. |
 | [ZP-I_Illustrated_Companion_v1_18.pdf](ZP-I_Illustrated_Companion_v1_18.pdf) | 2026-05-30 | ZP-I companion v1.18 superseded by v1.19: norm bound corrected to include S(0) factor; IsDepthChain and IsStrictStateSequence added to key result box. |
 | [ZP-J_Illustrated_Companion_v1_19.pdf](ZP-J_Illustrated_Companion_v1_19.pdf) | 2026-05-30 | ZP-J companion v1.19 superseded by v1.20: Aczel attribution removed; open question stated without attribution. |
