@@ -1,5 +1,6 @@
 """
-Build ZP-F: The Counterexamples (v1.3)
+Build ZP-F: The Counterexamples (v1.4)
+v1.4: Vocabulary fix — "departure from the null state" → "departure from ⊥" in preamble. Palette rebuild.
 v1.3: K-16 vocabulary fix — "topological isolation of zero" → "valuative gap at zero
 (v_p(0) = +∞)" in §VI body prose.
 v1.0: Initial release. Establishes formally that any linearly ordered field —
@@ -18,7 +19,7 @@ v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples.pdf')
@@ -42,7 +43,7 @@ def build():
     E.append(Paragraph('I. Purpose and Scope', S['h1']))
     E.append(body(
         'The Zero Paradox framework requires a metric space in which a minimal first '
-        'departure from the null state is structurally forced — the Binary Snap. '
+        'departure from &#8869; is structurally forced — the Binary Snap. '
         'This document establishes the negative result: no linearly ordered field can '
         'serve as that substrate. The real numbers &#8477; are the canonical and most '
         'familiar instance; the theorem applies to any field carrying a compatible '

@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.0 | May 2026
+Version 2.1 | May 2026
+v2.1: Version changelog removed from preamble; version stripped from section headers and endnote.
 v2.0: Four new sections added — Section VII (Aczel DC-free connection),
       Section VIII (abstraction chain: ValuationStructure → AbstractSelfApp →
       AFAStructure), Section IX (concrete instances: ℕ∞ and OntologicalStates),
@@ -16,7 +17,7 @@ v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.
 import os
 from zp_utils import *
 
-VERSION = '2.0'
+VERSION = '2.1'
 
 
 def build():
@@ -33,13 +34,6 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J: Executability of Self-Reference', S['title']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
-        Paragraph(
-            '<i>v2.0: Sections VII&#8211;X added — Aczel DC-free connection, abstraction chain, '
-            'concrete instances, APG decoration uniqueness. | '
-            'v1.2: Minor wording fix. | '
-            'v1.1: Remark R-J.0 — Lean encoding scope. | '
-            'v1.0: T-EXEC; all ZPJ.lean theorems axiom-free.</i>',
-            S['note']),
         sp(10),
         hr(),
         sp(4),
@@ -203,7 +197,7 @@ def build():
         'of the lattice is self-containing &#8212; it satisfies selfMem(&#8869;).'))
     E.append(body(
         'In set-theoretic terms: &#8869; &#8712; &#8869;, i.e. &#8869; = {&#8869;}. '
-        'In the framework: the null state contains itself as its sole content. '
+        'In the framework: &#8869; contains itself as its sole content. '
         'This is not a new claim &#8212; it is the identification that ZP-E\'s DA-1 Path 1 already '
         'invokes informally. ZP-J encodes it as a typeclass field, making it a verifiable '
         'structural prerequisite rather than a narrative motivation.'))
@@ -836,7 +830,7 @@ def build():
     E.append(sp(6))
 
     print('[build_zpj] Building registers...')
-    E += [hr(), Paragraph('Traceability Register &#8212; ZP-J v2.0', S['h1'])]
+    E += [hr(), Paragraph('Traceability Register &#8212; ZP-J', S['h1'])]
 
     trace_rows = [
         ['T-EXEC: Quine atom = &#8869;',
@@ -907,7 +901,7 @@ def build():
     ))
     E.append(sp(8))
 
-    E += [hr(), Paragraph('Open Items Register &#8212; ZP-J v2.0', S['h1'])]
+    E += [hr(), Paragraph('Open Items Register &#8212; ZP-J', S['h1'])]
 
     oq_rows = [
         ['CC-1 (ZP-A) derivability',
@@ -958,13 +952,13 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-J v2.0 | Theorem T-EXEC: Executability of Self-Reference | '
+            '<i>End of ZP-J | Theorem T-EXEC: Executability of Self-Reference | '
             'CC-1 derived &#8212; no freestanding axioms | '
             'DC-free: J_self = {&#8869;} without Dependent Choice | '
             'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure | '
             'Instances: &#8469;&#8734;, OntologicalStates | '
             'decoration_unique: any two valid decorations of a finite APG agree | '
-            'All v2.0 results sorry-free in Lean 4</i>',
+            'All results sorry-free in Lean 4</i>',
             S['endnote']),
     ]
 

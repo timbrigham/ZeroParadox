@@ -128,38 +128,45 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 
 ---
 
-## v2.2 - PENDING
+## v2.2 - 2026-05-31
 
-**Why this release:** K-series vocabulary round (K-11 through K-24) applied across all layers — systematic replacement of imprecise terms (topological isolation → clopen separation, first atomic state → minimum nonzero state, null state → ⊥). New sorry-free Lean proofs in ZPJ_APG. ZP-E companion Goodstein/proof-theoretic context for ε₀.
+**Why this release:** K-series vocabulary round (K-11 through K-24) applied across all layers — systematic replacement of imprecise terms (topological isolation → clopen separation, first atomic state → minimum nonzero state, null state → ⊥). New sorry-free Lean proofs in ZPJ_APG. ZP-E companion Goodstein/proof-theoretic context for ε₀. Full palette standardization pass — all 16 PDFs rebuilt from zp_utils to ensure consistent colors and formatting across the document set.
 
 **What changed:**
 - ZP-B p-Adic Topology: v1.8 → v1.9 — K-17 vocab fix ("First Atomic State" → "minimum nonzero state, ε₀")
-- ZP-C Information Theory: v1.14 → v1.15 — K-19/K-21 vocab fixes; companion v2.4 → v2.5
-- ZP-D State Layer: v1.10 → v1.11 — K-11/K-18 vocab fixes; companion v1.9 → v1.10
-- ZP-E Bridge Document: v3.16 → v3.17 — K-22 vocab fix; companion v1.10 → v1.11 (Goodstein/proof-theoretic context for ε₀)
-- ZP-F The Counterexamples: v1.2 → v1.3 — K-16 vocab fix; companion v1.10 → v1.11
-- ZP-G Category Theory: v1.9 → v1.10 — hash sync rebuild; companion v1.5 → v1.6
-- ZP-H Categorical Bridge: v1.13 → v1.14 — K-13 vocab fix; companion v1.5 → v1.6
-- ZP-J Self-Reference: ZPJ_APG.lean — val_iterate and scale_iterate_unique_fp proved sorry-free
-- Foreword: v2.1 → v2.5 — porthole precision, ZF/ZFC scope, fix() coverage
-- Philosophical Question: v1.5 → v1.11 — bridge → connecting argument, scope fixes
-- README/GUIDE: Question Register Open Questions link; vocabulary and prose precision pass
+- ZP-C Information Theory: v1.14 → v1.16 — K-19/K-21 vocab fixes; null state → ⊥ throughout body prose; palette rebuild; companion v2.4 → v2.6
+- ZP-D State Layer: v1.10 → v1.11 — K-11/K-18 vocab fixes; companion v1.9 → v1.11
+- ZP-E Bridge Document: v3.16 → v3.18 — K-22 vocab fix; null state → ⊥ and version refs removed from body prose; palette rebuild; companion v1.10 → v1.11 (Goodstein/proof-theoretic context for ε₀)
+- ZP-F The Counterexamples: v1.2 → v1.4 — K-16 vocab fix; null state → ⊥ in preamble; palette rebuild; companion v1.10 → v1.12
+- ZP-G Category Theory: v1.9 → v1.11 — local make_doc override removed; version subheader style fixed; version refs stripped from body prose; palette rebuild; companion v1.5 → v1.8
+- ZP-H Categorical Bridge: v1.13 → v1.15 — K-13 vocab fix; CC-1 framing updated (derived theorem in ZP-J, not freestanding modelling commitment); version ref stripped; palette rebuild; companion v1.5 → v1.13
+- ZP-I Inside Zero: v1.8 → v1.10 — null state → ⊥ and version refs removed from body prose; palette rebuild; companion updated
+- ZP-J Self-Reference: v1.2 → v2.1 — Sections VII-X added; version changelog removed from preamble; version strings stripped from section headers and endnote; ZPJ_APG.lean val_iterate and scale_iterate_unique_fp proved sorry-free; companion v1.4 → v1.23
+- ZP-J AFA Addendum: v1.0 → v1.2 — COMP_BLUE header banner added; version changelog removed from preamble; palette rebuild
+- ZP-K Computational Grounding: v1.3 → v1.7 — Lean proof completed sorry-free; version changelog removed from preamble; stale version refs stripped; palette rebuild; companion v1.6 → v1.8
+- ZP-L Incomputability Convergence: v1.0 — palette rebuild; companion v1.0 → v1.4
+- ZP-M Kleene-Ordinal Bridge: v1.0 — palette rebuild; companion v1.0 → v1.2
+- Foreword: v2.1 → v2.5 — porthole precision, ZF/ZFC scope, fix() coverage; palette rebuild
+- Philosophical Question: v1.3 → v1.11 — bridge → connecting argument, scope fixes; palette rebuild
+- README/GUIDE: Question Register Open Questions link; vocabulary and prose precision pass; version table updated
 - LEAN_CUSTOM_REGISTRY.md: [ZP-CUSTOM] inline comments across 13 Lean files
+- zp_utils: build gate added enforcing banned vocabulary and version-in-prose rules on all future PDF builds
 
 **Document versions at v2.2:**
 | Document | Version |
 |----------|---------|
 | ZP-A Lattice Algebra | v1.14 |
 | ZP-B p-Adic Topology | v1.9 |
-| ZP-C Information Theory | v1.15 |
+| ZP-C Information Theory | v1.16 |
 | ZP-D State Layer | v1.11 |
-| ZP-E Bridge Document | v3.17 |
-| ZP-F The Counterexamples | v1.3 |
-| ZP-G Category Theory | v1.10 |
-| ZP-H Categorical Bridge | v1.14 |
-| ZP-I Inside Zero | v1.9 |
-| ZP-J Self-Reference | v2.0 |
-| ZP-K Computational Grounding | v1.6 |
+| ZP-E Bridge Document | v3.18 |
+| ZP-F The Counterexamples | v1.4 |
+| ZP-G Category Theory | v1.11 |
+| ZP-H Categorical Bridge | v1.15 |
+| ZP-I Inside Zero | v1.10 |
+| ZP-J Self-Reference | v2.1 |
+| ZP-J AFA Addendum | v1.2 |
+| ZP-K Computational Grounding | v1.7 |
 | ZP-L Incomputability Convergence | v1.0 |
 | ZP-M Kleene-Ordinal Bridge | v1.0 |
 

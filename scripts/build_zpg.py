@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.10 | May 2026
+Version 1.11 | May 2026
+v1.11: Version line style fixed (bodyI → subtitle); local make_doc override removed.
 v1.10: Hash sync — script was modified without full workflow; rebuilt to bring
 hash into alignment with register.md.
 v1.9: Version number removed from Open Items Register section header.
@@ -23,7 +24,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
 AMBER = colors.HexColor('#B07800')  # ZP-OVERRIDE: ZP-G import_box label text uses darker amber
@@ -89,26 +90,10 @@ def import_box(title, status, rows):
     return t
 
 
-def make_doc(path, title_str, doc_id, version_str, date_str='May 2026'):
-    def footer_cb(canvas, doc):
-        canvas.saveState()
-        canvas.setFont('DV-I', 8)
-        canvas.setFillColor(colors.grey)
-        ft = (f'Zero Paradox {doc_id}  |  {version_str}  |  {date_str}  |  Page {doc.page}')
-        canvas.drawCentredString(LETTER[0] / 2, 0.6 * inch, ft)
-        canvas.restoreState()
-    return SimpleDocTemplate(
-        path, pagesize=LETTER,
-        leftMargin=LM, rightMargin=RM, topMargin=TM, bottomMargin=BM,
-        title=title_str, author='Zero Paradox Project',
-        onFirstPage=footer_cb, onLaterPages=footer_cb,
-    )
-
-
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory.pdf')
     print(f'[build_zpg] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version ' + VERSION)
+    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version ' + VERSION, date_str='May 2026')
     E   = []
 
     print('[build_zpg] Building title block...')
@@ -117,7 +102,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['bodyI']),
+        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
         sp(8),
         hr(),
         sp(4),
@@ -127,7 +112,7 @@ def build():
     E += [
         body('This document is self-contained within category theory, with one explicit import from '
              'ZP-C: the conditional Kolmogorov complexity K(x|n) and the coding theorem connecting '
-             'it to Shannon entropy. That import is named and labelled; it replaces the v1.0 Bridge '
+             'it to Shannon entropy. That import is named and labelled; it replaces Bridge '
              'Axiom BA-G1 (Leinster categorical entropy characterization) with a native derivation. All '
              'other content from ZP-A, ZP-B, ZP-D, and ZP-E remains excluded from this document. '
              'Cross-framework connections are deferred to ZP-H.'),
@@ -143,8 +128,7 @@ def build():
     print('[build_zpg] Building Section I: Categorical Primitives...')
     # ── I. CATEGORICAL PRIMITIVES ─────────────────────────────────────────────
     E.append(Paragraph('I. Categorical Primitives', S['h1']))
-    E.append(body('Definitions D1 through D6 and results T1 through T5 are unchanged from v1.0. '
-                  'They are reproduced here for completeness and self-reference.'))
+    E.append(body('Definitions D1 through D6 and results T1 through T5 are reproduced here for completeness and self-reference.'))
 
     E.append(Paragraph('1.1 The Definition of a Category', S['h2']))
     E.append(def_box(
@@ -351,9 +335,9 @@ def build():
     print('[build_zpg] Building Section V: Kolmogorov Import...')
     # ── V. THE KOLMOGOROV IMPORT FROM ZP-C ───────────────────────────────────
     E.append(Paragraph('V. The Kolmogorov Import from ZP-C', S['h1']))
-    E.append(body('This section contains the single import from outside category theory that ZP-G v1.1 '
+    E.append(body('This section contains the single import from outside category theory that ZP-G '
                   'requires. It is named, scoped, and labelled explicitly. It replaces BA-G1 (the Leinster '
-                  'Bridge Axiom from v1.0) as the informational foundation of D7\'.'))
+                  'Bridge Axiom) as the informational foundation of D7\'.'))
 
     E.append(import_box(
         'Import I-KC — Conditional Kolmogorov Complexity from ZP-C',
@@ -481,10 +465,9 @@ def build():
     ))
 
     print('[build_zpg] Building Section VII: Informational Singularity...')
-    # ── VII. THE INFORMATIONAL SINGULARITY OF 0 [REBUILT IN v1.1] ────────────
-    E.append(Paragraph('VII. The Informational Singularity of 0 [Rebuilt in v1.1]', S['h1']))
-    E.append(body('This is the central theorem of the information-theoretic section. In v1.0, it depended on '
-                  'BA-G1. In v1.1, it is proved from D7\' and AX-G2 alone, with I-KC as the only external dependency.'))
+    # ── VII. THE INFORMATIONAL SINGULARITY OF 0 ─────────────────────────────
+    E.append(Paragraph('VII. The Informational Singularity of 0', S['h1']))
+    E.append(body('This is the central theorem of the information-theoretic section. It is proved from D7\' and AX-G2 alone, with I-KC as the only external dependency.'))
 
     E.append(result_box(
         'Theorem T6 — Informational Singularity of 0',
@@ -541,9 +524,7 @@ def build():
     print('[build_zpg] Building Section VIII: Categorical Zero Paradox...')
     # ── VIII. THE CATEGORICAL ZERO PARADOX — FORMAL STATEMENT ─────────────────
     E.append(Paragraph('VIII. The Categorical Zero Paradox — Formal Statement', S['h1']))
-    E.append(body('Theorem T7 is the closing theorem of ZP-G. Its statement is unchanged from v1.0. Its '
-                  'proof is strengthened: Part IV (informational singularity) now rests on T6 as rebuilt in '
-                  'v1.1, which does not depend on BA-G1.'))
+    E.append(body('Theorem T7 is the closing theorem of ZP-G. Part IV (informational singularity) rests on T6, which does not depend on BA-G1.'))
 
     E.append(result_box(
         'Theorem T7 — The Categorical Zero Paradox',

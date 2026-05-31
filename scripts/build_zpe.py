@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.17 | May 2026
+Version 3.18 | May 2026
+v3.18: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state" throughout body prose; version references (v1.4, v1.5, v2.7, v1.0) removed from body prose. Palette rebuild.
 v3.17: K-22 vocabulary fix — "informational extremity" → "unbounded surprisal (L-INF)"
 in DA-1 Section II bridge prose.
 v3.16: Version numbers removed from three internal register section headers (Open Items,
@@ -74,7 +75,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.17'
+VERSION = '3.18'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -130,8 +131,8 @@ def build():
         'relation cannot descend; ZP-B finds the p-adic valuation undefined (or +&#8734;) at 0, where '
         'clopen separation is total — 0 and every nonzero element lie in disjoint clopen classes; '
         'ZP-C finds surprisal unbounded above at &#8869;, so no finite '
-        'external description can contain the null state; ZP-D maps 0 to a basis vector orthogonal to '
-        'every non-null state, from which no return is possible. DA-1 establishes these as descriptions '
+        'external description can contain &#8869;; ZP-D maps 0 to a basis vector orthogonal to '
+        'every nonzero state, from which no return is possible. DA-1 establishes these as descriptions '
         'of the same structural limit across four independent mathematical languages.'))
     E.append(hr())
 
@@ -147,17 +148,17 @@ def build():
     ]
 
     E.append(Paragraph('I. The Gap DA-1 Closes', S['h2']))
-    E.append(body('The T-BUF chain from ZP-C v1.4 established three results:'))
+    E.append(body('The T-BUF chain from ZP-C established three results:'))
     E += [
-        li('L-RUN: The transition c<sub>0</sub> → c<sub>1</sub> is a non-null state change. (ZP-C v1.4 — Derived)'),
-        li('TQ-IH: No program outputs ⊥ without a non-null intermediate configuration state. (ZP-C v1.4 — Derived by L-RUN)'),
+        li('L-RUN: The transition c<sub>0</sub> → c<sub>1</sub> is a nonzero state transition. (ZP-C — Derived)'),
+        li('TQ-IH: No program outputs ⊥ without a nonzero intermediate configuration state. (ZP-C — Derived by L-RUN)'),
         li('T-BUF: At P<sub>0</sub>, execution is structurally guaranteed; that execution state is ε<sub>0</sub> in the semilattice. (ZP-C v1.4 — Candidate Theorem pending DA-1)'),
         sp(4),
     ]
     E.append(body(
         'T-BUF was labelled Candidate because Step 2 asserts that a configuration at P<sub>0</sub> is a '
         'live machine state — that instantiation at P<sub>0</sub> constitutes an execution event, not a static '
-        'description. ZP-C v1.5 L-INF supplies one mathematical premise: &#8869; at P<sub>0</sub> has unbounded '
+        'description. ZP-C L-INF supplies one mathematical premise: &#8869; at P<sub>0</sub> has unbounded '
         'surprisal — no finite external interpreter can hold it as a static description. ZP-A CC-2 '
         'supplies a second, structural basis: &#8869; = {&#8869;} is a self-containing object with no external '
         'interpreter by structure. DA-1 (&#167; III below) provides the derived proposition that closes T-BUF Step 2.'))
@@ -249,7 +250,7 @@ def build():
              'reverse. ZP-A CC-2 (&#8869; = {&#8869;}) retains its label for editorial continuity but is now '
              'a structural consequence, not a freestanding commitment.'),
         body('Path 2 — Informational (ZP-C L-INF): Independently, the surprisal I(n) = n at ball-hierarchy '
-             'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. The null state ⊥ corresponds '
+             'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. ⊥ corresponds '
              'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
              'Any finite external interpreter can hold only a finite informational bound; ⊥ exceeds every '
              'such bound. '
@@ -330,8 +331,8 @@ def build():
         li('Step 1 — P<sub>0</sub> identifies the incompressibility threshold. When K(x|n)/n = 1, the configuration string x is algorithmically random. (ZP-C D1)'),
         li('Step 2 — A configuration at P<sub>0</sub> is necessarily executing: At P<sub>0</sub>, K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 (ZP-C D1) — c<sub>1</sub> is incompressible, its own minimal program. No shorter external generator exists; the static description state is eliminated; c<sub>1</sub> is in live execution (DA-1 Path 3 — from ZP-C D1 + AIT). Corroboration: ⊥ = {&#8869;} (ZP-A CC-2/R3); unbounded surprisal (ZP-C L-INF). (DA-1 &#167; III — Derived Proposition)'),
         li('Step 3 — Any instantiated execution passes through c<sub>1</sub>. (ZP-C D7 — definitional; c<sub>1</sub> is the first running configuration)'),
-        li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, non-null state)'),
-        li('Step 5 — No program that executes produces only null configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
+        li('Step 4 — c<sub>1</sub> ≠ ⊥. (ZP-C L-RUN — Derived; c<sub>1</sub> has gained execution context not present in c<sub>0</sub> = ⊥; by AX-B1 this is a distinct, nonzero state)'),
+        li('Step 5 — No program that executes produces only ⊥ configuration states. (ZP-C TQ-IH — Derived; execution trace τ(p) contains c<sub>1</sub> for any executing program p)'),
         li('Step 6 — In (L, ∨, ⊥), c<sub>1</sub> is an element strictly above ⊥. By ZP-A D2, the transition ⊥ → c<sub>1</sub> is a valid state transition: c<sub>1</sub> = ⊥ ∨ ε<sub>0</sub> for some ε<sub>0</sub> ∈ L with ε<sub>0</sub> > ⊥. This transition is the Binary Snap.'),
         li('Step 7 — The transition is irreversible: algebraically by ZP-A R1 (no subtraction operator); topologically by ZP-B C3 (no continuous return path to 0 in Q<sub>2</sub>). These two grounds are sufficient. Conceptual correspondence: ZP-G AX-G2 (hom(X, 0) = ∅ for X ≠ 0) expresses the same irreversibility in categorical language — ZP-G is downstream of ZP-E and is not a formal dependency of this proof.'),
         sp(4),
@@ -431,7 +432,7 @@ def build():
         'on T-SNAP as a derived theorem. T5 (Iterative Forcing Theorem) depended on AX-1 for the first '
         'Snap — it now depends on T-SNAP. Content unchanged; grounding strengthened. T4 (Unified Snap '
         'Description) carried AX-1 as an axiom label on the causality component — that label is upgraded '
-        'to Derived — T-SNAP. From v2.7, DA-1 is additionally upgraded from Design Principle to Derived '
+        'to Derived — T-SNAP. DA-1 is additionally upgraded from Design Principle to Derived '
         'Proposition: grounded in ZP-A CC-2 (⊥ = {⊥}) and R3, with ZP-C L-INF as independent corroboration. '
         'The intentional axioms of the system are now: AX-B1 (binary existence), '
         'AX-G1 (initial object), AX-G2 (source asymmetry). AX-1 is no longer an axiom. '
@@ -451,7 +452,7 @@ def build():
 
     E.append(Paragraph('I. The Gap DA-2 Closes', S['h2']))
     E.append(body('DA-1 and T-SNAP establish that the Binary Snap is a structural consequence of reaching P<sub>0</sub> '
-                  'within an instantiation. Three questions remain open after v1.0:'))
+                  'within an instantiation. Three questions remain open after DA-1:'))
     E += [
         li('CC-1 (ZP-A) says S<sub>0</sub> = ⊥ is a modelling commitment — not derived from A1–A4. This '
            'leaves open whether ⊥ is unique across all instantiations or whether each instantiation '
@@ -472,7 +473,7 @@ def build():
              'metric, its own ⊥, its own ε<sub>0</sub>. C3 quantifies only over paths within a single topological space '
              'and has nothing to say about the boundary between spaces.'),
         body('More precisely: C3 and the irreversibility of the Snap together require that any recurrence of '
-             'a null state be a different null state. You cannot return to the original ⊥ even in principle. '
+             '⊥ be a structurally distinct ⊥. You cannot return to the original ⊥ even in principle. '
              'Therefore if the structure recurs, it must instantiate fresh. The topology enforces the '
              'ontological novelty of each ⊥.'),
     ]
@@ -492,7 +493,7 @@ def build():
              '∨, the element that contributes nothing to any join and is therefore present in everything '
              'above it. DA-2 does not redefine ⊥. It clarifies that the modelling commitment of CC-1 can be '
              'satisfied by any state meeting A4\'s algebraic conditions — not only by a cosmologically '
-             'primitive null state. The identity condition is structural, not historical: what matters is the '
+             'primitive ⊥. The identity condition is structural, not historical: what matters is the '
              'algebraic role a state plays in the subsequent semilattice, not where it came from.'),
         body('The terminal state of I<sub>n</sub> arrives at I<sub>n+1</sub> carrying the accumulated join of everything in I<sub>n</sub>\'s '
              'sequence. It is structurally ⊥ to I<sub>n+1</sub> — contributing nothing to subsequent joins — while '
@@ -523,12 +524,12 @@ def build():
     E.append(body('With DA-2 and C-DA2 in place, the global structure of instantiations is a forward-directed '
                   'tree with no back edges:'))
     E += [
-        li('Each node in the tree is a ⊥ — the null state of one instantiation and the foundation of all '
+        li('Each node in the tree is a ⊥ — the bottom element of one instantiation and the foundation of all '
            'successor instantiations branching from it.'),
         li('Each edge within an instantiation is a step in a monotone state sequence (ZP-A T3). Edges are irreversible (ZP-B C3).'),
         li('Branching at each node: every distinct outbound vector from the terminal state of I<sub>n</sub> is a '
            'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches. Because ⊥ = {⊥} '
-           '(ZP-A CC-2) is the single self-containing null state with no internal differentiation, every '
+           '(ZP-A CC-2) is the single self-containing ⊥ with no internal differentiation, every '
            'ε<sub>0</sub> that represents a first differentiation in any direction is a valid outcome. '
            'Branching is not optional; it follows from T-SNAP applied to an undifferentiated ⊥.'),
         li('No back edges: C-DA2 establishes that no instantiation can reach the ⊥ of any ancestor instantiation.'),
@@ -541,7 +542,8 @@ def build():
         'T-SNAP fires in all directions simultaneously: it is the claim that ⊥ = {⊥} (ZP-A CC-2) has no '
         'internal differentiation and therefore no preferred direction for ε<sub>0</sub>. The multiverse of '
         'instantiations is the full set of all minimal differentiations available from the single '
-        'self-containing null state — a structural consequence of CC-2 + T-SNAP + DA-2 jointly.'))
+        'self-containing ⊥ — a structural consequence of CC-2 + T-SNAP + DA-2 jointly.'))
+
 
     E.append(Paragraph('VI. The Zero Paradox Iterated', S['h2']))
     E.append(body('The paradox of ⊥ — simultaneously contributing nothing and being present in everything — '
@@ -620,7 +622,7 @@ def build():
         body('Remark R-DA3-1: To observe the full branching fan, one would need to occupy a position '
              'outside all instantiations. That position would itself be a state in some semilattice, subject to '
              'the same rules. The meta-view is either another instantiation (in which case the tree has no '
-             'privileged outside view) or ⊥ itself (in which case the null state is the only position from which '
+             'privileged outside view) or ⊥ itself (in which case ⊥ is the only position from which '
              'the full structure is visible — the state that contributes nothing and is present in everything). '
              'The Zero Paradox\'s name is more precise than it first appeared.'),
     ]

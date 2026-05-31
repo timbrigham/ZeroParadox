@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.1 | May 2026
+Version 1.2 | May 2026
+v1.2: Version changelog removed from preamble.
 v1.1: Add COMP_BLUE header banner matching companion template.
 v1.0: Initial release. Presents the formal derivation chain from ValuationStructure
       to AFA decoration uniqueness for finite Accessible Pointed Graphs.
@@ -14,7 +15,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 
 def build():
@@ -46,15 +47,6 @@ def build():
         Paragraph('ZP-J AFA Addendum', S['title']),
         Paragraph('Decoration Uniqueness from Valuation Structure', S['subtitle']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
-        Paragraph(
-            '<i>v1.1: Header banner added. '
-            'v1.0: Initial release. Presents the derivation chain from '
-            'ValuationStructure to AFA decoration uniqueness for finite Accessible '
-            'Pointed Graphs. All active theorems sorry-free in Lean 4 '
-            '(one commented-out stub; see §V). '
-            'Reads after ZP-J Self-Reference. '
-            'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
-            S['note']),
         sp(10),
         hr(),
         sp(4),
