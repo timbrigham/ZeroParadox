@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.9 | May 2026
+Version 1.10 | May 2026
+v1.10: Hash sync — script was modified without full workflow; rebuilt to bring
+hash into alignment with register.md.
 v1.9: Version number removed from Open Items Register section header.
 v1.8: "Internal Working Document" marker removed from footer and endnote — not a working
 document; removing public-facing scaffolding label.
@@ -21,10 +23,10 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
-AMBER = colors.HexColor('#B07800')
+AMBER = colors.HexColor('#B07800')  # ZP-OVERRIDE: ZP-G import_box label text uses darker amber
 
 # ZP-G import box uses amber-colored label text (not white)
 S['labelAmber'] = ParagraphStyle('labelAmber', fontName='DV-B', fontSize=9, leading=13,

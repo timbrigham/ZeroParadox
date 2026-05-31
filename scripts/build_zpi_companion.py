@@ -1,21 +1,30 @@
 """
-Build ZP-I Illustrated Companion (v1.5)
+Build ZP-I Illustrated Companion
+Version 1.21 | May 2026
+v1.21: "(no sorryAx)" applied to step 1 source; ZP-internal labels removed from step table; "No new axioms" clarified to scope; "the framework" scoped to ZP-I (ER/AR fixes).
+v1.20: Conditions scoped in prose ("every" → conditional); "(axiom-free)" corrected to "(no sorryAx)" for theorems using propext/Classical.choice (ER/AR fixes).
+v1.19: Norm bound includes S(0) factor; IsDepthChain/IsStrictStateSequence added to key result box; ZP-internal framing replaced with standard math (AR fixes).
+v1.18: IsDepthChain hypothesis added to strict growth claim (AR fix).
+v1.17: Blanket purity claim replaced with per-theorem scoping (AR fix).
+v1.16: Norm claim corrected to inequality ("at most 2^{-n}" — matches proved bound).
+v1.15: Em-dashes removed; "closed system" language scoped to derivation chain (AR/ER fixes).
+v1.11: "Zero Paradox" expanded in disclaimer (AR fix).
+v1.10: T-IZ step table updated to 4 steps all proved via t_iz_complete (AFA/Kleene path);
+       disclaimer rewritten as self-contained; KleeneStructure condition added to key result box.
+v1.9: Cover title retitled "Going Forward Brings You Back to Zero" (AR fix).
+v1.8: Well diagram state labels  - black outline for visibility; DA-2 label centered.
+v1.7: Depth diagram legibility  - font sizes, Unicode math notation, norm labels below circles.
+v1.6: Vocab fix: null state → ⊥.
 v1.5: Strip version number from companion footer.
 v1.4: Strip Lean file version numbers from Lean 4 Verification section.
-v1.3: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
-      Opening paragraph revised — "existence necessarily emerges from null" replaced with
-      structural consequence framing.
+v1.3: Disclaimer and opening paragraph updated.
 v1.2: (prior)
+v1.1: R-IZ-A closure explained; engine section and Step 1 source updated.
+v1.0: Initial release.
+
 Standalone companion for ZP-I: Inside Zero.
-
 Accessibility target: 2 years of college math.
-Assumes reader has read ZP-E companion. Builds on T-SNAP vocabulary.
-
-Lean status reflected: ZPI.lean (current) — all proofs filled, no sorryAx.
-New in v1.1: R-IZ-A closure explained — each step in the chain is a genuine
-advance, derived from ZP-A axioms via h_strict_from_r1_t3 + IsDepthChain.
-Engine section and Step 1 source updated. Lean status box updated.
-New in v1.0: t_iz_r1_t3_geometric_bound (geometric norm bound from R1+T3).
+Lean status reflected: ZPI.lean (current)  - all proofs filled, no sorryAx.
 """
 
 import os, math
@@ -25,7 +34,7 @@ from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polyg
 from reportlab.graphics import renderPDF
 
 def lean_status_box(rows):
-    data = [[Paragraph('Lean 4 Verification Status (ZPI.lean — all proofs filled, no sorry)',
+    data = [[Paragraph('Lean 4 Verification Status (ZPI.lean  - all proofs filled, no sorry)',
                         CS['kr_hdr'])]]
     for r in rows:
         data.append([Paragraph(fix(r), CS['kr_body'])])
@@ -76,10 +85,10 @@ def depth_diagram():
     d.add(Line(ax, TOP_Y, ax, BOT_Y + 6, strokeColor=COMP_SLATE, strokeWidth=1.5))
     d.add(Polygon([ax, BOT_Y, ax - 4, BOT_Y + 8, ax + 4, BOT_Y + 8],
                   fillColor=COMP_SLATE, strokeColor=COMP_SLATE, strokeWidth=0))
-    d.add(String(2, TOP_Y - 8, 'shallow', fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(2, BOT_Y + 2, 'deep',    fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(0, dh / 2 + 6,  '2-adic', fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
-    d.add(String(0, dh / 2 - 5,  'depth',  fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(2, TOP_Y - 8, 'shallow', fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(2, BOT_Y + 2, 'deep',    fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(0, dh / 2 + 6,  '2-adic', fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
+    d.add(String(0, dh / 2 - 5,  'depth',  fontSize=7.5, fontName='DV-I', fillColor=COMP_SLATE))
 
     # 4 states at fixed, safe y-coordinates: 165, 128, 91, 54 (all within [14, 187])
     # x-coordinates step left-to-right so the chain goes upper-left → lower-right
@@ -104,21 +113,24 @@ def depth_diagram():
     for i in range(4):
         sx, sy = state_xs[i], state_ys[i]
         d.add(Circle(sx, sy, 8, fillColor=COMP_BLUE, strokeColor=WHITE, strokeWidth=1.5))
-        d.add(String(sx - 10, sy - 4, state_lbls[i], fontSize=8, fontName='DVS', fillColor=WHITE))
+        d.add(String(sx - 10, sy - 4, state_lbls[i], fontSize=8, fontName='DVS',
+                     fillColor=WHITE, strokeColor=colors.black, strokeWidth=0.4))
         if state_subs[i]:
             d.add(String(sx + 12, sy - 3, state_subs[i], fontSize=8, fontName='DVS',
                          fillColor=COMP_SLATE))
 
-    # Norm labels (to the right of each circle, short strings — all within dw)
-    norms = [(0, '||S0||=1'), (1, '||S1||<=2^-1'), (3, '||S3||<=2^-3')]
-    for i_s, ns in norms:
+    # Norm labels: placed BELOW each circle (sy - 8 radius - 3 gap - text baseline).
+    # This avoids collision with the "= ⊥" sub-label which sits to the right of the circle.
+    # S2 omitted (S3 norm nearby). S3 placed above-left (limit indicator owns the right).
+    norms_below = [(0, '‖S₀‖ = 1'), (1, '‖S₁‖ ≤ 2⁻¹')]
+    for i_s, ns in norms_below:
         sx, sy = state_xs[i_s], state_ys[i_s]
-        d.add(String(sx + 12, sy - 4, ns, fontSize=6.5, fontName='DV-I',
-                     fillColor=colors.HexColor('#888888')))
-    # S3 norm label above-left to avoid crowding with the limit indicator
+        d.add(String(sx - len(ns) * 2.4, sy - 22, ns, fontSize=8, fontName='DV-I',
+                     fillColor=colors.HexColor('#555555')))
+    # S3: above-left so it doesn't collide with the limit-indicator arrow
     sx3, sy3 = state_xs[3], state_ys[3]
-    d.add(String(sx3 - 60, sy3 + 12, '||S3||<=2^-3', fontSize=6.5, fontName='DV-I',
-                 fillColor=colors.HexColor('#888888')))
+    d.add(String(sx3 - 72, sy3 + 14, '‖S₃‖ ≤ 2⁻³', fontSize=8, fontName='DV-I',
+                 fillColor=colors.HexColor('#555555')))
 
     # Limit indicator: dotted line + arrow pointing right from S3, then "→ 0"
     # Arrow: from S3.x+10 to S3.x+10+40, at S3.y level
@@ -137,17 +149,13 @@ def depth_diagram():
     # arr_x2 ≈ 366, text at ≈ 370; '0 (limit)' ~9 chars × 5pt = 45pt → ends at 415 ≪ 468 ✓
     d.add(String(arr_x2 + 5, arr_y + 3, '0',
                  fontSize=11, fontName='DVS-B', fillColor=COMP_AMBER))
-    d.add(String(arr_x2 + 18, arr_y + 3, '(null limit,',
-                 fontSize=7.5, fontName='DVS-I', fillColor=COMP_SLATE))
-    d.add(String(arr_x2 + 18, arr_y - 9, 'infinite depth)',
-                 fontSize=7.5, fontName='DVS-I', fillColor=COMP_SLATE))
-    # Lowest text baseline: arr_y - 9 = 54 - 9 = 45, text top ≈ 45 + 8 = 53.
-    # Circle bottom of S3: sy3 - 8 = 46. Text top 53 > 46. No overlap. ✓
-    # Arrow and all annotation elements: y in [37, 62]. Well within [14, 187] ✓
+    d.add(String(arr_x2 + 18, arr_y + 3, '(depth → ∞)',
+                 fontSize=8, fontName='DVS-I', fillColor=COMP_SLATE))
+    # Annotation at arr_y + 3 = 57. Arrow elements: y in [46, 62]. Within [14, 187] ✓
 
-    # Bottom caption (within drawing, at y=4; text occupies y=[4, 12] — below all circles)
+    # Bottom caption (within drawing, at y=4; text occupies y=[4, 12]  - below all circles)
     d.add(String(30, 4,
-                 'States descend in 2-adic depth by going forward — the limit is 0, reached from inside',
+                 'States descend in 2-adic depth by going forward  - the limit is 0, reached from inside',
                  fontSize=7.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     # Caption at y=4 (top ≈ 12). BOT_Y = 14 means the band background starts at y=14. ✓
     # Nothing below y=4 in this diagram. ✓
@@ -173,7 +181,7 @@ def three_doors_diagram():
 
     RED = colors.HexColor('#C0392B')
 
-    # Three blocked attempts — spaced vertically above center
+    # Three blocked attempts  - spaced vertically above center
     blocked = [
         (dw * 0.18, dh * 0.80, 'Subtraction', '(R1 blocks)'),
         (dw * 0.38, dh * 0.80, 'Continuous path', '(C3 blocks)'),
@@ -227,7 +235,7 @@ def three_doors_diagram():
                fillColor=GREEN_LITE, strokeColor=COMP_GREEN, strokeWidth=1.8))
     d.add(String(cau_x - 48, cau_y + 5, 'Cauchy sequence',
                  fontSize=8.5, fontName='DV-B', fillColor=GREEN_DARK))
-    d.add(String(cau_x - 48, cau_y - 8, 'T-IZ — open passage',
+    d.add(String(cau_x - 48, cau_y - 8, 'T-IZ  - open passage',
                  fontSize=7.5, fontName='DV-I', fillColor=GREEN_DARK))
 
     d.add(String(40, 6,
@@ -270,7 +278,8 @@ def cycle_diagram():
         d.add(String(nx - len(sub) * 2.8, cy - 26, sub,
                      fontSize=6.5, fontName='DV-I', fillColor=COMP_SLATE))
 
-    d.add(String(xs[-1] + 4, cy + 6, '➤ DA-2: cycle repeats',
+    # Centered below the arrow-label row (cy+17) so it doesn't overflow the right edge
+    d.add(String(dw / 2 - 52, cy + 28, 'DA-2: cycle repeats',
                  fontSize=7, fontName='DV-I', fillColor=COMP_GREEN))
 
     d.add(String(40, 4,
@@ -279,7 +288,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.5'
+VERSION = '1.21'
 
 
 def build():
@@ -317,36 +326,41 @@ def build():
     E.append(sp(6))
 
     E += [
-        Paragraph('The engine runs in reverse', CS['title']),
-        Paragraph('Inside Zero | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | May 2026', CS['meta']),
+        Paragraph('Going Forward Brings You Back to Zero', CS['title']),
+        Paragraph('Inside Zero', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
-            'This companion explains the ideas in plain language with diagrams and real-world '
-            'examples. It is not the formal document — every claim here restates a result already '
-            'proved in the corresponding technical document. Consult that document for the '
-            'authoritative mathematics. This document assumes familiarity with the ZP-E '
-            'Illustrated Companion.',
+            'This companion explains in plain language how an ascending chain of p-adic '
+            'states converges, in the 2-adic metric, to zero  - and why that limit generates '
+            'a new structural bottom. This is one result in the Zero Paradox project (ZP-I), '
+            'a formal framework built on lattice algebra and 2-adic topology. '
+            'Diagrams and real-world examples are included throughout. '
+            'It is self-contained: ZP-A through ZP-E results used here are '
+            'briefly introduced on first appearance. Every claim restates a result already '
+            'proved in the corresponding technical document  - consult that document for the '
+            'authoritative mathematics. (The ZP-E Illustrated Companion covers the upstream '
+            'results in more depth if needed.)',
             CS['disc']),
     ]
 
     # ── What ZP-I Is Doing ─────────────────────────────────────────────────────
     E.append(Paragraph('What Is ZP-I Doing?', CS['h1']))
     E.append(cbody(
-        'ZP-E proved that the transition from null (⊥) to the first non-null state (ε₀) '
-        'is a structural consequence of the lattice axioms — derived, not assumed. But '
+        'ZP-E proved that the transition from ⊥ to the minimum nonzero state (ε₀) '
+        'is a structural consequence of the lattice axioms  - derived, not assumed. But '
         'ZP-E left a question open: what happens '
-        'after the Snap? The chain of states ascends — but does it ascend forever? And if '
+        'after the Snap? The chain of states ascends  - but does it ascend forever? And if '
         'not, what comes next?'))
     E.append(cbody(
         'ZP-I answers both questions with a single theorem: <b>T-IZ (Inside Zero)</b>. '
-        'Every maximal ascending chain in this framework converges — in the '
-        '2-adic metric — to its own successor null. The chain does not go on forever; it '
+        'Every maximal ascending chain satisfying the IsDepthChain and IsStrictStateSequence conditions converges  - in the '
+        '2-adic metric  - to a successor null. The chain does not go on forever; it '
         'generates a new null at the ordinal limit, and the cycle begins again. The '
-        'framework is not just a description of emergence. It is a closed system.'))
+        'framework is not just a description of emergence. The derivation chain from T-SNAP through T-IZ is self-contained within the framework\'s axioms.'))
     E.append(cbody(
         'The name "Inside Zero" refers to the geometry of the approach. The chain does '
         'not reach ⊥′ by turning around and going backward. It reaches ⊥′ by going '
-        '<i>deeper</i> — descending into the 2-adic structure until the depth of zero '
+        '<i>deeper</i>  - descending into the 2-adic structure until the depth of zero '
         'is reached from the inside. Forward motion is the mechanism of return.'))
     E.append(sp(4))
 
@@ -355,31 +369,31 @@ def build():
     E.append(cbody(
         'ZP-A established that the state space (L, ∨, ⊥) has no top element: there is '
         'no maximum state. When this was first stated (ZP-A, Remark R1), it looked like '
-        'a limitation — the algebra does not close. ZP-I reveals it is the opposite: R1 '
+        'a limitation  - the algebra does not close. ZP-I reveals it is the opposite: R1 '
         'is the engine that drives T-IZ.'))
     E.append(cbody(
         'Here is the logic. Each state in the ascending chain has a 2-adic valuation '
-        'depth — a measure of how many times 2 divides the state. As the chain ascends '
+        'depth  - a measure of how many times 2 divides the state. As the chain ascends '
         '(ZP-A T3: every step is a join, every state is at least as large as the last), '
         'the depth increases. Because L has no top element, the chain cannot stop. The '
         'depth grows without bound.'))
     E.append(cbody(
         'More than that: each step is a genuine advance. The depth does not merely grow '
-        'eventually — it increases by at least 1 at every transition. This is not an '
-        'assumption about the chain. It is derived from the ZP-A lattice axioms: no top '
-        'element plus monotonicity forces strict growth at every step, given that the '
-        'chain\'s 2-adic depth tracks its position. '
+        'eventually  - given the IsDepthChain condition, it increases by at least 1 at every transition. This is not an '
+        'assumption about the chain. It follows from the ZP-A lattice axioms together with '
+        'the IsDepthChain condition (which requires the chain\'s 2-adic depth to strictly '
+        'track position): no top element, monotonicity, and IsDepthChain together force strict depth growth at every step. '
         'Lean: <tt>h_strict_from_r1_t3</tt> (ZPI.lean §Ib).'))
     E.append(cbody(
-        'In the 2-adic metric, a state with depth n has norm 2<sup>−1</sup> per unit '
-        'depth. As n → ∞, the 2-adic norm → 0. The chain converges to 0 in the 2-adic '
-        'sense — the element of infinite depth. That element is ⊥′: the successor null.'))
+        'In the 2-adic metric, norms decrease geometrically: ‖S(n)‖ ≤ ‖S(0)‖ · 2<sup>−n</sup>. '
+        'As n → ∞, the norm → 0. The chain converges to 0 in the 2-adic sense: '
+        'the point with 2-adic valuation +∞. That structural limit is ⊥′, the successor null.'))
 
-    E.append(example_box('Real-world analogy — The deepest point in the well', [
-        'Imagine a well that has no bottom — every level opens onto a deeper one. '
+    E.append(example_box('Real-world analogy  - The deepest point in the well', [
+        'Imagine a well that has no bottom  - every level opens onto a deeper one. '
         'You descend, level by level, and each step takes you to a place more '
         '"inside" the well than the last. You never hit a floor within the well. '
-        'But from the outside, there is a limit to all that descent — the point '
+        'But from the outside, there is a limit to all that descent  - the point '
         'that all those levels approach. That limit is the bottom the well '
         'itself generates by going deeper. In ZP-I, the 2-adic null is that bottom.',
     ]))
@@ -409,7 +423,7 @@ def build():
         '<i>toward</i> zero, not away from it.'))
     E.append(cbody(
         'Think of it this way: each state in the chain is divisible by 2<sup>n</sup> for '
-        'some n. As the chain ascends — each state "larger" in the lattice sense — '
+        'some n. As the chain ascends  - each state "larger" in the lattice sense  - '
         'it becomes divisible by higher and higher powers of 2. In 2-adic terms, this '
         'means it is getting closer to 0. The chain approaches zero by becoming '
         'more and more structured, not by becoming smaller.'))
@@ -417,7 +431,7 @@ def build():
         'The formal statement uses the geometric norm bound: '
         '&#8214;S(n)&#8214;₂ ≤ &#8214;S(0)&#8214;₂ ⋅ 2<sup>−n</sup>. '
         'This bound is derived in Lean 4 as theorem '
-        '<tt>t_iz_r1_t3_geometric_bound</tt> — using the p-adic norm formula and '
+        '<tt>t_iz_r1_t3_geometric_bound</tt>  - using the p-adic norm formula and '
         'monotonicity of the valuation (R1 + T3). It means the norm is squeezed toward 0 '
         'by a geometric sequence, forcing convergence.'))
     E.append(sp(6))
@@ -425,34 +439,27 @@ def build():
     # ── T-IZ in Plain Language ─────────────────────────────────────────────────
     E.append(Paragraph('T-IZ in Plain Language', CS['h1']))
     E.append(cbody(
-        'The theorem has six steps. Here is each one in plain language:'))
+        'The theorem has four steps. All four are formally proved in Lean 4 '
+        'via <tt>t_iz_complete</tt> (ZPI.lean §III-B)  - no step is outside Lean scope:'))
 
     step_rows = [
         ['1. Cauchy convergence',
          'The chain has 2-adic norm ≤ 2⁻ⁿ at step n. Both the norm and the chain '
          'converge to 0. This is the topological core.',
-         'R1 + ZP-B completeness — proved axiom-free in Lean ✓. '
-         'Strict per-step growth derived (not assumed) via h_strict_from_r1_t3 + IsDepthChain — R-IZ-A closed.'],
-        ['2. Valuation-complexity bridge',
-         'As 2-adic depth → ∞, the Kolmogorov complexity ratio → 1. '
-         'The chain approaches the incompressibility threshold P₀.',
-         'ZP-C L-INF + ZP-B (binary construction) — informal argument; outside Lean scope'],
-        ['3. P₀ is satisfied',
-         'At the limit, the state is algorithmically incompressible. '
-         'The incompressibility threshold is reached.',
-         'ZP-C D1 — follows from step 2'],
-        ['4. DA-1 fires',
-         'A state at P₀ is a live execution event. The deterministic argument '
-         'DA-1 (from ZP-E) applies.',
-         'ZP-E DA-1 — already in framework ✓'],
-        ['5. T-SNAP fires again',
-         'DA-1 establishes that instantiation = execution. T-SNAP fires: ⊥ ∨ ε₀ = ε₀. '
-         'A new null ⊥′ is generated.',
-         'ZP-E T-SNAP — proved axiom-free in Lean (t_snap_derived) ✓'],
-        ['6. DA-2 licenses ⊥′',
-         'DA-2 recognizes ⊥′ as the structural null of the next instantiation. '
-         'The Cauchy limit 0 ∈ Q₂ satisfies the bottom-characterization condition.',
-         'ZP-E DA-2 — proved in Lean (t_iz_limit_is_new_null) ✓'],
+         'R1 + ZP-B completeness  - proved (no sorryAx) (t_iz_cauchy). '
+         'Strict per-step growth follows from h_strict_from_r1_t3 + IsDepthChain  - verified as a derived condition. ✓'],
+        ['2. ⊥′-identification',
+         'The Cauchy limit 0 ∈ Q₂ satisfies the join-identity condition  - '
+         'the structural role of a bottom element. The limit is ⊥′.',
+         'ZP-E DA-2  - proved in Lean (t_iz_limit_is_new_null, axiom-free). ✓'],
+        ['3. DA-1 fires',
+         'The successor semilattice carries a KleeneStructure (ZP-K). '
+         'DA-1 applies at ⊥′ via the computational fixed-point argument.',
+         'ZP-K KleeneStructure  - proved in Lean (da1_computational). ✓'],
+        ['4. T-SNAP fires, ⊥′ is born',
+         'At the computational fixed point, T-SNAP fires: '
+         'join ⊥ ε₀′ = ε₀′. The successor null ⊥′ is generated.',
+         'ZP-A bot_join  - proved in Lean. ✓'],
     ]
 
     col_widths = [TW * 0.21, TW * 0.49, TW * 0.30]
@@ -475,34 +482,36 @@ def build():
     E.append(t)
     E.append(sp(8))
 
-    E.append(key_result_box('Theorem T-IZ — Inside Zero',
-        'Every maximal ascending chain (S₀, S₁, S₂, ...) in the Zero '
-        'Paradox framework — starting at ⊥, ascending monotonically by ZP-A T3, '
-        'and unbounded by ZP-A R1 — converges to a successor null ⊥′ in the 2-adic '
-        'metric. At the limit: DA-1 fires, T-SNAP fires, ⊥′ is born. The chain '
-        'generates its own successor by forward motion alone. No new axioms required.'))
+    E.append(key_result_box('Theorem T-IZ  - Inside Zero',
+        'Every maximal ascending chain (S₀, S₁, S₂, ...) starting at ⊥, '
+        'ascending monotonically by ZP-A T3, unbounded by ZP-A R1, and satisfying '
+        'the IsDepthChain and IsStrictStateSequence conditions  - '
+        'converges to a successor null ⊥′ in the 2-adic metric. '
+        'At the limit: DA-1 fires (the successor semilattice carries a '
+        'KleeneStructure, per ZP-K), T-SNAP fires, ⊥′ is born. The chain '
+        'generates its own successor by forward motion alone. No axioms beyond those already proved in ZP-A through ZP-K.'))
     E.append(sp(6))
 
     # ── Three Doors, One Passage ───────────────────────────────────────────────
     E.append(Paragraph('Three Closed Doors, One Open Passage', CS['h1']))
     E.append(cbody(
         'ZP-I does not violate any of the irreversibility results already proved. '
-        'The framework established three ways that return to ⊥ is blocked — three '
+        'The framework established three ways that return to ⊥ is blocked  - three '
         '"closed doors." T-IZ uses a fourth passage that none of the three doors govern.'))
     E.append(cbody(
-        '<b>Door 1 — R1 (No subtraction):</b> In the lattice, there is no subtraction. '
+        '<b>Door 1  - R1 (No subtraction):</b> In the lattice, there is no subtraction. '
         'You cannot join your way back to a smaller state. The ascending chain never '
-        'subtracts — every step is a join S<sub>n+1</sub> = S<sub>n</sub> ∨ α<sub>n</sub>. '
+        'subtracts  - every step is a join S<sub>n+1</sub> = S<sub>n</sub> ∨ α<sub>n</sub>. '
         'T-IZ does not subtract. The chain joins forward, and the 2-adic geometry '
         'means "forward" is also "deeper." R1 is the engine of T-IZ, not an obstacle.'))
     E.append(cbody(
-        '<b>Door 2 — C3 (No continuous path to zero):</b> ZP-B proved there is no '
+        '<b>Door 2  - C3 (No continuous path to zero):</b> ZP-B proved there is no '
         'continuous function γ : [0,1] → Q₂ with γ(0) ≠ 0 and γ(1) = 0. '
-        'T-IZ uses a Cauchy sequence — a discrete countable list of points — not a '
+        'T-IZ uses a Cauchy sequence  - a discrete countable list of points  - not a '
         'continuous function on an interval. C3\'s prohibition covers continuous paths; '
         'it says nothing about Cauchy sequences. Proved in Lean: t_iz_c3_compatible.'))
     E.append(cbody(
-        '<b>Door 3 — AX-G2 (No morphism to initial object):</b> ZP-G proved that no '
+        '<b>Door 3  - AX-G2 (No morphism to initial object):</b> ZP-G proved that no '
         'morphism within the categorical structure C leads back to the initial object. '
         'T-IZ is not a morphism within C. The transition to ⊥′ is the termination of '
         'C and the opening of a new C\'. AX-G2 quantifies over morphisms within a single '
@@ -511,7 +520,7 @@ def build():
     E.append(three_doors_diagram())
     E.append(ccaption(
         'Three structures block return to zero: algebraic (R1), topological (C3), '
-        'categorical (AX-G2). The fourth passage — Cauchy sequence convergence — '
+        'categorical (AX-G2). The fourth passage  - Cauchy sequence convergence  - '
         'is not governed by any of them. T-IZ passes through the fourth door.'))
     E.append(sp(6))
 
@@ -520,7 +529,7 @@ def build():
         '(R1, C3, AX-G2) governs motion <i>within</i> an instantiation: no '
         'subtraction, no continuous return, no categorical reversal. T-IZ governs '
         'what happens at the instantiation\'s ordinal limit: the chain generates its '
-        'own successor null by Cauchy convergence — a structure that irreversibility '
+        'own successor null by Cauchy convergence  - a structure that irreversibility '
         'does not reach.'))
     E.append(sp(6))
 
@@ -529,7 +538,7 @@ def build():
     E.append(cbody(
         'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀, necessarily). ZP-I gives us '
         'the end that is also a beginning: T-IZ (the chain → ⊥′). Together, they '
-        'describe a closed cycle. The framework is not merely an emergence theorem — '
+        'describe a self-contained derivation cycle. ZP-I is not merely an emergence result  - '
         'it is a structural account of a repeating pattern:'))
     E.append(cbody(
         '1. <b>T-SNAP</b> fires: ⊥ and ε₀ emerge. The branch opens.'
@@ -548,17 +557,17 @@ def build():
     E.append(ccaption(
         'The complete cycle: T-SNAP opens the branch, T3 drives the ascent, '
         'T-IZ closes it and generates ⊥′. DA-2 licenses ⊥′ as the next null. '
-        'The Zero Paradox describes a closed system, not just an emergence theorem.'))
+        'The derivation chain T-SNAP through T-IZ is self-contained within the framework\'s axioms.'))
     E.append(sp(4))
 
     E.append(cbody(
-        'The Zero Paradox is a closed system. ⊥ is not just the bottom of the lattice '
-        '— it is the attractor of the chain\'s own unbounded forward motion. '
+        '⊥ is not just the bottom of the lattice '
+        ' - it is the attractor of the chain\'s own unbounded forward motion. '
         'The chain does not end by running out of structure. It ends by generating '
         'the next beginning.'))
     E.append(cbody(
         '<b>Note on "closed system":</b> The closure established by T-IZ is conceptual '
-        '— the formal derivation chain from T-SNAP through T-IZ to ⊥′ is '
+        ' - the formal derivation chain from T-SNAP through T-IZ to ⊥′ is '
         'self-contained within the framework\'s axioms (AX-B1, AX-G1, AX-G2, A1–A4). '
         'Whether the successor instantiation is part of a single formal structure or requires '
         'an extended framework is a question about multi-instantiation scope, not about '
@@ -568,39 +577,42 @@ def build():
     # ── Lean 4 Status ─────────────────────────────────────────────────────────
     E.append(Paragraph('Lean 4 Verification', CS['h1']))
     E.append(cbody(
-        'The topological core of T-IZ is fully verified in Lean 4 (ZPI.lean). '
-        'All proofs are complete. The purity check confirms the theorems depend only '
-        'on standard foundational axioms shared by all Mathlib theorems — '
-        'no domain-specific assumptions.'))
+        'T-IZ is fully verified in Lean 4 (ZPI.lean). All four steps are formally proved. '
+        'Axiom-free results are noted individually in the table below.'))
 
     E.append(lean_status_box([
-        'h_strict_from_r1_t3 (§Ib) — derives strict per-step valuation growth from '
+        'h_strict_from_r1_t3 (§Ib)  - derives strict per-step valuation growth from '
         'ZP-A R1 + T3, given IsDepthChain (2-adic depth tracks position index). '
         'Closes R-IZ-A: strict growth is no longer a construction hypothesis. ✓',
-        't_iz_norm_tendsto_zero — norm bound ≤ 2⁻ⁿ implies norms converge to 0. '
-        'Proved via squeeze_zero + tendsto_pow_atTop_nhds_zero_of_lt_one. ✓ (axiom-free)',
-        't_iz_conv_zero — norm convergence implies sequence convergence in Q₂. '
-        'Proved via tendsto_zero_iff_norm_tendsto_zero. ✓ (axiom-free)',
-        't_iz_r1_t3_geometric_bound — derives &#8214;S(n)&#8214; ≤ &#8214;S(0)&#8214; ⋅ 2⁻ⁿ '
+        't_iz_norm_tendsto_zero  - norm bound ≤ 2⁻ⁿ implies norms converge to 0. '
+        'Proved via squeeze_zero + tendsto_pow_atTop_nhds_zero_of_lt_one. ✓ (no sorryAx)',
+        't_iz_conv_zero  - norm convergence implies sequence convergence in Q₂. '
+        'Proved via tendsto_zero_iff_norm_tendsto_zero. ✓ (no sorryAx)',
+        't_iz_r1_t3_geometric_bound  - derives &#8214;S(n)&#8214; ≤ &#8214;S(0)&#8214; ⋅ 2⁻ⁿ '
         'from R1 + T3. Uses Padic.norm_eq_zpow_neg_valuation + zpow_le_zpow_right₀. ✓',
-        't_iz_cauchy — the complete topological convergence result. ✓ (axiom-free)',
-        't_iz_limit_is_new_null — Cauchy limit satisfies the DA-2 null role. '
-        'Proved directly from da2_bottom_characterization. ✓ (depends on no axioms)',
-        'c_t_iz_null_balance — a non-bottom state cannot be the successor null. '
+        't_iz_cauchy  - the complete topological convergence result. ✓ (no sorryAx)',
+        't_iz_limit_is_new_null  - Cauchy limit satisfies the DA-2 null role (⊥′-identification). '
+        'Proved directly from da2_bottom_characterization. ✓ (axiom-free)',
+        'da1_computational (ZP-K KleeneStructure)  - DA-1 fires at ⊥′ via the '
+        'computational fixed-point argument. ✓',
+        't_iz_complete (§III-B)  - chains all four steps into one theorem: convergence, '
+        '⊥′-identification, DA-1, T-SNAP. All formal, no Kolmogorov complexity needed. ✓',
+        't_iz_complete_from_axioms (§III-C, optional)  - replaces the h_bound hypothesis '
+        'with IsDepthChain + IsStrictStateSequence (pure ZP-A lattice conditions). '
+        'Closes the chain from R1+T3 all the way to T-SNAP without any ungrounded hypothesis. ✓',
+        'c_t_iz_null_balance  - a non-bottom state cannot be the successor null. '
         'Proved from c_da2_novelty. ✓',
-        't_iz_c3_compatible — C3 irreversibility and T-IZ coexist. '
+        't_iz_c3_compatible  - C3 irreversibility and T-IZ coexist. '
         'Cauchy sequences ≠ continuous paths. ✓',
-        'Valuation-complexity bridge (Steps 2–4): outside Lean scope. Kolmogorov '
-        'complexity is uncomputable and absent from Mathlib — same category as DA-1 Path 3 in ZP-E.',
     ]))
     E.append(sp(8))
 
     E.append(key_result_box('ZP-I Summary',
-        'T-IZ is derived from ZP-A through ZP-E — no new axioms required. '
-        'The topological core is proved axiom-free in Lean 4 (ZPI.lean, all proofs filled). '
-        'The valuation-complexity bridge uses the same informal argument as DA-1 '
-        'Path 3 in ZP-E (outside Lean scope: Kolmogorov complexity absent from Mathlib). '
-        'This framework is a closed system: T-SNAP opens each branch; '
+        'T-IZ is derived from ZP-A through ZP-E and ZP-K  - no new axioms required. '
+        'All four steps are formally proved in Lean 4 (ZPI.lean, t_iz_complete). '
+        'The Kolmogorov complexity route is superseded: the AFA/Kleene path via '
+        'ZP-K KleeneStructure closes Steps 2–4 without Kolmogorov complexity. '
+        'The derivation is self-contained: T-SNAP opens each branch; '
         'T-IZ closes it and generates the next null; DA-2 licenses the successor. '
         'Emergence and return are both derived, not assumed.'))
 

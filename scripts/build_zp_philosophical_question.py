@@ -1,5 +1,21 @@
 """
-Build: The Philosophical Question That Started This (v1.5)
+Build: The Philosophical Question That Started This (v1.11)
+v1.11: fix() guard added via Paragraph override — snap line and all raw Paragraph calls
+       now pass through unicode-to-entity conversion (Watch-3 resolved).
+       AR fix: residual "DA-1 is the bridge" → "DA-1 is the connecting argument".
+v1.10: AR fixes — "bridge" → "connecting argument" in §II DA-1 description (word collision).
+       "ZFC" → "ZF" in porthole passage wherever counterpart to ZF+AFA (Choice is irrelevant).
+v1.9: ER fixes — "ZFC" → "ZF+Foundation" in §II mutual-exclusivity clause (kill 2).
+      "description-instantiation gap" → plain language (kill 4).
+      "ontological claim" → "metaphysical claim" (kill 9 line 338).
+v1.8: ER/AR fixes — "ZFC and ZFC+AFA" → "ZF+Foundation and ZF+AFA" (F-3).
+      "formal signature" clauses scoped with "in ZP's reading" (AR).
+      "ZP-A through ZP-I" → "ZP-A through ZP-M" in endnote (F-6b).
+v1.7: Layer counts updated to thirteen (ZP-A through ZP-M) throughout.
+      AR fix: "see the same mathematical object" → "share the same arithmetic fact" + trailing clause.
+      "Structurally compelled" qualified with DA-1 condition.
+v1.6: §II porthole metaphor — "orthogonality" replaced with porthole image in prose.
+      Wall solid and opaque; one piece of glass (v₂(0) = ∞) that does not open.
 v1.5: §II extended — orthogonal frameworks / contact point framing following ZPJ_ScaleBridge.
       v₂(0)=∞ named as the contact point between ZFC and AFA; AFA dependency in DA-1
       restated more precisely as interpretive rather than computational.
@@ -22,13 +38,18 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.11'
+
+# ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
+_Paragraph_orig = Paragraph
+def Paragraph(text, style):
+    return _Paragraph_orig(fix(text) if isinstance(text, str) else text, style)
 
 # ── Local additions: Philosophical Question uses GOLD/AMBER essay style ───────
 GOLD      = colors.HexColor('#A0742A')
 GOLD_LITE = colors.HexColor('#FDF6E3')
 GOLD_MED  = colors.HexColor('#F0E0A0')
-AMBER     = colors.HexColor('#F9A825')   # override — PhilQ uses brighter amber
+AMBER     = colors.HexColor('#F9A825')   # ZP-OVERRIDE: PhilQ essay uses brighter amber for accent
 
 # ── Local style overrides: GOLD theme, larger body text ──────────────────────
 S['title']   = ParagraphStyle('title',   fontName='DV-B',  fontSize=20, leading=26,
@@ -203,9 +224,10 @@ def build():
         'on that assumption: if the null state (⊥, the bottom of a join-semilattice) is '
         'taken as the mathematical formalization of "nothing," then the Binary Snap '
         '(⊥ → ε₀, the first transition from nothing to something) is structurally '
-        'compelled — not assumed, not answered, compelled.'))
+        'compelled given the framework\'s minimal axiomatic commitments — '
+        'not assumed, not answered, but derived from those commitments.'))
     E.append(body(
-        'Eleven formal layers later — ZP-A through ZP-K — the picture is more nuanced '
+        'Thirteen formal layers later — ZP-A through ZP-M — the picture is more nuanced '
         'than "yes, fully proved" or "no, still assumed." What the framework found is a '
         'third possibility: the question itself, applied with sufficient precision, '
         'dissolves. This document is about that dissolution — and about the precise '
@@ -252,7 +274,7 @@ def build():
         'complexity (the point where no shorter description of it exists than itself), '
         'is not merely described — it is executing: actually happening, '
         'real in the way a running program is real rather than a program '
-        'sitting unread on a shelf. DA-1 is the bridge '
+        'sitting unread on a shelf. DA-1 is the connecting argument '
         'between the mathematics and that claim.'))
     E.append(body(
         '<b>Lean 4</b> is a formal proof assistant — software that checks '
@@ -277,7 +299,7 @@ def build():
         'The theorem needed category theory to show it wasn\'t an artifact of one '
         'particular mathematical language. And the whole structure needed a closure '
         'result to show it wasn\'t just a description of emergence but a complete cycle. '
-        'Eight layers, added one at a time, each forced by what the layer before it '
+        'Thirteen layers, added one at a time, each forced by what the layer before it '
         'could not yet say.'))
     E.append(body(
         'Two features of the construction matter for what follows. First, '
@@ -325,9 +347,9 @@ def build():
     E.append(body(
         'At the critical juncture sits DA-1: the argument that a configuration at '
         'the incompressibility threshold P₀ constitutes a live execution event. '
-        'DA-1 is the bridge between the formal mathematics (the system is in state '
-        'X with Kolmogorov complexity at maximum) and the ontological claim (therefore '
-        'it is running, not merely described). DA-1 is only partially formalized. '
+        'DA-1 is the connecting argument between the formal mathematics (the system is in state '
+        'X with Kolmogorov complexity at maximum) and the metaphysical claim (that the '
+        'system is running, not merely described). DA-1 is only partially formalized. '
         'Its full argument requires Kolmogorov complexity — not yet in Lean\'s Mathlib — '
         'and ZF+AFA for the self-grounding null state (⊥ = {⊥}). These are gaps in '
         'available tooling, not in principle, but they are gaps.'))
@@ -348,21 +370,25 @@ def build():
         bg=GOLD_LITE, border=GOLD))
     E.append(sp(8))
     E.append(body(
-        'ZFC and ZFC+AFA are mutually exclusive extensions of the same base theory: '
-        'you cannot derive AFA from ZFC, or ZFC from AFA. But mutual exclusivity is '
-        'not isolation. The better description is <b>orthogonality</b> — they are '
-        'independent, meeting at exactly one shared mathematical object.'))
+        'ZF+Foundation and ZF+AFA are mutually exclusive extensions of the same base theory: '
+        'you cannot derive AFA from ZF+Foundation, and you cannot recover Foundation from ZF+AFA — '
+        'each excludes the other\'s foundational commitment. This is not a bridge situation — '
+        'no crossing is possible in either direction. The better image is a porthole: '
+        'a wall that is solid and opaque everywhere except one piece of glass. '
+        'The glass does not open. Through it, both frameworks share the same arithmetic fact — '
+        'that zero is divisible by 2 infinitely many times — but interpret it differently: '
+        'a number-theoretic result in ZF, and in ZP\'s reading the formal signature of a self-membered set in ZF+AFA.'))
     E.append(body(
         'That object is zero. In the 2-adic integers, v₂(0) = ∞: zero is divisible '
-        'by 2 infinitely many times. This is a theorem of standard ZFC, with no AFA '
+        'by 2 infinitely many times. This is a theorem of standard ZF, with no AFA '
         'import, and it is machine-verified (ZPJ_ScaleBridge.lean: '
-        '{x : ℤ₂ | 2x = x} = {0}). In ZFC+AFA, the same computation carries '
-        'additional weight: infinite 2-adic depth is the formal signature of ⊥ = {⊥} '
+        '{x : ℤ₂ | 2x = x} = {0}). In ZF+AFA, the same computation carries '
+        'additional weight: on that reading, infinite 2-adic depth is the formal signature of ⊥ = {⊥} '
         '— the null state containing itself. Same computation, same result, different '
         'interpretation depending on which foundational framework you are standing in.'))
     E.append(body(
         'This makes the AFA dependency precise. The fixed-point content is derivable '
-        'in ZFC; the gap is <i>interpretive</i>. ZFC provides the computation. '
+        'in ZF; the gap is <i>interpretive</i>. ZF provides the computation. '
         'AFA provides the meaning. The dependency is not a tooling limitation — '
         'it is a claim about what the shared object signifies.'))
     E.append(hr())
@@ -494,8 +520,9 @@ def build():
     E.append(Paragraph('VIII. What This Document Is', S['h1']))
     E.append(body(
         'The record of a recognition. The dissolving-the-gap move — '
-        'the realization that the description-instantiation gap assumes a separability '
-        'that the universality of the framework does not permit — was not planned. '
+        'the realization that the supposed gap between formal description and actual '
+        'instantiation assumes a separability that the universality of the framework '
+        'does not permit — was not planned. '
         'It arose from honest interrogation of whether the formal system was complete. '
         'The answer was: not in the sense of a Lean proof. But perhaps the question '
         'of completeness, applied to a theory that fits every instance of zero, '
@@ -538,7 +565,7 @@ def build():
             '<i>End of document  |  The Philosophical Question That Started This  |  '
             'Zero Paradox Project  |  April 2026  |  '
             'Not a formal result — a philosophical essay. '
-            'The formal mathematics lives in the committed PDFs, ZP-A through ZP-I.</i>',
+            'The formal mathematics lives in the committed PDFs, ZP-A through ZP-M.</i>',
             S['endnote']),
     ]
 

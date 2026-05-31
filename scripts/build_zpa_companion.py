@@ -127,8 +127,8 @@ def build():
     hdr.setStyle(hdr_ts)
     E += [hdr, sp(6),
           Paragraph('How state accumulates without ever going backwards', CS['title']),
-          Paragraph('Lattice Algebra | Version ' + VERSION, CS['subtitle']),
-          Paragraph('ZP Companion | April 2026', CS['meta']),
+          Paragraph('Lattice Algebra', CS['subtitle']),
+          Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
               'examples. It is not the formal document — every claim here restates a result '

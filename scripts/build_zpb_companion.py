@@ -1,5 +1,6 @@
 """
 Build ZP-B Illustrated Companion (v1.9)
+v1.10: vocab fix: null state → ⊥.
 v1.9: Strip version number from companion footer.
 v1.8: Dan feedback (2026-05-21): "dense" → "densely ordered"; rewrite para 2 of "Why p-Adic
       Geometry?" to acknowledge ℚ₂ also has no minimum nonzero element — difference is topology
@@ -117,7 +118,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
@@ -156,8 +157,8 @@ def build():
 
     E += [
         Paragraph('Why the geometry of state space is non-Archimedean', CS['title']),
-        Paragraph('p-Adic Topology | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('p-Adic Topology', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '
@@ -176,7 +177,7 @@ def build():
     E.append(cbody(
         'The 2-adic numbers take a different route. As a number system, &#8474;&#8322; also has no '
         'smallest nonzero element — you can always find something smaller. What changes is the '
-        '<i>topology</i>: in &#8474;&#8322;, the null state (0) and every nonzero state live in '
+        '<i>topology</i>: in &#8474;&#8322;, zero (0) and every nonzero state live in '
         'completely separate clopen regions — entirely disjoint, with no continuous path between them. '
         'The gap is not enforced by the number system running out of small values. It is built into '
         'the geometry as a hard topological barrier. This is why &#8474;&#8322; — the 2-adic number '

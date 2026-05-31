@@ -1,5 +1,7 @@
 """
-Build ZP-D Illustrated Companion (v1.9)
+Build ZP-D Illustrated Companion (v1.10)
+v1.11: vocab fix: null state → ⊥.
+v1.10: K-12 vocab fix — "topological isolation" -> "clopen separation" in DP-1 body text.
 v1.9: Strip version number from companion footer.
 v1.7: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
 Changes from v1.5:
@@ -105,7 +107,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.9'
+VERSION = '1.11'
 
 
 def build():
@@ -144,8 +146,8 @@ def build():
 
     E += [
         Paragraph('How topology maps to Hilbert space geometry', CS['title']),
-        Paragraph('State Layer (Hilbert Space) | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | May 2026', CS['meta']),
+        Paragraph('State Layer (Hilbert Space)', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '
@@ -198,8 +200,8 @@ def build():
         'corresponds to orthogonality in H. States with no continuous path between them are '
         'represented as perpendicular vectors.'))
     E.append(cbody(
-        'ZP-D works with exactly two foundational states: the Null State (⊥, non-existence) '
-        'and the first non-null state (ε₀, existence). This is not a simplifying assumption — '
+        'ZP-D works with exactly two foundational states: ⊥ (non-existence) '
+        'and the minimum nonzero state (ε₀, existence). This is not a simplifying assumption — '
         'it is the irreducible minimum. The core question is whether any transition from ⊥ to '
         'a first state is possible, and for that question n=2 is the smallest meaningful case. '
         'No claim in ZP-D requires n > 2. Binary is the logical ground floor, not a placeholder '
@@ -265,7 +267,7 @@ def build():
     E.append(sp(8))
 
     E.append(cbody(
-        '<b>Design Commitment DP-1:</b> The choice to represent topological isolation as '
+        '<b>Design Commitment DP-1:</b> The choice to represent clopen separation as '
         'orthogonality is a design commitment — the natural and consistent choice, stated '
         'explicitly. Other faithful representations exist in principle. This honesty about '
         'what is chosen versus derived is central to the framework.'))

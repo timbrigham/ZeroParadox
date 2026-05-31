@@ -1,5 +1,13 @@
 """
-Build ZP-H Illustrated Companion (v1.5)
+Build ZP-H Illustrated Companion (v1.13)
+v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
+v1.12: T-SNAP endpoint circles — open (white fill, colored stroke) with colored text for legibility.
+v1.11: subtitle/footer 'Categorical Bridge' → 'Functor Coherence'; footer date April → May 2026.
+v1.10: CC-1 described as derived (not free commitment) throughout; 'independent' → 'distinct'; T-H2 surprisal claim descoped.
+v1.9: snap diagram — '(null)' → '(⊥)'; scope 'any sequence' to Q₂ in T-H2 prose; fix four_functor cy to constant.
+v1.8: T-SNAP diagram — ε₀ Unicode label; shorten right-side framework labels; fix cy to constant.
+v1.7: vocab fix: null state → ⊥.
+v1.6: K-15 vocabulary fix — "topological isolation" → "clopen separation" in DP-1 description.
 v1.5: Strip version number from companion footer.
 v1.4: Add structural floor section — power set lattice as primary example; bridge to ZP-specific
       structural floor; new section placed before morphism/functor content.
@@ -23,8 +31,8 @@ def four_functor_diagram():
     d = Drawing(dw, dh)
 
     cx = dw / 2
-    # Shift cy up slightly so bottom boxes have clearance for caption string
-    cy = dh / 2 + 14
+    # fixed — do not derive from dh; boxes at cy±65±17=135/55 pts; dh-10=235, min=5 ✓
+    cy = 136
 
     # Central C box
     box_w, box_h = 64, 36
@@ -95,13 +103,13 @@ def snap_convergence_diagram():
     dw, dh = TW, 1.9 * inch
     d = Drawing(dw, dh)
 
-    cy = dh / 2
+    cy = 68  # fixed — do not derive from dh; T-SNAP label at cy+44=112 < dh-10=127 ✓
     lx = 30
     rx = dw - 30
     snap_x = dw / 2
 
     domain_colors = [TEAL, GREEN, RED, INDIGO]
-    domain_labels = ['Lattice: first join', 'p-Adic: clopen jump', 'Info: 1-bit cost', 'Hilbert: right-angle shift']
+    domain_labels = ['Lattice', 'p-Adic', 'Info', 'Hilbert']
     y_offsets = [30, 10, -10, -30]
 
     # Draw lines from left (0) to snap, then snap to right (e0)
@@ -110,19 +118,19 @@ def snap_convergence_diagram():
         d.add(Line(lx + 20, y, snap_x - 10, y, strokeColor=col, strokeWidth=1.5))
         d.add(Line(snap_x + 10, y, rx - 20, y, strokeColor=col, strokeWidth=1.5))
 
-    # Left dot: 0
-    d.add(Circle(lx + 18, cy, 8, fillColor=COMP_AMBER, strokeColor=COMP_AMBER, strokeWidth=0))
-    d.add(String(lx + 12, cy - 6, '0', fontSize=9, fontName='DV-B', fillColor=WHITE))
-    d.add(String(lx + 4, cy - 20, '(null)', fontSize=7.5, fontName='DV-I',
+    # Left dot: 0 — open circle (white fill, amber stroke) so dark amber text is legible
+    d.add(Circle(lx + 18, cy, 8, fillColor=WHITE, strokeColor=COMP_AMBER, strokeWidth=2))
+    d.add(String(lx + 12, cy - 6, '0', fontSize=9, fontName='DV-B', fillColor=COMP_AMBER))
+    d.add(String(lx + 4, cy - 20, '(⊥)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
 
     # Snap marker (vertical line)
     d.add(Line(snap_x, cy - 40, snap_x, cy + 40, strokeColor=BLACK, strokeWidth=2))
     d.add(String(snap_x - 18, cy + 44, 'T-SNAP', fontSize=8, fontName='DV-B', fillColor=BLACK))
 
-    # Right dot: e0
-    d.add(Circle(rx - 18, cy, 8, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
-    d.add(String(rx - 26, cy - 6, 'e0', fontSize=8, fontName='DV-B', fillColor=WHITE))
+    # Right dot: ε₀ — open circle (white fill, indigo stroke) so indigo text is legible
+    d.add(Circle(rx - 18, cy, 8, fillColor=WHITE, strokeColor=INDIGO, strokeWidth=2))
+    d.add(String(rx - 26, cy - 6, 'ε₀', fontSize=8, fontName='DV-B', fillColor=INDIGO))
     d.add(String(rx - 30, cy - 20, '(first state)', fontSize=7.5, fontName='DV-I',
                  fillColor=colors.HexColor('#888888')))
 
@@ -133,7 +141,7 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.5'
+VERSION = '1.13'
 
 
 def build():
@@ -145,7 +153,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-H Companion  |  Categorical Bridge  |  April 2026')
+            'Zero Paradox ZP-H Companion  |  Functor Coherence  |  May 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -172,8 +180,8 @@ def build():
 
     E += [
         Paragraph('Four maps, one structure', CS['title']),
-        Paragraph('Categorical Bridge | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | May 2026', CS['meta']),
+        Paragraph('Functor Coherence', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '
@@ -199,7 +207,8 @@ def build():
         'realizations of the same abstract structure. They are not four separate arguments '
         'for the same conclusion — they are four different windows looking at one thing. '
         'This agreement is coherence: all four frameworks are built on the same structural '
-        'commitments (A1-A4, AX-B1, CC-1), so the Binary Snap appearing in all of them '
+        'axioms (A1-A4, AX-B1) and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J), '
+        'so the Binary Snap appearing in all of them '
         'reflects a shared foundation, not independent confirmation from unrelated starting points.'))
     E.append(four_functor_diagram())
     E.append(ccaption(
@@ -237,16 +246,17 @@ def build():
         '0 has infinite v₂, and no finite accumulation of finite values reaches infinity. '
         'In ℚ₂, sequences can get metrically close to 0, but the valuation gap cannot be closed. '
         'In ZP-A, ⊥ is the bottom of the lattice and the axioms forbid any non-trivial return. '
-        'In ZP-C, the informational cost of approaching the null state diverges — infinite '
+        'In ZP-C, the informational cost of approaching ⊥ diverges — infinite '
         'cost means no finite path reaches it. In ZP-D, the basis vector e₀ is orthogonal to '
-        'every non-null state — a right-angle separation that cannot be gradually closed.'))
+        'every nonzero state — a right-angle separation that cannot be gradually closed.'))
     E.append(remember_box(
         'The power set example shows that the structural floor property is not exotic: it appears '
         'in the most elementary object in set theory. What is non-trivial about the ZP framework '
         'is that the same property appears in four analytic settings — topology, algebra, '
         'information theory, Hilbert space — each with its own structural reason for why the '
         'bottom cannot be approached. These settings are not independent: they share the '
-        'foundational commitments (A1-A4, AX-B1, CC-1) that produce this behavior in all four. '
+        'axioms (A1-A4, AX-B1) and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J) '
+        'that produce this behavior in all four. '
         'ZP-H verifies that these four reasons are consistent.'))
     E.append(sp(6))
 
@@ -289,8 +299,8 @@ def build():
         'realization of AX-G2. FB is a full Lean 4 functor (fb_functor, sorry-free) — '
         'not a proxy witness.'))
     E.append(cbody(
-        '<b>FC (Information Theory):</b> The initial object 0 maps to the Null State '
-        'distribution P = (1, 0). Each morphism maps to an informational transition with '
+        '<b>FC (Information Theory):</b> The initial object 0 maps to the zero distribution '
+        'P = (1, 0). Each morphism maps to an informational transition with '
         'a non-negative cost measured in bits. The fundamental transition costs exactly '
         '1 bit (ZP-C T1b). The informational singularity of ZP-G maps to the diverging '
         'surprisal of ZP-C T2. FC has a concrete ZPCategory categorical witness '
@@ -300,7 +310,7 @@ def build():
         '<b>FD (Hilbert Space):</b> The initial object 0 maps to the basis vector e₀. '
         'Each morphism maps to an orthogonal extension — a step to a perpendicular basis '
         'vector. The Binary Snap becomes a right-angle turn in state space. The design '
-        'commitment DP-1 (orthogonality represents topological isolation) is inherited here. '
+        'commitment DP-1 (orthogonality represents clopen separation) is inherited here. '
         'FD has a concrete ZPCategory categorical witness (NNRealZPCat) grounded by T4. '
         'The full abstract Lean functor for the Hilbert space codomain remains future work.'))
 
@@ -325,8 +335,8 @@ def build():
     E.append(Paragraph('Two Descriptions of One Obstruction', CS['h1']))
     E.append(cbody(
         'ZP-G said: there is no morphism from any non-initial object back to 0 (AX-G2). '
-        'ZP-C said: the surprisal along any sequence approaching 0 diverges — the '
-        'accumulated informational cost grows without bound. These look like two different '
+        'ZP-C said: the informational cost of approaching 0 is unbounded '
+        '— the accumulated surprisal grows without bound. These look like two different '
         'statements about the same thing. Are they compatible?'))
     E.append(cbody(
         'T-H2 proves they are. The two characterizations are the same obstruction seen from '
@@ -359,7 +369,7 @@ def build():
         'irreversible by the topological structure of ℚ₂.'
         '<br/>'
         '• In information theory: an informational transition costing exactly 1 bit — the '
-        'minimum possible information cost for any state change.'
+        'minimum possible information cost for a transition from the bottom state in this framework (ZP-C T1b).'
         '<br/>'
         '• In Hilbert space: an orthogonal shift from basis vector e₀ to e₁, with '
         'inner product ⟨e₀, e₁⟩ = 0.'))
@@ -368,15 +378,15 @@ def build():
     E.append(ccaption(
         'All four frameworks describe the Binary Snap (T-SNAP) in their own language. '
         'The vertical line marks the moment of the Snap. '
-        'Left: the null state. Right: the first non-null state.'))
+        'Left: ⊥. Right: the minimum nonzero state.'))
     E.append(sp(6))
 
     E.append(remember_box(
         'The agreement across four frameworks reflects coherence, not independent confirmation. '
-        'All four share the same structural commitments — A1-A4 (lattice axioms), AX-B1 '
-        '(binary existence), and CC-1 (⊥ as ground state). The Binary Snap appears in all '
-        'four because those commitments are built into each framework, not because four '
-        'separate arguments from unrelated starting points happened to agree.'))
+        'All four share the same axioms — A1-A4 (lattice axioms), AX-B1 (binary existence) '
+        '— and the structural identification CC-1 (S₀ = ⊥, derived in ZP-J). The Binary '
+        'Snap appears in all four because those foundations are built into each framework, '
+        'not because four separate arguments from unrelated starting points happened to agree.'))
     E.append(sp(6))
 
     E.append(key_result_box('T-H3: The Binary Snap Under All Four Functors',
@@ -386,12 +396,13 @@ def build():
         'the minimal first step. This agreement is coherence across shared structural '
         'commitments (A1-A4, AX-B1, CC-1), not independent replication. '
         'T-SNAP is a derived theorem inherited here from ZP-E. '
-        'The only additional design premise is DP-1 (ZP-D).'))
+        'The only additional design premise is DP-1 (ZP-D). '
+        'CC-1 (S₀ = ⊥) is derived in ZP-J, not a free commitment.'))
     E.append(sp(8))
 
     E.append(cbody(
         '<b>What this means:</b> The Binary Snap is not a construct of any one framework. '
-        'It is a structural fact that survives translation into four independent mathematical '
+        'It is a structural fact that survives translation into four distinct mathematical '
         'languages. ZP-H is the document that verifies this translation is faithful.'))
 
     print(f'Building: {out_path}')

@@ -1,5 +1,9 @@
 """
-Build ZP-C Illustrated Companion (v2.2)
+Build ZP-C Illustrated Companion (v2.5)
+v2.6: vocab fix: null state → ⊥.
+v2.5: "First Atomic State Q = (0,1)" → "minimum nonzero state ε₀, Q = (0,1)" in JSD section body prose.
+v2.4: K-20 continued — "Lemma L-INF (Informational Extremity of ⊥)" → "Lemma L-INF (Unbounded Surprisal of ⊥)" in body prose (missed by K-20 diagram-only fix).
+v2.3: K-20 vocabulary fix — "First Atomic State" → "ε₀" in section III diagram label.
 v2.2: Strip version number from companion footer.
 v2.1: Strip version numbers from in-document cross-references; "New in v1.6" section header simplified.
 v1.8: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
@@ -116,7 +120,7 @@ def jsd_diagram():
                  fontName='DV-B', fillColor=COMP_BLUE))
     d.add(String(q_x - 6, base_y - 22, 'Q = (0,1)', fontSize=8,
                  fontName='DV-B', fillColor=BLACK))
-    d.add(String(q_x - 20, base_y - 32, 'First Atomic State', fontSize=7,
+    d.add(String(q_x - 20, base_y - 32, 'ε₀', fontSize=7,
                  fontName='DVS-I', fillColor=colors.HexColor('#555555')))
 
     # Arrow + label
@@ -192,7 +196,7 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.2'
+VERSION = '2.6'
 
 
 def build():
@@ -231,8 +235,8 @@ def build():
 
     E += [
         Paragraph('Why zero is an informational singularity', CS['title']),
-        Paragraph('Information Theory | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('Information Theory', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '
@@ -306,7 +310,7 @@ def build():
     E.append(Paragraph('Why the Singularity Forces Execution (L-INF)', CS['h1']))
     E.append(cbody(
         'The surprisal graph shows that I(x) goes to infinity as x approaches 0. ZP-C '
-        'makes this precise with Lemma L-INF (Informational Extremity of ⊥): at the '
+        'makes this precise with Lemma L-INF (Unbounded Surprisal of ⊥): at the '
         'incompressibility threshold P₀, the configuration\'s surprisal is not just very large — '
         'it is formally infinite. The branching measure assigns probability approaching zero to any '
         'specific configuration at P₀, so I(P₀) = ∞.'))
@@ -331,8 +335,8 @@ def build():
 
     E.append(Paragraph('The Binary Snap Costs Exactly 1 Bit', CS['h1']))
     E.append(cbody(
-        'The Jensen-Shannon Divergence (JSD) between the Null State P = (1,0) and the First '
-        'Atomic State Q = (0,1) is exactly 1 bit. These distributions are derived from AX-B1 — '
+        'The Jensen-Shannon Divergence (JSD) between the zero distribution P = (1,0) and the minimum '
+        'nonzero state &#949;<sub>0</sub>, Q = (0,1), is exactly 1 bit. These distributions are derived from AX-B1 - '
         'not assumed. The Snap is the minimum informational event possible.'))
     E.append(jsd_diagram())
     E.append(Paragraph(
@@ -342,7 +346,7 @@ def build():
 
     E.append(Paragraph('Turning On Is a State (L-RUN)', CS['h1']))
     E.append(cbody(
-        'Can a program output the null state ⊥ without passing through any non-null intermediate '
+        'Can a program output ⊥ without passing through any nonzero intermediate '
         'state? The answer is no — because the act of turning on is itself a state.'))
     E.append(cbody(
         'Any program that executes must pass through a "first instruction fetched" configuration '
@@ -380,7 +384,7 @@ def build():
         'a weakness — it is how the framework keeps track of what is proven versus what is chosen.'))
     E.append(cbody(
         'CC-2 (Modeling Commitment): The Turing machine initial configuration c₀ is identified '
-        'with the null state ⊥. This is the same pattern as CC-1 in ZP-A, which identifies the '
+        'with ⊥. This is the same pattern as CC-1 in ZP-A, which identifies the '
         'initial state S₀ with ⊥. Neither identification is forced by the definitions — both are '
         'deliberate choices that make the multi-layer framework cohere.'))
     E.append(cbody(

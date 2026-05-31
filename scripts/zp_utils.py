@@ -12,7 +12,7 @@ Usage (companion docs):
     from zp_utils import *
     # CS styles, example_box, remember_box, key_result_box are all available.
 """
-import os, sys
+import os, sys, re, inspect
 sys.stdout.reconfigure(encoding='utf-8')
 
 from reportlab.lib import colors
@@ -69,6 +69,10 @@ ORANGE_LITE= colors.HexColor('#FBE9E7')
 SLATE      = colors.HexColor('#455A64')
 INDIGO     = colors.HexColor('#3949AB')
 INDIGO_LITE= colors.HexColor('#E8EAF6')
+# Structural / diagram neutrals — use these instead of inline HexColor
+GRID       = colors.HexColor('#CCCCCC')   # table grid and rule lines
+ARROW      = GREY                         # diagram arrows (alias)
+LABEL_DIM  = GREY_TEXT                    # dim label text in diagrams (alias)
 
 # ── Layout constants ──────────────────────────────────────────────────────────
 TW         = 6.5 * inch          # text width
@@ -117,13 +121,13 @@ CS = {
     'meta':     ParagraphStyle('cmeta',     fontName='DV',    fontSize=9,  leading=13,
                                alignment=1, spaceAfter=8, textColor=colors.grey),
     'disc':     ParagraphStyle('cdisc',     fontName='DVS-I', fontSize=9,  leading=13,
-                               spaceAfter=10, textColor=colors.HexColor('#555555')),
+                               spaceAfter=10, textColor=GREY_TEXT),
     'h1':       ParagraphStyle('ch1',       fontName='DV-B',  fontSize=13, leading=17,
                                spaceBefore=14, spaceAfter=5, textColor=COMP_BLUE),
     'body':     ParagraphStyle('cbody',     fontName='DVS',   fontSize=10, leading=14,
                                spaceAfter=6),
     'caption':  ParagraphStyle('ccaption',  fontName='DVS-I', fontSize=9,  leading=12,
-                               spaceAfter=8, textColor=colors.HexColor('#555555')),
+                               spaceAfter=8, textColor=GREY_TEXT),
     'ex_title': ParagraphStyle('cex_title', fontName='DV-B',  fontSize=9,  leading=13,
                                textColor=COMP_AMBER),
     'ex_body':  ParagraphStyle('cex_body',  fontName='DVS',   fontSize=9,  leading=13),
@@ -194,6 +198,7 @@ def fix(text):
 
 def body(text, style='body'):
     """Paragraph in the given S style key (default: body)."""
+    prose_check(text)
     return Paragraph(fix(text), S[style])
 
 def hr():
@@ -212,6 +217,7 @@ def derived(text):
 
 def cbody(t):
     """Companion body paragraph."""
+    prose_check(t)
     return Paragraph(fix(t), CS['body'])
 
 def ccaption(t):
@@ -395,21 +401,292 @@ def key_result_box(title, body_text):
     return t
 
 
-# ── Build standards reminder (stdout only — not rendered) ─────────────────────
-print()
-print('=' * 70)
-print('  ZP BUILD LOADED — did you read PDF_Rendering_Standards.md first?')
-print('  .claude-local/PDF_Rendering_Standards.md')
-print()
-print('  Pre-build checklist:')
-print('  [ ] Font stack: DV (sans UI) / DVS (body + math) — never raw Unicode')
-print('  [ ] All body paragraphs go through cbody()/body() — never Paragraph() direct')
-print('  [ ] Table cells are Paragraph objects — never plain strings')
-print('  [ ] Version numbers: COMPANION = tagline meta line ONLY (CLAUDE.md wins)')
-print('      Companion footers must NOT contain version — remove v\' + VERSION')
-print('      Formal doc footers via make_doc() are OK')
-print('  [ ] No version numbers in body prose, disclaimers, or cross-doc refs')
-print()
-print('  Post-build: run null-char verification (Standards doc Section 7)')
-print('=' * 70)
-print()
+# ── Prose vocabulary and version gate ─────────────────────────────────────────
+# HTML entity pattern — entities in String() drawing primitives render literally.
+# The patch below fires at d.add() time, no per-diagram call required.
+_HTML_ENT_PAT = re.compile(r'&(?:#\d+|#x[0-9a-fA-F]+|[a-zA-Z]\w*);')
+
+def _zp_patched_drawing_add(self, shape, *args, **kwargs):
+    """Drop-in replacement for Drawing.add() — checks for HTML entities in String text."""
+    from reportlab.graphics.shapes import String as _S
+    if isinstance(shape, _S) and _HTML_ENT_PAT.search(shape.text or ''):
+        print()
+        print('!' * 70)
+        print('  ZP BUILD BLOCKED — HTML entity in String() drawing primitive')
+        print(f'  ↳ {shape.text!r}')
+        print()
+        print('  String() does not parse HTML — entities render literally in the PDF.')
+        print('  Fix: replace &#NNNN; / &name; with the actual Unicode character.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+    return _orig_drawing_add(self, shape, *args, **kwargs)
+
+# Patch at import time — fires for every d.add(String(...)) across all build scripts.
+from reportlab.graphics.shapes import Drawing as _Drawing
+_orig_drawing_add = _Drawing.add
+_Drawing.add = _zp_patched_drawing_add
+
+# Terms banned from rendered prose. Source: vocabulary_reference.md §1.
+# To suppress on a specific call site: append  # ZP-NOCHECK: <reason>
+_BANNED_PROSE = (
+    'null state',
+    'null distribution',
+    'first atomic state',
+    'informational extremity',
+    'informational incompressibility',
+    'state-transition structure',
+    'description-instantiation gap',
+    'gödel ceiling',
+    'categorical bridge',
+    'cross-framework bridge',
+    'assembly step',
+    'topologically isolated',
+    'metric isolation',
+    'converging at the bottom element',
+)
+_VERSION_IN_PROSE = re.compile(r'\bv\d+\.\d+\b', re.IGNORECASE)
+
+def _caller_nocheck():
+    """Return True if the first non-zp_utils call site has # ZP-NOCHECK."""
+    for frame in inspect.stack():
+        fp = frame.filename
+        if not fp or os.path.basename(fp) == 'zp_utils.py':
+            continue
+        try:
+            with open(fp, encoding='utf-8') as fh:
+                lines = fh.readlines()
+            if 0 < frame.lineno <= len(lines):
+                return '# ZP-NOCHECK' in lines[frame.lineno - 1]
+        except OSError:
+            pass
+        return False
+    return False
+
+def prose_check(text, name=''):
+    """
+    Vocabulary and version gate — called automatically by body() and cbody().
+    Fails the build on banned terms or version numbers in rendered prose.
+    Suppress on a specific call site with:  # ZP-NOCHECK: <reason>
+    """
+    low = text.lower()
+    violations = []
+    for term in _BANNED_PROSE:
+        if term in low:
+            violations.append(f'  banned term: "{term}"')
+    m = _VERSION_IN_PROSE.search(text)
+    if m:
+        violations.append(f'  version number in prose: "{m.group()}"')
+    if not violations:
+        return
+
+    # Find caller location for reporting and ZP-NOCHECK detection
+    caller_file, caller_line_no, caller_line = '', 0, ''
+    for frame in inspect.stack():
+        fp = frame.filename
+        if not fp or os.path.basename(fp) == 'zp_utils.py':
+            continue
+        caller_file = os.path.basename(fp)
+        caller_line_no = frame.lineno
+        try:
+            with open(fp, encoding='utf-8') as fh:
+                lines = fh.readlines()
+            if 0 < frame.lineno <= len(lines):
+                caller_line = lines[frame.lineno - 1].rstrip()
+        except OSError:
+            pass
+        break
+
+    if '# ZP-NOCHECK' in caller_line:
+        label = name or 'prose'
+        print(f'  [ZP-NOCHECK suppressed {len(violations)} violation(s) in {label}]')
+        return
+
+    print()
+    print('!' * 70)
+    label = f'"{name}"' if name else 'prose'
+    print(f'  ZP BUILD BLOCKED — prose violation in {label}')
+    print(f'  Location: {caller_file}:{caller_line_no}')
+    if caller_line:
+        print(f'  Line: {caller_line[:120]}')
+    for v in violations:
+        print(v)
+    print()
+    print('  Fix the term or append  # ZP-NOCHECK: <reason>  to the call site.')
+    print('  See .claude-local/vocabulary_reference.md Section 1.')
+    print('!' * 70)
+    print()
+    raise SystemExit(1)
+
+
+# ── Diagram geometry gate ──────────────────────────────────────────────────────
+def validate_drawing(drawing, dh, name='diagram'):
+    """
+    Geometry bounds gate for companion diagram Drawing objects.
+    Call at the end of every diagram function:
+        return validate_drawing(d, dh, 'diagram_name')
+
+    Enforces the CLAUDE.md layout rules:
+        max content y  <  dh - 10   (top margin)
+        min content y  >  5         (bottom margin)
+
+    Raises SystemExit(1) on violation.
+    """
+    from reportlab.graphics.shapes import Circle, Rect, String, Line, PolyLine, Group
+    ys = []
+    entity_violations = []
+
+    def _collect(shapes):
+        for shape in shapes:
+            try:
+                if isinstance(shape, Circle):
+                    ys.extend([shape.cy - shape.r, shape.cy + shape.r])
+                elif isinstance(shape, Rect):
+                    ys.extend([shape.y, shape.y + shape.height])
+                elif isinstance(shape, String):
+                    fs = getattr(shape, 'fontSize', 10) or 10
+                    ys.extend([shape.y, shape.y + fs])
+                    if _HTML_ENT_PAT.search(shape.text or ''):
+                        entity_violations.append(shape.text)
+                elif isinstance(shape, Line):
+                    ys.extend([shape.y1, shape.y2])
+                elif isinstance(shape, PolyLine):
+                    pts = shape.points
+                    for i in range(1, len(pts), 2):
+                        ys.append(pts[i])
+                elif isinstance(shape, Group):
+                    _collect(shape.contents)
+            except AttributeError:
+                pass
+
+    _collect(drawing.contents)
+
+    if entity_violations:
+        print()
+        print('!' * 70)
+        print(f'  ZP BUILD BLOCKED — HTML entities in String() in "{name}"')
+        for v in entity_violations:
+            print(f'  ↳ {v!r}')
+        print()
+        print('  String() primitives do not parse HTML entities — they render literally.')
+        print('  Fix: replace &#NNNN; / &name; with the actual Unicode character.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+
+    if not ys:
+        return drawing
+
+    min_y, max_y = min(ys), max(ys)
+    violations = []
+    if max_y > dh - 10:
+        violations.append(
+            f'  top overflow: max_y={max_y:.1f} > dh-10={dh-10:.1f}  (dh={dh:.1f})')
+    if min_y < 5:
+        violations.append(
+            f'  bottom overflow: min_y={min_y:.1f} < 5')
+
+    if violations:
+        print()
+        print('!' * 70)
+        print(f'  ZP BUILD BLOCKED — diagram geometry "{name}"')
+        for v in violations:
+            print(v)
+        print()
+        print('  Fix: increase dh or adjust element positions (cy, r, label offsets).')
+        print('  See CLAUDE.md §Companion PDF Diagram Layout Standards.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+
+    return drawing
+
+
+# ── Palette enforcement gate ──────────────────────────────────────────────────
+# Protected palette names: redefining these in a build script without a
+# # ZP-OVERRIDE: comment is a hard error that aborts the build.
+_PROTECTED_PALETTE = frozenset({
+    'BLUE', 'BLUE_LITE', 'GREEN', 'GREEN_LITE', 'GREEN_DARK',
+    'ORANGE', 'ORANGE_LITE', 'AMBER', 'AMBER_LITE',
+    'SLATE', 'SLATE_LITE', 'INDIGO', 'INDIGO_LITE',
+    'RED', 'GREY', 'GREY_TEXT', 'GREY_LITE',
+    'TEAL', 'TEAL_LITE', 'WHITE', 'BLACK',
+    'COMP_BLUE', 'COMP_GREEN', 'COMP_SLATE', 'COMP_AMBER',
+    'GRID', 'ARROW', 'LABEL_DIM',
+})
+_SHADOW_PAT = re.compile(
+    r'^(' + '|'.join(re.escape(n) for n in _PROTECTED_PALETTE) + r')\s*=\s*colors\.'
+)
+
+def _palette_gate():
+    """
+    Hard gate — called at import time. Reads the importing build script's source
+    and aborts (SystemExit 1) if any protected palette constant is redefined
+    without a  # ZP-OVERRIDE: <reason>  comment on the same line.
+
+    To add a legitimate exception: append  # ZP-OVERRIDE: <reason>  to the line.
+    """
+    caller_path = None
+    for frame in inspect.stack():
+        fp = frame.filename
+        if not fp:
+            continue
+        if '<frozen' in fp or 'importlib' in fp:
+            continue
+        if os.path.basename(fp) == 'zp_utils.py':
+            continue
+        caller_path = fp
+        break
+    if not caller_path or not os.path.isfile(caller_path):
+        return
+
+    try:
+        with open(caller_path, encoding='utf-8') as fh:
+            lines = fh.readlines()
+    except OSError:
+        return
+
+    violations = []
+    for i, line in enumerate(lines, 1):
+        if _SHADOW_PAT.match(line) and '# ZP-OVERRIDE' not in line:
+            violations.append(f'  line {i}: {line.rstrip()}')
+
+    if violations:
+        name = os.path.basename(caller_path)
+        print()
+        print('!' * 70)
+        print(f'  ZP BUILD BLOCKED — {name}')
+        print('  Unapproved palette constant shadowing detected:')
+        for v in violations:
+            print(v)
+        print()
+        print('  Each flagged line must end with:  # ZP-OVERRIDE: <reason here>')
+        print('  See .claude-local/PDF_Rendering_Standards.md §Palette Enforcement.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+
+    # Advisory checklist (informational only — palette has already passed)
+    print()
+    print('=' * 70)
+    print(f'  ZP BUILD — palette OK ({os.path.basename(caller_path)})')
+    print()
+    print('  Auto-checked (hard failures):')
+    print('  [x] Palette constants — no unapproved shadowing')
+    print('  [x] Banned vocabulary in body()/cbody() prose')
+    print('  [x] Version numbers in body()/cbody() prose')
+    print('  [x] Diagram geometry — call validate_drawing(d, dh, name) in each diagram fn')
+    print('  [x] HTML entities in String() drawing primitives — use Unicode directly')
+    print()
+    print('  Remaining checklist (not auto-checked):')
+    print('  [ ] Font stack: DV (sans UI) / DVS (body + math) — never raw Unicode')
+    print('  [ ] Body paragraphs through body()/cbody() — not bare Paragraph()')
+    print('  [ ] Table cells are Paragraph objects — never plain strings')
+    print('  [ ] Table grid lines use GRID constant, not inline HexColor')
+    print()
+    print('  Post-build: null-char verification (Standards doc §7)')
+    print('=' * 70)
+    print()
+
+
+_palette_gate()

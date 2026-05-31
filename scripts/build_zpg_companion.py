@@ -1,5 +1,7 @@
 """
 Build ZP-G Illustrated Companion (v1.6)
+v1.8: category_diagram — fix overlapping text: use fixed cy=68, dh=2.2in, remove redundant internal title string.
+v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
 v1.6: Strip version number from companion footer.
 v1.4: Title "Structure without substance" → "Structure independent of domain" — removes
 philosophical framing; "independent of domain" states the actual categorical property.
@@ -21,12 +23,12 @@ PURPLE = colors.HexColor('#7B2FBE')
 
 def category_diagram():
     """Diagram: objects as dots, morphisms as arrows, initial object 0."""
-    dw, dh = TW, 2.0 * inch
+    dw, dh = TW, 2.2 * inch  # 2.2*72=158 pts; content top ~135, content bottom ~20
     d = Drawing(dw, dh)
 
     # Positions for objects
     cx = dw / 2
-    cy = dh / 2
+    cy = 68  # fixed — do not derive from dh; A/B labels at cy+67=135 < dh-10=148 ✓
 
     # Object 0 (initial) at left
     ox = cx - 160
@@ -80,10 +82,6 @@ def category_diagram():
     d.add(String(bx - 4, by + 12, 'B', fontSize=10, fontName='DV-B', fillColor=PURPLE))
     d.add(String(cx2 - 4, cy2 - 18, 'C', fontSize=10, fontName='DV-B', fillColor=PURPLE))
 
-    # Title
-    d.add(String(dw/2 - 155, dh - 14,
-                 'A category: objects (dots), morphisms (arrows), one initial object 0',
-                 fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
 def functor_diagram():
@@ -148,7 +146,7 @@ def functor_diagram():
                  fontSize=8.5, fontName='DV-I', fillColor=colors.HexColor('#555555')))
     return d
 
-VERSION = '1.6'
+VERSION = '1.8'
 
 
 def build():
@@ -187,8 +185,8 @@ def build():
 
     E += [
         Paragraph('Structure independent of domain', CS['title']),
-        Paragraph('Category Theory | Version ' + VERSION, CS['subtitle']),
-        Paragraph('ZP Companion | April 2026', CS['meta']),
+        Paragraph('Category Theory', CS['subtitle']),
+        Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '
@@ -284,7 +282,7 @@ def build():
         'Not a new assumption: it follows from antisymmetry of the ZP-A partial order '
         'and is independently confirmed by ZP-B C3 (topological irreversibility in ℚ₂).'))
     E.append(cbody(
-        '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes the null state as a '
+        '<b>The connection to ⊥ = {⊥}:</b> ZP-A CC-2 characterizes ⊥ as a '
         '<i>Quine atom</i> — ⊥ = {⊥}, meaning ⊥ is its own only member. '
         'A self-containing object has no external interpreter: it IS its own interpretation. '
         'In categorical terms, this is exactly what AX-G1 and AX-G2 together express: '
@@ -295,7 +293,7 @@ def build():
         'Remember: 0 here is not the number zero. It is a label for the initial object of the '
         'category — the privileged starting point from which all structure originates. '
         'The label was chosen because 0 plays the same role as ⊥ (bottom) in ZP-A, '
-        '0 ∈ ℚ₂ in ZP-B, and the Null State in ZP-C.'))
+        '0 ∈ ℚ₂ in ZP-B, and ⊥ in ZP-C.'))
     E.append(sp(6))
 
     # ── Key results ────────────────────────────────────────────────────────────
@@ -347,7 +345,7 @@ def build():
     E.append(sp(8))
 
     E.append(cbody(
-        '<b>What comes next:</b> ZP-H (the Categorical Bridge) constructs four concrete '
+        '<b>What comes next:</b> ZP-H constructs four concrete '
         'functors from C to the four domain frameworks of the Zero Paradox, verifying that '
         'the abstract categorical structure is faithfully realized in lattice algebra, '
         'p-adic topology, information theory, and Hilbert space. See the ZP-H Illustrated '

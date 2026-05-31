@@ -6,19 +6,22 @@ Update this file first on any version bump. README.md Framework table and GUIDE.
 
 | Document | Formal Version | Filename | Companion Version | Comp AR | Notes |
 |----------|---------------|----------|-------------------|---------|-------|
-| ZP-A Lattice Algebra | v1.14 | ZP-A_Lattice_Algebra.pdf | v1.9 | Y/Y | v1.14: CC-2 label → Forced Metatheoretic Commitment; ZPJ_ScaleBridge reference added — formal:c20e847b comp:d83fd4c7 |
-| ZP-B p-Adic Topology | v1.8 | ZP-B_pAdic_Topology.pdf | v1.9 | Y/Y | Companion v1.9: strip version number from companion footer — formal:42af38ce comp:8e7b73c6 |
-| ZP-F The Counterexamples | v1.2 | ZP-F_The_Counterexamples.pdf | v1.10 | Y/Y | v1.2: vocab fix + dual-limit remark bullets (AR-clean); companion v1.10: new §VIII squeeze-as-structural-necessity (AR-clean) — formal:72f2aed0 comp:6935af00 |
-| ZP-C Information Theory | v1.14 | ZP-C_Information_Theory.pdf | v2.2 | Y/Y | v1.14: version number removed from Open Items Register header; comp v2.2: strip footer version — formal:273410c8 comp:8912617c |
-| ZP-D State Layer | v1.10 | ZP-D_State_Layer.pdf | v1.9 | Y/Y | v1.10: version number removed from Open Items Register header; comp v1.9: strip footer version — formal:ed26f6c9 comp:5824ada6 |
-| ZP-E Bridge Document | v3.16 | ZP-E_Bridge_Document.pdf | v1.10 | Y/Y | v3.16: version numbers removed from register section headers; comp v1.10: strip footer version — formal:c8732b44 comp:f877b143 |
-| ZP-G Category Theory | v1.9 | ZP-G_Category_Theory.pdf | v1.6 | Y/Y | v1.9: version number removed from Open Items Register header; comp v1.6: strip footer version — formal:e6c366d4 comp:9ecf37e9 |
-| ZP-H Categorical Bridge | v1.13 | ZP-H_Categorical_Bridge.pdf | v1.5 | Y/Y | v1.13: version number removed from Open Items Register header; comp v1.5: strip footer version — formal:1f9d6ae2 comp:3d10d767 |
-| ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.5 | Y/Y | Companion v1.5: strip footer version — formal:298f2e30 comp:c78d212d |
-| ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.6 | Y/Y | v2.0: Sections VII-X added; comp v1.6: five new sections matching v2.0 content; AR fixes applied to both — formal:f39311c3 comp:a5561b33 |
-| ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.8 | Y/Y | Companion v1.8: strip footer version — formal:8c00d4aa comp:1286a4a7 |
-| ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.4 | Y/Y | Companion v1.4: strip footer version — formal:7825902f comp:3a10ee7b |
-| ZP-M Kleene-Ordinal Bridge | v1.0 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.0 | N/— | v1.0: Initial release — snapEmbed type bridge, hfp gap closed, zpm_triangle, R-M.1. Lean source promoted to full document — formal:24dd8909 comp:702ff724 |
+| ZP-A Lattice Algebra | v1.14 | ZP-A_Lattice_Algebra.pdf | v1.9 | STALE | v1.14: CC-2 label → Forced Metatheoretic Commitment; ZPJ_ScaleBridge reference added — formal:c20e847b comp:37db9ee0 |
+| ZP-B p-Adic Topology | v1.9 | ZP-B_pAdic_Topology.pdf | v1.10 | STALE | v1.9: K-17 vocab fix — "First Atomic State" → "minimum nonzero state, ε₀" in §I; comp v1.10: vocab sweep — "null state (0)" → "zero (0)" — formal:75ac399e comp:6117d309 |
+| ZP-F The Counterexamples | v1.3 | ZP-F_The_Counterexamples.pdf | v1.12 | STALE | v1.3: K-16 vocab fix; comp v1.12: vocab sweep — null state fix — formal:ed2402fd comp:4f8d9904 |
+| ZP-C Information Theory | v1.15 | ZP-C_Information_Theory.pdf | v2.6 | STALE | v1.15: K-19/K-21 vocab fixes; comp v2.6: vocab sweep — null state fixes throughout — formal:a7dbf220 comp:8eb51699 |
+| ZP-D State Layer | v1.11 | ZP-D_State_Layer.pdf | v1.11 | STALE | v1.11: K-11/K-18 vocab fixes — "Topological Isolation" → "Clopen Separation" in DP-1; "first atomic state" → "minimum nonzero state"; comp v1.11: vocab sweep — null state fixes — formal:7f432037 comp:a37151e6 |
+| ZP-E Bridge Document | v3.17 | ZP-E_Bridge_Document.pdf | v1.11 | STALE | v1.11 comp: Goodstein/proof-theoretic context for ε₀; K-3/K-4 vocab fixes (null state → ⊥; ontological → structural) — formal:323bd69e comp:1b4c17b0 |
+| ZP-G Category Theory | v1.10 | ZP-G_Category_Theory.pdf | v1.8 | STALE | v1.10: hash sync — script modified without full workflow; rebuilt to sync; comp v1.8: category_diagram overlap fix — fixed cy, dh increased, redundant title removed — formal:f9ceca3f comp:0673dc77 |
+| ZP-H Categorical Bridge | v1.14 | ZP-H_Categorical_Bridge.pdf | v1.13 | STALE | v1.14: K-13 vocab fix + endnote version corrected (v1.10→v1.14); comp v1.13: "any state change" scoped to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix — formal:1e26ca53 comp:5e23b02f |
+| ZP-I Inside Zero | v1.9 | ZP-I_Inside_Zero.pdf | v1.21 | STALE | comp v1.21: "(no sorryAx)" in step table; ZP-internal labels removed; axiom scope clarified; "the framework" scoped to ZP-I (ER/AR fixes) — formal:298f2e30 comp:f4707408 |
+| ZP-J Self-Reference | v2.0 | ZP-J_Self_Reference.pdf | v1.23 | STALE | v2.0: Sections VII-X added; comp v1.23: pronoun fix; abstraction chain direction clarified; "this framework" → "ZP-A"; p-adic restored; Aczel ch. 6 p. 77 citation + verbatim quote restored; "not three separate properties" + "ZP version of" restored — formal:f39311c3 comp:9fd0957b |
+| ZP-J AFA Addendum | v1.1 | ZP-J_AFA_Addendum.pdf | N/A | N/— | v1.1: COMP_BLUE header banner added — formal:c6be6b33 |
+| ZP-K Computational Grounding | v1.6 | ZP-K_Computational_Grounding.pdf | v1.8 | STALE | Companion v1.8: strip footer version — formal:8c00d4aa comp:1286a4a7 |
+| ZP-L Incomputability Convergence | v1.0 | ZP-L_Incomputability_Convergence.pdf | v1.4 | STALE | Companion v1.4: strip footer version — formal:7825902f comp:fb745d9b |
+| ZP-M Kleene-Ordinal Bridge | v1.0 | ZP-M_Kleene_Ordinal_Bridge.pdf | v1.2 | N/— | v1.0: Initial release — snapEmbed type bridge, hfp gap closed, zpm_triangle, R-M.1. Lean source promoted to full document; comp v1.2: HTML entity fix; validate_drawing wired; triangle dh increased; internal caption removed (overlapped edge label) — formal:24dd8909 comp:d264b283 |
+| Zero Paradox Foreword | v2.5 | Zero_Paradox_Foreword.pdf | N/A | N/A | v2.5: AR/ER fixes — "standard ZFC" → "ZF" in porthole; fix() guard; "every" → "every finite" self-referential graph (Fintype scope) — formal:e475b28a |
+| ZP Philosophical Question | v1.11 | ZP_Philosophical_Question.pdf | N/A | N/A | v1.11: fix() guard via Paragraph override; "bridge" → "connecting argument"; "in ZP's reading" de-duplicated — formal:9b4905de |
 
 **Comp AR column key:** `Y/Y` = current comp hash adversary-reviewed + remediated (or confirmed clean). `Y/N` = reviewed, fixes identified but not yet applied. `N/—` = not yet reviewed.
 

@@ -1,5 +1,7 @@
 """
-Build ZP-F: The Counterexamples (v1.2)
+Build ZP-F: The Counterexamples (v1.3)
+v1.3: K-16 vocabulary fix — "topological isolation of zero" → "valuative gap at zero
+(v_p(0) = +∞)" in §VI body prose.
 v1.0: Initial release. Establishes formally that any linearly ordered field —
       notably ℝ and ℚ — is structurally incapable of hosting the Binary Snap.
       General case ([Field F] [LinearOrder F] [IsStrictOrderedRing F]) proved
@@ -16,7 +18,7 @@ v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples.pdf')
@@ -54,10 +56,10 @@ def build():
         'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
         'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
         '(such as &#8477;, where zero is a limit point and density excludes any floor) and '
-        'non-Archimedean completions (&#8474;&#8346;, where zero is topologically isolated by '
-        'the p-adic valuation). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
+        'non-Archimedean completions (&#8474;&#8346;, where zero is valuatively distinguished '
+        '(v<sub>p</sub>(0) = +&#8734;) from all nonzero elements). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
         'the minimum prime compatible with binary existence (AX-B1). '
-        'The structural isolation of zero is not imposed from outside; it follows from the completion.'))
+        'The valuative gap at zero is not imposed from outside; it follows from the completion.'))
     E.append(sp(4))
 
     # ── II. The General Result ────────────────────────────────────────────────

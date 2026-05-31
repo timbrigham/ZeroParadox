@@ -1,5 +1,6 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.10)
+Build ZP-D: State Layer (Hilbert Space) (v1.11)
+v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.
 v1.10: Version number removed from Open Items Register section header.
 v1.9: Adversary-review pass — Import I-B stale reference "Topological isolation of 0"
 corrected to "Clopen gap at 0" to match ZP-B v1.7+ terminology throughout.
@@ -17,7 +18,7 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer.pdf')
@@ -60,7 +61,7 @@ def build():
     E.append(label_box('Definition D1 — State Layer H', [
         'H = &#8450;<super>n</super> is a complex Hilbert space with orthonormal basis {e<sub>0</sub>, e<sub>1</sub>, &#8230;}.',
         'The foundational minimum is n = 2, corresponding to the two ontological states of the framework: '
-        '&#8869; (null state, mapped to e<sub>0</sub>) and &#949;<sub>0</sub> (first atomic state, mapped to e<sub>1</sub>). '
+        '&#8869; (null state, mapped to e<sub>0</sub>) and &#949;<sub>0</sub> (minimum nonzero state, mapped to e<sub>1</sub>). '
         'These two orthogonal vectors express the binary existence/non-existence distinction that is the '
         'framework\'s central object. All further states are derived from this pair as joins in (L, &#8744;, &#8869;) '
         '&#8212; they require no additional foundational dimension.',
@@ -78,8 +79,8 @@ def build():
 
     E.append(Paragraph('III. The Transition Operator T: Q₂ &#8594; H', S['h1']))
     E.append(Paragraph('3.1  The Design Commitment — Orthogonality', S['h2']))
-    E.append(label_box('Design Principle DP-1 — Orthogonality as the Representation of Topological Isolation  [reclassified from T1 in v1.1]', [
-        'Topological isolation in Q<sub>2</sub> (T3: 0 is isolated; clopen balls are mutually separated) is represented in H by orthogonality: elements that are topologically isolated in Q<sub>2</sub> map to orthogonal vectors in H.',
+    E.append(label_box('Design Principle DP-1 — Orthogonality as the Representation of Clopen Separation  [reclassified from T1 in v1.1]', [
+        'Clopen separation in Q<sub>2</sub> (T3: 0 is clopen-separated from all nonzero elements; clopen balls are mutually separated) is represented in H by orthogonality: elements that are clopen-separated in Q<sub>2</sub> map to orthogonal vectors in H.',
         'Motivation: Orthogonality in H is the natural algebraic analogue of topological separation. &#10216;e<sub>i</sub>, e<sub>j</sub>&#10217; = 0 for i &#8800; j; two clopen balls are maximally distinct in the topological sense.',
         'Status: DESIGN PRINCIPLE — DP-1 is chosen, not derived. It is the natural and consistent choice, stated explicitly. T4 and T5 below depend on DP-1 as a premise.',
     ]))
@@ -103,7 +104,7 @@ def build():
     E.append(sp(4))
     E.append(label_box('Remark R3 — Topological Type of T', [
         'T is locally constant: it is constant on each clopen ball of Q<sub>2</sub>. This follows directly from '
-        'DP-1 — topological isolation maps to orthogonality, so T does not interpolate between basis '
+        'DP-1 — clopen separation maps to orthogonality, so T does not interpolate between basis '
         'vectors across ball boundaries.',
         'Continuity: T is continuous from (Q<sub>2</sub>, 2-adic topology) to H. The image of T is a '
         'discrete set of basis vectors {e<sub>0</sub>, e<sub>1</sub>, &#8230;}. Each preimage T<super>&#8722;1</super>(e<sub>i</sub>) '
@@ -125,7 +126,7 @@ def build():
     E.append(sp(4))
     E.append(label_box('Remark R2 — What T Is Not', [
         'T is not a ring homomorphism. Q<sub>2</sub> has field operations; H does not. T does not preserve addition or multiplication from Q<sub>2</sub>.',
-        'T is not a topological embedding. The topology of H is the norm topology; the topology of Q<sub>2</sub> is the 2-adic ultrametric. T is a structure-preserving assignment: ontological distinctions (topological isolation in Q<sub>2</sub>) map to algebraic distinctions (orthogonality in H), as specified by DP-1.',
+        'T is not a topological embedding. The topology of H is the norm topology; the topology of Q<sub>2</sub> is the 2-adic ultrametric. T is a structure-preserving assignment: ontological distinctions (clopen separation in Q<sub>2</sub>) map to algebraic distinctions (orthogonality in H), as specified by DP-1.',
     ]))
 
     E.append(Paragraph('IV. The Binary Snap in H', S['h1']))
