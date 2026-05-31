@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.18 | May 2026
+Version 3.19 | May 2026
+v3.19: Version reference removed from T-BUF li() call (Gemini catch — build gate does not cover li()).
 v3.18: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state" throughout body prose; version references (v1.4, v1.5, v2.7, v1.0) removed from body prose. Palette rebuild.
 v3.17: K-22 vocabulary fix — "informational extremity" → "unbounded surprisal (L-INF)"
 in DA-1 Section II bridge prose.
@@ -75,7 +76,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.18'
+VERSION = '3.19'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -152,7 +153,7 @@ def build():
     E += [
         li('L-RUN: The transition c<sub>0</sub> → c<sub>1</sub> is a nonzero state transition. (ZP-C — Derived)'),
         li('TQ-IH: No program outputs ⊥ without a nonzero intermediate configuration state. (ZP-C — Derived by L-RUN)'),
-        li('T-BUF: At P<sub>0</sub>, execution is structurally guaranteed; that execution state is ε<sub>0</sub> in the semilattice. (ZP-C v1.4 — Candidate Theorem pending DA-1)'),
+        li('T-BUF: At P<sub>0</sub>, execution is structurally guaranteed; that execution state is ε<sub>0</sub> in the semilattice. (ZP-C — Candidate Theorem pending DA-1)'),
         sp(4),
     ]
     E.append(body(

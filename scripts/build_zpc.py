@@ -1,5 +1,6 @@
 """
-Build ZP-C: Information Theory (v1.16)
+Build ZP-C: Information Theory (v1.17)
+v1.17: Version references removed from Remark R5 label_box and T-BUF li() call (Gemini catch — build gate does not cover li()/label_box()).
 v1.16: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state"; "first atomic state" → "minimum nonzero state (ε₀)" throughout body prose. Palette rebuild.
 v1.15: K-19/K-21 vocab fixes — "First Atomic State" -> "Minimum Nonzero State" in T1; "Informational Extremity" -> "Unbounded Surprisal" in L-INF section header, label, and status lines.
 v1.14: Version number removed from Open Items Register section header.
@@ -25,7 +26,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
@@ -238,8 +239,8 @@ def build():
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [
-        'Prior to v1.4: AX-1 (Binary Snap Causality) was labeled Axiomatic in ZP-C.',
-        'As of v1.4: AX-1 is a Candidate Theorem. The derivation pathway: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a nonzero state change. TQ-IH establishes that no program avoids this. ZP-A D2 establishes that a nonzero state change from &#8869; is the Binary Snap.',
+        'AX-1 (Binary Snap Causality) was previously labeled Axiomatic in ZP-C.',
+        'AX-1 is a Candidate Theorem. The derivation pathway: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a nonzero state change. TQ-IH establishes that no program avoids this. ZP-A D2 establishes that a nonzero state change from &#8869; is the Binary Snap.',
         'Remaining work: DA-1 (Definitional Alignment) must formally tie instantiation of P<sub>0</sub> to an execution event. This is owned by ZP-E.',
         'Status label: CANDIDATE THEOREM — gap identified and named (DA-1). Closed in ZP-E DA-1 insert.',
     ]))
