@@ -51,8 +51,6 @@ open ZeroParadox.ZPJ
 open ZeroParadox.Scale
 open ZeroParadox.SelfApp
 
-set_option maxHeartbeats 400000
-
 -- ============================================================
 -- § I. Wheel Typeclass
 -- ============================================================
@@ -65,7 +63,7 @@ set_option maxHeartbeats 400000
     Axiom W7:  /(/x) = x  (involution — applying / twice returns x)
     Axiom W8:  /(x·y) = /x · /y  (involution distributes over ·)
     Axiom W9:  (x+y)·z + 0·z = x·z + y·z  (weakened distributivity)
-    Axiom W10: (x + 0·y)·/y = x + 0·(y·/y)  (wheel identity)
+    Axiom W10: (x + 0·y)·/y = x·/y + 0·y   (wheel identity)
     Axiom W11: 0·0 = 0
 
     Key consequence: /0 (= wheelInf) and 0·/0 (= wheelBot) are well-defined.
@@ -75,9 +73,9 @@ set_option maxHeartbeats 400000
 -- (which wheels deliberately weaken). Defined from scratch for axiom auditability,
 -- following ZPSemilattice convention.
 class Wheel (W : Type*) where
-  wadd  : W → W → W
-  wmul  : W → W → W
-  winv  : W → W
+  wadd : W → W → W
+  wmul : W → W → W
+  winv : W → W
   wzero : W
   wone  : W
   -- W1–W3: additive commutative monoid
@@ -96,10 +94,10 @@ class Wheel (W : Type*) where
   weak_distrib : ∀ x y z : W,
       wadd (wmul (wadd x y) z) (wmul wzero z) =
       wadd (wmul x z) (wmul y z)
-  -- W10: wheel identity
+  -- W10: wheel identity  (x + 0·y)·/y = x·/y + 0·y
   wheel_id : ∀ x y : W,
       wmul (wadd x (wmul wzero y)) (winv y) =
-      wadd x (wmul wzero (wmul y (winv y)))
+      wadd (wmul x (winv y)) (wmul wzero y)
   -- W11: 0 · 0 = 0
   wzero_mul_wzero : wmul wzero wzero = wzero
 
@@ -126,9 +124,17 @@ theorem winv_wheelInf : Wheel.winv (wheelInf (W := W)) = Wheel.wzero :=
 theorem wheel_zero_mul_zero_eq_zero : Wheel.wmul (Wheel.wzero : W) Wheel.wzero = Wheel.wzero :=
   Wheel.wzero_mul_wzero
 
-/-- In a wheel, /1 = 1. Follows from W7 and W6. -/
+/-- In a wheel, /1 = 1.
+    Proof: W8+W6 give winv x = (winv x)·(winv 1) for all x.
+    Apply at x = winv 1: winv(winv 1) = (winv 1)·(winv 1); W7 gives 1 = 1·(winv 1).
+    W5+W6 then give 1 = winv 1. -/
 theorem winv_one : Wheel.winv (Wheel.wone : W) = Wheel.wone := by
-  sorry
+  -- W8 at (winv 1, 1): winv((winv 1)·1) = (winv(winv 1))·(winv 1)
+  -- W6 reduces LHS; W7 reduces winv(winv 1) = 1; then W5+W6 close.
+  have h := @Wheel.winv_wmul W _ (Wheel.winv Wheel.wone) Wheel.wone
+  simp only [Wheel.wmul_one, Wheel.winv_winv] at h
+  rw [Wheel.wmul_comm, Wheel.wmul_one] at h
+  exact h.symm
 
 end WheelBasic
 
@@ -155,23 +161,29 @@ inductive ZPWheelElem where
 -- § IV. Operations on ZPWheelElem
 -- ============================================================
 
-/-- Addition: bot absorbs all; inf absorbs all finite elements; fin + fin = rational +. -/
+/-- Addition: bot absorbs; inf + inf = bot (∞ + ∞ is undefined, like ∞ − ∞);
+    inf + fin = inf; fin + fin = rational +.
+    Non-overlapping patterns ensure clean equation lemmas for simp. -/
 def zpwAdd : ZPWheelElem → ZPWheelElem → ZPWheelElem
-  | .bot, _        => .bot
-  | _,    .bot     => .bot
-  | .inf, _        => .inf
-  | _,    .inf     => .inf
-  | .fin p, .fin q => .fin (p + q)
+  | .bot,   _        => .bot
+  | .inf,   .bot     => .bot
+  | .inf,   .inf     => .bot   -- ∞ + ∞ = ⊥ (undefined sum at the porthole)
+  | .inf,   .fin _   => .inf
+  | .fin _, .bot     => .bot
+  | .fin _, .inf     => .inf
+  | .fin p, .fin q   => .fin (p + q)
 
-/-- Multiplication: bot absorbs all; inf · 0 = bot; inf · (fin ≠ 0) = inf;
-    inf · inf = inf; fin · fin = rational ·. -/
+/-- Multiplication: bot absorbs; inf · 0 = bot; inf · (fin ≠ 0) = inf;
+    inf · inf = inf; fin · fin = rational ·.
+    Non-overlapping patterns ensure clean equation lemmas for simp. -/
 def zpwMul : ZPWheelElem → ZPWheelElem → ZPWheelElem
-  | .bot, _        => .bot
-  | _,    .bot     => .bot
-  | .inf, .inf     => .inf
-  | .inf, .fin q   => if q = 0 then .bot else .inf
-  | .fin q, .inf   => if q = 0 then .bot else .inf
-  | .fin p, .fin q => .fin (p * q)
+  | .bot,   _        => .bot
+  | .inf,   .bot     => .bot
+  | .inf,   .inf     => .inf
+  | .inf,   .fin q   => if q = 0 then .bot else .inf
+  | .fin _, .bot     => .bot
+  | .fin q, .inf     => if q = 0 then .bot else .inf
+  | .fin p, .fin q   => .fin (p * q)
 
 /-- Involution: /bot = bot; /inf = fin(0); /fin(0) = inf; /fin(q≠0) = fin(1/q). -/
 def zpwInv : ZPWheelElem → ZPWheelElem
@@ -192,16 +204,63 @@ instance : Wheel ZPWheelElem where
   winv  := zpwInv
   wzero := .fin 0
   wone  := .fin 1
-  wadd_assoc x y z := by sorry
-  wadd_comm  x y   := by sorry
-  wadd_zero  x     := by sorry
-  wmul_assoc x y z := by sorry
-  wmul_comm  x y   := by sorry
-  wmul_one   x     := by sorry
-  winv_winv  x     := by sorry
-  winv_wmul  x y   := by sorry
-  weak_distrib x y z := by sorry
-  wheel_id x y := by sorry
+  wadd_assoc x y z := by
+    cases x <;> cases y <;> cases z <;> simp [zpwAdd, add_assoc]
+  wadd_comm  x y   := by
+    cases x <;> cases y <;> simp [zpwAdd, add_comm]
+  wadd_zero  x     := by
+    cases x <;> simp [zpwAdd]
+  wmul_assoc x y z := by
+    cases x <;> cases y <;> cases z <;>
+      simp only [zpwMul, mul_assoc] <;>
+      (try split_ifs) <;>
+      simp_all [mul_comm, mul_eq_zero]
+  wmul_comm  x y   := by
+    cases x <;> cases y <;> simp [zpwMul, mul_comm]
+  wmul_one   x     := by
+    cases x <;> simp [zpwMul]
+  winv_winv  x     := by
+    cases x with
+    | bot => simp [zpwInv]
+    | inf => simp [zpwInv]
+    | fin q =>
+      simp only [zpwInv]
+      split_ifs with h
+      · simp [h]
+      · simp only [if_neg (div_ne_zero one_ne_zero h)]
+        congr 1; field_simp
+  winv_wmul  x y   := by
+    cases x <;> cases y <;>
+      simp only [zpwInv, zpwMul] <;>
+      (try split_ifs) <;>
+      simp_all [mul_zero, mul_comm]
+  weak_distrib x y z := by
+    cases x <;> cases y <;> cases z <;>
+      simp only [zpwAdd, zpwMul] <;>
+      (try split_ifs) <;>
+      simp [add_mul]
+  wheel_id x y := by
+    cases x with
+    | bot => simp [zpwAdd, zpwMul, zpwInv]
+    | inf =>
+      cases y with
+      | bot => simp [zpwAdd, zpwMul, zpwInv]
+      | inf => simp [zpwAdd, zpwMul, zpwInv]
+      | fin q =>
+        by_cases hq : q = 0
+        · subst hq; simp [zpwAdd, zpwMul, zpwInv]
+        · simp [zpwAdd, zpwMul, zpwInv, hq]
+    | fin p =>
+      cases y with
+      | bot => simp [zpwAdd, zpwMul, zpwInv]
+      | inf => simp [zpwAdd, zpwMul, zpwInv]
+      | fin q =>
+        by_cases hq : q = 0
+        · subst hq
+          by_cases hp : p = 0
+          · subst hp; simp [zpwAdd, zpwMul, zpwInv]
+          · simp [zpwAdd, zpwMul, zpwInv, hp]
+        · simp [zpwAdd, zpwMul, zpwInv, hq]
   wzero_mul_wzero := by simp [zpwMul]
 
 -- ============================================================
@@ -263,7 +322,13 @@ theorem zpwVal_inv_zero : zpwVal (zpwInv (.fin 0)) = 0 := by
     val(⊥) = ∞  ↔  /⊥ = ∞ (as algebraic objects, not just symbols). -/
 theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     zpwVal x = ⊤ ↔ zpwInv x = .inf := by
-  sorry
+  cases x with
+  | bot => simp [zpwVal, zpwInv]
+  | inf => simp [zpwVal, zpwInv]
+  | fin q =>
+    by_cases hq : q = 0
+    · simp [zpwVal, zpwInv, hq]
+    · simp [zpwVal, zpwInv, hq]
 
 -- ============================================================
 -- § VII. The Main Conjecture
