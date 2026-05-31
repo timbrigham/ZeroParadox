@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.9 | May 2026
+Version 1.10 | May 2026
+v1.10: Vocabulary fixes — "null state" → "⊥" in two body prose locations; version references "(v1.1)", "v2.0" removed from body prose. Palette rebuild.
 v1.9: Adversary-review pass — version changelog removed from PDF title block (moved to
 docstring only); "DA-1 fires, T-SNAP fires, and a new ⊥' is born" replaced with
 mathematical language: "DA-1 and T-SNAP apply, yielding a successor null ⊥'".
@@ -26,7 +27,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
@@ -246,7 +247,7 @@ def build():
     E.append(Paragraph('B. Informational Path — The Valuation-Complexity Bridge', S['h2']))
     E.append(body(
         'ZP-C L-INF establishes that the surprisal I(n) = n at ball-hierarchy depth n is unbounded. '
-        'The null state &#8869; corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of '
+        '&#8869; corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of '
         'the binary ball hierarchy at infinite depth. The depth-surprisal correspondence (ZP-C D4) '
         'gives the informational content of the ascending chain: as v<sub>2</sub>(S<sub>n</sub>) &#8594; &#8734;, '
         'the surprisal I(n) &#8594; &#8734; without bound.'))
@@ -280,7 +281,7 @@ def build():
         'limit as &#8869;&#8242;) is proved axiom-free in Lean via t_iz_limit_is_new_null. The chain '
         'from Step 1 to Step 6 is complete without the bridge. Steps 2–5 describe the original '
         'ZP-E informational argument connecting 2-adic depth to Kolmogorov complexity and DA-1 '
-        'Path 3. Since ZP-K (v1.1) now formally closes DA-1 via Kleene\'s second recursion '
+        'Path 3. Since ZP-K now formally closes DA-1 via Kleene\'s second recursion '
         'theorem — without Kolmogorov complexity — Steps 2–5 are informational context, not a '
         'proof dependency. The bridge is retained as historical motivation: it documents why '
         'the framework\'s informational and topological layers converge at P<sub>0</sub>.'))
@@ -489,7 +490,7 @@ def build():
 
     E.append(Paragraph('I. Resolution of OQ-E2', S['h2']))
     E.append(body(
-        'OQ-E2 (Cardinality-Semilattice Correspondence) has been open since ZP-E v2.0. '
+        'OQ-E2 (Cardinality-Semilattice Correspondence) has been open since the initial ZP-E release. '
         'It asks: do specific semilattice structures correspond to specific cardinality regimes, '
         'and can the framework make predictions about which instantiations satisfy CH?'))
     E.append(body(
@@ -545,7 +546,7 @@ def build():
         'framework had a beginning (T-SNAP: &#8869; &#8594; &#949;<sub>0</sub>, necessarily) but '
         'no clear closing structure. T-IZ provides the closure:'))
     E += [
-        li('T-SNAP: From the null state &#8869;, existence necessarily emerges. The Binary Snap '
+        li('T-SNAP: From &#8869;, existence necessarily emerges. The Binary Snap '
            '&#8869; &#8594; &#949;<sub>0</sub> is irreversible. This is the opening of the branch.'),
         li('T3 (Monotonicity): The state sequence ascends without interruption. Each step '
            'adds informational content irreversibly. The chain climbs.'),

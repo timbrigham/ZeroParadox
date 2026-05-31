@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.6 | May 2026
+Version 1.7 | May 2026
+v1.7: Version changelog removed from preamble; stale v1.5 references stripped from section headers and endnote.
 v1.6: Adversary-review pass — "(April 2026)" date removed from PDF body (belongs in
 docstring); "last philosophical vulnerability" → "remaining informal gap in the DA-1 argument".
 v1.5: Precision fixes — periodicity framing throughout (selfApply fixed-point stated
@@ -34,7 +35,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
@@ -50,13 +51,6 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-K: Computational Grounding of Self-Reference', S['title']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
-        Paragraph(
-            '<i>v1.5: Precision fixes — periodicity framing, typeclass commitment language, Kolmogorov claims removed from preamble. | '
-            'v1.4: Four-way equivalence claim scoped to this framework; version history trimmed. | '
-            'v1.3: ZP-PQ forward references updated. | '
-            'v1.0–1.2: Initial release; R-K.0; DA-1 Path 2 recharacterization. '
-            'All ZPK.lean theorems verified in Lean 4.</i>',
-            S['note']),
         sp(10),
         hr(),
         sp(4),
@@ -283,7 +277,7 @@ def build():
     E.append(sp(6))
 
     E.append(Paragraph('II. The Description-Instantiation Gap', S['h2']))
-    E.append(body(
+    E.append(body(  # ZP-NOCHECK: term cited in quotes as a closed informal gap, not a live ZP claim
         'The remaining informal gap in the DA-1 argument concerned the "description-instantiation '
         'gap": why does mathematical self-reference imply computational execution? The '
         'gap assumed the two were different things connected by a philosophical bridge.'))
@@ -427,7 +421,7 @@ def build():
         'is discharged by the MachinePhase instance. Path 3 (computational) is resolved by '
         'the KleeneStructure instance: botCode witnesses the Kleene fixed point, which is '
         'the formal expression of "no shorter program is prior to ⊥."'))
-    E.append(body(
+    E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as a closed informal gap, not a live ZP claim
         'Path 2 (informational bridge: unbounded surprisal → necessarily executing) is a '
         'foundational commitment — a missing principle, not a missing proof. The mathematics '
         'of L-INF (ZPC.l_inf) is proved; but the step from "exceeds every finite informational '
@@ -453,7 +447,7 @@ def build():
     E.append(sp(8))
 
     print('[build_zpk] Building registers...')
-    E += [hr(), Paragraph('Traceability Register — ZP-K v1.5', S['h1'])]
+    E += [hr(), Paragraph('Traceability Register — ZP-K', S['h1'])]
 
     trace_rows = [
         ['selfApply_partrec',
@@ -498,7 +492,7 @@ def build():
     ))
     E.append(sp(8))
 
-    E += [hr(), Paragraph('Open Items Register — ZP-K v1.5', S['h1'])]
+    E += [hr(), Paragraph('Open Items Register — ZP-K', S['h1'])]
 
     oq_rows = [
         ['DA-1 Path 1 (AFA structural)',
@@ -539,7 +533,7 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-K v1.5 | Computational Grounding of Self-Reference | Precision fixes: periodicity framing, typeclass commitment language, Kolmogorov claims scoped. | '
+            '<i>End of ZP-K | Computational Grounding of Self-Reference | '
             'DA-1 closed: da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase) | '
             'Four-way equivalence: Quine atom = ⊥ = join identity = Kleene fixed point | '
             'Path 2 recharacterized: foundational commitment, not missing proof; forward: The Philosophical Question That Started This | '

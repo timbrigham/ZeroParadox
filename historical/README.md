@@ -6,6 +6,15 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-K_Computational_Grounding_v1_6.pdf](ZP-K_Computational_Grounding_v1_6.pdf) | 2026-05-31 | ZP-K v1.6 superseded by v1.7: version changelog removed from preamble; stale v1.5 refs stripped; palette rebuild. |
+| [ZP-J_AFA_Addendum_v1_1.pdf](ZP-J_AFA_Addendum_v1_1.pdf) | 2026-05-31 | ZP-J AFA Addendum v1.1 superseded by v1.2: version changelog removed from preamble; palette rebuild. |
+| [ZP-J_Self_Reference_v2_0.pdf](ZP-J_Self_Reference_v2_0.pdf) | 2026-05-31 | ZP-J Self-Reference v2.0 superseded by v2.1: version changelog removed from preamble; version strings stripped from section headers and endnote; "null state" → "⊥"; palette rebuild. |
+| [ZP-I_Inside_Zero_v1_9.pdf](ZP-I_Inside_Zero_v1_9.pdf) | 2026-05-31 | ZP-I v1.9 superseded by v1.10: vocab fixes — "null state" → "⊥"; version refs removed from body prose; palette rebuild. |
+| [ZP-H_Categorical_Bridge_v1_14.pdf](ZP-H_Categorical_Bridge_v1_14.pdf) | 2026-05-31 | ZP-H v1.14 superseded by v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4); version ref stripped; palette rebuild. |
+| [ZP-G_Category_Theory_v1_10.pdf](ZP-G_Category_Theory_v1_10.pdf) | 2026-05-31 | ZP-G v1.10 superseded by v1.11: local make_doc override removed; version subheader style fixed; version refs stripped from body prose; palette rebuild. |
+| [ZP-F_The_Counterexamples_v1_3.pdf](ZP-F_The_Counterexamples_v1_3.pdf) | 2026-05-31 | ZP-F v1.3 superseded by v1.4: vocab fix — "null state" → "⊥" in preamble; palette rebuild. |
+| [ZP-E_Bridge_Document_v3_17.pdf](ZP-E_Bridge_Document_v3_17.pdf) | 2026-05-31 | ZP-E v3.17 superseded by v3.18: vocab fixes — "null state" → "⊥"; version refs removed from body prose; palette rebuild. |
+| [ZP-C_Information_Theory_v1_15.pdf](ZP-C_Information_Theory_v1_15.pdf) | 2026-05-31 | ZP-C v1.15 superseded by v1.16: vocab fixes — "null state" → "⊥" throughout body prose; palette rebuild. |
 | [ZP-J_Illustrated_Companion_v1_21.pdf](ZP-J_Illustrated_Companion_v1_21.pdf) | 2026-05-30 | ZP-J companion v1.21 superseded by v1.22: "ZP lattice" and "bounded semilattice" replaced; AFAStructure typeclass used directly in key result box; Aczel specific claims replaced with generic AFA fixed-point framing. |
 | [ZP-I_Illustrated_Companion_v1_19.pdf](ZP-I_Illustrated_Companion_v1_19.pdf) | 2026-05-30 | ZP-I companion v1.19 superseded by v1.20: conditions added to "every chain" prose; "(axiom-free)" corrected to "(no sorryAx)" for theorems using Classical.choice. |
 | [ZP-J_Illustrated_Companion_v1_20.pdf](ZP-J_Illustrated_Companion_v1_20.pdf) | 2026-05-30 | ZP-J companion v1.20 superseded by v1.21: "ZP-A semilattice" replaced with structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous. |

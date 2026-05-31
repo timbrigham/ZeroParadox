@@ -1,5 +1,6 @@
 """
-Build ZP-C: Information Theory (v1.15)
+Build ZP-C: Information Theory (v1.16)
+v1.16: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state"; "first atomic state" → "minimum nonzero state (ε₀)" throughout body prose. Palette rebuild.
 v1.15: K-19/K-21 vocab fixes — "First Atomic State" -> "Minimum Nonzero State" in T1; "Informational Extremity" -> "Unbounded Surprisal" in L-INF section header, label, and status lines.
 v1.14: Version number removed from Open Items Register section header.
 v1.13: Adversary-review pass — "forcing result" terminology replaced with "structural
@@ -24,7 +25,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
@@ -35,7 +36,7 @@ def build():
           Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
-          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between the null state and the first atomic state is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, at &#8869;, the primary descriptive tool of information theory — surprisal — is unbounded above (L-INF, Section III): no finite external description can contain the null state. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint on the null state.'),
+          body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between &#8869; and the minimum nonzero state (&#949;<sub>0</sub>) is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, at &#8869;, the primary descriptive tool of information theory — surprisal — is unbounded above (L-INF, Section III): no finite external description can contain &#8869;. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint on &#8869;.'),
           body('<i>Illustrated Companion: A paired ZP-C Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),
           sp()]
 
@@ -129,7 +130,7 @@ def build():
     E.append(Paragraph('III-B. Unbounded Surprisal of the Bottom Element', S['h1']))
     E.append(label_box('Lemma L-INF — Unbounded Surprisal of &#8869;', [
         'The surprisal I(n) = n at ball-hierarchy depth n is unbounded above: for any finite bound M, there exist depths n with I(n) > M.',
-        'The null state &#8869; = c<sub>0</sub> corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2). At this limit, no finite bound M contains the informational content of &#8869;.',
+        '&#8869; = c<sub>0</sub> corresponds to the limit point 0 &#8712; Q<sub>2</sub> — the limit of the binary ball hierarchy at infinite depth. The binary branching measure assigns equal probability mass at each branch level (D4), and the surprisal diverges without bound as depth increases (T2). At this limit, no finite bound M contains the informational content of &#8869;.',
         'Proof: Let M &#8712; &#8477;. By the Archimedean property, &#8707; n &#8712; &#8469; with n > M. Then I(n) = n > M. Since M was arbitrary, surprisal is unbounded above. <font name="DV">&#10003;</font>',
         'Formal content: surprisal is not bounded above by any real M.',
         'Semantic content: &#8869; is informationally extreme — it is the limit point of the binary ball hierarchy under the 2-adic metric, the accumulation point approached by sequences of increasing depth. No finite bound M contains the surprisal at that limit; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1). ZP-A CC-2 (&#8869; = {&#8869;}) provides a structural second grounding for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent derivations converging on the same fact.',
@@ -188,7 +189,7 @@ def build():
         'Step 2 — By AX-B1, a state either exists or it does not. The machine at c<sub>1</sub> occupies a configuration distinct from c<sub>0</sub>. The transition c<sub>0</sub> &#8594; c<sub>1</sub> is a binary state change in the sense of AX-B1.',
         'Step 3 — The transition is irreducible: there is no intermediate configuration between c<sub>0</sub> and c<sub>1</sub>. The first instruction fetch is the minimal unit of execution.',
         'Step 4 — c<sub>0</sub> is modeled as corresponding to &#8869; in the semilattice (CC-2 — see below). c<sub>1</sub> is strictly above &#8869;: the machine configuration has gained content (an active execution context) not present in c<sub>0</sub>.',
-        'Conclusion: c<sub>1</sub> &#8800; &#8869;. The act of execution is itself a non-null state, regardless of what the output tape contains. <font name="DV">&#10003;</font>',
+        'Conclusion: c<sub>1</sub> &#8800; &#8869;. The act of execution is itself a nonzero state, regardless of what the output tape contains. <font name="DV">&#10003;</font>',
         'Status: DERIVED from AX-B1 and D7. No Coding Theorem required. No output-tape contents required.',
     ]))
     E.append(sp(4))
@@ -238,7 +239,7 @@ def build():
     E.append(sp(4))
     E.append(label_box('Remark R5 — Updated Status of AX-1', [
         'Prior to v1.4: AX-1 (Binary Snap Causality) was labeled Axiomatic in ZP-C.',
-        'As of v1.4: AX-1 is a Candidate Theorem. The derivation pathway: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a non-null state change. TQ-IH establishes that no program avoids this. ZP-A D2 establishes that a non-null state change from &#8869; is the Binary Snap.',
+        'As of v1.4: AX-1 is a Candidate Theorem. The derivation pathway: P<sub>0</sub> (D1) identifies the threshold. L-RUN establishes that execution at the threshold constitutes a nonzero state change. TQ-IH establishes that no program avoids this. ZP-A D2 establishes that a nonzero state change from &#8869; is the Binary Snap.',
         'Remaining work: DA-1 (Definitional Alignment) must formally tie instantiation of P<sub>0</sub> to an execution event. This is owned by ZP-E.',
         'Status label: CANDIDATE THEOREM — gap identified and named (DA-1). Closed in ZP-E DA-1 insert.',
     ]))
@@ -253,7 +254,7 @@ def build():
          ['RP-2: Branching measure on Q₂ \\ {0}', 'Principle — explicit', 'Canonical branching measure; representational commitment; required by T2 and L-INF.'],
          ['CC-2: c₀ = ⊥', 'Conditional Claim', 'Modeling commitment — c₀ identified with ⊥ in semilattice. Parallel to CC-1 in ZP-A. Required by L-RUN Step 4.'],
          ['D7: Machine configuration', 'Defined', 'Foundation for L-RUN and TQ-IH.'],
-         ['L-RUN: Hardware Lemma', 'Derived — Lemma', 'Execution is a non-null state change. Derived from AX-B1 and D7.'],
+         ['L-RUN: Hardware Lemma', 'Derived — Lemma', 'Execution is a nonzero state change. Derived from AX-B1 and D7.'],
          ['TQ-IH: Test Question', 'Closed — Confirmed', 'No program can output &#8869; without a non-null intermediate configuration state. Proven by L-RUN. Externally confirmed April 2026 (R-TQ): domain-independent, requires no Turing-specific or Kolmogorov machinery.'],
          ['T-BUF: Buffer Overflow Theorem', 'Candidate Theorem', 'Incompressibility forces non-null execution state. DA-1 bridge in ZP-E closes this fully.'],
          ['AX-1: Binary Snap Causality', 'Candidate Theorem', 'Derivation pathway formalized. Closed as T-SNAP in ZP-E DA-1 insert.']],

@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.14 | May 2026
+Version 1.15 | May 2026
+v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4),
+no longer a freestanding modelling commitment.
 v1.14: K-13 vocabulary fix — "topological isolation" → "clopen separation" throughout;
 updated DP-1 and related prose to use precise vocabulary.
 v1.13: Version number removed from Open Items Register section header.
@@ -26,7 +28,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 
 
 def label_box_status(title, status_line, rows_list):
@@ -84,7 +86,7 @@ def build():
              'connections.'),
         body('ZP-H inherits all open items from ZP-G with their original labels. The four open '
              'questions from ZP-G — OQ-G1 through OQ-G4 — are the primary targets of this document. '
-             'OQ-G2, OQ-G3, and OQ-G4 are resolved here. OQ-G1 is resolved in ZP-G v1.1 via '
+             'OQ-G2, OQ-G3, and OQ-G4 are resolved here. OQ-G1 is resolved in ZP-G via '
              'D7\' and I-KC. All four OQ-G items are now closed.'),
         body('Sequencing note: ZP-H introduces one new definition (D-H1: the morphisms of C) that '
              'was deliberately omitted from ZP-G to keep that document domain-independent. This '
@@ -222,8 +224,8 @@ def build():
             'object because L has no top element &#8868; (ZP-A R1). <font name="DV">&#10003;</font>',
             'AX-G2 respected: No join operation in L can return to &#8869; from a strictly larger state (ZP-A T3, '
             'monotonicity). Therefore F<sub>A</sub> sends no non-initial morphism to a map terminating at &#8869;. '
-            'Note: this verification depends on CC-1 / DA-2 to identify L\'s &#8869; with C\'s initial object 0 — '
-            'that identification is a modelling commitment, not derived from ZP-A alone. <font name="DV">&#10003;</font>',
+            'Note: this verification depends on CC-1 / DA-2 to identify L\'s &#8869; with C\'s initial object 0. '
+            'CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4) within the ZF+AFA setting — no longer a freestanding modelling commitment. <font name="DV">&#10003;</font>',
         ]
     ))
     E.append(sp(6))
