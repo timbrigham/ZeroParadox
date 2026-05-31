@@ -281,7 +281,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.12'
+VERSION = '1.13'
 
 
 def build():
@@ -324,8 +324,9 @@ def build():
         Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
         Paragraph(
             'This companion explains in plain language how an ascending chain of p-adic '
-            'states converges to its own successor null — a result in the Zero Paradox '
-            'project (ZP-I), a formal framework built on lattice algebra and 2-adic topology. '
+            'states converges, in the 2-adic metric, to zero — and why that limit generates '
+            'a new structural bottom. This is one result in the Zero Paradox project (ZP-I), '
+            'a formal framework built on lattice algebra and 2-adic topology. '
             'Diagrams and real-world examples are included throughout. '
             'It is self-contained: ZP-A through ZP-E results used here are '
             'briefly introduced on first appearance. Every claim restates a result already '
