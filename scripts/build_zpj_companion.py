@@ -1,6 +1,8 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.12 | May 2026
+Version 1.14 | May 2026
+v1.14: "full AFA decoration" scoped to finite APGs; Aczel quote paraphrased; sorry-free claim scoped (ER fixes).
+v1.13: Disclaimer leads with AFA math before brand name (AR fix).
 v1.12: "Zero Paradox" expanded in disclaimer; "Really" dropped from subtitle (AR fix).
 v1.11: Em-dashes removed from subtitle and first body paragraph; opening paragraph
        rewritten to lead with AFA mathematical content (AR/ER fix).
@@ -138,7 +140,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.13'
+VERSION = '1.14'
 
 
 def build():
@@ -203,8 +205,8 @@ def build():
         'ZP-J extends the original result in four directions: it shows that '
         'the proof requires no appeal to the axiom of Dependent Choice; it reduces the '
         'typeclass commitments layer by layer down to a pure valuation argument; it '
-        'demonstrates the structure on two concrete types; and it proves the full '
-        'AFA decoration uniqueness theorem for finite graphs.'))
+        'demonstrates the structure on two concrete types; and it proves a '
+        'decoration uniqueness theorem for finite APGs.'))
     E.append(sp(4))
 
     # ── What Is a Quine Atom? ────────────────────────────────────────────────
@@ -396,8 +398,8 @@ def build():
         'In 1988, Peter Aczel proved that the set of self-containing elements &#8212; '
         'J&#934; in his notation &#8212; is the largest pre-fixed-point of the self-membership '
         'operator. His proof used the axiom of Dependent Choice (DC) to build a sequence '
-        'of approximations converging to the fixed point. He then noted: '
-        '"I do not know if this use of the axiom of dependent choices was essential."'))
+        'of approximations converging to the fixed point. He noted in the same work '
+        'that he did not know whether DC was essential to the argument.'))
     E.append(cbody(
         'ZP-J answers his question for the self-membership case: DC is not essential. '
         'The proof is one step, not a sequence. Once you know there is at most one '
@@ -470,7 +472,8 @@ def build():
         'Concrete instances: &#8469;&#8734; satisfies the full ValuationStructure chain; '
         'OntologicalStates connects at the AbstractSelfApp level directly. '
         'decoration_unique: any two valid decorations of a finite APG agree. '
-        'All results sorry-free in Lean 4. &#10003;'))
+        'All stated results sorry-free in Lean 4 '
+        '(decoration_unique proved via strong induction on reach cardinality). &#10003;'))
     E.append(sp(6))
 
     print(f'Building: {out_path}')
