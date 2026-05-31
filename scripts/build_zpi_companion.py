@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.17 | May 2026
+Version 1.18 | May 2026
+v1.18: IsDepthChain hypothesis added to strict growth claim (AR fix).
 v1.17: Blanket purity claim replaced with per-theorem scoping (AR fix).
 v1.16: Norm claim corrected to inequality ("at most 2^{-n}" — matches proved bound).
 v1.15: Em-dashes removed; "closed system" language scoped to derivation chain (AR/ER fixes).
@@ -284,7 +285,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.17'
+VERSION = '1.18'
 
 
 def build():
@@ -376,9 +377,9 @@ def build():
     E.append(cbody(
         'More than that: each step is a genuine advance. The depth does not merely grow '
         'eventually  - it increases by at least 1 at every transition. This is not an '
-        'assumption about the chain. It is derived from the ZP-A lattice axioms: no top '
-        'element plus monotonicity forces strict growth at every step, given that the '
-        'chain\'s 2-adic depth tracks its position. '
+        'assumption about the chain. It follows from the ZP-A lattice axioms together with '
+        'the IsDepthChain condition (which requires the chain\'s 2-adic depth to strictly '
+        'track position): no top element plus monotonicity forces strict depth growth at every step. '
         'Lean: <tt>h_strict_from_r1_t3</tt> (ZPI.lean §Ib).'))
     E.append(cbody(
         'In the 2-adic metric, a state at 2-adic depth n has norm at most 2<sup>−n</sup>  - '

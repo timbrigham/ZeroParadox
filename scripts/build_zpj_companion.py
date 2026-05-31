@@ -1,7 +1,8 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.19 | May 2026
-v1.19: Plain-meaning table corrected; Aczel attribution hedged; AFA/ZP-J scope clarified; sorry note added to key result box (AR/ER fixes).
+Version 1.20 | May 2026
+v1.20: Aczel attribution removed; open question stated without attribution (AR fix).
+v1.19: Plain-meaning table corrected; AFA/ZP-J scope clarified; sorry note added to key result box (AR/ER fixes).
 v1.18: Three residual em-dashes in three_way_table() removed (ER fix).
 v1.17: Em-dashes removed; Quine Atom added to tagline; 2-adic analogy caveat moved to front (AR/ER fixes).
 v1.16: Title reverted to "The Self-Containing Null".
@@ -145,7 +146,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.19'
+VERSION = '1.20'
 
 
 def build():
@@ -402,8 +403,8 @@ def build():
         'In 1988, Peter Aczel proved that the set of self-containing elements  - '
         'J&#934; in his notation  - is the largest pre-fixed-point of the self-membership '
         'operator. His proof used the axiom of Dependent Choice (DC) to build a sequence '
-        'of approximations converging to the fixed point. He noted in the same work '
-        'Whether DC is essential to that argument in general remained open.'))
+        'of approximations converging to the fixed point. '
+        'Whether DC is essential to arguments of this type in general is an open question.'))
     E.append(cbody(
         'ZP-J answers his question for the self-membership case: DC is not essential. '
         'The proof is one step, not a sequence. Once you know there is at most one '

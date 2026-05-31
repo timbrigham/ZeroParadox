@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [ZP-J_Illustrated_Companion_v1_19.pdf](ZP-J_Illustrated_Companion_v1_19.pdf) | 2026-05-30 | ZP-J companion v1.19 superseded by v1.20: Aczel attribution removed; open question stated without attribution. |
+| [ZP-I_Illustrated_Companion_v1_17.pdf](ZP-I_Illustrated_Companion_v1_17.pdf) | 2026-05-30 | ZP-I companion v1.17 superseded by v1.18: IsDepthChain hypothesis added to strict growth claim. |
 | [ZP-J_Illustrated_Companion_v1_18.pdf](ZP-J_Illustrated_Companion_v1_18.pdf) | 2026-05-30 | ZP-J companion v1.18 superseded by v1.19: plain-meaning table corrected; Aczel attribution hedged; AFA vs ZP-J scope clarified; sorry note added to key result box. |
 | [ZP-I_Illustrated_Companion_v1_16.pdf](ZP-I_Illustrated_Companion_v1_16.pdf) | 2026-05-30 | ZP-I companion v1.16 superseded by v1.17: blanket purity claim removed; per-theorem axiom scoping applied. |
 | [ZP-J_Illustrated_Companion_v1_17.pdf](ZP-J_Illustrated_Companion_v1_17.pdf) | 2026-05-30 | ZP-J companion v1.17 superseded by v1.18: three residual em-dashes in three_way_table removed. |
