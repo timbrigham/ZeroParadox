@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.20 | May 2026
+Version 1.21 | May 2026
+v1.21: ZP-A semilattice replaced with standard structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous (AR fixes).
 v1.20: Aczel attribution removed; open question stated without attribution (AR fix).
 v1.19: Plain-meaning table corrected; AFA/ZP-J scope clarified; sorry note added to key result box (AR/ER fixes).
 v1.18: Three residual em-dashes in three_way_table() removed (ER fix).
@@ -146,7 +147,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.20'
+VERSION = '1.21'
 
 
 def build():
@@ -201,8 +202,9 @@ def build():
         '(see ZP-E for the full three-path argument).'))
     E.append(cbody(
         'ZP-J makes that argument formal. It proves, in Lean 4 with no axioms beyond the '
-        'standard mathematical infrastructure, that in any ZP-A semilattice with '
-        'anti-foundation grounding, the unique self-containing set  - the Quine atom  - '
+        'standard mathematical infrastructure, that in any bounded semilattice with '
+        'anti-foundation (AFA) set-theoretic grounding satisfying the ZP-A axioms, '
+        'the unique self-containing set  - the Quine atom  - '
         'is provably the bottom element &#8869;. CC-2 (&#8869; = {&#8869;}) is no longer a '
         'freestanding modelling assumption  - within ZF+AFA, it is a derived consequence '
         'of T-EXEC, not a choice. CC-1 (S&#8320; = &#8869;) is a derived consequence of '
@@ -250,7 +252,7 @@ def build():
         'The central theorem of ZP-J is T-EXEC (Executability of Self-Reference). It states:'))
     E.append(key_result_box(
         'Theorem T-EXEC',
-        'In any ZP-A semilattice with AFA grounding, an element q is a Quine atom '
+        'In any AFA-grounded bounded semilattice satisfying the ZP-A axioms (A1-A4), an element q is a Quine atom '
         '(q = {q}, i.e. q ∈ q) if and only if q = ⊥. '
         'The Quine atom property uniquely identifies the bottom element. '
         'Proved axiom-free in Lean 4 (ZeroParadox.ZPJ.t_exec).'))
@@ -398,7 +400,7 @@ def build():
     E.append(sp(8))
 
     # ── Aczel's Open Question ────────────────────────────────────────────────
-    E.append(Paragraph('Aczel\'s Open Question  - Closed', CS['h1']))
+    E.append(Paragraph('Aczel\'s DC Question  - Closed for Self-Membership', CS['h1']))
     E.append(cbody(
         'In 1988, Peter Aczel proved that the set of self-containing elements  - '
         'J&#934; in his notation  - is the largest pre-fixed-point of the self-membership '
@@ -436,7 +438,7 @@ def build():
         'from which every other vertex can be reached by following arrows. AFA proves '
         'that every APG has a unique valid "decoration"  - a way of '
         'labelling each vertex so that the label at each vertex is assembled from the labels '
-        'of all its immediate successors. That is existence plus uniqueness, for all APGs, '
+        'of all its immediate successors. AFA itself proves existence plus uniqueness for all APGs '
         'using AFA\'s axioms directly.'))
     E.append(cbody(
         'ZP-J proves something different: a uniqueness-only result for abstract DecorationUniverses  - '
@@ -461,8 +463,8 @@ def build():
     E.append(remember_box(
         'decoration_unique is the ZP version of AFA\'s central uniqueness theorem. '
         'It does not construct a decoration or prove one exists  - it proves that '
-        'any two valid decorations must be identical. This is the uniqueness half of AFA, '
-        'proved for abstract DecorationUniverses without importing set-theoretic AFA axioms.'))
+        'any two valid decorations must be identical. This is analogous to the uniqueness half of AFA\'s '
+        'decoration theorem, proved here for abstract DecorationUniverses without importing set-theoretic AFA axioms.'))
     E.append(sp(8))
 
     # ── Key Result Box ───────────────────────────────────────────────────────

@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.18 | May 2026
+Version 1.19 | May 2026
+v1.19: Norm bound includes S(0) factor; IsDepthChain/IsStrictStateSequence added to key result box; ZP-internal framing replaced with standard math (AR fixes).
 v1.18: IsDepthChain hypothesis added to strict growth claim (AR fix).
 v1.17: Blanket purity claim replaced with per-theorem scoping (AR fix).
 v1.16: Norm claim corrected to inequality ("at most 2^{-n}" — matches proved bound).
@@ -285,7 +286,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.18'
+VERSION = '1.19'
 
 
 def build():
@@ -379,13 +380,12 @@ def build():
         'eventually  - it increases by at least 1 at every transition. This is not an '
         'assumption about the chain. It follows from the ZP-A lattice axioms together with '
         'the IsDepthChain condition (which requires the chain\'s 2-adic depth to strictly '
-        'track position): no top element plus monotonicity forces strict depth growth at every step. '
+        'track position): no top element, monotonicity, and IsDepthChain together force strict depth growth at every step. '
         'Lean: <tt>h_strict_from_r1_t3</tt> (ZPI.lean §Ib).'))
     E.append(cbody(
-        'In the 2-adic metric, a state at 2-adic depth n has norm at most 2<sup>−n</sup>  - '
-        'each additional unit of depth multiplies the norm by 2<sup>−1</sup>. '
-        'As n → ∞, the 2-adic norm → 0. The chain converges to 0 in the 2-adic '
-        'sense  - the element of infinite depth. That element is ⊥′: the successor null.'))
+        'In the 2-adic metric, norms decrease geometrically: ‖S(n)‖ ≤ ‖S(0)‖ · 2<sup>−n</sup>. '
+        'As n → ∞, the norm → 0. The chain converges to 0 in the 2-adic sense: '
+        'the point with 2-adic valuation +∞. That structural limit is ⊥′, the successor null.'))
 
     E.append(example_box('Real-world analogy  - The deepest point in the well', [
         'Imagine a well that has no bottom  - every level opens onto a deeper one. '
@@ -481,10 +481,11 @@ def build():
     E.append(sp(8))
 
     E.append(key_result_box('Theorem T-IZ  - Inside Zero',
-        'Every maximal ascending chain (S₀, S₁, S₂, ...) in the Zero '
-        'Paradox framework  - starting at ⊥, ascending monotonically by ZP-A T3, '
-        'and unbounded by ZP-A R1  - converges to a successor null ⊥′ in the 2-adic '
-        'metric. At the limit: DA-1 fires (the successor semilattice carries a '
+        'Every maximal ascending chain (S₀, S₁, S₂, ...) starting at ⊥, '
+        'ascending monotonically by ZP-A T3, unbounded by ZP-A R1, and satisfying '
+        'the IsDepthChain and IsStrictStateSequence conditions  - '
+        'converges to a successor null ⊥′ in the 2-adic metric. '
+        'At the limit: DA-1 fires (the successor semilattice carries a '
         'KleeneStructure, per ZP-K), T-SNAP fires, ⊥′ is born. The chain '
         'generates its own successor by forward motion alone. No new axioms required.'))
     E.append(sp(6))
