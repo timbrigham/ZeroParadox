@@ -4,7 +4,7 @@ import ZeroParadox.ZPJ_SelfApp
 import Mathlib.Tactic
 
 /-!
-# ZPJ — Wheel Theory as Algebraic Porthole Formalization
+# ZPJ — Wheel Theory Formalization: /0 as a First-Class Element
 
 ## Engineer's Take
 
@@ -25,9 +25,10 @@ a defined first-class operation. The resulting structure has two special element
   - `∞ = /0`       — the multiplicative inverse of zero
   - `⊥ₗ = 0 · /0`  — the absorbing "undefined" element
 
-**The ZP Conjecture:** The wheel axioms for /0 are derivable from the ZP structural
-constraints (`val(⊥) = ∞` and `⊥ = {⊥}`) rather than independently assumed — making
-wheel theory the algebraic representation of the porthole rather than a coincidence.
+**The ZP Conjecture (unproved in this file — see §VIII):** The wheel axioms for /0
+are derivable from the ZP structural constraints (`val(⊥) = ∞` and `⊥ = {⊥}`) rather
+than independently assumed — making wheel theory the algebraic representation of the
+porthole rather than a coincidence.
 
 **Structural alignment (not proof):**
 - In ZFC+Foundation: division by zero is undefined; the Axiom of Regularity prohibits
@@ -50,7 +51,7 @@ This file:
   § IX.   Purity check
 
 Status: Sorry-free. All instance proofs, porthole theorems, and val bridge proved.
-§VII defines WheelValuationStructure — the typeclass that closes the algebraic gap:
+§VII defines WheelValuationStructure — the typeclass that identifies the bridge needed
 a commutative ring + multiplicative valuation with val(0) = ⊤, forced by the
 "infinitudes of zero" argument (⊥ = {⊥} structurally requires val(⊥) = ∞).
 §VIII restates the conjecture honestly and points to WheelValuationStructure as the
@@ -122,12 +123,12 @@ class Wheel (W : Type*) where
 section WheelBasic
 variable {W : Type*} [Wheel W]
 
-/-- wheelInf: the infinite element /0. In ZP terms, this is the algebraic
-    expression of `val(⊥) = ∞` — the porthole identification. -/
+/-- wheelInf: the infinite element /0. Conjectured ZP counterpart: the algebraic
+    expression of `val(⊥) = ∞` at the porthole — see §VIII for status. -/
 def wheelInf : W := Wheel.winv (Wheel.wzero)
 
-/-- wheelBot: the absorbing bottom element 0·/0. In ZP terms, this is the
-    algebraic expression of `⊥ = {⊥}` — self-containment forces this element. -/
+/-- wheelBot: the absorbing bottom element 0·/0. Conjectured ZP counterpart: the
+    algebraic expression of `⊥ = {⊥}` at the porthole — see §VIII for status. -/
 def wheelBot : W := Wheel.wmul (Wheel.wzero) (Wheel.winv (Wheel.wzero))
 
 /-- /(∞) = 0: applying / to wheelInf returns wzero. -/
@@ -281,13 +282,13 @@ instance : Wheel ZPWheelElem where
 -- § V. Porthole Theorems (proved without sorry)
 -- ============================================================
 
-/-- /0 = ∞: the porthole identification in algebraic form.
-    In ZP: winv (fin 0) = inf corresponds to val(⊥) = ∞ (ValuationStructure.val_bot). -/
+/-- /0 = ∞: the porthole identification in algebraic form, proved for ZPWheelElem.
+    Conjectured ZP counterpart: corresponds to val(⊥) = ∞ — see §VIII for status. -/
 theorem zpw_inv_zero_eq_inf : zpwInv (.fin 0) = .inf := by
   simp [zpwInv]
 
-/-- 0 · ∞ = ⊥ₗ: the self-containment identification in algebraic form.
-    In ZP: this is the algebraic expression of ⊥ = {⊥} (AFAStructure.bot_self_mem). -/
+/-- 0 · ∞ = ⊥ₗ: the absorbing-element identity, proved for ZPWheelElem.
+    Conjectured ZP counterpart: algebraic expression of ⊥ = {⊥} — see §VIII for status. -/
 theorem zpw_zero_mul_inf_eq_bot : zpwMul (.fin 0) .inf = .bot := by
   simp [zpwMul]
 
@@ -351,8 +352,8 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
 -- ============================================================
 
 /-- WheelValuationStructure: a commutative ring with a multiplicative valuation
-    satisfying val(0) = ⊤. This is the typeclass that closes the structural gap
-    between the ZP typeclasses and Wheel theory.
+    satisfying val(0) = ⊤. This typeclass identifies the bridge needed to close the
+    structural gap between the ZP typeclasses and Wheel theory.
 
     **The "infinitudes of zero" argument** establishes *why* the porthole condition
     val(0) = ⊤ must hold — it is forced by the self-referential structure ⊥ = {⊥},
