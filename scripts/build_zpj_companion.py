@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.18 | May 2026
+Version 1.19 | May 2026
+v1.19: Plain-meaning table corrected; Aczel attribution hedged; AFA/ZP-J scope clarified; sorry note added to key result box (AR/ER fixes).
 v1.18: Three residual em-dashes in three_way_table() removed (ER fix).
 v1.17: Em-dashes removed; Quine Atom added to tagline; 2-adic analogy caveat moved to front (AR/ER fixes).
 v1.16: Title reverted to "The Self-Containing Null".
@@ -86,7 +87,7 @@ def three_way_table():
     rows = [
         ['Set theory (AFA)',
          '&#8869; &#8712; &#8869;  (i.e. &#8869; = {&#8869;})',
-         '⊥ contains itself - self-referential, no external interpreter possible'],
+         '⊥ contains exactly one element: itself - the unique self-membership condition in AFA'],
         ['Order theory (ZP-A)',
          '&#8869; &#8804; x  for all x',
          '⊥ is below everything - the universal starting point'],
@@ -144,7 +145,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.18'
+VERSION = '1.19'
 
 
 def build():
@@ -402,7 +403,7 @@ def build():
         'J&#934; in his notation  - is the largest pre-fixed-point of the self-membership '
         'operator. His proof used the axiom of Dependent Choice (DC) to build a sequence '
         'of approximations converging to the fixed point. He noted in the same work '
-        'that he did not know whether DC was essential to the argument.'))
+        'Whether DC is essential to that argument in general remained open.'))
     E.append(cbody(
         'ZP-J answers his question for the self-membership case: DC is not essential. '
         'The proof is one step, not a sequence. Once you know there is at most one '
@@ -431,14 +432,16 @@ def build():
     E.append(Paragraph('Graphs That Decorate Themselves', CS['h1']))
     E.append(cbody(
         'An Accessible Pointed Graph (APG) is a directed graph with a special root vertex '
-        'from which every other vertex can be reached by following arrows. AFA\'s central '
-        'theorem states that every APG has a unique valid "decoration"  - a way of '
+        'from which every other vertex can be reached by following arrows. AFA proves '
+        'that every APG has a unique valid "decoration"  - a way of '
         'labelling each vertex so that the label at each vertex is assembled from the labels '
-        'of all its immediate successors.'))
+        'of all its immediate successors. That is existence plus uniqueness, for all APGs, '
+        'using AFA\'s axioms directly.'))
     E.append(cbody(
-        'ZP-J proves this for abstract DecorationUniverses  - types that carry '
-        'the ValuationStructure and a collect operation. The result: for any '
-        '<b>finite</b> APG, any two valid decorations must agree at every vertex.'))
+        'ZP-J proves something different: a uniqueness-only result for abstract DecorationUniverses  - '
+        'types carrying the ValuationStructure and a collect operation, without importing AFA axioms. '
+        'The result: for any <b>finite</b> APG, any two valid decorations must agree at every vertex. '
+        'Existence is not proved; the ZP-J result is a constraint, not a construction.'))
     E.append(cbody(
         'The proof follows the same two-direction logic as T-EXEC:'))
     E.append(cbody(
@@ -476,7 +479,9 @@ def build():
         'OntologicalStates connects at the AbstractSelfApp level directly. '
         'decoration_unique: any two valid decorations of a finite APG agree. '
         'All stated results sorry-free in Lean 4 '
-        '(decoration_unique proved via strong induction on reach cardinality). &#10003;'))
+        '(decoration_unique proved via strong induction on reach cardinality; '
+        'an auxiliary acyclic_decoration_unique in ZPJ_APG.lean is sorry\'d and commented out  - '
+        'it is not used by decoration_unique). &#10003;'))
     E.append(sp(6))
 
     print(f'Building: {out_path}')

@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.16 | May 2026
+Version 1.17 | May 2026
+v1.17: Blanket purity claim replaced with per-theorem scoping (AR fix).
 v1.16: Norm claim corrected to inequality ("at most 2^{-n}" — matches proved bound).
 v1.15: Em-dashes removed; "closed system" language scoped to derivation chain (AR/ER fixes).
 v1.11: "Zero Paradox" expanded in disclaimer (AR fix).
@@ -283,7 +284,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.16'
+VERSION = '1.17'
 
 
 def build():
@@ -573,8 +574,7 @@ def build():
     E.append(Paragraph('Lean 4 Verification', CS['h1']))
     E.append(cbody(
         'T-IZ is fully verified in Lean 4 (ZPI.lean). All four steps are formally proved. '
-        'The purity check confirms the theorems depend only on standard foundational axioms '
-        'shared by all Mathlib theorems  - no domain-specific assumptions.'))
+        'Axiom-free results are noted individually in the table below.'))
 
     E.append(lean_status_box([
         'h_strict_from_r1_t3 (§Ib)  - derives strict per-step valuation growth from '
