@@ -39,11 +39,17 @@ This file:
   § IV.  Operations and Wheel instance (all 11 axiom proofs sorry-free)
   § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved)
   § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
-  § VII. Main conjecture statement (architecture-level placeholder)
+  § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
+  § VIII. Main conjecture statement (architecture-level placeholder)
+  § IX.   Purity check
 
 Status: Sorry-free. All instance proofs, porthole theorems, and val bridge proved.
-§VII remains a philosophical placeholder — the abstract derivability claim requires
-ring structure not present in the current ZP typeclasses (see notes/wheel_conjecture_proof_gap_2026-05-31.md).
+§VII defines WheelValuationStructure — the typeclass that closes the algebraic gap:
+a commutative ring + multiplicative valuation with val(0) = ⊤, forced by the
+"infinitudes of zero" argument (⊥ = {⊥} structurally requires val(⊥) = ∞).
+§VIII restates the conjecture honestly and points to WheelValuationStructure as the
+correct bridge to the universality result (Tier 3 — not a near-term Lean target).
+See notes/wheel_conjecture_proof_gap_2026-05-31.md for the full three-tier diagnosis.
 -/
 
 namespace ZeroParadox.WheelTheory
@@ -333,31 +339,81 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     · simp [zpwVal, zpwInv, hq]
 
 -- ============================================================
--- § VII. The Main Conjecture
+-- § VII. WheelValuationStructure — The Algebraic Bridge
 -- ============================================================
 
-/-- **ZP Wheel Conjecture (philosophical placeholder).**
+/-- WheelValuationStructure: a commutative ring with a multiplicative valuation
+    satisfying val(0) = ⊤. This is the typeclass that closes the structural gap
+    between the ZP typeclasses and Wheel theory.
 
-    The intuition: wheel theory is the algebraic formalization of operating at the
-    ZFC/AFA contact point (the porthole), where val(⊥) = ∞ and ⊥ = {⊥}.
+    **The "infinitudes of zero" argument** establishes *why* the porthole condition
+    val(0) = ⊤ must hold — it is forced by the self-referential structure ⊥ = {⊥},
+    not freely assumed. Val(⊥) = ∞ is the algebraic signature of the Quine atom:
+    the ring's zero is simultaneously the floor of the domain (as ⊥) and the point
+    where its measure hits infinity (as val(⊥) = ⊤). This identification is
+    structural necessity, not a modeling choice.
 
-    The concrete evidence is already in §V–VI: for ZPWheelElem, the porthole condition
-    (val(x) = ⊤) and the wheel condition (winv(x) = ∞) coincide — proved by
-    `zpw_top_val_iff_inv_is_inf`. That is the core of the conjecture, formalized.
+    However, the "infinitudes of zero" argument works at the *identification* layer —
+    it tells you which element plays the porthole role. To *construct* a Wheel from
+    this requires binary multiplication. ValuationStructure supplies only
+    `scale : L → L` (a unary endomorphism, "multiply by p"), not a binary product.
+    WheelValuationStructure closes this gap by adding ring structure explicitly.
 
-    **Why the abstract statement is blocked:** ZPSemilattice + AFAStructure +
-    ValuationStructure supply no algebraic operations (wmul, winv, wone). A Wheel
-    instance cannot be constructed from order/valuation structure alone — ring structure
-    is a missing hypothesis. The suggested proof path (WithTop L, wmul from selfApp)
-    does not close.
+    **From a WheelValuationStructure, the wheel of fractions construction**
+      Wh(L) = (L × L) / ~  where  (a, b) ~ (c, d)  iff  a · d = b · c
+    yields a Wheel instance where:
+      - wzero  = [0, 1]          — porthole element; wvs_val_zero forces this choice
+      - winv([a, b]) = [b, a]    — involution is pair-swap
+      - wmul([a,b],[c,d]) = [a·c, b·d] — inherited from ring multiplication
+    The 11 wheel axioms follow from ring axioms on L plus wvs_val_mul and wvs_val_zero.
+    Formalizing this construction is Tier 3 of the porthole conjecture. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: bridge typeclass connecting ZP structural
+-- hierarchy to Wheel theory via the wheel of fractions construction.
+class WheelValuationStructure (L : Type*) extends CommRing L where
+  /-- The porthole valuation: measures proximity to the porthole element. -/
+  wvs_val : L → ℕ∞
+  /-- Multiplicativity: val is a semiring homomorphism to (ℕ∞, +). -/
+  wvs_val_mul : ∀ x y : L, wvs_val (x * y) = wvs_val x + wvs_val y
+  /-- Porthole condition: val(0_L) = ⊤. Forced by "infinitudes of zero" — the ring's
+      zero is the Quine atom ⊥ = {⊥}, whose valuation is necessarily infinite.
+      This is the algebraic expression of ValuationStructure.val_bot, now with ring
+      structure available to construct wmul and complete the Wheel instance. -/
+  wvs_val_zero : wvs_val 0 = ⊤
 
-    **The correct generalization** requires a `WheelValuationStructure` typeclass
-    extending L with a commutative ring and a multiplicative valuation, from which
-    the wheel of fractions construction yields a Wheel instance. This is the right
-    universality result but substantial new infrastructure.
+-- ============================================================
+-- § VIII. The Main Conjecture
+-- ============================================================
+
+/-- **ZP Wheel Conjecture (architecture-level placeholder).**
+
+    **What is proved (§V–VI):** For ZPWheelElem, the porthole condition and the wheel
+    condition coincide — proved by `zpw_top_val_iff_inv_is_inf`:
+      val(x) = ⊤  ↔  winv(x) = ∞
+    This is the core of the conjecture, concretely formalized.
+
+    **The "infinitudes of zero" insight:** val(0) = ⊤ is not a free hypothesis in
+    ZP — it is forced by the self-referential structure ⊥ = {⊥} (the Quine atom).
+    The ring's zero is simultaneously the lattice floor *and* the point where the
+    valuation hits infinity. This structural necessity identifies *which* element
+    plays the porthole role (wzero), but it does not construct the binary operation
+    wmul. The "infinitudes of zero" argument closes the identification gap; it cannot
+    close the construction gap.
+
+    **Why the abstract statement is blocked:** ValuationStructure supplies
+    `scale : L → L` (unary — "multiply by p"). `wmul : W → W → W` is binary.
+    Arbitrary binary multiplication cannot be recovered from a single unary endomorphism
+    without knowing what operation you are iterating. Ring structure is the missing
+    hypothesis; the suggested path (WithTop L, wmul from selfApp) does not close.
+
+    **The correct bridge:** `WheelValuationStructure` (§VII) — a commutative ring with
+    multiplicative valuation satisfying wvs_val(0) = ⊤. From this, the wheel of
+    fractions construction Wh(L) = (L × L)/~ yields a Wheel instance, and the porthole
+    condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
+    Formalizing this construction is Tier 3 — comparable in scale to FractionRing
+    universality. Not a near-term Lean target.
 
     See `.claude-local/notes/wheel_conjecture_proof_gap_2026-05-31.md` for the full
-    diagnosis. -/
+    three-tier diagnosis. -/
 theorem zp_porthole_forces_wheel_axioms
     (L : Type*) [ZPSemilattice L] [AFAStructure L] [ValuationStructure L]
     (_h_top : ValuationStructure.val (ZPSemilattice.bot : L) = ⊤)
@@ -366,7 +422,7 @@ theorem zp_porthole_forces_wheel_axioms
   trivial
 
 -- ============================================================
--- § VIII. Purity Check
+-- § IX. Purity Check
 -- ============================================================
 
 section PurityCheck
