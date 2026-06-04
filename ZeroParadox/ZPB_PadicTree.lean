@@ -64,9 +64,11 @@ def tree : SimpleGraph Vtx where
     rcases h with ⟨d, hd⟩ | ⟨d, hd⟩
     · exact Or.inr ⟨d, hd⟩
     · exact Or.inl ⟨d, hd⟩
-  -- TODO(bus): `loopless` elaborates to `Std.Irrefl Adj` here; discharge via the length
-  -- argument (`x ≠ x ++ [d]` since lengths differ). Left sorry'd for the live session.
-  loopless := by sorry
+  loopless := by
+    refine ⟨?_⟩
+    intro x hx
+    rcases hx with ⟨d, hd⟩ | ⟨d, hd⟩ <;>
+      exact absurd (congrArg List.length hd) (by simp)
 
 /-- It is a tree (connected + acyclic). Mirrors Ludwig–Merten `Graph/Tree.lean`. -/
 theorem tree_isTree : tree.IsTree := by sorry
@@ -75,10 +77,35 @@ theorem tree_isTree : tree.IsTree := by sorry
     parent (three of them) — the (p+1 = 3)-regularity of the BT tree for p = 2. Mirrors
     Ludwig–Merten `Graph/Regular.lean`, stated as a neighbor-set equality to avoid `Fintype`. -/
 theorem neighborSet_interior (v : Vtx) (hv : v ≠ root) :
-    tree.neighborSet v = {v ++ [0], v ++ [1], v.dropLast} := by sorry
+    tree.neighborSet v = {v ++ [0], v ++ [1], v.dropLast} := by
+  have hv' : v ≠ [] := by simpa only [root] using hv
+  ext w
+  simp only [SimpleGraph.mem_neighborSet, Set.mem_insert_iff, Set.mem_singleton_iff]
+  constructor
+  · rintro (⟨d, rfl⟩ | ⟨d, hd⟩)
+    · fin_cases d
+      · exact Or.inl rfl
+      · exact Or.inr (Or.inl rfl)
+    · right; right
+      rw [hd]; simp
+  · rintro (rfl | rfl | rfl)
+    · exact Or.inl ⟨0, rfl⟩
+    · exact Or.inl ⟨1, rfl⟩
+    · exact Or.inr ⟨v.getLast hv', (List.dropLast_append_getLast hv').symm⟩
 
 /-- Root regularity: the root has exactly its two children as neighbors (degree 2, no parent). -/
-theorem neighborSet_root : tree.neighborSet root = {root ++ [0], root ++ [1]} := by sorry
+theorem neighborSet_root : tree.neighborSet root = {root ++ [0], root ++ [1]} := by
+  ext w
+  simp only [SimpleGraph.mem_neighborSet, Set.mem_insert_iff, Set.mem_singleton_iff]
+  constructor
+  · rintro (⟨d, rfl⟩ | ⟨d, hd⟩)
+    · fin_cases d
+      · exact Or.inl rfl
+      · exact Or.inr rfl
+    · exact absurd (congrArg List.length hd) (by simp [root])
+  · rintro (rfl | rfl)
+    · exact Or.inl ⟨0, rfl⟩
+    · exact Or.inl ⟨1, rfl⟩
 
 /-! ## § II. Boundary and the forced floor ⊥ -/
 
@@ -95,7 +122,11 @@ noncomputable def endVal (x : End) : ℕ∞ :=
 
 /-- ⊥ is the unique end with infinite valuation: `endVal botEnd = ⊤`.
     Mirrors `q2Val_zero` / `val_bot` (`val ⊥ = ⊤`). -/
-theorem botEnd_val_top : endVal botEnd = ⊤ := by sorry
+theorem botEnd_val_top : endVal botEnd = ⊤ := by
+  have h : {n | botEnd n ≠ 0} = (∅ : Set ℕ) := by
+    ext n; simp [botEnd]
+  unfold endVal
+  rw [h, Set.image_empty, sInf_empty]
 
 /-! ## § III. The embedding question (conjecture — the ask for Ludwig & Merten) -/
 
