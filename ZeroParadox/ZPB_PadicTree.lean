@@ -13,7 +13,9 @@ TODO (Tim): your own words go here.
 
 ## Formal Overview (AI-assisted)
 
-**Status: STUB.** All nontrivial proofs are `sorry`. This file makes ZP's 2-adic tree
+**Status: near-complete stub.** Proved: `symm`, `loopless`, both `neighborSet` regularity
+lemmas (the (p+1)=3-regularity), and `botEnd_val_top`. Only `tree_isTree` (connected + acyclic)
+remains `sorry`'d — left as the live bus-session proof. This file makes ZP's 2-adic tree
 an *explicit graph object* so it can be lined up against the Lean formalization of the
 Bruhat–Tits tree by Ludwig & Merten (arXiv:2505.12933, repo `github.com/chrisflav/bruhat-tits`).
 
