@@ -210,8 +210,7 @@ theorem botEnd_val_top : endVal botEnd = ⊤ := by
     boundary end. Stated abstractly because the BT-tree type (arXiv:2505.12933 /
     `chrisflav/bruhat-tits`) is not a dependency here. -/
 def EmbedsAsRootedSubtree : Prop :=
-  ∃ (W : Type) (T : SimpleGraph W), T.IsTree ∧
-    ∃ f : Vtx → W, Function.Injective f ∧ ∀ v w : Vtx, tree.Adj v w → T.Adj (f v) (f w)
+  ∃ (W : Type) (T : SimpleGraph W), T.IsTree ∧ Nonempty (tree ↪g T)
 
 /-! ## § V. Self-similarity
 
