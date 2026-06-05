@@ -235,4 +235,36 @@ def EmbedsAsRootedSubtree : Prop :=
   ∃ (W : Type) (T : SimpleGraph W), T.IsTree ∧
     ∃ f : Vtx → W, Function.Injective f ∧ ∀ v w : Vtx, tree.Adj v w → T.Adj (f v) (f w)
 
+/-! ## § V. Self-similarity — every vertex is a local bottom (ZP-I, positively)
+
+The acyclicity proof *used* the self-similar structure; here it is as a theorem. The prefix map
+`x ↦ v ++ x` carries the whole tree faithfully onto the subtree `below(v)`: it preserves *and*
+reflects adjacency. So beneath every vertex sits an exact copy of the whole tree — each vertex is
+the local bottom of a replica. This is ZP-I stated positively, and it is the in-house form of the
+open question put to Ludwig & Merten (does ZP's tree sit as a rooted subtree inside the
+Bruhat–Tits tree?) — here answered for ZP's tree inside *itself*. -/
+
+/-- **Self-similarity.** Prefixing by `v` reflects and preserves adjacency, so the subtree below
+    any vertex `v` is a faithful copy of the whole tree: each vertex is a local bottom. -/
+theorem adj_prefix_iff (v x y : Vtx) : tree.Adj (v ++ x) (v ++ y) ↔ tree.Adj x y := by
+  constructor
+  · rintro (⟨d, hd⟩ | ⟨d, hd⟩)
+    · refine Or.inl ⟨d, ?_⟩
+      have h : v ++ y = v ++ (x ++ [d]) := by rw [hd, List.append_assoc]
+      exact List.append_cancel_left h
+    · refine Or.inr ⟨d, ?_⟩
+      have h : v ++ x = v ++ (y ++ [d]) := by rw [hd, List.append_assoc]
+      exact List.append_cancel_left h
+  · rintro (⟨d, rfl⟩ | ⟨d, rfl⟩)
+    · exact Or.inl ⟨d, by rw [List.append_assoc]⟩
+    · exact Or.inr ⟨d, by rw [List.append_assoc]⟩
+
+/-! ## § VI. Purity check -/
+
+section PurityCheck
+#print axioms tree_isTree
+#print axioms adj_prefix_iff
+#print axioms botEnd_val_top
+end PurityCheck
+
 end ZeroParadox.PadicTree
