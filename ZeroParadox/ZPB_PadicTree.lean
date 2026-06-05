@@ -13,9 +13,11 @@ TODO (Tim): your own words go here.
 
 ## Formal Overview (AI-assisted)
 
-**Status: near-complete stub.** Proved: `symm`, `loopless`, both `neighborSet` regularity
-lemmas (the (p+1)=3-regularity), and `botEnd_val_top`. Only `tree_isTree` (connected + acyclic)
-remains `sorry`'d — left as the live bus-session proof. This file makes ZP's 2-adic tree
+**Status: complete — fully proved, `sorry`-free** (only the Engineer's Take above is left as a
+TODO for Tim). Verified: the `SimpleGraph` on finite binary strings is connected and acyclic
+(`tree_isTree`), with the (p+1 = 3)-regularity as neighbor-set equalities and the forced floor
+`botEnd_val_top`. Acyclicity is proved on the local-bottom model (see §IV). This file makes ZP's
+2-adic tree
 an *explicit graph object* so it can be lined up against the Lean formalization of the
 Bruhat–Tits tree by Ludwig & Merten (arXiv:2505.12933, repo `github.com/chrisflav/bruhat-tits`).
 
@@ -72,8 +74,99 @@ def tree : SimpleGraph Vtx where
     rcases hx with ⟨d, hd⟩ | ⟨d, hd⟩ <;>
       exact absurd (congrArg List.length hd) (by simp)
 
-/-- It is a tree (connected + acyclic). Mirrors Ludwig–Merten `Graph/Tree.lean`. -/
-theorem tree_isTree : tree.IsTree := by sorry
+/-! ## § IV. `tree_isTree` — and a note on its proof structure (ZP-I in the metatheory)
+
+The proof that this graph is a tree recurses on **local bottoms**: every vertex `v` is the root
+of a self-similar subtree `below(v) = {x | v <+: x}`, an exact copy of the whole tree. Acyclicity
+is the statement that a cycle's *minimal-length* vertex — its own local bottom — would have to
+leave through both of its children, whose subtrees `below (v ++ [0])`, `below (v ++ [1])` are
+prefix-disjoint and can only reconnect back through `v`. The disjointness of the local copies *is*
+the acyclicity. This is exactly ZP-I's "a bottom at every level": the snap structure recurs at
+every node, and that recursion is what forbids cycles — the framework describing itself inside its
+own metatheory.
+
+Formally: `isAcyclic_iff_forall_adj_isBridge`. Every parent–child edge `(v, v ++ [d])` is a bridge
+because deleting it strands the child's prefix-closed subtree `below(v ++ [d])`, which `v` is not
+in. The one load-bearing lemma is `edge_pres`: membership in `below(v ++ [d])` is preserved across
+every *remaining* edge (the deleted edge is the only one that crosses the boundary). -/
+
+/-- A prefix of `p ++ [e]` is either all of it, or already a prefix of `p`: the "either you are the
+    child boundary, or you live strictly inside the parent" dichotomy that powers the local-bottom
+    argument. -/
+private theorem prefix_concat_split {α : Type*} {c p : List α} {e : α}
+    (h : c <+: p ++ [e]) : c = p ++ [e] ∨ c <+: p := by
+  obtain ⟨t, ht⟩ := h
+  rcases t.eq_nil_or_concat with rfl | ⟨t', a, rfl⟩
+  · exact Or.inl (by simpa using ht)
+  · refine Or.inr ⟨t', ?_⟩
+    rw [List.concat_eq_append, ← List.append_assoc] at ht
+    exact List.append_inj_left' ht rfl
+
+/-- It is a tree (connected + acyclic). Mirrors Ludwig–Merten `Graph/Tree.lean`.
+    See the section note above: acyclicity recurses on local bottoms (ZP-I). -/
+theorem tree_isTree : tree.IsTree := by
+  -- Connected: every vertex reaches the root `[]` by walking up via `dropLast`.
+  have reach_root : ∀ x : Vtx, tree.Reachable [] x := by
+    intro x
+    induction x using List.reverseRecOn with
+    | nil => exact SimpleGraph.Reachable.refl _
+    | append_singleton l a ih =>
+        exact ih.trans (SimpleGraph.Adj.reachable (Or.inl ⟨a, rfl⟩))
+  have hconn : tree.Connected := by
+    rw [SimpleGraph.connected_iff]
+    exact ⟨fun x y => (reach_root x).symm.trans (reach_root y), ⟨[]⟩⟩
+  -- Acyclic: every parent–child edge is a bridge (the local-bottom argument).
+  have hacyc : tree.IsAcyclic := by
+    rw [SimpleGraph.isAcyclic_iff_forall_adj_isBridge]
+    have bridge_lemma : ∀ (v : Vtx) (d : Fin 2), tree.IsBridge s(v, v ++ [d]) := by
+      intro v d
+      rw [SimpleGraph.isBridge_iff]
+      refine ⟨Or.inl ⟨d, rfl⟩, ?_⟩
+      -- `below(v ++ [d])`-membership is preserved across every *remaining* edge.
+      have edge_pres : ∀ x y : Vtx,
+          (tree.deleteEdges {s(v, v ++ [d])}).Adj x y →
+          ((v ++ [d]) <+: x ↔ (v ++ [d]) <+: y) := by
+        intro x y hxy
+        simp only [SimpleGraph.deleteEdges_adj, Set.mem_singleton_iff] at hxy
+        obtain ⟨hadj, hne⟩ := hxy
+        rcases hadj with ⟨e, rfl⟩ | ⟨e, rfl⟩
+        · constructor
+          · intro hx; exact hx.trans (List.prefix_append x [e])
+          · intro hy
+            rcases prefix_concat_split hy with heq | hpref
+            · exfalso; apply hne
+              have hxv : x = v := by simpa using (congrArg List.dropLast heq).symm
+              subst hxv
+              rw [← heq]
+            · exact hpref
+        · constructor
+          · intro hx
+            rcases prefix_concat_split hx with heq | hpref
+            · exfalso; apply hne
+              have hyv : y = v := by simpa using (congrArg List.dropLast heq).symm
+              subst hyv
+              rw [Sym2.eq_swap, ← heq]
+            · exact hpref
+          · intro hy; exact hy.trans (List.prefix_append y [e])
+      -- The invariant is preserved along every walk in the edge-deleted graph.
+      have key : ∀ {p q : Vtx},
+          (tree.deleteEdges {s(v, v ++ [d])}).Walk p q →
+          ((v ++ [d]) <+: p ↔ (v ++ [d]) <+: q) := by
+        intro p q w
+        induction w with
+        | nil => exact Iff.rfl
+        | cons hadj _ ih => exact (edge_pres _ _ hadj).trans ih
+      -- So `v` (not in the subtree) is unreachable from `v ++ [d]` (in it): contradiction.
+      intro hreach
+      obtain ⟨w⟩ := hreach
+      have hbad : (v ++ [d]) <+: v := (key w).mpr (List.prefix_refl _)
+      have hlen := hbad.length_le
+      simp only [List.length_append, List.length_cons, List.length_nil] at hlen
+      omega
+    rintro a b (⟨d, rfl⟩ | ⟨d, rfl⟩)
+    · exact bridge_lemma a d
+    · rw [Sym2.eq_swap]; exact bridge_lemma b d
+  exact ⟨hconn, hacyc⟩
 
 /-- Interior regularity: a non-root vertex's neighbors are exactly its two children and its
     parent (three of them) — the (p+1 = 3)-regularity of the BT tree for p = 2. Mirrors
