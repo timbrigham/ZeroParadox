@@ -2,6 +2,9 @@
 .claude-local/
 .claude/
 
+# Local MCP tooling (standalone repo, not part of the math publication)
+imap-email-mcp/
+
 # OS artifacts
 .DS_Store
 Thumbs.db
