@@ -398,48 +398,49 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
   wvs_val_zero : wvs_val 0 = ⊤
 
 -- ============================================================
--- § VIII. The Main Conjecture
+-- § VIII. The Main Conjecture (Resolved)
 -- ============================================================
 
-/-- **ZP Wheel Conjecture — NOW PROVED** (Tier 3 realized in `ZPJ_WheelFrac.lean`; this theorem
-    remains as the original documentation anchor). See the closing note below for the proof.
+/-! ### Resolution
 
-    **What is proved (§V–VI):** For ZPWheelElem, the porthole condition and the wheel
-    condition coincide — proved by `zpw_top_val_iff_inv_is_inf`:
-      val(x) = ⊤  ↔  winv(x) = ∞
-    This is the core of the conjecture, concretely formalized.
+This section is a documentation anchor only — there is no theorem object here. The conjecture
+that the ZP porthole forces the wheel axioms is now a theorem, formalized in `ZPJ_WheelFrac.lean`
+(which cannot be imported here without an import cycle, hence the prose pointer rather than a
+re-export).
 
-    **The "infinitudes of zero" insight:** val(0) = ⊤ is not a free hypothesis in
-    ZP — it is forced by the self-referential structure ⊥ = {⊥} (the Quine atom).
-    The ring's zero is simultaneously the lattice floor *and* the point where the
-    valuation hits infinity. This structural necessity identifies *which* element
-    plays the porthole role (wzero), but it does not construct the binary operation
-    wmul. The "infinitudes of zero" argument closes the identification gap; it cannot
-    close the construction gap.
+**What is proved (§V–VI):** For ZPWheelElem, the porthole condition and the wheel
+condition coincide — proved by `zpw_top_val_iff_inv_is_inf`:
+  val(x) = ⊤  ↔  winv(x) = ∞
+This is the core of the conjecture, concretely formalized.
 
-    **Why the abstract statement is blocked:** ValuationStructure supplies
-    `scale : L → L` (unary — "multiply by p"). `wmul : W → W → W` is binary.
-    Arbitrary binary multiplication cannot be recovered from a single unary endomorphism
-    without knowing what operation you are iterating. Ring structure is the missing
-    hypothesis; the suggested path (WithTop L, wmul from selfApp) does not close.
+**The "infinitudes of zero" insight:** val(0) = ⊤ is not a free hypothesis in
+ZP — it is forced by the self-referential structure ⊥ = {⊥} (the Quine atom).
+The ring's zero is simultaneously the lattice floor *and* the point where the
+valuation hits infinity. This structural necessity identifies *which* element
+plays the porthole role (wzero), but it does not construct the binary operation
+wmul. The "infinitudes of zero" argument closes the identification gap; it cannot
+close the construction gap.
 
-    **The correct bridge:** `WheelValuationStructure` (§VII) — a commutative ring with
-    multiplicative valuation satisfying wvs_val(0) = ⊤. From this, the wheel of
-    fractions construction Wh(L) = (L × L)/~ yields a Wheel instance, and the porthole
-    condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
+**Why the abstract statement is blocked:** ValuationStructure supplies
+`scale : L → L` (unary — "multiply by p"). `wmul : W → W → W` is binary.
+Arbitrary binary multiplication cannot be recovered from a single unary endomorphism
+without knowing what operation you are iterating. Ring structure is the missing
+hypothesis; the suggested path (WithTop L, wmul from selfApp) does not close.
 
-    **This construction is now formalized** (no longer a conjecture): see `ZPJ_WheelFrac.lean`.
-    `WheelFrac.instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
-    for any commutative ring `A` and multiplicative submonoid `S` — sorry-free and
-    `Classical.choice`-free (`[propext, Quot.sound]`). The porthole `∞ ≠ ⊥` is
-    `WheelFrac.inf_ne_bot` (given `0 ∉ S`). This is Carlström's wheel-of-fractions theorem,
-    machine-verified — the Tier 3 universality result that was previously out of reach. -/
-theorem zp_porthole_forces_wheel_axioms
-    (L : Type*) [ZPSemilattice L] [AFAStructure L] [ValuationStructure L]
-    (_h_top : ValuationStructure.val (ZPSemilattice.bot : L) = ⊤)
-    (_h_self : AFAStructure.selfMem (ZPSemilattice.bot : L)) :
-    True :=
-  trivial
+**The correct bridge:** `WheelValuationStructure` (§VII) — a commutative ring with
+multiplicative valuation satisfying wvs_val(0) = ⊤. From this, the wheel of
+fractions construction Wh(L) = (L × L)/~ yields a Wheel instance, and the porthole
+condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
+
+**The construction, formalized:** see `ZPJ_WheelFrac.lean`.
+`WheelFrac.instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
+for any commutative ring `A` and multiplicative submonoid `S` — sorry-free and
+`Classical.choice`-free (`[propext, Quot.sound]`). The porthole `∞ ≠ ⊥` is
+`WheelFrac.inf_ne_bot` (given `0 ∉ S`). This realizes Carlström's wheel-of-fractions
+construction as an instance of the ZP `Wheel` typeclass (an expanded 11-field presentation
+of his 8-axiom Def 1.1), machine-verified — the Tier 3 universality result previously
+scoped as a substantial, non-near-term target.
+-/
 
 -- ============================================================
 -- § IX. Purity Check
