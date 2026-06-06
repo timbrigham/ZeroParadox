@@ -16,7 +16,7 @@ provided the construction we'd been missing and the ability to distinguish betwe
 and wheel. The core of the Zero Paradox could have landed either way.
 
 After building that construction out and verifying the rest of the required wheel axioms,
-we're confident calling it a wheel — in particular, `inf_ne_bot` (∞ ≠ ⊥).
+we're confident calling it a wheel. In particular, `inf_ne_bot` (∞ ≠ ⊥).
 
 ---
 
