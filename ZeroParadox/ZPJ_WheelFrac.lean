@@ -54,15 +54,34 @@ def mk (p : A × A) : WheelFrac S := Quotient.mk (srel S) p
 
 /-- Addition: `[x,y] + [x',y'] = [x·y' + x'·y, y·y']`. -/
 def waddF : WheelFrac S → WheelFrac S → WheelFrac S :=
-  Quotient.lift₂ (fun p q => mk S (p.1 * q.2 + q.1 * p.2, p.2 * q.2)) (by sorry)
+  Quotient.lift₂ (fun p q => mk S (p.1 * q.2 + q.1 * p.2, p.2 * q.2)) (by
+    rintro p q p' q' ⟨s, hs, s', hs', hp1, hp2⟩ ⟨t, ht, t', ht', hq1, hq2⟩
+    refine Quotient.sound ⟨s * t, S.mul_mem hs ht, s' * t', S.mul_mem hs' ht', ?_, ?_⟩
+    · calc (s * t) * (p.1 * q.2 + q.1 * p.2)
+          = (s * p.1) * (t * q.2) + (t * q.1) * (s * p.2) := by ring
+        _ = (s' * p'.1) * (t' * q'.2) + (t' * q'.1) * (s' * p'.2) := by rw [hp1, hp2, hq1, hq2]
+        _ = (s' * t') * (p'.1 * q'.2 + q'.1 * p'.2) := by ring
+    · calc (s * t) * (p.2 * q.2) = (s * p.2) * (t * q.2) := by ring
+        _ = (s' * p'.2) * (t' * q'.2) := by rw [hp2, hq2]
+        _ = (s' * t') * (p'.2 * q'.2) := by ring)
 
 /-- Multiplication: `[x,y]·[x',y'] = [x·x', y·y']`. -/
 def wmulF : WheelFrac S → WheelFrac S → WheelFrac S :=
-  Quotient.lift₂ (fun p q => mk S (p.1 * q.1, p.2 * q.2)) (by sorry)
+  Quotient.lift₂ (fun p q => mk S (p.1 * q.1, p.2 * q.2)) (by
+    rintro p q p' q' ⟨s, hs, s', hs', hp1, hp2⟩ ⟨t, ht, t', ht', hq1, hq2⟩
+    refine Quotient.sound ⟨s * t, S.mul_mem hs ht, s' * t', S.mul_mem hs' ht', ?_, ?_⟩
+    · calc (s * t) * (p.1 * q.1) = (s * p.1) * (t * q.1) := by ring
+        _ = (s' * p'.1) * (t' * q'.1) := by rw [hp1, hq1]
+        _ = (s' * t') * (p'.1 * q'.1) := by ring
+    · calc (s * t) * (p.2 * q.2) = (s * p.2) * (t * q.2) := by ring
+        _ = (s' * p'.2) * (t' * q'.2) := by rw [hp2, hq2]
+        _ = (s' * t') * (p'.2 * q'.2) := by ring)
 
 /-- Reciprocal / involution: `/[x,y] = [y,x]`. -/
 def winvF : WheelFrac S → WheelFrac S :=
-  Quotient.lift (fun p => mk S (p.2, p.1)) (by sorry)
+  Quotient.lift (fun p => mk S (p.2, p.1)) (by
+    rintro p p' ⟨s, hs, s', hs', hp1, hp2⟩
+    exact Quotient.sound ⟨s, hs, s', hs', hp2, hp1⟩)
 
 /-- **Main goal (stub):** `⊙_S A` is a wheel (Carlström §4.2). All 11 axioms `sorry`. -/
 instance instWheel : Wheel (WheelFrac S) where
