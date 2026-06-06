@@ -141,4 +141,11 @@ theorem inf_ne_bot (h0 : (0 : A) ∉ S) : wheelInf (W := WheelFrac S) ≠ wheelB
   have hs0 : s = 0 := by simpa using e1
   exact h0 (hs0 ▸ hs)
 
+/-! ## Purity check -/
+
+section PurityCheck
+#print axioms instWheel
+#print axioms inf_ne_bot
+end PurityCheck
+
 end ZeroParadox.WheelFrac
