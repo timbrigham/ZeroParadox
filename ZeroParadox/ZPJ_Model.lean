@@ -66,7 +66,7 @@ noncomputable instance instNatInfZPS : ZPSemilattice ℕ∞ where
   join_assoc := min_assoc
   join_comm  := min_comm
   join_idem  := min_self
-  bot_join   := fun x => min_eq_right le_top
+  bot_join   := fun _ => min_eq_right le_top
 
 /-! ## § II. ValuationStructure Instance for ℕ∞ -/
 

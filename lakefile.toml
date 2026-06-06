@@ -8,6 +8,13 @@ pp.unicode.fun = true # pretty-prints `fun a ↦ b`
 relaxedAutoImplicit = false
 weak.linter.mathlibStandardSet = true
 maxSynthPendingDepth = 3
+# Standalone-repo lint policy: keep mathlibStandardSet on, but relax the pure
+# Mathlib-contribution house-style linters that don't fit a standalone research repo.
+# native_decide stays ON (soundness) and is exempted per-use via a scoped, documented disable.
+weak.linter.style.longLine = false    # the 100-char limit is Mathlib house style
+weak.linter.style.show = false        # `show` for readability is acceptable here
+weak.linter.style.setOption = false   # file-level maxHeartbeats is needed for heavy files
+weak.linter.dupNamespace = false      # e.g. ZeroParadox.APG.APG — harmless; rename would be invasive
 
 [[require]]
 name = "mathlib"

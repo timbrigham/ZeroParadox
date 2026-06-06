@@ -12,6 +12,8 @@ lake build
 
 Clean build: zero errors, zero warnings across all files. Some files set `maxHeartbeats 400000` due to heavy import chains (p-adics + Hilbert space machinery).
 
+Lint policy: `weak.linter.mathlibStandardSet` is on, so the build flags genuine hygiene issues (unused variables, deprecated tactics, etc.). The pure Mathlib-*contribution* house-style linters (line length, `show`-for-readability, file-level `set_option`, duplicate namespace) are relaxed in `lakefile.toml` — they govern Mathlib PRs, not a standalone research repo. The `native_decide` linter stays on (it trusts the compiler, not just the kernel); no file currently uses `native_decide`.
+
 ## File Overview and Dependency Order
 
 ### Core chain
