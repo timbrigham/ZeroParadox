@@ -25,7 +25,7 @@ ZF+AFA and `v₂(0) = ∞` in the 2-adic valuation. In wheel theory this is the 
 where `/0` is a first-class defined value rather than an error. Used throughout as
 shorthand for "the ZFC/AFA contact point where these structural identifications hold."
 
-Wheel theory (Carlström 2004) extends a commutative ring by making division by zero
+Wheel theory (Carlström 2001:11) extends a commutative ring by making division by zero
 a defined first-class operation. The resulting structure has two special elements:
   - `∞ = /0`       — the multiplicative inverse of zero
   - `⊥ₗ = 0 · /0`  — the absorbing "undefined" element
@@ -78,7 +78,7 @@ open ZeroParadox.SelfApp
 -- § I. Wheel Typeclass
 -- ============================================================
 
-/-- A wheel (Carlström 2004): a set with +, ·, and a total involution /,
+/-- A wheel (Carlström 2001:11): a set with +, ·, and a total involution /,
     making /0 a defined first-class element (∞) and 0·/0 an absorbing element (⊥ₗ).
 
     Axioms W1–W3: (W, +, 0) is a commutative monoid.
