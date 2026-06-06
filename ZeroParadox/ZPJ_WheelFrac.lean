@@ -135,6 +135,10 @@ instance instWheel : Wheel (WheelFrac S) where
 
 /-- Porthole: in `⊙_S A`, the infinity element `/0` and the bottom `0·/0` are distinct — the wheel
     (not meadow) behaviour, matching the ZP porthole `∞ ≠ ⊥`. (Stub.) -/
-theorem inf_ne_bot : wheelInf (W := WheelFrac S) ≠ wheelBot := by sorry
+theorem inf_ne_bot (h0 : (0 : A) ∉ S) : wheelInf (W := WheelFrac S) ≠ wheelBot := by
+  intro h
+  obtain ⟨s, hs, s', hs', e1, _⟩ := Quotient.exact h
+  have hs0 : s = 0 := by simpa using e1
+  exact h0 (hs0 ▸ hs)
 
 end ZeroParadox.WheelFrac
