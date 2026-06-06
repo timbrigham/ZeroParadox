@@ -90,17 +90,42 @@ instance instWheel : Wheel (WheelFrac S) where
   winv := winvF S
   wzero := mk S (0, 1)
   wone := mk S (1, 1)
-  wadd_assoc := by sorry
-  wadd_comm := by sorry
-  wadd_zero := by sorry
-  wmul_assoc := by sorry
-  wmul_comm := by sorry
-  wmul_one := by sorry
-  winv_winv := by sorry
-  winv_wmul := by sorry
+  wadd_assoc := by
+    intro x y z
+    induction x, y, z using Quotient.inductionOn₃ with
+    | _ a b c => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  wadd_comm := by
+    intro x y
+    induction x, y using Quotient.inductionOn₂ with
+    | _ a b => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  wadd_zero := by
+    intro x
+    induction x using Quotient.inductionOn with
+    | _ a => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  wmul_assoc := by
+    intro x y z
+    induction x, y, z using Quotient.inductionOn₃ with
+    | _ a b c => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  wmul_comm := by
+    intro x y
+    induction x, y using Quotient.inductionOn₂ with
+    | _ a b => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  wmul_one := by
+    intro x
+    induction x using Quotient.inductionOn with
+    | _ a => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  winv_winv := by
+    intro x
+    induction x using Quotient.inductionOn with
+    | _ a => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  winv_wmul := by
+    intro x y
+    induction x, y using Quotient.inductionOn₂ with
+    | _ a b => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
   weak_distrib := by sorry
   wheel_id := by sorry
-  wzero_mul_wzero := by sorry
+  wzero_mul_wzero := by
+    apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
 
 /-- Porthole: in `⊙_S A`, the infinity element `/0` and the bottom `0·/0` are distinct — the wheel
     (not meadow) behaviour, matching the ZP porthole `∞ ≠ ⊥`. (Stub.) -/
