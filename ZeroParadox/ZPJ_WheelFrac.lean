@@ -38,9 +38,12 @@ def rel (p q : A × A) : Prop :=
 def srel : Setoid (A × A) where
   r := rel S
   iseqv := {
-    refl := by intro p; sorry
-    symm := by intro p q h; sorry
-    trans := by intro p q r h₁ h₂; sorry
+    refl := fun p => ⟨1, S.one_mem, 1, S.one_mem, rfl, rfl⟩
+    symm := fun ⟨s, hs, s', hs', h1, h2⟩ => ⟨s', hs', s, hs, h1.symm, h2.symm⟩
+    trans := fun ⟨s, hs, s', hs', a1, a2⟩ ⟨t, ht, t', ht', b1, b2⟩ =>
+      ⟨t * s, S.mul_mem ht hs, t' * s', S.mul_mem ht' hs',
+        by linear_combination t * a1 + s' * b1,
+        by linear_combination t * a2 + s' * b2⟩
   }
 
 /-- The wheel of fractions `⊙_S A = (A × A) / ≡_S`. -/
