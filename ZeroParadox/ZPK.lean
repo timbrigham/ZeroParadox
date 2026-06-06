@@ -435,7 +435,7 @@ theorem isComputationalQuine_undecidable :
   -- Encoding: encode (φ c) ≠ 0 for all c
   have φ_enc : ∀ c : Code, Encodable.encode (φ c) ≠ 0 := by
     intro c heq
-    have h0 : Encodable.encode Code.zero = 0 := by native_decide
+    have h0 : Encodable.encode Code.zero = 0 := by decide
     have hne : φ c ≠ Code.zero := by simp [φ]
     exact hne (Encodable.encode_inj.mp (heq.trans h0.symm))
   -- IsComputationalQuine (φ c) ↔ ¬(eval c (encode c)).Dom
@@ -514,7 +514,7 @@ theorem infinite_quine_family :
     Set.infinite_range_of_injective hinj
   obtain ⟨k, hk⟩ : ∃ k : ℕ, n < Encodable.encode (Code.const k) := by
     by_contra h
-    push_neg at h
+    push Not at h
     apply hinf
     apply Set.Finite.subset (Finset.finite_toSet (Finset.range (n + 1)))
     intro x hx

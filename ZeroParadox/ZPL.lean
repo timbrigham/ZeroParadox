@@ -452,7 +452,7 @@ theorem snap_exactly_at_epsilon_zero
   · exact hfp epsilonZero epsilonZero_fixedPoint
   · intro α hα
     by_contra h
-    push_neg at h
+    push Not at h
     have hc0 : φ α = c₀ := snap_threshold_is_epsilon_zero φ hmono h0 α h
     rw [hc0] at hα
     exact absurd hα (by simp [c₀, c₁])
@@ -477,7 +477,7 @@ theorem kleene_ordinal_snap_bridge :
   · exact if_neg (lt_irrefl epsilonZero)
   · intro α hα
     by_contra h
-    push_neg at h
+    push Not at h
     simp only [if_pos h] at hα
     exact absurd hα (by simp [c₀, c₁])
 
@@ -539,7 +539,7 @@ theorem epsilon_zero_snap_canonical :
   · exact if_neg (lt_irrefl epsilonZero)
   · intro α hα
     by_contra h
-    push_neg at h
+    push Not at h
     simp only [if_pos h] at hα
     exact absurd hα (by simp [c₀, c₁])
 

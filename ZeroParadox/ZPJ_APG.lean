@@ -279,7 +279,7 @@ theorem pureSelfLoop_decoration_unique
 theorem kCycle_node_eq_bot
     {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
-    (d : V → U) (hd : IsDecoration d) (v : V) (k : ℕ) (hk : 0 < k)
+    (d : V → U) (_hd : IsDecoration d) (v : V) (k : ℕ) (hk : 0 < k)
     (hcycle : ValuationStructure.scale^[k] (d v) = d v) :
     d v = bot :=
   scale_iterate_unique_fp k hk (d v) hcycle
@@ -424,11 +424,14 @@ theorem acyclic_induction_step
 
     Requires [Fintype V] to bound the reachable set cardinality. -/
 
+-- `[Fintype V]` is not used in the *type* but is essential to the *proof*: it bounds the
+-- reachable-set cardinality so the strict-subset descent (`Set.ncard_lt_ncard`) terminates.
+set_option linter.unusedFintypeInType false in
 /-- Global decoration uniqueness: any two valid decorations of a finite APG are equal. -/
 theorem decoration_unique
     {V : Type*} [Quiver V] [Fintype V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
-    (G : APG V) (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) :
+    (_G : APG V) (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂) :
     d₁ = d₂ := by
   funext v
   suffices key : ∀ n : ℕ, ∀ u : V,
