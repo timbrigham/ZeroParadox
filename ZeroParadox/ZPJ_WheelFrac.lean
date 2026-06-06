@@ -122,8 +122,14 @@ instance instWheel : Wheel (WheelFrac S) where
     intro x y
     induction x, y using Quotient.inductionOn₂ with
     | _ a b => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
-  weak_distrib := by sorry
-  wheel_id := by sorry
+  weak_distrib := by
+    intro x y z
+    induction x, y, z using Quotient.inductionOn₃ with
+    | _ a b c => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  wheel_id := by
+    intro x y
+    induction x, y using Quotient.inductionOn₂ with
+    | _ a b => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
   wzero_mul_wzero := by
     apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
 
