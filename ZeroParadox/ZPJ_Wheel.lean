@@ -8,12 +8,15 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-We built a concrete type for the wheel structure, proved the supporting axioms, and
-determined exactly where the boundary is — we know where the Zero Paradox intersects,
-and the remaining gap is based on additional inputs that simply aren't needed for this
-tier of proof. That's a fairly narrow band. Even though we couldn't work around it
-entirely like Kolmogorov complexity, it's not needed for the level we're trying to
-prove today. This document shows that the wheel structure is compatible.
+In past iterations we weren't able to definitively determine whether the Zero Paradox
+theorem acted as a wheel or as a meadow.
+
+After researching and failing on several occasions, we found Carlström 2001:11, which
+provided the construction we'd been missing and the ability to distinguish between meadow
+and wheel. The core of the Zero Paradox could have landed either way.
+
+After building that construction out and verifying the rest of the required wheel axioms,
+we're confident calling it a wheel — in particular, `inf_ne_bot` (∞ ≠ ⊥).
 
 ---
 
