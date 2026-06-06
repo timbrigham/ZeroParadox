@@ -3,7 +3,7 @@ import Mathlib.Algebra.Group.Submonoid.Membership
 import Mathlib.Tactic
 
 /-!
-# The Wheel of Fractions `⊙_S A` (Carlström 2001:11, §4.2) — STUB
+# The Wheel of Fractions `⊙_S A` (Carlström 2001:11, §4.2)
 
 Constructs the wheel of fractions of a commutative ring `A` with respect to a multiplicative
 submonoid `S`, with the goal of proving it is a `Wheel` (from `ZPJ_Wheel.lean`). This turns the
@@ -18,8 +18,9 @@ with `0 = [0,1]`, `1 = [1,1]`, `[x,y] + [x',y'] = [x·y' + x'·y, y·y']`, `[x,y
 and `/[x,y] = [y,x]`. Then `/0 = [1,0] = ∞`, `0·/0 = [0,0] = ⊥`, with `∞ ≠ ⊥` (the wheel, not the
 meadow) — matching the ZP porthole.
 
-**Status: STUB.** Every proof is `sorry`. Fill order: equivalence (refl/symm/trans) → operation
-well-definedness → the 11 `Wheel` axioms → `inf_ne_bot`.
+**Status: complete.** Fully `sorry`-free: `≡_S` is an equivalence, the five operations are
+well-defined on the quotient, all 11 `Wheel` axioms hold, and `inf_ne_bot` holds given `0 ∉ S`.
+Both `instWheel` and `inf_ne_bot` are `Classical.choice`-free (`[propext, Quot.sound]`).
 -/
 
 namespace ZeroParadox.WheelFrac
@@ -83,7 +84,7 @@ def winvF : WheelFrac S → WheelFrac S :=
     rintro p p' ⟨s, hs, s', hs', hp1, hp2⟩
     exact Quotient.sound ⟨s, hs, s', hs', hp2, hp1⟩)
 
-/-- **Main goal (stub):** `⊙_S A` is a wheel (Carlström §4.2). All 11 axioms `sorry`. -/
+/-- **Main result:** `⊙_S A` is a wheel (Carlström §4.2). All 11 axioms proved. -/
 instance instWheel : Wheel (WheelFrac S) where
   wadd := waddF S
   wmul := wmulF S
@@ -134,7 +135,7 @@ instance instWheel : Wheel (WheelFrac S) where
     apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
 
 /-- Porthole: in `⊙_S A`, the infinity element `/0` and the bottom `0·/0` are distinct — the wheel
-    (not meadow) behaviour, matching the ZP porthole `∞ ≠ ⊥`. (Stub.) -/
+    (not meadow) behaviour, matching the ZP porthole `∞ ≠ ⊥`. -/
 theorem inf_ne_bot (h0 : (0 : A) ∉ S) : wheelInf (W := WheelFrac S) ≠ wheelBot := by
   intro h
   obtain ⟨s, hs, s', hs', e1, _⟩ := Quotient.exact h
