@@ -30,10 +30,10 @@ a defined first-class operation. The resulting structure has two special element
   - `∞ = /0`       — the multiplicative inverse of zero
   - `⊥ₗ = 0 · /0`  — the absorbing "undefined" element
 
-**The ZP Conjecture (unproved in this file — see §VIII):** The wheel axioms for /0
-are derivable from the ZP structural constraints (`val(⊥) = ∞` and `⊥ = {⊥}`) rather
-than independently assumed — making wheel theory the algebraic representation of the
-porthole rather than a coincidence.
+**The ZP Conjecture (see §VIII — construction now formalized in `ZPJ_WheelFrac.lean`):**
+The wheel axioms for /0 are derivable from ring structure rather than independently
+assumed, with the porthole (`val(⊥) = ∞` and `⊥ = {⊥}`) pinning the special element —
+making wheel theory the algebraic representation of the porthole rather than a coincidence.
 
 **Structural alignment (not proof):**
 - In ZFC+Foundation: division by zero is undefined; the Axiom of Regularity prohibits
@@ -52,17 +52,19 @@ This file:
   § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved)
   § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
   § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
-  § VIII. Main conjecture statement (architecture-level placeholder)
+  § VIII. Main conjecture: resolved (construction formalized in `ZPJ_WheelFrac.lean`)
   § IX.   Purity check
 
-Status: Sorry-free for all proved results. §VIII conjecture proves `True := trivial` —
-a philosophical placeholder with no mathematical content in this file.
-§VII defines WheelValuationStructure — the typeclass that identifies the bridge needed
-a commutative ring + multiplicative valuation with val(0) = ⊤, forced by the
-"infinitudes of zero" argument (⊥ = {⊥} structurally requires val(⊥) = ∞).
-§VIII restates the conjecture honestly and points to WheelValuationStructure as the
-correct bridge to the universality result (Tier 3 — not a near-term Lean target).
-See notes/wheel_conjecture_proof_gap_2026-05-31.md for the full three-tier diagnosis.
+Status: Sorry-free. §VIII is now a documentation anchor with no theorem object; the
+construction it points to is proved in `ZPJ_WheelFrac.lean` — `WheelFrac.instWheel` shows
+the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and
+multiplicative submonoid `S` (sorry-free, `Classical.choice`-free, `[propext, Quot.sound]`).
+§VII defines WheelValuationStructure — the typeclass identifying the bridge: a commutative
+ring + multiplicative valuation with val(0) = ⊤, with the porthole (⊥ = {⊥} structurally
+requires val(⊥) = ∞) pinning the special element. The construction closes the construction
+gap; §VI closes the identification gap. The universality result previously scoped as Tier 3
+(a substantial, non-near-term target) is now formalized.
+See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.
 -/
 
 namespace ZeroParadox.WheelTheory
@@ -374,15 +376,17 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     `scale : L → L` (a unary endomorphism, "multiply by p"), not a binary product.
     WheelValuationStructure closes this gap by adding ring structure explicitly.
 
-    **From a WheelValuationStructure, the wheel of fractions construction**
-      Wh(L) = (L × L) / ~  where  (a, b) ~ (c, d)  iff  a · d = b · c
-    would yield a Wheel instance where:
-      - wzero  = [0, 1]          — porthole element; wvs_val_zero pins this choice
+    **From a commutative ring + multiplicative submonoid, the wheel of fractions construction**
+      ⊙_S L = (L × L) / ≡_S   where   (a,b) ≡_S (c,d)  iff  ∃ s s' ∈ S, s·a = s'·c ∧ s·b = s'·d
+    (the submonoid-quotient relation; naive cross-multiplication `a·d = b·c` is *not* an
+    equivalence on a general commutative ring — transitivity fails without cancellation)
+    yields a Wheel instance where:
+      - wzero  = [0, 1]          — porthole element
       - winv([a, b]) = [b, a]    — involution is pair-swap
       - wmul([a,b],[c,d]) = [a·c, b·d] — inherited from ring multiplication
-    The 11 wheel axioms would follow from ring axioms on L plus wvs_val_mul and
-    wvs_val_zero. This construction is not formalized here — it is Tier 3 of the
-    porthole conjecture (§VIII). -/
+    The 11 wheel axioms follow from the ring axioms on L plus the submonoid structure of S.
+    This construction is now formalized in `ZPJ_WheelFrac.lean` (`WheelFrac.instWheel`) — the
+    Tier 3 result of the porthole conjecture (§VIII). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: bridge typeclass connecting ZP structural
 -- hierarchy to Wheel theory via the wheel of fractions construction.
 class WheelValuationStructure (L : Type*) extends CommRing L where
