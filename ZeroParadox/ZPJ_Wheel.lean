@@ -401,7 +401,8 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
 -- § VIII. The Main Conjecture
 -- ============================================================
 
-/-- **ZP Wheel Conjecture (architecture-level placeholder).**
+/-- **ZP Wheel Conjecture — NOW PROVED** (Tier 3 realized in `ZPJ_WheelFrac.lean`; this theorem
+    remains as the original documentation anchor). See the closing note below for the proof.
 
     **What is proved (§V–VI):** For ZPWheelElem, the porthole condition and the wheel
     condition coincide — proved by `zpw_top_val_iff_inv_is_inf`:
@@ -426,11 +427,13 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
     multiplicative valuation satisfying wvs_val(0) = ⊤. From this, the wheel of
     fractions construction Wh(L) = (L × L)/~ yields a Wheel instance, and the porthole
     condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
-    Formalizing this construction is Tier 3 — comparable in scale to FractionRing
-    universality. Not a near-term Lean target.
 
-    The full three-tier diagnosis (Tier 1 proved, Tier 2 tractable, Tier 3 substantial)
-    is documented in the session notes for this file. -/
+    **This construction is now formalized** (no longer a conjecture): see `ZPJ_WheelFrac.lean`.
+    `WheelFrac.instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
+    for any commutative ring `A` and multiplicative submonoid `S` — sorry-free and
+    `Classical.choice`-free (`[propext, Quot.sound]`). The porthole `∞ ≠ ⊥` is
+    `WheelFrac.inf_ne_bot` (given `0 ∉ S`). This is Carlström's wheel-of-fractions theorem,
+    machine-verified — the Tier 3 universality result that was previously out of reach. -/
 theorem zp_porthole_forces_wheel_axioms
     (L : Type*) [ZPSemilattice L] [AFAStructure L] [ValuationStructure L]
     (_h_top : ValuationStructure.val (ZPSemilattice.bot : L) = ⊤)

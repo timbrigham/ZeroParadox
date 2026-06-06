@@ -19,6 +19,7 @@ import ZeroParadox.ZPM
 import ZeroParadox.ZPJ_OntBridge
 import ZeroParadox.ZPJ_APG
 import ZeroParadox.ZPJ_Wheel
+import ZeroParadox.ZPJ_WheelFrac
 
 /-!
 # Zero Paradox — Library Root
