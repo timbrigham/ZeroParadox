@@ -48,10 +48,10 @@ making wheel theory the algebraic representation of the porthole rather than a c
 `WheelValuationStructure` (§VII) is the correct bridge. See §VIII for the full status.
 
 This file:
-  § I.   Wheel typeclass (11 axioms after Carlström)
+  § I.   Wheel typeclass (Carlström Def 1.1: 8 axioms, 14 unbundled fields)
   § II.  Derived elements: wheelInf, wheelBot; winv_one proved abstractly
   § III. Concrete carrier: ZPWheelElem (ℚ extended with ∞ and ⊥ₗ)
-  § IV.  Operations and Wheel instance (all 11 axiom proofs sorry-free)
+  § IV.  Operations and Wheel instance (all axiom proofs sorry-free)
   § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved)
   § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
   § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
@@ -84,13 +84,18 @@ open ZeroParadox.SelfApp
 /-- A wheel (Carlström 2001:11): a set with +, ·, and a total involution /,
     making /0 a defined first-class element (∞) and 0·/0 an absorbing element (⊥ₗ).
 
-    Axioms W1–W3: (W, +, 0) is a commutative monoid.
-    Axioms W4–W6: (W, ·, 1) is a commutative monoid.
-    Axiom W7:  /(/x) = x  (involution — applying / twice returns x)
-    Axiom W8:  /(x·y) = /x · /y  (involution distributes over ·)
-    Axiom W9:  (x+y)·z + 0·z = x·z + y·z  (weakened distributivity)
-    Axiom W10: (x + 0·y)·/y = x·/y + 0·y   (wheel identity)
-    Axiom W11: 0·0 = 0
+    The 14 fields below are exactly Carlström's eight Definition 1.1 axioms, with his two
+    "commutative monoid" axioms unbundled into their separate equational laws:
+    Axioms W1–W3: (W, +, 0) commutative monoid                  [Carlström (1)]
+    Axioms W4–W6: (W, ·, 1) commutative monoid                  [Carlström (2), monoid part]
+    Axiom W7:  /(/x) = x  (involution)                          [Carlström (2), involution]
+    Axiom W8:  /(x·y) = /x · /y                                 [Carlström (2), involution]
+    Axiom W9:  (x+y)·z + 0·z = x·z + y·z  (distributivity)      [Carlström (3)]
+    Axiom W10: x/y + z + 0y = (x + yz)/y                        [Carlström (4)]
+    Axiom W11: 0·0 = 0                                          [Carlström (5)]
+    Axiom W12: (x + 0y)·z = x·z + 0y                            [Carlström (6)]
+    Axiom W13: /(x + 0y) = /x + 0y                              [Carlström (7)]
+    Axiom W14: x + 0/0 = 0/0                                    [Carlström (8)]
 
     Key consequence: /0 (= wheelInf) and 0·/0 (= wheelBot) are well-defined.
     A field is a wheel where wheelInf = wheelBot (the two collapse). -/
@@ -120,12 +125,21 @@ class Wheel (W : Type*) where
   weak_distrib : ∀ x y z : W,
       wadd (wmul (wadd x y) z) (wmul wzero z) =
       wadd (wmul x z) (wmul y z)
-  -- W10: wheel identity  (x + 0·y)·/y = x·/y + 0·y
-  wheel_id : ∀ x y : W,
-      wmul (wadd x (wmul wzero y)) (winv y) =
-      wadd (wmul x (winv y)) (wmul wzero y)
-  -- W11: 0 · 0 = 0
+  -- W10: Carlström (4) — division/addition law:  x/y + z + 0y = (x + yz)/y
+  wheel_id : ∀ x y z : W,
+      wadd (wadd (wmul x (winv y)) z) (wmul wzero y) =
+      wmul (wadd x (wmul y z)) (winv y)
+  -- W11: Carlström (5) — 0·0 = 0
   wzero_mul_wzero : wmul wzero wzero = wzero
+  -- W12: Carlström (6) — a zero-term commutes out of a product:  (x + 0y)z = xz + 0y
+  wadd_zeromul_mul : ∀ x y z : W,
+      wmul (wadd x (wmul wzero y)) z = wadd (wmul x z) (wmul wzero y)
+  -- W13: Carlström (7) — a zero-term commutes through reciprocal:  /(x + 0y) = /x + 0y
+  winv_add_zeromul : ∀ x y : W,
+      winv (wadd x (wmul wzero y)) = wadd (winv x) (wmul wzero y)
+  -- W14: Carlström (8) — the bottom 0/0 absorbs addition:  x + 0/0 = 0/0
+  wadd_zeroinv_absorb : ∀ x : W,
+      wadd x (wmul wzero (winv wzero)) = wmul wzero (winv wzero)
 
 -- ============================================================
 -- § II. Derived Elements and Basic Theorems
@@ -221,9 +235,15 @@ def zpwInv : ZPWheelElem → ZPWheelElem
 -- § IV. Wheel Instance for ZPWheelElem
 -- ============================================================
 
-/-- ZPWheelElem is a Wheel. The 11 axioms encode the rational wheel extended
-    with ∞ and ⊥ₗ. All 11 axiom proofs are sorry-free, proceeding by cases
-    on the three constructors (bot / fin / inf). -/
+-- The case-bash proofs below (over the custom `ZPWheelElem` inductive) use `simp_all`/`field_simp`
+-- chains that trip two Mathlib house-style linters (`flexible`, `unnecessarySeqFocus`). They are
+-- relaxed locally here, consistent with the standalone-repo lint policy (cf. lakefile.toml).
+set_option linter.flexible false in
+set_option linter.unnecessarySeqFocus false in
+/-- ZPWheelElem is a Wheel. The fields encode Carlström's Definition 1.1 wheel axioms (his eight,
+    with the two commutative-monoid axioms unbundled into their equational laws) for the rationals
+    extended with ∞ and ⊥ₗ. All proofs are sorry-free, proceeding by cases on the three
+    constructors (bot / fin / inf). -/
 instance : Wheel ZPWheelElem where
   wadd  := zpwAdd
   wmul  := zpwMul
@@ -265,29 +285,27 @@ instance : Wheel ZPWheelElem where
       simp only [zpwAdd, zpwMul] <;>
       (try split_ifs) <;>
       simp [add_mul]
-  wheel_id x y := by
-    cases x with
-    | bot => simp [zpwAdd, zpwMul, zpwInv]
-    | inf =>
-      cases y with
-      | bot => simp [zpwAdd, zpwMul, zpwInv]
-      | inf => simp [zpwAdd, zpwMul, zpwInv]
-      | fin q =>
-        by_cases hq : q = 0
-        · subst hq; simp [zpwAdd, zpwMul, zpwInv]
-        · simp [zpwAdd, zpwMul, zpwInv, hq]
-    | fin p =>
-      cases y with
-      | bot => simp [zpwAdd, zpwMul, zpwInv]
-      | inf => simp [zpwAdd, zpwMul, zpwInv]
-      | fin q =>
-        by_cases hq : q = 0
-        · subst hq
-          by_cases hp : p = 0
-          · subst hp; simp [zpwAdd, zpwMul, zpwInv]
-          · simp [zpwAdd, zpwMul, zpwInv, hp]
-        · simp [zpwAdd, zpwMul, zpwInv, hq]
+  wheel_id x y z := by
+    cases x <;> cases y <;> cases z <;>
+      (try dsimp only [zpwAdd, zpwMul, zpwInv]) <;>
+      (try split_ifs) <;>
+      (try dsimp only [zpwAdd, zpwMul, zpwInv]) <;>
+      (try split_ifs) <;>
+      simp_all [add_mul, mul_comm, add_zero, mul_zero] <;>
+      (try field_simp)
   wzero_mul_wzero := by simp [zpwMul]
+  wadd_zeromul_mul x y z := by
+    cases x <;> cases y <;> cases z <;>
+      simp only [zpwAdd, zpwMul] <;>
+      (try split_ifs) <;>
+      simp_all [mul_comm, add_zero]
+  winv_add_zeromul x y := by
+    cases x <;> cases y <;>
+      simp only [zpwAdd, zpwMul, zpwInv] <;>
+      (try split_ifs) <;>
+      simp_all [add_zero]
+  wadd_zeroinv_absorb x := by
+    cases x <;> simp [zpwAdd, zpwMul, zpwInv]
 
 -- ============================================================
 -- § V. Porthole Theorems (proved without sorry)
@@ -387,7 +405,7 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
       - wzero  = [0, 1]          — porthole element
       - winv([a, b]) = [b, a]    — involution is pair-swap
       - wmul([a,b],[c,d]) = [a·c, b·d] — inherited from ring multiplication
-    The 11 wheel axioms follow from the ring axioms on L plus the submonoid structure of S.
+    The wheel axioms (Carlström Def 1.1) follow from the ring axioms on L plus the submonoid structure of S.
     This construction is now formalized in `ZPJ_WheelFrac.lean` (`WheelFrac.instWheel`) — the
     Tier 3 result of the porthole conjecture (§VIII). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: bridge typeclass connecting ZP structural
@@ -443,10 +461,10 @@ condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
 `WheelFrac.instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
 for any commutative ring `A` and multiplicative submonoid `S` — sorry-free and
 `Classical.choice`-free (`[propext, Quot.sound]`). The porthole `∞ ≠ ⊥` is
-`WheelFrac.inf_ne_bot` (given `0 ∉ S`). This realizes Carlström's wheel-of-fractions
-construction as an instance of the ZP `Wheel` typeclass (an expanded 11-field presentation
-of his 8-axiom Def 1.1), machine-verified — the Tier 3 universality result previously
-scoped as a substantial, non-near-term target.
+`WheelFrac.inf_ne_bot` (given `0 ∉ S`). The ZP `Wheel` typeclass is a faithful encoding of
+Carlström's Definition 1.1 (all eight axioms, with his two commutative-monoid axioms unbundled
+into 14 equational fields), so this is Carlström's wheel-of-fractions theorem, machine-verified —
+the Tier 3 universality result previously scoped as a substantial, non-near-term target.
 -/
 
 -- ============================================================
