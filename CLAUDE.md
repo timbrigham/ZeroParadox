@@ -91,6 +91,8 @@ GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASE
 
 **Do not release on:** every individual PR. Releases should feel like milestones worth timestamping.
 
+**Lean-only changes are an open question, not an automatic trigger (either way).** The release model is document-centric: `RELEASES.md` is built around a "Document versions" table, and the candidate→derived trigger above refers to *tracked, labeled* results in formal documents (carried in `register.md`), not to a placeholder proved only inside a `.lean` file. When a Lean milestone lands without accompanying formal prose (e.g. a conjecture proved only in Lean, no PDF document or companion moved), do not assume it warrants a release, and do not assume it doesn't - raise it as an explicit question for Tim. The two clean resolutions are: (a) bundle it into the next document release, or (b) write the result up as formal prose first, then release. Example: the wheel of fractions (§VIII conjecture → theorem, ZPJ_Wheel/ZPJ_WheelFrac) landed 2026-06-06 as a Lean-only change and was flagged, not auto-released.
+
 ### Release workflow
 
 When Tim initiates a release: draft the `RELEASES.md` entry → PR → after merge, draft the GitHub Release body → **wait for explicit approval** → execute:
