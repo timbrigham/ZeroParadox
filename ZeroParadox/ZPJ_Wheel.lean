@@ -230,9 +230,15 @@ def zpwInv : ZPWheelElem → ZPWheelElem
 -- § IV. Wheel Instance for ZPWheelElem
 -- ============================================================
 
-/-- ZPWheelElem is a Wheel. The 11 axioms encode the rational wheel extended
-    with ∞ and ⊥ₗ. All 11 axiom proofs are sorry-free, proceeding by cases
-    on the three constructors (bot / fin / inf). -/
+-- The case-bash proofs below (over the custom `ZPWheelElem` inductive) use `simp_all`/`field_simp`
+-- chains that trip two Mathlib house-style linters (`flexible`, `unnecessarySeqFocus`). They are
+-- relaxed locally here, consistent with the standalone-repo lint policy (cf. lakefile.toml).
+set_option linter.flexible false in
+set_option linter.unnecessarySeqFocus false in
+/-- ZPWheelElem is a Wheel. The fields encode Carlström's Definition 1.1 wheel axioms (his eight,
+    with the two commutative-monoid axioms unbundled into their equational laws) for the rationals
+    extended with ∞ and ⊥ₗ. All proofs are sorry-free, proceeding by cases on the three
+    constructors (bot / fin / inf). -/
 instance : Wheel ZPWheelElem where
   wadd  := zpwAdd
   wmul  := zpwMul
@@ -274,13 +280,20 @@ instance : Wheel ZPWheelElem where
       simp only [zpwAdd, zpwMul] <;>
       (try split_ifs) <;>
       simp [add_mul]
-  wheel_id x y z := by sorry
+  wheel_id x y z := by
+    cases x <;> cases y <;> cases z <;>
+      (try dsimp only [zpwAdd, zpwMul, zpwInv]) <;>
+      (try split_ifs) <;>
+      (try dsimp only [zpwAdd, zpwMul, zpwInv]) <;>
+      (try split_ifs) <;>
+      simp_all [add_mul, mul_comm, add_zero, mul_zero] <;>
+      (try field_simp)
   wzero_mul_wzero := by simp [zpwMul]
   wadd_zeromul_mul x y z := by
     cases x <;> cases y <;> cases z <;>
       simp only [zpwAdd, zpwMul] <;>
       (try split_ifs) <;>
-      simp_all [add_mul, mul_comm, add_zero, zero_mul, mul_zero]
+      simp_all [mul_comm, add_zero]
   winv_add_zeromul x y := by
     cases x <;> cases y <;>
       simp only [zpwAdd, zpwMul, zpwInv] <;>
