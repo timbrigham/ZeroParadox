@@ -19,8 +19,9 @@ and `/[x,y] = [y,x]`. Then `/0 = [1,0] = ∞`, `0·/0 = [0,0] = ⊥`, with `∞ 
 meadow) — matching the ZP porthole.
 
 **Status: complete.** Fully `sorry`-free: `≡_S` is an equivalence, the five operations are
-well-defined on the quotient, all 11 fields of the ZP `Wheel` typeclass hold (an expanded
-presentation of Carlström's 8-axiom Def 1.1), and `inf_ne_bot` holds given `0 ∉ S`.
+well-defined on the quotient, all 14 fields of the ZP `Wheel` typeclass hold (a faithful encoding
+of Carlström's 8-axiom Def 1.1, with his two commutative-monoid axioms unbundled), and `inf_ne_bot`
+holds given `0 ∉ S`.
 Both `instWheel` and `inf_ne_bot` are `Classical.choice`-free (`[propext, Quot.sound]`).
 -/
 
@@ -85,8 +86,8 @@ def winvF : WheelFrac S → WheelFrac S :=
     rintro p p' ⟨s, hs, s', hs', hp1, hp2⟩
     exact Quotient.sound ⟨s, hs, s', hs', hp2, hp1⟩)
 
-/-- **Main result:** `⊙_S A` is a wheel (Carlström 2001:11, Def 1.1, pp. 4-5). All 11 fields of the
-    ZP `Wheel` typeclass proved. -/
+/-- **Main result:** `⊙_S A` is a wheel (Carlström 2001:11, Def 1.1, pp. 4-5). All 14 fields of the
+    ZP `Wheel` typeclass proved (Carlström's eight axioms, two commutative-monoid axioms unbundled). -/
 instance instWheel : Wheel (WheelFrac S) where
   wadd := waddF S
   wmul := wmulF S
