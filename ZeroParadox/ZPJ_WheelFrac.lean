@@ -120,11 +120,11 @@ instance instWheel : Wheel (WheelFrac S) where
   winv_winv := by
     intro x
     induction x using Quotient.inductionOn with
-    | _ a => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+    | _ a => rfl  -- `/(/[x,y]) = [x,y]` holds definitionally (swap twice)
   winv_wmul := by
     intro x y
     induction x, y using Quotient.inductionOn₂ with
-    | _ a b => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+    | _ a b => rfl  -- `/(x·y) = /x · /y` holds definitionally (both reduce to `[bd, ac]`)
   weak_distrib := by
     intro x y z
     induction x, y, z using Quotient.inductionOn₃ with
