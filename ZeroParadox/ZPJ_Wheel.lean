@@ -276,9 +276,18 @@ instance : Wheel ZPWheelElem where
       simp [add_mul]
   wheel_id x y z := by sorry
   wzero_mul_wzero := by simp [zpwMul]
-  wadd_zeromul_mul x y z := by sorry
-  winv_add_zeromul x y := by sorry
-  wadd_zeroinv_absorb x := by sorry
+  wadd_zeromul_mul x y z := by
+    cases x <;> cases y <;> cases z <;>
+      simp only [zpwAdd, zpwMul] <;>
+      (try split_ifs) <;>
+      simp_all [add_mul, mul_comm, add_zero, zero_mul, mul_zero]
+  winv_add_zeromul x y := by
+    cases x <;> cases y <;>
+      simp only [zpwAdd, zpwMul, zpwInv] <;>
+      (try split_ifs) <;>
+      simp_all [add_zero]
+  wadd_zeroinv_absorb x := by
+    cases x <;> simp [zpwAdd, zpwMul, zpwInv]
 
 -- ============================================================
 -- § V. Porthole Theorems (proved without sorry)
