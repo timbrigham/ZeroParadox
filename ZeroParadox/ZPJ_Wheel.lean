@@ -120,12 +120,21 @@ class Wheel (W : Type*) where
   weak_distrib : ∀ x y z : W,
       wadd (wmul (wadd x y) z) (wmul wzero z) =
       wadd (wmul x z) (wmul y z)
-  -- W10: wheel identity  (x + 0·y)·/y = x·/y + 0·y
-  wheel_id : ∀ x y : W,
-      wmul (wadd x (wmul wzero y)) (winv y) =
-      wadd (wmul x (winv y)) (wmul wzero y)
-  -- W11: 0 · 0 = 0
+  -- W10: Carlström (4) — division/addition law:  x/y + z + 0y = (x + yz)/y
+  wheel_id : ∀ x y z : W,
+      wadd (wadd (wmul x (winv y)) z) (wmul wzero y) =
+      wmul (wadd x (wmul y z)) (winv y)
+  -- W11: Carlström (5) — 0·0 = 0
   wzero_mul_wzero : wmul wzero wzero = wzero
+  -- W12: Carlström (6) — a zero-term commutes out of a product:  (x + 0y)z = xz + 0y
+  wadd_zeromul_mul : ∀ x y z : W,
+      wmul (wadd x (wmul wzero y)) z = wadd (wmul x z) (wmul wzero y)
+  -- W13: Carlström (7) — a zero-term commutes through reciprocal:  /(x + 0y) = /x + 0y
+  winv_add_zeromul : ∀ x y : W,
+      winv (wadd x (wmul wzero y)) = wadd (winv x) (wmul wzero y)
+  -- W14: Carlström (8) — the bottom 0/0 absorbs addition:  x + 0/0 = 0/0
+  wadd_zeroinv_absorb : ∀ x : W,
+      wadd x (wmul wzero (winv wzero)) = wmul wzero (winv wzero)
 
 -- ============================================================
 -- § II. Derived Elements and Basic Theorems
@@ -265,29 +274,11 @@ instance : Wheel ZPWheelElem where
       simp only [zpwAdd, zpwMul] <;>
       (try split_ifs) <;>
       simp [add_mul]
-  wheel_id x y := by
-    cases x with
-    | bot => simp [zpwAdd, zpwMul, zpwInv]
-    | inf =>
-      cases y with
-      | bot => simp [zpwAdd, zpwMul, zpwInv]
-      | inf => simp [zpwAdd, zpwMul, zpwInv]
-      | fin q =>
-        by_cases hq : q = 0
-        · subst hq; simp [zpwAdd, zpwMul, zpwInv]
-        · simp [zpwAdd, zpwMul, zpwInv, hq]
-    | fin p =>
-      cases y with
-      | bot => simp [zpwAdd, zpwMul, zpwInv]
-      | inf => simp [zpwAdd, zpwMul, zpwInv]
-      | fin q =>
-        by_cases hq : q = 0
-        · subst hq
-          by_cases hp : p = 0
-          · subst hp; simp [zpwAdd, zpwMul, zpwInv]
-          · simp [zpwAdd, zpwMul, zpwInv, hp]
-        · simp [zpwAdd, zpwMul, zpwInv, hq]
+  wheel_id x y z := by sorry
   wzero_mul_wzero := by simp [zpwMul]
+  wadd_zeromul_mul x y z := by sorry
+  winv_add_zeromul x y := by sorry
+  wadd_zeroinv_absorb x := by sorry
 
 -- ============================================================
 -- § V. Porthole Theorems (proved without sorry)

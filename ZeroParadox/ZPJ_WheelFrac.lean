@@ -130,11 +130,19 @@ instance instWheel : Wheel (WheelFrac S) where
     induction x, y, z using Quotient.inductionOn₃ with
     | _ a b c => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
   wheel_id := by
-    intro x y
-    induction x, y using Quotient.inductionOn₂ with
-    | _ a b => apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+    intro x y z
+    sorry
   wzero_mul_wzero := by
     apply Quotient.sound; refine ⟨1, S.one_mem, 1, S.one_mem, ?_, ?_⟩ <;> ring
+  wadd_zeromul_mul := by
+    intro x y z
+    sorry
+  winv_add_zeromul := by
+    intro x y
+    sorry
+  wadd_zeroinv_absorb := by
+    intro x
+    sorry
 
 /-- Porthole: in `⊙_S A`, the infinity element `/0` and the bottom `0·/0` are distinct — the wheel
     (not meadow) behaviour, matching the ZP porthole `∞ ≠ ⊥`. -/
