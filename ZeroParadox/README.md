@@ -42,6 +42,7 @@ Each file contains a `section PurityCheck ... end PurityCheck` block with `#prin
 
 - **ZPA–ZPG:** `propext`, `Quot.sound` only, or fully axiom-free for computable results (e.g. `l_run` proved by `decide`)
 - **ZPH, ZPK:** `[propext, Classical.choice, Quot.sound]` — `Classical.choice` enters through Mathlib's Kleene/computability machinery (`Code`, `Partrec`), not through `ZPSemilattice` or `AFAStructure`
+- **ZPJ_WheelFrac (wheel of fractions `⊙_S A`):** `[propext, Quot.sound]` — `Classical.choice`-free. The Carlström wheel-of-fractions construction (`⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and multiplicative submonoid `S`) is fully constructive; no choice needed. This realizes the §VIII wheel conjecture of `ZPJ_Wheel.lean` as a theorem.
 
 ## Honest Scope Boundaries
 
