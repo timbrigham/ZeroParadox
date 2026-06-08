@@ -54,7 +54,7 @@ def build():
     # ── Preamble ───────────────────────────────────────────────────────────────
     print('[build_zpj_wheel_addendum] Building preamble...')
     E.append(body(
-        'A wheel (Carlström 2001:11) is an algebraic structure that extends a commutative '
+        'A wheel (Carlström 2001) is an algebraic structure that extends a commutative '
         'ring by making division a total operation: every element, including 0, has a '
         'reciprocal /x, so /0 becomes a defined first-class element rather than an error. '
         'The two elements this produces &#8212; &#8734; = /0 (the reciprocal of zero) and '
@@ -130,7 +130,7 @@ def build():
         'pairs (x, y) &#8712; A &#215; A &#8212; read as the formal fraction x/y &#8212; and '
         'quotient by the relation &#8801;<sub>S</sub> below.'))
     E.append(def_box(
-        'Construction (Carlström 2001:11, pp. 4&#8211;5, 10)',
+        'Construction (Carlström 2001, pp. 4&#8211;5)',
         [
             '&#8857;<sub>S</sub> A = (A &#215; A) / &#8801;<sub>S</sub>',
             '',
