@@ -103,6 +103,9 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **Metatheoretic note:** This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC. AFA permits self-containing sets (x = {x}). This affects only CC-2 below - the remaining results do not depend on non-well-founded sets. Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which is incompatible with the Foundation axiom's well-foundedness requirement (no infinite descending ∈-chains). The full argument for why AFA specifically is the appropriate extension - rather than simply removing Foundation - is developed in ZP-E Remark R-AFA.
 
+<details>
+<summary><b>Full commitment table</b> (label, type, statement) - click to expand</summary>
+
 | Label | Type | Statement |
 |-------|------|-----------|
 | **AX-B1** | Directly Verifiable | A state either exists or it does not. Directly verifiable by computation (OntologicalStates derives DecidableEq; ax_b1_distinct proved by `decide` without classical axioms) - not a novel commitment of this framework. |
@@ -112,6 +115,8 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | **RP-1** | Principle | The probabilistic representation of a state in the two-element state space is a point-mass distribution. |
 | **DP-1** | Design Commitment | Clopen separation in Q₂ is represented by orthogonality in H. |
 | **MC-1** | Modeling Commitment (Substantially Derived) | The bottom elements across all framework layers - algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as a single object. Substantially grounded by independent formal work: each domain locates its bottom element through its own logic prior to identification (ZP-H v1.7); ZP-E typeclass instance enforces ZP-A ⊥ ↔ ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves Binary Snap consistency across all four functors. What remains is the interpretive choice to unify the four under one name. |
+
+</details>
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure - it is a consequence of it.
 
