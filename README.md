@@ -30,7 +30,11 @@ The existence of a minimum nonzero element is not assumed - it follows from the 
 
 The identification of ⊥ across the framework's layers - algebraic, topological, information-theoretic, and categorical - is a modeling commitment, detailed in [Axiomatic Commitments](#axiomatic-commitments). The relationship between the framework's ε₀ and the proof-theoretic ordinal of PA (Gentzen 1936) is addressed in the [Question Register](#question-register).
 
-The derivation chain is:
+This framework introduces no snap-specific axioms. T-SNAP follows from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
+
+**Scope of the claim.** The internal coherence is formally established - T-SNAP and the supporting layer theorems are verified in Lean 4 given the explicitly stated commitments. The author believes the formalism faithfully captures the structural notion of zero it sets out to model, but that is a question Lean cannot answer from inside, and is what this repository invites external review on. Lean answers "do these conclusions follow from these commitments." Whether the commitments are the right ones, and whether the formalism tracks the intended structural notion, are open questions for outside readers. The framework has been developed in public from the start for exactly this reason: to invite inquiry throughout the process rather than only at its conclusion.
+
+**The derivation chain.** For readers who want the formal skeleton, the result is assembled as follows:
 
 **P₀** (incompressibility threshold, ZP-C D1)  
 → **DA-1** (instantiation of a configuration at P₀ constitutes an execution event, ZP-E)  
@@ -41,10 +45,6 @@ The derivation chain is:
 → **T-SNAP** (Binary Snap follows from A4, the standard bottom element axiom; AX-1 was redundant)
 
 The snap is also irreversible: ZP-B C3 (Lean-verified) establishes that there is no continuous path from any nonzero state back to ⊥. This follows from the ultrametric structure of Q₂: the total disconnectedness of Q₂ (established via the clopen ball structure in C3) makes any return path discontinuous. The connection to the lattice layer relies on the MC-1 identification of ⊥ with the 2-adic zero, detailed in [Axiomatic Commitments](#axiomatic-commitments).
-
-This framework introduces no snap-specific axioms. T-SNAP follows from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). Every other commitment is either directly verifiable by computation (AX-B1) or a categorical restatement of structure established in prior layers (AX-G1, AX-G2). See [Axiomatic Commitments](#axiomatic-commitments) for the full account.
-
-**Scope of the claim.** The internal coherence is formally established - T-SNAP and the supporting layer theorems are verified in Lean 4 given the explicitly stated commitments. The author believes the formalism faithfully captures the structural notion of zero it sets out to model, but that is a question Lean cannot answer from inside, and is what this repository invites external review on. Lean answers "do these conclusions follow from these commitments." Whether the commitments are the right ones, and whether the formalism tracks the intended structural notion, are open questions for outside readers. The framework has been developed in public from the start for exactly this reason: to invite inquiry throughout the process rather than only at its conclusion.
 
 ---
 
