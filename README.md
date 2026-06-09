@@ -32,12 +32,14 @@ The identification of ⊥ across the framework's layers - algebraic, topological
 
 This framework adds no axioms specific to the result. It follows from the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x) alone. The remaining commitments are either directly verifiable by computation or restatements of structure established in earlier layers; the full labelled account is in [Axiomatic Commitments](#axiomatic-commitments).
 
-**Scope of the claim.** The internal coherence is formally established - the central theorem and the supporting layer theorems are verified in Lean 4 given the explicitly stated commitments. The author believes the formalism faithfully captures the structural notion of zero it sets out to model, but that is a question Lean cannot answer from inside, and is what this repository invites external review on. Lean answers "do these conclusions follow from these commitments." Whether the commitments are the right ones, and whether the formalism tracks the intended structural notion, are open questions for outside readers. The framework has been developed in public from the start for exactly this reason: to invite inquiry throughout the process rather than only at its conclusion.
+**Scope of the claim**
+
+The internal coherence is formally established - the central theorem and the supporting layer theorems are verified in Lean 4 given the explicitly stated commitments. The author believes the formalism faithfully captures the structural notion of zero it sets out to model, but that is a question Lean cannot answer from inside, and is what this repository invites external review on. Lean answers "do these conclusions follow from these commitments." Whether the commitments are the right ones, and whether the formalism tracks the intended structural notion, are open questions for outside readers. The framework has been developed in public from the start for exactly this reason: to invite inquiry throughout the process rather than only at its conclusion.
 
 The snap is also irreversible: the p-adic topology layer (ZP-B) establishes, Lean-verified, that there is no continuous path from any nonzero state back to ⊥. This follows from the ultrametric structure of Q₂: its total disconnectedness makes any return path discontinuous. The connection to the lattice layer relies on identifying ⊥ with the 2-adic zero, detailed in [Axiomatic Commitments](#axiomatic-commitments).
 
 <details>
-<summary><b>The derivation chain</b> - the formal skeleton, P₀ → T-SNAP - click to expand</summary>
+<summary><b>The derivation chain</b> - the step-by-step formal skeleton - click to expand</summary>
 
 **P₀** (incompressibility threshold, ZP-C D1)  
 → **DA-1** (instantiation of a configuration at P₀ constitutes an execution event, ZP-E)  
@@ -60,11 +62,11 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | Document | Lean Source | Verifies | Build |
 |----------|-------------|----------|-------|
 | ZP-A Lattice Algebra | [ZPA.lean](ZeroParadox/ZPA.lean) | Partial order, ⊥ as the minimum, monotonicity of state change | Clean - April 2026 |
-| ZP-F The Counterexamples | [ZPF.lean](ZeroParadox/ZPF.lean) | The snap cannot occur in any linearly ordered field (ℝ, ℚ as instances) | Clean - May 2026 |
 | ZP-B p-Adic Topology | [ZPB.lean](ZeroParadox/ZPB.lean) | p = 2 forced; Q₂ ultrametric, clopen balls, total disconnectedness, snap irreversibility | Clean - April 2026 |
 | ZP-C Information Theory | [ZPC.lean](ZeroParadox/ZPC.lean) | Distinct state distributions, 1-bit divergence, execution as a nonzero change, unbounded surprisal at ⊥ | Clean - April 2026 |
 | ZP-D State Layer | [ZPD.lean](ZeroParadox/ZPD.lean) | Transition operator into Hilbert space: existence, uniqueness up to unitary, orthogonality under the snap | Clean - April 2026 |
 | ZP-E Bridge Document | [ZPE.lean](ZeroParadox/ZPE.lean) | The snap as a derived theorem (T-SNAP); instantiation succession; axiom-free minimal path | Clean - April 2026 |
+| ZP-F The Counterexamples | [ZPF.lean](ZeroParadox/ZPF.lean) | The snap cannot occur in any linearly ordered field (ℝ, ℚ as instances) | Clean - May 2026 |
 | ZP-G Category Theory | [ZPG.lean](ZeroParadox/ZPG.lean) | Initial object and its universal property; forward-only structure; the informational singularity | Clean - April 2026 |
 | ZP-H Categorical Bridge | [ZPH.lean](ZeroParadox/ZPH.lean) | The snap under all four domain functors; singularity reconciliation | Clean - April 2026 |
 | ZP-I Inside Zero | [ZPI.lean](ZeroParadox/ZPI.lean) | Every maximal chain is Cauchy and converges to its own successor ⊥ (Inside Zero) | Clean - April 2026 |
@@ -76,7 +78,14 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-L Incomputability Convergence | [ZPL.lean](ZeroParadox/ZPL.lean) | ε₀ as the exact snap threshold; the ordinal tower converges 2-adically to 0 (24 theorems) | Clean - May 2026 |
 | ZP-M Kleene-Ordinal Bridge | [ZPM.lean](ZeroParadox/ZPM.lean) | Type bridge MachinePhase → ℤ₂; Kleene quine and ε₀ fixed point co-witnessed | Clean - May 2026 |
 
-**Purity note:** ZP-H, ZP-I, ZP-J (extension files), ZP-K, ZP-L, and ZP-M use `Classical.choice` (via Mathlib computability, analysis, and ordinal infrastructure - Kleene's theorem, Roger's fixed-point theorem, metric space completion, ordinal arithmetic, and p-adic valuation). These are Mathlib infrastructure dependencies, not Zero Paradox commitments. `Classical.choice` in Lean is the kernel axiom that grounds classical excluded middle - it is distinct from the set-theoretic Axiom of Choice (AC) in ZFC and does not introduce non-constructive selection over infinite families of sets. The `#print axioms` check reports `[propext, Classical.choice, Quot.sound]` across ZP-I, ZP-K, ZP-L, ZP-M, and the ZP-J extension files (ZPJ_Scale, ZPJ_Model, ZPJ_APG); the classical axioms enter through Code/Partrec, analysis machinery, ordinal fixed-point theory, and p-adic library infrastructure, not through the ZPSemilattice or AFAStructure fields. The ZP-J core file (ZPJ.lean) and ZPJ_AczelConn, ZPJ_SelfApp, ZPJ_OntBridge, and ZPJ_WheelFrac are `Classical.choice`-free. ZP-A through ZP-G are `Classical.choice`-free except where standard Mathlib theorems require it. Whether `Classical.choice` is structurally forced by the ZP snap geometry or merely incidental to Mathlib's ordinal implementation is an open question (see Question Register).
+**Purity note.** All proofs are machine-checked. The classical axioms that appear (`Classical.choice`) come from Mathlib's computability, analysis, and ordinal libraries - they are infrastructure dependencies, not Zero Paradox commitments, and `Classical.choice` in Lean is distinct from the set-theoretic Axiom of Choice. Whether it is structurally forced by the snap geometry or merely incidental to Mathlib's implementation is an open question (see [Question Register](#question-register)).
+
+<details>
+<summary><b>Per-file axiom footprint</b> - click to expand</summary>
+
+ZP-H, ZP-I, ZP-J (extension files), ZP-K, ZP-L, and ZP-M use `Classical.choice` via Mathlib computability, analysis, and ordinal infrastructure (Kleene's theorem, Roger's fixed-point theorem, metric space completion, ordinal arithmetic, and p-adic valuation). `Classical.choice` is the Lean kernel axiom that grounds classical excluded middle; it does not introduce non-constructive selection over infinite families of sets. The `#print axioms` check reports `[propext, Classical.choice, Quot.sound]` across ZP-I, ZP-K, ZP-L, ZP-M, and the ZP-J extension files (ZPJ_Scale, ZPJ_Model, ZPJ_APG); the classical axioms enter through Code/Partrec, analysis machinery, ordinal fixed-point theory, and p-adic library infrastructure, not through the ZPSemilattice or AFAStructure fields. The ZP-J core file (ZPJ.lean) and ZPJ_AczelConn, ZPJ_SelfApp, ZPJ_OntBridge, and ZPJ_WheelFrac are `Classical.choice`-free. ZP-A through ZP-G are `Classical.choice`-free except where standard Mathlib theorems require it.
+
+</details>
 
 ### Formal Framework Documents
 
@@ -106,6 +115,8 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **Metatheoretic note:** This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC. AFA permits self-containing sets (x = {x}). This affects only CC-2 below - the remaining results do not depend on non-well-founded sets. Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which is incompatible with the Foundation axiom's well-foundedness requirement (no infinite descending ∈-chains). The full argument for why AFA specifically is the appropriate extension - rather than simply removing Foundation - is developed in ZP-E Remark R-AFA.
 
+**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure - it is a consequence of it.
+
 <details>
 <summary><b>Full commitment table</b> (label, type, statement) - click to expand</summary>
 
@@ -120,8 +131,6 @@ A commitment marked "not a novel commitment" means its content is formally groun
 | **MC-1** | Modeling Commitment (Substantially Derived) | The bottom elements across all framework layers - algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as a single object. Substantially grounded by independent formal work: each domain locates its bottom element through its own logic prior to identification (ZP-H v1.7); ZP-E typeclass instance enforces ZP-A ⊥ ↔ ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves Binary Snap consistency across all four functors. What remains is the interpretive choice to unify the four under one name. |
 
 </details>
-
-**AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure - it is a consequence of it.
 
 ---
 
