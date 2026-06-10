@@ -8,6 +8,7 @@ import ZeroParadox.ZPG
 import ZeroParadox.ZPH
 import ZeroParadox.ZPH_PowerSet
 import ZeroParadox.ZPH_TopFunctor
+import ZeroParadox.ZPH_HilbFunctor
 import ZeroParadox.ZPI
 import ZeroParadox.ZPJ
 import ZeroParadox.ZPJ_AczelConn
