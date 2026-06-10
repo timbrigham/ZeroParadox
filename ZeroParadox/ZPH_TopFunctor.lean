@@ -34,8 +34,6 @@ an **inverse system**, and the honest statement of "⊥ is the bottom" is that t
 
 This is the F_B half of the OQ-G3 upgrade (MC-1 correspondence into the real domain
 categories). F_C (information) and F_D (Hilbert) are separate, gated files.
-
-STUB: proof bodies are `sorry` pending the stub-first clean build.
 -/
 
 namespace ZeroParadox.ZPHTop

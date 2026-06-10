@@ -38,8 +38,6 @@ subsingleton, state space) **is** that zero object — so here ⊥ is the genuin
 - `fD_zero_isInitial` — ⊥ = `StateSpace 0` is the initial object of `ModuleCat ℂ`.
 
 This is the F_D half of the OQ-G3 upgrade (MC-1 correspondence into the real domain categories).
-
-STUB: proof bodies are `sorry` pending the stub-first clean build.
 -/
 
 namespace ZeroParadox.ZPHHilb

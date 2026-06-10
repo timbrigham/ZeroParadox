@@ -39,8 +39,6 @@ composition is monadic bind. Mathlib already provides this for free: `KleisliCat
   (`jsdPQ = log 2`, one bit).
 
 This is the F_C half of the OQ-G3 upgrade (MC-1 correspondence into the real domain categories).
-
-STUB: proof bodies are `sorry` pending the stub-first clean build.
 -/
 
 namespace ZeroParadox.ZPHInfo
