@@ -49,7 +49,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 **Mathematician:** [ZP-A](ZP-A_Lattice_Algebra.pdf) → [ZP-B](ZP-B_pAdic_Topology.pdf) → [ZP-C](ZP-C_Information_Theory.pdf) → [ZP-D](ZP-D_State_Layer.pdf) → [ZP-E](ZP-E_Bridge_Document.pdf) → [ZP-F](ZP-F_The_Counterexamples.pdf) → [ZP-J](ZP-J_Self_Reference.pdf) → [ZP-J AFA Addendum](ZP-J_AFA_Addendum.pdf) → [ZP-J Wheel Addendum](ZP-J_Wheel_Addendum.pdf) → [ZP-K](ZP-K_Computational_Grounding.pdf) → [ZP-I](ZP-I_Inside_Zero.pdf) → [ZP-L](ZP-L_Incomputability_Convergence.pdf) (axiom footprint convergence, ε₀ as snap threshold, canonical snap map) → [ZP-M](ZP-M_Kleene_Ordinal_Bridge.pdf) (Kleene-ordinal-2-adic bridge, hereditary fixed-point gap closure) - see [README](README.md) for the full formal index and Lean verification record
 
-**Category theory extension:** [ZP-G](ZP-G_Category_Theory.pdf) → [ZP-H](ZP-H_Categorical_Bridge.pdf) (self-contained after ZP-E)
+**Category theory extension:** [ZP-G](ZP-G_Category_Theory.pdf) → [ZP-H](ZP-H_Categorical_Bridge.pdf) → [ZP-H Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) (self-contained after ZP-E)
 
 **For process and methods:** [ZP Tools and Methods](ZP_Tools_and_Methods.pdf)
 
