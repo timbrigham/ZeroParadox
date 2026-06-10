@@ -6,6 +6,8 @@ This folder contains previous versions of the Zero Paradox documents, preserved 
 
 | File | Date Moved | Description |
 |------|-----------|-------------|
+| [Zero_Paradox_Foreword_v2_6.pdf](Zero_Paradox_Foreword_v2_6.pdf) | 2026-06-10 | Foreword v2.6 superseded by v2.7: §IV names Lawvere's fixed-point theorem as the recognized unification of the diagonal family (Cantor / Russell / the fixed-point lemma at the heart of Gödel / Kleene); fence firmed — "the bottom IS its diagonal fixed point" → "the Zero Paradox locates this diagonal fixed point at the bottom". |
+| [Zero_Paradox_Foreword_v2_5.pdf](Zero_Paradox_Foreword_v2_5.pdf) | 2026-06-10 | Foreword v2.5 superseded by v2.6: §IV diagonal fixed point keystone added (⊥ as the same self-referential fixed point across layers; Quine atom / Kleene quine / v₂(0)=∞ / categorical initial as four faces; Gödel inversion). Honesty fence kept — full unification stated as identification, not closed theorem. |
 | [ZP-E_Bridge_Document_v3_18.pdf](ZP-E_Bridge_Document_v3_18.pdf) | 2026-05-31 | ZP-E v3.18 superseded by v3.19: version string removed from T-BUF li() call (Gemini review catch — li/label_box calls not covered by prose gate). |
 | [ZP-C_Information_Theory_v1_16.pdf](ZP-C_Information_Theory_v1_16.pdf) | 2026-05-31 | ZP-C v1.16 superseded by v1.17: version strings removed from Remark R5 label_box (Gemini review catch — li/label_box calls not covered by prose gate). |
 | [ZP-K_Computational_Grounding_v1_6.pdf](ZP-K_Computational_Grounding_v1_6.pdf) | 2026-05-31 | ZP-K v1.6 superseded by v1.7: version changelog removed from preamble; stale v1.5 refs stripped; palette rebuild. |

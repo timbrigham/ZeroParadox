@@ -384,6 +384,42 @@ All formal ZP documents use the following hierarchy for naming results. Apply th
 
 When assigning a label, ask: "Is this result the central claim of its section, or is it infrastructure for something else?" Central claims are Theorems; infrastructure is Propositions or Lemmas.
 
+### Readable Name Convention — CC-2 is "the Quine atom" (framework-wide, additive)
+
+**Standing rule (Tim, 2026-06-09).** CC-2 (⊥ = {⊥}, the self-containing bottom) is the conceptual keystone of the framework — it is what forces ZF+AFA, makes ⊥ immune to external description, and is the single contact point between ZFC+Foundation and ZF+AFA. The bare label "CC-2" undersells it on two counts: it reads as a minor sequence code, and the "CC = Conditional Claim" prefix is now **stale** — CC-2 was upgraded to a Forced Metatheoretic Commitment (closed via ZP-J T-EXEC), so it is no longer a conditional claim. This is the same situation AX-1 was in before it became T-SNAP.
+
+**The convention — ADDITIVE, never eliminative:**
+- Present CC-2 with the readable name **"the Quine atom."** This is a recognized set-theory term (Quine, Aczel) — it carries real gravity and a literature anchor, and it is NOT ZP-invented jargon (avoid inventing a ZP-branded name — that would undo the de-jargoning work).
+- **Keep "CC-2" as the formal handle and note it alongside** — e.g., "the Quine atom (CC-2)" on first/significant mention. Do NOT remove or rename the CC-2 identifier anywhere; every existing cross-reference stays valid.
+- Gloss once per document as "the self-containing bottom, ⊥ = {⊥}."
+- **Do not overclaim status.** It remains a Forced Metatheoretic Commitment, not a Lean theorem. The structural self-application fixed point is Lean-proved (ZP-J T-EXEC); the literal set-membership ⊥ ∈ ⊥ is metatheoretic (lives in the ZF+AFA framing, not the Lean kernel). The readable name conveys significance, not proof-status.
+
+**Rollout (phased, not a 12-PDF marathon):**
+- Reader-facing surfaces first: README.md, GUIDE.md, register.md.
+- Then apply to each formal document/companion **as it is next revised** (the readable name leads CC-2's introduction). Footprint as of 2026-06-09: 12 build scripts carry CC-2 (build_zpe.py 27, build_zpa.py 13, build_zpc.py 8, etc.); Lean is clean (CC-2 is never a Lean identifier — 0 occurrences).
+- **Do not touch** RELEASES.md or historical/ (release record / archived — never rewrite history).
+
+### The keystone concept — "the diagonal fixed point" (confirmed name)
+
+**Standing rule (Tim, 2026-06-10).** The Quine atom (CC-2) is only the *set-theoretic face* of the
+framework's actual keystone: **⊥ is the same self-referential fixed point in every framework, and the
+floor of each structure is its point of self-reference** (the Gödel inversion — self-reference located
+at the floor, not the ceiling). The confirmed readable name for this keystone is **"the diagonal fixed
+point."** This language has recurred across many sessions; it is the real central concept.
+
+- The faces of the one diagonal fixed point: the Quine atom (set theory, CC-2), the Kleene quine
+  (computability, ZP-K), v₂(0)=∞ (valuation, ZP-B), the unique fixed point of `selfApp`
+  (ZP-J `AbstractSelfApp`), unbounded surprisal / no external description (ZP-C), the categorical
+  initial object (ZP-G). MC-1 (the single bottom) is the commitment that identifies them.
+- **Name it to evoke the recognized phenomenon, do NOT claim the unification as proved.** "Diagonal"
+  anchors it to the diagonal argument and Lawvere's fixed-point theorem (the recognized home for
+  self-referential fixed points across Russell / Quine / Kleene / Gödel / Tarski / Cantor). What ZP has
+  *formalized*: `AbstractSelfApp` + instances, T-COMP (Quine atom = Kleene fixed point = ⊥), ZP-M
+  (Kleene quine ∧ ε₀ co-witnessed). That ZP's keystone *is* a manifestation of Lawvere's theorem is a
+  CONNECTION / conjecture, not a ZP result — keep that fence.
+- Full articulation, faces, and the formal-vs-conjectural split:
+  `.claude-local/notes/keystone_self_referential_fixed_point_2026-06-10.md`.
+
 ## GitHub Issues — Transparency and Engagement Policy
 
 The Zero Paradox project treats GitHub Issues as a public transparency mechanism, consistent with the project's core transparency commitment. Issues are not just a bug tracker — they are the public record of what is open, contested, or unresolved in the framework.

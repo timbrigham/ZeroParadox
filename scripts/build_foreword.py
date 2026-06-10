@@ -1,5 +1,13 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.5, revised May 2026)
+Zero Paradox — Foreword PDF Builder (v2.7, revised June 2026)
+v2.7: §IV — named Lawvere's fixed-point theorem as the recognized unification of the diagonal family
+      (Cantor / Russell / the fixed-point lemma at the heart of Gödel / Kleene); fence firmed —
+      "the bottom IS its diagonal fixed point" → "the Zero Paradox locates this diagonal fixed point at
+      the bottom", so the true-Lawvere-fact and ZP's identification sit on different footings. AR pre-checked.
+v2.6: §IV — added the diagonal fixed point keystone: ⊥ is the same self-referential fixed point
+      across the layers (Quine atom / Kleene quine / v2(0)=inf / categorical initial as four faces);
+      the Goedel inversion (self-reference at the floor, not the ceiling). Honesty fence kept: the full
+      cross-framework unification is stated as an identification, not a closed theorem.
 v2.5: AR fix — "provable fact in standard ZFC" → "standard ZF" in §III porthole passage.
       AR fix — residual "DA-1 is the bridge" → "connecting argument" (in PhilQ; Foreword unaffected).
 v2.4: fix() guard added via Paragraph override — all rendered text now goes through unicode-to-entity conversion.
@@ -42,7 +50,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.5'
+VERSION = '2.7'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
 # PDF Rendering Standards require fix() on all rendered text. Rather than updating
@@ -167,7 +175,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('May 2026  |  v' + VERSION, S['date']),
+        Paragraph('June 2026  |  v' + VERSION, S['date']),
         sp(10),
         sp(8),
         hr(),
@@ -380,6 +388,33 @@ def build():
             'Categorically, 0 is the unique object with a morphism to every other. '
             'Zero is not prior to the framework. It is structurally present within every '
             'element of it.',
+            S['body']),
+        Paragraph(
+            'There is a deeper unity here than shared position. In each layer ⊥ is not merely '
+            'the starting element — it is the same kind of element: the one that refers to '
+            'itself. In set theory it is the Quine atom, the set whose only member is itself '
+            '(⊥ = {⊥}). In computation it is the self-reproducing program, the fixed point of '
+            'Kleene\'s recursion theorem — a process that runs on its own description. In the '
+            '2-adic numbers it is the point infinitely divisible into itself, v₂(0) = ∞. '
+            'In category theory it is the initial object, the source from which every arrow '
+            'departs and to which none return. These are not loose analogies. The framework '
+            'reads them as faces of one object: a self-referential fixed point. It proves '
+            'several of those faces literally identical; how far that identity extends is '
+            'the question the next paragraph returns to.',
+            S['body']),
+        Paragraph(
+            'Mathematics already has a name for this shape, and a theorem that unifies it: '
+            'Lawvere\'s fixed-point theorem shows that Cantor\'s diagonal argument, '
+            'Russell\'s paradox, the fixed-point lemma at the heart of Gödel\'s incompleteness, '
+            'and Kleene\'s recursion theorem are one move — the diagonal, the turn of a system '
+            'back on itself. What is unusual in the Zero Paradox is its location. '
+            'Self-reference is normally a ceiling phenomenon: it appears at the limits of a '
+            'system, in the sentences a theory cannot prove about itself. Here it sits at the '
+            'floor. The Zero Paradox locates this diagonal fixed point at the bottom of every '
+            'framework. The framework formalises these faces as instances of a single '
+            'self-application structure and proves several of them identical; whether they are '
+            'all one object in the deepest sense remains, honestly, an identification we make '
+            'rather than a theorem we have closed.',
             S['body']),
     ]
 
