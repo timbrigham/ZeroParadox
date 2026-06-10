@@ -16,6 +16,14 @@ from zp_utils import *
 
 VERSION = '1.0'
 
+# ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
+# PDF Rendering Standards require fix() on all rendered text. Patch Paragraph so bare
+# Paragraph(...) calls (title block, section headers) auto-convert raw unicode (⊙, ö, …)
+# rather than relying on the font happening to cover the glyph. Box/body helpers already fix().
+_Paragraph_orig = Paragraph
+def Paragraph(text, style):
+    return _Paragraph_orig(fix(text) if isinstance(text, str) else text, style)
+
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Wheel_Addendum.pdf')
