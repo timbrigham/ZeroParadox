@@ -36,7 +36,7 @@ This framework adds no axioms specific to the result. It follows from the standa
 
 The internal coherence is formally established - the central theorem and the supporting layer theorems are verified in Lean 4 given the explicitly stated commitments. The author believes the formalism faithfully captures the structural notion of zero it sets out to model, but that is a question Lean cannot answer from inside, and is what this repository invites external review on. Lean answers "do these conclusions follow from these commitments." Whether the commitments are the right ones, and whether the formalism tracks the intended structural notion, are open questions for outside readers. The framework has been developed in public from the start for exactly this reason: to invite inquiry throughout the process rather than only at its conclusion.
 
-The snap is also irreversible: the p-adic topology layer (ZP-B) establishes, Lean-verified, that there is no continuous path from any nonzero state back to ⊥. This follows from the ultrametric structure of Q₂: its total disconnectedness makes any return path discontinuous. The connection to the lattice layer relies on identifying ⊥ with the 2-adic zero, detailed in [Axiomatic Commitments](#axiomatic-commitments).
+The forced transition is also irreversible: the p-adic topology layer (ZP-B) establishes, Lean-verified, that there is no continuous path from any nonzero state back to ⊥. This follows from the ultrametric structure of Q₂: its total disconnectedness makes any return path discontinuous. The connection to the lattice layer relies on identifying ⊥ with the 2-adic zero, detailed in [Axiomatic Commitments](#axiomatic-commitments).
 
 <details>
 <summary><b>The derivation chain</b> - the step-by-step formal skeleton - click to expand</summary>
@@ -128,8 +128,12 @@ Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an extern
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure - it is a consequence of it.
 
+**The single bottom (MC-1)**
+
+The bottom elements across the layers - the algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as one object. This is substantially grounded rather than stipulated: each domain locates its own bottom through its own logic first, and the cross-layer agreement is then enforced formally (the ZP-E typeclass instance ties ZP-A ⊥ to ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves snap consistency across all four functors). What remains is the interpretive choice to call them one thing.
+
 <details>
-<summary><b>Full commitment table</b> (label, type, statement) - click to expand</summary>
+<summary><b>The supporting commitments</b> (label, type, statement) - click to expand</summary>
 
 | Label | Type | Statement |
 |-------|------|-----------|
@@ -139,7 +143,6 @@ Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an extern
 | **MP-1** | Principle | The representational base is the minimum sufficient base for AX-B1. Derives p = 2. |
 | **RP-1** | Principle | The probabilistic representation of a state in the two-element state space is a point-mass distribution. |
 | **DP-1** | Design Commitment | Clopen separation in Q₂ is represented by orthogonality in H. |
-| **MC-1** | Modeling Commitment (Substantially Derived) | The bottom elements across all framework layers - algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as a single object. Substantially grounded by independent formal work: each domain locates its bottom element through its own logic prior to identification (ZP-H v1.7); ZP-E typeclass instance enforces ZP-A ⊥ ↔ ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves Binary Snap consistency across all four functors. What remains is the interpretive choice to unify the four under one name. |
 
 </details>
 
