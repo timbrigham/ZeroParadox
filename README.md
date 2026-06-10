@@ -78,7 +78,9 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-L Incomputability Convergence | [ZPL.lean](ZeroParadox/ZPL.lean) | ε₀ as the exact snap threshold; the ordinal tower converges 2-adically to 0 (24 theorems) | Clean - May 2026 |
 | ZP-M Kleene-Ordinal Bridge | [ZPM.lean](ZeroParadox/ZPM.lean) | Type bridge MachinePhase → ℤ₂; Kleene quine and ε₀ fixed point co-witnessed | Clean - May 2026 |
 
-**Purity note.** All proofs are machine-checked. The classical axioms that appear (`Classical.choice`) come from Mathlib's computability, analysis, and ordinal libraries - they are infrastructure dependencies, not Zero Paradox commitments, and `Classical.choice` in Lean is distinct from the set-theoretic Axiom of Choice. Whether it is structurally forced by the snap geometry or merely incidental to Mathlib's implementation is an open question (see [Question Register](#question-register)).
+**Purity note**
+
+All proofs are machine-checked. The classical axioms that appear (`Classical.choice`) come from Mathlib's computability, analysis, and ordinal libraries - they are infrastructure dependencies, not Zero Paradox commitments, and `Classical.choice` in Lean is distinct from the set-theoretic Axiom of Choice. Whether it is structurally forced by the snap geometry or merely incidental to Mathlib's implementation is an open question (see [Question Register](#question-register)).
 
 <details>
 <summary><b>Per-file axiom footprint</b> - click to expand</summary>
@@ -113,7 +115,16 @@ ZP-H, ZP-I, ZP-J (extension files), ZP-K, ZP-L, and ZP-M use `Classical.choice` 
 
 A commitment marked "not a novel commitment" means its content is formally grounded in prior layers and derivable from results established there. It is stated as a local axiom only for the self-containment of that layer - the same pattern by which AX-1 was stated as an axiom before being formally derived as T-SNAP in ZP-E.
 
-**Metatheoretic note:** This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC. AFA permits self-containing sets (x = {x}). This affects only CC-2 below - the remaining results do not depend on non-well-founded sets. Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which is incompatible with the Foundation axiom's well-foundedness requirement (no infinite descending ∈-chains). The full argument for why AFA specifically is the appropriate extension - rather than simply removing Foundation - is developed in ZP-E Remark R-AFA.
+**Metatheoretic note**
+
+This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results.
+
+<details>
+<summary><b>Why AFA, and why it is forced</b> - click to expand</summary>
+
+Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The forcing comes from the framework's results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which is incompatible with the Foundation axiom's well-foundedness requirement (no infinite descending ∈-chains). The full argument for why AFA specifically is the appropriate extension - rather than simply removing Foundation - is developed in ZP-E Remark R-AFA.
+
+</details>
 
 **AX-1 (Binary Snap Causality) is no longer an axiom.** It is Theorem T-SNAP, derived in ZP-E from A4 - the standard bottom element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant: any join-semilattice with bottom already has this property. The snap is not imposed on the algebraic structure - it is a consequence of it.
 
