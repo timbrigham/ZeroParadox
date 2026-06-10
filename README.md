@@ -66,7 +66,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-C Information Theory | [ZPC.lean](ZeroParadox/ZPC.lean) | Distinct state distributions, 1-bit divergence, execution as a nonzero change, unbounded surprisal at ⊥ | Clean - April 2026 |
 | ZP-D State Layer | [ZPD.lean](ZeroParadox/ZPD.lean) | Transition operator into Hilbert space: existence, uniqueness up to unitary, orthogonality under the snap | Clean - April 2026 |
 | ZP-E Bridge Document | [ZPE.lean](ZeroParadox/ZPE.lean) | The snap as a derived theorem (T-SNAP); instantiation succession; axiom-free minimal path | Clean - April 2026 |
-| ZP-F The Counterexamples | [ZPF.lean](ZeroParadox/ZPF.lean) | The snap cannot occur in any linearly ordered field (ℝ, ℚ as instances) | Clean - May 2026 |
+| ZP-F The Counterexamples | [ZPF.lean](ZeroParadox/ZPF.lean) | The snap cannot occur in any ordered field (ℝ, ℚ as instances) | Clean - May 2026 |
 | ZP-G Category Theory | [ZPG.lean](ZeroParadox/ZPG.lean) | Initial object and its universal property; forward-only structure; the informational singularity | Clean - April 2026 |
 | ZP-H Categorical Bridge | [ZPH.lean](ZeroParadox/ZPH.lean) | The snap under all four domain functors; singularity reconciliation | Clean - April 2026 |
 | ZP-I Inside Zero | [ZPI.lean](ZeroParadox/ZPI.lean) | Every maximal chain is Cauchy and converges to its own successor ⊥ (Inside Zero) | Clean - April 2026 |

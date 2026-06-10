@@ -171,3 +171,37 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP-M Kleene-Ordinal Bridge | v1.0 |
 
 **Next threshold:** v2.3 on next substantive reviewer feedback round; v3.0 on new formal layer.
+
+---
+
+## v2.3 - 2026-06-10
+
+**Why this release:** Accumulated documentation and formal-content work since v2.2 - the ZP-J Wheel Addendum (the wheel of fractions proved a wheel, conjecture to theorem) and the diagonal fixed point keystone surfaced across the README and Foreword - a meaningful, reader-facing state of the framework.
+
+**What changed:**
+- ZP-J Wheel Addendum: new v1.0 formal document - the wheel of fractions ⊙_S A = (A×A)/≡_S is a wheel (Carlström Definition 1.1, all eight axioms / 14 unbundled fields) for any commutative ring A and multiplicative submonoid S; choice-free (`[propext, Quot.sound]`); `inf_ne_bot` porthole (∞ ≠ ⊥ given 0 ∉ S). Machine-verified in `ZPJ_WheelFrac.lean` (Lean source predates this release). Carlström citation verified against the 2001:11 primary source. Linked in README and GUIDE.
+- Foreword: v2.5 → v2.7 - §IV gains the diagonal fixed point keystone (⊥ as the same self-referential fixed point across the layers; Quine atom / Kleene quine / v₂(0)=∞ / categorical initial as faces; the Gödel inversion), anchored to Lawvere's fixed-point theorem as the recognized unification of the classical diagonal family. Honesty fence throughout - ZP situated in the Lawvere lineage, not claimed as a proved instance.
+- README: front-matter overhaul (five rounds) - Central Result reordered (plain claim + scope lead, derivation chain folded); Framework tables condensed, Lean-verification table moved above the PDF table; Axiomatic Commitments table, closed Question Register items, and the Purity note folded into collapsible blocks; MC-1 surfaced as a visible note; internal labels de-jargoned from the cold-reader path.
+- Naming conventions (CLAUDE.md + README): CC-2 presented as "the Quine atom" (additive); the keystone named "the diagonal fixed point."
+- `.zenodo.json`: ZP-J clause updated to include the wheel of fractions; ZP-F phrasing aligned to "ordered fields" (with a matching README tweak).
+
+**Document versions at v2.3:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.14 |
+| ZP-B p-Adic Topology | v1.9 |
+| ZP-C Information Theory | v1.17 |
+| ZP-D State Layer | v1.11 |
+| ZP-E Bridge Document | v3.19 |
+| ZP-F The Counterexamples | v1.4 |
+| ZP-G Category Theory | v1.11 |
+| ZP-H Categorical Bridge | v1.15 |
+| ZP-I Inside Zero | v1.10 |
+| ZP-J Self-Reference | v2.1 |
+| ZP-J AFA Addendum | v1.2 |
+| ZP-J Wheel Addendum | v1.0 (new) |
+| ZP-K Computational Grounding | v1.7 |
+| ZP-L Incomputability Convergence | v1.0 |
+| ZP-M Kleene-Ordinal Bridge | v1.0 |
+
+**Next threshold:** v3.0 on a new formal layer (ZP-N constructive ordinal validation candidate); a v2.4 doc release if the OQ-G3 / MC-1-theorem work lands (MC-1's correspondence upgraded from modeling commitment to theorem).
