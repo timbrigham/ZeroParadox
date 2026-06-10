@@ -62,24 +62,50 @@ noncomputable def fC_map {n m : ℕ} (h : n ≤ m) : fC_obj n ⟶ fC_obj m :=
 noncomputable def fC_functor : ℕ ⥤ KleisliCat PMF where
   obj n := fC_obj n
   map f := fC_map (leOfHom f)
-  map_id := sorry
-  map_comp := sorry
+  map_id n := by
+    funext i
+    simp [fC_map, KleisliCat.id_def]
+  map_comp f g := by
+    funext i
+    simp [fC_map, KleisliCat.comp_def]
 
 /-- ⊥ = `Fin 0` is the genuine initial object of `KleisliCat PMF`:
     there is exactly one stochastic map out of the empty type. -/
-noncomputable def fC_zero_isInitial : Limits.IsInitial (fC_functor.obj 0) :=
-  sorry
+noncomputable def fC_zero_isInitial : Limits.IsInitial (fC_functor.obj 0) := by
+  haveI : ∀ Y : KleisliCat PMF, Unique (fC_functor.obj 0 ⟶ Y) := fun _ =>
+    { default := fun i => i.elim0
+      uniq := fun _ => funext fun i => i.elim0 }
+  exact Limits.IsInitial.ofUnique _
 
 /-- AX-G2 realized as a theorem: no stochastic map returns into ⊥ = `Fin 0` from a nonempty
     object, because `PMF (Fin 0)` is empty. The categorical content of snap irreversibility. -/
 theorem fC_no_return {n : ℕ} (hn : 0 < n) :
-    IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0) :=
-  sorry
+    IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0) := by
+  refine ⟨fun f => ?_⟩
+  have hsum : ∑' a : Fin 0, (f ⟨0, hn⟩) a = 1 := PMF.tsum_coe _
+  rw [tsum_empty] at hsum
+  exact zero_ne_one hsum
 
 /-- The snap step's informational cost is grounded in ZPC: the P → Q transition costs exactly
     one bit (`jsdPQ = log 2`, T1b), paired with the existence of the snap morphism. -/
 theorem fC_snap_info_grounded :
     Nonempty (fC_functor.obj 0 ⟶ fC_functor.obj 1) ∧ jsdPQ = Real.log 2 :=
-  sorry
+  ⟨⟨fC_map (Nat.zero_le 1)⟩, t1b_jsd⟩
 
 end ZeroParadox.ZPHInfo
+
+/-! ## Axiom Purity Check
+
+`Classical.choice` is expected here: it enters through Mathlib's `PMF` / `tsum` / `KleisliCat`
+library. It is a library dependency, not a new commitment of this construction. -/
+
+section PurityCheck
+open ZeroParadox.ZPHInfo
+
+#print axioms fC_functor
+#print axioms fC_zero_isInitial
+#print axioms fC_no_return
+#print axioms fC_snap_info_grounded
+
+end PurityCheck
+
