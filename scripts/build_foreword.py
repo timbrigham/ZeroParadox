@@ -393,8 +393,10 @@ def build():
             'Kleene\'s recursion theorem — a process that runs on its own description. In the '
             '2-adic numbers it is the point infinitely divisible into itself, v₂(0) = ∞. '
             'In category theory it is the initial object, the source from which every arrow '
-            'departs and to which none return. These are not four analogies; they are four '
-            'faces of one object: a self-referential fixed point.',
+            'departs and to which none return. These are not loose analogies. The framework '
+            'reads them as faces of one object: a self-referential fixed point. It proves '
+            'several of those faces literally identical; how far that identity extends is '
+            'the question the next paragraph returns to.',
             S['body']),
         Paragraph(
             'Mathematics already has a name for this shape. The same self-reference drives '
