@@ -32,12 +32,17 @@ Key results:
   - F_A (ZPA/ZPE): fully categorical — ℕ with max/0 is a concrete ZPCategory instance
     (see NatSLat appendix); ⊥ satisfies the universal property of an initial object.
   - F_B: Q₂BallDepth appendix — concrete Functor ℕ → Q₂BallDepth (fb_functor),
-    preserves initial object, snap grounded in C3. OQ-G3 closed for F_B.
+    preserves initial object, snap grounded in C3. Concrete witness for F_B.
   - F_C: InfoDepth appendix — concrete Functor ℕ → InfoDepth (fc_functor),
-    preserves initial object, snap grounded in T1b (JSD = log 2). OQ-G3 closed for F_C.
+    preserves initial object, snap grounded in T1b (JSD = log 2). Concrete witness for F_C.
   - F_D: HilbDimDepth appendix — concrete Functor ℕ → HilbDimDepth (fd_functor),
-    preserves initial object, snap grounded in T4 (orthogonal shift). OQ-G3 closed for F_D.
-  All four functors now have concrete Lean Functor terms. OQ-G3 fully closed.
+    preserves initial object, snap grounded in T4 (orthogonal shift). Concrete witness for F_D.
+  OQ-G3 status: each F_B/F_C/F_D has a concrete depth-index witness (a ZPCategory whose
+  initial object is the snap floor). The full functors into the real domain categories
+  (TopCat, a Hilbert-space category, an information category) are a separate, stronger
+  construction and remain in progress — the depth-index targets here are proxies isomorphic
+  to ℕ, not the domains themselves. OQ-G3 is closed in the concrete-witness sense and open
+  in the real-domain-category sense (see README Question Register).
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
   accumulation) are compatible — jointly derivable (OQ-G4 closed).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved
@@ -79,7 +84,10 @@ plus the domain-specific theorem grounding the initial-object claim.
 - **F_C**: InfoDepth appendix — `fc_functor : Functor ℕ InfoDepth`, grounded in T1b.
 - **F_D**: HilbDimDepth appendix — `fd_functor : Functor ℕ HilbDimDepth`, grounded in T4.
   Each has a distinct depth-index type, ZPCategory instance, concrete Functor term,
-  preserves_initial definition, and snap grounding theorem. OQ-G3 fully closed.
+  preserves_initial definition, and snap grounding theorem. These depth-index types are
+  proxies isomorphic to ℕ — concrete witnesses, not the real domain categories. The full
+  functors into pTop / a Hilbert-space category / an information category remain the open
+  (stronger) part of OQ-G3.
   NNRealZPCat appendix remains as the shared categorical witness underlying all three. -/
 
 /-! ## T-H1 — Initial-Object Properties Under Each Instantiation Functor -/
