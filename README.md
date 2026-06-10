@@ -117,7 +117,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **Metatheoretic note**
 
-This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results.
+This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results.
 
 <details>
 <summary><b>Why AFA, and why it is forced</b> - click to expand</summary>
@@ -130,7 +130,7 @@ Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an extern
 
 **The single bottom (MC-1)**
 
-The bottom elements across the layers - the algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as one object. This is substantially grounded rather than stipulated: each domain locates its own bottom through its own logic first, and the cross-layer agreement is then enforced formally (the ZP-E typeclass instance ties ZP-A ⊥ to ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves snap consistency across all four functors). What remains is the interpretive choice to call them one thing.
+The bottom elements across the layers - the algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as one object: the same self-referential (diagonal) fixed point in each framework. Its faces are the Quine atom (⊥ = {⊥}) in set theory, the Kleene quine in computation, the point v₂(0) = ∞ in valuation, and the initial object in category theory. This identification is substantially grounded rather than stipulated: each domain locates its own bottom through its own logic first, and the cross-layer agreement is then enforced formally (the ZP-E typeclass instance ties ZP-A ⊥ to ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves snap consistency across all four functors). What remains is the interpretive choice to call them one thing.
 
 <details>
 <summary><b>The supporting commitments</b> (label, type, statement) - click to expand</summary>
@@ -173,7 +173,7 @@ The open and partially-resolved questions:
 | S1: Distribution stipulation | Closed - ZP-C T1 (derived from AX-B1 + RP-1) |
 | OQ-C1: Non-conservatism of DF | Closed - ZP-C T2 (rebuilt within extended D6) |
 | CC-1 (S₀ = ⊥) derivability | **Closed - ZP-J cc1_derived (axiom-free, Lean)** - was ZP-A Conditional Claim; now derived via ZP-J T-EXEC in any AFAStructure lattice; ZP-A v1.11 declaration and preface added for clarity |
-| CC-2 (⊥ = {⊥}) as commitment | **Closed - ZP-J T-EXEC** - ⊥ = {⊥} is structurally forced by self-execution argument; not a freestanding modelling choice |
+| CC-2 (⊥ = {⊥}, the Quine atom) as commitment | **Closed - ZP-J T-EXEC** - ⊥ = {⊥} is structurally forced by self-execution argument; not a freestanding modelling choice |
 | AX-1: Binary Snap Causality | **Closed - ZP-E T-SNAP (derived theorem)** |
 | OQ-E1: Sequence vs. tree structure | Closed - ZP-E DA-2 (directed instantiation tree; branching mandatory via T-SNAP) |
 | DA-2: Instantiation succession | Closed - ZP-E DA-2 (terminal state of I_n satisfies ⊥ role for I_n+1; C-DA2 derives that each instantiation produces a provably distinct ⊥) |
