@@ -420,6 +420,33 @@ point."** This language has recurred across many sessions; it is the real centra
 - Full articulation, faces, and the formal-vs-conjectural split:
   `.claude-local/notes/keystone_self_referential_fixed_point_2026-06-10.md`.
 
+### MC-1 status convention — correspondence half is now derived (additive, no new name)
+
+**Standing rule (Tim, 2026-06-10).** MC-1 (the cross-framework "single bottom" identification) was
+split this session, the same way AX-1 became T-SNAP and CC-2 became a Forced Metatheoretic Commitment:
+
+- **Correspondence half — now formally realized.** Each domain bottom is the categorical bottom
+  (limit or initial object) of its own *real* Mathlib category: F_B `fB_functor : ℕᵒᵖ ⥤ TopCat`
+  (⊥ = inverse limit `⋂ B(0,2⁻ⁿ) = {0}`), F_D `fD_functor : ℕ ⥤ ModuleCat ℂ` (⊥ = initial object
+  `StateSpace 0`), F_C `fC_functor : ℕ ⥤ KleisliCat PMF` (⊥ = initial object `Fin 0`, with
+  `fC_no_return` = AX-G2 as a theorem). Bundled witness: `mc1_correspondence` (`ZPH_MC1.lean`).
+  So the bare label "MC = Modeling Commitment" now **undersells** this half.
+- **Identity half — still a modeling commitment.** That the four bottoms are *numerically one object*
+  across four categories is a chosen identification, the irreducible residue. NOT a theorem.
+
+**The convention (ADDITIVE, never eliminative):**
+- Keep **"MC-1"** as the formal handle everywhere; do not rename it. When status is described, present
+  the split: correspondence half derived (cite `mc1_correspondence`), identity half a commitment.
+- **No new readable name for MC-1.** Unlike CC-2 (which *is* an object = the Quine atom), MC-1 is the
+  *identification*; its underlying object already has the confirmed readable name
+  [[project_diagonal_fixed_point]] ("the diagonal fixed point"). Coining an MC-branded name would be
+  the ZP-invented jargon the CC-2 convention warns against — do not.
+- **Do not overclaim.** The real categories are not `ZPCategory` instances (they have terminal
+  objects), so ⊥ is the *limit* in `TopCat` and the *initial object* in the other two; state that
+  distinction honestly. The cross-category identity is never claimed as proved.
+- **Rollout:** reader-facing surfaces first (README done 2026-06-10); other formal docs/companions as
+  each is next revised. Do not touch RELEASES.md or historical/.
+
 ## GitHub Issues — Transparency and Engagement Policy
 
 The Zero Paradox project treats GitHub Issues as a public transparency mechanism, consistent with the project's core transparency commitment. Issues are not just a bug tracker — they are the public record of what is open, contested, or unresolved in the framework.
