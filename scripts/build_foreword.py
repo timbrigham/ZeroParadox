@@ -1,5 +1,9 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.6, revised June 2026)
+Zero Paradox — Foreword PDF Builder (v2.7, revised June 2026)
+v2.7: §IV — named Lawvere's fixed-point theorem as the recognized unification of the diagonal family
+      (Cantor / Russell / the fixed-point lemma at the heart of Gödel / Kleene); fence firmed —
+      "the bottom IS its diagonal fixed point" → "the Zero Paradox locates this diagonal fixed point at
+      the bottom", so the true-Lawvere-fact and ZP's identification sit on different footings. AR pre-checked.
 v2.6: §IV — added the diagonal fixed point keystone: ⊥ is the same self-referential fixed point
       across the layers (Quine atom / Kleene quine / v2(0)=inf / categorical initial as four faces);
       the Goedel inversion (self-reference at the floor, not the ceiling). Honesty fence kept: the full
@@ -46,7 +50,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.6'
+VERSION = '2.7'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
 # PDF Rendering Standards require fix() on all rendered text. Rather than updating
@@ -399,17 +403,18 @@ def build():
             'the question the next paragraph returns to.',
             S['body']),
         Paragraph(
-            'Mathematics already has a name for this shape. The same self-reference drives '
-            'Cantor\'s diagonal argument, Russell\'s paradox, Gödel\'s incompleteness, and '
-            'Kleene\'s recursion theorem — it is the diagonal, the move that turns a system '
+            'Mathematics already has a name for this shape, and a theorem that unifies it: '
+            'Lawvere\'s fixed-point theorem shows that Cantor\'s diagonal argument, '
+            'Russell\'s paradox, the fixed-point lemma at the heart of Gödel\'s incompleteness, '
+            'and Kleene\'s recursion theorem are one move — the diagonal, the turn of a system '
             'back on itself. What is unusual in the Zero Paradox is its location. '
             'Self-reference is normally a ceiling phenomenon: it appears at the limits of a '
             'system, in the sentences a theory cannot prove about itself. Here it sits at the '
-            'floor. The bottom of every framework is its diagonal fixed point. The framework '
-            'formalises these faces as instances of a single self-application structure and '
-            'proves several of them identical; whether they are all one object in the deepest '
-            'sense remains, honestly, an identification we make rather than a theorem we have '
-            'closed.',
+            'floor. The Zero Paradox locates this diagonal fixed point at the bottom of every '
+            'framework. The framework formalises these faces as instances of a single '
+            'self-application structure and proves several of them identical; whether they are '
+            'all one object in the deepest sense remains, honestly, an identification we make '
+            'rather than a theorem we have closed.',
             S['body']),
     ]
 
