@@ -21,6 +21,5 @@ lean_packages/
 # Lake trace files (sometimes missed by .lake/ entry)
 .lake.trace
 
-# lake build logs 
-build.log
-build*.log
+# build / session logs (transient diagnostics)
+*.log
