@@ -47,6 +47,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding.pdf` |
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 | [build_zpm.py](build_zpm.py) | `ZP-M_Kleene_Ordinal_Bridge.pdf` |
+| [build_zp_choice_free_core.py](build_zp_choice_free_core.py) | `ZP_Choice_Free_Core_Addendum.pdf` |
 
 ### Illustrated companion builders
 

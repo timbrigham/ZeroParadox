@@ -3,6 +3,14 @@ import ZeroParadox.Basic
 /-!
 # Axiom Profile — the choice-free core of the Zero Paradox
 
+## Engineer's Take
+
+Here my system engineering background shows through. This is a unit test on the core axioms for the
+Zero Paradox project. While classical choice may exist elsewhere in the project, and may even be
+required in places... the heart of what we're trying to prove is choice free.
+
+---
+
 This file is a **checkable artifact**. Build it and read the `#print axioms` output: the Lean kernel
 reports the complete axiom dependency of each result, so the claims below are verifiable, not asserted.
 

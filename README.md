@@ -59,7 +59,7 @@ The forced transition is also irreversible: the p-adic topology layer (ZP-B) est
 
 ### Formal Verification (Lean 4)
 
-Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives under `ZeroParadox/` in this repository. The full theorem-by-theorem detail is in each source file. An **axiom-profile artifact**, [AxiomProfile.lean](ZeroParadox/AxiomProfile.lean), collects the axiom dependencies of the core results in one place: the central theorem T-SNAP depends on no axioms, the choice-free core (lattice, Quine-atom self-reference) is listed, and an honest contrast shows where `Classical.choice` enters (the analytic realizations). Build it with `lake build ZeroParadox.AxiomProfile`.
+Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives under `ZeroParadox/` in this repository. The full theorem-by-theorem detail is in each source file. An **axiom-profile artifact**, [AxiomProfile.lean](ZeroParadox/AxiomProfile.lean), collects the axiom dependencies of the core results in one place: the central theorem T-SNAP depends on no axioms, the choice-free core (lattice, Quine-atom self-reference) is listed, and an honest contrast shows where `Classical.choice` enters (the analytic realizations). Build it with `lake build ZeroParadox.AxiomProfile`. The same finding is written up in [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf).
 
 | Document | Lean Source | Verifies | Build |
 |----------|-------------|----------|-------|
@@ -112,6 +112,7 @@ ZP-H, ZP-I, ZP-J (extension files), ZP-K, ZP-L, and ZP-M use `Classical.choice` 
 | [ZP-K Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.7 | Computational grounding: the snap as a Kleene fixed point. |
 | [ZP-L Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.0 | ε₀ as the exact ordinal threshold where the snap occurs. |
 | [ZP-M Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.0 | The bridge between the Kleene quine and the ε₀ fixed point. |
+| [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.0 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
 
 ---
 
