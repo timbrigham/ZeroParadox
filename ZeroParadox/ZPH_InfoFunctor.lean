@@ -12,7 +12,9 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): your own words.
+Information theory is interesting here. Zero information in is zero information out by definition.
+Any existence of non zero information in results in some statistically distributed, and by
+definition a non zero distribution of information out.
 
 ---
 

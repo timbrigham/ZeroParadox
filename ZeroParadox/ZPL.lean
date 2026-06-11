@@ -13,7 +13,10 @@ import Mathlib.Tactic
 /-!
 # ZP-L: Incomputability Convergence
 
--- TODO: Engineer's Take section to be written by Tim in his own voice.
+## Engineer's Take
+
+Another hard one. We have four languages listed, all of which express the same diagonal shape,
+a limit from one direction and a fixed value from the other.
 
 ## Formal Overview
 

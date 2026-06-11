@@ -11,7 +11,8 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): your own words.
+Dimensions grow from zero by adding an additional point along the new orthogonal direction,
+indexed starting at zero. A bare 0 itself is the initial point.
 
 ---
 

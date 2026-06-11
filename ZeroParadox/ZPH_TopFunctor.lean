@@ -10,7 +10,9 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): your own words.
+This file captures the progressive return to zero, a single point as you approach infinity.
+This is exactly the claim of the Zero Paradox, although we usually view it from the opposing
+angle, as you approach vs as you leave.
 
 ---
 

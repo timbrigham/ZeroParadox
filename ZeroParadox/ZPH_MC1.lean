@@ -9,7 +9,11 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): your own words.
+This is a hard one and inherently incomplete. The zero states correspond across domains, all of
+which are vantage points to the same non returnable, 'empty' object. This is the same snap and
+same verdict described by the original depth definitions in ZPH.
+
+Identification with the same symbology is a commitment of this framework.
 
 ---
 
