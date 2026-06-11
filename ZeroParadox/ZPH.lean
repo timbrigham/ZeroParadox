@@ -37,12 +37,13 @@ Key results:
     preserves initial object, snap grounded in T1b (JSD = log 2). Concrete witness for F_C.
   - F_D: HilbDimDepth appendix — concrete Functor ℕ → HilbDimDepth (fd_functor),
     preserves initial object, snap grounded in T4 (orthogonal shift). Concrete witness for F_D.
-  OQ-G3 status: each F_B/F_C/F_D has a concrete depth-index witness (a ZPCategory whose
-  initial object is the snap floor). The full functors into the real domain categories
-  (TopCat, a Hilbert-space category, an information category) are a separate, stronger
-  construction and remain in progress — the depth-index targets here are proxies isomorphic
-  to ℕ, not the domains themselves. OQ-G3 is closed in the concrete-witness sense and open
-  in the real-domain-category sense (see README Question Register).
+  OQ-G3 status: each F_B/F_C/F_D has a concrete depth-index witness here (a ZPCategory whose
+  initial object is the snap floor). The full functors into the REAL domain categories are now
+  built in the sibling files — fB_functor : ℕᵒᵖ ⥤ TopCat (ZPH_TopFunctor), fD_functor :
+  ℕ ⥤ ModuleCat ℂ (ZPH_HilbFunctor), fC_functor : ℕ ⥤ KleisliCat PMF (ZPH_InfoFunctor), bundled
+  as mc1_correspondence (ZPH_MC1). Those supersede the ℕ-shaped depth proxies in this file.
+  MC-1's correspondence half is thereby formal; the literal cross-category identity remains a
+  modeling commitment (see README Question Register).
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
   accumulation) are compatible — jointly derivable (OQ-G4 closed).
 - T-H3: Binary Snap described consistently under all four functors. Fully proved
@@ -72,10 +73,12 @@ yield different functors. -/
 /-! ## Section III — Instantiation Functors: Domain Properties
 
 The four functors F_A, F_B, F_C, F_D map the abstract ZPCategory C to its four domain
-codomains. A complete Lean construction of each functor as a CategoryTheory.Functor
-requires defining SLat, pTop, InfoSp, and Hilb as full CategoryTheory categories (objects,
-hom-sets, composition, identity, laws) and verifying functor laws. That abstract construction
-remains future work. What is complete: a concrete ZPCategory witness for each functor,
+codomains. A complete Lean construction of each functor as a CategoryTheory.Functor into a
+real Mathlib category is now done in the sibling files (ZPH_TopFunctor / ZPH_HilbFunctor /
+ZPH_InfoFunctor, bundled in ZPH_MC1): fB into TopCat, fD into ModuleCat ℂ, fC into the Kleisli
+category of PMF. (Mathlib has no bespoke SLat/pTop/InfoSp/Hilb categories, so those standard
+categories are the genuine realizations.) The proxies below are the original concrete witnesses,
+superseded by those real-category functors; each still provides a concrete ZPCategory witness
 plus the domain-specific theorem grounding the initial-object claim.
 
 - **F_A (SLat)**: NatSLat appendix — ℕ with max/0 as ZPSemilattice, ≤ as poset-category.
@@ -86,8 +89,9 @@ plus the domain-specific theorem grounding the initial-object claim.
   Each has a distinct depth-index type, ZPCategory instance, concrete Functor term,
   preserves_initial definition, and snap grounding theorem. These depth-index types are
   proxies isomorphic to ℕ — concrete witnesses, not the real domain categories. The full
-  functors into pTop / a Hilbert-space category / an information category remain the open
-  (stronger) part of OQ-G3.
+  functors into the real Mathlib categories (TopCat / ModuleCat ℂ / KleisliCat PMF) are now
+  built in ZPH_TopFunctor / ZPH_HilbFunctor / ZPH_InfoFunctor and bundled in ZPH_MC1; they
+  supersede these proxies.
   NNRealZPCat appendix remains as the shared categorical witness underlying all three. -/
 
 /-! ## T-H1 — Initial-Object Properties Under Each Instantiation Functor -/
