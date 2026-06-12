@@ -39,6 +39,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpe.py](build_zpe.py) | `ZP-E_Bridge_Document.pdf` |
 | [build_zpg.py](build_zpg.py) | `ZP-G_Category_Theory.pdf` |
 | [build_zph.py](build_zph.py) | `ZP-H_Categorical_Bridge.pdf` |
+| [build_zph_native_addendum.py](build_zph_native_addendum.py) | `ZP-H_Native_Categories_Addendum.pdf` |
 | [build_zpi.py](build_zpi.py) | `ZP-I_Inside_Zero.pdf` |
 | [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference.pdf` |
 | [build_zpj_afa_addendum.py](build_zpj_afa_addendum.py) | `ZP-J_AFA_Addendum.pdf` |
@@ -46,6 +47,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding.pdf` |
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 | [build_zpm.py](build_zpm.py) | `ZP-M_Kleene_Ordinal_Bridge.pdf` |
+| [build_zp_choice_free_core.py](build_zp_choice_free_core.py) | `ZP_Choice_Free_Core_Addendum.pdf` |
 
 ### Illustrated companion builders
 

@@ -205,3 +205,41 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP-M Kleene-Ordinal Bridge | v1.0 |
 
 **Next threshold:** v3.0 on a new formal layer (ZP-N constructive ordinal validation candidate); a v2.4 doc release if the OQ-G3 / MC-1-theorem work lands (MC-1's correspondence upgraded from modeling commitment to theorem).
+
+---
+
+## v2.4 - 2026-06-11
+
+**Why this release:** The OQ-G3 / MC-1 work landed - the snap floor is now realized as genuine functors into the real domain categories, MC-1's correspondence half is formal, and the choice-free core is surfaced as a checkable artifact - the v2.4 doc release the v2.3 threshold anticipated, plus accumulated cleanup.
+
+**What changed:**
+- MC-1 remediation / OQ-G3: the snap floor realized as sorry-free Lean `CategoryTheory.Functor` terms into the real Mathlib categories - F_B into `TopCat` (⊥ = the inverse limit of the clopen-ball tower, ⋂ B(0,2⁻ⁿ) = {0}), F_D into `ModuleCat ℂ` (⊥ = `StateSpace 0`, the initial zero object; embeddings proved isometric), F_C into `KleisliCat PMF` (⊥ = `Fin 0` initial, with no stochastic map returning to it - AX-G2 realized as a theorem). Bundled as `mc1_correspondence`. MC-1's correspondence half is upgraded from a modeling commitment to a formal result; the literal cross-category identity stays a chosen commitment (the residue). New Lean files `ZPH_TopFunctor`/`ZPH_HilbFunctor`/`ZPH_InfoFunctor`/`ZPH_MC1`. The earlier ℕ-shaped proxy categories are superseded; the ZP-H "OQ-G3 fully closed" docstring overclaim was corrected.
+- ZP-H Native Categories Addendum: new v1.0 formal document presenting the above ("The Snap Floor in Native Categories"). Linked in README and GUIDE.
+- The Choice-Free Core: new v1.0 framework-wide addendum, plus the checkable artifact `ZeroParadox/AxiomProfile.lean` - the central theorem T-SNAP is machine-verified to depend on no axioms at all; the lattice (ZP-A) and the Quine-atom self-reference (ZP-J) are choice-free; `Classical.choice` is confined to the analytic realizations, inherited from Mathlib, with its necessity there open. Surfaced in README (Central Result, Formal Verification, Question Register) and recorded as the lead outreach artifact.
+- Question Register restructure: split into genuinely-open questions, a new **Design Commitments** table (Temperature T parameter, DP-2, MC-1 identity), and resolved-with-commitment. DA-1 moved to resolved (closed given DP-2; "Path 2" reframed as a foundational commitment, not a gap); OQ-G3 moved to resolved (functor construction closed). Verification-status and Classical.choice rows sharpened.
+- Engineer's Takes: filled in Tim's voice for the four new functor files, ZP-L, and AxiomProfile; a hard pre-release gate added to CLAUDE.md (no release while any `TODO (Tim)` Engineer's Take is unfilled).
+- Naming convention (CLAUDE.md): MC-1 status convention (correspondence derived / identity a commitment; additive, no new readable name).
+- Cleanup: `.gitignore` now ignores all `*.log`; `.zenodo.json` description updated (choice-free core + the native-category functors).
+
+**Document versions at v2.4:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.14 |
+| ZP-B p-Adic Topology | v1.9 |
+| ZP-C Information Theory | v1.17 |
+| ZP-D State Layer | v1.11 |
+| ZP-E Bridge Document | v3.19 |
+| ZP-F The Counterexamples | v1.4 |
+| ZP-G Category Theory | v1.11 |
+| ZP-H Categorical Bridge | v1.15 |
+| ZP-H Native Categories Addendum | v1.0 (new) |
+| ZP-I Inside Zero | v1.10 |
+| ZP-J Self-Reference | v2.1 |
+| ZP-J AFA Addendum | v1.2 |
+| ZP-J Wheel Addendum | v1.0 |
+| ZP-K Computational Grounding | v1.7 |
+| ZP-L Incomputability Convergence | v1.0 |
+| ZP-M Kleene-Ordinal Bridge | v1.0 |
+| ZP Choice-Free Core Addendum | v1.0 (new) |
+
+**Next threshold:** v3.0 on a new formal layer (ZP-N constructive-ordinal validation, which doubles as the unit test for the Classical.choice-necessity question); a v2.5 doc release on the next substantive reviewer-feedback round or accumulated documentation work.
