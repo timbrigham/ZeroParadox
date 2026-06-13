@@ -80,7 +80,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-K Computational Grounding | [ZPK.lean](ZeroParadox/ZPK.lean) | Computational grounding via a Kleene fixed point; the snap closed concretely | Clean - April 2026 |
 | ZP-L Incomputability Convergence | [ZPL.lean](ZeroParadox/ZPL.lean) | ε₀ as the exact snap threshold; the ordinal tower converges 2-adically to 0 (24 theorems) | Clean - May 2026 |
 | ZP-M Kleene-Ordinal Bridge | [ZPM.lean](ZeroParadox/ZPM.lean) | Type bridge MachinePhase → ℤ₂; Kleene quine and ε₀ fixed point co-witnessed | Clean - May 2026 |
-| ZP-P The Fixed-Point Fork | [ZPP.lean](ZeroParadox/ZPP.lean), [ZPP_Ostrowski.lean](ZeroParadox/ZPP_Ostrowski.lean) | The least/greatest fixed-point fork collapses iff the operator has a unique fixed point (choice-free); number-system instance ℝ vs ℚ₂ via Ostrowski | Clean - June 2026 |
+| ZP-P The Fixed-Point Fork | [ZPP.lean](ZeroParadox/ZPP.lean), [ZPP_Ostrowski.lean](ZeroParadox/ZPP_Ostrowski.lean), [ZPP_Coalgebra.lean](ZeroParadox/ZPP_Coalgebra.lean) | The least/greatest fixed-point fork collapses iff the operator has a unique fixed point (choice-free); number-system instance ℝ vs ℚ₂ via Ostrowski; categorical-parent instance (Fix empty / Cofix inhabited) via QPF | Clean - June 2026 |
 
 **Purity note**
 
@@ -113,7 +113,7 @@ ZP-H, ZP-I, ZP-J (extension files), ZP-K, ZP-L, and ZP-M use `Classical.choice` 
 | [ZP-K Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.7 | Computational grounding: the snap as a Kleene fixed point. |
 | [ZP-L Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.0 | ε₀ as the exact ordinal threshold where the snap occurs. |
 | [ZP-M Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.0 | The bridge between the Kleene quine and the ε₀ fixed point. |
-| [ZP-P The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) | ZP-P | v1.0 | Synthesis layer: the least-vs-greatest fixed-point fork, generalizing the Foundation/AFA orthogonal-contact-point claim across frameworks. |
+| [ZP-P The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) | ZP-P | v1.1 | Synthesis layer: the least-vs-greatest fixed-point fork, generalizing the Foundation/AFA orthogonal-contact-point claim across frameworks. |
 | [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.0 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
 
 ---

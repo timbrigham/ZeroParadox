@@ -146,9 +146,15 @@ When updating a companion, change:
 
 Companion version numbers are independent of formal version numbers. What matters is that the companion is not materially stale.
 
-### Version numbers in rendered companion content
+### Version numbers and changelogs in rendered PDF content (ALL PDFs)
 
-**Version numbers must appear in exactly one place in every companion PDF: the tagline meta line** (`'ZP Companion | Version ' + VERSION + ' | ...'`). Nowhere else in rendered content — not in disclaimers, section headers, body prose, or cross-document references. Patterns like `"ZP-J Self-Reference v1.1"`, `"New in v1.6"`, and `"In v2.7, DA-1 was upgraded"` are all violations. Strip them on discovery and bump the companion version.
+**This rule applies to every PDF in the project — formal layers, companions, addenda — not just companions.** (Generalized 2026-06-13, Tim: version changelogs in rendered content should be "murdered by the style guide and review." Scope is **rendered PDF content only** — build-script docstrings and `register.md`/`RELEASES.md` are the changelog of record and are exempt; git history is the real changelog.)
+
+**Version numbers must appear in exactly one place in rendered PDF content: the subtitle / tagline meta line** (`'... | Version ' + VERSION + ' | ...'`; formal-doc footers via `make_doc()` may also carry it). Nowhere else in rendered content — not in disclaimers, section headers, body prose, title-block notes, endnotes, or cross-document references.
+
+**No version changelogs in rendered PDF content.** A title-block "note" or endnote narrating `"v1.1: Added X. v1.0: Initial release…"` is a violation — this was the standard formal-doc pattern (e.g. ZP-M) and is now retired. The title-block note must describe what the document *is*, not its version history. Patterns like `"ZP-J Self-Reference v1.1"`, `"New in v1.6"`, `"In v2.7, DA-1 was upgraded"`, and `"End of ZP-X v1.0"` are all violations. Strip them on discovery and bump the version.
+
+**Editorial review enforces this as a kill** for any rendered-content version mention beyond the single meta line, or any rendered changelog narrative.
 
 ### Companion sync checklist
 

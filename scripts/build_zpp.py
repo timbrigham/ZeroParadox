@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.0 | June 2026
+Version 1.1 | June 2026
+v1.1: Added the categorical-parent instance as a Lean witness (ZPP_Coalgebra.lean:
+fix_isEmpty, cofix_nonempty, categorical_fork_strict — Fix empty / Cofix inhabited, split footprint);
+set-theory and computation instances referenced (ZP-J, ZP-K) rather than re-framed.
 v1.0: Initial release. Synthesis layer. Abstract fork schema proved sorry-free in Lean 4
 (ZPP.lean: fork_le, collapse_of_unique, unique_of_collapse, fork_collapse_iff —
 choice-free, [propext, Quot.sound]). Number-system instance via Ostrowski
@@ -12,7 +15,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 def build():
@@ -29,10 +32,11 @@ def build():
         Paragraph('ZP-P: The Fixed-Point Fork', S['title']),
         Paragraph('Version ' + VERSION + ' | June 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.0: Initial release. Synthesis layer. The abstract fork schema is proved '
-            'sorry-free and choice-free in Lean 4 (ZPP.lean); the number-system instance is '
-            'discharged through Ostrowski\'s theorem (ZPP_Ostrowski.lean). Generalizes the '
-            'ZFC+Foundation / ZFC+AFA orthogonal-contact-point claim.</i>',
+            '<i>Synthesis layer. The abstract fork schema is proved sorry-free and choice-free in '
+            'Lean 4 (ZPP.lean); the number-system instance via Ostrowski (ZPP_Ostrowski.lean) and '
+            'the categorical-parent instance via QPF.Fix / QPF.Cofix (ZPP_Coalgebra.lean) are '
+            'Lean-witnessed; the set-theory and computation instances are referenced to ZP-J and '
+            'ZP-K. Generalizes the ZFC+Foundation / ZFC+AFA orthogonal-contact-point claim.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -176,7 +180,7 @@ def build():
              'the Kleene quine / self-application; ZP-K'],
             ['Category theory',
              'initial algebra (W-types) vs final coalgebra (M-types)',
-             'QPF.Fix vs QPF.Cofix (the parent schema)'],
+             'QPF.Fix vs QPF.Cofix; ZPP_Coalgebra.lean'],
         ],
         col_widths=[TW * 0.20, TW * 0.42, TW * 0.38],
     ))
@@ -231,6 +235,35 @@ def build():
             '&#8474;<sub>2</sub>), not through the schema theorem.',
         ]
     ))
+    E.append(sp(6))
+
+    E.append(body(
+        'The categorical instance is the genuine &#956;/&#957; case &#8212; the parent of the '
+        'set-theory entry. On a one-shape, one-child polynomial functor (no leaf), the initial '
+        'algebra (W-type, &#956;) is empty while the final coalgebra (M-type, &#957;) is inhabited '
+        'by the infinite self-referential element: the non-well-founded closure contains a point '
+        'the well-founded closure lacks &#8212; the categorical analog of the Quine atom present '
+        'in &#957;F but not &#956;F.'))
+
+    E.append(result_box(
+        'Theorem: categorical_fork_strict (ZPP_Coalgebra.lean)',
+        [
+            'IsEmpty (Fix idPF.Obj) &#8743; Nonempty (Cofix idPF.Obj)',
+            'The initial algebra (least fixed point, &#956;) is empty; the final coalgebra '
+            '(greatest fixed point, &#957;) is inhabited. (Mathlib QPF.Fix / QPF.Cofix.)',
+            'Split footprint: fix_isEmpty (&#956; empty) is choice-free [propext, Quot.sound]; '
+            'cofix_nonempty (&#957; inhabited) carries Classical.choice from the M-type / '
+            'corecursion machinery. The self-referential element is exactly where choice enters. ✓',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(body(
+        'The remaining two instances are referenced, not re-proved here. The set-theory fork '
+        '(Foundation vs AFA) has its Lean witness in ZP-J: the Quine atom &#8869; = {&#8869;} is '
+        'the unique self-application fixed point (quine_atom_unique). The computation fork '
+        '(total vs partial) has its Lean witness in ZP-K: the Kleene quine. Each is the contact '
+        'point of its own fork.'))
     E.append(sp(6))
 
     # ── Section III: The Unification and Its Fences (Tier 3) ──────────────────────
@@ -300,6 +333,8 @@ def build():
             ['fork_collapse_iff', 'ZPP.lean §I', 'choice-free'],
             ['completions_exhaustive', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
             ['real_not_equiv_padic', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
+            ['fix_isEmpty', 'ZPP_Coalgebra.lean §II', 'choice-free'],
+            ['cofix_nonempty', 'ZPP_Coalgebra.lean §II', 'Classical.choice'],
         ],
         col_widths=[TW * 0.42, TW * 0.33, TW * 0.25],
     ))
@@ -313,6 +348,9 @@ def build():
             'Number-system instance (ZPP_Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical analysis / number '
             'theory (Ostrowski).',
+            'Categorical instance (ZPP_Coalgebra.lean): split &#8212; fix_isEmpty (&#956; empty) '
+            'is choice-free [propext, Quot.sound]; cofix_nonempty (&#957; inhabited) carries '
+            'Classical.choice from the M-type / corecursion machinery.',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
             'pattern. Zero sorry. Verified: lake build, June 2026.',
         ]
@@ -322,10 +360,11 @@ def build():
     E += [
         hr(),
         Paragraph(
-            '<i>End of ZP-P v1.0 | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
-            'Ostrowski number-system instance | hard fence: cross-instance identity is a type '
+            '<i>End of ZP-P | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
+            'Ostrowski number-system instance | categorical &#956;/&#957; instance '
+            '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
             'boundary | soft fence: not every fork is &#956;/&#957; | '
-            'All ZPP.lean / ZPP_Ostrowski.lean theorems verified.</i>',
+            'All ZPP.lean / ZPP_Ostrowski.lean / ZPP_Coalgebra.lean theorems verified.</i>',
             S['endnote']),
     ]
 
