@@ -26,6 +26,7 @@ import ZeroParadox.ZPJ_Wheel
 import ZeroParadox.ZPJ_WheelFrac
 import ZeroParadox.ZPP
 import ZeroParadox.ZPP_Ostrowski
+import ZeroParadox.ZPP_Coalgebra
 
 /-!
 # Zero Paradox — Library Root

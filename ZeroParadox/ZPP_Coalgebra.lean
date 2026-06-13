@@ -33,7 +33,9 @@ commitment, not a theorem (ZP-P hard fence).
 
 ## Status
 
-STUB (stub-first protocol): the functor and QPF instance are concrete; the two theorems are `sorry`.
+PROVED. Two theorems, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty) is choice-free
+`[propext, Quot.sound]`; `cofix_nonempty` (ν inhabited) carries `Classical.choice` from Mathlib's
+M-type / corecursion machinery. See PurityCheck.
 -/
 
 namespace ZeroParadox.ZPP
@@ -56,13 +58,16 @@ instance : QPF idPF.Obj where
 
 /-- **μ is empty.** The initial algebra (W-type) of the leaf-free functor has no element: no
 well-founded / inductive tree exists without a base case. -/
-theorem fix_isEmpty : IsEmpty (Fix idPF.Obj) := by
-  sorry
+theorem fix_isEmpty : IsEmpty (Fix idPF.Obj) :=
+  ⟨fun x => Fix.ind (fun _ => False) (fun y hy => by
+      rw [liftp_iff] at hy
+      obtain ⟨_, f, _, hf⟩ := hy
+      exact hf PUnit.unit) x⟩
 
 /-- **ν is inhabited.** The final coalgebra (M-type) contains the infinite self-referential element,
 built by corecursion from the single node that unfolds to itself. -/
-theorem cofix_nonempty : Nonempty (Cofix idPF.Obj) := by
-  sorry
+theorem cofix_nonempty : Nonempty (Cofix idPF.Obj) :=
+  ⟨Cofix.corec (fun _ : PUnit => (⟨PUnit.unit, fun _ => PUnit.unit⟩ : idPF.Obj PUnit)) PUnit.unit⟩
 
 /-- **The strict categorical fork.** The least fixed point is empty while the greatest is inhabited:
 the non-well-founded closure contains a self-referential element the well-founded closure lacks — the
@@ -70,5 +75,19 @@ categorical analog of the Quine atom in νF \ μF. -/
 theorem categorical_fork_strict :
     IsEmpty (Fix idPF.Obj) ∧ Nonempty (Cofix idPF.Obj) :=
   ⟨fix_isEmpty, cofix_nonempty⟩
+
+section PurityCheck
+-- Split footprint, and the split is meaningful:
+--   fix_isEmpty (μ is empty)        : [propext, Quot.sound]                     — CHOICE-FREE
+--   cofix_nonempty (ν is inhabited) : [propext, Classical.choice, Quot.sound]  — choice-carrying
+--   categorical_fork_strict         : inherits Classical.choice from cofix_nonempty
+-- The well-founded (inductive) side is constructive; the non-well-founded (coinductive) side carries
+-- Classical.choice, inherited from Mathlib's M-type / corecursion machinery. Fitting: the
+-- self-referential element that ν admits and μ forbids is exactly where choice enters. The fork spine
+-- (`ZeroParadox.ZPP.fork_collapse_iff`) is fully choice-free. See AxiomProfile.lean.
+#print axioms fix_isEmpty
+#print axioms cofix_nonempty
+#print axioms categorical_fork_strict
+end PurityCheck
 
 end ZeroParadox.ZPP
