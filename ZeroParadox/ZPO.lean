@@ -52,31 +52,51 @@ variable {α : Type*} [CompleteLattice α] (f : α →o α)
 
 /-- **The fork.** The least fixed point never exceeds the greatest: the inductive closure sits below
 the coinductive closure. (Re-states Mathlib's `OrderHom.lfp_le_gfp` as the named width of the fork.) -/
-theorem fork_le : f.lfp ≤ f.gfp := by
-  sorry
+theorem fork_le : f.lfp ≤ f.gfp :=
+  f.lfp_le_gfp
 
 /-- **Collapse, direction 1.** If `f` has a fixed point `x` that is its *only* fixed point, then both
 ends of the fork land on `x`: the inductive and coinductive closures coincide at the contact point. -/
-theorem collapse_of_unique (x : α) (hx : f x = x) (huniq : ∀ y, f y = y → y = x) :
-    f.lfp = x ∧ f.gfp = x := by
-  sorry
+theorem collapse_of_unique (x : α) (_hx : f x = x) (huniq : ∀ y, f y = y → y = x) :
+    f.lfp = x ∧ f.gfp = x :=
+  ⟨huniq f.lfp f.map_lfp, huniq f.gfp f.map_gfp⟩
 
 /-- **Collapse, direction 2.** If the two ends of the fork coincide, the common value is the unique
 fixed point: every fixed point lies between `lfp` and `gfp`, so collapse forces uniqueness. -/
 theorem unique_of_collapse (h : f.lfp = f.gfp) :
     ∀ y, f y = y → y = f.lfp := by
-  sorry
+  intro y hy
+  have h1 : f.lfp ≤ y := f.lfp_le_fixed hy
+  have h2 : y ≤ f.gfp := f.le_gfp (le_of_eq hy.symm)
+  rw [← h] at h2
+  exact le_antisymm h2 h1
 
 /-- **Porthole theorem (the schema's spine).** The fork collapses to a single contact point *iff* the
 self-referential operator has a unique fixed point. This is the abstract form of "the framework forks,
 and the diagonal fixed point is where the two closures meet." -/
 theorem porthole_collapse_iff :
     f.lfp = f.gfp ↔ ∃! x, f x = x := by
-  sorry
+  constructor
+  · intro h
+    exact ⟨f.lfp, f.map_lfp, fun y hy => unique_of_collapse f h y hy⟩
+  · rintro ⟨x, hx, huniq⟩
+    obtain ⟨hlfp, hgfp⟩ := collapse_of_unique f x hx huniq
+    rw [hlfp, hgfp]
 
 /-! ## Engineer's Take
 
 TODO (Tim): Engineer's Take — write in your own voice.
 -/
+
+section PurityCheck
+-- All four report `[propext, Quot.sound]` only — NO `Classical.choice`. The porthole schema spine is
+-- choice-free. (propext = propositional extensionality, Quot.sound = quotient soundness; both are
+-- benign Mathlib-wide kernel axioms, not the Axiom of Choice.) Consistent with the choice-free core:
+-- see ZeroParadox/AxiomProfile.lean.
+#print axioms fork_le
+#print axioms collapse_of_unique
+#print axioms unique_of_collapse
+#print axioms porthole_collapse_iff
+end PurityCheck
 
 end ZeroParadox.ZPO
