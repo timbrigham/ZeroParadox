@@ -1,18 +1,28 @@
 import Mathlib.Order.FixedPoints
 
 /-!
-# ZP-O: The Fixed-Point Fork (the "porthole" schema)
+# ZP-O: The Fixed-Point Fork
 
-**Synthesis layer (not foundational).** This file is the abstract spine of the porthole concept:
-every sufficiently rich framework with a self-referential operator presents a *fork* — a
-**least fixed point** (inductive / well-founded closure) versus a **greatest fixed point**
-(coinductive / non-well-founded closure) — and the two closures meet at a single contact point
-exactly when the operator has a unique fixed point. In the Zero Paradox that single contact point
-is the diagonal fixed point ⊥ (the self-containing bottom).
+**Synthesis layer (not foundational).** This file is the abstract spine of the fixed-point fork:
+over a complete lattice, a monotone self-map has a **least fixed point** and a **greatest fixed
+point** (Knaster–Tarski; Mathlib's `OrderHom.lfp` / `OrderHom.gfp`), and these two ends collapse to a
+single point exactly when the map has a unique fixed point. The intended reading is that a
+self-referential operator's least fixed point is its inductive / well-founded closure and its greatest
+fixed point its coinductive / non-well-founded closure; that reading is the initial-algebra /
+final-coalgebra picture (a categorical setting), offered here as analogy — what is *proved* below is
+purely the order-theoretic lfp/gfp statement. In the Zero Paradox the single collapse point is the
+diagonal fixed point ⊥ (the self-containing bottom).
 
-This generalizes the ZFC+Foundation / ZFC+AFA "orthogonal at one contact point" claim: that pairing
-is the *set-theory instance* of this fork (Foundation = initial algebra of powerset, μ; AFA = final
-coalgebra of powerset, ν; the Quine atom ⊥={⊥} = νF \ μF).
+Naming note: this layer's informal nickname is "the fork." The word *porthole* is used elsewhere in
+this repo (ZP-J Wheel) for a different, narrower thing — the `∞ ≠ ⊥` separation (`inf_ne_bot`). To
+avoid overloading it, this file uses **fork** for the structure and theorem names.
+
+This generalizes the ZFC+Foundation / ZFC+AFA "orthogonal at one contact point" claim: that pairing is
+the *set-theory instance* of this fork. In the standard category-theoretic characterization
+(Aczel; Lambek) Foundation corresponds to the initial algebra (μ) and AFA to the final coalgebra (ν)
+of the (small/bounded) powerset functor; in that concrete set instance the Quine atom ⊥={⊥} is exactly
+an element of νF that is not in μF. (The "final coalgebra of powerset" needs the bounded-powerset
+qualification to live in **Set**; stated unqualified it is loose.)
 
 ## The complete concept is three tiers — only TIER 1 lives here
 
@@ -31,17 +41,16 @@ coalgebra of powerset, ν; the Quine atom ⊥={⊥} = νF \ μF).
 - **Hard fence (permanent):** cross-instance identity ("the contact points are one object") is not a
   theorem and cannot be — it is a definitional/modeling commitment. Each framework forks at *its own*
   contact point; that is all that is claimed formally.
-- **Soft fence (conjecture):** that *every* domain porthole is an instance of this μ/ν schema. The
-  schema is a theorem here and for canonical functors; "every porthole is μ/ν" is the open
+- **Soft fence (conjecture):** that *every* domain fork is an instance of this μ/ν schema. The
+  schema is a theorem here and for canonical functors; "every fork is μ/ν" is the open
   generalization. (The Ostrowski / ℝ-vs-ℚ₂ instance, in particular, is theorem-backed on its own
   terms and is NOT claimed to be a μ/ν instance.)
 
-Per-instance portholes are theorems and are not hedged.
+Per-instance forks are theorems and are not hedged.
 
 ## Status
 
-STUB (stub-first protocol): statements present, proofs are `sorry`. Build the skeleton, commit the
-rollback point, then fill proofs one at a time.
+PROVED. Four theorems, no `sorry`; choice-free (`[propext, Quot.sound]` only — see PurityCheck).
 -/
 
 namespace ZeroParadox.ZPO
@@ -71,10 +80,10 @@ theorem unique_of_collapse (h : f.lfp = f.gfp) :
   rw [← h] at h2
   exact le_antisymm h2 h1
 
-/-- **Porthole theorem (the schema's spine).** The fork collapses to a single contact point *iff* the
+/-- **Fork theorem (the schema's spine).** The fork collapses to a single contact point *iff* the
 self-referential operator has a unique fixed point. This is the abstract form of "the framework forks,
 and the diagonal fixed point is where the two closures meet." -/
-theorem porthole_collapse_iff :
+theorem fork_collapse_iff :
     f.lfp = f.gfp ↔ ∃! x, f x = x := by
   constructor
   · intro h
@@ -89,14 +98,14 @@ TODO (Tim): Engineer's Take — write in your own voice.
 -/
 
 section PurityCheck
--- All four report `[propext, Quot.sound]` only — NO `Classical.choice`. The porthole schema spine is
+-- All four report `[propext, Quot.sound]` only — NO `Classical.choice`. The fork schema spine is
 -- choice-free. (propext = propositional extensionality, Quot.sound = quotient soundness; both are
 -- benign Mathlib-wide kernel axioms, not the Axiom of Choice.) Consistent with the choice-free core:
 -- see ZeroParadox/AxiomProfile.lean.
 #print axioms fork_le
 #print axioms collapse_of_unique
 #print axioms unique_of_collapse
-#print axioms porthole_collapse_iff
+#print axioms fork_collapse_iff
 end PurityCheck
 
 end ZeroParadox.ZPO
