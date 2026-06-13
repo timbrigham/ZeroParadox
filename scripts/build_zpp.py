@@ -1,10 +1,10 @@
 """
-Zero Paradox — ZP-O: The Fixed-Point Fork PDF Builder
+Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
 Version 1.0 | June 2026
 v1.0: Initial release. Synthesis layer. Abstract fork schema proved sorry-free in Lean 4
-(ZPO.lean: fork_le, collapse_of_unique, unique_of_collapse, fork_collapse_iff —
+(ZPP.lean: fork_le, collapse_of_unique, unique_of_collapse, fork_collapse_iff —
 choice-free, [propext, Quot.sound]). Number-system instance via Ostrowski
-(ZPO_Ostrowski.lean: completions_exhaustive, real_not_equiv_padic — [propext, Classical.choice,
+(ZPP_Ostrowski.lean: completions_exhaustive, real_not_equiv_padic — [propext, Classical.choice,
 Quot.sound]). Generalizes the ZFC+Foundation / ZFC+AFA orthogonal-contact-point claim.
 Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
@@ -16,22 +16,22 @@ VERSION = '1.0'
 
 
 def build():
-    out_path = os.path.join(PROJECT_ROOT, 'ZP-O_The_Fixed_Point_Fork.pdf')
-    print(f'[build_zpo] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-O: The Fixed-Point Fork',
-                   'ZP-O: The Fixed-Point Fork', 'Version ' + VERSION)
+    out_path = os.path.join(PROJECT_ROOT, 'ZP-P_The_Fixed_Point_Fork.pdf')
+    print(f'[build_zpp] Output: {out_path}')
+    doc = make_doc(out_path, 'ZP-P: The Fixed-Point Fork',
+                   'ZP-P: The Fixed-Point Fork', 'Version ' + VERSION)
     E = []
 
-    print('[build_zpo] Building title block...')
+    print('[build_zpp] Building title block...')
     E += [
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
-        Paragraph('ZP-O: The Fixed-Point Fork', S['title']),
+        Paragraph('ZP-P: The Fixed-Point Fork', S['title']),
         Paragraph('Version ' + VERSION + ' | June 2026', S['subtitle']),
         Paragraph(
             '<i>v1.0: Initial release. Synthesis layer. The abstract fork schema is proved '
-            'sorry-free and choice-free in Lean 4 (ZPO.lean); the number-system instance is '
-            'discharged through Ostrowski\'s theorem (ZPO_Ostrowski.lean). Generalizes the '
+            'sorry-free and choice-free in Lean 4 (ZPP.lean); the number-system instance is '
+            'discharged through Ostrowski\'s theorem (ZPP_Ostrowski.lean). Generalizes the '
             'ZFC+Foundation / ZFC+AFA orthogonal-contact-point claim.</i>',
             S['note']),
         sp(10),
@@ -41,7 +41,7 @@ def build():
 
     E.append(body(
         'A self-referential operator over a complete lattice has a least fixed point and a '
-        'greatest fixed point (Knaster&#8211;Tarski). ZP-O records a single elementary fact and '
+        'greatest fixed point (Knaster&#8211;Tarski). ZP-P records a single elementary fact and '
         'develops its consequences across the framework: these two fixed points coincide &#8212; '
         'the fork <i>collapses</i> to one point &#8212; exactly when the operator has a unique '
         'fixed point. Read intuitively, the least fixed point is the inductive (well-founded) '
@@ -61,7 +61,7 @@ def build():
     E.append(hr())
 
     # ── Section I: The Fork Schema (Tier 1) ───────────────────────────────────────
-    print('[build_zpo] Building Section I...')
+    print('[build_zpp] Building Section I...')
     E += [
         Paragraph('Section I: The Fork Schema (Tier 1)', S['h1']),
         hr(),
@@ -77,7 +77,7 @@ def build():
         'inductive/coinductive reading, which is offered as analogy only.'))
 
     E.append(def_box(
-        'Definition: the fork (ZPO.lean)',
+        'Definition: the fork (ZPP.lean)',
         [
             'For a complete lattice &#945; and a monotone self-map f : &#945; &#8594; &#945;:',
             '  lfp f = the least fixed point of f   (Mathlib OrderHom.lfp)',
@@ -89,7 +89,7 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Proposition: fork_le (ZPO.lean)',
+        'Proposition: fork_le (ZPP.lean)',
         [
             'lfp f &#8804; gfp f',
             'The inductive closure never exceeds the coinductive closure: the fork has '
@@ -100,7 +100,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: collapse_of_unique (ZPO.lean)',
+        'Lemma: collapse_of_unique (ZPP.lean)',
         [
             'If x is the unique fixed point of f, then lfp f = x and gfp f = x.',
             'Both ends of the fork land on the sole fixed point.',
@@ -111,7 +111,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: unique_of_collapse (ZPO.lean)',
+        'Lemma: unique_of_collapse (ZPP.lean)',
         [
             'If lfp f = gfp f, then every fixed point of f equals that common value.',
             'Every fixed point lies between lfp f and gfp f, so collapse forces uniqueness.',
@@ -122,7 +122,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: fork_collapse_iff (ZPO.lean) &#8212; the schema spine',
+        'Theorem: fork_collapse_iff (ZPP.lean) &#8212; the schema spine',
         [
             'lfp f = gfp f  &#8596;  &#8707;! x, f x = x',
             'The fork collapses to a single contact point if and only if f has a unique '
@@ -146,7 +146,7 @@ def build():
     E.append(sp(6))
 
     # ── Section II: The Instance Catalogue (Tier 2) ───────────────────────────────
-    print('[build_zpo] Building Section II...')
+    print('[build_zpp] Building Section II...')
     E += [
         hr(),
         Paragraph('Section II: The Instance Catalogue (Tier 2)', S['h1']),
@@ -154,7 +154,7 @@ def build():
     ]
 
     E.append(body(
-        'The same fork appears across frameworks. ZP-O does not re-prove each instance &#8212; '
+        'The same fork appears across frameworks. ZP-P does not re-prove each instance &#8212; '
         'each is a theorem in its home layer &#8212; it records the catalogue and pins the '
         'number-system instance to a checkable Lean witness. The original ZFC+Foundation / '
         'ZFC+AFA orthogonal-contact-point claim is the set-theory entry: in the standard '
@@ -192,7 +192,7 @@ def build():
         'and its valuation diverges (v<sub>2</sub>(0) = &#8734; &#8212; the snap holds).'))
 
     E.append(result_box(
-        'Theorem: completions_exhaustive (ZPO_Ostrowski.lean)',
+        'Theorem: completions_exhaustive (ZPP_Ostrowski.lean)',
         [
             'Every nontrivial absolute value on &#8474; is equivalent to the real absolute '
             'value, or to a p-adic absolute value for a unique prime p.',
@@ -204,7 +204,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: real_not_equiv_padic (ZPO_Ostrowski.lean)',
+        'Theorem: real_not_equiv_padic (ZPP_Ostrowski.lean)',
         [
             'The real absolute value is inequivalent to every p-adic absolute value.',
             'The two kinds of completion are genuinely distinct &#8212; never the same metric. '
@@ -234,7 +234,7 @@ def build():
     E.append(sp(6))
 
     # ── Section III: The Unification and Its Fences (Tier 3) ──────────────────────
-    print('[build_zpo] Building Section III...')
+    print('[build_zpp] Building Section III...')
     E += [
         hr(),
         Paragraph('Section III: The Unification and Its Fences (Tier 3)', S['h1']),
@@ -244,7 +244,7 @@ def build():
     E.append(body(
         'The tempting claim is that the contact points of all the instances &#8212; the Quine '
         'atom, the 2-adic 0, the Kleene quine, the categorical initial object &#8212; are faces '
-        'of one object, the diagonal fixed point. ZP-O states this as a conjecture and fences it '
+        'of one object, the diagonal fixed point. ZP-P states this as a conjecture and fences it '
         'precisely. The fences are not hedging; they mark a genuine boundary, and per-instance '
         'forks remain full theorems on either side of them.'))
 
@@ -284,7 +284,7 @@ def build():
     E.append(sp(6))
 
     # ── Theorem Summary ───────────────────────────────────────────────────────────
-    print('[build_zpo] Building theorem table...')
+    print('[build_zpp] Building theorem table...')
     E += [
         hr(),
         Paragraph('Theorem Summary', S['h1']),
@@ -294,12 +294,12 @@ def build():
     E.append(data_table(
         headers=['Result', 'File / Section', 'Axioms'],
         rows_data=[
-            ['fork_le', 'ZPO.lean §I', 'choice-free'],
-            ['collapse_of_unique', 'ZPO.lean §I', 'choice-free'],
-            ['unique_of_collapse', 'ZPO.lean §I', 'choice-free'],
-            ['fork_collapse_iff', 'ZPO.lean §I', 'choice-free'],
-            ['completions_exhaustive', 'ZPO_Ostrowski.lean §II', 'Classical.choice'],
-            ['real_not_equiv_padic', 'ZPO_Ostrowski.lean §II', 'Classical.choice'],
+            ['fork_le', 'ZPP.lean §I', 'choice-free'],
+            ['collapse_of_unique', 'ZPP.lean §I', 'choice-free'],
+            ['unique_of_collapse', 'ZPP.lean §I', 'choice-free'],
+            ['fork_collapse_iff', 'ZPP.lean §I', 'choice-free'],
+            ['completions_exhaustive', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
+            ['real_not_equiv_padic', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
         ],
         col_widths=[TW * 0.42, TW * 0.33, TW * 0.25],
     ))
@@ -308,9 +308,9 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'Fork spine (ZPO.lean): [propext, Quot.sound] &#8212; choice-free. The schema needs '
+            'Fork spine (ZPP.lean): [propext, Quot.sound] &#8212; choice-free. The schema needs '
             'no Axiom of Choice.',
-            'Number-system instance (ZPO_Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
+            'Number-system instance (ZPP_Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical analysis / number '
             'theory (Ostrowski).',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
@@ -322,16 +322,16 @@ def build():
     E += [
         hr(),
         Paragraph(
-            '<i>End of ZP-O v1.0 | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
+            '<i>End of ZP-P v1.0 | The Fixed-Point Fork | fork_collapse_iff (choice-free spine) | '
             'Ostrowski number-system instance | hard fence: cross-instance identity is a type '
             'boundary | soft fence: not every fork is &#956;/&#957; | '
-            'All ZPO.lean / ZPO_Ostrowski.lean theorems verified.</i>',
+            'All ZPP.lean / ZPP_Ostrowski.lean theorems verified.</i>',
             S['endnote']),
     ]
 
-    print('[build_zpo] Building document...')
+    print('[build_zpp] Building document...')
     doc.build(E)
-    print(f'[build_zpo] Done: {out_path}')
+    print(f'[build_zpp] Done: {out_path}')
 
 
 if __name__ == '__main__':

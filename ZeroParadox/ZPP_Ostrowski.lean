@@ -1,10 +1,10 @@
 import Mathlib.NumberTheory.Ostrowski
-import ZeroParadox.ZPO
+import ZeroParadox.ZPP
 
 /-!
-# ZP-O instance: the number-system fork (ℝ vs ℚ_p), via Ostrowski
+# ZP-P instance: the number-system fork (ℝ vs ℚ_p), via Ostrowski
 
-The number systems instance of the fixed-point fork (ZP-O). The completions of ℚ split into two
+The number systems instance of the fixed-point fork (ZP-P). The completions of ℚ split into two
 mutually-exclusive kinds — the Archimedean (real) absolute value and the non-Archimedean (p-adic)
 ones — and Ostrowski's theorem classifies them exhaustively. The contact point of this fork is 0: in
 the Archimedean completion ℝ it is approached but never reached (density), while in the 2-adic
@@ -19,14 +19,14 @@ drift:
 - **Orthogonality leg:** `Rat.AbsoluteValue.not_real_isEquiv_padic` — `real` is inequivalent to every
   `padic p`.
 
-**FENCE (per ZP-O soft fence).** This fork is theorem-backed *on its own terms* (Ostrowski is a genuine
+**FENCE (per ZP-P soft fence).** This fork is theorem-backed *on its own terms* (Ostrowski is a genuine
 classification theorem — stronger backing than the metatheoretic Foundation/AFA orthogonality). It is
 **NOT** claimed to be an instance of the μ/ν (least-vs-greatest fixed point) schema: Ostrowski concerns
 absolute values, not fixed points of a functor. The thread to ZP's diagonal fixed point runs through
 the contact point 0 (`q2_unique_fp`), not through `fork_collapse_iff`.
 -/
 
-namespace ZeroParadox.ZPO
+namespace ZeroParadox.ZPP
 
 open Rat.AbsoluteValue
 
@@ -46,10 +46,10 @@ theorem real_not_equiv_padic (p : ℕ) [Fact p.Prime] : ¬ real.IsEquiv (padic p
 section PurityCheck
 -- These inherit `Classical.choice` from Mathlib's classical analysis / number theory (Ostrowski).
 -- That is expected and honest: the number-system fork is an *analytic realization*, which carries
--- choice — in contrast to the choice-free fork spine (`ZeroParadox.ZPO.fork_collapse_iff`,
+-- choice — in contrast to the choice-free fork spine (`ZeroParadox.ZPP.fork_collapse_iff`,
 -- `[propext, Quot.sound]` only). Core choice-free; realizations choice-carrying. See AxiomProfile.lean.
 #print axioms completions_exhaustive
 #print axioms real_not_equiv_padic
 end PurityCheck
 
-end ZeroParadox.ZPO
+end ZeroParadox.ZPP

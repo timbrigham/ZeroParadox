@@ -1,7 +1,7 @@
 import Mathlib.Order.FixedPoints
 
 /-!
-# ZP-O: The Fixed-Point Fork
+# ZP-P: The Fixed-Point Fork
 
 **Synthesis layer (not foundational).** This file is the abstract spine of the fixed-point fork:
 over a complete lattice, a monotone self-map has a **least fixed point** and a **greatest fixed
@@ -53,7 +53,7 @@ Per-instance forks are theorems and are not hedged.
 PROVED. Four theorems, no `sorry`; choice-free (`[propext, Quot.sound]` only — see PurityCheck).
 -/
 
-namespace ZeroParadox.ZPO
+namespace ZeroParadox.ZPP
 
 set_option maxHeartbeats 400000
 
@@ -108,4 +108,4 @@ section PurityCheck
 #print axioms fork_collapse_iff
 end PurityCheck
 
-end ZeroParadox.ZPO
+end ZeroParadox.ZPP
