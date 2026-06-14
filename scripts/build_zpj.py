@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.1 | May 2026
+Version 2.2 | June 2026
+v2.2: Remaining rendered self-version refs removed — §VII preamble "Version 2.0 extends", v2.0/v1.0 register cells, validation "v2.0:" line (C1 sweep). Fixed null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>) and a garbled ≤ subscript.
 v2.1: Version changelog removed from preamble; version stripped from section headers and endnote.
 v2.0: Four new sections added — Section VII (Aczel DC-free connection),
       Section VIII (abstraction chain: ValuationStructure → AbstractSelfApp →
@@ -17,7 +18,7 @@ v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.
 import os
 from zp_utils import *
 
-VERSION = '2.1'
+VERSION = '2.2'
 
 
 def build():
@@ -47,7 +48,7 @@ def build():
         'framework. CC-1 from ZP-A, which stated "S&#8320; = &#8869;" as a modelling commitment, '
         'becomes a derived theorem.'))
     E.append(body(
-        'Version 2.0 extends the core T-EXEC result in four directions: it establishes that '
+        'This layer extends the core T-EXEC result in four directions: it establishes that '
         'Aczel\'s use of Dependent Choice is unnecessary for the self-membership case (Section VII); '
         'it generalises the AFAStructure typeclass into an abstraction chain reaching down to '
         'a pure valuation structure (Section VIII); it instantiates that chain on two concrete '
@@ -437,7 +438,7 @@ def build():
         li('ZP-E: T-SNAP, DA-1, DA-2 (T-SNAP and DA-2 proved axiom-free; DA-1 Path 3 outside Lean scope).'),
         li('ZP-J: AFAStructure fields (selfMem, quine_unique, bot_self_mem). '
            'T-EXEC, J1, CC-1: proved axiom-free. '
-           'v2.0: Sections VII&#8211;X (Aczel connection, abstraction chain, concrete instances, '
+           'Sections VII&#8211;X (Aczel connection, abstraction chain, concrete instances, '
            'decoration uniqueness): all sorry-free. &#10003;'),
         sp(4),
     ]
@@ -659,7 +660,7 @@ def build():
     E.append(body(
         '&#8469;&#8734; = WithTop &#8469; (the extended naturals) carries a ZPSemilattice '
         'with join = min and bot = &#8868; (the natural maximum). The ZP partial order reverses '
-        '&#8469;&#8734;\'s natural order: x &#8804;&#8325;&#8346; y iff min x y = y iff x &#8805; y. '
+        '&#8469;&#8734;\'s natural order: x &#8804; y iff min x y = y iff x &#8805; y. '
         'So &#8868; is the ZP-bottom (valuation &#8734;, unique fixed point) and 0 is the '
         'ZP-maximum (fully constrained).'))
     E.append(def_box(
@@ -774,17 +775,17 @@ def build():
     E.append(body(
         'The first key results handle cyclic vertices. If a vertex v lies on a directed cycle '
         'of length k, then composing the decoration equation around the cycle gives '
-        'd(v) = scale&#7503;(d(v)). The valuation argument then forces d(v) = &#8869;: '
-        'if d(v) &#8800; &#8869;, then val(scale&#7503;(d(v))) = val(d(v)) + k &#8800; val(d(v)), '
-        'contradicting d(v) = scale&#7503;(d(v)).'))
+        'd(v) = scale<sup>k</sup>(d(v)). The valuation argument then forces d(v) = &#8869;: '
+        'if d(v) &#8800; &#8869;, then val(scale<sup>k</sup>(d(v))) = val(d(v)) + k &#8800; val(d(v)), '
+        'contradicting d(v) = scale<sup>k</sup>(d(v)).'))
     E.append(result_box(
         'Cyclic Vertex Theorems (ZPJ_APG.lean &#167;&#167; III&#8211;VII\')',
         [
-            'val_iterate: val(scale&#7503;(x)) = val(x) + k for x &#8800; &#8869;. &#10003;',
-            'scale_iterate_unique_fp: scale&#7503;(x) = x &#8658; x = &#8869; for k &#8805; 1. &#10003;',
+            'val_iterate: val(scale<sup>k</sup>(x)) = val(x) + k for x &#8800; &#8869;. &#10003;',
+            'scale_iterate_unique_fp: scale<sup>k</sup>(x) = x &#8658; x = &#8869; for k &#8805; 1. &#10003;',
             'pureSelfLoop_decoration_eq_bot: any valid decoration assigns &#8869; to a pure '
             'self-loop vertex. &#10003;',
-            'kCycle_node_eq_bot: if d(v) = scale&#7503;(d(v)) under any valid decoration, '
+            'kCycle_node_eq_bot: if d(v) = scale<sup>k</sup>(d(v)) under any valid decoration, '
             'then d(v) = &#8869;. &#10003;',
             'cyclic_decoration_eq_bot: any vertex with a directed cycle through itself '
             'receives &#8869; under any valid decoration. &#10003;',
@@ -905,25 +906,25 @@ def build():
 
     oq_rows = [
         ['CC-1 (ZP-A) derivability',
-         'CLOSED &#8212; T-EXEC (ZP-J v1.0)',
+         'CLOSED &#8212; T-EXEC',
          'CC-1 is now a theorem. The Quine atom = &#8869; is structurally derived. '
          'No freestanding axiom. No modelling commitment beyond AFAStructure typeclass fields.'],
         ['AX-J1 bridge axiom',
-         'CLOSED &#8212; J1 derived (v1.0)',
+         'CLOSED &#8212; J1 derived',
          'The stub version had ax_j1 as a freestanding axiom. '
          'The final version derives J1 from T-EXEC + ZP-A A4. Axiom eliminated.'],
         ['AFAStructure concrete instances',
          'CLOSED &#8212; multiple instances',
          'MachinePhase (ZP-K): machinePhaseAFA : AFAStructure MachinePhase. '
-         '&#8469;&#8734; (v2.0): instNatInfZPS + instNatInfVal &#8594; AbstractSelfApp &#8594; AFA content. '
-         'OntologicalStates (v2.0): instOntSelfApp &#8594; AFA content directly.'],
+         '&#8469;&#8734;: instNatInfZPS + instNatInfVal &#8594; AbstractSelfApp &#8594; AFA content. '
+         'OntologicalStates: instOntSelfApp &#8594; AFA content directly.'],
         ['Aczel DC question (self-membership)',
-         'CLOSED &#8212; DC-free (v2.0)',
+         'CLOSED &#8212; DC-free',
          'For the self-membership operator, DC is unnecessary. '
          'J_self = {&#8869;} proved in one step via quine_unique. '
          'General set-continuous operators: still open (Aczel\'s "I do not know" stands).'],
         ['DA-1 Path 1 formalisation',
-         'PARTIAL &#8212; APG case proved (v2.0)',
+         'PARTIAL &#8212; APG case proved',
          'DA-1 Path 1 (ZP-E) invokes &#8869; = {&#8869;} informally. ZP-J T-EXEC formalises '
          'the identification. decoration_unique (&#167; X) proves uniqueness for finite APGs '
          'over abstract DecorationUniverses. The full ZF+AFA set-theoretic bridge '

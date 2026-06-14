@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.15 | May 2026
+Version 1.16 | June 2026
+v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4),
 no longer a freestanding modelling commitment.
 v1.14: K-13 vocabulary fix — "topological isolation" → "clopen separation" throughout;
@@ -28,7 +29,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 
 
 def label_box_status(title, status_line, rows_list):
@@ -373,7 +374,7 @@ def build():
     ))
 
     E.append(remark_box(
-        'Remark R-FORCING — Structural Forcing vs. Re-Description [new in v1.11]',
+        'Remark R-FORCING — Structural Forcing vs. Re-Description',
         [
             'The four functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>) established in '
             'Sections III-V do not merely translate the Binary Snap into categorical language. Each functor '
@@ -573,7 +574,7 @@ def build():
     E += [
         sp(12),
         Paragraph(
-            '<i>End of ZP-H v1.14 | Four instantiation functors constructed | '
+            '<i>End of ZP-H | Four instantiation functors constructed | '
             'OQ-G1 through OQ-G4 closed | '
             'All four functors have concrete Lean Functor terms (sorry-free): '
             'fb_functor (Q&#8322;BallDepth), fc_functor (InfoDepth), fd_functor (HilbDimDepth), F<sub>A</sub> via NatSLat | '

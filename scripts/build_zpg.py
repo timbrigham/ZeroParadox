@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.11 | May 2026
+Version 1.12 | June 2026
+v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
 v1.11: Version line style fixed (bodyI → subtitle); local make_doc override removed.
 v1.10: Hash sync — script was modified without full workflow; rebuilt to bring
 hash into alignment with register.md.
@@ -24,7 +25,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
 AMBER = colors.HexColor('#B07800')  # ZP-OVERRIDE: ZP-G import_box label text uses darker amber
@@ -168,7 +169,7 @@ def build():
 
     E.append(result_box(
         'Proposition T1 — Uniqueness of the Initial Object',
-        'Status: Derived — standard category theory [unchanged from v1.0]',
+        'Status: Derived — standard category theory',
         [
             'If 0 and 0\' are both initial in C, ∃! isomorphism 0 ≅ 0\'. '
             'The initial object is unique up to unique isomorphism.',
@@ -193,7 +194,7 @@ def build():
 
     E.append(axiom_box(
         'Axiom AX-G1 — Asymmetry Axiom',
-        'Status: Axiom — foundational structural commitment [unchanged from v1.0]',
+        'Status: Axiom — foundational structural commitment',
         [
             'The category C possesses an initial object 0 and no terminal object.',
             'Formally: ∃ 0 ∈ ob(C) satisfying D3. ¬∃ 1 ∈ ob(C) satisfying D4.',
@@ -206,7 +207,7 @@ def build():
 
     E.append(axiom_box(
         'Axiom AX-G2 — Source Asymmetry',
-        'Status: Axiom — foundational [unchanged from v1.0]',
+        'Status: Axiom — foundational',
         [
             'For any non-initial object X ≠ 0: hom(X, 0) = ∅.',
             'Motivation: The categorical expression of irreversibility. Morphisms '
@@ -216,7 +217,7 @@ def build():
     ))
     E.append(remark_box(
         'Remark R-AX — On the Non-Triviality of AX-G1 and AX-G2',
-        'Status: Remark [new in v1.7]',
+        'Status: Remark',
         [
             'AX-G1 and AX-G2 are satisfied by many categories — they are structural conditions, not exotic ones. '
             'What distinguishes ZP-G from a trivial application of initial-object asymmetry is that the initial '
@@ -236,7 +237,7 @@ def build():
 
     E.append(result_box(
         'Lemma T2 — Universal Constituent',
-        'Status: Derived — from D3 and AX-G1 [unchanged from v1.0]',
+        'Status: Derived — from D3 and AX-G1',
         [
             'For every X ∈ ob(C), ∃! &#953;<sub>X</sub>: 0 → X. '
             'The initial object 0 is the universal categorical source.',
@@ -247,7 +248,7 @@ def build():
 
     E.append(result_box(
         'Lemma T3 — Unreachability of 0',
-        'Status: Derived — from AX-G2 [unchanged from v1.0]',
+        'Status: Derived — from AX-G2',
         [
             'For any X ≠ 0: hom(X, 0) = ∅. The initial object 0 is unreachable from any non-initial object.',
             'Proof: Direct from AX-G2. ✓',
@@ -257,7 +258,7 @@ def build():
 
     E.append(remark_box(
         'Remark R1 — Structural Inversion — The Categorical Zero Paradox',
-        'Status: Remark [unchanged from v1.0]',
+        'Status: Remark',
         [
             'T2 and T3 together constitute the categorical Zero Paradox. 0 reaches every object (T2); '
             'no non-initial object reaches 0 (T3). This is not a logical contradiction. It is a structural '
@@ -268,7 +269,7 @@ def build():
 
     E.append(remark_box(
         'Remark R2 — Categorical Expression of Self-Containment',
-        'Status: Remark — connecting note to ZP-A CC-2 [new in v1.3]',
+        'Status: Remark — connecting note to ZP-A CC-2',
         [
             'R1 frames the structural inversion of 0. This remark connects that structure to ZP-A CC-2: '
             '⊥ = {⊥}. The null state is its own extension — a Quine atom. A self-containing object has '
@@ -293,7 +294,7 @@ def build():
 
     E.append(def_box(
         'Definition D5 — Morphism Chain',
-        'Status: Definition [unchanged from v1.0]',
+        'Status: Definition',
         [
             'A morphism chain of length n from 0 is a sequence:',
             '0 = X<sub>0</sub> → X<sub>1</sub> → ... → X<sub>n</sub>',
@@ -304,7 +305,7 @@ def build():
 
     E.append(result_box(
         'Proposition T4 — Chains are Forward-Only',
-        'Status: Derived — from AX-G2 [unchanged from v1.0]',
+        'Status: Derived — from AX-G2',
         [
             'No morphism chain from 0 can return to 0 through non-initial objects.',
             'Proof: A return morphism X<sub>n</sub> → 0 for X<sub>n</sub> ≠ 0 would contradict AX-G2. ✓',
@@ -314,7 +315,7 @@ def build():
 
     E.append(def_box(
         'Definition D6 — Functor',
-        'Status: Definition — standard category theory [unchanged from v1.0]',
+        'Status: Definition — standard category theory',
         [
             'A functor F: C → D consists of an object map F: ob(C) → ob(D) and a morphism map '
             'F: hom<sub>C</sub>(A,B) → hom<sub>D</sub>(F(A), F(B)), preserving composition and identity.',
@@ -324,7 +325,7 @@ def build():
 
     E.append(result_box(
         'Proposition T5 — Functors Preserve Initial Objects',
-        'Status: Derived — [OQ-G2 closed in ZP-H T-H1; unchanged from v1.0]',
+        'Status: Derived — [OQ-G2 closed in ZP-H T-H1]',
         [
             'For each instantiation functor F ∈ {F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>}, '
             'F(0) is an initial object in the codomain. '
@@ -368,15 +369,15 @@ def build():
 
     print('[build_zpg] Building Section VI: Categorical Information Theory...')
     # ── VI. CATEGORICAL INFORMATION THEORY [REBUILT IN v1.1] ─────────────────
-    E.append(Paragraph('VI. Categorical Information Theory [Rebuilt in v1.1]', S['h1']))
+    E.append(Paragraph('VI. Categorical Information Theory', S['h1']))
     E.append(Paragraph('6.1 Native Categorical Surprisal — Definition D7\'', S['h2']))
-    E.append(body('Version 1.0 defined categorical surprisal via the Shannon entropy functor H imported '
-                  'through BA-G1. Version 1.1 replaces this with conditional Kolmogorov complexity, '
-                  'imported via I-KC. The definition is native to the morphism structure of C.'))
+    E.append(body('Categorical surprisal is defined via conditional Kolmogorov complexity, imported '
+                  'via I-KC (Definition D7\'), rather than the Shannon entropy functor H of BA-G1. '
+                  'The definition is native to the morphism structure of C.'))
 
     E.append(def_box(
         'Definition D7\' — Native Categorical Surprisal',
-        'Status: Definition — from D5, I-KC [replaces D7 from v1.0]',
+        'Status: Definition — from D5, I-KC [replaces D7]',
         [
             'Let f: A → B be a morphism in C. Represent A and B as binary strings x<sub>A</sub> and x<sub>B</sub> '
             'via any injective encoding consistent with the morphism structure of C. The categorical surprisal of f is:',
@@ -390,7 +391,7 @@ def build():
             'properties that are invariant under any additive constant. This invariance is a consequence of what '
             'ZP-G chooses to claim, not a general property of K-complexity (additive constants can matter '
             'for precise K-complexity comparisons in AIT).',
-            'Relationship to v1.0 D7: By the coding theorem (I-KC), K(x<sub>B</sub>|x<sub>A</sub>) ≈ &#8722;log<sub>2</sub> P(x<sub>B</sub>|x<sub>A</sub>) + O(c) '
+            'Relationship to D7: By the coding theorem (I-KC), K(x<sub>B</sub>|x<sub>A</sub>) ≈ &#8722;log<sub>2</sub> P(x<sub>B</sub>|x<sub>A</sub>) + O(c) '
             'for any computable measure P. Therefore D7\' and D7 are equivalent up to O(c). The choice of D7\' '
             'over D7 is not a change in what is being measured; it is a change in how the measure is defined — '
             'natively versus via import.',
@@ -440,7 +441,7 @@ def build():
 
     E.append(remark_box(
         'Remark — Lean Scope of T6-b and T6-c',
-        'Status: Scope note [strengthened v1.5] — T6-b and T6-c are NOT Lean-verified for their mathematical claims',
+        'Status: Scope note — T6-b and T6-c are NOT Lean-verified for their mathematical claims',
         [
             '<b>T6-b and T6-c are not Lean-verified.</b> The ZPG.lean proofs for these results compile '
             'without error, but they verify nothing about Kolmogorov complexity. The ZPSurprisal typeclass '
@@ -471,7 +472,7 @@ def build():
 
     E.append(result_box(
         'Theorem T6 — Informational Singularity of 0',
-        'Status: Derived — from AX-G2, D7\', I-KC [rebuilt from v1.0, OQ-G1 closed]',
+        'Status: Derived — from AX-G2, D7\', I-KC [OQ-G1 closed]',
         [
             'Setup: Let 0 be the initial object of C (AX-G1). Let I(f) = K(x<sub>B</sub>|x<sub>A</sub>) be the categorical '
             'surprisal (D7\'). Let I-KC provide the Kolmogorov framework.',
@@ -502,17 +503,17 @@ def build():
 
     E.append(remark_box(
         'Remark R-BA — Compatibility of D7\' with the Shannon Entropy Functor',
-        'Status: Remark — BA-G1 demoted from Bridge Axiom [v1.0] to Compatibility Remark [v1.1]',
+        'Status: Remark — BA-G1 demoted from Bridge Axiom to Compatibility Remark',
         [
-            'Version 1.0 introduced BA-G1 as a bridge axiom: it imported Leinster\'s categorical '
+            'BA-G1 was originally introduced as a bridge axiom: it imported Leinster\'s categorical '
             'characterization of Shannon entropy (naturality, maximality, chain rule) to define the surprisal '
-            'functor. BA-G1 was the only bridge axiom in ZP-G v1.0 and was the source of OQ-G1.',
-            'In v1.1, BA-G1 is no longer a premise of any theorem. It is retained here as a compatibility remark: '
+            'functor. BA-G1 was originally the only bridge axiom in ZP-G and the source of OQ-G1.',
+            'BA-G1 is no longer a premise of any theorem; it is retained here as a compatibility remark: '
             'the coding theorem (I-KC) guarantees that D7\' and the Shannon functor of BA-G1 are equivalent '
             'up to an additive constant c. Specifically:',
             'K(x<sub>B</sub>|x<sub>A</sub>) ≈ H(F(B)) &#8722; H(F(A)) + O(c)',
             'for any computable probability measure P consistent with the morphism structure of C. This '
-            'means all quantitative results that v1.0 derived from BA-G1 remain valid under D7\' — they differ '
+            'means all quantitative results originally derived from BA-G1 remain valid under D7\' — they differ '
             'only by the additive constant c, which does not affect any structural (finite/zero/undefined) claim.',
             'BA-G1 is not false. It is not retired. It is now a derived compatibility result rather than an assumed '
             'premise. Any reader who finds the Shannon characterization more intuitive than Kolmogorov '
@@ -528,7 +529,7 @@ def build():
 
     E.append(result_box(
         'Theorem T7 — The Categorical Zero Paradox',
-        'Status: Derived — Closing Theorem [Part IV strengthened in v1.1]',
+        'Status: Derived — Closing Theorem',
         [
             'Setup: Let C satisfy AX-G1 and AX-G2. Let I be the categorical surprisal from D7\'. '
             'Let I-KC provide the Kolmogorov framework.',
@@ -616,35 +617,35 @@ def build():
         ['D6: Functor',
          'Valid — Definition. Standard. Unchanged.'],
         ['D7\': Native categorical surprisal',
-         'Valid — Definition [new in v1.1]. K(x<sub>B</sub>|x<sub>A</sub>) via I-KC. Replaces D7. '
+         'Valid — Definition. K(x<sub>B</sub>|x<sub>A</sub>) via I-KC. Replaces D7. '
          'Well-defined up to additive constant c. Structurally invariant.'],
         ['I-KC: Kolmogorov import',
-         'Import — named [new in v1.1]. K(x|y) and coding theorem from ZP-C. '
+         'Import — named. K(x|y) and coding theorem from ZP-C. '
          'Not a bridge axiom. Introduces explicit ZP-C dependency into ZP-G.'],
         ['AX-G1: Asymmetry Axiom',
          'Axiom — intentional. Unchanged.'],
         ['AX-G2: Source Asymmetry',
          'Axiom — intentional. Unchanged.'],
         ['R-BA: BA-G1 compatibility remark',
-         'Remark — [BA-G1 demoted from Bridge Axiom in v1.0]. Shannon entropy functor '
+         'Remark — [BA-G1 demoted from Bridge Axiom]. Shannon entropy functor '
          'compatible with D7\' up to O(c) by coding theorem. No longer a premise of any theorem.'],
         ['Proposition T1: Uniqueness of initial object',
-         'Valid — Derived. Relabelled Proposition in v1.2 (subsidiary uniqueness result). Unchanged. ✓'],
+         'Valid — Derived. Relabelled Proposition (subsidiary uniqueness result). Unchanged. ✓'],
         ['Lemma T2: Universal constituent',
-         'Valid — Derived. Relabelled Lemma in v1.2 (stepping-stone result). Unchanged. ✓'],
+         'Valid — Derived. Relabelled Lemma (stepping-stone result). Unchanged. ✓'],
         ['Lemma T3: Unreachability of 0',
-         'Valid — Derived. Relabelled Lemma in v1.2 (stepping-stone result). Unchanged. ✓'],
+         'Valid — Derived. Relabelled Lemma (stepping-stone result). Unchanged. ✓'],
         ['R1: Structural inversion',
          'Valid — Remark. Unchanged.'],
         ['R2: Categorical expression of self-containment',
-         'Valid — Remark [new in v1.3]. Connects T2 + AX-G2 to ZP-A CC-2 (⊥ = {⊥}). '
+         'Valid — Remark. Connects T2 + AX-G2 to ZP-A CC-2 (⊥ = {⊥}). '
          'No new derivation; explanatory bridge note.'],
         ['Proposition T4: Chains are forward-only',
-         'Valid — Derived. Relabelled Proposition in v1.2. Unchanged. ✓'],
+         'Valid — Derived. Relabelled Proposition. Unchanged. ✓'],
         ['Proposition T5: Functors preserve initial objects',
-         'Valid — Conditional on ZP-H T-H1 (closed). Relabelled Proposition in v1.2. Unchanged. ✓'],
+         'Valid — Conditional on ZP-H T-H1 (closed). Relabelled Proposition. Unchanged. ✓'],
         ['Lemma T6-a: Identity surprisal is zero',
-         'Valid — Derived [new in v1.1]. Relabelled Lemma in v1.2. K(x<sub>A</sub>|x<sub>A</sub>) = 0 up to c. ✓'],
+         'Valid — Derived. Relabelled Lemma. K(x<sub>A</sub>|x<sub>A</sub>) = 0 up to c. ✓'],
         ['Lemma T6-b: Non-negative outward surprisal',
          'Valid (PDF-level) — Derived from D5, D7\', AX-G2. K &#8805; 0; strict inequality for distinct objects. '
          'NOT Lean-verified: Lean proof reduces to Nat.zero_le _ (trivially true for any &#8469;-valued function; '
@@ -654,11 +655,11 @@ def build():
          'NOT Lean-verified: Lean proof reduces to Nat.zero_le _. '
          'Subadditivity of K is a standard AIT result but requires K-formalization absent from Mathlib.'],
         ['Theorem T6: Informational singularity',
-         'Valid — Derived [rebuilt in v1.1]. Does not depend on BA-G1. '
+         'Valid — Derived. Does not depend on BA-G1. '
          'Part II: undefined domain (AX-G2) — fully Lean-verified. '
          'Parts I, III: accumulation via T6-b, T6-c — PDF-level only (T6-b/T6-c not Lean-verified).'],
         ['Theorem T7: Categorical Zero Paradox',
-         'Valid — Derived [Part IV strengthened in v1.1]. All six parts derived. BA-G1 not a dependency. ✓'],
+         'Valid — Derived. All six parts derived. BA-G1 not a dependency. ✓'],
         ['OQ-G1: Native surprisal derivation',
          'Closed — D7\', T6. No bridge axiom remains as a theorem premise.'],
     ]
@@ -672,7 +673,7 @@ def build():
         sp(12),
         Paragraph(
             '<i>Zero Paradox ZP-G: Category Theory | Version ' + VERSION + ' | May 2026 |'
-            'Supersedes v1.4 | T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
+            'T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
             'not K-theoretic content | T6 Part II: Lean-verified</i>',
             S['endnote']),
     ]

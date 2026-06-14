@@ -1,5 +1,6 @@
 """
-Build ZP-C: Information Theory (v1.17)
+Build ZP-C: Information Theory (v1.18)
+v1.18: Rendered self-version refs removed — P₀ note ("Version 1.4 updates this") and Open Items row ("from v1.2") (C1 sweep).
 v1.17: Version references removed from Remark R5 label_box and T-BUF li() call (Gemini catch — build gate does not cover li()/label_box()).
 v1.16: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state"; "first atomic state" → "minimum nonzero state (ε₀)" throughout body prose. Palette rebuild.
 v1.15: K-19/K-21 vocab fixes — "First Atomic State" -> "Minimum Nonzero State" in T1; "Informational Extremity" -> "Unbounded Surprisal" in L-INF section header, label, and status lines.
@@ -26,7 +27,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
@@ -53,7 +54,7 @@ def build():
     E.append(sp(4))
     E.append(label_box('Remark R1 — Scope of P₀', [
         'What P<sub>0</sub> establishes (Derived): the point at which x becomes incompressible.',
-        'What P<sub>0</sub> does not establish (prior versions: Axiomatic): that incompressibility causes the Binary Snap. Version 1.4 updates this: the generative claim is now a Candidate Theorem (T-BUF), not a bare axiom. See Section V.',
+        'What P<sub>0</sub> does not establish: that incompressibility causes the Binary Snap — the generative claim is a Candidate Theorem (T-BUF), not a bare axiom. See Section V.',
     ]))
 
     E.append(Paragraph('II. Informational Work: State Representations and JSD', S['h1']))
@@ -250,7 +251,7 @@ def build():
         ['Item', 'Status', 'Description'],
         [['S1: Distribution stipulation', 'Closed — T1', 'T1 derives P and Q from AX-B1 and RP-1.'],
          ['OQ-C1: Non-conservation', 'Closed — T2 rebuilt', 'Telescoping critique resolved; infinite divergence proven within extended D6.'],
-         ['Smooth embedding, MO-1, P1', 'Retired', 'Remain retired from v1.2. Inconsistent with ZP-B.'],
+         ['Smooth embedding, MO-1, P1', 'Retired', 'Retired. Inconsistent with ZP-B.'],
          ['RP-1: Representation principle', 'Principle — explicit', 'Bridge between AX-B1 and probabilistic tools.'],
          ['RP-2: Branching measure on Q₂ \\ {0}', 'Principle — explicit', 'Canonical branching measure; representational commitment; required by T2 and L-INF.'],
          ['CC-2: c₀ = ⊥', 'Conditional Claim', 'Modeling commitment — c₀ identified with ⊥ in semilattice. Parallel to CC-1 in ZP-A. Required by L-RUN Step 4.'],

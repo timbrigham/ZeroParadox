@@ -150,11 +150,13 @@ Companion version numbers are independent of formal version numbers. What matter
 
 **This rule applies to every PDF in the project — formal layers, companions, addenda — not just companions.** (Generalized 2026-06-13, Tim: version changelogs in rendered content should be "murdered by the style guide and review." Scope is **rendered PDF content only** — build-script docstrings and `register.md`/`RELEASES.md` are the changelog of record and are exempt; git history is the real changelog.)
 
-**Version numbers must appear in exactly one place in rendered PDF content: the subtitle / tagline meta line** (`'... | Version ' + VERSION + ' | ...'`; formal-doc footers via `make_doc()` may also carry it). Nowhere else in rendered content — not in disclaimers, section headers, body prose, title-block notes, endnotes, or cross-document references.
+**The document's OWN version must appear in exactly one place in rendered PDF content: the subtitle / tagline meta line** (`'... | Version ' + VERSION + ' | ...'`; formal-doc footers via `make_doc()` may also carry it). Nowhere else in rendered content — not in disclaimers, section headers, body prose, title-block notes, endnotes, or status/provenance tags.
 
-**No version changelogs in rendered PDF content.** A title-block "note" or endnote narrating `"v1.1: Added X. v1.0: Initial release…"` is a violation — this was the standard formal-doc pattern (e.g. ZP-M) and is now retired. The title-block note must describe what the document *is*, not its version history. Patterns like `"ZP-J Self-Reference v1.1"`, `"New in v1.6"`, `"In v2.7, DA-1 was upgraded"`, and `"End of ZP-X v1.0"` are all violations. Strip them on discovery and bump the version.
+**No self-version changelogs or provenance tags in rendered PDF content.** A title-block "note" or endnote narrating `"v1.1: Added X. v1.0: Initial release…"` is a violation — this was the standard formal-doc pattern (e.g. ZP-M) and is now retired. The title-block note must describe what the document *is*, not its version history. Violations include: `"New in v1.6"`, `"In v2.7, DA-1 was upgraded"`, `"End of ZP-X v1.0"`, `"Updated ZP-E v3.0 | …"`, and status/provenance tags such as `[unchanged from v1.0]`, `[new in v1.7]`, `[rebuilt in v1.1]`, `Relabelled in v1.2`, `Supersedes v1.4`. Strip them on discovery and bump the version.
 
-**Editorial review enforces this as a kill** for any rendered-content version mention beyond the single meta line, or any rendered changelog narrative.
+**EXCEPTION — cross-document version citations are ALLOWED (Tim, 2026-06-14).** A reference to *another* document's version (e.g. `"T-SNAP derived in ZP-E v2.0"`, `"Closed in ZP-G v1.1"`) is a legitimate citation, not a self-changelog, and is **not** a violation. The rule targets a document's references to *its own* version history, not citations of where a result landed in a sibling layer.
+
+**Editorial review enforces this as a kill** for any rendered mention of the document's OWN version beyond the single meta line, or any rendered self-version changelog/provenance tag. Cross-document version citations are exempt.
 
 ### Companion sync checklist
 
@@ -371,7 +373,15 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 
 ## Archiving Old Document Versions
 
-When a document is superseded:
+**`historical/` is a write-once, READ-ONLY archive (standing rule, Tim 2026-06-13).** Once a file is in
+`historical/`, it is never modified, rebuilt, renamed, or deleted — it is the immutable record of a
+superseded version. The only allowed operation is *appending* a new superseded version (write-once).
+This also means `historical/` is reserved for **substantive version supersessions** worth preserving as
+distinct artifacts. **Cosmetic / hygiene patches** (e.g. removing rendered version strings, vocab
+fixes, palette rebuilds) **overwrite the flat root PDF in place and do NOT create a `historical/`
+entry** — git history + `register.md` are their record. Do not pollute the archive with trivial churn.
+
+When a document is superseded (substantively):
 1. Move the current flat root file to historical with the version number: `Move-Item ZP-X_Title.pdf historical\ZP-X_Title_vN_N.pdf`
 2. Rebuild the new version into the flat root name: `ZP-X_Title.pdf`
 3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`

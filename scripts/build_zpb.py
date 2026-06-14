@@ -1,5 +1,6 @@
 """
-Build ZP-B: p-Adic Topology (v1.9)
+Build ZP-B: p-Adic Topology (v1.10)
+v1.10: Rendered self-version tags removed from C2/C3 corollary titles (C1 sweep); "null state" → ⊥ in AX-B1 Lean-encoding note (vocab gate).
 v1.9: K-17 vocab fix — "First Atomic State" -> "minimum nonzero state (ε₀)" in AX-B1 box.
 v1.8: Adversary-review pass — R1 remark (Section VI) "universal ontology of state emergence"
 replaced with precise scope statement: results hold for any AX-B1 + MP-1 instantiation.
@@ -16,7 +17,7 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology.pdf')
@@ -49,7 +50,7 @@ def build():
     E.append(body(
         '<i>Lean encoding: AX-B1 is encoded as <b>OntologicalStates</b> — a free inductive type '
         'with two named constructors: <b>.null</b> (non-existence) and <b>.exist</b> (existence). '
-        'This avoids tying the null state to any numeric convention such as &#8469;\'s 0. '
+        'This avoids tying &#8869; to any numeric convention such as &#8469;\'s 0. '
         'Distinctness (null &#8800; exist) is verified by <b>decide</b> via deriving DecidableEq — '
         'no classical axioms required. Lean identifiers do not appear in the companion documents, '
         'which are Lean-free by design.</i>'))
@@ -126,7 +127,7 @@ def build():
         'Proof (open ball is closed): Let (x<sub>n</sub>) &#8594; x with all x<sub>n</sub> &#8712; B&#176;(a,r). Ball radii in Q<sub>2</sub> are discrete (powers of 2), so d(x,a) < r holds in the limit. Thus x &#8712; B&#176;(a,r). <font name="DV">&#10003;</font>',
     ]))
     E.append(sp(4))
-    E.append(label_box('Corollary C2 — Disjoint Balls Do Not Communicate  [v1.2: derived from T2 only]', [
+    E.append(label_box('Corollary C2 — Disjoint Balls Do Not Communicate', [
         'If B(a, r) and B(b, r) are disjoint (d(a,b) > r), then no continuous path exists from any point in B(a, r) to any point in B(b, r).',
         'Proof: By T2, B(a, r) is clopen in Q<sub>2</sub>. Any continuous f: [0,1] &#8594; Q<sub>2</sub> with f(0) &#8712; B(a,r) and f(1) &#8712; B(b,r) would require f to map the connected set [0,1] onto a subset intersecting both B(a,r) and its clopen complement. The preimage of a clopen set under a continuous function is clopen in [0,1]. Since [0,1] is connected, the preimage is either empty or all of [0,1]. It cannot be all of [0,1] (since f(1) &#8713; B(a,r)) and cannot be empty (since f(0) &#8712; B(a,r)). Contradiction. <font name="DV">&#10003;</font>',
     ]))
@@ -150,7 +151,7 @@ def build():
         'A transition from a to b in a topological space X is topologically irreversible if there exists no continuous path &#947;: [0,1] &#8594; X with &#947;(0) = b and &#947;(1) = a.',
     ]))
     E.append(sp(4))
-    E.append(label_box('Corollary C3 — The Snap is Topologically Irreversible  [reclassified from T4 in v1.1]', [
+    E.append(label_box('Corollary C3 — The Snap is Topologically Irreversible', [
         'Let x &#8712; Q<sub>2</sub> with x &#8800; 0. There exists no continuous path &#947;: [0,1] &#8594; Q<sub>2</sub> with &#947;(0) = x and &#947;(1) = 0.',
         'Proof: By T5, Q<sub>2</sub> is totally disconnected. A continuous path &#947; with &#947;(0) = x &#8800; 0 and &#947;(1) = 0 would require &#947;([0,1]) to be a connected subset of Q<sub>2</sub> containing two distinct points. By T5, no such connected subset exists. <font name="DV">&#10003;</font>',
         'Derivation chain: T1 &#8594; T2 &#8594; T5 &#8594; C3. Reclassified from Theorem T4: this result is a corollary of T5, not an independent theorem.',
