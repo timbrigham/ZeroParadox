@@ -113,8 +113,9 @@ def build():
         'Making division total introduces exactly two new elements:'))
     E.append(cbody(
         '<b>&#8734; = /0</b> (the reciprocal of zero). This is the "point at infinity" you '
-        'may have met on the Riemann sphere, where 0 and &#8734; sit at opposite poles. In '
-        'a wheel it is a genuine element you can compute with.'))
+        'may have met on the Riemann sphere, where 0 and &#8734; sit at opposite poles. A '
+        'wheel goes one step further than the sphere - it adds the second element &#8869; '
+        'below as well - and it makes &#8734; a genuine element you can compute with.'))
     E.append(cbody(
         '<b>&#8869; = 0&#183;/0</b> (zero times the reciprocal of zero). This is an '
         'absorbing "undefined" element: combine it with anything and you get &#8869; back. '
@@ -197,11 +198,10 @@ def build():
         'not one of the allowed denominators (0 &#8713; S), the reciprocal of zero and the '
         'absorbing element are different.'))
     E.append(cbody(
-        'That condition is the normal situation. Whenever S is the set of nonzero elements '
-        'with no zero divisors - for instance, the complement of a prime ideal, the usual '
-        'choice when building fractions - 0 is automatically excluded, and the two elements '
-        'stay apart. You only collapse to a meadow if you deliberately allow 0 as a '
-        'denominator.'))
+        'That condition is the normal situation: any sensible set of denominators excludes '
+        '0. The nonzero elements of an integral domain, or the complement of a prime ideal '
+        '(the usual choice when building fractions), all avoid 0 - so the two elements stay '
+        'apart. You only collapse to a meadow if you deliberately allow 0 as a denominator.'))
     E.append(key_result_box(
         'WheelFrac.inf_ne_bot  (machine-verified, Lean 4)',
         'If 0 &#8713; S, then &#8734; &#8800; &#8869; in &#8857;<sub>S</sub> A. The '
@@ -219,8 +219,9 @@ def build():
         '&#8869; = {&#8869;}. The wheel of fractions is the <b>algebraic</b> face of the '
         'same point. Where ZP-J says "the bottom is where measure runs to infinity," the '
         'wheel says "the bottom is where division by zero lives" - and it shows that this '
-        'point is a defined, well-behaved element (&#8734; = /0), distinct from the '
-        'absorbing &#8869;. Same location, different vocabulary.'))
+        'point is a defined, well-behaved element (&#8734; = /0), distinct - in the standard '
+        'case where 0 &#8713; S - from the absorbing &#8869;. Same location, different '
+        'vocabulary.'))
     E.append(cbody(
         'One honest limitation. The wheel is built <i>on top of</i> a ring you supply - the '
         'ring structure is an input, not something derived from the Zero Paradox\'s own '
