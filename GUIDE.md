@@ -72,7 +72,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-G Illustrated Companion](ZP-G_Illustrated_Companion.pdf) | ZP-G | Category and functor concepts, initial object, informational singularity |
 | [ZP-H Illustrated Companion](ZP-H_Illustrated_Companion.pdf) | ZP-H | Four-functor convergence, T-SNAP derivation chain, Binary Snap across the four ZP frameworks |
 | [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |
-| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J + ZP-J AFA Addendum | Quine atom diagram (⊥ = {⊥}), three-way equivalence table, CC-1/CC-2 as derived propositions, abstraction chain (ValuationStructure → AFAStructure), APG decoration uniqueness |
+| [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J + ZP-J AFA Addendum | Quine atom diagram (⊥ = {⊥}), directed-graph (APG) view of the Quine atom (self-loop), three-way equivalence table, CC-1/CC-2 as derived propositions, abstraction chain (ValuationStructure → AFAStructure), APG decoration uniqueness |
 | [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Four-way equivalence diagram, computational Quine, execution argument Lean verification |
 | [ZP-L Illustrated Companion](ZP-L_Illustrated_Companion.pdf) | ZP-L | Ordinal tower with ε₀ snap threshold, dual convergence diagram |
 | [ZP-M Illustrated Companion](ZP-M_Illustrated_Companion.pdf) | ZP-M | Kleene-Ordinal-2-adic triangle, diagonalization schema |

@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.23 | May 2026
+Version 1.24 | June 2026
+v1.24: Directed-graph (APG) diagram added for the Quine atom (self-loop + well-founded chain ending at ∅); arithmetic analogy scoped (it cannot show ⊥={⊥} — routed to mirror/graph); "depth" rephrased from "how far from ⊥" to intrinsic descent/valuation (Dan feedback 2026-06-15). Fixed latent null glyph scaleᵏ (&#7503; → <sup>k</sup>).
 v1.23: "his question" pronoun fixed; abstraction chain direction clarified; remember_box leads with analogy; p-adic removed from disclaimer (future work); "Not three separate" prose replaced; T-EXEC antecedent named (ER/AR fixes).
 v1.22: "ZP lattice" replaced with structural description; "bounded semilattice" corrected to join-semilattice; AFAStructure typeclass used directly; Aczel specific claims replaced with generic AFA fixed-point framing (ER/AR fixes).
 v1.21: ZP-A semilattice replaced with standard structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous (AR fixes).
@@ -83,6 +84,40 @@ def quine_atom_diagram():
     return d
 
 
+def quine_graph_diagram():
+    """Directed-graph (APG) view: ordinary chains end at ∅; ⊥ loops on itself."""
+    dw, dh = TW, 2.5 * inch  # 180 pts; content top ~152, bottom ~63
+    d = Drawing(dw, dh)
+    cy = 105
+
+    # LEFT — well-founded chain  a -> b -> ∅
+    d.add(Circle(60, cy, 15, fillColor=INDIGO_LITE, strokeColor=INDIGO, strokeWidth=1.3))
+    d.add(String(56, cy - 5, 'a', fontSize=12, fontName='DV-B', fillColor=INDIGO))
+    d.add(Circle(130, cy, 15, fillColor=INDIGO_LITE, strokeColor=INDIGO, strokeWidth=1.3))
+    d.add(String(126, cy - 5, 'b', fontSize=12, fontName='DV-B', fillColor=INDIGO))
+    d.add(Circle(196, cy, 13, fillColor=WHITE, strokeColor=INDIGO, strokeWidth=1.3))
+    d.add(String(191, cy - 5, '∅', fontSize=12, fontName='DV', fillColor=INDIGO))
+    d.add(Line(76, cy, 113, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(107, cy + 4, 113, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(107, cy - 4, 113, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(146, cy, 181, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(175, cy + 4, 181, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(175, cy - 4, 181, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(String(46, cy - 42, 'well-founded: the chain ends at ∅',
+                 fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
+
+    # RIGHT — Quine atom ⊥ with a self-loop
+    qx = 365
+    d.add(Circle(qx, cy, 18, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
+    d.add(String(qx - 9, cy - 6, '⊥', fontSize=16, fontName='DV-B', fillColor=WHITE))
+    d.add(Circle(qx, cy + 33, 14, fillColor=None, strokeColor=INDIGO, strokeWidth=1.4))
+    d.add(Line(qx - 5, cy + 24, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
+    d.add(Line(qx + 5, cy + 24, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
+    d.add(String(qx - 42, cy - 42, '⊥ = {⊥}: the chain loops on itself',
+                 fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
+    return d
+
+
 def three_way_table():
     """Three-way equivalence: Quine atom = bottom element = join identity."""
     hdr = [Paragraph('Language', CS['tbl_hdr']),
@@ -149,7 +184,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.23'
+VERSION = '1.24'
 
 
 def build():
@@ -160,7 +195,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-J Companion  |  Self-Reference  |  May 2026')
+            'Zero Paradox ZP-J Companion  |  Self-Reference  |  June 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -179,7 +214,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
           Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
-          Paragraph('ZP Companion | Version ' + VERSION + ' | The Quine Atom | May 2026', CS['meta']),
+          Paragraph('ZP Companion | Version ' + VERSION + ' | The Quine Atom | June 2026', CS['meta']),
           Paragraph(
               'This companion explains in plain language the proof that &#8869; = {&#8869;} '
               '(the Quine atom of AFA set theory) is the unique bottom element of a lattice. '
@@ -238,6 +273,15 @@ def build():
         'The Quine atom ⊥ = {⊥}: ⊥ is the sole member of itself. '
         'The outer ring is the set {⊥} and the inner disk is ⊥ as an element. '
         'They are the same object.'))
+    E.append(sp(6))
+    E.append(quine_graph_diagram())
+    E.append(ccaption(
+        'A second way to see it - as a directed graph (an "accessible pointed graph", or APG, '
+        'the structure Aczel\'s anti-foundation axiom decorates). Each arrow points from a set '
+        'to one of its members. Ordinary sets are well-founded: following the arrows always ends, '
+        'here at the empty set ∅. The bottom ⊥ is the lone exception - its arrow loops straight '
+        'back to itself. That self-loop is exactly ⊥ = {⊥}, the Quine atom: a membership chain '
+        'that never bottoms out.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - A mirror facing a mirror', [
         'Hold two mirrors facing each other. Each reflection contains the other mirror, '
@@ -287,12 +331,14 @@ def build():
         'descriptions of the same structural role. T-EXEC makes this explicit and '
         'machine-checked.'))
     E.append(sp(4))
-    E.append(example_box('Real-world analogy  - Zero in arithmetic', [
-        '0 is the additive identity (x + 0 = x), the smallest non-negative integer '
-        '(0 ≤ n for all n ∈ ℕ), and the unique fixed point of negation (−0 = 0). '
-        'These are three descriptions of the same object. '
-        'T-EXEC is the Zero Paradox equivalent: ⊥ as Quine atom = ⊥ as minimum = ⊥ as '
-        'join identity are three descriptions of the same bottom element.',
+    E.append(example_box('Real-world analogy  - Zero in arithmetic (partial)', [
+        '0 in arithmetic wears more than one hat at once: it is the additive identity '
+        '(x + 0 = x) and the smallest non-negative integer (0 ≤ n for all n ∈ ℕ). '
+        'Those two line up cleanly with ⊥ as join identity and ⊥ as minimum. '
+        'But arithmetic has no honest way to show the third hat - ⊥ as the Quine atom '
+        '(⊥ = {⊥}, "zero inside zero"): ordinary numbers simply do not contain themselves. '
+        'For that self-containing property the right pictures are the mirror-facing-a-mirror '
+        'analogy and the directed graph above, not arithmetic.',
     ]))
     E.append(sp(8))
 
@@ -325,14 +371,15 @@ def build():
         '<i>why</i> is &#8869; the unique fixed point? The valuation argument answers this, '
         'and it is the insight behind ZP-J\'s abstraction chain.'))
     E.append(cbody(
-        'Imagine every element of the lattice has a "depth"  - a value in the extended '
-        'naturals {0, 1, 2, &#8230;, &#8734;} measuring how far it is from &#8869;. '
-        '&#8869; itself has depth &#8734;. Applying scale  - the self-application '
-        'operation  - increases depth by exactly 1 at every non-&#8869; element. '
-        'So if scale(x) = x, then depth(x) = depth(x) + 1. '
-        'That equation has no finite solution. Only &#8869;, whose depth is already &#8734; '
-        '(and &#8734; + 1 = &#8734; in the extended naturals), can satisfy it. '
-        '&#8869; is the only fixed point.'))
+        'Imagine every element carries a "depth"  - a value in the extended naturals '
+        '{0, 1, 2, &#8230;, &#8734;} given by how many times you can descend through its '
+        'structure before bottoming out (its 2-adic valuation). Ordinary elements bottom out '
+        'in finitely many steps, so their depth is finite; &#8869; never bottoms out  - it '
+        'contains itself  - so its depth is &#8734;. Applying scale  - the self-application '
+        'operation  - raises depth by exactly 1 at every non-&#8869; element. '
+        'So if scale(x) = x, then depth(x) = depth(x) + 1  - an equation with no finite '
+        'solution. Only &#8869;, whose depth is already &#8734; (and &#8734; + 1 = &#8734; in '
+        'the extended naturals), can satisfy it. &#8869; is the only fixed point.'))
     E.append(cbody(
         'The formal bridge between the 2-adic type and the abstract ZPSemilattice framework '
         'is future work, not a proved result. But informally, the argument has the same shape '
@@ -451,7 +498,7 @@ def build():
         'The proof follows the same two-direction logic as T-EXEC:'))
     E.append(cbody(
         '<b>Cyclic vertices:</b> If a vertex lies on a directed cycle of length k, '
-        'then composing the decoration equation around the cycle gives d(v) = scale&#7503;(d(v)). '
+        'then composing the decoration equation around the cycle gives d(v) = scale<sup>k</sup>(d(v)). '
         'The valuation argument forces d(v) = &#8869;: any other label would require '
         'depth(d(v)) = depth(d(v)) + k, which is impossible. So on cycles, '
         'any two decorations must both assign &#8869;. They agree trivially.'))
