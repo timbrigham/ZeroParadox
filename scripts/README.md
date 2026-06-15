@@ -64,6 +64,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zph_companion.py](build_zph_companion.py) | ZP-H |
 | [build_zpi_companion.py](build_zpi_companion.py) | ZP-I |
 | [build_zpj_companion.py](build_zpj_companion.py) | ZP-J |
+| [build_zpj_wheel_companion.py](build_zpj_wheel_companion.py) | ZP-J Wheel Addendum |
 | [build_zpk_companion.py](build_zpk_companion.py) | ZP-K |
 | [build_zpl_companion.py](build_zpl_companion.py) | ZP-L |
 | [build_zpm_companion.py](build_zpm_companion.py) | ZP-M |
