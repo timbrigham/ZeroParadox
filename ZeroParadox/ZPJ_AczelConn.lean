@@ -2,7 +2,7 @@ import ZeroParadox.ZPJ
 import Mathlib.Tactic
 
 /-!
-# ZPJ — Aczel Fixed Point Connection (Exploratory)
+# ZPJ — Aczel Fixed Point Connection
 
 Aczel (Non-Well-Founded Sets, 1988, ch. 6, p. 77) proves that
 J_Φ = ⋃{x | x ⊆ Φx} is the largest fixed point of a set continuous

@@ -3,7 +3,7 @@ import ZeroParadox.ZPJ_AczelConn
 import Mathlib.Tactic
 
 /-!
-# ZPJ — Abstract Self-Application Bridge (Exploratory)
+# ZPJ — Abstract Self-Application Bridge
 
 ## The question
 

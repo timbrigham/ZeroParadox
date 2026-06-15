@@ -3,7 +3,7 @@ import Mathlib.NumberTheory.Padics.PadicIntegers
 import Mathlib.Tactic
 
 /-!
-# ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure (Exploratory)
+# ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
 
 ## The road surface
 
