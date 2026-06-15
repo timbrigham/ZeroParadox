@@ -39,7 +39,7 @@ and the closure of CC-1 and CC-2 as derived theorems rather than freestanding co
 
 import os
 from zp_utils import *
-from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle
+from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Path
 from reportlab.graphics import renderPDF
 
 def quine_atom_diagram():
@@ -106,13 +106,18 @@ def quine_graph_diagram():
     d.add(String(46, cy - 42, 'well-founded: the chain ends at ∅',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
 
-    # RIGHT — Quine atom ⊥ with a self-loop
+    # RIGHT — Quine atom ⊥ with a self-loop (dashed: exits right, re-enters the top)
     qx = 365
     d.add(Circle(qx, cy, 18, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
     d.add(String(qx - 9, cy - 6, '⊥', fontSize=16, fontName='DV-B', fillColor=WHITE))
-    d.add(Circle(qx, cy + 33, 14, fillColor=None, strokeColor=INDIGO, strokeWidth=1.4))
-    d.add(Line(qx - 5, cy + 24, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
-    d.add(Line(qx + 5, cy + 24, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
+    loop = Path(strokeColor=INDIGO, strokeWidth=1.4, fillColor=None,
+                strokeDashArray=[2.5, 2.5])
+    loop.moveTo(qx + 18, cy)                       # exit the right edge
+    loop.curveTo(qx + 55, cy, qx, cy + 50, qx, cy + 18)  # arc up and back into the top
+    d.add(loop)
+    # solid arrowhead at the top entry, pointing down into the ball
+    d.add(Line(qx - 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
+    d.add(Line(qx + 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
     d.add(String(qx - 42, cy - 42, '⊥ = {⊥}: the chain loops on itself',
                  fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
     return d
