@@ -395,7 +395,7 @@ def build():
         'Only 0, with v&#8322;(0) = &#8734;, satisfies 2 &#215; 0 = 0. '
         'The 2-adic integers &#8484;&#8322; are a machine-checked instance of exactly this '
         'valuation argument (see the models below). Unlike the axiom-free core (T-EXEC), this '
-        'instance inherits the axiom of choice from Mathlib\'s p-adic library.'))
+        'instance uses the axiom of choice, inherited from Mathlib.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - The elevator that only goes up', [
         'Imagine an elevator that, when you press a button, moves one floor higher  - '
@@ -464,8 +464,8 @@ def build():
         'genuine number system rather than an abstract lattice  - in fact &#8484;&#8322; is a '
         'ring, not a lattice at all, which is what showed the lattice structure was more than '
         'the argument needs. The unique fixed point of multiply-by-2 is 0. Machine-checked in '
-        'Lean, though (unlike the axiom-free core) it inherits the axiom of choice from '
-        'Mathlib\'s p-adic library.'))
+        'Lean, though (unlike the axiom-free core) it uses the axiom of choice, inherited from '
+        'Mathlib.'))
     E.append(sp(4))
     E.append(remember_box(
         'Three types, one destination. &#8469;&#8734; and the 2-adic integers &#8484;&#8322; '
