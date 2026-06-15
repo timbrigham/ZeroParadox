@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.24 | June 2026
+Version 1.25 | June 2026
+v1.25: §6 "future work" bridge sentence retired — the 2-adic valuation argument is now formalized (ZPJ_ScaleBridge wired into the maintained build); §7 gains the common-ancestor (ValBridge) framing — the abstract lattice track and ℤ₂ are instances of one minimal typeclass; §8 adds ℤ₂ as a third concrete model. The ℤ₂ instance is flagged as inheriting Classical.choice from Mathlib's p-adic library (unlike the axiom-free core T-EXEC).
 v1.24: Directed-graph (APG) diagram added for the Quine atom (self-loop + well-founded chain ending at ∅); arithmetic analogy scoped (it cannot show ⊥={⊥} — routed to mirror/graph); "depth" rephrased from "how far from ⊥" to intrinsic descent/valuation (Dan feedback 2026-06-15). Fixed latent null glyph scaleᵏ (&#7503; → <sup>k</sup>).
 v1.23: "his question" pronoun fixed; abstraction chain direction clarified; remember_box leads with analogy; p-adic removed from disclaimer (future work); "Not three separate" prose replaced; T-EXEC antecedent named (ER/AR fixes).
 v1.22: "ZP lattice" replaced with structural description; "bounded semilattice" corrected to join-semilattice; AFAStructure typeclass used directly; Aczel specific claims replaced with generic AFA fixed-point framing (ER/AR fixes).
@@ -189,7 +190,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.24'
+VERSION = '1.25'
 
 
 def build():
@@ -386,13 +387,15 @@ def build():
         'solution. Only &#8869;, whose depth is already &#8734; (and &#8734; + 1 = &#8734; in '
         'the extended naturals), can satisfy it. &#8869; is the only fixed point.'))
     E.append(cbody(
-        'The formal bridge between the 2-adic type and the abstract ZPSemilattice framework '
-        'is future work, not a proved result. But informally, the argument has the same shape '
-        'in 2-adic arithmetic: multiplication by 2 is the scale operation, '
+        'This same argument runs in 2-adic arithmetic, and there it is formalized in Lean. '
+        'Multiplication by 2 is the scale operation, '
         'the 2-adic valuation v&#8322;(x) measures how many times 2 divides x (a kind of depth), '
         'and v&#8322;(2x) = v&#8322;(x) + 1 for any x &#8800; 0. '
         'So 2x = x forces v&#8322;(x) = v&#8322;(x) + 1 - impossible for finite valuation. '
-        'Only 0, with v&#8322;(0) = &#8734;, satisfies 2 &#215; 0 = 0.'))
+        'Only 0, with v&#8322;(0) = &#8734;, satisfies 2 &#215; 0 = 0. '
+        'The 2-adic integers &#8484;&#8322; are a machine-checked instance of exactly this '
+        'valuation argument (see the models below). Unlike the axiom-free core (T-EXEC), this '
+        'instance inherits the axiom of choice from Mathlib\'s p-adic library.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - The elevator that only goes up', [
         'Imagine an elevator that, when you press a button, moves one floor higher  - '
@@ -423,13 +426,22 @@ def build():
         'Each layer of the chain removes one more thing you have to assume. At the bottom '
         'of the chain, you are left with the valuation argument: scale increases depth by 1, '
         'so the only fixed point is the element with infinite depth.'))
+    E.append(cbody(
+        'There is one more layer underneath. Those four valuation axioms never use the join '
+        'operation - so the full lattice was more structure than the argument needs. Keeping '
+        'only the four axioms, with &#8869; as a plain element, gives a minimal common '
+        'ancestor (called ValBridge in the Lean source). Both the abstract lattice track and '
+        'the concrete 2-adic integers &#8484;&#8322; are instances of it, so one Lean proof '
+        'establishes the unique-bottom result for both at once. This is what genuinely ties '
+        'the abstract framework and the 2-adic model together: not an analogy between them, '
+        'but a single theorem they both inherit.'))
     E.append(sp(8))
 
     # ── Two Concrete Models ──────────────────────────────────────────────────
-    E.append(Paragraph('Two Concrete Models', CS['h1']))
+    E.append(Paragraph('Three Concrete Models', CS['h1']))
     E.append(cbody(
         'The abstract chain is only useful if real types can actually run it. ZP-J '
-        'demonstrates two concrete instances, taking different paths through the chain.'))
+        'demonstrates three concrete instances, taking different paths through the chain.'))
     E.append(cbody(
         '<b>&#8469;&#8734; (the extended naturals):</b> Take the natural numbers extended '
         'with a point at infinity  - the set {0, 1, 2, 3, &#8230;, &#8734;}. '
@@ -445,11 +457,21 @@ def build():
         'the self-application operation maps every element to null. Null maps to itself '
         '(fixed point). Exist maps to null and is therefore not a fixed point. '
         'Null is the unique fixed point  - the AFA content follows immediately.'))
+    E.append(cbody(
+        '<b>&#8484;&#8322; (the 2-adic integers):</b> The number system from ZP-B, with '
+        'scale = multiply-by-2 and depth = the 2-adic valuation v&#8322;. The bottom element '
+        'is 0, whose valuation is &#8734;. This is the full valuation route again, but on a '
+        'genuine number system rather than an abstract lattice  - in fact &#8484;&#8322; is a '
+        'ring, not a lattice at all, which is what showed the lattice structure was more than '
+        'the argument needs. The unique fixed point of multiply-by-2 is 0. Machine-checked in '
+        'Lean, though (unlike the axiom-free core) it inherits the axiom of choice from '
+        'Mathlib\'s p-adic library.'))
     E.append(sp(4))
     E.append(remember_box(
-        'Two paths, one destination. ℕ∞ takes the full valuation route. OntologicalStates '
-        'bypasses the valuation step and connects directly to AbstractSelfApp. Both deliver '
-        'the same conclusion: the unique self-containing element is the bottom. '
+        'Three types, one destination. &#8469;&#8734; and the 2-adic integers &#8484;&#8322; '
+        'take the full valuation route; OntologicalStates bypasses the valuation step and '
+        'connects directly to AbstractSelfApp. All three deliver the same conclusion: the '
+        'unique self-containing element is the bottom. '
         'The architecture is sound because each type takes the path the mathematics allows.'))
     E.append(sp(8))
 
