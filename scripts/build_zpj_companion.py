@@ -373,7 +373,7 @@ def build():
     E.append(cbody(
         'Imagine every element carries a "depth"  - a value in the extended naturals '
         '{0, 1, 2, &#8230;, &#8734;} given by how many times you can descend through its '
-        'structure before bottoming out (its 2-adic valuation). Ordinary elements bottom out '
+        'structure before bottoming out. Ordinary elements bottom out '
         'in finitely many steps, so their depth is finite; &#8869; never bottoms out  - it '
         'contains itself  - so its depth is &#8734;. Applying scale  - the self-application '
         'operation  - raises depth by exactly 1 at every non-&#8869; element. '
