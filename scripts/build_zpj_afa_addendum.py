@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.2 | May 2026
+Version 1.3 | June 2026
+v1.3: Rendered self-version ref removed from endnote ("Version 1.0 covers…") (C1 sweep). Fixed 2 null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>).
 v1.2: Version changelog removed from preamble.
 v1.1: Add COMP_BLUE header banner matching companion template.
 v1.0: Initial release. Presents the formal derivation chain from ValuationStructure
@@ -15,7 +16,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 def build():
@@ -300,7 +301,7 @@ def build():
     E.append(body(
         'The key tool is the iterated valuation lemma. If v lies on a cycle of length '
         'k &#8805; 1, the decoration equation applied k times around the cycle gives '
-        'd(v) = scale&#7503;(d(v)). For any x &#8800; &#8869;, val(scale&#7503;(x)) = '
+        'd(v) = scale<sup>k</sup>(d(v)). For any x &#8800; &#8869;, val(scale<sup>k</sup>(x)) = '
         'val(x) + k (val_iterate), so a fixed point would require val(x) = val(x) + k '
         '&#8212; impossible for finite val. Therefore d(v) = &#8869;.'))
 
@@ -472,7 +473,7 @@ def build():
         'Endnote: This document is an addendum to ZP-J Self-Reference and reads after '
         'it. The derivation chain (ValuationStructure &#8594; AbstractSelfApp &#8594; '
         'AFAStructure) is established in ZP-J; this document applies it to the APG '
-        'decoration problem. Version 1.0 covers the uniqueness result for finite graphs. '
+        'decoration problem. It covers the uniqueness result for finite graphs. '
         'All active theorems sorry-free in Lean 4 as of May 2026 '
         '(one commented-out stub; see §V).',
         S['endnote']))

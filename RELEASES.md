@@ -243,3 +243,42 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP Choice-Free Core Addendum | v1.0 (new) |
 
 **Next threshold:** v3.0 on a new formal layer (ZP-N constructive-ordinal validation, which doubles as the unit test for the Classical.choice-necessity question); a v2.5 doc release on the next substantive reviewer-feedback round or accumulated documentation work.
+
+---
+
+## v2.5 - 2026-06-17
+
+**Why this release:** ZP-P "The Fixed-Point Fork" added as a synthesis layer, plus the new ZP-J Wheel illustrated companion and a project-wide rendered-version cleanup (C1). A minor doc release per the v2.4 threshold: ZP-P proves no new foundational result, so v3.0 stays reserved for a new foundational layer.
+
+**What changed:**
+- ZP-P The Fixed-Point Fork: new synthesis layer (PDF + Lean `ZPP.lean` / `ZPP_Coalgebra.lean` / `ZPP_Ostrowski.lean`, wired into `Basic.lean`). The μ/ν fork schema (least and greatest fixed point collapse to one point iff the self-map has a unique fixed point) is choice-free `[propext, Quot.sound]`; the categorical-parent instance (the leaf-free functor's W-type empty / M-type inhabited) and the number-system instance (ℝ vs ℚ₂ via Ostrowski) are theorem-backed, with `Classical.choice` confined to the non-well-founded / analytic realizations and inherited from Mathlib. Three tiers (schema / instances / unification); hard fence (cross-instance identity = type boundary) and soft fence (not every fork is μ/ν). Renamed from ZP-O to avoid O/0 collision in a zero-themed framework. Engineer's Takes filled in Tim's voice (the choice boundary: the framework-defining theorems are choice-free, the tooling realizations carry inherited choice).
+- ZP-J Wheel Illustrated Companion v1.0: new plain-language companion for the wheel of fractions (division by zero made total; ∞ = /0, ⊥ = 0·/0; wheel-vs-meadow diagram).
+- ZP-J Self-Reference companion v1.24 → v1.25: APG directed-graph diagram and depth/analogy fixes (Dan feedback); §6 future-work bridge retired (the 2-adic argument is now formalized); ValBridge common-ancestor framing and a ℤ₂ model added; ScaleBridge wired into the maintained build with its Engineer's Take.
+- C1 cleanup: rendered self-version references stripped across 11 documents (a document's own version now appears only on the subtitle / footer meta line); glyph and vocab fixes; the no-rendered-changelog rule codified in CLAUDE.md.
+- Hotfix: a leaked private-note phrase removed from the `ZPJ_WheelFrac.lean` docstring (surfaced in Bergstra correspondence).
+- `.zenodo.json`: updated to fourteen layers (ZP-P added, with the choice fence).
+
+**Document versions at v2.5:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.14 |
+| ZP-B p-Adic Topology | v1.10 |
+| ZP-C Information Theory | v1.18 |
+| ZP-D State Layer | v1.12 |
+| ZP-E Bridge Document | v3.20 |
+| ZP-F The Counterexamples | v1.4 |
+| ZP-G Category Theory | v1.12 |
+| ZP-H Categorical Bridge | v1.16 |
+| ZP-H Native Categories Addendum | v1.0 |
+| ZP-I Inside Zero | v1.11 |
+| ZP-J Self-Reference | v2.2 |
+| ZP-J AFA Addendum | v1.3 |
+| ZP-J Wheel Addendum | v1.0 |
+| ZP-J Wheel Illustrated Companion | v1.0 (new) |
+| ZP-K Computational Grounding | v1.7 |
+| ZP-L Incomputability Convergence | v1.1 |
+| ZP-M Kleene-Ordinal Bridge | v1.1 |
+| ZP-P The Fixed-Point Fork | v1.1 (new) |
+| ZP Choice-Free Core Addendum | v1.0 |
+
+**Next threshold:** v3.0 on a new foundational layer (ZP-N constructive-ordinal validation, the unit test for the Classical.choice-necessity question); a further v2.x doc release on the next substantive reviewer-feedback round or accumulated documentation work.

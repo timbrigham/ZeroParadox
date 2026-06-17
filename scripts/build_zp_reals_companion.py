@@ -1,7 +1,8 @@
 """
 Build ZP-Reals Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.6 | May 2026
+Version 1.7 | June 2026
+v1.7: Rendered self-version removed from page footer (C1 sweep); "null state" → "bottom ⊥" in L-INF note (vocab gate).
 v1.6: Adversary-review pass — "That is definitional" removed from Section V state-change
 claim; replaced with explicit scope to domains where state changes have nonzero extent.
 v1.0: Initial release.
@@ -119,7 +120,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.6'
+VERSION = '1.7'
 
 
 def build():
@@ -132,7 +133,7 @@ def build():
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
             'Zero Paradox | Where the Snap Fails: The Real Numbers as Counterexample'
-            '  |  May 2026  |  v' + VERSION)
+            '  |  May 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
@@ -323,7 +324,7 @@ def build():
     E.append(Paragraph('VII. Two Kinds of Incompressibility', CS['h1']))
     E.append(cbody(
         'This brings us to a subtle but important point. ZP-C includes the result '
-        'L-INF: the null state &#8869; has unbounded surprisal — no finite external '
+        'L-INF: the bottom &#8869; has unbounded surprisal — no finite external '
         'description can capture it. A careful reader might ask: is this the same '
         'as saying &#8869; is algorithmically incompressible, like a random real number?'))
     E.append(cbody(

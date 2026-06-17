@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.0 | May 2026
+Version 1.1 | June 2026
+v1.1: Rendered version changelog removed (C1 sweep — no version changelogs in rendered PDF content).
 v1.0: Initial release. All theorems §I–§IV proved sorry-free in Lean 4.
 Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.
 Closes the two gaps left by ZP-K (hfp free hypothesis) and ZP-L (type bridge).
@@ -10,7 +11,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 def build():
@@ -27,7 +28,7 @@ def build():
         Paragraph('ZP-M: Kleene&#8211;Ordinal Bridge', S['title']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.0: Initial release. '
+            '<i>Synthesis bridge. '
             'All theorems §I&#8211;§IV proved sorry-free in Lean 4. '
             'Closes the hfp free hypothesis (ZP-L) and the snapEmbed type bridge. '
             'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
@@ -402,7 +403,7 @@ def build():
     E += [
         hr(),
         Paragraph(
-            '<i>End of ZP-M v1.0 | Kleene&#8211;Ordinal Bridge | '
+            '<i>End of ZP-M | Kleene&#8211;Ordinal Bridge | '
             'snapEmbed type bridge | hfp gap closed | zpm_triangle co-proved | '
             'both_fixed_points_exist | R-M.1: DA-1 Path 2 boundary | '
             'All ZPM.lean theorems verified. Axioms: [propext, Classical.choice, Quot.sound].</i>',

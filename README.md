@@ -74,12 +74,13 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-H Native Categories | [ZPH_TopFunctor.lean](ZeroParadox/ZPH_TopFunctor.lean), [ZPH_HilbFunctor.lean](ZeroParadox/ZPH_HilbFunctor.lean), [ZPH_InfoFunctor.lean](ZeroParadox/ZPH_InfoFunctor.lean), [ZPH_MC1.lean](ZeroParadox/ZPH_MC1.lean) | The snap floor realized in real Mathlib categories: ⊥ as inverse limit in TopCat, initial object in ModuleCat ℂ and KleisliCat PMF; mc1_correspondence bundle | Clean - June 2026 |
 | ZP-I Inside Zero | [ZPI.lean](ZeroParadox/ZPI.lean) | Every maximal chain is Cauchy and converges to its own successor ⊥ (Inside Zero) | Clean - April 2026 |
 | ZP-J Self-Reference (Core) | [ZPJ.lean](ZeroParadox/ZPJ.lean) | The Quine atom is ⊥ (executable self-reference); CC-1 derived axiom-free | Clean - April 2026 |
-| ZP-J AFA Derivation Chain | [ZPJ_AczelConn.lean](ZeroParadox/ZPJ_AczelConn.lean), [ZPJ_SelfApp.lean](ZeroParadox/ZPJ_SelfApp.lean), [ZPJ_Scale.lean](ZeroParadox/ZPJ_Scale.lean), [ZPJ_OntBridge.lean](ZeroParadox/ZPJ_OntBridge.lean), [ZPJ_Model.lean](ZeroParadox/ZPJ_Model.lean), [ZPJ_ScaleBridge.lean](ZeroParadox/ZPJ_ScaleBridge.lean) | ValuationStructure → AbstractSelfApp → AFAStructure; DC-free Aczel uniqueness; concrete ℤ₂ and ℕ∞ instances | Clean - May 2026 |
+| ZP-J AFA Derivation Chain | [ZPJ_AczelConn.lean](ZeroParadox/ZPJ_AczelConn.lean), [ZPJ_SelfApp.lean](ZeroParadox/ZPJ_SelfApp.lean), [ZPJ_Scale.lean](ZeroParadox/ZPJ_Scale.lean), [ZPJ_OntBridge.lean](ZeroParadox/ZPJ_OntBridge.lean), [ZPJ_Model.lean](ZeroParadox/ZPJ_Model.lean), [ZPJ_ScaleBridge.lean](ZeroParadox/ZPJ_ScaleBridge.lean) | ValuationStructure → AbstractSelfApp → AFAStructure; DC-free Aczel uniqueness; ValBridge common ancestor unifying the lattice track and ℤ₂; concrete ℤ₂ and ℕ∞ instances | Clean - June 2026 |
 | ZP-J APG Decoration Uniqueness | [ZPJ_APG.lean](ZeroParadox/ZPJ_APG.lean) | Decoration uniqueness for finite accessible pointed graphs, by induction on reachable size | Clean - May 2026 |
 | ZP-J Wheel of Fractions | [ZPJ_Wheel.lean](ZeroParadox/ZPJ_Wheel.lean), [ZPJ_WheelFrac.lean](ZeroParadox/ZPJ_WheelFrac.lean) | The wheel of fractions is a wheel (Carlström Def 1.1), choice-free; ∞ ≠ ⊥ | Clean - June 2026 |
 | ZP-K Computational Grounding | [ZPK.lean](ZeroParadox/ZPK.lean) | Computational grounding via a Kleene fixed point; the snap closed concretely | Clean - April 2026 |
 | ZP-L Incomputability Convergence | [ZPL.lean](ZeroParadox/ZPL.lean) | ε₀ as the exact snap threshold; the ordinal tower converges 2-adically to 0 (24 theorems) | Clean - May 2026 |
 | ZP-M Kleene-Ordinal Bridge | [ZPM.lean](ZeroParadox/ZPM.lean) | Type bridge MachinePhase → ℤ₂; Kleene quine and ε₀ fixed point co-witnessed | Clean - May 2026 |
+| ZP-P The Fixed-Point Fork | [ZPP.lean](ZeroParadox/ZPP.lean), [ZPP_Ostrowski.lean](ZeroParadox/ZPP_Ostrowski.lean), [ZPP_Coalgebra.lean](ZeroParadox/ZPP_Coalgebra.lean) | The least/greatest fixed-point fork collapses iff the operator has a unique fixed point (choice-free); number-system instance ℝ vs ℚ₂ via Ostrowski; categorical-parent instance (Fix empty / Cofix inhabited) via QPF | Clean - June 2026 |
 
 **Purity note**
 
@@ -97,21 +98,22 @@ ZP-H, ZP-I, ZP-J (extension files), ZP-K, ZP-L, and ZP-M use `Classical.choice` 
 | File | Document | Version | Focus |
 |------|----------|---------|-------|
 | [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.14 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
-| [ZP-B pAdic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.9 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
-| [ZP-C Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.17 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
-| [ZP-D State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.11 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [ZP-E Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.19 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [ZP-B pAdic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.10 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
+| [ZP-C Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.18 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
+| [ZP-D State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.12 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
+| [ZP-E Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.20 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [ZP-F The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.4 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
-| [ZP-G Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.11 | The categorical layer: ⊥ as initial object, the informational singularity. |
-| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.15 | The categorical bridge: the snap holding under all four domain functors. |
+| [ZP-G Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.12 | The categorical layer: ⊥ as initial object, the informational singularity. |
+| [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.16 | The categorical bridge: the snap holding under all four domain functors. |
 | [ZP-H Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.0 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
-| [ZP-I Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.10 | Inside zero: each maximal chain converging to its own successor ⊥. |
-| [ZP-J Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.1 | Self-reference: ⊥ as the Quine atom, and the AFA structure it forces. |
-| [ZP-J AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.2 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
+| [ZP-I Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.11 | Inside zero: each maximal chain converging to its own successor ⊥. |
+| [ZP-J Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.2 | Self-reference: ⊥ as the Quine atom, and the AFA structure it forces. |
+| [ZP-J AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.3 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [ZP-J Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.0 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
 | [ZP-K Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.7 | Computational grounding: the snap as a Kleene fixed point. |
-| [ZP-L Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.0 | ε₀ as the exact ordinal threshold where the snap occurs. |
-| [ZP-M Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.0 | The bridge between the Kleene quine and the ε₀ fixed point. |
+| [ZP-L Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.1 | ε₀ as the exact ordinal threshold where the snap occurs. |
+| [ZP-M Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.1 | The bridge between the Kleene quine and the ε₀ fixed point. |
+| [ZP-P The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) | ZP-P | v1.1 | Synthesis layer: the least-vs-greatest fixed-point fork, generalizing the Foundation/AFA orthogonal-contact-point claim across frameworks. |
 | [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.0 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
 
 ---
@@ -164,7 +166,7 @@ The open and partially-resolved questions:
 | ε₀ / proof-theoretic ordinal | **Partially closed - ZP-L May 2026.** c1_epsilon_zero_identification establishes the canonical snap map (MachinePhase → Ordinal) with ε₀ as the exact transition point. snap_zp2_correspondence proves the four-way conjunction (ordinal bound, phase assignment, p-adic convergence, snap assignment). Structural alignment with Gentzen's proof-theoretic ordinal (PA consistency) documented in ZP-L Remark R-L.1. Full type-theoretic identity across type universes (MachinePhase vs. Ordinal) is outside Lean scope and deferred pending OQ-E2. |
 | Classical.choice necessity | **Core is choice-free (verified); analytic-layer necessity is Open.** The central results carry no Classical.choice - T-SNAP depends on no axioms at all, and the lattice (ZP-A), the Quine-atom self-reference (ZP-J), and the structural floor are choice-free (checkable in [AxiomProfile.lean](ZeroParadox/AxiomProfile.lean)). Classical.choice appears elsewhere only where the framework builds on Mathlib's classically-built topology / analysis / ordinal / computability libraries - the analytic realization layers (e.g. ZP-B, ZP-D, ZP-L, the ZP-H functors) and auxiliary constructions on them. Whether that inherited dependence is structurally forced or merely incidental is the open question; the one layer classified so far (ZPB_PadicTree, the choice-probe experiment) found it mostly incidental and routable. Testable via constructive ordinal fixed-point theory over ONote/NONote; future ZP-N (constructive validation layer). |
 
-**Verification status:** ZP-A through ZP-M, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4 (see the Formal Verification table above). A second-prover cross-check (e.g. Rocq) is not yet done.
+**Verification status:** ZP-A through ZP-M and ZP-P, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4 (see the Formal Verification table above). A second-prover cross-check (e.g. Rocq) is not yet done.
 
 ### Design Commitments
 

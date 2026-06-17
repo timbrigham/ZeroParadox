@@ -1,6 +1,8 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.23 | May 2026
+Version 1.25 | June 2026
+v1.25: §6 "future work" bridge sentence retired — the 2-adic valuation argument is now formalized (ZPJ_ScaleBridge wired into the maintained build); §7 gains the common-ancestor (ValBridge) framing — the abstract lattice track and ℤ₂ are instances of one minimal typeclass; §8 adds ℤ₂ as a third concrete model. The ℤ₂ instance is flagged as inheriting Classical.choice from Mathlib's p-adic library (unlike the axiom-free core T-EXEC).
+v1.24: Directed-graph (APG) diagram added for the Quine atom (self-loop + well-founded chain ending at ∅); arithmetic analogy scoped (it cannot show ⊥={⊥} — routed to mirror/graph); "depth" rephrased from "how far from ⊥" to intrinsic descent/valuation (Dan feedback 2026-06-15). Fixed latent null glyph scaleᵏ (&#7503; → <sup>k</sup>).
 v1.23: "his question" pronoun fixed; abstraction chain direction clarified; remember_box leads with analogy; p-adic removed from disclaimer (future work); "Not three separate" prose replaced; T-EXEC antecedent named (ER/AR fixes).
 v1.22: "ZP lattice" replaced with structural description; "bounded semilattice" corrected to join-semilattice; AFAStructure typeclass used directly; Aczel specific claims replaced with generic AFA fixed-point framing (ER/AR fixes).
 v1.21: ZP-A semilattice replaced with standard structural description; section heading scoped; AFA/ZP-J framing clarified; "uniqueness half" hedged as analogous (AR fixes).
@@ -38,7 +40,7 @@ and the closure of CC-1 and CC-2 as derived theorems rather than freestanding co
 
 import os
 from zp_utils import *
-from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle
+from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Path
 from reportlab.graphics import renderPDF
 
 def quine_atom_diagram():
@@ -80,6 +82,45 @@ def quine_atom_diagram():
                  'The Quine atom: ⊥ is a member of itself. '
                  'The outer ring is the set {⊥}; the inner disk is ⊥ as an element.',
                  fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
+    return d
+
+
+def quine_graph_diagram():
+    """Directed-graph (APG) view: ordinary chains end at ∅; ⊥ loops on itself."""
+    dw, dh = TW, 2.5 * inch  # 180 pts; content top ~152, bottom ~63
+    d = Drawing(dw, dh)
+    cy = 105
+
+    # LEFT — well-founded chain  a -> b -> ∅
+    d.add(Circle(60, cy, 15, fillColor=INDIGO_LITE, strokeColor=INDIGO, strokeWidth=1.3))
+    d.add(String(56, cy - 5, 'a', fontSize=12, fontName='DV-B', fillColor=INDIGO))
+    d.add(Circle(130, cy, 15, fillColor=INDIGO_LITE, strokeColor=INDIGO, strokeWidth=1.3))
+    d.add(String(126, cy - 5, 'b', fontSize=12, fontName='DV-B', fillColor=INDIGO))
+    d.add(Circle(196, cy, 13, fillColor=WHITE, strokeColor=INDIGO, strokeWidth=1.3))
+    d.add(String(191, cy - 5, '∅', fontSize=12, fontName='DV', fillColor=INDIGO))
+    d.add(Line(76, cy, 113, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(107, cy + 4, 113, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(107, cy - 4, 113, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(146, cy, 181, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(175, cy + 4, 181, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(Line(175, cy - 4, 181, cy, strokeColor=GREY_TEXT, strokeWidth=1.2))
+    d.add(String(46, cy - 42, 'well-founded: the chain ends at ∅',
+                 fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
+
+    # RIGHT — Quine atom ⊥ with a self-loop (dashed: exits right, re-enters the top)
+    qx = 365
+    d.add(Circle(qx, cy, 18, fillColor=INDIGO, strokeColor=INDIGO, strokeWidth=0))
+    d.add(String(qx - 9, cy - 6, '⊥', fontSize=16, fontName='DV-B', fillColor=WHITE))
+    loop = Path(strokeColor=INDIGO, strokeWidth=1.4, fillColor=None,
+                strokeDashArray=[2.5, 2.5])
+    loop.moveTo(qx + 18, cy)                       # exit the right edge
+    loop.curveTo(qx + 55, cy, qx, cy + 50, qx, cy + 18)  # arc up and back into the top
+    d.add(loop)
+    # solid arrowhead at the top entry, pointing down into the ball
+    d.add(Line(qx - 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
+    d.add(Line(qx + 5, cy + 25, qx, cy + 18, strokeColor=INDIGO, strokeWidth=1.4))
+    d.add(String(qx - 42, cy - 42, '⊥ = {⊥}: the chain loops on itself',
+                 fontSize=8, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
 
@@ -149,7 +190,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.23'
+VERSION = '1.25'
 
 
 def build():
@@ -160,7 +201,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-J Companion  |  Self-Reference  |  May 2026')
+            'Zero Paradox ZP-J Companion  |  Self-Reference  |  June 2026')
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -179,7 +220,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
           Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
-          Paragraph('ZP Companion | Version ' + VERSION + ' | The Quine Atom | May 2026', CS['meta']),
+          Paragraph('ZP Companion | Version ' + VERSION + ' | The Quine Atom | June 2026', CS['meta']),
           Paragraph(
               'This companion explains in plain language the proof that &#8869; = {&#8869;} '
               '(the Quine atom of AFA set theory) is the unique bottom element of a lattice. '
@@ -238,6 +279,15 @@ def build():
         'The Quine atom ⊥ = {⊥}: ⊥ is the sole member of itself. '
         'The outer ring is the set {⊥} and the inner disk is ⊥ as an element. '
         'They are the same object.'))
+    E.append(sp(6))
+    E.append(quine_graph_diagram())
+    E.append(ccaption(
+        'A second way to see it - as a directed graph (an "accessible pointed graph", or APG, '
+        'the structure Aczel\'s anti-foundation axiom decorates). Each arrow points from a set '
+        'to one of its members. Ordinary sets are well-founded: following the arrows always ends, '
+        'here at the empty set ∅. The bottom ⊥ is the lone exception - its arrow loops straight '
+        'back to itself. That self-loop is exactly ⊥ = {⊥}, the Quine atom: a membership chain '
+        'that never bottoms out.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - A mirror facing a mirror', [
         'Hold two mirrors facing each other. Each reflection contains the other mirror, '
@@ -287,12 +337,14 @@ def build():
         'descriptions of the same structural role. T-EXEC makes this explicit and '
         'machine-checked.'))
     E.append(sp(4))
-    E.append(example_box('Real-world analogy  - Zero in arithmetic', [
-        '0 is the additive identity (x + 0 = x), the smallest non-negative integer '
-        '(0 ≤ n for all n ∈ ℕ), and the unique fixed point of negation (−0 = 0). '
-        'These are three descriptions of the same object. '
-        'T-EXEC is the Zero Paradox equivalent: ⊥ as Quine atom = ⊥ as minimum = ⊥ as '
-        'join identity are three descriptions of the same bottom element.',
+    E.append(example_box('Real-world analogy  - Zero in arithmetic (partial)', [
+        '0 in arithmetic wears more than one hat at once: it is the additive identity '
+        '(x + 0 = x) and the smallest non-negative integer (0 ≤ n for all n ∈ ℕ). '
+        'Those two line up cleanly with ⊥ as join identity and ⊥ as minimum. '
+        'But arithmetic has no honest way to show the third hat - ⊥ as the Quine atom '
+        '(⊥ = {⊥}, "zero inside zero"): ordinary numbers simply do not contain themselves. '
+        'For that self-containing property the right pictures are the mirror-facing-a-mirror '
+        'analogy and the directed graph above, not arithmetic.',
     ]))
     E.append(sp(8))
 
@@ -325,22 +377,25 @@ def build():
         '<i>why</i> is &#8869; the unique fixed point? The valuation argument answers this, '
         'and it is the insight behind ZP-J\'s abstraction chain.'))
     E.append(cbody(
-        'Imagine every element of the lattice has a "depth"  - a value in the extended '
-        'naturals {0, 1, 2, &#8230;, &#8734;} measuring how far it is from &#8869;. '
-        '&#8869; itself has depth &#8734;. Applying scale  - the self-application '
-        'operation  - increases depth by exactly 1 at every non-&#8869; element. '
-        'So if scale(x) = x, then depth(x) = depth(x) + 1. '
-        'That equation has no finite solution. Only &#8869;, whose depth is already &#8734; '
-        '(and &#8734; + 1 = &#8734; in the extended naturals), can satisfy it. '
-        '&#8869; is the only fixed point.'))
+        'Imagine every element carries a "depth"  - a value in the extended naturals '
+        '{0, 1, 2, &#8230;, &#8734;} given by how many times you can descend through its '
+        'structure before bottoming out. Ordinary elements bottom out '
+        'in finitely many steps, so their depth is finite; &#8869; never bottoms out  - it '
+        'contains itself  - so its depth is &#8734;. Applying scale  - the self-application '
+        'operation  - raises depth by exactly 1 at every non-&#8869; element. '
+        'So if scale(x) = x, then depth(x) = depth(x) + 1  - an equation with no finite '
+        'solution. Only &#8869;, whose depth is already &#8734; (and &#8734; + 1 = &#8734; in '
+        'the extended naturals), can satisfy it. &#8869; is the only fixed point.'))
     E.append(cbody(
-        'The formal bridge between the 2-adic type and the abstract ZPSemilattice framework '
-        'is future work, not a proved result. But informally, the argument has the same shape '
-        'in 2-adic arithmetic: multiplication by 2 is the scale operation, '
+        'This same argument runs in 2-adic arithmetic, and there it is formalized in Lean. '
+        'Multiplication by 2 is the scale operation, '
         'the 2-adic valuation v&#8322;(x) measures how many times 2 divides x (a kind of depth), '
         'and v&#8322;(2x) = v&#8322;(x) + 1 for any x &#8800; 0. '
         'So 2x = x forces v&#8322;(x) = v&#8322;(x) + 1 - impossible for finite valuation. '
-        'Only 0, with v&#8322;(0) = &#8734;, satisfies 2 &#215; 0 = 0.'))
+        'Only 0, with v&#8322;(0) = &#8734;, satisfies 2 &#215; 0 = 0. '
+        'The 2-adic integers &#8484;&#8322; are a machine-checked instance of exactly this '
+        'valuation argument (see the models below). Unlike the axiom-free core (T-EXEC), this '
+        'instance uses the axiom of choice, inherited from Mathlib.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy  - The elevator that only goes up', [
         'Imagine an elevator that, when you press a button, moves one floor higher  - '
@@ -371,13 +426,22 @@ def build():
         'Each layer of the chain removes one more thing you have to assume. At the bottom '
         'of the chain, you are left with the valuation argument: scale increases depth by 1, '
         'so the only fixed point is the element with infinite depth.'))
+    E.append(cbody(
+        'There is one more layer underneath. Those four valuation axioms never use the join '
+        'operation - so the full lattice was more structure than the argument needs. Keeping '
+        'only the four axioms, with &#8869; as a plain element, gives a minimal common '
+        'ancestor (called ValBridge in the Lean source). Both the abstract lattice track and '
+        'the concrete 2-adic integers &#8484;&#8322; are instances of it, so one Lean proof '
+        'establishes the unique-bottom result for both at once. This is what genuinely ties '
+        'the abstract framework and the 2-adic model together: not an analogy between them, '
+        'but a single theorem they both inherit.'))
     E.append(sp(8))
 
     # ── Two Concrete Models ──────────────────────────────────────────────────
-    E.append(Paragraph('Two Concrete Models', CS['h1']))
+    E.append(Paragraph('Three Concrete Models', CS['h1']))
     E.append(cbody(
         'The abstract chain is only useful if real types can actually run it. ZP-J '
-        'demonstrates two concrete instances, taking different paths through the chain.'))
+        'demonstrates three concrete instances, taking different paths through the chain.'))
     E.append(cbody(
         '<b>&#8469;&#8734; (the extended naturals):</b> Take the natural numbers extended '
         'with a point at infinity  - the set {0, 1, 2, 3, &#8230;, &#8734;}. '
@@ -393,11 +457,21 @@ def build():
         'the self-application operation maps every element to null. Null maps to itself '
         '(fixed point). Exist maps to null and is therefore not a fixed point. '
         'Null is the unique fixed point  - the AFA content follows immediately.'))
+    E.append(cbody(
+        '<b>&#8484;&#8322; (the 2-adic integers):</b> The number system from ZP-B, with '
+        'scale = multiply-by-2 and depth = the 2-adic valuation v&#8322;. The bottom element '
+        'is 0, whose valuation is &#8734;. This is the full valuation route again, but on a '
+        'genuine number system rather than an abstract lattice  - in fact &#8484;&#8322; is a '
+        'ring, not a lattice at all, which is what showed the lattice structure was more than '
+        'the argument needs. The unique fixed point of multiply-by-2 is 0. Machine-checked in '
+        'Lean, though (unlike the axiom-free core) it uses the axiom of choice, inherited from '
+        'Mathlib.'))
     E.append(sp(4))
     E.append(remember_box(
-        'Two paths, one destination. ℕ∞ takes the full valuation route. OntologicalStates '
-        'bypasses the valuation step and connects directly to AbstractSelfApp. Both deliver '
-        'the same conclusion: the unique self-containing element is the bottom. '
+        'Three types, one destination. &#8469;&#8734; and the 2-adic integers &#8484;&#8322; '
+        'take the full valuation route; OntologicalStates bypasses the valuation step and '
+        'connects directly to AbstractSelfApp. All three deliver the same conclusion: the '
+        'unique self-containing element is the bottom. '
         'The architecture is sound because each type takes the path the mathematics allows.'))
     E.append(sp(8))
 
@@ -451,7 +525,7 @@ def build():
         'The proof follows the same two-direction logic as T-EXEC:'))
     E.append(cbody(
         '<b>Cyclic vertices:</b> If a vertex lies on a directed cycle of length k, '
-        'then composing the decoration equation around the cycle gives d(v) = scale&#7503;(d(v)). '
+        'then composing the decoration equation around the cycle gives d(v) = scale<sup>k</sup>(d(v)). '
         'The valuation argument forces d(v) = &#8869;: any other label would require '
         'depth(d(v)) = depth(d(v)) + k, which is impossible. So on cycles, '
         'any two decorations must both assign &#8869;. They agree trivially.'))

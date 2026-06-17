@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.10 | May 2026
+Version 1.11 | June 2026
+v1.11: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.10: Vocabulary fixes — "null state" → "⊥" in two body prose locations; version references "(v1.1)", "v2.0" removed from body prose. Palette rebuild.
 v1.9: Adversary-review pass — version changelog removed from PDF title block (moved to
 docstring only); "DA-1 fires, T-SNAP fires, and a new ⊥' is born" replaced with
@@ -27,7 +28,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
@@ -578,11 +579,11 @@ def build():
 
     print('[build_zpi] Building registers...')
     # ── UPDATED OPEN ITEMS REGISTER ───────────────────────────────────────────
-    E += [hr(), Paragraph('Updated Open Items Register — ZP-I v1.5', S['h1'])]
+    E += [hr(), Paragraph('Open Items Register', S['h1'])]
 
     oq_rows = [
         ['T-IZ: Inside Zero Theorem',
-         'DERIVED — T-IZ v1.4',
+         'DERIVED — T-IZ',
          'Every maximal ascending chain converges to its own successor null in Q<sub>2</sub>. '
          'Formal spine: Step 1 (t_iz_cauchy, axiom-free) + Step 6 (t_iz_limit_is_new_null, '
          'axiom-free via DA-2). Steps 2–5 are informational context — original ZP-E path; '
@@ -624,13 +625,13 @@ def build():
     ))
 
     # ── TRACEABILITY REGISTER ─────────────────────────────────────────────────
-    E += [sp(8), hr(), Paragraph('Traceability Register — ZP-I v1.5', S['h1'])]
+    E += [sp(8), hr(), Paragraph('Traceability Register', S['h1'])]
 
     trace_rows = [
         ['T-IZ: Inside Zero',
          'ZP-A R1 (no top — engine); ZP-B T2, completeness; ZP-C L-INF, D1; ZP-E DA-1, T-SNAP, DA-2',
          'None',
-         'Derived — T-IZ v1.4 ✓ (formal spine Steps 1+6: both proved axiom-free; bridge: contextual)'],
+         'Derived — T-IZ ✓ (formal spine Steps 1+6: both proved axiom-free; bridge: contextual)'],
         ['Null Balance 0 + x + (&#8722;x) = 0',
          'T-IZ + T-SNAP + DA-2 (ZP-E)',
          'None',
@@ -690,7 +691,7 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-I v1.8 | Theorem T-IZ: Inside Zero | '
+            '<i>End of ZP-I | Theorem T-IZ: Inside Zero | '
             'R-IZ-A closed: strict valuation growth derived from ZP-A R1 + T3 via IsDepthChain (h_strict_from_r1_t3, &#167;Ib) | '
             'Framework closure: no construction-level hypothesis required | '
             'Formal spine: Steps 1 + 6 both proved axiom-free (t_iz_cauchy + t_iz_limit_is_new_null) | '

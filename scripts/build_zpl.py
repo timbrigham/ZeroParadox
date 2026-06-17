@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.0 | May 2026
+Version 1.1 | June 2026
+v1.1: Rendered version changelog removed (C1 sweep). Fixed 3 null glyphs — subscript-letter entities
+&#8345; (ₙ) and &#8338; (ₒ) bypass fix() and are absent from STIX; replaced with <sub> markup.
 v1.0: Initial release. All §I–§VII theorems proved sorry-free in Lean 4.
 Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.
 Follows all rules in scripts/PDF_Rendering_Standards.md.
@@ -9,7 +11,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 
 def build():
@@ -26,8 +28,7 @@ def build():
         Paragraph('ZP-L: Incomputability Convergence', S['title']),
         Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
         Paragraph(
-            '<i>v1.0: Initial release. '
-            'All theorems §I&#8211;§VII proved sorry-free in Lean 4. '
+            '<i>All theorems §I&#8211;§VII proved sorry-free in Lean 4. '
             'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',
             S['note']),
         sp(10),
@@ -76,7 +77,7 @@ def build():
             ['ZPB', 'Topology', 'C3: no continuous path &#8869; &#8594; x &#8800; &#8869;'],
             ['ZPC', 'Information Theory', 'L-INF: infinite surprisal at &#8869;'],
             ['ZPJ/K', 'Set Theory + Computation', 'bot_self_mem (AFA); botCode (Kleene)'],
-            ['ZPI', 'Algorithmic IT', 'K(S&#8345;|n)/|S&#8345;| &#8594; 1; K uncomputable'],
+            ['ZPI', 'Algorithmic IT', 'K(S<sub>n</sub>|n)/|S<sub>n</sub>| &#8594; 1; K uncomputable'],
         ],
         col_widths=[50, 100, 280],
     ))
@@ -430,7 +431,7 @@ def build():
             'Witness: &#981; &#945; = if &#945; < &#949;&#8320; then c&#8320; else c&#8321;.',
             'One specific map sends all tower stages to c&#8320; and &#949;&#8320; to c&#8321;.',
             'The stronger structural claim — an order-preserving morphism '
-            'Ordinal &#8594;&#8338; MachinePhase compatible with the CNF &#8594; &#8484;&#8322; '
+            'Ordinal &#8594;<sub>o</sub> MachinePhase compatible with the CNF &#8594; &#8484;&#8322; '
             'encoding — remains outside Lean scope: no type bridge between Ordinal '
             'and MachinePhase is defined in this library.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',

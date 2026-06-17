@@ -2,11 +2,12 @@ import ZeroParadox.ZPJ_Scale
 import Mathlib.Tactic
 
 /-!
-# ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice (Exploratory)
+# ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice
 
 ## Engineer's Take
 
--- TODO: Tim fills this in
+This file represents a common ancestor between semilattice and p-adic valuation
+on our continuing hunt for the most basic structures to hold the bottom element.
 
 ## The question
 

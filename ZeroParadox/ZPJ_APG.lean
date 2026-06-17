@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZPJ — Accessible Pointed Graphs and AFA Decoration Uniqueness (Exploratory)
+# ZPJ — Accessible Pointed Graphs and AFA Decoration Uniqueness
 
 ## Engineer's Take
 

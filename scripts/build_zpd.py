@@ -1,5 +1,6 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.11)
+Build ZP-D: State Layer (Hilbert Space) (v1.12)
+v1.12: Rendered self-version refs removed — DP-1 title tag and T2 "R3 (v1.6)" ref (C1 sweep).
 v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.
 v1.10: Version number removed from Open Items Register section header.
 v1.9: Adversary-review pass — Import I-B stale reference "Topological isolation of 0"
@@ -18,7 +19,7 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer.pdf')
@@ -79,7 +80,7 @@ def build():
 
     E.append(Paragraph('III. The Transition Operator T: Q₂ &#8594; H', S['h1']))
     E.append(Paragraph('3.1  The Design Commitment — Orthogonality', S['h2']))
-    E.append(label_box('Design Principle DP-1 — Orthogonality as the Representation of Clopen Separation  [reclassified from T1 in v1.1]', [
+    E.append(label_box('Design Principle DP-1 — Orthogonality as the Representation of Clopen Separation', [
         'Clopen separation in Q<sub>2</sub> (T3: 0 is clopen-separated from all nonzero elements; clopen balls are mutually separated) is represented in H by orthogonality: elements that are clopen-separated in Q<sub>2</sub> map to orthogonal vectors in H.',
         'Motivation: Orthogonality in H is the natural algebraic analogue of topological separation. &#10216;e<sub>i</sub>, e<sub>j</sub>&#10217; = 0 for i &#8800; j; two clopen balls are maximally distinct in the topological sense.',
         'Status: DESIGN PRINCIPLE — DP-1 is chosen, not derived. It is the natural and consistent choice, stated explicitly. T4 and T5 below depend on DP-1 as a premise.',
@@ -174,7 +175,7 @@ def build():
          ['DP-1: Orthogonality', 'Valid — Design Principle; reclassified from T1; well-motivated and explicit'],
          ['D2: T requirements', 'Valid — Defined; five requirements stated; all satisfied by T2'],
          ['T2: Existence of T', 'Valid — Derived; basis assignment; all five requirements verified; '
-          'R3 (v1.6) names topological type: locally constant, continuous'],
+          'R3 names topological type: locally constant, continuous'],
          ['T3: Uniqueness of T', 'Valid — Proposition; derived; unique up to unitary equivalence'],
          ['T4: Snap &#8594; orthogonal shift', 'Valid — Theorem; derived; unconditional; depends on DP-1'],
          ['T5 / T5-b: Monotone norms + strict orthogonality',

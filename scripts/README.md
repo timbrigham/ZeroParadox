@@ -47,6 +47,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding.pdf` |
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 | [build_zpm.py](build_zpm.py) | `ZP-M_Kleene_Ordinal_Bridge.pdf` |
+| [build_zpp.py](build_zpp.py) | `ZP-P_The_Fixed_Point_Fork.pdf` |
 | [build_zp_choice_free_core.py](build_zp_choice_free_core.py) | `ZP_Choice_Free_Core_Addendum.pdf` |
 
 ### Illustrated companion builders
@@ -63,6 +64,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zph_companion.py](build_zph_companion.py) | ZP-H |
 | [build_zpi_companion.py](build_zpi_companion.py) | ZP-I |
 | [build_zpj_companion.py](build_zpj_companion.py) | ZP-J |
+| [build_zpj_wheel_companion.py](build_zpj_wheel_companion.py) | ZP-J Wheel Addendum |
 | [build_zpk_companion.py](build_zpk_companion.py) | ZP-K |
 | [build_zpl_companion.py](build_zpl_companion.py) | ZP-L |
 | [build_zpm_companion.py](build_zpm_companion.py) | ZP-M |

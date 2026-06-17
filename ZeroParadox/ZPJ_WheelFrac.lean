@@ -7,8 +7,7 @@ import Mathlib.Tactic
 
 Constructs the wheel of fractions of a commutative ring `A` with respect to a multiplicative
 submonoid `S`, with the goal of proving it is a `Wheel` (from `ZPJ_Wheel.lean`). This turns the
-§VIII conjecture of `ZPJ_Wheel.lean` into a theorem, and is the direct construction behind the
-Bergstra/Tucker question.
+§VIII conjecture of `ZPJ_Wheel.lean` into a theorem.
 
 Construction (Carlström, source-verified): `⊙_S A = (A × A) / ≡_S`, where
 

@@ -16,6 +16,7 @@ import ZeroParadox.ZPJ
 import ZeroParadox.ZPJ_AczelConn
 import ZeroParadox.ZPJ_SelfApp
 import ZeroParadox.ZPJ_Scale
+import ZeroParadox.ZPJ_ScaleBridge
 import ZeroParadox.ZPJ_Model
 import ZeroParadox.ZPK
 import ZeroParadox.ZPL
@@ -24,6 +25,9 @@ import ZeroParadox.ZPJ_OntBridge
 import ZeroParadox.ZPJ_APG
 import ZeroParadox.ZPJ_Wheel
 import ZeroParadox.ZPJ_WheelFrac
+import ZeroParadox.ZPP
+import ZeroParadox.ZPP_Ostrowski
+import ZeroParadox.ZPP_Coalgebra
 
 /-!
 # Zero Paradox — Library Root
@@ -40,6 +44,8 @@ Dependency order of the layers:
 
   ZP-G (self-contained) → ZP-H (depends on ZP-G, ZP-C, ZP-D)
   ZP-H-PowerSet (self-contained Mathlib-only witness for structural floor)
+
+  ZP-P (self-contained synthesis — the fixed-point fork; Mathlib-only)
 
 The central result is **T-SNAP** (`ZeroParadox.ZPE.t_snap_machine` and
 `ZeroParadox.ZPE.t_snap_derived`): the Binary Snap c₀ ∨ c₁ = c₁ — derived from the

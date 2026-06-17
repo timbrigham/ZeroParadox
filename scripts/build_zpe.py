@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.19 | May 2026
+Version 3.20 | June 2026
+v3.20: Rendered version refs removed — DA-2/DA-3 section notes ("New in v2.0") and endnote version (C1 sweep — no version changelogs in rendered PDF content).
 v3.19: Version reference removed from T-BUF li() call (Gemini catch — build gate does not cover li()).
 v3.18: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state" throughout body prose; version references (v1.4, v1.5, v2.7, v1.0) removed from body prose. Palette rebuild.
 v3.17: K-22 vocabulary fix — "informational extremity" → "unbounded surprisal (L-INF)"
@@ -76,7 +77,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.19'
+VERSION = '3.20'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -141,9 +142,9 @@ def build():
     # ── FORMAL INSERT DA-1 ────────────────────────────────────────────────────
     E += [
         Paragraph('Formal Insert DA-1: Derived Proposition — Instantiation as Execution', S['h1']),
-        Paragraph('<i>Updated ZP-E v3.0 | DP-2 added — first Lean formalization of DA-1 (axiom-free, conditional on DP-2, ZPE.lean &#167;VI) | '
-                  'v2.9: DA-1 Lean scope note | v2.8: incompressibility = self-description (ZP-C D1 + AIT) | '
-                  'v2.7: DA-1 upgraded, CC-2/R3 grounding | v2.6: DA-3 applications removed</i>',
+        Paragraph('<i>DA-1 is a Derived Proposition: instantiation as execution, the first Lean '
+                  'formalization of DA-1 (axiom-free, conditional on DP-2, ZPE.lean &#167;VI), with '
+                  'incompressibility read as self-description (ZP-C D1 + AIT) and CC-2/R3 grounding.</i>',
                   S['note']),
         hr(),
     ]
@@ -447,7 +448,7 @@ def build():
     E += [
         hr(),
         Paragraph('Formal Insert DA-2: Instantiation Succession — The Multiple-&#8869; Result', S['h1']),
-        Paragraph('<i>New in v2.0 | Formally licenses the directed instantiation tree</i>', S['note']),
+        Paragraph('<i>Formally licenses the directed instantiation tree</i>', S['note']),
         hr(),
     ]
 
@@ -588,7 +589,7 @@ def build():
     E += [
         hr(),
         Paragraph('Formal Insert DA-3: Perspective-Relative Cardinality', S['h1']),
-        Paragraph('<i>New in v2.0 | Cardinality as position-dependent measurement within the instantiation structure</i>', S['note']),
+        Paragraph('<i>Cardinality as position-dependent measurement within the instantiation structure</i>', S['note']),
         hr(),
     ]
 
@@ -663,9 +664,9 @@ def build():
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP',
          'AX-1 is no longer an axiom. Binary Snap derived via P<sub>0</sub> + DA-1 + L-RUN + TQ-IH + ZP-A D2.'],
-        ['DA-1: Derived Proposition (v3.0: DP-2 formal grounding added)',
+        ['DA-1: Derived Proposition (DP-2 formal grounding)',
          'CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)',
-         'Primary formal grounding (v3.0): DP-2 (TrackedOutput, ZPE.lean &#167;VI) — da1_minimal_path proved '
+         'Primary formal grounding: DP-2 (TrackedOutput, ZPE.lean &#167;VI) — da1_minimal_path proved '
          'axiom-free. Instantiation of &#8869; moves machine from c<sub>0</sub> to c<sub>1</sub>; output value is irrelevant '
          'to whether execution occurred. '
          'Informal corroboration: ZP-A CC-2 + R3 (structural); ZP-C L-INF (informational); AIT incompressibility (Path 3).'],
@@ -771,11 +772,11 @@ def build():
     E += [sp(8), hr(), Paragraph('Validation Status', S['h1'])]
 
     val_rows = [
-        ['DA-1: Derived Proposition (v3.8 Path 2 recharacterization)',
+        ['DA-1: Derived Proposition (Path 2 recharacterization)',
          'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI). '
          'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
          'are provably distinct even when both produce &#8869;. ✓ '
-         'ZP-K formal closure (v3.7): da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in ZPK.lean. '
+         'ZP-K formal closure: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in ZPK.lean. '
          'KleeneStructure MachinePhase instance provides botCode_is_quine (Path 3 IN LEAN SCOPE). '
          'machinePhaseAFA gives AFAStructure instance (Path 1 IN LEAN SCOPE). '
          'Path 2 (informational bridge, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a '
@@ -821,7 +822,7 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E v3.17 | Three formal inserts: DA-1, DA-2, DA-3 | T-SNAP Step 7: AX-G2 removed as formal dependency; ZP-G is downstream, irreversibility grounded in ZP-A R1 and ZP-B C3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
+            '<i>End of ZP-E | Three formal inserts: DA-1, DA-2, DA-3 | T-SNAP Step 7: AX-G2 removed as formal dependency; ZP-G is downstream, irreversibility grounded in ZP-A R1 and ZP-B C3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
             'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
             'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward: The Philosophical Question That Started This | '
             'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '

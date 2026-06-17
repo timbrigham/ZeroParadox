@@ -1,6 +1,7 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.2 | May 2026
+Version 1.3 | June 2026
+v1.3: Rendered self-version ref removed from Key Results box header (C1 sweep).
 v1.2: fix HTML entities in String() drawing primitives (rendered literally);
       add validate_drawing() to both diagram functions; increase triangle_diagram
       dh 3.2→3.5 in to clear top-circle geometry overflow; remove duplicate
@@ -16,7 +17,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.2'
+VERSION = '1.3'
 
 
 def triangle_diagram():
@@ -338,7 +339,7 @@ def build():
     print('[build_zpm_companion] Building key result box...')
     E.append(hr())
     E.append(result_box(
-        'Key Results — ZP-M v1.0',
+        'Key Results',
         [
             'snapEmbed: c₀ ↦ 1, c₁ ↦ 0 in ℤ₂ — injective, join-to-multiply morphism. ✓',
             'hfp_from_epsilon_zero: hfp derived from monotonicity + φ(ε₀) = c₁ alone. ✓',
