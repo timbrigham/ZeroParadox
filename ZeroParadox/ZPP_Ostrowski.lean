@@ -43,6 +43,17 @@ p-adic absolute value: the two kinds of completion are genuinely distinct, never
 theorem real_not_equiv_padic (p : ℕ) [Fact p.Prime] : ¬ real.IsEquiv (padic p) :=
   not_real_isEquiv_padic p
 
+/-! ## Engineer's Take
+
+These files sit at the boundary of where choice lives within the framework. There is a distinct boundary
+between the theorems that define the Zero Paradox framework itself and the individual implementations of
+the tooling, and that boundary is the same for set theory, coalgebra, and p-adics. This is a synthesis
+layer: a validation tool, a unit test to represent that concept quickly.
+
+Here the dataset is the completions of ℚ: ℝ (Archimedean) versus ℚ₂ (non-Archimedean), classified by
+Ostrowski, a realization whose choice is inherited from Mathlib's classical analysis.
+-/
+
 section PurityCheck
 -- These inherit `Classical.choice` from Mathlib's classical analysis / number theory (Ostrowski).
 -- That is expected and honest: the number-system fork is an *analytic realization*, which carries

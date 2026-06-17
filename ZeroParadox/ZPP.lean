@@ -94,7 +94,13 @@ theorem fork_collapse_iff :
 
 /-! ## Engineer's Take
 
-TODO (Tim): Engineer's Take — write in your own voice.
+These files sit at the boundary of where choice lives within the framework. There is a distinct boundary
+between the theorems that define the Zero Paradox framework itself and the individual implementations of
+the tooling, and that boundary is the same for set theory, coalgebra, and p-adics. This is a synthesis
+layer: a validation tool, a unit test to represent that concept quickly.
+
+This file is the framework side of that boundary: the abstract fork over a complete lattice
+(Knaster–Tarski `lfp`/`gfp`), proved fully choice-free.
 -/
 
 section PurityCheck

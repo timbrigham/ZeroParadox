@@ -76,6 +76,18 @@ theorem categorical_fork_strict :
     IsEmpty (Fix idPF.Obj) ∧ Nonempty (Cofix idPF.Obj) :=
   ⟨fix_isEmpty, cofix_nonempty⟩
 
+/-! ## Engineer's Take
+
+These files sit at the boundary of where choice lives within the framework. There is a distinct boundary
+between the theorems that define the Zero Paradox framework itself and the individual implementations of
+the tooling, and that boundary is the same for set theory, coalgebra, and p-adics. This is a synthesis
+layer: a validation tool, a unit test to represent that concept quickly.
+
+Here the dataset is the leaf-free polynomial functor `idPF`: its W-type (`QPF.Fix`, μ) is empty and
+choice-free, while its M-type (`QPF.Cofix`, ν) is inhabited and carries choice inherited from Mathlib, with
+choice entering exactly on the non-well-founded, self-referential side.
+-/
+
 section PurityCheck
 -- Split footprint, and the split is meaningful:
 --   fix_isEmpty (μ is empty)        : [propext, Quot.sound]                     — CHOICE-FREE
