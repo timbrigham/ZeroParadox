@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.20 | June 2026
+Version 3.21 | June 2026
+v3.21: FMC precision (sweep Step 4 remediation, against fmc.md) — R-AFA "the metatheoretic necessity of AFA is derived" → "argued, not proved (a metatheoretic squeeze, not a derivation)"; named falsifier added to R-AFA; CC-2 status lines now split the proved structural fixed point (T-EXEC, axiom-free) from the argued set-membership reading; "establish that Foundation is incompatible" → "make the case that".
 v3.20: Rendered version refs removed — DA-2/DA-3 section notes ("New in v2.0") and endnote version (C1 sweep — no version changelogs in rendered PDF content).
 v3.19: Version reference removed from T-BUF li() call (Gemini catch — build gate does not cover li()).
 v3.18: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state" throughout body prose; version references (v1.4, v1.5, v2.7, v1.0) removed from body prose. Palette rebuild.
@@ -77,7 +78,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.20'
+VERSION = '3.21'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -250,7 +251,7 @@ def build():
              'proved axiom-free in Lean 4 (ZeroParadox.ZPJ.t_exec). AFA (ZF + AFA) is the consistent '
              'set-theoretic home for this structure — chosen because the framework requires it, not the '
              'reverse. ZP-A CC-2 (&#8869; = {&#8869;}) retains its label for editorial continuity but is now '
-             'a structural consequence, not a freestanding commitment.'),
+             'a structural consequence — the self-application fixed point, proved axiom-free by T-EXEC; the set-membership reading is the argued metatheoretic step (see Remark R-AFA), not a freestanding commitment.'),
         body('Path 2 — Informational (ZP-C L-INF): Independently, the surprisal I(n) = n at ball-hierarchy '
              'depth n is unbounded — for any finite M, ∃ depth n with I(n) > M. ⊥ corresponds '
              'to the limit point 0 ∈ Q<sub>2</sub>; its informational content exceeds every finite bound. '
@@ -307,7 +308,7 @@ def build():
                 'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: The Philosophical Question That Started This; ZP-M R-M.1 (retrospective structural analysis). '
                 'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
                 'CC-1 (S<sub>0</sub> = &#8869;) derived via ZP-J cc1_derived (axiom-free, Lean). '
-                'CC-2 (&#8869; = {&#8869;}) structurally forced by self-execution argument; ZP-J T-EXEC formally verifies. '
+                'CC-2 (&#8869; = {&#8869;}): ZP-J T-EXEC proves the structural self-application fixed point (axiom-free); the set-membership reading is an argued metatheoretic commitment (see R-AFA). '
                 'DP-2 (&#167;III) — explicit. '
                 'T-SNAP is derived given DA-1, CC-1, and AX-B1. '
                 'AIT (Kolmogorov complexity) outside Lean scope; Kleene fixed-point is the in-scope formal counterpart.'),
@@ -342,7 +343,7 @@ def build():
         derived('Status: DERIVED — Cross-Framework. Dependencies: ZP-C D1, D7, L-RUN, TQ-IH; ZP-B AX-B1, C3; '
                 'ZP-A D2, R1; ZP-E DA-1; ZP-J T-EXEC. '
                 'CC-1 (S&#8320; = &#8869;) derived via ZP-J cc1_derived (axiom-free). '
-                'CC-2 (&#8869; = {&#8869;}) structurally forced — ZP-J T-EXEC (axiom-free). '
+                'CC-2 (&#8869; = {&#8869;}): structural fixed point proved by ZP-J T-EXEC (axiom-free); set-membership argued metatheoretically (see R-AFA). '
                 'Neither CC-1 nor CC-2 is a freestanding commitment. T-SNAP is derived given DA-1 and AX-B1. '
                 'Conceptual correspondence only: ZP-G AX-G2 (downstream of ZP-E; not a formal dependency).'),
     ]
@@ -391,7 +392,7 @@ def build():
             [
                 'CC-2 is stated as a Conditional Claim within ZP-A\'s algebraic scope: it is not derived '
                 'from A1&#8211;A4. The choice of ZF + AFA over ZF + Foundation is, however, not arbitrary. '
-                'Two independent cross-framework arguments establish that Foundation is incompatible with '
+                'Two independent cross-framework arguments make the case that Foundation is incompatible with '
                 'the framework\'s results.',
                 '<b>R3 rules out Foundation (structural).</b> Under ZF + Foundation, every set has a '
                 'well-founded &#8712;-rank: its membership chain terminates in finitely many steps. Any '
@@ -421,8 +422,8 @@ def build():
                 'for x &#8800; &#8869;) would add members carrying their own membership chains, exceeding '
                 'what A4\'s purely algebraic additive-identity constraint requires. Second, the identification '
                 'of &#8869; as a set-theoretic object — rather than a purely algebraic element — is itself '
-                'a modelling step beyond A1&#8211;A4. The metatheoretic necessity of AFA is derived; the '
-                'specific realisation as &#8869; = {&#8869;} is minimally committed.',
+                'a modelling step beyond A1&#8211;A4. The metatheoretic necessity of AFA is argued, not proved (a metatheoretic squeeze argument, not a derivation in the formal system); the '
+                'specific realisation as &#8869; = {&#8869;} is minimally committed. The standing falsifier: a well-founded (Foundation-respecting) model of &#8869; consistent with R3 and L-INF would overturn the forcing, since the argument turns on well-founded sets being finitely interpretable.',
             ]
         ),
         sp(4),
