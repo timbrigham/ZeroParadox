@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.9 | May 2026
+Version 1.10 | May 2026
+v1.10: four_way_diagram — removed the redundant internal caption String that overlapped the bottom "Computation (Kleene)" box (Diagram Rule 4; the external ccaption already captions the diagram).
 v1.9: FMC precision (sweep Step 4) — DA-1 Path 1 line splits the axiom-free structural fixed point (what ZP-J proved) from the literal ⊥ = {⊥} (the ZF+AFA setting).
 v1.8: Strip version number from companion footer.
 v1.7: Fix four_way_diagram String() HTML entity encoding — raw Unicode for ⊥, ≤, ∨.
@@ -85,10 +86,6 @@ def four_way_diagram():
          'Algebra (A4)', '⊥ ∨ x = x', 'Join identity',
          cx + cr + 14, cy, cx + cr + 2, cy)
 
-    d.add(String(14, 10,
-                 'Four mathematical languages describing the same structural role. '
-                 'T-COMP proves they name the same object.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
 def four_way_table():
@@ -126,7 +123,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
