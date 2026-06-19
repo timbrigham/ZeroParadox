@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.8 | May 2026
+Version 1.9 | May 2026
+v1.9: FMC precision (sweep Step 4) — DA-1 Path 1 line splits the axiom-free structural fixed point (what ZP-J proved) from the literal ⊥ = {⊥} (the ZF+AFA setting).
 v1.8: Strip version number from companion footer.
 v1.7: Fix four_way_diagram String() HTML entity encoding — raw Unicode for ⊥, ≤, ∨.
 v1.6: Add "Self-Reference: Fixed Point vs. Oscillation" section — Gödel diagonal lemma, fixed-point vs. liar-type self-reference, ZPE irreversibility excludes oscillation.
@@ -125,7 +126,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.8'
+VERSION = '1.9'
 
 
 def build():
@@ -240,7 +241,7 @@ def build():
         'DA-1 (Instantiation as Execution) had three informal argument paths in ZP-E:'))
     E.append(cbody(
         '<b>Path 1 (Structural — AFA):</b> Nothing external to ⊥ can execute ⊥. Therefore '
-        '⊥ must execute itself, which forces ⊥ = {⊥}. ZP-J proved this axiom-free. '
+        '⊥ must execute itself. ZP-J proved axiom-free that ⊥ is the unique self-containing element (the structural fixed point); that this is the literal ⊥ = {⊥} holds in the ZF+AFA setting. '
         '<b>Now IN LEAN SCOPE via ZP-K:</b> the KleeneStructure instance for MachinePhase '
         'includes an AFAStructure instance (machinePhaseAFA). The AFA self-containment of ⊥ '
         'is not just argued — it is machine-checked.'))

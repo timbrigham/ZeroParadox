@@ -62,8 +62,10 @@ open Ordinal
 /-! ## § I. Axiom Footprint Convergence
 
 Non-constructibility appears in four formal languages across the ZP framework.
-Each proved theorem in each layer requires Classical.choice at the diagonal step
-where a non-constructive choice is forced.
+Each proved theorem in each layer, as currently written, depends on Classical.choice at the
+diagonal step. Whether that dependence is necessary (forced by ZP geometry rather than incidental)
+is the open Classical.choice inversion conjecture (cf. ZPM §II): #print axioms shows dependence,
+not necessity.
 
 | Layer | Formal Language | Expression of non-constructibility |
 |-------|----------------|--------------------------------------|

@@ -1,6 +1,7 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.25 | June 2026
+Version 1.26 | June 2026
+v1.26: FMC precision (sweep Step 4) — Key Results box and the T-EXEC body line now split the proved structural fixed point (axiom-free) from the argued set-membership reading (the ZF+AFA setting itself).
 v1.25: §6 "future work" bridge sentence retired — the 2-adic valuation argument is now formalized (ZPJ_ScaleBridge wired into the maintained build); §7 gains the common-ancestor (ValBridge) framing — the abstract lattice track and ℤ₂ are instances of one minimal typeclass; §8 adds ℤ₂ as a third concrete model. The ℤ₂ instance is flagged as inheriting Classical.choice from Mathlib's p-adic library (unlike the axiom-free core T-EXEC).
 v1.24: Directed-graph (APG) diagram added for the Quine atom (self-loop + well-founded chain ending at ∅); arithmetic analogy scoped (it cannot show ⊥={⊥} — routed to mirror/graph); "depth" rephrased from "how far from ⊥" to intrinsic descent/valuation (Dan feedback 2026-06-15). Fixed latent null glyph scaleᵏ (&#7503; → <sup>k</sup>).
 v1.23: "his question" pronoun fixed; abstraction chain direction clarified; remember_box leads with analogy; p-adic removed from disclaimer (future work); "Not three separate" prose replaced; T-EXEC antecedent named (ER/AR fixes).
@@ -190,7 +191,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.25'
+VERSION = '1.26'
 
 
 def build():
@@ -250,7 +251,7 @@ def build():
         'the unique self-containing set  - the Quine atom  - '
         'is provably the bottom element &#8869;. CC-2 (&#8869; = {&#8869;}) is no longer a '
         'freestanding modelling assumption  - within ZF+AFA, it is a derived consequence '
-        'of T-EXEC, not a choice. CC-1 (S&#8320; = &#8869;) is a derived consequence of '
+        'of T-EXEC at the structural level; the literal set-membership &#8869; = {&#8869;} is the AFA setting itself, an argued commitment, not a free choice. CC-1 (S&#8320; = &#8869;) is a derived consequence of '
         'the algebra with no additional axioms.'))
     E.append(cbody(
         'ZP-J extends the T-EXEC result in four directions: it shows that '
@@ -550,7 +551,7 @@ def build():
         'T-EXEC (axiom-free, Lean 4): IsQuineAtom(q) &#8596; q = &#8869;. '
         'The Quine atom, the order minimum, and the join identity are the same element. '
         'CC-1 (S&#8320; = &#8869;) is a derived theorem  - axiom-free in Lean 4. '
-        'CC-2 (&#8869; = {&#8869;}) is proved within ZF+AFA: forced by T-EXEC, not assumed. '
+        'CC-2 (&#8869; = {&#8869;}): T-EXEC proves the structural self-containment fixed point (axiom-free); that &#8869; literally equals {&#8869;} as sets is the ZF+AFA setting, an argued commitment, not a Lean theorem. '
         'DC-free: the self-containing set {&#8869;} is identified in one step, '
         'with no Dependent Choice. '
         'Abstraction chain: ValuationStructure &#8594; AbstractSelfApp &#8594; AFAStructure  - '
