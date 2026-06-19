@@ -602,6 +602,110 @@ def validate_drawing(drawing, dh, name='diagram'):
     return drawing
 
 
+# ── Automatic diagram bounds gate + diagram-page reporter ───────────────────────
+# validate_drawing() above is opt-in (a diagram fn must call it). The hooks below
+# make the bounds check UNIVERSAL — every Drawing in the story is validated at
+# build time with no per-function call — and report which PDF pages carry a
+# diagram, so they can be eyeballed for the internal-overlap class (two elements
+# colliding INSIDE the box) that a bounds check cannot see.
+
+_DIAGRAM_PAGES = []
+
+_orig_drawing_drawOn = _Drawing.drawOn
+def _zp_patched_drawing_drawOn(self, canvas, x, y, *a, **k):
+    """Record the page each Drawing renders on, for the post-build page report."""
+    try:
+        _DIAGRAM_PAGES.append(canvas.getPageNumber())
+    except Exception:
+        pass
+    return _orig_drawing_drawOn(self, canvas, x, y, *a, **k)
+_Drawing.drawOn = _zp_patched_drawing_drawOn
+
+def _drawing_y_extent(drawing):
+    """Return (min_y, max_y) over all primitives in a Drawing, or (None, None)."""
+    from reportlab.graphics.shapes import Circle, Rect, String, Line, PolyLine, Group
+    ys = []
+    def _collect(shapes):
+        for shape in shapes:
+            try:
+                if isinstance(shape, Circle):
+                    ys.extend([shape.cy - shape.r, shape.cy + shape.r])
+                elif isinstance(shape, Rect):
+                    ys.extend([shape.y, shape.y + shape.height])
+                elif isinstance(shape, String):
+                    fs = getattr(shape, 'fontSize', 10) or 10
+                    ys.extend([shape.y, shape.y + fs])
+                elif isinstance(shape, Line):
+                    ys.extend([shape.y1, shape.y2])
+                elif isinstance(shape, PolyLine):
+                    pts = shape.points
+                    for i in range(1, len(pts), 2):
+                        ys.append(pts[i])
+                elif isinstance(shape, Group):
+                    _collect(shape.contents)
+            except AttributeError:
+                pass
+    _collect(drawing.contents)
+    if not ys:
+        return None, None
+    return min(ys), max(ys)
+
+def _validate_story_drawings(flowables):
+    """Diagram bounds gate. HARD-FAIL when content escapes the Drawing's reserved
+    box (max_y > dh or min_y < 0) — that is the only case that overlaps surrounding
+    text. WARN (no fail) when content is inside the box but within the 10pt-top /
+    5pt-bottom safety margin, so tight diagrams are flagged for a visual eyeball."""
+    TOL = 0.5  # float-rounding tolerance at the box edge
+    def _walk(fls):
+        for f in fls:
+            if isinstance(f, _Drawing):
+                dh = getattr(f, 'height', 0) or 0
+                name = getattr(f, '_zp_name', 'diagram')
+                if dh:
+                    min_y, max_y = _drawing_y_extent(f)
+                    if max_y is None:
+                        continue
+                    if max_y > dh + TOL or min_y < -TOL:
+                        print()
+                        print('!' * 70)
+                        print(f'  ZP BUILD BLOCKED — diagram "{name}" escapes its box')
+                        if max_y > dh + TOL:
+                            print(f'    top escape:    max_y={max_y:.1f} > dh={dh:.1f}')
+                        if min_y < -TOL:
+                            print(f'    bottom escape: min_y={min_y:.1f} < 0')
+                        print()
+                        print('  Content outside the Drawing box overlaps surrounding text.')
+                        print('  Fix: increase dh, or move the element inside [0, dh].')
+                        print('  See CLAUDE.md §Companion PDF Diagram Layout Standards.')
+                        print('!' * 70)
+                        print()
+                        raise SystemExit(1)
+                    if max_y > dh - 10 or min_y < 5:
+                        print(f'  [diagram margin warning — "{name}": '
+                              f'min_y={min_y:.1f} max_y={max_y:.1f} dh={dh:.1f}]')
+            else:
+                for attr in ('_content', 'flowables', '_flowables'):
+                    sub = getattr(f, attr, None)
+                    if isinstance(sub, (list, tuple)):
+                        _walk(sub)
+                        break
+    _walk(flowables)
+
+_orig_doc_build = SimpleDocTemplate.build
+def _zp_patched_doc_build(self, flowables, *args, **kwargs):
+    """Auto-validate diagram bounds (hard gate) + report diagram page numbers."""
+    _DIAGRAM_PAGES.clear()
+    _validate_story_drawings(flowables)          # hard-fail on box escape; warn on tight margin
+    result = _orig_doc_build(self, flowables, *args, **kwargs)
+    if _DIAGRAM_PAGES:
+        pages = sorted(set(_DIAGRAM_PAGES))
+        s = 's' if len(pages) != 1 else ''
+        print(f'  [diagram page{s} — eyeball for internal overlaps: '
+              + ', '.join(str(p) for p in pages) + ']')
+    return result
+SimpleDocTemplate.build = _zp_patched_doc_build
+
+
 # ── Palette enforcement gate ──────────────────────────────────────────────────
 # Protected palette names: redefining these in a build script without a
 # # ZP-OVERRIDE: comment is a hard error that aborts the build.

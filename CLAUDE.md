@@ -216,6 +216,10 @@ A hash mismatch is not just a "rebuild needed" signal — it means the version b
 
 These rules apply to every `Drawing` object in every companion build script. Violations cause diagram content to overflow the declared bounding box and render over surrounding text — a recurring issue that has required multiple retroactive fixes.
 
+**Now build-enforced (automatic).** `zp_utils` validates every `Drawing` in the story at `doc.build()` time — no per-function `validate_drawing()` call required. It **hard-fails the build** when content escapes its box (`max_y > dh` or `min_y < 0`, the only case that overlaps surrounding text), and prints a **margin warning** when content is inside the box but within the 10pt-top / 5pt-bottom safety margin. The rules below are still the design discipline (write diagrams that fit), but a forgotten check can no longer ship an escape. The bounds gate cannot see the *internal-collision* class (two elements overlapping inside the box, e.g. a caption over a node box); for that, every build prints a **diagram-page report** (`[diagram pages — eyeball for internal overlaps: …]`) naming the pages to visually check. Eyeball those pages on any diagram-touching build before commit.
+
+**Known deferred tripwire (2026-06-19):** `build_zpc_companion.py`'s surprisal diagram has a pre-existing ~2pt bottom escape (the amber origin marker) — sub-perceptible, no visible overlap. Left unfixed by decision; the gate will block that companion's next rebuild until the diagram's `dh` is bumped a few points. Fix it then, bundled with whatever change prompts the rebuild.
+
 ### Diagram height and cy rules
 
 **Rule 1 — Never derive `cy` from `dh` when the diagram contains fixed-size elements (circles, boxes, labels at fixed offsets).** `cy = dh * fraction` is only safe when all content scales with `dh`. If any element has a fixed radius `r` or a fixed offset, use a fixed numeric `cy` instead.
