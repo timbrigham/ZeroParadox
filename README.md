@@ -124,7 +124,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **Metatheoretic note**
 
-This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results.
+This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results. What "forced" means here, and the discipline every such claim must meet, is defined in [Forced Metatheoretic Commitment](fmc.md).
 
 <details>
 <summary><b>Why AFA, and why it is forced</b> - click to expand</summary>
