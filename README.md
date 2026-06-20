@@ -97,11 +97,11 @@ ZP-H, ZP-I, ZP-J (extension files), ZP-K, ZP-L, and ZP-M use `Classical.choice` 
 
 | File | Document | Version | Focus |
 |------|----------|---------|-------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.14 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.15 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.10 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [ZP-C Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.18 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [ZP-D State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.12 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [ZP-E Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.20 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [ZP-E Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.21 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [ZP-F The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.4 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [ZP-G Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.12 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.16 | The categorical bridge: the snap holding under all four domain functors. |
@@ -124,7 +124,7 @@ A commitment marked "not a novel commitment" means its content is formally groun
 
 **Metatheoretic note**
 
-This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results.
+This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice - it is forced by the framework's own results. What "forced" means here, and the discipline every such claim must meet, is defined in [Forced Metatheoretic Commitment](fmc.md).
 
 <details>
 <summary><b>Why AFA, and why it is forced</b> - click to expand</summary>

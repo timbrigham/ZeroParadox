@@ -1,6 +1,8 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.8 | May 2026
+Version 1.10 | May 2026
+v1.10: four_way_diagram — removed the redundant internal caption String that overlapped the bottom "Computation (Kleene)" box (Diagram Rule 4; the external ccaption already captions the diagram).
+v1.9: FMC precision (sweep Step 4) — DA-1 Path 1 line splits the axiom-free structural fixed point (what ZP-J proved) from the literal ⊥ = {⊥} (the ZF+AFA setting).
 v1.8: Strip version number from companion footer.
 v1.7: Fix four_way_diagram String() HTML entity encoding — raw Unicode for ⊥, ≤, ∨.
 v1.6: Add "Self-Reference: Fixed Point vs. Oscillation" section — Gödel diagonal lemma, fixed-point vs. liar-type self-reference, ZPE irreversibility excludes oscillation.
@@ -84,10 +86,6 @@ def four_way_diagram():
          'Algebra (A4)', '⊥ ∨ x = x', 'Join identity',
          cx + cr + 14, cy, cx + cr + 2, cy)
 
-    d.add(String(14, 10,
-                 'Four mathematical languages describing the same structural role. '
-                 'T-COMP proves they name the same object.',
-                 fontSize=7.5, fontName='DV-I', fillColor=GREY_TEXT))
     return d
 
 def four_way_table():
@@ -125,7 +123,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.8'
+VERSION = '1.10'
 
 
 def build():
@@ -240,7 +238,7 @@ def build():
         'DA-1 (Instantiation as Execution) had three informal argument paths in ZP-E:'))
     E.append(cbody(
         '<b>Path 1 (Structural — AFA):</b> Nothing external to ⊥ can execute ⊥. Therefore '
-        '⊥ must execute itself, which forces ⊥ = {⊥}. ZP-J proved this axiom-free. '
+        '⊥ must execute itself. ZP-J proved axiom-free that ⊥ is the unique self-containing element (the structural fixed point); that this is the literal ⊥ = {⊥} holds in the ZF+AFA setting. '
         '<b>Now IN LEAN SCOPE via ZP-K:</b> the KleeneStructure instance for MachinePhase '
         'includes an AFAStructure instance (machinePhaseAFA). The AFA self-containment of ⊥ '
         'is not just argued — it is machine-checked.'))

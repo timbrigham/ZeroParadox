@@ -1,5 +1,6 @@
 """
-Build ZP-A: Lattice Algebra (v1.14)
+Build ZP-A: Lattice Algebra (v1.15)
+v1.15: FMC precision (sweep Step 4, against fmc.md) — CC-2 box: "structurally required" / "ruled out" / "incompatible" softened to "argued"; named falsifier added; status line marked argued, not a derivation.
 v1.14: CC-2 label updated — "Conditional Claim" → "Forced Metatheoretic Commitment".
 Metatheoretic choice of ZF+AFA over Foundation is not free: ruled out by R3 and ZP-C L-INF.
 Lean 4 scope note extended — ZPJ_ScaleBridge formally verifies the fixed-point content
@@ -33,7 +34,7 @@ All three DA-1 paths share D7 as background; independence is among their argumen
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra.pdf')
@@ -137,14 +138,14 @@ def build():
     E.append(Paragraph('V. The Self-Containment of &#8869;', S['h1']))
     E.append(Paragraph('5.1  Foundational Characterisation', S['h2']))
     E.append(body('The axioms A1&#8211;A4 establish &#8869; as the additive identity and algebraic minimum of L. The following forced metatheoretic commitment characterises its set-theoretic nature. R3 provides a structural route to DA-1 in ZP-E: CC-2 establishes that &#8869; has no external interpreter position, which — conditional on D7&#8217;s exhaustive static/executing dichotomy (ZP-E) as background — eliminates the static-description state for &#8869;. See R3 for the full dependency note.'))
-    E.append(body('<i>Foundation note: The framework is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). The classical Axiom of Foundation is replaced by AFA, which permits self-containing sets. This replacement is not an arbitrary modelling choice: ZF + Foundation is incompatible with CC-2 (a well-founded &#8869; would admit an external interpreter, contradicting R3) and with ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). See ZP-E Remark R-AFA for the full cross-framework argument. The Axiom of Choice is not assumed.</i>'))
+    E.append(body('<i>Foundation note: The framework is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). The classical Axiom of Foundation is replaced by AFA, which permits self-containing sets. This replacement is not an arbitrary modelling choice: ZF + Foundation is argued to be incompatible with CC-2 (a well-founded &#8869; would admit an external interpreter, contradicting R3) and with ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). See ZP-E Remark R-AFA for the full cross-framework argument. The Axiom of Choice is not assumed.</i>'))
     E.append(sp(4))
     E.append(label_box('Forced Metatheoretic Commitment CC-2 — Self-Containment of &#8869;', [
         'The null state &#8869; is its own extension: the collection of all objects bearing the structural property of &#8869; is &#8869; itself.',
         'Formally: &#8869; = {&#8869;}',
         'Under ZF + AFA, &#8869; is a Quine atom — a set satisfying x = {x}. By set extensionality, any infinite collection of objects all indistinguishable under the structural property of &#8869; collapses to &#8869; itself. There is no multiplicity, only &#8869;.',
-        'This is a forced metatheoretic commitment, not a freely chosen modeling decision. The replacement of Foundation by AFA is structurally required — Foundation is ruled out by R3 and ZP-C L-INF. It is not derived from A1&#8211;A4 at the algebraic level; the metatheoretic choice is forced at the framework level.',
-        'Status: FORCED METATHEORETIC COMMITMENT — AFA over Foundation is structurally required, not freely chosen. Algebraic fixed-point content formally verified in ZFC by ZP-J (ZPJ_ScaleBridge); set-theoretic interpretation outside Lean scope.',
+        'This is a Forced Metatheoretic Commitment, not a freely chosen modeling decision. The replacement of Foundation by AFA is argued (not proved) to be structurally required — Foundation is argued to be ruled out by R3 and ZP-C L-INF, a metatheoretic squeeze argument, not a derivation. It is not derived from A1&#8211;A4 at the algebraic level; the metatheoretic choice is argued at the framework level. The standing falsifier: a well-founded model of &#8869; consistent with R3 and L-INF would overturn the forcing.',
+        'Status: FORCED METATHEORETIC COMMITMENT — AFA over Foundation is argued to be structurally required (a metatheoretic argument, not a derivation), not freely chosen. Algebraic fixed-point content formally verified in ZFC by ZP-J (ZPJ_ScaleBridge); set-theoretic interpretation outside Lean scope.',
         'Cross-framework note: The replacement of Foundation by AFA is not an arbitrary choice — ZF + Foundation is ruled out by R3 (a well-founded &#8869; would admit an external interpreter, contradicting CC-2) and by ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). Foundation and AFA are dual framings of the same object: Foundation excludes the Quine atom; AFA uniquely permits it. Both axioms converge on the identical object with zero gap between them. AFA is the forced metatheoretic replacement; the specific form &#8869; = {&#8869;} is the minimal Quine atom consistent with A4. See ZP-E Remark R-AFA for the full cross-framework argument.',
         'Lean 4 scope — three distinct layers. (1) Set-theoretic: the claim &#8869; = {&#8869;} as a set cannot be realized in Lean&#8217;s type theory (CIC is well-founded by construction). This remains a prose-level commitment in ZF + AFA. (2) AFAStructure context (conditional on AFA as ambient): ZP-J defines IsQuineAtom as the lattice-theoretic analog — IsQuineAtom q := selfMem q &#8743; &#8704; x, selfMem x &#8594; x = q. Within an AFAStructure instance, t_exec_iff proves IsQuineAtom q &#8596; q = &#8869; (ZPJ.lean); ZP-K&#8217;s da1_closed_concrete closes this concretely on MachinePhase. These results assume AFAStructure as ambient context — they are conditional on AFA structure, not derived independently of it. (3) ZFC-clean (no AFA import): ZPJ_ScaleBridge.lean proves the fixed-point content in standard ZFC — selfMem_eq_singleton_free and z2_selfMem_singleton establish {x : &#8484;&#8322; | 2x = x} = {0}. This result is loop-free from AFA. The set-theoretic interpretation connecting layer 3 to layer 1 remains outside Lean scope.',
     ]))
