@@ -623,13 +623,16 @@ _Drawing.drawOn = _zp_patched_drawing_drawOn
 
 def _drawing_y_extent(drawing):
     """Return (min_y, max_y) over all primitives in a Drawing, or (None, None)."""
-    from reportlab.graphics.shapes import Circle, Rect, String, Line, PolyLine, Group
+    from reportlab.graphics.shapes import (Circle, Rect, String, Line, PolyLine,
+                                           Polygon, Path, Ellipse, Group)
     ys = []
     def _collect(shapes):
         for shape in shapes:
             try:
                 if isinstance(shape, Circle):
                     ys.extend([shape.cy - shape.r, shape.cy + shape.r])
+                elif isinstance(shape, Ellipse):
+                    ys.extend([shape.cy - shape.ry, shape.cy + shape.ry])
                 elif isinstance(shape, Rect):
                     ys.extend([shape.y, shape.y + shape.height])
                 elif isinstance(shape, String):
@@ -637,13 +640,19 @@ def _drawing_y_extent(drawing):
                     ys.extend([shape.y, shape.y + fs])
                 elif isinstance(shape, Line):
                     ys.extend([shape.y1, shape.y2])
-                elif isinstance(shape, PolyLine):
+                elif isinstance(shape, (PolyLine, Polygon, Path)):
+                    # all three carry a flat .points list [x0, y0, x1, y1, ...]
                     pts = shape.points
                     for i in range(1, len(pts), 2):
                         ys.append(pts[i])
                 elif isinstance(shape, Group):
                     _collect(shape.contents)
-            except AttributeError:
+                else:
+                    # unknown primitive — fall back to its own bounding box so it
+                    # can never be silently ignored (Wedge, future shapes, etc.)
+                    _, y1, _, y2 = shape.getBounds()
+                    ys.extend([y1, y2])
+            except (AttributeError, TypeError, ValueError):
                 pass
     _collect(drawing.contents)
     if not ys:
