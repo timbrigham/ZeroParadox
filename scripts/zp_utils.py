@@ -322,8 +322,8 @@ _MONTH_YEAR = re.compile(
 def version_line(first_released, version):
     """Standard dual-date meta line. first_released is a per-doc constant (the v1.0
     date, never changes) — a permanent provenance claim, so it is REQUIRED and
-    validated; there is NO default. The this-version date is auto-derived. e.g.
-    'First released: April 2026   ·   This version: v1.17 · June 2026'."""
+    validated; there is NO default. The current date is auto-derived. e.g.
+    'Initial: April 2026  |  Current: 1.17, June 2026'."""
     if not first_released or not _MONTH_YEAR.match(str(first_released)):
         print()
         print('!' * 70)
@@ -336,8 +336,8 @@ def version_line(first_released, version):
         print('!' * 70)
         print()
         raise SystemExit(1)
-    return ('First released: ' + first_released
-            + '   ·   This version: v' + version + ' · ' + version_date())
+    return ('Initial: ' + first_released
+            + '  |  Current: ' + version + ', ' + version_date())
 
 def make_doc(path, title_str, doc_id, version_str, date_str=None):
     """SimpleDocTemplate with standard Zero Paradox footer.
