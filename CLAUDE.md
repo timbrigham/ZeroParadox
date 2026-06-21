@@ -111,7 +111,7 @@ Then grab the Zenodo DOI badge and add to README.md in a follow-up commit.
 
 ## register.md — Canonical Version Registry
 
-`register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md (and carries a transparency notice per the Transparency Notices policy).
+`register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository and reachable from the main index via the Claims Ledger (`CLAIMS.md`, which README links to register.md), so it no longer carries an unlinked-transparency notice (removed 2026-06-21).
 
 **Schema:** One row per formal document:
 `| Document | Formal Version | Filename | Companion Version | Notes |`

@@ -1,5 +1,3 @@
-> **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. It is a canonical version registry used during active development to keep README.md and GUIDE.md in sync. The main entry point for the Zero Paradox is [README.md](README.md).
-
 # Zero Paradox Version Registry
 
 Update this file first on any version bump. README.md Framework table and GUIDE.md Reading Paths are verified against this register.
