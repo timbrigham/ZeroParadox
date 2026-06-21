@@ -41,12 +41,12 @@ type also a ValBridge instance, unifying both tracks under a common ancestor.
 The formal gap described here is closed.
 -/
 
-namespace ZeroParadox.Scale
+namespace ZeroParadox.ZPJ_Scale
 
 open ZeroParadox.ZPA ZPSemilattice
 open ZeroParadox.ZPJ
-open ZeroParadox.SelfApp
-open ZeroParadox.AczelConn
+open ZeroParadox.ZPJ_SelfApp
+open ZeroParadox.ZPJ_AczelConn
 
 /-! ## § I. ValuationStructure — The Abstract Typeclass -/
 
@@ -195,12 +195,12 @@ theorem q2Scale_unique_fp (x : ℤ_[2]) (h : 2 * x = x) : x = 0 := by
 
 end PadicParallel
 
-end ZeroParadox.Scale
+end ZeroParadox.ZPJ_Scale
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.Scale
+open ZeroParadox.ZPJ_Scale
 
 #print axioms scale_ne_fixed
 #print axioms scale_unique_fp

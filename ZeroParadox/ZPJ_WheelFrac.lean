@@ -24,9 +24,9 @@ holds given `0 ∉ S`.
 Both `instWheel` and `inf_ne_bot` are `Classical.choice`-free (`[propext, Quot.sound]`).
 -/
 
-namespace ZeroParadox.WheelFrac
+namespace ZeroParadox.ZPJ_WheelFrac
 
-open ZeroParadox.WheelTheory
+open ZeroParadox.ZPJ_Wheel
 
 set_option maxHeartbeats 400000
 
@@ -163,4 +163,4 @@ section PurityCheck
 #print axioms inf_ne_bot
 end PurityCheck
 
-end ZeroParadox.WheelFrac
+end ZeroParadox.ZPJ_WheelFrac

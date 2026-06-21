@@ -50,10 +50,10 @@ The full derivation chain now has a concrete model:
 All results are sorry-free and derived from ℕ∞ arithmetic + ZPJ_Scale theorems.
 -/
 
-namespace ZeroParadox.Model
+namespace ZeroParadox.ZPJ_Model
 
 open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.Scale
+open ZeroParadox.ZPJ_Scale
 
 /-! ## § I. ZPSemilattice Instance for ℕ∞ -/
 
@@ -92,12 +92,12 @@ theorem natInf_selfMem_singleton :
     {x : ℕ∞ | x + 1 = x} = ({⊤} : Set ℕ∞) :=
   val_selfMem_singleton
 
-end ZeroParadox.Model
+end ZeroParadox.ZPJ_Model
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.Model
+open ZeroParadox.ZPJ_Model
 
 #print axioms instNatInfZPS
 #print axioms instNatInfVal

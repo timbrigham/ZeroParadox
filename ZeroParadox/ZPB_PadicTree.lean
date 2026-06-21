@@ -26,7 +26,7 @@ Contents:
 This file is self-contained.
 -/
 
-namespace ZeroParadox.PadicTree
+namespace ZeroParadox.ZPB_PadicTree
 
 set_option maxHeartbeats 400000
 
@@ -243,4 +243,4 @@ section PurityCheck
 #print axioms botEnd_val_top
 end PurityCheck
 
-end ZeroParadox.PadicTree
+end ZeroParadox.ZPB_PadicTree

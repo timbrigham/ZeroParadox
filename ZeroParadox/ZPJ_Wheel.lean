@@ -59,7 +59,7 @@ This file:
   § IX.   Purity check
 
 Status: Sorry-free. §VIII is now a documentation anchor with no theorem object; the
-construction it points to is proved in `ZPJ_WheelFrac.lean` — `WheelFrac.instWheel` shows
+construction it points to is proved in `ZPJ_WheelFrac.lean` — `ZPJ_WheelFrac.instWheel` shows
 the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and
 multiplicative submonoid `S` (sorry-free, `Classical.choice`-free, `[propext, Quot.sound]`).
 §VII defines WheelValuationStructure — the typeclass identifying the bridge: a commutative
@@ -70,12 +70,12 @@ gap; §VI closes the identification gap. The universality result previously scop
 See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.
 -/
 
-namespace ZeroParadox.WheelTheory
+namespace ZeroParadox.ZPJ_Wheel
 
 open ZeroParadox.ZPA ZPSemilattice
 open ZeroParadox.ZPJ
-open ZeroParadox.Scale
-open ZeroParadox.SelfApp
+open ZeroParadox.ZPJ_Scale
+open ZeroParadox.ZPJ_SelfApp
 
 -- ============================================================
 -- § I. Wheel Typeclass
@@ -406,7 +406,7 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
       - winv([a, b]) = [b, a]    — involution is pair-swap
       - wmul([a,b],[c,d]) = [a·c, b·d] — inherited from ring multiplication
     The wheel axioms (Carlström Def 1.1) follow from the ring axioms on L plus the submonoid structure of S.
-    This construction is now formalized in `ZPJ_WheelFrac.lean` (`WheelFrac.instWheel`) — the
+    This construction is now formalized in `ZPJ_WheelFrac.lean` (`ZPJ_WheelFrac.instWheel`) — the
     Tier 3 result of the porthole conjecture (§VIII). -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: bridge typeclass connecting ZP structural
 -- hierarchy to Wheel theory via the wheel of fractions construction.
@@ -458,10 +458,10 @@ fractions construction Wh(L) = (L × L)/~ yields a Wheel instance, and the porth
 condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
 
 **The construction, formalized:** see `ZPJ_WheelFrac.lean`.
-`WheelFrac.instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
+`ZPJ_WheelFrac.instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
 for any commutative ring `A` and multiplicative submonoid `S` — sorry-free and
 `Classical.choice`-free (`[propext, Quot.sound]`). The porthole `∞ ≠ ⊥` is
-`WheelFrac.inf_ne_bot` (given `0 ∉ S`). The ZP `Wheel` typeclass is a faithful encoding of
+`ZPJ_WheelFrac.inf_ne_bot` (given `0 ∉ S`). The ZP `Wheel` typeclass is a faithful encoding of
 Carlström's Definition 1.1 (all eight axioms, with his two commutative-monoid axioms unbundled
 into 14 equational fields), so this is Carlström's wheel-of-fractions theorem, machine-verified —
 the Tier 3 universality result previously scoped as a substantial, non-near-term target.
@@ -480,4 +480,4 @@ section PurityCheck
 #print axioms zpwVal_inv_zero
 end PurityCheck
 
-end ZeroParadox.WheelTheory
+end ZeroParadox.ZPJ_Wheel

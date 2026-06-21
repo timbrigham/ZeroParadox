@@ -43,7 +43,7 @@ composition is monadic bind. Mathlib already provides this for free: `KleisliCat
 This is the F_C half of the OQ-G3 upgrade (MC-1 correspondence into the real domain categories).
 -/
 
-namespace ZeroParadox.ZPHInfo
+namespace ZeroParadox.ZPH_InfoFunctor
 
 open ZeroParadox.ZPC
 open CategoryTheory
@@ -92,7 +92,7 @@ theorem fC_snap_info_grounded :
     Nonempty (fC_functor.obj 0 ⟶ fC_functor.obj 1) ∧ jsdPQ = Real.log 2 :=
   ⟨⟨fC_map (Nat.zero_le 1)⟩, t1b_jsd⟩
 
-end ZeroParadox.ZPHInfo
+end ZeroParadox.ZPH_InfoFunctor
 
 /-! ## Axiom Purity Check
 
@@ -100,7 +100,7 @@ end ZeroParadox.ZPHInfo
 library. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPHInfo
+open ZeroParadox.ZPH_InfoFunctor
 
 #print axioms fC_functor
 #print axioms fC_zero_isInitial

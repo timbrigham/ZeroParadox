@@ -46,11 +46,11 @@ constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
 of a common ancestor. The formal gap described here is closed.
 -/
 
-namespace ZeroParadox.SelfApp
+namespace ZeroParadox.ZPJ_SelfApp
 
 open ZeroParadox.ZPA ZPSemilattice
 open ZeroParadox.ZPJ
-open ZeroParadox.AczelConn
+open ZeroParadox.ZPJ_AczelConn
 
 /-! ## § I. AbstractSelfApp Typeclass -/
 
@@ -147,12 +147,12 @@ theorem q2_selfMem_singleton :
 
 end PadicParallel
 
-end ZeroParadox.SelfApp
+end ZeroParadox.ZPJ_SelfApp
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.SelfApp
+open ZeroParadox.ZPJ_SelfApp
 
 #print axioms derived_bot_self_mem
 #print axioms derived_quine_unique
