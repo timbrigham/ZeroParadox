@@ -1,5 +1,6 @@
 """
-Build ZP-A Illustrated Companion (v1.9)
+Build ZP-A Illustrated Companion (v1.10)
+v1.10: FMC uniformity — "why AFA is the minimal required change" → "argued to be the minimal change".
 v1.9: Strip version number from companion footer.
 v1.8: Strip version number from ZP-A cross-reference in CC-2 section.
 v1.6: Disclaimer updated — "formal ontology" replaced with "formal document"; "proven" → "proved".
@@ -97,7 +98,7 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.9'
+VERSION = '1.10'
 
 
 def build():
@@ -280,7 +281,7 @@ def build():
         '(AFA). The Axiom of Choice is not assumed. This is a framework-level commitment — A1&#8211;A4 '
         'are unaffected, but it changes what &#8869; is allowed to be. '
         'For a plain-language explanation of why Foundation is incompatible with &#8869; = {&#8869;} '
-        'and why AFA is the minimal required change, see the ZP-J Illustrated Companion.'))
+        'and why AFA is argued to be the minimal change, see the ZP-J Illustrated Companion.'))
     E.append(sp(8))
 
     E.append(remember_box(

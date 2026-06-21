@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.0 | June 2026
+Version 1.1 | June 2026
+v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
       framework is free of the Axiom of Choice. The central theorem T-SNAP (the Binary Snap)
       depends on NO axioms at all; the lattice algebra (ZP-A) and the Quine-atom self-reference
@@ -16,7 +17,7 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 # ── fix() guard ──
 _Paragraph_orig = Paragraph
@@ -107,7 +108,7 @@ def build():
         'A second tier of results is choice-free but uses propositional extensionality and quotient '
         'soundness (`[propext, Quot.sound]`), both standard in Lean 4. These include the structural '
         'floor (ZPH_PowerSet.ps_structural_floor) and the wheel of fractions '
-        '(WheelFrac.instWheel, inf_ne_bot). No `Classical.choice`.'))
+        '(ZPJ_WheelFrac.instWheel, inf_ne_bot). No `Classical.choice`.'))
     E.append(sp(6))
 
     # ── Section II ───────────────────────────────────────────────────────────────

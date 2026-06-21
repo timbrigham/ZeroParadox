@@ -72,9 +72,9 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 - Mathlib.Combinatorics.Quiver.Path: directed graph paths
 -/
 
-namespace ZeroParadox.APG
+namespace ZeroParadox.ZPJ_APG
 
-open ZeroParadox.Scale ZeroParadox.SelfApp ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox.ZPJ_Scale ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPA ZPSemilattice
 
 /-! ## § I. APG Definition -/
 
@@ -470,12 +470,12 @@ theorem decoration_unique
       have hlt := Set.ncard_lt_ncard hstrict
       omega
 
-end ZeroParadox.APG
+end ZeroParadox.ZPJ_APG
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.APG
+open ZeroParadox.ZPJ_APG
 
 #check @val_iterate
 #check @scale_iterate_unique_fp

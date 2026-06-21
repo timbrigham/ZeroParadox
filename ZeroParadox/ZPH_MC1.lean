@@ -50,9 +50,9 @@ fenced. It is *not* claimed here that the four bottoms are one object — only t
 categorical bottom of its own real category and they agree on the snap.
 -/
 
-namespace ZeroParadox.ZPHMC1
+namespace ZeroParadox.ZPH_MC1
 
-open CategoryTheory ZeroParadox.ZPB ZeroParadox.ZPHTop ZeroParadox.ZPHHilb ZeroParadox.ZPHInfo
+open CategoryTheory ZeroParadox.ZPB ZeroParadox.ZPH_TopFunctor ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
 
 /-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical
     bottom (initial object / inverse limit) of each domain's genuine Mathlib category, and the
@@ -75,12 +75,12 @@ noncomputable def mc1_correspondence : MC1Correspondence where
   info_no_return := fun {_} hn => fC_no_return hn
   top_limit := fB_bottom_is_limit
 
-end ZeroParadox.ZPHMC1
+end ZeroParadox.ZPH_MC1
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPHMC1
+open ZeroParadox.ZPH_MC1
 
 #print axioms mc1_correspondence
 

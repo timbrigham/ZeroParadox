@@ -111,7 +111,7 @@ Then grab the Zenodo DOI badge and add to README.md in a follow-up commit.
 
 ## register.md — Canonical Version Registry
 
-`register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md (and carries a transparency notice per the Transparency Notices policy).
+`register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository and reachable from the main index via the Claims Ledger (`CLAIMS.md`, which README links to register.md), so it no longer carries an unlinked-transparency notice (removed 2026-06-21).
 
 **Schema:** One row per formal document:
 `| Document | Formal Version | Filename | Companion Version | Notes |`
@@ -197,6 +197,8 @@ This rule applies to both directions:
 ## Build Script Hash Integrity
 
 `register.md` records a SHA-256 fingerprint (first 8 chars) of every formal and companion build script in the `formal:XXXXXXXX comp:XXXXXXXX` token embedded in each row's Notes field.
+
+**Line endings are LF, enforced by `.gitattributes`.** Because the fingerprint is a hash of file *bytes*, line endings must be byte-stable across machines or the same script would hash differently (CRLF vs LF). `.gitattributes` declares `* text=auto eol=lf` (all text normalized to LF) and marks PDFs/images `binary` (never converted). Do not commit CRLF in tracked text files, and do not rely on `core.autocrlf` — the attributes override it. `check_hashes.py` hashes the active `.claude-local` scripts (LF); the `scripts/` mirror is the same content under the same LF policy. (Added 2026-06-21 after a CRLF/LF mismatch made the `scripts/` mirror hash differ from the active script for the same content.)
 
 **Standing rule — any script change requires all four steps in the same commit:**
 1. Make the change and bump the internal version number

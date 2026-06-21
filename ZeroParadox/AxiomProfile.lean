@@ -63,11 +63,11 @@ end ChoiceFreeCore
 No `Classical.choice`; at most propositional extensionality and quotient soundness. -/
 section ChoiceFreeStructural
 
-#print axioms ZeroParadox.AczelConn.J_self_is_largest        -- does not depend on any axioms
+#print axioms ZeroParadox.ZPJ_AczelConn.J_self_is_largest        -- does not depend on any axioms
 #print axioms ZeroParadox.ZPI.t_iz_limit_is_new_null         -- does not depend on any axioms
 #print axioms ZeroParadox.ZPH_PowerSet.ps_structural_floor   -- [propext, Quot.sound]
-#print axioms ZeroParadox.WheelFrac.instWheel                -- [propext, Quot.sound]
-#print axioms ZeroParadox.WheelFrac.inf_ne_bot               -- [propext, Quot.sound]
+#print axioms ZeroParadox.ZPJ_WheelFrac.instWheel                -- [propext, Quot.sound]
+#print axioms ZeroParadox.ZPJ_WheelFrac.inf_ne_bot               -- [propext, Quot.sound]
 
 end ChoiceFreeStructural
 
@@ -80,8 +80,8 @@ section WhereChoiceEnters
 
 #print axioms ZeroParadox.ZPB.c3_irreversible        -- [propext, Classical.choice, Quot.sound]  (p-adic topology)
 #print axioms ZeroParadox.ZPD.t4_snap_orthogonal     -- [propext, Classical.choice, Quot.sound]  (Hilbert space)
-#print axioms ZeroParadox.ZPHTop.fB_functor          -- [propext, Classical.choice, Quot.sound]  (TopCat)
-#print axioms ZeroParadox.ZPHHilb.fD_functor         -- [propext, Classical.choice, Quot.sound]  (ModuleCat ℂ)
-#print axioms ZeroParadox.ZPHInfo.fC_functor         -- [propext, Classical.choice, Quot.sound]  (KleisliCat PMF)
+#print axioms ZeroParadox.ZPH_TopFunctor.fB_functor          -- [propext, Classical.choice, Quot.sound]  (TopCat)
+#print axioms ZeroParadox.ZPH_HilbFunctor.fD_functor         -- [propext, Classical.choice, Quot.sound]  (ModuleCat ℂ)
+#print axioms ZeroParadox.ZPH_InfoFunctor.fC_functor         -- [propext, Classical.choice, Quot.sound]  (KleisliCat PMF)
 
 end WhereChoiceEnters

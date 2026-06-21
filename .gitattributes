@@ -1,1 +1,35 @@
-*.lean text linguist-language=Lean
+# Line-ending + binary policy for the Zero Paradox repository.
+#
+# Build-script integrity is tracked by SHA-256 of file bytes (the formal:/comp:
+# tokens in register.md, checked by check_hashes.py). Line endings change bytes,
+# so every text file MUST be byte-stable across machines and contributors:
+# normalize all text to LF, and never let git touch binaries (PDFs especially —
+# line-ending conversion corrupts them).
+
+# Default: auto-detect text, force LF in the working tree and the repo.
+* text=auto eol=lf
+
+# Source / hashed text — explicit LF
+*.py        text eol=lf
+*.lean      text eol=lf linguist-language=Lean
+*.md        text eol=lf
+*.txt       text eol=lf
+*.toml      text eol=lf
+*.json      text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.graphql   text eol=lf
+.gitignore  text eol=lf
+.gitattributes text eol=lf
+
+# Binary — never normalize
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.otf   binary
+*.ttf   binary
+*.woff  binary
+*.woff2 binary
