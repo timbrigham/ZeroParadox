@@ -1,5 +1,6 @@
 """
-Build ZP-A: Lattice Algebra (v1.15)
+Build ZP-A: Lattice Algebra (v1.16)
+v1.16: FMC uniformity (sweep Step 4b) — residual AFA-necessity assertions softened to "argued": metatheoretic declaration, R-AFA cross-framework note, CC-2 validation-table cell.
 v1.15: FMC precision (sweep Step 4, against fmc.md) — CC-2 box: "structurally required" / "ruled out" / "incompatible" softened to "argued"; named falsifier added; status line marked argued, not a derivation.
 v1.14: CC-2 label updated — "Conditional Claim" → "Forced Metatheoretic Commitment".
 Metatheoretic choice of ZF+AFA over Foundation is not free: ruled out by R3 and ZP-C L-INF.
@@ -34,7 +35,7 @@ All three DA-1 paths share D7 as background; independence is among their argumen
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra.pdf')
@@ -53,7 +54,7 @@ def build():
         'This document is stated over ZF + AFA (Zermelo&#8211;Fraenkel set theory with Aczel&#8217;s Anti-Foundation Axiom). AFA replaces the classical Axiom of Foundation and permits self-containing sets &#8212; in particular, sets satisfying x = {x}.',
         'Scope: This declaration affects only CC-2 (Section V), which asserts ⊥ = {⊥}. All algebraic results in Sections I&#8211;IV are independent of AFA and hold in standard ZF.',
         'Standard concrete models (power sets ordered by inclusion, real intervals ordered by max, etc.) satisfy A1&#8211;A4 but do not satisfy ⊥ = {⊥}. This is expected &#8212; they are models of the algebraic structure, not instantiations of the ZF + AFA metatheory. The self-containment of ⊥ is a set-theoretic claim about what ⊥ is, not an algebraic one.',
-        'The Axiom of Choice is not assumed. AFA is forced rather than chosen &#8212; see Section V and ZP-E Remark R-AFA for the argument.',
+        'The Axiom of Choice is not assumed. AFA is argued to be forced rather than chosen &#8212; see Section V and ZP-E Remark R-AFA for the argument.',
     ]))
     E.append(sp(8))
 
@@ -146,7 +147,7 @@ def build():
         'Under ZF + AFA, &#8869; is a Quine atom — a set satisfying x = {x}. By set extensionality, any infinite collection of objects all indistinguishable under the structural property of &#8869; collapses to &#8869; itself. There is no multiplicity, only &#8869;.',
         'This is a Forced Metatheoretic Commitment, not a freely chosen modeling decision. The replacement of Foundation by AFA is argued (not proved) to be structurally required — Foundation is argued to be ruled out by R3 and ZP-C L-INF, a metatheoretic squeeze argument, not a derivation. It is not derived from A1&#8211;A4 at the algebraic level; the metatheoretic choice is argued at the framework level. The standing falsifier: a well-founded model of &#8869; consistent with R3 and L-INF would overturn the forcing.',
         'Status: FORCED METATHEORETIC COMMITMENT — AFA over Foundation is argued to be structurally required (a metatheoretic argument, not a derivation), not freely chosen. Algebraic fixed-point content formally verified in ZFC by ZP-J (ZPJ_ScaleBridge); set-theoretic interpretation outside Lean scope.',
-        'Cross-framework note: The replacement of Foundation by AFA is not an arbitrary choice — ZF + Foundation is ruled out by R3 (a well-founded &#8869; would admit an external interpreter, contradicting CC-2) and by ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). Foundation and AFA are dual framings of the same object: Foundation excludes the Quine atom; AFA uniquely permits it. Both axioms converge on the identical object with zero gap between them. AFA is the forced metatheoretic replacement; the specific form &#8869; = {&#8869;} is the minimal Quine atom consistent with A4. See ZP-E Remark R-AFA for the full cross-framework argument.',
+        'Cross-framework note: The replacement of Foundation by AFA is not an arbitrary choice — ZF + Foundation is argued to be ruled out by R3 (a well-founded &#8869; would admit an external interpreter, contradicting CC-2) and by ZP-C L-INF (bounded &#8712;-rank contradicts unbounded surprisal of &#8869;). Foundation and AFA are dual framings of the same object: Foundation excludes the Quine atom; AFA uniquely permits it. Both axioms converge on the identical object with zero gap between them. AFA is the argued metatheoretic replacement; the specific form &#8869; = {&#8869;} is the minimal Quine atom consistent with A4. See ZP-E Remark R-AFA for the full cross-framework argument.',
         'Lean 4 scope — three distinct layers. (1) Set-theoretic: the claim &#8869; = {&#8869;} as a set cannot be realized in Lean&#8217;s type theory (CIC is well-founded by construction). This remains a prose-level commitment in ZF + AFA. (2) AFAStructure context (conditional on AFA as ambient): ZP-J defines IsQuineAtom as the lattice-theoretic analog — IsQuineAtom q := selfMem q &#8743; &#8704; x, selfMem x &#8594; x = q. Within an AFAStructure instance, t_exec_iff proves IsQuineAtom q &#8596; q = &#8869; (ZPJ.lean); ZP-K&#8217;s da1_closed_concrete closes this concretely on MachinePhase. These results assume AFAStructure as ambient context — they are conditional on AFA structure, not derived independently of it. (3) ZFC-clean (no AFA import): ZPJ_ScaleBridge.lean proves the fixed-point content in standard ZFC — selfMem_eq_singleton_free and z2_selfMem_singleton establish {x : &#8484;&#8322; | 2x = x} = {0}. This result is loop-free from AFA. The set-theoretic interpretation connecting layer 3 to layer 1 remains outside Lean scope.',
     ]))
     E.append(sp(4))
@@ -188,7 +189,7 @@ def build():
          ['State transition as join (D2)', 'Valid — Defined; consistent with signature'],
          ['Monotonicity of state sequences (T3)', 'Valid — Derived from A1&#8211;A3 and D3'],
          ['CC-1: S<sub>0</sub> = &#8869;', 'DERIVED (given AFAStructure grounding, ZP-J T-EXEC) — structural consequence in any AFAStructure lattice. Modelling commitment at ZP-A level without AFAStructure assumption.'],
-         ['CC-2: &#8869; = {&#8869;}', 'Forced Metatheoretic Commitment — AFA over Foundation structurally required; fixed-point content verified in ZFC by ZPJ_ScaleBridge'],
+         ['CC-2: &#8869; = {&#8869;}', 'Forced Metatheoretic Commitment — AFA over Foundation argued to be structurally required; fixed-point content verified in ZFC by ZPJ_ScaleBridge'],
          ['ZF + AFA foundation (no AC)', 'Meta-theoretic — framework-wide; required for CC-2'],
          ['OQ-A1: Sufficiency of monotonicity', 'Open within ZP-A; closed by ZP-E T5']],
         [2.5*inch, 4.0*inch]

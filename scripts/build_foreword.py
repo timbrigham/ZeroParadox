@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.7, revised June 2026)
+Zero Paradox — Foreword PDF Builder (v2.8, revised June 2026)
+v2.8: FMC uniformity — CC-2 metatheoretic row "Foundation is ruled out" → "argued to be ruled out" (matches fmc.md, argued not proved).
 v2.7: §IV — named Lawvere's fixed-point theorem as the recognized unification of the diagonal family
       (Cantor / Russell / the fixed-point lemma at the heart of Gödel / Kleene); fence firmed —
       "the bottom IS its diagonal fixed point" → "the Zero Paradox locates this diagonal fixed point at
@@ -50,7 +51,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.7'
+VERSION = '2.8'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
 # PDF Rendering Standards require fix() on all rendered text. Rather than updating
@@ -131,7 +132,7 @@ def commitments_table():
          'holding in a given instantiation.'),
         ('CC-2',  'Forced Metatheoretic Commitment',
          '⊥ = {⊥}. The null state is self-containing — a Quine atom under ZF+AFA. '
-         'The metatheoretic choice of AFA over Foundation is not free: Foundation is ruled out '
+         'The metatheoretic choice of AFA over Foundation is not free: Foundation is argued to be ruled out '
          'by R3 and ZP-C L-INF. Foundation and AFA are dual framings of the same object — '
          'Foundation excludes the Quine atom; AFA uniquely permits it. '
          'Fixed-point content formally verified in ZFC by ZP-J (ZPJ_ScaleBridge). '

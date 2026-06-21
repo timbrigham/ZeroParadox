@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.0 | June 2026
+Version 1.1 | June 2026
+v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Presents the formal construction of the wheel of fractions
       ⊙_S A = (A × A)/≡_S for a commutative ring A and multiplicative submonoid S,
       and the machine-verified proof that it satisfies all of Carlström's Definition 1.1
@@ -14,7 +15,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
 # PDF Rendering Standards require fix() on all rendered text. Patch Paragraph so bare
@@ -71,10 +72,10 @@ def build():
         'porthole gives rise to: a wheel, in which &#8734; and &#8869; are distinct, or a '
         'meadow, in which they collapse. This addendum settles that question.'))
     E.append(body(
-        'The main result is WheelFrac.instWheel (ZPJ_WheelFrac.lean): for any commutative '
+        'The main result is ZPJ_WheelFrac.instWheel (ZPJ_WheelFrac.lean): for any commutative '
         'ring A and any multiplicative submonoid S, the wheel of fractions '
         '&#8857;<sub>S</sub> A = (A &#215; A)/&#8801;<sub>S</sub> satisfies every axiom of '
-        'Carlström\'s Definition 1.1. The companion result WheelFrac.inf_ne_bot shows that, '
+        'Carlström\'s Definition 1.1. The companion result ZPJ_WheelFrac.inf_ne_bot shows that, '
         'whenever 0 &#8713; S, the two special elements stay distinct (&#8734; &#8800; '
         '&#8869;) &#8212; so the construction is a wheel, not a meadow. The construction '
         'is Carlström\'s; the contribution here is a faithful, machine-verified encoding '
@@ -161,7 +162,7 @@ def build():
         'fails without a cancellation law. The submonoid-quotient relation '
         '&#8801;<sub>S</sub> repairs this by witnessing each identification with elements '
         'of S, and it is provably reflexive, symmetric, and transitive '
-        '(WheelFrac.srel). Each of the five operations is then well-defined on the '
+        '(ZPJ_WheelFrac.srel). Each of the five operations is then well-defined on the '
         'quotient &#8212; the proofs that they respect &#8801;<sub>S</sub> are the bulk of '
         'the formalisation.'))
     E.append(sp(6))
@@ -181,7 +182,7 @@ def build():
         'definitionally because pair-swap is its own inverse and commutes with the '
         'componentwise product.'))
     E.append(result_box(
-        'Theorem: WheelFrac.instWheel (ZPJ_WheelFrac.lean)',
+        'Theorem: ZPJ_WheelFrac.instWheel (ZPJ_WheelFrac.lean)',
         [
             '&#8704; {A : Type*} [CommRing A] (S : Submonoid A),',
             '  Wheel (&#8857;<sub>S</sub> A)',
@@ -209,7 +210,7 @@ def build():
         'become identified. The natural hypothesis 0 &#8713; S (which holds whenever S is '
         'the complement of a prime ideal, the usual case) keeps them apart.'))
     E.append(result_box(
-        'Theorem: WheelFrac.inf_ne_bot (ZPJ_WheelFrac.lean)',
+        'Theorem: ZPJ_WheelFrac.inf_ne_bot (ZPJ_WheelFrac.lean)',
         [
             '&#8704; {A : Type*} [CommRing A] (S : Submonoid A),',
             '  (0 : A) &#8713; S  &#8594;  &#8734; &#8800; &#8869;     in &#8857;<sub>S</sub> A',

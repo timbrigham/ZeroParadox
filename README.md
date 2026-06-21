@@ -86,7 +86,7 @@ This prints the kernel's `#print axioms` report for each core result - the basis
 
 | File | Document | Version | Focus |
 |------|----------|---------|-------|
-| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.15 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
+| [ZP-A Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.16 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
 | [ZP-B pAdic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.10 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [ZP-C Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.18 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [ZP-D State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.12 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
@@ -98,12 +98,12 @@ This prints the kernel's `#print axioms` report for each core result - the basis
 | [ZP-I Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.11 | Inside zero: each maximal chain converging to its own successor ⊥. |
 | [ZP-J Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.2 | Self-reference: ⊥ as the Quine atom, and the AFA structure it forces. |
 | [ZP-J AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.3 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
-| [ZP-J Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.0 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
+| [ZP-J Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.1 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
 | [ZP-K Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.7 | Computational grounding: the snap as a Kleene fixed point. |
 | [ZP-L Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.1 | ε₀ as the exact ordinal threshold where the snap occurs. |
 | [ZP-M Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.1 | The bridge between the Kleene quine and the ε₀ fixed point. |
 | [ZP-P The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) | ZP-P | v1.1 | Synthesis layer: the least-vs-greatest fixed-point fork, generalizing the Foundation/AFA orthogonal-contact-point claim across frameworks. |
-| [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.0 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
+| [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.1 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
 
 ---
 
