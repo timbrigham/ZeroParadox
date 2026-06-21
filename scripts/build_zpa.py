@@ -1,5 +1,6 @@
 """
-Build ZP-A: Lattice Algebra (v1.16)
+Build ZP-A: Lattice Algebra (v1.17)
+v1.17: C8 dual-date — subtitle templated via version_line (First released / This version); hardcoded month removed.
 v1.16: FMC uniformity (sweep Step 4b) — residual AFA-necessity assertions softened to "argued": metatheoretic declaration, R-AFA cross-framework note, CC-2 validation-table cell.
 v1.15: FMC precision (sweep Step 4, against fmc.md) — CC-2 box: "structurally required" / "ruled out" / "incompatible" softened to "argued"; named falsifier added; status line marked argued, not a derivation.
 v1.14: CC-2 label updated — "Conditional Claim" → "Forced Metatheoretic Commitment".
@@ -35,7 +36,8 @@ All three DA-1 paths share D7 as background; independence is among their argumen
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
+FIRST_RELEASED = 'April 2026'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-A_Lattice_Algebra.pdf')
@@ -44,7 +46,7 @@ def build():
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-A: Lattice Algebra', S['subtitle']),
-          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
+          Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
           sp(10),
           body('This document is self-contained within abstract algebra. No topology, probability, or Hilbert space is imported. Every claim is provable using only the tools of semilattice theory. Cross-framework connections are deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-A Illustrated Companion document provides concrete examples and visual intuitions for the results in this document. Examples are kept separate from the formal layers to distinguish illustrative material from proofs. The companion is a reading aid; no proof-critical judgements should be drawn from examples alone.</i>'),
