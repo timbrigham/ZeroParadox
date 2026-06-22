@@ -92,7 +92,7 @@ This prints the kernel's `#print axioms` report for each core result - the basis
 | [ZP-D State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.13 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
 | [ZP-E Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.22 | The bridge: the snap assembled as a derived theorem across the layers. |
 | [ZP-F The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.5 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
-| [ZP-G Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.13 | The categorical layer: ⊥ as initial object, the informational singularity. |
+| [ZP-G Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.14 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [ZP-H Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.17 | The categorical bridge: the snap holding under all four domain functors. |
 | [ZP-H Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.1 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
 | [ZP-I Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.12 | Inside zero: each maximal chain converging to its own successor ⊥. |

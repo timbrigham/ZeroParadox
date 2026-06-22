@@ -43,6 +43,17 @@ Here the snap floor is realized inside the genuine Mathlib categories:
 (`F_A` — the join-semilattice ℕ with 0 initial — is already in `ZPH.lean`; it is omitted here only
 to keep ℕ's category instance unambiguous, not for any mathematical reason.)
 
+**Prior art / positioning.** None of the categorical structure here is new. `KleisliCat PMF` is the
+Kleisli category of a probability monad — a *Markov category* in the sense of Fritz (2020), the
+categorical home of stochastic maps (Stoch / FinStoch arise as the Kleisli category of the Giry monad;
+cf. Golubtsov, Cho–Jacobs, Lawvere). In that setting `fC_no_return` is the *strict initiality* of the
+empty object (Carboni–Lack–Walters 1993): every morphism into the initial object is an isomorphism, so
+nothing maps back in. F_B's `⋂ B(0,2⁻ⁿ) = {0}` is the standard 2-adic inverse limit (ℤ₂ = lim ℤ/2ⁿ);
+F_D's zero module is the zero/initial object of an abelian category. ZP-H's contribution is not new
+category theory but the cross-domain *assembly* — each ZP bottom realized as its own real category's
+categorical bottom, agreeing on the snap — with the single-object identification left as the MC-1
+commitment.
+
 `mc1_correspondence` bundles these into one witness. This is the **correspondence** half only; the
 literal cross-category identity remains a chosen identification (the residual modeling commitment),
 exactly as AX-1 became T-SNAP while a residue was kept, and as CC-2 / the diagonal fixed point are

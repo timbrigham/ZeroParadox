@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.13 | June 2026
+Version 1.14 | June 2026
+v1.14: R-AX remark — named AX-G2 as the standard strict-initial-object property (Carboni-Lack-Walters 1993) and noted AX-G1+AX-G2 = a non-trivial strict initial; prior-art positioning, paired with the CLAIMS Convergence section.
 v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
 v1.11: Version line style fixed (bodyI → subtitle); local make_doc override removed.
 v1.10: Hash sync — script was modified without full workflow; rebuilt to bring
@@ -25,7 +26,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -221,6 +222,13 @@ def build():
         'Status: Remark',
         [
             'AX-G1 and AX-G2 are satisfied by many categories — they are structural conditions, not exotic ones. '
+            'AX-G2 is the standard notion of a <i>strict initial object</i> (Carboni, Lack and Walters, 1993): '
+            'an initial object into which every morphism is an isomorphism. Strict initial objects are the norm '
+            'in well-behaved categories — the initial object of any topos, extensive category, or cartesian '
+            'closed category is strict — so AX-G2 names a recognised structural property, not a ZP-specific '
+            'stipulation. Together with AX-G1 (no terminal object) it places C at a <i>non-trivial</i> strict '
+            'initial object: a strict initial that is also terminal (a zero object) forces the category to be '
+            'trivial, so the two axioms jointly pick out exactly the non-degenerate case. '
             'What distinguishes ZP-G from a trivial application of initial-object asymmetry is that the initial '
             'object here is not an abstract placeholder: it is &#8869;, the algebraically minimal element of '
             'ZP-A\'s lattice. This identification is not asserted in ZP-G; it is demonstrated in ZP-H via '
