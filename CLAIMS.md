@@ -130,7 +130,7 @@ Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an extern
 | OQ-E2: cardinality ↔ semilattice correspondence | **Partially closed — ZP-I T-IZ.** Ordinal indexing Ω = ω forced by the countable binary substrate (ZP-C D4, Q₂ separability, binary alphabet); internal/external perspective relativity is ordinal, not set-theoretically free. The formal connection between specific semilattice structures and specific CH instances remains open. |
 | ε₀ / proof-theoretic ordinal | **Partially closed — ZP-L.** `c1_epsilon_zero_identification` establishes the canonical snap map with ε₀ as the exact transition point; `snap_zp2_correspondence` proves the four-way conjunction. Structural alignment with Gentzen's proof-theoretic ordinal (PA consistency) is documented in ZP-L Remark R-L.1. Full type-theoretic identity across universes (MachinePhase vs Ordinal) is outside Lean scope, deferred pending OQ-E2. |
 | DA-3: perspective-relative cardinality | Closed (definitional, via D7 exhaustiveness) / Candidate (DA-3-C1); formal cardinality derivation deferred to OQ-E2. |
-| Lawvere unification of the diagonal fixed point | **Conjecture / connection, not proved.** That the shared self-referential-fixed-point attribute (Tier 5) is an instance of Lawvere's fixed-point theorem — the recognized home of the diagonal family (Cantor / Russell / Gödel / Kleene / Tarski) — is a connection, not a ZP result. |
+| Lawvere unification of the diagonal fixed point | **Conjecture / connection, not proved.** That the shared self-referential-fixed-point attribute (Tier 5) is an instance of Lawvere's fixed-point theorem (Lawvere 1969) is a connection, not a ZP result. Yanofsky (2003) restated that theorem in plain set/function terms and unified Cantor, Russell, Gödel, Tarski, Turing, and the recursion theorem (quine) as one scheme - those faces are prior art, cited not claimed. ZP's contribution relative to this literature: candidate faces outside their scope (the 2-adic valuation v₂(0)=∞, ε₀, the wheel), the machine-checked axiom/choice footprint of each face, and the location claim (the fixed point at the floor ⊥, the Gödel inversion) - a framing, not a theorem. The numerical "one object" identity is MC-1, a commitment (Tier 5), strictly beyond the "same scheme" Lawvere/Yanofsky establish. See the Convergence section below. |
 | Second-prover cross-check | A Rocq (or other) independent re-verification is **not yet done**. |
 
 Open questions are also discussed publicly in the [GitHub Discussions Open Questions category](https://github.com/timbrigham/ZeroParadox/discussions/categories/open-questions).
@@ -158,6 +158,33 @@ Open questions are also discussed publicly in the [GitHub Discussions Open Quest
 | Null balance | **Closed - T-IZ + DA-2.** Every branch starts at ⊥, ascends ω state changes (T3), generates a successor ⊥ at the ordinal limit (T-IZ + T-SNAP + DA-2). |
 
 </details>
+
+---
+
+## Convergence with established work
+
+The Zero Paradox is, in large part, a body of inferences resting on a choice-free, machine-checked core. The strongest non-proof support for the framing is that **independent traditions - set theory, number theory, proof theory, computability, category theory - each arrive near the same structure at zero.** This section maps that convergence honestly.
+
+Three things to read it correctly:
+
+1. **This is convergence evidence, not proof.** It raises the prior that there is a real object at the floor; it closes nothing. Each row's *link status* says exactly how tight the connection is.
+2. **The direction of credit points outward.** In every row the established result is the prior work; ZP is an *instance joining* that program, never a frame that subsumes it. Where ZP claims the faces are literally one object, that is a commitment (MC-1), offered to these communities, not imposed on them.
+3. **Not all of these are independent of each other.** Lawvere, the coalgebra line, and the categorical face are one tradition, not three; counted honestly, the genuinely separate roads are set theory, valuation / number theory, proof theory, computability, and category theory.
+
+**Named falsifier.** If a framework's bottom were shown *not* to carry the fixed-point / snap structure, or if a listed face turned out structurally dissimilar under scrutiny, the convergence weakens accordingly.
+
+**Prior-art search is ongoing.** This map is certainly incomplete. We treat finding additional prior work as a standing obligation, not a finished task - and corrections, especially "you have missed X," are welcome and will be added here with attribution.
+
+| Established result (prior work, cited) | ZP face | Link status | How ZP reached it |
+|---|---|---|---|
+| **Lawvere (1969)**, *Diagonal Arguments and Cartesian Closed Categories*; **Yanofsky (2003)** - the diagonal fixed point unifies Cantor, Russell, Gödel, Tarski, Turing, the recursion theorem | ⊥ as the self-referential (diagonal) fixed point - the keystone | **Conjectured instance** (Tier 6): the phenomenon is recognized; ZP's instantiation is unproved | Connected this session - the keystone framing predated the citation |
+| **Aczel (1988)** AFA; **Forti-Honsell (1983)**; **Paulson** - the Quine atom ⊥={⊥}, non-well-founded sets, final-coalgebra theorem | ⊥={⊥} (CC-2); the ZFC/AFA contact point | **Theorem-grounded + commitment**: the structural self-application fixed point (`ZPJ.t_exec`) is axiom-free Lean; the literal set-membership identity is metatheoretic | Independent → later converged (the ⊥ question reached x={x}; matched to AFA after) |
+| **Ostrowski's theorem** - every nontrivial absolute value on ℚ is the real or a p-adic one (the complete dichotomy) | ZP-B / ZP-F: the snap fails in ℝ, holds in ℚ₂; v₂(0)=∞ | **Theorem used** - Ostrowski is a classification theorem ZP directly invokes (Mathlib) | Independent → later converged (Riemann-sphere 0/∞ intuition → ℚ₂; Ostrowski recognized as the backing after) |
+| **Gentzen** - ε₀ is the proof-theoretic ordinal of PA | ZP-L / ZP-M: ε₀ as the exact snap threshold | **Theorem-aligned** - structural alignment documented (ZP-L Remark R-L.1); full type-theoretic identity deferred (OQ-E2) | Built on the cited work - ε₀ chosen deliberately as PA's ordinal |
+| **Kleene's recursion theorem** (quines / self-reproduction) | ZP-K: the Kleene quine; the periodicity fixed-point construction | **Theorem + external novelty signal** - the quine face is standard; the periodicity construction was flagged novel by a computability specialist | Built on the cited work; the periodicity construction is the new piece |
+| **Lambek**; **Adámek-Rutten**; **Veltri (2021)**, **Ahrens et al.** - initial-algebra / final-coalgebra (μ/ν) fork; the constructive choice boundary | ZP-P: the lfp/gfp fork; `categorical_fork_strict` | **Theorem + cited boundary** - the fork instance is choice-free Lean; the choice-content of the coalgebra side is Veltri's, cited | Built on the cited work - the fork is the categorical parent; Veltri connected this session |
+| **Carlström** - wheels (consistent division by zero) | ZP-J: the wheel of fractions (`ZPJ_WheelFrac`) | **Theorem** - faithful to Carlström's Def 1.1, choice-free; under specialist review | Built on the cited work - developed with Carlström in hand |
+| **Chaitin** - algorithmic information theory / incompressibility | ZP-C: unbounded surprisal at ⊥ / no external description | **Analogy / referenced** - lighter; Yanofsky also notes AIT fits the scheme | Parallel - not a load-bearing identity |
 
 ---
 

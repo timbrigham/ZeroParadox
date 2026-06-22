@@ -1,5 +1,7 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.8, revised June 2026)
+Zero Paradox — Foreword PDF Builder (v2.10, revised June 2026)
+v2.10: §IV — cited Yanofsky (2003) and Lawvere's year (1969) for the diagonal-fixed-point unification; prior-art positioning, paired with the new CLAIMS "Convergence with established work" section.
+v2.9: C8 dual-date templating (Initial/Current meta line; hardcoded month removed).
 v2.8: FMC uniformity — CC-2 metatheoretic row "Foundation is ruled out" → "argued to be ruled out" (matches fmc.md, argued not proved).
 v2.7: §IV — named Lawvere's fixed-point theorem as the recognized unification of the diagonal family
       (Cantor / Russell / the fixed-point lemma at the heart of Gödel / Kleene); fence firmed —
@@ -51,7 +53,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.9'
+VERSION = '2.10'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -406,10 +408,12 @@ def build():
             S['body']),
         Paragraph(
             'Mathematics already has a name for this shape, and a theorem that unifies it: '
-            'Lawvere\'s fixed-point theorem shows that Cantor\'s diagonal argument, '
+            'Lawvere\'s fixed-point theorem (1969) shows that Cantor\'s diagonal argument, '
             'Russell\'s paradox, the fixed-point lemma at the heart of Gödel\'s incompleteness, '
             'and Kleene\'s recursion theorem are one move — the diagonal, the turn of a system '
-            'back on itself. What is unusual in the Zero Paradox is its location. '
+            'back on itself. Yanofsky (2003) restated this in plain set-and-function terms and '
+            'extended it across logic and computation. What is unusual in the Zero Paradox is '
+            'its location. '
             'Self-reference is normally a ceiling phenomenon: it appears at the limits of a '
             'system, in the sentences a theory cannot prove about itself. Here it sits at the '
             'floor. The Zero Paradox locates this diagonal fixed point at the bottom of every '
