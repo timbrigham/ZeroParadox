@@ -1,5 +1,6 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.13)
+Build ZP-D: State Layer (Hilbert Space) (v1.14)
+v1.14: R-PA added — prior-art note: T is the standard p-adic ball-indicator ONB (van der Put basis), refined to Kozyrev's p-adic wavelet basis of L2(Q2) (Kozyrev 2002); p-adic-QM / p-adic-qubit context. Prior-art positioning, paired with the CLAIMS Convergence row.
 v1.12: Rendered self-version refs removed — DP-1 title tag and T2 "R3 (v1.6)" ref (C1 sweep).
 v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.
 v1.10: Version number removed from Open Items Register section header.
@@ -19,7 +20,7 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -129,6 +130,11 @@ def build():
     E.append(label_box('Remark R2 — What T Is Not', [
         'T is not a ring homomorphism. Q<sub>2</sub> has field operations; H does not. T does not preserve addition or multiplication from Q<sub>2</sub>.',
         'T is not a topological embedding. The topology of H is the norm topology; the topology of Q<sub>2</sub> is the 2-adic ultrametric. T is a structure-preserving assignment: ontological distinctions (clopen separation in Q<sub>2</sub>) map to algebraic distinctions (orthogonality in H), as specified by DP-1.',
+    ]))
+    E.append(sp(4))
+    E.append(remark_box('Remark R-PA — What T Is, in Standard Terms (Prior Art)', [
+        'Representing the clopen-ball structure of Q<sub>2</sub> by an orthonormal system in a Hilbert space is the standard p-adic construction, not a ZP novelty: the indicator functions of clopen balls form an orthonormal basis for locally constant functions (the van der Put basis), which refines to Kozyrev\'s p-adic wavelet basis of L<super>2</super>(&#8474;<sub>2</sub>) &#8212; the analog of the Haar basis and an eigenbasis of the Vladimirov operator (Kozyrev, 2002). p-adic quantum mechanics builds Hilbert-space state models (the "p-adic qubit") on the same structure.',
+        'ZP-D\'s contribution is not the embedding itself but the specific reading in DP-1 &#8212; clopen separation &#8614; orthogonality &#8212; that carries the Binary Snap into the state layer. T is an instance of the recognized construction, applied to the snap.',
     ]))
 
     E.append(Paragraph('IV. The Binary Snap in H', S['h1']))

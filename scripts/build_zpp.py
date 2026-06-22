@@ -1,6 +1,11 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.2 | June 2026
+Version 1.3 | June 2026
+v1.3: Re-aimed the categorical instance's choice note per the Veltri (FSCD 2021) literature review —
+the Classical.choice on the ν side is a Mathlib M-type artifact, not a necessity (polynomial-functor
+final coalgebras are choice-free); choice genuinely enters only for the non-polynomial finite-powerset
+functor (full AC for the set-quotient; countable choice + LLPO for Worrell's limit). Added the
+"where choice genuinely enters" remark box and the Veltri / Ahrens citations (R1).
 v1.1: Added the categorical-parent instance as a Lean witness (ZPP_Coalgebra.lean:
 fix_isEmpty, cofix_nonempty, categorical_fork_strict — Fix empty / Cofix inhabited, split footprint);
 set-theory and computation instances referenced (ZP-J, ZP-K) rather than re-framed.
@@ -15,7 +20,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -254,7 +259,24 @@ def build():
             '(greatest fixed point, &#957;) is inhabited. (Mathlib QPF.Fix / QPF.Cofix.)',
             'Split footprint: fix_isEmpty (&#956; empty) is choice-free [propext, Quot.sound]; '
             'cofix_nonempty (&#957; inhabited) carries Classical.choice from the M-type / '
-            'corecursion machinery. The self-referential element is exactly where choice enters. ✓',
+            'corecursion machinery &#8212; a library artifact, not a necessity: for a polynomial '
+            'functor the final coalgebra is constructible choice-free (Veltri, FSCD 2021). ✓',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(remark_box(
+        'Remark: where choice genuinely enters the &#956;/&#957; fork',
+        [
+            'The Classical.choice in cofix_nonempty is inherited from Mathlib\'s M-type machinery, '
+            'not forced by the mathematics: for a polynomial functor the final coalgebra is '
+            'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti; Veltri, FSCD 2021, '
+            'the coinductive construction).',
+            'Choice genuinely enters only for the non-polynomial finite-powerset functor, where the '
+            'literature pins each presentation: the set-quotient requires the full axiom of choice '
+            'for finality, while Worrell\'s (&#969;+&#969;)-limit requires countable choice together '
+            'with the lesser limited principle of omniscience (LLPO) &#8212; indeed injectivity of '
+            'the canonical algebra is equivalent to LLPO (Veltri, FSCD 2021).',
         ]
     ))
     E.append(sp(6))

@@ -35,7 +35,9 @@ commitment, not a theorem (ZP-P hard fence).
 
 PROVED. Two theorems, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty) is choice-free
 `[propext, Quot.sound]`; `cofix_nonempty` (ν inhabited) carries `Classical.choice` from Mathlib's
-M-type / corecursion machinery. See PurityCheck.
+M-type / corecursion machinery. That choice is a library artifact, not a necessity: for a polynomial
+functor the final coalgebra is constructible choice-free (Ahrens et al.; Veltri, FSCD 2021). See
+PurityCheck.
 -/
 
 namespace ZeroParadox.ZPP
@@ -86,6 +88,13 @@ layer: a validation tool, a unit test to represent that concept quickly.
 Here the dataset is the leaf-free polynomial functor `idPF`: its W-type (`QPF.Fix`, μ) is empty and
 choice-free, while its M-type (`QPF.Cofix`, ν) is inhabited and carries choice inherited from Mathlib, with
 choice entering exactly on the non-well-founded, self-referential side.
+
+*Editorial addendum (Claude):* that choice on the ν side is inherited from Mathlib's M-type machinery,
+not a necessity — for a polynomial functor like `idPF` the final coalgebra is constructible choice-free
+in principle (Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021, the coinductive construction). Choice
+genuinely enters the μ/ν story only for the non-polynomial finite-powerset functor, where it is pinned
+per presentation: full AC for the set-quotient, countable choice + LLPO (⟺ injectivity of the canonical
+algebra) for Worrell's (ω+ω)-limit (Veltri, FSCD 2021).
 -/
 
 section PurityCheck
@@ -94,8 +103,11 @@ section PurityCheck
 --   cofix_nonempty (ν is inhabited) : [propext, Classical.choice, Quot.sound]  — choice-carrying
 --   categorical_fork_strict         : inherits Classical.choice from cofix_nonempty
 -- The well-founded (inductive) side is constructive; the non-well-founded (coinductive) side carries
--- Classical.choice, inherited from Mathlib's M-type / corecursion machinery. Fitting: the
--- self-referential element that ν admits and μ forbids is exactly where choice enters. The fork spine
+-- Classical.choice — but as a Mathlib artifact, NOT a necessity: for a polynomial functor like idPF the
+-- final coalgebra (M-type) is constructible choice-free in principle (Ahrens–Capriotti–Spadotti;
+-- Veltri, FSCD 2021, the coinductive construction). Choice genuinely enters the μ/ν story only for the
+-- non-polynomial finite-powerset functor — pinned per presentation: full AC for the set-quotient,
+-- countable choice + LLPO (⟺ injectivity of alg_Vω) for Worrell's limit (Veltri). The fork spine
 -- (`ZeroParadox.ZPP.fork_collapse_iff`) is fully choice-free. See AxiomProfile.lean.
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty

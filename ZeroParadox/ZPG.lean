@@ -41,7 +41,11 @@ open CategoryTheory CategoryTheory.Limits
 -- [ZP-CUSTOM] extends: Mathlib CategoryTheory.Limits.IsInitial | reason: Mathlib has IsInitial and IsTerminal as separate structures; it has no typeclass bundling them together with AX-G2 (source asymmetry: hom(X,0) = ∅ for non-isomorphic X). ZPCategory bundles both ZP-G axioms so they can be assumed uniformly across all ZP-G theorems without threading separate hypotheses.
 /-- ZPCategory bundles the two ZP-G foundational axioms onto a given category.
     AX-G1: there is an initial object 0; there is no terminal object.
-    AX-G2: hom(X, 0) = ∅ for any X not isomorphic to 0 (source asymmetry). -/
+    AX-G2: hom(X, 0) = ∅ for any X not isomorphic to 0 (source asymmetry). This is the standard
+    notion of a *strict initial object* (Carboni–Lack–Walters 1993): every morphism into 0 is an
+    isomorphism. Strict initials are the norm (toposes, extensive and cartesian closed categories);
+    with AX-G1 (no terminal) this is a *non-trivial* strict initial — a strict initial that is also
+    terminal forces a trivial category. -/
 class ZPCategory (C : Type*) [Category C] where
   zpInitial : C
   zpIsInitial : IsInitial zpInitial
