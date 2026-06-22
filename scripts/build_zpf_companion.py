@@ -1,7 +1,7 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.12 | May 2026
+Version 1.13 | May 2026
 v1.12: vocab fix: null state → ⊥.
 v1.11: Hash sync — script was modified without full workflow; rebuilt to bring
 hash into alignment with register.md.
@@ -139,7 +139,8 @@ def comparison_table():
     return t
 
 
-VERSION = '1.12'
+VERSION = '1.13'
+FIRST_RELEASED = 'May 2026'
 
 
 def build():
@@ -152,7 +153,7 @@ def build():
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
             'Zero Paradox ZP-F Companion | Where the Snap Fails: The Real Numbers as Counterexample'
-            '  |  May 2026')
+            '  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(
@@ -178,7 +179,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Where the Snap Fails', CS['title']),
           Paragraph('The Real Numbers as Counterexample', CS['subtitle']),
-          Paragraph('ZP-F Companion  |  Version ' + VERSION + '  |  May 2026', CS['meta']),
+          Paragraph('ZP-F Companion  |  ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion document is written for general readers. It explains in plain '
               'language why the real number line cannot serve as the mathematical substrate '
@@ -448,7 +449,7 @@ def build():
         'Q&#8322; is not an exotic choice. Among all completions of the rationals, '
         'Ostrowski\'s theorem says there are exactly two kinds: Archimedean ones '
         '(like &#8477;, where zero is a limit point — always approachable, never a floor) '
-        'and non-Archimedean ones (&#8474;&#8346;, where the p-adic valuation assigns '
+        'and non-Archimedean ones (&#8474;<sub>p</sub>, where the p-adic valuation assigns '
         'zero infinite valuation while every non-zero element has finite valuation). '
         'Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2, '
         'the minimum prime compatible with binary existence. '

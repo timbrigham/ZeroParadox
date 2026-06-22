@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.1 | June 2026
+Version 1.2 | June 2026
 v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
       framework is free of the Axiom of Choice. The central theorem T-SNAP (the Binary Snap)
@@ -17,7 +17,8 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
+FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
 _Paragraph_orig = Paragraph
@@ -29,8 +30,7 @@ def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP_Choice_Free_Core_Addendum.pdf')
     print(f'[build_zp_choice_free_core] Output: {out_path}')
     doc = make_doc(out_path, 'ZP Addendum: The Choice-Free Core',
-                   'ZP Addendum: The Choice-Free Core', 'Version ' + VERSION,
-                   date_str='June 2026')
+                   'ZP Addendum: The Choice-Free Core', 'Version ' + VERSION)
     E = []
 
     # ── Header banner ───────────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP Addendum', S['title']),
         Paragraph('The Choice-Free Core', S['subtitle']),
-        Paragraph('Version ' + VERSION + ' | June 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),

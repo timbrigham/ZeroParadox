@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.1 | June 2026
+Version 1.2 | June 2026
 v1.1: Rendered version changelog removed (C1 sweep). Fixed 3 null glyphs — subscript-letter entities
 &#8345; (ₙ) and &#8338; (ₒ) bypass fix() and are absent from STIX; replaced with <sub> markup.
 v1.0: Initial release. All §I–§VII theorems proved sorry-free in Lean 4.
@@ -11,7 +11,8 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
+FIRST_RELEASED = 'May 2026'
 
 
 def build():
@@ -26,7 +27,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-L: Incomputability Convergence', S['title']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>All theorems §I&#8211;§VII proved sorry-free in Lean 4. '
             'Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.</i>',

@@ -1,5 +1,5 @@
 """
-Build ZP-F: The Counterexamples (v1.4)
+Build ZP-F: The Counterexamples (v1.5)
 v1.4: Vocabulary fix — "departure from the null state" → "departure from ⊥" in preamble. Palette rebuild.
 v1.3: K-16 vocabulary fix — "topological isolation of zero" → "valuative gap at zero
 (v_p(0) = +∞)" in §VI body prose.
@@ -19,7 +19,8 @@ v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
+FIRST_RELEASED = 'April 2026'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-F_The_Counterexamples.pdf')
@@ -28,7 +29,7 @@ def build():
 
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-F: The Counterexamples', S['subtitle']),
-          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
+          Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
           sp(10),
           body('This document is self-contained within ordered field theory. No p-adic '
                'topology, no information theory, and no Hilbert space machinery is required. '
@@ -57,7 +58,7 @@ def build():
         'This result contextualises the choice of Q&#8322; in ZP-B. Among all completions '
         'of &#8474;, Ostrowski\'s theorem identifies exactly two kinds: Archimedean completions '
         '(such as &#8477;, where zero is a limit point and density excludes any floor) and '
-        'non-Archimedean completions (&#8474;&#8346;, where zero is valuatively distinguished '
+        'non-Archimedean completions (&#8474;<sub>p</sub>, where zero is valuatively distinguished '
         '(v<sub>p</sub>(0) = +&#8734;) from all nonzero elements). Q&#8322; is the non-Archimedean completion at p&#160;=&#160;2 — '
         'the minimum prime compatible with binary existence (AX-B1). '
         'The valuative gap at zero is not imposed from outside; it follows from the completion.'))
@@ -189,7 +190,7 @@ def build():
         'The exclusion of &#8477; is not an isolated fact about one number system. '
         'F-SNAP-IMPOSSIBLE applies to any linearly ordered field. By Ostrowski\'s theorem, '
         'every completion of &#8474; falls into exactly one of two classes: Archimedean '
-        '(including &#8477;) or non-Archimedean (the p-adic fields &#8474;&#8346;). '
+        '(including &#8477;) or non-Archimedean (the p-adic fields &#8474;<sub>p</sub>). '
         'The theorems of this document eliminate the entire Archimedean class. '
         'What remains is the non-Archimedean class. The framework\'s binary existence '
         'constraint (AX-B1) then selects p&#160;=&#160;2 as the minimum prime. '

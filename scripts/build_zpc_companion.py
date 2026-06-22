@@ -81,11 +81,11 @@ def surprisal_graph():
 
 def jsd_diagram():
     """Bar chart: P=(1,0) and Q=(0,1) with 1-bit arrow."""
-    dw, dh = TW, 2.0 * inch
+    dw, dh = TW, 2.3 * inch
     d = Drawing(dw, dh)
 
     bar_w = 30
-    base_y = 30
+    base_y = 37
     max_h  = 90
     cx = dw / 2
 
@@ -103,7 +103,7 @@ def jsd_diagram():
                  fontName='DV', fillColor=colors.HexColor('#888888')))
     d.add(String(p_x - 16, base_y - 22, 'P = (1,0)', fontSize=8,
                  fontName='DV-B', fillColor=BLACK))
-    d.add(String(p_x - 14, base_y - 32, 'Null State', fontSize=7,
+    d.add(String(p_x - 14, base_y - 32, 'Bottom ⊥', fontSize=7,
                  fontName='DVS-I', fillColor=colors.HexColor('#555555')))
 
     # Q bars (right, teal)
@@ -196,7 +196,8 @@ def lrun_diagram():
                strokeColor=COMP_BLUE, strokeWidth=1, strokeDashArray=[4, 3]))
     return d
 
-VERSION = '2.6'
+VERSION = '2.7'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -208,7 +209,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-C Companion  |  Information Theory  |  April 2026')
+            'Zero Paradox ZP-C Companion  |  Information Theory  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -236,7 +237,7 @@ def build():
     E += [
         Paragraph('Why zero is an informational singularity', CS['title']),
         Paragraph('Information Theory', CS['subtitle']),
-        Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
+        Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '

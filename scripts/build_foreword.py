@@ -51,7 +51,8 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.8'
+VERSION = '2.9'
+FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
 # PDF Rendering Standards require fix() on all rendered text. Rather than updating
@@ -176,7 +177,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('A Foreword for the General Reader', S['subtitle']),
-        Paragraph('June 2026  |  v' + VERSION, S['date']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['date']),
         sp(10),
         sp(8),
         hr(),

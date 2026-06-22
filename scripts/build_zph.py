@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.16 | June 2026
+Version 1.17 | June 2026
 v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4),
 no longer a freestanding modelling commitment.
@@ -29,7 +29,8 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
+FIRST_RELEASED = 'April 2026'
 
 
 def label_box_status(title, status_line, rows_list):
@@ -63,7 +64,7 @@ def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Categorical_Bridge.pdf')
     print(f'[build_zph] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-H: Categorical Bridge', 'ZP-H: Categorical Bridge',
-                   'Version ' + VERSION, date_str='May 2026')
+                   'Version ' + VERSION)
     E = []
 
     print('[build_zph] Building title block...')
@@ -72,7 +73,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H: Categorical Bridge', S['subtitle']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['bodyI']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['bodyI']),
         sp(8),
         hr(),
         sp(4),

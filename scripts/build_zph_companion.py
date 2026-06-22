@@ -1,5 +1,5 @@
 """
-Build ZP-H Illustrated Companion (v1.13)
+Build ZP-H Illustrated Companion (v1.14)
 v1.13: Scope "any state change" to "transition from bottom state in this framework (ZP-C T1b)" — Category 5 precision fix.
 v1.12: T-SNAP endpoint circles — open (white fill, colored stroke) with colored text for legibility.
 v1.11: subtitle/footer 'Categorical Bridge' → 'Functor Coherence'; footer date April → May 2026.
@@ -141,7 +141,8 @@ def snap_convergence_diagram():
 
     return d
 
-VERSION = '1.13'
+VERSION = '1.14'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -153,7 +154,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-H Companion  |  Functor Coherence  |  May 2026')
+            'Zero Paradox ZP-H Companion  |  Functor Coherence  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -181,7 +182,7 @@ def build():
     E += [
         Paragraph('Four maps, one structure', CS['title']),
         Paragraph('Functor Coherence', CS['subtitle']),
-        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
+        Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '

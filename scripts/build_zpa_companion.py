@@ -1,5 +1,5 @@
 """
-Build ZP-A Illustrated Companion (v1.10)
+Build ZP-A Illustrated Companion (v1.11)
 v1.10: FMC uniformity — "why AFA is the minimal required change" → "argued to be the minimal change".
 v1.9: Strip version number from companion footer.
 v1.8: Strip version number from ZP-A cross-reference in CC-2 section.
@@ -98,7 +98,8 @@ def transition_diagram():
                  fontName='DV-B', fillColor=RED))
     return d
 
-VERSION = '1.10'
+VERSION = '1.11'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -109,7 +110,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  April 2026')
+            'Zero Paradox ZP-A Companion  |  Lattice Algebra  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -129,7 +130,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('How state accumulates without ever going backwards', CS['title']),
           Paragraph('Lattice Algebra', CS['subtitle']),
-          Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
+          Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language with diagrams and real-world '
               'examples. It is not the formal document — every claim here restates a result '

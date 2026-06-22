@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.1 | June 2026
+Version 1.2 | June 2026
 v1.1: Added the categorical-parent instance as a Lean witness (ZPP_Coalgebra.lean:
 fix_isEmpty, cofix_nonempty, categorical_fork_strict — Fix empty / Cofix inhabited, split footprint);
 set-theory and computation instances referenced (ZP-J, ZP-K) rather than re-framed.
@@ -15,7 +15,8 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
+FIRST_RELEASED = 'June 2026'
 
 
 def build():
@@ -30,7 +31,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-P: The Fixed-Point Fork', S['title']),
-        Paragraph('Version ' + VERSION + ' | June 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer. The abstract fork schema is proved sorry-free and choice-free in '
             'Lean 4 (ZPP.lean); the number-system instance via Ostrowski (ZPP_Ostrowski.lean) and '

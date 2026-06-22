@@ -1,6 +1,6 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.10 | May 2026
+Version 1.11 | May 2026
 v1.10: four_way_diagram — removed the redundant internal caption String that overlapped the bottom "Computation (Kleene)" box (Diagram Rule 4; the external ccaption already captions the diagram).
 v1.9: FMC precision (sweep Step 4) — DA-1 Path 1 line splits the axiom-free structural fixed point (what ZP-J proved) from the literal ⊥ = {⊥} (the ZF+AFA setting).
 v1.8: Strip version number from companion footer.
@@ -123,7 +123,8 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.10'
+VERSION = '1.11'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -134,7 +135,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  April 2026')
+            'Zero Paradox ZP-K Companion  |  Computational Grounding  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -153,7 +154,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Four Languages, One Structure', CS['title']),
           Paragraph('The Computational Grounding of &#8869;', CS['subtitle']),
-          Paragraph('ZP Companion | Version ' + VERSION + ' | April 2026', CS['meta']),
+          Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains the ideas in plain language. It is not the formal '
               'document — every claim here restates a result already proved in the technical '

@@ -1,5 +1,5 @@
 """
-Build: The Philosophical Question That Started This (v1.11)
+Build: The Philosophical Question That Started This (v1.12)
 v1.11: fix() guard added via Paragraph override — snap line and all raw Paragraph calls
        now pass through unicode-to-entity conversion (Watch-3 resolved).
        AR fix: residual "DA-1 is the bridge" → "DA-1 is the connecting argument".
@@ -38,7 +38,8 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
+FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
 _Paragraph_orig = Paragraph
@@ -187,7 +188,7 @@ def build():
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(
             LETTER[0] / 2, 0.6 * inch,
-            'Zero Paradox  |  The Philosophical Question That Started This  |  April 2026')
+            'Zero Paradox  |  The Philosophical Question That Started This  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -206,7 +207,7 @@ def build():
             'On the gap between formal description and instantiation, '
             'what the framework dissolves, and what it snaps.',
             S['subtitle']),
-        Paragraph('Version ' + VERSION + '  |  April 2026', S['meta']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['meta']),
         hr(),
         sp(4),
     ]
@@ -563,7 +564,7 @@ def build():
         sp(14), hr(),
         Paragraph(
             '<i>End of document  |  The Philosophical Question That Started This  |  '
-            'Zero Paradox Project  |  April 2026  |  '
+            'Zero Paradox Project  |  ' + version_date() + '  |  '
             'Not a formal result — a philosophical essay. '
             'The formal mathematics lives in the committed PDFs, ZP-A through ZP-M.</i>',
             S['endnote']),

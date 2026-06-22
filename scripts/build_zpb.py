@@ -1,5 +1,5 @@
 """
-Build ZP-B: p-Adic Topology (v1.10)
+Build ZP-B: p-Adic Topology (v1.11)
 v1.10: Rendered self-version tags removed from C2/C3 corollary titles (C1 sweep); "null state" → ⊥ in AX-B1 Lean-encoding note (vocab gate).
 v1.9: K-17 vocab fix — "First Atomic State" -> "minimum nonzero state (ε₀)" in AX-B1 box.
 v1.8: Adversary-review pass — R1 remark (Section VI) "universal ontology of state emergence"
@@ -17,7 +17,8 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
+FIRST_RELEASED = 'April 2026'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-B_pAdic_Topology.pdf')
@@ -25,7 +26,7 @@ def build():
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-B: p-Adic Topology', S['subtitle']),
-          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
+          Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
           sp(10),
           body('This document is self-contained within p-adic analysis and topology. No abstract algebra from ZP-A, no probability, and no Hilbert space is imported. Cross-framework connections are deferred to ZP-D and ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-B Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),

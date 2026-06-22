@@ -1,5 +1,5 @@
 """
-Build ZP-D: State Layer (Hilbert Space) (v1.12)
+Build ZP-D: State Layer (Hilbert Space) (v1.13)
 v1.12: Rendered self-version refs removed — DP-1 title tag and T2 "R3 (v1.6)" ref (C1 sweep).
 v1.11: K-11/K-18 vocab fixes — "topological isolation" -> "clopen separation" throughout DP-1; "first atomic state" -> "minimum nonzero state" in D1.
 v1.10: Version number removed from Open Items Register section header.
@@ -19,7 +19,8 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
+FIRST_RELEASED = 'April 2026'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-D_State_Layer.pdf')
@@ -27,7 +28,7 @@ def build():
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-D: State Layer (Hilbert Space)', S['subtitle']),
-          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
+          Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
           sp(10),
           body('This document operates within functional analysis. It imports from ZP-A and ZP-B and constructs the Hilbert space state layer on top of them. No information theory from ZP-C is imported. Cross-framework synthesis is deferred to ZP-E.'),
           body('<i>Illustrated Companion: A paired ZP-D Illustrated Companion provides concrete examples and visual intuitions for the results here. Examples are kept separate from the formal layers to distinguish illustrative material from proofs.</i>'),

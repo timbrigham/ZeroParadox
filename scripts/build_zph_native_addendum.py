@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.0 | June 2026
+Version 1.1 | June 2026
 v1.0: Initial release. Realizes the snap floor ⊥ inside each framework's own
       Mathlib category as a genuine CategoryTheory.Functor, replacing the ℕ-indexed
       depth-proxy categories of the main ZP-H document:
@@ -20,7 +20,8 @@ Reads after ZP-H Categorical Bridge.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
+FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
 _Paragraph_orig = Paragraph
@@ -32,8 +33,7 @@ def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-H_Native_Categories_Addendum.pdf')
     print(f'[build_zph_native_addendum] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-H Native Categories Addendum',
-                   'ZP-H Native Categories Addendum', 'Version ' + VERSION,
-                   date_str='June 2026')
+                   'ZP-H Native Categories Addendum', 'Version ' + VERSION)
     E = []
 
     # ── Header banner ───────────────────────────────────────────────────────────
@@ -56,7 +56,7 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-H Addendum', S['title']),
         Paragraph('The Snap Floor in Native Categories', S['subtitle']),
-        Paragraph('Version ' + VERSION + ' | June 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),

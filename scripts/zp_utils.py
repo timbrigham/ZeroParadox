@@ -13,6 +13,7 @@ Usage (companion docs):
     # CS styles, example_box, remember_box, key_result_box are all available.
 """
 import os, sys, re, inspect
+from datetime import datetime
 sys.stdout.reconfigure(encoding='utf-8')
 
 from reportlab.lib import colors
@@ -308,8 +309,40 @@ def data_table(headers, rows_data, col_widths, header_bg=None):
     t.setStyle(ts)
     return t
 
-def make_doc(path, title_str, doc_id, version_str, date_str='April 2026'):
-    """SimpleDocTemplate with standard Zero Paradox footer."""
+def version_date():
+    """Current 'Month Year' — the build / this-version date (C8 dual-date model).
+    One source, cannot drift: every rebuild is a version bump per the script-change
+    rule, so build-month == this-version-month. Never hardcode a month literal."""
+    return datetime.now().strftime('%B %Y')
+
+_MONTH_YEAR = re.compile(
+    r'^(January|February|March|April|May|June|July|August|September|October|'
+    r'November|December) \d{4}$')
+
+def version_line(first_released, version):
+    """Standard dual-date meta line. first_released is a per-doc constant (the v1.0
+    date, never changes) — a permanent provenance claim, so it is REQUIRED and
+    validated; there is NO default. The current date is auto-derived. e.g.
+    'Initial: April 2026  |  Current: 1.17, June 2026'."""
+    if not first_released or not _MONTH_YEAR.match(str(first_released)):
+        print()
+        print('!' * 70)
+        print('  ZP BUILD BLOCKED — FIRST_RELEASED missing or not a valid "Month Year"')
+        print(f'  ↳ got: {first_released!r}')
+        print()
+        print('  FIRST_RELEASED is a permanent provenance claim (the v1.0 date). Set a')
+        print('  VERIFIED "Month Year" — recover from register.md / historical/ / git')
+        print('  log --follow. Do NOT guess, and do NOT let it default.')
+        print('!' * 70)
+        print()
+        raise SystemExit(1)
+    return ('Initial: ' + first_released
+            + '  |  Current: ' + version + ', ' + version_date())
+
+def make_doc(path, title_str, doc_id, version_str, date_str=None):
+    """SimpleDocTemplate with standard Zero Paradox footer.
+    date_str defaults to the current build month (version_date()); never hardcode it."""
+    date_str = date_str or version_date()
     def footer_cb(canvas, doc):
         canvas.saveState()
         canvas.setFont('DV-I', 8)
