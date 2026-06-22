@@ -44,6 +44,25 @@ Same-session self-review does not satisfy this requirement. The review must be a
 
 **What triggered this rule:** Lean docstring and build script prose changes were pushed on 2026-05-20 before adversary review ran. The review subsequently found two additional precision errors in the already-committed content.
 
+## Prior-Art Search — Trigger Conditions and Gate
+
+The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. Prior-art search is therefore a **gated control**, not an aspiration. It is enforced through the adversary-review gate's **synthesis-layer detection** (the same routing pattern as claim-status → `/claim-review`).
+
+**Scope — synthesis/bridge layers only.** A trigger fires on content that unifies, connects, or identifies a structure across more than one field or framework (e.g. the diagonal-fixed-point keystone, ZP-P, ZP-G/H). It does **not** fire on theorem-backed layers whose central claim is a single named classical theorem the framework merely invokes (ZP-B / Ostrowski, ZP-L/M / Gentzen) — those are already anchored.
+
+**Trigger conditions:**
+1. **A new synthesis/bridge layer is created** — prior-art search before its first push. (Highest yield; every gap found in the 2026-06-22 arc originated at layer creation.)
+2. **A synthesis layer's central/distinctive claim is revised or strengthened** — re-run for that claim.
+3. **A layer is prepared for outreach or arXiv** — prior-art search is part of the pre-flight, beside the adversary pre-flight.
+4. **Reactive:** an external reviewer asks "have you seen X?" — search, then add the result to the CLAIMS "Convergence with established work" table with attribution.
+
+**The mechanism (how it runs):**
+- The **adversary-review** gate detects synthesis-layer content. If a distinctive cross-field claim lacks a specialist-branch citation (in the content or the CLAIMS Convergence ledger) and there is no `.claude-local/pa_cleared.txt` matching HEAD, it adds a kill-list item — `ar_cleared.txt` is withheld and the pre-push hook blocks. (Detection only; the adversary does not perform the search.)
+- **`/prior-art-review`** is the deep gate it routes to: a fresh-agent literature scout that states each distinctive synthesis claim in the target field's terms, searches for and **reads from source** the specialist branch, and either cites it (with the honest delta, credit pointing outward) or records "searched, none found." On PASS it writes `.claude-local/pa_cleared.txt`; the push clears once both adversary and prior-art-review are satisfied.
+- Same-session self-review does not satisfy this. The review must be a separate scout context (spawned Agent with no conversation history).
+
+**The record:** the CLAIMS "Convergence with established work" table is the public ledger of identified prior art; `.claude-local/notes/prior_art_*` notes hold the per-search findings and saved sources. Standing practice: memory `feedback_prior_art_search_baseline.md`.
+
 ## Guiding Principles (from Project Instructions)
 
 - **Logical Rigor First:** The primary goal is logical consistency and rigor. 
