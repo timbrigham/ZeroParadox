@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.21 | June 2026
+Version 3.22 | June 2026
 v3.21: FMC precision (sweep Step 4 remediation, against fmc.md) — R-AFA "the metatheoretic necessity of AFA is derived" → "argued, not proved (a metatheoretic squeeze, not a derivation)"; named falsifier added to R-AFA; CC-2 status lines now split the proved structural fixed point (T-EXEC, axiom-free) from the argued set-membership reading; "establish that Foundation is incompatible" → "make the case that".
 v3.20: Rendered version refs removed — DA-2/DA-3 section notes ("New in v2.0") and endnote version (C1 sweep — no version changelogs in rendered PDF content).
 v3.19: Version reference removed from T-BUF li() call (Gemini catch — build gate does not cover li()).
@@ -78,7 +78,8 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.21'
+VERSION = '3.22'
+FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14, spaceAfter=6, alignment=4)
@@ -92,7 +93,7 @@ bridge_box = remark_box  # SLATE header — ZP-E bridge document style
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-E_Bridge_Document.pdf')
     print(f'[build_zpe] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version ' + VERSION, date_str='May 2026')
+    doc = make_doc(out_path, 'ZP-E: Bridge Document', 'ZP-E: Bridge Document', 'Version ' + VERSION)
     E   = []
 
     print('[build_zpe] Building title block...')
@@ -101,7 +102,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-E: Bridge Document', S['title']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),

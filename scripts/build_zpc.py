@@ -1,5 +1,5 @@
 """
-Build ZP-C: Information Theory (v1.18)
+Build ZP-C: Information Theory (v1.19)
 v1.18: Rendered self-version refs removed — P₀ note ("Version 1.4 updates this") and Open Items row ("from v1.2") (C1 sweep).
 v1.17: Version references removed from Remark R5 label_box and T-BUF li() call (Gemini catch — build gate does not cover li()/label_box()).
 v1.16: Vocabulary fixes — "null state" → "⊥"; "non-null state" → "nonzero state"; "first atomic state" → "minimum nonzero state (ε₀)" throughout body prose. Palette rebuild.
@@ -27,7 +27,8 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
+FIRST_RELEASED = 'April 2026'
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-C_Information_Theory.pdf')
@@ -35,7 +36,7 @@ def build():
     E = []
     E += [Paragraph('THE ZERO PARADOX', S['title']),
           Paragraph('ZP-C: Information Theory', S['subtitle']),
-          Paragraph('Version ' + VERSION + '  |  May 2026', S['subtitle']),
+          Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
           sp(10),
           body('This document is self-contained within information theory and discrete analysis on Q<sub>2</sub>. The topological structure of Q<sub>2</sub> — specifically total disconnectedness (ZP-B T5), the clopen ball hierarchy, and the binary existence axiom (AX-B1) — is imported from ZP-B as a dependency. Every claim is marked as Derived, Axiomatic, Defined, or Candidate.'),
           body('<b>Encoding commitment.</b> The two ontological states of AX-B1 are represented here as point-mass (Dirac) distributions over {0, 1} — the minimum-sufficient probabilistic encoding (RP-1, Section II). Under this encoding, the information-theoretic separation between &#8869; and the minimum nonzero state (&#949;<sub>0</sub>) is exactly 1 bit (T1b). The 1-bit result is conditional on this encoding; RP-1 declares and justifies the commitment. Separately, at &#8869;, the primary descriptive tool of information theory — surprisal — is unbounded above (L-INF, Section III): no finite external description can contain &#8869;. These two results — the 1-bit cost of the transition and the infinite descriptive cost of the origin — are the information-theoretic expression of the same structural constraint on &#8869;.'),

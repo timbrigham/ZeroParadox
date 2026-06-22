@@ -1,6 +1,6 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.26 | June 2026
+Version 1.27 | June 2026
 v1.26: FMC precision (sweep Step 4) — Key Results box and the T-EXEC body line now split the proved structural fixed point (axiom-free) from the argued set-membership reading (the ZF+AFA setting itself).
 v1.25: §6 "future work" bridge sentence retired — the 2-adic valuation argument is now formalized (ZPJ_ScaleBridge wired into the maintained build); §7 gains the common-ancestor (ValBridge) framing — the abstract lattice track and ℤ₂ are instances of one minimal typeclass; §8 adds ℤ₂ as a third concrete model. The ℤ₂ instance is flagged as inheriting Classical.choice from Mathlib's p-adic library (unlike the axiom-free core T-EXEC).
 v1.24: Directed-graph (APG) diagram added for the Quine atom (self-loop + well-founded chain ending at ∅); arithmetic analogy scoped (it cannot show ⊥={⊥} — routed to mirror/graph); "depth" rephrased from "how far from ⊥" to intrinsic descent/valuation (Dan feedback 2026-06-15). Fixed latent null glyph scaleᵏ (&#7503; → <sup>k</sup>).
@@ -191,7 +191,8 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.26'
+VERSION = '1.27'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -202,7 +203,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-J Companion  |  Self-Reference  |  June 2026')
+            'Zero Paradox ZP-J Companion  |  Self-Reference  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -221,7 +222,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('The Self-Containing Null', CS['title']),
           Paragraph('What &#8869; = {&#8869;} Means, and Why It Matters', CS['subtitle']),
-          Paragraph('ZP Companion | Version ' + VERSION + ' | The Quine Atom | June 2026', CS['meta']),
+          Paragraph('ZP Companion | The Quine Atom | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
           Paragraph(
               'This companion explains in plain language the proof that &#8869; = {&#8869;} '
               '(the Quine atom of AFA set theory) is the unique bottom element of a lattice. '

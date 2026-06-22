@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.11 | June 2026
+Version 1.12 | June 2026
 v1.11: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.10: Vocabulary fixes — "null state" → "⊥" in two body prose locations; version references "(v1.1)", "v2.0" removed from body prose. Palette rebuild.
 v1.9: Adversary-review pass — version changelog removed from PDF title block (moved to
@@ -28,7 +28,8 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
+FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
 S['body']    = ParagraphStyle('body',    fontName='DVS',   fontSize=10, leading=14,
@@ -93,7 +94,7 @@ def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-I_Inside_Zero.pdf')
     print(f'[build_zpi] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-I: Inside Zero', 'ZP-I: Inside Zero',
-                   'Version ' + VERSION, date_str='May 2026')
+                   'Version ' + VERSION)
     E   = []
 
     print('[build_zpi] Building title block...')
@@ -102,7 +103,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-I: Inside Zero', S['title']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),

@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.21 | May 2026
+Version 1.22 | May 2026
 v1.21: "(no sorryAx)" applied to step 1 source; ZP-internal labels removed from step table; "No new axioms" clarified to scope; "the framework" scoped to ZP-I (ER/AR fixes).
 v1.20: Conditions scoped in prose ("every" → conditional); "(axiom-free)" corrected to "(no sorryAx)" for theorems using propext/Classical.choice (ER/AR fixes).
 v1.19: Norm bound includes S(0) factor; IsDepthChain/IsStrictStateSequence added to key result box; ZP-internal framing replaced with standard math (AR fixes).
@@ -288,7 +288,8 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.21'
+VERSION = '1.22'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -300,7 +301,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-I Companion  |  Inside Zero  |  May 2026')
+            'Zero Paradox ZP-I Companion  |  Inside Zero  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -328,7 +329,7 @@ def build():
     E += [
         Paragraph('Going Forward Brings You Back to Zero', CS['title']),
         Paragraph('Inside Zero', CS['subtitle']),
-        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
+        Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains in plain language how an ascending chain of p-adic '
             'states converges, in the 2-adic metric, to zero  - and why that limit generates '

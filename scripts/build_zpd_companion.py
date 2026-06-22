@@ -107,7 +107,8 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.11'
+VERSION = '1.12'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -119,7 +120,7 @@ def build():
         canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  May 2026')
+            'Zero Paradox ZP-D Companion  |  State Layer (Hilbert Space)  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -147,7 +148,7 @@ def build():
     E += [
         Paragraph('How topology maps to Hilbert space geometry', CS['title']),
         Paragraph('State Layer (Hilbert Space)', CS['subtitle']),
-        Paragraph('ZP Companion | Version ' + VERSION + ' | May 2026', CS['meta']),
+        Paragraph('ZP Companion | ' + version_line(FIRST_RELEASED, VERSION), CS['meta']),
         Paragraph(
             'This companion explains the ideas in plain language with diagrams and real-world '
             'examples. It is not the formal document — every claim here restates a result already '

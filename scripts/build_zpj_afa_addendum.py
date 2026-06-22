@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.3 | June 2026
+Version 1.4 | June 2026
 v1.3: Rendered self-version ref removed from endnote ("Version 1.0 covers…") (C1 sweep). Fixed 2 null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>).
 v1.2: Version changelog removed from preamble.
 v1.1: Add COMP_BLUE header banner matching companion template.
@@ -16,15 +16,15 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
+FIRST_RELEASED = 'May 2026'
 
 
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-J_AFA_Addendum.pdf')
     print(f'[build_zpj_afa_addendum] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-J AFA Addendum',
-                   'ZP-J AFA Addendum', 'Version ' + VERSION,
-                   date_str='May 2026')
+                   'ZP-J AFA Addendum', 'Version ' + VERSION)
     E = []
 
     # ── Header banner (matches companion template) ─────────────────────────────
@@ -47,7 +47,7 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J AFA Addendum', S['title']),
         Paragraph('Decoration Uniqueness from Valuation Structure', S['subtitle']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),

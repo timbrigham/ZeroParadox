@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.12 | June 2026
+Version 1.13 | June 2026
 v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
 v1.11: Version line style fixed (bodyI → subtitle); local make_doc override removed.
 v1.10: Hash sync — script was modified without full workflow; rebuilt to bring
@@ -25,7 +25,8 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
+FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
 AMBER = colors.HexColor('#B07800')  # ZP-OVERRIDE: ZP-G import_box label text uses darker amber
@@ -94,7 +95,7 @@ def import_box(title, status, rows):
 def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-G_Category_Theory.pdf')
     print(f'[build_zpg] Output: {out_path}')
-    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version ' + VERSION, date_str='May 2026')
+    doc = make_doc(out_path, 'ZP-G: Category Theory', 'ZP-G: Category Theory', 'Version ' + VERSION)
     E   = []
 
     print('[build_zpg] Building title block...')
@@ -103,7 +104,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-G: Category Theory', S['subtitle']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(8),
         hr(),
         sp(4),
@@ -672,7 +673,7 @@ def build():
     E += [
         sp(12),
         Paragraph(
-            '<i>Zero Paradox ZP-G: Category Theory | Version ' + VERSION + ' | May 2026 |'
+            '<i>Zero Paradox ZP-G: Category Theory | '
             'T6-b and T6-c: PDF-level only; Lean proofs verify non-negativity by type only (Nat.zero_le _), '
             'not K-theoretic content | T6 Part II: Lean-verified</i>',
             S['endnote']),

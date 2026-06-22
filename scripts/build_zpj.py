@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.2 | June 2026
+Version 2.3 | June 2026
 v2.2: Remaining rendered self-version refs removed — §VII preamble "Version 2.0 extends", v2.0/v1.0 register cells, validation "v2.0:" line (C1 sweep). Fixed null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>) and a garbled ≤ subscript.
 v2.1: Version changelog removed from preamble; version stripped from section headers and endnote.
 v2.0: Four new sections added — Section VII (Aczel DC-free connection),
@@ -18,7 +18,8 @@ v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.
 import os
 from zp_utils import *
 
-VERSION = '2.2'
+VERSION = '2.3'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -34,7 +35,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J: Executability of Self-Reference', S['title']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),

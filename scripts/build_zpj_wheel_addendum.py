@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.1 | June 2026
+Version 1.2 | June 2026
 v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Presents the formal construction of the wheel of fractions
       ⊙_S A = (A × A)/≡_S for a commutative ring A and multiplicative submonoid S,
@@ -15,7 +15,8 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
+FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
 # PDF Rendering Standards require fix() on all rendered text. Patch Paragraph so bare
@@ -30,8 +31,7 @@ def build():
     out_path = os.path.join(PROJECT_ROOT, 'ZP-J_Wheel_Addendum.pdf')
     print(f'[build_zpj_wheel_addendum] Output: {out_path}')
     doc = make_doc(out_path, 'ZP-J Wheel Addendum',
-                   'ZP-J Wheel Addendum', 'Version ' + VERSION,
-                   date_str='June 2026')
+                   'ZP-J Wheel Addendum', 'Version ' + VERSION)
     E = []
 
     # ── Header banner (matches addendum/companion template) ────────────────────
@@ -54,7 +54,7 @@ def build():
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-J Wheel Addendum', S['title']),
         Paragraph('The Wheel of Fractions is a Wheel', S['subtitle']),
-        Paragraph('Version ' + VERSION + ' | June 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),

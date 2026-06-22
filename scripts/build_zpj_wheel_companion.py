@@ -1,6 +1,6 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.1 | June 2026
+Version 1.2 | June 2026
 v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Plain-language companion to the ZP-J Wheel Addendum
       (ZPJ_Wheel.lean / ZPJ_WheelFrac.lean). Explains what a wheel is (division
@@ -15,7 +15,8 @@ import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle
 
-VERSION = '1.1'
+VERSION = '1.2'
+FIRST_RELEASED = 'June 2026'
 
 
 def wheel_vs_meadow_diagram():
@@ -59,7 +60,7 @@ def build():
         canvas.saveState(); canvas.setFont('DV-I', 8)
         canvas.setFillColor(colors.grey)
         canvas.drawCentredString(LETTER[0]/2, 0.6*inch,
-            'Zero Paradox ZP-J Wheel Companion  |  Division by Zero  |  June 2026')
+            'Zero Paradox ZP-J Wheel Companion  |  Division by Zero  |  ' + version_date())
         canvas.restoreState()
 
     doc = SimpleDocTemplate(out_path, pagesize=LETTER,
@@ -79,7 +80,7 @@ def build():
     E += [hdr, sp(6),
           Paragraph('Dividing by Zero', CS['title']),
           Paragraph('What a Wheel Is, and Why /0 Becomes a Real Element', CS['subtitle']),
-          Paragraph('ZP Companion | Version ' + VERSION + ' | The Wheel of Fractions | June 2026',
+          Paragraph('ZP Companion | The Wheel of Fractions | ' + version_line(FIRST_RELEASED, VERSION),
                     CS['meta']),
           Paragraph(
               'This companion explains in plain language the ZP-J Wheel Addendum: the '

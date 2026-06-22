@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.7 | May 2026
+Version 1.8 | May 2026
 v1.7: Version changelog removed from preamble; stale v1.5 references stripped from section headers and endnote.
 v1.6: Adversary-review pass — "(April 2026)" date removed from PDF body (belongs in
 docstring); "last philosophical vulnerability" → "remaining informal gap in the DA-1 argument".
@@ -35,7 +35,8 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
+FIRST_RELEASED = 'April 2026'
 
 
 def build():
@@ -50,7 +51,7 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-K: Computational Grounding of Self-Reference', S['title']),
-        Paragraph('Version ' + VERSION + ' | May 2026', S['subtitle']),
+        Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         sp(10),
         hr(),
         sp(4),
