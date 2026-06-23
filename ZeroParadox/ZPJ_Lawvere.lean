@@ -7,10 +7,10 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-The Lawvere file here. started while researching the shape of zpj. at the time I wasn't as familiar
-with the prior art as I would have liked. The shape of the keystone here.. it felt like it could have
-fit using the Lawvere framework. this iteration showed that only the computability theory really had
-precisely the structure needed. this eventually gave way to me looking at other routes
+The Lawvere file here started while researching the shape of ZPJ. At the time I wasn't as familiar
+with the prior art as I would have liked. The shape of the keystone here, it felt like it could have
+fit using the Lawvere framework. This iteration showed that only the computability theory really had
+precisely the structure needed. This eventually gave way to me looking at other routes.
 
 ---
 
