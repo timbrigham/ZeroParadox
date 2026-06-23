@@ -28,6 +28,9 @@ import ZeroParadox.ZPJ_WheelFrac
 import ZeroParadox.ZPP
 import ZeroParadox.ZPP_Ostrowski
 import ZeroParadox.ZPP_Coalgebra
+import ZeroParadox.ZPJ_Lawvere
+import ZeroParadox.ZPJ_Boundary
+import ZeroParadox.ZPJ_BoundaryBridge
 
 /-!
 # Zero Paradox — Library Root
