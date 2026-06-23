@@ -5,6 +5,15 @@ import Mathlib.Tactic
 /-!
 # ZPJ — The Lawvere bridge (keystone Tier-6 upgrade probe)
 
+## Engineer's Take
+
+The Lawvere file here. started while researching the shape of zpj. at the time I wasn't as familiar
+with the prior art as I would have liked. The shape of the keystone here.. it felt like it could have
+fit using the Lawvere framework. this iteration showed that only the computability theory really had
+precisely the structure needed. this eventually gave way to me looking at other routes
+
+---
+
 **Status: PROBE, stub-first.** Goal: test whether ZP's self-application fixed point (`AbstractSelfApp`,
 `t_exec` / the Quine atom ⊥) is an *instance* of Lawvere's fixed-point theorem, or whether it is a
 *posited* fixed point that merely has the same shape (the Tier-6 conjecture).
