@@ -8,7 +8,8 @@ import ZeroParadox.ZPP_Coalgebra
 
 This file is a shortcut, a quick representation of the ν versus μ relationship. Mathlib at current does
 not currently provide complete Taylor machinery, so we're representing the same premise to the best of
-our abilities using indexes.
+our abilities using indexes. Please take this as an open invitation to expand both the Zero Paradox
+project as well as Mathlib as a whole.
 
 ---
 
