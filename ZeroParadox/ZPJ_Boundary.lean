@@ -5,6 +5,15 @@ import Mathlib.Tactic
 /-!
 # ZPJ — The well-foundedness boundary (keystone snap-as-boundary probe)
 
+## Engineer's Take
+
+Continuing to look at the shape of ZPJ, we pivoted from Lawvere to Taylor / AMM coalgebra. This was
+mostly due to a gut reaction about the three failing cases, the original assessment, that they were
+really the larger and more specific case for our framework. And if so, it gives the structure of our
+binary snap an official home as a boundary crossing.
+
+---
+
 **Status: PROBE, stub-first, local branch `keystone-boundary`.** Rung A of the iterative A→B plan
 (see `.claude-local/notes/wellfounded_coalgebra_foray_2026-06-23.md`).
 

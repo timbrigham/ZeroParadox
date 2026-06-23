@@ -4,6 +4,14 @@ import ZeroParadox.ZPP_Coalgebra
 /-!
 # ZPJ — The snap-boundary, QPF bridge (best-effort; Rung C-QPF)
 
+## Engineer's Take
+
+This file is a shortcut, a quick representation of the ν versus μ relationship. Mathlib at current does
+not currently provide complete Taylor machinery, so we're representing the same premise to the best of
+our abilities using indexes.
+
+---
+
 **Status: PROBE, local branch `keystone-boundary`.** This is the deliberately-scoped "C-QPF" route
 (see `.claude-local/notes/wellfounded_coalgebra_foray_2026-06-23.md`).
 
