@@ -66,10 +66,60 @@ theorem snap_crosses_boundary :
     ¬ WellFounded (floorRel (L := L)) ∧ WellFounded ((· < ·) : Ordinal → Ordinal → Prop) :=
   ⟨floor_not_wellFounded, ascent_wellFounded⟩
 
+/-! ## § IV. Rung B — the snap as ONE crossing on a single carrier
+
+    Glue the self-looping floor and the ordinal ascent into one carrier `Phase`, and show the
+    non-well-foundedness is localized entirely at the floor: every post-snap state is accessible, the
+    floor alone is not. The snap is the irreversible exit `floor ↦ up 0`.
+
+    MODELING NOTE (honest): the carrier + relation are a *modeling choice* (how the floor, the ascent,
+    and the irreversible snap are represented). Given that model the theorems below are proven — B2
+    nontrivially, by ordinal well-founded induction. So "the snap is one crossing" is a faithful,
+    coherent MODEL whose content is the two proven endpoints + the gluing commitment (mirrors MC-1),
+    not a single forced theorem. -/
+
+/-- The combined carrier: the self-looping floor, and the ordinal-indexed ascent. -/
+inductive Phase where
+  | floor : Phase
+  | up : Ordinal → Phase
+
+/-- The combined descent relation: the floor self-loops (non-well-founded); the ascent follows ordinal
+    `<` (well-founded); no cross edges — the snap is irreversible, not a descent edge. -/
+def phaseRel : Phase → Phase → Prop
+  | Phase.floor, Phase.floor => True
+  | Phase.up a, Phase.up b => a < b
+  | _, _ => False
+
+/-- The snap: the irreversible exit from the floor to the first ascent state. -/
+def snap : Phase := Phase.up 0
+
+/-- **B1 — the whole carrier is non-well-founded** (floor self-loop). -/
+theorem phase_not_wellFounded : ¬ WellFounded phaseRel := fun hwf =>
+  acc_irrefl (hwf.apply Phase.floor) trivial
+
+/-- **B2 — every post-snap state is accessible** (the ascent is well-founded; non-wf localized off the
+    ascent), by ordinal well-founded induction. -/
+theorem phase_acc_of_up (o : Ordinal) : Acc phaseRel (Phase.up o) := by
+  induction o using Ordinal.lt_wf.induction with
+  | _ o ih =>
+    refine Acc.intro _ (fun y hy => ?_)
+    cases y with
+    | floor => simp only [phaseRel] at hy
+    | up a => exact ih a hy
+
+/-- **B3 — the crossing.** The floor is the sole non-accessible point; every post-snap state is
+    accessible. The snap exits the unique non-well-founded point into the well-founded ascent. -/
+theorem snap_crossing :
+    ¬ Acc phaseRel Phase.floor ∧ ∀ o : Ordinal, Acc phaseRel (Phase.up o) :=
+  ⟨fun hacc => acc_irrefl hacc trivial, phase_acc_of_up⟩
+
 end ZeroParadox.ZPJ_Boundary
 
 section PurityCheck
 open ZeroParadox.ZPJ_Boundary
 #print axioms floor_not_wellFounded
 #print axioms ascent_wellFounded
+#print axioms phase_not_wellFounded
+#print axioms phase_acc_of_up
+#print axioms snap_crossing
 end PurityCheck
