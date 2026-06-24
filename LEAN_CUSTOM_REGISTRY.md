@@ -84,6 +84,22 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
+### `Wheel` — `ZeroParadox/ZPJ_Wheel.lean:106`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Mathlib has no wheel typeclass (Carlström's algebraic structure in which division is total — `1/0` is a defined element). Extending `AddCommMonoid` + `CommMonoid` would inherit full semiring distributivity, which wheels deliberately weaken (axiom W9). `Wheel` states the wheel axioms (Carlström W1–W14) from scratch for axiom auditability, following the `ZPSemilattice` convention.
+
+---
+
+### `WheelValuationStructure` — `ZeroParadox/ZPJ_Wheel.lean:413`
+
+**Relationship to Mathlib:** Extends `CommRing` (no Mathlib analog for the bridge)
+
+**Reason:** The bridge typeclass connecting the ZP valuation hierarchy to wheel theory via the wheel-of-fractions construction. Over a `CommRing L` it carries a valuation `wvs_val : L → ℕ∞` that is additive on products (`wvs_val_mul`), with the assumed condition `wvs_val 0 = ⊤` (`wvs_val_zero`) — an axiom encoding that the ring's zero sits at infinite valuation. The ZP argument motivates the choice; the type-checker does not verify its necessity. No Mathlib typeclass bundles a ring with such a valuation for the wheel construction.
+
+---
+
 ## Custom Types and Definitions
 
 ### `OntologicalStates` — `ZeroParadox/ZPB.lean:51`
@@ -131,6 +147,22 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Named alias for `IsKleeneFixedPoint selfApply c`. Makes the connection to Quine atoms explicit in type signatures and theorem statements. Unlike the AFA Quine (unique by `quine_unique`), computational quines are not unique — each has a distinct Gödel number, generating the infinite family proved in §VI.
+
+---
+
+### `HasLawvereWitness` — `ZeroParadox/ZPJ_Lawvere.lean:43`
+
+**Relationship to Mathlib:** Names the hypothesis of `Function.exists_fixed_point_of_surjective` (no Mathlib named predicate)
+
+**Reason:** Mathlib proves Lawvere's fixed-point theorem (`Function.exists_fixed_point_of_surjective`) but exposes no reusable predicate for "β admits a point-surjection α → (α → β)" — the diagonal hypothesis. Naming it lets the face-split state, per face, whether the hypothesis holds (the Set faces are refuted by Cantor; the computability face is genuine). A naming alias in the spirit of `IsComputationalQuine`; no new axiomatic content — every theorem about it reduces to the Mathlib lemma.
+
+---
+
+### `Phase` (with `floorRel`, `phaseRel`, `snap`) — `ZeroParadox/ZPJ_Boundary.lean:94`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** The illustrative single-carrier model for the well-foundedness boundary: `floor` (the self-looping ⊥) and `up : Ordinal → Phase` (the ε₀ ascent), with `phaseRel` self-looping at the floor and following ordinal `<` above it, and `snap := up 0` the irreversible exit. Mathlib has no type bundling a non-well-founded floor with a well-founded ordinal ascent under one relation. The carrier is a *modeling choice* — the boundary theorems' content is the two proven endpoints plus the framework's existing ⊥/ε₀ identification (MC-1, ε₀ open under OQ-E2), not a new commitment; the real-⊥ endpoint (`floorRel` / `floor_not_wellFounded`) is axiom-free on the actual lattice.
 
 ---
 
@@ -192,4 +224,4 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 ---
 
-*Last updated: 2026-05-28. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
+*Last updated: 2026-06-24. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
