@@ -84,8 +84,11 @@ theorem snap_crosses_boundary :
     MODELING NOTE (honest): the carrier + relation are a *modeling choice* (how the floor, the ascent,
     and the irreversible snap are represented). Given that model the theorems below are proven — B2
     nontrivially, by ordinal well-founded induction. So "the snap is one crossing" is a faithful,
-    coherent MODEL whose content is the two proven endpoints + the gluing commitment (mirrors MC-1),
-    not a single forced theorem. -/
+    coherent MODEL whose content is the two proven endpoints + an identification — and that
+    identification is NOT a new commitment: it is the framework's existing ⊥/ε₀ identification (MC-1,
+    plus the ε₀ identity already open under OQ-E2). The floor endpoint is tied to ZP's real ⊥
+    (`floor_not_wellFounded`, axiom-free); the abstract `Phase` carrier is the illustrative toy form
+    (non-well-foundedness localized at the floor by construction). No new commitment is introduced. -/
 
 /-- The combined carrier: the self-looping floor, and the ordinal-indexed ascent. -/
 inductive Phase where

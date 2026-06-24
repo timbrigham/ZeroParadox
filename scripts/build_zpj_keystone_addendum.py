@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.0 | June 2026
+Version 1.1 | June 2026
+v1.1: Honest-scope precision — the single-carrier "snap is one crossing" carries no NEW commitment; it rests on the framework's existing ⊥/ε₀ identification (MC-1 / OQ-E2), endpoints proved (floor non-wf via real ⊥, axiom-free).
 v1.0: Initial release. A thin addendum recording two machine-checked investigations into the
       keystone (⊥ as the diagonal fixed point): (1) the Lawvere face-split (ZPJ_Lawvere.lean) —
       in Set no face is a Lawvere instance (Cantor), the computability face is genuine; and
@@ -13,7 +14,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -205,10 +206,13 @@ def build():
             'Proved: the relation-level boundary and the QPF &#956;/&#957; bridge above '
             '(floor_not_wellFounded is axiom-free; the rest carry Classical.choice from '
             'Mathlib\'s ordinal and QPF machinery).',
-            'Commitment, not a single forced theorem: that the snap <i>is</i> this crossing is '
-            'a faithful model whose content is the two proven endpoints plus a gluing choice, '
-            'the same shape as MC-1. The carrier and relation are a modeling choice; the '
-            'localization of non-well-foundedness at the floor is partly by construction.',
+            'No new commitment: that the snap <i>is</i> this crossing is a faithful model whose '
+            'content is the two proven endpoints plus an identification &#8212; and that identification '
+            'is the framework&#8217;s <i>existing</i> &#8869;/&#949;<sub>0</sub> identification (MC-1, and '
+            'the &#949;<sub>0</sub> identity already open under OQ-E2), not a fresh one. The floor endpoint '
+            'is tied to the real &#8869; of ZP (floor_not_wellFounded, axiom-free); the single-carrier '
+            'Phase is the illustrative toy model, where non-well-foundedness localizes at the floor by '
+            'construction.',
         ]
     ))
     E.append(sp(6))
