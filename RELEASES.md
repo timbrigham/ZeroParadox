@@ -282,3 +282,45 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP Choice-Free Core Addendum | v1.0 |
 
 **Next threshold:** v3.0 on a new foundational layer (ZP-N constructive-ordinal validation, the unit test for the Classical.choice-necessity question); a further v2.x doc release on the next substantive reviewer-feedback round or accumulated documentation work.
+
+---
+
+## v2.6 - 2026-06-24
+
+**Why this release:** Consolidates the un-tagged v2.5 (ZP-P "The Fixed-Point Fork" layer) with the subsequent framework-wide prior-art / transparency pass and the keystone investigation - the Lawvere face-split and the well-foundedness boundary - into one Zenodo snapshot. v2.5 was written to this file but never tagged; v2.6 supersedes it and reflects the current state of main.
+
+**What changed (since the last tagged release, v2.4):**
+- **ZP-P "The Fixed-Point Fork"** (the 14th layer, originally staged as v2.5): the mu/nu fork schema (least vs greatest fixed point collapse to one point iff the self-map has a unique fixed point) choice-free `[propext, Quot.sound]`; the categorical-parent (W-type empty / M-type inhabited) and number-system (R vs Q_2 via Ostrowski) instances theorem-backed. Renamed from ZP-O to avoid an O/0 collision. Now at v1.3 after the Veltri correction below.
+- **Prior-art pass + Claims Ledger:** a new "Convergence with established work" ledger in CLAIMS.md maps each ZP face to the established prior art that owns it - Lawvere/Yanofsky, Aczel/Forti-Honsell/Paulson, Ostrowski, Gentzen, Kleene, Lambek/Adamek-Rutten/Veltri/Ahrens, Carboni-Lack-Walters/Fritz, van der Put/Kozyrev, Carlstroem, Chaitin - each with an honest delta and credit pointing outward. Citations added across ZP-D (van der Put / Kozyrev p-adic ball-indicator ONB), ZP-G/H (strict initial objects / Markov categories), and ZP-P (Veltri FSCD 2021, which corrected the nu-side choice claim from "structural" to a Mathlib artifact).
+- **Keystone arc:** the new ZP-J Keystone Addendum plus Lean (ZPJ_Lawvere, ZPJ_Boundary, ZPJ_BoundaryBridge). The Lawvere face-split is machine-checked (in Set no face is a Lawvere instance - Cantor; the computability face is a genuine recursion-theorem instance). The binary snap is framed as a crossing of the well-foundedness boundary (Taylor / Adamek-Milius-Moss) - relation level plus a QPF mu/nu bridge, best-effort, with the full Taylor coalgebraic version flagged open (Mathlib lacks the next-time operator, Pataraia's theorem, and the General Recursion Theorem). Honest fences throughout: the single-carrier picture carries no new commitment beyond the framework's existing bottom/epsilon-0 identification (MC-1 / OQ-E2), and the endpoints are proved (the floor non-well-founded via the real bottom, axiom-free).
+- **FMC defined and applied:** fmc.md publishes the Forced Metatheoretic Commitment rubric (argued-not-proved, with a named falsifier - a disciplined form of intrinsic justification); the FMC uniformity sweep softened AFA-necessity language from "forced/derived" to "argued" across ZP-A, ZP-E, the Foreword, and companions.
+- **Transparency + reproducibility:** CLAIMS.md is the claim-level ledger (proved / argued / committed / open tiers, verified against live `#print axioms` via AxiomProfile.lean); a README "Reproducing the verification" section (clone, toolchain pin, lake build, axiom profile).
+- **C8 dual-date templating:** every document's meta line now renders "Initial / Current" dates from a single source (drift-proof); rendered self-version changelogs retired across the corpus.
+- **Process controls:** a prior-art review gate (synthesis-layer detection routing to a deep literature-scout review); Lean namespace standardization (namespace = filename stem); a line-ending policy (.gitattributes, eol=lf) so build-script hash fingerprints are byte-stable across machines.
+
+**Document versions at v2.6:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.17 |
+| ZP-B p-Adic Topology | v1.11 |
+| ZP-C Information Theory | v1.19 |
+| ZP-D State Layer | v1.14 |
+| ZP-E Bridge Document | v3.22 |
+| ZP-F The Counterexamples | v1.5 |
+| ZP-G Category Theory | v1.14 |
+| ZP-H Categorical Bridge | v1.17 |
+| ZP-H Native Categories Addendum | v1.1 |
+| ZP-I Inside Zero | v1.12 |
+| ZP-J Self-Reference | v2.3 |
+| ZP-J AFA Addendum | v1.4 |
+| ZP-J Wheel Addendum | v1.2 |
+| ZP-J Keystone Addendum | v1.1 (new) |
+| ZP-K Computational Grounding | v1.8 |
+| ZP-L Incomputability Convergence | v1.2 |
+| ZP-M Kleene-Ordinal Bridge | v1.2 |
+| ZP-P The Fixed-Point Fork | v1.3 |
+| Zero Paradox Foreword | v2.10 |
+| ZP Philosophical Question | v1.12 |
+| ZP Choice-Free Core Addendum | v1.2 |
+
+**Next threshold:** v3.0 on a new foundational layer (ZP-N constructive-ordinal validation, the unit test for the Classical.choice-necessity question) or a theorem status change; a further v2.x on the next substantive reviewer-feedback round or accumulated documentation work.
