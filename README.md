@@ -99,6 +99,7 @@ This prints the kernel's `#print axioms` report for each core result - the basis
 | [ZP-J Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.3 | Self-reference: ⊥ as the Quine atom, and the AFA structure it forces. |
 | [ZP-J AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.4 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [ZP-J Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.2 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
+| [ZP-J Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.1 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
 | [ZP-K Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.8 | Computational grounding: the snap as a Kleene fixed point. |
 | [ZP-L Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.2 | ε₀ as the exact ordinal threshold where the snap occurs. |
 | [ZP-M Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.2 | The bridge between the Kleene quine and the ε₀ fixed point. |

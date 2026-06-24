@@ -44,6 +44,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpj.py](build_zpj.py) | `ZP-J_Self_Reference.pdf` |
 | [build_zpj_afa_addendum.py](build_zpj_afa_addendum.py) | `ZP-J_AFA_Addendum.pdf` |
 | [build_zpj_wheel_addendum.py](build_zpj_wheel_addendum.py) | `ZP-J_Wheel_Addendum.pdf` |
+| [build_zpj_keystone_addendum.py](build_zpj_keystone_addendum.py) | `ZP-J_Keystone_Addendum.pdf` |
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding.pdf` |
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 | [build_zpm.py](build_zpm.py) | `ZP-M_Kleene_Ordinal_Bridge.pdf` |
