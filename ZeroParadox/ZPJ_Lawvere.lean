@@ -40,6 +40,7 @@ set_option maxHeartbeats 400000
 /-- An endofunction `g : β → β` "has a Lawvere witness" when the diagonal hypothesis of Lawvere's
     theorem holds: a point-surjection `α → (α → β)`. This is exactly the hypothesis Cantor's theorem
     shows is *impossible* for `β` with a fixed-point-free endomap. -/
+-- [ZP-CUSTOM] no Mathlib named predicate | reason: Mathlib proves Lawvere's theorem (Function.exists_fixed_point_of_surjective) but exposes no reusable predicate for the diagonal hypothesis (β admits a point-surjection α → (α → β)). Naming it lets the face-split state, per face, whether the hypothesis holds (Set faces refuted by Cantor; computability face genuine). Naming alias (cf. IsComputationalQuine); every theorem reduces to the Mathlib lemma, no new axiomatic content.
 def HasLawvereWitness (β : Type*) : Prop :=
   ∃ (α : Type*) (f : α → α → β), Function.Surjective f
 
