@@ -68,6 +68,7 @@ section ChoiceFreeStructural
 #print axioms ZeroParadox.ZPH_PowerSet.ps_structural_floor   -- [propext, Quot.sound]
 #print axioms ZeroParadox.ZPJ_WheelFrac.instWheel                -- [propext, Quot.sound]
 #print axioms ZeroParadox.ZPJ_WheelFrac.inf_ne_bot               -- [propext, Quot.sound]
+#print axioms ZeroParadox.ZPJ_QuineDichotomy.quine_self_members_eq_bot  -- [propext, Quot.sound]  (Quine-atom identity = {⊥})
 
 end ChoiceFreeStructural
 
@@ -83,5 +84,7 @@ section WhereChoiceEnters
 #print axioms ZeroParadox.ZPH_TopFunctor.fB_functor          -- [propext, Classical.choice, Quot.sound]  (TopCat)
 #print axioms ZeroParadox.ZPH_HilbFunctor.fD_functor         -- [propext, Classical.choice, Quot.sound]  (ModuleCat ℂ)
 #print axioms ZeroParadox.ZPH_InfoFunctor.fC_functor         -- [propext, Classical.choice, Quot.sound]  (KleisliCat PMF)
+#print axioms ZeroParadox.ZPF_SnapDichotomy.snap_dichotomy   -- [propext, Classical.choice, Quot.sound]  (snap-occurrence dichotomy, ℝ/ℚ_p)
+#print axioms ZeroParadox.ZPJ_QuineDichotomy.quine_dichotomy -- [propext, Classical.choice, Quot.sound]  (Quine-atom structural μ/ν fork)
 
 end WhereChoiceEnters

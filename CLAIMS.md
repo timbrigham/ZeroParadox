@@ -49,6 +49,7 @@ No `Classical.choice`; at most propositional extensionality and quotient soundne
 | ∞ ≠ ⊥ | The wheel's infinity is distinct from its bottom | `ZPJ_WheelFrac.inf_ne_bot` | [propext, Quot.sound] |
 | Fixed-point fork | lfp/gfp collapse iff the operator has a unique fixed point | `ZPP.fork_collapse_iff` (with `fork_le`, `collapse_of_unique`, `unique_of_collapse`) | [propext, Quot.sound] |
 | Coalgebra fork (μ side) | `Fix` empty — choice-free | `ZPP.fix_isEmpty` | [propext, Quot.sound] |
+| Quine-atom identity | The self-referential fixed points are exactly {⊥} (unique, and = ⊥) | `ZPJ_QuineDichotomy.quine_self_members_eq_bot` | [propext, Quot.sound] |
 
 ## Tier 3 — Proved, inherits `Classical.choice` from Mathlib (analytic realizations)
 
@@ -66,6 +67,8 @@ These *realize* the snap floor inside standard analytic structures and inherit `
 | Kleene–ordinal bridge | MachinePhase → ℤ₂; quine ∧ ε₀ co-witnessed | `ZPM.zpm_triangle` |
 | ℝ ≠ ℚ₂ (Ostrowski) | number-system instance of the fork | `ZPP.real_not_equiv_padic`, `ZPP.completions_exhaustive` |
 | No snap in ordered fields | ℝ, ℚ as counterexamples | `ZPF.f_snap_impossible`, `ZPF.r_snap_impossible` |
+| Snap-occurrence dichotomy | completions of ℚ: ℚ_p totally disconnected = snap, ℝ connected = no snap; Ostrowski exhaustive + exclusive | `ZPF_SnapDichotomy.snap_dichotomy` (with `padic_snaps`, `real_no_snap`) |
+| Quine-atom dichotomy (structural) | μ/ν fork — the self-referential object exists on ν (non-well-founded), not μ; the "Quine atom ⟺ AFA" reading is metatheoretic (Tier 4), not this theorem | `ZPJ_QuineDichotomy.quine_dichotomy` |
 | T-IZ (full chain) | the complete Inside-Zero chain — inherits choice only via its ZP-K/DA-1 step (the limit-step lemma alone is axiom-free, Tier 1) | `ZPI.t_iz_complete` |
 
 *Whether this inherited dependence is structurally forced by the snap geometry or merely incidental to Mathlib's implementation is **open** (see Tier 6). The one layer classified so far (the `ZPB_PadicTree` choice-probe) found it mostly incidental and routable.*
