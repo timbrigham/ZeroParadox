@@ -9,7 +9,10 @@ import Mathlib.Topology.Connected.PathConnected
 
 ## Engineer's Take
 
-TODO (Tim): Engineer's Take — your own words.
+This layer shows the exact edge between ℝ and ℚ_p using Ostrowski's theorem, and shows that the two
+diverge into different branches specifically due to how they treat their respective bottom element. It is an
+example of how incompatible structures can be built by flipping a single bit of logic — notably, the
+treatment of zero.
 
 ## Overview
 
