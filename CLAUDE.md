@@ -118,11 +118,17 @@ GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASE
 
 ### Release workflow
 
-When Tim initiates a release: draft the `RELEASES.md` entry → PR → after merge, draft the GitHub Release body → **wait for explicit approval** → execute:
+When Tim initiates a release: draft the `RELEASES.md` entry + `.zenodo.json` → PR → after merge, **run the Release-Readiness Gate (`check_release_ready.py <tag>` must exit 0) and confirm its judgment checklist** → draft the GitHub Release body → **wait for explicit approval** → execute:
 ```
 gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"
 ```
-Then grab the Zenodo DOI badge and add to README.md in a follow-up commit.
+After release, confirm the Zenodo snapshot minted (query `https://zenodo.org/api/records/<conceptID>`). The README DOI badge is the **concept DOI** (`10.5281/zenodo.20060860`), which auto-resolves to the latest version — so **no per-release badge edit is needed** (confirmed v2.6, 2026-06-24). Only verify the snapshot exists; do not chase a badge update.
+
+**Release-Readiness Gate — mandatory hard gate before drafting the release body / cutting any tag.** Run from the repo root:
+```
+python .claude-local/check_release_ready.py <tag>
+```
+It must **exit 0** before the release body is drafted. The script mechanically verifies the deterministic release preconditions and **exits 1 (NO-GO)** on any blocking failure: Engineer's Takes filled (no `TODO (Tim)` / `TODO: Engineer` / empty take section), build-script hash integrity vs `register.md`, the `LEAN_CUSTOM_REGISTRY` invariant (`### ` entries == `[ZP-CUSTOM]` tags), `.zenodo.json` valid JSON, no conflict markers in tracked files, a `## <tag>` entry present in `RELEASES.md`, and every README/GUIDE-linked PDF exists. It also prints WARN-level hygiene checks (register↔script VERSION, `scripts/` mirror currency, untracked root PDFs) and a **judgment checklist** of the non-mechanizable items (editorial/adversary/claim-review/prior-art ran on the PR; companion sync; major-vs-minor decision; release body approved). It **consolidates** the `.zenodo.json` and Engineer's-Take checks below (kept individually documented for context) and adds the rest. The gate cannot hook `gh release create` (no git event for tag creation), so enforcement is procedural: **the gate must exit 0 AND its judgment checklist must be confirmed before the release body is drafted.** Lives in `.claude-local/` (gitignored, like `check_hashes.py`; `check_*` dev tools are not mirrored to `scripts/`); reuses `check_hashes.py` for register parsing. Spec: `.claude-local/notes/release_readiness_gate_2026-06-24.md`. (Added 2026-06-24 after `LEAN_CUSTOM_REGISTRY` went 18 days stale undetected at the v2.6 threshold — the scattered-checks model let it slip.)
 
 **`.zenodo.json` check — mandatory before every release:** Read `.zenodo.json` and verify the `description` field accurately reflects the current layer count and layer list. Update it in the same PR as `RELEASES.md` if anything is stale. Zenodo reads this file at release creation time; it cannot be updated retroactively via the repo (only via the Zenodo web UI).
 
