@@ -25,6 +25,8 @@ No snap-specific axioms appear anywhere in the framework. The Binary Snap - the 
 - **Not a claim that zero is paradoxical in all of mathematics** - the paradox is local to this framework's structure
 - **Not a logical contradiction** - the framework is internally consistent throughout
 
+**On vocabulary.** The framework aims for precision by using the *established* term for each structure it describes - the recognized name from the relevant field, not a coinage of its own. (Its own results carry reference labels - T-SNAP, MC-1, and the like - as any formal development assigns; those are identifiers for specific results, not invented vocabulary for existing structures.) A deliberate consequence is that its language draws on concepts from many backgrounds: set theory, category theory, proof theory, computability, valuation theory, and others. Borrowing a field's precise vocabulary is not a claim to results in that field; the framework's assertions are confined to the mathematics it formally establishes, and where its structures resemble ideas in other domains, those resemblances are named as such, never asserted as results there.
+
 ---
 
 ## Entry Point
