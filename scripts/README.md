@@ -77,7 +77,6 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_foreword.py](build_foreword.py) | `Zero_Paradox_Foreword.pdf` |
 | [build_tools.py](build_tools.py) | `ZP_Tools_and_Methods.pdf` |
 | [build_zp_philosophical_question.py](build_zp_philosophical_question.py) | `ZP_Philosophical_Question.pdf` |
-| [build_zp_reals_companion.py](build_zp_reals_companion.py) | Retired — superseded by build_zpf_companion.py (content merged into the ZP-F Counterexamples layer); script kept for source reference only, output PDF removed |
 
 ### Archive
 
