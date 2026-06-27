@@ -237,6 +237,10 @@ This rule applies to both directions:
 
 A hash mismatch is not just a "rebuild needed" signal — it means the version bump step was skipped. Do not rebuild without incrementing the version number.
 
+## Starting a New File — Use the Templates
+
+**Before creating any new file** — a ZP-X Lean file, a PDF build script, or a root markdown doc — read `.claude-local/templates/README.md` and start from the matching template there. Do not seed a new file by copying the nearest-looking existing one; that is how conventions drift (missing Engineer's Take, version string in the wrong place, no PurityCheck block, hardcoded date). The templates bake in the conventions documented in this file; the README is the per-type checklist and points back to the relevant section here for detail.
+
 ## PDF Build Standards
 
 **Before building any PDF in this project** — formal layer, companion, or otherwise — read `.claude-local/PDF_Rendering_Standards.md`. It is the single authoritative source for font stack, glyph rendering, table cell formatting, HTML entities, subscript/superscript rules, and pre-build verification. All rules there apply to every PDF build without exception.
