@@ -8,8 +8,6 @@ translation / external readers): *the metatheoretic boundary where ⊥'s self-re
 internalized.* ("Wall" is a flagged metaphor-nickname per the project idiom rule; the precise term is the
 gloss.)
 
-PRIVATE / exploratory (private/physics-bridge); promotable — depends only on Mathlib, no physics.
-
 Across five separate pushes (fork unification, the Quine atom CC-2, MC-1, "realization is the choice",
 the faithfulness criterion) the framework keeps landing on the SAME boundary: a structural shadow Lean's
 well-founded kernel CAN host, plus a metatheoretic residue it CANNOT. This file represents that boundary
@@ -56,9 +54,8 @@ Foundation," the in-kernel refutation of the literal Quine atom.
 The wall is not one theorem — its structure is the MAP from a held-fixed condition-set to the PRECISE
 failure signature self-reference produces there. `wf_no_selfloop` is the well-founded-set entry; the rest
 are proved in their own modules, each a checkable witness whose hypotheses ARE the conditions. Method:
-hold one condition-set fixed, characterize the exact failure, then read the pattern across them (the
-physics-bridge experiment discipline turned on the math; the same process that narrowed MC-1 and that
-EXTRACTED `wf_no_selfloop` itself).
+hold one condition-set fixed, characterize the exact failure, then read the pattern across them (the same
+experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloop` itself).
 
 | Condition-set held fixed | Failure SIGNATURE | Theorem (module) | Footprint |
 |---|---|---|---|
