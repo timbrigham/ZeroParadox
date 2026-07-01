@@ -4,7 +4,7 @@
 
 [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
-For the formal framework index, Lean verification, and complete question register, see [README](README.md).
+For a dictionary and map of ⊥ - the object the whole framework is built on - see [The Bottom Element](BOTTOMELEMENT.md). For the formal framework index, Lean verification, and complete question register, see [README](README.md).
 
 ---
 
@@ -46,6 +46,8 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 ---
 
 ## Reading Paths
+
+**Before any path:** [The Bottom Element (⊥)](BOTTOMELEMENT.md) - a dictionary and map of the object the whole framework is built on. It orients you to ⊥, and to what is proved versus still open about it, before you follow any route below.
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 

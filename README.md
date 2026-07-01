@@ -7,6 +7,8 @@
 
 For plain-language introduction, illustrated companions, and reading paths, see [GUIDE](GUIDE.md). For the claim-by-claim status of every result - proved / argued / open, with Lean witnesses and exact axiom profiles - see the [Claims Ledger](CLAIMS.md).
 
+**New to the framework?** [The Bottom Element (⊥)](BOTTOMELEMENT.md) is a dictionary and map of ⊥, the object the whole framework is built on. It catalogues what ⊥ is, what it cannot be, and where each characterization is established, most with a machine-checked Lean witness linked to the source. Start there for orientation, then return here for the formal index.
+
 ---
 
 ## Contents

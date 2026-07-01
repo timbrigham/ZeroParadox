@@ -78,6 +78,12 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_tools.py](build_tools.py) | `ZP_Tools_and_Methods.pdf` |
 | [build_zp_philosophical_question.py](build_zp_philosophical_question.py) | `ZP_Philosophical_Question.pdf` |
 
+### Reference document generators (markdown, not PDF)
+
+| File | Current output |
+|------|---------------|
+| [build_dictionary_map.py](build_dictionary_map.py) | `BOTTOMELEMENT.md` — the ⊥ dictionary-and-map reference at the repo root. Unlike the PDF builders, this emits GitHub-rendered markdown. It resolves every witness name against the Lean corpus at generation time, so a link only appears if the declaration exists in the source; edit the flat data and rerun to update. |
+
 ### Archive
 
 | File | Notes |
