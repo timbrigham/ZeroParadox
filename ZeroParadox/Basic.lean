@@ -31,6 +31,8 @@ import ZeroParadox.ZPP_Coalgebra
 import ZeroParadox.ZPJ_Lawvere
 import ZeroParadox.ZPJ_Boundary
 import ZeroParadox.ZPJ_BoundaryBridge
+import ZeroParadox.ZPF_SnapDichotomy
+import ZeroParadox.ZPJ_QuineDichotomy
 
 /-!
 # Zero Paradox — Library Root

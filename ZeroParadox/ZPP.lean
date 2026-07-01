@@ -9,7 +9,8 @@ point** (Knaster–Tarski; Mathlib's `OrderHom.lfp` / `OrderHom.gfp`), and these
 single point exactly when the map has a unique fixed point. The intended reading is that a
 self-referential operator's least fixed point is its inductive / well-founded closure and its greatest
 fixed point its coinductive / non-well-founded closure; that reading is the initial-algebra /
-final-coalgebra picture (a categorical setting), offered here as analogy — what is *proved* below is
+final-coalgebra picture (a categorical setting; the μ/ν theory of functor fixed points - Lambek 1968,
+Rutten 2000, Adámek-Milius-Moss), offered here as analogy — what is *proved* below is
 purely the order-theoretic lfp/gfp statement. In the Zero Paradox the single collapse point is the
 diagonal fixed point ⊥ (the self-containing bottom).
 

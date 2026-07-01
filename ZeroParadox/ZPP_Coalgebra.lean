@@ -112,6 +112,16 @@ section PurityCheck
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty
 #print axioms categorical_fork_strict
+
+/- **M3 metric — the fork choice discriminator (lake build, 2026-06-27).** The per-side footprint is
+   a genuine SPLIT, and that split is the measured invariant of the fork: the μ (initial-algebra,
+   well-founded) side `fix_isEmpty` is choice-free `[propext, Quot.sound]`, while the ν (final-coalgebra,
+   non-well-founded) side `cofix_nonempty` carries `[propext, Classical.choice, Quot.sound]`;
+   `categorical_fork_strict` inherits ν's choice. So choice is the discriminator between the two ends of
+   the fork at this abstract polynomial-functor level. (Contrast M1: at the concrete Mathlib-category
+   realization the analogous split is invisible — every functor is uniformly choice-carrying because the
+   library proves it with choice. The ν choice here is likewise a Mathlib M-type artifact, not a
+   necessity — Veltri, FSCD 2021 — so the discriminator is real but its structural status is fenced.) -/
 end PurityCheck
 
 end ZeroParadox.ZPP

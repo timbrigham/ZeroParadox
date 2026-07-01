@@ -91,8 +91,29 @@ end ZeroParadox.ZPH_MC1
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox.ZPH_MC1 ZeroParadox.ZPH_TopFunctor ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
 
+-- M1 metric: per-functor choice footprint of the three MC-1 correspondence realizations.
+-- F_B / TopCat
+#print axioms fB_functor
+#print axioms fB_bottom_is_limit
+-- F_D / ModuleCat ℂ
+#print axioms fD_functor
+#print axioms fD_zero_isInitial
+-- F_C / KleisliCat PMF
+#print axioms fC_functor
+#print axioms fC_zero_isInitial
+#print axioms fC_no_return
+-- Capstone
 #print axioms mc1_correspondence
+
+/- **M1 result (lake build, 2026-06-27).** All eight — `fB_functor`, `fB_bottom_is_limit`,
+   `fD_functor`, `fD_zero_isInitial`, `fC_functor`, `fC_zero_isInitial`, `fC_no_return`,
+   `mc1_correspondence` — footprint `[propext, Classical.choice, Quot.sound]`. The footprint is
+   UNIFORM, not split: the kernel/fiber prediction (bottom choice-free / realization choice-bearing)
+   is invisible here — even the bottom-identification `fB_bottom_is_limit` carries choice. That
+   `Classical.choice` is inherited Mathlib tooling (TopCat / ModuleCat ℂ / KleisliCat PMF +
+   category-theory machinery), NOT shown to be structural; separating library-vs-structural needs a
+   choice-minimal re-derivation, not this footprint pass. -/
 
 end PurityCheck
