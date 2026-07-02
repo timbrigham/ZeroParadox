@@ -86,12 +86,40 @@ def prefix_of(fn):
     m = re.match(r"(ZP[A-Z])", fn)
     return m.group(1) if m else "(misc)"
 
+def clean_lines(f):
+    """Yield (lineno, code) with comments removed, so NS/SEC/END/DECL never match keyword
+    words inside docstrings/comments. Handles NESTED block comments `/- /- -/ -/` (incl. `/--`
+    docstrings and `/-!` module docs — both are `/-` variants) and `--` line comments; block
+    state persists across lines. Line numbers are preserved. (Heuristic: does not model string
+    literals containing `/-`/`--`; the Lean build is the authoritative check.)
+
+    Rationale: WITHOUT this, a docstring line `theorem and cannot be…` became a phantom decl
+    `and`, and a prose line `end inward…` popped the namespace stack — mis-qualifying real
+    decls (e.g. ZPG.t6 recorded bare). Caught by the trust-root check 2026-07-01."""
+    depth = 0
+    for ln, line in enumerate(f, 1):
+        out, i, n = [], 0, len(line)
+        while i < n:
+            two = line[i:i+2]
+            if depth == 0:
+                if two == "--":
+                    break                      # line comment: ignore rest of line
+                if two == "/-":
+                    depth += 1; i += 2; continue
+                out.append(line[i]); i += 1
+            else:
+                if two == "-/":
+                    depth -= 1; i += 2; continue
+                if two == "/-":
+                    depth += 1; i += 2; continue
+                i += 1
+        yield ln, "".join(out)
+
 def scan_file(path):
     stack, out, file_sorry = [], [], False
     with open(path, encoding="utf-8") as f:
-        for ln, line in enumerate(f, 1):
-            # crude sorry detection (ignores string/comment edge cases; the build is the real check)
-            if SORRY.search(line) and not line.lstrip().startswith("--"):
+        for ln, line in clean_lines(f):
+            if SORRY.search(line):             # sorry in a comment no longer counts (cleaned)
                 file_sorry = True
             if NS.match(line):
                 stack.append(("ns", NS.match(line).group(1))); continue
