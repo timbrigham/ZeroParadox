@@ -55,3 +55,15 @@ every run:
    null-named, file+line-keyed entries) if a complete census is ever wanted.
 
 Both policies must be applied consistently by every scan for the conservation guarantee to hold.
+
+## The published registry (`registry_export.json`) and its vocabulary (`tag_vocab.json`)
+
+`registry_export.json` is the validated, byte-stable `export_full` output of the SSOT registry — the
+1012-declaration inventory enriched with an **ontology overlay**: per-declaration `object` / `domain` /
+`role` tags (each a controlled, multi-valued list). `tag_vocab.json` is the controlled vocabulary those
+tags are drawn from — the allowed values for each axis, their cardinalities, and one-line glosses.
+
+**Status: work in progress (this is a dedicated working branch).** The ontology tagging is mid-pass —
+domains are largely assigned, roles partially, and a batch of experimental-campaign results are
+provisionally marked `scaffolding` pending a load-bearing/decorative reclassification. It is a snapshot of
+active work, not a finalized layer.

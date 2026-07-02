@@ -1,0 +1,44 @@
+{
+  "object": {
+    "values": ["bottom", "ceiling", "snap"],
+    "cardinality": {"min": 0, "max": 1},
+    "kinds": {"bottom": "noun", "ceiling": "noun", "snap": "verb"},
+    "glosses": {
+      "bottom": "NOUN (thing). ⊥ — the diagonal fixed point; the framework's one dominant object. Faces span every domain.",
+      "ceiling": "NOUN (thing). ε₀ — the ordinal the snap lands at; the endpoint the bottom rises to.",
+      "snap": "VERB (act). the ⊥ → ε₀ transition itself (T-SNAP, DA-1, dichotomy). DISTINCT from `bottom` — noun vs verb; folding = category error."
+    }
+  },
+  "domain": {
+    "values": ["algebra", "category", "computability", "information", "logic", "order", "ordinal", "reals", "set-theory", "state", "valuation"],
+    "cardinality": {"min": 1, "max": null},
+    "glosses": {
+      "algebra": "algebraic structures beyond the core lattice — wheels, meadows (totalized division), rings/fields. ZPJ_Wheel/WheelFrac. Umbrella bucket for algebra edge cases, kept intentionally broad.",
+      "category": "category theory — functors, initial/terminal objects, ZPCategory. ZP-G, ZP-H.",
+      "computability": "computation, recursion, self-application, the Kleene fixed point. ZP-K, ZP-J self-app.",
+      "information": "information theory — surprisal, entropy, no-external-description. ZP-C.",
+      "logic": "propositional / predicate logic — the pure negation / diagonal engine (¬(p↔¬p)), the fixed-point-free root of the diagonal family. USE SPARINGLY, LAST-RESORT: only when no more specific domain fits — prefer computability (deciders / Bool / Turing), set-theory (Cantor / Russell / Foundation), or category (Lawvere) whenever the decl actually sits there. A peer sparse bucket, NOT a super-category. Currently exactly one member: ZPP_Wall.negation_no_fixedpoint (pure-Prop engine, homeless in every other bucket).",
+      "order": "lattice / order algebra — join-semilattice, ⊔, ≼, bottom axiom A4, T-SNAP setting. ZP-A, ZP-E.",
+      "ordinal": "ordinals, CNF, ε₀, Gentzen, independence. ZP-L, ZP-M, ZP-N, ZP-P (Goodstein/KirbyParis/Kruskal).",
+      "reals": "the real numbers — counterexample layer where the snap fails (density). ZP-F.",
+      "set-theory": "non-well-founded set theory — AFA, Quine atom, APG, Aczel, coalgebra. ZP-J, ZP-P, ZP-I.",
+      "state": "the state / Hilbert-space layer — orthogonality, state space. ZP-D.",
+      "valuation": "p-adic valuation, absolute values, Ostrowski, Bruhat-Tits tree. ZP-B, ZP-P (Ostrowski)."
+    }
+  },
+  "role": {
+    "values": ["bridge", "commitment", "core", "face", "go", "infra", "no-go", "scaffolding", "schema"],
+    "cardinality": {"min": 1, "max": 1},
+    "glosses": {
+      "bridge": "a transform connecting two domains (ZPH functors). An EDGE, not a cell.",
+      "no-go": "an apophatic / obstruction result — establishes what ⊥ is NOT (no morphism, not-initial, counterexample, negation has no fixed point). The framework's fence made first-class. ~87 candidates in the corpus (padic_bottom_not_initial, negation_no_fixedpoint, the *_NoGo/*_Obstruction files, the reals counterexample, the wall ZPP_Wall). NOTE: role is ALSO a hardcoded sjv schema enum, so this needs the sjv-side role enum updated (see interop).",
+      "commitment": "a labeled modeling commitment / identity claim (MC-1). Held, not proved.",
+      "core": "a central load-bearing result (T-SNAP, the Quine-atom keystone).",
+      "face": "a (object, domain) cell — an object realized inside one domain.",
+      "go": "a confirmed-POSITIVE gauge result — a probe/construction that SUCCEEDS (the GO verdict), the positive complement of `no-go`. Marks the experimental campaign's confirmed positives (a connection/convergence/construction that works). Distinct from `face`: `go` is a gauge VERDICT on a probe (did it work?), `face` is a structural ⊥-realization in a domain. From the no-go-gauge campaign — GO and NO-GO are the matched verdict pair. Like no-go, apply SPARINGLY (headline probe verdicts, not every positive lemma).",
+      "infra": "non-framework build scaffolding (Basic, AxiomProfile). Vendored EXCLUDED, not tagged.",
+      "scaffolding": "a helper/stepping-stone decl, not a headline claim.",
+      "schema": "structure ABOUT the matrix — the synthesis/meta layer (ZP-P fork, the diagonal-fixed-point keystone)."
+    }
+  }
+}
