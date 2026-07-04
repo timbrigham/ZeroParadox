@@ -64,7 +64,8 @@ the claims-layer work it is a **multi-collection envelope**, not a bare declarat
 ```
 { "collections": {
     "declarations": { "entries": [...], "vocab": {...}, "anchor": {...}, "counts": {...} },
-    "claims":       { "entries": [...], "vocab": {...} } },
+    "claims":       { "entries": [...], "vocab": {...} },
+    "deps":         { "entries": [...] } },
   "store_version": "2" }
 ```
 
@@ -76,6 +77,13 @@ the claims-layer work it is a **multi-collection envelope**, not a bare declarat
   `claims.witness_of`. The store enforces a cross-collection invariant: a `proved`/`deep` claim is
   refused unless a sorry-free declaration witnesses it, so the published graph cannot overstate the
   formal evidence.
+- **`collections.deps.entries`** — the declaration-level **dependency graph**: directed edges
+  `{from, to, kind}` where `from` compiles-depends on `to` (`kind` = `type` if the dependency appears in
+  the dependent's signature, else `proof`). Extracted mechanically from the Lean environment
+  (`ZeroParadox/Meta/ExtractDeps.lean` → `deps_build.py`), it is derived data — re-extracted and
+  whole-collection-replaced, never hand-curated. Endpoints reference declaration `qualified` names; the
+  store refuses any edge whose endpoint is not a live declaration (no dangling edges). This is the backbone
+  for the eventual codebase restructure (validating a proposed `new.*` module layout against the import DAG).
 
 `tag_vocab.json` is the controlled vocabulary the declaration tags are drawn from — the allowed values
 for each axis, their cardinalities, and one-line glosses. (Consumers should read the
