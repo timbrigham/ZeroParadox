@@ -58,10 +58,29 @@ Both policies must be applied consistently by every scan for the conservation gu
 
 ## The published registry (`registry_export.json`) and its vocabulary (`tag_vocab.json`)
 
-`registry_export.json` is the validated, byte-stable `export_full` output of the SSOT registry — the
-1012-declaration inventory enriched with an **ontology overlay**: per-declaration `object` / `domain` /
-`role` tags (each a controlled, multi-valued list). `tag_vocab.json` is the controlled vocabulary those
-tags are drawn from — the allowed values for each axis, their cardinalities, and one-line glosses.
+`registry_export.json` is the validated, byte-stable `export_full` output of the SSOT registry. As of
+the claims-layer work it is a **multi-collection envelope**, not a bare declaration list:
+
+```
+{ "collections": {
+    "declarations": { "entries": [...], "vocab": {...}, "anchor": {...}, "counts": {...} },
+    "claims":       { "entries": [...], "vocab": {...} } },
+  "store_version": "2" }
+```
+
+- **`collections.declarations.entries`** — the ~1012-declaration inventory enriched with an **ontology
+  overlay**: per-declaration `object` / `domain` / `role` tags (each a controlled, multi-valued list).
+- **`collections.claims.entries`** — the curated **claim graph**: ⊥-face domain nodes, the adjudicated
+  inter-domain edges, and the free-standing keystones. Each claim carries a `status`
+  (`proved`/`deep`/`corr`/`conj`/`commitment`), and a declaration links back to a claim via its
+  `claims.witness_of`. The store enforces a cross-collection invariant: a `proved`/`deep` claim is
+  refused unless a sorry-free declaration witnesses it, so the published graph cannot overstate the
+  formal evidence.
+
+`tag_vocab.json` is the controlled vocabulary the declaration tags are drawn from — the allowed values
+for each axis, their cardinalities, and one-line glosses. (Consumers should read the
+`collections.declarations.entries` path; the legacy top-level `entries` shape is superseded. The
+`tools/render/` extractor handles both shapes transparently.)
 
 **Status: work in progress (this is a dedicated working branch).** The ontology tagging is mid-pass —
 domains are largely assigned, roles partially, and a batch of experimental-campaign results are

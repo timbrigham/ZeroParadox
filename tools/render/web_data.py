@@ -44,10 +44,21 @@ def _short(e):
     return o.get("short") or (o.get("qualified") or "?").split(".")[-1]
 
 
+def _decls_and_anchor(reg):
+    """Return (declaration entries, anchor) for BOTH export shapes:
+    the legacy decl-only export ({entries, anchor, ...}) and the current
+    multi-collection envelope ({collections: {declarations, claims}, store_version}).
+    The renderers stay shape-agnostic so a republish cannot break them."""
+    if "collections" in reg:                       # multi-collection envelope
+        dc = reg["collections"].get("declarations") or {}
+        return dc.get("entries") or [], dc.get("anchor") or {}
+    return reg.get("entries") or [], reg.get("anchor") or {}   # legacy decl-only
+
+
 def load(export_path=None):
     path = export_path or DEFAULT_EXPORT
     reg = json.load(open(path, encoding="utf-8"))
-    ent = reg["entries"]
+    ent, anchor = _decls_and_anchor(reg)
 
     face_reps = defaultdict(list)      # domain -> [decl names] realizing object=bottom
     edges = {}                         # (a,b,role) -> [decl names]
@@ -88,9 +99,58 @@ def load(export_path=None):
     edge_list.sort(key=lambda e: (e["role"], -e["count"]))
 
     hubs = [n["domain"] for n in sorted(nodes, key=lambda n: -n["degree"])[:2]]
-    src_hash = (reg.get("anchor") or {}).get("commit", "")
+    src_hash = anchor.get("commit", "")
     return {"nodes": nodes, "edges": edge_list, "hubs": hubs,
-            "n_decls": len(ent), "source": path}
+            "n_decls": len(ent), "source": path, "src_hash": src_hash}
+
+
+def load_claims(export_path=None):
+    """Extract the curated CLAIM GRAPH (sjv `claims` collection) from the envelope
+    export: the ⊥-face domain nodes, the adjudicated inter-domain edges, and the
+    free-standing keystones. Live-witness counts are recomputed from the
+    declarations collection (a claim is backed iff a sorry-free decl carries it in
+    `claims.witness_of`) — the same join the store's gate enforces, so the drawn
+    status cannot outrun the evidence. Returns {} if the export carries no claims
+    collection (legacy decl-only export)."""
+    path = export_path or DEFAULT_EXPORT
+    reg = json.load(open(path, encoding="utf-8"))
+    claims_c = (reg.get("collections") or {}).get("claims") or {}
+    citems = claims_c.get("entries") or []
+    decls, _anchor = _decls_and_anchor(reg)
+
+    live = defaultdict(int)                    # claim_id -> # live (sorry-free) witnesses
+    wit_names = defaultdict(list)              # claim_id -> [witness short names]
+    for e in decls:
+        sf = (e.get("verify") or {}).get("sorry_free")
+        for cid in ((e.get("claims") or {}).get("witness_of") or []):
+            if sf:
+                live[cid] += 1
+                wit_names[cid].append(_short(e))
+
+    def _rec(c):
+        cid = c["claim_id"]
+        return {"id": cid, "status": c.get("status"), "statement": c.get("statement", ""),
+                "domain": c.get("domain") or [], "object": c.get("object") or [],
+                "from": c.get("from"), "to": c.get("to"), "date": c.get("date"),
+                "live": live.get(cid, 0), "witnesses": wit_names.get(cid, [])}
+
+    nodes, keystones, edges = [], [], []
+    for c in citems:
+        r = _rec(c)
+        if r["from"] and r["to"]:
+            edges.append(r)
+        elif r["id"].startswith("node-"):
+            nodes.append(r)
+        else:
+            keystones.append(r)
+
+    nodes.sort(key=lambda r: r["id"])
+    keystones.sort(key=lambda r: r["id"])
+    edges.sort(key=lambda r: r["id"])
+    from collections import Counter
+    counts = dict(Counter(c.get("status") for c in citems))
+    return {"nodes": nodes, "keystones": keystones, "edges": edges,
+            "counts": counts, "n_claims": len(citems), "source": path}
 
 
 if __name__ == "__main__":
