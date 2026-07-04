@@ -1016,9 +1016,11 @@
         "domain": [
           "ordinal"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
-          "scaffolding"
+          "face"
         ]
       },
       "reason": null,
@@ -13153,9 +13155,11 @@
           "ordinal",
           "valuation"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
-          "scaffolding"
+          "bridge"
         ]
       },
       "reason": null,
@@ -14533,9 +14537,11 @@
         "domain": [
           "ordinal"
         ],
-        "object": [],
+        "object": [
+          "ceiling"
+        ],
         "role": [
-          "scaffolding"
+          "face"
         ]
       },
       "reason": null,
@@ -16473,7 +16479,9 @@
         "domain": [
           "category"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
           "no-go"
         ]
@@ -20577,11 +20585,14 @@
       },
       "ontology": {
         "domain": [
-          "unscoped"
+          "information",
+          "state"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
-          "scaffolding"
+          "face"
         ]
       },
       "reason": null,
@@ -22834,9 +22845,11 @@
         "domain": [
           "order"
         ],
-        "object": [],
+        "object": [
+          "snap"
+        ],
         "role": [
-          "scaffolding"
+          "face"
         ]
       },
       "reason": null,
@@ -23595,11 +23608,14 @@
       },
       "ontology": {
         "domain": [
-          "unscoped"
+          "order",
+          "state"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
-          "scaffolding"
+          "bridge"
         ]
       },
       "reason": null,
@@ -26320,7 +26336,7 @@
       },
       "ontology": {
         "domain": [
-          "unscoped"
+          "set-theory"
         ],
         "object": [],
         "role": [
@@ -28322,9 +28338,11 @@
           "set-theory",
           "computability"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
-          "scaffolding"
+          "core"
         ]
       },
       "reason": null,
@@ -30567,7 +30585,9 @@
         "domain": [
           "category"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
           "no-go"
         ]
@@ -30709,11 +30729,14 @@
       },
       "ontology": {
         "domain": [
-          "unscoped"
+          "category",
+          "computability",
+          "order",
+          "set-theory"
         ],
         "object": [],
         "role": [
-          "scaffolding"
+          "schema"
         ]
       },
       "reason": null,
@@ -33325,7 +33348,9 @@
         "domain": [
           "category"
         ],
-        "object": [],
+        "object": [
+          "bottom"
+        ],
         "role": [
           "no-go"
         ]
