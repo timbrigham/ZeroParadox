@@ -127,7 +127,7 @@ section CannotBeIndex
 #check @ZeroParadox.ZPH_MC1_TC23.doublyStochastic_stationary_not_subsingleton
 
 /-! ### the p-adic floor cannot be reached from within / matched to the Markov rate -/
-#check @ZeroParadox.ZPH_MC1_TC28.padic_orbit_never_reaches_zero
+#check @ZeroParadox.padic_orbit_never_reaches_zero
 #check @ZeroParadox.ZPH_MC1_TC33.no_rate_conjugacy
 #check @ZeroParadox.ZPH_MC1_TC33.no_rate_orderIso
 
@@ -308,7 +308,7 @@ section CannotBeIndex
 -- NO RETURN: no morphism back into ⊥ from a nonempty object (one-way departure, ZP-H).
 #check @ZeroParadox.ZPH_InfoFunctor.fC_no_return
 -- APPROACH (μ, finite time): well-founded descent reaches ⊥ in finitely many steps.
-#check @ZeroParadox.ZPH_MC1_TC28.pred_orbit_reaches_floor
+#check @ZeroParadox.pred_orbit_reaches_floor
 -- APPROACH (ν, limit): the doubling orbit converges to ⊥ in the 2-adic metric.
 #check @ZeroParadox.ZPH_MC1_TC05.doubling_orbit_tendsto_zero
 -- IRREVERSIBLE, categorical: even given ⊥ → X there is no X → ⊥ (chains from ⊥ are forward-only).

@@ -92,7 +92,7 @@ the framework reading; the Lean proves the separation under the stated predicate
 well-foundedness obstruction in the proof term of the μ side.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC28
+namespace ZeroParadox
 
 open ZeroParadox.ZPB
 open Filter Topology
@@ -220,7 +220,7 @@ theorem floor_reach_separates_mu_nu :
     ⟨pred_orbit_reaches_floor,
       ZPH_MC1_TC05.doubling_orbit_tendsto_zero x, padic_orbit_not_reaches_floor x hx⟩
 
-end ZeroParadox.ZPH_MC1_TC28
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -229,7 +229,7 @@ end ZeroParadox.ZPH_MC1_TC28
 construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC28
+open ZeroParadox
 
 #print axioms no_infinite_descent
 #print axioms descent_with_strict_steps_reaches_floor

@@ -72,7 +72,7 @@ incommensurability, exactly as the campaign predicted. This is a clean obstructi
 result, completing the cross-root edge set at the categorical-witness level.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC50
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 open ZeroParadox.ZPB
@@ -146,7 +146,7 @@ theorem colimit_limit_cross_root :
       node3_isLimit.lift floorCone = 𝟙 floorCone.pt) :=
   ⟨⟨node4_isColimit⟩, ⟨node3_isLimit⟩, node4_node3_arrow_asymmetry⟩
 
-end ZeroParadox.ZPH_MC1_TC50
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -155,7 +155,7 @@ end ZeroParadox.ZPH_MC1_TC50
 TC10 / TC24 witnesses. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC50
+open ZeroParadox
 
 #print axioms node4_isColimit
 #print axioms node4_no_incoming
