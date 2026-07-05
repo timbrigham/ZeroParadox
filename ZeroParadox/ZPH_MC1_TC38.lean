@@ -71,7 +71,7 @@ other here — so "the polynomial-functor seam and the zero-object seam are the 
 canonical-comparison iso (GO); the unification is fenced.
 -/
 
-namespace ZeroParadox.TC38
+namespace ZeroParadox
 
 open QPF
 open CategoryTheory
@@ -219,4 +219,4 @@ section PurityCheck
 #print axioms root_node_seam_no_identity
 end PurityCheck
 
-end ZeroParadox.TC38
+end ZeroParadox

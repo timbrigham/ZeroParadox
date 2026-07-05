@@ -142,9 +142,9 @@ section CannotBeIndex
 
 /-! ### μ/ν fork: the least-fixed-point (Fix) is EMPTY / does not match the greatest (no seam) -/
 #check @ZeroParadox.TC26.idPF_no_seam
-#check @ZeroParadox.TC32.binPF_no_seam
+#check @ZeroParadox.binPF_no_seam
 #check @ZeroParadox.ZPH_MC1_TC47.strict_fix_isEmpty
-#check @ZeroParadox.TC48.fix_isEmpty_constructive   -- choice-free (note: tighter purity)
+#check @ZeroParadox.fix_isEmpty_constructive   -- choice-free (note: tighter purity)
 #check @ZeroParadox.ZPH_MC1_TC49.fixToCofix_not_surjective
 
 /-! ### orbits that cannot reach ⊥ / cannot be matched (only contractions reach it) -/
@@ -157,7 +157,7 @@ section CannotBeIndex
 #check @ZeroParadox.ZPH_MC1_TC40.seam_not_mu_colimit_apex
 -- NB: `no_cross_setting_map` records absence-of-construction (no map EXHIBITED), NOT a proven
 -- impossibility (`IsEmpty (map)`). It is an OPEN-style "none given", not a NO-GO. See register D8.
-#check @ZeroParadox.TC42.no_cross_setting_map
+#check @ZeroParadox.no_cross_setting_map
 #check @ZeroParadox.isEmpty_hom_one_to_zero
 
 /-! ### cross-domain CANNOT-HAVE anchors (the exclusion recurs in other layers — corpus sweep 2026-06-30) -/

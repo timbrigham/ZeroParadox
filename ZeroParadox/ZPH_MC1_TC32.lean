@@ -60,7 +60,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.TC32
+namespace ZeroParadox
 
 open QPF
 
@@ -151,4 +151,4 @@ section PurityCheck
 #print axioms arity_collapse
 end PurityCheck
 
-end ZeroParadox.TC32
+end ZeroParadox
