@@ -47,7 +47,7 @@ Mathlib (neither is a ZP construction):
   (the load-bearing statement: same polarity, distinct cardinality). This is a *different* pair from
   the Kleisli/Hilbert pair, so Axis III is not a peculiarity of #4/#5.
 
-**The structural explanation (also in-statement, `axis_iii_is_pointedness`).** The two cardinality
+**The structural explanation (also in-statement, `initial_carrier_empty_or_subsingleton`).** The two cardinality
 classes are governed by a single binary distinction: whether the category's objects are forced to
 carry a distinguished point (a zero object). When they are not (`Type`, `KleisliCat PMF`,
 `TopCat`), the initial object is **empty** (card 0); when they are (`ModuleCat`, any category with a
@@ -109,7 +109,7 @@ theorem split_type_vs_module :
 
     Both the new pair (`PEmpty`/`PUnit`) and the original #4/#5 pair (`Fin 0`/`StateSpace 0`) sit at
     these same two endpoints, which is why the split is not special to Kleisli/Hilbert. -/
-theorem axis_iii_is_pointedness :
+theorem initial_carrier_empty_or_subsingleton :
     IsEmpty (PEmpty : Type 0) ∧ Subsingleton PUnit ∧
     IsEmpty (Fin 0) ∧ Subsingleton (ZeroParadox.ZPD.StateSpace 0) := by
   refine ⟨inferInstance, inferInstance, inferInstance, ?_⟩
@@ -144,7 +144,7 @@ open ZeroParadox.ZPH_MC1_TC09
 #print axioms type_initial_card0
 #print axioms module_initial_card1
 #print axioms split_type_vs_module
-#print axioms axis_iii_is_pointedness
+#print axioms initial_carrier_empty_or_subsingleton
 #print axioms two_independent_pairs
 
 end PurityCheck

@@ -103,7 +103,7 @@ theorem seam_role_not_transported :
     zero-object role in `ModuleCat ℂ` is not matched by any initial-object role of #3 in `TopCat`.
     Together: the seam #5 connects to the ν-limit node #3 only as a bare singleton, NOT as a literal
     categorical bridge — the NO-GO in the ν-direction. -/
-theorem tc34_no_bridge_to_nu_limit :
+theorem seam_no_categorical_bridge_padic :
     Subsingleton (StateSpace 0 → ↥({(0 : Q₂)} : Set Q₂))
     ∧ Limits.IsZero (fD_functor.obj 0)
     ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
@@ -124,6 +124,6 @@ open ZeroParadox.ZPH_MC1_TC34
 #print axioms generic_singleton_target_map_unique
 #print axioms seam_to_padic_map_unique
 #print axioms seam_role_not_transported
-#print axioms tc34_no_bridge_to_nu_limit
+#print axioms seam_no_categorical_bridge_padic
 
 end PurityCheck

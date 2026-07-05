@@ -35,12 +35,12 @@ This file runs one go/no-go cycle on the **μ/ν root asymmetry** between two bo
 
 **GO side — the asymmetry holds in the precise registered form:**
 
-1. `tc35_nat_floor_isLeast` — `IsLeast (Set.univ : Set ℕ) 0`: node #1's order-bottom μ-witness, a real
+1. `nat_zero_isLeast` — `IsLeast (Set.univ : Set ℕ) 0`: node #1's order-bottom μ-witness, a real
    least element of the whole order.
-2. `tc35_q2_floor_isLeast_norm` — `IsLeast (Set.range (‖·‖ : Q₂ → ℝ)) 0`: node #3 carries a least
+2. `q2_norm_floor_isLeast` — `IsLeast (Set.range (‖·‖ : Q₂ → ℝ)) 0`: node #3 carries a least
    element **only on the image of its norm**, i.e. in the *valuation/topological* register, not in an
    order on `Q₂` itself. This is the honest minimal-norm fact (`norm_zero` + `norm_nonneg`).
-3. `tc35_q2_norm_floor_unique` — `‖x‖ = 0 ↔ x = 0`: the minimal-norm point of `Q₂` is exactly the
+3. `q2_norm_eq_zero_iff` — `‖x‖ = 0 ↔ x = 0`: the minimal-norm point of `Q₂` is exactly the
    topological floor `0`, so the only "least" structure #3 supports lives on the metric, mapping the
    floor through `‖·‖`, not as an order-bottom of `Q₂`.
 
@@ -70,7 +70,7 @@ open ZeroParadox.ZPB
 
 /-- Node #1 (`0 : ℕ`), the well-founded proof-theory floor, is the **order-least** element of its
 ambient order — its native μ (initial/colimit) universal property as a least element. -/
-theorem tc35_nat_floor_isLeast : IsLeast (Set.univ : Set ℕ) 0 :=
+theorem nat_zero_isLeast : IsLeast (Set.univ : Set ℕ) 0 :=
   ⟨Set.mem_univ 0, fun n _ => Nat.zero_le n⟩
 
 /-! ## GO side: node #3's bottom is least only in the norm/valuation register -/
@@ -78,13 +78,13 @@ theorem tc35_nat_floor_isLeast : IsLeast (Set.univ : Set ℕ) 0 :=
 /-- The minimal-norm point of `Q₂` is exactly the topological floor `0`: `‖x‖ = 0 ↔ x = 0`.
 So the only "least" structure node #3 supports recovers the floor through the **norm**, not through an
 order on `Q₂`. -/
-theorem tc35_q2_norm_floor_unique (x : Q₂) : ‖x‖ = 0 ↔ x = 0 :=
+theorem q2_norm_eq_zero_iff (x : Q₂) : ‖x‖ = 0 ↔ x = 0 :=
   norm_eq_zero
 
 /-- Node #3 (`{0} ⊆ Q₂`) carries a least element **only on the image of its norm** in `ℝ`: `0` is the
 least value of `‖·‖ : Q₂ → ℝ`. This is the valuation/topological register (`norm_nonneg`,
 `norm_zero`), distinct from an order-bottom of `Q₂` itself. -/
-theorem tc35_q2_floor_isLeast_norm :
+theorem q2_norm_floor_isLeast :
     IsLeast (Set.range (fun x : Q₂ => ‖x‖)) 0 := by
   constructor
   · exact ⟨0, norm_zero⟩
@@ -97,17 +97,17 @@ theorem tc35_q2_floor_isLeast_norm :
 #3 supplies a least element only in the **norm image** (`Set.range (‖·‖ : Q₂ → ℝ)`), with the floor
 recovered by `‖x‖ = 0 ↔ x = 0`. Two different registers: order (μ-native, #1) vs valuation (ν-limit,
 #3). -/
-theorem tc35_root_asymmetry :
+theorem order_norm_floor_asymmetry :
     IsLeast (Set.univ : Set ℕ) 0
       ∧ IsLeast (Set.range (fun x : Q₂ => ‖x‖)) 0
       ∧ (∀ x : Q₂, ‖x‖ = 0 ↔ x = 0) :=
-  ⟨tc35_nat_floor_isLeast, tc35_q2_floor_isLeast_norm, tc35_q2_norm_floor_unique⟩
+  ⟨nat_zero_isLeast, q2_norm_floor_isLeast, q2_norm_eq_zero_iff⟩
 
 section PurityCheck
-#print axioms tc35_nat_floor_isLeast
-#print axioms tc35_q2_norm_floor_unique
-#print axioms tc35_q2_floor_isLeast_norm
-#print axioms tc35_root_asymmetry
+#print axioms nat_zero_isLeast
+#print axioms q2_norm_eq_zero_iff
+#print axioms q2_norm_floor_isLeast
+#print axioms order_norm_floor_asymmetry
 end PurityCheck
 
 end ZeroParadox.ZPH_MC1_TC35

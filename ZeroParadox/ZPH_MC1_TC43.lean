@@ -58,7 +58,7 @@ it separates #5 from #4, and adds **no new cardinality value** (the {0,1} dichot
 
 ### Capstone
 
-`tc43_axis_iii_over_floor` bundles both halves: (NO-GO) the floor is thin, so it has no
+`nat_floor_initial_singleton_homs` bundles both halves: (NO-GO) the floor is thin, so it has no
 Type-forgetful carrier; (GO) its hom-set carrier is a singleton, card-equal to a point and
 card-distinct from `Fin 0`. The delta over TC14: TC14 covered the two Type-forgetful endpoints; TC43
 adds #1 to the ledger and shows it does *not* break the {0,1} dichotomy — but only once the carrier
@@ -130,7 +130,7 @@ theorem floor_homset_not_equiv_fin0 (n : ℕ) :
     the {0,1} pointedness dichotomy of TC14 survives the addition of the proof-theory floor. The floor
     `0 : ℕ` is the genuine initial object of its category (`nat_floor_isInitial`), so this is the
     Axis-III reading of a real μ-bottom, not a contrived element. -/
-theorem tc43_axis_iii_over_floor :
+theorem nat_floor_initial_singleton_homs :
     (∀ x y : ℕ, Subsingleton (x ⟶ y)) ∧
     (∀ n : ℕ, Nonempty (Unique ((0 : ℕ) ⟶ n))) ∧
     (∀ n : ℕ, Nonempty (((0 : ℕ) ⟶ n) ≃ PUnit)) ∧
@@ -156,6 +156,6 @@ open ZeroParadox.ZPH_MC1_TC43
 #print axioms floor_homset_card_one
 #print axioms floor_homset_equiv_punit
 #print axioms floor_homset_not_equiv_fin0
-#print axioms tc43_axis_iii_over_floor
+#print axioms nat_floor_initial_singleton_homs
 
 end PurityCheck

@@ -171,7 +171,7 @@ theorem halving_not_matched_below (a₀ : ℕ) :
     geometric orbit because it terminates. So convergence-rate class is a genuine separating
     invariant, but the two-sided match is blocked by termination — Axis IV refines, rather than
     decouples from, the well-founded fork (Axis I). -/
-theorem tc41_rate_class_axis (a₀ : ℕ) :
+theorem linear_geo_rate_asymmetry (a₀ : ℕ) :
     (∀ C : ℝ, ∃ n : ℕ, (n : ℝ) > C * geo n) ∧
     (∀ n : ℕ, ((a₀ / 2 ^ n : ℕ) : ℝ) ≤ (a₀ : ℝ) * geo n) ∧
     (¬ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, c * geo n ≤ ((a₀ / 2 ^ n : ℕ) : ℝ)) :=
@@ -194,6 +194,6 @@ open ZeroParadox.ZPH_MC1_TC41
 #print axioms halving_dominated_by_geometric
 #print axioms halving_terminates
 #print axioms halving_not_matched_below
-#print axioms tc41_rate_class_axis
+#print axioms linear_geo_rate_asymmetry
 
 end PurityCheck

@@ -38,7 +38,7 @@ that voids the method-artifact reading:
   sides are singletons (`homeomorphOfUnique`).
 - `span_apex_to_ordinal_floor : PUnit.{1} ≃o ↥({0} : Set Ordinal)` — an order-iso, but only because
   both sides are subsingletons (every `≤` collapses to `le_refl`).
-- `tc17_span_reconciles_1_and_3` — the capstone: a single apex `S = PUnit` is iso to both singleton
+- `apex_iso_padic_ordinal_floor` — the capstone: a single apex `S = PUnit` is iso to both singleton
   floors, `#3 ⟵ S ⟶ #1` in-statement.
 
 **Why this is NOT T1's reconciliation strength (the retracted overclaim).** An earlier draft of this
@@ -54,7 +54,7 @@ T1's carries a universal role; TC17's is the trivial floor of the strength scale
 span existing does **not** show the cross-root cut is a method artifact, because it does not match
 T1's role-preserving span.
 
-**What is honestly proved.** Two facts, both true, witnessed in `tc17_span_but_no_direct_ambient_map`:
+**What is honestly proved.** Two facts, both true, witnessed in `apex_span_no_ambient_strictMono`:
 1. a singleton-apex span exists for the two bottom *points* (vacuous: they are singletons), and
 2. the *direct* ambient obstruction survives — `no_strictMono_real_to_ordinal` (in
    `ZPH_MC1_TreeObstructions`) still rules out a strict-mono embedding of the attractor ambient `ℝ`
@@ -106,9 +106,9 @@ def span_apex_to_ordinal_floor : PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordina
     one-point sets are isomorphic to a one-point apex — it carries NO structural content specific to
     #1 or #3. It does NOT match T1's GO span, whose legs transport a descent/initiality morphism
     (a universal role, in `t1_mu_cluster_glue`'s statement). The apex legs here transport nothing.
-    So this does NOT show the cross-root cut is a method artifact; see `tc17_span_but_no_direct_ambient_map`
+    So this does NOT show the cross-root cut is a method artifact; see `apex_span_no_ambient_strictMono`
     for the real content (the ambient direct-map obstruction survives). -/
-theorem tc17_span_reconciles_1_and_3 :
+theorem apex_iso_padic_ordinal_floor :
     Nonempty (PUnit.{1} ≃ₜ ↥({(0 : Q₂)} : Set Q₂)) ∧
     Nonempty (PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordinal)) :=
   ⟨⟨span_apex_to_padic_floor⟩, ⟨span_apex_to_ordinal_floor⟩⟩
@@ -120,11 +120,11 @@ theorem tc17_span_reconciles_1_and_3 :
     honest finding is just this simultaneity: the cross-root obstruction is genuinely about the
     ambient/descent carriers, and the bare bottom *points* being singletons does not touch it. This
     is NOT a method-artifact result — see the capstone docstring and Formal Overview. -/
-theorem tc17_span_but_no_direct_ambient_map :
+theorem apex_span_no_ambient_strictMono :
     (Nonempty (PUnit.{1} ≃ₜ ↥({(0 : Q₂)} : Set Q₂)) ∧
       Nonempty (PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordinal))) ∧
     ¬ ∃ f : ℝ → Ordinal, StrictMono f :=
-  ⟨tc17_span_reconciles_1_and_3,
+  ⟨apex_iso_padic_ordinal_floor,
     ZeroParadox.ZPH_MC1_TreeObstructions.no_strictMono_real_to_ordinal⟩
 
 end ZeroParadox.ZPH_MC1_TC17
@@ -139,7 +139,7 @@ open ZeroParadox.ZPH_MC1_TC17
 
 #print axioms span_apex_to_padic_floor
 #print axioms span_apex_to_ordinal_floor
-#print axioms tc17_span_reconciles_1_and_3
-#print axioms tc17_span_but_no_direct_ambient_map
+#print axioms apex_iso_padic_ordinal_floor
+#print axioms apex_span_no_ambient_strictMono
 
 end PurityCheck

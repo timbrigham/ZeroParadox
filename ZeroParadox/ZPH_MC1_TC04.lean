@@ -42,7 +42,7 @@ clash as E4, instantiated for #3:
 
 - `padic_descent_radii_strictAnti` — the radii `2⁻ⁿ` of the p-adic descent are **strictly** decreasing
   for all `n`: an infinite strict descent in ℝ. The descent that defines #3 never terminates.
-- `tc04_a_wellfounded_clash` — the load-bearing in-statement separation: the proof-theory carrier is
+- `ordinal_wf_padic_descent_clash` — the load-bearing in-statement separation: the proof-theory carrier is
   well-founded under `<` **and** the p-adic descent admits an infinite strictly-decreasing radius
   sequence (non-well-founded descent). A single structure cannot be both the terminating ordinal
   descent and the non-terminating ball descent; the two floors are reached by incompatible descents.
@@ -54,12 +54,12 @@ The Hilbert seam `#5 = StateSpace 0` is a **zero object** of `ModuleCat ℂ` —
 **not initial** in `TopCat` (`ZPH_MC1_TreeObstructions.padic_bottom_not_initial`). The separator is the
 categorical-polarity clash:
 
-- `tc04_b_polarity_clash` — `#5` is initial in `ModuleCat ℂ` **and** `#3`'s one-point space is *not*
+- `seam_initial_padic_not_initial` — `#5` is initial in `ModuleCat ℂ` **and** `#3`'s one-point space is *not*
   initial in `TopCat`. One bottom carries the initial universal property, the other provably does not,
   so they sit on opposite sides of the μ/ν root.
 
 **Cardinality does NOT separate (b).** Both `#5 = StateSpace 0` and `#3 = {0} ⊆ Q₂` are *singletons*
-(`tc04_b_both_singletons`), so the Axis-III invariant that split #4 from #5 is silent here: the genuine
+(`bots_both_subsingleton`), so the Axis-III invariant that split #4 from #5 is silent here: the genuine
 separator for the #5↔#3 edge is polarity (initial vs not), not cardinality. Recorded in-statement so the
 finding is honest about *which* wall does the work.
 
@@ -90,7 +90,7 @@ theorem padic_descent_radii_strictAnti :
     are reached by **incompatible descents**: the proof-theory carrier (ordinals) is well-founded under
     `<` (terminating descent, μ), while the p-adic descent admits an infinite strictly-decreasing radius
     sequence (non-terminating descent, ν). The two bottoms cannot be one object reached by one descent. -/
-theorem tc04_a_wellfounded_clash :
+theorem ordinal_wf_padic_descent_clash :
     WellFounded ((· < ·) : Ordinal → Ordinal → Prop) ∧
     StrictAnti (fun n : ℕ => (2 : ℝ) ^ (-(n : ℤ))) :=
   ⟨Ordinal.lt_wf, padic_descent_radii_strictAnti⟩
@@ -101,15 +101,15 @@ theorem tc04_a_wellfounded_clash :
     in `ModuleCat ℂ` (the μ half of its zero-object straddle), while the #3 p-adic floor `{0} ⊆ Q₂` is
     **not initial** in `TopCat`. One bottom carries the initial universal property, the other provably
     does not — the categorical-polarity clash across the μ/ν root. -/
-theorem tc04_b_polarity_clash :
+theorem seam_initial_padic_not_initial :
     Nonempty (Limits.IsInitial (fD_functor.obj 0)) ∧
     IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨⟨fD_zero_isInitial⟩, ZeroParadox.ZPH_MC1_TreeObstructions.padic_bottom_not_initial⟩
 
 /-- Cardinality does NOT separate edge (b): both bottoms are singletons. `#5 = StateSpace 0` is a
     subsingleton and `#3 = {0} ⊆ Q₂` is a singleton, so the Axis-III (cardinality) invariant is silent
-    here — the genuine separator for #5↔#3 is polarity (`tc04_b_polarity_clash`), not cardinality. -/
-theorem tc04_b_both_singletons :
+    here — the genuine separator for #5↔#3 is polarity (`seam_initial_padic_not_initial`), not cardinality. -/
+theorem bots_both_subsingleton :
     Subsingleton (StateSpace 0) ∧ Subsingleton (↥({(0 : Q₂)} : Set Q₂)) := by
   refine ⟨⟨fun a b => ?_⟩, ?_⟩
   · apply WithLp.ofLp_injective
@@ -129,8 +129,8 @@ section PurityCheck
 open ZeroParadox.ZPH_MC1_TC04
 
 #print axioms padic_descent_radii_strictAnti
-#print axioms tc04_a_wellfounded_clash
-#print axioms tc04_b_polarity_clash
-#print axioms tc04_b_both_singletons
+#print axioms ordinal_wf_padic_descent_clash
+#print axioms seam_initial_padic_not_initial
+#print axioms bots_both_subsingleton
 
 end PurityCheck

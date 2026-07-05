@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZPH_MC1_TC09.axis_iii_is_pointedness` asserted that across the framework's initial bottoms only
+`ZPH_MC1_TC09.initial_carrier_empty_or_subsingleton` asserted that across the framework's initial bottoms only
 carrier-cardinalities 0 and 1 arise, governed by a single binary distinction (whether the category
 forces a distinguished point — a zero object). But TC09 only **witnessed the two endpoints**
 (`PEmpty`/`Fin 0` empty, `PUnit`/`StateSpace 0` singleton). It did **not** prove the *closure* claim

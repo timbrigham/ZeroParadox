@@ -43,7 +43,7 @@ This is a statement about hom-sets only (no object-level data), and:
 - `bare_initial_fails_Pin` — **P_in FAILS at #4.** `Hom(fC_functor.obj 1, fC_functor.obj 0)` is
   **empty** (`fC_no_return`: no stochastic map returns into `Fin 0` from a nonempty type), so there
   is an object `Y` with `Hom(Y, #4)` empty. P_in is false at the bare-initial bottom.
-- `tc44_arrow_level_separates` — the headline: P_in(#5) ∧ ¬P_in(#4). Terminality DOES add
+- `hom_into_bot_separates` — the headline: P_in(#5) ∧ ¬P_in(#4). Terminality DOES add
   arrow-level content (all in-hom-sets become inhabited) that initiality alone does not supply at
   these bottoms. The seam has an arrow-level signature, sharpening TC20 from "generic collapse" to a
   genuine arrow-level distinction.
@@ -99,7 +99,7 @@ theorem bare_initial_fails_Pin :
     Terminality therefore contributes arrow-level content — all in-hom-sets inhabited — that
     initiality alone does not give at these bottoms. This sharpens TC20/TC38's "generic collapse"
     into a genuine arrow-level distinction: the seam carries a hom-set-level signature. -/
-theorem tc44_arrow_level_separates :
+theorem hom_into_bot_separates :
     (∀ Y : ModuleCat ℂ, Nonempty (Y ⟶ fD_functor.obj 0))
     ∧ ¬ (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ fC_functor.obj 0)) :=
   ⟨seam_has_Pin, bare_initial_fails_Pin⟩
@@ -124,7 +124,7 @@ theorem bare_initial_endo_subsingleton :
     at BOTH the seam (#5) and the bare-initial bottom (#4). So the endo-subsingleton property does
     not distinguish them: this is the property TC20/TC38 over-read as a seam signature, and it is
     confirmed here to be generic (driven by initiality alone, present off-seam). Contrast with
-    `tc44_arrow_level_separates`, where P_in genuinely separates. -/
+    `hom_into_bot_separates`, where P_in genuinely separates. -/
 theorem endo_subsingleton_does_not_separate :
     Subsingleton (fD_functor.obj 0 ⟶ fD_functor.obj 0)
     ∧ Subsingleton (fC_functor.obj 0 ⟶ fC_functor.obj 0) :=
@@ -138,7 +138,7 @@ theorem endo_subsingleton_does_not_separate :
     does *not* separate. The contrast (separator found, generic property correctly excluded) is the
     sharpening of the TC20/TC38 deflation: the seam DOES have an arrow-level signature, but it is
     the in-hom-nonemptiness (terminality-existence) property, not the endo-equation TC20 used. -/
-theorem tc44_full :
+theorem cat_bot_separation_full :
     (∀ Y : ModuleCat ℂ, Nonempty (Y ⟶ fD_functor.obj 0))
     ∧ ¬ (∀ Y : KleisliCat PMF, Nonempty (Y ⟶ fC_functor.obj 0))
     ∧ Subsingleton (fD_functor.obj 0 ⟶ fD_functor.obj 0)
@@ -157,10 +157,10 @@ open ZeroParadox.ZPH_MC1_TC46
 
 #print axioms seam_has_Pin
 #print axioms bare_initial_fails_Pin
-#print axioms tc44_arrow_level_separates
+#print axioms hom_into_bot_separates
 #print axioms seam_endo_subsingleton
 #print axioms bare_initial_endo_subsingleton
 #print axioms endo_subsingleton_does_not_separate
-#print axioms tc44_full
+#print axioms cat_bot_separation_full
 
 end PurityCheck

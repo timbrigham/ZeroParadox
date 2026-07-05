@@ -55,7 +55,7 @@ ambient mismatch):
   incoming hom from a nonempty object is empty, while #3 is a limit whose defining property is to
   receive an incoming factoring map from every cone. This direction-of-universal-arrows clash is the
   categorical residue of the μ/ν root cut for *this* pair.
-- `tc50_cross_root_witnesses` — the co-occurrence bundle: the genuine `IsColimit` of #4 and the
+- `colimit_limit_cross_root` — the co-occurrence bundle: the genuine `IsColimit` of #4 and the
   genuine `IsLimit` of #3, recorded together with the arrow asymmetry.
 
 **Honest verdict (recorded here, not hidden in prose).** Even with the arrow asymmetry sharpened
@@ -139,7 +139,7 @@ theorem node4_node3_arrow_asymmetry :
     cross-domain map and no new identification — only a sharpened separation. The cross-root #4 ↔ #3
     obstruction is categorically witnessable only as this co-occurrence plus the generic
     arrow-direction asymmetry. -/
-theorem tc50_cross_root_witnesses :
+theorem colimit_limit_cross_root :
     Nonempty (IsColimit (asEmptyCocone (fC_obj 0))) ∧
     Nonempty (IsLimit floorCone) ∧
     ((∀ {n : ℕ}, 0 < n → IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0)) ∧
@@ -162,6 +162,6 @@ open ZeroParadox.ZPH_MC1_TC50
 #print axioms node3_isLimit
 #print axioms node3_receives_cone
 #print axioms node4_node3_arrow_asymmetry
-#print axioms tc50_cross_root_witnesses
+#print axioms colimit_limit_cross_root
 
 end PurityCheck

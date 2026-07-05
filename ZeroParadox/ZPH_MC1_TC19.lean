@@ -112,7 +112,7 @@ noncomputable def nu_leaf_reconcile_generic : padicFloor ≃ₜ PUnit :=
     the p-adic floor with `PUnit`, so the leaf map is the generic subsingleton homeomorphism and
     carries no distinguishing structure. Together: the ν-branch glues, but only vacuously — confirming
     the μ/ν asymmetry (μ glues structurally via T1's functor span; ν glues only at the point). -/
-theorem tc16_nu_leaf_glue_but_generic :
+theorem nu_leaf_glue_subsingleton :
     Nonempty (padicFloor ≃ₜ simplexPoint) ∧ Nonempty (padicFloor ≃ₜ PUnit) :=
   ⟨⟨nu_leaf_reconcile⟩, ⟨nu_leaf_reconcile_generic⟩⟩
 
@@ -130,6 +130,6 @@ open ZeroParadox.ZPH_MC1_TC19
 #print axioms simplex_point_unique
 #print axioms nu_leaf_reconcile
 #print axioms nu_leaf_reconcile_generic
-#print axioms tc16_nu_leaf_glue_but_generic
+#print axioms nu_leaf_glue_subsingleton
 
 end PurityCheck

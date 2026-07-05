@@ -38,7 +38,7 @@ rate-level **match** — both descend to their floor at rate `1/2`.
 - **μ-descent leg (ℕ floor, #1).** `nat_descent_bound`: any well-founded ℕ-orbit with
   `a (n+1) ≤ a n / 2` (Nat floor-halving) is bounded by the **same** envelope,
   `(a n : ℝ) ≤ (a 0 : ℝ) * (2:ℝ)^(-n)`. `nat_descent_tendsto`: its distance tends to `0`.
-- **Shared-rate capstone.** `tc34_shared_rate`: *both* distance sequences are dominated by the single
+- **Shared-rate capstone.** `shared_rate_envelope_bound`: *both* distance sequences are dominated by the single
   envelope `C · (2:ℝ)^(-n)` (with `C = ‖x‖` on the p-adic side, `C = a 0` on the ℕ side), and that
   envelope `→ 0`. The common rate `n ↦ 2^(-n)` is exhibited in-statement as a quantitative invariant
   shared across the μ/ν root.
@@ -141,7 +141,7 @@ theorem nat_descent_tendsto (a : ℕ → ℕ) (hdesc : ∀ n, a (n + 1) ≤ a n 
     ν-attractor orbit (#3, `C = ‖x‖`), and that envelope tends to `0`. The shared rate
     `n ↦ 2^(-n)` is the common quantitative invariant across the μ/ν root — exhibited in-statement
     as a simultaneous bound, NOT as a structure-preserving map between the orbits. -/
-theorem tc34_shared_rate
+theorem shared_rate_envelope_bound
     (x : Q₂) (a : ℕ → ℕ) (hdesc : ∀ n, a (n + 1) ≤ a n / 2) :
     -- the shared rate envelope tends to 0
     Tendsto (fun n : ℕ => (2 : ℝ) ^ (-(n : ℤ))) atTop (𝓝 0) ∧
@@ -159,7 +159,7 @@ theorem tc34_shared_rate
     eventually identically `0`. So no step-for-step geometric-rate *correspondence* exists between the
     two orbits — only the common upper bound does. This is the TC33 obstruction, localized: rate-MATCH
     at the envelope level, rate-MISMATCH at the orbit level. -/
-theorem tc34_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0) :
+theorem padic_nat_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0) :
     (∀ n, 0 < ‖(2 : Q₂) ^ n * x‖) ∧
     (∀ a : ℕ → ℕ, (∀ n, a (n + 1) ≤ a n / 2) → ∀ k, a k = 0 → ∀ m, a (k + m) = 0) := by
   refine ⟨padic_orbit_pos hx, ?_⟩
@@ -189,7 +189,7 @@ open ZeroParadox.ZPH_MC1_TC36
 #print axioms padic_orbit_pos
 #print axioms nat_descent_bound
 #print axioms nat_descent_tendsto
-#print axioms tc34_shared_rate
-#print axioms tc34_no_orbit_correspondence
+#print axioms shared_rate_envelope_bound
+#print axioms padic_nat_no_orbit_correspondence
 
 end PurityCheck

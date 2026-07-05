@@ -33,16 +33,16 @@ order-bottom of `Q₂`.
 
 **Re-exported from TC10.** `ZPH_MC1_TC10.floorConeIsLimit` proves the snap floor `{0} ⊆ Q₂` is a
 genuine categorical `IsLimit` of the inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`. We re-expose it
-here as `tc44_padic_floor_isLimit` (`Nonempty (IsLimit floorCone)`).
+here as `padic_floor_isLimit` (`Nonempty (IsLimit floorCone)`).
 
 **The new (generic) fact.** In the `ℕ` preorder category the order floor `0` is the *initial* object
 but is **not terminal**: there is no morphism `1 ⟶ 0`, because `¬ ((1 : ℕ) ≤ 0)`. This is in the
-statement `tc44_no_hom_into_nat_floor : IsEmpty ((1 : ℕ) ⟶ (0 : ℕ))`, and from it
-`tc44_nat_floor_not_isTerminal : IsEmpty (Limits.IsTerminal (0 : ℕ))`.
+statement `isEmpty_hom_one_to_zero : IsEmpty ((1 : ℕ) ⟶ (0 : ℕ))`, and from it
+`nat_zero_not_terminal : IsEmpty (Limits.IsTerminal (0 : ℕ))`.
 
 ### What the file actually witnesses (load-bearing, in the theorem statements)
 
-The bundle `tc44_floor_facts_cooccur` is a pure conjunction of four pre-existing-or-generic facts:
+The bundle `floor_facts_cooccur` is a pure conjunction of four pre-existing-or-generic facts:
 1. `Nonempty (IsLimit ZPH_MC1_TC10.floorCone)` — #3 sits at a real limit (TC10).
 2. `IsEmpty (Limits.IsTerminal (0 : ℕ))` — `0` is not terminal in the `ℕ` preorder (new, generic).
 3. `IsLeast (Set.univ : Set ℕ) 0` ∧ `IsLeast (Set.range ‖·‖) 0` (TC35).
@@ -76,7 +76,7 @@ open ZeroParadox.ZPB
 /-- Node #3 (the p-adic floor `{0} ⊆ Q₂`) sits at a **genuine categorical limit** of the inverse
 system `fB_functor : ℕᵒᵖ ⥤ TopCat` (TC10's cone). This is the native limit (ν) universal property of
 #3. Re-exported verbatim from TC10. -/
-theorem tc44_padic_floor_isLimit :
+theorem padic_floor_isLimit :
     Nonempty (IsLimit ZeroParadox.ZPH_MC1_TC10.floorCone) :=
   ⟨ZeroParadox.ZPH_MC1_TC10.floorConeIsLimit⟩
 
@@ -85,15 +85,15 @@ theorem tc44_padic_floor_isLimit :
 /-- The morphism-level obstruction: there is **no morphism `1 ⟶ 0`** in the `ℕ` preorder category,
 because `¬ ((1 : ℕ) ≤ 0)`. A terminal object must receive a morphism from every object; `0` does not
 receive one from `1`. -/
-theorem tc44_no_hom_into_nat_floor : IsEmpty ((1 : ℕ) ⟶ (0 : ℕ)) :=
+theorem isEmpty_hom_one_to_zero : IsEmpty ((1 : ℕ) ⟶ (0 : ℕ)) :=
   ⟨fun f => absurd (leOfHom f) (by decide)⟩
 
 /-- **The new Lean content over TC10+TC35 — a generic poset triviality.** The order floor `0 : ℕ` is
 **not terminal** in the `ℕ` preorder category: a terminal `0` would manufacture a morphism `1 ⟶ 0`,
 i.e. `1 ≤ 0`, which is false. This is true of the bottom of any nontrivial poset (the bottom is
 initial, never terminal); it is not a framework-specific fact about node #1. -/
-theorem tc44_nat_floor_not_isTerminal : IsEmpty (IsTerminal (0 : ℕ)) :=
-  ⟨fun t => tc44_no_hom_into_nat_floor.false (t.from (1 : ℕ))⟩
+theorem nat_zero_not_terminal : IsEmpty (IsTerminal (0 : ℕ)) :=
+  ⟨fun t => isEmpty_hom_one_to_zero.false (t.from (1 : ℕ))⟩
 
 /-! ## The four ambient facts, bundled (co-occurrence only — proves no relation between them). -/
 
@@ -108,15 +108,15 @@ proves the four facts *hold together*, not that any structural relation connects
 **Honest scope:** the four facts live in incommensurable ambients (`ℕ` preorder, `TopCat`, orders on
 `ℕ`/`ℝ`); there is no single category in which they are directly comparable, and no "duality"
 predicate appears in the statement. This bundle witnesses co-occurrence, nothing more. -/
-theorem tc44_floor_facts_cooccur :
+theorem floor_facts_cooccur :
     Nonempty (IsLimit ZeroParadox.ZPH_MC1_TC10.floorCone)
       ∧ IsEmpty (IsTerminal (0 : ℕ))
       ∧ IsLeast (Set.univ : Set ℕ) 0
       ∧ IsLeast (Set.range (fun x : Q₂ => ‖x‖)) 0 :=
-  ⟨tc44_padic_floor_isLimit,
-   tc44_nat_floor_not_isTerminal,
-   ZeroParadox.ZPH_MC1_TC35.tc35_nat_floor_isLeast,
-   ZeroParadox.ZPH_MC1_TC35.tc35_q2_floor_isLeast_norm⟩
+  ⟨padic_floor_isLimit,
+   nat_zero_not_terminal,
+   ZeroParadox.ZPH_MC1_TC35.nat_zero_isLeast,
+   ZeroParadox.ZPH_MC1_TC35.q2_norm_floor_isLeast⟩
 
 end ZeroParadox.ZPH_MC1_TC44
 
@@ -129,9 +129,9 @@ TC10 and the ZP-B topology layer); it is a library dependency, not a new commitm
 section PurityCheck
 open ZeroParadox.ZPH_MC1_TC44
 
-#print axioms tc44_padic_floor_isLimit
-#print axioms tc44_no_hom_into_nat_floor
-#print axioms tc44_nat_floor_not_isTerminal
-#print axioms tc44_floor_facts_cooccur
+#print axioms padic_floor_isLimit
+#print axioms isEmpty_hom_one_to_zero
+#print axioms nat_zero_not_terminal
+#print axioms floor_facts_cooccur
 
 end PurityCheck

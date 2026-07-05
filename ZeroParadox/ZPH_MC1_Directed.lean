@@ -6,7 +6,7 @@ set_option maxHeartbeats 400000
 /-!
 # The Kleisli snap floor is not isomorphic to any object above it
 
-**Proves.** `mc1_bottom_directed_not_mutual`: in `KleisliCat PMF`, for `n > 0`, `fC_functor.obj 0` is not
+**Proves.** `kleisli_obj_not_iso_bot`: in `KleisliCat PMF`, for `n > 0`, `fC_functor.obj 0` is not
 isomorphic to `fC_functor.obj n`. One-line consequence of `fC_no_return` (no morphism back into the floor):
 an iso would supply one. The content is "no return ⟹ not iso to anything above it", about one domain.
 
@@ -37,7 +37,7 @@ open CategoryTheory ZeroParadox.ZPH_InfoFunctor
     object: there is no mutual/equivalence pairing with anything above it. The bottom sits strictly at
     the source of a directed structure — the snap's irreversibility *is* the failure of mutuality, so
     MC-1's bottoms do not form a single mutual (NP-style) degree. -/
-theorem mc1_bottom_directed_not_mutual {n : ℕ} (hn : 0 < n) :
+theorem kleisli_obj_not_iso_bot {n : ℕ} (hn : 0 < n) :
     IsEmpty (fC_functor.obj n ≅ fC_functor.obj 0) := by
   constructor
   intro e
@@ -49,5 +49,5 @@ end ZeroParadox.ZPH_MC1
 
 section PurityCheck
 open ZeroParadox.ZPH_MC1
-#print axioms mc1_bottom_directed_not_mutual
+#print axioms kleisli_obj_not_iso_bot
 end PurityCheck

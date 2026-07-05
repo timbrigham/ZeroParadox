@@ -43,12 +43,12 @@ is **canonically isomorphic to the seam #5** (zero objects are unique up to a un
 
 - `freeFin0_isZero` — `(ModuleCat.free ℂ).obj (Fin 0)` (the functor's *image* of #4's carrier) is a
   zero object of `ModuleCat ℂ`. (The free module on the empty type is 0.)
-- `tc27_cross_arrow` — **the cross-category arrow's image lands AT the seam**: there is an
+- `freeFin0IsoSeam` — **the cross-category arrow's image lands AT the seam**: there is an
   isomorphism `(ModuleCat.free ℂ).obj (Fin 0) ≅ fD_functor.obj 0` in `ModuleCat ℂ`. The left side is
   the image of #4's bottom under a real functor whose source is `Type` (= the carrier of `KleisliCat
   PMF`); the right side is the seam #5. This is the cross-category edge TC18's deflation said was
   unbuilt.
-- `tc27_image_is_zero_seam` — bundles both halves with the seam's own two-sidedness: the image is a
+- `freeFin0_zero_iso_seam` — bundles both halves with the seam's own two-sidedness: the image is a
   zero object AND the seam is a zero object AND they are isomorphic.
 
 ### GO verdict, with an honest fence
@@ -94,18 +94,18 @@ theorem seam_isZero : Limits.IsZero (fD_functor.obj 0) := by
     `ModuleCat.free ℂ : Type ⥤ ModuleCat ℂ` (a real functor between framework categories, the left
     adjoint of `forget`) carries #4's carrier `Fin 0` onto a zero object that is **canonically
     isomorphic** to the seam #5 `fD_functor.obj 0`. The isomorphism is the unique-zero-object iso. -/
-noncomputable def tc27_cross_arrow :
+noncomputable def freeFin0IsoSeam :
     (ModuleCat.free ℂ).obj (Fin 0) ≅ fD_functor.obj 0 :=
   Limits.IsZero.iso freeFin0_isZero seam_isZero
 
 /-- Bundled witness: the functor-image of #4's bottom is a zero object, the seam #5 is a zero
     object, and the two are isomorphic via the cross-category arrow. The whole claim, in one
     statement. -/
-theorem tc27_image_is_zero_seam :
+theorem freeFin0_zero_iso_seam :
     Limits.IsZero ((ModuleCat.free ℂ).obj (Fin 0))
     ∧ Limits.IsZero (fD_functor.obj 0)
     ∧ Nonempty ((ModuleCat.free ℂ).obj (Fin 0) ≅ fD_functor.obj 0) :=
-  ⟨freeFin0_isZero, seam_isZero, ⟨tc27_cross_arrow⟩⟩
+  ⟨freeFin0_isZero, seam_isZero, ⟨freeFin0IsoSeam⟩⟩
 
 /-- The honest scope marker, stated as a theorem about the *carrier*: #4's carrier
     `fC_functor.obj 0` is *definitionally* the type `Fin 0`, which is exactly the input the
@@ -127,8 +127,8 @@ open ZeroParadox.ZPH_MC1_TC27
 
 #print axioms freeFin0_isZero
 #print axioms seam_isZero
-#print axioms tc27_cross_arrow
-#print axioms tc27_image_is_zero_seam
+#print axioms freeFin0IsoSeam
+#print axioms freeFin0_zero_iso_seam
 #print axioms kleisli_bottom_carrier_eq
 
 end PurityCheck

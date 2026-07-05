@@ -134,7 +134,7 @@ theorem surprisal_eq_binary_info (n : ℕ) :
   field_simp [hlog2]
 
 /-- D5: DF antisymmetry — DF(x, y) = I(y) − I(x) = −DF(y, x). -/
-theorem d5_antisymm (m n : ℕ) :
+theorem surprisal_sub_antisymm (m n : ℕ) :
     surprisal n - surprisal m = -(surprisal m - surprisal n) := by ring
 
 /-- D6: Partial circulation at step n: C_n = I(n+1) − I(1). -/
@@ -224,7 +224,7 @@ open ZeroParadox.ZPC
 #print axioms t1b_kl_Q
 #print axioms t1b_jsd
 #print axioms surprisal_eq_binary_info
-#print axioms d5_antisymm
+#print axioms surprisal_sub_antisymm
 #print axioms t2_partial_eq
 #print axioms t2_finite_loop
 #print axioms t2_diverges

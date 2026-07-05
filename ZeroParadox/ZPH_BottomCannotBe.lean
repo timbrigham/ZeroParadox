@@ -133,7 +133,7 @@ section CannotBeIndex
 
 /-! ### categorical floor/seam exclusions -/
 #check @ZeroParadox.ZPH_MC1_TC40.leaf_not_isZero
-#check @ZeroParadox.ZPH_MC1_TC44.tc44_nat_floor_not_isTerminal
+#check @ZeroParadox.ZPH_MC1_TC44.nat_zero_not_terminal
 
 /-! ### the bottoms cannot be zero objects / greatest elements (various categories) -/
 #check @ZeroParadox.ZPH_MC1_TC08.kleisli_bottom_not_zero
@@ -150,7 +150,7 @@ section CannotBeIndex
 /-! ### orbits that cannot reach ⊥ / cannot be matched (only contractions reach it) -/
 #check @ZeroParadox.ZPH_MC1_TC30.unit_orbit_not_tendsto_zero
 #check @ZeroParadox.ZPH_MC1_TC39.swap_orbit_not_convergent
-#check @ZeroParadox.ZPH_MC1_TC45.tc43_no_orbit_correspondence
+#check @ZeroParadox.ZPH_MC1_TC45.padic_markov_no_orbit_correspondence
 
 /-! ### seam / floor cannot be transported or cross-connected -/
 #check @ZeroParadox.ZPH_MC1_TC34.seam_role_not_transported
@@ -158,7 +158,7 @@ section CannotBeIndex
 -- NB: `no_cross_setting_map` records absence-of-construction (no map EXHIBITED), NOT a proven
 -- impossibility (`IsEmpty (map)`). It is an OPEN-style "none given", not a NO-GO. See register D8.
 #check @ZeroParadox.ZPH.TC42.no_cross_setting_map
-#check @ZeroParadox.ZPH_MC1_TC44.tc44_no_hom_into_nat_floor
+#check @ZeroParadox.ZPH_MC1_TC44.isEmpty_hom_one_to_zero
 
 /-! ### cross-domain CANNOT-HAVE anchors (the exclusion recurs in other layers — corpus sweep 2026-06-30) -/
 #check @ZeroParadox.ZPG.t3_unreachability   -- categorical: IsEmpty (X ⟶ ⊥) — ⊥ cannot be reached from outside.

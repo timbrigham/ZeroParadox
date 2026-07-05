@@ -47,7 +47,7 @@ floor — collapsing the μ/ν distinction.
 **Verdict: GO.** The NO-GO is *refuted at the structural level*: well-foundedness of ℕ forbids the
 infinite descending orbit that TC05's contraction produces.
 
-**Honest framing of the capstone.** The capstone `tc28_axis_I_separation` is, syntactically, a
+**Honest framing of the capstone.** The capstone `floor_reach_separates_mu_nu` is, syntactically, a
 conjunction (`μ-side ∧ ν-side`). Its content is not "two unrelated facts": both sides are stated under
 the *same* predicate `ReachesFloorInFiniteTime`, and the in-statement contrast is sharpened from the
 weak "eventually 0 vs never 0" to the real dynamical contrast — the ν side carries TC05's topological
@@ -77,7 +77,7 @@ What the Lean proves (load-bearing, in the statements):
   under.
 - `padic_orbit_not_reaches_floor` — the p-adic ν-orbit `2ⁿ·x` (`x ≠ 0`) **satisfies the negation**
   `¬ ReachesFloorInFiniteTime`.
-- `tc28_axis_I_separation` — the capstone: the μ orbit satisfies `ReachesFloorInFiniteTime` while the
+- `floor_reach_separates_mu_nu` — the capstone: the μ orbit satisfies `ReachesFloorInFiniteTime` while the
   ν orbit both **converges to the floor** (`Tendsto … (nhds 0)`, imported from TC05's
   `doubling_orbit_tendsto_zero`) and **satisfies `¬ ReachesFloorInFiniteTime`**. The in-statement
   contrast is therefore finite-time termination vs convergence-without-arrival, not the weaker
@@ -211,7 +211,7 @@ theorem padic_orbit_not_reaches_floor (x : Q₂) (hx : x ≠ 0) :
     side's convergence is TC05's contraction and its non-arrival is `padic_orbit_never_reaches_zero`.
     The Axis-I cut is not collapsed: recast as the same dynamical question, #1 and #3 answer it
     oppositely. -/
-theorem tc28_axis_I_separation :
+theorem floor_reach_separates_mu_nu :
     ∀ x : Q₂, x ≠ 0 →
       (∀ n : ℕ, ReachesFloorInFiniteTime (fun k => Nat.pred^[k] n)) ∧
       (Tendsto (fun n => (2 : Q₂) ^ n * x) atTop (nhds 0) ∧
@@ -239,6 +239,6 @@ open ZeroParadox.ZPH_MC1_TC28
 #print axioms padic_orbit_never_reaches_zero
 #print axioms pred_orbit_reaches_floor
 #print axioms padic_orbit_not_reaches_floor
-#print axioms tc28_axis_I_separation
+#print axioms floor_reach_separates_mu_nu
 
 end PurityCheck

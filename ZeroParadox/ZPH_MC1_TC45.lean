@@ -36,7 +36,7 @@ p-adic #3 orbit (`padic_orbit_norm`: `‖2ⁿ·x‖ = 2^(-n)·‖x‖`, and `2^(
 **GO half (the within-ν rate match, in-statement).**
 - `markov_imbalance_quarter`: with `a = 1/4`, `imb (P^ᵏ v₀) = (1/2)ᵏ · imb v₀` (exact).
 - `padic_orbit_half`: `‖2ⁿ·x‖ = (1/2)ⁿ · ‖x‖` (exact; `padic_orbit_norm` restated with `2^(-n)=(1/2)ⁿ`).
-- `tc43_shared_rate_half`: BOTH distance sequences are exactly `C · (1/2)ⁿ` (the Markov side with
+- `padic_markov_shared_rate_envelope`: BOTH distance sequences are exactly `C · (1/2)ⁿ` (the Markov side with
   `C₂ = imb v₀` on the imbalance functional, the p-adic side with `C₃ = ‖x‖`), and the single envelope
   `(1/2)ⁿ → 0` dominates both. The two ν-attractors share the rate **constant** `1/2`, witnessed
   in-statement — an **envelope match**, NOT an orbit isomorphism. This is the within-ν analog of TC36's
@@ -45,7 +45,7 @@ p-adic #3 orbit (`padic_orbit_norm`: `‖2ⁿ·x‖ = 2^(-n)·‖x‖`, and `2^(
 
 **NO-GO residue (the honest fence, also in-statement).** The matched rate does NOT dissolve the
 within-ν wall:
-- `tc43_no_orbit_correspondence` — for `x ≠ 0` the p-adic orbit distance is **strictly positive at
+- `padic_markov_no_orbit_correspondence` — for `x ≠ 0` the p-adic orbit distance is **strictly positive at
   every finite step** (`ZPH_MC1_TC36.padic_orbit_pos`), whereas the Markov imbalance, started balanced
   (`imb v₀ = 0`, e.g. the uniform vector), is **identically 0** at every step. So even at matched rate
   1/2 there is no step-for-step distance correspondence: the same envelope can carry a strictly-positive
@@ -98,7 +98,7 @@ theorem padic_orbit_half (x : Q₂) (n : ℕ) :
     and that envelope `→ 0`. The shared rate **constant** `1/2` is exhibited in-statement — an envelope
     match across the two ν-attractors #2 and #3, NOT an orbit isomorphism. Rate-level complement to
     TC33's geometric-vs-absorbing mismatch. -/
-theorem tc43_shared_rate_half (x : Q₂) (v₀ : Fin 2 → ℝ) :
+theorem padic_markov_shared_rate_envelope (x : Q₂) (v₀ : Fin 2 → ℝ) :
     -- the shared envelope tends to 0
     Tendsto (fun n : ℕ => ((1 : ℝ) / 2) ^ n) atTop (𝓝 0) ∧
     -- #2 (Markov, a = 1/4): imbalance distance is exactly the envelope · (imb v₀)
@@ -116,7 +116,7 @@ theorem tc43_shared_rate_half (x : Q₂) (v₀ : Fin 2 → ℝ) :
     p-adic orbit and a degenerate at-floor Markov orbit: there is no step-for-step distance
     correspondence even at matched rate. The within-ν #2↔#3 edge stays OPEN at the orbit level — exactly
     as TC36's cross-root envelope match did not dissolve the wall. -/
-theorem tc43_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0)
+theorem padic_markov_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0)
     {v₀ : Fin 2 → ℝ} (hbal : imb v₀ = 0) :
     (∀ n, 0 < ‖(2 : Q₂) ^ n * x‖) ∧
     (∀ k, imb ((step (1/4))^[k] v₀) = 0) := by
@@ -146,8 +146,8 @@ open ZeroParadox.ZPH_MC1_TC45
 #print axioms padic_env_eq
 #print axioms markov_imbalance_quarter
 #print axioms padic_orbit_half
-#print axioms tc43_shared_rate_half
-#print axioms tc43_no_orbit_correspondence
+#print axioms padic_markov_shared_rate_envelope
+#print axioms padic_markov_no_orbit_correspondence
 #print axioms unif_balanced
 
 end PurityCheck

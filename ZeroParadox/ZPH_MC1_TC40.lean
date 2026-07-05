@@ -122,7 +122,7 @@ noncomputable def seam_selfcoproduct_collapse :
     and consequently no zero-apex colimit cofan exists over two nonzero μ-leaves — while the
     self-collapse cofan over the zero object IS a colimit. The pair = "seam is not a μ-side coproduct
     connector, only a trivial self-cocone." -/
-theorem tc38_seam_not_colimit_connector :
+theorem seam_not_colimit_connector :
     IsZero (fD_functor.obj 0)
     ∧ ¬ IsZero (fD_functor.obj 1)
     ∧ (∀ (c : BinaryCofan (fD_functor.obj 1) (fD_functor.obj 1)),
@@ -143,6 +143,6 @@ open ZeroParadox.ZPH_MC1_TC40
 #print axioms leaf_not_isZero
 #print axioms seam_not_mu_colimit_apex
 #print axioms seam_selfcoproduct_collapse
-#print axioms tc38_seam_not_colimit_connector
+#print axioms seam_not_colimit_connector
 
 end PurityCheck

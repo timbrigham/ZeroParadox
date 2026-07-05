@@ -46,7 +46,7 @@ lives only in `Cofix`.
   destructurings") holds on the entire range — `fixToCofix_eventuallyLeaf`, by `Fix.ind` (well-founded
   descent of the initial algebra) — but fails on `natInfinity` (`natInfinity_not_eventuallyLeaf`,
   its head is always the successor). So the infinite unfolding lives only in `Cofix`.
-* `tc49_three_regimes` — the classification claim bundled: `Fix` inhabited ∧ `Cofix` inhabited ∧
+* `fix_cofix_not_surjective` — the classification claim bundled: `Fix` inhabited ∧ `Cofix` inhabited ∧
   comparison non-surjective.
 
 **What is Lean vs interpretation.** Lean proves: `natPF`'s initial algebra is inhabited and its
@@ -211,7 +211,7 @@ theorem fixToCofix_not_surjective : ¬ Function.Surjective fixToCofix := by
     their fixpoint's bottom unfolding: `constPF` and `idPF` are the pure regimes; `natPF` is the third,
     with both `Fix` and `Cofix` inhabited and the comparison non-surjective. (The substance is the
     three theorems above; this records the classification claim in one place.) -/
-theorem tc49_three_regimes :
+theorem fix_cofix_not_surjective :
     Nonempty (Fix natPF.Obj) ∧ Nonempty (Cofix natPF.Obj) ∧ ¬ Function.Surjective fixToCofix :=
   ⟨natFix_nonempty, natCofix_nonempty, fixToCofix_not_surjective⟩
 
@@ -228,6 +228,6 @@ open ZeroParadox.ZPH_MC1_TC49
 #print axioms natInfinity_not_eventuallyLeaf
 #print axioms fixToCofix_eventuallyLeaf
 #print axioms fixToCofix_not_surjective
-#print axioms tc49_three_regimes
+#print axioms fix_cofix_not_surjective
 
 end PurityCheck
