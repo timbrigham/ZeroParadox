@@ -90,6 +90,31 @@ for each axis, their cardinalities, and one-line glosses. (Consumers should read
 `collections.declarations.entries` path; the legacy top-level `entries` shape is superseded. The
 `tools/render/` extractor handles both shapes transparently.)
 
+## Refactor-support tooling (the codebase restructure will be verified, not trusted)
+
+The registry is the blueprint for an eventual reorganization of the Lean sources into a legible,
+mathematician-facing structure. That restructure is done **incrementally and content-preservingly** —
+every cut is checked against a baseline, because a refactor can compile cleanly and still drop a
+declaration, change what a theorem proves, or introduce an axiom. The tooling:
+
+- **`ZeroParadox/Meta/ExtractDeps.lean`** — the dependency extractor (env-walk metaprogram) → `deps_build.py`
+  → the `deps` collection above. Run: `lake build ZeroParadox.Meta.ExtractDeps`.
+- **`ZeroParadox/Meta/Snapshot.lean`** — the **golden-master** metaprogram: per declaration, a structural
+  fingerprint of its TYPE (`Expr.hash`) and its transitive AXIOM profile. Run:
+  `lake build ZeroParadox.Meta.Snapshot`.
+- **`refactor_check.py`** — the differential content-preservation checker. Diffs a frozen baseline snapshot
+  against the current state across four layers: inventory (drops/adds, renames inferred by type-hash),
+  STATEMENTS (a changed type-hash = an altered statement), PURITY (a changed axiom profile = a regression),
+  DEPENDENCY (edge diff = the structural change the cut made). Exit 0 = content preserved, 1 = changed.
+- **`regen_meta_imports.py`** — regenerates the two metaprograms' import headers (they import every ZP module
+  by a fixed list); run after any file add/move/delete, before re-snapshotting.
+- **`deps_build.py`** — intersects the raw extractor output with the registry's tracked qualified set,
+  assigns `kind` (type/proof), and emits the final dependency edge list.
+
+The workflow per cut: freeze a baseline once → make ONE incremental cut → rebuild → re-snapshot →
+`refactor_check.py`. Because cuts are done one at a time, any content change is localized to the last one.
+(`ZeroParadox/Meta/*` is not imported by `Basic`, so a normal `lake build` skips these metaprograms.)
+
 **Status: work in progress (this is a dedicated working branch).** The ontology tagging is mid-pass —
 domains are largely assigned, roles partially, and a batch of experimental-campaign results are
 provisionally marked `scaffolding` pending a load-bearing/decorative reclassification. It is a snapshot of

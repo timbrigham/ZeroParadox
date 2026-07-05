@@ -143,44 +143,24 @@ import ZeroParadox.ZPP_WeakGoodstein
 import Lean
 
 /-!
-# Declaration-level dependency extractor (interop Issue 13, ZP side)
+# Golden-master snapshot for refactor verification (content-preservation harness)
 
-Walks the fully-loaded environment and, for every declaration that lives in a tracked
-ZeroParadox source module (Vendored excluded), records the constants referenced in its
-TYPE (hard, structural dependencies -- they pin the module boundary) and in its VALUE /
-proof term (softer dependencies). Emits a RAW dump to
-`.claude-local/translation_matrix/deps_raw.json`.
+For every tracked declaration, records a structural fingerprint of its TYPE (`Expr.hash`)
+and its transitive AXIOM profile. Diffing two snapshots (before/after a refactor cut) proves
+content preservation: a decl whose type-hash changed had its STATEMENT altered; a decl whose
+axiom set changed had a purity regression. A pure move/rename leaves both identical.
 
-`deps_build.py` then intersects BOTH endpoints of every edge with the registry's tracked
-qualified-name set, so the final `deps.json` cannot contain an endpoint that is not a
-registered declaration (no dangling edges -- satisfies interop Issue 13 / D3 by construction).
-Private names are de-mangled to their user-facing form so they match the registry's
-`old.qualified` (the trust-root check demangled the same way).
-
-This module is intentionally NOT imported by `ZeroParadox.Basic`, so a normal `lake build`
-skips it. Run the extraction explicitly:
-
-    lake build ZeroParadox.Meta.ExtractDeps
-
-(It re-runs whenever the module is (re)elaborated; the file write is a build side effect.)
+NOT imported by Basic (normal builds skip it). Run:  lake build ZeroParadox.Meta.Snapshot
+Out: .claude-local/translation_matrix/golden_master.json
 -/
 
 open Lean
 
 namespace ZeroParadox.Meta
 
-/-- A tracked ZP source module: under the `ZeroParadox` namespace, excluding `Vendored`. -/
 def isTrackedModule (m : Name) : Bool :=
   (`ZeroParadox).isPrefixOf m && ! (`ZeroParadox.Vendored).isPrefixOf m
-
-/-- De-mangle private names to their user-facing form (the registry stores the source name). -/
-def userName (n : Name) : Name :=
-  (privateToUserName? n).getD n
-
-def nameStr (n : Name) : String := toString (userName n)
-
-def namesToJson (arr : Array Name) : Json :=
-  Json.arr (arr.map (fun c => Json.str (nameStr c)))
+def userName (n : Name) : Name := (privateToUserName? n).getD n
 
 run_cmd do
   let env ← getEnv
@@ -189,16 +169,15 @@ run_cmd do
     match env.getModuleFor? name with
     | some m =>
       if isTrackedModule m then
-        let tdeps := ci.type.getUsedConstants
-        let vdeps := (ci.value?.map (·.getUsedConstants)).getD #[]
+        let axs ← Lean.collectAxioms name
+        let axl := (axs.qsort (fun a b => toString a < toString b)).map (fun a => Json.str (toString a))
         recs := recs.push <| Json.mkObj [
-          ("from", Json.str (nameStr name)),
-          ("module", Json.str (toString m)),
-          ("type_deps", namesToJson tdeps),
-          ("val_deps", namesToJson vdeps)
+          ("q", Json.str (toString (userName name))),
+          ("th", Json.str (toString ci.type.hash)),
+          ("ax", Json.arr axl)
         ]
     | none => pure ()
-  IO.FS.writeFile ".claude-local/translation_matrix/deps_raw.json" (Json.arr recs).compress
-  logInfo s!"[ExtractDeps] wrote deps_raw.json -- {recs.size} tracked declarations"
+  IO.FS.writeFile ".claude-local/translation_matrix/golden_master.json" (Json.arr recs).compress
+  logInfo s!"[Snapshot] wrote golden_master.json -- {recs.size} decls"
 
 end ZeroParadox.Meta
