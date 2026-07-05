@@ -53,7 +53,7 @@ OVERRIDDEN = []
 # find them) but DO live in a known local file — e.g. class fields. Kept explicit and reported
 # so a hand-resolved link is never silently indistinguishable from a scanned one.
 FIELD_OVERRIDE = {
-    "unique_fp": "ZeroParadox/ZPJ_SelfApp.lean",  # class field AbstractSelfApp.unique_fp (SelfApp:69)
+    "unique_fp": "ZeroParadox/Computability/SelfApp.lean",  # class field AbstractSelfApp.unique_fp (SelfApp:69)
 }
 
 def link_witness(name):
