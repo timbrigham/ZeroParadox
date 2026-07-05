@@ -32,10 +32,10 @@ The absence of DC here is a consequence of ZP's discrete foundation — the
 fixed point is forced, not constructed.
 -/
 
-namespace ZeroParadox.ZPJ_AczelConn
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
-open ZeroParadox.ZPJ
+open ZeroParadox
 
 /-! ## § I. The Self-Membership Operator and its Largest Pre-Fixed-Point -/
 
@@ -123,7 +123,7 @@ theorem selfMem_determines_singleton {L : Type*} [ZPSemilattice L] [AFAStructure
 
 end UniquenessEliminatesDC
 
-end ZeroParadox.ZPJ_AczelConn
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -133,7 +133,7 @@ fields of ZPSemilattice and AFAStructure.
 -/
 
 section PurityCheck
-open ZeroParadox.ZPJ_AczelConn
+open ZeroParadox
 
 #print axioms J_self_eq_singleton_bot
 #print axioms J_self_is_largest

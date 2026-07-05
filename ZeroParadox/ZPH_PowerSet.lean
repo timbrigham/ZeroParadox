@@ -25,7 +25,7 @@ combinatorial. Cardinality lives in ℕ, and there is no natural number strictly
 That is the entire proof. The rest is scaffolding to make the statement precise.
 -/
 
-namespace ZeroParadox.ZPH_PowerSet
+namespace ZeroParadox
 
 variable {α : Type*}
 
@@ -89,4 +89,4 @@ section PurityCheck
 #print axioms ps_structural_floor
 end PurityCheck
 
-end ZeroParadox.ZPH_PowerSet
+end ZeroParadox

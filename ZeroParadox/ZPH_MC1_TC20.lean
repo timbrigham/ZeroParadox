@@ -62,7 +62,7 @@ terminal-alone objects (the deflation, also true). "The seam IS the diagonal fix
 level" is NOT supported — the arrow level adds nothing past TC13.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC20
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox
@@ -82,9 +82,9 @@ theorem zero_mu_eq_nu_arrow {Z : C} (hZ : Limits.IsZero Z) :
 /-- **GO (node #5).** Instantiated at the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`: the
     μ-arrow and the ν-arrow at the seam are the same arrow. Uses `hilbert_bottom_isZero` (TC13). -/
 theorem seam_mu_eq_nu_arrow :
-    (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isInitial.to (fD_functor.obj 0)
-      = (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isTerminal.from (fD_functor.obj 0) :=
-  zero_mu_eq_nu_arrow ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero
+    (ZeroParadox.hilbert_bottom_isZero).isInitial.to (fD_functor.obj 0)
+      = (ZeroParadox.hilbert_bottom_isZero).isTerminal.from (fD_functor.obj 0) :=
+  zero_mu_eq_nu_arrow ZeroParadox.hilbert_bottom_isZero
 
 /-! ## The NO-GO / deflation side: the collapse is generic, not seam-specific. -/
 
@@ -134,15 +134,15 @@ theorem collapse_fires_off_seam :
           = 𝟙 (ZeroParadox.fC_functor.obj 0) := by
   refine ⟨ZeroParadox.fC_zero_isInitial, ?_, ?_⟩
   · intro hZ
-    exact (ZeroParadox.ZPH_MC1_TreeSeam.kleisli_bottom_not_terminal).false hZ.isTerminal
+    exact (ZeroParadox.kleisli_bottom_not_terminal).false hZ.isTerminal
   · exact initial_endo_is_id ZeroParadox.fC_zero_isInitial
 
-end ZeroParadox.ZPH_MC1_TC20
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC20
+open ZeroParadox
 
 #print axioms zero_mu_eq_nu_arrow
 #print axioms seam_mu_eq_nu_arrow

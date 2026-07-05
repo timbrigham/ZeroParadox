@@ -26,7 +26,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPK
+namespace ZeroParadox
 
 open Nat.Partrec Nat.Partrec.Code
 
@@ -49,11 +49,11 @@ theorem quine_encodings_approach_bot (ε : ℝ) (hε : 0 < ε) :
         pow_le_pow_of_le_one (by norm_num) (by norm_num) hcN.le
     _ < ε := hN
 
-end ZeroParadox.ZPK
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPK
+open ZeroParadox
 #print axioms quine_encodings_approach_bot
 end PurityCheck

@@ -53,7 +53,7 @@ Ostrowski/Mathlib re-exports; `framework_family_complete` is the ∃-weakening o
 categorical/order bottoms (#1/#4/#5, walled). The product formula itself remains Mathlib's.
 -/
 
-namespace ZeroParadox.ZPH_PlaceAllPrimes
+namespace ZeroParadox
 
 open Rat.AbsoluteValue Filter Topology
 
@@ -112,12 +112,12 @@ theorem framework_family_complete (f : AbsoluteValue ℚ ℝ) (hf : f.IsNontrivi
     f ≈ real ∨ ∃ p, ∃ (_ : Fact p.Prime), f ≈ padic p :=
   (ZeroParadox.place_dichotomy f hf).imp id (fun h => h.exists)
 
-end ZeroParadox.ZPH_PlaceAllPrimes
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_PlaceAllPrimes
+open ZeroParadox
 
 #print axioms padic_contraction_all_primes
 #print axioms padic_place_eq_norm_all_primes

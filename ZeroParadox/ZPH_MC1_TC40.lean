@@ -63,7 +63,7 @@ open ZeroParadox ZeroParadox
 
 /-- The seam node is a zero object of `ModuleCat ℂ` (reuse of `hilbert_bottom_isZero`). -/
 theorem seam_isZero : IsZero (fD_functor.obj 0) :=
-  ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero
+  ZeroParadox.hilbert_bottom_isZero
 
 /-- The transported μ-side leaf `fD_functor.obj 1 = StateSpace 1` is **not** a zero object:
     `EuclideanSpace ℂ (Fin 1)` is nontrivial, so it is not subsingleton. This is what makes the

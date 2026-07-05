@@ -29,9 +29,9 @@ The honest question, made precise: ZP's `AbstractSelfApp` provides `selfApp : L 
 ZP's setting supply the diagonal surjection from which the fixed point would *follow*?
 -/
 
-namespace ZeroParadox.ZPJ_Lawvere
+namespace ZeroParadox
 
-open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp
+open ZeroParadox ZPSemilattice ZeroParadox
 
 set_option maxHeartbeats 400000
 
@@ -146,10 +146,10 @@ theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code
     theorem, and the lattice/2-adic faces are *provably not* Set-level Lawvere instances. This is the
     sharpened, partly-proven replacement for the bare Tier-6 conjecture. -/
 
-end ZeroParadox.ZPJ_Lawvere
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.ZPJ_Lawvere
+open ZeroParadox
 #print axioms fixedPoint_of_witness
 #print axioms no_witness_of_fixedPointFree
 #print axioms fixedPointFree_of_nontrivial

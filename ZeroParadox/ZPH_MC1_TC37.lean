@@ -49,10 +49,10 @@ framework's interpretation. The Lean content is exactly: `fD_functor.obj 0` `IsZ
 generic biproduct-unit lemmas) `X ≅ X ⊞ (fD_functor.obj 0)` and `X ≅ (fD_functor.obj 0) ⊞ X`.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC37
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox ZeroParadox.ZPH_MC1_TreeSeam
+open ZeroParadox ZeroParadox
 
 /-- The seam object: the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`, a zero object of
     `ModuleCat ℂ` (see `hilbert_bottom_isZero`). -/
@@ -94,7 +94,7 @@ theorem seam_unit_iff_isZero :
   · intro hZ; exact ⟨isoBiprodZero (Y := seam) hZ⟩
   · intro _; exact hilbert_bottom_isZero
 
-end ZeroParadox.ZPH_MC1_TC37
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -102,7 +102,7 @@ end ZeroParadox.ZPH_MC1_TC37
 a library dependency carried already by the ZP-D / ZP-H Hilbert layer, not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC37
+open ZeroParadox
 
 #print axioms seam_biprod_right
 #print axioms seam_biprod_left

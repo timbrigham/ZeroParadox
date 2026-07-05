@@ -60,10 +60,10 @@ theorem tower_enters_every_ball (n : ℕ) :
     the analogue of E2 for the computation domain (existential, since the quines are an unbounded family
     rather than a single sequence). -/
 theorem quines_enter_every_ball (n : ℕ) :
-    ∃ c, ZeroParadox.ZPK.IsComputationalQuine c ∧
+    ∃ c, ZeroParadox.IsComputationalQuine c ∧
       (2 : ℤ_[2]) ^ (Encodable.encode c) ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ))) := by
   obtain ⟨c, hc, hlt⟩ :=
-    ZeroParadox.ZPK.quine_encodings_approach_bot ((2 : ℝ) ^ (-(n : ℤ))) (by positivity)
+    ZeroParadox.quine_encodings_approach_bot ((2 : ℝ) ^ (-(n : ℤ))) (by positivity)
   refine ⟨c, hc, ?_⟩
   rw [Metric.mem_closedBall, dist_zero_right]
   exact le_of_lt hlt
@@ -87,7 +87,7 @@ theorem padic_cluster_colocates_at_floor (n : ℕ) :
     (∀ᶠ k in Filter.atTop,
         ZeroParadox.cnf_encode (ZeroParadox.towerOrd k)
           ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ)))) ∧
-    (∃ c, ZeroParadox.ZPK.IsComputationalQuine c ∧
+    (∃ c, ZeroParadox.IsComputationalQuine c ∧
         (2 : ℤ_[2]) ^ (Encodable.encode c) ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ)))) ∧
     (∀ᶠ k in Filter.atTop,
         (2 : ℤ_[2]) ^ k ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ)))) :=

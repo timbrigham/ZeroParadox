@@ -303,7 +303,7 @@ T-IZ is now formally complete in four steps:
 theorem t_iz_complete
     (S : ℕ → Q₂)
     (h_bound : ∀ n : ℕ, ‖S n‖ ≤ (2⁻¹ : ℝ) ^ n)
-    {L' : Type*} [ZPSemilattice L'] [ZeroParadox.ZPK.KleeneStructure L']
+    {L' : Type*} [ZPSemilattice L'] [ZeroParadox.KleeneStructure L']
     (terminal : L') (ε₀' : L')
     (h_role : ∀ x : L', join terminal x = x) :
     -- Step 1: chain converges to 0 in Q₂
@@ -311,12 +311,12 @@ theorem t_iz_complete
     -- Steps 3/6: terminal IS the successor null (DA-2)
     terminal = bot ∧
     -- Step 4: DA-1 fires at the successor null via AFA/Kleene — no K required
-    ZeroParadox.ZPJ.IsQuineAtom (bot : L') ∧
+    ZeroParadox.IsQuineAtom (bot : L') ∧
     -- Step 5: T-SNAP fires from ⊥' to ε₀' (A4 = bot_join, definitional)
     join (bot : L') ε₀' = ε₀' :=
   ⟨t_iz_cauchy S h_bound,
    t_iz_limit_is_new_null terminal h_role,
-   ZeroParadox.ZPK.da1_computational,
+   ZeroParadox.da1_computational,
    bot_join ε₀'⟩
 
 /-! ## III-C. Depth-Chain Bridge — Closing the R1+T3 → t_iz_complete Chain
@@ -365,12 +365,12 @@ theorem t_iz_complete_from_axioms
     (hS : ∀ n, S n ≠ 0)
     (h_depth : IsDepthChain S depths)
     (h_seq : IsStrictStateSequence depths)
-    {L' : Type*} [ZPSemilattice L'] [ZeroParadox.ZPK.KleeneStructure L']
+    {L' : Type*} [ZPSemilattice L'] [ZeroParadox.KleeneStructure L']
     (terminal : L') (ε₀' : L')
     (h_role : ∀ x : L', join terminal x = x) :
     Filter.Tendsto S Filter.atTop (nhds 0) ∧
     terminal = bot ∧
-    ZeroParadox.ZPJ.IsQuineAtom (bot : L') ∧
+    ZeroParadox.IsQuineAtom (bot : L') ∧
     join (bot : L') ε₀' = ε₀' :=
   t_iz_complete S (t_iz_h_bound_from_depth_chain S depths hS h_depth h_seq) terminal ε₀' h_role
 

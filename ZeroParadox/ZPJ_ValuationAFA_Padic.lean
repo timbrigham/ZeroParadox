@@ -31,7 +31,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPJ
+namespace ZeroParadox
 
 instance : Fact (Nat.Prime 2) := ⟨by norm_num⟩
 
@@ -54,12 +54,12 @@ theorem padic_addVal_top_unique (x : ℚ_[2]) (hx : Padic.addValuation x = ⊤) 
 theorem padic_addVal_eq_top_iff (x : ℚ_[2]) : Padic.addValuation x = ⊤ ↔ x = 0 :=
   ⟨padic_addVal_top_unique x, fun h => h ▸ padic_addVal_bot⟩
 
-end ZeroParadox.ZPJ
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPJ
+open ZeroParadox
 #print axioms padic_addVal_bot
 #print axioms padic_addVal_top_unique
 #print axioms padic_addVal_eq_top_iff

@@ -60,7 +60,7 @@ senses* — #2 a *dynamical* attractor, #3 a *categorical* limit — which would
 ν-asymmetry; but this is unproven and is the open direction, not a result.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TreeT2
+namespace ZeroParadox
 
 open ZeroParadox
 open scoped Topology
@@ -90,12 +90,12 @@ theorem padic_simplex_not_homeomorphic :
   rw [hcomp, Set.mem_singleton_iff] at h1
   exact one_ne_zero h1
 
-end ZeroParadox.ZPH_MC1_TreeT2
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TreeT2
+open ZeroParadox
 
 #print axioms padic_simplex_not_homeomorphic
 

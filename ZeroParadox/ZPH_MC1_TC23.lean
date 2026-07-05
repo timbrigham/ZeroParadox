@@ -62,7 +62,7 @@ Verdict: **NO-GO** — #2 is dynamical-only, structurally outside the μ/ν univ
 obstruction being reducibility.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC23
+namespace ZeroParadox
 
 open scoped BigOperators
 open ZeroParadox
@@ -185,7 +185,7 @@ theorem doublyStochastic_stationary_not_subsingleton :
   obtain ⟨f, hf, _, hbad⟩ := markov_node_no_universal_property
   exact hbad (h f hf)
 
-end ZeroParadox.ZPH_MC1_TC23
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -194,7 +194,7 @@ end ZeroParadox.ZPH_MC1_TC23
 commitment. The counterexample theorems are choice-light. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC23
+open ZeroParadox
 
 #print axioms markov_node_stationary_inhabited
 #print axioms blockKernel_doublyStochastic

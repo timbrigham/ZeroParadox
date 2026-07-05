@@ -65,7 +65,7 @@ floor. It is a specialization of library results, not an original theorem; it ca
 cross-node identity claim.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC30
+namespace ZeroParadox
 
 open ZeroParadox
 open Filter Topology
@@ -160,7 +160,7 @@ theorem three_orbit_not_tendsto_zero :
     ¬ Tendsto (fun n : ℕ => (3 : Q₂) ^ n * 1) atTop (nhds 0) :=
   unit_orbit_not_tendsto_zero three_is_unit (one_ne_zero)
 
-end ZeroParadox.ZPH_MC1_TC30
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -169,7 +169,7 @@ end ZeroParadox.ZPH_MC1_TC30
 ZP-B and by TC05. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC30
+open ZeroParadox
 
 #print axioms norm_lt_one_iff_two_dvd
 #print axioms two_is_contraction

@@ -77,10 +77,10 @@ quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
 No sorry stubs remain in ZPK.
 -/
 
-namespace ZeroParadox.ZPK
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
-open ZeroParadox.ZPJ
+open ZeroParadox
 open Nat.Partrec Nat.Partrec.Code
 
 /-! ## § I. The Kleene Fixed Point -/
@@ -523,12 +523,12 @@ theorem infinite_quine_family :
     exact Nat.lt_succ_of_le (h k)
   exact ⟨Code.const k, hconst_quine k, hk⟩
 
-end ZeroParadox.ZPK
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPK ZeroParadox ZPSemilattice ZeroParadox.ZPJ
+open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 
 #print axioms t_comp
 #print axioms kleene_quine_is_bot

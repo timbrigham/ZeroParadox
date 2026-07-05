@@ -59,7 +59,7 @@ the structural claim, and it is borrowed, not re-proved here. So:
   *distinctively-μ/ν* character is inherited from ZP-P, not freshly witnessed here.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC21
+namespace ZeroParadox
 
 open QPF
 open ZeroParadox.ZPP
@@ -101,12 +101,12 @@ theorem root_cut_no_equiv :
   refine ⟨fun e => ?_⟩
   exact root_cut_no_map_nu_to_mu.elim e.toFun
 
-end ZeroParadox.ZPH_MC1_TC21
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC21
+open ZeroParadox
 
 -- Footprint (measured): all four carry [propext, Classical.choice, Quot.sound]. Choice is the
 -- Mathlib M-type / `Cofix` artifact (fenced in ZPP_Coalgebra) — it enters through the `Cofix idPF.Obj`

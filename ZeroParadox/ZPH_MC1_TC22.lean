@@ -66,9 +66,9 @@ bottoms-only span that transports no ν-content. The "leaves related through com
 holds only for ancestors that drop the descending structure — exactly the well-founded ones.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC22
+namespace ZeroParadox
 
-open ZeroParadox.ZPH_MC1_TreeObstructions
+open ZeroParadox
 
 /-! ## The invariant: order-preserving leg into the well-founded ordinal carrier -/
 
@@ -133,7 +133,7 @@ theorem faithful_iff_descending {S : Type u} (r : S → S → Prop) :
     haveI : IsWellFounded S r := ⟨hwf⟩
     exact ⟨IsWellFounded.rank r, fun a b hab => IsWellFounded.rank_lt_of_rel hab⟩
 
-end ZeroParadox.ZPH_MC1_TC22
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -141,7 +141,7 @@ end ZeroParadox.ZPH_MC1_TC22
 dependency, not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC22
+open ZeroParadox
 
 #print axioms apex_wf_of_strictMono_to_ordinal
 #print axioms no_faithful_span_to_ordinal_and_descending

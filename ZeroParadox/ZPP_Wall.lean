@@ -108,7 +108,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 set_option maxHeartbeats 400000
 
-namespace ZeroParadox.ZPPWall
+namespace ZeroParadox
 
 /-- **THE ENGINE — negation has no fixed point.** No proposition `p` satisfies `p ↔ ¬p` (a contradiction).
     This is the root every wall face descends from (Lawvere): the canonical fixed-point-free map is
@@ -162,7 +162,7 @@ theorem bool_not_no_fixedpoint (b : Bool) : (!b) ≠ b := by cases b <;> decide
     fixed point of Boolean negation, which `bool_not_no_fixedpoint` forbids. This is the abstract skeleton
     of the halting argument — a decider is a map to `Bool`, and the diagonal input flips it. The faithful
     computability instance (with a real machine model, choice-laden) is
-    `ZeroParadox.ZPK.isComputationalQuine_undecidable`. -/
+    `ZeroParadox.isComputationalQuine_undecidable`. -/
 theorem no_self_decider {A : Type*} (g : A → (A → Bool)) : ¬ Function.Surjective g := by
   intro hg
   obtain ⟨b, hb⟩ := lawvere_fixedpoint g hg (fun b => !b)
@@ -198,10 +198,10 @@ theorem wf_no_cycle {α : Type*} {r : α → α → Prop} (h : WellFounded r) (x
 theorem no_membership_cycle (x : ZFSet) : ¬ Relation.TransGen (· ∈ ·) x x :=
   wf_no_cycle ZFSet.mem_wf x
 
-end ZeroParadox.ZPPWall
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.ZPPWall
+open ZeroParadox
 #print axioms negation_no_fixedpoint
 #print axioms cantor_via_engine
 #print axioms lawvere_fixedpoint

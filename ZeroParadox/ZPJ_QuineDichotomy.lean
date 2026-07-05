@@ -22,7 +22,7 @@ Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
   (greatest-fixed-point) side and not on the well-founded (least-fixed-point) side.
   (`ZeroParadox.ZPP.categorical_fork_strict`: `Fix idPF.Obj` empty, `Cofix idPF.Obj` inhabited.)
 - **Uniqueness + identity:** wherever the self-referential fixed point lives, it is unique and IS the
-  bottom. (`ZeroParadox.ZPJ_SelfApp.selfMem_eq_singleton_bot`: the self-members are exactly `{⊥}`.)
+  bottom. (`ZeroParadox.selfMem_eq_singleton_bot`: the self-members are exactly `{⊥}`.)
 - **Cantor obstruction (no literal):** a nontrivial lattice face admits no Lawvere witness, so the literal
   self-singleton (which would need `T ≃ Set T`) cannot be built. (`ZPJ_Lawvere.nontrivial_lattice_no_witness`.)
 
@@ -37,8 +37,8 @@ claim that AFA is machine-checked.
 
 ## Symbol map (component → existing lemma)
 - existence fork        → `ZeroParadox.ZPP.categorical_fork_strict`  (`idPF`, `Fix`, `Cofix` from ZP-P)
-- self-members = {⊥}    → `ZeroParadox.ZPJ_SelfApp.selfMem_eq_singleton_bot`  (`selfMemDerived`, `bot`)
-- no literal (Cantor)   → `ZeroParadox.ZPJ_Lawvere.nontrivial_lattice_no_witness`  (`HasLawvereWitness`)
+- self-members = {⊥}    → `ZeroParadox.selfMem_eq_singleton_bot`  (`selfMemDerived`, `bot`)
+- no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness`  (`HasLawvereWitness`)
 
 STATUS: PROVED, sorry-free. Pure assembly of ZP-P coalgebra (`categorical_fork_strict`) +
 ZPJ_SelfApp (`selfMem_eq_singleton_bot`) + ZPJ_Lawvere (`nontrivial_lattice_no_witness`).
@@ -46,9 +46,9 @@ ZPJ_SelfApp (`selfMem_eq_singleton_bot`) + ZPJ_Lawvere (`nontrivial_lattice_no_w
 
 set_option maxHeartbeats 400000
 
-namespace ZeroParadox.ZPJ_QuineDichotomy
+namespace ZeroParadox
 
-open ZeroParadox.ZPP ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPJ_Lawvere ZeroParadox ZPSemilattice QPF
+open ZeroParadox.ZPP ZeroParadox ZeroParadox ZeroParadox ZPSemilattice QPF
 
 /-- **The Quine-atom dichotomy (existence fork).** The self-referential object exists on the
     non-well-founded (final-coalgebra) side and not on the well-founded (initial-algebra) side:
@@ -59,7 +59,7 @@ theorem quine_dichotomy :
     IsEmpty (Fix idPF.Obj) ∧ Nonempty (Cofix idPF.Obj) := categorical_fork_strict
 
 /-- **Uniqueness + identity.** In any `AbstractSelfApp` carrier the self-referential fixed points are
-    exactly `{⊥}` — unique, and equal to the bottom. (= `ZeroParadox.ZPJ_SelfApp.selfMem_eq_singleton_bot`.) -/
+    exactly `{⊥}` — unique, and equal to the bottom. (= `ZeroParadox.selfMem_eq_singleton_bot`.) -/
 theorem quine_self_members_eq_bot {L : Type*} [ZPSemilattice L] [AbstractSelfApp L] :
     {x : L | selfMemDerived x} = ({bot} : Set L) := selfMem_eq_singleton_bot
 
@@ -68,10 +68,10 @@ theorem quine_self_members_eq_bot {L : Type*} [ZPSemilattice L] [AbstractSelfApp
 theorem quine_no_literal {L : Type*} [ZPSemilattice L] (a : L) (ha : a ≠ bot) :
     ¬ HasLawvereWitness L := nontrivial_lattice_no_witness a ha
 
-end ZeroParadox.ZPJ_QuineDichotomy
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.ZPJ_QuineDichotomy
+open ZeroParadox
 #print axioms quine_dichotomy
 #print axioms quine_self_members_eq_bot
 #print axioms quine_no_literal

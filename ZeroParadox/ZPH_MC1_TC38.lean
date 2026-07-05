@@ -170,7 +170,7 @@ theorem node_seam_arrow_collapse_is_generic :
       ¬ Limits.IsZero (ZeroParadox.fC_functor.obj 0)
       ∧ h.to (ZeroParadox.fC_functor.obj 0)
           = 𝟙 (ZeroParadox.fC_functor.obj 0) :=
-  ZeroParadox.ZPH_MC1_TC20.collapse_fires_off_seam
+  ZeroParadox.collapse_fires_off_seam
 
 /-- **The honest fence (capstone, content IN the statement).** The root-level seam (canonical μ→ν
 comparison is an iso, governed by absence of a recursive position) and the node-#5 seam (arrow
@@ -189,18 +189,18 @@ theorem root_node_seam_no_identity :
     -- root-seam: canonical comparison is an iso for the no-recursive-position functor
     Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj)
     ∧ -- node-seam: at the zero object the two universal arrows coincide ...
-      (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isInitial.to
+      (ZeroParadox.hilbert_bottom_isZero).isInitial.to
           (ZeroParadox.fD_functor.obj 0)
-        = (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isTerminal.from
+        = (ZeroParadox.hilbert_bottom_isZero).isTerminal.from
           (ZeroParadox.fD_functor.obj 0)
     ∧ -- ... but that coincidence is the generic identity collapse (TC20 deflation)
-      (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isInitial.to
+      (ZeroParadox.hilbert_bottom_isZero).isInitial.to
           (ZeroParadox.fD_functor.obj 0)
         = 𝟙 (ZeroParadox.fD_functor.obj 0) :=
   ⟨canonicalCmp_bijective,
-   ZeroParadox.ZPH_MC1_TC20.seam_mu_eq_nu_arrow,
-   ZeroParadox.ZPH_MC1_TC20.initial_endo_is_id
-     (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isInitial⟩
+   ZeroParadox.seam_mu_eq_nu_arrow,
+   ZeroParadox.initial_endo_is_id
+     (ZeroParadox.hilbert_bottom_isZero).isInitial⟩
 
 section PurityCheck
 -- Measured footprint (lake build, v4.30.0-rc2): every result is

@@ -104,7 +104,7 @@ theorem seam_is_mu_nu_coincidence :
       ↔ Nonempty (IsInitial (ZeroParadox.fD_functor.obj 0))
         ∧ Nonempty (IsTerminal (ZeroParadox.fD_functor.obj 0)))
     ∧ IsZero (ZeroParadox.fD_functor.obj 0) :=
-  ⟨isZero_iff_isInitial_and_isTerminal, ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero⟩
+  ⟨isZero_iff_isInitial_and_isTerminal, ZeroParadox.hilbert_bottom_isZero⟩
 
 end ZeroParadox.ZPH_MC1_TC12
 

@@ -66,7 +66,7 @@ bottom.
 namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox ZeroParadox.ZPH_MC1_TreeSeam ZeroParadox.ZPH_MC1_TC37
+open ZeroParadox ZeroParadox ZeroParadox
 
 /-! ### § I  The genuine uniqueness theorem -/
 

@@ -45,7 +45,7 @@ dynamics. Still within the number-theoretic bottoms (the ℝ/ℚ₂ places); doe
 bottoms (walled).
 -/
 
-namespace ZeroParadox.ZPH_PlaceMetric
+namespace ZeroParadox
 
 open Filter Topology
 
@@ -86,12 +86,12 @@ theorem markov_attractor_archimedean {n : ℕ} (f : Fin n → PMF (Fin n))
       atTop (𝓝 y) :=
   ZeroParadox.doubly_stochastic_mean_ergodic f hd x
 
-end ZeroParadox.ZPH_PlaceMetric
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_PlaceMetric
+open ZeroParadox
 
 #print axioms node3_contracts_2adic
 #print axioms doubling_expands_archimedean

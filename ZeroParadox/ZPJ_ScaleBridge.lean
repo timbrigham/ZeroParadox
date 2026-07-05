@@ -36,9 +36,9 @@ import from Aczel.
 This is the same chain as ZPJ_Scale §II–IV, without the ZPSemilattice dependency.
 -/
 
-namespace ZeroParadox.ZPJ_ScaleBridge
+namespace ZeroParadox
 
-open ZeroParadox.ZPJ_Scale
+open ZeroParadox
 
 /-! ## § I. ValBridge — The Unconstrained Typeclass -/
 
@@ -147,12 +147,12 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
       ({ZeroParadox.ZPSemilattice.bot} : Set L) :=
   selfMem_eq_singleton_free
 
-end ZeroParadox.ZPJ_ScaleBridge
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPJ_ScaleBridge
+open ZeroParadox
 
 #print axioms scale_ne_fixed_free
 #print axioms scale_unique_fp_free

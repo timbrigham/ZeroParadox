@@ -74,7 +74,7 @@ theorem principal_injective : Function.Injective (algebraMap ℚ (AdeleRing ℤ 
 theorem adele_global_assembly (x : ℚ) (hx : x ≠ 0) :
     Function.Injective (algebraMap ℚ (AdeleRing ℤ ℚ)) ∧
     ((∏ w : InfinitePlace ℚ, w x ^ w.mult) = (∏ᶠ w : FinitePlace ℚ, w x)⁻¹) :=
-  ⟨principal_injective, ZeroParadox.ZPH_PlaceForcing.archimedean_factor_forced x hx⟩
+  ⟨principal_injective, ZeroParadox.archimedean_factor_forced x hx⟩
 
 end ZeroParadox
 

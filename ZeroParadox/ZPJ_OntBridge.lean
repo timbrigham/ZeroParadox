@@ -30,11 +30,11 @@ Result: null is the unique self-containing element of OntologicalStates — form
 in Lean, from ZPB structure alone, without importing any AFA axioms.
 -/
 
-namespace ZeroParadox.ZPJ_OntBridge
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
 open ZeroParadox
-open ZeroParadox.ZPJ_SelfApp
+open ZeroParadox
 
 /-! ## §I. ZPSemilattice Instance for OntologicalStates
 
@@ -86,11 +86,11 @@ theorem ont_selfMem_singleton :
     {x : OntologicalStates | selfMemDerived x} = ({bot} : Set OntologicalStates) :=
   selfMem_eq_singleton_bot
 
-end ZeroParadox.ZPJ_OntBridge
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 section PurityCheck
-open ZeroParadox.ZPJ_OntBridge
+open ZeroParadox
 
 #print axioms instOntZPS
 #print axioms instOntSelfApp

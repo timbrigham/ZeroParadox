@@ -66,7 +66,7 @@ a generic fact about all objects (3).
 namespace ZeroParadox.ZPH_MC1_TC25
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox ZeroParadox ZeroParadox.ZPH_MC1_TreeSeam
+open ZeroParadox ZeroParadox ZeroParadox
 
 /-- The Hilbert bottom, the seam node `Z = fD_functor.obj 0`. -/
 noncomputable abbrev Z : ModuleCat ℂ := fD_functor.obj 0

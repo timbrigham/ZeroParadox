@@ -73,10 +73,10 @@ Type-forgetful carrier exists — is the genuinely forced part; the GO half is "
 reading once you accept the thin-category carrier convention".
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC43
+namespace ZeroParadox
 
 open CategoryTheory
-open ZeroParadox ZeroParadox ZeroParadox.ZPH_MC1_TreeT1
+open ZeroParadox ZeroParadox ZeroParadox
 
 /-! ## NO-GO half: the proof-theory floor lives in a thin category (no Type-valued carrier) -/
 
@@ -142,7 +142,7 @@ theorem nat_floor_initial_singleton_homs :
    floor_homset_not_equiv_fin0,
    ⟨nat_floor_isInitial⟩⟩
 
-end ZeroParadox.ZPH_MC1_TC43
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -150,7 +150,7 @@ end ZeroParadox.ZPH_MC1_TC43
 libraries — a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC43
+open ZeroParadox
 
 #print axioms floor_has_no_forgetful_carrier
 #print axioms floor_homset_card_one

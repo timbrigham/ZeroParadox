@@ -26,7 +26,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPPWall
+namespace ZeroParadox
 
 /-- **The load-bearing hypothesis is well-foundedness, not the engine.** Absent `WellFounded`, self-loops
     are PERMITTED — the negation engine alone does not forbid `r x x`. Since the engine theorems carry no
@@ -41,12 +41,12 @@ theorem engine_is_wf_free {A B : Type*} (e : A → (A → B)) (he : Function.Sur
     ∃ b, f b = b :=
   lawvere_fixedpoint e he f
 
-end ZeroParadox.ZPPWall
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPPWall
+open ZeroParadox
 #print axioms selfloop_permitted
 #print axioms engine_is_wf_free
 end PurityCheck

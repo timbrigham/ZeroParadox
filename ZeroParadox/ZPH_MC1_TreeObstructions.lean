@@ -60,7 +60,7 @@ tree. Whether the straddle is the root seam (the diagonal fixed point) or a defe
 open question; this file only supplies the missing terminal half so the straddle is fully witnessed.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TreeObstructions
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
@@ -156,7 +156,7 @@ noncomputable def fD_zero_isTerminal :
     exact Fin.elim0 i⟩
   exact (ModuleCat.isZero_of_subsingleton (ModuleCat.of ℂ (StateSpace 0))).isTerminal
 
-end ZeroParadox.ZPH_MC1_TreeObstructions
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -164,7 +164,7 @@ end ZeroParadox.ZPH_MC1_TreeObstructions
 a library dependency, not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TreeObstructions
+open ZeroParadox
 
 #print axioms ordinal_carrier_wellFounded
 #print axioms real_carrier_not_wellFounded

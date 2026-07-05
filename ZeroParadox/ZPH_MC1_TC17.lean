@@ -125,7 +125,7 @@ theorem apex_span_no_ambient_strictMono :
       Nonempty (PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordinal))) ∧
     ¬ ∃ f : ℝ → Ordinal, StrictMono f :=
   ⟨apex_iso_padic_ordinal_floor,
-    ZeroParadox.ZPH_MC1_TreeObstructions.no_strictMono_real_to_ordinal⟩
+    ZeroParadox.no_strictMono_real_to_ordinal⟩
 
 end ZeroParadox.ZPH_MC1_TC17
 

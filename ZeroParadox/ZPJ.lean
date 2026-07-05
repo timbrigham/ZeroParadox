@@ -59,7 +59,7 @@ ZP-E (full synthesis: ZP-A through ZP-D, T-SNAP, DA-2).
 No new Mathlib imports beyond those already present in ZP-E.
 -/
 
-namespace ZeroParadox.ZPJ
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
 open ZeroParadox
@@ -169,7 +169,7 @@ theorem bot_unique {L : Type*} [ZPSemilattice L]
   have hyb : y = bot := (da2_bottom_characterization y).mp hy
   rw [hxb, hyb]
 
-end ZeroParadox.ZPJ
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -184,7 +184,7 @@ All results are derived from the ZPSemilattice and AFAStructure class fields alo
 No freestanding axioms. The full chain ⊥ = {⊥} → Q = ⊥ is structurally enforced. -/
 
 section PurityCheck
-open ZeroParadox.ZPJ ZeroParadox ZPSemilattice ZeroParadox
+open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 
 #print axioms t_exec
 #print axioms j1_quine_join_identity

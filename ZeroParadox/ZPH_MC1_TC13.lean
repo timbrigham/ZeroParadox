@@ -54,7 +54,7 @@ meaning of "seam" ("μ and ν coincide here") is now a witnessed theorem, no lon
 namespace ZeroParadox.ZPH_MC1_TC13
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox ZeroParadox.ZPH_MC1_TreeSeam
+open ZeroParadox ZeroParadox
 
 variable {C : Type*} [Category C]
 

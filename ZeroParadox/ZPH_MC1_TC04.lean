@@ -104,7 +104,7 @@ theorem ordinal_wf_padic_descent_clash :
 theorem seam_initial_padic_not_initial :
     Nonempty (Limits.IsInitial (fD_functor.obj 0)) ∧
     IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
-  ⟨⟨fD_zero_isInitial⟩, ZeroParadox.ZPH_MC1_TreeObstructions.padic_bottom_not_initial⟩
+  ⟨⟨fD_zero_isInitial⟩, ZeroParadox.padic_bottom_not_initial⟩
 
 /-- Cardinality does NOT separate edge (b): both bottoms are singletons. `#5 = StateSpace 0` is a
     subsingleton and `#3 = {0} ⊆ Q₂` is a singleton, so the Axis-III (cardinality) invariant is silent

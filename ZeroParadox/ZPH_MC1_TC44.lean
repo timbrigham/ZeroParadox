@@ -66,7 +66,7 @@ directly comparable, so the bundle witnesses no duality. The honest reading is *
 that happen to co-occur**, with one of them generic.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC44
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 open ZeroParadox
@@ -115,10 +115,10 @@ theorem floor_facts_cooccur :
       ∧ IsLeast (Set.range (fun x : Q₂ => ‖x‖)) 0 :=
   ⟨padic_floor_isLimit,
    nat_zero_not_terminal,
-   ZeroParadox.ZPH_MC1_TC35.nat_zero_isLeast,
-   ZeroParadox.ZPH_MC1_TC35.q2_norm_floor_isLeast⟩
+   ZeroParadox.nat_zero_isLeast,
+   ZeroParadox.q2_norm_floor_isLeast⟩
 
-end ZeroParadox.ZPH_MC1_TC44
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -127,7 +127,7 @@ TC10 and the ZP-B topology layer); it is a library dependency, not a new commitm
 `IsTerminal`-obstruction results carry only the standard footprint. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC44
+open ZeroParadox
 
 #print axioms padic_floor_isLimit
 #print axioms isEmpty_hom_one_to_zero

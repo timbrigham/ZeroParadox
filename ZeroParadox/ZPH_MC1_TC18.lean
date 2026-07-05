@@ -62,7 +62,7 @@ namespace ZeroParadox.ZPH_MC1_TC18
 
 open CategoryTheory
 open ZeroParadox ZeroParadox
-open ZeroParadox.ZPH_MC1_TreeSeam
+open ZeroParadox
 
 /-- The seam object: the Hilbert bottom `fD_functor.obj 0`, a zero object of `ModuleCat ℂ`. -/
 noncomputable abbrev Z : ModuleCat ℂ := fD_functor.obj 0

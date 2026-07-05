@@ -75,7 +75,7 @@ facts about them. No categorical or p-adic object is invoked here — the claim 
 *rate functions* those bottoms converge at.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC41
+namespace ZeroParadox
 
 /-- The geometric rate `2⁻ⁿ : ℝ` — the #3 p-adic orbit's convergence rate. -/
 noncomputable def geo (n : ℕ) : ℝ := (2 : ℝ) ^ (-(n : ℤ))
@@ -177,7 +177,7 @@ theorem linear_geo_rate_asymmetry (a₀ : ℕ) :
     (¬ ∃ c : ℝ, 0 < c ∧ ∀ n : ℕ, c * geo n ≤ ((a₀ / 2 ^ n : ℕ) : ℝ)) :=
   ⟨linear_overtakes_geometric, halving_dominated_by_geometric a₀, halving_not_matched_below a₀⟩
 
-end ZeroParadox.ZPH_MC1_TC41
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -186,7 +186,7 @@ Mathlib's real-analysis / archimedean library (`exists_nat_gt`, `zpow`, ordered-
 library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC41
+open ZeroParadox
 
 #print axioms geo_le_one
 #print axioms linear_overtakes_geometric

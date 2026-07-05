@@ -70,8 +70,8 @@ is genuinely earned but the cross-face identity stays fenced.
 namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
-open ZeroParadox.ZPJ_SelfApp
-open ZeroParadox.ZPJ_AczelConn
+open ZeroParadox
+open ZeroParadox
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 

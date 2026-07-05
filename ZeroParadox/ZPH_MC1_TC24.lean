@@ -52,7 +52,7 @@ load-bearing one must first build TH10; until then this is generic category theo
 ledger, deliberately demoted from a verdict bundle to a remark.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC24
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox
@@ -82,7 +82,7 @@ noncomputable def fC_initial_iso_floor :
   haveI := fC_hasInitial
   Limits.initialIsoIsInitial fC_zero_isInitial
 
-end ZeroParadox.ZPH_MC1_TC24
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -90,7 +90,7 @@ end ZeroParadox.ZPH_MC1_TC24
 exactly as in `ZPH_InfoFunctor`. No new commitment is introduced by this file. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC24
+open ZeroParadox
 
 #print axioms fC_zero_isInitial_as_empty_colimit
 #print axioms fC_zero_cocone_apex

@@ -52,9 +52,9 @@ Rung C, and would be a reusable contribution independent of the Zero Paradox. Co
 precise missing pieces are listed above.
 -/
 
-namespace ZeroParadox.ZPJ_BoundaryBridge
+namespace ZeroParadox
 
-open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPJ_Boundary ZeroParadox.ZPP
+open ZeroParadox ZPSemilattice ZeroParadox ZeroParadox ZeroParadox.ZPP
 
 set_option maxHeartbeats 400000
 
@@ -70,9 +70,9 @@ theorem snap_boundary_two_registers {L : Type*} [ZPSemilattice L] [AbstractSelfA
       ∧ (IsEmpty (QPF.Fix idPF.Obj) ∧ Nonempty (QPF.Cofix idPF.Obj)) :=
   ⟨⟨floor_not_wellFounded, snap_crossing⟩, categorical_fork_strict⟩
 
-end ZeroParadox.ZPJ_BoundaryBridge
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.ZPJ_BoundaryBridge
+open ZeroParadox
 #print axioms snap_boundary_two_registers
 end PurityCheck

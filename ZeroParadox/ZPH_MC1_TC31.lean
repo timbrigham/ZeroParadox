@@ -70,11 +70,11 @@ reading — calling a unique fixed point a terminal / final-coalgebra (ν) unive
 interpretation only; no category, terminal object, or coalgebra is constructed in this file.)
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC31
+namespace ZeroParadox
 
 open scoped BigOperators ENNReal
 open ZeroParadox
-open ZeroParadox.ZPH_MC1_TC23 (IsStationaryPMF)
+open ZeroParadox (IsStationaryPMF)
 
 variable {n : ℕ}
 
@@ -266,7 +266,7 @@ theorem markov_node_irreducible_rescue {n : ℕ} :
   ⟨cycKernel (n := n + 1), cycKernel_doublyStochastic, cycKernel_ne_id,
     cyc_stationary_subsingleton⟩
 
-end ZeroParadox.ZPH_MC1_TC31
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -274,7 +274,7 @@ end ZeroParadox.ZPH_MC1_TC31
 a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC31
+open ZeroParadox
 
 #print axioms cycKernel_doublyStochastic
 #print axioms cyc_bind_apply

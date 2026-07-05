@@ -54,7 +54,7 @@ at the level of "connected by real bottom-preserving maps", which is exactly the
 prediction; it is not the stronger claim of a single unifying functor.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TreeT1
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
@@ -101,12 +101,12 @@ theorem t1_mu_cluster_glue :
     Nonempty (linObj (Fin 0) ≅ fD_functor.obj 0) :=
   ⟨⟨nat_floor_isInitial⟩, fC_floor_transport, fD_floor_transport, ⟨linObj_iso_hilbert 0⟩⟩
 
-end ZeroParadox.ZPH_MC1_TreeT1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TreeT1
+open ZeroParadox
 
 #print axioms nat_floor_isInitial
 #print axioms linObj_iso_hilbert

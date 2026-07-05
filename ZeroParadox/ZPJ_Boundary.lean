@@ -28,9 +28,9 @@ proves "the self-application floor is non-well-founded; the ordinal ascent is we
 crosses between," at the level of relations.
 -/
 
-namespace ZeroParadox.ZPJ_Boundary
+namespace ZeroParadox
 
-open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp
+open ZeroParadox ZPSemilattice ZeroParadox
 
 set_option maxHeartbeats 400000
 
@@ -126,10 +126,10 @@ theorem snap_crossing :
     ¬ Acc phaseRel Phase.floor ∧ ∀ o : Ordinal, Acc phaseRel (Phase.up o) :=
   ⟨fun hacc => acc_irrefl hacc trivial, phase_acc_of_up⟩
 
-end ZeroParadox.ZPJ_Boundary
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.ZPJ_Boundary
+open ZeroParadox
 #print axioms floor_not_wellFounded
 #print axioms ascent_wellFounded
 #print axioms phase_not_wellFounded

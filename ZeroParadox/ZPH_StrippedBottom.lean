@@ -50,9 +50,9 @@ term), one domain, an open list, and NOT ⊥. The genuine formal content that su
 lives elsewhere (the per-domain limit/uniqueness theorems); this file is the framing, honestly thin.
 -/
 
-namespace ZeroParadox.ZPH_StrippedBottom
+namespace ZeroParadox
 
-open ZeroParadox.ZPH_PlaceAllPrimes
+open ZeroParadox
 
 /-- **⊥ by inversion ("typecast by what it is NOT").** A point `b : X` that is the degenerate/inverted
     value of each listed attribute-class: STRUCTURE inverted (`absorbing`) and DYNAMICS inverted (the
@@ -117,12 +117,12 @@ theorem stripped_bottom_padic :
     (⋂ n, qpBall 2 n) = {(0 : ℚ_[2])} :=
   ⟨measure_degenerate, dynamics_inverted, structure_absorbing, extent_single_point⟩
 
-end ZeroParadox.ZPH_StrippedBottom
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_StrippedBottom
+open ZeroParadox
 
 #print axioms measure_degenerate
 #print axioms dynamics_inverted

@@ -102,38 +102,38 @@ their nature and are not indexed here. New exclusions are proved in their own fi
 section CannotBeIndex
 
 /-! ### ⊥-interpretations do not unify across the μ/ν root (cross-domain walls) -/
-#check @ZeroParadox.ZPH_MC1_TreeObstructions.no_strictMono_real_to_ordinal
+#check @ZeroParadox.no_strictMono_real_to_ordinal
 -- (supporting infra, not a ⊥-exclusion on its own — a generic fact about ℝ that powers the line above)
-#check @ZeroParadox.ZPH_MC1_TreeObstructions.real_carrier_not_wellFounded
-#check @ZeroParadox.ZPH_MC1_TreeObstructions.simplex_antichain
-#check @ZeroParadox.ZPH_MC1_TreeObstructions.padic_bottom_not_initial
-#check @ZeroParadox.ZPH_MC1_TreeObstructions.split_kleisli_vs_hilbert
-#check @ZeroParadox.ZPH_MC1_TreeObstructions.split_kleisli_vs_padic
-#check @ZeroParadox.ZPH_MC1_TC21.root_cut_no_map_nu_to_mu
-#check @ZeroParadox.ZPH_MC1_TC21.root_cut_strict_asymmetric
+#check @ZeroParadox.real_carrier_not_wellFounded
+#check @ZeroParadox.simplex_antichain
+#check @ZeroParadox.padic_bottom_not_initial
+#check @ZeroParadox.split_kleisli_vs_hilbert
+#check @ZeroParadox.split_kleisli_vs_padic
+#check @ZeroParadox.root_cut_no_map_nu_to_mu
+#check @ZeroParadox.root_cut_strict_asymmetric
 
 /-! ### ⊥ cannot be reached by a structure-preserving (descending/ν) comparison -/
-#check @ZeroParadox.ZPH_MC1_TC22.no_faithful_span_to_ordinal_and_descending
-#check @ZeroParadox.ZPH_MC1_TC22.faithful_iff_descending
+#check @ZeroParadox.no_faithful_span_to_ordinal_and_descending
+#check @ZeroParadox.faithful_iff_descending
 
 /-! ### the two faces: `faces_iso_unique` is POSITIVE (they coincide as a bare point, uniquely) — it
     supports the *interpretation-layer* exclusion (no STRUCTURE-respecting unification) via the
     structure-respecting caveat, it is NOT itself a no-go. Indexed honestly as support, not an exclusion. -/
-#check @ZeroParadox.ZPH_TwoFacesBot.faces_iso_unique
+#check @ZeroParadox.faces_iso_unique
 
 /-! ### the Markov interpretation (#2) cannot be a single ordered/unique point in general -/
-#check @ZeroParadox.ZPH_MC1_TC16.stationary_attractor_no_order_placement
-#check @ZeroParadox.ZPH_MC1_TC23.markov_node_no_universal_property
-#check @ZeroParadox.ZPH_MC1_TC23.doublyStochastic_stationary_not_subsingleton
+#check @ZeroParadox.stationary_attractor_no_order_placement
+#check @ZeroParadox.markov_node_no_universal_property
+#check @ZeroParadox.doublyStochastic_stationary_not_subsingleton
 
 /-! ### the p-adic floor cannot be reached from within / matched to the Markov rate -/
 #check @ZeroParadox.padic_orbit_never_reaches_zero
-#check @ZeroParadox.ZPH_MC1_TC33.no_rate_conjugacy
-#check @ZeroParadox.ZPH_MC1_TC33.no_rate_orderIso
+#check @ZeroParadox.no_rate_conjugacy
+#check @ZeroParadox.no_rate_orderIso
 
 /-! ### categorical floor/seam exclusions -/
 #check @ZeroParadox.ZPH_MC1_TC40.leaf_not_isZero
-#check @ZeroParadox.ZPH_MC1_TC44.nat_zero_not_terminal
+#check @ZeroParadox.nat_zero_not_terminal
 
 /-! ### the bottoms cannot be zero objects / greatest elements (various categories) -/
 #check @ZeroParadox.kleisli_bottom_not_zero
@@ -148,17 +148,17 @@ section CannotBeIndex
 #check @ZeroParadox.ZPH_MC1_TC49.fixToCofix_not_surjective
 
 /-! ### orbits that cannot reach ⊥ / cannot be matched (only contractions reach it) -/
-#check @ZeroParadox.ZPH_MC1_TC30.unit_orbit_not_tendsto_zero
-#check @ZeroParadox.ZPH_MC1_TC39.swap_orbit_not_convergent
-#check @ZeroParadox.ZPH_MC1_TC45.padic_markov_no_orbit_correspondence
+#check @ZeroParadox.unit_orbit_not_tendsto_zero
+#check @ZeroParadox.swap_orbit_not_convergent
+#check @ZeroParadox.padic_markov_no_orbit_correspondence
 
 /-! ### seam / floor cannot be transported or cross-connected -/
-#check @ZeroParadox.ZPH_MC1_TC34.seam_role_not_transported
+#check @ZeroParadox.seam_role_not_transported
 #check @ZeroParadox.ZPH_MC1_TC40.seam_not_mu_colimit_apex
 -- NB: `no_cross_setting_map` records absence-of-construction (no map EXHIBITED), NOT a proven
 -- impossibility (`IsEmpty (map)`). It is an OPEN-style "none given", not a NO-GO. See register D8.
 #check @ZeroParadox.TC42.no_cross_setting_map
-#check @ZeroParadox.ZPH_MC1_TC44.isEmpty_hom_one_to_zero
+#check @ZeroParadox.isEmpty_hom_one_to_zero
 
 /-! ### cross-domain CANNOT-HAVE anchors (the exclusion recurs in other layers — corpus sweep 2026-06-30) -/
 #check @ZeroParadox.t3_unreachability   -- categorical: IsEmpty (X ⟶ ⊥) — ⊥ cannot be reached from outside.
@@ -174,17 +174,17 @@ section CannotBeIndex
 -- ⊥ is the UNIQUE fixed point of the action — the concurrency point (input = output).
 -- (NB: this is a FIELD of the `AbstractSelfApp` class — a structural commitment assumed of the action,
 --  not a derived theorem. "Concurrency"/"not-action" is the plain-language gloss for `selfApp x = x`.)
-#check @ZeroParadox.ZPJ_SelfApp.AbstractSelfApp.unique_fp
+#check @ZeroParadox.AbstractSelfApp.unique_fp
 -- that concurrency point is the seam (the μ=ν coincidence).
 #check @ZeroParadox.selfApp_fixed_point_is_seam
 -- least = greatest fixed point: the two extremes co-hold at the one point (a concurrency).
-#check @ZeroParadox.ZPH_MC1_TC15.selfApp_bot_is_both_extremal
+#check @ZeroParadox.selfApp_bot_is_both_extremal
 
 /-! ### the CONTRAST that makes concurrency meaningful: pure logical negation has NO fixed point —
     `¬(p ↔ ¬p)` — it is THE fixed-point-free map at the diagonal (Lawvere), whereas `selfApp`'s fixed
     point exists and is unique (⊥). (NB: do NOT read this as "involutions have no fixed point" — most do,
     e.g. `x ↦ -x` fixes 0; the claim is specifically about logical `Not`, not involutions in general.) -/
-#check @ZeroParadox.ZPPWall.negation_no_fixedpoint
+#check @ZeroParadox.negation_no_fixedpoint
 
 /-! ## POSITIVE side, the two poles — NARROW focus + INFINITE width (Tim, 2026-06-30)
     "Narrow focus and infinite width is what makes bottom bottom." Every positive handle on ⊥ is
@@ -202,13 +202,13 @@ section CannotBeIndex
     The "poles" are a cross-construction characterization, not facts about a single carrier. #check-only. -/
 
 -- NARROW — uniqueness: ⊥ is THE single point (relational pinning, no intrinsic structure). [ℚ₂]
-#check @ZeroParadox.ZPJ_SelfApp.q2_unique_fp        -- 0 is the UNIQUE self-membership fixed point in ℚ₂.
+#check @ZeroParadox.q2_unique_fp        -- 0 is the UNIQUE self-membership fixed point in ℚ₂.
 #check @ZeroParadox.ZPH_TopFunctor.fB_bottom_is_limit -- ⋂ nested balls = {0}: exactly one point pinned.
 -- WIDE / infinite MEASURE: a scalar diverges (unbounded value), NOT "reached from everywhere". [ZPC]
 #check @ZeroParadox.t2_diverges                 -- surprisal/information exceeds every bound M.
 #check @ZeroParadox.info_bottom_diverges -- = `ZPC.l_inf` (same fact, the BottomMeasure framing).
 -- WIDE / infinite REACH: ⊥ is the universal attractor — every CONTRACTION orbit (‖c‖<1) flows to it. [ℚ₂]
-#check @ZeroParadox.ZPH_MC1_TC30.contraction_orbit_tendsto_zero
+#check @ZeroParadox.contraction_orbit_tendsto_zero
 -- COINCIDENCE (actual-⊥ core, both genuinely 0 ∈ ℚ₂): the SAME point is `q2_unique_fp` (narrow: the
 -- unique fixed point) AND `contraction_orbit_tendsto_zero`'s limit (reach: the universal attractor). Not
 -- one theorem — a tight Lean-anchored pairing in ONE carrier (ℚ₂), the formal shadow of narrow+reach.
@@ -222,7 +222,7 @@ section CannotBeIndex
 -- MEASURE, fully general: in ANY additively-valued ring the floor 0 carries v 0 = ⊤ (subsumes the p-adic).
 #check @ZeroParadox.addVal_bot
 -- REACH, ordinal domain: the ε₀-tower encodings converge to the 2-adic floor 0 (a different orbit family).
-#check @ZeroParadox.ZPL.tower_converges_to_zero
+#check @ZeroParadox.tower_converges_to_zero
 
 /-! ### INVERSION — the symmetry suggesting the narrow/wide link (z ↦ 1/z)
     Interpretation (NOT carried by the first theorem): inversion as the formal face of the Riemann-sphere
@@ -234,7 +234,7 @@ section CannotBeIndex
 #check @ZeroParadox.inversion_reverses_filtration
 -- THE literal 0=∞: the SAME orbit 2ⁿx reaches 0 at the 2-adic place AND diverges to ∞ at the archimedean
 -- place — one orbit, the narrow/reach pole and the divergence pole as two place-views. (This carries it.)
-#check @ZeroParadox.ZPH_PlaceMetric.doubling_place_dichotomy
+#check @ZeroParadox.doubling_place_dichotomy
 -- THE literal 0↔∞ at the floor, made a HOMEOMORPHISM (the p-adic Riemann sphere): inversion on
 -- `OnePoint ℚ₂` swaps the floor `0` and the point at infinity `∞`, repairing the discontinuity Mathlib's
 -- `0⁻¹ = 0` leaves at the floor. The strongest p-adic INV witness — 0 and ∞ antipodal, the Riemann origin.
@@ -258,14 +258,14 @@ section CannotBeIndex
     object previously carried with a single concurrency handle. #check-only. -/
 -- ⊥ IS the (unique) self-executing Kleene/Quine fixed point. (NB: `kleene_quine_is_bot` is under
 --  `[KleeneStructure]` — the quine-atom property is class-supplied, like `unique_fp`; not free-standing.)
-#check @ZeroParadox.ZPK.kleene_quine_is_bot       -- any Quine atom q = ⊥.
-#check @ZeroParadox.ZPK.computational_quine_exists -- the Kleene self-referential fixed point exists.
+#check @ZeroParadox.kleene_quine_is_bot       -- any Quine atom q = ⊥.
+#check @ZeroParadox.computational_quine_exists -- the Kleene self-referential fixed point exists.
 -- a genuine PERIODICITY fact (the self-reference made concrete, beyond bare `f x = x`): the fixed point's
 -- own Gödel number IS the period of its evaluation, `eval c n = eval c (encode c + n)` — index and
 -- function tied. (A true periodicity statement, not a deep "diagonal identity" — kept literal.)
-#check @ZeroParadox.ZPK.quine_period_is_goedel
+#check @ZeroParadox.quine_period_is_goedel
 -- cross-domain: the two diagonalization fixed points (Kleene-periodic code; least ε₀ with ω^ε₀=ε₀) coexist.
-#check @ZeroParadox.ZPM.both_fixed_points_exist
+#check @ZeroParadox.both_fixed_points_exist
 -- TWO SUB-SENSES of SELF (a refinement, #5-Hilbert probe 2026-06-30). The above are self-APPLICATION
 -- (Kleene-quine: a code acts on its own index — a computability phenomenon). The Hilbert bottom carries
 -- the OTHER sub-sense, self-SIMILARITY / diagonal-uniqueness: ⊥ is the UNIQUE finite-dim fixed point of
@@ -280,9 +280,9 @@ section CannotBeIndex
     The floor GENERATES the ceiling — the project's name-as-method (self-reference located at the floor,
     the ceiling built from it). Connects ⊥ to ε₀ (the snap target) structurally, not just via the snap. -/
 -- the ceiling ε₀ is the closure of the floor 0 under ω^· (ε₀ = nfp (ω^·) 0).
-#check @ZeroParadox.ZPL.epsilonZero_eq_nfp
+#check @ZeroParadox.epsilonZero_eq_nfp
 -- and ε₀ is the LEAST fixed point above the floor (ω^b = b → ε₀ ≤ b).
-#check @ZeroParadox.ZPL.epsilonZero_le_fixedPoint
+#check @ZeroParadox.epsilonZero_le_fixedPoint
 -- ABSTRACT engine, CITED from Mathlib (prior-art for GEN — do NOT rebuild): the least fixed point IS
 -- generated from the floor ⊥ by iteration — Kleene `lfp f = ⨆ₙ fⁿ(⊥)` (ωScott-continuous f); transfinitely
 -- `lfpApprox f ⊥`. ε₀ = nfp(ω^·)0 is the ordinal instance. (`gen_probe_2026-06-30.md`.)

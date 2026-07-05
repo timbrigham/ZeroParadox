@@ -69,7 +69,7 @@ namespace ZeroParadox
 open CategoryTheory
 open ZeroParadox ZeroParadox
 open ZeroParadox ZeroParadox
-open ZeroParadox.ZPH_MC1_TreeObstructions ZeroParadox.ZPH_MC1_TreeSeam
+open ZeroParadox ZeroParadox
 
 /-! ## ZP-G: the initial object of a ZPCategory is never a zero object -/
 

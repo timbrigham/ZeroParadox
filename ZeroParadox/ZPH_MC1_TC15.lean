@@ -51,10 +51,10 @@ theorem. The pre-registered GO conjecture is proved; the NO-GO (degenerate/vacuo
 refuted by `selfApp_fp_set_eq_singleton_bot` showing the f.p. set is inhabited.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC15
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
-open ZeroParadox.ZPJ_SelfApp
+open ZeroParadox
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 
@@ -107,12 +107,12 @@ theorem selfApp_seam_nondegenerate :
     ∧ (∀ x : L, AbstractSelfApp.selfApp x = x → le x (bot : L)) :=
   ⟨selfApp_bot_mem_fp_set, selfApp_bot_is_least_fp, selfApp_bot_is_greatest_fp⟩
 
-end ZeroParadox.ZPH_MC1_TC15
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC15
+open ZeroParadox
 
 #print axioms selfApp_bot_is_least_fp
 #print axioms selfApp_bot_is_greatest_fp

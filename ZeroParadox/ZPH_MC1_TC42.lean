@@ -80,8 +80,8 @@ namespace ZeroParadox.TC42
 open QPF
 open ZeroParadox.TC26
 open ZeroParadox.TC38
-open ZeroParadox.ZPH_MC1_TC15
-open ZeroParadox.ZPJ_SelfApp
+open ZeroParadox
+open ZeroParadox
 open ZeroParadox ZPSemilattice
 
 set_option maxHeartbeats 400000

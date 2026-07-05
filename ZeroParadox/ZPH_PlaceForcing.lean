@@ -39,7 +39,7 @@ result (the product formula is Mathlib's) with the framework interpretation that
 archimedean slot — NOT a from-scratch framework theorem, and NOT an object-level claim about the simplex.
 -/
 
-namespace ZeroParadox.ZPH_PlaceForcing
+namespace ZeroParadox
 
 open NumberField
 
@@ -65,12 +65,12 @@ theorem archimedean_factor_forced (x : ℚ) (hx : x ≠ 0) :
   field_simp [hB]
   linear_combination h
 
-end ZeroParadox.ZPH_PlaceForcing
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_PlaceForcing
+open ZeroParadox
 
 #print axioms productFormula_rat
 #print axioms archimedean_place_unique_rat

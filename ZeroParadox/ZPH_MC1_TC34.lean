@@ -56,11 +56,11 @@ attached to that pattern. This is an obstruction (separation) result, not a cros
 identification: it records precisely *how* the seam fails to bridge to #3.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC34
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox ZeroParadox
-open ZeroParadox.ZPH_MC1_TreeObstructions
+open ZeroParadox
 
 /-- The seam #5's carrier `StateSpace 0` is a singleton (subsingleton). -/
 theorem seam_carrier_subsingleton : Subsingleton (StateSpace 0) :=
@@ -96,7 +96,7 @@ theorem seam_to_padic_map_unique :
 theorem seam_role_not_transported :
     Limits.IsZero (fD_functor.obj 0)
     ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
-  ⟨ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero, padic_bottom_not_initial⟩
+  ⟨ZeroParadox.hilbert_bottom_isZero, padic_bottom_not_initial⟩
 
 /-- The full TC34 verdict assembled: both carriers are singletons; the only inter-carrier map is the
     cardinality-forced trivial one (an instance of the generic singleton fact); and the seam's
@@ -109,7 +109,7 @@ theorem seam_no_categorical_bridge_padic :
     ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨seam_to_padic_map_unique, seam_role_not_transported⟩
 
-end ZeroParadox.ZPH_MC1_TC34
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -117,7 +117,7 @@ end ZeroParadox.ZPH_MC1_TC34
 dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC34
+open ZeroParadox
 
 #print axioms seam_carrier_subsingleton
 #print axioms padic_floor_subsingleton

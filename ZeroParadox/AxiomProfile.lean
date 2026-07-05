@@ -51,10 +51,10 @@ section ChoiceFreeCore
 #print axioms ZeroParadox.ZPSemilattice.cc1
 
 -- The Quine-atom self-reference keystone (ZP-J):
-#print axioms ZeroParadox.ZPJ.bot_is_quine_atom
-#print axioms ZeroParadox.ZPJ.cc1_derived
-#print axioms ZeroParadox.ZPJ.t_exec
-#print axioms ZeroParadox.ZPJ.quine_atom_unique
+#print axioms ZeroParadox.bot_is_quine_atom
+#print axioms ZeroParadox.cc1_derived
+#print axioms ZeroParadox.t_exec
+#print axioms ZeroParadox.quine_atom_unique
 
 end ChoiceFreeCore
 
@@ -63,12 +63,12 @@ end ChoiceFreeCore
 No `Classical.choice`; at most propositional extensionality and quotient soundness. -/
 section ChoiceFreeStructural
 
-#print axioms ZeroParadox.ZPJ_AczelConn.J_self_is_largest        -- does not depend on any axioms
+#print axioms ZeroParadox.J_self_is_largest        -- does not depend on any axioms
 #print axioms ZeroParadox.ZPI.t_iz_limit_is_new_null         -- does not depend on any axioms
-#print axioms ZeroParadox.ZPH_PowerSet.ps_structural_floor   -- [propext, Quot.sound]
-#print axioms ZeroParadox.ZPJ_WheelFrac.instWheel                -- [propext, Quot.sound]
-#print axioms ZeroParadox.ZPJ_WheelFrac.inf_ne_bot               -- [propext, Quot.sound]
-#print axioms ZeroParadox.ZPJ_QuineDichotomy.quine_self_members_eq_bot  -- [propext, Quot.sound]  (Quine-atom identity = {⊥})
+#print axioms ZeroParadox.ps_structural_floor   -- [propext, Quot.sound]
+#print axioms ZeroParadox.instWheel                -- [propext, Quot.sound]
+#print axioms ZeroParadox.inf_ne_bot               -- [propext, Quot.sound]
+#print axioms ZeroParadox.quine_self_members_eq_bot  -- [propext, Quot.sound]  (Quine-atom identity = {⊥})
 
 end ChoiceFreeStructural
 
@@ -85,6 +85,6 @@ section WhereChoiceEnters
 #print axioms ZeroParadox.fD_functor         -- [propext, Classical.choice, Quot.sound]  (ModuleCat ℂ)
 #print axioms ZeroParadox.fC_functor         -- [propext, Classical.choice, Quot.sound]  (KleisliCat PMF)
 #print axioms ZeroParadox.snap_dichotomy   -- [propext, Classical.choice, Quot.sound]  (snap-occurrence dichotomy, ℝ/ℚ_p)
-#print axioms ZeroParadox.ZPJ_QuineDichotomy.quine_dichotomy -- [propext, Classical.choice, Quot.sound]  (Quine-atom structural μ/ν fork)
+#print axioms ZeroParadox.quine_dichotomy -- [propext, Classical.choice, Quot.sound]  (Quine-atom structural μ/ν fork)
 
 end WhereChoiceEnters

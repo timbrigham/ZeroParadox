@@ -41,13 +41,13 @@
 import ZeroParadox.ZPK
 import ZeroParadox.ZPL
 
-namespace ZeroParadox.ZPM
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
 open ZeroParadox
-open ZeroParadox.ZPK
 open ZeroParadox
-open ZeroParadox.ZPL
+open ZeroParadox
+open ZeroParadox
 open Nat.Partrec Nat.Partrec.Code
 open Ordinal
 
@@ -223,11 +223,11 @@ precise: the gap is not a skipped proof step but a genuine framework separation 
 measure-theoretic surprisal on one side, computability-theoretic encoding on the
 other, with no shared machinery in current Mathlib. -/
 
-end ZeroParadox.ZPM
+end ZeroParadox
 
 /-! ## Purity Check -/
 section PurityCheck
-open ZeroParadox.ZPM
+open ZeroParadox
 
 #print axioms snapEmbed_injective
 #print axioms snapEmbed_mul_morphism

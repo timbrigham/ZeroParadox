@@ -31,7 +31,7 @@ Scope: this is the snap *from below* (ε₀ is the unreachable fixed point). The
 which no notation names.
 -/
 
-namespace ZeroParadox.ZPN
+namespace ZeroParadox
 
 open ONote
 
@@ -87,4 +87,4 @@ section PurityCheck
 #print axioms tower_NF
 end PurityCheck
 
-end ZeroParadox.ZPN
+end ZeroParadox

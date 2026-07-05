@@ -61,7 +61,7 @@ it is a *representative* of #2's attractor, chosen as the natural extreme (limit
 immediately). The p-adic side is the genuine doubling-map orbit on `Q₂`.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC33
+namespace ZeroParadox
 
 open ZeroParadox
 
@@ -134,7 +134,7 @@ theorem no_rate_orderIso {x : Q₂} (hx : x ≠ 0) :
   rintro ⟨n, m, h⟩
   exact padic_ne_markov hx n m h
 
-end ZeroParadox.ZPH_MC1_TC33
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -143,7 +143,7 @@ library (`padicNormE.norm_p`, `norm_mul`, `norm_pow`, `norm_pos_iff`), the same 
 carried by ZP-B. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC33
+open ZeroParadox
 
 #print axioms padicRate_eq
 #print axioms padicRate_pos

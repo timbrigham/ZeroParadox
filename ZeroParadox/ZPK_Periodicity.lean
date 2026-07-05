@@ -24,7 +24,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPK
+namespace ZeroParadox
 
 open Nat.Partrec Nat.Partrec.Code
 
@@ -48,12 +48,12 @@ theorem quine_set_infinite : {c : Code | IsComputationalQuine c}.Infinite := by
   have hinj : Function.Injective (fun k : ℕ => Code.const k) := fun a b h => const_inj h
   exact Set.infinite_of_injective_forall_mem hinj hconst_quine
 
-end ZeroParadox.ZPK
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPK Nat.Partrec Nat.Partrec.Code
+open ZeroParadox Nat.Partrec Nat.Partrec.Code
 #print axioms quine_isPeriodic
 #print axioms quine_set_infinite
 end PurityCheck

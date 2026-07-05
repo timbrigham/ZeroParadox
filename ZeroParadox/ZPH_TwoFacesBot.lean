@@ -57,9 +57,9 @@ simplex/set, TC23 — an interpretation that has NOT bottomed out unless collaps
 unification specifically at actual ⊥; it does NOT reopen the falsified identity-of-interpretations thesis.
 -/
 
-namespace ZeroParadox.ZPH_TwoFacesBot
+namespace ZeroParadox
 
-open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp
+open ZeroParadox ZPSemilattice ZeroParadox
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 
@@ -86,12 +86,12 @@ theorem faces_iso_unique :
     Subsingleton ({x : L // AbstractSelfApp.selfApp x = x} ≃ PUnit) :=
   ⟨fun _ _ => Equiv.ext fun _ => Subsingleton.elim _ _⟩
 
-end ZeroParadox.ZPH_TwoFacesBot
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_TwoFacesBot
+open ZeroParadox
 
 #print axioms selfApp_face_subsingleton
 #print axioms selfApp_face_equiv_punit

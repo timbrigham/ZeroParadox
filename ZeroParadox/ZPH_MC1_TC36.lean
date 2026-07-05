@@ -59,7 +59,7 @@ rate-level **match** — both descend to their floor at rate `1/2`.
   is a shared *bound*, not a shared *orbit profile*. We do not overclaim a positive bridge.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC36
+namespace ZeroParadox
 
 open ZeroParadox
 open Filter Topology
@@ -172,7 +172,7 @@ theorem padic_nat_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0) :
     simp at this
     omega
 
-end ZeroParadox.ZPH_MC1_TC36
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -181,7 +181,7 @@ end ZeroParadox.ZPH_MC1_TC36
 It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC36
+open ZeroParadox
 
 #print axioms rate_tendsto
 #print axioms padic_orbit_norm

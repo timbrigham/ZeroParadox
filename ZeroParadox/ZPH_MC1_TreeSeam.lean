@@ -49,11 +49,11 @@ interpretation, not a Lean claim; the Lean content is precisely: #5 is a zero ob
 and not terminal, #3 is not initial. The seam reading is the meaning we attach to that pattern.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TreeSeam
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
-open ZeroParadox.ZPH_MC1_TreeObstructions
+open ZeroParadox
 
 /-- #5 is the seam: the Hilbert bottom is a **zero object** (initial ∧ terminal) of `ModuleCat ℂ` —
     the μ=ν coincidence at a node. -/
@@ -82,12 +82,12 @@ theorem fork_positions_distinct :
     ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨hilbert_bottom_isZero, kleisli_bottom_not_terminal, padic_bottom_not_initial⟩
 
-end ZeroParadox.ZPH_MC1_TreeSeam
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TreeSeam
+open ZeroParadox
 
 #print axioms hilbert_bottom_isZero
 #print axioms kleisli_bottom_not_terminal

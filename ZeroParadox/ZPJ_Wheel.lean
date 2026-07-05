@@ -70,12 +70,12 @@ gap; §VI closes the identification gap. The universality result previously scop
 See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.
 -/
 
-namespace ZeroParadox.ZPJ_Wheel
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
-open ZeroParadox.ZPJ
-open ZeroParadox.ZPJ_Scale
-open ZeroParadox.ZPJ_SelfApp
+open ZeroParadox
+open ZeroParadox
+open ZeroParadox
 
 -- ============================================================
 -- § I. Wheel Typeclass
@@ -480,4 +480,4 @@ section PurityCheck
 #print axioms zpwVal_inv_zero
 end PurityCheck
 
-end ZeroParadox.ZPJ_Wheel
+end ZeroParadox

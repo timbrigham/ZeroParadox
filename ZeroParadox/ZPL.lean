@@ -50,11 +50,11 @@ ZPK (§I): KleeneStructure, roger_fixed_point_exists, IsComputationalQuine
 ZPB (§IV): 2-adic topology, PadicInt 2, 2-adic valuation
 ZPE (§V): T-SNAP, MachinePhase, t_snap_machine -/
 
-namespace ZeroParadox.ZPL
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
 open ZeroParadox
-open ZeroParadox.ZPK
+open ZeroParadox
 open ZeroParadox
 open Nat.Partrec Nat.Partrec.Code
 open Ordinal
@@ -82,10 +82,10 @@ AFA/Kleene route reaches the same fixed-point structure via a provable path. -/
 -- The Classical.choice entry is the computational expression of the diagonal.
 section AxiomFootprintEvidence
 
-#print axioms ZeroParadox.ZPK.t_comp
-#print axioms ZeroParadox.ZPK.da1_paths_unified
-#print axioms ZeroParadox.ZPK.isComputationalQuine_undecidable
-#print axioms ZeroParadox.ZPK.infinite_quine_family
+#print axioms ZeroParadox.t_comp
+#print axioms ZeroParadox.da1_paths_unified
+#print axioms ZeroParadox.isComputationalQuine_undecidable
+#print axioms ZeroParadox.infinite_quine_family
 
 end AxiomFootprintEvidence
 
@@ -570,12 +570,12 @@ theorem snap_zp2_correspondence :
    tower_converges_to_zero,
    if_neg (lt_irrefl epsilonZero)⟩
 
-end ZeroParadox.ZPL
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPL
+open ZeroParadox
 
 -- § III: fully proved
 #print axioms epsilonZero_fixedPoint

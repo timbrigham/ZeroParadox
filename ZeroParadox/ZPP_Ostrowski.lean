@@ -8,7 +8,7 @@ The number systems instance of the fixed-point fork (ZP-P). The completions of �
 mutually-exclusive kinds — the Archimedean (real) absolute value and the non-Archimedean (p-adic)
 ones — and Ostrowski's theorem classifies them exhaustively. The contact point of this fork is 0: in
 the Archimedean completion ℝ it is approached but never reached (density), while in the 2-adic
-completion ℚ₂ it is the unique fixed point of `x ↦ 2x` (`ZeroParadox.ZPJ.q2_unique_fp`) and its
+completion ℚ₂ it is the unique fixed point of `x ↦ 2x` (`ZeroParadox.q2_unique_fp`) and its
 valuation diverges (`v₂(0) = ∞`, ZP-B). See ZP-B / ZP-F for the snap behaviour at 0.
 
 This file pins the exact Mathlib lemmas the prose document cites, so the citations cannot silently

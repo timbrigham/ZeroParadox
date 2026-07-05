@@ -59,7 +59,7 @@ inverse limit, or final coalgebra is constructed; the ν reading of "unique geom
 interpretation. This is an edge/rate test on node #2 of the bottom-diagram tree.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC39
+namespace ZeroParadox
 
 open Filter Topology
 
@@ -230,7 +230,7 @@ theorem markov_contraction_dichotomy :
     (¬ ∃ w : Fin 2 → ℝ, Tendsto (fun k => swap^[k] e0vec) atTop (nhds w)) :=
   ⟨fun _ ha0 ha1 _ hv => markov_contraction_tendsto ha0 ha1 hv, swap_orbit_not_convergent⟩
 
-end ZeroParadox.ZPH_MC1_TC39
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -238,7 +238,7 @@ end ZeroParadox.ZPH_MC1_TC39
 lemmas) — a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC39
+open ZeroParadox
 
 #print axioms step_imb
 #print axioms markov_imbalance_pow

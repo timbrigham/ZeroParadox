@@ -23,7 +23,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPJ
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
 
@@ -63,12 +63,12 @@ theorem valuation_bot_is_quine (L : Type*) [ZPSemilattice L] {Γ : Type*} [Top �
     @IsQuineAtom L _ (BottomValuation.toAFA L (Γ := Γ)) bot :=
   @bot_is_quine_atom L _ (BottomValuation.toAFA L (Γ := Γ))
 
-end ZeroParadox.ZPJ
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPJ
+open ZeroParadox
 #print axioms BottomValuation.toAFA
 #print axioms valuation_forces_selfMem
 #print axioms valuation_bot_is_quine

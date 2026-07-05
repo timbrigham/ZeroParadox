@@ -61,10 +61,10 @@ cross-ambient map is built. TC43 is an envelope/rate test on the #2↔#3 ν-edge
 the orbit level — the rate match is the COMPLEMENT to TC33, not a closure of the wall.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC45
+namespace ZeroParadox
 
-open ZeroParadox.ZPH_MC1_TC39
-open ZeroParadox.ZPH_MC1_TC36
+open ZeroParadox
+open ZeroParadox
 open ZeroParadox
 open Filter Topology
 
@@ -131,7 +131,7 @@ theorem unif_balanced : imb unif = 0 := by
   simp only [imb, unif, Matrix.cons_val_zero, Matrix.cons_val_one]
   norm_num
 
-end ZeroParadox.ZPH_MC1_TC45
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -140,7 +140,7 @@ norm, `tendsto_pow…`) and TC39 (`Tendsto`) — a library dependency, not a new
 construction. The matched-rate identities themselves are algebraic specializations. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC45
+open ZeroParadox
 
 #print axioms env_tendsto
 #print axioms padic_env_eq

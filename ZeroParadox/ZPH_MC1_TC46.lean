@@ -68,12 +68,12 @@ the Lean content is the named-bottom separation #5 vs #4. The earlier endo-equat
 remains correctly deflated.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC46
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox
 open ZeroParadox ZeroParadox
-open ZeroParadox.ZPH_MC1_TreeObstructions
+open ZeroParadox
 
 /-! ## The separating arrow-level property: P_in (all in-hom-sets nonempty) -/
 
@@ -145,7 +145,7 @@ theorem cat_bot_separation_full :
     ∧ Subsingleton (fC_functor.obj 0 ⟶ fC_functor.obj 0) :=
   ⟨seam_has_Pin, bare_initial_fails_Pin, seam_endo_subsingleton, bare_initial_endo_subsingleton⟩
 
-end ZeroParadox.ZPH_MC1_TC46
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -153,7 +153,7 @@ end ZeroParadox.ZPH_MC1_TC46
 libraries — a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC46
+open ZeroParadox
 
 #print axioms seam_has_Pin
 #print axioms bare_initial_fails_Pin

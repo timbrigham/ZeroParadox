@@ -62,7 +62,7 @@ matching `0`-least, and the only least-element structure available is the norm r
 GO outcome, not a collapse.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC35
+namespace ZeroParadox
 
 open ZeroParadox
 
@@ -110,4 +110,4 @@ section PurityCheck
 #print axioms order_norm_floor_asymmetry
 end PurityCheck
 
-end ZeroParadox.ZPH_MC1_TC35
+end ZeroParadox

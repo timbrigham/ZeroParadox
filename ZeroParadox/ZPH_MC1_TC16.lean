@@ -76,9 +76,9 @@ out the *coordinate-order* placement specifically; it does not rule out every co
 structure on the simplex (only the natural order one a descent map would use).
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC16
+namespace ZeroParadox
 
-open ZeroParadox.ZPH_MC1_TreeObstructions
+open ZeroParadox
 
 /-- The two standard basis vertices `Pi.single 0 1` and `Pi.single 1 1` of the simplex over `Fin n`
     (`n ≥ 2`) are **distinct**: they disagree at coordinate `0`. This is the nondegeneracy that drives
@@ -154,7 +154,7 @@ theorem stationary_attractor_no_order_placement {n : ℕ} (hn : 2 ≤ n)
     rwa [tsum_eq_sum (s := Finset.univ) (fun x hx => absurd (Finset.mem_univ x) hx)] at h
   rw [← ENNReal.toReal_sum (fun i _ => μ.apply_ne_top i), h1, ENNReal.toReal_one]
 
-end ZeroParadox.ZPH_MC1_TC16
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -162,7 +162,7 @@ end ZeroParadox.ZPH_MC1_TC16
 dependency (inherited through `simplex_antichain`), not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC16
+open ZeroParadox
 
 #print axioms vertices_distinct
 #print axioms stdSimplex_no_isLeast
