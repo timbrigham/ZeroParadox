@@ -1,8 +1,8 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/ZPH_BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import Mathlib.Data.QPF.Univariate.Basic
 import ZeroParadox.Settheory.Coalgebra
-import ZeroParadox.ZPH_MC1_TC26
-import ZeroParadox.ZPH_MC1_TC20
+import ZeroParadox.Category.RootCutDegeneracy
+import ZeroParadox.Category.SeamArrowLevel
 
 /-!
 # ZP-H MC-1 tree test TC38: the canonical μ→ν comparison map at the root seam, and the honest

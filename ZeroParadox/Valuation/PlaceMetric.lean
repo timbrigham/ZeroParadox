@@ -1,4 +1,4 @@
-import ZeroParadox.ZPH_MC1_TC05
+import ZeroParadox.Valuation.PadicAttractor
 import ZeroParadox.State.MeanErgodic
 import Mathlib.Tactic
 

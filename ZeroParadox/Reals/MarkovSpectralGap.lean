@@ -1,5 +1,5 @@
 import ZeroParadox.Reals.PerronFrobenius
-import ZeroParadox.ZPH_MC1_TC31
+import ZeroParadox.Computability.StationaryUnique
 import ZeroParadox.State.MeanErgodic
 import Mathlib.Probability.Distributions.Uniform
 import Mathlib.Tactic

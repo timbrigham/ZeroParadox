@@ -1,7 +1,7 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/ZPH_BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import Mathlib.Data.QPF.Univariate.Basic
 import ZeroParadox.Settheory.Coalgebra
-import ZeroParadox.ZPH_MC1_TC26
+import ZeroParadox.Category.RootCutDegeneracy
 
 /-!
 # ZP-H MC-1 tree test TC32: the root cut is binary in arity, not graded

@@ -1,6 +1,6 @@
 import ZeroParadox.State.HilbFunctor
 import ZeroParadox.Category.TreeSeam
-import ZeroParadox.ZPH_MC1_TC37
+import ZeroParadox.Category.SeamBiproductUnit
 import Mathlib.Algebra.Category.ModuleCat.Biproducts
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.Dimension.Finite
