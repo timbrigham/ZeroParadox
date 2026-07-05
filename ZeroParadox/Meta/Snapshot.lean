@@ -1,7 +1,6 @@
 import ZeroParadox.Algebra.Wheel
 import ZeroParadox.Algebra.WheelFrac
 import ZeroParadox.AxiomProfile
-import ZeroParadox.Basic
 import ZeroParadox.BottomCannotBe
 import ZeroParadox.Category.AxG2Reduce
 import ZeroParadox.Category.CardinalitySplit
@@ -33,7 +32,6 @@ import ZeroParadox.Category.SeamNotColimit
 import ZeroParadox.Category.SeamUniqueness
 import ZeroParadox.Category.TopNoGo
 import ZeroParadox.Category.TreeSeam
-import ZeroParadox.ChoiceProbe
 import ZeroParadox.Computability.ChoicePurityInvariant
 import ZeroParadox.Computability.Kleene
 import ZeroParadox.Computability.MarkovNuUniversal
@@ -139,7 +137,7 @@ import ZeroParadox.Valuation.TopFunctor
 import ZeroParadox.Valuation.ValuationAFA
 import ZeroParadox.Valuation.ValuationAFA_Padic
 import ZeroParadox.Vendored.NaturalOps
-import ZeroParadox.Vendored.NaturalOpsPow
+import ZeroParadox.Ordinal.NaturalOpsPow
 import Lean
 
 /-!

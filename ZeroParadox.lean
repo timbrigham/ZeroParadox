@@ -1,1 +1,1 @@
-import ZeroParadox.Basic
+import ZeroParadox.AxiomProfile

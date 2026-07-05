@@ -1,7 +1,7 @@
 import Mathlib.SetTheory.Ordinal.Exponential
 import Mathlib.Logic.Hydra
 import ZeroParadox.Vendored.NaturalOps
-import ZeroParadox.Vendored.NaturalOpsPow
+import ZeroParadox.Ordinal.NaturalOpsPow
 
 set_option maxHeartbeats 800000
 
@@ -19,7 +19,7 @@ Kirby–Paris version.
 This file proves it. The order-independent valuation needs the natural sum `♯`; that API was removed
 from Mathlib (it lived in Combinatorial Game Theory, moved to an external repo), so it is recovered here
 from a vendored Mathlib-v4.28 snapshot (`Vendored.NaturalOps`) plus the ω-power closure
-`nadd_lt_omega0_opow` (`Vendored.NaturalOpsPow`, the CNF characterization that the snapshot left as a
+`nadd_lt_omega0_opow` (`Ordinal.NaturalOpsPow`, the CNF characterization that the snapshot left as a
 TODO). See `.claude-local/notes/kirby_paris_nadd_absent_2026-06-29.md`.
 
 What is proved:

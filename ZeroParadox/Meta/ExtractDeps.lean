@@ -1,7 +1,6 @@
 import ZeroParadox.Algebra.Wheel
 import ZeroParadox.Algebra.WheelFrac
 import ZeroParadox.AxiomProfile
-import ZeroParadox.Basic
 import ZeroParadox.BottomCannotBe
 import ZeroParadox.Category.AxG2Reduce
 import ZeroParadox.Category.CardinalitySplit
@@ -33,7 +32,6 @@ import ZeroParadox.Category.SeamNotColimit
 import ZeroParadox.Category.SeamUniqueness
 import ZeroParadox.Category.TopNoGo
 import ZeroParadox.Category.TreeSeam
-import ZeroParadox.ChoiceProbe
 import ZeroParadox.Computability.ChoicePurityInvariant
 import ZeroParadox.Computability.Kleene
 import ZeroParadox.Computability.MarkovNuUniversal
@@ -139,7 +137,7 @@ import ZeroParadox.Valuation.TopFunctor
 import ZeroParadox.Valuation.ValuationAFA
 import ZeroParadox.Valuation.ValuationAFA_Padic
 import ZeroParadox.Vendored.NaturalOps
-import ZeroParadox.Vendored.NaturalOpsPow
+import ZeroParadox.Ordinal.NaturalOpsPow
 import Lean
 
 /-!
@@ -157,12 +155,12 @@ registered declaration (no dangling edges -- satisfies interop Issue 13 / D3 by 
 Private names are de-mangled to their user-facing form so they match the registry's
 `old.qualified` (the trust-root check demangled the same way).
 
-This module is intentionally NOT imported by `ZeroParadox.Basic`, so a normal `lake build`
-skips it. Run the extraction explicitly:
+With the lakefile's full-tree `globs`, a normal `lake build` compiles this module, so the
+extraction runs as a side effect of any full build. To run it in isolation:
 
     lake build ZeroParadox.Meta.ExtractDeps
 
-(It re-runs whenever the module is (re)elaborated; the file write is a build side effect.)
+(It re-runs whenever the module is (re)elaborated; the file write is the side effect.)
 -/
 
 open Lean
