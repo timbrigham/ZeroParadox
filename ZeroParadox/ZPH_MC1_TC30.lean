@@ -1,5 +1,5 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/ZPH_BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
-import ZeroParadox.ZPB
+import ZeroParadox.Valuation.Padic
 import ZeroParadox.ZPH_MC1_TC05
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Tactic

@@ -4,7 +4,7 @@ import Mathlib.Logic.Equiv.Defs
 import ZeroParadox.ZPH_MC1_TC26
 import ZeroParadox.ZPH_MC1_TC38
 import ZeroParadox.ZPH_MC1_TC15
-import ZeroParadox.ZPJ_SelfApp
+import ZeroParadox.Computability.SelfApp
 
 /-!
 # ZP-H MC-1 tree test TC42: a shared "seam schema" for the QPF root-seam and the lattice selfApp seam,

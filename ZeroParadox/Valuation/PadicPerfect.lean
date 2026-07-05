@@ -1,4 +1,4 @@
-import ZeroParadox.ZPN_P8
+import ZeroParadox.Ordinal.P8
 import Mathlib.Topology.Perfect
 
 /-!

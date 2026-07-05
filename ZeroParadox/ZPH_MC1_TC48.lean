@@ -1,7 +1,7 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/ZPH_BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import Mathlib.Data.QPF.Univariate.Basic
 import Mathlib.Data.W.Basic
-import ZeroParadox.ZPP_Coalgebra
+import ZeroParadox.Settheory.Coalgebra
 
 /-!
 # ZP-H MC-1 tree test TC48: is choice-purity an IN-STATEMENT μ/ν separating invariant?

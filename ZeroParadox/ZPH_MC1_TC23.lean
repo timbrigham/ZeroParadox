@@ -1,6 +1,6 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/ZPH_BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
-import ZeroParadox.ZPH_PerronFrobenius
-import ZeroParadox.ZPH_MeanErgodic
+import ZeroParadox.Reals.PerronFrobenius
+import ZeroParadox.State.MeanErgodic
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
 import Mathlib.Tactic
 
