@@ -48,7 +48,7 @@ set_option maxHeartbeats 400000
 
 namespace ZeroParadox.ZPJ_QuineDichotomy
 
-open ZeroParadox.ZPP ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPJ_Lawvere ZeroParadox.ZPA ZPSemilattice QPF
+open ZeroParadox.ZPP ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPJ_Lawvere ZeroParadox ZPSemilattice QPF
 
 /-- **The Quine-atom dichotomy (existence fork).** The self-referential object exists on the
     non-well-founded (final-coalgebra) side and not on the well-founded (initial-algebra) side:

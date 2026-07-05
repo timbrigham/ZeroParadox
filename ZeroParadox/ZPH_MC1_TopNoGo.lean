@@ -29,7 +29,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
 open CategoryTheory Limits
 
@@ -43,11 +43,11 @@ theorem top_initial_not_iso_terminal :
   intro e
   exact (e.inv.hom PUnit.unit).elim
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms top_initial_not_iso_terminal
 end PurityCheck

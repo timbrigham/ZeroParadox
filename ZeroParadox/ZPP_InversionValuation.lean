@@ -28,7 +28,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.InversionValuation
+namespace ZeroParadox
 
 /-- Inversion REVERSES the valuation filtration on the nonzero points: the image under `z ↦ z⁻¹` of the
     `n`-sublevel `{x ≠ 0 | n ≤ v₂(x)}` is exactly the `(-n)`-superlevel `{x ≠ 0 | v₂(x) ≤ -n}`. An elementary
@@ -45,11 +45,11 @@ theorem inversion_reverses_filtration (n : ℤ) :
     refine ⟨x⁻¹, ⟨inv_ne_zero hx, ?_⟩, inv_inv x⟩
     rw [Padic.valuation_inv]; omega
 
-end ZeroParadox.InversionValuation
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.InversionValuation
+open ZeroParadox
 #print axioms inversion_reverses_filtration
 end PurityCheck

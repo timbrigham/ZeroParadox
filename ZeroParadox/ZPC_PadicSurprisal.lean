@@ -23,7 +23,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPC
+namespace ZeroParadox
 
 /-- Information surprisal at ball-depth `n` is `n`. -/
 theorem surprisal_eq_self (n : ℕ) : surprisal n = n := rfl
@@ -36,12 +36,12 @@ theorem padic_size_at_depth (n : ℕ) : ‖(2 : ℤ_[2]) ^ n‖ = (1 / 2 : ℝ) 
   rw [show (2 : ℤ_[2]) = ((2 : ℕ) : ℤ_[2]) by norm_cast, PadicInt.norm_p]
   norm_num
 
-end ZeroParadox.ZPC
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPC
+open ZeroParadox
 #print axioms surprisal_eq_self
 #print axioms padic_size_at_depth
 end PurityCheck

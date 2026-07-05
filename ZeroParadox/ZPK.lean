@@ -79,7 +79,7 @@ No sorry stubs remain in ZPK.
 
 namespace ZeroParadox.ZPK
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 open ZeroParadox.ZPJ
 open Nat.Partrec Nat.Partrec.Code
 
@@ -254,7 +254,7 @@ self-containment ⊥ = {⊥}. Anti-foundation is not required at the typeclass l
 the relevant structural fact (bot is the unique self-containing element) is
 captured by the definition selfMem x := x = bot, proved axiom-free. -/
 
-open ZeroParadox.ZPE ZeroParadox.ZPC
+open ZeroParadox ZeroParadox
 
 /-- AFAStructure instance for MachinePhase.
     selfMem x := x = bot (bot = .initial = c₀).
@@ -528,7 +528,7 @@ end ZeroParadox.ZPK
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPK ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ
+open ZeroParadox.ZPK ZeroParadox ZPSemilattice ZeroParadox.ZPJ
 
 #print axioms t_comp
 #print axioms kleene_quine_is_bot

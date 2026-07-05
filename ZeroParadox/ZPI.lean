@@ -50,8 +50,8 @@ Key results: t_iz_cauchy (topological core, axiom-free), t_iz_complete (all step
 
 namespace ZeroParadox.ZPI
 
-open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.ZPB ZeroParadox.ZPE
+open ZeroParadox ZPSemilattice
+open ZeroParadox ZeroParadox
 
 /-! ## I. Cauchy Convergence — Topological Core of T-IZ
 
@@ -278,7 +278,7 @@ theorem t_iz_c3_compatible :
     ∀ (x : Q₂), x ≠ 0 →
     ¬∃ γ : C(Set.Icc (0 : ℝ) 1, Q₂),
       γ ⟨0, by norm_num⟩ = x ∧ γ ⟨1, by norm_num⟩ = 0 :=
-  ZeroParadox.ZPB.c3_irreversible
+  ZeroParadox.c3_irreversible
 
 /-! ## III-B. T-IZ (Formally Complete) — AFA/Kleene Path
 
@@ -401,7 +401,7 @@ Verified results (all sorries filled; no sorryAx anywhere):
      optional transparency variant — t_iz_complete is the canonical theorem) -/
 
 section PurityCheck
-open ZeroParadox.ZPI ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPE ZeroParadox.ZPB
+open ZeroParadox.ZPI ZeroParadox ZPSemilattice ZeroParadox ZeroParadox
 
 #print axioms nat_has_no_top
 #print axioms nat_strict_of_strict_state_seq

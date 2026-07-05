@@ -32,7 +32,7 @@ T5 (functors preserve initial objects) deferred to ZP-H T-H1.
 D7' (native categorical surprisal) modelled as abstract class parameter (I-KC import).
 -/
 
-namespace ZeroParadox.ZPG
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 
@@ -178,12 +178,12 @@ theorem t7_categorical_zero_paradox {C : Type*} [Category C] [ZPC : ZPCategory C
     Verified by direct universal property check in ZP-H. No Lean theorem here — a vacuous
     `True := trivial` stub would misrepresent the theorem list. -/
 
-end ZeroParadox.ZPG
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPG CategoryTheory
+open ZeroParadox CategoryTheory
 
 #print axioms t1_initial_unique
 #print axioms t2_universal_constituent
@@ -208,7 +208,7 @@ zero → right, nothing else. Zero is initial; no terminal object exists; AX-G2 
 
 section ForkCat
 
-open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox CategoryTheory CategoryTheory.Limits
 
 /-- Three objects: the initial zero and two non-initial leaves. -/
 inductive ForkObj : Type | zero | left | right deriving DecidableEq

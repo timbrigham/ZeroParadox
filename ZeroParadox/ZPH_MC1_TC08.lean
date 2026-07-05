@@ -64,11 +64,11 @@ case check, not a universal claim. The seam reading (#5 is the diagonal-fixed-po
 at a node) remains the framework's interpretation, not a Lean claim.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC08
+namespace ZeroParadox
 
 open CategoryTheory
-open ZeroParadox.ZPG ZeroParadox.ZPA
-open ZeroParadox.ZPH_InfoFunctor ZeroParadox.ZPH_HilbFunctor
+open ZeroParadox ZeroParadox
+open ZeroParadox ZeroParadox
 open ZeroParadox.ZPH_MC1_TreeObstructions ZeroParadox.ZPH_MC1_TreeSeam
 
 /-! ## ZP-G: the initial object of a ZPCategory is never a zero object -/
@@ -144,7 +144,7 @@ theorem seam_unique_among_named (L : Type*) [ZPSemilattice L]
    forkcat_initial_not_zero,
    zpa_bot_not_greatest L hnt⟩
 
-end ZeroParadox.ZPH_MC1_TC08
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -152,7 +152,7 @@ end ZeroParadox.ZPH_MC1_TC08
 libraries used by the cited bottoms — a library dependency, not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC08
+open ZeroParadox
 
 #print axioms zpcategory_initial_not_zero
 #print axioms forkcat_initial_not_zero

@@ -22,7 +22,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.FloorWitness
+namespace ZeroParadox
 
 /-- **Abstract floor witness.** Any additive valuation sends the bottom `0` to `⊤` (+∞): the floor of
     a valued structure always carries the maximal/infinite valuation. This is the general fact behind
@@ -37,12 +37,12 @@ theorem powerSeries_order_bot {R : Type*} [Semiring R] :
     (0 : PowerSeries R).order = ⊤ :=
   PowerSeries.order_zero
 
-end ZeroParadox.FloorWitness
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.FloorWitness
+open ZeroParadox
 #print axioms addVal_bot
 #print axioms powerSeries_order_bot
 end PurityCheck

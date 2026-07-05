@@ -53,7 +53,7 @@ open Filter Topology
     (cite TC05). Multiplication by 2 contracts to the floor at the 2-adic place. -/
 theorem node3_contracts_2adic (x : ℚ_[2]) :
     Tendsto (fun n : ℕ => (2 : ℚ_[2]) ^ n * x) atTop (𝓝 0) :=
-  ZeroParadox.ZPH_MC1_TC05.doubling_orbit_tendsto_zero x
+  ZeroParadox.doubling_orbit_tendsto_zero x
 
 /-- The **same** map `x ↦ 2x` at the **archimedean** place EXPANDS: `|2ⁿx| → ∞` for `x ≠ 0`. -/
 theorem doubling_expands_archimedean (x : ℝ) (hx : x ≠ 0) :
@@ -81,10 +81,10 @@ theorem doubling_place_dichotomy (x : ℚ) (hx : x ≠ 0) :
 /-- #2 reached by contraction in the **archimedean** metric: the Markov stationary bottom is the limit
     of Birkhoff averages of the transfer operator in the ℝ/ℂ norm (cite the mean-ergodic theorem). -/
 theorem markov_attractor_archimedean {n : ℕ} (f : Fin n → PMF (Fin n))
-    (hd : ZeroParadox.MeanErgodic.DoublyStochastic f) (x : EuclideanSpace ℂ (Fin n)) :
-    ∃ y, Tendsto (fun N => birkhoffAverage ℂ (ZeroParadox.MeanErgodic.T₂ f) id N x)
+    (hd : ZeroParadox.DoublyStochastic f) (x : EuclideanSpace ℂ (Fin n)) :
+    ∃ y, Tendsto (fun N => birkhoffAverage ℂ (ZeroParadox.T₂ f) id N x)
       atTop (𝓝 y) :=
-  ZeroParadox.MeanErgodic.doubly_stochastic_mean_ergodic f hd x
+  ZeroParadox.doubly_stochastic_mean_ergodic f hd x
 
 end ZeroParadox.ZPH_PlaceMetric
 

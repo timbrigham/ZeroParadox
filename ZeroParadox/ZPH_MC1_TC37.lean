@@ -52,7 +52,7 @@ generic biproduct-unit lemmas) `X ≅ X ⊞ (fD_functor.obj 0)` and `X ≅ (fD_f
 namespace ZeroParadox.ZPH_MC1_TC37
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_MC1_TreeSeam
+open ZeroParadox ZeroParadox.ZPH_MC1_TreeSeam
 
 /-- The seam object: the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`, a zero object of
     `ModuleCat ℂ` (see `hilbert_bottom_isZero`). -/

@@ -70,7 +70,7 @@ morphism-level Kleisli→Module transport remains open (and is the next obstruct
 namespace ZeroParadox.ZPH_MC1_TC27
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open ZeroParadox ZeroParadox ZeroParadox
 
 /-- The image of #4's carrier `Fin 0` under the real cross-category functor `ModuleCat.free ℂ`
     is a **zero object** of `ModuleCat ℂ`: the free ℂ-module on the empty type is `Fin 0 →₀ ℂ`,

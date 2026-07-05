@@ -21,7 +21,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ReversibleSpectrum
+namespace ZeroParadox
 
 open Complex
 
@@ -104,11 +104,11 @@ theorem reversible_real_spectrum (f : Fin n → PMF (Fin n)) (μ : Fin n → ℝ
   have : c = (starRingEnd ℂ) c := mul_right_cancel₀ hne hsa
   exact Complex.conj_eq_iff_im.mp this.symm
 
-end ZeroParadox.ReversibleSpectrum
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ReversibleSpectrum
+open ZeroParadox
 #print axioms reversible_real_spectrum
 end PurityCheck

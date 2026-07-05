@@ -57,12 +57,12 @@ a concrete in-kernel witness (`fullMix`, eigenvalue 0, `![1,-1]`), fenced to the
 - § III Irreversibility: non-injectivity of the relaxation operator
 -/
 
-namespace ZeroParadox.MarkovSpectralGap
+namespace ZeroParadox
 
 open scoped BigOperators
 open Filter Topology
-open ZeroParadox.PerronFrobenius
-open ZeroParadox.MeanErgodic (DoublyStochastic)
+open ZeroParadox
+open ZeroParadox (DoublyStochastic)
 
 variable {n : ℕ}
 
@@ -149,7 +149,7 @@ theorem fullMix_mode_decays :
     Filter.Tendsto (fun m => ‖(T fullMix)^[m] v0‖) Filter.atTop (𝓝 0) :=
   tendsto_norm_iterate_zero fullMix fullMix_eigen_zero (by norm_num)
 
-end ZeroParadox.MarkovSpectralGap
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -158,7 +158,7 @@ the Mathlib PMF / `tsum` / ENNReal / analysis libraries (a library dependency, n
 no `sorryAx` appears. -/
 
 section PurityCheck
-open ZeroParadox.MarkovSpectralGap
+open ZeroParadox
 
 #print axioms iterate_eigen
 #print axioms tendsto_norm_iterate_zero

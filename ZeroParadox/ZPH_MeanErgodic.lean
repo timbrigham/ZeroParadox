@@ -19,7 +19,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.MeanErgodic
+namespace ZeroParadox
 
 open Filter Topology
 
@@ -78,7 +78,7 @@ theorem T₂_opNorm_le_one (f : Fin n → PMF (Fin n)) (hd : DoublyStochastic f)
     _ = ∑ j, ∑ k, ((f j) k).toReal * ‖x j‖ ^ 2 := Finset.sum_comm
     _ = ∑ j, ‖x j‖ ^ 2 := by
         refine Finset.sum_congr rfl fun j _ => ?_
-        rw [← Finset.sum_mul, ZeroParadox.PerronFrobenius.row_sum, one_mul]
+        rw [← Finset.sum_mul, ZeroParadox.row_sum, one_mul]
 
 /-- **Mean ergodic convergence** for a doubly-stochastic kernel: the Birkhoff (Cesàro) averages of the
     transfer operator converge. Follows from Mathlib's von Neumann mean ergodic theorem and the ℓ²-contraction
@@ -89,12 +89,12 @@ theorem doubly_stochastic_mean_ergodic (f : Fin n → PMF (Fin n)) (hd : DoublyS
       Tendsto (fun N => birkhoffAverage ℂ (T₂ f) id N x) atTop (𝓝 y) :=
   ⟨_, (T₂ f).tendsto_birkhoffAverage_orthogonalProjection (T₂_opNorm_le_one f hd) x⟩
 
-end ZeroParadox.MeanErgodic
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.MeanErgodic
+open ZeroParadox
 #print axioms T₂_opNorm_le_one
 #print axioms doubly_stochastic_mean_ergodic
 end PurityCheck

@@ -65,7 +65,7 @@ namespace ZeroParadox.ZPH_MC1_TC45
 
 open ZeroParadox.ZPH_MC1_TC39
 open ZeroParadox.ZPH_MC1_TC36
-open ZeroParadox.ZPB
+open ZeroParadox
 open Filter Topology
 
 /-! ### The shared envelope `n ↦ (1/2)ⁿ` -/

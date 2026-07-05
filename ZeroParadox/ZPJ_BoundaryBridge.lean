@@ -54,7 +54,7 @@ precise missing pieces are listed above.
 
 namespace ZeroParadox.ZPJ_BoundaryBridge
 
-open ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPJ_Boundary ZeroParadox.ZPP
+open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPJ_Boundary ZeroParadox.ZPP
 
 set_option maxHeartbeats 400000
 

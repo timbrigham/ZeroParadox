@@ -23,7 +23,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.G3
+namespace ZeroParadox
 
 instance : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
 
@@ -45,12 +45,12 @@ theorem inv_tower_norm_tendsto_atTop :
   refine h.congr (fun n => ?_)
   rw [inv_tower_norm]
 
-end ZeroParadox.G3
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.G3
+open ZeroParadox
 #print axioms inv_tower_norm
 #print axioms inv_tower_norm_tendsto_atTop
 end PurityCheck

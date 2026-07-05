@@ -52,7 +52,7 @@ Dependency order of the layers:
 
   ZP-P (self-contained synthesis — the fixed-point fork; Mathlib-only)
 
-The central result is **T-SNAP** (`ZeroParadox.ZPE.t_snap_machine` and
-`ZeroParadox.ZPE.t_snap_derived`): the Binary Snap c₀ ∨ c₁ = c₁ — derived from the
+The central result is **T-SNAP** (`ZeroParadox.t_snap_machine` and
+`ZeroParadox.t_snap_derived`): the Binary Snap c₀ ∨ c₁ = c₁ — derived from the
 standard join-semilattice bottom axiom A4, with no snap-specific commitments.
 -/

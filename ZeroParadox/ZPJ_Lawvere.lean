@@ -31,7 +31,7 @@ ZP's setting supply the diagonal surjection from which the fixed point would *fo
 
 namespace ZeroParadox.ZPJ_Lawvere
 
-open ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ_SelfApp
+open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp
 
 set_option maxHeartbeats 400000
 

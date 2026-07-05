@@ -146,7 +146,7 @@ theorem stationary_attractor_no_order_placement {n : ℕ} (hn : 2 ≤ n)
       (fun i => (μ i).toReal) ∈ stdSimplex ℝ (Fin n) ∧
       ¬ IsLeast (stdSimplex ℝ (Fin n)) (fun i => (μ i).toReal) ∧
       ¬ IsGreatest (stdSimplex ℝ (Fin n)) (fun i => (μ i).toReal) := by
-  obtain ⟨μ, hμ⟩ := ZeroParadox.PerronFrobenius.exists_stationary f
+  obtain ⟨μ, hμ⟩ := ZeroParadox.exists_stationary f
   refine ⟨μ, hμ, ?_, stdSimplex_no_isLeast hn _, stdSimplex_no_isGreatest hn _⟩
   refine ⟨fun i => ENNReal.toReal_nonneg, ?_⟩
   have h1 : ∑ i, μ i = 1 := by

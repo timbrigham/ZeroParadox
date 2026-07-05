@@ -69,7 +69,7 @@ that happen to co-occur**, with one of them generic.
 namespace ZeroParadox.ZPH_MC1_TC44
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox.ZPB
+open ZeroParadox
 
 /-! ## Re-expose TC10's genuine `IsLimit` cone for the p-adic floor. -/
 
@@ -77,8 +77,8 @@ open ZeroParadox.ZPB
 system `fB_functor : ℕᵒᵖ ⥤ TopCat` (TC10's cone). This is the native limit (ν) universal property of
 #3. Re-exported verbatim from TC10. -/
 theorem padic_floor_isLimit :
-    Nonempty (IsLimit ZeroParadox.ZPH_MC1_TC10.floorCone) :=
-  ⟨ZeroParadox.ZPH_MC1_TC10.floorConeIsLimit⟩
+    Nonempty (IsLimit ZeroParadox.floorCone) :=
+  ⟨ZeroParadox.floorConeIsLimit⟩
 
 /-! ## The new (generic) fact: the order floor `0 : ℕ` is initial but NOT terminal. -/
 
@@ -109,7 +109,7 @@ proves the four facts *hold together*, not that any structural relation connects
 `ℕ`/`ℝ`); there is no single category in which they are directly comparable, and no "duality"
 predicate appears in the statement. This bundle witnesses co-occurrence, nothing more. -/
 theorem floor_facts_cooccur :
-    Nonempty (IsLimit ZeroParadox.ZPH_MC1_TC10.floorCone)
+    Nonempty (IsLimit ZeroParadox.floorCone)
       ∧ IsEmpty (IsTerminal (0 : ℕ))
       ∧ IsLeast (Set.univ : Set ℕ) 0
       ∧ IsLeast (Set.range (fun x : Q₂ => ‖x‖)) 0 :=

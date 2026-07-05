@@ -67,7 +67,7 @@ cross-node identity claim.
 
 namespace ZeroParadox.ZPH_MC1_TC30
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open Filter Topology
 
 /-! ### The valuation criterion -/

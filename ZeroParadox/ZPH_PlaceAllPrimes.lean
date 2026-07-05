@@ -110,7 +110,7 @@ theorem every_finite_place_is_padic (f : AbsoluteValue ℚ ℝ) (hf : f.IsNontri
     (A2), the framework's own bottoms carry the global constraint, not "ℚ's places with two lit up". -/
 theorem framework_family_complete (f : AbsoluteValue ℚ ℝ) (hf : f.IsNontrivial) :
     f ≈ real ∨ ∃ p, ∃ (_ : Fact p.Prime), f ≈ padic p :=
-  (ZeroParadox.ZPH_ArchPlace.place_dichotomy f hf).imp id (fun h => h.exists)
+  (ZeroParadox.place_dichotomy f hf).imp id (fun h => h.exists)
 
 end ZeroParadox.ZPH_PlaceAllPrimes
 

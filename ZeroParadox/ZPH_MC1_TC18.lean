@@ -61,7 +61,7 @@ bridge." The Lean content is the scope, not the metaphysics.
 namespace ZeroParadox.ZPH_MC1_TC18
 
 open CategoryTheory
-open ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open ZeroParadox ZeroParadox
 open ZeroParadox.ZPH_MC1_TreeSeam
 
 /-- The seam object: the Hilbert bottom `fD_functor.obj 0`, a zero object of `ModuleCat ℂ`. -/

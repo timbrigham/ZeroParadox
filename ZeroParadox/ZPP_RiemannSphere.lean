@@ -42,7 +42,7 @@ abstract ⊥↔⊤ swap is already Mathlib's `compl_bot`/`compl_top`). Do not re
 - § IV  `rInvHomeo`, `rInv_swaps` — the homeomorphism and the 0↔∞ swap.
 -/
 
-namespace ZeroParadox.RiemannSphere
+namespace ZeroParadox
 
 open OnePoint Filter Topology
 -- ℚ_[2] has no `DecidableEq` (it is a completion), so the `0 ↦ ∞` case split in `rInv` needs a classical
@@ -150,11 +150,11 @@ theorem rInv_swaps :
     rInvHomeo (OnePoint.some (0 : ℚ_[2])) = ∞ ∧ rInvHomeo ∞ = OnePoint.some (0 : ℚ_[2]) :=
   ⟨rInv_zero, rInv_infty⟩
 
-end ZeroParadox.RiemannSphere
+end ZeroParadox
 
 /-! ## Axiom Purity Check (enable per theorem once proved) -/
 section PurityCheck
-open ZeroParadox.RiemannSphere
+open ZeroParadox
 #print axioms rInv_involutive
 #print axioms continuous_rInv
 #print axioms rInv_swaps

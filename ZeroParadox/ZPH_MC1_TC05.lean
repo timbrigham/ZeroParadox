@@ -61,9 +61,9 @@ systems is built — that edge remains OPEN. TC05 establishes only that #3 *carr
 structure*, putting it in the same descriptive vocabulary as #2; it does not connect the two systems.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC05
+namespace ZeroParadox
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open Filter Topology
 
 /-- **The contraction fact (obstruction-killer).** The 2-adic norm of the doubling multiplier is
@@ -120,7 +120,7 @@ theorem orbit_tendsto_into_topfloor
   subst hp0
   exact doubling_orbit_tendsto_zero x
 
-end ZeroParadox.ZPH_MC1_TC05
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -130,7 +130,7 @@ end ZeroParadox.ZPH_MC1_TC05
 commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC05
+open ZeroParadox
 
 #print axioms doubling_norm_lt_one
 #print axioms doubling_norm_eq

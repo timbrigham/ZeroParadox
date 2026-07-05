@@ -29,9 +29,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.B6
+namespace ZeroParadox
 
-open Ordinal Filter Topology ZeroParadox.P8
+open Ordinal Filter Topology ZeroParadox
 
 /-- Below ε₀, `ω^·` is strict: `o < ω ^ o` for `o < ε₀` (ε₀ is the least fixed point of `ω^·`,
     `epsilon_zero_le_of_omega0_opow_le`). -/
@@ -118,7 +118,7 @@ theorem cnf_log_encode_tower_tendsto_zero :
     tendsto_atTop_mono k_le_cnfLogDepth tendsto_id
   exact two_pow_tendsto_zero.comp hdepth
 
-end ZeroParadox.B6
+end ZeroParadox
 
 /-! ## Honest scope
 `cnfLogDepth` is defined purely by `log ω`-iteration on the ordinal (its leading CNF exponents) — the
@@ -129,7 +129,7 @@ heavier construction. But B6's claim — a canonical, non-tower-defined ordinal�
 images converge to 0 — is now a proven theorem. -/
 
 section PurityCheck
-open ZeroParadox.B6
+open ZeroParadox
 #print axioms cnf_log_encode_tower_tendsto_zero
 #print axioms log_lt_self
 end PurityCheck

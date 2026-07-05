@@ -75,9 +75,9 @@ result, completing the cross-root edge set at the categorical-witness level.
 namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox.ZPB
-open ZeroParadox.ZPH_InfoFunctor ZeroParadox.ZPH_TopFunctor
-open ZeroParadox.ZPH_MC1_TC10 ZeroParadox.ZPH_MC1_TC24
+open ZeroParadox
+open ZeroParadox ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox.ZPH_MC1_TC24
 
 /-! ## Node #4 — the Kleisli μ-bottom is a colimit / source with empty incoming hom -/
 

@@ -59,7 +59,7 @@ identification: it records precisely *how* the seam fails to bridge to #3.
 namespace ZeroParadox.ZPH_MC1_TC34
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPB ZeroParadox.ZPH_HilbFunctor
+open ZeroParadox ZeroParadox ZeroParadox
 open ZeroParadox.ZPH_MC1_TreeObstructions
 
 /-- The seam #5's carrier `StateSpace 0` is a singleton (subsingleton). -/

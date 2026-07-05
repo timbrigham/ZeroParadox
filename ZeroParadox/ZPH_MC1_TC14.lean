@@ -73,7 +73,7 @@ a framework-relevant category) is *refuted* for `ModuleCat ℂ` by (a): the dich
 there.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC14
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
@@ -139,7 +139,7 @@ theorem pointedness_dichotomy :
     exact hempty.elim (hterm.from (PUnit : Type) PUnit.unit)
   · infer_instance
 
-end ZeroParadox.ZPH_MC1_TC14
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -148,7 +148,7 @@ end ZeroParadox.ZPH_MC1_TC14
 construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC14
+open ZeroParadox
 
 #print axioms pointed_initial_carrier_subsingleton
 #print axioms zero_initial_carrier_subsingleton

@@ -28,7 +28,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1_PolarityFlip
+namespace ZeroParadox
 
 instance : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
 
@@ -47,12 +47,12 @@ theorem tower_inv_valuation (n : ℕ) : (((2 : ℚ_[2]) ^ n)⁻¹).valuation = -
   have h2 : (2 : ℚ_[2]) = ((2 : ℕ) : ℚ_[2]) := by norm_cast
   rw [h2, Padic.valuation_p, mul_one]
 
-end ZeroParadox.ZPH_MC1_PolarityFlip
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_PolarityFlip
+open ZeroParadox
 #print axioms padic_inv_flips_valuation
 #print axioms tower_inv_valuation
 end PurityCheck

@@ -67,7 +67,7 @@ content (the structural μ-glue lives in `ZPH_MC1_TreeT1`, not re-proved here).
 
 namespace ZeroParadox.ZPH_MC1_TC19
 
-open ZeroParadox.ZPB ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox.ZPH_TopFunctor
 open scoped Topology
 
 /-- The p-adic ν-bottom as a topological subspace: the floor `{0} ⊆ Q₂`

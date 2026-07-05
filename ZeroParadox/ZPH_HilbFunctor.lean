@@ -41,9 +41,9 @@ subsingleton, state space) **is** that zero object — so here ⊥ is the genuin
 This is the F_D half of the OQ-G3 upgrade (MC-1 correspondence into the real domain categories).
 -/
 
-namespace ZeroParadox.ZPH_HilbFunctor
+namespace ZeroParadox
 
-open ZeroParadox.ZPD
+open ZeroParadox
 open CategoryTheory
 
 /-- The ℂ-linear zero-padding embedding `StateSpace n ↪ StateSpace m` for `n ≤ m`:
@@ -112,7 +112,7 @@ noncomputable def fD_zero_isInitial : Limits.IsInitial (fD_functor.obj 0) := by
     exact Fin.elim0 i⟩
   exact (ModuleCat.isZero_of_subsingleton (ModuleCat.of ℂ (StateSpace 0))).isInitial
 
-end ZeroParadox.ZPH_HilbFunctor
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -121,7 +121,7 @@ end ZeroParadox.ZPH_HilbFunctor
 dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_HilbFunctor
+open ZeroParadox
 
 #print axioms fD_embed
 #print axioms fD_embed_inner

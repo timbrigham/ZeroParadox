@@ -61,8 +61,8 @@ No new Mathlib imports beyond those already present in ZP-E.
 
 namespace ZeroParadox.ZPJ
 
-open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.ZPE
+open ZeroParadox ZPSemilattice
+open ZeroParadox
 
 /-! ## § I. AFA Machinery -/
 
@@ -184,7 +184,7 @@ All results are derived from the ZPSemilattice and AFAStructure class fields alo
 No freestanding axioms. The full chain ⊥ = {⊥} → Q = ⊥ is structurally enforced. -/
 
 section PurityCheck
-open ZeroParadox.ZPJ ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPE
+open ZeroParadox.ZPJ ZeroParadox ZPSemilattice ZeroParadox
 
 #print axioms t_exec
 #print axioms j1_quine_join_identity

@@ -53,7 +53,7 @@ the number-theoretic sub-family only, not the whole diagram. Mathlib-anchored re
 interpretation (the components ARE #2/#3); not a from-scratch framework construction.
 -/
 
-namespace ZeroParadox.ZPH_AdeleGlobal
+namespace ZeroParadox
 
 open NumberField IsDedekindDomain
 
@@ -76,12 +76,12 @@ theorem adele_global_assembly (x : ℚ) (hx : x ≠ 0) :
     ((∏ w : InfinitePlace ℚ, w x ^ w.mult) = (∏ᶠ w : FinitePlace ℚ, w x)⁻¹) :=
   ⟨principal_injective, ZeroParadox.ZPH_PlaceForcing.archimedean_factor_forced x hx⟩
 
-end ZeroParadox.ZPH_AdeleGlobal
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_AdeleGlobal
+open ZeroParadox
 
 #print axioms adele_is_infinite_times_finite
 #print axioms principal_injective

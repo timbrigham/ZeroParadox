@@ -30,9 +30,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
-open CategoryTheory Limits ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open CategoryTheory Limits ZeroParadox ZeroParadox
 
 /-- Proves: restates three existing witnesses as (co)limits via Mathlib's definitional
     `IsInitial = IsColimit (asEmptyCocone _)` / `IsTerminal = IsLimit (asEmptyCone _)` — Info and Hilbert
@@ -45,11 +45,11 @@ theorem fork_mu_nu :
       Nonempty (IsLimit (asEmptyCone (TopCat.of PUnit))) :=
   ⟨⟨fC_zero_isInitial⟩, ⟨fD_zero_isInitial⟩, ⟨TopCat.isTerminalPUnit⟩⟩
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check — the choice-discrimination is MASKED here (uniform library choice) -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms fork_mu_nu
 end PurityCheck

@@ -68,11 +68,11 @@ complete the cross-root row of the tree — every μ↔ν pair the campaign name
 obstructed.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC04
+namespace ZeroParadox
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPB
-open ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox
+open ZeroParadox ZeroParadox.ZPH_TopFunctor
 
 /-! ## Edge (a) — #1 (μ, well-founded) vs #3 (ν, non-well-founded inverse limit) -/
 
@@ -118,7 +118,7 @@ theorem bots_both_subsingleton :
   · rw [Set.subsingleton_coe]
     exact Set.subsingleton_singleton
 
-end ZeroParadox.ZPH_MC1_TC04
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -126,7 +126,7 @@ end ZeroParadox.ZPH_MC1_TC04
 a library dependency, not a new commitment of these obstruction results. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC04
+open ZeroParadox
 
 #print axioms padic_descent_radii_strictAnti
 #print axioms ordinal_wf_padic_descent_clash

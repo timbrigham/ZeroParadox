@@ -33,10 +33,10 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
-open CategoryTheory ZeroParadox.ZPB ZeroParadox.ZPH_TopFunctor
-  ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open CategoryTheory ZeroParadox ZeroParadox.ZPH_TopFunctor
+  ZeroParadox ZeroParadox
 
 /-- The three heterogeneous universal characters of the MC-1 bottoms, bundled: F_C strict-initial,
     F_D non-strict-initial (zero object), F_B an inverse limit (not an initial object). Witness that no
@@ -72,12 +72,12 @@ theorem initial_underdetermines {n : ℕ} (hn : 0 < n) :
       Nonempty (fD_functor.obj n ⟶ fD_functor.obj 0) :=
   ⟨fC_no_return hn, fD_has_return⟩
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms no_uniform_character
 #print axioms initial_underdetermines
 end PurityCheck

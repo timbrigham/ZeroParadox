@@ -20,7 +20,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.P8
+namespace ZeroParadox
 
 instance : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
 
@@ -74,7 +74,7 @@ theorem cnf_encode_tower_tendsto_zero :
     tendsto_atTop_mono k_le_cnfRank_towerOrd tendsto_id
   exact two_pow_tendsto_zero.comp hrank
 
-end ZeroParadox.P8
+end ZeroParadox
 
 /-! ## Honest scope
 The encoding here is the **tower-rank** map `α ↦ 2 ^ (least tower stage above α)`, not the canonical
@@ -87,7 +87,7 @@ What changed vs. the earlier (invalid) deferral: the note's stated goal — a ma
 images converge to 0 — is now a proven theorem, built in 4 iterations. -/
 
 section PurityCheck
-open ZeroParadox.P8
+open ZeroParadox
 #print axioms two_pow_tendsto_zero
 #print axioms cnf_encode_tower_tendsto_zero
 end PurityCheck

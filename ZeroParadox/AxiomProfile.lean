@@ -39,16 +39,16 @@ Each of these reports `'<name>' does not depend on any axioms`. -/
 section ChoiceFreeCore
 
 -- The Binary Snap (T-SNAP) and its derivation (ZP-E):
-#print axioms ZeroParadox.ZPE.t_snap_machine
-#print axioms ZeroParadox.ZPE.t_snap_derived
-#print axioms ZeroParadox.ZPE.t_snap_join
-#print axioms ZeroParadox.ZPE.t_snap_irreversible
-#print axioms ZeroParadox.ZPE.da1_minimal_path
-#print axioms ZeroParadox.ZPE.dp2_execution_distinguishability
+#print axioms ZeroParadox.t_snap_machine
+#print axioms ZeroParadox.t_snap_derived
+#print axioms ZeroParadox.t_snap_join
+#print axioms ZeroParadox.t_snap_irreversible
+#print axioms ZeroParadox.da1_minimal_path
+#print axioms ZeroParadox.dp2_execution_distinguishability
 
 -- The lattice algebra (ZP-A):
-#print axioms ZeroParadox.ZPA.ZPSemilattice.bot_le
-#print axioms ZeroParadox.ZPA.ZPSemilattice.cc1
+#print axioms ZeroParadox.ZPSemilattice.bot_le
+#print axioms ZeroParadox.ZPSemilattice.cc1
 
 -- The Quine-atom self-reference keystone (ZP-J):
 #print axioms ZeroParadox.ZPJ.bot_is_quine_atom
@@ -79,12 +79,12 @@ Mathlib's classically-built topology / inner-product / category / probability li
 dependence is in the realization, not in the core claim of Section I. -/
 section WhereChoiceEnters
 
-#print axioms ZeroParadox.ZPB.c3_irreversible        -- [propext, Classical.choice, Quot.sound]  (p-adic topology)
-#print axioms ZeroParadox.ZPD.t4_snap_orthogonal     -- [propext, Classical.choice, Quot.sound]  (Hilbert space)
+#print axioms ZeroParadox.c3_irreversible        -- [propext, Classical.choice, Quot.sound]  (p-adic topology)
+#print axioms ZeroParadox.t4_snap_orthogonal     -- [propext, Classical.choice, Quot.sound]  (Hilbert space)
 #print axioms ZeroParadox.ZPH_TopFunctor.fB_functor          -- [propext, Classical.choice, Quot.sound]  (TopCat)
-#print axioms ZeroParadox.ZPH_HilbFunctor.fD_functor         -- [propext, Classical.choice, Quot.sound]  (ModuleCat ℂ)
-#print axioms ZeroParadox.ZPH_InfoFunctor.fC_functor         -- [propext, Classical.choice, Quot.sound]  (KleisliCat PMF)
-#print axioms ZeroParadox.ZPF_SnapDichotomy.snap_dichotomy   -- [propext, Classical.choice, Quot.sound]  (snap-occurrence dichotomy, ℝ/ℚ_p)
+#print axioms ZeroParadox.fD_functor         -- [propext, Classical.choice, Quot.sound]  (ModuleCat ℂ)
+#print axioms ZeroParadox.fC_functor         -- [propext, Classical.choice, Quot.sound]  (KleisliCat PMF)
+#print axioms ZeroParadox.snap_dichotomy   -- [propext, Classical.choice, Quot.sound]  (snap-occurrence dichotomy, ℝ/ℚ_p)
 #print axioms ZeroParadox.ZPJ_QuineDichotomy.quine_dichotomy -- [propext, Classical.choice, Quot.sound]  (Quine-atom structural μ/ν fork)
 
 end WhereChoiceEnters

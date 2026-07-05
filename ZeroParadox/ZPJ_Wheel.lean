@@ -72,7 +72,7 @@ See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier d
 
 namespace ZeroParadox.ZPJ_Wheel
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 open ZeroParadox.ZPJ
 open ZeroParadox.ZPJ_Scale
 open ZeroParadox.ZPJ_SelfApp

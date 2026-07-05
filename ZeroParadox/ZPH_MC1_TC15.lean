@@ -53,7 +53,7 @@ refuted by `selfApp_fp_set_eq_singleton_bot` showing the f.p. set is inhabited.
 
 namespace ZeroParadox.ZPH_MC1_TC15
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 open ZeroParadox.ZPJ_SelfApp
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]

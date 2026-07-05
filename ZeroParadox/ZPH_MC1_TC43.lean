@@ -76,7 +76,7 @@ reading once you accept the thin-category carrier convention".
 namespace ZeroParadox.ZPH_MC1_TC43
 
 open CategoryTheory
-open ZeroParadox.ZPH_InfoFunctor ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_MC1_TreeT1
+open ZeroParadox ZeroParadox ZeroParadox.ZPH_MC1_TreeT1
 
 /-! ## NO-GO half: the proof-theory floor lives in a thin category (no Type-valued carrier) -/
 

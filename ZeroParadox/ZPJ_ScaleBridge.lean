@@ -129,9 +129,9 @@ theorem z2_selfMem_singleton :
 
 /-- Any ZPSemilattice with a ValuationStructure is a ValBridge.
     Proof: all four fields come directly from ZPSemilattice.bot and ValuationStructure. -/
-instance toValBridge (L : Type*) [ZeroParadox.ZPA.ZPSemilattice L]
+instance toValBridge (L : Type*) [ZeroParadox.ZPSemilattice L]
     [ValuationStructure L] : ValBridge L where
-  bot := ZeroParadox.ZPA.ZPSemilattice.bot
+  bot := ZeroParadox.ZPSemilattice.bot
   scale := ValuationStructure.scale
   val := ValuationStructure.val
   scale_bot := ValuationStructure.scale_bot
@@ -141,10 +141,10 @@ instance toValBridge (L : Type*) [ZeroParadox.ZPA.ZPSemilattice L]
 
 /-- Both tracks produce the same singleton theorem via a single ValBridge proof.
     For any ZPSemilattice L with ValuationStructure: {x | scale x = x} = {bot}. -/
-theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPA.ZPSemilattice L]
+theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
     [ValuationStructure L] :
     {x : L | ValuationStructure.scale x = x} =
-      ({ZeroParadox.ZPA.ZPSemilattice.bot} : Set L) :=
+      ({ZeroParadox.ZPSemilattice.bot} : Set L) :=
   selfMem_eq_singleton_free
 
 end ZeroParadox.ZPJ_ScaleBridge

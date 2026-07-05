@@ -35,7 +35,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.Kruskal
+namespace ZeroParadox
 
 open Set
 
@@ -257,10 +257,10 @@ theorem partiallyWellOrderedOn_treeEmbeds (r : α → α → Prop) [IsPreorder �
     rwa [RoseTree.node_root_children, RoseTree.node_root_children] at h
   exact hf1.2 (g i) (g j) (g.strictMono hij) hemb
 
-end ZeroParadox.Kruskal
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.Kruskal
+open ZeroParadox
 
 #print axioms partiallyWellOrderedOn_treeEmbeds
 

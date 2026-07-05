@@ -34,7 +34,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
 open CategoryTheory Limits
 
@@ -60,12 +60,12 @@ theorem top_floor_lin_dim_obstruction :
   have h2 : Finsupp.single PUnit.unit (1 : ℂ) = 0 := e.injective h1
   exact (Finsupp.single_ne_zero.mpr one_ne_zero) h2
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms dualized_top_floor_initial
 #print axioms top_floor_lin_dim_obstruction
 end PurityCheck

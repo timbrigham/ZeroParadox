@@ -52,7 +52,7 @@ All results are sorry-free and derived from ℕ∞ arithmetic + ZPJ_Scale theore
 
 namespace ZeroParadox.ZPJ_Model
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 open ZeroParadox.ZPJ_Scale
 
 /-! ## § I. ZPSemilattice Instance for ℕ∞ -/

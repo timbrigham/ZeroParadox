@@ -59,7 +59,7 @@ unification specifically at actual ⊥; it does NOT reopen the falsified identit
 
 namespace ZeroParadox.ZPH_TwoFacesBot
 
-open ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ_SelfApp
+open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp
 
 variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 

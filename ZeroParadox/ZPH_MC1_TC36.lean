@@ -61,7 +61,7 @@ rate-level **match** — both descend to their floor at rate `1/2`.
 
 namespace ZeroParadox.ZPH_MC1_TC36
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open Filter Topology
 
 /-- The shared geometric envelope rate: `n ↦ (2:ℝ)^(-n)`, ratio `1/2 < 1`. Tends to `0`. -/

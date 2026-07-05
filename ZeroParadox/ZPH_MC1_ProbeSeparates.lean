@@ -28,9 +28,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
-open ZeroParadox.ZPB ZeroParadox.ZPH_HilbFunctor
+open ZeroParadox ZeroParadox
 
 /-- The information bottom `Fin 0` has no global point — the empty type (Set-initial `∅`). -/
 theorem info_bottom_no_point : IsEmpty (Fin 0) := inferInstance
@@ -50,11 +50,11 @@ theorem top_bottom_has_point : ({(0 : Q₂)} : Set Q₂).Nonempty := Set.singlet
 theorem probe_separates : IsEmpty (Fin 0) ∧ Nonempty (EuclideanSpace ℂ (Fin 0)) :=
   ⟨inferInstance, ⟨0⟩⟩
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms probe_separates
 end PurityCheck

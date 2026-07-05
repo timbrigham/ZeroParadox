@@ -30,7 +30,7 @@ crosses between," at the level of relations.
 
 namespace ZeroParadox.ZPJ_Boundary
 
-open ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPJ_SelfApp
+open ZeroParadox ZPSemilattice ZeroParadox.ZPJ_SelfApp
 
 set_option maxHeartbeats 400000
 

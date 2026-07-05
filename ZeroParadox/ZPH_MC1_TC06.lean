@@ -82,7 +82,7 @@ bottom diagram, and identifying it with the diagonal fixed point of the other la
 cross-instance modeling commitment (ZP-P hard fence), not a theorem.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC06
+namespace ZeroParadox
 
 open QPF
 
@@ -176,4 +176,4 @@ section PurityCheck
 #print axioms coalgebra_fork_strict_on_idPF
 end PurityCheck
 
-end ZeroParadox.ZPH_MC1_TC06
+end ZeroParadox

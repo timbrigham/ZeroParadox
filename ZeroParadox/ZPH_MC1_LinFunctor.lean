@@ -35,7 +35,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.FinStoch
+namespace ZeroParadox
 
 open CategoryTheory
 
@@ -157,12 +157,12 @@ theorem L_map_pow {n : ℕ} (f : End (⟨n⟩ : FinStoch)) (k : ℕ) :
     Functor.mapEnd (⟨n⟩ : FinStoch) L (f ^ k) = (Functor.mapEnd (⟨n⟩ : FinStoch) L f) ^ k :=
   map_pow (Functor.mapEnd (⟨n⟩ : FinStoch) L) f k
 
-end ZeroParadox.FinStoch
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.FinStoch
+open ZeroParadox
 #print axioms L
 #print axioms L_bot_isInitial
 #print axioms stationary_transports_to_unit_eigenvector

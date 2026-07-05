@@ -48,7 +48,7 @@ of a common ancestor. The formal gap described here is closed.
 
 namespace ZeroParadox.ZPJ_SelfApp
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 open ZeroParadox.ZPJ
 open ZeroParadox.ZPJ_AczelConn
 

@@ -32,8 +32,8 @@ in Lean, from ZPB structure alone, without importing any AFA axioms.
 
 namespace ZeroParadox.ZPJ_OntBridge
 
-open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.ZPB
+open ZeroParadox ZPSemilattice
+open ZeroParadox
 open ZeroParadox.ZPJ_SelfApp
 
 /-! ## §I. ZPSemilattice Instance for OntologicalStates

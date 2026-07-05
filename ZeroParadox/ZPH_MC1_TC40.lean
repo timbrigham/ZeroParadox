@@ -59,7 +59,7 @@ interpretation of that pair; #1 (ℕ-order-initial) and #4 (Kleisli `Fin 0`) are
 namespace ZeroParadox.ZPH_MC1_TC40
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox.ZPD ZeroParadox.ZPH_HilbFunctor
+open ZeroParadox ZeroParadox
 
 /-- The seam node is a zero object of `ModuleCat ℂ` (reuse of `hilbert_bottom_isZero`). -/
 theorem seam_isZero : IsZero (fD_functor.obj 0) :=

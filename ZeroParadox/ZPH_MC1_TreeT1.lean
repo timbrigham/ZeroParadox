@@ -57,7 +57,7 @@ prediction; it is not the stronger claim of a single unifying functor.
 namespace ZeroParadox.ZPH_MC1_TreeT1
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor ZeroParadox.ZPH_MC1
+open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 
 /-- #1 as a μ/initial object: the floor `0` is the initial object of the well-founded order category
     `ℕ` (the base of the transfinite descent the proof-theory layer uses, Goodstein/KP/Kruskal). -/

@@ -55,7 +55,7 @@ ledger, deliberately demoted from a verdict bundle to a remark.
 namespace ZeroParadox.ZPH_MC1_TC24
 
 open CategoryTheory
-open ZeroParadox.ZPH_InfoFunctor
+open ZeroParadox
 
 /-- `fC_zero_isInitial` restated with its definitional type unfolded: in this Mathlib pin
     `IsInitial X` is the `abbrev` `IsColimit (asEmptyCocone X)`, so this is the *same term* and does

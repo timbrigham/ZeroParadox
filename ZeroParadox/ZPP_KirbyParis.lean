@@ -35,7 +35,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.KirbyParis
+namespace ZeroParadox
 
 open Ordinal NaturalOps
 
@@ -148,4 +148,4 @@ section PurityCheck
 #print axioms kp_terminates
 end PurityCheck
 
-end ZeroParadox.KirbyParis
+end ZeroParadox

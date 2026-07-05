@@ -22,9 +22,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.SpectralRadius
+namespace ZeroParadox
 
-open ZeroParadox.FinStoch
+open ZeroParadox
 
 /-- The transfer operator is ℓ¹-NONEXPANSIVE: `∑ₖ ‖(linMap f v) k‖ ≤ ∑ₖ ‖v k‖`. Triangle inequality plus
     row-stochasticity (`row_sum`). -/
@@ -42,7 +42,7 @@ lemma linMap_l1_nonexpansive {n : ℕ} (f : Fin n → PMF (Fin n)) (v : Fin n �
     _ = ∑ j, ∑ k, ‖v j‖ * ((f j) k).toReal := Finset.sum_comm
     _ = ∑ j, ‖v j‖ := by
         refine Finset.sum_congr rfl fun j _ => ?_
-        rw [← Finset.mul_sum, ZeroParadox.PerronFrobenius.row_sum, mul_one]
+        rw [← Finset.mul_sum, ZeroParadox.row_sum, mul_one]
 
 /-- Every eigenvalue of the transfer operator has modulus `≤ 1` (spectral radius `≤ 1`). -/
 lemma eigenvalue_abs_le_one {n : ℕ} (f : Fin n → PMF (Fin n)) {v : Fin n →₀ ℂ} (hv : v ≠ 0)
@@ -58,12 +58,12 @@ lemma eigenvalue_abs_le_one {n : ℕ} (f : Fin n → PMF (Fin n)) {v : Fin n →
   rw [h2] at h1
   exact le_of_mul_le_mul_right (by rwa [one_mul]) hpos
 
-end ZeroParadox.SpectralRadius
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.SpectralRadius
+open ZeroParadox
 #print axioms linMap_l1_nonexpansive
 #print axioms eigenvalue_abs_le_one
 end PurityCheck

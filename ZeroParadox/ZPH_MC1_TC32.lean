@@ -60,7 +60,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH.TC32
+namespace ZeroParadox.TC32
 
 open QPF
 
@@ -108,7 +108,7 @@ theorem binPF_fork_strict :
 
 /-- For the two-recursive-position functor `binPF`, the fixed points are NOT equivalent: an
 equivalence would carry the inhabitant of `Cofix binPF.Obj` (ν) back into the empty `Fix binPF.Obj`
-(μ). Mirrors `ZeroParadox.ZPH.TC26.idPF_no_seam`. -/
+(μ). Mirrors `ZeroParadox.TC26.idPF_no_seam`. -/
 theorem binPF_no_seam : IsEmpty (Fix binPF.Obj ≃ Cofix binPF.Obj) := by
   refine ⟨fun e => ?_⟩
   obtain ⟨c⟩ := binCofix_nonempty
@@ -125,12 +125,12 @@ position ⇒ strict}`:
 The one-position and two-position cases agree (both strict), so the discriminator is presence vs
 absence of a recursive position, not its multiplicity. -/
 theorem arity_collapse :
-    Nonempty (Fix (ZeroParadox.ZPH.TC26.constPF Unit).Obj ≃
-        Cofix (ZeroParadox.ZPH.TC26.constPF Unit).Obj) ∧
+    Nonempty (Fix (ZeroParadox.TC26.constPF Unit).Obj ≃
+        Cofix (ZeroParadox.TC26.constPF Unit).Obj) ∧
     IsEmpty (Fix ZeroParadox.ZPP.idPF.Obj ≃ Cofix ZeroParadox.ZPP.idPF.Obj) ∧
     IsEmpty (Fix binPF.Obj ≃ Cofix binPF.Obj) :=
-  ⟨⟨(ZeroParadox.ZPH.TC26.root_seam : Fix (ZeroParadox.ZPH.TC26.constPF Unit).Obj ≃ _)⟩,
-    ZeroParadox.ZPH.TC26.idPF_no_seam, binPF_no_seam⟩
+  ⟨⟨(ZeroParadox.TC26.root_seam : Fix (ZeroParadox.TC26.constPF Unit).Obj ≃ _)⟩,
+    ZeroParadox.TC26.idPF_no_seam, binPF_no_seam⟩
 
 section PurityCheck
 -- Measured footprint (lake build, v4.30.0-rc2) — the same μ-choice-free / ν-choice split as
@@ -151,4 +151,4 @@ section PurityCheck
 #print axioms arity_collapse
 end PurityCheck
 
-end ZeroParadox.ZPH.TC32
+end ZeroParadox.TC32

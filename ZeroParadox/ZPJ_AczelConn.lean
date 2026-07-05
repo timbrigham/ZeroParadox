@@ -34,7 +34,7 @@ fixed point is forced, not constructed.
 
 namespace ZeroParadox.ZPJ_AczelConn
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 open ZeroParadox.ZPJ
 
 /-! ## § I. The Self-Membership Operator and its Largest Pre-Fixed-Point -/

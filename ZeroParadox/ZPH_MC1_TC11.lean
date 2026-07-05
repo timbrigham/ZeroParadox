@@ -67,9 +67,9 @@ real driver: extremality in both directions is *because* the fixed point is uniq
 is genuinely earned but the cross-face identity stays fenced.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC11
+namespace ZeroParadox
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 open ZeroParadox.ZPJ_SelfApp
 open ZeroParadox.ZPJ_AczelConn
 
@@ -77,7 +77,7 @@ variable {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 
 local infix:50 " ≼ " => (ZPSemilattice.le : L → L → Prop)
 
--- `ZPSemilattice.le`, `bot_le`, `le_refl` are opened above (namespace `ZeroParadox.ZPA.ZPSemilattice`).
+-- `ZPSemilattice.le`, `bot_le`, `le_refl` are opened above (namespace `ZeroParadox.ZPSemilattice`).
 
 /-- The fixed-point predicate of `selfApp` (a fixed point is a "self-containing" element). -/
 def isFixedPt (x : L) : Prop := AbstractSelfApp.selfApp x = x
@@ -125,12 +125,12 @@ theorem selfApp_fixed_point_is_seam :
     ∧ (∀ x : L, isFixedPt x → x ≼ (bot : L)) :=
   ⟨AbstractSelfApp.fixed_bot, bot_is_least_fixed_point, bot_is_greatest_fixed_point⟩
 
-end ZeroParadox.ZPH_MC1_TC11
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC11
+open ZeroParadox
 
 #print axioms selfApp_fp_set_eq_singleton
 #print axioms bot_is_least_fixed_point

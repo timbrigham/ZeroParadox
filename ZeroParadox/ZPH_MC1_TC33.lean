@@ -63,7 +63,7 @@ immediately). The p-adic side is the genuine doubling-map orbit on `Q₂`.
 
 namespace ZeroParadox.ZPH_MC1_TC33
 
-open ZeroParadox.ZPB
+open ZeroParadox
 
 /-- The p-adic doubling orbit's **distance-to-floor** at step `n`, started at `x`:
     `‖(2:Q₂)^n · x‖`. This is the deterministic-ν (#3) convergence-rate sequence. -/

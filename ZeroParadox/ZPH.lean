@@ -50,14 +50,14 @@ Key results:
   by assembling independently proved domain theorems.
 -/
 
-namespace ZeroParadox.ZPH
+namespace ZeroParadox
 
-open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.ZPB
-open ZeroParadox.ZPC
-open ZeroParadox.ZPD
-open ZeroParadox.ZPE
-open ZeroParadox.ZPG
+open ZeroParadox ZPSemilattice
+open ZeroParadox
+open ZeroParadox
+open ZeroParadox
+open ZeroParadox
+open ZeroParadox
 open CategoryTheory
 
 /-! ## D-H1 — Morphisms of C are State Transitions (Design Commitment)
@@ -180,12 +180,12 @@ theorem th3_snap_all_functors (n : ℕ) (hn : 2 ≤ n) :
       (transitionOp n ⟨1, by omega⟩) = 0 :=
   ⟨t_snap_machine, c3_irreversible, t1b_jsd, t4_snap_orthogonal n hn⟩
 
-end ZeroParadox.ZPH
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPC ZeroParadox.ZPD
+open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox ZeroParadox
 open CategoryTheory
 
 #print axioms th1_fa
@@ -208,7 +208,7 @@ F_A claim in T-H1: OQ-G3 is closed for F_A. -/
 
 section NatSLat
 
-open ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox ZPSemilattice ZeroParadox CategoryTheory CategoryTheory.Limits
 
 /-- ℕ is a ZPSemilattice with max as join and 0 as bottom. -/
 instance natZPSemilattice : ZPSemilattice ℕ where
@@ -250,7 +250,7 @@ end NatSLat
 /-! ## Axiom Purity Check — NatSLat -/
 
 section PurityCheckNatSLat
-open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox CategoryTheory CategoryTheory.Limits
 
 -- OQ-G3 closed for F_A: ℕ has a categorical initial object grounded in the ZPA semilattice.
 -- IsInitial is a Type (not Prop), so `def` rather than `theorem`.
@@ -273,7 +273,7 @@ domain-specific theorems proved separately in T-H1 (C3 for F_B, T1b for F_C, T4 
 Full abstract functors (Lean Functor terms to pTop / InfoSp / Hilb) remain future work (OQ-G3). -/
 
 section NNRealZPCat
-open ZeroParadox.ZPB ZeroParadox.ZPC ZeroParadox.ZPD ZeroParadox.ZPG
+open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 open CategoryTheory CategoryTheory.Limits
 
 /-- Category on ℝ≥0 via ≤: morphisms x → y are proofs of x ≤ y. -/
@@ -322,7 +322,7 @@ end NNRealZPCat
 /-! ## Axiom Purity Check — NNRealZPCat -/
 
 section PurityCheckNNRealZPCat
-open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox CategoryTheory CategoryTheory.Limits
 
 -- One shared witness for F_B, F_C, F_D: ℝ≥0 has a categorical initial object.
 -- Domain differentiation (C3, T1b, T4) is proved separately in T-H1 above.
@@ -346,7 +346,7 @@ fb_snap_q2_grounded connects this to C3. -/
 
 section Q₂BallFunctor
 
-open ZeroParadox.ZPB ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox ZeroParadox CategoryTheory CategoryTheory.Limits
 
 /-- Q₂BallDepth: depth index for the clopen ball hierarchy in Q₂.
     A distinct type (not ℕ) so its Category and ZPCategory instances
@@ -432,7 +432,7 @@ end Q₂BallFunctor
 /-! ## Axiom Purity Check — Q₂BallFunctor -/
 
 section PurityCheckQ₂BallFunctor
-open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox CategoryTheory CategoryTheory.Limits
 
 #print axioms fb_preserves_initial
 #print axioms fb_snap_q2_grounded
@@ -455,7 +455,7 @@ fc_snap_info_grounded connects this to T1b (JSD = log 2). -/
 
 section InfoDepthFunctor
 
-open ZeroParadox.ZPC ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox ZeroParadox CategoryTheory CategoryTheory.Limits
 
 /-- InfoDepth: surprisal-level index for the information hierarchy.
     A distinct type (not ℕ) so its Category and ZPCategory instances
@@ -527,7 +527,7 @@ end InfoDepthFunctor
 /-! ## Axiom Purity Check — InfoDepthFunctor -/
 
 section PurityCheckInfoDepthFunctor
-open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox CategoryTheory CategoryTheory.Limits
 
 #print axioms fc_preserves_initial
 #print axioms fc_snap_info_grounded
@@ -552,7 +552,7 @@ fd_snap_hilb_grounded connects this to T4 (⟪T(0), T(ε₀)⟫_ℂ = 0). -/
 
 section HilbDimFunctor
 
-open ZeroParadox.ZPD ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox ZeroParadox CategoryTheory CategoryTheory.Limits
 
 /-- HilbDimDepth: dimension index for the Hilbert state space hierarchy.
     A distinct type (not ℕ) so its Category and ZPCategory instances
@@ -627,7 +627,7 @@ end HilbDimFunctor
 /-! ## Axiom Purity Check — HilbDimFunctor -/
 
 section PurityCheckHilbDimFunctor
-open ZeroParadox.ZPG CategoryTheory CategoryTheory.Limits
+open ZeroParadox CategoryTheory CategoryTheory.Limits
 
 #print axioms fd_preserves_initial
 #print axioms fd_snap_hilb_grounded

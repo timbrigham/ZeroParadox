@@ -65,7 +65,7 @@ obstruction being reducibility.
 namespace ZeroParadox.ZPH_MC1_TC23
 
 open scoped BigOperators
-open ZeroParadox.MeanErgodic
+open ZeroParadox
 
 variable {n : ℕ}
 
@@ -81,7 +81,7 @@ def IsStationaryPMF (f : Fin n → PMF (Fin n)) (μ : PMF (Fin n)) : Prop := μ.
     pre-registered GO conjecture that survives: inhabited, but (see below) **not** subsingleton. -/
 theorem markov_node_stationary_inhabited [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
     ∃ μ : PMF (Fin n), IsStationaryPMF f μ :=
-  ZeroParadox.PerronFrobenius.exists_stationary f
+  ZeroParadox.exists_stationary f
 
 /-! ## The reducible doubly-stochastic counterexample: the block-permutation kernel
 

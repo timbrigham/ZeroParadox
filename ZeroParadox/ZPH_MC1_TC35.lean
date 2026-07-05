@@ -64,7 +64,7 @@ GO outcome, not a collapse.
 
 namespace ZeroParadox.ZPH_MC1_TC35
 
-open ZeroParadox.ZPB
+open ZeroParadox
 
 /-! ## GO side: node #1's order-bottom μ-witness -/
 

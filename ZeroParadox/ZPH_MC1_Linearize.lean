@@ -31,9 +31,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
-open CategoryTheory Limits ZeroParadox.ZPH_HilbFunctor
+open CategoryTheory Limits ZeroParadox
 
 /-- **Object map of the linearization comparison**: the free ℂ-module on a type `A`, `A ↦ (A →₀ ℂ)`. On
     finite `A = Fin n` this is `ℂ^n`; a finite stochastic map becomes its stochastic-matrix linear map. -/
@@ -52,11 +52,11 @@ noncomputable def lin_bottom_isInitial : IsInitial (linObj (Fin 0)) := by
 noncomputable def lin_carries_bottom : linObj (Fin 0) ≅ fD_functor.obj 0 :=
   lin_bottom_isInitial.uniqueUpToIso fD_zero_isInitial
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms lin_carries_bottom
 end PurityCheck

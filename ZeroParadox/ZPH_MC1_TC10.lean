@@ -46,9 +46,9 @@ limit object of the real `TopCat` diagram, not a set coincidence. The *interpret
 "ν / limit face" of the cross-framework diagonal fixed point) is framework prose, not a Lean claim.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC10
+namespace ZeroParadox
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open ZeroParadox.ZPH_TopFunctor
 open CategoryTheory CategoryTheory.Limits
 
@@ -160,7 +160,7 @@ the categorical upgrade of the set equation `fB_bottom_is_limit`. -/
 noncomputable def fB_limit_iso_floor : limit fB_functor ≅ floorPt :=
   (limit.isLimit fB_functor).conePointUniqueUpToIso floorConeIsLimit
 
-end ZeroParadox.ZPH_MC1_TC10
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -169,7 +169,7 @@ the same dependency carried by `ZPH_TopFunctor` and the ZP-B topology layer. It 
 dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC10
+open ZeroParadox
 
 #print axioms zero_mem_q2Ball
 #print axioms floorCone

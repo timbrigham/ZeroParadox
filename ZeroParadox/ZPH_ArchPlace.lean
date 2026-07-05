@@ -43,7 +43,7 @@ as two of them.
   ℝ-absolute-value (#2's base field) and the 2-adic place is the `Q₂`-norm (#3's ambient).
 -/
 
-namespace ZeroParadox.ZPH_ArchPlace
+namespace ZeroParadox
 
 open Rat.AbsoluteValue
 
@@ -86,7 +86,7 @@ theorem node3_place_eq_q2_norm (q : ℚ) : padic 2 q = ‖(q : ℚ_[2])‖ := by
     using the framework's own `ZPB.t5_totallyDisconnected`. -/
 theorem place_topological_signature :
     ConnectedSpace ℝ ∧ TotallyDisconnectedSpace ℚ_[2] :=
-  ⟨inferInstance, ZeroParadox.ZPB.t5_totallyDisconnected⟩
+  ⟨inferInstance, ZeroParadox.t5_totallyDisconnected⟩
 
 /-- **A1 capstone.** `real` is ℚ's unique archimedean place; `padic 2` is non-archimedean; the two
     classes are exhaustive (Ostrowski). **INTERPRETATION (not a kernel theorem about the simplex):** the
@@ -101,12 +101,12 @@ theorem arch_place_characterization :
     (∀ f : AbsoluteValue ℚ ℝ, (¬ ∀ n : ℕ, f n ≤ 1) → f ≈ real) :=
   ⟨node2_place_archimedean, node3_place_nonarchimedean, fun f h => archimedean_place_unique f h⟩
 
-end ZeroParadox.ZPH_ArchPlace
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_ArchPlace
+open ZeroParadox
 
 #print axioms node2_place_archimedean
 #print axioms node3_place_nonarchimedean

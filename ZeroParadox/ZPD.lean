@@ -39,7 +39,7 @@ pending OrthonormalBasis API. DP-1 (orthogonality) is proved as a theorem
 of the construction — reflecting the design commitment, not a bare axiom.
 -/
 
-namespace ZeroParadox.ZPD
+namespace ZeroParadox
 
 /-! ## I. The State-Layer Hilbert Space (D1) -/
 
@@ -191,12 +191,12 @@ theorem t5_strict_orthogonal (n : ℕ) (S : ℕ → Fin n) (k : ℕ) (h : S k �
     @inner ℂ (StateSpace n) _ (transitionOp n (S k)) (transitionOp n (S (k + 1))) = 0 :=
   t2_orthogonal n (S k) (S (k + 1)) h
 
-end ZeroParadox.ZPD
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPD
+open ZeroParadox
 
 #print axioms dp1_orthogonality
 #print axioms t2_injective

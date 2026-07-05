@@ -40,7 +40,7 @@ categories). F_C (information) and F_D (Hilbert) are separate, gated files.
 
 namespace ZeroParadox.ZPH_TopFunctor
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open CategoryTheory Topology
 
 /-- The clopen ball at depth `n`: `B(0, 2⁻ⁿ) ⊆ Q₂`. Shrinks as `n` grows. -/

@@ -14,7 +14,7 @@ different types into different codomains, so "measure(bottom) = ⊤" is not well
 SAME type boundary as MC-1's identity half, now at the MEASURE level. The honest form is a per-domain
 bundle of the divergence facts, each in its own measure type:
 
-* valuation domains (incl. every p-adic field): `ZeroParadox.FloorWitness.addVal_bot` (P7) — `v 0 = ⊤`,
+* valuation domains (incl. every p-adic field): `ZeroParadox.addVal_bot` (P7) — `v 0 = ⊤`,
   choice-free;
 * information: `info_bottom_diverges` here (= ZP-C `l_inf`) — surprisal unbounded above;
 * ordinal: ε₀ = sup of the ω-tower (ZP-N), the order-theoretic divergence.
@@ -30,19 +30,19 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.BottomMeasure
+namespace ZeroParadox
 
 /-- **Information-side floor divergence (P6).** The surprisal at ball-depth `n` is unbounded above: the
     information measure diverges to +∞ as depth → the bottom. The info-domain member of the bottom-measure
     bundle (= ZP-C `l_inf`). -/
-theorem info_bottom_diverges : ∀ M : ℝ, ∃ n : ℕ, M < ZeroParadox.ZPC.surprisal n :=
-  ZeroParadox.ZPC.l_inf
+theorem info_bottom_diverges : ∀ M : ℝ, ∃ n : ℕ, M < ZeroParadox.surprisal n :=
+  ZeroParadox.l_inf
 
-end ZeroParadox.BottomMeasure
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.BottomMeasure
+open ZeroParadox
 #print axioms info_bottom_diverges
 end PurityCheck

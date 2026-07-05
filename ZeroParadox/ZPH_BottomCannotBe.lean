@@ -136,15 +136,15 @@ section CannotBeIndex
 #check @ZeroParadox.ZPH_MC1_TC44.nat_zero_not_terminal
 
 /-! ### the bottoms cannot be zero objects / greatest elements (various categories) -/
-#check @ZeroParadox.ZPH_MC1_TC08.kleisli_bottom_not_zero
-#check @ZeroParadox.ZPH_MC1_TC08.padic_bottom_not_zero
-#check @ZeroParadox.ZPH_MC1_TC08.zpa_bot_not_greatest
+#check @ZeroParadox.kleisli_bottom_not_zero
+#check @ZeroParadox.padic_bottom_not_zero
+#check @ZeroParadox.zpa_bot_not_greatest
 
 /-! ### μ/ν fork: the least-fixed-point (Fix) is EMPTY / does not match the greatest (no seam) -/
-#check @ZeroParadox.ZPH.TC26.idPF_no_seam
-#check @ZeroParadox.ZPH.TC32.binPF_no_seam
+#check @ZeroParadox.TC26.idPF_no_seam
+#check @ZeroParadox.TC32.binPF_no_seam
 #check @ZeroParadox.ZPH_MC1_TC47.strict_fix_isEmpty
-#check @ZeroParadox.ZPH.TC48.fix_isEmpty_constructive   -- choice-free (note: tighter purity)
+#check @ZeroParadox.TC48.fix_isEmpty_constructive   -- choice-free (note: tighter purity)
 #check @ZeroParadox.ZPH_MC1_TC49.fixToCofix_not_surjective
 
 /-! ### orbits that cannot reach ⊥ / cannot be matched (only contractions reach it) -/
@@ -157,14 +157,14 @@ section CannotBeIndex
 #check @ZeroParadox.ZPH_MC1_TC40.seam_not_mu_colimit_apex
 -- NB: `no_cross_setting_map` records absence-of-construction (no map EXHIBITED), NOT a proven
 -- impossibility (`IsEmpty (map)`). It is an OPEN-style "none given", not a NO-GO. See register D8.
-#check @ZeroParadox.ZPH.TC42.no_cross_setting_map
+#check @ZeroParadox.TC42.no_cross_setting_map
 #check @ZeroParadox.ZPH_MC1_TC44.isEmpty_hom_one_to_zero
 
 /-! ### cross-domain CANNOT-HAVE anchors (the exclusion recurs in other layers — corpus sweep 2026-06-30) -/
-#check @ZeroParadox.ZPG.t3_unreachability   -- categorical: IsEmpty (X ⟶ ⊥) — ⊥ cannot be reached from outside.
+#check @ZeroParadox.t3_unreachability   -- categorical: IsEmpty (X ⟶ ⊥) — ⊥ cannot be reached from outside.
 -- SCOPE FENCE: not every well-quasi-order has an ordinal-valued floor — Kruskal's theorem is a WQO, NOT a
 -- descent to a bottom. Marks where the "canonical floor 0" claim does NOT apply. (apophatic, scope-limit.)
-#check @ZeroParadox.MC1.TC07.kruskal_is_wqo_not_descent
+#check @ZeroParadox.kruskal_is_wqo_not_descent
 
 /-! ## POSITIVE side — concurrency = the fixed point (the not-action point)
     The complement to the exclusions above: ⊥'s one positive handle. "Concurrency" (operation and result
@@ -176,7 +176,7 @@ section CannotBeIndex
 --  not a derived theorem. "Concurrency"/"not-action" is the plain-language gloss for `selfApp x = x`.)
 #check @ZeroParadox.ZPJ_SelfApp.AbstractSelfApp.unique_fp
 -- that concurrency point is the seam (the μ=ν coincidence).
-#check @ZeroParadox.ZPH_MC1_TC11.selfApp_fixed_point_is_seam
+#check @ZeroParadox.selfApp_fixed_point_is_seam
 -- least = greatest fixed point: the two extremes co-hold at the one point (a concurrency).
 #check @ZeroParadox.ZPH_MC1_TC15.selfApp_bot_is_both_extremal
 
@@ -205,8 +205,8 @@ section CannotBeIndex
 #check @ZeroParadox.ZPJ_SelfApp.q2_unique_fp        -- 0 is the UNIQUE self-membership fixed point in ℚ₂.
 #check @ZeroParadox.ZPH_TopFunctor.fB_bottom_is_limit -- ⋂ nested balls = {0}: exactly one point pinned.
 -- WIDE / infinite MEASURE: a scalar diverges (unbounded value), NOT "reached from everywhere". [ZPC]
-#check @ZeroParadox.ZPC.t2_diverges                 -- surprisal/information exceeds every bound M.
-#check @ZeroParadox.BottomMeasure.info_bottom_diverges -- = `ZPC.l_inf` (same fact, the BottomMeasure framing).
+#check @ZeroParadox.t2_diverges                 -- surprisal/information exceeds every bound M.
+#check @ZeroParadox.info_bottom_diverges -- = `ZPC.l_inf` (same fact, the BottomMeasure framing).
 -- WIDE / infinite REACH: ⊥ is the universal attractor — every CONTRACTION orbit (‖c‖<1) flows to it. [ℚ₂]
 #check @ZeroParadox.ZPH_MC1_TC30.contraction_orbit_tendsto_zero
 -- COINCIDENCE (actual-⊥ core, both genuinely 0 ∈ ℚ₂): the SAME point is `q2_unique_fp` (narrow: the
@@ -216,11 +216,11 @@ section CannotBeIndex
 
 /-! ### the poles recur across layers (cross-domain anchors — corpus sweep 2026-06-30) -/
 -- NARROW, framework-abstract: the ⊥-role (universal join-identity) is satisfied by EXACTLY one element.
-#check @ZeroParadox.ZPE.da2_bottom_characterization   -- (∀ x, join S x = x) ↔ S = bot.
+#check @ZeroParadox.da2_bottom_characterization   -- (∀ x, join S x = x) ↔ S = bot.
 -- NARROW, categorical: ⊥ maps uniquely to every object (initial universal property).
-#check @ZeroParadox.ZPG.t2_universal_constituent
+#check @ZeroParadox.t2_universal_constituent
 -- MEASURE, fully general: in ANY additively-valued ring the floor 0 carries v 0 = ⊤ (subsumes the p-adic).
-#check @ZeroParadox.FloorWitness.addVal_bot
+#check @ZeroParadox.addVal_bot
 -- REACH, ordinal domain: the ε₀-tower encodings converge to the 2-adic floor 0 (a different orbit family).
 #check @ZeroParadox.ZPL.tower_converges_to_zero
 
@@ -231,15 +231,15 @@ section CannotBeIndex
 -- valuation-filtration REFLECTION around the floor: `{x≠0 ∣ n ≤ v₂} ↦ {x≠0 ∣ v₂ ≤ -n}` under (·⁻¹).
 -- NB: this is ℤ-valued — NO literal 0=∞ content (the source file disclaims it); 0 is the excluded center.
 -- It is the inversion *symmetry* of the tower, the suggestive shadow of the pole, not the pole itself.
-#check @ZeroParadox.InversionValuation.inversion_reverses_filtration
+#check @ZeroParadox.inversion_reverses_filtration
 -- THE literal 0=∞: the SAME orbit 2ⁿx reaches 0 at the 2-adic place AND diverges to ∞ at the archimedean
 -- place — one orbit, the narrow/reach pole and the divergence pole as two place-views. (This carries it.)
 #check @ZeroParadox.ZPH_PlaceMetric.doubling_place_dichotomy
 -- THE literal 0↔∞ at the floor, made a HOMEOMORPHISM (the p-adic Riemann sphere): inversion on
 -- `OnePoint ℚ₂` swaps the floor `0` and the point at infinity `∞`, repairing the discontinuity Mathlib's
 -- `0⁻¹ = 0` leaves at the floor. The strongest p-adic INV witness — 0 and ∞ antipodal, the Riemann origin.
-#check @ZeroParadox.RiemannSphere.rInv_swaps
-#check @ZeroParadox.RiemannSphere.rInvHomeo
+#check @ZeroParadox.rInv_swaps
+#check @ZeroParadox.rInvHomeo
 -- CATEGORICAL instances, CITED from Mathlib (NOT ZP-proved — attribution is the point): passing to Cᵒᵖ is
 -- the categorical face of inversion. `IsInitial.op` swaps the μ-bottom (initial, e.g. `fC_zero_isInitial`)
 -- to a terminal object — the initial↔terminal = 0↔∞ swap. `hasZeroObject_op` keeps the zero-object SEAM a
@@ -273,8 +273,8 @@ section CannotBeIndex
 -- load-bearing via finrank) — the honest version TC37's `seam_unit_iff_isZero` faked (its converse discards
 -- the hypothesis). NARROW-flavored (uniqueness) wearing a defensible self-similarity label; NOT the
 -- Kleene-quine sense (the linear zero object has no self-application). Cold-audited SOLID.
-#check @ZeroParadox.HilbertDiagonal.biprod_diagonal_only_zero
-#check @ZeroParadox.HilbertDiagonal.seam_is_diagonal_fixpoint
+#check @ZeroParadox.biprod_diagonal_only_zero
+#check @ZeroParadox.seam_is_diagonal_fixpoint
 
 /-! ## GENERATION / the Gödel inversion (NEW slot — corpus sweep 2026-06-30)
     The floor GENERATES the ceiling — the project's name-as-method (self-reference located at the floor,
@@ -300,27 +300,27 @@ section CannotBeIndex
     role, not new content. -/
 
 -- the SNAP: the state change `c₀ ∨ c₁ = c₁` (⊥ → ε₀) — the fundamental state-advance off the floor.
-#check @ZeroParadox.ZPE.t_snap_derived
+#check @ZeroParadox.t_snap_derived
 -- IRREVERSIBLE: a GENERIC semilattice no-return lemma (for `x ≼ y, x ≠ y`, no join returns `y` to `x`);
 -- it does NOT mention ⊥ or the snap — the snap merely INSTANTIATES it. (Not "arrow of time" itself; that
 -- is the application, not the statement.)
-#check @ZeroParadox.ZPE.t_snap_irreversible
+#check @ZeroParadox.t_snap_irreversible
 -- NO RETURN: no morphism back into ⊥ from a nonempty object (one-way departure, ZP-H).
-#check @ZeroParadox.ZPH_InfoFunctor.fC_no_return
+#check @ZeroParadox.fC_no_return
 -- APPROACH (μ, finite time): well-founded descent reaches ⊥ in finitely many steps.
 #check @ZeroParadox.pred_orbit_reaches_floor
 -- APPROACH (ν, limit): the doubling orbit converges to ⊥ in the 2-adic metric.
-#check @ZeroParadox.ZPH_MC1_TC05.doubling_orbit_tendsto_zero
+#check @ZeroParadox.doubling_orbit_tendsto_zero
 -- IRREVERSIBLE, categorical: even given ⊥ → X there is no X → ⊥ (chains from ⊥ are forward-only).
 -- (NB: `t4_chains_forward_only := t3_unreachability` — the SAME no-incoming fact, here under the
 --  irreversibility/dynamics reading rather than the unreachability/cannot-have reading. Not new content.)
-#check @ZeroParadox.ZPG.t4_chains_forward_only
+#check @ZeroParadox.t4_chains_forward_only
 -- IRREVERSIBLE, #2 Markov via the SPECTRAL GAP (the arrow of time for the attractor): a mixing chain's
 -- relaxation operator is NON-INJECTIVE (`fullMix` sends the nonzero mean-zero mode to 0) — information is
 -- lost, the relaxation cannot be reversed; off-stationary modes with |λ|<1 decay (`fullMix_mode_decays`,
 -- via the general `tendsto_norm_iterate_zero`). FENCE: NOT universal — permutation/cyclic chains have no
 -- gap, are injective, do NOT mix (`ZPH_MC1_TC39.swap_orbit_not_convergent`). Mixing-specific. Cold-audit SOLID.
-#check @ZeroParadox.MarkovSpectralGap.fullMix_not_injective
-#check @ZeroParadox.MarkovSpectralGap.tendsto_norm_iterate_zero
+#check @ZeroParadox.fullMix_not_injective
+#check @ZeroParadox.tendsto_norm_iterate_zero
 
 end CannotBeIndex

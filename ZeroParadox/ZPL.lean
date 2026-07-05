@@ -52,10 +52,10 @@ ZPE (§V): T-SNAP, MachinePhase, t_snap_machine -/
 
 namespace ZeroParadox.ZPL
 
-open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.ZPC
+open ZeroParadox ZPSemilattice
+open ZeroParadox
 open ZeroParadox.ZPK
-open ZeroParadox.ZPE
+open ZeroParadox
 open Nat.Partrec Nat.Partrec.Code
 open Ordinal
 

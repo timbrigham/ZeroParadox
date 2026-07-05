@@ -38,7 +38,7 @@ All results follow from the LinearOrderedField axioms — no topology, no
 measure theory.
 -/
 
-namespace ZeroParadox.ZPF
+namespace ZeroParadox
 
 /-! ### General case: any LinearOrderedField -/
 
@@ -126,4 +126,4 @@ section PurityCheck
 #print axioms r_snap_impossible
 end PurityCheck
 
-end ZeroParadox.ZPF
+end ZeroParadox

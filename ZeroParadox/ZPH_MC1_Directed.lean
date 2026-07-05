@@ -28,9 +28,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
-open CategoryTheory ZeroParadox.ZPH_InfoFunctor
+open CategoryTheory ZeroParadox
 
 /-- **The MC-1 bottom is directed, not mutual (B7).** In `KleisliCat PMF` the snap floor admits no
     return morphism from any nonempty object (`fC_no_return`), so it is not isomorphic to any such
@@ -43,11 +43,11 @@ theorem kleisli_obj_not_iso_bot {n : ℕ} (hn : 0 < n) :
   intro e
   exact (fC_no_return hn).false e.hom
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms kleisli_obj_not_iso_bot
 end PurityCheck

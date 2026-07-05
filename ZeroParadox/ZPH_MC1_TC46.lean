@@ -71,8 +71,8 @@ remains correctly deflated.
 namespace ZeroParadox.ZPH_MC1_TC46
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPB
-open ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open ZeroParadox ZeroParadox
+open ZeroParadox ZeroParadox
 open ZeroParadox.ZPH_MC1_TreeObstructions
 
 /-! ## The separating arrow-level property: P_in (all in-hom-sets nonempty) -/

@@ -52,7 +52,7 @@ and not terminal, #3 is not initial. The seam reading is the meaning we attach t
 namespace ZeroParadox.ZPH_MC1_TreeSeam
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPB ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 open ZeroParadox.ZPH_MC1_TreeObstructions
 
 /-- #5 is the seam: the Hilbert bottom is a **zero object** (initial ∧ terminal) of `ModuleCat ℂ` —

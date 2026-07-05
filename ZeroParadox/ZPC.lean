@@ -40,7 +40,7 @@ Imports ZP-B conceptually (total disconnectedness, clopen balls) but not
 as a Lean dependency — ZP-C's theorems do not require the p-adic structure.
 -/
 
-namespace ZeroParadox.ZPC
+namespace ZeroParadox
 
 /-! ## Setup: Binary States (AX-B1) -/
 
@@ -212,12 +212,12 @@ theorem l_run : c₀ ≠ c₁ := by decide
     No program can produce ⊥ without a non-null intermediate state. -/
 theorem tq_ih : c₁ ≠ c₀ := Ne.symm l_run
 
-end ZeroParadox.ZPC
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPC
+open ZeroParadox
 
 #print axioms t1_distributions_distinct
 #print axioms t1b_kl_P

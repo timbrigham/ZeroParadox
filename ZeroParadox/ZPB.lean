@@ -30,7 +30,7 @@ total disconnectedness T5, and irreversibility of the Snap C3.
 Self-contained within p-adic analysis and topology; no ZP-A algebra imported.
 -/
 
-namespace ZeroParadox.ZPB
+namespace ZeroParadox
 
 /-! ## Setup -/
 
@@ -258,7 +258,7 @@ non-Archimedean case made topologically explicit.
 
 See: ZPF.lean (f_snap_impossible) for the Archimedean side. -/
 
-end ZeroParadox.ZPB
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -267,7 +267,7 @@ T1–C3 depend on Mathlib's p-adic and topology instances — any classical axio
 by those instances will appear here and are inherited from standard Mathlib, not ZP-B. -/
 
 section PurityCheck
-open ZeroParadox.ZPB
+open ZeroParadox
 
 #print axioms t0_two_is_prime
 #print axioms t0_no_prime_below_two

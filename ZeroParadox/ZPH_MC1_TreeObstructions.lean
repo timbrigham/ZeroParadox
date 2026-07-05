@@ -63,7 +63,7 @@ open question; this file only supplies the missing terminal half so the straddle
 namespace ZeroParadox.ZPH_MC1_TreeObstructions
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPB ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 
 /-! ## E4 cluster — Axis I (well-founded vs non-well-founded) -/
 

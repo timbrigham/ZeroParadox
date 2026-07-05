@@ -21,9 +21,9 @@ non-Archimedean completions of ℚ. Unifies three previously separate facts unde
 with "snap occurs" formalized topologically as **total disconnectedness** (predicate (a)):
 
 - ℝ (the Archimedean completion): connected, NOT totally disconnected → no snap.
-  (Order-language companion: ZP-F `ZeroParadox.ZPF.f_snap_impossible`.)
+  (Order-language companion: ZP-F `ZeroParadox.f_snap_impossible`.)
 - ℚ_p (the non-Archimedean completions): totally disconnected → snap.
-  (ZP-B anchor: `ZeroParadox.ZPB.t5_totallyDisconnected`, itself `inferInstance` from Mathlib.)
+  (ZP-B anchor: `ZeroParadox.t5_totallyDisconnected`, itself `inferInstance` from Mathlib.)
 - Ostrowski (ZP-P, `ZPP_Ostrowski`): these are the ONLY completions, and they are mutually exclusive.
 
 ## Why topological (predicate (a), Tim 2026-06-24)
@@ -35,7 +35,7 @@ witnesses are Mathlib-solid; the dichotomy reuses ZP-P's Ostrowski backbone + ZP
 - "snap occurs"             → `TotallyDisconnectedSpace K`  (K a completion of ℚ)
 - ℝ completion              → `ℝ`; connected via `Real.instPathConnectedSpace`
 - ℚ_p completion            → `ℚ_[p]` = `Padic p` `[Fact p.Prime]`; totally disconnected = inferInstance
-- "no order-atom" (ℝ side)  → `ZeroParadox.ZPF.f_snap_impossible` (order companion)
+- "no order-atom" (ℝ side)  → `ZeroParadox.f_snap_impossible` (order companion)
 - Ostrowski exhaustiveness  → `ZeroParadox.ZPP.completions_exhaustive` (`equiv_real_or_padic`)
 - Ostrowski orthogonality   → `ZeroParadox.ZPP.real_not_equiv_padic` (`not_real_isEquiv_padic`)
 - "ℝ not totally disc."     → ℝ connected + nontrivial → ¬ `TotallyDisconnectedSpace ℝ`   [NEW lemma]
@@ -52,7 +52,7 @@ ultrametric/connected instances; the only new lemma is `real_no_snap`.
 
 set_option maxHeartbeats 400000
 
-namespace ZeroParadox.ZPF_SnapDichotomy
+namespace ZeroParadox
 
 open Rat.AbsoluteValue
 
@@ -83,10 +83,10 @@ theorem snap_dichotomy :
    fun f hf => ZeroParadox.ZPP.completions_exhaustive f hf,
    fun p => ZeroParadox.ZPP.real_not_equiv_padic p⟩
 
-end ZeroParadox.ZPF_SnapDichotomy
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.ZPF_SnapDichotomy
+open ZeroParadox
 #print axioms padic_snaps
 #print axioms real_no_snap
 #print axioms snap_dichotomy

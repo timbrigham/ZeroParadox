@@ -24,9 +24,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.WebEdges
+namespace ZeroParadox
 
-open ZeroParadox.ZPB ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox.ZPH_TopFunctor
 
 /-- EDGE topology↔number-theory: the ball `B(0,2⁻ⁿ)` equals the addValuation sublevel `{x | n ≤ v₂(x)}`. -/
 theorem q2Ball_eq_addValuation_sublevel (n : ℕ) :
@@ -49,9 +49,9 @@ theorem q2Ball_eq_addValuation_sublevel (n : ℕ) :
     floor; it is the formalized 2-hop path, not a new direct transform. -/
 theorem tower_enters_every_ball (n : ℕ) :
     ∀ᶠ k in Filter.atTop,
-      ZeroParadox.P8.cnf_encode (ZeroParadox.P8.towerOrd k)
+      ZeroParadox.cnf_encode (ZeroParadox.towerOrd k)
         ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ))) :=
-  ZeroParadox.P8.cnf_encode_tower_tendsto_zero.eventually
+  ZeroParadox.cnf_encode_tower_tendsto_zero.eventually
     (Metric.closedBall_mem_nhds 0 (by positivity))
 
 /-- EDGE computation → topology (the path via the floor): the computational quine family (B2,
@@ -73,7 +73,7 @@ theorem quines_enter_every_ball (n : ℕ) :
     p-adic floor — the analogue of E2/E3 for the information domain. -/
 theorem info_points_enter_every_ball (n : ℕ) :
     ∀ᶠ k in Filter.atTop, (2 : ℤ_[2]) ^ k ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ))) :=
-  ZeroParadox.P8.two_pow_tendsto_zero.eventually (Metric.closedBall_mem_nhds 0 (by positivity))
+  ZeroParadox.two_pow_tendsto_zero.eventually (Metric.closedBall_mem_nhds 0 (by positivity))
 
 /-- CORRESPONDENCE — co-location at the shared floor. Proof-theory (tower, B6), computation (quines, B2),
     and information (depth points, B3) ALL enter every ball around the single floor `0 ∈ ℤ₂`, via their real
@@ -85,7 +85,7 @@ theorem info_points_enter_every_ball (n : ℕ) :
     hit 0; they hit it because the bottoms are genuinely floors, so the co-location has content. -/
 theorem padic_cluster_colocates_at_floor (n : ℕ) :
     (∀ᶠ k in Filter.atTop,
-        ZeroParadox.P8.cnf_encode (ZeroParadox.P8.towerOrd k)
+        ZeroParadox.cnf_encode (ZeroParadox.towerOrd k)
           ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ)))) ∧
     (∃ c, ZeroParadox.ZPK.IsComputationalQuine c ∧
         (2 : ℤ_[2]) ^ (Encodable.encode c) ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ)))) ∧
@@ -99,12 +99,12 @@ theorem padic_cluster_colocates_at_floor (n : ℕ) :
     separate "= n" facts. (Still thin, since ZPC defines surprisal as the depth index; but it is an honest
     correspondence equation relating the two domains' measures, the info-side of the p-adic cluster.) -/
 theorem info_valuation_eq_surprisal (n : ℕ) :
-    (((2 : ℚ_[2]) ^ n).valuation : ℝ) = ZeroParadox.ZPC.surprisal n := by
+    (((2 : ℚ_[2]) ^ n).valuation : ℝ) = ZeroParadox.surprisal n := by
   have hv : ((2 : ℚ_[2]) ^ n).valuation = (n : ℤ) := by
     rw [show (2 : ℚ_[2]) = ((2 : ℕ) : ℚ_[2]) by norm_cast, Padic.valuation_pow, Padic.valuation_p,
       mul_one]
   rw [hv]
-  simp [ZeroParadox.ZPC.surprisal]
+  simp [ZeroParadox.surprisal]
 
 /-- CORRESPONDENCE category-theory ↔ {topology, information, Hilbert}: each of those domains has a genuine
     categorical REALIZATION, and its snap bottom is a proven categorical object — the information and Hilbert
@@ -113,19 +113,19 @@ theorem info_valuation_eq_surprisal (n : ℕ) :
     half (derived, not the identity commitment): category-theory connects DIRECTLY to the three realized
     domains, making it a second hub alongside the p-adic floor. Bundles existing witnesses. -/
 theorem category_realizes_bottoms :
-    Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0)) ∧
-      Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0)) ∧
+    Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.fC_functor.obj 0)) ∧
+      Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.fD_functor.obj 0)) ∧
       (⋂ n, ZeroParadox.ZPH_TopFunctor.q2Ball n) = {(0 : Q₂)} :=
-  ⟨⟨ZeroParadox.ZPH_InfoFunctor.fC_zero_isInitial⟩,
-    ⟨ZeroParadox.ZPH_HilbFunctor.fD_zero_isInitial⟩,
+  ⟨⟨ZeroParadox.fC_zero_isInitial⟩,
+    ⟨ZeroParadox.fD_zero_isInitial⟩,
     ZeroParadox.ZPH_TopFunctor.fB_bottom_is_limit⟩
 
-end ZeroParadox.WebEdges
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.WebEdges
+open ZeroParadox
 #print axioms q2Ball_eq_addValuation_sublevel
 #print axioms tower_enters_every_ball
 #print axioms quines_enter_every_ball

@@ -71,11 +71,11 @@ other here — so "the polynomial-functor seam and the zero-object seam are the 
 canonical-comparison iso (GO); the unification is fenced.
 -/
 
-namespace ZeroParadox.ZPH.TC38
+namespace ZeroParadox.TC38
 
 open QPF
 open CategoryTheory
-open ZeroParadox.ZPH.TC26
+open ZeroParadox.TC26
 
 set_option maxHeartbeats 400000
 
@@ -166,10 +166,10 @@ object). So the node-seam is governed by the zero-object universal property, and
 adds nothing beyond it. -/
 theorem node_seam_arrow_collapse_is_generic :
     -- it fires OFF the seam: node #4 is initial, not a zero object, yet to = 𝟙 (TC20)
-    ∃ (h : Limits.IsInitial (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0)),
-      ¬ Limits.IsZero (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0)
-      ∧ h.to (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0)
-          = 𝟙 (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0) :=
+    ∃ (h : Limits.IsInitial (ZeroParadox.fC_functor.obj 0)),
+      ¬ Limits.IsZero (ZeroParadox.fC_functor.obj 0)
+      ∧ h.to (ZeroParadox.fC_functor.obj 0)
+          = 𝟙 (ZeroParadox.fC_functor.obj 0) :=
   ZeroParadox.ZPH_MC1_TC20.collapse_fires_off_seam
 
 /-- **The honest fence (capstone, content IN the statement).** The root-level seam (canonical μ→ν
@@ -190,13 +190,13 @@ theorem root_node_seam_no_identity :
     Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj)
     ∧ -- node-seam: at the zero object the two universal arrows coincide ...
       (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isInitial.to
-          (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0)
+          (ZeroParadox.fD_functor.obj 0)
         = (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isTerminal.from
-          (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0)
+          (ZeroParadox.fD_functor.obj 0)
     ∧ -- ... but that coincidence is the generic identity collapse (TC20 deflation)
       (ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero).isInitial.to
-          (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0)
-        = 𝟙 (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0) :=
+          (ZeroParadox.fD_functor.obj 0)
+        = 𝟙 (ZeroParadox.fD_functor.obj 0) :=
   ⟨canonicalCmp_bijective,
    ZeroParadox.ZPH_MC1_TC20.seam_mu_eq_nu_arrow,
    ZeroParadox.ZPH_MC1_TC20.initial_endo_is_id
@@ -219,4 +219,4 @@ section PurityCheck
 #print axioms root_node_seam_no_identity
 end PurityCheck
 
-end ZeroParadox.ZPH.TC38
+end ZeroParadox.TC38

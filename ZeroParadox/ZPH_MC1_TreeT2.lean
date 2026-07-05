@@ -62,7 +62,7 @@ senses* — #2 a *dynamical* attractor, #3 a *categorical* limit — which would
 
 namespace ZeroParadox.ZPH_MC1_TreeT2
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open scoped Topology
 
 /-- **T2 partial obstruction (coarse).** No homeomorphism between the connected simplex

@@ -25,9 +25,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.PerronCapstone
+namespace ZeroParadox
 
-open ZeroParadox.FinStoch ZeroParadox.PerronFrobenius ZeroParadox.SpectralRadius
+open ZeroParadox ZeroParadox ZeroParadox
 
 /-- **Perron–Frobenius for a finite stochastic kernel.** (i) There is a probability vector `w`
     (`0 ≤ w i`, `∑ w i = 1`) whose free-module image is a unit eigenvector of the transfer operator
@@ -48,11 +48,11 @@ theorem perron_frobenius_finite {n : ℕ} [Nonempty (Fin n)] (f : Fin n → PMF 
     rwa [tsum_eq_sum (s := Finset.univ) (fun x hx => absurd (Finset.mem_univ x) hx)] at h
   rw [← ENNReal.toReal_sum (fun i _ => μ.apply_ne_top i), h1, ENNReal.toReal_one]
 
-end ZeroParadox.PerronCapstone
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.PerronCapstone
+open ZeroParadox
 #print axioms perron_frobenius_finite
 end PurityCheck

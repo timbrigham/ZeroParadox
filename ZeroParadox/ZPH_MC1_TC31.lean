@@ -73,7 +73,7 @@ interpretation only; no category, terminal object, or coalgebra is constructed i
 namespace ZeroParadox.ZPH_MC1_TC31
 
 open scoped BigOperators ENNReal
-open ZeroParadox.MeanErgodic
+open ZeroParadox
 open ZeroParadox.ZPH_MC1_TC23 (IsStationaryPMF)
 
 variable {n : ℕ}

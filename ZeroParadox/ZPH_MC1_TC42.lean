@@ -75,14 +75,14 @@ shared schema is real and both-instantiated, but it is loose enough to be vacuou
 and that looseness is itself proved.
 -/
 
-namespace ZeroParadox.ZPH.TC42
+namespace ZeroParadox.TC42
 
 open QPF
-open ZeroParadox.ZPH.TC26
-open ZeroParadox.ZPH.TC38
+open ZeroParadox.TC26
+open ZeroParadox.TC38
 open ZeroParadox.ZPH_MC1_TC15
 open ZeroParadox.ZPJ_SelfApp
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 
 set_option maxHeartbeats 400000
 
@@ -215,4 +215,4 @@ section PurityCheck
 #print axioms no_cross_setting_map
 end PurityCheck
 
-end ZeroParadox.ZPH.TC42
+end ZeroParadox.TC42

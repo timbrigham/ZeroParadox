@@ -62,7 +62,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.MC1.TC07
+namespace ZeroParadox
 
 open Ordinal
 
@@ -81,11 +81,11 @@ theorem goodstein_reaches_floor (n : ℕ) : ∃ k, ZeroParadox.Goodstein.gseq n 
 /-! ### Kirby–Paris floor -/
 
 /-- The Kirby–Paris minimal hydra is the leaf `node []`; its ordinal valuation is `⊥ : Ordinal`. -/
-theorem kp_leaf_val_eq_bot : (ZeroParadox.KirbyParis.Hydra.node []).val = (⊥ : Ordinal) := by
-  rw [ZeroParadox.KirbyParis.val_node, ZeroParadox.KirbyParis.S_nil, Ordinal.bot_eq_zero]
+theorem kp_leaf_val_eq_bot : (ZeroParadox.Hydra.node []).val = (⊥ : Ordinal) := by
+  rw [ZeroParadox.val_node, ZeroParadox.S_nil, Ordinal.bot_eq_zero]
 
 /-- Every hydra valuation is `≥ ⊥` — the Kirby–Paris descent cannot go below the floor `⊥`. -/
-theorem kp_val_bot_le (h : ZeroParadox.KirbyParis.Hydra) : (⊥ : Ordinal) ≤ h.val :=
+theorem kp_val_bot_le (h : ZeroParadox.Hydra) : (⊥ : Ordinal) ≤ h.val :=
   bot_le
 
 /-! ### The GO half: Goodstein and Kirby–Paris share one ordinal floor -/
@@ -99,9 +99,9 @@ theorem kp_val_bot_le (h : ZeroParadox.KirbyParis.Hydra) : (⊥ : Ordinal) ≤ h
     So the two genuine well-founded descents of the depth campaign share a single floor object. -/
 theorem gk_share_floor :
     ZeroParadox.Goodstein.heval 2 0 = (⊥ : Ordinal) ∧
-    (ZeroParadox.KirbyParis.Hydra.node []).val = (⊥ : Ordinal) ∧
+    (ZeroParadox.Hydra.node []).val = (⊥ : Ordinal) ∧
     ((0 : ℕ) : Ordinal) = (⊥ : Ordinal) ∧
-    ZeroParadox.Goodstein.heval 2 0 = (ZeroParadox.KirbyParis.Hydra.node []).val := by
+    ZeroParadox.Goodstein.heval 2 0 = (ZeroParadox.Hydra.node []).val := by
   refine ⟨heval_floor_eq_bot 2, kp_leaf_val_eq_bot, ?_, ?_⟩
   · rw [Nat.cast_zero, Ordinal.bot_eq_zero]
   · rw [heval_floor_eq_bot 2, kp_leaf_val_eq_bot]
@@ -117,14 +117,14 @@ theorem gk_share_floor :
 theorem kruskal_is_wqo_not_descent
     {α : Type*} (r : α → α → Prop) [IsPreorder α r]
     (hr : (Set.univ : Set α).PartiallyWellOrderedOn r) :
-    (Set.univ : Set (ZeroParadox.Kruskal.RoseTree α)).PartiallyWellOrderedOn
-      (ZeroParadox.Kruskal.TreeEmbeds r) :=
-  ZeroParadox.Kruskal.partiallyWellOrderedOn_treeEmbeds r hr
+    (Set.univ : Set (ZeroParadox.RoseTree α)).PartiallyWellOrderedOn
+      (ZeroParadox.TreeEmbeds r) :=
+  ZeroParadox.partiallyWellOrderedOn_treeEmbeds r hr
 
-end ZeroParadox.MC1.TC07
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.MC1.TC07
+open ZeroParadox
 #print axioms heval_floor_eq_bot
 #print axioms goodstein_reaches_floor
 #print axioms kp_leaf_val_eq_bot

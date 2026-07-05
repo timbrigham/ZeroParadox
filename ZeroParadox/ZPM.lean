@@ -43,10 +43,10 @@ import ZeroParadox.ZPL
 
 namespace ZeroParadox.ZPM
 
-open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.ZPC
+open ZeroParadox ZPSemilattice
+open ZeroParadox
 open ZeroParadox.ZPK
-open ZeroParadox.ZPE
+open ZeroParadox
 open ZeroParadox.ZPL
 open Nat.Partrec Nat.Partrec.Code
 open Ordinal

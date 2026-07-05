@@ -21,7 +21,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.P8
+namespace ZeroParadox
 
 open Filter Topology
 
@@ -38,11 +38,11 @@ theorem padicInt_univ_perfect : Perfect (Set.univ : Set ℤ_[2]) := by
   exact pow_ne_zero n (show (2 : ℤ_[2]) ≠ 0 by norm_num)
     (add_left_cancel (h.trans (add_zero x).symm))
 
-end ZeroParadox.P8
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.P8
+open ZeroParadox
 #print axioms padicInt_univ_perfect
 end PurityCheck

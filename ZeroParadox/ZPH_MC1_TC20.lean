@@ -65,7 +65,7 @@ level" is NOT supported — the arrow level adds nothing past TC13.
 namespace ZeroParadox.ZPH_MC1_TC20
 
 open CategoryTheory
-open ZeroParadox.ZPD ZeroParadox.ZPH_HilbFunctor
+open ZeroParadox ZeroParadox
 
 universe v u
 variable {C : Type u} [Category.{v} C]
@@ -128,14 +128,14 @@ theorem seam_arrow_equality_factors_through_identity {Z : C} (hZ : Limits.IsZero
     genuinely fires off the seam — it does not characterize the seam. This is the load-bearing content
     that makes `seam_arrow_equality_factors_through_identity` a deflation rather than a keystone. -/
 theorem collapse_fires_off_seam :
-    ∃ (h : Limits.IsInitial (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0)),
-      ¬ Limits.IsZero (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0)
-      ∧ h.to (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0)
-          = 𝟙 (ZeroParadox.ZPH_InfoFunctor.fC_functor.obj 0) := by
-  refine ⟨ZeroParadox.ZPH_InfoFunctor.fC_zero_isInitial, ?_, ?_⟩
+    ∃ (h : Limits.IsInitial (ZeroParadox.fC_functor.obj 0)),
+      ¬ Limits.IsZero (ZeroParadox.fC_functor.obj 0)
+      ∧ h.to (ZeroParadox.fC_functor.obj 0)
+          = 𝟙 (ZeroParadox.fC_functor.obj 0) := by
+  refine ⟨ZeroParadox.fC_zero_isInitial, ?_, ?_⟩
   · intro hZ
     exact (ZeroParadox.ZPH_MC1_TreeSeam.kleisli_bottom_not_terminal).false hZ.isTerminal
-  · exact initial_endo_is_id ZeroParadox.ZPH_InfoFunctor.fC_zero_isInitial
+  · exact initial_endo_is_id ZeroParadox.fC_zero_isInitial
 
 end ZeroParadox.ZPH_MC1_TC20
 

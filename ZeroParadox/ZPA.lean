@@ -28,7 +28,7 @@ from the axioms. CC-1 is stated as a conditional claim.
 Self-contained within semilattice theory; no topology or probability imported.
 -/
 
-namespace ZeroParadox.ZPA
+namespace ZeroParadox
 
 /-- The ZP-A algebraic structure: a join-semilattice with bottom.
     Corresponds to Axiom Block A (A1–A4) in ZP-A §1.1. -/
@@ -149,7 +149,7 @@ theorem cc1 (S : ℕ → L) (_ : IsStateSequence S) (_ : S 0 = ⊥ₗ) :
 
 end ZPSemilattice
 
-end ZeroParadox.ZPA
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -160,7 +160,7 @@ No Mathlib-specific axioms should appear.
 -/
 
 section PurityCheck
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 
 variable {L : Type*} [ZPSemilattice L]
 

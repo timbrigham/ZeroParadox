@@ -29,9 +29,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
-open CategoryTheory ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_InfoFunctor
+open CategoryTheory ZeroParadox ZeroParadox
 
 /-- Proves: there is a morphism `fD_functor.obj n ⟶ fD_functor.obj 0` — the zero morphism `⟨0⟩` (it exists
     because the target is a zero object). Contrast `fC_no_return`. (NB: this is the trivial zero morphism,
@@ -48,11 +48,11 @@ theorem irreversibility_not_uniform {n : ℕ} (hn : 0 < n) :
       IsEmpty (fC_functor.obj n ⟶ fC_functor.obj 0) :=
   ⟨⟨0⟩, fC_no_return hn⟩
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms irreversibility_not_uniform
 end PurityCheck

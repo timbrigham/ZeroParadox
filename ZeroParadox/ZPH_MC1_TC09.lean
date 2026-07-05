@@ -64,7 +64,7 @@ carrier); the result is that the phenomenon recurs across unrelated categories, 
 cardinalities occur.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC09
+namespace ZeroParadox
 
 open CategoryTheory
 
@@ -111,7 +111,7 @@ theorem split_type_vs_module :
     these same two endpoints, which is why the split is not special to Kleisli/Hilbert. -/
 theorem initial_carrier_empty_or_subsingleton :
     IsEmpty (PEmpty : Type 0) ∧ Subsingleton PUnit ∧
-    IsEmpty (Fin 0) ∧ Subsingleton (ZeroParadox.ZPD.StateSpace 0) := by
+    IsEmpty (Fin 0) ∧ Subsingleton (ZeroParadox.StateSpace 0) := by
   refine ⟨inferInstance, inferInstance, inferInstance, ?_⟩
   exact ⟨fun a b => by
     apply WithLp.ofLp_injective
@@ -125,13 +125,13 @@ theorem initial_carrier_empty_or_subsingleton :
     to be in bijection with each other's class. -/
 theorem two_independent_pairs :
     ¬ Nonempty ((PEmpty : Type 0) ≃ PUnit) ∧
-    ¬ Nonempty (Fin 0 ≃ ZeroParadox.ZPD.StateSpace 0) := by
+    ¬ Nonempty (Fin 0 ≃ ZeroParadox.StateSpace 0) := by
   refine ⟨?_, ?_⟩
   · rintro ⟨e⟩; exact (e.symm PUnit.unit).elim
   · rintro ⟨e⟩
     exact (e.symm 0).elim0
 
-end ZeroParadox.ZPH_MC1_TC09
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -139,7 +139,7 @@ end ZeroParadox.ZPH_MC1_TC09
 libraries — a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC09
+open ZeroParadox
 
 #print axioms type_initial_card0
 #print axioms module_initial_card1

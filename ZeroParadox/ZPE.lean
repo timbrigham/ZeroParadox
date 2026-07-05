@@ -37,10 +37,10 @@ AX-1 is retired. The cross-framework link is established by giving ZPC.MachinePh
 a ZPSemilattice instance, making T-SNAP a direct consequence of ZPA.bot_join.
 -/
 
-namespace ZeroParadox.ZPE
+namespace ZeroParadox
 
-open ZeroParadox.ZPA ZPSemilattice
-open ZeroParadox.ZPC
+open ZeroParadox ZPSemilattice
+open ZeroParadox
 
 /-! ## I. MachinePhase as a ZPSemilattice
 
@@ -253,12 +253,12 @@ theorem da1_minimal_path :
     after.state  = c₁ :=           -- after: execution occurred (the snap)
   ⟨rfl, by decide, rfl, rfl⟩
 
-end ZeroParadox.ZPE
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPE ZeroParadox.ZPA ZPSemilattice ZeroParadox.ZPC
+open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 
 #print axioms t_snap_join
 #print axioms t_snap_machine

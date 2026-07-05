@@ -20,7 +20,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.PerronFrobenius
+namespace ZeroParadox
 
 open scoped BigOperators
 open Filter Topology
@@ -175,11 +175,11 @@ theorem exists_stationary [Nonempty (Fin n)] (f : Fin n → PMF (Fin n)) :
         rw [← h]
         exact Finset.sum_congr rfl fun j _ => mul_comm _ _
 
-end ZeroParadox.PerronFrobenius
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.PerronFrobenius
+open ZeroParadox
 #print axioms exists_stationary
 end PurityCheck

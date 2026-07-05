@@ -23,7 +23,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPG
+namespace ZeroParadox
 
 open CategoryTheory
 
@@ -38,11 +38,11 @@ theorem ax_g2_from_strict_initial {C : Type*} [Category C] (zero : C)
   haveI := hstrict X f
   exact hne.false (asIso f)
 
-end ZeroParadox.ZPG
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPG
+open ZeroParadox
 #print axioms ax_g2_from_strict_initial
 end PurityCheck

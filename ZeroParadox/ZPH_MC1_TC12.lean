@@ -100,10 +100,10 @@ theorem isZero_iff_isInitial_and_isTerminal {X : C} :
     (it *is* a zero object, by `ZPH_MC1_TreeSeam.hilbert_bottom_isZero`). So the seam is literally the
     μ=ν coincidence point. -/
 theorem seam_is_mu_nu_coincidence :
-    (IsZero (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0)
-      ↔ Nonempty (IsInitial (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0))
-        ∧ Nonempty (IsTerminal (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0)))
-    ∧ IsZero (ZeroParadox.ZPH_HilbFunctor.fD_functor.obj 0) :=
+    (IsZero (ZeroParadox.fD_functor.obj 0)
+      ↔ Nonempty (IsInitial (ZeroParadox.fD_functor.obj 0))
+        ∧ Nonempty (IsTerminal (ZeroParadox.fD_functor.obj 0)))
+    ∧ IsZero (ZeroParadox.fD_functor.obj 0) :=
   ⟨isZero_iff_isInitial_and_isTerminal, ZeroParadox.ZPH_MC1_TreeSeam.hilbert_bottom_isZero⟩
 
 end ZeroParadox.ZPH_MC1_TC12

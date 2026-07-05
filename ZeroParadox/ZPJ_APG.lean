@@ -74,7 +74,7 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 
 namespace ZeroParadox.ZPJ_APG
 
-open ZeroParadox.ZPJ_Scale ZeroParadox.ZPJ_SelfApp ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox.ZPJ_Scale ZeroParadox.ZPJ_SelfApp ZeroParadox ZPSemilattice
 
 /-! ## § I. APG Definition -/
 

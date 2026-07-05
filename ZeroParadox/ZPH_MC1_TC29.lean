@@ -80,7 +80,7 @@ valuation asymmetry) is NOT in this file.
 
 namespace ZeroParadox.ZPH_MC1_TC29
 
-open ZeroParadox.ZPB ZeroParadox.ZPH_TopFunctor ZeroParadox.ZPD
+open ZeroParadox ZeroParadox.ZPH_TopFunctor ZeroParadox
 open scoped Topology
 
 /-- #3: the p-adic ν-bottom as a topological subspace, the floor `{0} ⊆ Q₂`

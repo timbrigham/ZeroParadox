@@ -23,7 +23,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.G1
+namespace ZeroParadox
 
 open Ordinal
 
@@ -37,12 +37,12 @@ theorem epsilon0_is_fixedpoint : ω ^ ε₀ = ε₀ :=
 theorem epsilon0_least_fixedpoint (o : Ordinal) (h : ω ^ o = o) : ε₀ ≤ o :=
   epsilon_zero_le_of_omega0_opow_le (le_of_eq h)
 
-end ZeroParadox.G1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.G1
+open ZeroParadox
 #print axioms epsilon0_is_fixedpoint
 #print axioms epsilon0_least_fixedpoint
 end PurityCheck

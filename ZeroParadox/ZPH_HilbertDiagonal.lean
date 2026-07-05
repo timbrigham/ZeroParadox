@@ -63,10 +63,10 @@ bottom.
 - § II  `seam_is_diagonal_fixpoint` — concrete witness at the Hilbert bottom.
 -/
 
-namespace ZeroParadox.HilbertDiagonal
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
-open ZeroParadox.ZPH_HilbFunctor ZeroParadox.ZPH_MC1_TreeSeam ZeroParadox.ZPH_MC1_TC37
+open ZeroParadox ZeroParadox.ZPH_MC1_TreeSeam ZeroParadox.ZPH_MC1_TC37
 
 /-! ### § I  The genuine uniqueness theorem -/
 
@@ -96,7 +96,7 @@ theorem biprod_diagonal_only_zero (X : ModuleCat ℂ) [Module.Finite ℂ X]
 /-- The Hilbert bottom `seam = fD_functor.obj 0` is finite-dimensional. Its carrier is
     `StateSpace 0 = EuclideanSpace ℂ (Fin 0)`, finite-dim over the finite index `Fin 0`. -/
 instance : Module.Finite ℂ (fD_functor.obj 0) := by
-  show Module.Finite ℂ (ZeroParadox.ZPD.StateSpace 0)
+  show Module.Finite ℂ (ZeroParadox.StateSpace 0)
   infer_instance
 
 /-- **Corollary.** The concrete Hilbert bottom `seam = fD_functor.obj 0` is a finite-dimensional
@@ -108,7 +108,7 @@ theorem seam_is_diagonal_fixpoint :
     ⟨isoBiprodZero (Y := seam) hilbert_bottom_isZero⟩
   exact ⟨hfix, biprod_diagonal_only_zero seam hfix⟩
 
-end ZeroParadox.HilbertDiagonal
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -118,7 +118,7 @@ library dependency already carried by the ZP-D / ZP-H Hilbert layer (`fD_functor
 `biprodIsoProd`), not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.HilbertDiagonal
+open ZeroParadox
 
 #print axioms biprod_diagonal_only_zero
 #print axioms seam_is_diagonal_fixpoint

@@ -94,7 +94,7 @@ well-foundedness obstruction in the proof term of the μ side.
 
 namespace ZeroParadox
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open Filter Topology
 
 /-! ## The obstruction-killer — no infinite descent on the well-founded μ floor -/

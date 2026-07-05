@@ -25,7 +25,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 namespace ZeroParadox.ZPJ
 
-open ZeroParadox.ZPA ZPSemilattice
+open ZeroParadox ZPSemilattice
 
 /-- A **bottom-valuation** on a ZPSemilattice: a valuation `v : L → Γ` into a type with `⊤` whose
     UNIQUE `⊤`-valued point is the bottom (`v_top_unique`), with `v ⊥ = ⊤` (`v_bot`). These two

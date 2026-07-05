@@ -48,7 +48,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH.TC26
+namespace ZeroParadox.TC26
 
 open QPF
 
@@ -193,4 +193,4 @@ section PurityCheck
 #print axioms root_cut_dichotomy
 end PurityCheck
 
-end ZeroParadox.ZPH.TC26
+end ZeroParadox.TC26

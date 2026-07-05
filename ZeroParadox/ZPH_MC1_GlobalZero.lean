@@ -32,9 +32,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.ZPH_MC1
+namespace ZeroParadox
 
-open CategoryTheory Limits ZeroParadox.ZPH_InfoFunctor ZeroParadox.ZPH_HilbFunctor
+open CategoryTheory Limits ZeroParadox ZeroParadox
 
 /-- A 3-field structure bundling one object from each domain category. Intent: a "section over the discrete
     domain index" / "the discrete-index Grothendieck object" — but NO Grothendieck construction or fibration
@@ -65,11 +65,11 @@ theorem globalZero_mixed_character :
       Nonempty (IsInitial globalZero.info) :=
   ⟨⟨TopCat.isTerminalPUnit⟩, ⟨fD_zero_isInitial⟩, ⟨fC_zero_isInitial⟩⟩
 
-end ZeroParadox.ZPH_MC1
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1
+open ZeroParadox
 #print axioms globalZero_mixed_character
 end PurityCheck

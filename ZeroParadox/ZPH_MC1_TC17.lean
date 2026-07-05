@@ -71,7 +71,7 @@ about the ambient carriers, not the bare bottom points.
 
 namespace ZeroParadox.ZPH_MC1_TC17
 
-open ZeroParadox.ZPB
+open ZeroParadox
 open scoped Topology
 
 /-- #3 carrier as a one-point space: the p-adic floor `{0} ⊆ Q₂` is `Unique`. -/

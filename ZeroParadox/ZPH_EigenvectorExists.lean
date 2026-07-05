@@ -21,9 +21,9 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.EigenvectorExists
+namespace ZeroParadox
 
-open ZeroParadox.FinStoch ZeroParadox.PerronFrobenius
+open ZeroParadox ZeroParadox
 
 /-- **Deep cross-domain existence.** For any finite stochastic kernel `f`, the linearized transfer operator
     `linMap f` has a nonzero fixed vector (eigenvalue `1`). Proved by transporting the stationary distribution
@@ -46,11 +46,11 @@ theorem transfer_operator_has_unit_eigenvector {n : ℕ} [Nonempty (Fin n)]
     simpa [Finsupp.coe_equivFunOnFinite_symm] using hh
   exact (ENNReal.toReal_ne_zero.mpr ⟨hi, μ.apply_ne_top i⟩) (by exact_mod_cast hcoord)
 
-end ZeroParadox.EigenvectorExists
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.EigenvectorExists
+open ZeroParadox
 #print axioms transfer_operator_has_unit_eigenvector
 end PurityCheck
