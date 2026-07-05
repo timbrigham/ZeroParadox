@@ -36,7 +36,7 @@ import ZeroParadox.ZPL
 import ZeroParadox.ZPP_InversionValuation
 import ZeroParadox.ZPH_PlaceMetric
 import ZeroParadox.ZPG
-import ZeroParadox.ZPB_FloorWitness
+import ZeroParadox.Valuation.FloorWitness
 import ZeroParadox.ZPH_MC1_TC07
 import ZeroParadox.ZPP_RiemannSphere
 import ZeroParadox.ZPH_HilbertDiagonal

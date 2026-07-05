@@ -1,12 +1,12 @@
 import ZeroParadox.AxiomProfile
 import ZeroParadox.Basic
+import ZeroParadox.Valuation.FloorWitness
+import ZeroParadox.Valuation.PadicPerfect
+import ZeroParadox.Valuation.PadicTree
 import ZeroParadox.Vendored.NaturalOps
 import ZeroParadox.Vendored.NaturalOpsPow
 import ZeroParadox.ZPA
 import ZeroParadox.ZPB
-import ZeroParadox.ZPB_FloorWitness
-import ZeroParadox.ZPB_PadicPerfect
-import ZeroParadox.ZPB_PadicTree
 import ZeroParadox.ZPC
 import ZeroParadox.ZPC_PadicSurprisal
 import ZeroParadox.ZPD
