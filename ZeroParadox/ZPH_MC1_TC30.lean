@@ -80,7 +80,7 @@ theorem norm_lt_one_iff_two_dvd (k : ℕ) : ‖((k : ℕ) : Q₂)‖ < 1 ↔ 2 �
 
 /-- Witness, ideal regime: `‖2‖ < 1`. The doubling multiplier of TC05 is one element of the
     ideal, not the source of the attractor property. -/
-theorem two_is_contraction : ‖(2 : Q₂)‖ < 1 := ZPH_MC1_TC05.doubling_norm_lt_one
+theorem two_is_contraction : ‖(2 : Q₂)‖ < 1 := doubling_norm_lt_one
 
 /-- Witness, unit regime: `‖3‖ = 1`. `3` is a 2-adic unit (coprime to `2`), so its orbit is
     norm-preserving, not contracting. -/

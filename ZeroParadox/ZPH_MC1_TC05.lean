@@ -101,8 +101,8 @@ theorem doubling_zero_isFixed : (2 : Q₂) * 0 = 0 := mul_zero 2
     dynamical content (it is just `fB_bottom_is_limit`). The dynamics/ν-limit *bridge* is the next
     theorem, `orbit_tendsto_into_topfloor`, where the orbit and the floor appear in one statement. -/
 theorem topfloor_singleton :
-    ⋂ n, ZPH_TopFunctor.q2Ball n = {(0 : Q₂)} :=
-  ZPH_TopFunctor.fB_bottom_is_limit
+    ⋂ n, q2Ball n = {(0 : Q₂)} :=
+  fB_bottom_is_limit
 
 /-- **The bridge — dynamics meet the ν-limit floor (witnessed in-statement).** For every starting
     point `x`, the doubling orbit `2ⁿ · x` converges to the *unique point* `p` of the
@@ -111,7 +111,7 @@ theorem topfloor_singleton :
     #3-as-ν-limit" is proved, not narrated: the dynamical limit of every orbit is exactly the point
     cut out by the shrinking-ball inverse system. -/
 theorem orbit_tendsto_into_topfloor
-    (x p : Q₂) (hp : ⋂ n, ZPH_TopFunctor.q2Ball n = {p}) :
+    (x p : Q₂) (hp : ⋂ n, q2Ball n = {p}) :
     Tendsto (fun n : ℕ => (2 : Q₂) ^ n * x) atTop (nhds p) := by
   -- the floor is a singleton, and topfloor_singleton pins its point to `0`
   have hp0 : p = 0 := by

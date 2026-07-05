@@ -218,7 +218,7 @@ theorem floor_reach_separates_mu_nu :
         ¬ ReachesFloorInFiniteTime (fun n => (2 : Q₂) ^ n * x)) :=
   fun x hx =>
     ⟨pred_orbit_reaches_floor,
-      ZPH_MC1_TC05.doubling_orbit_tendsto_zero x, padic_orbit_not_reaches_floor x hx⟩
+      doubling_orbit_tendsto_zero x, padic_orbit_not_reaches_floor x hx⟩
 
 end ZeroParadox
 

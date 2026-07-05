@@ -125,7 +125,7 @@ theorem cone_val_eq_zero (S : Cone fB_functor) (x : S.pt) (n : ℕ) :
       have hmemk := legVal_mem S x k
       rwa [hk] at hmemk
     · -- k ≤ n : value at leg n lands in q2Ball k via antitonicity
-      exact q2Ball_antitone hkn (legVal_mem S x n)
+      exact q2Ball_antitone_nat hkn (legVal_mem S x n)
   rw [fB_bottom_is_limit, Set.mem_singleton_iff] at hmem
   exact hmem
 
