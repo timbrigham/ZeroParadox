@@ -2,7 +2,7 @@
 """The CLAIM GRAPH — ⊥-face domain nodes and the adjudicated transforms between them.
 
 REGISTRY-DRIVEN, gate-honest. Reads the curated `claims` collection from the SSOT
-envelope export (tools/registry/registry_export.json) via web_data.load_claims().
+envelope export (ssot.json at the repo root) via web_data.load_claims().
 Every node and edge is a claim in the store; every `proved`/`deep` claim is drawn
 ONLY because a sorry-free declaration witnesses it (the store's cross-collection
 invariant refuses to record a witnessless proved/deep claim). So the map's status

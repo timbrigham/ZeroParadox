@@ -30,7 +30,7 @@ if hasattr(sys.stdout, "reconfigure"):
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 RAW = os.path.join(REPO, ".claude-local", "translation_matrix", "deps_raw.json")
-EXPORT = os.path.join(HERE, "registry_export.json")
+EXPORT = os.path.join(REPO, "ssot.json")  # canonical SSOT: SJV export_full at repo root
 OUT = os.path.join(REPO, ".claude-local", "translation_matrix", "deps.json")
 
 

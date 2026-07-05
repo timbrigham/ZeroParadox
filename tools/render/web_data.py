@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Shared registry->web-graph extractor for make_web_diagram.py / make_web_tree.py.
 
-Reads the SSOT export (tools/registry/registry_export.json) and returns the nodes
+Reads the SSOT export (ssot.json at the repo root) and returns the nodes
 (domain faces of bottom) and edges (cross-domain transforms) that the registry
 SANCTIONS — nothing hand-drawn. An edge exists in the diagram iff >=1 tagged decl
 in the registry backs it. This is the anti-inflation property: the generated SVG
@@ -18,7 +18,8 @@ from itertools import combinations
 from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_EXPORT = os.path.join(HERE, "..", "registry", "registry_export.json")
+# Canonical SSOT: the SJV `export_full` output, always at the repo root as ssot.json.
+DEFAULT_EXPORT = os.path.join(HERE, "..", "..", "ssot.json")
 
 # Presentation-only gloss: HOW a domain's bottom reads. The STRUCTURE (which
 # domains/edges appear) is registry-derived; this dict only prettifies labels.

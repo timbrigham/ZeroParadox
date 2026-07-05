@@ -56,9 +56,14 @@ every run:
 
 Both policies must be applied consistently by every scan for the conservation guarantee to hold.
 
-## The published registry (`registry_export.json`) and its vocabulary (`tag_vocab.json`)
+## The published SSOT (`ssot.json`) and its vocabulary (`tag_vocab.json`)
 
-`registry_export.json` is the validated, byte-stable `export_full` output of the SSOT registry. As of
+**The canonical SSOT is `ssot.json` at the repo root** — the single, authoritative export every consumer
+reads. It is the validated, byte-stable `export_full` output of the SSOT registry (SJV), and it is
+produced **only** by `mcp__sjv__export_full` written to the **absolute** repo-root path
+(`.../ZeroParadox/ssot.json`) — never hand-edited, never copied, and never read from a second location.
+(SJV resolves a *relative* `dest` against its own working directory, so the absolute path is required to
+land the file at the repo root; passing a bare `ssot.json` writes it beside the MCP instead.) As of
 the claims-layer work it is a **multi-collection envelope**, not a bare declaration list:
 
 ```

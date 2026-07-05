@@ -2,7 +2,7 @@
 """Honest status-coded map of "the web": faces of ⊥ and the transforms between them.
 
 REGISTRY-DRIVEN. Nodes and edges are extracted from the SSOT export
-(tools/registry/registry_export.json) via web_data.py — nothing is hand-drawn.
+(ssot.json at the repo root) via web_data.py — nothing is hand-drawn.
 Every edge on the canvas is backed by >=1 tagged decl; the diagram cannot draw a
 relation the register does not carry. Pure stdlib -> SVG.
 

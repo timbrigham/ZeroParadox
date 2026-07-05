@@ -7,7 +7,7 @@ is built and re-run it to check that every line on the canvas is backed by a tag
 
 ## The honest-by-construction property
 
-These renderers read the registry export (`tools/registry/registry_export.json`) and draw **only what
+These renderers read the SSOT export (`ssot.json` at the repo root) and draw **only what
 the register sanctions**. A domain node appears iff some declaration realizes ⊥ (or an edge references
 it); an edge appears iff ≥1 declaration tagged `bridge` / `core` / `no-go` spans those two domains. The
 diagram *cannot* draw a relation the register does not carry — so it cannot overstate the framework.
@@ -49,6 +49,6 @@ python tools/render/make_web_tree.py             # -> tools/render/the_web_tree.
 python tools/render/make_claim_graph.py          # -> tools/render/the_claim_graph.svg
 ```
 
-Both accept an optional export path argument (defaults to `../registry/registry_export.json`) and are
+Both accept an optional export path argument (defaults to `../../ssot.json`) and are
 deterministic — the same export produces byte-identical SVGs. The generated `.svg` files are artifacts
 (gitignored); re-run to regenerate against the current register. Pure standard-library Python, no deps.
