@@ -1,4 +1,4 @@
--- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/ZPH_BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import Mathlib.Data.PFunctor.Univariate.Basic
 import Mathlib.Data.PFunctor.Univariate.M
 import Mathlib.Data.W.Basic
