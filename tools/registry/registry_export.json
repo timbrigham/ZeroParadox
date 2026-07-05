@@ -746,7 +746,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "category"
             ],
             "object": [],
             "role": [
@@ -820,7 +821,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -1036,7 +1037,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -1445,7 +1446,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "algebra"
             ],
             "object": [],
             "role": [
@@ -1481,7 +1482,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -1665,7 +1666,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -1737,7 +1738,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -1809,7 +1810,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -1917,7 +1918,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -1953,7 +1954,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -1989,11 +1990,14 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -2061,11 +2065,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "reals"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -2133,7 +2138,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -2279,7 +2284,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability",
+              "set-theory"
             ],
             "object": [],
             "role": [
@@ -2569,11 +2575,11 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "reals"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -2605,7 +2611,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -2749,7 +2755,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -2894,7 +2900,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -3074,7 +3080,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -3220,7 +3226,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "state"
             ],
             "object": [],
             "role": [
@@ -3369,7 +3376,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -3443,7 +3450,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -3554,7 +3561,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -3772,7 +3779,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -4026,11 +4033,14 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -4098,7 +4108,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "ordinal"
             ],
             "object": [],
             "role": [
@@ -4242,7 +4253,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state",
+              "category"
             ],
             "object": [],
             "role": [
@@ -4649,7 +4661,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -4903,7 +4915,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -5157,7 +5169,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -5229,7 +5241,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -5340,7 +5352,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -5376,7 +5388,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -5487,11 +5499,14 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category",
+              "valuation"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -6190,7 +6205,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -6334,7 +6349,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -6406,7 +6421,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -6555,7 +6570,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -6810,11 +6825,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "order"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -7135,11 +7151,14 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state",
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -7171,11 +7190,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -7315,7 +7336,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -7495,7 +7516,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -7607,7 +7628,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal"
             ],
             "object": [],
             "role": [
@@ -7823,7 +7844,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "reals"
             ],
             "object": [],
             "role": [
@@ -8257,7 +8278,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -8548,7 +8569,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -8584,7 +8605,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -8693,7 +8714,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -8801,7 +8822,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -8837,11 +8858,11 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -8873,7 +8894,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -9021,7 +9042,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -9093,7 +9114,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -9129,11 +9150,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -9382,7 +9405,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -9418,7 +9441,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -9634,7 +9657,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal"
             ],
             "object": [],
             "role": [
@@ -9850,7 +9873,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "algebra"
             ],
             "object": [],
             "role": [
@@ -9958,7 +9981,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -10033,7 +10057,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -10326,7 +10350,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -10542,11 +10566,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "information"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -10651,11 +10677,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "information",
+              "state"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "bridge"
             ]
           },
           "reason": null,
@@ -10726,7 +10753,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -10799,7 +10826,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -10907,7 +10934,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -11125,7 +11152,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -11235,7 +11262,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -11308,7 +11335,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "reals"
             ],
             "object": [],
             "role": [
@@ -11744,7 +11772,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -11816,7 +11844,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -11924,7 +11952,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "set-theory",
+              "category"
             ],
             "object": [],
             "role": [
@@ -11960,7 +11989,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -12070,11 +12099,14 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "bridge"
             ]
           },
           "reason": null,
@@ -12106,11 +12138,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "core"
             ]
           },
           "reason": null,
@@ -12145,9 +12179,7 @@
               "computability",
               "valuation"
             ],
-            "object": [
-              "bottom"
-            ],
+            "object": [],
             "role": [
               "go"
             ]
@@ -12253,11 +12285,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -12325,7 +12359,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -12469,7 +12503,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "ordinal"
             ],
             "object": [],
             "role": [
@@ -12505,7 +12540,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -12578,7 +12613,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -12833,11 +12868,14 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability",
+              "set-theory"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "core"
             ]
           },
           "reason": null,
@@ -13121,7 +13159,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -13229,11 +13267,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -13265,7 +13305,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -13410,7 +13450,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -13518,11 +13558,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category",
+              "set-theory"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "schema"
             ]
           },
           "reason": null,
@@ -13855,7 +13896,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -13928,7 +13969,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -13964,7 +14005,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -14036,7 +14077,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -14072,7 +14113,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -14108,7 +14149,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -14766,7 +14807,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -14910,7 +14951,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -15090,7 +15131,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -15200,7 +15241,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -15236,7 +15277,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -15344,7 +15386,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -15416,7 +15458,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -15600,7 +15642,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -15636,7 +15678,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -15747,7 +15789,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "algebra"
             ],
             "object": [],
             "role": [
@@ -15930,7 +15972,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -16041,7 +16083,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -16483,7 +16525,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -16669,7 +16711,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -16741,11 +16783,11 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -16777,7 +16819,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "state"
             ],
             "object": [],
             "role": [
@@ -16813,7 +16856,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -16849,7 +16892,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -16957,7 +17000,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -17434,7 +17477,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -17507,7 +17550,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal"
             ],
             "object": [],
             "role": [
@@ -17797,7 +17840,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -18014,7 +18057,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -18090,7 +18133,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -18126,7 +18169,10 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "category",
+              "information",
+              "state"
             ],
             "object": [],
             "role": [
@@ -18162,11 +18208,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -18344,7 +18392,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -18380,7 +18428,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "set-theory"
             ],
             "object": [],
             "role": [
@@ -18416,11 +18465,11 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -18636,7 +18685,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -18926,7 +18975,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -18998,7 +19047,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -19034,7 +19083,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -19106,7 +19155,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -19142,7 +19191,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -19215,7 +19264,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -19440,7 +19489,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "reals"
             ],
             "object": [],
             "role": [
@@ -19837,7 +19886,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability",
+              "order"
             ],
             "object": [],
             "role": [
@@ -20203,7 +20253,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -20383,11 +20434,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -20563,11 +20616,14 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state",
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -20925,11 +20981,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal",
+              "reals"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -21072,7 +21129,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -21327,7 +21384,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -21656,11 +21713,11 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "set-theory"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -21802,7 +21859,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -22092,7 +22149,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -22605,7 +22662,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -23004,7 +23061,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "set-theory",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -23040,7 +23098,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -23185,7 +23243,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -23257,7 +23315,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -23586,7 +23644,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -23696,7 +23754,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -23768,7 +23826,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -23877,11 +23935,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -23913,7 +23973,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -23985,7 +24045,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -24057,7 +24117,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -24165,7 +24225,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -24316,7 +24376,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -24906,7 +24966,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -25122,7 +25182,11 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "category",
+              "valuation",
+              "state",
+              "information"
             ],
             "object": [],
             "role": [
@@ -25230,7 +25294,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -25341,7 +25405,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -25599,7 +25663,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -25707,7 +25771,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -25851,11 +25915,11 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -25959,7 +26023,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -26031,11 +26095,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal",
+              "valuation",
+              "reals"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -26140,7 +26206,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -26212,7 +26278,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -26248,7 +26314,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "reals"
             ],
             "object": [],
             "role": [
@@ -26466,7 +26532,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -26502,7 +26568,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "set-theory",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -26718,7 +26785,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -26790,7 +26857,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -26899,7 +26966,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -26935,7 +27002,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "order"
             ],
             "object": [],
             "role": [
@@ -27043,7 +27111,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -27117,7 +27185,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -27153,7 +27221,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "information"
             ],
             "object": [],
             "role": [
@@ -27299,7 +27367,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -27371,7 +27439,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -27517,7 +27585,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "set-theory",
+              "state"
             ],
             "object": [],
             "role": [
@@ -27661,7 +27730,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "set-theory"
             ],
             "object": [],
             "role": [
@@ -27988,7 +28058,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -28352,7 +28422,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -28756,7 +28826,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -28792,7 +28862,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "state"
             ],
             "object": [],
             "role": [
@@ -29011,7 +29082,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -29047,7 +29118,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -29119,7 +29190,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -29192,7 +29263,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "reals"
             ],
             "object": [],
             "role": [
@@ -29228,7 +29299,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -29264,7 +29335,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -29300,7 +29371,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -29372,11 +29444,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category",
+              "set-theory"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "schema"
             ]
           },
           "reason": null,
@@ -29408,7 +29481,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "reals"
             ],
             "object": [],
             "role": [
@@ -29804,11 +29877,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "face"
             ]
           },
           "reason": null,
@@ -29986,7 +30061,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -30058,11 +30133,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "reals",
+              "ordinal"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -30094,7 +30170,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal"
             ],
             "object": [],
             "role": [
@@ -30385,7 +30461,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -30604,11 +30680,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category",
+              "set-theory"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -30712,7 +30789,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -31330,7 +31407,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -31441,7 +31518,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -31477,7 +31555,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -31513,7 +31591,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -31549,11 +31627,12 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "information",
+              "state"
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "bridge"
             ]
           },
           "reason": null,
@@ -31697,7 +31776,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -31733,7 +31812,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -31987,11 +32066,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -32278,7 +32359,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category",
+              "reals"
             ],
             "object": [],
             "role": [
@@ -32496,7 +32578,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -32604,7 +32686,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -32823,7 +32905,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -33039,7 +33121,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -33151,7 +33233,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -33439,11 +33521,13 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
-            "object": [],
+            "object": [
+              "bottom"
+            ],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": null,
@@ -33549,7 +33633,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -33585,7 +33669,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -33765,7 +33849,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -34575,7 +34659,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -34686,7 +34770,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -35344,7 +35428,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "computability"
             ],
             "object": [],
             "role": [
@@ -35524,7 +35608,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -35632,7 +35716,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -35704,7 +35788,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -35812,7 +35896,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -35848,7 +35932,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -35957,7 +36041,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation",
+              "category"
             ],
             "object": [],
             "role": [
@@ -36176,7 +36261,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category"
             ],
             "object": [],
             "role": [
@@ -36286,7 +36371,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -36610,7 +36695,8 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "ordinal",
+              "valuation"
             ],
             "object": [],
             "role": [
@@ -36979,7 +37065,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "order"
             ],
             "object": [],
             "role": [
@@ -37198,7 +37284,7 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "state"
             ],
             "object": [],
             "role": [
@@ -37342,7 +37428,9 @@
           },
           "ontology": {
             "domain": [
-              "unscoped"
+              "category",
+              "order",
+              "set-theory"
             ],
             "object": [],
             "role": [
