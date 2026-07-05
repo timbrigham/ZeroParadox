@@ -37,7 +37,7 @@ theorem transfer_operator_has_unit_eigenvector {n : ℕ} [Nonempty (Fin n)]
   intro hzero
   obtain ⟨i, hi⟩ : ∃ i, μ i ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     have hz : ∑' i, μ i = 0 := by simp only [h, tsum_zero]
     rw [μ.tsum_coe] at hz
     exact one_ne_zero hz

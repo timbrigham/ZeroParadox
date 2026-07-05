@@ -23,3 +23,8 @@ rev = "v4.30.0-rc2"
 
 [[lean_lib]]
 name = "ZeroParadox"
+# Build every module under ZeroParadox/, not just the root umbrella's import
+# closure. Without this, `lake build` compiles only ZeroParadox.lean and what
+# it transitively imports, silently skipping any file no umbrella pulls in.
+# `.+` = the root module and all submodules.
+globs = ["ZeroParadox.+"]

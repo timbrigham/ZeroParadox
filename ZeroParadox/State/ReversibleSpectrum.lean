@@ -83,7 +83,7 @@ lemma Wform_selfadjoint (f : Fin n → PMF (Fin n)) (μ : Fin n → ℝ) (hμ : 
 lemma Wform_self_ne_zero (μ : Fin n → ℝ) (hμ : ∀ i, 0 < μ i) {v : Fin n → ℂ} (hv : v ≠ 0) :
     Wform μ v v ≠ 0 := by
   obtain ⟨i₀, hi₀⟩ : ∃ i, v i ≠ 0 := by
-    by_contra h; push_neg at h; exact hv (funext h)
+    by_contra h; push Not at h; exact hv (funext h)
   have hreal : Wform μ v v = ((∑ i, (μ i)⁻¹ * Complex.normSq (v i) : ℝ) : ℂ) := by
     rw [Wform, Complex.ofReal_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

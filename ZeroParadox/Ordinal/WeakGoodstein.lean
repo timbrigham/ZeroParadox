@@ -64,10 +64,10 @@ lemma ωeval_eq_zero_iff (L : List ℕ) : ωeval L = 0 ↔ ∀ d ∈ L, d = 0 :=
     tauto
 
 /-- The measure is positive for nonzero `n`. -/
-lemma gmeasure_pos {b : ℕ} (hb : 2 ≤ b) {n : ℕ} (hn : n ≠ 0) : 0 < gmeasure b n := by
+lemma gmeasure_pos {b : ℕ} (_hb : 2 ≤ b) {n : ℕ} (hn : n ≠ 0) : 0 < gmeasure b n := by
   have hne : gmeasure b n ≠ 0 := by
     rw [gmeasure, Ne, ωeval_eq_zero_iff]
-    push_neg
+    push Not
     exact ⟨(Nat.digits b n).getLast (Nat.digits_ne_nil_iff_ne_zero.mpr hn),
       List.getLast_mem _, Nat.getLast_digit_ne_zero b hn⟩
   exact pos_iff_ne_zero.mpr hne
@@ -98,7 +98,7 @@ lemma ωeval_strictMono {b : ℕ} (hb : 2 ≤ b) {m n : ℕ} (h : m < n) :
         rw [gmeasure, gmeasure] at hA
         calc Ordinal.omega0 * ωeval (Nat.digits b (m / b)) + ((m % b : ℕ) : Ordinal)
             < Ordinal.omega0 * ωeval (Nat.digits b (m / b)) + Ordinal.omega0 :=
-              (add_lt_add_iff_left _).mpr (Ordinal.nat_lt_omega0 _)
+              (add_lt_add_iff_left _).mpr (Ordinal.natCast_lt_omega0 _)
           _ = Ordinal.omega0 * (ωeval (Nat.digits b (m / b)) + 1) := (mul_add_one _ _).symm
           _ ≤ Ordinal.omega0 * ωeval (Nat.digits b (n / b)) := by
               gcongr
@@ -132,7 +132,7 @@ lemma weak_gseq_measure_lt (n : ℕ) (k : ℕ) (hk : weak_gseq n k ≠ 0) :
 /-- **Target.** The weak-Goodstein sequence always reaches 0. -/
 theorem weak_goodstein_terminates (n : ℕ) : ∃ k, weak_gseq n k = 0 := by
   by_contra h
-  push_neg at h
+  push Not at h
   set m : ℕ → Ordinal := fun k => gmeasure (k + 2) (weak_gseq n k) with hmdef
   have hm : ∀ k, m (k + 1) < m k := fun k => by
     have := weak_gseq_measure_lt n k (h k); simpa [hmdef] using this
