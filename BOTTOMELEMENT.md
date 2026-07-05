@@ -72,17 +72,17 @@ comparison):
 | A1 | a Lean term or otherwise finitely written down (⊥ is descriptionless, so any written form is already a description of it) | *meta (no Lean witness)* |
 | A2 | anything that keeps time, space, description, measure or structure (that would be an *interpretation* of ⊥, not ⊥) | *meta (no Lean witness)* |
 | A3 | finite: ⊥ is by definition the point where every finite measure diverges to infinity | *meta (no Lean witness)* |
-| B1 | the same object as both the proof-theory floor and the attractor floor (one is well-founded, the other is not) | [`no_strictMono_real_to_ordinal`](ZeroParadox/ZPH_MC1_TreeObstructions.lean), [`simplex_antichain`](ZeroParadox/ZPH_MC1_TreeObstructions.lean) |
-| B2 | the same object as a categorical initial bottom, if it is a topological limit bottom (their universal properties point opposite ways) | [`padic_bottom_not_initial`](ZeroParadox/ZPH_MC1_TreeObstructions.lean), [`split_kleisli_vs_hilbert`](ZeroParadox/ZPH_MC1_TreeObstructions.lean) |
-| B4 | reached by a comparison that preserves the 'closed-down' (ν) structure - you can only get to ⊥ by forgetting that structure | [`faithful_iff_descending`](ZeroParadox/ZPH_MC1_TC22.lean) |
-| B5 | unified with its self-referential face in a structure-preserving way - the two coincide only as a bare point | [`faces_iso_unique`](ZeroParadox/ZPH_TwoFacesBot.lean) |
-| C1 | forced to a single point as a Markov bottom (#2): a reducible chain settles into a whole family of distributions, not one | [`markov_node_no_universal_property`](ZeroParadox/ZPH_MC1_TC23.lean) |
-| C3 | an *initial* object of the category of spaces (the p-adic floor behaves like a limit / terminal object, the opposite) | [`padic_bottom_not_initial`](ZeroParadox/ZPH_MC1_TreeObstructions.lean) |
-| D1 | a *zero object* (both initial and terminal) of the Kleisli or p-adic categories | [`kleisli_bottom_not_zero`](ZeroParadox/ZPH_MC1_TC08.lean), [`padic_bottom_not_zero`](ZeroParadox/ZPH_MC1_TC08.lean) |
-| D2 | a *greatest* element (it is the floor, not the top) | [`zpa_bot_not_greatest`](ZeroParadox/ZPH_MC1_TC08.lean) |
-| D4 | an inhabited least-fixed-point for the identity functor: that least fixed point is provably empty | [`strict_fix_isEmpty`](ZeroParadox/ZPH_MC1_TC47.lean), [`fix_isEmpty_constructive`](ZeroParadox/ZPH_MC1_TC48.lean) |
-| D5 | recovered by mapping the least fixed point onto the greatest: the comparison map is not onto | [`fixToCofix_not_surjective`](ZeroParadox/ZPH_MC1_TC49.lean) |
-| D6 | reached by a non-contracting orbit: unit-norm and swap orbits provably do not converge to ⊥ | [`unit_orbit_not_tendsto_zero`](ZeroParadox/ZPH_MC1_TC30.lean), [`swap_orbit_not_convergent`](ZeroParadox/ZPH_MC1_TC39.lean) |
+| B1 | the same object as both the proof-theory floor and the attractor floor (one is well-founded, the other is not) | [`no_strictMono_real_to_ordinal`](ZeroParadox/Multihomed/TreeObstructions.lean), [`simplex_antichain`](ZeroParadox/Multihomed/TreeObstructions.lean) |
+| B2 | the same object as a categorical initial bottom, if it is a topological limit bottom (their universal properties point opposite ways) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean), [`split_kleisli_vs_hilbert`](ZeroParadox/Multihomed/TreeObstructions.lean) |
+| B4 | reached by a comparison that preserves the 'closed-down' (ν) structure - you can only get to ⊥ by forgetting that structure | [`faithful_iff_descending`](ZeroParadox/Multihomed/WallSpanRobust.lean) |
+| B5 | unified with its self-referential face in a structure-preserving way - the two coincide only as a bare point | [`faces_iso_unique`](ZeroParadox/Multihomed/TwoFacesBot.lean) |
+| C1 | forced to a single point as a Markov bottom (#2): a reducible chain settles into a whole family of distributions, not one | [`markov_node_no_universal_property`](ZeroParadox/Computability/MarkovNuUniversal.lean) |
+| C3 | an *initial* object of the category of spaces (the p-adic floor behaves like a limit / terminal object, the opposite) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean) |
+| D1 | a *zero object* (both initial and terminal) of the Kleisli or p-adic categories | [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean), [`padic_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean) |
+| D2 | a *greatest* element (it is the floor, not the top) | [`zpa_bot_not_greatest`](ZeroParadox/Category/SeamUniqueness.lean) |
+| D4 | an inhabited least-fixed-point for the identity functor: that least fixed point is provably empty | [`strict_fix_isEmpty`](ZeroParadox/Computability/RootCutTrichotomy.lean), [`fix_isEmpty_constructive`](ZeroParadox/Computability/ChoicePurityInvariant.lean) |
+| D5 | recovered by mapping the least fixed point onto the greatest: the comparison map is not onto | [`fixToCofix_not_surjective`](ZeroParadox/Computability/NatListRegime.lean) |
+| D6 | reached by a non-contracting orbit: unit-norm and swap orbits provably do not converge to ⊥ | [`unit_orbit_not_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`swap_orbit_not_convergent`](ZeroParadox/Order/MarkovContractionDual.lean) |
 
 ### ⊥ is (positive handles - the slots)
 
@@ -94,14 +94,14 @@ not.*
 
 | slot | aspect | characterization of ⊥ | witness (links to Lean source) |
 |---|---|---|---|
-| narrow | noun | the single, unique pinned point | [`q2_unique_fp`](ZeroParadox/ZPJ_SelfApp.lean), [`fB_bottom_is_limit`](ZeroParadox/ZPH_TopFunctor.lean) |
-| measure | noun | a quantity that becomes infinite exactly at ⊥ | [`t2_diverges`](ZeroParadox/ZPC.lean), [`addVal_bot`](ZeroParadox/ZPB_FloorWitness.lean) |
-| reach | verb | an attractor: *contracting* orbits converge to ⊥ (not all orbits - see D6) | [`contraction_orbit_tendsto_zero`](ZeroParadox/ZPH_MC1_TC30.lean) |
-| inversion | verb | the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity | [`rInv_swaps`](ZeroParadox/ZPP_RiemannSphere.lean), [`inversion_reverses_filtration`](ZeroParadox/ZPP_InversionValuation.lean) |
-| concurrency | hinge | the fixed point where least and greatest coincide (operation = result) | [`unique_fp`](ZeroParadox/ZPJ_SelfApp.lean), [`selfApp_bot_is_both_extremal`](ZeroParadox/ZPH_MC1_TC15.lean) |
-| self-reference | hinge | the self-reproducing / self-containing fixed point (Quine / Kleene) | [`kleene_quine_is_bot`](ZeroParadox/ZPK.lean), [`quine_period_is_goedel`](ZeroParadox/ZPK.lean) |
-| generation | verb | the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power) | [`epsilonZero_eq_nfp`](ZeroParadox/ZPL.lean) |
-| dynamics | verb | approached as orbits reach it, and departed irreversibly (the snap) | [`t_snap_derived`](ZeroParadox/ZPE.lean), [`fC_no_return`](ZeroParadox/ZPH_InfoFunctor.lean), [`fullMix_not_injective`](ZeroParadox/ZPH_MarkovSpectralGap.lean) |
+| narrow | noun | the single, unique pinned point | [`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean) |
+| measure | noun | a quantity that becomes infinite exactly at ⊥ | [`t2_diverges`](ZeroParadox/Information/Surprisal.lean), [`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean) |
+| reach | verb | an attractor: *contracting* orbits converge to ⊥ (not all orbits - see D6) | [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean) |
+| inversion | verb | the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity | [`rInv_swaps`](ZeroParadox/Valuation/RiemannSphere.lean), [`inversion_reverses_filtration`](ZeroParadox/Valuation/InversionValuation.lean) |
+| concurrency | hinge | the fixed point where least and greatest coincide (operation = result) | [`unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`selfApp_bot_is_both_extremal`](ZeroParadox/Multihomed/SelfAppSeam.lean) |
+| self-reference | hinge | the self-reproducing / self-containing fixed point (Quine / Kleene) | [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean), [`quine_period_is_goedel`](ZeroParadox/Computability/Kleene.lean) |
+| generation | verb | the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power) | [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) |
+| dynamics | verb | approached as orbits reach it, and departed irreversibly (the snap) | [`t_snap_derived`](ZeroParadox/Order/Snap.lean), [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean), [`fullMix_not_injective`](ZeroParadox/Reals/MarkovSpectralGap.lean) |
 
 ---
 

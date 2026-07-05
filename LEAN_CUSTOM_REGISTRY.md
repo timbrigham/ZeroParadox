@@ -12,7 +12,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ## Custom Typeclasses
 
-### `ZPSemilattice` — `ZeroParadox/ZPA.lean:36`
+### `ZPSemilattice` — `ZeroParadox/Order/Lattice.lean:36`
 
 **Relationship to Mathlib:** Replaces `SemilatticeSup` + `OrderBot`
 
@@ -20,7 +20,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `AFAStructure` — `ZeroParadox/ZPJ.lean:78`
+### `AFAStructure` — `ZeroParadox/Settheory/SetTheoryAFA.lean:78`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -28,7 +28,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `AbstractSelfApp` — `ZeroParadox/ZPJ_SelfApp.lean:63`
+### `AbstractSelfApp` — `ZeroParadox/Computability/SelfApp.lean:63`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -36,7 +36,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ValuationStructure` — `ZeroParadox/ZPJ_Scale.lean:62`
+### `ValuationStructure` — `ZeroParadox/Valuation/Scale.lean:62`
 
 **Relationship to Mathlib:** Replaces `Mathlib.RingTheory.Valuation.Valued`
 
@@ -44,7 +44,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ValBridge` — `ZeroParadox/ZPJ_ScaleBridge.lean:47`
+### `ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean:47`
 
 **Relationship to Mathlib:** Replaces `ValuationStructure` (this project)
 
@@ -52,7 +52,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `KleeneStructure` — `ZeroParadox/ZPK.lean:168`
+### `KleeneStructure` — `ZeroParadox/Computability/Kleene.lean:168`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -60,7 +60,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ZPCategory` — `ZeroParadox/ZPG.lean:42`
+### `ZPCategory` — `ZeroParadox/Category/Category.lean:42`
 
 **Relationship to Mathlib:** Extends `Mathlib.CategoryTheory.Limits.IsInitial`
 
@@ -68,7 +68,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ZPSurprisal` — `ZeroParadox/ZPG.lean:54`
+### `ZPSurprisal` — `ZeroParadox/Category/Category.lean:54`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -76,7 +76,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `DecorationUniverse` — `ZeroParadox/ZPJ_APG.lean:138`
+### `DecorationUniverse` — `ZeroParadox/Settheory/APG.lean:138`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -84,7 +84,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `Wheel` — `ZeroParadox/ZPJ_Wheel.lean:106`
+### `Wheel` — `ZeroParadox/Algebra/Wheel.lean:106`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -92,7 +92,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `WheelValuationStructure` — `ZeroParadox/ZPJ_Wheel.lean:413`
+### `WheelValuationStructure` — `ZeroParadox/Algebra/Wheel.lean:413`
 
 **Relationship to Mathlib:** Extends `CommRing` (no Mathlib analog for the bridge)
 
@@ -102,7 +102,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ## Custom Types and Definitions
 
-### `OntologicalStates` — `ZeroParadox/ZPB.lean:51`
+### `OntologicalStates` — `ZeroParadox/Valuation/Padic.lean:51`
 
 **Relationship to Mathlib:** Replaces `Fin 2`
 
@@ -110,7 +110,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `BinaryState` — `ZeroParadox/ZPC.lean:48`
+### `BinaryState` — `ZeroParadox/Information/Surprisal.lean:48`
 
 **Relationship to Mathlib:** Replaces `Fin 2`
 
@@ -118,7 +118,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `IsQuineAtom` — `ZeroParadox/ZPJ.lean:99`
+### `IsQuineAtom` — `ZeroParadox/Settheory/SetTheoryAFA.lean:99`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -126,7 +126,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `APG` — `ZeroParadox/ZPJ_APG.lean:84`
+### `APG` — `ZeroParadox/Settheory/APG.lean:84`
 
 **Relationship to Mathlib:** Extends `Mathlib.Combinatorics.Quiver.Basic`
 
@@ -134,7 +134,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `IsKleeneFixedPoint` — `ZeroParadox/ZPK.lean:92`
+### `IsKleeneFixedPoint` — `ZeroParadox/Computability/Kleene.lean:92`
 
 **Relationship to Mathlib:** Replaces `Mathlib.Function.IsFixedPt`
 
@@ -142,7 +142,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `IsComputationalQuine` — `ZeroParadox/ZPK.lean:129`
+### `IsComputationalQuine` — `ZeroParadox/Computability/Kleene.lean:129`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -150,7 +150,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `HasLawvereWitness` — `ZeroParadox/ZPJ_Lawvere.lean:43`
+### `HasLawvereWitness` — `ZeroParadox/Category/Lawvere.lean:43`
 
 **Relationship to Mathlib:** Names the hypothesis of `Function.exists_fixed_point_of_surjective` (no Mathlib named predicate)
 
@@ -158,7 +158,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `Phase` (with `floorRel`, `phaseRel`, `snap`) — `ZeroParadox/ZPJ_Boundary.lean:94`
+### `Phase` (with `floorRel`, `phaseRel`, `snap`) — `ZeroParadox/Multihomed/Boundary.lean:94`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -168,56 +168,56 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ## Custom Instances
 
-### `machinePhaseZPS` — `ZeroParadox/ZPE.lean:55`
+### `machinePhaseZPS` — `ZeroParadox/Order/Snap.lean:55`
 `ZPSemilattice MachinePhase`
 
 The cross-framework bridge. `MachinePhase` is ZPC's two-element type; giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for `MachinePhase`.
 
 ---
 
-### `machinePhaseAFA` — `ZeroParadox/ZPK.lean:265`
+### `machinePhaseAFA` — `ZeroParadox/Computability/Kleene.lean:265`
 `AFAStructure MachinePhase`
 
 `selfMem x := x = bot` is the CIC-compatible encoding of AFA self-containment (`⊥ = {⊥}` cannot be stated in Lean's well-founded type theory). `quine_unique` and `bot_self_mem` are provable by `rfl`. This is the concrete closure of DA-1 for ZP-E's machine model.
 
 ---
 
-### `machinePhaseKleene` — `ZeroParadox/ZPK.lean:275`
+### `machinePhaseKleene` — `ZeroParadox/Computability/Kleene.lean:275`
 `KleeneStructure MachinePhase` (noncomputable)
 
 `botCode` is chosen via `Classical.choose` — no algorithm can identify which `Code` is the `botCode` (`isComputationalQuine_undecidable`). The `noncomputable` marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Removing it would misrepresent the result.
 
 ---
 
-### `instZ2ValBridge` — `ZeroParadox/ZPJ_ScaleBridge.lean:97`
+### `instZ2ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean:97`
 `ValBridge ℤ_[2]`
 
 `ℤ_[2]` is a ring — it cannot be a `ZPSemilattice` instance and could not satisfy `ValuationStructure`. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `ZPJ_Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
 
 ---
 
-### `instNatInfZPS` — `ZeroParadox/ZPJ_Model.lean:63`
+### `instNatInfZPS` — `ZeroParadox/Settheory/Model.lean:63`
 `ZPSemilattice ℕ∞` with inverted order
 
 Mathlib's `WithTop ℕ` has `≤` as its standard order (`⊤` is maximum). Here `join = min` and `bot = ⊤` — a deliberate reversal. The ZP partial order `x ≤_ZP y ↔ min x y = y` makes `⊤` the bottom (valuation ∞) and `0` the maximum (fully constrained). No Mathlib instance covers this inverted reading.
 
 ---
 
-### `instNatInfVal` — `ZeroParadox/ZPJ_Model.lean:76`
+### `instNatInfVal` — `ZeroParadox/Settheory/Model.lean:76`
 `ValuationStructure ℕ∞` (scale = +1, val = id)
 
 The concrete model confirming that `ValuationStructure`'s abstract axioms have an inhabitant. `val = id` works because `ℕ∞` already carries its own depth as its value; `scale = (· + 1)` satisfies `val_scale` by `rfl`.
 
 ---
 
-### `instOntZPS` — `ZeroParadox/ZPJ_OntBridge.lean:46`
+### `instOntZPS` — `ZeroParadox/Settheory/OntBridge.lean:46`
 `ZPSemilattice OntologicalStates`
 
 `OntologicalStates` carries no Mathlib lattice structure. The join (null-identity, exist-absorbing) matches ZP-A's A1–A4 but does not correspond to any Mathlib-provided instance on a two-element type.
 
 ---
 
-### `instOntSelfApp` — `ZeroParadox/ZPJ_OntBridge.lean:61`
+### `instOntSelfApp` — `ZeroParadox/Settheory/OntBridge.lean:61`
 `AbstractSelfApp OntologicalStates` via constant-to-null map
 
 `OntologicalStates` (two elements) cannot satisfy `ValuationStructure`'s `val_scale` axiom — a finite two-element type has no room for `val` to strictly increase. The direct `AbstractSelfApp` instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
