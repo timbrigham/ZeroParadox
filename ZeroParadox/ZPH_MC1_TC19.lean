@@ -35,7 +35,7 @@ even though no global homeomorphism exists.
 **Race outcome: GO at the leaf — but it is the GENERIC subsingleton reconciliation (the honest, deflated
 verdict). The asymmetry the T2 audit flagged is CONFIRMED by the same Lean content.**
 
-- `padic_floor_unique` / `simplex_point_unique` — both ν-bottom carriers are `Unique` (one-element):
+- `padic_floor_unique_19` / `simplex_point_unique` — both ν-bottom carriers are `Unique` (one-element):
   the p-adic floor `↥({0} : Set Q₂)` via `Set.uniqueSingleton`, the one-state stationary point
   `↥(stdSimplex ℝ (Fin 1))` via `stdSimplex_unique` (`= {fun _ ↦ 1}`).
 - `nu_leaf_reconcile` (GO, IN-statement) — a genuine **homeomorphism**
@@ -79,7 +79,7 @@ abbrev padicFloor : Type := ↥({(0 : Q₂)} : Set Q₂)
 abbrev simplexPoint : Type := ↥(stdSimplex ℝ (Fin 1))
 
 /-- The p-adic floor carrier is a one-element space. -/
-noncomputable instance padic_floor_unique : Unique padicFloor := Set.uniqueSingleton _
+noncomputable instance padic_floor_unique_19 : Unique padicFloor := Set.uniqueSingleton _
 
 /-- The one-state stationary point carrier is a one-element space:
     `stdSimplex ℝ (Fin 1) = {fun _ ↦ 1}`. -/
@@ -126,7 +126,7 @@ end ZeroParadox.ZPH_MC1_TC19
 section PurityCheck
 open ZeroParadox.ZPH_MC1_TC19
 
-#print axioms padic_floor_unique
+#print axioms padic_floor_unique_19
 #print axioms simplex_point_unique
 #print axioms nu_leaf_reconcile
 #print axioms nu_leaf_reconcile_generic

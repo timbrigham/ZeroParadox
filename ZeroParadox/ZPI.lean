@@ -166,7 +166,7 @@ lattice theorem — deriving it rather than assuming it. -/
 /-- (ℕ, max, 0) is a ZPSemilattice. The induced partial order is the natural ≤ on ℕ.
     R1: ℕ has no top element (∀ n, n + 1 > n).
     T3: max(S n, α n) ≥ S n always, so state sequences are monotone. -/
-instance natZPSemilattice : ZPSemilattice ℕ where
+instance natZPSemilattice_zpi : ZPSemilattice ℕ where
   join       := max
   bot        := 0
   join_assoc := fun x y z => by omega

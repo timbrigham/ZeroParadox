@@ -25,7 +25,7 @@ fixed point" was **explicitly fenced as framework interpretation, not a Lean cla
 removes that fence for the structural half of the claim by upgrading it to a *generic* categorical
 theorem.
 
-**The load-bearing generic theorem** (`isZero_iff_isInitial_and_isTerminal`): in ANY category `C`,
+**The load-bearing generic theorem** (`isZero_iff_initial_terminal_expl`): in ANY category `C`,
 for any object `Z`,
 ```
 IsZero Z  ↔  Nonempty (IsInitial Z) ∧ Nonempty (IsTerminal Z).
@@ -39,7 +39,7 @@ map out, from initiality, and a unique map in, from terminality). So the pre-reg
 (zero object strictly stronger than initial ∧ terminal, requiring preadditive) is **refuted**: the
 coincidence is genuinely the whole story at the bare-category level.
 
-**The named instance** (`seam_isZero_iff` and `seam_is_mu_nu_coincidence`): the equivalence is then
+**The named instance** (`seam_isZero_iff` and `seam_is_mu_nu_coincidence_alt`): the equivalence is then
 instantiated at `Z := fD_functor.obj 0`, reusing `hilbert_bottom_isZero`. The seam node concretely
 witnesses both sides of the coincidence.
 
@@ -65,7 +65,7 @@ variable {C : Type*} [Category C]
     furnishes the full `IsZero` predicate, with **no** pointed / preadditive hypothesis. So "zero
     object = the point where the least- and greatest-fixed-point characterisations coincide" is a
     real categorical fact, not extra structure. -/
-theorem isZero_iff_isInitial_and_isTerminal (Z : C) :
+theorem isZero_iff_initial_terminal_expl (Z : C) :
     IsZero Z ↔ Nonempty (IsInitial Z) ∧ Nonempty (IsTerminal Z) := by
   constructor
   · intro h
@@ -85,13 +85,13 @@ theorem isZero_iff_isInitial_and_isTerminal (Z : C) :
 theorem seam_isZero_iff :
     IsZero (fD_functor.obj 0)
       ↔ Nonempty (IsInitial (fD_functor.obj 0)) ∧ Nonempty (IsTerminal (fD_functor.obj 0)) :=
-  isZero_iff_isInitial_and_isTerminal (fD_functor.obj 0)
+  isZero_iff_initial_terminal_expl (fD_functor.obj 0)
 
 /-- **The seam IS the μ=ν coincidence, as a theorem.** The seam node #5 is simultaneously initial
     (μ: least-fixed-point / colimit side) and terminal (ν: greatest-fixed-point / limit side). This
     is the structural content of "the seam is the μ=ν coincidence point," now witnessed rather than
     glossed: both `IsInitial` and `IsTerminal` are produced for the concrete node. -/
-theorem seam_is_mu_nu_coincidence :
+theorem seam_is_mu_nu_coincidence_alt :
     Nonempty (IsInitial (fD_functor.obj 0)) ∧ Nonempty (IsTerminal (fD_functor.obj 0)) :=
   (seam_isZero_iff).mp hilbert_bottom_isZero
 
@@ -102,8 +102,8 @@ end ZeroParadox.ZPH_MC1_TC13
 section PurityCheck
 open ZeroParadox.ZPH_MC1_TC13
 
-#print axioms isZero_iff_isInitial_and_isTerminal
+#print axioms isZero_iff_initial_terminal_expl
 #print axioms seam_isZero_iff
-#print axioms seam_is_mu_nu_coincidence
+#print axioms seam_is_mu_nu_coincidence_alt
 
 end PurityCheck

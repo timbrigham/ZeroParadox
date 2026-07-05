@@ -92,7 +92,7 @@ section APGBasics
 variable {V : Type*} [Quiver V]
 
 /-- Immediate successors of a vertex: all w with an edge v ⟶ w. -/
-def children (v : V) : Set V :=
+def apg_children (v : V) : Set V :=
   { w | Nonempty (v ⟶ w) }
 
 /-- A vertex has a directed cycle through itself: some outgoing edge leads to a
@@ -108,11 +108,11 @@ def IsAcyclic (v : V) : Prop :=
 def IsPureSelfLoop (v : V) : Prop :=
   Nonempty (v ⟶ v) ∧ ∀ w : V, Nonempty (v ⟶ w) → w = v
 
-/-- For a pure self-loop vertex, the children set is the singleton {v}. -/
+/-- For a pure self-loop vertex, the apg_children set is the singleton {v}. -/
 theorem pureSelfLoop_children_eq_singleton (v : V) (hv : IsPureSelfLoop v) :
-    children v = {v} := by
+    apg_children v = {v} := by
   ext w
-  simp only [children, Set.mem_setOf_eq, Set.mem_singleton_iff]
+  simp only [apg_children, Set.mem_setOf_eq, Set.mem_singleton_iff]
   constructor
   · intro ⟨e⟩; exact hv.2 w ⟨e⟩
   · intro hw; rw [hw]; exact hv.1
@@ -228,25 +228,25 @@ end ScaleIterate
 /-! ## § V. Decoration Predicate -/
 
 /-- A valid decoration of a graph: a vertex labeling d : V → U satisfying the
-    AFA decoration equation at every vertex: d(v) = collect over d's image of v's children. -/
+    AFA decoration equation at every vertex: d(v) = collect over d's image of v's apg_children. -/
 def IsDecoration {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
     (d : V → U) : Prop :=
-  ∀ v : V, d v = DecorationUniverse.collect (d '' children v)
+  ∀ v : V, d v = DecorationUniverse.collect (d '' apg_children v)
 
 /-! ## § VI. Self-Loop Uniqueness -/
 
 /-- Any valid decoration assigns ⊥ to any pure self-loop vertex.
-    Proof: children v = {v}, so d(v) = collect{d(v)} = scale(d(v)).
+    Proof: apg_children v = {v}, so d(v) = collect{d(v)} = scale(d(v)).
     scale(d v) = d v makes d v a fixed point of scale, so scale_unique_fp gives d v = ⊥. -/
 theorem pureSelfLoop_decoration_eq_bot
     {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
     (d : V → U) (hd : IsDecoration d) (v : V) (hv : IsPureSelfLoop v) :
     d v = bot := by
-  have hchildren : children v = {v} := pureSelfLoop_children_eq_singleton v hv
-  have himage : d '' children v = {d v} := by rw [hchildren, Set.image_singleton]
-  have hcollect : DecorationUniverse.collect (d '' children v) =
+  have hchildren : apg_children v = {v} := pureSelfLoop_children_eq_singleton v hv
+  have himage : d '' apg_children v = {d v} := by rw [hchildren, Set.image_singleton]
+  have hcollect : DecorationUniverse.collect (d '' apg_children v) =
       ValuationStructure.scale (d v) := by
     rw [himage]; exact DecorationUniverse.collect_singleton (d v)
   -- d v = scale(d v), so d v is a fixed point of scale
@@ -309,7 +309,7 @@ theorem kCycle_node_unique
 
 /-- Valuation chain along a path: for any path p : u ↝ v, decoration at u has valuation
     ≥ decoration at v plus the path length. Each edge step uses collect_val_ge:
-    if b ⟶ c then d(b) = collect(d '' children b) and d(c) ∈ d '' children b. -/
+    if b ⟶ c then d(b) = collect(d '' apg_children b) and d(c) ∈ d '' apg_children b. -/
 private theorem path_val_chain
     {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
@@ -324,8 +324,8 @@ private theorem path_val_chain
     -- p : Path u b, e : b ⟶ c, ih : val(d u) ≥ val(d b) + ↑p.length
     simp only [Quiver.Path.length_cons, Nat.cast_add, Nat.cast_one]
     -- goal : val(d u) ≥ val(d c) + (↑p.length + 1)
-    have hc_child : c ∈ children b := ⟨e⟩
-    have hc_img : d c ∈ d '' children b := Set.mem_image_of_mem d hc_child
+    have hc_child : c ∈ apg_children b := ⟨e⟩
+    have hc_img : d c ∈ d '' apg_children b := Set.mem_image_of_mem d hc_child
     have hstep : ValuationStructure.val (d b) ≥ ValuationStructure.val (d c) + 1 := by
       rw [hd b]
       exact DecorationUniverse.collect_val_ge _ (d c) hc_img
@@ -347,11 +347,11 @@ theorem cyclic_decoration_eq_bot
   obtain ⟨w, ⟨e⟩, ⟨p⟩⟩ := hcyc
   by_contra hdv
   have hfin := val_finite_of_ne_bot (d v) hdv
-  -- val(d v) ≥ val(d w) + 1: w ∈ children v, d v = collect, collect_val_ge
-  have hw_child : w ∈ children v := ⟨e⟩
-  have hdw_mem : d w ∈ d '' children v := Set.mem_image_of_mem d hw_child
+  -- val(d v) ≥ val(d w) + 1: w ∈ apg_children v, d v = collect, collect_val_ge
+  have hw_child : w ∈ apg_children v := ⟨e⟩
+  have hdw_mem : d w ∈ d '' apg_children v := Set.mem_image_of_mem d hw_child
   have hge1 : ValuationStructure.val (d v) ≥ ValuationStructure.val (d w) + 1 := by
-    have hcoll := DecorationUniverse.collect_val_ge (d '' children v) (d w) hdw_mem
+    have hcoll := DecorationUniverse.collect_val_ge (d '' apg_children v) (d w) hdw_mem
     rwa [← hd v] at hcoll
   -- val(d w) ≥ val(d v) + p.length: path from w to v
   have hge2 : ValuationStructure.val (d w) ≥ ValuationStructure.val (d v) + p.length :=
@@ -375,25 +375,25 @@ theorem cyclic_decoration_eq_bot
 /-! ## § VIII. Acyclic Vertex Uniqueness (sorry)
 
     For acyclic vertices, the induction step is clear:
-      - IH: d₁ and d₂ agree on all children of v
-      - d₁ '' children v = d₂ '' children v    [image equality from IH]
-      - collect(d₁ '' children v) = collect(d₂ '' children v)  [congrArg collect]
-      - d₁ v = collect(d₁ '' children v) = collect(d₂ '' children v) = d₂ v
+      - IH: d₁ and d₂ agree on all apg_children of v
+      - d₁ '' apg_children v = d₂ '' apg_children v    [image equality from IH]
+      - collect(d₁ '' apg_children v) = collect(d₂ '' apg_children v)  [congrArg collect]
+      - d₁ v = collect(d₁ '' apg_children v) = collect(d₂ '' apg_children v) = d₂ v
 
     What's missing: the well-founded induction principle itself. For [Fintype V],
-    the children relation on acyclic vertices has no infinite descending chains
+    the apg_children relation on acyclic vertices has no infinite descending chains
     (finite type, acyclic subgraph = DAG), giving a WellFoundedRelation. Building
     this WellFounded instance requires connecting IsAcyclic to a finiteness argument.
     Deferred to the next session. -/
 
-/-- Local induction step: if d₁ and d₂ agree on all children of v, they agree on v. -/
+/-- Local induction step: if d₁ and d₂ agree on all apg_children of v, they agree on v. -/
 theorem acyclic_induction_step
     {V : Type*} [Quiver V]
     {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]
     (d₁ d₂ : V → U) (hd₁ : IsDecoration d₁) (hd₂ : IsDecoration d₂)
-    (v : V) (ih : ∀ w ∈ children v, d₁ w = d₂ w) :
+    (v : V) (ih : ∀ w ∈ apg_children v, d₁ w = d₂ w) :
     d₁ v = d₂ v := by
-  have himage_eq : d₁ '' children v = d₂ '' children v := by
+  have himage_eq : d₁ '' apg_children v = d₂ '' apg_children v := by
     ext y
     simp only [Set.mem_image]
     constructor
@@ -420,7 +420,7 @@ theorem acyclic_induction_step
 
     - Cyclic u: d₁ u = ⊥ = d₂ u by cyclic_decoration_eq_bot
     - Acyclic u: for each child w, reach w ⊊ reach u (since v ∉ reach w by acyclicity),
-      so IH gives d₁ w = d₂ w for all children, and acyclic_induction_step closes the goal.
+      so IH gives d₁ w = d₂ w for all apg_children, and acyclic_induction_step closes the goal.
 
     Requires [Fintype V] to bound the reachable set cardinality. -/
 
@@ -452,8 +452,8 @@ theorem decoration_unique
     · -- u is acyclic: use acyclic_induction_step (no IsAcyclic param needed)
       apply acyclic_induction_step d₁ d₂ hd₁ hd₂ u
       intro w hw
-      -- unfold children membership to get hw : Nonempty (u ⟶ w)
-      simp only [children, Set.mem_setOf_eq] at hw
+      -- unfold apg_children membership to get hw : Nonempty (u ⟶ w)
+      simp only [apg_children, Set.mem_setOf_eq] at hw
       apply ih w
       -- reach w ⊂ reach u because: ⊆ via edge u→w, and u ∈ reach u but u ∉ reach w (acyclicity)
       have hreach_mono : {x : V | Nonempty (Quiver.Path w x)} ⊆

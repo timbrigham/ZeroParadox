@@ -39,12 +39,12 @@ noncomputable def ωeval : List ℕ → Ordinal.{0}
 noncomputable def gmeasure (b n : ℕ) : Ordinal.{0} := ωeval (Nat.digits b n)
 
 /-- One weak-Goodstein step from base `b`: bump the base to `b+1` (same digit list), subtract 1. -/
-def gstep (b n : ℕ) : ℕ := Nat.ofDigits (b + 1) (Nat.digits b n) - 1
+def weak_gstep (b n : ℕ) : ℕ := Nat.ofDigits (b + 1) (Nat.digits b n) - 1
 
 /-- The weak-Goodstein sequence from `n`, with base `k+2` at step `k`. -/
-def gseq (n : ℕ) : ℕ → ℕ
+def weak_gseq (n : ℕ) : ℕ → ℕ
   | 0 => n
-  | k + 1 => gstep (k + 2) (gseq n k)
+  | k + 1 => weak_gstep (k + 2) (weak_gseq n k)
 
 /-- `Nat.ofDigits` is monotone in the base (fixed digit list). -/
 lemma ofDigits_base_mono {b₁ b₂ : ℕ} (h : b₁ ≤ b₂) :
@@ -114,28 +114,28 @@ lemma gmeasure_bump (b n : ℕ) (hb : 2 ≤ b) :
     (fun hL => Nat.getLast_digit_ne_zero b (Nat.digits_ne_nil_iff_ne_zero.mp hL))]
 
 /-- Each step strictly decreases the ordinal measure, as long as we have not reached 0. -/
-lemma gseq_measure_lt (n : ℕ) (k : ℕ) (hk : gseq n k ≠ 0) :
-    gmeasure (k + 3) (gseq n (k + 1)) < gmeasure (k + 2) (gseq n k) := by
-  have hbump : gmeasure (k + 3) (Nat.ofDigits (k + 3) (Nat.digits (k + 2) (gseq n k)))
-      = gmeasure (k + 2) (gseq n k) := by
-    have := gmeasure_bump (k + 2) (gseq n k) (by omega); simpa using this
-  have hMne : Nat.ofDigits (k + 3) (Nat.digits (k + 2) (gseq n k)) ≠ 0 := by
-    have hle : gseq n k ≤ Nat.ofDigits (k + 3) (Nat.digits (k + 2) (gseq n k)) := by
-      conv_lhs => rw [← Nat.ofDigits_digits (k + 2) (gseq n k)]
+lemma weak_gseq_measure_lt (n : ℕ) (k : ℕ) (hk : weak_gseq n k ≠ 0) :
+    gmeasure (k + 3) (weak_gseq n (k + 1)) < gmeasure (k + 2) (weak_gseq n k) := by
+  have hbump : gmeasure (k + 3) (Nat.ofDigits (k + 3) (Nat.digits (k + 2) (weak_gseq n k)))
+      = gmeasure (k + 2) (weak_gseq n k) := by
+    have := gmeasure_bump (k + 2) (weak_gseq n k) (by omega); simpa using this
+  have hMne : Nat.ofDigits (k + 3) (Nat.digits (k + 2) (weak_gseq n k)) ≠ 0 := by
+    have hle : weak_gseq n k ≤ Nat.ofDigits (k + 3) (Nat.digits (k + 2) (weak_gseq n k)) := by
+      conv_lhs => rw [← Nat.ofDigits_digits (k + 2) (weak_gseq n k)]
       exact ofDigits_base_mono (by omega) _
     omega
-  have hstep : gseq n (k + 1)
-      = Nat.ofDigits (k + 3) (Nat.digits (k + 2) (gseq n k)) - 1 := rfl
+  have hstep : weak_gseq n (k + 1)
+      = Nat.ofDigits (k + 3) (Nat.digits (k + 2) (weak_gseq n k)) - 1 := rfl
   rw [hstep, ← hbump]
   exact ωeval_strictMono (by omega) (Nat.sub_lt (Nat.pos_of_ne_zero hMne) one_pos)
 
 /-- **Target.** The weak-Goodstein sequence always reaches 0. -/
-theorem weak_goodstein_terminates (n : ℕ) : ∃ k, gseq n k = 0 := by
+theorem weak_goodstein_terminates (n : ℕ) : ∃ k, weak_gseq n k = 0 := by
   by_contra h
   push_neg at h
-  set m : ℕ → Ordinal := fun k => gmeasure (k + 2) (gseq n k) with hmdef
+  set m : ℕ → Ordinal := fun k => gmeasure (k + 2) (weak_gseq n k) with hmdef
   have hm : ∀ k, m (k + 1) < m k := fun k => by
-    have := gseq_measure_lt n k (h k); simpa [hmdef] using this
+    have := weak_gseq_measure_lt n k (h k); simpa [hmdef] using this
   obtain ⟨x, ⟨k, rfl⟩, hmin⟩ := wellFounded_lt.has_min (Set.range m) ⟨m 0, 0, rfl⟩
   exact hmin (m (k + 1)) ⟨k + 1, rfl⟩ (hm k)
 

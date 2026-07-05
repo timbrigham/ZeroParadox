@@ -48,7 +48,7 @@ noncomputable def q2Ball (n : ℕ) : Set Q₂ :=
   Metric.closedBall 0 (2 ^ (-(n : ℤ)))
 
 /-- Bigger index ⇒ smaller ball: `m ≤ n → q2Ball n ⊆ q2Ball m`. -/
-theorem q2Ball_antitone {m n : ℕ} (h : m ≤ n) : q2Ball n ⊆ q2Ball m := by
+theorem q2Ball_antitone_nat {m n : ℕ} (h : m ≤ n) : q2Ball n ⊆ q2Ball m := by
   simp only [q2Ball]
   apply Metric.closedBall_subset_closedBall
   exact zpow_le_zpow_right₀ (by norm_num : (1 : ℝ) ≤ 2)
@@ -60,7 +60,7 @@ noncomputable def fBObj (n : ℕ) : TopCat :=
 
 /-- The continuous inclusion `q2Ball n ↪ q2Ball m` when `m ≤ n` (smaller ball into larger). -/
 noncomputable def fBIncl {m n : ℕ} (h : m ≤ n) : C(↥(q2Ball n), ↥(q2Ball m)) :=
-  ⟨Set.inclusion (q2Ball_antitone h), continuous_inclusion (q2Ball_antitone h)⟩
+  ⟨Set.inclusion (q2Ball_antitone_nat h), continuous_inclusion (q2Ball_antitone_nat h)⟩
 
 /-- F_B: the snap chain realized as a genuine inverse system of topological spaces in `TopCat`.
     Source `ℕᵒᵖ` (balls shrink as the index grows). Object `n ↦ B(0, 2⁻ⁿ)`,
@@ -110,7 +110,7 @@ new commitment of this construction. -/
 section PurityCheck
 open ZeroParadox.ZPH_TopFunctor
 
-#print axioms q2Ball_antitone
+#print axioms q2Ball_antitone_nat
 #print axioms fB_functor
 #print axioms fB_faithful
 #print axioms fB_bottom_is_limit

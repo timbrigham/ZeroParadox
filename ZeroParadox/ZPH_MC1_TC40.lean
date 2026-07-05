@@ -62,7 +62,7 @@ open CategoryTheory CategoryTheory.Limits
 open ZeroParadox ZeroParadox
 
 /-- The seam node is a zero object of `ModuleCat ℂ` (reuse of `hilbert_bottom_isZero`). -/
-theorem seam_isZero : IsZero (fD_functor.obj 0) :=
+theorem seam_isZero_tree : IsZero (fD_functor.obj 0) :=
   ZeroParadox.hilbert_bottom_isZero
 
 /-- The transported μ-side leaf `fD_functor.obj 1 = StateSpace 1` is **not** a zero object:
@@ -91,7 +91,7 @@ theorem seam_not_mu_colimit_apex
     IsEmpty (IsColimit c) := by
   refine ⟨fun hc => ?_⟩
   -- The apex is a zero object.
-  have hZ : IsZero c.pt := by rw [hpt]; exact seam_isZero
+  have hZ : IsZero c.pt := by rw [hpt]; exact seam_isZero_tree
   -- The left injection into a zero object is the zero map.
   have hinl : c.inl = 0 := hZ.eq_of_tgt _ _
   -- Universal factorization of the pair (𝟙, 0).
@@ -112,7 +112,7 @@ theorem seam_not_mu_colimit_apex
 noncomputable def seam_selfcoproduct_collapse :
     IsColimit (BinaryCofan.mk (0 : fD_functor.obj 0 ⟶ fD_functor.obj 0)
                               (0 : fD_functor.obj 0 ⟶ fD_functor.obj 0)) := by
-  have hZ : IsZero (fD_functor.obj 0) := seam_isZero
+  have hZ : IsZero (fD_functor.obj 0) := seam_isZero_tree
   refine BinaryCofan.IsColimit.mk _ (fun {T} _ _ => hZ.to_ T) ?_ ?_ ?_
   · intro T f g; exact hZ.eq_of_src _ _
   · intro T f g; exact hZ.eq_of_src _ _
@@ -127,7 +127,7 @@ theorem seam_not_colimit_connector :
     ∧ ¬ IsZero (fD_functor.obj 1)
     ∧ (∀ (c : BinaryCofan (fD_functor.obj 1) (fD_functor.obj 1)),
         c.pt = fD_functor.obj 0 → IsEmpty (IsColimit c)) :=
-  ⟨seam_isZero, leaf_not_isZero, seam_not_mu_colimit_apex⟩
+  ⟨seam_isZero_tree, leaf_not_isZero, seam_not_mu_colimit_apex⟩
 
 end ZeroParadox.ZPH_MC1_TC40
 
@@ -139,7 +139,7 @@ library carried from ZP-D. A library dependency, not a new commitment of this co
 section PurityCheck
 open ZeroParadox.ZPH_MC1_TC40
 
-#print axioms seam_isZero
+#print axioms seam_isZero_tree
 #print axioms leaf_not_isZero
 #print axioms seam_not_mu_colimit_apex
 #print axioms seam_selfcoproduct_collapse

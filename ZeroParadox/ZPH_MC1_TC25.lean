@@ -31,9 +31,9 @@ The honest answer the Lean forces is a **refinement (SPLIT)**, not the flat GO t
 
 1. **`seam_empty_lim_eq_colim` — the genuinely seam-specific case (the real content).** For the *empty*
    diagram, the limit is the terminal object and the colimit is the initial object. At the zero object
-   `Z = fD_functor.obj 0` these are the SAME object `Z`: `IsLimit (asEmptyCone Z)` (≡ `IsTerminal Z`)
-   AND `IsColimit (asEmptyCocone Z)` (≡ `IsInitial Z`) both hold, both cones with apex `Z`. So the
-   empty-diagram limit and colimit coincide on `Z`. This is the diagram-level seam coincidence, and it
+   `Z_state25 = fD_functor.obj 0` these are the SAME object `Z_state25`: `IsLimit (asEmptyCone Z_state25)` (≡ `IsTerminal Z_state25`)
+   AND `IsColimit (asEmptyCocone Z_state25)` (≡ `IsInitial Z_state25`) both hold, both cones with apex `Z_state25`. So the
+   empty-diagram limit and colimit coincide on `Z_state25`. This is the diagram-level seam coincidence, and it
    is special to a zero object.
 
 2. **`generic_object_empty_lim_ne_colim` — the NO-GO fence (genuine separation).** At a NON-zero object
@@ -48,7 +48,7 @@ The honest answer the Lean forces is a **refinement (SPLIT)**, not the flat GO t
    constant-diagram limit and colimit both exist and have apex `X` (Mathlib `isLimitConstCone` /
    `isColimitConstCocone`). So the connected-diagram lim=colim coincidence is **generic** — true at
    every object — and is therefore NOT evidence for the seam. The pre-registered NO-GO ("for
-   non-discrete J the colimit escapes Z via a copower") is FALSE for connected J: the colimit of a
+   non-discrete J the colimit escapes Z_state25 via a copower") is FALSE for connected J: the colimit of a
    connected constant diagram is the apex itself, no copower. The copower escape only appears for
    *disconnected* shapes, which is exactly the empty/discrete regime captured by (1)+(2).
 
@@ -68,18 +68,18 @@ namespace ZeroParadox.ZPH_MC1_TC25
 open CategoryTheory CategoryTheory.Limits
 open ZeroParadox ZeroParadox ZeroParadox
 
-/-- The Hilbert bottom, the seam node `Z = fD_functor.obj 0`. -/
-noncomputable abbrev Z : ModuleCat ℂ := fD_functor.obj 0
+/-- The Hilbert bottom, the seam node `Z_state25 = fD_functor.obj 0`. -/
+noncomputable abbrev Z_state25 : ModuleCat ℂ := fD_functor.obj 0
 
-/-- **(1) Seam diagram-level coincidence.** At the zero object `Z`, the empty-diagram **limit** and the
-    empty-diagram **colimit** both land on `Z`: `asEmptyCone Z` is a limit (≡ `Z` terminal) and
-    `asEmptyCocone Z` is a colimit (≡ `Z` initial), and both cones have apex `Z`. So at the seam the
-    limit and colimit of the empty diagram coincide as the single object `Z` — the μ=ν object-level
+/-- **(1) Seam diagram-level coincidence.** At the zero object `Z_state25`, the empty-diagram **limit** and the
+    empty-diagram **colimit** both land on `Z_state25`: `asEmptyCone Z_state25` is a limit (≡ `Z_state25` terminal) and
+    `asEmptyCocone Z_state25` is a colimit (≡ `Z_state25` initial), and both cones have apex `Z_state25`. So at the seam the
+    limit and colimit of the empty diagram coincide as the single object `Z_state25` — the μ=ν object-level
     coincidence lifted to the diagram level. -/
 theorem seam_empty_lim_eq_colim :
-    ∃ (_ : IsLimit (asEmptyCone Z)) (_ : IsColimit (asEmptyCocone Z)),
-      (asEmptyCone Z).pt = (asEmptyCocone Z).pt := by
-  have hZ : IsZero Z := hilbert_bottom_isZero
+    ∃ (_ : IsLimit (asEmptyCone Z_state25)) (_ : IsColimit (asEmptyCocone Z_state25)),
+      (asEmptyCone Z_state25).pt = (asEmptyCocone Z_state25).pt := by
+  have hZ : IsZero Z_state25 := hilbert_bottom_isZero
   exact ⟨hZ.isTerminal, hZ.isInitial, rfl⟩
 
 /-- **(2) NO-GO fence — off the seam the coincidence fails.** A zero object is the *only* object that is
