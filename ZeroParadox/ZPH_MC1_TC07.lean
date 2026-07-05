@@ -71,12 +71,12 @@ open Ordinal
 /-- The Goodstein ordinal measure evaluated at its natural-number floor `0` is `⊥ : Ordinal`.
     Goodstein terminates at `gseq n k = 0`; this records that the descent measure bottoms at `⊥`. -/
 theorem heval_floor_eq_bot (b : ℕ) :
-    ZeroParadox.Goodstein.heval b 0 = (⊥ : Ordinal) := by
-  rw [ZeroParadox.Goodstein.heval_zero, Ordinal.bot_eq_zero]
+    ZeroParadox.heval b 0 = (⊥ : Ordinal) := by
+  rw [ZeroParadox.heval_zero, Ordinal.bot_eq_zero]
 
 /-- Re-export: the Goodstein sequence reaches the ℕ floor `0`. -/
-theorem goodstein_reaches_floor (n : ℕ) : ∃ k, ZeroParadox.Goodstein.gseq n k = 0 :=
-  ZeroParadox.Goodstein.goodstein_terminates n
+theorem goodstein_reaches_floor (n : ℕ) : ∃ k, ZeroParadox.gseq n k = 0 :=
+  ZeroParadox.goodstein_terminates n
 
 /-! ### Kirby–Paris floor -/
 
@@ -98,10 +98,10 @@ theorem kp_val_bot_le (h : ZeroParadox.Hydra) : (⊥ : Ordinal) ≤ h.val :=
     * both measures land in the one ordered type `Ordinal`, whose `⊥` is unique.
     So the two genuine well-founded descents of the depth campaign share a single floor object. -/
 theorem gk_share_floor :
-    ZeroParadox.Goodstein.heval 2 0 = (⊥ : Ordinal) ∧
+    ZeroParadox.heval 2 0 = (⊥ : Ordinal) ∧
     (ZeroParadox.Hydra.node []).val = (⊥ : Ordinal) ∧
     ((0 : ℕ) : Ordinal) = (⊥ : Ordinal) ∧
-    ZeroParadox.Goodstein.heval 2 0 = (ZeroParadox.Hydra.node []).val := by
+    ZeroParadox.heval 2 0 = (ZeroParadox.Hydra.node []).val := by
   refine ⟨heval_floor_eq_bot 2, kp_leaf_val_eq_bot, ?_, ?_⟩
   · rw [Nat.cast_zero, Ordinal.bot_eq_zero]
   · rw [heval_floor_eq_bot 2, kp_leaf_val_eq_bot]

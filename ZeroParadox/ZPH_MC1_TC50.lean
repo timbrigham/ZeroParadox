@@ -76,7 +76,7 @@ namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 open ZeroParadox
-open ZeroParadox ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox
 open ZeroParadox ZeroParadox
 
 /-! ## Node #4 — the Kleisli μ-bottom is a colimit / source with empty incoming hom -/

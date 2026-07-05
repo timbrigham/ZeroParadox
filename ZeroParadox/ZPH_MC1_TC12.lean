@@ -56,7 +56,7 @@ claim. The biconditional itself is a standard categorical fact (the definition o
 content here is stating it as the seam's defining property and witnessing it at node #5.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC12
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 
@@ -106,12 +106,12 @@ theorem seam_is_mu_nu_coincidence :
     ∧ IsZero (ZeroParadox.fD_functor.obj 0) :=
   ⟨isZero_iff_isInitial_and_isTerminal, ZeroParadox.hilbert_bottom_isZero⟩
 
-end ZeroParadox.ZPH_MC1_TC12
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC12
+open ZeroParadox
 
 #print axioms isZero_of_isInitial_isTerminal
 #print axioms isZero_iff_isInitial_and_isTerminal

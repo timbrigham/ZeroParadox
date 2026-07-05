@@ -26,7 +26,7 @@ absolute values, not fixed points of a functor. The thread to ZP's diagonal fixe
 the contact point 0 (`q2_unique_fp`), not through `fork_collapse_iff`.
 -/
 
-namespace ZeroParadox.ZPP
+namespace ZeroParadox
 
 open Rat.AbsoluteValue
 
@@ -57,10 +57,10 @@ Ostrowski, a realization whose choice is inherited from Mathlib's classical anal
 section PurityCheck
 -- These inherit `Classical.choice` from Mathlib's classical analysis / number theory (Ostrowski).
 -- That is expected and honest: the number-system fork is an *analytic realization*, which carries
--- choice — in contrast to the choice-free fork spine (`ZeroParadox.ZPP.fork_collapse_iff`,
+-- choice — in contrast to the choice-free fork spine (`ZeroParadox.fork_collapse_iff`,
 -- `[propext, Quot.sound]` only). Core choice-free; realizations choice-carrying. See AxiomProfile.lean.
 #print axioms completions_exhaustive
 #print axioms real_not_equiv_padic
 end PurityCheck
 
-end ZeroParadox.ZPP
+end ZeroParadox

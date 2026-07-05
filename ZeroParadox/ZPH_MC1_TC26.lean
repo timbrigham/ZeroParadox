@@ -34,7 +34,7 @@ via the mutually-inverse pairs `Fix.mk/Fix.dest` and (for `Cofix`, built here by
 `cofixMk/Cofix.dest`. For `constPF A` the action is `(constPF A).Obj X = Σ _ : A, (PEmpty → X) ≃ A`
 because `PEmpty → X` is a singleton. Composing the unfold equivalence with this collapse gives both
 `fixEquiv` and `cofixEquiv`, and `root_seam := fixEquiv.trans cofixEquiv.symm`. The strict side is
-imported verbatim from `ZeroParadox.ZPP.categorical_fork_strict`.
+imported verbatim from `ZeroParadox.categorical_fork_strict`.
 
 What is PROVED is exactly the equivalences and the dichotomy bundle below. The identification of this
 root seam with the diagonal fixed point / the node-#5 zero-object seam is the cross-instance modeling
@@ -48,7 +48,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.TC26
+namespace ZeroParadox
 
 open QPF
 
@@ -155,11 +155,11 @@ def root_seam : Fix (constPF A).Obj ≃ Cofix (constPF A).Obj :=
 
 /-- For the one-recursive-position functor `idPF`, the fixed points are NOT equivalent: an equivalence
 would carry the inhabitant of `Cofix idPF.Obj` (ν) back into the empty `Fix idPF.Obj` (μ). This is the
-strict half of the dichotomy, derived from `ZeroParadox.ZPP.categorical_fork_strict`. -/
-theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.ZPP.idPF.Obj ≃ Cofix ZeroParadox.ZPP.idPF.Obj) := by
+strict half of the dichotomy, derived from `ZeroParadox.categorical_fork_strict`. -/
+theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj) := by
   refine ⟨fun e => ?_⟩
-  obtain ⟨c⟩ := ZeroParadox.ZPP.cofix_nonempty
-  exact ZeroParadox.ZPP.fix_isEmpty.false (e.symm c)
+  obtain ⟨c⟩ := ZeroParadox.cofix_nonempty
+  exact ZeroParadox.fix_isEmpty.false (e.symm c)
 
 /-- **The root-cut degeneracy dichotomy.** The μ/ν root cut is strict exactly when the functor has a
 recursive position and collapses to a seam exactly when it has none:
@@ -170,7 +170,7 @@ recursive position and collapses to a seam exactly when it has none:
   `IsEmpty (Fix ≃ Cofix)` (strict, no seam) — second component. -/
 theorem root_cut_dichotomy :
     (Nonempty (Fix (constPF Unit).Obj ≃ Cofix (constPF Unit).Obj)) ∧
-    IsEmpty (Fix ZeroParadox.ZPP.idPF.Obj ≃ Cofix ZeroParadox.ZPP.idPF.Obj) :=
+    IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj) :=
   ⟨⟨(root_seam : Fix (constPF Unit).Obj ≃ _)⟩, idPF_no_seam⟩
 
 section PurityCheck
@@ -193,4 +193,4 @@ section PurityCheck
 #print axioms root_cut_dichotomy
 end PurityCheck
 
-end ZeroParadox.TC26
+end ZeroParadox

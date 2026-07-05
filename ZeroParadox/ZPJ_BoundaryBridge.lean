@@ -54,7 +54,7 @@ precise missing pieces are listed above.
 
 namespace ZeroParadox
 
-open ZeroParadox ZPSemilattice ZeroParadox ZeroParadox ZeroParadox.ZPP
+open ZeroParadox ZPSemilattice ZeroParadox ZeroParadox ZeroParadox
 
 set_option maxHeartbeats 400000
 

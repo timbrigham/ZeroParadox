@@ -63,7 +63,7 @@ empty-colimit coincide (1); off the zero object they do not (2); the connected-d
 a generic fact about all objects (3).
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC25
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 open ZeroParadox ZeroParadox ZeroParadox
@@ -114,7 +114,7 @@ theorem const_connected_lim_eq_colim_generic
       ∧ (constCone J X).pt = (constCocone J X).pt :=
   ⟨⟨isLimitConstCone J X⟩, ⟨isColimitConstCocone J X⟩, rfl⟩
 
-end ZeroParadox.ZPH_MC1_TC25
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -122,7 +122,7 @@ end ZeroParadox.ZPH_MC1_TC25
 (`isLimitConstCone` uses `Classical.arbitrary`) — a library dependency, not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC25
+open ZeroParadox
 
 #print axioms seam_empty_lim_eq_colim
 #print axioms generic_object_empty_lim_ne_colim

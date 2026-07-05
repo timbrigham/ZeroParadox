@@ -35,7 +35,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 namespace ZeroParadox
 
-open CategoryTheory ZeroParadox ZeroParadox.ZPH_TopFunctor
+open CategoryTheory ZeroParadox ZeroParadox
   ZeroParadox ZeroParadox
 
 /-- The three heterogeneous universal characters of the MC-1 bottoms, bundled: F_C strict-initial,

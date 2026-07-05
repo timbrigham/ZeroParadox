@@ -38,7 +38,7 @@ This is the F_B half of the OQ-G3 upgrade (MC-1 correspondence into the real dom
 categories). F_C (information) and F_D (Hilbert) are separate, gated files.
 -/
 
-namespace ZeroParadox.ZPH_TopFunctor
+namespace ZeroParadox
 
 open ZeroParadox
 open CategoryTheory Topology
@@ -98,7 +98,7 @@ theorem fB_bottom_is_limit : (⋂ n, q2Ball n) = {(0 : Q₂)} := by
   · rintro rfl n
     simp
 
-end ZeroParadox.ZPH_TopFunctor
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -108,7 +108,7 @@ carried by the ZP-B topology layer (e.g. `c3_irreversible`). It is a library dep
 new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_TopFunctor
+open ZeroParadox
 
 #print axioms q2Ball_antitone_nat
 #print axioms fB_functor

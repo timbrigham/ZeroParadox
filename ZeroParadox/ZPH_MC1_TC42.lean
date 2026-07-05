@@ -78,7 +78,7 @@ and that looseness is itself proved.
 namespace ZeroParadox
 
 open QPF
-open ZeroParadox.TC26
+open ZeroParadox
 open ZeroParadox
 open ZeroParadox
 open ZeroParadox
@@ -175,7 +175,7 @@ In-statement: for the *recursive* functor `idPF` there is NO equivalence `Fix �
 (it holds for `constPF`, fails for `idPF`), NOT an automatic `refl` — unlike the lattice side. The
 schema therefore encodes genuine content on the QPF side and vacuous content on the lattice side. -/
 theorem qpf_seam_not_automatic :
-    IsEmpty (Fix ZeroParadox.ZPP.idPF.Obj ≃ Cofix ZeroParadox.ZPP.idPF.Obj) :=
+    IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj) :=
   idPF_no_seam
 
 /-- **No cross-setting map (the capstone fence, content IN the statement).** The two `SeamSchema`
@@ -199,7 +199,7 @@ theorem no_cross_setting_map :
     (((qpfSeam Unit).cmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj) = canonicalCmp
       ∧ Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj))
     ∧ -- ... which is NOT automatic: it fails for the recursive functor idPF
-      IsEmpty (Fix ZeroParadox.ZPP.idPF.Obj ≃ Cofix ZeroParadox.ZPP.idPF.Obj)
+      IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj)
     ∧ -- lattice side: the SeamSchema witness is the trivial Equiv.refl on a collapsed carrier
       ((latticeSeam (L := L)).cmp = Equiv.refl (FpSub L))
     ∧ -- lattice side fact: the f.p. set is the nonempty singleton {⊥} (a SET equality, not a type equiv)

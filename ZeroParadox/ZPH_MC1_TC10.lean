@@ -49,7 +49,7 @@ limit object of the real `TopCat` diagram, not a set coincidence. The *interpret
 namespace ZeroParadox
 
 open ZeroParadox
-open ZeroParadox.ZPH_TopFunctor
+open ZeroParadox
 open CategoryTheory CategoryTheory.Limits
 
 /-- `0` lies in every clopen ball of the snap chain. -/

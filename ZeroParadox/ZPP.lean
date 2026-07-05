@@ -54,7 +54,7 @@ Per-instance forks are theorems and are not hedged.
 PROVED. Four theorems, no `sorry`; choice-free (`[propext, Quot.sound]` only — see PurityCheck).
 -/
 
-namespace ZeroParadox.ZPP
+namespace ZeroParadox
 
 set_option maxHeartbeats 400000
 
@@ -115,4 +115,4 @@ section PurityCheck
 #print axioms fork_collapse_iff
 end PurityCheck
 
-end ZeroParadox.ZPP
+end ZeroParadox

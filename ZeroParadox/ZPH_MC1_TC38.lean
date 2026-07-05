@@ -75,7 +75,7 @@ namespace ZeroParadox
 
 open QPF
 open CategoryTheory
-open ZeroParadox.TC26
+open ZeroParadox
 
 set_option maxHeartbeats 400000
 
@@ -151,13 +151,13 @@ So the seam at the root level is the coincidence of μ and ν constructions, and
 the functor has no recursive position. -/
 theorem seam_iff_no_recursive_position :
     Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj)
-    ∧ (∀ g : Fix ZeroParadox.ZPP.idPF.Obj → Cofix ZeroParadox.ZPP.idPF.Obj,
+    ∧ (∀ g : Fix ZeroParadox.idPF.Obj → Cofix ZeroParadox.idPF.Obj,
         ¬ Function.Surjective g) := by
   refine ⟨canonicalCmp_bijective, ?_⟩
   intro g hg
-  obtain ⟨c⟩ := ZeroParadox.ZPP.cofix_nonempty
+  obtain ⟨c⟩ := ZeroParadox.cofix_nonempty
   obtain ⟨a, _⟩ := hg c
-  exact ZeroParadox.ZPP.fix_isEmpty.false a
+  exact ZeroParadox.fix_isEmpty.false a
 
 /-- **The node-seam arrow collapse is generic (re-export of TC20).** The node-#5 "seam" arrow
 coincidence `IsInitial.to = IsTerminal.from` holds at any zero object but is *generic*: each side is

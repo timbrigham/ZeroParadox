@@ -27,7 +27,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.Goodstein
+namespace ZeroParadox
 
 open Ordinal
 
@@ -416,9 +416,9 @@ theorem goodstein_terminates (n : ℕ) : ∃ k, gseq n k = 0 := by
   obtain ⟨x, ⟨k, rfl⟩, hmin⟩ := wellFounded_lt.has_min (Set.range m) ⟨m 0, 0, rfl⟩
   exact hmin (m (k + 1)) ⟨k + 1, rfl⟩ (hm k)
 
-end ZeroParadox.Goodstein
+end ZeroParadox
 
 section PurityCheck
-open ZeroParadox.Goodstein
+open ZeroParadox
 #print axioms goodstein_terminates
 end PurityCheck

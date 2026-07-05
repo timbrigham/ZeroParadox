@@ -40,7 +40,7 @@ functor the final coalgebra is constructible choice-free (Ahrens et al.; Veltri,
 PurityCheck.
 -/
 
-namespace ZeroParadox.ZPP
+namespace ZeroParadox
 
 open QPF
 
@@ -108,7 +108,7 @@ section PurityCheck
 -- Veltri, FSCD 2021, the coinductive construction). Choice genuinely enters the μ/ν story only for the
 -- non-polynomial finite-powerset functor — pinned per presentation: full AC for the set-quotient,
 -- countable choice + LLPO (⟺ injectivity of alg_Vω) for Worrell's limit (Veltri). The fork spine
--- (`ZeroParadox.ZPP.fork_collapse_iff`) is fully choice-free. See AxiomProfile.lean.
+-- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See AxiomProfile.lean.
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty
 #print axioms categorical_fork_strict
@@ -124,4 +124,4 @@ section PurityCheck
    necessity — Veltri, FSCD 2021 — so the discriminator is real but its structural status is fenced.) -/
 end PurityCheck
 
-end ZeroParadox.ZPP
+end ZeroParadox

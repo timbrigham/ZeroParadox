@@ -67,7 +67,7 @@ in-statement. The honest scope: GO at the object/carrier level via a real adjunc
 morphism-level Kleisli→Module transport remains open (and is the next obstruction to probe).
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC27
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox ZeroParadox
@@ -115,7 +115,7 @@ theorem freeFin0_zero_iso_seam :
 theorem kleisli_bottom_carrier_eq :
     (fC_functor.obj 0 : Type) = Fin 0 := rfl
 
-end ZeroParadox.ZPH_MC1_TC27
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -123,7 +123,7 @@ end ZeroParadox.ZPH_MC1_TC27
 `EuclideanSpace` library. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC27
+open ZeroParadox
 
 #print axioms freeFin0_isZero
 #print axioms seam_isZero

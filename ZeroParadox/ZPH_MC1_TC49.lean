@@ -57,7 +57,7 @@ this is a "third root-cut regime strictly between pure-seam (`constPF_unit`, `Fi
 this file. The witnessed substance is the `natPF_alt` triple above.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC49
+namespace ZeroParadox
 
 open QPF
 
@@ -215,12 +215,12 @@ theorem fix_cofix_not_surjective :
     Nonempty (Fix natPF_alt.Obj) ∧ Nonempty (Cofix natPF_alt.Obj) ∧ ¬ Function.Surjective fixToCofix :=
   ⟨natFix_nonempty, natCofix_nonempty, fixToCofix_not_surjective⟩
 
-end ZeroParadox.ZPH_MC1_TC49
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC49
+open ZeroParadox
 
 #print axioms natFix_nonempty
 #print axioms natCofix_nonempty

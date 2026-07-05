@@ -51,7 +51,7 @@ meaning attached to the pattern — not asserted here. The upgrade is precisely:
 meaning of "seam" ("μ and ν coincide here") is now a witnessed theorem, no longer a docstring gloss.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC13
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 open ZeroParadox ZeroParadox
@@ -95,12 +95,12 @@ theorem seam_is_mu_nu_coincidence_alt :
     Nonempty (IsInitial (fD_functor.obj 0)) ∧ Nonempty (IsTerminal (fD_functor.obj 0)) :=
   (seam_isZero_iff).mp hilbert_bottom_isZero
 
-end ZeroParadox.ZPH_MC1_TC13
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC13
+open ZeroParadox
 
 #print axioms isZero_iff_initial_terminal_expl
 #print axioms seam_isZero_iff

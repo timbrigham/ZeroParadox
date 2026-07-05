@@ -63,7 +63,7 @@ categorical bottom of its own real category and they agree on the snap.
 
 namespace ZeroParadox
 
-open CategoryTheory ZeroParadox ZeroParadox.ZPH_TopFunctor ZeroParadox ZeroParadox
+open CategoryTheory ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 
 /-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical
     bottom (initial object / inverse limit) of each domain's genuine Mathlib category, and the
@@ -91,7 +91,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox ZeroParadox.ZPH_TopFunctor ZeroParadox ZeroParadox
+open ZeroParadox ZeroParadox ZeroParadox ZeroParadox
 
 -- M1 metric: per-functor choice footprint of the three MC-1 correspondence realizations.
 -- F_B / TopCat

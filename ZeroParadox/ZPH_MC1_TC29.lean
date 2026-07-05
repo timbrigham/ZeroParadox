@@ -78,9 +78,9 @@ not framework-specific evidence. The single non-vacuous claim in this corner of 
 valuation asymmetry) is NOT in this file.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC29
+namespace ZeroParadox
 
-open ZeroParadox ZeroParadox.ZPH_TopFunctor ZeroParadox
+open ZeroParadox ZeroParadox ZeroParadox
 open scoped Topology
 
 /-- #3: the p-adic ν-bottom as a topological subspace, the floor `{0} ⊆ Q₂`
@@ -170,7 +170,7 @@ theorem nu_leaf_glue_three :
       ∧ Nonempty (hilbertCarrier ≃ₜ PUnit) :=
   ⟨⟨⟨nu_leaf_homeo⟩, ⟨seam_leaf_homeo⟩⟩, ⟨hilbert_is_punit⟩⟩
 
-end ZeroParadox.ZPH_MC1_TC29
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -179,7 +179,7 @@ end ZeroParadox.ZPH_MC1_TC29
 commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC29
+open ZeroParadox
 
 #print axioms padic_floor_unique_29
 #print axioms simplex_point_unique_29

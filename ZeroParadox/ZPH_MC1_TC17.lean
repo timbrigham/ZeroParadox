@@ -69,7 +69,7 @@ stands; this file neither strengthens nor refutes it, it only records that the o
 about the ambient carriers, not the bare bottom points.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC17
+namespace ZeroParadox
 
 open ZeroParadox
 open scoped Topology
@@ -127,7 +127,7 @@ theorem apex_span_no_ambient_strictMono :
   ⟨apex_iso_padic_ordinal_floor,
     ZeroParadox.no_strictMono_real_to_ordinal⟩
 
-end ZeroParadox.ZPH_MC1_TC17
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -135,7 +135,7 @@ end ZeroParadox.ZPH_MC1_TC17
 dependency, not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC17
+open ZeroParadox
 
 #print axioms span_apex_to_padic_floor
 #print axioms span_apex_to_ordinal_floor

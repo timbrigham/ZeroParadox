@@ -62,7 +62,7 @@ the structural claim, and it is borrowed, not re-proved here. So:
 namespace ZeroParadox
 
 open QPF
-open ZeroParadox.ZPP
+open ZeroParadox
 
 /-- **The root cut, hard direction (in-statement obstruction).** There is no function from the
     inhabited ν-root `Cofix idPF.Obj` to the empty μ-root `Fix idPF.Obj`. A map would send the

@@ -132,7 +132,7 @@ section CannotBeIndex
 #check @ZeroParadox.no_rate_orderIso
 
 /-! ### categorical floor/seam exclusions -/
-#check @ZeroParadox.ZPH_MC1_TC40.leaf_not_isZero
+#check @ZeroParadox.leaf_not_isZero
 #check @ZeroParadox.nat_zero_not_terminal
 
 /-! ### the bottoms cannot be zero objects / greatest elements (various categories) -/
@@ -141,11 +141,11 @@ section CannotBeIndex
 #check @ZeroParadox.zpa_bot_not_greatest
 
 /-! ### μ/ν fork: the least-fixed-point (Fix) is EMPTY / does not match the greatest (no seam) -/
-#check @ZeroParadox.TC26.idPF_no_seam
+#check @ZeroParadox.idPF_no_seam
 #check @ZeroParadox.binPF_no_seam
-#check @ZeroParadox.ZPH_MC1_TC47.strict_fix_isEmpty
+#check @ZeroParadox.strict_fix_isEmpty
 #check @ZeroParadox.fix_isEmpty_constructive   -- choice-free (note: tighter purity)
-#check @ZeroParadox.ZPH_MC1_TC49.fixToCofix_not_surjective
+#check @ZeroParadox.fixToCofix_not_surjective
 
 /-! ### orbits that cannot reach ⊥ / cannot be matched (only contractions reach it) -/
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
@@ -154,7 +154,7 @@ section CannotBeIndex
 
 /-! ### seam / floor cannot be transported or cross-connected -/
 #check @ZeroParadox.seam_role_not_transported
-#check @ZeroParadox.ZPH_MC1_TC40.seam_not_mu_colimit_apex
+#check @ZeroParadox.seam_not_mu_colimit_apex
 -- NB: `no_cross_setting_map` records absence-of-construction (no map EXHIBITED), NOT a proven
 -- impossibility (`IsEmpty (map)`). It is an OPEN-style "none given", not a NO-GO. See register D8.
 #check @ZeroParadox.no_cross_setting_map
@@ -203,7 +203,7 @@ section CannotBeIndex
 
 -- NARROW — uniqueness: ⊥ is THE single point (relational pinning, no intrinsic structure). [ℚ₂]
 #check @ZeroParadox.q2_unique_fp        -- 0 is the UNIQUE self-membership fixed point in ℚ₂.
-#check @ZeroParadox.ZPH_TopFunctor.fB_bottom_is_limit -- ⋂ nested balls = {0}: exactly one point pinned.
+#check @ZeroParadox.fB_bottom_is_limit -- ⋂ nested balls = {0}: exactly one point pinned.
 -- WIDE / infinite MEASURE: a scalar diverges (unbounded value), NOT "reached from everywhere". [ZPC]
 #check @ZeroParadox.t2_diverges                 -- surprisal/information exceeds every bound M.
 #check @ZeroParadox.info_bottom_diverges -- = `ZPC.l_inf` (same fact, the BottomMeasure framing).

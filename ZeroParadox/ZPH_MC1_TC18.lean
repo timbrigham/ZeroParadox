@@ -58,7 +58,7 @@ differ. What is interpretation: that this pattern means "the seam is/ is not the
 bridge." The Lean content is the scope, not the metaphysics.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC18
+namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox
@@ -90,12 +90,12 @@ theorem seam_is_intra_category :
     ∧ IsEmpty (Limits.IsTerminal (fC_functor.obj 0)) :=
   ⟨seam_two_sided, kleisli_bottom_not_terminal⟩
 
-end ZeroParadox.ZPH_MC1_TC18
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC18
+open ZeroParadox
 
 #print axioms seam_two_sided
 #print axioms seam_is_intra_category

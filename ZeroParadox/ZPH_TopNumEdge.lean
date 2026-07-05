@@ -26,7 +26,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 namespace ZeroParadox
 
-open ZeroParadox ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox
 
 /-- EDGE topology↔number-theory: the ball `B(0,2⁻ⁿ)` equals the addValuation sublevel `{x | n ≤ v₂(x)}`. -/
 theorem q2Ball_eq_addValuation_sublevel (n : ℕ) :
@@ -115,10 +115,10 @@ theorem info_valuation_eq_surprisal (n : ℕ) :
 theorem category_realizes_bottoms :
     Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.fC_functor.obj 0)) ∧
       Nonempty (CategoryTheory.Limits.IsInitial (ZeroParadox.fD_functor.obj 0)) ∧
-      (⋂ n, ZeroParadox.ZPH_TopFunctor.q2Ball n) = {(0 : Q₂)} :=
+      (⋂ n, ZeroParadox.q2Ball n) = {(0 : Q₂)} :=
   ⟨⟨ZeroParadox.fC_zero_isInitial⟩,
     ⟨ZeroParadox.fD_zero_isInitial⟩,
-    ZeroParadox.ZPH_TopFunctor.fB_bottom_is_limit⟩
+    ZeroParadox.fB_bottom_is_limit⟩
 
 end ZeroParadox
 

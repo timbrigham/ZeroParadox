@@ -36,8 +36,8 @@ witnesses are Mathlib-solid; the dichotomy reuses ZP-P's Ostrowski backbone + ZP
 - ℝ completion              → `ℝ`; connected via `Real.instPathConnectedSpace`
 - ℚ_p completion            → `ℚ_[p]` = `Padic p` `[Fact p.Prime]`; totally disconnected = inferInstance
 - "no order-atom" (ℝ side)  → `ZeroParadox.f_snap_impossible` (order companion)
-- Ostrowski exhaustiveness  → `ZeroParadox.ZPP.completions_exhaustive` (`equiv_real_or_padic`)
-- Ostrowski orthogonality   → `ZeroParadox.ZPP.real_not_equiv_padic` (`not_real_isEquiv_padic`)
+- Ostrowski exhaustiveness  → `ZeroParadox.completions_exhaustive` (`equiv_real_or_padic`)
+- Ostrowski orthogonality   → `ZeroParadox.real_not_equiv_padic` (`not_real_isEquiv_padic`)
 - "ℝ not totally disc."     → ℝ connected + nontrivial → ¬ `TotallyDisconnectedSpace ℝ`   [NEW lemma]
 
 ## Scope / honest seam
@@ -80,8 +80,8 @@ theorem snap_dichotomy :
     (∀ (p : ℕ) [Fact p.Prime], ¬ real.IsEquiv (padic p)) :=
   ⟨fun p => padic_snaps p,
    real_no_snap,
-   fun f hf => ZeroParadox.ZPP.completions_exhaustive f hf,
-   fun p => ZeroParadox.ZPP.real_not_equiv_padic p⟩
+   fun f hf => ZeroParadox.completions_exhaustive f hf,
+   fun p => ZeroParadox.real_not_equiv_padic p⟩
 
 end ZeroParadox
 

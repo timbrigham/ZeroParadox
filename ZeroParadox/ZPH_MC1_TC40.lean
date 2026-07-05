@@ -56,7 +56,7 @@ interpretation of that pair; #1 (ℕ-order-initial) and #4 (Kleisli `Fin 0`) are
 (`fD.obj 1`), which is the strongest honest formalization of "the seam cannot be their coproduct".
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC40
+namespace ZeroParadox
 
 open CategoryTheory CategoryTheory.Limits
 open ZeroParadox ZeroParadox
@@ -129,7 +129,7 @@ theorem seam_not_colimit_connector :
         c.pt = fD_functor.obj 0 → IsEmpty (IsColimit c)) :=
   ⟨seam_isZero_tree, leaf_not_isZero, seam_not_mu_colimit_apex⟩
 
-end ZeroParadox.ZPH_MC1_TC40
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -137,7 +137,7 @@ end ZeroParadox.ZPH_MC1_TC40
 library carried from ZP-D. A library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC40
+open ZeroParadox
 
 #print axioms seam_isZero_tree
 #print axioms leaf_not_isZero

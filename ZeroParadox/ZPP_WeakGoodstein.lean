@@ -23,7 +23,7 @@ verb (an action). The Lean here is our attempt, one way or the other, to get a c
 defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
-namespace ZeroParadox.WeakGoodstein
+namespace ZeroParadox
 
 open Ordinal
 
@@ -139,11 +139,11 @@ theorem weak_goodstein_terminates (n : ℕ) : ∃ k, weak_gseq n k = 0 := by
   obtain ⟨x, ⟨k, rfl⟩, hmin⟩ := wellFounded_lt.has_min (Set.range m) ⟨m 0, 0, rfl⟩
   exact hmin (m (k + 1)) ⟨k + 1, rfl⟩ (hm k)
 
-end ZeroParadox.WeakGoodstein
+end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 
 section PurityCheck
-open ZeroParadox.WeakGoodstein
+open ZeroParadox
 #print axioms weak_goodstein_terminates
 end PurityCheck

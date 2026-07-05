@@ -143,17 +143,17 @@ theorem fork_places_on_root :
     bundles existence + commutation + the strict fork — it does not assert initiality/finality. -/
 theorem coalgebra_fork_strict_on_idPF :
     -- μ-side: recursor commuting square (mediating map out of Fix), and Fix is empty
-    (∀ {α : Type} (g : (ZeroParadox.ZPP.idPF.Obj) α → α) (x : (ZeroParadox.ZPP.idPF.Obj) (Fix (ZeroParadox.ZPP.idPF.Obj))),
+    (∀ {α : Type} (g : (ZeroParadox.idPF.Obj) α → α) (x : (ZeroParadox.idPF.Obj) (Fix (ZeroParadox.idPF.Obj))),
         Fix.rec g (Fix.mk x) = g (Fix.rec g <$> x)) ∧
-    IsEmpty (Fix (ZeroParadox.ZPP.idPF.Obj)) ∧
+    IsEmpty (Fix (ZeroParadox.idPF.Obj)) ∧
     -- ν-side: corecursor commuting square (mediating map into Cofix), and Cofix is inhabited
-    (∀ {α : Type} (g : α → (ZeroParadox.ZPP.idPF.Obj) α) (x : α),
+    (∀ {α : Type} (g : α → (ZeroParadox.idPF.Obj) α) (x : α),
         Cofix.dest (Cofix.corec g x) = Cofix.corec g <$> g x) ∧
-    Nonempty (Cofix (ZeroParadox.ZPP.idPF.Obj)) :=
+    Nonempty (Cofix (ZeroParadox.idPF.Obj)) :=
   ⟨fun g x => fix_rec_commutes g x,
-   ZeroParadox.ZPP.fix_isEmpty,
+   ZeroParadox.fix_isEmpty,
    fun g x => cofix_corec_commutes g x,
-   ZeroParadox.ZPP.cofix_nonempty⟩
+   ZeroParadox.cofix_nonempty⟩
 
 /-! ## PurityCheck -/
 

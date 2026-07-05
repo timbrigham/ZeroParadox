@@ -48,7 +48,7 @@ Dependencies: ZP-E (full synthesis: ZP-A, ZP-B, ZP-C, ZP-D), ZP-K (KleeneStructu
 Key results: t_iz_cauchy (topological core, axiom-free), t_iz_complete (all steps formal).
 -/
 
-namespace ZeroParadox.ZPI
+namespace ZeroParadox
 
 open ZeroParadox ZPSemilattice
 open ZeroParadox ZeroParadox
@@ -374,7 +374,7 @@ theorem t_iz_complete_from_axioms
     join (bot : L') ε₀' = ε₀' :=
   t_iz_complete S (t_iz_h_bound_from_depth_chain S depths hS h_depth h_seq) terminal ε₀' h_role
 
-end ZeroParadox.ZPI
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -401,7 +401,7 @@ Verified results (all sorries filled; no sorryAx anywhere):
      optional transparency variant — t_iz_complete is the canonical theorem) -/
 
 section PurityCheck
-open ZeroParadox.ZPI ZeroParadox ZPSemilattice ZeroParadox ZeroParadox
+open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox ZeroParadox
 
 #print axioms nat_has_no_top
 #print axioms nat_strict_of_strict_state_seq

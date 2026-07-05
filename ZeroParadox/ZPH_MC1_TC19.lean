@@ -65,9 +65,9 @@ structurally, so the tree's branches are asymmetric" is the framework's interpre
 content (the structural μ-glue lives in `ZPH_MC1_TreeT1`, not re-proved here).
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC19
+namespace ZeroParadox
 
-open ZeroParadox ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox
 open scoped Topology
 
 /-- The p-adic ν-bottom as a topological subspace: the floor `{0} ⊆ Q₂`
@@ -116,7 +116,7 @@ theorem nu_leaf_glue_subsingleton :
     Nonempty (padicFloor ≃ₜ simplexPoint) ∧ Nonempty (padicFloor ≃ₜ PUnit) :=
   ⟨⟨nu_leaf_reconcile⟩, ⟨nu_leaf_reconcile_generic⟩⟩
 
-end ZeroParadox.ZPH_MC1_TC19
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -124,7 +124,7 @@ end ZeroParadox.ZPH_MC1_TC19
 `stdSimplex`, `Homeomorph`) — a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC19
+open ZeroParadox
 
 #print axioms padic_floor_unique_19
 #print axioms simplex_point_unique

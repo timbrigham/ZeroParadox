@@ -64,7 +64,7 @@ distinct-from a strictly larger `Cofix` is read off `mixed_fix_nonempty` togethe
 cardinality theorems, which is where the new leaf×position content actually is.
 -/
 
-namespace ZeroParadox.ZPH_MC1_TC47
+namespace ZeroParadox
 
 open PFunctor
 
@@ -155,7 +155,7 @@ theorem mixed_trichotomy :
    ⟨strict_fix_isEmpty, strict_cofix_nonempty⟩,
    ⟨mixed_fix_nonempty, mixed_fix_infinite, mixed_cofix_nonempty⟩⟩
 
-end ZeroParadox.ZPH_MC1_TC47
+end ZeroParadox
 
 /-! ## Axiom Purity Check
 
@@ -163,7 +163,7 @@ end ZeroParadox.ZPH_MC1_TC47
 and friends) — a library dependency, not a new commitment. -/
 
 section PurityCheck
-open ZeroParadox.ZPH_MC1_TC47
+open ZeroParadox
 
 #print axioms seam_fix_finite
 #print axioms strict_fix_isEmpty

@@ -64,7 +64,7 @@ No `Classical.choice`; at most propositional extensionality and quotient soundne
 section ChoiceFreeStructural
 
 #print axioms ZeroParadox.J_self_is_largest        -- does not depend on any axioms
-#print axioms ZeroParadox.ZPI.t_iz_limit_is_new_null         -- does not depend on any axioms
+#print axioms ZeroParadox.t_iz_limit_is_new_null         -- does not depend on any axioms
 #print axioms ZeroParadox.ps_structural_floor   -- [propext, Quot.sound]
 #print axioms ZeroParadox.instWheel                -- [propext, Quot.sound]
 #print axioms ZeroParadox.inf_ne_bot               -- [propext, Quot.sound]
@@ -81,7 +81,7 @@ section WhereChoiceEnters
 
 #print axioms ZeroParadox.c3_irreversible        -- [propext, Classical.choice, Quot.sound]  (p-adic topology)
 #print axioms ZeroParadox.t4_snap_orthogonal     -- [propext, Classical.choice, Quot.sound]  (Hilbert space)
-#print axioms ZeroParadox.ZPH_TopFunctor.fB_functor          -- [propext, Classical.choice, Quot.sound]  (TopCat)
+#print axioms ZeroParadox.fB_functor          -- [propext, Classical.choice, Quot.sound]  (TopCat)
 #print axioms ZeroParadox.fD_functor         -- [propext, Classical.choice, Quot.sound]  (ModuleCat ℂ)
 #print axioms ZeroParadox.fC_functor         -- [propext, Classical.choice, Quot.sound]  (KleisliCat PMF)
 #print axioms ZeroParadox.snap_dichotomy   -- [propext, Classical.choice, Quot.sound]  (snap-occurrence dichotomy, ℝ/ℚ_p)

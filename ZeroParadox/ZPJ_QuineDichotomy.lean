@@ -20,7 +20,7 @@ Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
 
 - **Existence fork (ν admits / μ forbids):** the self-referential object exists on the non-well-founded
   (greatest-fixed-point) side and not on the well-founded (least-fixed-point) side.
-  (`ZeroParadox.ZPP.categorical_fork_strict`: `Fix idPF.Obj` empty, `Cofix idPF.Obj` inhabited.)
+  (`ZeroParadox.categorical_fork_strict`: `Fix idPF.Obj` empty, `Cofix idPF.Obj` inhabited.)
 - **Uniqueness + identity:** wherever the self-referential fixed point lives, it is unique and IS the
   bottom. (`ZeroParadox.selfMem_eq_singleton_bot`: the self-members are exactly `{⊥}`.)
 - **Cantor obstruction (no literal):** a nontrivial lattice face admits no Lawvere witness, so the literal
@@ -36,7 +36,7 @@ exists ⟺ AFA" — stays a metatheoretic commitment (the FMC / CC-2, fenced in 
 claim that AFA is machine-checked.
 
 ## Symbol map (component → existing lemma)
-- existence fork        → `ZeroParadox.ZPP.categorical_fork_strict`  (`idPF`, `Fix`, `Cofix` from ZP-P)
+- existence fork        → `ZeroParadox.categorical_fork_strict`  (`idPF`, `Fix`, `Cofix` from ZP-P)
 - self-members = {⊥}    → `ZeroParadox.selfMem_eq_singleton_bot`  (`selfMemDerived`, `bot`)
 - no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness`  (`HasLawvereWitness`)
 
@@ -48,11 +48,11 @@ set_option maxHeartbeats 400000
 
 namespace ZeroParadox
 
-open ZeroParadox.ZPP ZeroParadox ZeroParadox ZeroParadox ZPSemilattice QPF
+open ZeroParadox ZeroParadox ZeroParadox ZeroParadox ZPSemilattice QPF
 
 /-- **The Quine-atom dichotomy (existence fork).** The self-referential object exists on the
     non-well-founded (final-coalgebra) side and not on the well-founded (initial-algebra) side:
-    `Fix idPF.Obj` is empty, `Cofix idPF.Obj` is inhabited. (= `ZeroParadox.ZPP.categorical_fork_strict`.)
+    `Fix idPF.Obj` is empty, `Cofix idPF.Obj` is inhabited. (= `ZeroParadox.categorical_fork_strict`.)
     The set-theoretic reading "Quine atom ⟺ AFA" is the metatheoretic commitment (see FENCE), NOT part of
     this theorem. -/
 theorem quine_dichotomy :

@@ -72,7 +72,7 @@ namespace ZeroParadox
 
 open CategoryTheory
 open ZeroParadox ZeroParadox
-open ZeroParadox ZeroParadox.ZPH_TopFunctor
+open ZeroParadox ZeroParadox
 
 /-! ## Edge (a) — #1 (μ, well-founded) vs #3 (ν, non-well-founded inverse limit) -/
 
