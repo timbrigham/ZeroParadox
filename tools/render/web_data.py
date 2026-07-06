@@ -71,10 +71,24 @@ def load(export_path=None):
             for d in dom:
                 face_reps[d].append(_short(e))
         if len(dom) >= 2:
+            doms = sorted(set(dom))
             for r in EDGE_ROLES:
-                if r in roles:
-                    for a, b in combinations(sorted(set(dom)), 2):
-                        edges.setdefault((a, b, r), []).append(_short(e))
+                if r not in roles:
+                    continue
+                # `core` (cross-domain identity / Rosetta) genuinely relates ALL
+                # pairs of a multi-domain decl -- projecting it pairwise is honest
+                # (the "faces of one object" identity holds across every pair). But a
+                # DIRECTIONAL relation (`bridge` / `no-go`) on a >=3-domain decl is NOT
+                # a bridge/no-go on every pair -- the transform/obstruction concerns one
+                # pair or the whole span, not each edge (e.g. a #1<->#3 no-go whose real
+                # obstruction is reals<->ordinal must not draw an ordinal<->valuation
+                # no-go). So draw bridge/no-go ONLY from an unambiguous EXACTLY-2-domain
+                # decl; this drops pairwise-projection artifacts while keeping every
+                # genuine 2-domain bridge/no-go and every multi-way `core` identity.
+                if r != "core" and len(doms) > 2:
+                    continue
+                for a, b in combinations(doms, 2):
+                    edges.setdefault((a, b, r), []).append(_short(e))
 
     node_set = set(face_reps)
     for (a, b, _r) in edges:
