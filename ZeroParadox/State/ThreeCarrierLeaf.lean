@@ -44,7 +44,7 @@ witnesses).
 `↥({0} : Set Q₂)`, #2 `↥(stdSimplex ℝ (Fin 1))`, #5 `StateSpace 0` — is `Unique`, i.e. a singleton.
 Everything else follows from that alone:
 
-- `padic_floor_unique_29` / `simplex_point_unique_29` / `hilbert_carrier_unique` — the three carriers are
+- `padic_floor_unique_ThreeCarrierLeaf` / `simplex_point_unique_ThreeCarrierLeaf` / `hilbert_carrier_unique` — the three carriers are
   each `Unique`. These are the only statements that touch the actual objects, and each says only "this
   carrier has one element".
 - `hom_padic_simplex_subsingleton`, `hom_padic_hilbert_subsingleton` — `Subsingleton C(X, Y)`. These
@@ -85,21 +85,21 @@ open scoped Topology
 
 /-- #3: the p-adic ν-bottom as a topological subspace, the floor `{0} ⊆ Q₂`
     (`fB_bottom_is_limit : ⋂ n, q2Ball n = {0}`). -/
-abbrev padicFloor_29 : Type := ↥({(0 : Q₂)} : Set Q₂)
+abbrev padicFloor_ThreeCarrierLeaf : Type := ↥({(0 : Q₂)} : Set Q₂)
 
 /-- #2: the one-state Markov ν-bottom, the unique point of `stdSimplex ℝ (Fin 1)`. -/
-abbrev simplexPoint_29 : Type := ↥(stdSimplex ℝ (Fin 1))
+abbrev simplexPoint_ThreeCarrierLeaf : Type := ↥(stdSimplex ℝ (Fin 1))
 
 /-- #5: the Hilbert bottom's underlying carrier `StateSpace 0 = EuclideanSpace ℂ (Fin 0)`. -/
 abbrev hilbertCarrier : Type := StateSpace 0
 
 /-- #3 carrier is a one-element space. -/
-noncomputable instance padic_floor_unique_29 : Unique padicFloor_29 := Set.uniqueSingleton _
+noncomputable instance padic_floor_unique_ThreeCarrierLeaf : Unique padicFloor_ThreeCarrierLeaf := Set.uniqueSingleton _
 
 /-- #2 carrier is a one-element space: `stdSimplex ℝ (Fin 1) = {fun _ ↦ 1}`. -/
-noncomputable instance simplex_point_unique_29 : Unique simplexPoint_29 := by
+noncomputable instance simplex_point_unique_ThreeCarrierLeaf : Unique simplexPoint_ThreeCarrierLeaf := by
   have h : stdSimplex ℝ (Fin 1) = {fun _ ↦ (1 : ℝ)} := stdSimplex_unique ℝ (Fin 1)
-  have e : simplexPoint_29 ≃ ↥({fun _ ↦ (1 : ℝ)} : Set (Fin 1 → ℝ)) := Equiv.setCongr h
+  have e : simplexPoint_ThreeCarrierLeaf ≃ ↥({fun _ ↦ (1 : ℝ)} : Set (Fin 1 → ℝ)) := Equiv.setCongr h
   exact e.unique
 
 /-- #5 carrier is a one-element space: `EuclideanSpace ℂ (Fin 0)` has only `0`. -/
@@ -117,36 +117,36 @@ instance (`ContinuousMap.Defs`), true of any map into any singleton. Each carrie
 so the instances below are just that generic fact applied to one-point carriers. They carry NO
 p-adic / simplex / Hilbert content. -/
 
-/-- The hom-set `C(padicFloor_29, simplexPoint_29)` is a `Subsingleton`. This is `inferInstance` resolving
-    the GENERIC codomain-subsingleton instance, because `simplexPoint_29` is a one-point space — it has
+/-- The hom-set `C(padicFloor_ThreeCarrierLeaf, simplexPoint_ThreeCarrierLeaf)` is a `Subsingleton`. This is `inferInstance` resolving
+    the GENERIC codomain-subsingleton instance, because `simplexPoint_ThreeCarrierLeaf` is a one-point space — it has
     no p-adic or simplex content and would hold for any map into any singleton. Naming note: this is
     NOT a "forcing" specific to these objects; it is "maps into a one-point space are unique". -/
-instance hom_padic_simplex_subsingleton : Subsingleton C(padicFloor_29, simplexPoint_29) :=
+instance hom_padic_simplex_subsingleton : Subsingleton C(padicFloor_ThreeCarrierLeaf, simplexPoint_ThreeCarrierLeaf) :=
   inferInstance
 
-/-- The hom-set `C(padicFloor_29, hilbertCarrier)` is a `Subsingleton`, again by the generic
+/-- The hom-set `C(padicFloor_ThreeCarrierLeaf, hilbertCarrier)` is a `Subsingleton`, again by the generic
     codomain-subsingleton instance (the codomain is one-point). No Hilbert content. -/
-instance hom_padic_hilbert_subsingleton : Subsingleton C(padicFloor_29, hilbertCarrier) :=
+instance hom_padic_hilbert_subsingleton : Subsingleton C(padicFloor_ThreeCarrierLeaf, hilbertCarrier) :=
   inferInstance
 
 /-- The canonical homeomorphism between two `Unique` spaces (`homeomorphOfUnique`): "any two
     one-point spaces are homeomorphic". Cardinality-driven, not a structural identification.
     This is the #3 ≃ₜ #2 leaf reconciliation TC19 already established. -/
-noncomputable def nu_leaf_homeo : padicFloor_29 ≃ₜ simplexPoint_29 :=
-  Homeomorph.homeomorphOfUnique padicFloor_29 simplexPoint_29
+noncomputable def nu_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf :=
+  Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf simplexPoint_ThreeCarrierLeaf
 
 /-- **The TC29-specific edge: #3 ≃ₜ #5.** The canonical homeomorphism between the p-adic floor and the
     Hilbert seam carrier `StateSpace 0` — again `homeomorphOfUnique` (both are `Unique`). This is the
     leaf reconciliation TC19 does NOT cover: it adds the #5 seam node to the ν-leaf glue set. Generic
     (cardinality-driven), per the genericity witnesses below. -/
-noncomputable def seam_leaf_homeo : padicFloor_29 ≃ₜ hilbertCarrier :=
-  Homeomorph.homeomorphOfUnique padicFloor_29 hilbertCarrier
+noncomputable def seam_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier :=
+  Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf hilbertCarrier
 
-/-- `padicFloor_29 ≃ₜ PUnit`, again `homeomorphOfUnique`. Genericity witness for #3: the valuation/
+/-- `padicFloor_ThreeCarrierLeaf ≃ₜ PUnit`, again `homeomorphOfUnique`. Genericity witness for #3: the valuation/
     embedding invariant lives on the ambient `Q₂`, and the one-point subspace `{0}` forgets it, so the
     floor-as-space is a bare point. The real asymmetry is ambient and stays OPEN in `ZPH_MC1_TreeT2`. -/
-noncomputable def padic_is_punit : padicFloor_29 ≃ₜ PUnit :=
-  Homeomorph.homeomorphOfUnique padicFloor_29 PUnit
+noncomputable def padic_is_punit : padicFloor_ThreeCarrierLeaf ≃ₜ PUnit :=
+  Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf PUnit
 
 /-- `hilbertCarrier ≃ₜ PUnit`, again `homeomorphOfUnique`. Genericity witness for the #5 seam edge:
     the *same* construction that builds `seam_leaf_homeo` reconciles the Hilbert carrier with the
@@ -159,14 +159,14 @@ noncomputable def hilbert_is_punit : hilbertCarrier ≃ₜ PUnit :=
 
 /-- **TC29 capstone — the three-carrier ν/seam leaf glue, with #5 Hilbert load-bearing in-statement.**
     The NEW content over TC19: the statement names the #5 Hilbert seam carrier, not only #3/#2.
-    Conjoins (a) the three-way leaf homeo span `padicFloor_29 ≃ₜ simplexPoint_29` (= #3 ≃ₜ #2) and
-    `padicFloor_29 ≃ₜ hilbertCarrier` (= #3 ≃ₜ #5, the TC29-specific edge), with (b) the genericity
+    Conjoins (a) the three-way leaf homeo span `padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf` (= #3 ≃ₜ #2) and
+    `padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier` (= #3 ≃ₜ #5, the TC29-specific edge), with (b) the genericity
     deflation `hilbertCarrier ≃ₜ PUnit`. Reading: the Hilbert seam carrier joins the ν-leaf glue, but
     only by the generic subsingleton map — so this edge carries no Hilbert content beyond cardinality,
     exactly as the one-point case forces. Honest verdict: DECORATIVE, edge-to-#5 added, deflation
     in-statement. -/
 theorem nu_leaf_glue_three :
-    (Nonempty (padicFloor_29 ≃ₜ simplexPoint_29) ∧ Nonempty (padicFloor_29 ≃ₜ hilbertCarrier))
+    (Nonempty (padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf) ∧ Nonempty (padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier))
       ∧ Nonempty (hilbertCarrier ≃ₜ PUnit) :=
   ⟨⟨⟨nu_leaf_homeo⟩, ⟨seam_leaf_homeo⟩⟩, ⟨hilbert_is_punit⟩⟩
 
@@ -181,8 +181,8 @@ commitment of this construction. -/
 section PurityCheck
 open ZeroParadox
 
-#print axioms padic_floor_unique_29
-#print axioms simplex_point_unique_29
+#print axioms padic_floor_unique_ThreeCarrierLeaf
+#print axioms simplex_point_unique_ThreeCarrierLeaf
 #print axioms hilbert_carrier_unique
 #print axioms hom_padic_simplex_subsingleton
 #print axioms hom_padic_hilbert_subsingleton

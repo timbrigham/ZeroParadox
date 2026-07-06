@@ -32,7 +32,7 @@ a "reconciliation-strength method artifact" rather than a μ/ν property.
 claim it.** What the Lean actually proves is much weaker than T1's reconciliation, and weaker in a way
 that voids the method-artifact reading:
 
-- `padic_floor_unique` — the p-adic floor `↥({0} : Set Q₂)` is a one-point space (`Unique`).
+- `padic_floor_unique_SpanObstruction` — the p-adic floor `↥({0} : Set Q₂)` is a one-point space (`Unique`).
 - `ordinal_floor_unique` — the well-founded ordinal floor `↥({0} : Set Ordinal)` is one point.
 - `span_apex_to_padic_floor : PUnit.{1} ≃ₜ ↥({0} : Set Q₂)` — a homeomorphism, but only because both
   sides are singletons (`homeomorphOfUnique`).
@@ -75,7 +75,7 @@ open ZeroParadox
 open scoped Topology
 
 /-- #3 carrier as a one-point space: the p-adic floor `{0} ⊆ Q₂` is `Unique`. -/
-noncomputable instance padic_floor_unique : Unique (↥({(0 : Q₂)} : Set Q₂)) := Set.uniqueSingleton 0
+noncomputable instance padic_floor_unique_SpanObstruction : Unique (↥({(0 : Q₂)} : Set Q₂)) := Set.uniqueSingleton 0
 
 /-- #1 carrier as a one-point order: the well-founded ordinal floor `{0} ⊆ Ordinal` is `Unique`. -/
 instance ordinal_floor_unique : Unique (↥({(0 : Ordinal)} : Set Ordinal)) := Set.uniqueSingleton 0

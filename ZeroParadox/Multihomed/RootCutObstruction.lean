@@ -19,8 +19,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 This module tests **TC18 — strict-fork canonicity of the root**. The tree hypothesis roots the whole
 bottom-diagram at the μ/ν fork. ZP-P (`ZPP_Coalgebra.lean`) places that fork on the leaf-free identity
-polynomial functor `idPF`: its initial algebra (W-type, μ) `Fix idPF.Obj` is **empty**
-(`fix_isEmpty`) and its final coalgebra (M-type, ν) `Cofix idPF.Obj` is **inhabited**
+polynomial functor `idPF_Coalgebra`: its initial algebra (W-type, μ) `Fix idPF_Coalgebra.Obj` is **empty**
+(`fix_isEmpty`) and its final coalgebra (M-type, ν) `Cofix idPF_Coalgebra.Obj` is **inhabited**
 (`cofix_nonempty`). The pre-registered question: is the root cut a *genuine* obstruction — i.e. is
 there no map reconciling the two roots — or is it cosmetic?
 
@@ -28,7 +28,7 @@ there no map reconciling the two roots — or is it cosmetic?
 
 The load-bearing content is `root_cut_no_map_nu_to_mu`:
 
-  `IsEmpty (Cofix idPF.Obj → Fix idPF.Obj)`
+  `IsEmpty (Cofix idPF_Coalgebra.Obj → Fix idPF_Coalgebra.Obj)`
 
 There is **no function** from the inhabited ν-root to the empty μ-root: a function applied to the
 witness element of `Cofix` would produce an element of the empty `Fix`. The obstruction is IN the
@@ -65,11 +65,11 @@ open QPF
 open ZeroParadox
 
 /-- **The root cut, hard direction (in-statement obstruction).** There is no function from the
-    inhabited ν-root `Cofix idPF.Obj` to the empty μ-root `Fix idPF.Obj`. A map would send the
+    inhabited ν-root `Cofix idPF_Coalgebra.Obj` to the empty μ-root `Fix idPF_Coalgebra.Obj`. A map would send the
     witnessing element of `Cofix` (from `cofix_nonempty`) to an element of the empty `Fix` (from
     `fix_isEmpty`) — impossible. The obstruction is the emptiness of the *function type*. -/
 theorem root_cut_no_map_nu_to_mu :
-    IsEmpty (Cofix idPF.Obj → Fix idPF.Obj) := by
+    IsEmpty (Cofix idPF_Coalgebra.Obj → Fix idPF_Coalgebra.Obj) := by
   refine ⟨fun f => ?_⟩
   obtain ⟨c⟩ := cofix_nonempty
   exact fix_isEmpty.elim (f c)
@@ -78,18 +78,18 @@ theorem root_cut_no_map_nu_to_mu :
     ν-root: any two such functions agree, since the domain is empty. This is the trivial half of the
     asymmetry — a map exists one way and not the other. -/
 theorem root_cut_mu_to_nu_unique
-    (f g : Fix idPF.Obj → Cofix idPF.Obj) : f = g := by
+    (f g : Fix idPF_Coalgebra.Obj → Cofix idPF_Coalgebra.Obj) : f = g := by
   funext x
   exact fix_isEmpty.elim x
 
 /-- **Strict asymmetry of the root cut (capstone, in-statement).** The μ/ν root cut is a one-way wall:
-    there is NO function ν→μ (`IsEmpty (Cofix idPF.Obj → Fix idPF.Obj)`), while every two functions
+    there is NO function ν→μ (`IsEmpty (Cofix idPF_Coalgebra.Obj → Fix idPF_Coalgebra.Obj)`), while every two functions
     μ→ν coincide (the μ→ν map is unique, by emptiness of the domain). So the cut is strict and
     non-invertible: it cannot be a relabeling of one object, because a relabeling would give an
     invertible map in both directions. -/
 theorem root_cut_strict_asymmetric :
-    IsEmpty (Cofix idPF.Obj → Fix idPF.Obj) ∧
-      (∀ f g : Fix idPF.Obj → Cofix idPF.Obj, f = g) :=
+    IsEmpty (Cofix idPF_Coalgebra.Obj → Fix idPF_Coalgebra.Obj) ∧
+      (∀ f g : Fix idPF_Coalgebra.Obj → Cofix idPF_Coalgebra.Obj, f = g) :=
   ⟨root_cut_no_map_nu_to_mu, root_cut_mu_to_nu_unique⟩
 
 /-- **No equivalence across the root cut.** As an immediate consequence, the two roots are not
@@ -97,7 +97,7 @@ theorem root_cut_strict_asymmetric :
     impossible. This is the cleanest "not a relabeling" statement — the root cut is not a cosmetic
     renaming of a single object. -/
 theorem root_cut_no_equiv :
-    IsEmpty (Cofix idPF.Obj ≃ Fix idPF.Obj) := by
+    IsEmpty (Cofix idPF_Coalgebra.Obj ≃ Fix idPF_Coalgebra.Obj) := by
   refine ⟨fun e => ?_⟩
   exact root_cut_no_map_nu_to_mu.elim e.toFun
 
@@ -109,7 +109,7 @@ section PurityCheck
 open ZeroParadox
 
 -- Footprint (measured): all four carry [propext, Classical.choice, Quot.sound]. Choice is the
--- Mathlib M-type / `Cofix` artifact (fenced in ZPP_Coalgebra) — it enters through the `Cofix idPF.Obj`
+-- Mathlib M-type / `Cofix` artifact (fenced in ZPP_Coalgebra) — it enters through the `Cofix idPF_Coalgebra.Obj`
 -- type that every statement here mentions, not through any necessity of the obstruction. The
 -- obstruction's mathematical content (empty domain/codomain → asymmetric function-type emptiness) is
 -- itself choice-free; the footprint reflects the ambient M-type machinery, consistent with

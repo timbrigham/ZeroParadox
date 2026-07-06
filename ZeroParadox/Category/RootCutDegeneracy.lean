@@ -6,9 +6,9 @@ import ZeroParadox.Settheory.Coalgebra
 # ZP-H MC-1 tree test TC26: the root-cut degeneracy dichotomy
 
 This module sharpens the strict μ/ν fork of `ZPP_Coalgebra.lean` (TC21) into a **dichotomy at the
-root of the tree**. TC21 proved the fork *strict* on the leaf-free one-child functor `idPF`
-(child type `PUnit`, a recursive position): the initial algebra `QPF.Fix idPF.Obj` is empty and the
-final coalgebra `QPF.Cofix idPF.Obj` is inhabited, so the two fixed points cannot agree.
+root of the tree**. TC21 proved the fork *strict* on the leaf-free one-child functor `idPF_Coalgebra`
+(child type `PUnit`, a recursive position): the initial algebra `QPF.Fix idPF_Coalgebra.Obj` is empty and the
+final coalgebra `QPF.Cofix idPF_Coalgebra.Obj` is inhabited, so the two fixed points cannot agree.
 
 Here we show the complementary case. Take the **leaf-free constant polynomial functor**
 `constPF A := ⟨A, fun _ => PEmpty⟩` — head type `A`, **no recursive position** (child type empty).
@@ -153,10 +153,10 @@ equivalent: `Fix ≃ Cofix`. The seam recurs at the root of the tree. -/
 def root_seam : Fix (constPF A).Obj ≃ Cofix (constPF A).Obj :=
   fixEquiv.trans cofixEquiv.symm
 
-/-- For the one-recursive-position functor `idPF`, the fixed points are NOT equivalent: an equivalence
-would carry the inhabitant of `Cofix idPF.Obj` (ν) back into the empty `Fix idPF.Obj` (μ). This is the
+/-- For the one-recursive-position functor `idPF_Coalgebra`, the fixed points are NOT equivalent: an equivalence
+would carry the inhabitant of `Cofix idPF_Coalgebra.Obj` (ν) back into the empty `Fix idPF_Coalgebra.Obj` (μ). This is the
 strict half of the dichotomy, derived from `ZeroParadox.categorical_fork_strict`. -/
-theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj) := by
+theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) := by
   refine ⟨fun e => ?_⟩
   obtain ⟨c⟩ := ZeroParadox.cofix_nonempty
   exact ZeroParadox.fix_isEmpty.false (e.symm c)
@@ -166,11 +166,11 @@ recursive position and collapses to a seam exactly when it has none:
 
 * leaf-free **constant** functor `constPF A` (child type `PEmpty`, no recursive position):
   `Fix ≃ Cofix` (a seam) — first component;
-* one-shape **identity** functor `idPF` (child type `PUnit`, one recursive position):
+* one-shape **identity** functor `idPF_Coalgebra` (child type `PUnit`, one recursive position):
   `IsEmpty (Fix ≃ Cofix)` (strict, no seam) — second component. -/
 theorem root_cut_dichotomy :
     (Nonempty (Fix (constPF Unit).Obj ≃ Cofix (constPF Unit).Obj)) ∧
-    IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj) :=
+    IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ⟨⟨(root_seam : Fix (constPF Unit).Obj ≃ _)⟩, idPF_no_seam⟩
 
 section PurityCheck

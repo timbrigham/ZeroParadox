@@ -33,19 +33,19 @@ recursive-position presence alone.
 
 The three functors under test, all polynomial (`PFunctor`):
 - `seamPF = ⟨PUnit, fun _ => PEmpty⟩` — one node, a leaf, **no** recursive position.
-- `idPF_pf47 = ⟨PUnit, fun _ => PUnit⟩` — one node, one recursive position, **no** leaf.
-- `natPF = ⟨Bool, fun b => cond b PUnit PEmpty⟩` — `false` is a leaf, `true` carries one recursive
+- `idPF_RootCutTrichotomy = ⟨PUnit, fun _ => PUnit⟩` — one node, one recursive position, **no** leaf.
+- `natPF_RootCutTrichotomy = ⟨Bool, fun b => cond b PUnit PEmpty⟩` — `false` is a leaf, `true` carries one recursive
   position. This is the natural-number / list shape.
 
 **The in-statement findings (the load-bearing content lives in the theorem statements):**
 
 - `seam_fix_finite` — `W seamPF` (the least fixed point, `Fix`) is **finite**: the seam regime.
-- `strict_fix_isEmpty` — `W idPF_pf47` is **empty**: no base case, so no finite tree exists — the strict
+- `strict_fix_isEmpty` — `W idPF_RootCutTrichotomy` is **empty**: no base case, so no finite tree exists — the strict
   regime. (`W` is `Fix`; emptiness is the strict fork's `Fix = ∅`.)
-- `mixed_fix_nonempty` — `W natPF` is **nonempty**: the leaf (`false`) supplies a genuine base case.
-- `mixed_fix_infinite` — `W natPF` is **infinite**: the recursive position (`true`) lets finite trees
+- `mixed_fix_nonempty` — `W natPF_RootCutTrichotomy` is **nonempty**: the leaf (`false`) supplies a genuine base case.
+- `mixed_fix_infinite` — `W natPF_RootCutTrichotomy` is **infinite**: the recursive position (`true`) lets finite trees
   grow without bound.
-- `strict_cofix_nonempty`, `mixed_cofix_nonempty` — the greatest fixed points `M idPF_pf47`, `M natPF`
+- `strict_cofix_nonempty`, `mixed_cofix_nonempty` — the greatest fixed points `M idPF_RootCutTrichotomy`, `M natPF_RootCutTrichotomy`
   (`Cofix`) are nonempty. With `strict_fix_isEmpty` the strict fork is fully exhibited in-statement:
   `Fix = ∅`, `Cofix ≠ ∅`. The mixed regime has both a nonempty `Fix` (`mixed_fix_nonempty`) and a
   `Cofix`, so it is neither the seam (finite `Fix`) nor the strict fork (empty `Fix`).
@@ -74,10 +74,10 @@ open PFunctor
 def seamPF : PFunctor.{0, 0} := ⟨PUnit, fun _ => PEmpty⟩
 
 /-- Strict: one node, one recursive position, no leaf (the identity polynomial functor). -/
-def idPF_pf47 : PFunctor.{0, 0} := ⟨PUnit, fun _ => PUnit⟩
+def idPF_RootCutTrichotomy : PFunctor.{0, 0} := ⟨PUnit, fun _ => PUnit⟩
 
 /-- Mixed (the nat/list shape): `false` is a leaf, `true` carries one recursive position. -/
-def natPF : PFunctor.{0, 0} := ⟨Bool, fun b => cond b PUnit PEmpty⟩
+def natPF_RootCutTrichotomy : PFunctor.{0, 0} := ⟨Bool, fun b => cond b PUnit PEmpty⟩
 
 /-! ## Seam regime — `Fix` finite -/
 
@@ -100,9 +100,9 @@ theorem seam_fix_finite : Finite (W seamPF) := by
 
 /-! ## Strict regime — `Fix` empty -/
 
-/-- `W idPF_pf47` (= `Fix`) is empty: `idPF_pf47` has no leaf (every node has exactly one recursive position),
+/-- `W idPF_RootCutTrichotomy` (= `Fix`) is empty: `idPF_RootCutTrichotomy` has no leaf (every node has exactly one recursive position),
     so no finite tree exists. The strict fork's `Fix = ∅`. -/
-theorem strict_fix_isEmpty : IsEmpty (W idPF_pf47) := by
+theorem strict_fix_isEmpty : IsEmpty (W idPF_RootCutTrichotomy) := by
   constructor
   intro w
   -- well-founded recursion on the W-tree: every node forces a strictly smaller child, no base case
@@ -111,33 +111,33 @@ theorem strict_fix_isEmpty : IsEmpty (W idPF_pf47) := by
 
 /-! ## Mixed regime — `Fix` nonempty and infinite -/
 
-/-- `W natPF` (= `Fix`) is nonempty: the leaf node `false` (whose child type is `PEmpty`) is a base
+/-- `W natPF_RootCutTrichotomy` (= `Fix`) is nonempty: the leaf node `false` (whose child type is `PEmpty`) is a base
     case, giving the finite tree `⟨false, PEmpty.elim⟩`. -/
-theorem mixed_fix_nonempty : Nonempty (W natPF) :=
+theorem mixed_fix_nonempty : Nonempty (W natPF_RootCutTrichotomy) :=
   ⟨WType.mk false (fun (p : cond false PUnit PEmpty) => (p : PEmpty).elim)⟩
 
-/-- `W natPF` (= `Fix`) is infinite: the recursive node `true` (child type `PUnit`, nonempty) and the
+/-- `W natPF_RootCutTrichotomy` (= `Fix`) is infinite: the recursive node `true` (child type `PUnit`, nonempty) and the
     leaf node `false` (child type `PEmpty`) together build trees of unbounded depth. -/
-theorem mixed_fix_infinite : Infinite (W natPF) := by
-  -- `natPF.B true = PUnit` is nonempty, `natPF.B false = PEmpty` is empty.
-  haveI : Nonempty (natPF.B true) := ⟨PUnit.unit⟩
-  haveI : IsEmpty (natPF.B false) := inferInstanceAs (IsEmpty PEmpty)
-  exact WType.infinite_of_nonempty_of_isEmpty (β := natPF.B) true false
+theorem mixed_fix_infinite : Infinite (W natPF_RootCutTrichotomy) := by
+  -- `natPF_RootCutTrichotomy.B true = PUnit` is nonempty, `natPF_RootCutTrichotomy.B false = PEmpty` is empty.
+  haveI : Nonempty (natPF_RootCutTrichotomy.B true) := ⟨PUnit.unit⟩
+  haveI : IsEmpty (natPF_RootCutTrichotomy.B false) := inferInstanceAs (IsEmpty PEmpty)
+  exact WType.infinite_of_nonempty_of_isEmpty (β := natPF_RootCutTrichotomy.B) true false
 
 /-! ## Cofix witnesses (the `M`-type / greatest fixed point) -/
 
-/-- The strict fork's `Cofix` is inhabited: `M idPF_pf47` is nonempty (the infinite unary unfolding).
+/-- The strict fork's `Cofix` is inhabited: `M idPF_RootCutTrichotomy` is nonempty (the infinite unary unfolding).
     With `strict_fix_isEmpty` this is the full strict fork: `Fix = ∅`, `Cofix ≠ ∅`. -/
-theorem strict_cofix_nonempty : Nonempty (M idPF_pf47) := by
-  haveI : Inhabited idPF_pf47.A := ⟨PUnit.unit⟩
+theorem strict_cofix_nonempty : Nonempty (M idPF_RootCutTrichotomy) := by
+  haveI : Inhabited idPF_RootCutTrichotomy.A := ⟨PUnit.unit⟩
   exact ⟨default⟩
 
-/-- The mixed `Cofix` is inhabited: `M natPF` is nonempty. (Its inhabitants include both the finite
+/-- The mixed `Cofix` is inhabited: `M natPF_RootCutTrichotomy` is nonempty. (Its inhabitants include both the finite
     images of `Fix` and strictly larger infinite unfoldings; `Fix` is nonempty by
     `mixed_fix_nonempty`, so the mixed regime has both a nonempty `Fix` and a `Cofix` — neither the
     seam's finite-`Fix` nor the strict fork's empty-`Fix`.) -/
-theorem mixed_cofix_nonempty : Nonempty (M natPF) := by
-  haveI : Inhabited natPF.A := ⟨false⟩
+theorem mixed_cofix_nonempty : Nonempty (M natPF_RootCutTrichotomy) := by
+  haveI : Inhabited natPF_RootCutTrichotomy.A := ⟨false⟩
   exact ⟨default⟩
 
 /-! ## The trichotomy, bundled -/
@@ -149,8 +149,8 @@ theorem mixed_cofix_nonempty : Nonempty (M natPF) := by
     The three regimes are pairwise distinguished in-statement by the cardinality of `Fix`. -/
 theorem mixed_trichotomy :
     Finite (W seamPF) ∧
-    (IsEmpty (W idPF_pf47) ∧ Nonempty (M idPF_pf47)) ∧
-    (Nonempty (W natPF) ∧ Infinite (W natPF) ∧ Nonempty (M natPF)) :=
+    (IsEmpty (W idPF_RootCutTrichotomy) ∧ Nonempty (M idPF_RootCutTrichotomy)) ∧
+    (Nonempty (W natPF_RootCutTrichotomy) ∧ Infinite (W natPF_RootCutTrichotomy) ∧ Nonempty (M natPF_RootCutTrichotomy)) :=
   ⟨seam_fix_finite,
    ⟨strict_fix_isEmpty, strict_cofix_nonempty⟩,
    ⟨mixed_fix_nonempty, mixed_fix_infinite, mixed_cofix_nonempty⟩⟩

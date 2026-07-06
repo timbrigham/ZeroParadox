@@ -55,7 +55,7 @@ is non-degenerate, not the vacuous empty case). The schema instantiates at both 
 states the catch: the lattice instance fits `SeamSchema` ONLY because its two carriers are forced equal
 (`μ = ν` as the same subtype) so the `cmp` is `Equiv.refl` — a trivial identity equivalence — whereas
 the QPF instance relates two provably DISTINCT types (`Fix` and `Cofix` are not definitionally equal,
-and for the recursive functor `idPF` they are not even equivalent, `idPF_no_seam`). So the shared
+and for the recursive functor `idPF_Coalgebra` they are not even equivalent, `idPF_no_seam`). So the shared
 schema is satisfied by both, but the *only* common content is "there is some equivalence between the
 μ-carrier and the ν-carrier" — which is automatically true once the lattice carriers are collapsed to a
 single type. `no_cross_setting_map` records that there is NO map exhibited between the QPF setting
@@ -170,12 +170,12 @@ theorem seam_schema_is_degenerate_for_lattice :
     (latticeSeam (L := L)).cmp = Equiv.refl (FpSub L) := rfl
 
 /-- **The QPF seam relates provably distinct carriers (the contrast that makes the schema loose).**
-In-statement: for the *recursive* functor `idPF` there is NO equivalence `Fix ≃ Cofix` at all
+In-statement: for the *recursive* functor `idPF_Coalgebra` there is NO equivalence `Fix ≃ Cofix` at all
 (TC26 `idPF_no_seam`). So the existence of `qpfSeam A`'s equivalence is a real fact about the carriers
-(it holds for `constPF`, fails for `idPF`), NOT an automatic `refl` — unlike the lattice side. The
+(it holds for `constPF`, fails for `idPF_Coalgebra`), NOT an automatic `refl` — unlike the lattice side. The
 schema therefore encodes genuine content on the QPF side and vacuous content on the lattice side. -/
 theorem qpf_seam_not_automatic :
-    IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj) :=
+    IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   idPF_no_seam
 
 /-- **No cross-setting map (the capstone fence, content IN the statement).** The two `SeamSchema`
@@ -184,7 +184,7 @@ between them:
 
 * QPF: a type equivalence `Fix (constPF Unit).Obj ≃ Cofix (constPF Unit).Obj` whose witness is the
   canonical bijective comparison (distinct carriers; the equivalence FAILS for the recursive functor
-  `idPF`, so it is genuine content);
+  `idPF_Coalgebra`, so it is genuine content);
 * lattice: a set equality `{x | selfApp x = x} = {⊥}` whose `SeamSchema` witness is forced to be
   `Equiv.refl` on the collapsed singleton carrier (vacuous content).
 
@@ -198,8 +198,8 @@ theorem no_cross_setting_map :
     -- QPF side: genuine equivalence (canonical, bijective) between distinct carriers ...
     (((qpfSeam Unit).cmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj) = canonicalCmp
       ∧ Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj))
-    ∧ -- ... which is NOT automatic: it fails for the recursive functor idPF
-      IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj)
+    ∧ -- ... which is NOT automatic: it fails for the recursive functor idPF_Coalgebra
+      IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj)
     ∧ -- lattice side: the SeamSchema witness is the trivial Equiv.refl on a collapsed carrier
       ((latticeSeam (L := L)).cmp = Equiv.refl (FpSub L))
     ∧ -- lattice side fact: the f.p. set is the nonempty singleton {⊥} (a SET equality, not a type equiv)

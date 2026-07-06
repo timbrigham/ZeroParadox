@@ -22,7 +22,7 @@ The snap ⊥→ε₀ as the crossing of the well-foundedness boundary, witnessed
 * **Relation / carrier level** (`ZPJ_Boundary`): the self-application floor is non-well-founded (the ⊥
   self-loop, `fixed_bot`); the ordinal ascent is well-founded; on one carrier, the floor is the *sole*
   non-accessible point and every post-snap state is accessible (`snap_crossing`).
-* **Categorical level** (`ZPP_Coalgebra`, the ZP-P μ/ν fork): for the leaf-free functor `idPF`, the
+* **Categorical level** (`ZPP_Coalgebra`, the ZP-P μ/ν fork): for the leaf-free functor `idPF_Coalgebra`, the
   initial algebra (W-type, μ, the well-founded closure) is **empty** and the final coalgebra (M-type, ν,
   the non-well-founded closure) is **inhabited** (`categorical_fork_strict`). The self-referential element
   lives in ν, not μ — the back edge on the non-well-founded side.
@@ -67,7 +67,7 @@ set_option maxHeartbeats 400000
 theorem snap_boundary_two_registers {L : Type*} [ZPSemilattice L] [AbstractSelfApp L] :
     ((¬ WellFounded (floorRel (L := L)))
         ∧ (¬ Acc phaseRel Phase.floor ∧ ∀ o : Ordinal, Acc phaseRel (Phase.up o)))
-      ∧ (IsEmpty (QPF.Fix idPF.Obj) ∧ Nonempty (QPF.Cofix idPF.Obj)) :=
+      ∧ (IsEmpty (QPF.Fix idPF_Coalgebra.Obj) ∧ Nonempty (QPF.Cofix idPF_Coalgebra.Obj)) :=
   ⟨⟨floor_not_wellFounded, snap_crossing⟩, categorical_fork_strict⟩
 
 end ZeroParadox

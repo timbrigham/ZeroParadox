@@ -21,17 +21,17 @@ in a statement. The only way to put constructive content IN the statement is to 
 through a genuinely constructive proxy. That is what this file does, and it is the load-bearing new
 content over `fix_isEmpty`:
 
-* **μ side — a strictly more constructive witness than the existing one.** `QPF.Fix idPF.Obj` is by
-  definition `Quotient (Wsetoid : Setoid idPF.W)` with `idPF.W = WType idPF.B`. We prove
-  `IsEmpty idPF.W` **by the bare inductive `WType` eliminator** (`w_isEmpty`) — no `QPF.Fix.ind`, no
+* **μ side — a strictly more constructive witness than the existing one.** `QPF.Fix idPF_Coalgebra.Obj` is by
+  definition `Quotient (Wsetoid : Setoid idPF_Coalgebra.W)` with `idPF_Coalgebra.W = WType idPF_Coalgebra.B`. We prove
+  `IsEmpty idPF_Coalgebra.W` **by the bare inductive `WType` eliminator** (`w_isEmpty`) — no `QPF.Fix.ind`, no
   `Liftp`, no quotient machinery. That term has footprint `[]` (NO axioms — not even `Quot.sound`),
-  strictly tighter than `fix_isEmpty`'s `[propext, Quot.sound]`. `IsEmpty (Fix idPF.Obj)`
+  strictly tighter than `fix_isEmpty`'s `[propext, Quot.sound]`. `IsEmpty (Fix idPF_Coalgebra.Obj)`
   (`fix_isEmpty_constructive`) then follows using `Quot.exists_rep`, and is measured **fully
   axiom-free** — strictly tighter than the existing `fix_isEmpty`. The μ-emptiness of the root is thus
   witnessed by structural recursion on a plain inductive type, with no kernel axioms at all.
 
 * **ν side — choice cannot be made load-bearing.** The strongest honest in-statement claim is
-  `Nonempty (Cofix idPF.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),
+  `Nonempty (Cofix idPF_Coalgebra.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),
   whose footprint carries `Classical.choice` from Mathlib's M-type / `Cofix.corec`. We do **not**
   claim ν *requires* choice: for a polynomial functor the final coalgebra is constructible choice-free
   in principle (Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021). The `Classical.choice` is a Mathlib
@@ -45,15 +45,15 @@ choice-dependent or quotient-quotient-collapse lemma.
 
 ## Formal Overview
 
-`PFunctor.W P = WType P.B`, an ordinary inductive type. For `idPF` (`A = PUnit`, `B = fun _ => PUnit`)
+`PFunctor.W P = WType P.B`, an ordinary inductive type. For `idPF_Coalgebra` (`A = PUnit`, `B = fun _ => PUnit`)
 there is no leaf (no head `a` with `B a` empty), so `WType.recOn` with motive `fun _ => False`
 discharges emptiness: each node needs its `PUnit`-indexed child already refuted, and `PUnit.unit`
-supplies that contradiction. `QPF.Fix idPF.Obj = Quotient (Wsetoid)` is then empty because every class
+supplies that contradiction. `QPF.Fix idPF_Coalgebra.Obj = Quotient (Wsetoid)` is then empty because every class
 has a representative (`Quot.exists_rep`) and the representative is impossible. The ν inhabitant is the
 self-unfolding corecursion node (`ZeroParadox.cofix_nonempty`).
 
-What is PROVED is exactly: `IsEmpty idPF.W` by the inductive eliminator (no axioms), `IsEmpty (Fix
-idPF.Obj)` from it (`[Quot.sound]`), and `Nonempty (Cofix idPF.Obj)`. The VERDICT on the pre-registered
+What is PROVED is exactly: `IsEmpty idPF_Coalgebra.W` by the inductive eliminator (no axioms), `IsEmpty (Fix
+idPF_Coalgebra.Obj)` from it (`[Quot.sound]`), and `Nonempty (Cofix idPF_Coalgebra.Obj)`. The VERDICT on the pre-registered
 fork — whether this constitutes a *new theorem-level invariant* or only a *measured comment* — is the
 finding, recorded in the Engineer's Take placeholder and the report. The in-statement constructive
 upgrade on the μ side is real; the "ν needs choice" half remains a fenced comment, not a theorem.
@@ -74,20 +74,20 @@ set_option maxHeartbeats 400000
 
 /-! ### μ side: a choice-free AND propext-free emptiness witness via the bare inductive eliminator -/
 
-/-- **`idPF.W` is empty, by the `WType` recursor alone.** `idPF.W = WType idPF.B` with
-`idPF.B = fun _ => PUnit`. There is no leaf node (no head whose child type is empty), so structural
+/-- **`idPF_Coalgebra.W` is empty, by the `WType` recursor alone.** `idPF_Coalgebra.W = WType idPF_Coalgebra.B` with
+`idPF_Coalgebra.B = fun _ => PUnit`. There is no leaf node (no head whose child type is empty), so structural
 recursion never bottoms out: the motive `fun _ => False` is discharged at every node by feeding
 `PUnit.unit` to the (already-refuted) child function. This term uses NO axioms — not `Classical.choice`,
 not `propext`, not `Quot.sound`. It is strictly more constructive than `QPF.Fix.ind`. -/
-theorem w_isEmpty : IsEmpty ZeroParadox.idPF.W :=
+theorem w_isEmpty : IsEmpty ZeroParadox.idPF_Coalgebra.W :=
   ⟨fun w => WType.recOn w (fun _ _ ih => ih PUnit.unit)⟩
 
-/-- **μ is empty — the choice-free, in-statement witness.** `Fix idPF.Obj` is by definition
-`Quotient (Wsetoid : Setoid idPF.W)`. Any element has a representative (`Quot.exists_rep`), which is
+/-- **μ is empty — the choice-free, in-statement witness.** `Fix idPF_Coalgebra.Obj` is by definition
+`Quotient (Wsetoid : Setoid idPF_Coalgebra.W)`. Any element has a representative (`Quot.exists_rep`), which is
 impossible by `w_isEmpty`. Measured **fully axiom-free**, strictly tighter than the existing
 `ZeroParadox.fix_isEmpty` (`[propext, Quot.sound]`). This is the load-bearing new content: the
 μ-witness re-derived without `Liftp` / `Fix.ind`. -/
-theorem fix_isEmpty_constructive : IsEmpty (Fix ZeroParadox.idPF.Obj) :=
+theorem fix_isEmpty_constructive : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj) :=
   ⟨fun x => by
     obtain ⟨w, _⟩ := Quot.exists_rep x
     exact w_isEmpty.false w⟩
@@ -98,7 +98,7 @@ theorem fix_isEmpty_constructive : IsEmpty (Fix ZeroParadox.idPF.Obj) :=
 corecursion term (the self-unfolding node). Its footprint carries `Classical.choice` from Mathlib's
 M-type machinery — recorded in PurityCheck, NOT asserted as a necessity (polynomial final coalgebras
 are choice-free in principle: Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021). -/
-theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF.Obj) :=
+theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 
 /-! ### The split, in one statement -/
@@ -110,7 +110,7 @@ side is inhabited by a concrete corecursion term. The in-statement *constructive
 μ side; the ν side's choice-carrying status is a measured comment (PurityCheck), not part of this type.
 -/
 theorem root_purity_split :
-    IsEmpty (Fix ZeroParadox.idPF.Obj) ∧ Nonempty (Cofix ZeroParadox.idPF.Obj) :=
+    IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj) ∧ Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ⟨fix_isEmpty_constructive, cofix_nonempty'⟩
 
 section PurityCheck

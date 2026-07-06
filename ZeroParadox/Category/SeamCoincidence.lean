@@ -43,7 +43,7 @@ checking it holds at the actual ZP-D bottom node, with the unfolding spelled out
   (`IsTerminal.from` + `IsTerminal.hom_ext`). This is a short restatement of the `IsZero` definition,
   not novel content.
 
-- `seam_is_mu_nu_coincidence` — the definition instantiated at the actual seam node: `fD_functor.obj 0`
+- `seam_is_mu_nu_coincidence_SeamCoincidence` — the definition instantiated at the actual seam node: `fD_functor.obj 0`
   is a zero object **iff** it is both initial and terminal, and (since it *is* a zero object, via
   `ZPH_MC1_TreeSeam.hilbert_bottom_isZero`) both sides hold. So the #5 seam is literally the μ=ν
   coincidence point, not merely a node we labelled "seam".
@@ -99,7 +99,7 @@ theorem isZero_iff_isInitial_and_isTerminal {X : C} :
     it is both initial and terminal (the general keystone, specialized), and both sides in fact hold
     (it *is* a zero object, by `ZPH_MC1_TreeSeam.hilbert_bottom_isZero`). So the seam is literally the
     μ=ν coincidence point. -/
-theorem seam_is_mu_nu_coincidence :
+theorem seam_is_mu_nu_coincidence_SeamCoincidence :
     (IsZero (ZeroParadox.fD_functor.obj 0)
       ↔ Nonempty (IsInitial (ZeroParadox.fD_functor.obj 0))
         ∧ Nonempty (IsTerminal (ZeroParadox.fD_functor.obj 0)))
@@ -115,6 +115,6 @@ open ZeroParadox
 
 #print axioms isZero_of_isInitial_isTerminal
 #print axioms isZero_iff_isInitial_and_isTerminal
-#print axioms seam_is_mu_nu_coincidence
+#print axioms seam_is_mu_nu_coincidence_SeamCoincidence
 
 end PurityCheck

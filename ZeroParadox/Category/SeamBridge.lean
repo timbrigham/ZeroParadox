@@ -26,8 +26,8 @@ terminal in its own category `ModuleCat ℂ`. The tree's structural claim is str
 and a canonical morphism TO every ν-side bottom inside a single ambient category. TC18 races the
 two readings.
 
-**GO reading (provable, but generic).** Within `ModuleCat ℂ`, the zero object `Z = fD_functor.obj 0`
-is genuinely two-sided: for every object `X` there is a map `Z ⟶ X` (initiality) AND `X ⟶ Z`
+**GO reading (provable, but generic).** Within `ModuleCat ℂ`, the zero object `Z_SeamBridge = fD_functor.obj 0`
+is genuinely two-sided: for every object `X` there is a map `Z_SeamBridge ⟶ X` (initiality) AND `X ⟶ Z_SeamBridge`
 (terminality). This is `seam_two_sided`. It is honest, and it is exactly the *definition* of a zero
 object restated (`IsZero.unique_to` / `IsZero.unique_from`) — true of ANY zero object in ANY category,
 not a special bridging fact about these bottoms. We state it as what it is.
@@ -36,8 +36,8 @@ not a special bridging fact about these bottoms. We state it as what it is.
 `ModuleCat ℂ` objects only**. The actual cross-subtree bottoms do NOT live in `ModuleCat ℂ`:
 #4 the Kleisli bottom `Fin 0` lives in `KleisliCat PMF`, #3 the p-adic floor `{0}` lives in `TopCat`,
 #1 the order floor `0` lives in `ℕ`. They are not objects `X : ModuleCat ℂ`, so `seam_two_sided`
-**cannot be instantiated at them** — there is no map `Z ⟶ (Fin 0 : KleisliCat)` or
-`(Fin 0 : KleisliCat) ⟶ Z`, because those would be morphisms between objects of different categories,
+**cannot be instantiated at them** — there is no map `Z_SeamBridge ⟶ (Fin 0 : KleisliCat)` or
+`(Fin 0 : KleisliCat) ⟶ Z_SeamBridge`, because those would be morphisms between objects of different categories,
 which do not typecheck. The witness that the seam does not reach the μ-subtree as a *bridge node* is
 `kleisli_bottom_not_terminal` (reused from the seam file): #4 `Fin 0` is initial but NOT terminal in
 its OWN category — its universal-property profile differs from the seam's, so even up to the obvious
@@ -65,16 +65,16 @@ open ZeroParadox ZeroParadox
 open ZeroParadox
 
 /-- The seam object: the Hilbert bottom `fD_functor.obj 0`, a zero object of `ModuleCat ℂ`. -/
-noncomputable abbrev Z : ModuleCat ℂ := fD_functor.obj 0
+noncomputable abbrev Z_SeamBridge : ModuleCat ℂ := fD_functor.obj 0
 
-/-- **GO (true, but generic).** Within `ModuleCat ℂ`, the seam `Z` is two-sided: for every object `X`
-    there is a canonical map `Z ⟶ X` (from initiality, the colimit-target / μ end) AND `X ⟶ Z`
+/-- **GO (true, but generic).** Within `ModuleCat ℂ`, the seam `Z_SeamBridge` is two-sided: for every object `X`
+    there is a canonical map `Z_SeamBridge ⟶ X` (from initiality, the colimit-target / μ end) AND `X ⟶ Z_SeamBridge`
     (from terminality, the limit-source / ν end). Reuses `hilbert_bottom_isZero`.
 
     HONEST SCOPE: this is the *definition* of a zero object restated (`IsZero.unique_to` /
     `IsZero.unique_from`). It is true of ANY zero object in ANY category — it is NOT a special
     bridging fact about the framework bottoms. The quantifier ranges over `ModuleCat ℂ` ONLY. -/
-theorem seam_two_sided (X : ModuleCat ℂ) : Nonempty (Z ⟶ X) ∧ Nonempty (X ⟶ Z) :=
+theorem seam_two_sided (X : ModuleCat ℂ) : Nonempty (Z_SeamBridge ⟶ X) ∧ Nonempty (X ⟶ Z_SeamBridge) :=
   ⟨⟨hilbert_bottom_isZero.isInitial.to X⟩, ⟨hilbert_bottom_isZero.isTerminal.from X⟩⟩
 
 /-- **NO-GO / deflation.** The seam's two-sidedness is an **intra-category** property of `ModuleCat ℂ`:
@@ -86,7 +86,7 @@ theorem seam_two_sided (X : ModuleCat ℂ) : Nonempty (Z ⟶ X) ∧ Nonempty (X 
     typechecks), and the μ-side bottom's profile differs even in its own home. The conjunction is the
     load-bearing witness that there is a seam node but no seam edge to the μ-subtree. -/
 theorem seam_is_intra_category :
-    (∀ X : ModuleCat ℂ, Nonempty (Z ⟶ X) ∧ Nonempty (X ⟶ Z))
+    (∀ X : ModuleCat ℂ, Nonempty (Z_SeamBridge ⟶ X) ∧ Nonempty (X ⟶ Z_SeamBridge))
     ∧ IsEmpty (Limits.IsTerminal (fC_functor.obj 0)) :=
   ⟨seam_two_sided, kleisli_bottom_not_terminal⟩
 

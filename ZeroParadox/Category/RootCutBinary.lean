@@ -10,7 +10,7 @@ This module sharpens the root-cut dichotomy of `ZPH_MC1_TC26.lean` into a statem
 **number** of recursive positions. TC26 established the dichotomy on the two boundary cases:
 
 * `constPF A` — child type `PEmpty`, **zero** recursive positions: `Fix ≃ Cofix` (a seam);
-* `idPF`      — child type `PUnit`, **one** recursive position: `IsEmpty (Fix ≃ Cofix)` (strict).
+* `idPF_Coalgebra`      — child type `PUnit`, **one** recursive position: `IsEmpty (Fix ≃ Cofix)` (strict).
 
 The open question this file closes: is the strict side graded by arity, or is it triggered by mere
 *presence* of a recursive position? We take the **binary-tree polynomial functor**
@@ -23,17 +23,17 @@ binary tree (a bounded-depth tree), making `Fix` inhabited and grading the dicho
 
 The NO-GO is refuted; the GO holds. With no leaf constructor every node still demands children (now
 two of them), so no well-founded finite tree exists — the same base-case obstruction as the unary
-`idPF`, unchanged by doubling the arity:
+`idPF_Coalgebra`, unchanged by doubling the arity:
 
 - `binFix_isEmpty`   : `IsEmpty (QPF.Fix binPF.Obj)`     (μ side: still empty)
 - `binCofix_nonempty`: `Nonempty (QPF.Cofix binPF.Obj)`  (ν side: still inhabited)
 - `binPF_fork_strict`: `IsEmpty (Fix) ∧ Nonempty (Cofix)` (the strict side, mirroring
-  `ZeroParadox.categorical_fork_strict` for `idPF`)
+  `ZeroParadox.categorical_fork_strict` for `idPF_Coalgebra`)
 - `binPF_no_seam`    : `IsEmpty (Fix binPF.Obj ≃ Cofix binPF.Obj)`
 
 The capstone `arity_collapse` records the trichotomy of child types `{empty, one, two}` collapsing to
 the **binary** dichotomy `{no recursive position ⇒ seam | ≥ 1 recursive position ⇒ strict}`: the
-zero-position `constPF Unit` seams, while both the one-position `idPF` and the two-position `binPF` are
+zero-position `constPF Unit` seams, while both the one-position `idPF_Coalgebra` and the two-position `binPF` are
 strict. The cut is presence-vs-absence, not multiplicity.
 
 ## Formal Overview (AI-assisted)
@@ -43,7 +43,7 @@ from `PUnit` to `Bool` children: `Fix.ind` reduces emptiness to: for every `x : 
 the children satisfy `False` — which `liftp_iff` unpacks to a child predicate that we evaluate at one
 concrete child (`true : Bool`), contradiction. Doubling the child type changes nothing because the
 argument needs only *one* child to derive the contradiction. The ν-inhabitedness is one corecursion
-from the single head shape, exactly as for `idPF`. `binPF_no_seam` is the TC26 transport argument:
+from the single head shape, exactly as for `idPF_Coalgebra`. `binPF_no_seam` is the TC26 transport argument:
 an equivalence would carry the ν inhabitant into the empty μ.
 
 What is PROVED is exactly the four theorems and the capstone bundle below. The reading of "two
@@ -82,7 +82,7 @@ instance : QPF binPF.Obj where
 
 /-- **μ is empty.** The initial algebra of the leaf-free **binary** functor has no element: every
 node demands two children with no base case, so no well-founded finite tree exists. This is the same
-obstruction as `ZeroParadox.fix_isEmpty` (unary `idPF`); the extra child position does not create
+obstruction as `ZeroParadox.fix_isEmpty` (unary `idPF_Coalgebra`); the extra child position does not create
 a base case. The contradiction is derived from a single child (`true`). -/
 theorem binFix_isEmpty : IsEmpty (Fix binPF.Obj) :=
   ⟨fun x => Fix.ind (fun _ => False) (fun y hy => by
@@ -99,7 +99,7 @@ theorem binCofix_nonempty : Nonempty (Cofix binPF.Obj) :=
 
 /-! ### The strict fork and the absence of a seam -/
 
-/-- **The strict fork for the arity-two functor.** Exactly like `idPF` (arity one): the least fixed
+/-- **The strict fork for the arity-two functor.** Exactly like `idPF_Coalgebra` (arity one): the least fixed
 point is empty while the greatest is inhabited. Doubling the recursive positions does not soften the
 fork. -/
 theorem binPF_fork_strict :
@@ -119,7 +119,7 @@ theorem binPF_no_seam : IsEmpty (Fix binPF.Obj ≃ Cofix binPF.Obj) := by
 position ⇒ strict}`:
 
 * `constPF Unit` (child `PEmpty`, **zero** positions): `Nonempty (Fix ≃ Cofix)` — a seam;
-* `idPF`         (child `PUnit`,  **one**  position):  `IsEmpty (Fix ≃ Cofix)` — strict;
+* `idPF_Coalgebra`         (child `PUnit`,  **one**  position):  `IsEmpty (Fix ≃ Cofix)` — strict;
 * `binPF`        (child `Bool`,   **two**  positions): `IsEmpty (Fix ≃ Cofix)` — strict.
 
 The one-position and two-position cases agree (both strict), so the discriminator is presence vs
@@ -127,7 +127,7 @@ absence of a recursive position, not its multiplicity. -/
 theorem arity_collapse :
     Nonempty (Fix (ZeroParadox.constPF Unit).Obj ≃
         Cofix (ZeroParadox.constPF Unit).Obj) ∧
-    IsEmpty (Fix ZeroParadox.idPF.Obj ≃ Cofix ZeroParadox.idPF.Obj) ∧
+    IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix ZeroParadox.idPF_Coalgebra.Obj) ∧
     IsEmpty (Fix binPF.Obj ≃ Cofix binPF.Obj) :=
   ⟨⟨(ZeroParadox.root_seam : Fix (ZeroParadox.constPF Unit).Obj ≃ _)⟩,
     ZeroParadox.idPF_no_seam, binPF_no_seam⟩
@@ -140,7 +140,7 @@ section PurityCheck
 --   binPF_fork_strict               : [propext, Classical.choice, Quot.sound]     — inherits ν
 --   binPF_no_seam                   : [propext, Classical.choice, Quot.sound]     — inherits ν
 --   arity_collapse                  : [propext, Classical.choice, Quot.sound]
--- The arity-two μ side is choice-free exactly as the arity-one (idPF) μ side: doubling the recursive
+-- The arity-two μ side is choice-free exactly as the arity-one (idPF_Coalgebra) μ side: doubling the recursive
 -- positions changes neither the emptiness nor its axiom footprint. The ν choice is the Mathlib
 -- corecursion artifact, not a necessity (polynomial-functor final coalgebra is constructible
 -- choice-free in principle; Veltri, FSCD 2021).

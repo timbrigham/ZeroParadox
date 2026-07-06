@@ -1051,13 +1051,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "0299f9c1-4175-4713-a70c-f789aa418d8a",
           "new": {
             "file": "ZeroParadox/Category/SeamLimColim.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.Z_state25",
-            "short": "Z_state25"
+            "qualified": "ZeroParadox.Z_SeamLimColim",
+            "short": "Z_SeamLimColim"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC25.lean",
@@ -1076,7 +1076,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -2833,13 +2833,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "0d4a6011-41a4-4de0-bafa-98f2cb1fe833",
           "new": {
             "file": "ZeroParadox/Computability/NatListRegime.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.natPF_alt",
-            "short": "natPF_alt"
+            "qualified": "ZeroParadox.natPF_NatListRegime",
+            "short": "natPF_NatListRegime"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC49.lean",
@@ -2858,7 +2858,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -3304,13 +3304,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "106ea936-9b20-44ea-b4f6-f8c017e1bde4",
           "new": {
             "file": "ZeroParadox/Valuation/NuLeafReconcile.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.simplex_point_unique",
-            "short": "simplex_point_unique"
+            "qualified": "ZeroParadox.simplex_point_unique_NuLeafReconcile",
+            "short": "simplex_point_unique_NuLeafReconcile"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC19.lean",
@@ -3330,7 +3330,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -3486,13 +3486,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "11249a47-cc4c-4198-81b6-d2b11ce83af1",
           "new": {
             "file": "ZeroParadox/Computability/RootCutTrichotomy.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.natPF",
-            "short": "natPF"
+            "qualified": "ZeroParadox.natPF_RootCutTrichotomy",
+            "short": "natPF_RootCutTrichotomy"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC47.lean",
@@ -3511,7 +3511,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7396,13 +7396,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "2d5511fc-26de-4650-aff2-193896a85e0d",
           "new": {
             "file": "ZeroParadox/Category/SeamGeneric.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.seam_is_mu_nu_coincidence_alt",
-            "short": "seam_is_mu_nu_coincidence_alt"
+            "qualified": "ZeroParadox.seam_is_mu_nu_coincidence_SeamGeneric",
+            "short": "seam_is_mu_nu_coincidence_SeamGeneric"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC13.lean",
@@ -7423,7 +7423,7 @@
               "face"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9675,13 +9675,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "3cf58442-3b48-480c-a6ac-18a1f1b379df",
           "new": {
             "file": "ZeroParadox/Valuation/NuLeafReconcile.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.padicFloor",
-            "short": "padicFloor"
+            "qualified": "ZeroParadox.padicFloor_NuLeafReconcile",
+            "short": "padicFloor_NuLeafReconcile"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC19.lean",
@@ -9700,7 +9700,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14366,13 +14366,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "59b34c5f-cbc3-4912-a18d-713843c994e4",
           "new": {
             "file": "ZeroParadox/State/ThreeCarrierLeaf.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.simplex_point_unique_29",
-            "short": "simplex_point_unique_29"
+            "qualified": "ZeroParadox.simplex_point_unique_ThreeCarrierLeaf",
+            "short": "simplex_point_unique_ThreeCarrierLeaf"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC29.lean",
@@ -14391,7 +14391,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14583,13 +14583,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "5bbeaacc-f7c4-40b5-950b-c75f2fedc5e0",
           "new": {
             "file": "ZeroParadox/Category/SeamCoincidence.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.seam_is_mu_nu_coincidence",
-            "short": "seam_is_mu_nu_coincidence"
+            "qualified": "ZeroParadox.seam_is_mu_nu_coincidence_SeamCoincidence",
+            "short": "seam_is_mu_nu_coincidence_SeamCoincidence"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC12.lean",
@@ -14608,7 +14608,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15277,13 +15277,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "615ac7b2-210e-4dbb-80e4-d066ce221da3",
           "new": {
             "file": "ZeroParadox/State/ThreeCarrierLeaf.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.simplexPoint_29",
-            "short": "simplexPoint_29"
+            "qualified": "ZeroParadox.simplexPoint_ThreeCarrierLeaf",
+            "short": "simplexPoint_ThreeCarrierLeaf"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC29.lean",
@@ -15302,7 +15302,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20711,13 +20711,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "869a4ef0-8f9c-465a-8ba8-0309b62f4278",
           "new": {
             "file": "ZeroParadox/Valuation/NuLeafReconcile.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.padic_floor_unique_19",
-            "short": "padic_floor_unique_19"
+            "qualified": "ZeroParadox.padic_floor_unique_NuLeafReconcile",
+            "short": "padic_floor_unique_NuLeafReconcile"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC19.lean",
@@ -20736,7 +20736,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24346,13 +24346,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "9fc00f2b-8507-4277-899c-26d74c624666",
           "new": {
             "file": "ZeroParadox/Computability/RootCutTrichotomy.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.idPF_pf47",
-            "short": "idPF_pf47"
+            "qualified": "ZeroParadox.idPF_RootCutTrichotomy",
+            "short": "idPF_RootCutTrichotomy"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC47.lean",
@@ -24371,7 +24371,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24456,13 +24456,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "a0c1e305-5ccd-42ff-ab9a-a740b4ce8179",
           "new": {
             "file": "ZeroParadox/State/ThreeCarrierLeaf.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.padicFloor_29",
-            "short": "padicFloor_29"
+            "qualified": "ZeroParadox.padicFloor_ThreeCarrierLeaf",
+            "short": "padicFloor_ThreeCarrierLeaf"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC29.lean",
@@ -24481,7 +24481,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27302,13 +27302,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "b5c99ee1-f355-415a-a4f4-f851a79f06c8",
           "new": {
             "file": "ZeroParadox/Computability/NatListRegime.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.idPF_pf49",
-            "short": "idPF_pf49"
+            "qualified": "ZeroParadox.idPF_NatListRegime",
+            "short": "idPF_NatListRegime"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC49.lean",
@@ -27327,7 +27327,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29664,13 +29664,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "c717fd68-b383-4ac1-ba13-6eedef56d16a",
           "new": {
             "file": "ZeroParadox/Valuation/NuLeafReconcile.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.simplexPoint",
-            "short": "simplexPoint"
+            "qualified": "ZeroParadox.simplexPoint_NuLeafReconcile",
+            "short": "simplexPoint_NuLeafReconcile"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC19.lean",
@@ -29690,7 +29690,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30137,13 +30137,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "ca8f3412-4105-4b98-bcf6-46b722f8d77c",
           "new": {
             "file": "ZeroParadox/Category/SeamBridge.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.Z",
-            "short": "Z"
+            "qualified": "ZeroParadox.Z_SeamBridge",
+            "short": "Z_SeamBridge"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC18.lean",
@@ -30162,7 +30162,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31987,13 +31987,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "d880a1b6-09f6-4466-9e37-c70ef2d704a3",
           "new": {
             "file": "ZeroParadox/State/ThreeCarrierLeaf.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.padic_floor_unique_29",
-            "short": "padic_floor_unique_29"
+            "qualified": "ZeroParadox.padic_floor_unique_ThreeCarrierLeaf",
+            "short": "padic_floor_unique_ThreeCarrierLeaf"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC29.lean",
@@ -32012,7 +32012,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34503,13 +34503,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "e5c09082-f38d-4efa-919c-82c8b390396a",
           "new": {
             "file": "ZeroParadox/Multihomed/SpanObstruction.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.padic_floor_unique",
-            "short": "padic_floor_unique"
+            "qualified": "ZeroParadox.padic_floor_unique_SpanObstruction",
+            "short": "padic_floor_unique_SpanObstruction"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC17.lean",
@@ -34528,7 +34528,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37477,13 +37477,13 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "present",
+          "disposition": "renamed",
           "id": "f9c7cc74-9579-46e1-b1ac-845084e50216",
           "new": {
             "file": "ZeroParadox/Settheory/Coalgebra.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.idPF",
-            "short": "idPF"
+            "qualified": "ZeroParadox.idPF_Coalgebra",
+            "short": "idPF_Coalgebra"
           },
           "old": {
             "file": "ZeroParadox/ZPP_Coalgebra.lean",
@@ -37502,7 +37502,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38655,6 +38655,12 @@
           "to": "ZeroParadox.e0vec"
         },
         {
+          "from": "ZeroParadox.fixToCofix",
+          "id": "00fe4576-df61-5ecd-92d0-146daf766ba0",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
+        },
+        {
           "from": "ZeroParadox.ZPSemilattice.IsStateTransition",
           "id": "0153fa60-31e1-5602-aa08-12178f395310",
           "kind": "type",
@@ -38689,6 +38695,12 @@
           "id": "026f2170-af85-5f2f-b92d-56027a70409c",
           "kind": "type",
           "to": "ZeroParadox.Wheel"
+        },
+        {
+          "from": "ZeroParadox.eventuallyLeaf_ne_infinity",
+          "id": "028f2cc5-c42f-513f-8c8f-390b52fe427f",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
         },
         {
           "from": "ZeroParadox.val_finite_free",
@@ -38773,6 +38785,12 @@
           "id": "04df5c9b-430f-5fa4-8a20-f8c5db8876d2",
           "kind": "type",
           "to": "ZeroParadox.Phase"
+        },
+        {
+          "from": "ZeroParadox.padic_floor_unique_NuLeafReconcile",
+          "id": "0545a8f1-b94a-5b3d-9b98-97995c89d4dd",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_NuLeafReconcile"
         },
         {
           "from": "ZeroParadox.qpfSeam",
@@ -38889,12 +38907,6 @@
           "to": "ZeroParadox.ValuationStructure"
         },
         {
-          "from": "ZeroParadox.padic_is_punit",
-          "id": "09d1a3b6-e2e5-5e9b-aa8b-7c7cf5239653",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor_29"
-        },
-        {
           "from": "ZeroParadox.canonicalCmp_unique",
           "id": "09dfe1b8-7bc5-531f-8171-c7c196e4b223",
           "kind": "type",
@@ -38910,6 +38922,12 @@
           "from": "ZeroParadox.padic_nat_no_orbit_correspondence",
           "id": "0a754386-a92b-5e09-9446-885a25df617e",
           "kind": "type",
+          "to": "ZeroParadox.hp2"
+        },
+        {
+          "from": "ZeroParadox.padic_floor_unique_ThreeCarrierLeaf",
+          "id": "0a77c890-30af-5ee9-8ec7-0fce9f341b60",
+          "kind": "proof",
           "to": "ZeroParadox.hp2"
         },
         {
@@ -39085,6 +39103,12 @@
           "id": "0f11a214-e488-5bb5-a380-5f5f473c0ea0",
           "kind": "type",
           "to": "ZeroParadox.AFAStructure"
+        },
+        {
+          "from": "ZeroParadox.natFix_nonempty",
+          "id": "0f1228c4-edd3-5cc9-a587-4027ab171da1",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
         },
         {
           "from": "ZeroParadox.t2_orthogonal",
@@ -39357,10 +39381,10 @@
           "to": "ZeroParadox.tree"
         },
         {
-          "from": "ZeroParadox.seam_leaf_homeo",
-          "id": "15decc17-ba2e-5fbf-a7b9-4dd88ab95226",
-          "kind": "proof",
-          "to": "ZeroParadox.padic_floor_unique_29"
+          "from": "ZeroParadox.fixToCofix_dest_mk",
+          "id": "16160ae9-32e4-54ff-9fc5-0f2672c4ce04",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
         },
         {
           "from": "ZeroParadox.t1b_kl_Q",
@@ -39489,12 +39513,6 @@
           "to": "ZeroParadox.fD_functor"
         },
         {
-          "from": "ZeroParadox.root_cut_strict_asymmetric",
-          "id": "1a890fdb-a255-5c03-b240-a873cf7fa3e5",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
-        },
-        {
           "from": "ZeroParadox.t4_snap_orthogonal",
           "id": "1aa0b440-0435-5dd2-91b5-20a640eebb33",
           "kind": "type",
@@ -39519,12 +39537,6 @@
           "to": "ZeroParadox.FinStoch"
         },
         {
-          "from": "ZeroParadox.mixed_trichotomy",
-          "id": "1b5bb036-51a0-55c9-bb71-2388dff1a403",
-          "kind": "type",
-          "to": "ZeroParadox.natPF"
-        },
-        {
           "from": "ZeroParadox.zp_selfMem_singleton",
           "id": "1b63c77e-3a66-5376-a122-4f83678dff5c",
           "kind": "type",
@@ -39535,12 +39547,6 @@
           "id": "1b6a6210-1ba4-5925-8517-b9a22423fb55",
           "kind": "type",
           "to": "ZeroParadox.IsKleeneFixedPoint"
-        },
-        {
-          "from": "ZeroParadox.natFix_nonempty",
-          "id": "1c038a66-3dff-5758-b06f-1710ab28d8c9",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
         },
         {
           "from": "ZeroParadox.selfApp_bot_is_least_fp",
@@ -39609,6 +39615,12 @@
           "to": "ZeroParadox.TreeEmbeds"
         },
         {
+          "from": "ZeroParadox.leafNode",
+          "id": "1d9c6c95-ea8d-5062-ac28-d0f5de539514",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
+        },
+        {
           "from": "ZeroParadox.t_snap_machine",
           "id": "1dbf4de8-a2f7-5e5c-80e5-a0649552e2b2",
           "kind": "type",
@@ -39661,12 +39673,6 @@
           "id": "1ea2599b-7ce4-5400-8694-8179610dd2ba",
           "kind": "type",
           "to": "ZeroParadox.qpBall"
-        },
-        {
-          "from": "ZeroParadox.padic_floor_unique_19",
-          "id": "1edd699d-62fb-57f7-9e47-d31c47900aa8",
-          "kind": "proof",
-          "to": "ZeroParadox.hp2"
         },
         {
           "from": "ZeroParadox.tree_isTree",
@@ -39733,12 +39739,6 @@
           "id": "213beb70-3ce0-517b-a4fa-0e5dcd7f6f96",
           "kind": "type",
           "to": "ZeroParadox.hp2"
-        },
-        {
-          "from": "ZeroParadox.mixed_cofix_nonempty",
-          "id": "214d2c0e-8009-5779-aa14-a29a2ad911c8",
-          "kind": "type",
-          "to": "ZeroParadox.natPF"
         },
         {
           "from": "ZeroParadox.hom_padic_hilbert_subsingleton",
@@ -39855,12 +39855,6 @@
           "to": "ZeroParadox.ValuationStructure"
         },
         {
-          "from": "ZeroParadox.mixed_trichotomy",
-          "id": "23e10949-f915-5079-9052-d5ca38108f03",
-          "kind": "type",
-          "to": "ZeroParadox.idPF_pf47"
-        },
-        {
           "from": "ZeroParadox.scale_unique_fp",
           "id": "23f44f3e-d519-5026-a9c4-0067d3e73771",
           "kind": "type",
@@ -39889,12 +39883,6 @@
           "id": "24629d38-e0e1-50b8-a547-96ec2c718133",
           "kind": "type",
           "to": "ZeroParadox.q2Ball"
-        },
-        {
-          "from": "ZeroParadox.coalgebra_fork_strict_on_idPF",
-          "id": "247bde6d-dd22-5423-a6c1-f0abc86b8065",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.scale_iterate_unique_fp",
@@ -40011,6 +39999,12 @@
           "to": "ZeroParadox.ZPSemilattice"
         },
         {
+          "from": "ZeroParadox.nu_leaf_homeo",
+          "id": "281c5bc4-5263-5ce7-9582-e0172396af85",
+          "kind": "proof",
+          "to": "ZeroParadox.padic_floor_unique_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.cesaro_diff",
           "id": "283c1e89-5f15-5a35-9bfb-117f8761d4d9",
           "kind": "type",
@@ -40057,6 +40051,12 @@
           "id": "28f90aa8-40bf-5a1b-92fc-89749f50240d",
           "kind": "type",
           "to": "ZeroParadox.Sphere"
+        },
+        {
+          "from": "ZeroParadox.root_purity_split",
+          "id": "2942fd1a-7aaa-56e5-9093-622f8aff6cfd",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "fd_functor",
@@ -40117,12 +40117,6 @@
           "id": "2ad78e65-807b-5009-9846-fbb9562e87fc",
           "kind": "type",
           "to": "ZeroParadox.AbstractSelfApp"
-        },
-        {
-          "from": "ZeroParadox.fix_isEmpty",
-          "id": "2afa4bf5-8aa2-5fe8-b766-d8e802e20ea8",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.fullMix_not_injective",
@@ -40219,12 +40213,6 @@
           "id": "2d171095-22af-5fee-95b1-0df645f98459",
           "kind": "type",
           "to": "ZeroParadox.ZPSemilattice"
-        },
-        {
-          "from": "ZeroParadox.nu_leaf_glue_three",
-          "id": "2d581f83-3212-562f-a229-30992b771e9d",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor_29"
         },
         {
           "from": "ZeroParadox.cc1_derived",
@@ -40485,12 +40473,6 @@
           "to": "ZeroParadox.IsStationaryPMF"
         },
         {
-          "from": "ZeroParadox.eventuallyLeaf_ne_infinity",
-          "id": "31e157a0-6932-5d65-bd6a-a5493f38eb23",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.snapEmbed_injective",
           "id": "31e3babb-16b6-5662-8be8-276f379d8b87",
           "kind": "type",
@@ -40539,6 +40521,12 @@
           "to": "ZeroParadox.fD_functor"
         },
         {
+          "from": "ZeroParadox.simplex_point_unique_ThreeCarrierLeaf",
+          "id": "334c2898-9c9e-50d5-ab9f-5cf0c14e8b95",
+          "kind": "type",
+          "to": "ZeroParadox.simplexPoint_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.instOntSelfApp",
           "id": "338b2c32-ed17-58f8-9be0-b11ccfa84768",
           "kind": "type",
@@ -40551,10 +40539,10 @@
           "to": "ZeroParadox.zpwInv"
         },
         {
-          "from": "ZeroParadox.fix_cofix_not_surjective",
-          "id": "340eace3-0cc6-5b05-a32a-693e3a54eee2",
+          "from": "ZeroParadox.padic_is_punit",
+          "id": "344a0803-4019-58eb-b7ca-e636e13bd2e7",
           "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
+          "to": "ZeroParadox.padicFloor_ThreeCarrierLeaf"
         },
         {
           "from": "ZeroParadox.swap_orbit_coord0",
@@ -40611,12 +40599,6 @@
           "to": "ZeroParadox.fC_functor"
         },
         {
-          "from": "ZeroParadox.natCofix_nonempty",
-          "id": "354e2dd4-70b8-55f8-98bd-25b55a5ff1e2",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.da1_minimal_path",
           "id": "3558219b-6610-5f28-92c6-3bca8831c772",
           "kind": "type",
@@ -40651,12 +40633,6 @@
           "id": "362c2f71-6cdf-5df6-9cdc-6d9349d9e9d0",
           "kind": "type",
           "to": "ZeroParadox.bump"
-        },
-        {
-          "from": "ZeroParadox.fixToCofix",
-          "id": "367c52f3-7464-569f-8865-30864b36db97",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
         },
         {
           "from": "ZeroParadox.tower_converges_to_zero",
@@ -40713,6 +40689,12 @@
           "to": "ZeroParadox.Wform"
         },
         {
+          "from": "ZeroParadox.padic_floor_unique_ThreeCarrierLeaf",
+          "id": "379c06d1-ea70-518b-9d07-e18e68da98c3",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.canonicalCmp_apply",
           "id": "37a4c451-d497-5d9f-9a71-55cd8f3dc3ff",
           "kind": "type",
@@ -40735,12 +40717,6 @@
           "id": "37c45d63-ba19-5db0-88b8-97ab5f484fba",
           "kind": "type",
           "to": "ZeroParadox.APG"
-        },
-        {
-          "from": "ZeroParadox.qpf_seam_not_automatic",
-          "id": "37e71dc1-375b-5f72-8a60-2a97c09deaac",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.node4_node3_arrow_asymmetry",
@@ -40809,12 +40785,6 @@
           "to": "ZeroParadox.cofixMk_head"
         },
         {
-          "from": "ZeroParadox.seam_is_mu_nu_coincidence",
-          "id": "38ec47a7-8df1-5675-84de-96f94927d949",
-          "kind": "type",
-          "to": "ZeroParadox.fD_functor"
-        },
-        {
           "from": "ZeroParadox.distP",
           "id": "3911528c-33ed-50f6-a774-2a9f770d7d7c",
           "kind": "proof",
@@ -40827,6 +40797,12 @@
           "to": "ZeroParadox.fC_functor"
         },
         {
+          "from": "ZeroParadox.mixed_fix_nonempty",
+          "id": "395e7596-25b6-52ba-8da7-dfd0c4821aad",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_RootCutTrichotomy"
+        },
+        {
           "from": "ZeroParadox.ont_quine_unique",
           "id": "39c2596c-4e9e-59d3-8abc-9b5be1479970",
           "kind": "type",
@@ -40837,12 +40813,6 @@
           "id": "39ce866a-dc1b-56e5-95d4-0314b89a4cfa",
           "kind": "type",
           "to": "ZeroParadox.selfMemDerived"
-        },
-        {
-          "from": "ZeroParadox.simplex_point_unique_29",
-          "id": "39d03916-5023-58d4-b130-84b374da1329",
-          "kind": "type",
-          "to": "ZeroParadox.simplexPoint_29"
         },
         {
           "from": "ZeroParadox.two_independent_pairs",
@@ -40867,12 +40837,6 @@
           "id": "3a89ac31-7e7b-5001-a14b-9bbf2f2764ac",
           "kind": "type",
           "to": "ZeroParadox.transitionOp"
-        },
-        {
-          "from": "ZeroParadox.snap_boundary_two_registers",
-          "id": "3ac49c02-c7b3-5cd6-8a21-b9a7cd831e4c",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.fix_cofix_not_surjective",
@@ -41055,6 +41019,12 @@
           "to": "ZeroParadox.fB_functor"
         },
         {
+          "from": "ZeroParadox.padic_is_punit",
+          "id": "3f28d1c1-1a0f-5e5f-8865-5fafd73fcaf8",
+          "kind": "proof",
+          "to": "ZeroParadox.padic_floor_unique_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.t1_mu_cluster_glue",
           "id": "3f7d3087-0a0f-55b4-a428-08e34df972cb",
           "kind": "type",
@@ -41089,12 +41059,6 @@
           "id": "40f80953-f2a8-5311-a54c-b57d917c1365",
           "kind": "type",
           "to": "ZeroParadox.WheelFrac"
-        },
-        {
-          "from": "ZeroParadox.padicFloor_29",
-          "id": "41030cf7-a579-5a5d-9456-188c999e9733",
-          "kind": "proof",
-          "to": "ZeroParadox.hp2"
         },
         {
           "from": "ZeroParadox.padic_simplex_not_homeomorphic",
@@ -41163,6 +41127,12 @@
           "to": "ZeroParadox.hp2"
         },
         {
+          "from": "ZeroParadox.padic_floor_unique_SpanObstruction",
+          "id": "421eb5e0-c50b-5517-bdd2-d77ef40bf139",
+          "kind": "type",
+          "to": "ZeroParadox.hp2"
+        },
+        {
           "from": "ZeroParadox.category_realizes_bottoms",
           "id": "4223cf5f-d0d0-58f2-bdf7-552b9d7ae3ff",
           "kind": "type",
@@ -41191,6 +41161,12 @@
           "id": "42bb49cc-78d6-56d3-a43d-6b888660b2f9",
           "kind": "type",
           "to": "ZeroParadox.blockKernel"
+        },
+        {
+          "from": "ZeroParadox.mixed_fix_infinite",
+          "id": "42c24cf9-e580-55b2-8760-d9f414b15130",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_RootCutTrichotomy"
         },
         {
           "from": "ZeroParadox.th3_snap_all_functors",
@@ -41259,22 +41235,10 @@
           "to": "ZeroParadox.IsQuineAtom"
         },
         {
-          "from": "ZeroParadox.root_cut_no_map_nu_to_mu",
-          "id": "45be773f-1dd6-5d65-9ed0-18631fe8ff85",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
-        },
-        {
           "from": "ZeroParadox.toValBridge",
           "id": "45d0fd82-b843-5968-b9f0-97620fddad5b",
           "kind": "type",
           "to": "ZeroParadox.ValBridge"
-        },
-        {
-          "from": "ZeroParadox.strict_cofix_nonempty",
-          "id": "45ea3ba1-40f3-50d6-8c4f-429a2a537bb0",
-          "kind": "type",
-          "to": "ZeroParadox.idPF_pf47"
         },
         {
           "from": "ZeroParadox.fC_floor_transport",
@@ -41311,6 +41275,12 @@
           "id": "4708d9b8-589e-5ec0-a1a3-b17efd294c88",
           "kind": "type",
           "to": "ZeroParadox.KleeneStructure"
+        },
+        {
+          "from": "ZeroParadox.simplex_point_unique_NuLeafReconcile",
+          "id": "470cc803-d2b2-58ed-99d0-0ea165ed6af9",
+          "kind": "type",
+          "to": "ZeroParadox.simplexPoint_NuLeafReconcile"
         },
         {
           "from": "ZeroParadox.snap_exactly_at_epsilon_zero",
@@ -41367,12 +41337,6 @@
           "to": "ZeroParadox.IsComputationalQuine"
         },
         {
-          "from": "ZeroParadox.nu_leaf_reconcile_generic",
-          "id": "48c7f899-0aee-5d51-b1d5-52ed555af5fd",
-          "kind": "proof",
-          "to": "ZeroParadox.padic_floor_unique_19"
-        },
-        {
           "from": "ZeroParadox.zpwVal_zero_eq_top",
           "id": "48cd6d42-dbb3-58d7-b8bf-04519ba62db8",
           "kind": "type",
@@ -41409,6 +41373,12 @@
           "to": "ZeroParadox.fD_functor"
         },
         {
+          "from": "ZeroParadox.natInfinity",
+          "id": "494d8c8b-b4a3-5e82-9a54-55620d8b527d",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
+        },
+        {
           "from": "ZeroParadox.t_snap_irreversible",
           "id": "497b5390-48f5-522f-9d98-7b311015aa99",
           "kind": "type",
@@ -41443,6 +41413,12 @@
           "id": "4a0bf94f-e4e0-53bd-b8c7-d9fb62b296bd",
           "kind": "type",
           "to": "ZeroParadox.T"
+        },
+        {
+          "from": "ZeroParadox.succCoalg",
+          "id": "4a333e70-e735-5bdb-8129-aae71dced6d3",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
         },
         {
           "from": "ZeroParadox.no_rate_conjugacy",
@@ -41541,6 +41517,12 @@
           "to": "ZeroParadox.AbstractSelfApp"
         },
         {
+          "from": "ZeroParadox.fixToCofix_not_surjective",
+          "id": "4d7abef8-0cba-57a9-b3de-dba385347706",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
+        },
+        {
           "from": "ZeroParadox.winvF",
           "id": "4d8b8d5d-bc02-5ced-92bc-af1374c2d64f",
           "kind": "proof",
@@ -41581,6 +41563,12 @@
           "id": "4f5f1063-2022-5cbd-afcc-5cd87587e6bf",
           "kind": "type",
           "to": "ZeroParadox.ValuationStructure"
+        },
+        {
+          "from": "ZeroParadox.root_cut_no_map_nu_to_mu",
+          "id": "4f6cf870-547a-562c-a534-1dd55a157e56",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "ZeroParadox.J_self_eq_singleton_bot",
@@ -41659,12 +41647,6 @@
           "id": "51229f70-d453-5390-a9fe-b29047906920",
           "kind": "type",
           "to": "ZeroParadox.S"
-        },
-        {
-          "from": "ZeroParadox.cofix_nonempty",
-          "id": "513b2662-5658-581d-9d6b-ae5d68c56842",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.da1_computational",
@@ -41817,6 +41799,18 @@
           "to": "ZeroParadox.bump"
         },
         {
+          "from": "ZeroParadox.seam_is_mu_nu_coincidence_SeamCoincidence",
+          "id": "55250438-0e12-52f5-8f4c-7e8da37fdbec",
+          "kind": "type",
+          "to": "ZeroParadox.fD_functor"
+        },
+        {
+          "from": "ZeroParadox.Z_SeamLimColim",
+          "id": "5586e9f2-d7fe-5e61-a02f-d8a77e08c352",
+          "kind": "proof",
+          "to": "ZeroParadox.fD_functor"
+        },
+        {
           "from": "ZeroParadox.z2_selfMem_singleton",
           "id": "55f9be57-a6b5-5817-b433-467564eff60a",
           "kind": "type",
@@ -41827,6 +41821,12 @@
           "id": "560b92bf-e476-5595-abdc-ac4bf9de242f",
           "kind": "type",
           "to": "ZeroParadox.MachinePhase"
+        },
+        {
+          "from": "ZeroParadox.root_cut_no_equiv",
+          "id": "56141f26-d75a-5d60-bc55-216b51e19d77",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "ZeroParadox.quine_period_is_goedel",
@@ -41925,6 +41925,18 @@
           "to": "ZeroParadox.GlobalZero"
         },
         {
+          "from": "ZeroParadox.padicFloor_ThreeCarrierLeaf",
+          "id": "586156a7-e3fe-5d9b-b4b4-eac5f768f347",
+          "kind": "proof",
+          "to": "ZeroParadox.hp2"
+        },
+        {
+          "from": "ZeroParadox.seam_is_intra_category",
+          "id": "58970f2a-14fb-5f78-98da-b10c24fcb672",
+          "kind": "type",
+          "to": "ZeroParadox.Z_SeamBridge"
+        },
+        {
           "from": "ZeroParadox.no_cross_setting_map",
           "id": "58eed1d3-4fd9-517d-ba17-61f995fb349c",
           "kind": "type",
@@ -42021,6 +42033,12 @@
           "to": "ZeroParadox.Sphere"
         },
         {
+          "from": "ZeroParadox.nu_leaf_reconcile",
+          "id": "5b27b089-bb8c-5e46-92b6-71a870dd53b0",
+          "kind": "proof",
+          "to": "ZeroParadox.simplex_point_unique_NuLeafReconcile"
+        },
+        {
           "from": "ZeroParadox.wmulF",
           "id": "5b8aa5de-0438-5f1c-93ec-4114fe37849d",
           "kind": "proof",
@@ -42063,12 +42081,6 @@
           "to": "ZeroParadox.ZPSemilattice"
         },
         {
-          "from": "ZeroParadox.fixToCofix_dest_mk",
-          "id": "5cbf4d60-6d47-507a-9347-b243193c1ffc",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.step_imb",
           "id": "5cceb0d7-4a31-5cfc-a510-1e1d975b5fee",
           "kind": "type",
@@ -42079,6 +42091,12 @@
           "id": "5cf1e4d3-01a7-552a-9529-d184190a65f3",
           "kind": "type",
           "to": "ZeroParadox.gseq"
+        },
+        {
+          "from": "ZeroParadox.seam_iff_no_recursive_position",
+          "id": "5cf2b750-09a0-58db-b6f1-a2166398907b",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "ZeroParadox.natInfinity_not_eventuallyLeaf",
@@ -42123,6 +42141,18 @@
           "to": "ZeroParadox.DoublyStochastic"
         },
         {
+          "from": "ZeroParadox.padic_floor_unique_NuLeafReconcile",
+          "id": "5e4a9035-2c79-54cc-8107-587db8510a2a",
+          "kind": "proof",
+          "to": "ZeroParadox.hp2"
+        },
+        {
+          "from": "ZeroParadox.mixed_trichotomy",
+          "id": "5e8e6cf4-80db-5aee-8394-f2281bff302b",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_RootCutTrichotomy"
+        },
+        {
           "from": "ZeroParadox.J_self_is_largest",
           "id": "5e94f05e-defa-5c25-b13b-fdcbc5d49d46",
           "kind": "type",
@@ -42139,12 +42169,6 @@
           "id": "5f88a5dd-d31e-595d-a9df-753cf60477ab",
           "kind": "proof",
           "to": "forkComp"
-        },
-        {
-          "from": "ZeroParadox.seam_leaf_homeo",
-          "id": "5f9d896d-9aad-5cd2-a557-df196db2069d",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor_29"
         },
         {
           "from": "ZeroParadox.t1_distributions_distinct",
@@ -42259,6 +42283,12 @@
           "id": "62d9245a-7ce2-50f2-bb66-c789fdebeb39",
           "kind": "type",
           "to": "ZeroParadox.hp2"
+        },
+        {
+          "from": "ZeroParadox.fix_isEmpty_constructive",
+          "id": "62f84789-0f27-503f-9e81-e94f2f938940",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "ZeroParadox.path_val_chain",
@@ -42411,6 +42441,12 @@
           "to": "ZeroParadox.RoseTree"
         },
         {
+          "from": "ZeroParadox.cofix_nonempty'",
+          "id": "661c68fd-bf45-5d10-bb3f-724078c14973",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.pureSelfLoop_decoration_unique",
           "id": "66202164-21aa-5524-a06f-bc5d7ef8b779",
           "kind": "type",
@@ -42441,10 +42477,10 @@
           "to": "ZeroParadox.Step"
         },
         {
-          "from": "ZeroParadox.no_cross_setting_map",
-          "id": "676761cb-6419-5f3b-b4eb-5f546cfbe06a",
+          "from": "ZeroParadox.seam_leaf_homeo",
+          "id": "679244f5-60a3-592b-b3f6-bae38a0da768",
           "kind": "type",
-          "to": "ZeroParadox.idPF"
+          "to": "ZeroParadox.padicFloor_ThreeCarrierLeaf"
         },
         {
           "from": "ZeroParadox.canonicalCmp",
@@ -42459,12 +42495,6 @@
           "to": "ZeroParadox.Phase"
         },
         {
-          "from": "ZeroParadox.EventuallyLeaf",
-          "id": "681b1dc6-3040-51ff-9d60-f5e1293e2dfb",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.valuation_forces_selfMem",
           "id": "681e3803-aae2-5d32-810d-cdbe1bb12d42",
           "kind": "type",
@@ -42475,6 +42505,12 @@
           "id": "6832da4c-836f-5f4d-b94c-af39c69e4ef4",
           "kind": "type",
           "to": "ZeroParadox.pfunctorQPF"
+        },
+        {
+          "from": "ZeroParadox.nu_leaf_reconcile",
+          "id": "684be8ee-f5d3-5b75-83a9-b8a0ccf0b956",
+          "kind": "type",
+          "to": "ZeroParadox.simplexPoint_NuLeafReconcile"
         },
         {
           "from": "ZeroParadox.quine_no_literal",
@@ -42523,12 +42559,6 @@
           "id": "697a4cf8-771f-5da5-ab8e-86d2a44d55b8",
           "kind": "type",
           "to": "ZeroParadox.ZPSemilattice"
-        },
-        {
-          "from": "ZeroParadox.seam_is_mu_nu_coincidence_alt",
-          "id": "69d2521d-1754-528e-ac99-282bb74dd8d9",
-          "kind": "type",
-          "to": "ZeroParadox.fD_functor"
         },
         {
           "from": "ZeroParadox.floorCone",
@@ -42651,6 +42681,12 @@
           "to": "ZeroParadox.c₁"
         },
         {
+          "from": "ZeroParadox.seam_two_sided",
+          "id": "6d096ea1-9753-53cf-81de-172282ef02e7",
+          "kind": "type",
+          "to": "ZeroParadox.Z_SeamBridge"
+        },
+        {
           "from": "ZeroParadox.preInstantiation",
           "id": "6d38dfe5-30b6-5bc2-95cf-0d989c1ad87f",
           "kind": "proof",
@@ -42729,6 +42765,12 @@
           "to": "ZeroParadox.step"
         },
         {
+          "from": "ZeroParadox.quine_dichotomy",
+          "id": "6f1cc968-6b4a-53b9-9d1a-c3f283e455eb",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "fd_preserves_initial",
           "id": "6f1fb4ad-32ee-5655-aff9-bfcf41339e72",
           "kind": "type",
@@ -42783,12 +42825,6 @@
           "to": "ZeroParadox.ZPSemilattice.le"
         },
         {
-          "from": "ZeroParadox.w_isEmpty",
-          "id": "6fabd9e8-4a62-5879-96a4-9750e4c908af",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
-        },
-        {
           "from": "ZeroParadox.DecorationUniverse",
           "id": "6ff05173-8a81-5b09-a9c7-3afa7258359a",
           "kind": "type",
@@ -42831,6 +42867,12 @@
           "to": "ZeroParadox.markovRate"
         },
         {
+          "from": "ZeroParadox.mixed_trichotomy",
+          "id": "705f8437-52c9-5014-b303-05ab1084969f",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_RootCutTrichotomy"
+        },
+        {
           "from": "ZeroParadox.Hydra.val",
           "id": "711bced5-cf69-5b33-adde-69ac288f3889",
           "kind": "type",
@@ -42861,6 +42903,12 @@
           "to": "ZeroParadox.ZPSemilattice"
         },
         {
+          "from": "ZeroParadox.snap_boundary_two_registers",
+          "id": "71cb54da-687f-57aa-acec-94c362e9cba0",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.ps_empty_not_limit",
           "id": "7231f83a-0bb4-550b-9d2d-5a388c10ba31",
           "kind": "type",
@@ -42889,6 +42937,12 @@
           "id": "72df7741-3cee-51c6-9828-3c4e68fe3000",
           "kind": "type",
           "to": "ZeroParadox.constPF"
+        },
+        {
+          "from": "ZeroParadox.seam_is_mu_nu_coincidence_SeamGeneric",
+          "id": "7315d34d-04b5-5752-8d34-c370011a84fe",
+          "kind": "type",
+          "to": "ZeroParadox.fD_functor"
         },
         {
           "from": "ZeroParadox.ZPSemilattice.HasNoTop",
@@ -42999,6 +43053,12 @@
           "to": "ZeroParadox.hp2"
         },
         {
+          "from": "ZeroParadox.root_cut_strict_asymmetric",
+          "id": "76883f56-fd0d-5d52-8ea6-566d506edae8",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.postInstantiation",
           "id": "76a3ed25-8186-51bf-93a3-bdb201a9a396",
           "kind": "proof",
@@ -43065,6 +43125,18 @@
           "to": "natOrderCat"
         },
         {
+          "from": "ZeroParadox.natCofix_nonempty",
+          "id": "790fdc0f-6ac3-59a4-85b8-ccd01dc08e63",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
+        },
+        {
+          "from": "ZeroParadox.span_apex_to_padic_floor",
+          "id": "7937194f-9e50-5070-bffe-dfb1c571fc4b",
+          "kind": "proof",
+          "to": "ZeroParadox.padic_floor_unique_SpanObstruction"
+        },
+        {
           "from": "ZeroParadox.th3_snap_all_functors",
           "id": "799d17fb-dd6d-5571-b26d-20cdaba725e6",
           "kind": "type",
@@ -43083,6 +43155,12 @@
           "to": "ZeroParadox.pfunctorQPF"
         },
         {
+          "from": "ZeroParadox.nu_leaf_homeo",
+          "id": "79ed3e79-a38f-5186-a0eb-6bcbd1ebaf52",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.fD_has_return",
           "id": "7a141247-bd7c-5010-90c8-9de79f454b45",
           "kind": "type",
@@ -43099,6 +43177,18 @@
           "id": "7a593c90-de86-5af9-9660-2201ccb6bd19",
           "kind": "type",
           "to": "ZeroParadox.step"
+        },
+        {
+          "from": "ZeroParadox.natCofix_infinity_dest",
+          "id": "7a737305-17b3-5cd5-b90f-0843397ed4d6",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
+        },
+        {
+          "from": "ZeroParadox.nu_leaf_reconcile_generic",
+          "id": "7a8f0ce4-7bb5-5ec0-ad4a-f6f414f35225",
+          "kind": "proof",
+          "to": "ZeroParadox.padic_floor_unique_NuLeafReconcile"
         },
         {
           "from": "ZeroParadox.hilbert_bottom_isZero",
@@ -43123,6 +43213,12 @@
           "id": "7b505ee6-1196-5a13-8ce8-2ac0dc095c7d",
           "kind": "type",
           "to": "ZeroParadox.geo"
+        },
+        {
+          "from": "ZeroParadox.nu_leaf_glue_three",
+          "id": "7b75e6bc-5d49-56c0-9bae-c3c29488bc9e",
+          "kind": "type",
+          "to": "ZeroParadox.simplexPoint_ThreeCarrierLeaf"
         },
         {
           "from": "ZeroParadox.fB_functor",
@@ -43203,12 +43299,6 @@
           "to": "ZeroParadox.binPF"
         },
         {
-          "from": "ZeroParadox.arity_collapse",
-          "id": "7e265e09-bb1c-5377-afa9-0fa890492df7",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
-        },
-        {
           "from": "ZeroParadox.zpa_bot_not_greatest",
           "id": "7e3b3c2c-4804-531b-afce-e8c05b12b228",
           "kind": "type",
@@ -43287,6 +43377,12 @@
           "to": "ZeroParadox.fB_functor"
         },
         {
+          "from": "ZeroParadox.arity_collapse",
+          "id": "81169eee-8304-5bf8-b643-15bf50c3d2a4",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.seam_iff_no_recursive_position",
           "id": "812f1285-2d82-5e1b-b3e5-167d97e81b8c",
           "kind": "type",
@@ -43363,12 +43459,6 @@
           "id": "833f1eab-b9a7-572d-b918-78771807e294",
           "kind": "type",
           "to": "ZeroParadox.step"
-        },
-        {
-          "from": "ZeroParadox.hom_padic_hilbert_subsingleton",
-          "id": "834aeaeb-f1e2-5811-94d6-ab6210c85d75",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor_29"
         },
         {
           "from": "ZeroParadox.path_val_chain",
@@ -43485,6 +43575,12 @@
           "to": "ZeroParadox.hp2"
         },
         {
+          "from": "ZeroParadox.hom_padic_hilbert_subsingleton",
+          "id": "85be50bf-ed43-5199-82a9-49ace95255b4",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.t_snap_derived",
           "id": "85bebe53-47f2-5148-874d-d4fccaefb0e0",
           "kind": "type",
@@ -43509,16 +43605,16 @@
           "to": "ZeroParadox.DecorationUniverse"
         },
         {
-          "from": "ZeroParadox.strict_fix_isEmpty",
-          "id": "86107d94-03c4-5329-a9e1-5c43ebfc788a",
-          "kind": "type",
-          "to": "ZeroParadox.idPF_pf47"
-        },
-        {
           "from": "ZeroParadox.seam_leaf_homeo",
           "id": "86197ec4-0816-500a-b08b-109e690eed7b",
           "kind": "proof",
           "to": "ZeroParadox.hilbert_carrier_unique"
+        },
+        {
+          "from": "ZeroParadox.seam_empty_lim_eq_colim",
+          "id": "8688c07f-ec48-599b-8548-5a2bb7760ccf",
+          "kind": "type",
+          "to": "ZeroParadox.Z_SeamLimColim"
         },
         {
           "from": "ZeroParadox.t_iz_complete_from_axioms",
@@ -43599,12 +43695,6 @@
           "to": "ZeroParadox.preInstantiation"
         },
         {
-          "from": "ZeroParadox.padicFloor",
-          "id": "892a83a6-fcff-5383-b559-53e3da03d135",
-          "kind": "proof",
-          "to": "ZeroParadox.hp2"
-        },
-        {
           "from": "ZeroParadox.distQ",
           "id": "894dc517-c492-58fa-b8f6-7e9077fcdbe0",
           "kind": "proof",
@@ -43627,12 +43717,6 @@
           "id": "89de2a4a-dc6f-5640-a492-81a1072659d7",
           "kind": "type",
           "to": "ZeroParadox.TreeEmbeds"
-        },
-        {
-          "from": "ZeroParadox.nu_leaf_reconcile",
-          "id": "89f18ff1-9b0d-5f78-96a3-300e2d452350",
-          "kind": "proof",
-          "to": "ZeroParadox.padic_floor_unique_19"
         },
         {
           "from": "ZeroParadox.ZPSurprisal",
@@ -43665,6 +43749,12 @@
           "to": "ZeroParadox.KleeneStructure"
         },
         {
+          "from": "ZeroParadox.root_cut_dichotomy",
+          "id": "8a83c238-70f7-5b9d-ae4b-ffec561ee380",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.J_self_is_prefixed",
           "id": "8aa0f9fb-11f3-51ef-8f09-b468190c5c9e",
           "kind": "type",
@@ -43693,6 +43783,12 @@
           "id": "8b6206fa-251c-551f-9846-8cff69e4617b",
           "kind": "type",
           "to": "ZeroParadox.fC_functor"
+        },
+        {
+          "from": "ZeroParadox.cofix_nonempty",
+          "id": "8b74f92f-ca06-5c23-ad0b-4c427ba4c315",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "ZeroParadox.phaseRel",
@@ -43833,16 +43929,16 @@
           "to": "ZeroParadox.padicRate"
         },
         {
-          "from": "ZeroParadox.nu_leaf_glue_subsingleton",
-          "id": "908f1cb3-5894-5fd5-8028-c1b95704fc28",
-          "kind": "type",
-          "to": "ZeroParadox.simplexPoint"
-        },
-        {
           "from": "ZeroParadox.fD_zero_isTerminal",
           "id": "90a0952a-8a3c-5650-beca-05696f121c5f",
           "kind": "proof",
           "to": "ZeroParadox.StateSpace"
+        },
+        {
+          "from": "ZeroParadox.seam_leaf_homeo",
+          "id": "90a129b1-b96a-5326-940e-6ce780c31f8b",
+          "kind": "proof",
+          "to": "ZeroParadox.padic_floor_unique_ThreeCarrierLeaf"
         },
         {
           "from": "ZeroParadox.neighborSet_root",
@@ -43959,12 +44055,6 @@
           "to": "ZeroParadox.S"
         },
         {
-          "from": "ZeroParadox.nu_leaf_reconcile",
-          "id": "939a7473-371e-5b55-99cb-3a95879fa820",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor"
-        },
-        {
           "from": "ZeroParadox.root_seam",
           "id": "93adf379-087f-5e7c-8fe2-c1ff3acf7746",
           "kind": "type",
@@ -44017,12 +44107,6 @@
           "id": "94ce242b-f6fe-5951-aea7-da914aa0cb8f",
           "kind": "type",
           "to": "ZeroParadox.heval"
-        },
-        {
-          "from": "ZeroParadox.cofix_nonempty'",
-          "id": "94e9ba4a-c67b-555e-888c-938c859ca8b3",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.DecorationUniverse",
@@ -44095,12 +44179,6 @@
           "id": "96a58791-cad8-5ac8-a847-01e492af5d14",
           "kind": "type",
           "to": "ZeroParadox.weak_gseq"
-        },
-        {
-          "from": "ZeroParadox.fixToCofix_not_surjective",
-          "id": "96e88c62-e6c7-51ff-8e73-bb17e9fcf752",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
         },
         {
           "from": "ZeroParadox.node3_isLimit",
@@ -44271,6 +44349,12 @@
           "to": "forkZPCategory"
         },
         {
+          "from": "ZeroParadox.mixed_cofix_nonempty",
+          "id": "9aeef75c-a86a-5511-a895-c6bcb3d2ee8f",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_RootCutTrichotomy"
+        },
+        {
           "from": "ZeroParadox.snap_unconditional",
           "id": "9af54441-ce41-5b64-9a2b-803b1588462b",
           "kind": "type",
@@ -44329,6 +44413,12 @@
           "id": "9c41457a-97f4-5d76-b5b6-212144fff8f2",
           "kind": "type",
           "to": "ZeroParadox.heval"
+        },
+        {
+          "from": "ZeroParadox.fix_cofix_not_surjective",
+          "id": "9c5db704-5917-55c2-908d-83388c829756",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
         },
         {
           "from": "ZeroParadox.linObj_iso_hilbert",
@@ -44433,22 +44523,10 @@
           "to": "ZeroParadox.hp2"
         },
         {
-          "from": "ZeroParadox.root_cut_mu_to_nu_unique",
-          "id": "9f696ff9-bf44-5eb4-be53-729c8ae3af31",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
-        },
-        {
           "from": "ZeroParadox.tower_stage_zero",
           "id": "9fe01c08-a5b6-5022-ab08-64831ec7512e",
           "kind": "type",
           "to": "ZeroParadox.fundamentalSeq"
-        },
-        {
-          "from": "ZeroParadox.natCofix_infinity_dest",
-          "id": "9feaccf6-6f64-5fa3-a836-0432b5e98b94",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
         },
         {
           "from": "ZeroParadox.snap_state_zp2_is_zero",
@@ -44493,10 +44571,22 @@
           "to": "ZeroParadox.AbstractSelfApp"
         },
         {
+          "from": "ZeroParadox.w_isEmpty",
+          "id": "a1b12333-e4ab-5afb-a1ec-8e3ba4895aca",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.canonicalCmp_unique",
           "id": "a1fdc15c-dd65-5fe4-8fbb-ad72303ad5bd",
           "kind": "type",
           "to": "ZeroParadox.constPF"
+        },
+        {
+          "from": "ZeroParadox.nu_leaf_reconcile",
+          "id": "a22dbdad-c6fd-570d-b4d1-2e1e8a229f35",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_NuLeafReconcile"
         },
         {
           "from": "ZeroParadox.natFix_nonempty",
@@ -44521,12 +44611,6 @@
           "id": "a312cc1d-6c42-5e1d-a896-babbda96040b",
           "kind": "proof",
           "to": "ZeroParadox.rInv"
-        },
-        {
-          "from": "ZeroParadox.hom_padic_simplex_subsingleton",
-          "id": "a3468eed-4f8a-5a9b-bc44-6695aff47efd",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor_29"
         },
         {
           "from": "ZeroParadox.IsDepthChain",
@@ -44563,6 +44647,12 @@
           "id": "a3a7028a-0c3d-5ad4-950a-23e7a1966694",
           "kind": "type",
           "to": "ZeroParadox.c₁"
+        },
+        {
+          "from": "ZeroParadox.idPF_no_seam",
+          "id": "a3aa6ac6-3392-5256-94eb-8fd152c3ee25",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "ZeroParadox.padicRate_pos",
@@ -44607,6 +44697,12 @@
           "to": "ZeroParadox.fD_functor"
         },
         {
+          "from": "ZeroParadox.hom_padic_simplex_subsingleton",
+          "id": "a61250f5-89b6-5f9c-9147-28a933a5ceb4",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.t_snap_derived",
           "id": "a63274e2-2d9d-520a-8ca1-a3aa022b9d2c",
           "kind": "type",
@@ -44641,6 +44737,12 @@
           "id": "a793dee0-29d0-53ac-81b9-ca624253cee0",
           "kind": "type",
           "to": "ZeroParadox.ZPSemilattice"
+        },
+        {
+          "from": "ZeroParadox.strict_fix_isEmpty",
+          "id": "a7981a6f-74d4-5e93-9d06-c628e1a26c93",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_RootCutTrichotomy"
         },
         {
           "from": "ZeroParadox.cycKernel_doublyStochastic",
@@ -44763,12 +44865,6 @@
           "to": "ZeroParadox.canonicalCmp"
         },
         {
-          "from": "ZeroParadox.succCoalg",
-          "id": "aa9e7d32-9bc3-5e65-8fae-9f75f5fe6fe5",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.σ_involutive",
           "id": "aaa6cd6b-e8a5-5361-9b91-415dd75a5599",
           "kind": "type",
@@ -44803,12 +44899,6 @@
           "id": "ab776818-9588-5070-a3fd-ec6b7cd8b792",
           "kind": "proof",
           "to": "ZeroParadox.Pc"
-        },
-        {
-          "from": "ZeroParadox.nu_leaf_homeo",
-          "id": "ab7e1bce-1597-507e-8809-7afd62264afa",
-          "kind": "proof",
-          "to": "ZeroParadox.padic_floor_unique_29"
         },
         {
           "from": "ZeroParadox.th3_snap_all_functors",
@@ -44925,12 +45015,6 @@
           "to": "ZeroParadox.mk"
         },
         {
-          "from": "ZeroParadox.nu_leaf_homeo",
-          "id": "ae64d17f-6f99-5e93-a5f6-5958f69ffdfe",
-          "kind": "type",
-          "to": "ZeroParadox.simplexPoint_29"
-        },
-        {
           "from": "ZeroParadox.natInfinity_not_eventuallyLeaf",
           "id": "ae6a5928-2825-562a-a975-a06feabd167d",
           "kind": "type",
@@ -44977,12 +45061,6 @@
           "id": "aef1f750-8b24-5a5c-a8a0-1aab5cf8bac9",
           "kind": "type",
           "to": "ZeroParadox.Sphere"
-        },
-        {
-          "from": "ZeroParadox.fix_isEmpty_constructive",
-          "id": "aef95965-ed99-59bb-b681-8113a0225297",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.floorLeg",
@@ -45033,12 +45111,6 @@
           "to": "ZeroParadox.hp2"
         },
         {
-          "from": "ZeroParadox.padic_is_punit",
-          "id": "b0e9d242-dff7-5fc6-867f-93f0f8534ae1",
-          "kind": "proof",
-          "to": "ZeroParadox.padic_floor_unique_29"
-        },
-        {
           "from": "ZeroParadox.machinePhaseKleene",
           "id": "b107f459-e053-5dc0-a71b-febb1b673027",
           "kind": "type",
@@ -45049,12 +45121,6 @@
           "id": "b11829b4-a867-52b1-b96a-2f9737ca0f6a",
           "kind": "type",
           "to": "ZeroParadox.IsDepthChain"
-        },
-        {
-          "from": "ZeroParadox.padic_floor_unique_19",
-          "id": "b184421c-357e-5628-9f1e-10c243f2ae62",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor"
         },
         {
           "from": "ZeroParadox.bot_is_greatest_fixed_point",
@@ -45079,12 +45145,6 @@
           "id": "b241eeae-bab6-5ef4-85f7-811073f6ada3",
           "kind": "proof",
           "to": "ZeroParadox.q2Val_scale"
-        },
-        {
-          "from": "ZeroParadox.seam_is_intra_category",
-          "id": "b2541777-6162-5164-a9e2-d509ece4d29b",
-          "kind": "type",
-          "to": "ZeroParadox.Z"
         },
         {
           "from": "ZeroParadox.zpw_zero_mul_inf_eq_bot",
@@ -45133,12 +45193,6 @@
           "id": "b3f975de-4f3f-5e27-87ac-06ca6b2a6e92",
           "kind": "type",
           "to": "ZeroParadox.StateSpace"
-        },
-        {
-          "from": "ZeroParadox.mixed_fix_infinite",
-          "id": "b4230bea-f74b-571b-8b07-4542a1779634",
-          "kind": "type",
-          "to": "ZeroParadox.natPF"
         },
         {
           "from": "ZeroParadox.inf_ne_bot",
@@ -45205,12 +45259,6 @@
           "id": "b607e723-f626-56f7-9f85-77b07445aef9",
           "kind": "type",
           "to": "ZeroParadox.S"
-        },
-        {
-          "from": "ZeroParadox.nu_leaf_reconcile_generic",
-          "id": "b60b135c-b8c9-52a9-8921-e2bb6563205a",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor"
         },
         {
           "from": "ZeroParadox.ZPSemilattice.state_transition_iff",
@@ -45381,10 +45429,22 @@
           "to": "ZeroParadox.MC1Correspondence"
         },
         {
+          "from": "ZeroParadox.nu_leaf_homeo",
+          "id": "b98abd39-5974-5c02-ab4b-ac7191198fcb",
+          "kind": "proof",
+          "to": "ZeroParadox.simplex_point_unique_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.t2_maps_null",
           "id": "b996110b-e7d6-54be-a049-abfcb4194492",
           "kind": "type",
           "to": "ZeroParadox.basisVec"
+        },
+        {
+          "from": "ZeroParadox.EventuallyLeaf",
+          "id": "b9db00a6-4e9c-5baa-97ce-2f6c7dc80313",
+          "kind": "type",
+          "to": "ZeroParadox.natPF_NatListRegime"
         },
         {
           "from": "ZeroParadox.kruskal_is_wqo_not_descent",
@@ -45417,6 +45477,12 @@
           "to": "ZeroParadox.Wheel"
         },
         {
+          "from": "ZeroParadox.root_cut_mu_to_nu_unique",
+          "id": "baab7378-5259-54ee-ab36-b1c0d59c9fb2",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.hilbert_carrier_unique",
           "id": "bbbfd71d-e5f6-52df-9a43-400381b9f2ab",
           "kind": "type",
@@ -45427,12 +45493,6 @@
           "id": "bbc35651-855a-542c-805f-d5a139a7b6c4",
           "kind": "type",
           "to": "ZeroParadox.c₁"
-        },
-        {
-          "from": "ZeroParadox.categorical_fork_strict",
-          "id": "bbed6f97-f18a-5f97-bca9-75ae69750bd0",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.gmeasure",
@@ -45487,12 +45547,6 @@
           "id": "bd4cce5a-4843-5349-9ebf-dbf08d3545c0",
           "kind": "type",
           "to": "ZeroParadox.hp2"
-        },
-        {
-          "from": "ZeroParadox.nu_leaf_reconcile",
-          "id": "bd64cc04-8c72-5f6d-aebe-fb1dff0772d2",
-          "kind": "type",
-          "to": "ZeroParadox.simplexPoint"
         },
         {
           "from": "ZeroParadox.nontrivial_lattice_no_witness",
@@ -45585,6 +45639,12 @@
           "to": "natOrderCat"
         },
         {
+          "from": "ZeroParadox.fix_isEmpty",
+          "id": "bfce1948-9c13-57a3-b950-996703389d91",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.ZPSemilattice.le_trans",
           "id": "c03bca1d-8379-5cc9-95c1-a66784a7c729",
           "kind": "type",
@@ -45627,12 +45687,6 @@
           "to": "ZeroParadox.c₁"
         },
         {
-          "from": "ZeroParadox.nu_leaf_homeo",
-          "id": "c1c8df3c-9b46-5dfe-84fe-c00e50c6c007",
-          "kind": "proof",
-          "to": "ZeroParadox.simplex_point_unique_29"
-        },
-        {
           "from": "ZeroParadox.t_iz_valuation_unbounded",
           "id": "c1eb50da-4992-5176-b092-d71aac9ea7a4",
           "kind": "type",
@@ -45645,16 +45699,16 @@
           "to": "ZeroParadox.hp2"
         },
         {
-          "from": "ZeroParadox.nu_leaf_glue_three",
-          "id": "c22765e0-ce31-537b-acc9-745bdf94aa1b",
-          "kind": "type",
-          "to": "ZeroParadox.simplexPoint_29"
-        },
-        {
           "from": "ZeroParadox.snap_state_zp2_is_zero",
           "id": "c23e743b-532a-5ea3-b83a-b85c430f56eb",
           "kind": "type",
           "to": "ZeroParadox.snapEmbed"
+        },
+        {
+          "from": "ZeroParadox.padicFloor_NuLeafReconcile",
+          "id": "c240b5ae-1d5f-5a36-a17a-1d605ee6e1ad",
+          "kind": "proof",
+          "to": "ZeroParadox.hp2"
         },
         {
           "from": "ZeroParadox.fC_zero_isInitial_as_empty_colimit",
@@ -45715,18 +45769,6 @@
           "id": "c445a9da-fe52-526d-a834-7998e487d67e",
           "kind": "type",
           "to": "ZeroParadox.hp2"
-        },
-        {
-          "from": "ZeroParadox.seam_two_sided",
-          "id": "c4556f11-292f-54ae-bf5e-f0d997d95005",
-          "kind": "type",
-          "to": "ZeroParadox.Z"
-        },
-        {
-          "from": "ZeroParadox.root_cut_dichotomy",
-          "id": "c4b2d0a5-70a8-594f-beb4-ca200101998f",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.root_node_seam_no_identity",
@@ -45807,12 +45849,6 @@
           "to": "ZeroParadox.IsDecoration"
         },
         {
-          "from": "ZeroParadox.root_purity_split",
-          "id": "c7c1973a-2319-5762-b06f-23b5b2ae7eb3",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
-        },
-        {
           "from": "ZeroParadox.toValBridge",
           "id": "c7e7a6fc-62bd-5f7a-95ef-020ff88c4bd5",
           "kind": "type",
@@ -45855,12 +45891,6 @@
           "to": "ZeroParadox.qpfSeam"
         },
         {
-          "from": "ZeroParadox.nu_leaf_reconcile",
-          "id": "c8729da3-de5d-58cf-a520-e6ced055c2fd",
-          "kind": "proof",
-          "to": "ZeroParadox.simplex_point_unique"
-        },
-        {
           "from": "ZeroParadox.TreeEmbeds",
           "id": "c92a8758-95ac-5e0e-8da6-ac41427f55a6",
           "kind": "type",
@@ -45889,6 +45919,12 @@
           "id": "c993b710-94b9-552e-be75-68fae96d5097",
           "kind": "type",
           "to": "ZeroParadox.step"
+        },
+        {
+          "from": "ZeroParadox.Z_SeamBridge",
+          "id": "c9bb713a-fc41-5a46-b51d-6708249c8fc4",
+          "kind": "proof",
+          "to": "ZeroParadox.fD_functor"
         },
         {
           "from": "ZeroParadox.klDiv",
@@ -46053,12 +46089,6 @@
           "to": "ZeroParadox.seam_isZero_tree"
         },
         {
-          "from": "ZeroParadox.idPF_no_seam",
-          "id": "cdcd2dbb-1648-5851-8860-1440d61fa11e",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
-        },
-        {
           "from": "ZeroParadox.j1_quine_join_identity",
           "id": "ce38821e-dc78-5406-b29a-91a93496105f",
           "kind": "type",
@@ -46179,12 +46209,6 @@
           "to": "ZeroParadox.machinePhaseZPS"
         },
         {
-          "from": "ZeroParadox.fixToCofix_eventuallyLeaf",
-          "id": "d1e6987e-b4db-56d8-ad01-5c4be0dd2bcd",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.heval_bump",
           "id": "d2045504-5eea-57a8-ae3e-8c556890cb22",
           "kind": "type",
@@ -46207,12 +46231,6 @@
           "id": "d2660e19-2651-5b0a-baed-321ec81895d7",
           "kind": "type",
           "to": "ZeroParadox.constPF"
-        },
-        {
-          "from": "ZeroParadox.Z",
-          "id": "d2875b85-add2-5cdb-bf57-81cebccc863b",
-          "kind": "proof",
-          "to": "ZeroParadox.fD_functor"
         },
         {
           "from": "ZeroParadox.canonicalCmp",
@@ -46257,12 +46275,6 @@
           "to": "ZeroParadox.epsilonZero"
         },
         {
-          "from": "ZeroParadox.padic_floor_unique",
-          "id": "d44ffc6c-40ef-5146-9ddc-12f56f7734c4",
-          "kind": "type",
-          "to": "ZeroParadox.hp2"
-        },
-        {
           "from": "ZeroParadox.floorCone",
           "id": "d45c6110-3597-582b-a0e9-91a1157278cd",
           "kind": "proof",
@@ -46281,6 +46293,12 @@
           "to": "ZeroParadox.hp2"
         },
         {
+          "from": "ZeroParadox.nu_leaf_glue_three",
+          "id": "d59603c3-fe95-5a8b-a49d-381f6f776153",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_ThreeCarrierLeaf"
+        },
+        {
           "from": "ZeroParadox.markov_contraction_dichotomy",
           "id": "d59f61a0-d5d5-5e34-b78f-aed8f5f4c40c",
           "kind": "type",
@@ -46291,6 +46309,12 @@
           "id": "d5d80865-c489-5abd-b717-0ef2720a2e04",
           "kind": "type",
           "to": "ZeroParadox.selfApply"
+        },
+        {
+          "from": "ZeroParadox.strict_cofix_nonempty",
+          "id": "d5dde39e-80d3-5b65-8820-c4fc9b86f341",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_RootCutTrichotomy"
         },
         {
           "from": "ZeroParadox.cycKernel_ne_id",
@@ -46339,12 +46363,6 @@
           "id": "d6f1992f-f590-51a0-80b2-d014f7cc74b0",
           "kind": "type",
           "to": "ZeroParadox.c₁"
-        },
-        {
-          "from": "ZeroParadox.nu_leaf_glue_subsingleton",
-          "id": "d6feb76a-d752-5c15-b3d2-0c1ac523154c",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor"
         },
         {
           "from": "ZeroParadox.colimit_limit_cross_root",
@@ -46411,12 +46429,6 @@
           "id": "d848e1af-f596-55e0-bb66-f623f649297d",
           "kind": "type",
           "to": "ZeroParadox.ZPSemilattice"
-        },
-        {
-          "from": "ZeroParadox.seam_empty_lim_eq_colim",
-          "id": "d85ece49-12ca-598d-aed5-6ef2572a457a",
-          "kind": "type",
-          "to": "ZeroParadox.Z_state25"
         },
         {
           "from": "ZeroParadox.sublistForall₂_mem",
@@ -46491,12 +46503,6 @@
           "to": "ZeroParadox.ZPSemilattice"
         },
         {
-          "from": "ZeroParadox.leafNode",
-          "id": "db4f6e73-664f-5304-935c-bb7c5d359fa1",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.leaf_not_isZero",
           "id": "dbb39fc2-f05d-5f45-ab64-6b1412590ddf",
           "kind": "type",
@@ -46507,6 +46513,12 @@
           "id": "dbbb55e7-9448-519a-9269-e0a34a18537c",
           "kind": "type",
           "to": "ZeroParadox.P_real"
+        },
+        {
+          "from": "ZeroParadox.qpf_seam_not_automatic",
+          "id": "dbd67d7c-0215-5941-a80d-f97ce0d2ae64",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "ZeroParadox.partiallyWellOrderedOn_treeEmbeds",
@@ -46521,16 +46533,16 @@
           "to": "ZeroParadox.IsQuineAtom"
         },
         {
+          "from": "ZeroParadox.nu_leaf_reconcile_generic",
+          "id": "dc2467e2-8d6f-5344-88da-c49892ba8c8f",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_NuLeafReconcile"
+        },
+        {
           "from": "ZeroParadox.seam_schema_is_degenerate_for_lattice",
           "id": "dc6fca84-5134-50c7-8117-d70f37473c87",
           "kind": "type",
           "to": "ZeroParadox.FpSub"
-        },
-        {
-          "from": "ZeroParadox.nu_leaf_homeo",
-          "id": "dc948b89-4296-597d-9fe3-3b206e38dcbc",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor_29"
         },
         {
           "from": "ZeroParadox.t_iz_conv_zero",
@@ -46719,6 +46731,12 @@
           "to": "ZeroParadox.ZPSemilattice"
         },
         {
+          "from": "ZeroParadox.nu_leaf_reconcile",
+          "id": "e1641480-6a9e-5867-a33c-6bb958be4f14",
+          "kind": "proof",
+          "to": "ZeroParadox.padic_floor_unique_NuLeafReconcile"
+        },
+        {
           "from": "ZeroParadox.padic_floor_isLimit",
           "id": "e16f67ed-a54a-5e07-b8d2-53293cc8c053",
           "kind": "type",
@@ -46851,12 +46869,6 @@
           "to": "ZeroParadox.Q_real"
         },
         {
-          "from": "ZeroParadox.padic_floor_unique_29",
-          "id": "e4f8dba8-8fa9-558f-8197-5f075acf35c5",
-          "kind": "type",
-          "to": "ZeroParadox.padicFloor_29"
-        },
-        {
           "from": "ZeroParadox.floorCone",
           "id": "e5319759-1354-5a40-9ca2-4d35895cc0e8",
           "kind": "proof",
@@ -46941,22 +46953,16 @@
           "to": "ZeroParadox.IsComputationalQuine"
         },
         {
-          "from": "ZeroParadox.root_cut_no_equiv",
-          "id": "e907c845-8565-5c18-9e31-b7095d61a603",
+          "from": "ZeroParadox.nu_leaf_glue_subsingleton",
+          "id": "e8c4caa7-03b5-5a96-8e6e-0a5068af80e3",
           "kind": "type",
-          "to": "ZeroParadox.idPF"
+          "to": "ZeroParadox.simplexPoint_NuLeafReconcile"
         },
         {
           "from": "ZeroParadox.da1_minimal_path",
           "id": "e909d9d4-b3a6-54df-a19a-0c447057227e",
           "kind": "type",
           "to": "ZeroParadox.preInstantiation"
-        },
-        {
-          "from": "ZeroParadox.Z_state25",
-          "id": "e90e8484-5ee1-5b74-aea2-25f726897d23",
-          "kind": "proof",
-          "to": "ZeroParadox.fD_functor"
         },
         {
           "from": "ZeroParadox.bump_eq_zero_iff",
@@ -46993,6 +46999,12 @@
           "id": "e9d4155b-08a4-5829-9643-5dbca0a655fa",
           "kind": "type",
           "to": "ZeroParadox.ZPSemilattice"
+        },
+        {
+          "from": "ZeroParadox.nu_leaf_homeo",
+          "id": "e9fbeac1-c0ec-571b-b17d-c24c5ce50f1a",
+          "kind": "type",
+          "to": "ZeroParadox.simplexPoint_ThreeCarrierLeaf"
         },
         {
           "from": "ZeroParadox.hom_padic_hilbert_subsingleton",
@@ -47041,12 +47053,6 @@
           "id": "ea725704-9f66-535b-82df-fe006ffc2581",
           "kind": "type",
           "to": "ZeroParadox.legVal"
-        },
-        {
-          "from": "ZeroParadox.span_apex_to_padic_floor",
-          "id": "ea898b82-f728-5823-8bf3-053373b0658d",
-          "kind": "proof",
-          "to": "ZeroParadox.padic_floor_unique"
         },
         {
           "from": "ZeroParadox.ZPSemilattice.cc1",
@@ -47149,12 +47155,6 @@
           "id": "ec01de3b-12b6-59da-9a39-fdc33ab64366",
           "kind": "type",
           "to": "ZeroParadox.c₀"
-        },
-        {
-          "from": "ZeroParadox.quine_dichotomy",
-          "id": "ec1f44e3-27ae-595e-aede-10d07de3dc4f",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.padic_orbit_tendsto",
@@ -47277,10 +47277,10 @@
           "to": "ZeroParadox.ZPSemilattice"
         },
         {
-          "from": "ZeroParadox.mixed_fix_nonempty",
-          "id": "f05c898e-0f30-5978-80c4-bab308c04cc0",
+          "from": "ZeroParadox.fixToCofix_eventuallyLeaf",
+          "id": "f07a672f-2d3f-5824-8e07-a88a4fa13dbd",
           "kind": "type",
-          "to": "ZeroParadox.natPF"
+          "to": "ZeroParadox.natPF_NatListRegime"
         },
         {
           "from": "ZeroParadox.instZ2ValBridge",
@@ -47335,6 +47335,12 @@
           "id": "f208d380-7482-5f1c-9b3f-38471674307d",
           "kind": "proof",
           "to": "ZeroParadox.selfApply"
+        },
+        {
+          "from": "ZeroParadox.hom_padic_simplex_subsingleton",
+          "id": "f20ac9f2-bf65-572d-b0b4-ee23f15e31b3",
+          "kind": "type",
+          "to": "ZeroParadox.simplexPoint_ThreeCarrierLeaf"
         },
         {
           "from": "ZeroParadox.nat_strict_of_strict_state_seq",
@@ -47415,6 +47421,12 @@
           "to": "ZeroParadox.ValuationStructure"
         },
         {
+          "from": "ZeroParadox.no_cross_setting_map",
+          "id": "f3e3c9a0-ce80-57aa-a885-6825a4a72aec",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.J_self_is_largest",
           "id": "f3e5b1cd-6728-586b-8f03-8ec82c8c6708",
           "kind": "type",
@@ -47427,12 +47439,6 @@
           "to": "ZeroParadox.IsStationaryPMF"
         },
         {
-          "from": "ZeroParadox.natInfinity",
-          "id": "f4405498-6685-5b24-9092-ce1047e837da",
-          "kind": "type",
-          "to": "ZeroParadox.natPF_alt"
-        },
-        {
           "from": "ZeroParadox.q2SelfMem",
           "id": "f4554e95-0dcb-50f8-a767-62b4dab803bd",
           "kind": "proof",
@@ -47443,12 +47449,6 @@
           "id": "f4685c57-057c-5796-9697-90043ba5ba20",
           "kind": "type",
           "to": "ZeroParadox.fB_functor"
-        },
-        {
-          "from": "ZeroParadox.seam_iff_no_recursive_position",
-          "id": "f4737ff6-d601-5759-8595-577bd65e9cd4",
-          "kind": "type",
-          "to": "ZeroParadox.idPF"
         },
         {
           "from": "ZeroParadox.cnfToZp2_tower_valuation",
@@ -47529,12 +47529,6 @@
           "to": "ZeroParadox.hp2"
         },
         {
-          "from": "ZeroParadox.hom_padic_simplex_subsingleton",
-          "id": "f687e9f7-a95e-5633-9d37-84016b1492ed",
-          "kind": "type",
-          "to": "ZeroParadox.simplexPoint_29"
-        },
-        {
           "from": "ZeroParadox.hfp_from_epsilon_zero",
           "id": "f6909870-869c-578c-87cf-8b48c8a65f15",
           "kind": "type",
@@ -47571,6 +47565,12 @@
           "to": "ZeroParadox.floorRel"
         },
         {
+          "from": "ZeroParadox.nu_leaf_glue_subsingleton",
+          "id": "f73f937f-34ff-5353-b223-db86a9ee13b8",
+          "kind": "type",
+          "to": "ZeroParadox.padicFloor_NuLeafReconcile"
+        },
+        {
           "from": "ZeroParadox.q2Ball_eq_addValuation_sublevel",
           "id": "f7d8dbe1-8c79-5150-89e0-1418fcf78826",
           "kind": "type",
@@ -47581,12 +47581,6 @@
           "id": "f7de4690-9b9e-5e21-85f9-c4f2da85770f",
           "kind": "type",
           "to": "natOrderCat"
-        },
-        {
-          "from": "ZeroParadox.simplex_point_unique",
-          "id": "f7ebcee1-f807-5ac7-be85-322b7b4dc835",
-          "kind": "type",
-          "to": "ZeroParadox.simplexPoint"
         },
         {
           "from": "ZeroParadox.tower_stage_two",
@@ -47617,6 +47611,12 @@
           "id": "f94c1038-19a3-5588-bf7e-a64d5e1aff10",
           "kind": "type",
           "to": "ZeroParadox.natZPSemilattice_zpi"
+        },
+        {
+          "from": "ZeroParadox.coalgebra_fork_strict_on_idPF",
+          "id": "f94dac13-e05a-5377-91aa-805c2f1df712",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
         },
         {
           "from": "Q₂BallDepth.ext",
@@ -47763,6 +47763,12 @@
           "to": "ZeroParadox.bump"
         },
         {
+          "from": "ZeroParadox.categorical_fork_strict",
+          "id": "fd288457-aa21-5c2f-a429-7a6e9283a781",
+          "kind": "type",
+          "to": "ZeroParadox.idPF_Coalgebra"
+        },
+        {
           "from": "ZeroParadox.canonicalCmp_eq_root_seam",
           "id": "fd3c64e5-80ce-554c-a533-bbe0c7b79623",
           "kind": "type",
@@ -47779,12 +47785,6 @@
           "id": "fd9e3dc8-84bc-545e-958a-79cd1786a9cc",
           "kind": "type",
           "to": "ZeroParadox.ZPSemilattice"
-        },
-        {
-          "from": "ZeroParadox.padic_floor_unique_29",
-          "id": "fde8dd67-f6d7-58e0-8415-f2f4103c26dd",
-          "kind": "proof",
-          "to": "ZeroParadox.hp2"
         },
         {
           "from": "ZeroParadox.node3_isLimit",

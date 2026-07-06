@@ -53,7 +53,7 @@ that "root-seam ≅ node-seam" is a loose analogy, not a structural identity. It
 decisive and they are stated in Lean:
 
 1. `seam_iff_no_recursive_position` — the canonical comparison is an iso for `constPF` (no recursive
-   position) and is *not* even a bijection for `idPF` (one recursive position): there `Fix` is empty
+   position) and is *not* even a bijection for `idPF_Coalgebra` (one recursive position): there `Fix` is empty
    and `Cofix` is inhabited, so **no** function `Fix → Cofix` is surjective. The root-seam is governed
    by *absence of a recursive position* in the functor.
 
@@ -145,13 +145,13 @@ theorem canonicalCmp_bijective :
 /-! ## The honest fence: root-seam vs node-seam are distinct phenomena -/
 
 /-- **The root-seam is governed by absence of a recursive position.** For `constPF` (no recursive
-position) the canonical comparison is a bijection; for `idPF` (one recursive position) NO function
-`Fix → Cofix` can be surjective, because `Fix idPF.Obj` is empty while `Cofix idPF.Obj` is inhabited.
+position) the canonical comparison is a bijection; for `idPF_Coalgebra` (one recursive position) NO function
+`Fix → Cofix` can be surjective, because `Fix idPF_Coalgebra.Obj` is empty while `Cofix idPF_Coalgebra.Obj` is inhabited.
 So the seam at the root level is the coincidence of μ and ν constructions, and it happens exactly when
 the functor has no recursive position. -/
 theorem seam_iff_no_recursive_position :
     Function.Bijective (canonicalCmp : Fix (constPF Unit).Obj → Cofix (constPF Unit).Obj)
-    ∧ (∀ g : Fix ZeroParadox.idPF.Obj → Cofix ZeroParadox.idPF.Obj,
+    ∧ (∀ g : Fix ZeroParadox.idPF_Coalgebra.Obj → Cofix ZeroParadox.idPF_Coalgebra.Obj,
         ¬ Function.Surjective g) := by
   refine ⟨canonicalCmp_bijective, ?_⟩
   intro g hg

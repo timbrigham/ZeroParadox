@@ -39,7 +39,7 @@ map out, from initiality, and a unique map in, from terminality). So the pre-reg
 (zero object strictly stronger than initial ∧ terminal, requiring preadditive) is **refuted**: the
 coincidence is genuinely the whole story at the bare-category level.
 
-**The named instance** (`seam_isZero_iff` and `seam_is_mu_nu_coincidence_alt`): the equivalence is then
+**The named instance** (`seam_isZero_iff` and `seam_is_mu_nu_coincidence_SeamGeneric`): the equivalence is then
 instantiated at `Z := fD_functor.obj 0`, reusing `hilbert_bottom_isZero`. The seam node concretely
 witnesses both sides of the coincidence.
 
@@ -91,7 +91,7 @@ theorem seam_isZero_iff :
     (μ: least-fixed-point / colimit side) and terminal (ν: greatest-fixed-point / limit side). This
     is the structural content of "the seam is the μ=ν coincidence point," now witnessed rather than
     glossed: both `IsInitial` and `IsTerminal` are produced for the concrete node. -/
-theorem seam_is_mu_nu_coincidence_alt :
+theorem seam_is_mu_nu_coincidence_SeamGeneric :
     Nonempty (IsInitial (fD_functor.obj 0)) ∧ Nonempty (IsTerminal (fD_functor.obj 0)) :=
   (seam_isZero_iff).mp hilbert_bottom_isZero
 
@@ -104,6 +104,6 @@ open ZeroParadox
 
 #print axioms isZero_iff_initial_terminal_expl
 #print axioms seam_isZero_iff
-#print axioms seam_is_mu_nu_coincidence_alt
+#print axioms seam_is_mu_nu_coincidence_SeamGeneric
 
 end PurityCheck
