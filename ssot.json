@@ -5383,7 +5383,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "pending",
+          "disposition": "dropped",
           "id": "1f182e78-38cd-4efb-b550-ec1ec6ce1629",
           "new": {
             "file": null,
@@ -5408,7 +5408,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "Dedup: rename-twin of fresh add_new isZero_iff_initial_terminal_expl (same HEAD decl); TC13 copy renamed in source",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11581,9 +11581,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -14306,9 +14310,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "category"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -19175,7 +19183,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "pending",
+          "disposition": "dropped",
           "id": "7ca7cff5-fc5e-450c-ad94-028f6526b181",
           "new": {
             "file": null,
@@ -19200,7 +19208,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "Dedup: rename-twin of fresh add_new weak_gseq (same HEAD decl); old identity WeakGoodstein.gseq renamed in source, deps remapped to fresh entry",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20594,7 +20602,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "pending",
+          "disposition": "dropped",
           "id": "86108115-5cde-4f0b-90e6-7e6811f46e62",
           "new": {
             "file": null,
@@ -20619,7 +20627,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "Dedup: rename-twin of fresh add_new apg_children (same HEAD decl); old identity ZPJ_APG.children renamed in source, deps remapped to fresh entry",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20973,9 +20981,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -23441,9 +23453,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "set-theory"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -24856,9 +24872,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -25860,7 +25880,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "pending",
+          "disposition": "dropped",
           "id": "adf5a669-5032-4969-b42a-e6dad78f6140",
           "new": {
             "file": null,
@@ -25885,7 +25905,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "Dedup: rename-twin of fresh add_new weak_gstep (same HEAD decl); old identity WeakGoodstein.gstep renamed in source",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32039,7 +32059,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "pending",
+          "disposition": "dropped",
           "id": "d893c22e-0a1b-4592-92c3-378ce83093a8",
           "new": {
             "file": null,
@@ -32064,7 +32084,7 @@
               "scaffolding"
             ]
           },
-          "reason": null,
+          "reason": "Dedup: rename-twin of fresh add_new weak_gseq_measure_lt (same HEAD decl); old identity renamed in source, deps remapped to fresh entry",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38863,12 +38883,6 @@
           "to": "ZeroParadox.StateSpace"
         },
         {
-          "from": "ZeroParadox.weak_goodstein_terminates",
-          "id": "09947a3b-5eba-54c2-9542-a0a86f7f36fc",
-          "kind": "type",
-          "to": "ZeroParadox.WeakGoodstein.gseq"
-        },
-        {
           "from": "ZeroParadox.toAbstractSelfApp",
           "id": "09af3eaa-838a-5ae0-aab0-29e5c3cd3571",
           "kind": "type",
@@ -40447,6 +40461,12 @@
           "to": "ZeroParadox.hp2"
         },
         {
+          "from": "ZeroParadox.weak_goodstein_terminates",
+          "id": "31937f88-7dfb-569b-bc4d-d4d0635a7dd0",
+          "kind": "type",
+          "to": "ZeroParadox.weak_gseq"
+        },
+        {
           "from": "ZeroParadox.colimit_limit_cross_root",
           "id": "31b26ce6-406b-5ea1-8153-0424664b606f",
           "kind": "type",
@@ -41443,6 +41463,12 @@
           "to": "q2BallCat"
         },
         {
+          "from": "ZeroParadox.weak_gseq_measure_lt",
+          "id": "4a73659b-35d1-5722-9fa1-15bc490e87a4",
+          "kind": "type",
+          "to": "ZeroParadox.gmeasure"
+        },
+        {
           "from": "ZeroParadox.padic_orbit_not_reaches_floor",
           "id": "4aad8415-226b-5eda-9bc6-acfe358f54e3",
           "kind": "type",
@@ -42043,12 +42069,6 @@
           "to": "ZeroParadox.natPF_alt"
         },
         {
-          "from": "ZeroParadox.IsDecoration",
-          "id": "5cc0baab-8428-590f-ae67-44d59900bf09",
-          "kind": "proof",
-          "to": "ZeroParadox.ZPJ_APG.children"
-        },
-        {
           "from": "ZeroParadox.step_imb",
           "id": "5cceb0d7-4a31-5cfc-a510-1e1d975b5fee",
           "kind": "type",
@@ -42341,6 +42361,12 @@
           "id": "655ab2ce-bd70-5577-aeeb-b569b3cdc8d5",
           "kind": "type",
           "to": "ZeroParadox.ZPSemilattice.IsStrictStateSequence"
+        },
+        {
+          "from": "ZeroParadox.IsDecoration",
+          "id": "656d632d-148f-560b-a4bc-6ad66d299c80",
+          "kind": "proof",
+          "to": "ZeroParadox.apg_children"
         },
         {
           "from": "ZeroParadox.t6c_surprisal_sum_nonneg",
@@ -43067,12 +43093,6 @@
           "id": "7a3f820b-a945-5367-b442-ceeacecaf0da",
           "kind": "type",
           "to": "HilbDimDepth"
-        },
-        {
-          "from": "ZeroParadox.pureSelfLoop_children_eq_singleton",
-          "id": "7a531366-ae05-511f-80b3-24c0ff34547f",
-          "kind": "type",
-          "to": "ZeroParadox.ZPJ_APG.children"
         },
         {
           "from": "ZeroParadox.markov_imbalance_quarter",
@@ -44071,6 +44091,12 @@
           "to": "ZeroParadox.floorCone"
         },
         {
+          "from": "ZeroParadox.weak_gseq_measure_lt",
+          "id": "96a58791-cad8-5ac8-a847-01e492af5d14",
+          "kind": "type",
+          "to": "ZeroParadox.weak_gseq"
+        },
+        {
           "from": "ZeroParadox.fixToCofix_not_surjective",
           "id": "96e88c62-e6c7-51ff-8e73-bb17e9fcf752",
           "kind": "type",
@@ -44831,6 +44857,12 @@
           "id": "acadbf2b-c99d-5298-be79-698ed62ef86f",
           "kind": "type",
           "to": "ZeroParadox.AbstractSelfApp"
+        },
+        {
+          "from": "ZeroParadox.pureSelfLoop_children_eq_singleton",
+          "id": "acb6dc02-1210-5d20-b05d-6b7cfddb89d4",
+          "kind": "type",
+          "to": "ZeroParadox.apg_children"
         },
         {
           "from": "ZeroParadox.selfMem_determines_singleton",
@@ -46087,12 +46119,6 @@
           "to": "ZeroParadox.fundamentalSeq"
         },
         {
-          "from": "ZeroParadox.WeakGoodstein.gseq_measure_lt",
-          "id": "cffc4a98-0455-591c-867a-428b52ddfd98",
-          "kind": "type",
-          "to": "ZeroParadox.WeakGoodstein.gseq"
-        },
-        {
           "from": "ZeroParadox.padic_is_punit",
           "id": "d03b5c7b-1267-55d2-bb78-3a0d7000438b",
           "kind": "type",
@@ -46627,12 +46653,6 @@
           "to": "ZeroParadox.IsQuineAtom"
         },
         {
-          "from": "ZeroParadox.WeakGoodstein.gseq_measure_lt",
-          "id": "df0e5876-d02d-56b8-b6ef-4db787b6519c",
-          "kind": "type",
-          "to": "ZeroParadox.gmeasure"
-        },
-        {
           "from": "ZeroParadox.valuation_bot_is_quine",
           "id": "df2d414b-e010-5792-86ff-d996aa8a5258",
           "kind": "type",
@@ -46769,12 +46789,6 @@
           "id": "e316c8ed-1dab-5c87-9f90-da8847a7cff7",
           "kind": "type",
           "to": "forkZPCategory"
-        },
-        {
-          "from": "ZeroParadox.acyclic_induction_step",
-          "id": "e32d20ee-009a-56b3-b5fd-0ce8013e76f8",
-          "kind": "type",
-          "to": "ZeroParadox.ZPJ_APG.children"
         },
         {
           "from": "ZeroParadox.J_self_eq_singleton_bot",
@@ -47195,6 +47209,12 @@
           "id": "ee15a5fc-3809-5cc9-b639-6524ffd0090e",
           "kind": "type",
           "to": "ZeroParadox.ValuationStructure"
+        },
+        {
+          "from": "ZeroParadox.acyclic_induction_step",
+          "id": "ee768f68-76df-5371-97e8-e866ec2cae47",
+          "kind": "type",
+          "to": "ZeroParadox.apg_children"
         },
         {
           "from": "ZeroParadox.scale_ne_fixed",
