@@ -83,6 +83,7 @@ import ZeroParadox.Ordinal.Goodstein
 import ZeroParadox.Ordinal.Incompleteness
 import ZeroParadox.Ordinal.KirbyParis
 import ZeroParadox.Ordinal.Kruskal
+import ZeroParadox.Ordinal.NaturalOpsPow
 import ZeroParadox.Ordinal.P8
 import ZeroParadox.Ordinal.ProofFloorCanonical
 import ZeroParadox.Ordinal.WeakGoodstein
@@ -137,7 +138,6 @@ import ZeroParadox.Valuation.TopFunctor
 import ZeroParadox.Valuation.ValuationAFA
 import ZeroParadox.Valuation.ValuationAFA_Padic
 import ZeroParadox.Vendored.NaturalOps
-import ZeroParadox.Ordinal.NaturalOpsPow
 import Lean
 
 /-!
