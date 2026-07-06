@@ -23165,7 +23165,7 @@
           "ontology": {
             "domain": [
               "ordinal",
-              "set-theory"
+              "reals"
             ],
             "object": [],
             "role": [
@@ -28046,7 +28046,7 @@
           "ontology": {
             "domain": [
               "ordinal",
-              "set-theory"
+              "reals"
             ],
             "object": [],
             "role": [
