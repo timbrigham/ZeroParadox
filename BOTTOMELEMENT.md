@@ -31,7 +31,7 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 | CONC | **concurrency** - applying ⊥'s own operation returns ⊥ unchanged (a fixed point: operation and result coincide) |
 | SELF | **self-reference** - ⊥ is defined by referring to itself (a self-reproducing / self-containing object) |
 | GEN | **generation** - ⊥ generates the structure built above it (for example, the ordinal ε₀ generated from 0) |
-| DYN | **dynamics** - ⊥'s arrow of time, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source |
+| DYN | **dynamics** - how ⊥ is approached and departed, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source |
 
 **Constructions** (the map rows). A `#N` prefix (#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert
 seam) cross-references the **bottom-diagram-tree nodes** used throughout the Lean source (`node #4`,
@@ -102,7 +102,7 @@ not.*
 | concurrency | hinge | the fixed point where least and greatest coincide (operation = result) | [`unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`selfApp_bot_is_both_extremal`](ZeroParadox/Multihomed/SelfAppSeam.lean) |
 | self-reference | hinge | the self-reproducing / self-containing fixed point (Quine / Kleene) | [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean), [`quine_period_is_goedel`](ZeroParadox/Computability/Kleene.lean) |
 | generation | verb | the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power) | [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) |
-| dynamics | verb | ⊥'s arrow of time - one directional axis, two sub-senses: **inbound** (↓, orbits converge *to* ⊥ - a sink) and **outbound** (↑, structure departs *from* ⊥ irreversibly - a source); ↕ = both, only at a seam (μ=ν) | [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`t_snap_derived`](ZeroParadox/Order/Snap.lean), [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean), [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) |
+| dynamics | verb | ⊥'s one-way approach and departure - two sub-senses: **inbound** (↓, orbits converge *to* ⊥ - a sink) and **outbound** (↑, structure departs *from* ⊥ irreversibly - a source); ↕ = both, only at a seam (μ=ν) | [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`t_snap_derived`](ZeroParadox/Order/Snap.lean), [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean), [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) |
 
 ---
 
@@ -135,7 +135,7 @@ point-limit) read `∅` there - a ν-object has no μ-property - and the self-co
 selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
 (2) The **dynamics** column is single-directional - `↓` for a sink (ν), `↑` for a source (μ) - and `↕` (both)
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
-0→ε₀. So the arrow of time at ⊥ has one direction, fixed by whether ⊥ is a source or a sink.
+0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
 
 **The value is in the non-`✓` cells** - the open questions (`?`) and the proved obstructions (`✗`), not the
 filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in

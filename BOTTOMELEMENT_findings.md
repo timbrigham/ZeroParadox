@@ -65,7 +65,7 @@ The matrix's `dynamics` column has **two sub-senses**, drawn as one directional 
 - **↕ both** - ⊥ is a **seam** (μ = ν): things flow both in and out.
 
 **The claim: a non-seam ⊥ has exactly one direction.** ⊥ cannot be both a pure source and a pure sink, so its
-arrow of time points one way, fixed by its μ/ν polarity; both directions coincide only at a seam. Read for
+dynamics points one way, fixed by its μ/ν polarity; both directions coincide only at a seam. Read for
 what it actually asserts, each dynamics witness sorts cleanly under this:
 
 | construction | ⊥ nature | witness (what it says) | direction |
@@ -85,9 +85,10 @@ directions, because two "irreversibility" theorems sat in the outbound column th
 Reading them correctly re-sorts both to `↓`, and p-adic and Markov become cleanly inbound-only: pure sinks. So
 `↕` is a **seam diagnostic** - the only genuine `↕` is the Hilbert zero object. (ε₀ also shows `↕`, but for a
 different reason: its row *is* the transition arc `0 → ε₀`, spanning a floor and a ceiling, not a single
-seam.) The reach-in / can't-return-out asymmetry between the two sub-senses is what the framework reads as the
-arrow of time at ⊥ (the irreversibility lemmas witness the asymmetry; the "arrow of time" is the reading, not
-the theorem).
+seam.) The reach-in / can't-return-out asymmetry between the two sub-senses is ⊥'s one-way irreversibility: you
+can reach ⊥, but the snap off it does not reverse. (This one-way-ness is what physics calls an arrow of time -
+the framework is inspired by that analogy and makes no claim about physics; the irreversibility lemmas are the
+statements, the analogy is not.)
 
 ---
 
