@@ -33,11 +33,11 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 | GEN | **generation** - ⊥ generates the structure built above it (for example, the ordinal ε₀ generated from 0) |
 | DYN | **dynamics** - ⊥'s arrow of time, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source |
 
-**Constructions** (the map rows). A `#N` prefix is a **bottom-diagram-tree node number** (#1 order floor,
-#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert seam) - a live cross-reference to the μ/ν fork
-campaign used throughout the Lean source (`node #4`, `seam node #5`, …). **Only those five categorical /
-analytic bottoms are tree nodes**, so the rows from other layers (Lat, Info, Kleene, ε₀, selfApp, the p-adic
-valuation) intentionally carry no number - the partial numbering is scoped, not missing data:
+**Constructions** (the map rows). A `#N` prefix (#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert
+seam) cross-references the **bottom-diagram-tree nodes** used throughout the Lean source (`node #4`,
+`seam node #5`, …). Only those four appear as numbered rows; the tree's order-floor node #1 is the abstract
+`Lat ⊥` row (shown here without the number), and the other rows (Info, Kleene, ε₀, selfApp, the p-adic
+valuation) come from other layers. The partial numbering is scoped, not missing data:
 
 | construction (map row) | what it means |
 |---|---|
@@ -142,107 +142,107 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 **[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
 
 <details>
-<summary><b>Why each cell</b> — the reason or witness behind every mark (click to expand)</summary>
+<summary><b>Why each cell</b> - the reason or witness behind every mark (click to expand)</summary>
 
 **Lat ⊥ (ZPA/ZPE)**
-- `CANT` ✓ — [`zpa_bot_not_greatest`](ZeroParadox/Category/SeamUniqueness.lean)
-- `NARR` ✓ — [`da2_bottom_characterization`](ZeroParadox/Order/Snap.lean)
-- `MEAS` ∅ — bare ZPSemilattice has no metric/valuation scalar to diverge
-- `INV` ∅ — a join-semilattice has no top / complement / involution to swap ⊥ with
-- `CONC` ✓* — [`selfApp_bot_is_both_extremal`](ZeroParadox/Multihomed/SelfAppSeam.lean)
-- `SELF` ✓* — [`derived_bot_self_mem`](ZeroParadox/Computability/SelfApp.lean)
-- `GEN` ∅ — no infinite joins to form ⊔ₙfⁿ(⊥); ε₀-generation lives in the ordinal row
-- `DYN` ↑ — [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (⊥=c₀ departs to c₁ — source/μ)
+- `CANT` ✓ - [`zpa_bot_not_greatest`](ZeroParadox/Category/SeamUniqueness.lean)
+- `NARR` ✓ - [`da2_bottom_characterization`](ZeroParadox/Order/Snap.lean)
+- `MEAS` ∅ - bare ZPSemilattice has no metric/valuation scalar to diverge
+- `INV` ∅ - a join-semilattice has no top / complement / involution to swap ⊥ with
+- `CONC` ✓* - [`selfApp_bot_is_both_extremal`](ZeroParadox/Multihomed/SelfAppSeam.lean)
+- `SELF` ✓* - [`derived_bot_self_mem`](ZeroParadox/Computability/SelfApp.lean)
+- `GEN` ∅ - no infinite joins to form ⊔ₙfⁿ(⊥); ε₀-generation lives in the ordinal row
+- `DYN` ↑ - [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (⊥=c₀ departs to c₁ - source/μ)
 
 **p-adic (ℚ₂/ℤ₂)**
-- `CANT` ✓ — [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean)
-- `NARR` ✓ — [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean)
-- `MEAS` ✓ — [`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean)
-- `INV` ✓ — [`rInv_swaps`](ZeroParadox/Valuation/RiemannSphere.lean) (Riemann sphere 0↔∞)
-- `CONC` ✓ — [`q2_zero_is_fixed`](ZeroParadox/Computability/SelfApp.lean)
-- `SELF` ✓* — [`valuation_bot_is_quine`](ZeroParadox/Valuation/ValuationAFA.lean)
-- `GEN` ∅ — ν-limit (inverse limit of balls) — carries inbound dynamics, not GEN (μ/ν fork)
-- `DYN` ↓ — [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean) (converge) + [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean) (arrival is a jump) — sink/ν
+- `CANT` ✓ - [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean)
+- `NARR` ✓ - [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean)
+- `MEAS` ✓ - [`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean)
+- `INV` ✓ - [`rInv_swaps`](ZeroParadox/Valuation/RiemannSphere.lean) (Riemann sphere 0↔∞)
+- `CONC` ✓ - [`q2_zero_is_fixed`](ZeroParadox/Computability/SelfApp.lean)
+- `SELF` ✓* - [`valuation_bot_is_quine`](ZeroParadox/Valuation/ValuationAFA.lean)
+- `GEN` ∅ - ν-limit (inverse limit of balls) - carries inbound dynamics, not GEN (μ/ν fork)
+- `DYN` ↓ - [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean) (converge) + [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean) (arrival is a jump) - sink/ν
 
 **Info (ZPC)**
-- `CANT` ✓* — [`description_instantiation_gap_closed`](ZeroParadox/Computability/Kleene.lean)
-- `NARR` ∅ — the info bottom is the n→∞ surprisal limit, not a pinned carrier point
-- `MEAS` ✓ — [`t2_diverges`](ZeroParadox/Information/Surprisal.lean)
-- `INV` ∅ — −log prob↔info is a coordinate change, not a ⊥↔∞ involution
-- `CONC` ∅ — no self-application operation on surprisal / distributions
-- `SELF` ✓* — [`da1_closed_concrete`](ZeroParadox/Computability/Kleene.lean)
-- `GEN` ∅ — unbounded ascent, no distinct ceiling constructed
-- `DYN` ↑* — [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (snap off the machine null c₀; ZP-E bridge)
+- `CANT` ✓* - [`description_instantiation_gap_closed`](ZeroParadox/Computability/Kleene.lean)
+- `NARR` ∅ - the info bottom is the n→∞ surprisal limit, not a pinned carrier point
+- `MEAS` ✓ - [`t2_diverges`](ZeroParadox/Information/Surprisal.lean)
+- `INV` ∅ - −log prob↔info is a coordinate change, not a ⊥↔∞ involution
+- `CONC` ∅ - no self-application operation on surprisal / distributions
+- `SELF` ✓* - [`da1_closed_concrete`](ZeroParadox/Computability/Kleene.lean)
+- `GEN` ∅ - unbounded ascent, no distinct ceiling constructed
+- `DYN` ↑* - [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (snap off the machine null c₀; ZP-E bridge)
 
 **#4 Kleisli (Fin 0)**
-- `CANT` ✓ — [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)
-- `NARR` ✓ — [`fC_zero_isInitial`](ZeroParadox/Multihomed/InfoFunctor.lean)
-- `MEAS` ∅ — the empty type supports no PMF — no scalar defined to diverge
-- `INV` ✓ — IsInitial.op (Mathlib)
-- `CONC` ✗ — [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)
-- `SELF` ∅ — no self-application / diagonal on the empty probability type
-- `GEN` ✓ — [`node4_generates_nat`](ZeroParadox/Category/Node4Generation.lean)
-- `DYN` ↑ — [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) (initial source; nothing returns to ⊥ — μ)
+- `CANT` ✓ - [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)
+- `NARR` ✓ - [`fC_zero_isInitial`](ZeroParadox/Multihomed/InfoFunctor.lean)
+- `MEAS` ∅ - the empty type supports no PMF - no scalar defined to diverge
+- `INV` ✓ - IsInitial.op (Mathlib)
+- `CONC` ✗ - [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean)
+- `SELF` ∅ - no self-application / diagonal on the empty probability type
+- `GEN` ✓ - [`node4_generates_nat`](ZeroParadox/Category/Node4Generation.lean)
+- `DYN` ↑ - [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) (initial source; nothing returns to ⊥ - μ)
 
 **#5 Hilbert (zero obj/seam)**
-- `CANT` ✓ — [`seam_not_mu_colimit_apex`](ZeroParadox/Category/SeamNotColimit.lean)
-- `NARR` ✓ — [`hilbert_bottom_isZero`](ZeroParadox/Category/TreeSeam.lean)
-- `MEAS` ∅ — the zero space has finrank 0 — every attached scalar is 0/finite
-- `INV` ✓ — hasZeroObject_op (Mathlib)
-- `CONC` ✓ — [`seam_is_mu_nu_coincidence_SeamCoincidence`](ZeroParadox/Category/SeamCoincidence.lean)
-- `SELF` ✓ — [`biprod_diagonal_only_zero`](ZeroParadox/Multihomed/HilbertDiagonal.lean) (self-similarity)
-- `GEN` ∅ — μ=ν self-coincident (seam⊔seam≅seam) — generates no distinct ceiling
-- `DYN` ↕ — [`seam_has_Pin`](ZeroParadox/Category/SeamArrowSignature.lean) (terminal: maps in) ; [`hilbert_bottom_isZero`](ZeroParadox/Category/TreeSeam.lean).isInitial (maps out) — the SEAM (μ=ν)
+- `CANT` ✓ - [`seam_not_mu_colimit_apex`](ZeroParadox/Category/SeamNotColimit.lean)
+- `NARR` ✓ - [`hilbert_bottom_isZero`](ZeroParadox/Category/TreeSeam.lean)
+- `MEAS` ∅ - the zero space has finrank 0 - every attached scalar is 0/finite
+- `INV` ✓ - hasZeroObject_op (Mathlib)
+- `CONC` ✓ - [`seam_is_mu_nu_coincidence_SeamCoincidence`](ZeroParadox/Category/SeamCoincidence.lean)
+- `SELF` ✓ - [`biprod_diagonal_only_zero`](ZeroParadox/Multihomed/HilbertDiagonal.lean) (self-similarity)
+- `GEN` ∅ - μ=ν self-coincident (seam⊔seam≅seam) - generates no distinct ceiling
+- `DYN` ↕ - [`seam_has_Pin`](ZeroParadox/Category/SeamArrowSignature.lean) (terminal: maps in) ; [`hilbert_bottom_isZero`](ZeroParadox/Category/TreeSeam.lean).isInitial (maps out) - the SEAM (μ=ν)
 
 **#3 TopCat ({0} limit)**
-- `CANT` ✓ — [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean)
-- `NARR` ✓ — [`floorConeIsLimit`](ZeroParadox/Order/PadicLimitCone.lean)
-- `MEAS` ∅ — TopCat forgets the scalar; divergence-at-⊥ is the p-adic/info sibling
-- `INV` ∅ — TopCat forgets field mult; z↦1/z is the ℚ₂ Riemann sibling
-- `CONC` ∅ — no intrinsic self-map on the topological limit object (×2-fp is ℚ₂ field structure)
-- `SELF` ∅ — no self-application on the topological limit object
-- `GEN` ∅ — ν-limit ({0} as a topological limit) — carries inbound dynamics, not GEN (μ/ν fork)
-- `DYN` ↓* — [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean) (topological no-return; stated on ambient Q₂) — sink/ν
+- `CANT` ✓ - [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean)
+- `NARR` ✓ - [`floorConeIsLimit`](ZeroParadox/Order/PadicLimitCone.lean)
+- `MEAS` ∅ - TopCat forgets the scalar; divergence-at-⊥ is the p-adic/info sibling
+- `INV` ∅ - TopCat forgets field mult; z↦1/z is the ℚ₂ Riemann sibling
+- `CONC` ∅ - no intrinsic self-map on the topological limit object (×2-fp is ℚ₂ field structure)
+- `SELF` ∅ - no self-application on the topological limit object
+- `GEN` ∅ - ν-limit ({0} as a topological limit) - carries inbound dynamics, not GEN (μ/ν fork)
+- `DYN` ↓* - [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean) (topological no-return; stated on ambient Q₂) - sink/ν
 
 **#2 Markov (attractor)**
-- `CANT` ✓ — [`markov_node_no_universal_property`](ZeroParadox/Computability/MarkovNuUniversal.lean)
-- `NARR` ✓* — [`markov_node_irreducible_rescue`](ZeroParadox/Computability/StationaryUnique.lean)
-- `MEAS` ∅ — a probability distribution — no finite value diverges at it
-- `INV` ∅ — no antipodal involution on a simplex
-- `CONC` ✓ — [`exists_stationary`](ZeroParadox/Reals/PerronFrobenius.lean)
-- `SELF` ∅ — no self-application; its fixed point is CONC, no self-similarity
-- `GEN` ∅ — ν-attractor — carries inbound dynamics, not GEN (μ/ν fork)
-- `DYN` ↓ — [`doubly_stochastic_mean_ergodic`](ZeroParadox/State/MeanErgodic.lean) (converge) + [`fullMix_not_injective`](ZeroParadox/Reals/MarkovSpectralGap.lean) (mixing is lossy) — sink/ν
+- `CANT` ✓ - [`markov_node_no_universal_property`](ZeroParadox/Computability/MarkovNuUniversal.lean)
+- `NARR` ✓* - [`markov_node_irreducible_rescue`](ZeroParadox/Computability/StationaryUnique.lean)
+- `MEAS` ∅ - a probability distribution - no finite value diverges at it
+- `INV` ∅ - no antipodal involution on a simplex
+- `CONC` ✓ - [`exists_stationary`](ZeroParadox/Reals/PerronFrobenius.lean)
+- `SELF` ∅ - no self-application; its fixed point is CONC, no self-similarity
+- `GEN` ∅ - ν-attractor - carries inbound dynamics, not GEN (μ/ν fork)
+- `DYN` ↓ - [`doubly_stochastic_mean_ergodic`](ZeroParadox/State/MeanErgodic.lean) (converge) + [`fullMix_not_injective`](ZeroParadox/Reals/MarkovSpectralGap.lean) (mixing is lossy) - sink/ν
 
 **Kleene (quine, ZPK)**
-- `CANT` ✓ — [`self_halting_undecidable`](ZeroParadox/Computability/Kleene.lean)
-- `NARR` ✓ — [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean)
-- `MEAS` ✓ — [`infinite_quine_family`](ZeroParadox/Computability/Kleene.lean)
-- `INV` ∅ — programs carry no reciprocal / involution or ∞ counterpart to swap with
-- `CONC` ✓ — [`computational_quine_exists`](ZeroParadox/Computability/Kleene.lean)
-- `SELF` ✓ — [`quine_period_is_goedel`](ZeroParadox/Computability/Kleene.lean)
-- `GEN` ∅ — self-coincident fixed point (⊥ = the quine itself) — carries SELF, not floor→ceiling
-- `DYN` ↓ — [`quine_encodings_approach_bot`](ZeroParadox/Multihomed/PadicBridge.lean) (encodings approach ⊥; a static point)
+- `CANT` ✓ - [`self_halting_undecidable`](ZeroParadox/Computability/Kleene.lean)
+- `NARR` ✓ - [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean)
+- `MEAS` ✓ - [`infinite_quine_family`](ZeroParadox/Computability/Kleene.lean)
+- `INV` ∅ - programs carry no reciprocal / involution or ∞ counterpart to swap with
+- `CONC` ✓ - [`computational_quine_exists`](ZeroParadox/Computability/Kleene.lean)
+- `SELF` ✓ - [`quine_period_is_goedel`](ZeroParadox/Computability/Kleene.lean)
+- `GEN` ∅ - self-coincident fixed point (⊥ = the quine itself) - carries SELF, not floor→ceiling
+- `DYN` ↓ - [`quine_encodings_approach_bot`](ZeroParadox/Multihomed/PadicBridge.lean) (encodings approach ⊥; a static point)
 
 **ε₀ (ordinal, ZPL/M)**
-- `CANT` ✓* — [`kruskal_is_wqo_not_descent`](ZeroParadox/Ordinal/ProofFloorCanonical.lean)
-- `NARR` ✓ — [`epsilonZero_le_fixedPoint`](ZeroParadox/Ordinal/Gentzen.lean)
-- `MEAS` ✓ — [`cnfToZp2_valuation_unbounded`](ZeroParadox/Ordinal/Gentzen.lean)
-- `INV` ∅ — a well-order has a floor but no ∞-pole / order-reversing z↦1/z
-- `CONC` ✓ — [`epsilonZero_fixedPoint`](ZeroParadox/Ordinal/Gentzen.lean)
-- `SELF` ✓* — [`both_fixed_points_exist`](ZeroParadox/Ordinal/Incompleteness.lean)
-- `GEN` ✓ — [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean)
-- `DYN` ↕ — [`tower_converges_to_zero`](ZeroParadox/Ordinal/Gentzen.lean) (floor 0) ; [`snap_exactly_at_epsilon_zero`](ZeroParadox/Ordinal/Gentzen.lean) (ceiling ε₀) — the snap-ARC
+- `CANT` ✓* - [`kruskal_is_wqo_not_descent`](ZeroParadox/Ordinal/ProofFloorCanonical.lean)
+- `NARR` ✓ - [`epsilonZero_le_fixedPoint`](ZeroParadox/Ordinal/Gentzen.lean)
+- `MEAS` ✓ - [`cnfToZp2_valuation_unbounded`](ZeroParadox/Ordinal/Gentzen.lean)
+- `INV` ∅ - a well-order has a floor but no ∞-pole / order-reversing z↦1/z
+- `CONC` ✓ - [`epsilonZero_fixedPoint`](ZeroParadox/Ordinal/Gentzen.lean)
+- `SELF` ✓* - [`both_fixed_points_exist`](ZeroParadox/Ordinal/Incompleteness.lean)
+- `GEN` ✓ - [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean)
+- `DYN` ↕ - [`tower_converges_to_zero`](ZeroParadox/Ordinal/Gentzen.lean) (floor 0) ; [`snap_exactly_at_epsilon_zero`](ZeroParadox/Ordinal/Gentzen.lean) (ceiling ε₀) - the snap-ARC
 
 **selfApp (abstract ⊥)**
-- `CANT` ✓ — [`scale_ne_fixed`](ZeroParadox/Valuation/Scale.lean)
-- `NARR` ✓ — [`selfApp_fp_set_eq_singleton`](ZeroParadox/Multihomed/SelfAppForkPlace.lean)
-- `MEAS` ∅ — AbstractSelfApp abstracts away valuation (ℚ₂ deliberately not an instance)
-- `INV` ∅ — no ∞-pole; qua μ=ν seam the point is the inversion-FIXED centre
-- `CONC` ✓ — [`unique_fp`](ZeroParadox/Computability/SelfApp.lean)
-- `SELF` ✓ — [`derived_bot_self_mem`](ZeroParadox/Computability/SelfApp.lean)
-- `GEN` ∅ — self-coincident (μ=ν seam, ⊥ = the least fixed point) — carries SELF/CONC, not GEN
-- `DYN` ↑* — [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (inherited; the static seam-point does not itself move)
+- `CANT` ✓ - [`scale_ne_fixed`](ZeroParadox/Valuation/Scale.lean)
+- `NARR` ✓ - [`selfApp_fp_set_eq_singleton`](ZeroParadox/Multihomed/SelfAppForkPlace.lean)
+- `MEAS` ∅ - AbstractSelfApp abstracts away valuation (ℚ₂ deliberately not an instance)
+- `INV` ∅ - no ∞-pole; qua μ=ν seam the point is the inversion-FIXED centre
+- `CONC` ✓ - [`unique_fp`](ZeroParadox/Computability/SelfApp.lean)
+- `SELF` ✓ - [`derived_bot_self_mem`](ZeroParadox/Computability/SelfApp.lean)
+- `GEN` ∅ - self-coincident (μ=ν seam, ⊥ = the least fixed point) - carries SELF/CONC, not GEN
+- `DYN` ↑* - [`t_snap_derived`](ZeroParadox/Order/Snap.lean) (inherited; the static seam-point does not itself move)
 
 </details>
 

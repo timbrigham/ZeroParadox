@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generator for "The Bottom Element (⊥) — Dictionary and Map".
+"""Generator for "The Bottom Element (⊥) - Dictionary and Map".
 
 SSOT: MAP data from `build_bottom_matrix.py` (CELLS/SLOTS); apophatic entries + glosses below. Witness
 theorem names are RESOLVED against the actual Lean source (`ZeroParadox/**/*.lean`) at generation time:
@@ -50,7 +50,7 @@ UNRESOLVED = []
 OVERRIDDEN = []
 
 # Manual overrides for witnesses that are NOT top-level declarations (so the scanner cannot
-# find them) but DO live in a known local file — e.g. class fields. Kept explicit and reported
+# find them) but DO live in a known local file - e.g. class fields. Kept explicit and reported
 # so a hand-resolved link is never silently indistinguishable from a scanned one.
 FIELD_OVERRIDE = {
     "unique_fp": "ZeroParadox/Computability/SelfApp.lean",  # class field AbstractSelfApp.unique_fp (SelfApp:69)
@@ -65,7 +65,7 @@ def link_witness(name):
         OVERRIDDEN.append(name)
         return f"[`{name}`]({path})"
     UNRESOLVED.append(name)
-    return f"`{name}`"  # not a local declaration (Mathlib, a class field, etc.) — shown, not linked
+    return f"`{name}`"  # not a local declaration (Mathlib, a class field, etc.) - shown, not linked
 
 def render_witnesses(names):
     return ", ".join(link_witness(n) for n in names) if names else "*meta (no Lean witness)*"
@@ -181,7 +181,7 @@ def render_map():
 
 _TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9_']*")
 def _decl_shaped(name):
-    # only auto-link tokens that LOOK like ZP witness names — snake_case or camelCase — so common
+    # only auto-link tokens that LOOK like ZP witness names - snake_case or camelCase - so common
     # English words that happen to collide with a short decl (e.g. `is`) are never linked.
     return "_" in name or re.search(r"[A-Z]", name[1:]) is not None
 def link_in_text(text):
@@ -196,7 +196,7 @@ def link_in_text(text):
 def render_cell_details():
     """Collapsible per-cell reasoning: glyph + the reason/witness behind every mark (witnesses auto-linked)."""
     out = ["<details>",
-           "<summary><b>Why each cell</b> — the reason or witness behind every mark (click to expand)</summary>",
+           "<summary><b>Why each cell</b> - the reason or witness behind every mark (click to expand)</summary>",
            ""]
     for c, d in CELLS.items():
         out.append(f"**{c}**")
@@ -209,7 +209,7 @@ def render_cell_details():
             else:
                 st, txt = classify(v)
                 g = GLYPH[st]
-            body = f" — {link_in_text(txt)}" if txt else ""
+            body = f" - {link_in_text(txt)}" if txt else ""
             out.append(f"- `{k}` {g}{body}")
         out.append("")
     out.append("</details>")
@@ -241,11 +241,11 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 
 {slot_gloss}
 
-**Constructions** (the map rows). A `#N` prefix is a **bottom-diagram-tree node number** (#1 order floor,
-#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert seam) - a live cross-reference to the μ/ν fork
-campaign used throughout the Lean source (`node #4`, `seam node #5`, …). **Only those five categorical /
-analytic bottoms are tree nodes**, so the rows from other layers (Lat, Info, Kleene, ε₀, selfApp, the p-adic
-valuation) intentionally carry no number - the partial numbering is scoped, not missing data:
+**Constructions** (the map rows). A `#N` prefix (#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert
+seam) cross-references the **bottom-diagram-tree nodes** used throughout the Lean source (`node #4`,
+`seam node #5`, …). Only those four appear as numbered rows; the tree's order-floor node #1 is the abstract
+`Lat ⊥` row (shown here without the number), and the other rows (Info, Kleene, ε₀, selfApp, the p-adic
+valuation) come from other layers. The partial numbering is scoped, not missing data:
 
 {construction_gloss}
 
