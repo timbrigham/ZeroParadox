@@ -20,7 +20,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 The GEN slot of the ⊥-matrix is **generation by iteration**: the floor ⊥ generates the structure built
 above it as the least fixed point `lfp F = ⊔ₙ Fⁿ(⊥)` — the categorical Adámek construction (initial
-algebra = colimit of the initial chain `0 → F0 → F²0 → …`). Mathlib carries the *order-theoretic* engine
+algebra = colimit of the initial chain `0 → F0 → F²0 → …`; J. Adámek, *Free algebras and automata
+realizations in the language of categories*, Comment. Math. Univ. Carolin. 15 (1974), 589–602). Mathlib
+carries the *order-theoretic* engine
 (`fixedPoints.lfp_eq_sSup_iterate`) and ZP carries the *ordinal* instance (`epsilonZero_eq_nfp`:
 ε₀ = nfp(ω^·)0), but the *categorical* Adámek colimit was recorded open (not in Mathlib). This file builds
 the canonical instance for node #4's floor.
