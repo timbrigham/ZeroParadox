@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1043,
+        "declarations": 1046,
         "files": 136
       },
       "entries": [
@@ -3112,6 +3112,42 @@
             ]
           },
           "reason": null,
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0eb14bcd-838f-4d32-8d13-67b9ebd3ae81",
+          "new": {
+            "file": "ZeroParadox/Category/Node4Generation.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succChain_base_is_empty",
+            "short": "succChain_base_is_empty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11554,6 +11590,42 @@
             ]
           },
           "reason": null,
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "47c6b618-fd8d-4984-bf20-bbca7ab9568b",
+          "new": {
+            "file": "ZeroParadox/Category/Node4Generation.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succChain_castLE_compat",
+            "short": "succChain_castLE_compat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20520,6 +20592,44 @@
             ]
           },
           "reason": null,
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "851d6467-b3cf-4a36-bc3f-152fa0bd805e",
+          "new": {
+            "file": "ZeroParadox/Category/Node4Generation.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.node4_generates_nat",
+            "short": "node4_generates_nat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
