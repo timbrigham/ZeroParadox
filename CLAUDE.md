@@ -675,4 +675,18 @@ When a ZP-X document is successfully proved in Lean 4, the following steps are *
 1. **Build clean** — run as two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`. Confirm zero errors and zero warnings.
 2. **Purity check** — add a `#print axioms` block at the bottom of every ZP-X Lean file (inside a `section PurityCheck ... end PurityCheck`), one call per proved theorem. The expected result is `'theorem_name' does not depend on any axioms`. Any kernel axiom that appears (`Classical.choice`, `propext`, `Quot.sound`) must be explicitly noted and justified in a comment in the Lean file.
 3. **Update README.md** — add or update a row in the `### Formal Verification (Lean 4)` subsection of The Framework, and update the Question Register row for `Formal verification (Lean/Rocq)`.
-4. **Commit all changes together** on `illustrated`.
+4. **Sync the SJV registry (SSOT) — mandatory, see the standing rule below.**
+5. **Commit all changes together** on `illustrated`.
+
+### SJV Registry Sync — Standing Rule (mandatory on any Lean declaration change)
+
+**Any change that adds, renames, removes, or splits Lean declarations at HEAD — including a new `.lean` file — must update the SJV `declarations` store and re-export `ssot.json` in the SAME change, never deferred.** The SSOT is only trustworthy if it tracks HEAD 1:1; every un-synced decl re-introduces registry drift (the recurring "SJV is a whole reorg behind" problem the ontology-revamp arc eliminated). Treat this as the same reflex as `lake build` and the purity check.
+
+The sequence (via the SJV MCP; tools reload in any session started after the MCP loaded):
+1. `migrate_batch` — `add_new` for new decls (`{qualified, file, namespace, short}`); `reconcile` for renames/moves (id-keyed `new.*` + `disposition`) with `remap_deps=true` (or an explicit `deps` list) so deps edges follow; drops for removed decls.
+2. `annotate_many` — ontology tags on new/changed entries (no `domain=[]`; a `role:face` needs an `object`). Refine later via `/tag-review` if unsure.
+3. `validate` + `verify_integrity` (both green).
+4. `export_full(dest="C:/Workspace/ZeroParadox/ssot.json")` — ABSOLUTE path (a relative dest lands beside the MCP).
+5. Confirm file paths resolve N/N, then commit `ssot.json` with the change.
+
+Memory: `feedback_sjv_sync_on_lean_change`.
