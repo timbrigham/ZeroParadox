@@ -18,7 +18,7 @@ import sys, os, re
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, os.path.dirname(__file__))
-from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH
+from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH, dyn_glyph
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at repo root (relative links resolve from here)
@@ -75,12 +75,11 @@ SLOT_GLOSS = {
     "CANT":  "**cannot-have** - what ⊥ provably is NOT (its exclusions)",
     "NARR":  "**narrow** - ⊥ is a single, unique point",
     "MEAS":  "**measure** - some quantity becomes infinite exactly at ⊥",
-    "REACH": "**reach** - ⊥ is what nearby points converge to (an attractor)",
     "INV":   "**inversion** - the map z↦1/z swaps ⊥ (which is 0) with infinity (the two poles of a Riemann sphere)",
     "CONC":  "**concurrency** - applying ⊥'s own operation returns ⊥ unchanged (a fixed point: operation and result coincide)",
     "SELF":  "**self-reference** - ⊥ is defined by referring to itself (a self-reproducing / self-containing object)",
     "GEN":   "**generation** - ⊥ generates the structure built above it (for example, the ordinal ε₀ generated from 0)",
-    "DYN":   "**dynamics** - how ⊥ is approached over time and departed from irreversibly",
+    "DYN":   "**dynamics** - ⊥'s arrow of time, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source",
 }
 
 # --- Reading key 2: constructions (map rows) ---
@@ -139,8 +138,6 @@ APOPHATIC = [
 POSITIVE = [
     ("narrow", "noun", "the single, unique pinned point", ["q2_unique_fp", "fB_bottom_is_limit"]),
     ("measure", "noun", "a quantity that becomes infinite exactly at ⊥", ["t2_diverges", "addVal_bot"]),
-    ("reach", "verb", "an attractor: *contracting* orbits converge to ⊥ (not all orbits - see D6)",
-     ["contraction_orbit_tendsto_zero"]),
     ("inversion", "verb", "the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity",
      ["rInv_swaps", "inversion_reverses_filtration"]),
     ("concurrency", "hinge", "the fixed point where least and greatest coincide (operation = result)",
@@ -149,13 +146,15 @@ POSITIVE = [
      ["kleene_quine_is_bot", "quine_period_is_goedel"]),
     ("generation", "verb", "the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power)",
      ["epsilonZero_eq_nfp"]),
-    ("dynamics", "verb", "approached as orbits reach it, and departed irreversibly (the snap)",
-     ["t_snap_derived", "fC_no_return", "fullMix_not_injective"]),
+    ("dynamics", "verb", "⊥'s arrow of time - one directional axis, two sub-senses: **inbound** (↓, orbits converge *to* ⊥ - a sink) and **outbound** (↑, structure departs *from* ⊥ irreversibly - a source); ↕ = both, only at a seam (μ=ν)",
+     ["contraction_orbit_tendsto_zero", "t_snap_derived", "c3_irreversible", "fC_no_return"]),
 ]
 
-def cell_mark(w):
-    # 5-state glyph (see build_bottom_matrix.classify): ✓ established · ✓* conditional ·
-    # ✗ refuted · ∅ n/a-structural · ? open probe.  A cell is a claim-with-status, not a checkbox.
+def cell_mark(w, key=None):
+    # DYN is the directional dynamics column: ↓ inbound · ↑ outbound · ↕ seam (both) · ? open.
+    # Every other column is 5-state: ✓ established · ✓* conditional · ✗ refuted · ∅ n/a-structural · ? open.
+    if key == "DYN":
+        return dyn_glyph(w)
     return GLYPH[classify(w)[0]]
 
 def render_table(rows, headers):
@@ -177,7 +176,7 @@ def render_map():
     keys = [k for k, _ in SLOTS]
     rows = ["| construction | " + " | ".join(keys) + " |", "|---|" + ":--:|" * len(keys)]
     for c, d in CELLS.items():
-        rows.append("| " + c + " | " + " | ".join(cell_mark(d.get(k)) for k in keys) + " |")
+        rows.append("| " + c + " | " + " | ".join(cell_mark(d.get(k), k) for k in keys) + " |")
     return "\n".join(rows)
 
 PAGE = """# The Bottom Element (⊥) - Dictionary and Map
@@ -237,20 +236,23 @@ not.*
 
 ## Map - slot × construction
 
-Where each characterization stands. A cell is a **claim with a status**, not a checkbox: `✓` established ·
+Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` established ·
 `✓*` conditional/bridge · `✗` refuted (a proved obstruction) · `∅` not-applicable by structure (a category
-error - e.g. asking a ν-limit for a μ-generation property - not a gap) · `?` open probe. (The witnessing
-theorem - and whether it is proved here or cited from a library - is in the dictionary above, with links to
-the Lean source.)
+error - e.g. asking a ν-limit for a μ-generation property - not a gap) · `?` open probe. The last column,
+**dynamics**, is DIRECTIONAL instead: `↓` inbound (converges *to* ⊥ - a sink), `↑` outbound (departs *from* ⊥
+irreversibly - a source), `↕` both (a seam). (Witnessing theorems, with links to the Lean source, are in the
+dictionary above.)
 
 {map}
 
 The honest content is in the non-`✓` cells, and splitting them is the point: a `?` is an open question, a `∅`
-is a settled structural fact, and a `✗` would be news (a proved obstruction). Two columns concentrate in one
-construction each for structural reasons, not gaps: **inversion** is the p-adic / Riemann phenomenon; and
-**generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
+is a settled structural fact, and a `✗` is news (a proved obstruction). Two things worth reading off the table:
+(1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
 point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
-selfApp) carry SELF rather than GEN. GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
+selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
+(2) The **dynamics** column is single-directional - `↓` for a sink (ν), `↑` for a source (μ) - and `↕` (both)
+appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
+0→ε₀. So the arrow of time at ⊥ has one direction, fixed by whether ⊥ is a source or a sink.
 
 ---
 

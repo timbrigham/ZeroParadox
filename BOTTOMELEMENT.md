@@ -27,12 +27,11 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 | CANT | **cannot-have** - what ⊥ provably is NOT (its exclusions) |
 | NARR | **narrow** - ⊥ is a single, unique point |
 | MEAS | **measure** - some quantity becomes infinite exactly at ⊥ |
-| REACH | **reach** - ⊥ is what nearby points converge to (an attractor) |
 | INV | **inversion** - the map z↦1/z swaps ⊥ (which is 0) with infinity (the two poles of a Riemann sphere) |
 | CONC | **concurrency** - applying ⊥'s own operation returns ⊥ unchanged (a fixed point: operation and result coincide) |
 | SELF | **self-reference** - ⊥ is defined by referring to itself (a self-reproducing / self-containing object) |
 | GEN | **generation** - ⊥ generates the structure built above it (for example, the ordinal ε₀ generated from 0) |
-| DYN | **dynamics** - how ⊥ is approached over time and departed from irreversibly |
+| DYN | **dynamics** - ⊥'s arrow of time, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source |
 
 **Constructions** (the map rows; the `#` numbers are node labels from the framework's bottom-diagram
 comparison):
@@ -96,42 +95,44 @@ not.*
 |---|---|---|---|
 | narrow | noun | the single, unique pinned point | [`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`fB_bottom_is_limit`](ZeroParadox/Valuation/TopFunctor.lean) |
 | measure | noun | a quantity that becomes infinite exactly at ⊥ | [`t2_diverges`](ZeroParadox/Information/Surprisal.lean), [`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean) |
-| reach | verb | an attractor: *contracting* orbits converge to ⊥ (not all orbits - see D6) | [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean) |
 | inversion | verb | the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity | [`rInv_swaps`](ZeroParadox/Valuation/RiemannSphere.lean), [`inversion_reverses_filtration`](ZeroParadox/Valuation/InversionValuation.lean) |
 | concurrency | hinge | the fixed point where least and greatest coincide (operation = result) | [`unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`selfApp_bot_is_both_extremal`](ZeroParadox/Multihomed/SelfAppSeam.lean) |
 | self-reference | hinge | the self-reproducing / self-containing fixed point (Quine / Kleene) | [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean), [`quine_period_is_goedel`](ZeroParadox/Computability/Kleene.lean) |
 | generation | verb | the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power) | [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) |
-| dynamics | verb | approached as orbits reach it, and departed irreversibly (the snap) | [`t_snap_derived`](ZeroParadox/Order/Snap.lean), [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean), [`fullMix_not_injective`](ZeroParadox/Reals/MarkovSpectralGap.lean) |
+| dynamics | verb | ⊥'s arrow of time - one directional axis, two sub-senses: **inbound** (↓, orbits converge *to* ⊥ - a sink) and **outbound** (↑, structure departs *from* ⊥ irreversibly - a source); ↕ = both, only at a seam (μ=ν) | [`contraction_orbit_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`t_snap_derived`](ZeroParadox/Order/Snap.lean), [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean), [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) |
 
 ---
 
 ## Map - slot × construction
 
-Where each characterization stands. A cell is a **claim with a status**, not a checkbox: `✓` established ·
+Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` established ·
 `✓*` conditional/bridge · `✗` refuted (a proved obstruction) · `∅` not-applicable by structure (a category
-error - e.g. asking a ν-limit for a μ-generation property - not a gap) · `?` open probe. (The witnessing
-theorem - and whether it is proved here or cited from a library - is in the dictionary above, with links to
-the Lean source.)
+error - e.g. asking a ν-limit for a μ-generation property - not a gap) · `?` open probe. The last column,
+**dynamics**, is DIRECTIONAL instead: `↓` inbound (converges *to* ⊥ - a sink), `↑` outbound (departs *from* ⊥
+irreversibly - a source), `↕` both (a seam). (Witnessing theorems, with links to the Lean source, are in the
+dictionary above.)
 
-| construction | CANT | NARR | MEAS | REACH | INV | CONC | SELF | GEN | DYN |
-|---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| Lat ⊥ (ZPA/ZPE) | ✓ | ✓ | ? | ? | ? | ? | ? | ? | ✓ |
-| p-adic (ℚ₂/ℤ₂) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓* | ∅ | ✓ |
-| Info (ZPC) | ? | ? | ✓ | ? | ? | ? | ? | ? | ? |
-| #4 Kleisli (Fin 0) | ✓ | ✓ | ? | ? | ✓ | ? | ? | ? | ✓ |
-| #5 Hilbert (zero obj/seam) | ? | ✓ | ? | ? | ✓ | ✓ | ✓ | ? | ✓ |
-| #3 TopCat ({0} limit) | ✓ | ✓ | ? | ? | ? | ? | ? | ∅ | ? |
-| #2 Markov (attractor) | ✓ | ✓* | ∅ | ✓ | ∅ | ✓ | ∅ | ∅ | ✓ |
-| Kleene (quine, ZPK) | ✓ | ✓ | ✓ | ✓ | ? | ✓ | ✓ | ∅ | ? |
-| ε₀ (ordinal, ZPL/M) | ? | ✓ | ✓ | ✓ | ? | ✓ | ✓* | ✓ | ✓ |
-| selfApp (abstract ⊥) | ✓ | ✓ | ? | ? | ? | ✓ | ✓ | ∅ | ? |
+| construction | CANT | NARR | MEAS | INV | CONC | SELF | GEN | DYN |
+|---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| Lat ⊥ (ZPA/ZPE) | ✓ | ✓ | ∅ | ∅ | ✓* | ✓* | ∅ | ↑ |
+| p-adic (ℚ₂/ℤ₂) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓* | ∅ | ↓ |
+| Info (ZPC) | ? | ∅ | ✓ | ∅ | ∅ | ✓* | ∅ | ↑* |
+| #4 Kleisli (Fin 0) | ✓ | ✓ | ∅ | ✓ | ✗ | ∅ | ? | ↑ |
+| #5 Hilbert (zero obj/seam) | ✓ | ✓ | ∅ | ✓ | ✓ | ✓ | ∅ | ↕ |
+| #3 TopCat ({0} limit) | ✓ | ✓ | ∅ | ∅ | ∅ | ∅ | ∅ | ↓* |
+| #2 Markov (attractor) | ✓ | ✓* | ∅ | ∅ | ✓ | ∅ | ∅ | ↓ |
+| Kleene (quine, ZPK) | ✓ | ✓ | ✓ | ∅ | ✓ | ✓ | ∅ | ↓ |
+| ε₀ (ordinal, ZPL/M) | ✓* | ✓ | ✓ | ∅ | ✓ | ✓* | ✓ | ↕ |
+| selfApp (abstract ⊥) | ✓ | ✓ | ∅ | ∅ | ✓ | ✓ | ∅ | ↑* |
 
 The honest content is in the non-`✓` cells, and splitting them is the point: a `?` is an open question, a `∅`
-is a settled structural fact, and a `✗` would be news (a proved obstruction). Two columns concentrate in one
-construction each for structural reasons, not gaps: **inversion** is the p-adic / Riemann phenomenon; and
-**generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
+is a settled structural fact, and a `✗` is news (a proved obstruction). Two things worth reading off the table:
+(1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
 point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
-selfApp) carry SELF rather than GEN. GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
+selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
+(2) The **dynamics** column is single-directional - `↓` for a sink (ν), `↑` for a source (μ) - and `↕` (both)
+appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
+0→ε₀. So the arrow of time at ⊥ has one direction, fixed by whether ⊥ is a source or a sink.
 
 ---
 
