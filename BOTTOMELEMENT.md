@@ -69,22 +69,22 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 
 ### ⊥ cannot be (characterization by exclusion)
 
-| # | ⊥ cannot be... | witness (links to Lean source) |
-|---|---|---|
-| A1 | a Lean term or otherwise finitely written down (⊥ is descriptionless, so any written form is already a description of it) | *meta (no Lean witness)* |
-| A2 | anything that keeps time, space, description, measure or structure (that would be an *interpretation* of ⊥, not ⊥) | *meta (no Lean witness)* |
-| A3 | finite: ⊥ is by definition the point where every finite measure diverges to infinity | *meta (no Lean witness)* |
-| B1 | the same object as both the proof-theory floor and the attractor floor (one is well-founded, the other is not) | [`no_strictMono_real_to_ordinal`](ZeroParadox/Multihomed/TreeObstructions.lean), [`simplex_antichain`](ZeroParadox/Multihomed/TreeObstructions.lean) |
-| B2 | the same object as a categorical initial bottom, if it is a topological limit bottom (their universal properties point opposite ways) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean), [`split_kleisli_vs_hilbert`](ZeroParadox/Multihomed/TreeObstructions.lean) |
-| B4 | reached by a comparison that preserves the 'closed-down' (ν) structure - you can only get to ⊥ by forgetting that structure | [`faithful_iff_descending`](ZeroParadox/Multihomed/WallSpanRobust.lean) |
-| B5 | unified with its self-referential face in a structure-preserving way - the two coincide only as a bare point | [`faces_iso_unique`](ZeroParadox/Multihomed/TwoFacesBot.lean) |
-| C1 | forced to a single point as a Markov bottom (#2): a reducible chain settles into a whole family of distributions, not one | [`markov_node_no_universal_property`](ZeroParadox/Computability/MarkovNuUniversal.lean) |
-| C3 | an *initial* object of the category of spaces (the p-adic floor behaves like a limit / terminal object, the opposite) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean) |
-| D1 | a *zero object* (both initial and terminal) of the Kleisli or p-adic categories | [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean), [`padic_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean) |
-| D2 | a *greatest* element (it is the floor, not the top) | [`zpa_bot_not_greatest`](ZeroParadox/Category/SeamUniqueness.lean) |
-| D4 | an inhabited least-fixed-point for the identity functor: that least fixed point is provably empty | [`strict_fix_isEmpty`](ZeroParadox/Computability/RootCutTrichotomy.lean), [`fix_isEmpty_constructive`](ZeroParadox/Computability/ChoicePurityInvariant.lean) |
-| D5 | recovered by mapping the least fixed point onto the greatest: the comparison map is not onto | [`fixToCofix_not_surjective`](ZeroParadox/Computability/NatListRegime.lean) |
-| D6 | reached by a non-contracting orbit: unit-norm and swap orbits provably do not converge to ⊥ | [`unit_orbit_not_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`swap_orbit_not_convergent`](ZeroParadox/Order/MarkovContractionDual.lean) |
+| ⊥ cannot be... | witness (links to Lean source) |
+|---|---|
+| a Lean term or otherwise finitely written down (⊥ is descriptionless, so any written form is already a description of it) | *meta (no Lean witness)* |
+| anything that keeps time, space, description, measure or structure (that would be an *interpretation* of ⊥, not ⊥) | *meta (no Lean witness)* |
+| finite: ⊥ is by definition the point where every finite measure diverges to infinity | *meta (no Lean witness)* |
+| the same object as both the proof-theory floor and the attractor floor (one is well-founded, the other is not) | [`no_strictMono_real_to_ordinal`](ZeroParadox/Multihomed/TreeObstructions.lean), [`simplex_antichain`](ZeroParadox/Multihomed/TreeObstructions.lean) |
+| the same object as a categorical initial bottom, if it is a topological limit bottom (their universal properties point opposite ways) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean), [`split_kleisli_vs_hilbert`](ZeroParadox/Multihomed/TreeObstructions.lean) |
+| reached by a comparison that preserves the 'closed-down' (ν) structure - you can only get to ⊥ by forgetting that structure | [`faithful_iff_descending`](ZeroParadox/Multihomed/WallSpanRobust.lean) |
+| unified with its self-referential face in a structure-preserving way - the two coincide only as a bare point | [`faces_iso_unique`](ZeroParadox/Multihomed/TwoFacesBot.lean) |
+| forced to a single point as a Markov bottom (#2): a reducible chain settles into a whole family of distributions, not one | [`markov_node_no_universal_property`](ZeroParadox/Computability/MarkovNuUniversal.lean) |
+| an *initial* object of the category of spaces (the p-adic floor behaves like a limit / terminal object, the opposite) | [`padic_bottom_not_initial`](ZeroParadox/Multihomed/TreeObstructions.lean) |
+| a *zero object* (both initial and terminal) of the Kleisli or p-adic categories | [`kleisli_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean), [`padic_bottom_not_zero`](ZeroParadox/Category/SeamUniqueness.lean) |
+| a *greatest* element (it is the floor, not the top) | [`zpa_bot_not_greatest`](ZeroParadox/Category/SeamUniqueness.lean) |
+| an inhabited least-fixed-point for the identity functor: that least fixed point is provably empty | [`strict_fix_isEmpty`](ZeroParadox/Computability/RootCutTrichotomy.lean), [`fix_isEmpty_constructive`](ZeroParadox/Computability/ChoicePurityInvariant.lean) |
+| recovered by mapping the least fixed point onto the greatest: the comparison map is not onto | [`fixToCofix_not_surjective`](ZeroParadox/Computability/NatListRegime.lean) |
+| reached by a non-contracting orbit: unit-norm and swap orbits provably do not converge to ⊥ | [`unit_orbit_not_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`swap_orbit_not_convergent`](ZeroParadox/Order/MarkovContractionDual.lean) |
 
 ### ⊥ is (positive handles - the slots)
 
