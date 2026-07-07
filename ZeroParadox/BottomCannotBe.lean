@@ -290,8 +290,9 @@ section CannotBeIndex
 -- STRUCTURAL FINDING (GEN probe 2026-06-30): GEN ↔ the μ side (generate UP from ⊥ = least fixed point);
 -- its DUAL is REACH ↔ the ν side (flow DOWN to ⊥ = attractor/limit). So GEN empty on the ν-bottoms (p-adic
 -- inverse limit, Markov attractor) is NOT a gap — it is the μ/ν fork; they carry REACH instead. The
--- categorical μ-GEN (initial algebra = colimit of the initial chain, Adámek) is NOT cheaply in Mathlib —
--- recorded open, not built.
+-- categorical μ-GEN (initial algebra = colimit of the initial chain, Adámek) is NOT cheaply in Mathlib.
+-- ONE instance now BUILT (choice-free): `node4_generates_nat` (Category/Node4Generation.lean) — ℕ is the
+-- colimit of the successor chain Fin 0 → Fin 1 → … rooted at node #4's floor `Fin 0`. General Adámek open.
 
 /-! ## DYNAMICS — state-change / time-advancement: how ⊥ is approached and departed
     The complement of concurrency (the still point). Time-advancement (orbits, descent, the snap) meets ⊥

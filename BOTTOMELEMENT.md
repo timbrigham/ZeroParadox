@@ -117,7 +117,7 @@ dictionary above.)
 | Lat ⊥ (ZPA/ZPE) | ✓ | ✓ | ∅ | ∅ | ✓* | ✓* | ∅ | ↑ |
 | p-adic (ℚ₂/ℤ₂) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓* | ∅ | ↓ |
 | Info (ZPC) | ? | ∅ | ✓ | ∅ | ∅ | ✓* | ∅ | ↑* |
-| #4 Kleisli (Fin 0) | ✓ | ✓ | ∅ | ✓ | ✗ | ∅ | ? | ↑ |
+| #4 Kleisli (Fin 0) | ✓ | ✓ | ∅ | ✓ | ✗ | ∅ | ✓ | ↑ |
 | #5 Hilbert (zero obj/seam) | ✓ | ✓ | ∅ | ✓ | ✓ | ✓ | ∅ | ↕ |
 | #3 TopCat ({0} limit) | ✓ | ✓ | ∅ | ∅ | ∅ | ∅ | ∅ | ↓* |
 | #2 Markov (attractor) | ✓ | ✓* | ∅ | ∅ | ✓ | ∅ | ∅ | ↓ |

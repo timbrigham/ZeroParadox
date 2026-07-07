@@ -16,6 +16,7 @@ import ZeroParadox.Category.Lawvere
 import ZeroParadox.Category.LinFunctor
 import ZeroParadox.Category.Linearize
 import ZeroParadox.Category.NoUniformCharacter
+import ZeroParadox.Category.Node4Generation
 import ZeroParadox.Category.Obstruction
 import ZeroParadox.Category.PointednessSharp
 import ZeroParadox.Category.RootCutBinary
