@@ -33,8 +33,11 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 | GEN | **generation** - ⊥ generates the structure built above it (for example, the ordinal ε₀ generated from 0) |
 | DYN | **dynamics** - ⊥'s arrow of time, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source |
 
-**Constructions** (the map rows; the `#` numbers are node labels from the framework's bottom-diagram
-comparison):
+**Constructions** (the map rows). A `#N` prefix is a **bottom-diagram-tree node number** (#1 order floor,
+#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert seam) - a live cross-reference to the μ/ν fork
+campaign used throughout the Lean source (`node #4`, `seam node #5`, …). **Only those five categorical /
+analytic bottoms are tree nodes**, so the rows from other layers (Lat, Info, Kleene, ε₀, selfApp, the p-adic
+valuation) intentionally carry no number - the partial numbering is scoped, not missing data:
 
 | construction (map row) | what it means |
 |---|---|

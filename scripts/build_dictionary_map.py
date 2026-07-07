@@ -241,8 +241,11 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 
 {slot_gloss}
 
-**Constructions** (the map rows; the `#` numbers are node labels from the framework's bottom-diagram
-comparison):
+**Constructions** (the map rows). A `#N` prefix is a **bottom-diagram-tree node number** (#1 order floor,
+#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert seam) - a live cross-reference to the μ/ν fork
+campaign used throughout the Lean source (`node #4`, `seam node #5`, …). **Only those five categorical /
+analytic bottoms are tree nodes**, so the rows from other layers (Lat, Info, Kleene, ε₀, selfApp, the p-adic
+valuation) intentionally carry no number - the partial numbering is scoped, not missing data:
 
 {construction_gloss}
 
