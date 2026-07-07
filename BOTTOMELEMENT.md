@@ -107,26 +107,31 @@ not.*
 
 ## Map - slot × construction
 
-Where each characterization is established. `✓` = established, `✓*` = conditional/bridge, blank = **open
-probe**. (The witnessing theorem - and whether it is proved here or cited from a library - is in the
-dictionary above, with links to the Lean source.)
+Where each characterization stands. A cell is a **claim with a status**, not a checkbox: `✓` established ·
+`✓*` conditional/bridge · `✗` refuted (a proved obstruction) · `∅` not-applicable by structure (a category
+error - e.g. asking a ν-limit for a μ-generation property - not a gap) · `?` open probe. (The witnessing
+theorem - and whether it is proved here or cited from a library - is in the dictionary above, with links to
+the Lean source.)
 
 | construction | CANT | NARR | MEAS | REACH | INV | CONC | SELF | GEN | DYN |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| Lat ⊥ (ZPA/ZPE) | ✓ | ✓ |  |  |  |  |  |  | ✓ |
-| p-adic (ℚ₂/ℤ₂) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓* |  | ✓ |
-| Info (ZPC) |  |  | ✓ |  |  |  |  |  |  |
-| #4 Kleisli (Fin 0) | ✓ | ✓ |  |  | ✓ |  |  |  | ✓ |
-| #5 Hilbert (zero obj/seam) |  | ✓ |  |  | ✓ | ✓ | ✓ |  | ✓ |
-| #3 TopCat ({0} limit) | ✓ | ✓ |  |  |  |  |  |  |  |
-| #2 Markov (attractor) | ✓ | ✓* |  | ✓ |  | ✓ |  |  | ✓ |
-| Kleene (quine, ZPK) | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |
-| ε₀ (ordinal, ZPL/M) |  | ✓ | ✓ | ✓ |  | ✓ | ✓* | ✓ | ✓ |
-| selfApp (abstract ⊥) | ✓ | ✓ |  |  |  | ✓ | ✓ |  |  |
+| Lat ⊥ (ZPA/ZPE) | ✓ | ✓ | ? | ? | ? | ? | ? | ? | ✓ |
+| p-adic (ℚ₂/ℤ₂) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓* | ∅ | ✓ |
+| Info (ZPC) | ? | ? | ✓ | ? | ? | ? | ? | ? | ? |
+| #4 Kleisli (Fin 0) | ✓ | ✓ | ? | ? | ✓ | ? | ? | ? | ✓ |
+| #5 Hilbert (zero obj/seam) | ? | ✓ | ? | ? | ✓ | ✓ | ✓ | ? | ✓ |
+| #3 TopCat ({0} limit) | ✓ | ✓ | ? | ? | ? | ? | ? | ∅ | ? |
+| #2 Markov (attractor) | ✓ | ✓* | ∅ | ✓ | ∅ | ✓ | ∅ | ∅ | ✓ |
+| Kleene (quine, ZPK) | ✓ | ✓ | ✓ | ✓ | ? | ✓ | ✓ | ∅ | ? |
+| ε₀ (ordinal, ZPL/M) | ? | ✓ | ✓ | ✓ | ? | ✓ | ✓* | ✓ | ✓ |
+| selfApp (abstract ⊥) | ✓ | ✓ | ? | ? | ? | ✓ | ✓ | ∅ | ? |
 
-The blanks are the honest part: they are open probes, and two columns (**inversion**, **generation**) sit in
-one construction each - structural facts (inversion is the p-adic / Riemann phenomenon; generation is the
-build-up-from-the-floor side), not gaps to paper over.
+The honest content is in the non-`✓` cells, and splitting them is the point: a `?` is an open question, a `∅`
+is a settled structural fact, and a `✗` would be news (a proved obstruction). Two columns concentrate in one
+construction each for structural reasons, not gaps: **inversion** is the p-adic / Riemann phenomenon; and
+**generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
+point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
+selfApp) carry SELF rather than GEN. GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
 
 ---
 

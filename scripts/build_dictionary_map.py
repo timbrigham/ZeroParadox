@@ -18,7 +18,7 @@ import sys, os, re
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, os.path.dirname(__file__))
-from build_bottom_matrix import CELLS, SLOTS
+from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at repo root (relative links resolve from here)
@@ -154,11 +154,9 @@ POSITIVE = [
 ]
 
 def cell_mark(w):
-    if not w:
-        return ""
-    if w.strip().endswith("*"):
-        return "✓*"
-    return "✓"
+    # 5-state glyph (see build_bottom_matrix.classify): ✓ established · ✓* conditional ·
+    # ✗ refuted · ∅ n/a-structural · ? open probe.  A cell is a claim-with-status, not a checkbox.
+    return GLYPH[classify(w)[0]]
 
 def render_table(rows, headers):
     out = ["| " + " | ".join(headers) + " |", "|" + "---|" * len(headers)]
@@ -239,15 +237,20 @@ not.*
 
 ## Map - slot × construction
 
-Where each characterization is established. `✓` = established, `✓*` = conditional/bridge, blank = **open
-probe**. (The witnessing theorem - and whether it is proved here or cited from a library - is in the
-dictionary above, with links to the Lean source.)
+Where each characterization stands. A cell is a **claim with a status**, not a checkbox: `✓` established ·
+`✓*` conditional/bridge · `✗` refuted (a proved obstruction) · `∅` not-applicable by structure (a category
+error - e.g. asking a ν-limit for a μ-generation property - not a gap) · `?` open probe. (The witnessing
+theorem - and whether it is proved here or cited from a library - is in the dictionary above, with links to
+the Lean source.)
 
 {map}
 
-The blanks are the honest part: they are open probes, and two columns (**inversion**, **generation**) sit in
-one construction each - structural facts (inversion is the p-adic / Riemann phenomenon; generation is the
-build-up-from-the-floor side), not gaps to paper over.
+The honest content is in the non-`✓` cells, and splitting them is the point: a `?` is an open question, a `∅`
+is a settled structural fact, and a `✗` would be news (a proved obstruction). Two columns concentrate in one
+construction each for structural reasons, not gaps: **inversion** is the p-adic / Riemann phenomenon; and
+**generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
+point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
+selfApp) carry SELF rather than GEN. GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
 
 ---
 
