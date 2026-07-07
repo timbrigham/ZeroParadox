@@ -179,6 +179,42 @@ def render_map():
         rows.append("| " + c + " | " + " | ".join(cell_mark(d.get(k), k) for k in keys) + " |")
     return "\n".join(rows)
 
+_TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9_']*")
+def _decl_shaped(name):
+    # only auto-link tokens that LOOK like ZP witness names — snake_case or camelCase — so common
+    # English words that happen to collide with a short decl (e.g. `is`) are never linked.
+    return "_" in name or re.search(r"[A-Z]", name[1:]) is not None
+def link_in_text(text):
+    """Auto-link any decl-shaped token that resolves against the Lean source; leave prose untouched."""
+    def repl(m):
+        name = m.group(0)
+        if _decl_shaped(name) and (name in INDEX or name in FIELD_OVERRIDE):
+            return link_witness(name)
+        return name
+    return _TOKEN.sub(repl, text or "")
+
+def render_cell_details():
+    """Collapsible per-cell reasoning: glyph + the reason/witness behind every mark (witnesses auto-linked)."""
+    out = ["<details>",
+           "<summary><b>Why each cell</b> — the reason or witness behind every mark (click to expand)</summary>",
+           ""]
+    for c, d in CELLS.items():
+        out.append(f"**{c}**")
+        for k, _ in SLOTS:
+            v = d.get(k)
+            if k == "DYN":
+                g = dyn_glyph(v)
+                parts = str(v).strip().split(" ", 1) if v else []
+                txt = parts[1] if len(parts) > 1 else ""
+            else:
+                st, txt = classify(v)
+                g = GLYPH[st]
+            body = f" — {link_in_text(txt)}" if txt else ""
+            out.append(f"- `{k}` {g}{body}")
+        out.append("")
+    out.append("</details>")
+    return "\n".join(out)
+
 PAGE = """# The Bottom Element (⊥) - Dictionary and Map
 
 *A dictionary and map of the framework's bottom element ⊥ - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
@@ -254,6 +290,12 @@ selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the flo
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
 0→ε₀. So the arrow of time at ⊥ has one direction, fixed by whether ⊥ is a source or a sink.
 
+**The value is in the non-`✓` cells** - the open questions (`?`) and the proved obstructions (`✗`), not the
+filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
+**[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
+
+{cell_details}
+
 ---
 
 ## Structure diagrams
@@ -305,6 +347,7 @@ def main():
         positive=render_table([[s, a, c, render_witnesses(ws)] for (s, a, c, ws) in POSITIVE],
                               ["slot", "aspect", "characterization of ⊥", "witness (links to Lean source)"]),
         map=render_map(),
+        cell_details=render_cell_details(),
     )
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(page)
