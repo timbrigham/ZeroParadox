@@ -1,6 +1,7 @@
 """
 Build ZP-J Wheel Illustrated Companion
-Version 1.2 | June 2026
+Version 1.3 | July 2026
+v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Plain-language companion to the ZP-J Wheel Addendum
       (ZPJ_Wheel.lean / ZPJ_WheelFrac.lean). Explains what a wheel is (division
@@ -15,7 +16,7 @@ import os
 from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Circle
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -88,7 +89,7 @@ def build():
               'algebraic structure (Carlstr&#246;m, 2001) in which dividing by zero is a '
               'defined operation rather than an error. Every formal claim here restates a '
               'theorem already proved in the technical document and its Lean source '
-              '(ZPJ_Wheel.lean, ZPJ_WheelFrac.lean). Analogies are included to build '
+              '(Wheel.lean, WheelFrac.lean). Analogies are included to build '
               'intuition, not as proof claims. Consult the addendum for the authoritative '
               'mathematics.', CS['disc'])]
 
@@ -183,7 +184,7 @@ def build():
         'Carlstr&#246;m\'s Definition 1.1 (checked in Lean as 14 separate equational '
         'fields). It is a wheel, with no exceptions and no extra hypotheses.'))
     E.append(key_result_box(
-        'ZPJ_WheelFrac.instWheel  (machine-verified, Lean 4)',
+        'WheelFrac.instWheel  (machine-verified, Lean 4)',
         'For every commutative ring A and every multiplicative submonoid S, the wheel of '
         'fractions &#8857;<sub>S</sub> A is a wheel - it satisfies all of Carlstr&#246;m\'s '
         'axioms. The proof is sorry-free and free of the axiom of choice: its only '
@@ -205,7 +206,7 @@ def build():
         '(the usual choice when building fractions), all avoid 0 - so the two elements stay '
         'apart. You only collapse to a meadow if you deliberately allow 0 as a denominator.'))
     E.append(key_result_box(
-        'ZPJ_WheelFrac.inf_ne_bot  (machine-verified, Lean 4)',
+        'WheelFrac.inf_ne_bot  (machine-verified, Lean 4)',
         'If 0 &#8713; S, then &#8734; &#8800; &#8869; in &#8857;<sub>S</sub> A. The '
         'construction is a genuine wheel, not a meadow. (If &#8734; and &#8869; were equal, '
         'the witnessing elements of S would force 0 itself into S, contradicting the '
