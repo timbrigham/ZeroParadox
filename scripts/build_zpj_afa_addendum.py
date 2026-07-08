@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.4 | June 2026
+Version 1.5 | July 2026
+v1.5: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Rendered self-version ref removed from endnote ("Version 1.0 covers…") (C1 sweep). Fixed 2 null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>).
 v1.2: Version changelog removed from preamble.
 v1.1: Add COMP_BLUE header banner matching companion template.
@@ -16,7 +17,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -58,7 +59,7 @@ def build():
     E.append(body(
         'This document presents the formal consequences of ZP-J\'s valuation framework '
         'for the central uniqueness theorem of Aczel\'s Anti-Foundation Axiom (AFA). '
-        'The main result is decoration_unique (ZPJ_APG.lean §IX): for any finite '
+        'The main result is decoration_unique (APG.lean §IX): for any finite '
         'Accessible Pointed Graph, any two valid decorations must agree at every vertex. '
         'The proof does not import set-theoretic AFA axioms. It derives the uniqueness '
         'property from a chain of abstract typeclasses whose root is ValuationStructure, '
@@ -87,7 +88,7 @@ def build():
         '&#8469;&#8734; (the natural numbers extended with a point at infinity).'))
 
     E.append(def_box(
-        'Typeclass: ValuationStructure (ZPJ_Scale.lean)',
+        'Typeclass: ValuationStructure (Scale.lean)',
         [
             'class ValuationStructure (L : Type*) [ZPSemilattice L] where',
             '  scale      : L &#8594; L             -- self-application',
@@ -109,7 +110,7 @@ def build():
         'scale(x) = x.'))
 
     E.append(result_box(
-        'Theorem: scale_unique_fp (ZPJ_Scale.lean)',
+        'Theorem: scale_unique_fp (Scale.lean)',
         [
             '&#8704; x : L,  scale x = x  &#8594;  x = &#8869;',
             '&#8869; is the only fixed point of scale.',
@@ -139,14 +140,14 @@ def build():
         'The relationship to Aczel\'s theorem in ZF+AFA is discussed in Remark R-J.A (§V).'))
 
     E.append(def_box(
-        'Typeclass: AbstractSelfApp (ZPJ_SelfApp.lean)',
+        'Typeclass: AbstractSelfApp (SelfApp.lean)',
         [
             'class AbstractSelfApp (L : Type*) [ZPSemilattice L] where',
             '  selfApp   : L &#8594; L',
             '  fixed_bot : selfApp &#8869; = &#8869;',
             '  unique_fp : &#8704; x : L, selfApp x = x &#8594; x = &#8869;',
             '',
-            'Instance toAbstractSelfApp (ZPJ_Scale.lean):',
+            'Instance toAbstractSelfApp (Scale.lean):',
             '  selfApp   := scale',
             '  fixed_bot := scale_bot         (direct from ValuationStructure)',
             '  unique_fp := scale_unique_fp   (proved in §I above)',
@@ -175,7 +176,7 @@ def build():
             '  quine_unique : &#8704; x y : L, selfMem x &#8594; selfMem y &#8594; x = y',
             '  bot_self_mem : selfMem &#8869;',
             '',
-            'Instance toAFAStructure (ZPJ_SelfApp.lean):',
+            'Instance toAFAStructure (SelfApp.lean):',
             '  selfMem      := &#955; x, selfApp x = x   (fixed-point predicate)',
             '  bot_self_mem := fixed_bot                 (&#8869; is a fixed point)',
             '  quine_unique := derived from unique_fp    (any fixed point is &#8869;)',
@@ -185,7 +186,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Proposition: Derivation Chain (ZPJ_Scale.lean, ZPJ_SelfApp.lean)',
+        'Proposition: Derivation Chain (Scale.lean, SelfApp.lean)',
         [
             'ValuationStructure L  &#8658;  AbstractSelfApp L  &#8658;  AFAStructure L',
             'Each arrow is a Lean instance derivation proved without new axioms.',
@@ -225,7 +226,7 @@ def build():
         'in the abstract setting of ZP\'s DecorationUniverse typeclass.'))
 
     E.append(def_box(
-        'Definition: Accessible Pointed Graph (ZPJ_APG.lean §I)',
+        'Definition: Accessible Pointed Graph (APG.lean §I)',
         [
             'An APG over vertex type V (a Quiver) is a structure APG V with:',
             '  root       : V',
@@ -248,7 +249,7 @@ def build():
         'the labels of its immediate successors via the collect operation.'))
 
     E.append(def_box(
-        'Typeclass: DecorationUniverse (ZPJ_APG.lean §II)',
+        'Typeclass: DecorationUniverse (APG.lean §II)',
         [
             'class DecorationUniverse (U : Type*) [ZPSemilattice U]',
             '      [ValuationStructure U] where',
@@ -277,7 +278,7 @@ def build():
         'decoration. The proof splits on whether a vertex lies on a directed cycle.'))
 
     E.append(result_box(
-        'Theorem: decoration_unique (ZPJ_APG.lean §IX)',
+        'Theorem: decoration_unique (APG.lean §IX)',
         [
             '&#8704; {V : Type*} [Quiver V] [Fintype V]',
             '  {U : Type*} [ZPSemilattice U] [ValuationStructure U] [DecorationUniverse U]',
@@ -306,7 +307,7 @@ def build():
         '&#8212; impossible for finite val. Therefore d(v) = &#8869;.'))
 
     E.append(result_box(
-        'Lemma: val_iterate (ZPJ_APG.lean §III)',
+        'Lemma: val_iterate (APG.lean §III)',
         [
             '&#8704; (x : U) (hx : x &#8800; &#8869;) (k : &#8469;),',
             '  val (scale^[k] x) = val x + k',
@@ -320,7 +321,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: scale_iterate_unique_fp (ZPJ_APG.lean §IV)',
+        'Lemma: scale_iterate_unique_fp (APG.lean §IV)',
         [
             '&#8704; (k : &#8469;) (hk : 0 < k) (x : U),  scale^[k] x = x  &#8594;  x = &#8869;',
             '&#8869; is the only element fixed by any k-fold iteration of scale (k &#8805; 1).',
@@ -332,7 +333,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: cyclic_decoration_eq_bot (ZPJ_APG.lean §VII\')',
+        'Theorem: cyclic_decoration_eq_bot (APG.lean §VII\')',
         [
             '&#8704; (d : V &#8594; U), IsDecoration d &#8594;',
             '  (v lies on a directed cycle) &#8594; d v = &#8869;',
@@ -365,7 +366,7 @@ def build():
         'In both sub-cases, acyclic_induction_step formalises the argument.'))
 
     E.append(result_box(
-        'Lemma: acyclic_induction_step (ZPJ_APG.lean §VIII)',
+        'Lemma: acyclic_induction_step (APG.lean §VIII)',
         [
             'If d&#8321; and d&#8322; agree on every successor of an acyclic vertex v,',
             'then d&#8321; v = d&#8322; v.',
@@ -410,7 +411,7 @@ def build():
         'argument on the reachability relation, and is not addressed here.'))
 
     E.append(body(
-        '<b>Commented-out stub.</b> ZPJ_APG.lean contains a commented-out theorem '
+        '<b>Commented-out stub.</b> APG.lean contains a commented-out theorem '
         '<i>acyclic_decoration_unique</i> with a sorry placeholder. That stub is not '
         'used by the proof of decoration_unique: the final proof proceeds by direct '
         'strong induction using acyclic_induction_step, without using the stub. '
@@ -420,17 +421,17 @@ def build():
     E.append(label_box(
         'Lean Source Files',
         [
-            'ZPJ_Scale.lean     &#8212; ValuationStructure, scale_unique_fp, '
+            'Scale.lean     &#8212; ValuationStructure, scale_unique_fp, '
             'toAbstractSelfApp',
-            'ZPJ_SelfApp.lean   &#8212; AbstractSelfApp, derived_bot_self_mem, '
+            'SelfApp.lean   &#8212; AbstractSelfApp, derived_bot_self_mem, '
             'derived_quine_unique, toAFAStructure',
-            'ZPJ_AczelConn.lean &#8212; J_self, selfMem_determines_singleton, '
+            'AczelConn.lean &#8212; J_self, selfMem_determines_singleton, '
             'DC-free identification theorems',
-            'ZPJ_OntBridge.lean &#8212; OntologicalStates as AbstractSelfApp instance',
-            'ZPJ_Model.lean     &#8212; &#8469;&#8734; as ValuationStructure instance',
-            'ZPJ_ScaleBridge.lean &#8212; &#8484;&#8322; as ValuationStructure instance '
+            'OntBridge.lean &#8212; OntologicalStates as AbstractSelfApp instance',
+            'Model.lean     &#8212; &#8469;&#8734; as ValuationStructure instance',
+            'ScaleBridge.lean &#8212; &#8484;&#8322; as ValuationStructure instance '
             '(via ValBridge typeclass)',
-            'ZPJ_APG.lean       &#8212; APG, DecorationUniverse, val_iterate, '
+            'APG.lean       &#8212; APG, DecorationUniverse, val_iterate, '
             'scale_iterate_unique_fp, cyclic_decoration_eq_bot, '
             'acyclic_induction_step, decoration_unique',
             'All files in ZeroParadox/ in the public repository.',
