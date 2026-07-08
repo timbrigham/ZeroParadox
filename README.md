@@ -31,7 +31,7 @@ The forced transition from the bottom element ⊥ to the minimum nonzero state �
 
 The existence of a minimum nonzero element is not assumed - it follows from the structure of the bottom element itself, using only the standard bottom-element axiom of join-semilattice theory. The derivation is machine-verified in Lean 4 - independent reviewers can check the conclusion mechanically, without relying on the argument's prose presentation.
 
-The identification of ⊥ across the framework's layers - algebraic, topological, information-theoretic, and categorical - is a modeling commitment, detailed in [Axiomatic Commitments](#axiomatic-commitments). The relationship between the framework's ε₀ and the proof-theoretic ordinal of PA (Gentzen 1936) is addressed in the [Question Register](#question-register).
+The identification of ⊥ across the framework's layers - algebraic, topological, information-theoretic, and categorical - is a modeling commitment, detailed in [Axiomatic Commitments](#axiomatic-commitments). The framework's ε₀ is chosen deliberately as the proof-theoretic ordinal of PA (Gentzen 1936) - a cited classical fact the framework invokes, not a result it re-proves; its role as the exact snap threshold is machine-verified, and the alignment is recorded as theorem-aligned in the [Claims Ledger](CLAIMS.md). The one open residue is the type-level identity across universes (OQ-E2), not the Gentzen relationship itself.
 
 This framework adds no axioms specific to the result. It follows from the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x) alone. The remaining commitments are either directly verifiable by computation or restatements of structure established in earlier layers; the full labelled account is in [Axiomatic Commitments](#axiomatic-commitments).
 
@@ -122,7 +122,7 @@ The full labelled account - the supporting commitments (AX-B1, AX-G1, AX-G2, MP-
 
 ## Question Register
 
-The framework's open questions, design commitments, and resolved questions are tracked in the **[Claims Ledger](CLAIMS.md)** - Tier 6 (open: the `Classical.choice` necessity question, OQ-E2, the ε₀ / Gentzen relationship, the Lawvere conjecture), Tier 5 (chosen commitments), and the Resolved-questions list.
+The framework's open questions, design commitments, and resolved questions are tracked in the **[Claims Ledger](CLAIMS.md)** - Tier 6 (open: the `Classical.choice` necessity question, OQ-E2, the Lawvere conjecture), Tier 5 (chosen commitments), and the Resolved-questions list.
 
 **Verification status:** ZP-A through ZP-M and ZP-P, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4. A second-prover cross-check (e.g. Rocq) is not yet done.
 
