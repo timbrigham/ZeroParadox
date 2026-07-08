@@ -26,17 +26,17 @@ The framework's load-bearing claims. The Lean kernel reports no axiom dependency
 
 | Claim | Readable name | Lean witness | Axioms |
 |-------|---------------|--------------|--------|
-| T-SNAP | The Binary Snap (⊥ → ε₀) — the central theorem | `Snap.t_snap_derived`, `t_snap_machine`, `t_snap_join`, `t_snap_irreversible` | (none) |
-| DA-1 (given DP-2) | Instantiation alignment, minimal path — *closed conditional on DP-2 (Tier 5)* | `Snap.da1_minimal_path` | (none) |
-| DP-2 (formalized) | Execution distinguishability lemma — *the proved lemma; the modeling commitment it encodes is Tier 5* | `Snap.dp2_execution_distinguishability` | (none) |
-| ⊥ = minimum | Lattice bottom is the least element (ZP-A) | `Lattice.ZPSemilattice.bot_le` | (none) |
-| CC-1 (in ZP-A) | S₀ = ⊥ as a lattice fact | `Lattice.ZPSemilattice.cc1` | (none) |
-| Quine atom = ⊥ | The self-containing bottom is executable self-reference (ZP-J) | `SetTheoryAFA.bot_is_quine_atom` | (none) |
-| CC-1 derived | S₀ = ⊥ derived axiom-free in any AFAStructure | `SetTheoryAFA.cc1_derived` | (none) |
-| T-EXEC | Self-execution forces the diagonal fixed point | `SetTheoryAFA.t_exec` | (none) |
-| Quine atom unique | The fixed point is unique | `SetTheoryAFA.quine_atom_unique` | (none) |
-| Aczel J largest | DC-free Aczel uniqueness (J is the largest self) | `AczelConn.J_self_is_largest` | (none) |
-| T-IZ (limit step) | Every maximal chain's limit is its own successor ⊥ | `SemilatticeInstance.t_iz_limit_is_new_null` | (none) |
+| T-SNAP | The Binary Snap (⊥ → ε₀) — the central theorem | `t_snap_derived`, `t_snap_machine`, `t_snap_join`, `t_snap_irreversible` | (none) |
+| DA-1 (given DP-2) | Instantiation alignment, minimal path — *closed conditional on DP-2 (Tier 5)* | `da1_minimal_path` | (none) |
+| DP-2 (formalized) | Execution distinguishability lemma — *the proved lemma; the modeling commitment it encodes is Tier 5* | `dp2_execution_distinguishability` | (none) |
+| ⊥ = minimum | Lattice bottom is the least element (ZP-A) | `ZPSemilattice.bot_le` | (none) |
+| CC-1 (in ZP-A) | S₀ = ⊥ as a lattice fact | `ZPSemilattice.cc1` | (none) |
+| Quine atom = ⊥ | The self-containing bottom is executable self-reference (ZP-J) | `bot_is_quine_atom` | (none) |
+| CC-1 derived | S₀ = ⊥ derived axiom-free in any AFAStructure | `cc1_derived` | (none) |
+| T-EXEC | Self-execution forces the diagonal fixed point | `t_exec` | (none) |
+| Quine atom unique | The fixed point is unique | `quine_atom_unique` | (none) |
+| Aczel J largest | DC-free Aczel uniqueness (J is the largest self) | `J_self_is_largest` | (none) |
+| T-IZ (limit step) | Every maximal chain's limit is its own successor ⊥ | `t_iz_limit_is_new_null` | (none) |
 
 ## Tier 2 — Proved, choice-free `[propext, Quot.sound]`
 
@@ -44,12 +44,12 @@ No `Classical.choice`; at most propositional extensionality and quotient soundne
 
 | Claim | Readable name | Lean witness | Axioms |
 |-------|---------------|--------------|--------|
-| Power-set floor | Structural floor in the power-set model | `PowerSet.ps_structural_floor` | [propext, Quot.sound] |
-| Wheel instance | Wheel of fractions is a wheel (Carlström Def 1.1) | `WheelFrac.instWheel` | [propext, Quot.sound] |
-| ∞ ≠ ⊥ | The wheel's infinity is distinct from its bottom | `WheelFrac.inf_ne_bot` | [propext, Quot.sound] |
-| Fixed-point fork | lfp/gfp collapse iff the operator has a unique fixed point | `FixedPointFork.fork_collapse_iff` (with `fork_le`, `collapse_of_unique`, `unique_of_collapse`) | [propext, Quot.sound] |
-| Coalgebra fork (μ side) | `Fix` empty — choice-free | `FixedPointFork.fix_isEmpty` | [propext, Quot.sound] |
-| Quine-atom identity | The self-referential fixed points are exactly {⊥} (unique, and = ⊥) | `QuineDichotomy.quine_self_members_eq_bot` | [propext, Quot.sound] |
+| Power-set floor | Structural floor in the power-set model | `ps_structural_floor` | [propext, Quot.sound] |
+| Wheel instance | Wheel of fractions is a wheel (Carlström Def 1.1) | `instWheel` | [propext, Quot.sound] |
+| ∞ ≠ ⊥ | The wheel's infinity is distinct from its bottom | `inf_ne_bot` | [propext, Quot.sound] |
+| Fixed-point fork | lfp/gfp collapse iff the operator has a unique fixed point | `fork_collapse_iff` (with `fork_le`, `collapse_of_unique`, `unique_of_collapse`) | [propext, Quot.sound] |
+| Coalgebra fork (μ side) | `Fix` empty — choice-free | `fix_isEmpty` | [propext, Quot.sound] |
+| Quine-atom identity | The self-referential fixed points are exactly {⊥} (unique, and = ⊥) | `quine_self_members_eq_bot` | [propext, Quot.sound] |
 
 ## Tier 3 — Proved, inherits `Classical.choice` from Mathlib (analytic realizations)
 
@@ -57,19 +57,19 @@ These *realize* the snap floor inside standard analytic structures and inherit `
 
 | Claim | Realization | Lean witness |
 |-------|-------------|--------------|
-| Snap irreversibility | p-adic topology (ℚ₂) | `Padic.c3_irreversible` |
-| Snap orthogonality | Hilbert space | `StateSpace.t4_snap_orthogonal` |
-| ⊥ as inverse limit | TopCat | `TopFunctor.fB_functor` |
-| ⊥ as initial object | ModuleCat ℂ | `HilbFunctor.fD_functor` |
-| ⊥ as initial object | KleisliCat PMF (`fC_no_return` = AX-G2 as theorem) | `InfoFunctor.fC_functor` |
-| ε₀ as exact snap threshold | ordinal tower, 2-adic convergence | `Gentzen.c1_epsilon_zero_identification`, `Gentzen.snap_zp2_correspondence` |
-| Computational grounding | Kleene fixed point | `Kleene.da1_closed_concrete` |
-| Kleene–ordinal bridge | MachinePhase → ℤ₂; quine ∧ ε₀ co-witnessed | `Incompleteness.zpm_triangle` |
-| ℝ ≠ ℚ₂ (Ostrowski) | number-system instance of the fork | `FixedPointFork.real_not_equiv_padic`, `FixedPointFork.completions_exhaustive` |
-| No snap in ordered fields | ℝ, ℚ as counterexamples | `OrderedField.f_snap_impossible`, `OrderedField.r_snap_impossible` |
-| Snap-occurrence dichotomy | completions of ℚ: ℚ_p totally disconnected = snap, ℝ connected = no snap; Ostrowski exhaustive + exclusive | `SnapDichotomy.snap_dichotomy` (with `padic_snaps`, `real_no_snap`) |
-| Quine-atom dichotomy (structural) | μ/ν fork — the self-referential object exists on ν (non-well-founded), not μ; the "Quine atom ⟺ AFA" reading is metatheoretic (Tier 4), not this theorem | `QuineDichotomy.quine_dichotomy` |
-| T-IZ (full chain) | the complete Inside-Zero chain — inherits choice only via its ZP-K/DA-1 step (the limit-step lemma alone is axiom-free, Tier 1) | `SemilatticeInstance.t_iz_complete` |
+| Snap irreversibility | p-adic topology (ℚ₂) | `c3_irreversible` |
+| Snap orthogonality | Hilbert space | `t4_snap_orthogonal` |
+| ⊥ as inverse limit | TopCat | `fB_functor` |
+| ⊥ as initial object | ModuleCat ℂ | `fD_functor` |
+| ⊥ as initial object | KleisliCat PMF (`fC_no_return` = AX-G2 as theorem) | `fC_functor` |
+| ε₀ as exact snap threshold | ordinal tower, 2-adic convergence | `c1_epsilon_zero_identification`, `snap_zp2_correspondence` |
+| Computational grounding | Kleene fixed point | `da1_closed_concrete` |
+| Kleene–ordinal bridge | MachinePhase → ℤ₂; quine ∧ ε₀ co-witnessed | `zpm_triangle` |
+| ℝ ≠ ℚ₂ (Ostrowski) | number-system instance of the fork | `real_not_equiv_padic`, `completions_exhaustive` |
+| No snap in ordered fields | ℝ, ℚ as counterexamples | `f_snap_impossible`, `r_snap_impossible` |
+| Snap-occurrence dichotomy | completions of ℚ: ℚ_p totally disconnected = snap, ℝ connected = no snap; Ostrowski exhaustive + exclusive | `snap_dichotomy` (with `padic_snaps`, `real_no_snap`) |
+| Quine-atom dichotomy (structural) | μ/ν fork — the self-referential object exists on ν (non-well-founded), not μ; the "Quine atom ⟺ AFA" reading is metatheoretic (Tier 4), not this theorem | `quine_dichotomy` |
+| T-IZ (full chain) | the complete Inside-Zero chain — inherits choice only via its ZP-K/DA-1 step (the limit-step lemma alone is axiom-free, Tier 1) | `t_iz_complete` |
 
 *Whether this inherited dependence is structurally forced by the snap geometry or merely incidental to Mathlib's implementation is **open** (see Tier 6). The one layer classified so far (the `PadicTree` choice-probe) found it mostly incidental and routable.*
 
@@ -79,8 +79,8 @@ Foundational choices the framework's internal structure rules out alternatives t
 
 | Commitment | What is argued | Proved part (separate) | Named falsifier |
 |------------|----------------|------------------------|-----------------|
-| AFA necessity (R-AFA, ZP-E) | That ⊥ = {⊥} forces ZF+AFA over Foundation (a metatheoretic squeeze: Foundation too restrictive, Boffa too permissive, AFA the unique fit) | The *structural* self-application fixed point is Lean-proved: `SetTheoryAFA.t_exec` (Tier 1, axiom-free) | A well-founded (Foundation-respecting) model of ⊥ consistent with R3 and L-INF would overturn the forcing |
-| CC-2 set-membership reading | The literal ⊥ ∈ ⊥ (the Quine atom as a set fact) | The structural fixed point `SetTheoryAFA.t_exec` is axiom-free; only the set-membership reading is metatheoretic | Same as above — a Foundation-respecting realization of the same structural role |
+| AFA necessity (R-AFA, ZP-E) | That ⊥ = {⊥} forces ZF+AFA over Foundation (a metatheoretic squeeze: Foundation too restrictive, Boffa too permissive, AFA the unique fit) | The *structural* self-application fixed point is Lean-proved: `t_exec` (Tier 1, axiom-free) | A well-founded (Foundation-respecting) model of ⊥ consistent with R3 and L-INF would overturn the forcing |
+| CC-2 set-membership reading | The literal ⊥ ∈ ⊥ (the Quine atom as a set fact) | The structural fixed point `t_exec` is axiom-free; only the set-membership reading is metatheoretic | Same as above — a Foundation-respecting realization of the same structural role |
 
 ## Tier 5 — Modeling commitments (chosen, not derived; not open questions)
 
@@ -88,9 +88,9 @@ Explicit, motivated commitments. Listed so the open register holds only genuinel
 
 | Commitment | Nature | Lean note |
 |------------|--------|-----------|
-| The diagonal fixed point (cross-layer identity) | ⊥ is one self-referential fixed point; each framework's face is that single attribute in its own language | Faces proved per-framework (Quine atom `SetTheoryAFA.t_exec`, Tier 1; Kleene quine ZP-K, v₂(0)=∞ ZP-B, categorical initial ZP-G, Tier 3). That they are *one object* carrying the attribute is the identity commitment; MC-1 (below) is its categorical instance. The Lawvere identification is conjectural (Tier 6). |
-| MC-1 identity half | Reading the four domain bottoms as numerically *one* object | The *correspondence* half is a theorem (`MC1Bridge.mc1_correspondence`, Tier 3); the identity half is the chosen identification |
-| DP-2 (execution distinguishability) | The commitment DA-1 rests on; motivated by ZP-C D7, not freely chosen | *Listed in two tiers by design:* the formalized lemma is proved and axiom-free (`Snap.dp2_execution_distinguishability`, Tier 1); the modeling choice that lemma encodes is the commitment, recorded here |
+| The diagonal fixed point (cross-layer identity) | ⊥ is one self-referential fixed point; each framework's face is that single attribute in its own language | Faces proved per-framework (Quine atom `t_exec`, Tier 1; Kleene quine ZP-K, v₂(0)=∞ ZP-B, categorical initial ZP-G, Tier 3). That they are *one object* carrying the attribute is the identity commitment; MC-1 (below) is its categorical instance. The Lawvere identification is conjectural (Tier 6). |
+| MC-1 identity half | Reading the four domain bottoms as numerically *one* object | The *correspondence* half is a theorem (`mc1_correspondence`, Tier 3); the identity half is the chosen identification |
+| DP-2 (execution distinguishability) | The commitment DA-1 rests on; motivated by ZP-C D7, not freely chosen | *Listed in two tiers by design:* the formalized lemma is proved and axiom-free (`dp2_execution_distinguishability`, Tier 1); the modeling choice that lemma encodes is the commitment, recorded here |
 | BA-1 (temperature T) | A universe-contingent scale parameter; specific value irrelevant to structure | Not formalized - the framework's only bridge to physical units, via Landauer's `E = kT ln2` (referenced in ZP-C/E/H). The information-thermodynamics of the snap is an open direction, not a claim. |
 
 A commitment marked "not a novel commitment" in the layers means its content is formally grounded in prior layers and derivable there; it is stated as a local axiom only for the self-containment of that layer — the same pattern by which AX-1 was stated as an axiom before being derived as T-SNAP. **AX-1 (Binary Snap Causality) is no longer an axiom:** it is Theorem T-SNAP, derived in ZP-E from A4, the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant — any join-semilattice with bottom already has this property.
@@ -183,7 +183,7 @@ Three things to read it correctly:
 |---|---|---|---|
 | **Lawvere (1969)**, *Diagonal Arguments and Cartesian Closed Categories*; **Yanofsky (2003)** - the diagonal fixed point unifies Cantor, Russell, Gödel, Tarski, Turing, the recursion theorem | ⊥ as the self-referential (diagonal) fixed point - the keystone | **Conjectured unification; face-split now machine-checked** (Lawvere): no Set-level face is a Lawvere instance (Cantor - `nontrivial_lattice_no_witness`, `q2_no_witness`); the computability face is a genuine recursion-theorem instance (`computability_face_fixedPoint`); the one-object unification stays an MC-1 commitment | Connected retrospectively - the keystone framing predated the citation |
 | **Taylor** *Well-founded coalgebras and recursion*; **Adámek-Milius-Moss (2020)** (arXiv:1910.09401) - well-founded ⟺ recursive; the μ/ν divide | The snap as the well-foundedness boundary crossing: ⊥ the non-well-founded floor (self-loop), the ε₀ ascent well-founded (Boundary, BoundaryBridge) | **Best-effort formalized + cited for depth** - relation-level boundary + QPF μ/ν bridge proved (`snap_crossing`, `snap_boundary_two_registers`); the well-founded ⟺ recursive depth (Taylor Prop 111) cited, not re-proved (full coalgebraic version awaits Mathlib tooling - Tier 6) | Connected via the back-edge insight - the keystone's structural home (ZP-P already adjacent via Adámek-Rutten) |
-| **Aczel (1988)** AFA; **Forti-Honsell (1983)**; **Paulson** - the Quine atom ⊥={⊥}, non-well-founded sets, final-coalgebra theorem | ⊥={⊥} (CC-2); the ZFC/AFA contact point | **Theorem-grounded + commitment**: the structural self-application fixed point (`SetTheoryAFA.t_exec`) is axiom-free Lean; the literal set-membership identity is metatheoretic | Independent → later converged (the ⊥ question reached x={x}; matched to AFA after) |
+| **Aczel (1988)** AFA; **Forti-Honsell (1983)**; **Paulson** - the Quine atom ⊥={⊥}, non-well-founded sets, final-coalgebra theorem | ⊥={⊥} (CC-2); the ZFC/AFA contact point | **Theorem-grounded + commitment**: the structural self-application fixed point (`t_exec`) is axiom-free Lean; the literal set-membership identity is metatheoretic | Independent → later converged (the ⊥ question reached x={x}; matched to AFA after) |
 | **Ostrowski's theorem** - every nontrivial absolute value on ℚ is the real or a p-adic one (the complete dichotomy) | ZP-B / ZP-F: the snap fails in ℝ, holds in ℚ₂; v₂(0)=∞ | **Theorem used** - Ostrowski is a classification theorem ZP directly invokes (Mathlib) | Independent → later converged (Riemann-sphere 0/∞ intuition → ℚ₂; Ostrowski recognized as the backing after) |
 | **Gentzen** - ε₀ is the proof-theoretic ordinal of PA | ZP-L / ZP-M: ε₀ as the exact snap threshold | **Theorem-aligned** - structural alignment documented (ZP-L Remark R-L.1); full type-theoretic identity deferred (OQ-E2) | Built on the cited work - ε₀ chosen deliberately as PA's ordinal |
 | **Kleene's recursion theorem** (quines / self-reproduction) | ZP-K: the Kleene quine; the periodicity fixed-point construction | **Theorem + external novelty signal** - the quine face is standard; the periodicity construction was flagged novel by a computability specialist | Built on the cited work; the periodicity construction is the new piece |
