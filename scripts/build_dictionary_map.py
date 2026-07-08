@@ -151,7 +151,7 @@ POSITIVE = [
 ]
 
 def cell_mark(w, key=None):
-    # DYN is the directional dynamics column: ↓ inbound · ↑ outbound · ↕ seam (both) · ? open.
+    # DYN is the directional dynamics column: ↓ inbound · ↑ outbound · ↕ seam (both); trailing * = conditional/inherited.
     # Every other column is 5-state: ✓ established · ✓* conditional · ✗ refuted · ∅ n/a-structural · ? open.
     if key == "DYN":
         return dyn_glyph(w)
@@ -275,17 +275,17 @@ not.*
 
 ## Map - slot × construction
 
-Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` established ·
-`✓*` conditional/bridge · `✗` refuted (a proved obstruction) · `∅` not-applicable by structure (a category
-error - e.g. asking a ν-limit for a μ-generation property - not a gap) · `?` open probe. The last column,
+Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` **Lean-verified** - a machine-checked proof, with the witness theorem linked in *Why each cell* below ·
+`✗` refuted (a proved obstruction, also Lean-checked) · `∅` not-applicable by structure (a category
+error - e.g. asking a ν-limit for a μ-generation property - not a gap). A trailing `*` on any mark (`✓*`, `↑*`, `↓*`) means conditional - established via a bridge or inherited from a sibling layer. The last column,
 **dynamics**, is DIRECTIONAL instead: `↓` inbound (converges *to* ⊥ - a sink), `↑` outbound (departs *from* ⊥
 irreversibly - a source), `↕` both (a seam). (Witnessing theorems, with links to the Lean source, are in the
 dictionary above.)
 
 {map}
 
-The honest content is in the non-`✓` cells, and splitting them is the point: a `?` is an open question, a `∅`
-is a settled structural fact, and a `✗` is news (a proved obstruction). Two things worth reading off the table:
+The honest content is in the non-`✓` cells, and splitting them is the point: a `∅`
+is a settled structural fact (a category error, not a gap), a `✗` is news (a proved obstruction), and a `✓*` holds only via a bridge. Two things worth reading off the table:
 (1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
 point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
 selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
@@ -293,7 +293,7 @@ selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the flo
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
 0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
 
-**The value is in the non-`✓` cells** - the open questions (`?`) and the proved obstructions (`✗`), not the
+**The value is in the non-`✓` cells** - the proved obstructions (`✗`) and the structural non-applicabilities (`∅`), not the
 filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
 **[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
 
