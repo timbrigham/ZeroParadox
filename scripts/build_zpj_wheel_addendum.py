@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Wheel Addendum: The Wheel of Fractions is a Wheel
-Version 1.2 | June 2026
+Version 1.3 | July 2026
+v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citations updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Presents the formal construction of the wheel of fractions
       ⊙_S A = (A × A)/≡_S for a commutative ring A and multiplicative submonoid S,
@@ -15,7 +16,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -72,10 +73,10 @@ def build():
         'porthole gives rise to: a wheel, in which &#8734; and &#8869; are distinct, or a '
         'meadow, in which they collapse. This addendum settles that question.'))
     E.append(body(
-        'The main result is ZPJ_WheelFrac.instWheel (ZPJ_WheelFrac.lean): for any commutative '
+        'The main result is WheelFrac.instWheel (WheelFrac.lean): for any commutative '
         'ring A and any multiplicative submonoid S, the wheel of fractions '
         '&#8857;<sub>S</sub> A = (A &#215; A)/&#8801;<sub>S</sub> satisfies every axiom of '
-        'Carlström\'s Definition 1.1. The companion result ZPJ_WheelFrac.inf_ne_bot shows that, '
+        'Carlström\'s Definition 1.1. The companion result WheelFrac.inf_ne_bot shows that, '
         'whenever 0 &#8713; S, the two special elements stay distinct (&#8734; &#8800; '
         '&#8869;) &#8212; so the construction is a wheel, not a meadow. The construction '
         'is Carlström\'s; the contribution here is a faithful, machine-verified encoding '
@@ -98,7 +99,7 @@ def build():
         'eight. The unbundling is bookkeeping only &#8212; no axiom is added, removed, or '
         'weakened.'))
     E.append(def_box(
-        'Typeclass: Wheel (ZPJ_Wheel.lean)',
+        'Typeclass: Wheel (Wheel.lean)',
         [
             'class Wheel (W : Type*) where',
             '  wadd, wmul : W &#8594; W &#8594; W      -- + and &#183;',
@@ -162,7 +163,7 @@ def build():
         'fails without a cancellation law. The submonoid-quotient relation '
         '&#8801;<sub>S</sub> repairs this by witnessing each identification with elements '
         'of S, and it is provably reflexive, symmetric, and transitive '
-        '(ZPJ_WheelFrac.srel). Each of the five operations is then well-defined on the '
+        '(WheelFrac.srel). Each of the five operations is then well-defined on the '
         'quotient &#8212; the proofs that they respect &#8801;<sub>S</sub> are the bulk of '
         'the formalisation.'))
     E.append(sp(6))
@@ -182,7 +183,7 @@ def build():
         'definitionally because pair-swap is its own inverse and commutes with the '
         'componentwise product.'))
     E.append(result_box(
-        'Theorem: ZPJ_WheelFrac.instWheel (ZPJ_WheelFrac.lean)',
+        'Theorem: WheelFrac.instWheel (WheelFrac.lean)',
         [
             '&#8704; {A : Type*} [CommRing A] (S : Submonoid A),',
             '  Wheel (&#8857;<sub>S</sub> A)',
@@ -210,7 +211,7 @@ def build():
         'become identified. The natural hypothesis 0 &#8713; S (which holds whenever S is '
         'the complement of a prime ideal, the usual case) keeps them apart.'))
     E.append(result_box(
-        'Theorem: ZPJ_WheelFrac.inf_ne_bot (ZPJ_WheelFrac.lean)',
+        'Theorem: WheelFrac.inf_ne_bot (WheelFrac.lean)',
         [
             '&#8704; {A : Type*} [CommRing A] (S : Submonoid A),',
             '  (0 : A) &#8713; S  &#8594;  &#8734; &#8800; &#8869;     in &#8857;<sub>S</sub> A',
@@ -233,7 +234,7 @@ def build():
             '2-adic valuation (v&#8322;(0) = &#8734;) and in ZF+AFA (the Quine atom). The '
             'wheel of fractions is the algebraic face of that point: /0 is defined and '
             'distinct from the absorbing &#8869;, exactly the behaviour the porthole '
-            'predicts. The concrete carrier ZPWheelElem (ZPJ_Wheel.lean §III&#8211;VI) '
+            'predicts. The concrete carrier ZPWheelElem (Wheel.lean §III&#8211;VI) '
             'makes this explicit on the rationals extended with &#8734; and &#8869;, where '
             'val(x) = &#8734; &#8660; /x = &#8734; is proved directly '
             '(zpw_top_val_iff_inv_is_inf). This addendum\'s headline result is the general '
@@ -258,16 +259,16 @@ def build():
         'context. <b>Ring structure is an input, not a conclusion.</b> The construction '
         'starts from a commutative ring and a submonoid; it does not derive wheel structure '
         'from the ZP lattice axioms alone. The bridge typeclass that would state such a '
-        'derivation, WheelValuationStructure (ZPJ_Wheel.lean §VII), is defined but its '
+        'derivation, WheelValuationStructure (Wheel.lean §VII), is defined but its '
         'porthole condition val(0) = &#8868; is an assumed axiom, motivated by the ZP '
         'argument rather than type-checked as necessary.'))
     E.append(label_box(
         'Lean Source Files',
         [
-            'ZPJ_WheelFrac.lean &#8212; rel, srel, the five quotient operations '
+            'WheelFrac.lean &#8212; rel, srel, the five quotient operations '
             '(waddF, wmulF, winvF), instWheel, inf_ne_bot. The headline results of this '
             'addendum.',
-            'ZPJ_Wheel.lean     &#8212; the Wheel typeclass (Carlström Def 1.1, 14 fields), '
+            'Wheel.lean     &#8212; the Wheel typeclass (Carlström Def 1.1, 14 fields), '
             'the derived elements wheelInf / wheelBot, the concrete carrier ZPWheelElem, '
             'and the porthole correspondence zpw_top_val_iff_inv_is_inf.',
             'Both files in ZeroParadox/ in the public repository.',
@@ -302,7 +303,7 @@ def build():
             'and can read the axiom footprint to confirm the choice-free claim. Whether '
             'the porthole condition val(0) = &#8868; can be derived &#8212; rather than '
             'assumed &#8212; from upstream ZP structure remains the open question flagged '
-            'in ZPJ_Wheel.lean §VII&#8211;VIII.',
+            'in Wheel.lean §VII&#8211;VIII.',
         ]
     ))
     E.append(sp(6))
