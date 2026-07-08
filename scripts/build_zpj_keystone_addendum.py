@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.1 | June 2026
+Version 1.2 | July 2026
+v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: Honest-scope precision — the single-carrier "snap is one crossing" carries no NEW commitment; it rests on the framework's existing ⊥/ε₀ identification (MC-1 / OQ-E2), endpoints proved (floor non-wf via real ⊥, axiom-free).
 v1.0: Initial release. A thin addendum recording two machine-checked investigations into the
       keystone (⊥ as the diagonal fixed point): (1) the Lawvere face-split (ZPJ_Lawvere.lean) —
@@ -14,7 +15,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -120,7 +121,7 @@ def build():
         'fixed point); Lawvere\'s are <i>derived</i> from a surjection. So the question is '
         'whether each face supplies that surjection. The verdict is face-dependent.'))
     E.append(result_box(
-        'In Set: no face is a Lawvere instance (ZPJ_Lawvere.lean)',
+        'In Set: no face is a Lawvere instance (Lawvere.lean)',
         [
             'For any nontrivial type, a Lawvere witness cannot exist: it would force every '
             'endofunction to have a fixed point, impossible once there are two distinct '
@@ -136,7 +137,7 @@ def build():
     ))
     E.append(sp(4))
     E.append(result_box(
-        'In computability: a genuine instance (ZPJ_Lawvere.lean)',
+        'In computability: a genuine instance (Lawvere.lean)',
         [
             'computability_face_fixedPoint &#8212; every <i>computable</i> self-map on codes '
             'has a fixed point. This wraps Mathlib\'s Nat.Partrec.Code.fixed_point (Rogers / '
@@ -179,7 +180,7 @@ def build():
         'self-loop, where recursion cannot reach) to the well-founded ascent (the &#949;<sub>0</sub> '
         'ordinal tower, recursively generated). The Zero Paradox formalizes this at two levels.'))
     E.append(result_box(
-        'Relation level (ZPJ_Boundary.lean)',
+        'Relation level (Boundary.lean)',
         [
             'floor_not_wellFounded &#8212; the self-application floor is non-well-founded '
             '(&#8869; self-loops under selfApp). Fully axiom-free.',
@@ -191,7 +192,7 @@ def build():
     ))
     E.append(sp(4))
     E.append(result_box(
-        'Categorical bridge (ZPJ_BoundaryBridge.lean)',
+        'Categorical bridge (BoundaryBridge.lean)',
         [
             'snap_boundary_two_registers &#8212; the crossing witnessed in two registers at '
             'once: the relation/carrier level above, and ZP-P\'s categorical &#956;/&#957; '
@@ -250,8 +251,8 @@ def build():
         'established the porthole (v<sub>2</sub>(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
         'addendum records two machine-checked probes into the keystone\'s structure &#8212; the '
         'Lawvere face-split and the well-foundedness boundary &#8212; each fenced as to exactly '
-        'what it proves. Lean sources: ZPJ_Lawvere.lean, ZPJ_Boundary.lean, '
-        'ZPJ_BoundaryBridge.lean, all sorry-free in Lean 4 as of June 2026.',
+        'what it proves. Lean sources: Lawvere.lean, Boundary.lean, '
+        'BoundaryBridge.lean, all sorry-free in Lean 4 as of June 2026.',
         S['endnote']))
 
     print(f'[build_zpj_keystone_addendum] Assembling document ({len(E)} elements)...')
