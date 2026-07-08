@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-H Addendum: The Snap Floor in Native Categories
-Version 1.1 | June 2026
+Version 1.2 | July 2026
+v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.0: Initial release. Realizes the snap floor ⊥ inside each framework's own
       Mathlib category as a genuine CategoryTheory.Functor, replacing the ℕ-indexed
       depth-proxy categories of the main ZP-H document:
@@ -20,7 +21,7 @@ Reads after ZP-H Categorical Bridge.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -81,7 +82,7 @@ def build():
         'Each is sorry-free, and each carries the snap floor to its category\'s categorical '
         'bottom &#8212; an inverse limit in TopCat, an initial object in ModuleCat &#8450; '
         'and in the Kleisli category. The bundled witness is mc1_correspondence '
-        '(ZPH_MC1.lean).'))
+        '(MC1Bridge.lean).'))
     E.append(body(
         'Two honesty boundaries hold throughout. <b>The realized claim is correspondence, '
         'not identity.</b> What is proved is that each bottom is its own category\'s '
@@ -133,7 +134,7 @@ def build():
         'of &#8469;<sup>op</sup> (the balls shrink as the index grows): a real diagram in '
         'TopCat.'))
     E.append(result_box(
-        'Functor: fB_functor : ℕ^op → TopCat (ZPH_TopFunctor.lean)',
+        'Functor: fB_functor : ℕ^op → TopCat (TopFunctor.lean)',
         [
             'Object  n &#8614; the clopen ball B(0, 2<sup>&#8722;n</sup>) &#8838; '
             'Q<sub>2</sub>, as a TopCat object.',
@@ -168,7 +169,7 @@ def build():
         'basis states (ZP-D). As &#8450;-modules, these spaces and the linear maps between '
         'them form a diagram in ModuleCat &#8450;.'))
     E.append(result_box(
-        'Functor: fD_functor : ℕ → ModuleCat ℂ (ZPH_HilbFunctor.lean)',
+        'Functor: fD_functor : ℕ → ModuleCat ℂ (HilbFunctor.lean)',
         [
             'Object  n &#8614; StateSpace n = the &#8450;-module &#8450;<sup>n</sup>.',
             'Morphism (n &#8804; m): the isometric &#8450;-linear embedding that pads the '
@@ -206,7 +207,7 @@ def build():
         'probability distribution on B. Mathlib supplies this category for free, since PMF '
         'is a lawful monad.'))
     E.append(result_box(
-        'Functor: fC_functor : ℕ → KleisliCat PMF (ZPH_InfoFunctor.lean)',
+        'Functor: fC_functor : ℕ → KleisliCat PMF (InfoFunctor.lean)',
         [
             'Object  n &#8614; Fin n, the type of n distinguishable outcomes.',
             'Morphism (n &#8804; m): the deterministic embedding (each outcome mapped to its '
@@ -241,7 +242,7 @@ def build():
         'The three functors, together with F_A (the join-semilattice &#8469; of the main '
         'document, where 0 is already the initial object), are bundled as a single witness.'))
     E.append(result_box(
-        'Definition: mc1_correspondence : MC1Correspondence (ZPH_MC1.lean)',
+        'Definition: mc1_correspondence : MC1Correspondence (MC1Bridge.lean)',
         [
             'A record collecting the native-category realizations:',
             '&#8226;  F_D: StateSpace 0 is initial in ModuleCat &#8450;.',
@@ -280,12 +281,12 @@ def build():
     E.append(label_box(
         'Lean Source Files',
         [
-            'ZPH_TopFunctor.lean  &#8212; fB_functor, fB_bottom_is_limit (F_B into TopCat).',
-            'ZPH_HilbFunctor.lean &#8212; fD_functor, fD_zero_isInitial, fD_embed_inner '
+            'TopFunctor.lean  &#8212; fB_functor, fB_bottom_is_limit (F_B into TopCat).',
+            'HilbFunctor.lean &#8212; fD_functor, fD_zero_isInitial, fD_embed_inner '
             '(F_D into ModuleCat &#8450;).',
-            'ZPH_InfoFunctor.lean &#8212; fC_functor, fC_zero_isInitial, fC_no_return '
+            'InfoFunctor.lean &#8212; fC_functor, fC_zero_isInitial, fC_no_return '
             '(F_C into KleisliCat PMF).',
-            'ZPH_MC1.lean         &#8212; mc1_correspondence (the bundled witness).',
+            'MC1Bridge.lean         &#8212; mc1_correspondence (the bundled witness).',
             'All in ZeroParadox/ in the public repository.',
         ]
     ))
