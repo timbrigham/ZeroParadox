@@ -20,7 +20,7 @@ v1.4: T5 proof corrected — ball-boundary argument replaces D2(v) citation.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -149,12 +149,12 @@ def build():
         'T5 norm result: Derived — unconditional given DP-1. '
         'Note: in the basis-assignment construction (D2), all T-images are unit basis vectors — all norms equal 1. '
         'The norm inequality &#8214;T(S<sub>n</sub>)&#8214; &#8804; &#8214;T(S<sub>n+1</sub>)&#8214; is therefore satisfied trivially (1 &#8804; 1). '
-        'The Lean proof (ZPD.t5_monotone_norms) verifies this tautology; it does not verify the ball-boundary argument. '
+        'The Lean proof (t5_monotone_norms) verifies this tautology; it does not verify the ball-boundary argument. '
         '<font name="DV">&#10003;</font>',
         'T5-b — Strict Orthogonality (non-trivial content, Lean-verified): For any strictly monotone state sequence — where S<sub>n</sub> &#8800; S<sub>n+1</sub> — consecutive T-images are orthogonal: '
         '&#10216;T(S<sub>n</sub>), T(S<sub>n+1</sub>)&#10217; = 0. '
         'Proof: S<sub>n</sub> &#8800; S<sub>n+1</sub> implies they index distinct clopen balls. By DP-1, distinct ball-indices map to orthogonal basis vectors. Therefore T(S<sub>n</sub>) &#8869; T(S<sub>n+1</sub>). '
-        'Lean: ZPD.t5_strict_orthogonal (uses DP-1 via t2_orthogonal; axiom-free). <font name="DV">&#10003;</font>',
+        'Lean: t5_strict_orthogonal (uses DP-1 via t2_orthogonal; axiom-free). <font name="DV">&#10003;</font>',
         'T5-b is the load-bearing result: it captures the genuine content of the ball-boundary structure and is the Hilbert-space expression of ZP-B C3 (topological irreversibility) applied to consecutive states.',
     ]))
 
@@ -167,7 +167,7 @@ def build():
          ['T4: Snap &#8594; orthogonal shift', 'Closed — unconditional', 'Proven from T2 and ZP-B T3. Depends on DP-1 as premise.'],
          ['T5: Monotone norms + T5-b: Strict orthogonality', 'Closed — unconditional given DP-1',
           'T5 norm result: trivially satisfied (all norms = 1 by construction). '
-          'T5-b: distinct consecutive states produce orthogonal T-images — non-trivial, Lean-verified (ZPD.t5_strict_orthogonal).']],
+          'T5-b: distinct consecutive states produce orthogonal T-images — non-trivial, Lean-verified (t5_strict_orthogonal).']],
         [1.6*inch, 1.5*inch, 3.4*inch]
     ))
 
@@ -186,8 +186,8 @@ def build():
          ['T3: Uniqueness of T', 'Valid — Proposition; derived; unique up to unitary equivalence'],
          ['T4: Snap &#8594; orthogonal shift', 'Valid — Theorem; derived; unconditional; depends on DP-1'],
          ['T5 / T5-b: Monotone norms + strict orthogonality',
-          'Valid — T5 norm result: tautology of construction (all norms = 1); Lean: ZPD.t5_monotone_norms. '
-          'T5-b: non-trivial Lean-verified result — distinct consecutive states produce orthogonal T-images via DP-1; Lean: ZPD.t5_strict_orthogonal (axiom-free).']],
+          'Valid — T5 norm result: tautology of construction (all norms = 1); Lean: t5_monotone_norms. '
+          'T5-b: non-trivial Lean-verified result — distinct consecutive states produce orthogonal T-images via DP-1; Lean: t5_strict_orthogonal (axiom-free).']],
         [2.5*inch, 4.0*inch]
     ))
 

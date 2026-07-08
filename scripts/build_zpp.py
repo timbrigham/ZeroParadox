@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.4 | July 2026
+Version 1.5 | July 2026
+v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.4: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Re-aimed the categorical instance's choice note per the Veltri (FSCD 2021) literature review —
 the Classical.choice on the ν side is a Mathlib M-type artifact, not a necessity (polynomial-functor
@@ -21,7 +22,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -40,7 +41,7 @@ def build():
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer. The abstract fork schema is proved sorry-free and choice-free in '
-            'Lean 4 (ZPP.lean); the number-system instance via Ostrowski (Ostrowski.lean) and '
+            'Lean 4 (FixedPointFork.lean); the number-system instance via Ostrowski (Ostrowski.lean) and '
             'the categorical-parent instance via QPF.Fix / QPF.Cofix (Coalgebra.lean) are '
             'Lean-witnessed; the set-theory and computation instances are referenced to ZP-J and '
             'ZP-K. Generalizes the ZFC+Foundation / ZFC+AFA orthogonal-contact-point claim.</i>',
@@ -88,7 +89,7 @@ def build():
         'inductive/coinductive reading, which is offered as analogy only.'))
 
     E.append(def_box(
-        'Definition: the fork (ZPP.lean)',
+        'Definition: the fork (FixedPointFork.lean)',
         [
             'For a complete lattice &#945; and a monotone self-map f : &#945; &#8594; &#945;:',
             '  lfp f = the least fixed point of f   (Mathlib OrderHom.lfp)',
@@ -100,7 +101,7 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Proposition: fork_le (ZPP.lean)',
+        'Proposition: fork_le (FixedPointFork.lean)',
         [
             'lfp f &#8804; gfp f',
             'The inductive closure never exceeds the coinductive closure: the fork has '
@@ -111,7 +112,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: collapse_of_unique (ZPP.lean)',
+        'Lemma: collapse_of_unique (FixedPointFork.lean)',
         [
             'If x is the unique fixed point of f, then lfp f = x and gfp f = x.',
             'Both ends of the fork land on the sole fixed point.',
@@ -122,7 +123,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: unique_of_collapse (ZPP.lean)',
+        'Lemma: unique_of_collapse (FixedPointFork.lean)',
         [
             'If lfp f = gfp f, then every fixed point of f equals that common value.',
             'Every fixed point lies between lfp f and gfp f, so collapse forces uniqueness.',
@@ -133,7 +134,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: fork_collapse_iff (ZPP.lean) &#8212; the schema spine',
+        'Theorem: fork_collapse_iff (FixedPointFork.lean) &#8212; the schema spine',
         [
             'lfp f = gfp f  &#8596;  &#8707;! x, f x = x',
             'The fork collapses to a single contact point if and only if f has a unique '
@@ -351,10 +352,10 @@ def build():
     E.append(data_table(
         headers=['Result', 'File / Section', 'Axioms'],
         rows_data=[
-            ['fork_le', 'ZPP.lean §I', 'choice-free'],
-            ['collapse_of_unique', 'ZPP.lean §I', 'choice-free'],
-            ['unique_of_collapse', 'ZPP.lean §I', 'choice-free'],
-            ['fork_collapse_iff', 'ZPP.lean §I', 'choice-free'],
+            ['fork_le', 'FixedPointFork.lean §I', 'choice-free'],
+            ['collapse_of_unique', 'FixedPointFork.lean §I', 'choice-free'],
+            ['unique_of_collapse', 'FixedPointFork.lean §I', 'choice-free'],
+            ['fork_collapse_iff', 'FixedPointFork.lean §I', 'choice-free'],
             ['completions_exhaustive', 'Ostrowski.lean §II', 'Classical.choice'],
             ['real_not_equiv_padic', 'Ostrowski.lean §II', 'Classical.choice'],
             ['fix_isEmpty', 'Coalgebra.lean §II', 'choice-free'],
@@ -367,7 +368,7 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'Fork spine (ZPP.lean): [propext, Quot.sound] &#8212; choice-free. The schema needs '
+            'Fork spine (FixedPointFork.lean): [propext, Quot.sound] &#8212; choice-free. The schema needs '
             'no Axiom of Choice.',
             'Number-system instance (Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical analysis / number '
@@ -388,7 +389,7 @@ def build():
             'Ostrowski number-system instance | categorical &#956;/&#957; instance '
             '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
             'boundary | soft fence: not every fork is &#956;/&#957; | '
-            'All ZPP.lean / Ostrowski.lean / Coalgebra.lean theorems verified.</i>',
+            'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified.</i>',
             S['endnote']),
     ]
 

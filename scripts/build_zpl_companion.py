@@ -1,6 +1,7 @@
 """
 Build ZP-L Illustrated Companion
-Version 1.5 | May 2026
+Version 1.6 | May 2026
+v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.4: Strip version number from companion footer.
 v1.3: Add "Convergence with Proof Theory" section — Gentzen (1936), ε₀ as PA's proof-theoretic ordinal, structural alignment with ZPL's independent derivation.
 v1.2: Strip version number from disclaimer cross-reference to ZP-L formal document.
@@ -223,7 +224,7 @@ def dual_convergence_diagram():
     return d
 
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -374,7 +375,7 @@ def build():
         'encoding of ordinals below &#949;&#8320; into &#8484;&#8322; using their Cantor '
         'normal forms.'))
     E.append(cbody(
-        'The encoding (cnfToZp2 in ZPL.lean) maps the n-th tower stage to 2<sup>n</sup> '
+        'The encoding (cnfToZp2 in Gentzen.lean) maps the n-th tower stage to 2<sup>n</sup> '
         'in &#8484;&#8322;. The 2-adic norm of 2<sup>n</sup> is (1/2)<sup>n</sup>, which '
         'goes to 0 as n increases. So as the ordinal tower climbs toward &#949;&#8320; from '
         'below, its 2-adic image converges to 0 = &#8869; in the 2-adic metric '
@@ -407,7 +408,7 @@ def build():
         'axiom enters at a non-constructive selection step: the ordinal proof uses it for the '
         'supremum that defines &#949;&#8320;; the Kleene proof uses it for the fixed-point '
         'selection. Whether these reflect the same underlying mathematical phenomenon &#8212; '
-        'or are coincidentally parallel &#8212; is the open question ZPL.lean &#167;I poses.'))
+        'or are coincidentally parallel &#8212; is the open question Gentzen.lean &#167;I poses.'))
     E.append(cbody(
         'ZP-L &#167;VI (kleene_ordinal_snap_bridge) names this structural parallel explicitly. '
         'The theorem itself is purely ordinal &#8212; no Code or eval object appears in it. '
@@ -482,7 +483,7 @@ def build():
     # ── Key Result ────────────────────────────────────────────────────────────
     E.append(key_result_box(
         'Key Result &#8212; ZP-L: The Ordinal Snap Threshold',
-        'epsilon_zero_snap_canonical (ZPL.lean &#167;VII): The canonical map '
+        'epsilon_zero_snap_canonical (Gentzen.lean &#167;VII): The canonical map '
         '&#981;(&#945;) = c&#8320; if &#945; < &#949;&#8320;, else c&#8321; '
         'satisfies all five conditions simultaneously &#8212; monotone, tower-aligned '
         '(c&#8320; on every fundamental sequence stage), fixed-point-respecting '

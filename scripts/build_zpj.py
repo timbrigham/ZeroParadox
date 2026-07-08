@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.4 | July 2026
+Version 2.5 | July 2026
+v2.5: Rendered Lean citations synced to post-reorg files/namespaces the v2.4 pass missed: ZPJ.lean -> SetTheoryAFA.lean; ZeroParadox.ZPJ.* -> ZeroParadox.* (per-layer namespaces flattened); ZPE.da2_bottom_characterization -> da2_bottom_characterization (now in Snap.lean).
 v2.4: Rendered Lean-file citations synced to post-reorg basenames (ZPJ_AczelConn.lean -> AczelConn.lean, etc.). Docstring changelog above kept as the historical record.
 v2.2: Remaining rendered self-version refs removed — §VII preamble "Version 2.0 extends", v2.0/v1.0 register cells, validation "v2.0:" line (C1 sweep). Fixed null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>) and a garbled ≤ subscript.
 v2.1: Version changelog removed from preamble; version stripped from section headers and endnote.
@@ -19,7 +20,7 @@ v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.
 import os
 from zp_utils import *
 
-VERSION = '2.4'
+VERSION = '2.5'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -159,7 +160,7 @@ def build():
         'by at most one element (quine_unique). The third structural field &#8212; bot_self_mem &#8212; '
         'is where the bridge is built.'))
     E.append(body(
-        'The AFAStructure typeclass in ZPJ.lean captures exactly this. Its three fields are '
+        'The AFAStructure typeclass in SetTheoryAFA.lean captures exactly this. Its three fields are '
         'sufficient to derive T-EXEC with no additional axioms. The full AFA machinery '
         '(APGs, bisimulation, decoration) provides the informal justification for why any '
         'concrete lattice grounded in ZF+AFA satisfies these three fields &#8212; but the formal '
@@ -178,7 +179,7 @@ def build():
         'encode standard AFA properties. The third is the bridge.'))
 
     E.append(def_box(
-        'AFAStructure Typeclass (ZPJ.lean &#167; I)',
+        'AFAStructure Typeclass (SetTheoryAFA.lean &#167; I)',
         [
             'class AFAStructure (L : Type*) [ZPSemilattice L] with:',
             '(1) selfMem : L &#8594; Prop  '
@@ -232,7 +233,7 @@ def build():
 
     E.append(Paragraph('III. Why a Typeclass Field Rather than a Freestanding Axiom', S['h2']))
     E.append(body(
-        'In the stub version of ZPJ.lean, the bridge was a freestanding axiom: '
+        'In the stub version of SetTheoryAFA.lean, the bridge was a freestanding axiom: '
         'ax_j1_quine_join_identity. It stated directly that the Quine atom satisfies the '
         'join-identity. This compiled, but the purity check showed T-EXEC depending on '
         'ax_j1_quine_join_identity &#8212; a named axiom floating outside any typeclass.'))
@@ -264,7 +265,7 @@ def build():
             'Statement: Let L be a ZP-A semilattice with AFAStructure. '
             'If q : L is a Quine atom (selfMem(q) and q is unique among self-containing '
             'elements), then q = &#8869;.',
-            'Lean: ZeroParadox.ZPJ.t_exec &#8212; proved in ZPJ.lean. '
+            'Lean: ZeroParadox.t_exec &#8212; proved in SetTheoryAFA.lean. '
             'Purity: does not depend on any axioms. &#10003;',
         ]
     ))
@@ -309,7 +310,7 @@ def build():
             'In any AFAStructure lattice L: IsQuineAtom(&#8869;).',
             'Proof: &#8869; is self-containing by bot_self_mem. Any other self-containing '
             'x satisfies x = &#8869; by quine_unique(x, &#8869;, selfMem(x), bot_self_mem).',
-            'Lean: ZeroParadox.ZPJ.bot_is_quine_atom &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.bot_is_quine_atom &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -327,7 +328,7 @@ def build():
             'The three conditions are mutually equivalent: Quine atom (set-theoretic), '
             'bottom element (order-theoretic), and join-identity element (algebraic). '
             'They are three formulations of one structural role.',
-            'Lean: ZeroParadox.ZPJ.t_exec_iff &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.t_exec_iff &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -341,7 +342,7 @@ def build():
 
     E.append(Paragraph('I. J1 &#8212; QuineJoinIdentity (Derived)', S['h2']))
     E.append(body(
-        'In the initial stub of ZPJ.lean, the claim "the Quine atom satisfies the join-identity" '
+        'In the initial stub of SetTheoryAFA.lean, the claim "the Quine atom satisfies the join-identity" '
         'was stated as a freestanding axiom (ax_j1_quine_join_identity). ZP-J replaces it with '
         'a theorem.'))
     E.append(result_box(
@@ -351,7 +352,7 @@ def build():
             'Proof: q = &#8869; by T-EXEC. Then join q x = join &#8869; x = x by A4 (bot_join, ZP-A). &#10003;',
             'Status: DERIVED THEOREM. Was axiom ax_j1_quine_join_identity in the stub &#8212; '
             'now proved from T-EXEC + ZP-A A4. No freestanding axiom remains.',
-            'Lean: ZeroParadox.ZPJ.j1_quine_join_identity &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.j1_quine_join_identity &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -370,7 +371,7 @@ def build():
             'The modelling commitment "we choose &#8869; as the initial state" is replaced by '
             '"the Quine atom IS &#8869;, structurally." Starting at Q and starting at &#8869; '
             'are not two choices &#8212; they are the same state, identified by structure.',
-            'Lean: ZeroParadox.ZPJ.cc1_derived &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.cc1_derived &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -386,7 +387,7 @@ def build():
             'For any ZP-A semilattice L (no AFA required): if x, y : L both satisfy '
             '&#8704; z, join x z = z and &#8704; z, join y z = z, then x = y.',
             'Proof: da2_bottom_characterization gives x = &#8869; and y = &#8869;. Therefore x = y.',
-            'Lean: ZeroParadox.ZPJ.bot_unique &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.bot_unique &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -403,7 +404,7 @@ def build():
         'T-EXEC and its corollaries carry zero freestanding axioms in the Lean 4 purity check. '
         'The entire derivation traces to the fields of two typeclasses: ZPSemilattice (from ZP-A) '
         'and AFAStructure (new in ZP-J). No standalone axiom statement appears anywhere in the '
-        'ZPJ.lean proof obligations.'))
+        'SetTheoryAFA.lean proof obligations.'))
     E.append(body(
         'The foundational commitments are the typeclass fields themselves. In ZPSemilattice: '
         'A1&#8211;A4 (the semilattice axioms). In AFAStructure: selfMem (a predicate), '
@@ -857,7 +858,7 @@ def build():
          'None',
          'Lean: t_exec_iff &#8212; axiom-free &#10003;'],
         ['bot_unique: join-identity is unique',
-         'ZPE.da2_bottom_characterization',
+         'da2_bottom_characterization',
          'None',
          'Lean: bot_unique &#8212; axiom-free &#10003; (no AFA required)'],
         ['J_self = {&#8869;} (DC-free)',

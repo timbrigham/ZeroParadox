@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.22 | June 2026
+Version 3.23 | June 2026
+v3.23: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v3.21: FMC precision (sweep Step 4 remediation, against fmc.md) — R-AFA "the metatheoretic necessity of AFA is derived" → "argued, not proved (a metatheoretic squeeze, not a derivation)"; named falsifier added to R-AFA; CC-2 status lines now split the proved structural fixed point (T-EXEC, axiom-free) from the argued set-membership reading; "establish that Foundation is incompatible" → "make the case that".
 v3.20: Rendered version refs removed — DA-2/DA-3 section notes ("New in v2.0") and endnote version (C1 sweep — no version changelogs in rendered PDF content).
 v3.19: Version reference removed from T-BUF li() call (Gemini catch — build gate does not cover li()).
@@ -78,7 +79,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.22'
+VERSION = '3.23'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -145,7 +146,7 @@ def build():
     E += [
         Paragraph('Formal Insert DA-1: Derived Proposition — Instantiation as Execution', S['h1']),
         Paragraph('<i>DA-1 is a Derived Proposition: instantiation as execution, the first Lean '
-                  'formalization of DA-1 (axiom-free, conditional on DP-2, ZPE.lean &#167;VI), with '
+                  'formalization of DA-1 (axiom-free, conditional on DP-2, Snap.lean &#167;VI), with '
                   'incompressibility read as self-description (ZP-C D1 + AIT) and CC-2/R3 grounding.</i>',
                   S['note']),
         hr(),
@@ -193,7 +194,7 @@ def build():
             'A machine in state c<sub>1</sub> can output ⊥ (the null value) while being in a configuration '
             'entirely distinct from a machine in state c<sub>0</sub>. The post-execution null and the '
             'pre-execution null are different instances — same output value, different machine state.',
-            'Lean formalization (ZPE.lean &#167;VI): TrackedOutput separates value : MachinePhase '
+            'Lean formalization (Snap.lean &#167;VI): TrackedOutput separates value : MachinePhase '
             'from state : MachinePhase. preInstantiation = &#10216;c<sub>0</sub>, c<sub>0</sub>&#10217;; '
             'postInstantiation = &#10216;c<sub>0</sub>, c<sub>1</sub>&#10217;. '
             'Theorem dp2_execution_distinguishability proves: '
@@ -206,7 +207,7 @@ def build():
         sp(4),
         body(
             'Given DP-2, DA-1 is Lean-formalizable at the minimal-path level. '
-            'Theorem da1_minimal_path (ZPE.lean &#167;VI) establishes four conjuncts: '
+            'Theorem da1_minimal_path (Snap.lean &#167;VI) establishes four conjuncts: '
             '(1) before and after instantiation, the output value is the same (⊥); '
             '(2) the machine states are distinct (c<sub>0</sub> ≠ c<sub>1</sub>); '
             '(3) the machine was at c<sub>0</sub> before; '
@@ -249,7 +250,7 @@ def build():
              'i.e. &#8869; = {&#8869;}. This is not a commitment — it is forced by the impossibility of external '
              'execution. ZP-A R3 states the structural consequence: a self-containing object admits no external '
              'interpreter position. ZP-J T-EXEC formally verifies the structure: IsQuineAtom(q) &#8596; q = &#8869;, '
-             'proved axiom-free in Lean 4 (ZeroParadox.ZPJ.t_exec). AFA (ZF + AFA) is the consistent '
+             'proved axiom-free in Lean 4 (ZeroParadox.t_exec). AFA (ZF + AFA) is the consistent '
              'set-theoretic home for this structure — chosen because the framework requires it, not the '
              'reverse. ZP-A CC-2 (&#8869; = {&#8869;}) retains its label for editorial continuity but is now '
              'a structural consequence — the self-application fixed point, proved axiom-free by T-EXEC; the set-membership reading is the argued metatheoretic step (see Remark R-AFA), not a freestanding commitment.'),
@@ -302,9 +303,9 @@ def build():
              'its forward resolution is in The Philosophical Question That Started This. DA-1 is grounded in Paths 1 and 3; Path 2 is context. '
              '(ZP-M R-M.1 provides a retrospective structural analysis of why the gap resisted formalization.)'),
         derived('Status: DERIVED PROPOSITION — primary formal grounding: DP-2 (§III, TrackedOutput construction). '
-                'da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI): instantiation moves c<sub>0</sub> '
+                'da1_minimal_path proved axiom-free in Lean (Snap.lean &#167;VI): instantiation moves c<sub>0</sub> '
                 'to c<sub>1</sub> regardless of output value. ✓ '
-                'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in ZPK.lean. '
+                'Path 1 (structural, ZP-J T-EXEC + ZP-K): IN LEAN SCOPE — da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase), proved in Kleene.lean. '
                 '(Under MachinePhase\'s selfMem x := x = &#8869;, this reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;) — structural closure enforced by typeclass design, not a set-theoretic derivation from ZF+AFA. See R-K.0.) '
                 'Path 2 (informational, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a missing proof. Forward: The Philosophical Question That Started This; ZP-M R-M.1 (retrospective structural analysis). '
                 'Path 3 (computational, ZP-K Kleene): IN LEAN SCOPE — machinePhaseKleene instance provides botCode_is_quine. '
@@ -668,7 +669,7 @@ def build():
          'AX-1 is no longer an axiom. Binary Snap derived via P<sub>0</sub> + DA-1 + L-RUN + TQ-IH + ZP-A D2.'],
         ['DA-1: Derived Proposition (DP-2 formal grounding)',
          'CLOSED — DP-2 (formal core); CC-2 + L-INF + AIT (corroboration of precondition)',
-         'Primary formal grounding: DP-2 (TrackedOutput, ZPE.lean &#167;VI) — da1_minimal_path proved '
+         'Primary formal grounding: DP-2 (TrackedOutput, Snap.lean &#167;VI) — da1_minimal_path proved '
          'axiom-free. Instantiation of &#8869; moves machine from c<sub>0</sub> to c<sub>1</sub>; output value is irrelevant '
          'to whether execution occurred. '
          'Informal corroboration: ZP-A CC-2 + R3 (structural); ZP-C L-INF (informational); AIT incompressibility (Path 3).'],
@@ -726,7 +727,7 @@ def build():
          'None',
          'Derived — T-SNAP ✓ (was: Axiomatic — AX-1)'],
         ['DA-1: Instantiation = execution',
-         'DP-2 (TrackedOutput, ZPE.lean &#167;VI); ZP-A CC-2, R3; ZP-C L-INF',
+         'DP-2 (TrackedOutput, Snap.lean &#167;VI); ZP-A CC-2, R3; ZP-C L-INF',
          'None',
          'Derived Proposition — primary: DP-2 (da1_minimal_path proved axiom-free in Lean). '
          'Informal paths: CC-2/R3 (structural), L-INF (informational), AIT incompressibility (Path 3). '
@@ -775,10 +776,10 @@ def build():
 
     val_rows = [
         ['DA-1: Derived Proposition (Path 2 recharacterization)',
-         'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (ZPE.lean &#167;VI). '
+         'Valid — DP-2 formal core: da1_minimal_path proved axiom-free in Lean (Snap.lean &#167;VI). '
          'TrackedOutput separates output value from machine state; pre- and post-instantiation states '
          'are provably distinct even when both produce &#8869;. ✓ '
-         'ZP-K formal closure: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in ZPK.lean. '
+         'ZP-K formal closure: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Kleene.lean. '
          'KleeneStructure MachinePhase instance provides botCode_is_quine (Path 3 IN LEAN SCOPE). '
          'machinePhaseAFA gives AFAStructure instance (Path 1 IN LEAN SCOPE). '
          'Path 2 (informational bridge, L-INF): FOUNDATIONAL COMMITMENT — a missing principle, not a '

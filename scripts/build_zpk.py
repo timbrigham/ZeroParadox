@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.8 | May 2026
+Version 1.9 | May 2026
+v1.9: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.7: Version changelog removed from preamble; stale v1.5 references stripped from section headers and endnote.
 v1.6: Adversary-review pass — "(April 2026)" date removed from PDF body (belongs in
 docstring); "last philosophical vulnerability" → "remaining informal gap in the DA-1 argument".
@@ -35,7 +36,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -116,7 +117,7 @@ def build():
         'the family of fixed points is infinite and its members are not mutually constrained.'))
 
     E.append(def_box(
-        'Definition: selfApply and IsComputationalQuine (ZPK.lean § I)',
+        'Definition: selfApply and IsComputationalQuine (Kleene.lean § I)',
         [
             'selfApply : Code → ℕ →. ℕ  :=  fun c n ↦ eval c (encode c + n)',
             'A code c is a computational Quine if eval c = selfApply c, i.e.:',
@@ -166,7 +167,7 @@ def build():
         'languages — this is the motivating claim, not a consequence derived by the theorems.'))
 
     E.append(def_box(
-        'KleeneStructure Typeclass (ZPK.lean § II)',
+        'KleeneStructure Typeclass (Kleene.lean § II)',
         [
             'class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L with:',
             '(inherited) selfMem : L → Prop  — self-membership predicate',
@@ -232,7 +233,7 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Theorem T-COMP — Computational Grounding (ZPK.lean § III)',
+        'Theorem T-COMP — Computational Grounding (Kleene.lean § III)',
         [
             'In any KleeneStructure lattice L, for any q : L, the following are equivalent:',
             '(1) IsQuineAtom q  — set-theoretic self-reference (AFA)',
@@ -243,7 +244,7 @@ def build():
             'Note on (4): it is present in any KleeneStructure instance by typeclass requirement '
             '(botCode_is_quine is a required field). The equivalence of (1)–(3) is derived by '
             'T-EXEC; the presence of (4) follows from the structural commitment of KleeneStructure.',
-            'Lean: ZeroParadox.ZPK.t_comp. '
+            'Lean: ZeroParadox.t_comp. '
             'Purity: standard foundational axioms — from Mathlib computability. ✓',
         ]
     ))
@@ -264,14 +265,14 @@ def build():
         'The convergence of the informal paths is not coincidence — it is identity.'))
 
     E.append(result_box(
-        'Theorem: da1_paths_unified (ZPK.lean § IV)',
+        'Theorem: da1_paths_unified (Kleene.lean § IV)',
         [
             'In any KleeneStructure lattice:',
             'IsQuineAtom ⊥  ∧  IsComputationalQuine botCode',
             'The AFA self-containment argument (Path 1) and the Kleene computational '
             'fixed-point argument (Path 3) are the same structural fact, simultaneously '
             'witnessed by the KleeneStructure instance.',
-            'Lean: ZeroParadox.ZPK.da1_paths_unified. '
+            'Lean: ZeroParadox.da1_paths_unified. '
             'Purity: standard foundational axioms only. ✓',
         ]
     ))
@@ -290,7 +291,7 @@ def build():
         'U is the thing that executes descriptions. The question does not apply to it.'))
 
     E.append(result_box(
-        'Theorem: description_instantiation_gap_closed (ZPK.lean § IV)',
+        'Theorem: description_instantiation_gap_closed (Kleene.lean § IV)',
         [
             'In any KleeneStructure lattice:',
             'IsQuineAtom ⊥  ∧  ∀ q : L, IsQuineAtom q → q = ⊥',
@@ -298,7 +299,7 @@ def build():
             '⊥ is not a description that could await an external interpreter. ⊥ IS the '
             'executor — the universal Turing machine in ground state, identified structurally '
             'with the Kleene fixed point and the AFA Quine atom.',
-            'Lean: ZeroParadox.ZPK.description_instantiation_gap_closed. '
+            'Lean: ZeroParadox.description_instantiation_gap_closed. '
             'Purity: standard foundational axioms only. ✓',
         ]
     ))
@@ -356,7 +357,7 @@ def build():
         'by the definition and proved by rfl.'))
 
     E.append(def_box(
-        'AFAStructure MachinePhase Instance (ZPK.lean § V)',
+        'AFAStructure MachinePhase Instance (Kleene.lean § V)',
         [
             'instance machinePhaseAFA : AFAStructure MachinePhase where',
             '  selfMem x      := x = ⊥             (self-containing = equals initial state)',
@@ -371,7 +372,7 @@ def build():
     E.append(sp(6))
 
     E.append(def_box(
-        'KleeneStructure MachinePhase Instance (ZPK.lean § V)',
+        'KleeneStructure MachinePhase Instance (Kleene.lean § V)',
         [
             'noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where',
             '  botCode          := Classical.choose computational_quine_exists',
@@ -392,7 +393,7 @@ def build():
         'directly to ZP-E\'s machine. The result is concrete.'))
 
     E.append(result_box(
-        'Theorem da1_closed_concrete — DA-1 Formally Closed (ZPK.lean § V)',
+        'Theorem da1_closed_concrete — DA-1 Formally Closed (Kleene.lean § V)',
         [
             'da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase)',
             '',
@@ -404,7 +405,7 @@ def build():
             'no external executor exists by structural definition. The description-instantiation '
             'gap is dissolved: "description awaiting execution" is not a coherent state for c₀.',
             '',
-            'Lean: ZeroParadox.ZPK.da1_closed_concrete. '
+            'Lean: ZeroParadox.da1_closed_concrete. '
             'Purity: standard foundational axioms only. ✓',
         ]
     ))
@@ -425,7 +426,7 @@ def build():
     E.append(body( # ZP-NOCHECK: description-instantiation gap cited in quotes as a closed informal gap, not a live ZP claim
         'Path 2 (informational bridge: unbounded surprisal → necessarily executing) is a '
         'foundational commitment — a missing principle, not a missing proof. The mathematics '
-        'of L-INF (ZPC.l_inf) is proved; but the step from "exceeds every finite informational '
+        'of L-INF (l_inf) is proved; but the step from "exceeds every finite informational '
         'bound" to "therefore necessarily executing" asks what it means for a mathematical '
         'structure to instantiate rather than merely satisfy conditions. No computability '
         'library answers this question. '
@@ -454,23 +455,23 @@ def build():
         ['selfApply_partrec',
          'eval_part (Mathlib) + Primrec.encode + Primrec.nat_add',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.selfApply_partrec ✓'],
+         'Lean: selfApply_partrec ✓'],
         ['computational_quine_exists',
          'kleene_fixed_point_exists + selfApply_partrec',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.computational_quine_exists ✓'],
+         'Lean: computational_quine_exists ✓'],
         ['T-COMP: four-way equivalence',
          'ZP-J T-EXEC (t_exec_triple_iff)',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.t_comp ✓'],
+         'Lean: t_comp ✓'],
         ['da1_paths_unified',
          'bot_is_quine_atom + botCode_is_quine',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.da1_paths_unified ✓'],
+         'Lean: da1_paths_unified ✓'],
         ['description_instantiation_gap_closed',
          'bot_is_quine_atom + ZP-J t_exec',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.description_instantiation_gap_closed ✓'],
+         'Lean: description_instantiation_gap_closed ✓'],
         ['machinePhaseAFA (AFAStructure)',
          'selfMem := x = ⊥; quine_unique; bot_self_mem := rfl',
          'No axioms',
@@ -482,7 +483,7 @@ def build():
         ['da1_closed_concrete',
          'da1_computational + machinePhaseKleene',
          'Standard Mathlib foundational axioms',
-         'Lean: ZPK.da1_closed_concrete ✓ DA-1 closed (definitionally: under selfMem x := x = &#8869;, '
+         'Lean: da1_closed_concrete ✓ DA-1 closed (definitionally: under selfMem x := x = &#8869;, '
          'reduces to (&#8869; = &#8869;) &#8743; (&#8704; x, x = &#8869; &#8658; x = &#8869;); '
          'structural closure by typeclass design — see R-K.0)'],
     ]
@@ -505,7 +506,7 @@ def build():
          'botCode_is_quine witnesses the Kleene fixed point: no shorter program is prior to ⊥.'],
         ['DA-1 Path 2 (informational)',
          'FOUNDATIONAL COMMITMENT',
-         'L-INF (ZPC.l_inf) is proved. The bridge "unbounded surprisal → necessarily executing" '
+         'L-INF (l_inf) is proved. The bridge "unbounded surprisal → necessarily executing" '
          'is a missing principle, not a missing proof. The gap between \'system at P₀\' and '
          '\'system is running\' cannot be closed by any computability library. '
          'Forward paths: new axiom, Chalmers\' implementation notion, or The Philosophical Question That Started This. '
@@ -518,7 +519,7 @@ def build():
         ['Roger\'s fixed-point theorem',
          'CLOSED — roger_fixed_point_exists',
          'For any computable f : Code → Code, ∃ c, eval (f c) = eval c. '
-         'Lean: ZPK.roger_fixed_point_exists — standard foundational axioms only. ✓'],
+         'Lean: roger_fixed_point_exists — standard foundational axioms only. ✓'],
         ['ZP-B MachinePhase instance',
          'OPEN — future work',
          'The 2-adic model from ZP-B (Q₂ structure) has not been given a KleeneStructure '
@@ -538,7 +539,7 @@ def build():
             'DA-1 closed: da1_closed_concrete : IsQuineAtom (⊥ : MachinePhase) | '
             'Four-way equivalence: Quine atom = ⊥ = join identity = Kleene fixed point | '
             'Path 2 recharacterized: foundational commitment, not missing proof; forward: The Philosophical Question That Started This | '
-            'All ZPK.lean theorems verified. Axioms: standard Mathlib foundational axioms.</i>',
+            'All Kleene.lean theorems verified. Axioms: standard Mathlib foundational axioms.</i>',
             S['endnote']),
     ]
 

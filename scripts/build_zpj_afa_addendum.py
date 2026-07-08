@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.5 | July 2026
+Version 1.6 | July 2026
+v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.5: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Rendered self-version ref removed from endnote ("Version 1.0 covers…") (C1 sweep). Fixed 2 null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>).
 v1.2: Version changelog removed from preamble.
@@ -17,7 +18,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -169,7 +170,7 @@ def build():
         'step.'))
 
     E.append(def_box(
-        'Typeclass: AFAStructure (ZPJ.lean)',
+        'Typeclass: AFAStructure (SetTheoryAFA.lean)',
         [
             'class AFAStructure (L : Type*) [ZPSemilattice L] where',
             '  selfMem      : L &#8594; Prop',

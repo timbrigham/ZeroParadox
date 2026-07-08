@@ -27,7 +27,7 @@ used as independent routes to the same conclusion, not as a unified measure.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -138,7 +138,7 @@ def build():
         'Formal content: surprisal is not bounded above by any real M.',
         'Semantic content: &#8869; is informationally extreme — it is the limit point of the binary ball hierarchy under the 2-adic metric, the accumulation point approached by sequences of increasing depth. No finite bound M contains the surprisal at that limit; therefore no finite external interpreter can hold &#8869; as a static description. This is the mathematical premise for DA-1 (ZP-E &#167; I-DA1). ZP-A CC-2 (&#8869; = {&#8869;}) provides a structural second grounding for the same conclusion: a self-containing object has no external interpreter by structure (ZP-A R3). The informational argument from the ball hierarchy and the structural argument from self-containment are independent derivations converging on the same fact.',
         'Note: the connection from unbounded surprisal (L-INF) to forced execution is a named design principle (DA-1 in ZP-E), not a mathematical consequence of L-INF alone. L-INF supplies the formal premise; DA-1 supplies the ontological bridge.',
-        'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: ZPC.l_inf (purity check: no non-Mathlib axioms).',
+        'Status: DERIVED from D4 and T2. Structural corroboration: ZP-A CC-2 (&#8869; = {&#8869;}) and R3. Lean: l_inf (purity check: no non-Mathlib axioms).',
     ]))
     E.append(sp(4))
     E.append(label_box('Remark R-BRIDGE — On the Relationship Between K and 2-Adic Surprisal', [

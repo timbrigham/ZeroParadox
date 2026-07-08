@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.22 | May 2026
+Version 1.23 | May 2026
+v1.23: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.21: "(no sorryAx)" applied to step 1 source; ZP-internal labels removed from step table; "No new axioms" clarified to scope; "the framework" scoped to ZP-I (ER/AR fixes).
 v1.20: Conditions scoped in prose ("every" → conditional); "(axiom-free)" corrected to "(no sorryAx)" for theorems using propext/Classical.choice (ER/AR fixes).
 v1.19: Norm bound includes S(0) factor; IsDepthChain/IsStrictStateSequence added to key result box; ZP-internal framing replaced with standard math (AR fixes).
@@ -34,7 +35,7 @@ from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polyg
 from reportlab.graphics import renderPDF
 
 def lean_status_box(rows):
-    data = [[Paragraph('Lean 4 Verification Status (ZPI.lean  - all proofs filled, no sorry)',
+    data = [[Paragraph('Lean 4 Verification Status (SemilatticeInstance.lean  - all proofs filled, no sorry)',
                         CS['kr_hdr'])]]
     for r in rows:
         data.append([Paragraph(fix(r), CS['kr_body'])])
@@ -288,7 +289,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -384,7 +385,7 @@ def build():
         'assumption about the chain. It follows from the ZP-A lattice axioms together with '
         'the IsDepthChain condition (which requires the chain\'s 2-adic depth to strictly '
         'track position): no top element, monotonicity, and IsDepthChain together force strict depth growth at every step. '
-        'Lean: <tt>h_strict_from_r1_t3</tt> (ZPI.lean §Ib).'))
+        'Lean: <tt>h_strict_from_r1_t3</tt> (SemilatticeInstance.lean §Ib).'))
     E.append(cbody(
         'In the 2-adic metric, norms decrease geometrically: ‖S(n)‖ ≤ ‖S(0)‖ · 2<sup>−n</sup>. '
         'As n → ∞, the norm → 0. The chain converges to 0 in the 2-adic sense: '
@@ -441,7 +442,7 @@ def build():
     E.append(Paragraph('T-IZ in Plain Language', CS['h1']))
     E.append(cbody(
         'The theorem has four steps. All four are formally proved in Lean 4 '
-        'via <tt>t_iz_complete</tt> (ZPI.lean §III-B)  - no step is outside Lean scope:'))
+        'via <tt>t_iz_complete</tt> (SemilatticeInstance.lean §III-B)  - no step is outside Lean scope:'))
 
     step_rows = [
         ['1. Cauchy convergence',
@@ -578,7 +579,7 @@ def build():
     # ── Lean 4 Status ─────────────────────────────────────────────────────────
     E.append(Paragraph('Lean 4 Verification', CS['h1']))
     E.append(cbody(
-        'T-IZ is fully verified in Lean 4 (ZPI.lean). All four steps are formally proved. '
+        'T-IZ is fully verified in Lean 4 (SemilatticeInstance.lean). All four steps are formally proved. '
         'Axiom-free results are noted individually in the table below.'))
 
     E.append(lean_status_box([
@@ -610,7 +611,7 @@ def build():
 
     E.append(key_result_box('ZP-I Summary',
         'T-IZ is derived from ZP-A through ZP-E and ZP-K  - no new axioms required. '
-        'All four steps are formally proved in Lean 4 (ZPI.lean, t_iz_complete). '
+        'All four steps are formally proved in Lean 4 (SemilatticeInstance.lean, t_iz_complete). '
         'The Kolmogorov complexity route is superseded: the AFA/Kleene path via '
         'ZP-K KleeneStructure closes Steps 2–4 without Kolmogorov complexity. '
         'The derivation is self-contained: T-SNAP opens each branch; '

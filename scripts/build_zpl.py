@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.2 | June 2026
+Version 1.3 | June 2026
+v1.3: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.1: Rendered version changelog removed (C1 sweep). Fixed 3 null glyphs — subscript-letter entities
 &#8345; (ₙ) and &#8338; (ₒ) bypass fix() and are absent from STIX; replaced with <sub> markup.
 v1.0: Initial release. All §I–§VII theorems proved sorry-free in Lean 4.
@@ -11,7 +12,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -94,10 +95,10 @@ def build():
             'path without requiring K to be explicitly computed.',
             'Axiom footprint evidence — the following ZP-K theorems all carry '
             '[propext, Classical.choice, Quot.sound]:',
-            '  ZPK.t_comp (T-COMP four-way equivalence)',
-            '  ZPK.da1_paths_unified',
-            '  ZPK.isComputationalQuine_undecidable',
-            '  ZPK.infinite_quine_family',
+            '  t_comp (T-COMP four-way equivalence)',
+            '  da1_paths_unified',
+            '  isComputationalQuine_undecidable',
+            '  infinite_quine_family',
             'The Classical.choice entry is the computational expression of the diagonal. '
             'ZP-L inherits this footprint throughout.',
         ]
@@ -119,11 +120,11 @@ def build():
         'For any computable transformation, at least one fixed-point code exists.'))
 
     E.append(result_box(
-        'Theorem: roger_fixed_point_stability (ZPL.lean §II)',
+        'Theorem: roger_fixed_point_stability (Gentzen.lean §II)',
         [
             'For any computable f : Code &#8594; Code,',
             '&#8203;  &#8707; c : Code, eval (f c) = eval c',
-            'Proof: wrapper around ZPK.roger_fixed_point_exists.',
+            'Proof: wrapper around roger_fixed_point_exists.',
             'Lean purity: [propext, Classical.choice, Quot.sound]. ✓',
             'Note: this is an existential result. The specific code c is not '
             'constructively produced; Classical.choice selects it. This is the '
@@ -149,7 +150,7 @@ def build():
         'via Mathlib\'s ordinal machinery.'))
 
     E.append(def_box(
-        'Definitions (ZPL.lean §III)',
+        'Definitions (Gentzen.lean §III)',
         [
             'epsilonZero : Ordinal  :=  Ordinal.epsilon 0  (= nfp (&#969;^&#183;) 0 = veblen 1 0)',
             'fundamentalSeq : &#8469; &#8594; Ordinal  :=  fun n &#8614; (&#945; &#8614; &#969;^&#945;)^[n] 0',
@@ -311,7 +312,7 @@ def build():
         'recursion on the Cantor normal form.'))
 
     E.append(def_box(
-        'Definition: cnfToZp2 (ZPL.lean §IV)',
+        'Definition: cnfToZp2 (Gentzen.lean §IV)',
         [
             'cnfToZp2 : NONote &#8594; &#8484;&#8322;',
             'Base: cnfToZp2(0) = 0',
@@ -633,7 +634,7 @@ def build():
             'Classical.choice is load-bearing: it is the formal non-constructivity '
             'appearing at the diagonal step in each ZP layer (§I). Its presence is '
             'expected and documented, not incidental.',
-            'Zero sorry in ZPL.lean. Verified: lake build, May 2026.',
+            'Zero sorry in Gentzen.lean. Verified: lake build, May 2026.',
         ]
     ))
     E.append(sp(6))

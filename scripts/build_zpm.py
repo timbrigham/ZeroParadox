@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-M: Kleene-Ordinal Bridge PDF Builder
-Version 1.2 | June 2026
+Version 1.3 | June 2026
+v1.3: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.1: Rendered version changelog removed (C1 sweep — no version changelogs in rendered PDF content).
 v1.0: Initial release. All theorems §I–§IV proved sorry-free in Lean 4.
 Axiom footprint: [propext, Classical.choice, Quot.sound] throughout.
@@ -11,7 +12,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -80,7 +81,7 @@ def build():
         'not a ring-theoretic theorem.'))
 
     E.append(def_box(
-        'Definition: snapEmbed (ZPM.lean §I)',
+        'Definition: snapEmbed (Incompleteness.lean §I)',
         [
             'snapEmbed : MachinePhase &#8594; &#8484;&#8322;',
             '  snapEmbed c&#8320; = 1    (pre-snap: 2-adic unit)',
@@ -95,7 +96,7 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Theorem: snapEmbed_injective (ZPM.lean §I)',
+        'Theorem: snapEmbed_injective (Incompleteness.lean §I)',
         [
             'Function.Injective snapEmbed',
             'c&#8320; and c&#8321; map to distinct 2-adic integers (1 &#8800; 0 in &#8484;&#8322;).',
@@ -106,7 +107,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: snapEmbed_mul_morphism (ZPM.lean §I)',
+        'Theorem: snapEmbed_mul_morphism (Incompleteness.lean §I)',
         [
             '&#8704; a b : MachinePhase,  snapEmbed (join a b) = snapEmbed a &#215; snapEmbed b',
             'snapEmbed sends the join operation to multiplication.',
@@ -119,7 +120,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: snapEmbed_c0_val (ZPM.lean §I)',
+        'Lemma: snapEmbed_c0_val (Incompleteness.lean §I)',
         [
             '(snapEmbed c&#8320;).valuation = 0',
             'c&#8320; maps to a 2-adic unit: valuation 0, norm 1.',
@@ -130,7 +131,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: snapEmbed_c1_dvd (ZPM.lean §I)',
+        'Lemma: snapEmbed_c1_dvd (Incompleteness.lean §I)',
         [
             '&#8704; n : &#8469;,  (2 : &#8484;&#8322;)^n &#8739; snapEmbed c&#8321;',
             'c&#8321; maps to 0, which is divisible by all powers of 2.',
@@ -182,7 +183,7 @@ def build():
         'c&#8321; and using c&#8321;\'s absorbing property gives &#981; &#945; = c&#8321;.'))
 
     E.append(result_box(
-        'Theorem: hfp_from_epsilon_zero (ZPM.lean §II)',
+        'Theorem: hfp_from_epsilon_zero (Incompleteness.lean §II)',
         [
             'For any &#981; : Ordinal &#8594; MachinePhase satisfying:',
             '  hmono: &#8704; &#945; &#8804; &#946;, join (&#981; &#945;) (&#981; &#946;) = &#981; &#946;',
@@ -199,7 +200,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: snap_unconditional (ZPM.lean §II)',
+        'Theorem: snap_unconditional (Incompleteness.lean §II)',
         [
             'For any &#981; satisfying hmono, h0 (tower stages &#8614; c&#8320;), '
             'and h&#949;&#8320; (&#981; &#949;&#8320; = c&#8321;):',
@@ -255,7 +256,7 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Theorem: snap_state_zp2_is_zero (ZPM.lean §III)',
+        'Theorem: snap_state_zp2_is_zero (Incompleteness.lean §III)',
         [
             'snapEmbed ((&#955; &#945; : Ordinal, if &#945; < &#949;&#8320; then c&#8320; else c&#8321;) '
             '&#949;&#8320;) = 0',
@@ -268,7 +269,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: zpm_triangle (ZPM.lean §III)',
+        'Theorem: zpm_triangle (Incompleteness.lean §III)',
         [
             'All three edges of the triangle, co-proved:',
             '(A &#8596; C)  &#8704; n : &#8469;, fundamentalSeq n < &#949;&#8320;',
@@ -316,7 +317,7 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Theorem: both_fixed_points_exist (ZPM.lean §IV)',
+        'Theorem: both_fixed_points_exist (Incompleteness.lean §IV)',
         [
             '(&#8707; c : Code, &#8704; n, eval c n = eval c (encode c + n))  &#8743;',
             '(&#8707; &#945; : Ordinal, &#969;^&#945; = &#945; &#8743; '
@@ -396,7 +397,7 @@ def build():
             'Classical.choice is load-bearing in both the computability fixed-point '
             '(Kleene\'s theorem) and the ordinal fixed-point (nfp). Its presence is '
             'expected and documented.',
-            'Zero sorry in ZPM.lean. Verified: lake build, May 2026.',
+            'Zero sorry in Incompleteness.lean. Verified: lake build, May 2026.',
         ]
     ))
     E.append(sp(6))
@@ -407,7 +408,7 @@ def build():
             '<i>End of ZP-M | Kleene&#8211;Ordinal Bridge | '
             'snapEmbed type bridge | hfp gap closed | zpm_triangle co-proved | '
             'both_fixed_points_exist | R-M.1: DA-1 Path 2 boundary | '
-            'All ZPM.lean theorems verified. Axioms: [propext, Classical.choice, Quot.sound].</i>',
+            'All Incompleteness.lean theorems verified. Axioms: [propext, Classical.choice, Quot.sound].</i>',
             S['endnote']),
     ]
 

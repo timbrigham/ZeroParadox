@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.12 | June 2026
+Version 1.13 | June 2026
+v1.13: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.11: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.10: Vocabulary fixes — "null state" → "⊥" in two body prose locations; version references "(v1.1)", "v2.0" removed from body prose. Palette rebuild.
 v1.9: Adversary-review pass — version changelog removed from PDF title block (moved to
@@ -28,7 +29,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -217,7 +218,7 @@ def build():
             '(1) The norms &#8214;S(n)&#8214;<sub>2</sub> &#8594; 0 (squeeze between 0 and the '
             'geometric sequence 2<sup>-n</sup>, both tending to 0).',
             '(2) S(n) &#8594; 0 in Q<sub>2</sub> (norm &#8594; 0 iff sequence &#8594; 0 in a normed group).',
-            'Lean: t_iz_cauchy — proved axiom-free in ZPI.lean. This is the topological core of T-IZ.',
+            'Lean: t_iz_cauchy — proved axiom-free in SemilatticeInstance.lean. This is the topological core of T-IZ.',
         ]
     ))
     E.append(sp(6))
@@ -238,7 +239,7 @@ def build():
         'Remark R-IZ-A — Closure of the valuation growth hypothesis: The strict growth condition '
         'v<sub>2</sub>(S(n)) &#8805; n was previously treated as a construction-level assumption '
         'stronger than the proved result t_iz_valuation_unbounded (sup v<sub>2</sub>(S(n)) = &#8734;). '
-        'It is now Lean-derived. Theorem h_strict_from_r1_t3 (ZPI.lean &#167;Ib) proves that any '
+        'It is now Lean-derived. Theorem h_strict_from_r1_t3 (SemilatticeInstance.lean &#167;Ib) proves that any '
         'Q<sub>2</sub> chain satisfying the IsDepthChain modeling commitment — meaning its 2-adic '
         'valuations track a strict &#8469;-depth-index sequence — inherits strict valuation growth '
         'from ZP-A R1 + T3 alone. IsDepthChain (&#8704; n, v<sub>2</sub>(S(n)) = depths(n)) is the '
@@ -326,10 +327,10 @@ def build():
            'at the limit. The configuration is algorithmically incompressible. ZP-C D1 applies.'),
         li('Step 4 — DA-1 fires: A configuration at P<sub>0</sub> is a live execution event — '
            'not a static description. DA-1 (ZP-E) applies, with the same three-path argument as in ZP-E § IV. '
-           'The TrackedOutput formal core (DP-2, ZPE.lean § VI) establishes the machine-state transition.'),
+           'The TrackedOutput formal core (DP-2, Snap.lean § VI) establishes the machine-state transition.'),
         li('Step 5 — T-SNAP fires: DA-1 establishes instantiation = execution. T-SNAP (ZP-E) gives '
            '&#8869; &#8744; &#949;<sub>0</sub> = &#949;<sub>0</sub>. A new &#8869;\' is generated. '
-           'Lean: t_snap_derived, proved axiom-free in ZPE.lean. ✓'),
+           'Lean: t_snap_derived, proved axiom-free in Snap.lean. ✓'),
         li("Step 6 — DA-2 licenses &#8869;': DA-2 (ZP-E) establishes that any state satisfying "
            '&#8704; x, S &#8744; x = x is the structural &#8869; of the successor instantiation. '
            'The Cauchy limit 0 &#8712; Q<sub>2</sub> satisfies this condition for I<sub>n+1</sub>. '
@@ -378,13 +379,13 @@ def build():
 
     E.append(Paragraph('III. Lean Scope', S['h2']))
     E.append(body(
-        'The Lean file ZPI.lean formalizes the formal spine of T-IZ: Step 1 (Cauchy convergence, '
+        'The Lean file SemilatticeInstance.lean formalizes the formal spine of T-IZ: Step 1 (Cauchy convergence, '
         '§ I) and Step 6 (DA-2 licensing of &#8869;&#8242;, § IV). These two steps are proved '
         'axiom-free and together constitute the complete formal proof. Steps 2–5 (the '
         'valuation-complexity bridge and DA-1/T-SNAP path) describe the original ZP-E '
         'informational argument and are retained as motivational context. DA-1 is now formally '
         'closed by ZP-K via Kleene\'s second recursion theorem. The following theorems are proved '
-        'axiom-free in ZPI.lean:'))
+        'axiom-free in SemilatticeInstance.lean:'))
     E += [
         li('t_iz_cauchy: the ascending chain converges to 0 (topological core, proved axiom-free).'),
         li('t_iz_limit_is_new_null: the Cauchy limit satisfies the DA-2 &#8869; role (proved directly).'),
@@ -449,7 +450,7 @@ def build():
         'functions; T-IZ\'s convergence is a statement about countable sequences. The two results '
         'do not conflict.'))
     E.append(body(
-        'Lean: t_iz_c3_compatible (ZPI.lean) proves this directly: the statement of C3 '
+        'Lean: t_iz_c3_compatible (SemilatticeInstance.lean) proves this directly: the statement of C3 '
         '(c3_irreversible from ZPB) holds without modification alongside T-IZ. C3 blocks '
         'continuous paths; T-IZ uses Cauchy sequences. They govern different structures. ✓'))
 
@@ -608,9 +609,9 @@ def build():
          'informational layers at P<sub>0</sub>. Outside Lean scope (Kolmogorov complexity '
          'absent from standard proof libraries) — but no longer load-bearing.'],
         ['T-IZ Lean sorry fill',
-         'CLOSED — ZPI.lean v1.1',
+         'CLOSED — SemilatticeInstance.lean v1.1',
          't_iz_norm_tendsto_zero and t_iz_conv_zero filled; t_iz_cauchy proved axiom-free. '
-         'All ZPI.lean theorems compile with no sorry. '
+         'All SemilatticeInstance.lean theorems compile with no sorry. '
          'Axiom footprint: standard foundational axioms only (no domain-specific assumptions).'],
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP (ZP-E)',
@@ -651,15 +652,15 @@ def build():
          'None',
          'Lean: proved axiom-free ✓ (t_iz_norm_tendsto_zero, t_iz_conv_zero filled)'],
         ['t_iz_limit_is_new_null (Lean)',
-         'ZPE.da2_bottom_characterization',
+         'da2_bottom_characterization',
          'None',
          'Lean: proved ✓ (direct delegation to DA-2)'],
         ['c_t_iz_null_balance (Lean)',
-         'ZPE.c_da2_novelty',
+         'c_da2_novelty',
          'None',
          'Lean: proved ✓ (direct delegation to C-DA2)'],
         ['t_iz_c3_compatible (Lean)',
-         'ZPB.c3_irreversible',
+         'c3_irreversible',
          'None',
          'Lean: proved ✓ (C3 holds unmodified; Cauchy sequences &#8800; continuous paths)'],
         ['Valuation-complexity bridge',
