@@ -83,6 +83,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | File | Current output |
 |------|---------------|
 | [build_dictionary_map.py](build_dictionary_map.py) | `BOTTOMELEMENT.md` — the ⊥ dictionary-and-map reference at the repo root. Unlike the PDF builders, this emits GitHub-rendered markdown. It resolves every witness name against the Lean corpus at generation time, so a link only appears if the declaration exists in the source; edit the flat data and rerun to update. |
+| [build_manifest.py](build_manifest.py) | `ZeroParadox/MANIFEST.md` — the Lean-sources manifest. Also GitHub-rendered markdown, not a PDF. Classifies every `ZeroParadox/**/*.lean` file core-vs-experimental by its in-file `-- EXPERIMENTAL` header, groups by domain folder, and titles each from its module docstring; the editorial preamble is fixed, the file listing is generated — rerun after any file add/move/rename. |
 
 ### Archive
 

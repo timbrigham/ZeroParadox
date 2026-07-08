@@ -3,7 +3,7 @@ import ZeroParadox.Computability.SelfApp
 import ZeroParadox.Category.Lawvere
 
 /-!
-# ZPJ_QuineDichotomy — the Quine-atom dichotomy
+# ZPJ — the Quine-atom dichotomy
 
 ## Engineer's Take
 

@@ -2,7 +2,7 @@ import ZeroParadox.Valuation.Scale
 import Mathlib.Tactic
 
 /-!
-# ZPJ_Model — Concrete ValuationStructure Instance: (ℕ∞, min, ⊤)
+# ZPJ — Concrete ValuationStructure Instance: (ℕ∞, min, ⊤)
 
 ## Engineer's Take
 

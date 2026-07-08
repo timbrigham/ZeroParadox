@@ -1,7 +1,7 @@
 import Mathlib.SetTheory.ZFC.Basic
 
 /-!
-# Zero as a Wall (`ZPP_Wall`) — the metatheoretic boundary, as a failure-mode taxonomy (formal object)
+# Zero as a Wall — the metatheoretic boundary, as a failure-mode taxonomy (formal object)
 
 **Name: "Zero as a Wall"** — ⊥/zero is the boundary self-reference cannot cross. Precise gloss (for
 translation / external readers): *the metatheoretic boundary where ⊥'s self-reference cannot be

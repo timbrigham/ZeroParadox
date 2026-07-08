@@ -5,7 +5,7 @@ import Mathlib.Topology.Connected.TotallyDisconnected
 import Mathlib.Topology.Connected.PathConnected
 
 /-!
-# ZPF_SnapDichotomy — the snap-occurrence dichotomy over ℚ
+# ZPF — the snap-occurrence dichotomy over ℚ
 
 ## Engineer's Take
 

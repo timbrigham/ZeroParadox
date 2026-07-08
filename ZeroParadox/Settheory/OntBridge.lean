@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZPJ_OntBridge — OntologicalStates → AbstractSelfApp → AFA Content
+# ZPJ — OntologicalStates → AbstractSelfApp → AFA Content
 
 ## Engineer's Take
 
