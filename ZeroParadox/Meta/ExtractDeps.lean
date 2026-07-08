@@ -169,14 +169,14 @@ open Lean
 namespace ZeroParadox.Meta
 
 /-- A tracked ZP source module: under the `ZeroParadox` namespace, excluding `Vendored`. -/
-def isTrackedModule (m : Name) : Bool :=
+def isTrackedSrcModule (m : Name) : Bool :=
   (`ZeroParadox).isPrefixOf m && ! (`ZeroParadox.Vendored).isPrefixOf m
 
 /-- De-mangle private names to their user-facing form (the registry stores the source name). -/
-def userName (n : Name) : Name :=
+def deMangleName (n : Name) : Name :=
   (privateToUserName? n).getD n
 
-def nameStr (n : Name) : String := toString (userName n)
+def nameStr (n : Name) : String := toString (deMangleName n)
 
 def namesToJson (arr : Array Name) : Json :=
   Json.arr (arr.map (fun c => Json.str (nameStr c)))
@@ -187,7 +187,7 @@ run_cmd do
   for (name, ci) in env.constants.toList do
     match env.getModuleFor? name with
     | some m =>
-      if isTrackedModule m then
+      if isTrackedSrcModule m then
         let tdeps := ci.type.getUsedConstants
         let vdeps := (ci.value?.map (·.getUsedConstants)).getD #[]
         recs := recs.push <| Json.mkObj [
