@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.10, revised June 2026)
+Zero Paradox — Foreword PDF Builder (v2.11, revised July 2026)
+v2.11: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
 v2.10: §IV — cited Yanofsky (2003) and Lawvere's year (1969) for the diagonal-fixed-point unification; prior-art positioning, paired with the new CLAIMS "Convergence with established work" section.
 v2.9: C8 dual-date templating (Initial/Current meta line; hardcoded month removed).
 v2.8: FMC uniformity — CC-2 metatheoretic row "Foundation is ruled out" → "argued to be ruled out" (matches fmc.md, argued not proved).
@@ -53,7 +54,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.10'
+VERSION = '2.11'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -138,7 +139,7 @@ def commitments_table():
          'The metatheoretic choice of AFA over Foundation is not free: Foundation is argued to be ruled out '
          'by R3 and ZP-C L-INF. Foundation and AFA are dual framings of the same object — '
          'Foundation excludes the Quine atom; AFA uniquely permits it. '
-         'Fixed-point content formally verified in ZFC by ZP-J (ZPJ_ScaleBridge). '
+         'Fixed-point content formally verified in ZFC by ZP-J (ScaleBridge). '
          'Set-theoretic interpretation requires ZF+AFA.'),
     ]
 
