@@ -928,9 +928,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -1140,9 +1144,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -1509,9 +1517,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "unscoped"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -3430,9 +3442,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -4788,9 +4804,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -6177,9 +6197,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "unscoped"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -7197,9 +7221,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -8103,9 +8131,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -9004,9 +9036,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -10159,9 +10195,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -12270,9 +12310,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -12447,9 +12491,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -13685,9 +13733,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "unscoped"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "Meta helper renamed in source to remove ExtractDeps/Snapshot qualified collision",
           "verify": {
@@ -16126,9 +16178,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -17738,9 +17794,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "unscoped"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -19811,9 +19871,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "unscoped"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -21563,9 +21627,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -22399,9 +22467,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -25343,9 +25415,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "unscoped"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "Meta helper renamed in source to remove ExtractDeps/Snapshot qualified collision",
           "verify": {
@@ -28438,9 +28514,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -30690,9 +30770,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -35422,9 +35506,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -35752,9 +35840,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -36586,9 +36678,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -37561,9 +37657,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -38579,9 +38679,13 @@
             "short": null
           },
           "ontology": {
-            "domain": [],
+            "domain": [
+              "ordinal"
+            ],
             "object": [],
-            "role": []
+            "role": [
+              "scaffolding"
+            ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
