@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.3 | June 2026
+Version 1.4 | July 2026
+v1.4: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Re-aimed the categorical instance's choice note per the Veltri (FSCD 2021) literature review —
 the Classical.choice on the ν side is a Mathlib M-type artifact, not a necessity (polynomial-functor
 final coalgebras are choice-free); choice genuinely enters only for the non-polynomial finite-powerset
@@ -20,7 +21,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -39,8 +40,8 @@ def build():
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer. The abstract fork schema is proved sorry-free and choice-free in '
-            'Lean 4 (ZPP.lean); the number-system instance via Ostrowski (ZPP_Ostrowski.lean) and '
-            'the categorical-parent instance via QPF.Fix / QPF.Cofix (ZPP_Coalgebra.lean) are '
+            'Lean 4 (ZPP.lean); the number-system instance via Ostrowski (Ostrowski.lean) and '
+            'the categorical-parent instance via QPF.Fix / QPF.Cofix (Coalgebra.lean) are '
             'Lean-witnessed; the set-theory and computation instances are referenced to ZP-J and '
             'ZP-K. Generalizes the ZFC+Foundation / ZFC+AFA orthogonal-contact-point claim.</i>',
             S['note']),
@@ -186,7 +187,7 @@ def build():
              'the Kleene quine / self-application; ZP-K'],
             ['Category theory',
              'initial algebra (W-types) vs final coalgebra (M-types)',
-             'QPF.Fix vs QPF.Cofix; ZPP_Coalgebra.lean'],
+             'QPF.Fix vs QPF.Cofix; Coalgebra.lean'],
         ],
         col_widths=[TW * 0.20, TW * 0.42, TW * 0.38],
     ))
@@ -202,7 +203,7 @@ def build():
         'and its valuation diverges (v<sub>2</sub>(0) = &#8734; &#8212; the snap holds).'))
 
     E.append(result_box(
-        'Theorem: completions_exhaustive (ZPP_Ostrowski.lean)',
+        'Theorem: completions_exhaustive (Ostrowski.lean)',
         [
             'Every nontrivial absolute value on &#8474; is equivalent to the real absolute '
             'value, or to a p-adic absolute value for a unique prime p.',
@@ -214,7 +215,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: real_not_equiv_padic (ZPP_Ostrowski.lean)',
+        'Theorem: real_not_equiv_padic (Ostrowski.lean)',
         [
             'The real absolute value is inequivalent to every p-adic absolute value.',
             'The two kinds of completion are genuinely distinct &#8212; never the same metric. '
@@ -252,7 +253,7 @@ def build():
         'in &#957;F but not &#956;F.'))
 
     E.append(result_box(
-        'Theorem: categorical_fork_strict (ZPP_Coalgebra.lean)',
+        'Theorem: categorical_fork_strict (Coalgebra.lean)',
         [
             'IsEmpty (Fix idPF.Obj) &#8743; Nonempty (Cofix idPF.Obj)',
             'The initial algebra (least fixed point, &#956;) is empty; the final coalgebra '
@@ -354,10 +355,10 @@ def build():
             ['collapse_of_unique', 'ZPP.lean §I', 'choice-free'],
             ['unique_of_collapse', 'ZPP.lean §I', 'choice-free'],
             ['fork_collapse_iff', 'ZPP.lean §I', 'choice-free'],
-            ['completions_exhaustive', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
-            ['real_not_equiv_padic', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
-            ['fix_isEmpty', 'ZPP_Coalgebra.lean §II', 'choice-free'],
-            ['cofix_nonempty', 'ZPP_Coalgebra.lean §II', 'Classical.choice'],
+            ['completions_exhaustive', 'Ostrowski.lean §II', 'Classical.choice'],
+            ['real_not_equiv_padic', 'Ostrowski.lean §II', 'Classical.choice'],
+            ['fix_isEmpty', 'Coalgebra.lean §II', 'choice-free'],
+            ['cofix_nonempty', 'Coalgebra.lean §II', 'Classical.choice'],
         ],
         col_widths=[TW * 0.42, TW * 0.33, TW * 0.25],
     ))
@@ -368,10 +369,10 @@ def build():
         [
             'Fork spine (ZPP.lean): [propext, Quot.sound] &#8212; choice-free. The schema needs '
             'no Axiom of Choice.',
-            'Number-system instance (ZPP_Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
+            'Number-system instance (Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical analysis / number '
             'theory (Ostrowski).',
-            'Categorical instance (ZPP_Coalgebra.lean): split &#8212; fix_isEmpty (&#956; empty) '
+            'Categorical instance (Coalgebra.lean): split &#8212; fix_isEmpty (&#956; empty) '
             'is choice-free [propext, Quot.sound]; cofix_nonempty (&#957; inhabited) carries '
             'Classical.choice from the M-type / corecursion machinery.',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
@@ -387,7 +388,7 @@ def build():
             'Ostrowski number-system instance | categorical &#956;/&#957; instance '
             '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
             'boundary | soft fence: not every fork is &#956;/&#957; | '
-            'All ZPP.lean / ZPP_Ostrowski.lean / ZPP_Coalgebra.lean theorems verified.</i>',
+            'All ZPP.lean / Ostrowski.lean / Coalgebra.lean theorems verified.</i>',
             S['endnote']),
     ]
 
