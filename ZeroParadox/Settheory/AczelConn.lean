@@ -4,6 +4,12 @@ import Mathlib.Tactic
 /-!
 # ZPJ — Aczel Fixed Point Connection
 
+## Engineer's Take
+
+A ZP-J/AFA sub-file. See the Engineer's Take in `ZeroParadox/Settheory/SetTheoryAFA.lean`.
+
+---
+
 Aczel (Non-Well-Founded Sets, 1988, ch. 6, p. 77) proves that
 J_Φ = ⋃{x | x ⊆ Φx} is the largest fixed point of a set continuous
 operator Φ. The proof uses the axiom of dependent choices (DC) to

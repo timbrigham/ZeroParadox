@@ -5,6 +5,12 @@ import Mathlib.Tactic
 /-!
 # ZPJ — Abstract Self-Application Bridge
 
+## Engineer's Take
+
+A ZP-J self-reference sub-file. See the Engineer's Take in `ZeroParadox/Settheory/SetTheoryAFA.lean`.
+
+---
+
 ## The question
 
 ZPJ imports three fields from AFA (via AFAStructure):

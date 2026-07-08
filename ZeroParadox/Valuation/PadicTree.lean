@@ -5,6 +5,12 @@ import Mathlib.Tactic
 /-!
 # A rooted 2-adic tree as a `SimpleGraph`
 
+## Engineer's Take
+
+A ZP-B construction. See the Engineer's Take in `ZeroParadox/Valuation/Padic.lean`.
+
+---
+
 A small, self-contained Lean 4 formalization of the rooted tree whose vertices are finite binary
 strings (the clopen balls of ℤ₂), with an edge between a string and that same string with one extra
 digit appended. Fully proved, `sorry`-free.

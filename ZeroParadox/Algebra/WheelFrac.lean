@@ -5,6 +5,12 @@ import Mathlib.Tactic
 /-!
 # The Wheel of Fractions `⊙_S A` (Carlström 2001:11, pp. 4-5, 10)
 
+## Engineer's Take
+
+A ZP-J wheel sub-file. See the Engineer's Take in `ZeroParadox/Algebra/Wheel.lean`.
+
+---
+
 Constructs the wheel of fractions of a commutative ring `A` with respect to a multiplicative
 submonoid `S`, with the goal of proving it is a `Wheel` (from `ZPJ_Wheel.lean`). This turns the
 §VIII conjecture of `ZPJ_Wheel.lean` into a theorem.

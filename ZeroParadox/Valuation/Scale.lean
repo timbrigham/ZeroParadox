@@ -5,6 +5,12 @@ import Mathlib.Tactic
 /-!
 # ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
 
+## Engineer's Take
+
+A ZP-J valuation-bridge sub-file. See the Engineer's Take in `ZeroParadox/Settheory/SetTheoryAFA.lean`.
+
+---
+
 ## The road surface
 
 ZPJ_SelfApp reduced AFAStructure to AbstractSelfApp (two axioms: fixed_bot, unique_fp).
