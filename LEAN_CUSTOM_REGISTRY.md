@@ -114,7 +114,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 **Relationship to Mathlib:** Replaces `Fin 2`
 
-**Reason:** ZPC is self-contained (no ZPB import as a Lean dependency). `BinaryState` is a local copy of the same free-inductive encoding used by `OntologicalStates` in ZPB. `Fin 2` would import ℕ arithmetic into an information-theoretic file whose proofs should not depend on it.
+**Reason:** Surprisal is self-contained (no Padic import as a Lean dependency). `BinaryState` is a local copy of the same free-inductive encoding used by `OntologicalStates` in Padic. `Fin 2` would import ℕ arithmetic into an information-theoretic file whose proofs should not depend on it.
 
 ---
 
@@ -171,7 +171,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 ### `machinePhaseZPS` — `ZeroParadox/Order/Snap.lean:55`
 `ZPSemilattice MachinePhase`
 
-The cross-framework bridge. `MachinePhase` is ZPC's two-element type; giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for `MachinePhase`.
+The cross-framework bridge. `MachinePhase` is Surprisal's two-element type; giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for `MachinePhase`.
 
 ---
 
@@ -192,7 +192,7 @@ The cross-framework bridge. `MachinePhase` is ZPC's two-element type; giving it 
 ### `instZ2ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean:97`
 `ValBridge ℤ_[2]`
 
-`ℤ_[2]` is a ring — it cannot be a `ZPSemilattice` instance and could not satisfy `ValuationStructure`. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `ZPJ_Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
+`ℤ_[2]` is a ring — it cannot be a `ZPSemilattice` instance and could not satisfy `ValuationStructure`. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
 
 ---
 
