@@ -4,6 +4,10 @@
 
 Lean 4 + Mathlib proofs for the Zero Paradox framework. The central result is **T-SNAP** (Binary Snap: `join c₀ c₁ = c₁`), derived from standard join-semilattice axioms. For full project context see [README.md](../README.md) at the repository root.
 
+## Source layout
+
+As of **v3.0** the source is organized by domain - `ZeroParadox/<Domain>/<Name>.lean` (e.g. `Order/`, `Valuation/`, `Ordinal/`, `Settheory/`, `Category/`, `Computability/`, `State/`, `Information/`, `Multihomed/`, `Reals/`, `Algebra/`) - all under a single flat `ZeroParadox` namespace. Earlier versions used a flat `ZeroParadox/ZPx_*.lean` layout with per-layer namespaces; those file paths and namespace prefixes are retired. The complete old→new file/declaration mapping is recorded in [`ssot.json`](../ssot.json), and SHA-pinned permalinks to earlier commits remain valid.
+
 ## Build
 
 ```

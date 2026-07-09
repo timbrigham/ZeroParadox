@@ -324,3 +324,43 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP Choice-Free Core Addendum | v1.2 |
 
 **Next threshold:** v3.0 on a new foundational layer (ZP-N constructive-ordinal validation, the unit test for the Classical.choice-necessity question) or a theorem status change; a further v2.x on the next substantive reviewer-feedback round or accumulated documentation work.
+
+---
+
+## v3.0 - 2026-07-09
+
+**Why this release:** A major structural reorganization of the Lean source into a domain-based layout, plus a framework-wide citation-integrity and legibility pass - the "make the whole thing inspectable" milestone. (This took precedence over the ZP-N layer the v2.6 threshold anticipated; a structural revision of this size is itself a major-version trigger.)
+
+**What changed (since v2.6):**
+- **Domain-based Lean source layout.** The ~150 source files moved from a flat `ZeroParadox/ZPx_*.lean` layout to a domain-based directory structure - `ZeroParadox/<Domain>/<Name>.lean` (Order, Valuation, Ordinal, Settheory, Category, Computability, State, Information, Multihomed, Reals, Algebra) - and the per-layer namespaces (`ZeroParadox.ZPA`, `ZeroParadox.ZPJ`, ...) were flattened to a single `ZeroParadox`. Old `ZPx_*` paths and namespace prefixes are retired; the complete old->new file and declaration map is recorded in `ssot.json`. CI-verified: the full reorganized source builds clean. SHA-pinned permalinks and prior Zenodo snapshots remain valid.
+- **Citation-integrity pass.** An SSOT-driven sweep corrected stale post-reorg Lean references (dead file paths and dead per-layer namespaces) across the ledgers and 18 rebuilt PDFs, adversary-verified with zero residual stale references across the entire PDF corpus. The epsilon-0 / Gentzen framing was corrected in README/CLAIMS (a deliberate citation of Gentzen 1936, not an open gap), and the Bottom Element map legend was clarified (check-mark = Lean-verified; a resolved open-probe value removed).
+- **File-reference citation convention.** A standing rule: file references in checkable surfaces carry full repository paths (grep-verifiable, so a future move fails loud, not silent); declaration names stay bare (globally unique, checkable via `#print axioms`).
+- **`historical/` folder retired.** The hand-maintained archive of 179 superseded PDFs was removed - git history and each release's Zenodo DOI snapshot are a more complete and authoritative record. Git history is left fully intact (SHA-pinned permalinks and DOIs depend on it).
+- **Tooling surfaced for transparency.** The single-source-of-truth registry (`ssot.json`) and a `tools/` directory (registry + web-rendering scripts) are now in the public repo.
+
+**Document versions at v3.0:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.19 |
+| ZP-B p-Adic Topology | v1.11 |
+| ZP-C Information Theory | v1.20 |
+| ZP-D State Layer | v1.15 |
+| ZP-E Bridge Document | v3.23 |
+| ZP-F The Counterexamples | v1.5 |
+| ZP-G Category Theory | v1.15 |
+| ZP-H Categorical Bridge | v1.17 |
+| ZP-H Native Categories Addendum | v1.2 |
+| ZP-I Inside Zero | v1.13 |
+| ZP-J Self-Reference | v2.5 |
+| ZP-J AFA Addendum | v1.6 |
+| ZP-J Wheel Addendum | v1.3 |
+| ZP-J Keystone Addendum | v1.2 |
+| ZP-K Computational Grounding | v1.9 |
+| ZP-L Incomputability Convergence | v1.3 |
+| ZP-M Kleene-Ordinal Bridge | v1.3 |
+| ZP-P The Fixed-Point Fork | v1.5 |
+| Zero Paradox Foreword | v2.11 |
+| ZP Philosophical Question | v1.13 |
+| ZP Choice-Free Core Addendum | v1.3 |
+
+**Next threshold:** ZP-N (constructive-ordinal validation - the unit test for the Classical.choice-necessity question) as a new foundational layer, or a theorem status change (candidate -> derived); a further v3.x on the next substantive reviewer-feedback round or accumulated documentation work.

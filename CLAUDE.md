@@ -79,7 +79,7 @@ This is a **mathematical publication repository**, not a software project. There
 
 - PDF documents (the formal mathematical framework and illustrated companions)
 - Markdown documentation (README.md, ABOUTME.md, this file)
-- A `historical/` folder for superseded document versions
+- (superseded document versions are preserved in git history and per-release Zenodo snapshots; the `historical/` folder was retired in v3.0)
 - A `scripts/` folder with the PDF build tooling (Claude-generated, public, included for transparency)
 
 ## Private Working Folder
@@ -96,8 +96,7 @@ Transparency is a core value of this project. The existence of this private fold
 
 - Current documents live at the root with **flat (version-free) filenames**: `ZP-X_Title.pdf`
 - Version numbers are tracked in `register.md` (Formal Version column) and in each PDF's title block — not in the filename
-- Superseded versions are moved to `historical/` **with the version number added**: `ZP-X_Title_vN_N.pdf` (no `-1` suffix needed since the root filename is flat)
-- The `historical/README.md` tracks all archived files with date moved and description
+- Superseded versions are **not** archived to a folder (the `historical/` folder was retired in v3.0); the flat root PDF is overwritten in place, and git history + each release's Zenodo snapshot are the record
 - README.md and GUIDE.md always link to the flat root filename
 
 ## GitHub Releases and Zenodo Snapshots
@@ -155,7 +154,7 @@ It must **exit 0** before the release body is drafted. The script mechanically v
 
 ## Companion Document Versioning
 
-Each formal ZP-X document has a paired illustrated companion (`ZP-X_Illustrated_Companion.pdf`). Companion PDFs overwrite in place — no versioned filename, no `historical/` archiving. The current companion version lives only in the title block of the PDF and the docstring of its build script.
+Each formal ZP-X document has a paired illustrated companion (`ZP-X_Illustrated_Companion.pdf`). Companion PDFs overwrite in place - no versioned filename, no archiving (git history + Zenodo snapshots are the record). The current companion version lives only in the title block of the PDF and the docstring of its build script.
 
 ### Companion sync rule
 
@@ -336,7 +335,7 @@ Any file that is committed to the public repository but intentionally unlinked f
 
 **For PDF files:** Add an amber callout box as the first element in the document (before the title block), using the `callout(text, bg=AMBER_LITE, border=AMBER)` helper in the build script. Wording should follow the same pattern: explain the document is unlinked, why, and direct the reader to the README.
 
-**If no build script exists for an unlinked PDF:** The correct action is to archive it to `historical/` rather than leave it unnoticed in the root. Standalone documents without active build scripts are almost always superseded development artifacts. Follow the archiving convention above.
+**If no build script exists for an unlinked PDF:** it is almost always a superseded development artifact - remove it from the root (git history preserves it) rather than leave it unnoticed.
 
 ## Development Environment
 
@@ -416,24 +415,21 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 6. Put version number in the Version column only
 7. Verify file exists with `Glob` before committing
 
-**Historical folder table format** (`historical/README.md`): `| [filename](filename) | YYYY-MM-DD | description |` — use actual archived filename in both display text and link; date moved (not date of document); newest-first.
+## Superseding Document Versions
 
-## Archiving Old Document Versions
+The `historical/` folder was **retired in v3.0**. Superseded versions are preserved by two records more
+complete and authoritative than a hand-maintained archive: **git history** (every prior PDF stays in the
+commit record) and each release's **Zenodo DOI snapshot** (the full repo - including the then-current root
+PDFs - captured at a permanent, browsable DOI). The archive folder had drifted a month out of date; these
+do not. Do NOT recreate `historical/`, and do NOT rewrite git history to purge old binaries (SHA-pinned
+permalinks and DOI-referenced commits depend on it).
 
-**`historical/` is a write-once, READ-ONLY archive (standing rule, Tim 2026-06-13).** Once a file is in
-`historical/`, it is never modified, rebuilt, renamed, or deleted — it is the immutable record of a
-superseded version. The only allowed operation is *appending* a new superseded version (write-once).
-This also means `historical/` is reserved for **substantive version supersessions** worth preserving as
-distinct artifacts. **Cosmetic / hygiene patches** (e.g. removing rendered version strings, vocab
-fixes, palette rebuilds) **overwrite the flat root PDF in place and do NOT create a `historical/`
-entry** — git history + `register.md` are their record. Do not pollute the archive with trivial churn.
+When a document is superseded (cosmetic **or** substantive), overwrite the flat root PDF in place:
+1. Rebuild the new version into the flat root name `ZP-X_Title.pdf` (overwrite; do **not** create a versioned copy or a `historical/` entry).
+2. Update `register.md` (version number + script hash).
+3. Update the version in README.md's Framework table and GUIDE.md Reading Paths.
 
-When a document is superseded (substantively):
-1. Move the current flat root file to historical with the version number: `Move-Item ZP-X_Title.pdf historical\ZP-X_Title_vN_N.pdf`
-2. Rebuild the new version into the flat root name: `ZP-X_Title.pdf`
-3. Update `historical/README.md` with a table row: `| [filename](filename) | YYYY-MM-DD | description |`
-4. Update register.md with the new version number (Filename column stays flat — `ZP-X_Title.pdf`)
-5. Update the version number in README.md's The Framework table
+The prior version is recoverable from git (`git show <commit>:ZP-X_Title.pdf`) and lives permanently in the Zenodo snapshot of the release that last carried it.
 
 ## Theorem/Proposition/Lemma Naming Convention
 
@@ -462,7 +458,7 @@ When assigning a label, ask: "Is this result the central claim of its section, o
 **Rollout (phased, not a 12-PDF marathon):**
 - Reader-facing surfaces first: README.md, GUIDE.md, register.md.
 - Then apply to each formal document/companion **as it is next revised** (the readable name leads CC-2's introduction). Footprint as of 2026-06-09: 12 build scripts carry CC-2 (build_zpe.py 27, build_zpa.py 13, build_zpc.py 8, etc.); Lean is clean (CC-2 is never a Lean identifier — 0 occurrences).
-- **Do not touch** RELEASES.md or historical/ (release record / archived — never rewrite history).
+- **Do not touch** RELEASES.md (release record - never rewrite history).
 
 ### The keystone concept — "the diagonal fixed point" (confirmed name)
 
@@ -510,7 +506,7 @@ split this session, the same way AX-1 became T-SNAP and CC-2 became a Forced Met
   objects), so ⊥ is the *limit* in `TopCat` and the *initial object* in the other two; state that
   distinction honestly. The cross-category identity is never claimed as proved.
 - **Rollout:** reader-facing surfaces first (README done 2026-06-10); other formal docs/companions as
-  each is next revised. Do not touch RELEASES.md or historical/.
+  each is next revised. Do not touch RELEASES.md.
 
 ## GitHub Issues — Transparency and Engagement Policy
 

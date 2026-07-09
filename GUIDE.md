@@ -111,7 +111,7 @@ To view older versions of documents as the framework progressed:
 - **Via GitHub web interface**: Navigate to the repository, click on a file, then "History" to browse commits.
 - **Locally**: Use `git log` to see commit history and `git checkout <commit-hash>` to view specific versions.
 
-Previous document versions are also kept in the [historical/](historical/) folder, making the development process visible without requiring Git access.
+Previous document versions are preserved in the git history and browsable at each release's Zenodo snapshot, keeping the full development history recoverable.
 
 ---
 
