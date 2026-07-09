@@ -162,6 +162,10 @@ def isTrackedModule (m : Name) : Bool :=
 def userName (n : Name) : Name := (privateToUserName? n).getD n
 
 run_cmd do
+  -- Dev tool: writes into the gitignored `.claude-local/`. Skip on any clean checkout
+  -- (CI, fresh clone) where that dir is absent, so the catch-all lake glob can build this
+  -- module without doing (or failing) build-time IO. Runs normally where the dir exists.
+  unless (← System.FilePath.pathExists ".claude-local/translation_matrix") do return
   let env ← getEnv
   let mut recs : Array Json := #[]
   for (name, ci) in env.constants.toList do
