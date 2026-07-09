@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-G: Category Theory PDF Builder
-Version 1.14 | June 2026
+Version 1.15 | June 2026
+v1.15: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.14: R-AX remark — named AX-G2 as the standard strict-initial-object property (Carboni-Lack-Walters 1993) and noted AX-G1+AX-G2 = a non-trivial strict initial; prior-art positioning, paired with the CLAIMS Convergence section.
 v1.12: Rendered version refs removed from BA-G1 compatibility remark ("ZP-G v1.0", "In v1.1") — C1 sweep, no version refs in rendered PDF content.
 v1.11: Version line style fixed (bodyI → subtitle); local make_doc override removed.
@@ -26,7 +27,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-G uses a slightly different amber shade; override zp_utils default
@@ -452,7 +453,7 @@ def build():
         'Remark — Lean Scope of T6-b and T6-c',
         'Status: Scope note — T6-b and T6-c are NOT Lean-verified for their mathematical claims',
         [
-            '<b>T6-b and T6-c are not Lean-verified.</b> The ZPG.lean proofs for these results compile '
+            '<b>T6-b and T6-c are not Lean-verified.</b> The Category.lean proofs for these results compile '
             'without error, but they verify nothing about Kolmogorov complexity. The ZPSurprisal typeclass '
             'defines surp : hom &#8594; &#8469; (surprisal as a natural number) and the proofs reduce to '
             'Nat.zero_le _, which states that any natural number is &#8805; 0. This is trivially true by '

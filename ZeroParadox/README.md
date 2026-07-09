@@ -20,36 +20,36 @@ Lint policy: `weak.linter.mathlibStandardSet` is on, so the build flags genuine 
 
 | File | Key result | Depends on |
 |------|------------|------------|
-| `ZPA.lean` | `ZPSemilattice` typeclass (A1–A4); partial order (T1); ⊥ minimum (T2); monotonicity (T3) | — |
-| `ZPB.lean` | `OntologicalStates` free inductive (AX-B1 — modelling commitment, not derived); ultrametric (T1); clopen balls (T2); topological irreversibility (C3) | ZPA |
-| `ZPC.lean` | `BinaryState` free inductive; `MachinePhase`; L-RUN (execution is non-null); TQ-IH (no program avoids non-null state); L-INF (informational extremity at ⊥) | ZPA, ZPB |
-| `ZPD.lean` | `TransitionMap`; transition operator T: Q₂ → ℂⁿ; orthogonal snap shift (T4); non-decreasing norms (T5) | ZPA, ZPB |
-| `ZPE.lean` | `MachinePhase` ZPSemilattice instance; **T-SNAP** (`join c₀ c₁ = c₁`); DA-2 (successor null); `da1_minimal_path` (axiom-free) | ZPA–ZPD |
-| `ZPJ.lean` | `AFAStructure` typeclass; **T-EXEC** (Quine atom = ⊥, axiom-free); `cc1_derived` (CC-1 as theorem); three-way equivalence: Quine atom = ⊥ = join-identity | ZPA |
-| `ZPK.lean` | `KleeneStructure` typeclass; `selfApply_partrec` (Kleene's second recursion theorem); T-COMP (four-way equivalence); **`da1_closed_concrete : IsQuineAtom(⊥ : MachinePhase)`** | ZPE, ZPJ |
-| `ZPI.lean` | **`t_iz_complete`** (all four T-IZ steps: Cauchy convergence + DA-2 + DA-1/Kleene + T-SNAP); `h_strict_from_r1_t3` (strict valuation growth derived, not assumed) | ZPA, ZPB, ZPE, ZPK |
+| `Lattice.lean` | `ZPSemilattice` typeclass (A1–A4); partial order (T1); ⊥ minimum (T2); monotonicity (T3) | — |
+| `Padic.lean` | `OntologicalStates` free inductive (AX-B1 — modelling commitment, not derived); ultrametric (T1); clopen balls (T2); topological irreversibility (C3) | Lattice |
+| `Surprisal.lean` | `BinaryState` free inductive; `MachinePhase`; L-RUN (execution is non-null); TQ-IH (no program avoids non-null state); L-INF (informational extremity at ⊥) | Lattice, Padic |
+| `StateSpace.lean` | `TransitionMap`; transition operator T: Q₂ → ℂⁿ; orthogonal snap shift (T4); non-decreasing norms (T5) | Lattice, Padic |
+| `Snap.lean` | `MachinePhase` ZPSemilattice instance; **T-SNAP** (`join c₀ c₁ = c₁`); DA-2 (successor null); `da1_minimal_path` (axiom-free) | Lattice–StateSpace |
+| `SetTheoryAFA.lean` | `AFAStructure` typeclass; **T-EXEC** (Quine atom = ⊥, axiom-free); `cc1_derived` (CC-1 as theorem); three-way equivalence: Quine atom = ⊥ = join-identity | Lattice |
+| `Kleene.lean` | `KleeneStructure` typeclass; `selfApply_partrec` (Kleene's second recursion theorem); T-COMP (four-way equivalence); **`da1_closed_concrete : IsQuineAtom(⊥ : MachinePhase)`** | Snap, SetTheoryAFA |
+| `SemilatticeInstance.lean` | **`t_iz_complete`** (all four T-IZ steps: Cauchy convergence + DA-2 + DA-1/Kleene + T-SNAP); `h_strict_from_r1_t3` (strict valuation growth derived, not assumed) | Lattice, Padic, Snap, Kleene |
 
-### Categorical extension (self-contained; depends on ZPE conceptually, not formally)
+### Categorical extension (self-contained; depends on Snap conceptually, not formally)
 
 | File | Key result | Depends on |
 |------|------------|------------|
-| `ZPG.lean` | `ZPCategory` and `ZPSurprisal` typeclasses; T6 (informational singularity); T7 (Categorical Zero Paradox); `ForkCat` concrete instance | ZPA |
-| `ZPH.lean` | Four functors F_A–F_D; T-H2 (singularity compatibility); T-H3 (Binary Snap under all four functors); `nnreal_initial_grounding` shared witness | ZPG, ZPC, ZPD |
+| `Category.lean` | `ZPCategory` and `ZPSurprisal` typeclasses; T6 (informational singularity); T7 (Categorical Zero Paradox); `ForkCat` concrete instance | Lattice |
+| `CategoricalBridge.lean` | Four functors F_A–F_D; T-H2 (singularity compatibility); T-H3 (Binary Snap under all four functors); `nnreal_initial_grounding` shared witness | Category, Surprisal, StateSpace |
 
 ## Axiom Profile
 
 Each file contains a `section PurityCheck ... end PurityCheck` block with `#print axioms` for key theorems.
 
-- **ZPA–ZPG:** `propext`, `Quot.sound` only, or fully axiom-free for computable results (e.g. `l_run` proved by `decide`)
-- **ZPH, ZPK:** `[propext, Classical.choice, Quot.sound]` — `Classical.choice` enters through Mathlib's Kleene/computability machinery (`Code`, `Partrec`), not through `ZPSemilattice` or `AFAStructure`
-- **ZPJ_WheelFrac (wheel of fractions `⊙_S A`):** `[propext, Quot.sound]` — `Classical.choice`-free. The Carlström wheel-of-fractions construction (`⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and multiplicative submonoid `S`) is fully constructive; no choice needed. This realizes the §VIII wheel conjecture of `ZPJ_Wheel.lean` as a theorem.
+- **Lattice–Category:** `propext`, `Quot.sound` only, or fully axiom-free for computable results (e.g. `l_run` proved by `decide`)
+- **CategoricalBridge, Kleene:** `[propext, Classical.choice, Quot.sound]` — `Classical.choice` enters through Mathlib's Kleene/computability machinery (`Code`, `Partrec`), not through `ZPSemilattice` or `AFAStructure`
+- **WheelFrac (wheel of fractions `⊙_S A`):** `[propext, Quot.sound]` — `Classical.choice`-free. The Carlström wheel-of-fractions construction (`⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and multiplicative submonoid `S`) is fully constructive; no choice needed. This realizes the §VIII wheel conjecture of `Wheel.lean` as a theorem.
 
 ## Honest Scope Boundaries
 
 The framework is explicit about what is and is not Lean-verified. Two boundaries are worth noting upfront:
 
-**ZPG.lean T6-b/c** — The Lean proofs for T6-b (strict surprisal inequality) and T6-c (subadditivity along chains) verify only `Nat.zero_le _` (non-negativity by type). The K-specific content — strict inequality and subadditivity of Kolmogorov complexity — is outside Lean scope and explicitly noted as such in the file's inline scope note. Importantly, T6-b/c are **not load-bearing for any subsequent formal result**. The load-bearing singularity claim — that surprisal diverges along sequences approaching ⊥ — is separately proved in `ZPC.t2_diverges` using Q₂'s specific structure, without K.
+**Category.lean T6-b/c** — The Lean proofs for T6-b (strict surprisal inequality) and T6-c (subadditivity along chains) verify only `Nat.zero_le _` (non-negativity by type). The K-specific content — strict inequality and subadditivity of Kolmogorov complexity — is outside Lean scope and explicitly noted as such in the file's inline scope note. Importantly, T6-b/c are **not load-bearing for any subsequent formal result**. The load-bearing singularity claim — that surprisal diverges along sequences approaching ⊥ — is separately proved in `t2_diverges` using Q₂'s specific structure, without K.
 
-**ZPE.lean / ZPC.lean — DA-1 Path 2** — L-INF formally proves that surprisal is unbounded at ⊥. The inference from unbounded surprisal to "necessarily executing" is an ontological bridge claim, not a mathematical consequence of L-INF alone. ZPC.lean's L-INF docstring states this explicitly: "L-INF supplies the formal premise; DA-1 supplies the ontological bridge." DA-1 is formally closed through independent paths (AFA/self-containment and Kleene fixed point) in ZPK.lean.
+**Snap.lean / Surprisal.lean — DA-1 Path 2** — L-INF formally proves that surprisal is unbounded at ⊥. The inference from unbounded surprisal to "necessarily executing" is an ontological bridge claim, not a mathematical consequence of L-INF alone. Surprisal.lean's L-INF docstring states this explicitly: "L-INF supplies the formal premise; DA-1 supplies the ontological bridge." DA-1 is formally closed through independent paths (AFA/self-containment and Kleene fixed point) in Kleene.lean.
 
 The inline scope notes in each file document what is and is not Lean-verified.

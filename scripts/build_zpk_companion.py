@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.11 | May 2026
+Version 1.12 | May 2026
+v1.12: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.10: four_way_diagram — removed the redundant internal caption String that overlapped the bottom "Computation (Kleene)" box (Diagram Rule 4; the external ccaption already captions the diagram).
 v1.9: FMC precision (sweep Step 4) — DA-1 Path 1 line splits the axiom-free structural fixed point (what ZP-J proved) from the literal ⊥ = {⊥} (the ZF+AFA setting).
 v1.8: Strip version number from companion footer.
@@ -123,7 +124,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -257,7 +258,7 @@ def build():
         'recursion theorem. The code IS its own program.'))
     E.append(sp(4))
     E.append(key_result_box(
-        'da1_closed_concrete (ZPK.lean)',
+        'da1_closed_concrete (Kleene.lean)',
         'IsQuineAtom(&#8869; : MachinePhase) — proved in Lean 4. '
         'The initial machine state c&#8320; is self-containing and self-executing — not a '
         'static description awaiting an external interpreter. '

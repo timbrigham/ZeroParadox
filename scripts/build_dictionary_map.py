@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generator for "The Bottom Element (⊥) — Dictionary and Map".
+"""Generator for "The Bottom Element (⊥) - Dictionary and Map".
 
 SSOT: MAP data from `build_bottom_matrix.py` (CELLS/SLOTS); apophatic entries + glosses below. Witness
 theorem names are RESOLVED against the actual Lean source (`ZeroParadox/**/*.lean`) at generation time:
@@ -18,7 +18,7 @@ import sys, os, re
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, os.path.dirname(__file__))
-from build_bottom_matrix import CELLS, SLOTS
+from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH, dyn_glyph
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at repo root (relative links resolve from here)
@@ -50,10 +50,10 @@ UNRESOLVED = []
 OVERRIDDEN = []
 
 # Manual overrides for witnesses that are NOT top-level declarations (so the scanner cannot
-# find them) but DO live in a known local file — e.g. class fields. Kept explicit and reported
+# find them) but DO live in a known local file - e.g. class fields. Kept explicit and reported
 # so a hand-resolved link is never silently indistinguishable from a scanned one.
 FIELD_OVERRIDE = {
-    "unique_fp": "ZeroParadox/ZPJ_SelfApp.lean",  # class field AbstractSelfApp.unique_fp (SelfApp:69)
+    "unique_fp": "ZeroParadox/Computability/SelfApp.lean",  # class field AbstractSelfApp.unique_fp (SelfApp:69)
 }
 
 def link_witness(name):
@@ -65,7 +65,7 @@ def link_witness(name):
         OVERRIDDEN.append(name)
         return f"[`{name}`]({path})"
     UNRESOLVED.append(name)
-    return f"`{name}`"  # not a local declaration (Mathlib, a class field, etc.) — shown, not linked
+    return f"`{name}`"  # not a local declaration (Mathlib, a class field, etc.) - shown, not linked
 
 def render_witnesses(names):
     return ", ".join(link_witness(n) for n in names) if names else "*meta (no Lean witness)*"
@@ -75,12 +75,11 @@ SLOT_GLOSS = {
     "CANT":  "**cannot-have** - what ⊥ provably is NOT (its exclusions)",
     "NARR":  "**narrow** - ⊥ is a single, unique point",
     "MEAS":  "**measure** - some quantity becomes infinite exactly at ⊥",
-    "REACH": "**reach** - ⊥ is what nearby points converge to (an attractor)",
     "INV":   "**inversion** - the map z↦1/z swaps ⊥ (which is 0) with infinity (the two poles of a Riemann sphere)",
     "CONC":  "**concurrency** - applying ⊥'s own operation returns ⊥ unchanged (a fixed point: operation and result coincide)",
     "SELF":  "**self-reference** - ⊥ is defined by referring to itself (a self-reproducing / self-containing object)",
     "GEN":   "**generation** - ⊥ generates the structure built above it (for example, the ordinal ε₀ generated from 0)",
-    "DYN":   "**dynamics** - how ⊥ is approached over time and departed from irreversibly",
+    "DYN":   "**dynamics** - how ⊥ is approached and departed, one directional axis with two sub-senses: **↓ inbound** (orbits converge *to* ⊥ - a sink) and **↑ outbound** (structure departs *from* ⊥ irreversibly - a source). ↕ = both, which happens only at a seam (μ=ν). Single-directional, set by whether ⊥ is a sink or a source",
 }
 
 # --- Reading key 2: constructions (map rows) ---
@@ -139,8 +138,6 @@ APOPHATIC = [
 POSITIVE = [
     ("narrow", "noun", "the single, unique pinned point", ["q2_unique_fp", "fB_bottom_is_limit"]),
     ("measure", "noun", "a quantity that becomes infinite exactly at ⊥", ["t2_diverges", "addVal_bot"]),
-    ("reach", "verb", "an attractor: *contracting* orbits converge to ⊥ (not all orbits - see D6)",
-     ["contraction_orbit_tendsto_zero"]),
     ("inversion", "verb", "the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity",
      ["rInv_swaps", "inversion_reverses_filtration"]),
     ("concurrency", "hinge", "the fixed point where least and greatest coincide (operation = result)",
@@ -149,16 +146,16 @@ POSITIVE = [
      ["kleene_quine_is_bot", "quine_period_is_goedel"]),
     ("generation", "verb", "the floor generates the ceiling (ε₀ = the closure of 0 under omega-to-the-power)",
      ["epsilonZero_eq_nfp"]),
-    ("dynamics", "verb", "approached as orbits reach it, and departed irreversibly (the snap)",
-     ["t_snap_derived", "fC_no_return", "fullMix_not_injective"]),
+    ("dynamics", "verb", "⊥'s one-way approach and departure - two sub-senses: **inbound** (↓, orbits converge *to* ⊥ - a sink) and **outbound** (↑, structure departs *from* ⊥ irreversibly - a source); ↕ = both, only at a seam (μ=ν)",
+     ["contraction_orbit_tendsto_zero", "t_snap_derived", "c3_irreversible", "fC_no_return"]),
 ]
 
-def cell_mark(w):
-    if not w:
-        return ""
-    if w.strip().endswith("*"):
-        return "✓*"
-    return "✓"
+def cell_mark(w, key=None):
+    # DYN is the directional dynamics column: ↓ inbound · ↑ outbound · ↕ seam (both); trailing * = conditional/inherited.
+    # Every other column is 5-state: ✓ established · ✓* conditional · ✗ refuted · ∅ n/a-structural · ? open.
+    if key == "DYN":
+        return dyn_glyph(w)
+    return GLYPH[classify(w)[0]]
 
 def render_table(rows, headers):
     out = ["| " + " | ".join(headers) + " |", "|" + "---|" * len(headers)]
@@ -179,8 +176,44 @@ def render_map():
     keys = [k for k, _ in SLOTS]
     rows = ["| construction | " + " | ".join(keys) + " |", "|---|" + ":--:|" * len(keys)]
     for c, d in CELLS.items():
-        rows.append("| " + c + " | " + " | ".join(cell_mark(d.get(k)) for k in keys) + " |")
+        rows.append("| " + c + " | " + " | ".join(cell_mark(d.get(k), k) for k in keys) + " |")
     return "\n".join(rows)
+
+_TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9_']*")
+def _decl_shaped(name):
+    # only auto-link tokens that LOOK like ZP witness names - snake_case or camelCase - so common
+    # English words that happen to collide with a short decl (e.g. `is`) are never linked.
+    return "_" in name or re.search(r"[A-Z]", name[1:]) is not None
+def link_in_text(text):
+    """Auto-link any decl-shaped token that resolves against the Lean source; leave prose untouched."""
+    def repl(m):
+        name = m.group(0)
+        if _decl_shaped(name) and (name in INDEX or name in FIELD_OVERRIDE):
+            return link_witness(name)
+        return name
+    return _TOKEN.sub(repl, text or "")
+
+def render_cell_details():
+    """Collapsible per-cell reasoning: glyph + the reason/witness behind every mark (witnesses auto-linked)."""
+    out = ["<details>",
+           "<summary><b>Why each cell</b> - the reason or witness behind every mark (click to expand)</summary>",
+           ""]
+    for c, d in CELLS.items():
+        out.append(f"**{c}**")
+        for k, _ in SLOTS:
+            v = d.get(k)
+            if k == "DYN":
+                g = dyn_glyph(v)
+                parts = str(v).strip().split(" ", 1) if v else []
+                txt = parts[1] if len(parts) > 1 else ""
+            else:
+                st, txt = classify(v)
+                g = GLYPH[st]
+            body = f" - {link_in_text(txt)}" if txt else ""
+            out.append(f"- `{k}` {g}{body}")
+        out.append("")
+    out.append("</details>")
+    return "\n".join(out)
 
 PAGE = """# The Bottom Element (⊥) - Dictionary and Map
 
@@ -208,8 +241,11 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 
 {slot_gloss}
 
-**Constructions** (the map rows; the `#` numbers are node labels from the framework's bottom-diagram
-comparison):
+**Constructions** (the map rows). A `#N` prefix (#2 Markov, #3 TopCat/p-adic limit, #4 Kleisli, #5 Hilbert
+seam) cross-references the **bottom-diagram-tree nodes** used throughout the Lean source (`node #4`,
+`seam node #5`, …). Only those four appear as numbered rows; the tree's order-floor node #1 is the abstract
+`Lat ⊥` row (shown here without the number), and the other rows (Info, Kleene, ε₀, selfApp, the p-adic
+valuation) come from other layers. The partial numbering is scoped, not missing data:
 
 {construction_gloss}
 
@@ -239,15 +275,29 @@ not.*
 
 ## Map - slot × construction
 
-Where each characterization is established. `✓` = established, `✓*` = conditional/bridge, blank = **open
-probe**. (The witnessing theorem - and whether it is proved here or cited from a library - is in the
-dictionary above, with links to the Lean source.)
+Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` **Lean-verified** - a machine-checked proof, with the witness theorem linked in *Why each cell* below ·
+`✗` refuted (a proved obstruction, also Lean-checked) · `∅` not-applicable by structure (a category
+error - e.g. asking a ν-limit for a μ-generation property - not a gap). A trailing `*` on any mark (`✓*`, `↑*`, `↓*`) means conditional - established via a bridge or inherited from a sibling layer. The last column,
+**dynamics**, is DIRECTIONAL instead: `↓` inbound (converges *to* ⊥ - a sink), `↑` outbound (departs *from* ⊥
+irreversibly - a source), `↕` both (a seam). (Witnessing theorems, with links to the Lean source, are in the
+dictionary above.)
 
 {map}
 
-The blanks are the honest part: they are open probes, and two columns (**inversion**, **generation**) sit in
-one construction each - structural facts (inversion is the p-adic / Riemann phenomenon; generation is the
-build-up-from-the-floor side), not gaps to paper over.
+The honest content is in the non-`✓` cells, and splitting them is the point: a `∅`
+is a settled structural fact (a category error, not a gap), a `✗` is news (a proved obstruction), and a `✓*` holds only via a bridge. Two things worth reading off the table:
+(1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
+point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
+selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
+(2) The **dynamics** column is single-directional - `↓` for a sink (ν), `↑` for a source (μ) - and `↕` (both)
+appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
+0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
+
+**The value is in the non-`✓` cells** - the proved obstructions (`✗`) and the structural non-applicabilities (`∅`), not the
+filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
+**[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
+
+{cell_details}
 
 ---
 
@@ -295,11 +345,12 @@ def main():
         slot_gloss=render_slot_gloss(),
         construction_gloss=render_construction_gloss(),
         terms=render_terms(),
-        apophatic=render_table([[i, c, render_witnesses(ws)] for (i, c, ws) in APOPHATIC],
-                               ["#", "⊥ cannot be...", "witness (links to Lean source)"]),
+        apophatic=render_table([[c, render_witnesses(ws)] for (_i, c, ws) in APOPHATIC],
+                               ["⊥ cannot be...", "witness (links to Lean source)"]),
         positive=render_table([[s, a, c, render_witnesses(ws)] for (s, a, c, ws) in POSITIVE],
                               ["slot", "aspect", "characterization of ⊥", "witness (links to Lean source)"]),
         map=render_map(),
+        cell_details=render_cell_details(),
     )
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(page)

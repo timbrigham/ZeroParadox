@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.3 | June 2026
+Version 1.5 | July 2026
+v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
+v1.4: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Re-aimed the categorical instance's choice note per the Veltri (FSCD 2021) literature review —
 the Classical.choice on the ν side is a Mathlib M-type artifact, not a necessity (polynomial-functor
 final coalgebras are choice-free); choice genuinely enters only for the non-polynomial finite-powerset
@@ -20,7 +22,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -39,8 +41,8 @@ def build():
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer. The abstract fork schema is proved sorry-free and choice-free in '
-            'Lean 4 (ZPP.lean); the number-system instance via Ostrowski (ZPP_Ostrowski.lean) and '
-            'the categorical-parent instance via QPF.Fix / QPF.Cofix (ZPP_Coalgebra.lean) are '
+            'Lean 4 (FixedPointFork.lean); the number-system instance via Ostrowski (Ostrowski.lean) and '
+            'the categorical-parent instance via QPF.Fix / QPF.Cofix (Coalgebra.lean) are '
             'Lean-witnessed; the set-theory and computation instances are referenced to ZP-J and '
             'ZP-K. Generalizes the ZFC+Foundation / ZFC+AFA orthogonal-contact-point claim.</i>',
             S['note']),
@@ -87,7 +89,7 @@ def build():
         'inductive/coinductive reading, which is offered as analogy only.'))
 
     E.append(def_box(
-        'Definition: the fork (ZPP.lean)',
+        'Definition: the fork (FixedPointFork.lean)',
         [
             'For a complete lattice &#945; and a monotone self-map f : &#945; &#8594; &#945;:',
             '  lfp f = the least fixed point of f   (Mathlib OrderHom.lfp)',
@@ -99,7 +101,7 @@ def build():
     E.append(sp(6))
 
     E.append(result_box(
-        'Proposition: fork_le (ZPP.lean)',
+        'Proposition: fork_le (FixedPointFork.lean)',
         [
             'lfp f &#8804; gfp f',
             'The inductive closure never exceeds the coinductive closure: the fork has '
@@ -110,7 +112,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: collapse_of_unique (ZPP.lean)',
+        'Lemma: collapse_of_unique (FixedPointFork.lean)',
         [
             'If x is the unique fixed point of f, then lfp f = x and gfp f = x.',
             'Both ends of the fork land on the sole fixed point.',
@@ -121,7 +123,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Lemma: unique_of_collapse (ZPP.lean)',
+        'Lemma: unique_of_collapse (FixedPointFork.lean)',
         [
             'If lfp f = gfp f, then every fixed point of f equals that common value.',
             'Every fixed point lies between lfp f and gfp f, so collapse forces uniqueness.',
@@ -132,7 +134,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: fork_collapse_iff (ZPP.lean) &#8212; the schema spine',
+        'Theorem: fork_collapse_iff (FixedPointFork.lean) &#8212; the schema spine',
         [
             'lfp f = gfp f  &#8596;  &#8707;! x, f x = x',
             'The fork collapses to a single contact point if and only if f has a unique '
@@ -186,7 +188,7 @@ def build():
              'the Kleene quine / self-application; ZP-K'],
             ['Category theory',
              'initial algebra (W-types) vs final coalgebra (M-types)',
-             'QPF.Fix vs QPF.Cofix; ZPP_Coalgebra.lean'],
+             'QPF.Fix vs QPF.Cofix; Coalgebra.lean'],
         ],
         col_widths=[TW * 0.20, TW * 0.42, TW * 0.38],
     ))
@@ -202,7 +204,7 @@ def build():
         'and its valuation diverges (v<sub>2</sub>(0) = &#8734; &#8212; the snap holds).'))
 
     E.append(result_box(
-        'Theorem: completions_exhaustive (ZPP_Ostrowski.lean)',
+        'Theorem: completions_exhaustive (Ostrowski.lean)',
         [
             'Every nontrivial absolute value on &#8474; is equivalent to the real absolute '
             'value, or to a p-adic absolute value for a unique prime p.',
@@ -214,7 +216,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'Theorem: real_not_equiv_padic (ZPP_Ostrowski.lean)',
+        'Theorem: real_not_equiv_padic (Ostrowski.lean)',
         [
             'The real absolute value is inequivalent to every p-adic absolute value.',
             'The two kinds of completion are genuinely distinct &#8212; never the same metric. '
@@ -252,7 +254,7 @@ def build():
         'in &#957;F but not &#956;F.'))
 
     E.append(result_box(
-        'Theorem: categorical_fork_strict (ZPP_Coalgebra.lean)',
+        'Theorem: categorical_fork_strict (Coalgebra.lean)',
         [
             'IsEmpty (Fix idPF.Obj) &#8743; Nonempty (Cofix idPF.Obj)',
             'The initial algebra (least fixed point, &#956;) is empty; the final coalgebra '
@@ -350,14 +352,14 @@ def build():
     E.append(data_table(
         headers=['Result', 'File / Section', 'Axioms'],
         rows_data=[
-            ['fork_le', 'ZPP.lean §I', 'choice-free'],
-            ['collapse_of_unique', 'ZPP.lean §I', 'choice-free'],
-            ['unique_of_collapse', 'ZPP.lean §I', 'choice-free'],
-            ['fork_collapse_iff', 'ZPP.lean §I', 'choice-free'],
-            ['completions_exhaustive', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
-            ['real_not_equiv_padic', 'ZPP_Ostrowski.lean §II', 'Classical.choice'],
-            ['fix_isEmpty', 'ZPP_Coalgebra.lean §II', 'choice-free'],
-            ['cofix_nonempty', 'ZPP_Coalgebra.lean §II', 'Classical.choice'],
+            ['fork_le', 'FixedPointFork.lean §I', 'choice-free'],
+            ['collapse_of_unique', 'FixedPointFork.lean §I', 'choice-free'],
+            ['unique_of_collapse', 'FixedPointFork.lean §I', 'choice-free'],
+            ['fork_collapse_iff', 'FixedPointFork.lean §I', 'choice-free'],
+            ['completions_exhaustive', 'Ostrowski.lean §II', 'Classical.choice'],
+            ['real_not_equiv_padic', 'Ostrowski.lean §II', 'Classical.choice'],
+            ['fix_isEmpty', 'Coalgebra.lean §II', 'choice-free'],
+            ['cofix_nonempty', 'Coalgebra.lean §II', 'Classical.choice'],
         ],
         col_widths=[TW * 0.42, TW * 0.33, TW * 0.25],
     ))
@@ -366,12 +368,12 @@ def build():
     E.append(axiom_box(
         'Axiom Purity',
         [
-            'Fork spine (ZPP.lean): [propext, Quot.sound] &#8212; choice-free. The schema needs '
+            'Fork spine (FixedPointFork.lean): [propext, Quot.sound] &#8212; choice-free. The schema needs '
             'no Axiom of Choice.',
-            'Number-system instance (ZPP_Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
+            'Number-system instance (Ostrowski.lean): [propext, Classical.choice, Quot.sound] '
             '&#8212; Classical.choice inherited from Mathlib\'s classical analysis / number '
             'theory (Ostrowski).',
-            'Categorical instance (ZPP_Coalgebra.lean): split &#8212; fix_isEmpty (&#956; empty) '
+            'Categorical instance (Coalgebra.lean): split &#8212; fix_isEmpty (&#956; empty) '
             'is choice-free [propext, Quot.sound]; cofix_nonempty (&#957; inhabited) carries '
             'Classical.choice from the M-type / corecursion machinery.',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
@@ -387,7 +389,7 @@ def build():
             'Ostrowski number-system instance | categorical &#956;/&#957; instance '
             '(Fix empty / Cofix inhabited) | hard fence: cross-instance identity is a type '
             'boundary | soft fence: not every fork is &#956;/&#957; | '
-            'All ZPP.lean / ZPP_Ostrowski.lean / ZPP_Coalgebra.lean theorems verified.</i>',
+            'All FixedPointFork.lean / Ostrowski.lean / Coalgebra.lean theorems verified.</i>',
             S['endnote']),
     ]
 

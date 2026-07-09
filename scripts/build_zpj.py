@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-J: Executability of Self-Reference PDF Builder
-Version 2.3 | June 2026
+Version 2.5 | July 2026
+v2.5: Rendered Lean citations synced to post-reorg files/namespaces the v2.4 pass missed: ZPJ.lean -> SetTheoryAFA.lean; ZeroParadox.ZPJ.* -> ZeroParadox.* (per-layer namespaces flattened); ZPE.da2_bottom_characterization -> da2_bottom_characterization (now in Snap.lean).
+v2.4: Rendered Lean-file citations synced to post-reorg basenames (ZPJ_AczelConn.lean -> AczelConn.lean, etc.). Docstring changelog above kept as the historical record.
 v2.2: Remaining rendered self-version refs removed — §VII preamble "Version 2.0 extends", v2.0/v1.0 register cells, validation "v2.0:" line (C1 sweep). Fixed null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>) and a garbled ≤ subscript.
 v2.1: Version changelog removed from preamble; version stripped from section headers and endnote.
 v2.0: Four new sections added — Section VII (Aczel DC-free connection),
@@ -18,7 +20,7 @@ v1.0: Initial release — Theorem T-EXEC; all ZPJ.lean theorems axiom-free.
 import os
 from zp_utils import *
 
-VERSION = '2.3'
+VERSION = '2.5'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -158,7 +160,7 @@ def build():
         'by at most one element (quine_unique). The third structural field &#8212; bot_self_mem &#8212; '
         'is where the bridge is built.'))
     E.append(body(
-        'The AFAStructure typeclass in ZPJ.lean captures exactly this. Its three fields are '
+        'The AFAStructure typeclass in SetTheoryAFA.lean captures exactly this. Its three fields are '
         'sufficient to derive T-EXEC with no additional axioms. The full AFA machinery '
         '(APGs, bisimulation, decoration) provides the informal justification for why any '
         'concrete lattice grounded in ZF+AFA satisfies these three fields &#8212; but the formal '
@@ -177,7 +179,7 @@ def build():
         'encode standard AFA properties. The third is the bridge.'))
 
     E.append(def_box(
-        'AFAStructure Typeclass (ZPJ.lean &#167; I)',
+        'AFAStructure Typeclass (SetTheoryAFA.lean &#167; I)',
         [
             'class AFAStructure (L : Type*) [ZPSemilattice L] with:',
             '(1) selfMem : L &#8594; Prop  '
@@ -231,7 +233,7 @@ def build():
 
     E.append(Paragraph('III. Why a Typeclass Field Rather than a Freestanding Axiom', S['h2']))
     E.append(body(
-        'In the stub version of ZPJ.lean, the bridge was a freestanding axiom: '
+        'In the stub version of SetTheoryAFA.lean, the bridge was a freestanding axiom: '
         'ax_j1_quine_join_identity. It stated directly that the Quine atom satisfies the '
         'join-identity. This compiled, but the purity check showed T-EXEC depending on '
         'ax_j1_quine_join_identity &#8212; a named axiom floating outside any typeclass.'))
@@ -263,7 +265,7 @@ def build():
             'Statement: Let L be a ZP-A semilattice with AFAStructure. '
             'If q : L is a Quine atom (selfMem(q) and q is unique among self-containing '
             'elements), then q = &#8869;.',
-            'Lean: ZeroParadox.ZPJ.t_exec &#8212; proved in ZPJ.lean. '
+            'Lean: ZeroParadox.t_exec &#8212; proved in SetTheoryAFA.lean. '
             'Purity: does not depend on any axioms. &#10003;',
         ]
     ))
@@ -308,7 +310,7 @@ def build():
             'In any AFAStructure lattice L: IsQuineAtom(&#8869;).',
             'Proof: &#8869; is self-containing by bot_self_mem. Any other self-containing '
             'x satisfies x = &#8869; by quine_unique(x, &#8869;, selfMem(x), bot_self_mem).',
-            'Lean: ZeroParadox.ZPJ.bot_is_quine_atom &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.bot_is_quine_atom &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -326,7 +328,7 @@ def build():
             'The three conditions are mutually equivalent: Quine atom (set-theoretic), '
             'bottom element (order-theoretic), and join-identity element (algebraic). '
             'They are three formulations of one structural role.',
-            'Lean: ZeroParadox.ZPJ.t_exec_iff &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.t_exec_iff &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -340,7 +342,7 @@ def build():
 
     E.append(Paragraph('I. J1 &#8212; QuineJoinIdentity (Derived)', S['h2']))
     E.append(body(
-        'In the initial stub of ZPJ.lean, the claim "the Quine atom satisfies the join-identity" '
+        'In the initial stub of SetTheoryAFA.lean, the claim "the Quine atom satisfies the join-identity" '
         'was stated as a freestanding axiom (ax_j1_quine_join_identity). ZP-J replaces it with '
         'a theorem.'))
     E.append(result_box(
@@ -350,7 +352,7 @@ def build():
             'Proof: q = &#8869; by T-EXEC. Then join q x = join &#8869; x = x by A4 (bot_join, ZP-A). &#10003;',
             'Status: DERIVED THEOREM. Was axiom ax_j1_quine_join_identity in the stub &#8212; '
             'now proved from T-EXEC + ZP-A A4. No freestanding axiom remains.',
-            'Lean: ZeroParadox.ZPJ.j1_quine_join_identity &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.j1_quine_join_identity &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -369,7 +371,7 @@ def build():
             'The modelling commitment "we choose &#8869; as the initial state" is replaced by '
             '"the Quine atom IS &#8869;, structurally." Starting at Q and starting at &#8869; '
             'are not two choices &#8212; they are the same state, identified by structure.',
-            'Lean: ZeroParadox.ZPJ.cc1_derived &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.cc1_derived &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -385,7 +387,7 @@ def build():
             'For any ZP-A semilattice L (no AFA required): if x, y : L both satisfy '
             '&#8704; z, join x z = z and &#8704; z, join y z = z, then x = y.',
             'Proof: da2_bottom_characterization gives x = &#8869; and y = &#8869;. Therefore x = y.',
-            'Lean: ZeroParadox.ZPJ.bot_unique &#8212; does not depend on any axioms. &#10003;',
+            'Lean: ZeroParadox.bot_unique &#8212; does not depend on any axioms. &#10003;',
         ]
     ))
     E.append(sp(6))
@@ -402,7 +404,7 @@ def build():
         'T-EXEC and its corollaries carry zero freestanding axioms in the Lean 4 purity check. '
         'The entire derivation traces to the fields of two typeclasses: ZPSemilattice (from ZP-A) '
         'and AFAStructure (new in ZP-J). No standalone axiom statement appears anywhere in the '
-        'ZPJ.lean proof obligations.'))
+        'SetTheoryAFA.lean proof obligations.'))
     E.append(body(
         'The foundational commitments are the typeclass fields themselves. In ZPSemilattice: '
         'A1&#8211;A4 (the semilattice axioms). In AFAStructure: selfMem (a predicate), '
@@ -457,7 +459,7 @@ def build():
     ]
 
     E.append(body(
-        '<i>Formalised in ZPJ_AczelConn.lean as an immediate extension of the T-EXEC typeclass '
+        '<i>Formalised in AczelConn.lean as an immediate extension of the T-EXEC typeclass '
         'encoding; the DC-free observation follows directly from quine_unique.</i>',
         style='bodyI'))
     E.append(sp(4))
@@ -479,9 +481,9 @@ def build():
         'In ZP\'s encoding, the analogue of Aczel\'s J&#8721; for the self-membership operator '
         'is J_self = {x : L | selfMem(x)} &#8212; the set of self-containing elements. '
         'The key results about J_self follow immediately from AFAStructure '
-        '(Lean: ZPJ_AczelConn.lean &#167; I):'))
+        '(Lean: AczelConn.lean &#167; I):'))
     E.append(result_box(
-        'J_self Theorems (ZPJ_AczelConn.lean &#167; I)',
+        'J_self Theorems (AczelConn.lean &#167; I)',
         [
             'bot &#8712; J_self: the bottom element is self-containing. (AFAStructure.bot_self_mem.)',
             'J_self_eq_bot: every x &#8712; J_self satisfies x = &#8869;. '
@@ -500,9 +502,9 @@ def build():
     E.append(Paragraph('III. The Abstract Principle: Uniqueness Eliminates DC', S['h2']))
     E.append(body(
         'The argument is not specific to self-membership. It holds for any predicate with a '
-        'unique witness. ZPJ_AczelConn.lean makes this explicit:'))
+        'unique witness. AczelConn.lean makes this explicit:'))
     E.append(result_box(
-        'Theorem singleton_from_unique_witness (ZPJ_AczelConn.lean &#167; II)',
+        'Theorem singleton_from_unique_witness (AczelConn.lean &#167; II)',
         [
             'For any type &#945; and predicate P : &#945; &#8594; Prop: '
             'if w satisfies P(w) and &#8704; x, P(x) &#8594; x = w, '
@@ -532,7 +534,7 @@ def build():
     ]
 
     E.append(body(
-        '<i>Developed in ZPJ_SelfApp.lean and ZPJ_Scale.lean after T-EXEC was established; '
+        '<i>Developed in SelfApp.lean and Scale.lean after T-EXEC was established; '
         'the abstraction chain reduces the axiom load of AFAStructure by deriving its fields '
         'from a minimal fixed-point structure.</i>',
         style='bodyI'))
@@ -556,7 +558,7 @@ def build():
         'AbstractSelfApp encodes the abstract pattern common to both the set-theoretic and '
         '2-adic domains: a self-application operation whose unique fixed point is &#8869;.'))
     E.append(def_box(
-        'AbstractSelfApp Typeclass (ZPJ_SelfApp.lean &#167; I)',
+        'AbstractSelfApp Typeclass (SelfApp.lean &#167; I)',
         [
             'class AbstractSelfApp (L : Type*) [ZPSemilattice L] with:',
             '(1) selfApp : L &#8594; L  &#8212; the self-application operation.',
@@ -569,7 +571,7 @@ def build():
     E.append(body(
         'From these two fields, all three AFAStructure fields become derived theorems:'))
     E.append(result_box(
-        'Derived Results from AbstractSelfApp (ZPJ_SelfApp.lean &#167; II&#8211;III)',
+        'Derived Results from AbstractSelfApp (SelfApp.lean &#167; II&#8211;III)',
         [
             'selfMemDerived x := selfApp(x) = x  &#8212; self-containment as fixed-point property.',
             'derived_bot_self_mem: selfMemDerived(&#8869;) &#8212; from fixed_bot. &#10003;',
@@ -591,7 +593,7 @@ def build():
         'valuation. Only &#8869;, which has infinite valuation (val(&#8869;) = &#8868;), '
         'can be a fixed point.'))
     E.append(def_box(
-        'ValuationStructure Typeclass (ZPJ_Scale.lean &#167; I)',
+        'ValuationStructure Typeclass (Scale.lean &#167; I)',
         [
             'class ValuationStructure (L : Type*) [ZPSemilattice L] with:',
             '(1) scale : L &#8594; L  &#8212; the self-application (scaling) operation.',
@@ -606,7 +608,7 @@ def build():
     ))
     E.append(sp(6))
     E.append(result_box(
-        'Derived Results from ValuationStructure (ZPJ_Scale.lean &#167; II&#8211;IV)',
+        'Derived Results from ValuationStructure (Scale.lean &#167; II&#8211;IV)',
         [
             'val_finite_of_ne_bot: x &#8800; &#8869; &#8658; val(x) &#8800; &#8868;  '
             '&#8212; contrapositive of val_unique. &#10003;',
@@ -650,7 +652,7 @@ def build():
     ]
 
     E.append(body(
-        '<i>Developed in ZPJ_Model.lean and ZPJ_OntBridge.lean to ground the abstraction '
+        '<i>Developed in Model.lean and OntBridge.lean to ground the abstraction '
         'chain in concrete types; OntologicalStates takes a shorter path because its '
         'two-element structure cannot support val_scale.</i>',
         style='bodyI'))
@@ -665,7 +667,7 @@ def build():
         'So &#8868; is the ZP-bottom (valuation &#8734;, unique fixed point) and 0 is the '
         'ZP-maximum (fully constrained).'))
     E.append(def_box(
-        '&#8469;&#8734; Instances (ZPJ_Model.lean)',
+        '&#8469;&#8734; Instances (Model.lean)',
         [
             'instNatInfZPS: ZPSemilattice &#8469;&#8734; with join = min, bot = &#8868;. '
             'A1&#8211;A3: min is associative, commutative, idempotent. '
@@ -679,7 +681,7 @@ def build():
     ))
     E.append(sp(6))
     E.append(result_box(
-        'Derived AFA Content on &#8469;&#8734; (ZPJ_Model.lean &#167; III)',
+        'Derived AFA Content on &#8469;&#8734; (Model.lean &#167; III)',
         [
             'natInf_scale_unique_fp: x + 1 = x &#8658; x = &#8868;. '
             '(The unique fixed point of (&#183; + 1) in &#8469;&#8734; is &#8868;.) &#10003;',
@@ -703,7 +705,7 @@ def build():
         'exist &#8614; null &#8800; exist (unique_fp holds vacuously for exist). '
         'AFA content follows immediately from the AbstractSelfApp instance.'))
     E.append(def_box(
-        'OntologicalStates Instances (ZPJ_OntBridge.lean)',
+        'OntologicalStates Instances (OntBridge.lean)',
         [
             'instOntZPS: ZPSemilattice OntologicalStates with null-identity join and bot = null. '
             'All four axioms proved by case analysis. &#10003;',
@@ -714,7 +716,7 @@ def build():
     ))
     E.append(sp(6))
     E.append(result_box(
-        'Derived AFA Content on OntologicalStates (ZPJ_OntBridge.lean &#167; III)',
+        'Derived AFA Content on OntologicalStates (OntBridge.lean &#167; III)',
         [
             'ont_bot_self_mem: null is self-containing. &#10003;',
             'ont_quine_unique: any two self-containing elements of OntologicalStates are equal. &#10003;',
@@ -740,7 +742,7 @@ def build():
     ]
 
     E.append(body(
-        '<i>Formalised in ZPJ_APG.lean as the most recent addition; this section proves the '
+        '<i>Formalised in APG.lean as the most recent addition; this section proves the '
         'full AFA decoration uniqueness theorem for finite accessible pointed graphs, '
         'using the typeclass chain established in Sections VIII&#8211;IX.</i>',
         style='bodyI'))
@@ -757,7 +759,7 @@ def build():
         'than sets. This avoids ZFSet (which satisfies Foundation, making self-loops impossible) '
         'and places the result in the typeclass framework established above.'))
     E.append(def_box(
-        'DecorationUniverse Typeclass (ZPJ_APG.lean &#167; II)',
+        'DecorationUniverse Typeclass (APG.lean &#167; II)',
         [
             'class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] with:',
             '(1) collect_singleton : collect {x} = scale(x)  '
@@ -780,7 +782,7 @@ def build():
         'if d(v) &#8800; &#8869;, then val(scale<sup>k</sup>(d(v))) = val(d(v)) + k &#8800; val(d(v)), '
         'contradicting d(v) = scale<sup>k</sup>(d(v)).'))
     E.append(result_box(
-        'Cyclic Vertex Theorems (ZPJ_APG.lean &#167;&#167; III&#8211;VII\')',
+        'Cyclic Vertex Theorems (APG.lean &#167;&#167; III&#8211;VII\')',
         [
             'val_iterate: val(scale<sup>k</sup>(x)) = val(x) + k for x &#8800; &#8869;. &#10003;',
             'scale_iterate_unique_fp: scale<sup>k</sup>(x) = x &#8658; x = &#8869; for k &#8805; 1. &#10003;',
@@ -809,7 +811,7 @@ def build():
         'be reached from w without creating a cycle). Reach cardinality is therefore strictly '
         'decreasing, providing a well-founded measure for the induction.'))
     E.append(result_box(
-        'Acyclic Induction and Global Uniqueness (ZPJ_APG.lean &#167;&#167; VIII&#8211;IX)',
+        'Acyclic Induction and Global Uniqueness (APG.lean &#167;&#167; VIII&#8211;IX)',
         [
             'acyclic_induction_step: if two valid decorations d&#8321;, d&#8322; agree on all '
             'children of an acyclic vertex v, they agree on v. '
@@ -856,7 +858,7 @@ def build():
          'None',
          'Lean: t_exec_iff &#8212; axiom-free &#10003;'],
         ['bot_unique: join-identity is unique',
-         'ZPE.da2_bottom_characterization',
+         'da2_bottom_characterization',
          'None',
          'Lean: bot_unique &#8212; axiom-free &#10003; (no AFA required)'],
         ['J_self = {&#8869;} (DC-free)',
@@ -938,10 +940,10 @@ def build():
          'Mathematical content unchanged; editorial update only.'],
         ['Formal ZPSemilattice instance for a ValuationStructure type',
          'OPEN &#8212; gap in chain',
-         'ZPJ_Scale.lean proves the ValuationStructure &#8594; AbstractSelfApp chain abstractly. '
+         'Scale.lean proves the ValuationStructure &#8594; AbstractSelfApp chain abstractly. '
          'Connecting a concrete type (e.g. a 2-adic type or ZP state space) to both '
          'ZPSemilattice and ValuationStructure in the same instance requires a bridge file '
-         'importing ZP-A and ZP-B. The &#8469;&#8734; instance (ZPJ_Model.lean) fills this for '
+         'importing ZP-A and ZP-B. The &#8469;&#8734; instance (Model.lean) fills this for '
          'the abstract model; a concrete ZP-grounded instance remains future work.'],
     ]
     E.append(data_table(

@@ -1,6 +1,8 @@
 """
 Build ZP-J Illustrated Companion
-Version 1.27 | June 2026
+Version 1.29 | July 2026
+v1.29: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
+v1.28: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.26: FMC precision (sweep Step 4) — Key Results box and the T-EXEC body line now split the proved structural fixed point (axiom-free) from the argued set-membership reading (the ZF+AFA setting itself).
 v1.25: §6 "future work" bridge sentence retired — the 2-adic valuation argument is now formalized (ZPJ_ScaleBridge wired into the maintained build); §7 gains the common-ancestor (ValBridge) framing — the abstract lattice track and ℤ₂ are instances of one minimal typeclass; §8 adds ℤ₂ as a third concrete model. The ℤ₂ instance is flagged as inheriting Classical.choice from Mathlib's p-adic library (unlike the axiom-free core T-EXEC).
 v1.24: Directed-graph (APG) diagram added for the Quine atom (self-loop + well-founded chain ending at ∅); arithmetic analogy scoped (it cannot show ⊥={⊥} — routed to mirror/graph); "depth" rephrased from "how far from ⊥" to intrinsic descent/valuation (Dan feedback 2026-06-15). Fixed latent null glyph scaleᵏ (&#7503; → <sup>k</sup>).
@@ -191,7 +193,7 @@ def abstraction_chain_table():
     t.setStyle(ts); return t
 
 
-VERSION = '1.27'
+VERSION = '1.29'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -309,7 +311,7 @@ def build():
         'In any type carrying the AFAStructure typeclass (in the ZF+AFA setting), an element q is a Quine atom '
         '(q = {q}, i.e. q ∈ q) if and only if q = ⊥. '
         'The Quine atom property uniquely identifies the bottom element. '
-        'Proved axiom-free in Lean 4 (ZeroParadox.ZPJ.t_exec).'))
+        'Proved axiom-free in Lean 4 (ZeroParadox.t_exec).'))
     E.append(sp(6))
     E.append(cbody(
         '<b>Quine atom &#8594; &#8869;:</b> Suppose q = {q}. AFA uniqueness says there is '
@@ -562,7 +564,7 @@ def build():
         'decoration_unique: any two valid decorations of a finite APG agree. '
         'All stated results sorry-free in Lean 4 '
         '(decoration_unique proved via strong induction on reach cardinality; '
-        'an auxiliary acyclic_decoration_unique in ZPJ_APG.lean is sorry\'d and commented out  - '
+        'an auxiliary acyclic_decoration_unique in APG.lean is sorry\'d and commented out  - '
         'it is not used by decoration_unique). &#10003;'))
     E.append(sp(6))
 

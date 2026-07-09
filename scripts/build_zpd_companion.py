@@ -107,7 +107,7 @@ def t_map_diagram():
 
     return d
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -264,7 +264,7 @@ def build():
         'states are distinct — meaning the sequence actually moved — their T-images in H '
         'are orthogonal. Each genuine transition opens a new direction. The whole ascending '
         'chain, not just the first step, unfolds through orthogonal shifts. '
-        'Lean: ZPD.t5_strict_orthogonal (axiom-free, via DP-1).'))
+        'Lean: t5_strict_orthogonal (axiom-free, via DP-1).'))
     E.append(sp(8))
 
     E.append(cbody(

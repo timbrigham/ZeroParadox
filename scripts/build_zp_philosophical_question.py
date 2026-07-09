@@ -1,5 +1,6 @@
 """
-Build: The Philosophical Question That Started This (v1.12)
+Build: The Philosophical Question That Started This (v1.13)
+v1.13: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
 v1.11: fix() guard added via Paragraph override — snap line and all raw Paragraph calls
        now pass through unicode-to-entity conversion (Watch-3 resolved).
        AR fix: residual "DA-1 is the bridge" → "DA-1 is the connecting argument".
@@ -38,7 +39,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -382,7 +383,7 @@ def build():
     E.append(body(
         'That object is zero. In the 2-adic integers, v₂(0) = ∞: zero is divisible '
         'by 2 infinitely many times. This is a theorem of standard ZF, with no AFA '
-        'import, and it is machine-verified (ZPJ_ScaleBridge.lean: '
+        'import, and it is machine-verified (ScaleBridge.lean: '
         '{x : ℤ₂ | 2x = x} = {0}). In ZF+AFA, the same computation carries '
         'additional weight: on that reading, infinite 2-adic depth is the formal signature of ⊥ = {⊥} '
         '— the null state containing itself. Same computation, same result, different '

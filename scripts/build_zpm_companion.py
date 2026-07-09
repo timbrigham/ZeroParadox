@@ -1,6 +1,7 @@
 """
 Build ZP-M Illustrated Companion
-Version 1.4 | June 2026
+Version 1.5 | June 2026
+v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.3: Rendered self-version ref removed from Key Results box header (C1 sweep).
 v1.2: fix HTML entities in String() drawing primitives (rendered literally);
       add validate_drawing() to both diagram functions; increase triangle_diagram
@@ -17,7 +18,7 @@ from zp_utils import *
 from reportlab.graphics.shapes import Drawing, Line, String, Rect, Circle, Polygon
 from reportlab.graphics import renderPDF
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -361,7 +362,7 @@ def build():
         Paragraph(
             '<i>ZP-M Illustrated Companion | ' + version_date() + ' | '
             'Companion to ZP-M: Kleene-Ordinal Bridge | '
-            'Formal verification: ZPM.lean (Lean 4 + Mathlib) | '
+            'Formal verification: Incompleteness.lean (Lean 4 + Mathlib) | '
             'Zero Paradox Project</i>',
             CS['meta']),
     ]

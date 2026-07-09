@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.2 | June 2026
+Version 1.3 | July 2026
+v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
       framework is free of the Axiom of Choice. The central theorem T-SNAP (the Binary Snap)
@@ -17,7 +18,7 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -107,8 +108,8 @@ def build():
     E.append(body(
         'A second tier of results is choice-free but uses propositional extensionality and quotient '
         'soundness (`[propext, Quot.sound]`), both standard in Lean 4. These include the structural '
-        'floor (ZPH_PowerSet.ps_structural_floor) and the wheel of fractions '
-        '(ZPJ_WheelFrac.instWheel, inf_ne_bot). No `Classical.choice`.'))
+        'floor (PowerSet.ps_structural_floor) and the wheel of fractions '
+        '(WheelFrac.instWheel, inf_ne_bot). No `Classical.choice`.'))
     E.append(sp(6))
 
     # ── Section II ───────────────────────────────────────────────────────────────
@@ -156,7 +157,7 @@ def build():
         '<i>requires</i> choice. So the analytic-layer dependence may be removable.'))
     E.append(body(
         'One layer has been classified directly. In the "choice-probe" experiment, the '
-        '`Classical.choice` in the 2-adic tree construction (ZPB_PadicTree) decomposed into three '
+        '`Classical.choice` in the 2-adic tree construction (PadicTree) decomposed into three '
         'sources: incidental tactic artifacts (removed, leaving those results choice-free); Mathlib\'s '
         'classically-proved connectivity API (routable by a path-uniqueness reformulation); and '
         '`sInf` on a complete lattice (routable by a redefinition). The verdict for that layer was '

@@ -23,3 +23,9 @@ lean_packages/
 
 # build / session logs (transient diagnostics)
 *.log
+
+# Python bytecode cache (tools/)
+__pycache__/
+*.pyc
+# Generated diagram artifacts (regenerate via tools/render/*.py)
+tools/render/*.svg
