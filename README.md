@@ -132,7 +132,7 @@ Open questions are discussed publicly in the [GitHub Discussions Open Questions 
 
 ## Version History
 
-Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). Previous document versions are in [historical/](historical/). See [GUIDE.md](GUIDE.md) for development notes and process documentation.
+Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). Previous document versions are preserved in the repository's git history and in each release's Zenodo/DOI snapshot. See [GUIDE.md](GUIDE.md) for development notes and process documentation.
 
 ---
 
