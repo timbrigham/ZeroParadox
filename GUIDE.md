@@ -6,6 +6,8 @@
 
 For a dictionary and map of ⊥ - the object the whole framework is built on - see [The Bottom Element](BOTTOMELEMENT.md). For the formal framework index, Lean verification, and complete question register, see [README](README.md).
 
+Followed a link that broke after the v3.0 source reorganization? Report anything stale in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
+
 ---
 
 ## What This Is
