@@ -90,6 +90,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 |------|-------------|
 | [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The philosophical question that motivated the framework, and what the formal results say about it. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
+| [Forced but Not Proved: A Reader's Guide](fmc_guide.md) | Plain-language guide to the framework's confidence labels. What "proved," "forced," "chosen," and "open" mean, and why some results are chosen rather than proved. The accessible companion to [fmc.md](fmc.md). |
 
 ---
 
