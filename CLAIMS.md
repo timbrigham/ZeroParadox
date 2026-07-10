@@ -9,6 +9,8 @@ This ledger is a *view*, not a new source of truth. The authorities it consolida
 - **The "argued, not proved" tier** — [fmc.md](fmc.md) (Forced Metatheoretic Commitment: definition, conditions, falsifiers).
 - **Versions and script hashes** — [register.md](register.md).
 
+If a Lean witness or file link below no longer resolves after the v3.0 source reorganization, the old→new map is in [`ssot.json`](ssot.json); report anything stale in [discussion #120](https://github.com/timbrigham/ZeroParadox/discussions/120).
+
 **How to verify the axiom column yourself.** Lean's kernel reports the complete axiom dependency of each theorem:
 
 ```

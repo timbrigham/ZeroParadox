@@ -6,7 +6,7 @@ Lean 4 + Mathlib proofs for the Zero Paradox framework. The central result is **
 
 ## Source layout
 
-As of **v3.0** the source is organized by domain - `ZeroParadox/<Domain>/<Name>.lean` (e.g. `Order/`, `Valuation/`, `Ordinal/`, `Settheory/`, `Category/`, `Computability/`, `State/`, `Information/`, `Multihomed/`, `Reals/`, `Algebra/`) - all under a single flat `ZeroParadox` namespace. Earlier versions used a flat `ZeroParadox/ZPx_*.lean` layout with per-layer namespaces; those file paths and namespace prefixes are retired. The complete old→new file/declaration mapping is recorded in [`ssot.json`](../ssot.json), and SHA-pinned permalinks to earlier commits remain valid.
+As of **v3.0** the source is organized by domain - `ZeroParadox/<Domain>/<Name>.lean` (e.g. `Order/`, `Valuation/`, `Ordinal/`, `Settheory/`, `Category/`, `Computability/`, `State/`, `Information/`, `Multihomed/`, `Reals/`, `Algebra/`) - all under a single flat `ZeroParadox` namespace. Earlier versions used a flat `ZeroParadox/ZPx_*.lean` layout with per-layer namespaces; those file paths and namespace prefixes are retired. The complete old→new file/declaration mapping is recorded in [`ssot.json`](../ssot.json), and SHA-pinned permalinks to earlier commits remain valid. Followed an old `blob/main` link that broke? Report it in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
 ## Build
 

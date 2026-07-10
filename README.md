@@ -9,6 +9,8 @@ For plain-language introduction, illustrated companions, and reading paths, see 
 
 **New to the framework?** [The Bottom Element (⊥)](BOTTOMELEMENT.md) is a dictionary and map of ⊥, the object the whole framework is built on. It catalogues what ⊥ is, what it cannot be, and where each characterization is established, most with a machine-checked Lean witness linked to the source. Start there for orientation, then return here for the formal index.
 
+Followed a link that broke after the v3.0 source reorganization? The old→new file and declaration map is in [`ssot.json`](ssot.json); report anything we missed in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
+
 ---
 
 ## Contents
