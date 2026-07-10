@@ -18,6 +18,20 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 
 ---
 
+## The short version: concepts that should not coincide, but do
+
+One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
+
+**Proved - the same element, four names.** In any Kleene-structured ZP lattice, the *Quine atom* (a set that is its own only member, set theory / AFA), the *Kleene fixed point* (a program that reproduces itself, computability), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element**. The three-name core - Quine atom = order-bottom ⊥ = join-identity - is **axiom-free** ([`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean)); adding the fourth name, the Kleene fixed point, is proved via [`t_comp`](ZeroParadox/Computability/Kleene.lean) and [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean), which inherit `Classical.choice` from Mathlib's recursion theorem. The set that is its own only member is the program that prints itself - a theorem here, not an analogy.
+
+**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ ([`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean)); unbounded surprisal, the state with no finite description ([`t2_diverges`](ZeroParadox/Information/Surprisal.lean)); the categorical bottom of each real Mathlib category, an inverse limit or initial object ([`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski ([`completions_exhaustive`](ZeroParadox/Valuation/Ostrowski.lean), [`real_not_equiv_padic`](ZeroParadox/Valuation/Ostrowski.lean)). They all instantiate one abstract schema, choice-free ([`fork_collapse_iff`](ZeroParadox/Settheory/FixedPointFork.lean)); and the ε₀ ceiling is co-witnessed with the 2-adic limit and the machine snap ([`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean)).
+
+**Argued - a metatheoretic squeeze, not a theorem.** That ⊥ = {⊥} *forces* ZF+AFA over Foundation is argued, not proved: Foundation too restrictive, Boffa too permissive, AFA the unique fit, with a named falsifier. The *structural* fixed point is machine-checked and axiom-free ([`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean)); the AFA *forcing* is a Forced Metatheoretic Commitment, stronger than a free modeling choice and weaker than a theorem.
+
+**Committed - the identity.** That all of these floors are *numerically one object* across their different carriers and categories is a modeling commitment (MC-1), not a theorem - `x = y` across distinct categories is not even a well-formed proposition. It is offered to these communities, not imposed. The map below is the full account: exactly where the representations align, and where they are provably *distinct* (the "walls").
+
+---
+
 ## Reading key (for a reader with no prior context)
 
 **Slot codes** (the map columns, and the positive dictionary entries):

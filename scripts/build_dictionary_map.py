@@ -215,6 +215,31 @@ def render_cell_details():
     out.append("</details>")
     return "\n".join(out)
 
+# --- Front-door on-ramp: the same fixed point across disparate fields, tiered by confidence ---
+# The witnesses named in the prose auto-link via link_in_text(); this list forces a fail-loud
+# UNRESOLVED warning if any of them is renamed/moved (so the on-ramp cannot silently rot).
+ROSETTA_WITNESSES = [
+    "t_comp", "t_exec", "kleene_quine_is_bot", "addVal_bot", "t2_diverges",
+    "mc1_correspondence", "completions_exhaustive", "real_not_equiv_padic",
+    "fork_collapse_iff", "zpm_triangle",
+]
+def render_rosetta():
+    for w in ROSETTA_WITNESSES:
+        if w not in INDEX and w not in FIELD_OVERRIDE:
+            UNRESOLVED.append(w)
+    body = """## The short version: concepts that should not coincide, but do
+
+One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
+
+**Proved - the same element, four names.** In any Kleene-structured ZP lattice, the *Quine atom* (a set that is its own only member, set theory / AFA), the *Kleene fixed point* (a program that reproduces itself, computability), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element**. The three-name core - Quine atom = order-bottom ⊥ = join-identity - is **axiom-free** (t_exec); adding the fourth name, the Kleene fixed point, is proved via t_comp and kleene_quine_is_bot, which inherit `Classical.choice` from Mathlib's recursion theorem. The set that is its own only member is the program that prints itself - a theorem here, not an analogy.
+
+**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ (addVal_bot); unbounded surprisal, the state with no finite description (t2_diverges); the categorical bottom of each real Mathlib category, an inverse limit or initial object (mc1_correspondence); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski (completions_exhaustive, real_not_equiv_padic). They all instantiate one abstract schema, choice-free (fork_collapse_iff); and the ε₀ ceiling is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle).
+
+**Argued - a metatheoretic squeeze, not a theorem.** That ⊥ = {⊥} *forces* ZF+AFA over Foundation is argued, not proved: Foundation too restrictive, Boffa too permissive, AFA the unique fit, with a named falsifier. The *structural* fixed point is machine-checked and axiom-free (t_exec); the AFA *forcing* is a Forced Metatheoretic Commitment, stronger than a free modeling choice and weaker than a theorem.
+
+**Committed - the identity.** That all of these floors are *numerically one object* across their different carriers and categories is a modeling commitment (MC-1), not a theorem - `x = y` across distinct categories is not even a well-formed proposition. It is offered to these communities, not imposed. The map below is the full account: exactly where the representations align, and where they are provably *distinct* (the "walls")."""
+    return link_in_text(body)
+
 PAGE = """# The Bottom Element (⊥) - Dictionary and Map
 
 *A dictionary and map of the framework's bottom element ⊥ - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
@@ -232,6 +257,10 @@ This is a **reference** for the framework's bottom element ⊥: a **dictionary**
 *proved* is that each construction's bottom belongs to the family and that the slot structure recurs; that
 the various bottoms are *one object* stays a conjecture - they are provably distinct as structures (the
 "walls"). It closes a standing gap: a framework built on ⊥ that had not yet characterized ⊥ itself.
+
+---
+
+{rosetta}
 
 ---
 
@@ -342,6 +371,7 @@ render natively on GitHub.*
 
 def main():
     page = PAGE.format(
+        rosetta=render_rosetta(),
         slot_gloss=render_slot_gloss(),
         construction_gloss=render_construction_gloss(),
         terms=render_terms(),
