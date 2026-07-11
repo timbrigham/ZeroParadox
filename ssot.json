@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1051,
+        "declarations": 1054,
         "files": 136
       },
       "entries": [
@@ -4333,6 +4333,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "15906b3e-281e-499c-b760-98137c603b21",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallIndicator.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ball_measurableSet",
+            "short": "ball_measurableSet"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20990,6 +21026,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "875a3295-df68-42a5-bb4c-bad7f93dd14b",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallIndicator.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_ballIndicatorL2",
+            "short": "norm_ballIndicatorL2"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8764e5ee-2f98-426a-a0a4-17a457e2bb58",
           "new": {
@@ -25237,6 +25309,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a67039e0-4e48-4d33-88d1-0e3a25d85a45",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicBallIndicator.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ballIndicatorL2",
+            "short": "ballIndicatorL2"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
