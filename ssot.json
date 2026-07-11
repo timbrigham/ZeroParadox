@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1048,
+        "declarations": 1051,
         "files": 136
       },
       "entries": [
@@ -1670,6 +1670,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "056b970f-1973-400a-99a0-7c15fe0f2177",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKoopman.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.koopman",
+            "short": "koopman"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21353,6 +21389,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8accbace-483e-4ce4-8345-e7ac94ba29ed",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKoopman.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.koopmanOdometer",
+            "short": "koopmanOdometer"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8ad07bd6-6ae9-46fb-a9d2-9ba781f04674",
           "new": {
@@ -35515,6 +35587,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eb1c31b5-7215-425e-b6c1-3615a3a72a69",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKoopman.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.measurePreserving_odometer",
+            "short": "measurePreserving_odometer"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
