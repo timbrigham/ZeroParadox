@@ -68,7 +68,37 @@ theorem paChar_integrable (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) :
   intro r _
   exact (integrable_const (φ r)).indicator (toZModPow_fiber_measurableSet n r)
 
-/-! ## § II — The level-1 eigenfunction -/
+/-! ## § II — The eigenfunction property (any level) -/
+
+/-- **Characters are eigenfunctions of `D^α`.** For any level-`n` character, `D^α (paChar n φ) x` factors
+    as `paChar n φ x · D^α (paChar n φ) 0`: the value at `x` is the value at `0` times the character. This
+    is the eigenfunction property, and it needs neither primitivity nor the crane — only that `paChar` is a
+    character (`χ(y) = χ(x)·χ(y−x)`) and that `D^α` is translation-invariant. The eigenvalue is
+    `D^α (paChar n φ) 0` (computed separately). -/
+theorem vladimirov_paChar_eigen (α : ℝ) (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (x : ℤ_[p]) :
+    vladimirov α (paChar (p := p) n φ) x
+      = paChar (p := p) n φ x * vladimirov α (paChar (p := p) n φ) 0 := by
+  have h0 : paChar (p := p) n φ 0 = 1 := by
+    simp [paChar]
+  unfold vladimirov
+  rw [← MeasurePreserving.integral_comp (measurePreserving_add_left (haarZp (p := p)) x)
+      (measurableEmbedding_addLeft x)
+      (fun y => (paChar (p := p) n φ x - paChar (p := p) n φ y) * (vladimirovKernel α x y : ℂ))]
+  trans (∫ z, paChar (p := p) n φ x
+      * ((paChar (p := p) n φ 0 - paChar (p := p) n φ z) * (vladimirovKernel α 0 z : ℂ))
+      ∂(haarZp (p := p)))
+  · refine integral_congr_ae (Filter.Eventually.of_forall (fun z => ?_))
+    have hchar : paChar (p := p) n φ (x + z) = paChar (p := p) n φ x * paChar (p := p) n φ z :=
+      paChar_add n φ x z
+    have hker : vladimirovKernel α x (x + z) = vladimirovKernel α 0 z := by
+      have h : x - (x + z) = 0 - z := by ring
+      simp only [vladimirovKernel, h]
+    simp only [hchar, hker, h0]
+    ring
+  · exact integral_const_mul (paChar (p := p) n φ x)
+      (fun z => (paChar (p := p) n φ 0 - paChar (p := p) n φ z) * (vladimirovKernel α 0 z : ℂ))
+
+/-! ## § III — The level-1 eigenfunction -/
 
 /-- **The level-1 character is an eigenfunction of `D^α`, with eigenvalue 1.** Because `paChar 1 φ` is
     constant on radius-`p⁻¹` balls, the kernel factor collapses to `1`, and the crane `∫ χ = 0` closes
@@ -101,5 +131,6 @@ end ZeroParadox
 section PurityCheck
 open ZeroParadox
 #print axioms paChar_integrable
+#print axioms vladimirov_paChar_eigen
 #print axioms vladimirov_paChar_one
 end PurityCheck

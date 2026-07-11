@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1089,
+        "declarations": 1090,
         "files": 136
       },
       "entries": [
@@ -6969,6 +6969,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "273fba6c-4951-4321-9004-0a4ea769fbb5",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_paChar_eigen",
+            "short": "vladimirov_paChar_eigen"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
