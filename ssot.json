@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1079,
+        "declarations": 1087,
         "files": 136
       },
       "entries": [
@@ -8100,6 +8100,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2f9ac8cc-7432-4cc8-a388-28a63cda4988",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_integral_eq_zero",
+            "short": "paChar_integral_eq_zero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -16191,6 +16227,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "64e5e1dc-eebc-4af0-b3ba-6fd06107453b",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_locally_constant",
+            "short": "paChar_locally_constant"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6618472d-4e44-455f-bda2-bf117bb9387f",
           "new": {
@@ -20790,6 +20862,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "81ebd929-eb44-45b7-ac13-0af8a5a7b0e4",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toZModPow_fiber_measure",
+            "short": "toZModPow_fiber_measure"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26340,6 +26448,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "aaae4db3-8e98-4dee-a369-cf80bb0a27ac",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toZModPow_fiber_measurableSet",
+            "short": "toZModPow_fiber_measurableSet"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "aaceaf84-44d2-4f0a-a78f-848c20772078",
           "new": {
@@ -30487,6 +30631,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c613f1e2-8af1-4452-9560-1437bf443572",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_add",
+            "short": "paChar_add"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c6278104-7eb7-49e8-b8b5-71045e5d4bd0",
           "new": {
@@ -32672,6 +32852,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d3bbc29e-09bf-40bc-8909-4835ea0cb768",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toZModPow_fiber_eq",
+            "short": "toZModPow_fiber_eq"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d469d993-3764-490d-9db5-e1737d202414",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -33351,6 +33567,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d96bb740-68e7-4d13-8f96-21cd8809a435",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toZModPow_surjective",
+            "short": "toZModPow_surjective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37515,6 +37767,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f24705f5-ee8f-4bf6-a8a3-2cf8aad06ad1",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicCharacter.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar",
+            "short": "paChar"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
