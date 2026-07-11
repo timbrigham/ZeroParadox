@@ -277,6 +277,40 @@ theorem vladimirov_ballFun_zero (α : ℝ) (m : ℕ) :
     push_cast
     ring
 
+/-! ## § VI — The symbol `|ξ|^α`, read off the connection matrix (Fourier-free)
+
+The Taibleson–Vladimirov operator `D^α` is the Fourier multiplier by `|ξ|_p^α`. Its genuine eigenfunctions
+are the Kozyrev wavelets, which need additive characters (the Fourier wall). But the *symbol itself* can be
+read off the connection matrix without any Fourier transform: a ball of radius `p⁻ᵐ` has dual frequency
+scale `|ξ|_p = p^m` (the reciprocal radius), and the per-shell increment of `D^α` at the center is exactly
+`(1 - p⁻¹)·(p^m)^α = (1 - p⁻¹)·|ξ|^α`. This is an **operator-level** statement about `D^α` on ℤ_p; it makes
+no dynamical or physical claim, and it is not an eigenvalue (the ball indicators are not eigenfunctions). -/
+
+omit [Fact p.Prime] in
+/-- The symbol identity: `(p^α)^m = (p^m)^α`. Rewrites the per-shell factor `(p^α)^m` into `|ξ|^α` form
+    with `|ξ| = p^m` (the reciprocal of the ball radius `p⁻ᵐ`). -/
+theorem pow_rpow_symbol (α : ℝ) (m : ℕ) : ((p : ℝ) ^ α) ^ m = ((p : ℝ) ^ m) ^ α := by
+  have hP : (0 : ℝ) ≤ (p : ℝ) := by positivity
+  rw [← Real.rpow_natCast ((p : ℝ) ^ α) m, ← Real.rpow_mul hP, ← Real.rpow_natCast (p : ℝ) m,
+    ← Real.rpow_mul hP, mul_comm α (m : ℝ)]
+
+/-- **The `|ξ|^α` symbol, Fourier-free.** The per-shell increment of `D^α` at the center is
+    `(1 - p⁻¹)·(p^m)^α` — the Vladimirov symbol `|ξ|^α` evaluated at the shell's dual frequency scale
+    `|ξ| = p^m`. Restates `vladimirov_shell_load` in symbol form via `pow_rpow_symbol`. -/
+theorem vladimirov_shell_symbol (α : ℝ) (m : ℕ) :
+    ∫ y, shellLoad (p := p) α m y ∂(haarZp (p := p))
+      = (((1 - (p : ℝ)⁻¹) * ((p : ℝ) ^ m) ^ α : ℝ) : ℂ) := by
+  rw [vladimirov_shell_load, pow_rpow_symbol]
+
+/-- **Closed form of the connection entry.** When `p^α ≠ 1`, the geometric series sums, so `D^α` of the
+    radius-`p⁻ᵐ` ball indicator at the center is `(1 - p⁻¹)·((p^α)^m - 1)/(p^α - 1)`. -/
+theorem vladimirov_ballFun_geom (α : ℝ) (m : ℕ) (hα : (p : ℝ) ^ α ≠ 1) :
+    vladimirov α (ballFun (p := p) m) 0
+      = (((1 - (p : ℝ)⁻¹) * (((p : ℝ) ^ α) ^ m - 1) / ((p : ℝ) ^ α - 1) : ℝ) : ℂ) := by
+  rw [vladimirov_ballFun_zero, geom_sum_eq hα]
+  push_cast
+  ring
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -287,4 +321,7 @@ open ZeroParadox
 #print axioms vladimirov_ballFun_one_zero
 #print axioms vladimirov_shell_load
 #print axioms vladimirov_ballFun_zero
+#print axioms pow_rpow_symbol
+#print axioms vladimirov_shell_symbol
+#print axioms vladimirov_ballFun_geom
 end PurityCheck
