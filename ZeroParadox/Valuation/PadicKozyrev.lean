@@ -191,6 +191,58 @@ theorem sum_char_multiples_eq_zero (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (
     rw [sub_mul, one_mul, ← key, sub_self]
   exact (mul_eq_zero.mp hz).resolve_left hne
 
+/-- **Ball ↔ divisibility bridge.** For `j ≤ n`, a point lies in the radius-`p⁻ʲ` ball iff its level-`n`
+    residue is divisible by `pʲ`. (`‖x‖ ≤ p⁻ʲ ⟺ pʲ ∣ x` in `ℤ_p`, transported to `ZMod(pⁿ)`; the reverse
+    direction lifts a witness and uses `ker toZModPow n = (pⁿ)` with `pʲ ∣ pⁿ`.) -/
+theorem norm_le_iff_dvd_toZModPow (n j : ℕ) (hjn : j ≤ n) (x : ℤ_[p]) :
+    ‖x‖ ≤ (p : ℝ) ^ (-(j : ℤ)) ↔ (p : ZMod (p ^ n)) ^ j ∣ PadicInt.toZModPow n x := by
+  rw [PadicInt.norm_le_pow_iff_mem_span_pow, Ideal.mem_span_singleton]
+  have hpimg : PadicInt.toZModPow n ((p : ℤ_[p]) ^ j) = (p : ZMod (p ^ n)) ^ j := by
+    rw [map_pow, map_natCast]
+  constructor
+  · intro hdvd
+    rw [← hpimg]; exact map_dvd _ hdvd
+  · rintro ⟨s, hs⟩
+    obtain ⟨ŝ, hŝ⟩ := toZModPow_surjective n s
+    have hmem : x - (p : ℤ_[p]) ^ j * ŝ ∈ RingHom.ker (PadicInt.toZModPow n) := by
+      rw [RingHom.mem_ker, map_sub, map_mul, hpimg, hŝ, hs, sub_self]
+    rw [PadicInt.ker_toZModPow, Ideal.mem_span_singleton] at hmem
+    have hjdvd : (p : ℤ_[p]) ^ j ∣ (p : ℤ_[p]) ^ n := pow_dvd_pow _ hjn
+    have hx1 : (p : ℤ_[p]) ^ j ∣ x - (p : ℤ_[p]) ^ j * ŝ := hjdvd.trans hmem
+    have := dvd_add hx1 (dvd_mul_right ((p : ℤ_[p]) ^ j) ŝ)
+    rwa [sub_add_cancel] at this
+
+open Classical in
+/-- **Sub-ball orthogonality.** For a primitive `φ` and `j < n`, the character integrates to zero over
+    the radius-`p⁻ʲ` ball: `∫_{ball_j} paChar n φ = 0`. Reduces (via `integral_comp_toZModPow`) to the
+    subgroup character sum `∑_{pʲ ∣ r} φ(r) = 0` (`sum_char_multiples_eq_zero`). Generalizes the crane
+    (`j = 0`) to every ball strictly larger than the constancy radius. -/
+theorem paChar_ball_integral_eq_zero (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (hφ : φ.IsPrimitive)
+    {j : ℕ} (hjn : j < n) :
+    ∫ x, Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(j : ℤ))} (paChar (p := p) n φ) x
+      ∂(haarZp (p := p)) = 0 := by
+  haveI : NeZero (p ^ n) := ⟨pow_ne_zero n ‹Fact p.Prime›.out.pos.ne'⟩
+  have hq : (p : ZMod (p ^ n)) ^ j ≠ 0 := by
+    rw [← Nat.cast_pow, Ne, ZMod.natCast_eq_zero_iff]
+    intro hdvd
+    have h1 : p ^ n ≤ p ^ j := Nat.le_of_dvd (pow_pos ‹Fact p.Prime›.out.pos j) hdvd
+    have h2 : n ≤ j := (Nat.pow_le_pow_iff_right ‹Fact p.Prime›.out.one_lt).mp h1
+    omega
+  have key : ∀ x : ℤ_[p],
+      Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(j : ℤ))} (paChar (p := p) n φ) x
+        = (fun r => if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0) (PadicInt.toZModPow n x) := by
+    intro x
+    by_cases hx : x ∈ {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(j : ℤ))}
+    · rw [Set.indicator_of_mem hx]
+      simp only [if_pos ((norm_le_iff_dvd_toZModPow n j hjn.le x).mp hx)]
+      rfl
+    · rw [Set.indicator_of_notMem hx]
+      simp only [Set.mem_setOf_eq] at hx
+      simp only [if_neg (fun hc => hx ((norm_le_iff_dvd_toZModPow n j hjn.le x).mpr hc))]
+  rw [integral_congr_ae (Filter.Eventually.of_forall key),
+    integral_comp_toZModPow n (fun r => if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0),
+    sum_char_multiples_eq_zero n φ hφ hq, mul_zero]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -202,4 +254,6 @@ open ZeroParadox
 #print axioms integral_comp_toZModPow
 #print axioms sum_mulShift_eq_zero
 #print axioms sum_char_multiples_eq_zero
+#print axioms norm_le_iff_dvd_toZModPow
+#print axioms paChar_ball_integral_eq_zero
 end PurityCheck
