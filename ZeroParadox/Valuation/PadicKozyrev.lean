@@ -243,6 +243,29 @@ theorem paChar_ball_integral_eq_zero (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ)
     integral_comp_toZModPow n (fun r => if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0),
     sum_char_multiples_eq_zero n φ hφ hq, mul_zero]
 
+/-- **Innermost ball integral.** Over the constancy-radius ball `ball_n`, the character is constant `1`,
+    so `∫_{ball_n} paChar n φ = μ(ball_n) = p⁻ⁿ`. (Completes the `J_j` family: `J_j = 0` for `j < n`,
+    `J_n = p⁻ⁿ`.) -/
+theorem paChar_ball_n_integral (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) :
+    ∫ x, Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(n : ℤ))} (paChar (p := p) n φ) x
+      ∂(haarZp (p := p)) = ((((p : ℝ) ^ n)⁻¹ : ℝ) : ℂ) := by
+  haveI : NeZero (p ^ n) := ⟨pow_ne_zero n ‹Fact p.Prime›.out.pos.ne'⟩
+  have hval : Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(n : ℤ))} (paChar (p := p) n φ)
+      = Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(n : ℤ))} (fun _ => (1 : ℂ)) := by
+    funext x
+    by_cases hx : x ∈ {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(n : ℤ))}
+    · rw [Set.indicator_of_mem hx, Set.indicator_of_mem hx]
+      have h0 : (p : ZMod (p ^ n)) ^ n = 0 := by rw [← Nat.cast_pow]; exact ZMod.natCast_self _
+      have hz : PadicInt.toZModPow n x = 0 := by
+        have := (norm_le_iff_dvd_toZModPow n n le_rfl x).mp hx
+        rwa [h0, zero_dvd_iff] at this
+      simp [paChar, hz]
+    · rw [Set.indicator_of_notMem hx, Set.indicator_of_notMem hx]
+  rw [hval, integral_indicator_const _ (ball_measurableSet n), measureReal_def, haarZp_ball,
+    ENNReal.toReal_inv, ENNReal.toReal_pow, ENNReal.toReal_natCast]
+  show (((p : ℝ) ^ n)⁻¹ : ℝ) • (1 : ℂ) = ((((p : ℝ) ^ n)⁻¹ : ℝ) : ℂ)
+  rw [Complex.real_smul, mul_one]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -256,4 +279,5 @@ open ZeroParadox
 #print axioms sum_char_multiples_eq_zero
 #print axioms norm_le_iff_dvd_toZModPow
 #print axioms paChar_ball_integral_eq_zero
+#print axioms paChar_ball_n_integral
 end PurityCheck

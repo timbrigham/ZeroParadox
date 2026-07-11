@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1095,
+        "declarations": 1096,
         "files": 136
       },
       "entries": [
@@ -3341,6 +3341,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0fcc8c30-d7ad-4009-830a-3fb9c67c11ed",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_ball_n_integral",
+            "short": "paChar_ball_n_integral"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
