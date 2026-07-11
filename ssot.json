@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1075,
+        "declarations": 1077,
         "files": 136
       },
       "entries": [
@@ -24951,6 +24951,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9e078a39-8f6f-4b81-87d8-5833dc75a5f8",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.norm_inv_eq_freq",
+            "short": "norm_inv_eq_freq"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9e357454-a14b-43fc-8ee3-ba4d27ac79a3",
           "new": {
@@ -31175,6 +31211,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "caa20513-d37b-4a04-9c85-6ff5a1338103",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_shell_symbol_inv",
+            "short": "vladimirov_shell_symbol_inv"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true

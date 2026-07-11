@@ -311,6 +311,34 @@ theorem vladimirov_ballFun_geom (α : ℝ) (m : ℕ) (hα : (p : ℝ) ^ α ≠ 1
   push_cast
   ring
 
+/-! ## § VII — The scale operator IS the inversion keystone (frequency = inverse-norm of position)
+
+The frequency `|ξ| = p^m` at which `D^α` reads its symbol on shell `m` is not a separate structure: it is
+the **norm of the inverse** of any shell point. `‖x⁻¹‖ = ‖x‖⁻¹` (`norm_inv`, the norm face of `z ↦ 1/z`)
+carries the radius `p⁻ᵐ` to the frequency `p^m` — the same reflection `m ↦ −m` that the sibling valuation
+files formalize as `padic_inv_flips_valuation` (`v₂(x⁻¹) = −v₂(x)`, `ZeroParadox/Valuation/PolarityFlip.lean`)
+and `inversion_reverses_filtration` (`ZeroParadox/Valuation/InversionValuation.lean`), and that
+`rInv_swaps` (`ZeroParadox/Valuation/RiemannSphere.lean`) realizes as the literal `0 ↔ ∞` swap. Because
+`ℚ_p` is self-dual under Fourier, position and frequency share one value group, so the reciprocal `x ↦ x⁻¹`
+IS the radius↔frequency scale operator. These lemmas make that identification checkable, not narrated. -/
+
+/-- **Scale operator = inversion (norm face).** For a shell-`m` point `x` (norm `p⁻ᵐ`), the Vladimirov
+    frequency scale `p^m` is exactly `‖x⁻¹‖`. This is `‖x⁻¹‖ = ‖x‖⁻¹` (`norm_inv`) sending the radius
+    `p⁻ᵐ` to the frequency `p^m` — the norm face of the framework's `z ↦ 1/z` keystone. -/
+theorem norm_inv_eq_freq (m : ℕ) {x : ℤ_[p]} (hx : ‖x‖ = (p : ℝ) ^ (-(m : ℤ))) :
+    ‖((x : ℚ_[p]))⁻¹‖ = (p : ℝ) ^ m := by
+  rw [norm_inv, PadicInt.padic_norm_e_of_padicInt, hx, ← zpow_neg, neg_neg, zpow_natCast]
+
+/-- **The symbol's frequency is an inverse-norm.** The shell-`m` load — the per-shell `|ξ|^α` symbol of
+    § VI — evaluated at frequency `‖x⁻¹‖` for any shell point `x`. This states the M3 symbol directly in
+    terms of the inversion keystone: `D^α`'s symbol on shell `m` is `(1 - p⁻¹)·‖x⁻¹‖^α`, the power law read
+    at the inverse-norm of a point of the shell. -/
+theorem vladimirov_shell_symbol_inv (α : ℝ) (m : ℕ) {x : ℤ_[p]}
+    (hx : ‖x‖ = (p : ℝ) ^ (-(m : ℤ))) :
+    ∫ y, shellLoad (p := p) α m y ∂(haarZp (p := p))
+      = (((1 - (p : ℝ)⁻¹) * ‖((x : ℚ_[p]))⁻¹‖ ^ α : ℝ) : ℂ) := by
+  rw [vladimirov_shell_symbol, norm_inv_eq_freq m hx]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -324,4 +352,6 @@ open ZeroParadox
 #print axioms pow_rpow_symbol
 #print axioms vladimirov_shell_symbol
 #print axioms vladimirov_ballFun_geom
+#print axioms norm_inv_eq_freq
+#print axioms vladimirov_shell_symbol_inv
 end PurityCheck
