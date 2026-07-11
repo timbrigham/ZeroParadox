@@ -93,23 +93,20 @@ theorem vladimirov_ballFun_one_zero (α : ℝ) :
     vladimirov α (ballFun (p := p) 1) 0 = (1 : ℂ) - (p : ℂ)⁻¹ := by
   have hpos : (0 : ℝ) < (p : ℝ) := by exact_mod_cast ‹Fact p.Prime›.out.pos
   have hpinv : (p : ℝ) ^ (-((1 : ℕ) : ℤ)) = (p : ℝ)⁻¹ := by simp
-  have h0true : (0 : ℝ) ≤ (p : ℝ)⁻¹ := by positivity
   -- The integrand equals the indicator of the complement of the ball (the units shell).
   have key : (fun y : ℤ_[p] => (ballFun (p := p) 1 0 - ballFun (p := p) 1 y)
         * ((vladimirovKernel α 0 y : ℝ) : ℂ))
       = Set.indicator {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((1 : ℕ) : ℤ))}ᶜ (fun _ => (1 : ℂ)) := by
     funext y
     by_cases hy : ‖y‖ ≤ (p : ℝ)⁻¹
-    · simp [ballFun, Set.indicator_apply, Set.mem_setOf_eq, Set.mem_compl_iff, norm_zero, hpinv,
-        h0true, hy]
+    · simp [ballFun, Set.mem_setOf_eq, Set.mem_compl_iff, norm_zero, hy]
     · have hnorm1 : ‖y‖ = 1 := by
         have hiff := PadicInt.norm_le_pow_iff_norm_lt_pow_add_one y (-((1 : ℕ) : ℤ))
         rw [show (-((1 : ℕ) : ℤ) + 1) = 0 from by norm_num, zpow_zero, hpinv] at hiff
         exact le_antisymm (PadicInt.norm_le_one y) (not_lt.mp (fun h => hy (hiff.mpr h)))
       have hker : vladimirovKernel α 0 y = 1 := by
         simp only [vladimirovKernel, zero_sub, norm_neg, hnorm1, Real.one_rpow, inv_one]
-      simp [ballFun, Set.indicator_apply, Set.mem_setOf_eq, Set.mem_compl_iff, norm_zero, hpinv,
-        h0true, hy, hker]
+      simp [ballFun, Set.mem_setOf_eq, Set.mem_compl_iff, norm_zero, hy, hker]
   unfold vladimirov
   rw [key, integral_indicator_const (1 : ℂ) (ball_measurableSet 1).compl, measureReal_def,
     measure_compl (ball_measurableSet 1) (measure_ne_top _ _), measure_univ, haarZp_ball]
@@ -122,6 +119,164 @@ theorem vladimirov_ballFun_one_zero (α : ℝ) :
   push_cast
   ring
 
+/-! ## § V — The general-`m` connection entry: `D^α 𝟙_{ball p⁻ᵐ}(0)`
+
+The general-`m` matrix entry generalizes § IV (`m = 1`) by peeling one shell at a time. The complement
+of `ball_m` decomposes into shells of norm `p⁻ᵏ` (`k = 0,…,m-1`); on shell `k` the kernel is the constant
+`(p^α)^k · p^k`, so the radial integral is the geometric series `(1 - p⁻¹) ∑_{k<m} (p^α)^k`. -/
+
+/-- The shell `ball_m \ ball_{m+1}` (points of norm exactly `p⁻ᵐ`). Matches `measure_ball_diff`. -/
+noncomputable def shellSet (m : ℕ) : Set ℤ_[p] :=
+  {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(m : ℤ))} \ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))}
+
+/-- The constant value of the singular kernel `|·|^{-(α+1)}` on shell `m` (where `‖y‖ = p⁻ᵐ`):
+    `(p⁻ᵐ)^{-(α+1)} = p^{m(α+1)} = (p^α)^m · p^m`. Only `p^α` is an `rpow`; the rest is `npow`. -/
+noncomputable def shellConst (α : ℝ) (m : ℕ) : ℝ := ((p : ℝ) ^ α) ^ m * (p : ℝ) ^ m
+
+/-- The shell-load integrand: the shell `m` indicator scaled by the kernel's constant value there. -/
+noncomputable def shellLoad (α : ℝ) (m : ℕ) : ℤ_[p] → ℂ :=
+  Set.indicator (shellSet (p := p) m) (fun _ => ((shellConst (p := p) α m : ℝ) : ℂ))
+
+/-- The integrand defining `D^α (ballFun m) 0`, isolated so it can carry an integrability induction. -/
+noncomputable def vladIntegrand (α : ℝ) (m : ℕ) : ℤ_[p] → ℂ :=
+  fun y => (ballFun (p := p) m 0 - ballFun (p := p) m y) * (vladimirovKernel α 0 y : ℂ)
+
+/-- `shellSet m` is measurable (difference of two balls). -/
+theorem shellSet_measurable (m : ℕ) : MeasurableSet (shellSet (p := p) m) :=
+  (ball_measurableSet m).diff (ball_measurableSet (m + 1))
+
+/-- On shell `m`, the norm is exactly `p⁻ᵐ` (a value sandwiched between two adjacent ball radii). -/
+theorem norm_eq_of_mem_shell (m : ℕ) {y : ℤ_[p]} (hy : y ∈ shellSet (p := p) m) :
+    ‖y‖ = (p : ℝ) ^ (-(m : ℤ)) := by
+  simp only [shellSet, Set.mem_diff, Set.mem_setOf_eq] at hy
+  obtain ⟨hin, hout⟩ := hy
+  refine le_antisymm hin ?_
+  have hiff := PadicInt.norm_le_pow_iff_norm_lt_pow_add_one y (-((m + 1 : ℕ) : ℤ))
+  rw [show (-((m + 1 : ℕ) : ℤ) + 1) = -(m : ℤ) from by push_cast; ring] at hiff
+  exact not_lt.mp (fun h => hout (hiff.mpr h))
+
+/-- On shell `m` (where `‖y‖ = p⁻ᵐ`), the singular kernel equals the constant `shellConst α m`. -/
+theorem kernel_on_shell (α : ℝ) (m : ℕ) {y : ℤ_[p]} (h : ‖y‖ = (p : ℝ) ^ (-(m : ℤ))) :
+    vladimirovKernel α 0 y = shellConst (p := p) α m := by
+  have hP : (0 : ℝ) < (p : ℝ) := by exact_mod_cast ‹Fact p.Prime›.out.pos
+  have hbase : ‖(0 : ℤ_[p]) - y‖ = (p : ℝ) ^ (-(m : ℤ)) := by rw [zero_sub, norm_neg, h]
+  rw [vladimirovKernel, hbase, shellConst,
+    ← Real.rpow_intCast (p : ℝ) (-(m : ℤ)), ← Real.rpow_mul hP.le, ← Real.rpow_neg hP.le,
+    ← Real.rpow_natCast ((p : ℝ) ^ α) m, ← Real.rpow_mul hP.le, ← Real.rpow_natCast (p : ℝ) m,
+    ← Real.rpow_add hP]
+  congr 1
+  push_cast
+  ring
+
+/-- **Shell load.** The integral of the shell-`m` load is `(1 - p⁻¹)(p^α)^m` — one term of the series. -/
+theorem vladimirov_shell_load (α : ℝ) (m : ℕ) :
+    ∫ y, shellLoad (p := p) α m y ∂(haarZp (p := p))
+      = (((1 - (p : ℝ)⁻¹) * ((p : ℝ) ^ α) ^ m : ℝ) : ℂ) := by
+  have hp1 : (1 : ℝ≥0∞) ≤ (p : ℝ≥0∞) := by exact_mod_cast ‹Fact p.Prime›.out.one_lt.le
+  have hp0 : (p : ℝ≥0∞) ≠ 0 := by exact_mod_cast (‹Fact p.Prime›.out.pos).ne'
+  have hp0R : (p : ℝ) ≠ 0 := by exact_mod_cast (‹Fact p.Prime›.out.pos).ne'
+  have hle : ((p : ℝ≥0∞) ^ (m + 1))⁻¹ ≤ ((p : ℝ≥0∞) ^ m)⁻¹ :=
+    ENNReal.inv_le_inv.mpr (pow_le_pow_right₀ hp1 (Nat.le_succ m))
+  have htop : ((p : ℝ≥0∞) ^ m)⁻¹ ≠ ⊤ := ENNReal.inv_ne_top.mpr (pow_ne_zero m hp0)
+  unfold shellLoad
+  rw [integral_indicator_const _ (shellSet_measurable m), measureReal_def]
+  unfold shellSet
+  rw [measure_ball_diff m, ENNReal.toReal_sub_of_le hle htop]
+  simp only [ENNReal.toReal_inv, ENNReal.toReal_pow, ENNReal.toReal_natCast]
+  show (((p : ℝ) ^ m)⁻¹ - ((p : ℝ) ^ (m + 1))⁻¹) • ((shellConst (p := p) α m : ℝ) : ℂ) = _
+  rw [Complex.real_smul, shellConst, ← Complex.ofReal_mul, Complex.ofReal_inj]
+  field_simp
+  ring
+
+/-- The shell load is integrable (a constant times a finite-measure indicator). -/
+theorem shellLoad_integrable (α : ℝ) (m : ℕ) :
+    Integrable (shellLoad (p := p) α m) (haarZp (p := p)) := by
+  rw [shellLoad]
+  exact (integrable_const _).indicator (shellSet_measurable m)
+
+/-- **Peeling step.** The `(m+1)`-integrand is the `m`-integrand plus the shell-`m` load. -/
+theorem vladIntegrand_succ (α : ℝ) (m : ℕ) :
+    vladIntegrand (p := p) α (m + 1)
+      = fun y => vladIntegrand (p := p) α m y + shellLoad (p := p) α m y := by
+  have hp1le : (1 : ℝ) ≤ (p : ℝ) := by exact_mod_cast ‹Fact p.Prime›.out.one_lt.le
+  have hc : ∀ k : ℕ, ballFun (p := p) k 0 = 1 := by
+    intro k
+    have hmem : (0 : ℤ_[p]) ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(k : ℤ))} := by
+      simp only [Set.mem_setOf_eq, norm_zero]; positivity
+    exact Set.indicator_of_mem hmem _
+  funext y
+  simp only [vladIntegrand, hc]
+  simp only [ballFun, shellLoad]
+  by_cases h1 : y ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))}
+  · have h2 : y ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(m : ℤ))} := by
+      simp only [Set.mem_setOf_eq] at h1 ⊢
+      exact le_trans h1 (zpow_le_zpow_right₀ hp1le (by omega))
+    have hshell : y ∉ shellSet (p := p) m := by
+      simp only [shellSet, Set.mem_diff, not_and, not_not]; intro _; exact h1
+    simp only [Set.indicator_of_mem h1, Set.indicator_of_mem h2, Set.indicator_of_notMem hshell]
+    ring
+  · by_cases h2 : y ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(m : ℤ))}
+    · have hshell : y ∈ shellSet (p := p) m := by
+        simp only [shellSet, Set.mem_diff]; exact ⟨h2, h1⟩
+      have hnorm : ‖y‖ = (p : ℝ) ^ (-(m : ℤ)) := norm_eq_of_mem_shell m hshell
+      have hker := kernel_on_shell α m hnorm
+      simp only [Set.indicator_of_notMem h1, Set.indicator_of_mem h2, Set.indicator_of_mem hshell,
+        hker]
+      ring
+    · have hshell : y ∉ shellSet (p := p) m := by
+        simp only [shellSet, Set.mem_diff, not_and]; intro hh; exact absurd hh h2
+      simp only [Set.indicator_of_notMem h1, Set.indicator_of_notMem h2,
+        Set.indicator_of_notMem hshell]
+      ring
+
+/-- The integrand is integrable for every `m` (induction: `g₀ = 0`; `g_{m+1} = g_m + shell load`). -/
+theorem vladIntegrand_integrable (α : ℝ) (m : ℕ) :
+    Integrable (vladIntegrand (p := p) α m) (haarZp (p := p)) := by
+  induction m with
+  | zero =>
+    have hb : ballFun (p := p) 0 = fun _ => (1 : ℂ) := by
+      funext z
+      have hz : z ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((0 : ℕ) : ℤ))} := by
+        simp only [Set.mem_setOf_eq, Nat.cast_zero, neg_zero, zpow_zero]
+        exact PadicInt.norm_le_one z
+      exact Set.indicator_of_mem hz _
+    have hz0 : vladIntegrand (p := p) α 0 = fun _ => 0 := by
+      funext y; simp only [vladIntegrand, hb]; ring
+    rw [hz0]; exact integrable_zero _ _ _
+  | succ m ih =>
+    rw [vladIntegrand_succ]
+    exact ih.add (shellLoad_integrable α m)
+
+/-- **General connection-matrix entry (Fourier-free).** `D^α` of the radius-`p⁻ᵐ` ball indicator at the
+    center `0` is the geometric series `(1 - p⁻¹) ∑_{k<m} (p^α)^k` — the radial integral over the `m`
+    shells peeled off the complement of `ball_m`. Recovers § IV at `m = 1`. -/
+theorem vladimirov_ballFun_zero (α : ℝ) (m : ℕ) :
+    vladimirov α (ballFun (p := p) m) 0
+      = (((1 - (p : ℝ)⁻¹) * ∑ k ∈ Finset.range m, ((p : ℝ) ^ α) ^ k : ℝ) : ℂ) := by
+  induction m with
+  | zero =>
+    have hb : ballFun (p := p) 0 = fun _ => (1 : ℂ) := by
+      funext z
+      have hz : z ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((0 : ℕ) : ℤ))} := by
+        simp only [Set.mem_setOf_eq, Nat.cast_zero, neg_zero, zpow_zero]
+        exact PadicInt.norm_le_one z
+      exact Set.indicator_of_mem hz _
+    rw [hb, vladimirov_const]
+    simp
+  | succ m ih =>
+    have hstep : vladimirov α (ballFun (p := p) (m + 1)) 0
+        = vladimirov α (ballFun (p := p) m) 0
+          + ∫ y, shellLoad (p := p) α m y ∂(haarZp (p := p)) := by
+      show (∫ y, vladIntegrand (p := p) α (m + 1) y ∂(haarZp (p := p)))
+          = (∫ y, vladIntegrand (p := p) α m y ∂(haarZp (p := p)))
+            + ∫ y, shellLoad (p := p) α m y ∂(haarZp (p := p))
+      rw [← integral_add (vladIntegrand_integrable α m) (shellLoad_integrable α m)]
+      congr 1
+      exact vladIntegrand_succ α m
+    rw [hstep, ih, vladimirov_shell_load, Finset.sum_range_succ]
+    push_cast
+    ring
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -130,4 +285,6 @@ open ZeroParadox
 #print axioms vladimirov_const
 #print axioms measure_ball_diff
 #print axioms vladimirov_ballFun_one_zero
+#print axioms vladimirov_shell_load
+#print axioms vladimirov_ballFun_zero
 end PurityCheck
