@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1104,
+        "declarations": 1106,
         "files": 136
       },
       "entries": [
@@ -30192,6 +30192,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c0449e9e-fbff-4c45-82b4-731e91c8206f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicJointSpectrum.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_koopman_eigen",
+            "short": "paChar_koopman_eigen"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "c0475ee7-e365-496e-8ef4-56b824333a9e",
           "new": {
@@ -33199,6 +33235,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d2bebedb-9fd3-4dd5-8fbd-62a688fcc8f4",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicJointSpectrum.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_joint_spectrum",
+            "short": "paChar_joint_spectrum"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
