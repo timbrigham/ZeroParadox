@@ -5749,7 +5749,7 @@
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "go"
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
@@ -8420,7 +8420,7 @@
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "go"
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
@@ -15338,7 +15338,7 @@
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "go"
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
@@ -16828,7 +16828,7 @@
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "go"
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
@@ -29451,7 +29451,7 @@
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "go"
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
@@ -33267,7 +33267,7 @@
             ],
             "object": [],
             "role": [
-              "scaffolding"
+              "go"
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
