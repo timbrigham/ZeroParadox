@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1087,
+        "declarations": 1089,
         "files": 136
       },
       "entries": [
@@ -2080,6 +2080,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "085aaae4-9850-48ee-afce-7c98f80bb6e1",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_integrable",
+            "short": "paChar_integrable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0885fa70-e0c1-4bb0-abb7-d13c7f0244ef",
           "new": {
@@ -3480,6 +3516,42 @@
           "ontology": {
             "domain": [
               "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "10c04d27-9726-4649-a9f8-b7a6cbcdb516",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.vladimirov_paChar_one",
+            "short": "vladimirov_paChar_one"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
             ],
             "object": [],
             "role": [
