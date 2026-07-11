@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a genuine eigenfunction of the ℤ_p Taibleson–Vladimirov operator D^α — the level-1 p-adic additive character, with eigenvalue 1. Unlike the ball-indicator matrix entries of PadicVladimirov §IV, this is a true eigenfunction, and the character orthogonality ∫χ=0 (the "crane") is exactly what closes the computation. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicVladimirov
 import ZeroParadox.Valuation.PadicCharacter
+import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -125,6 +126,71 @@ theorem vladimirov_paChar_one (α : ℝ) (φ : AddChar (ZMod (p ^ 1)) ℂ) (hφ 
     paChar_integral_eq_zero 1 φ hφ, sub_zero, measureReal_def, measure_univ, ENNReal.toReal_one,
     one_smul]
 
+/-! ## § IV — Toward the general-`n` eigenvalue: sub-ball orthogonality -/
+
+/-- **General quotient integral.** Any function pulled back from the finite quotient `ZMod(pⁿ)` integrates
+    to `p⁻ⁿ` times its sum over `ZMod(pⁿ)` (the crane, generalized from a character to arbitrary `g`). -/
+theorem integral_comp_toZModPow (n : ℕ) (g : ZMod (p ^ n) → ℂ) :
+    ∫ x, g (PadicInt.toZModPow n x) ∂(haarZp (p := p))
+      = ((((p : ℝ) ^ n)⁻¹ : ℝ) : ℂ) * ∑ r : ZMod (p ^ n), g r := by
+  haveI : NeZero (p ^ n) := ⟨pow_ne_zero n ‹Fact p.Prime›.out.pos.ne'⟩
+  have hdecomp : ∀ x : ℤ_[p], g (PadicInt.toZModPow n x)
+      = ∑ r : ZMod (p ^ n),
+          Set.indicator {y : ℤ_[p] | PadicInt.toZModPow n y = r} (fun _ => g r) x := by
+    intro x
+    simp only [Set.indicator_apply, Set.mem_setOf_eq, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+  have hterm : ∀ r : ZMod (p ^ n),
+      ∫ x, Set.indicator {y : ℤ_[p] | PadicInt.toZModPow n y = r} (fun _ => g r) x
+          ∂(haarZp (p := p)) = ((((p : ℝ) ^ n)⁻¹ : ℝ) : ℂ) * g r := by
+    intro r
+    rw [integral_indicator_const _ (toZModPow_fiber_measurableSet n r), measureReal_def,
+      toZModPow_fiber_measure, ENNReal.toReal_inv, ENNReal.toReal_pow, ENNReal.toReal_natCast]
+    show (((p : ℝ) ^ n)⁻¹ : ℝ) • (g r : ℂ) = _
+    rw [Complex.real_smul]
+  rw [integral_congr_ae (Filter.Eventually.of_forall hdecomp),
+    integral_finset_sum _
+      (fun r _ => (integrable_const (g r)).indicator (toZModPow_fiber_measurableSet n r)),
+    Finset.sum_congr rfl (fun r _ => hterm r), ← Finset.mul_sum]
+
+/-- **Primitive shift sum.** For a primitive character and `a ≠ 0`, the shifted sum `∑ₓ φ(a·x)` over
+    `ZMod(pⁿ)` vanishes — it is the full-group sum of the nontrivial character `mulShift φ a`. Uses
+    `AddChar.one_eq_zero` (`rfl`) to bridge primitivity's `≠ 1` to the sum lemma's `≠ 0`. -/
+theorem sum_mulShift_eq_zero (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (hφ : φ.IsPrimitive)
+    {a : ZMod (p ^ n)} (ha : a ≠ 0) :
+    ∑ x : ZMod (p ^ n), φ (a * x) = 0 := by
+  have hne : AddChar.mulShift φ a ≠ 0 := by
+    rw [← AddChar.one_eq_zero]; exact hφ ha
+  simp only [← AddChar.mulShift_apply]
+  exact AddChar.sum_eq_zero_iff_ne_zero.mpr hne
+
+open Classical in
+/-- **Character sum over a subgroup vanishes.** For a primitive `φ` and `q = pʲ ≠ 0`, the sum of `φ` over
+    the multiples of `q` (the subgroup `H_j = qℤ/pⁿℤ`) is zero. Classic shift trick: pick `h ∈ H_j` with
+    `φ(h) ≠ 1` (primitivity), then `∑ = φ(h)·∑` by reindexing `r ↦ r+h`, forcing `∑ = 0`. No subgroup
+    subtype needed — the `q ∣ ·` predicate is shift-stable because `q ∣ h`. -/
+theorem sum_char_multiples_eq_zero (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (hφ : φ.IsPrimitive)
+    {j : ℕ} (hj : (p : ZMod (p ^ n)) ^ j ≠ 0) :
+    ∑ r : ZMod (p ^ n), (if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0) = 0 := by
+  obtain ⟨x, hx⟩ := DFunLike.ne_iff.mp (hφ hj)
+  rw [AddChar.mulShift_apply, AddChar.one_apply] at hx
+  have hdvd : (p : ZMod (p ^ n)) ^ j ∣ (p : ZMod (p ^ n)) ^ j * x := dvd_mul_right _ _
+  have key : (∑ r : ZMod (p ^ n), (if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0))
+      = φ ((p : ZMod (p ^ n)) ^ j * x)
+        * ∑ r : ZMod (p ^ n), (if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0) := by
+    rw [Finset.mul_sum, ← Equiv.sum_comp (Equiv.addRight ((p : ZMod (p ^ n)) ^ j * x))
+      (fun r => if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0)]
+    refine Finset.sum_congr rfl (fun r _ => ?_)
+    simp only [Equiv.coe_addRight]
+    by_cases hr : (p : ZMod (p ^ n)) ^ j ∣ r
+    · rw [if_pos hr, if_pos (dvd_add hr hdvd), φ.map_add_eq_mul, mul_comm]
+    · rw [if_neg hr, if_neg (fun hc => hr (by
+        have := dvd_sub hc hdvd; rwa [add_sub_cancel_right] at this)), mul_zero]
+  have hne : (1 : ℂ) - φ ((p : ZMod (p ^ n)) ^ j * x) ≠ 0 := sub_ne_zero.mpr (Ne.symm hx)
+  have hz : (1 - φ ((p : ZMod (p ^ n)) ^ j * x))
+      * ∑ r : ZMod (p ^ n), (if (p : ZMod (p ^ n)) ^ j ∣ r then φ r else 0) = 0 := by
+    rw [sub_mul, one_mul, ← key, sub_self]
+  exact (mul_eq_zero.mp hz).resolve_left hne
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -133,4 +199,7 @@ open ZeroParadox
 #print axioms paChar_integrable
 #print axioms vladimirov_paChar_eigen
 #print axioms vladimirov_paChar_one
+#print axioms integral_comp_toZModPow
+#print axioms sum_mulShift_eq_zero
+#print axioms sum_char_multiples_eq_zero
 end PurityCheck
