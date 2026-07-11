@@ -266,6 +266,183 @@ theorem paChar_ball_n_integral (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) :
   show (((p : ℝ) ^ n)⁻¹ : ℝ) • (1 : ℂ) = ((((p : ℝ) ^ n)⁻¹ : ℝ) : ℂ)
   rw [Complex.real_smul, mul_one]
 
+/-! ## § V — The general-`n` eigenvalue `λ_n` (assembly, reusing M2c's shell machinery) -/
+
+/-- The M2c ball integrand telescopes into shell loads: `vladIntegrand α n = ∑_{m<n} shellLoad α m`
+    (from `vladIntegrand_succ` and `vladIntegrand α 0 = 0`). Since `vladIntegrand α n y =
+    (1 − 𝟙_{ball_n}(y))·K = 𝟙_{(ball_n)ᶜ}(y)·K`, this is the annulus decomposition of the kernel — for free. -/
+theorem vladIntegrand_eq_sum (α : ℝ) (n : ℕ) :
+    vladIntegrand (p := p) α n = ∑ m ∈ Finset.range n, shellLoad (p := p) α m := by
+  induction n with
+  | zero =>
+    simp only [Finset.range_zero, Finset.sum_empty]
+    funext y
+    have hb : ∀ z : ℤ_[p], ballFun (p := p) 0 z = 1 := by
+      intro z
+      have hz : z ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((0 : ℕ) : ℤ))} := by
+        simp only [Set.mem_setOf_eq, Nat.cast_zero, neg_zero, zpow_zero]
+        exact PadicInt.norm_le_one z
+      exact Set.indicator_of_mem hz _
+    simp [vladIntegrand, hb]
+  | succ m ih =>
+    rw [vladIntegrand_succ, ih, Finset.sum_range_succ]
+    funext y
+    rw [Pi.add_apply]
+
+/-- The character against one shell load: `∫ χ·shellLoad α m = shellConst α m · (J_m − J_{m+1})`, where
+    `J_j = ∫_{ball_j} χ`. (`shellLoad = shellConst·𝟙_{shell_m}` and `𝟙_{shell_m} = 𝟙_{ball_m} − 𝟙_{ball_{m+1}}`.) -/
+theorem integral_char_shellLoad (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (α : ℝ) (m : ℕ) :
+    ∫ y, paChar (p := p) n φ y * shellLoad (p := p) α m y ∂(haarZp (p := p))
+      = (shellConst (p := p) α m : ℂ)
+        * ((∫ y, Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(m : ℤ))} (paChar (p := p) n φ) y
+              ∂(haarZp (p := p)))
+          - ∫ y, Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))} (paChar (p := p) n φ) y
+              ∂(haarZp (p := p))) := by
+  have hsub : {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))}
+      ⊆ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(m : ℤ))} := by
+    intro x hx
+    simp only [Set.mem_setOf_eq] at hx ⊢
+    refine le_trans hx (zpow_le_zpow_right₀ ?_ ?_)
+    · exact_mod_cast ‹Fact p.Prime›.out.one_lt.le
+    · omega
+  have hpt : ∀ y, paChar (p := p) n φ y * shellLoad (p := p) α m y
+      = (shellConst (p := p) α m : ℂ) * Set.indicator (shellSet (p := p) m) (paChar (p := p) n φ) y := by
+    intro y
+    by_cases hy : y ∈ shellSet (p := p) m
+    · simp only [shellLoad, Set.indicator_of_mem hy]; ring
+    · simp only [shellLoad, Set.indicator_of_notMem hy, mul_zero]
+  have hind : ∀ y, Set.indicator (shellSet (p := p) m) (paChar (p := p) n φ) y
+      = Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(m : ℤ))} (paChar (p := p) n φ) y
+        - Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))} (paChar (p := p) n φ) y := by
+    intro y
+    rw [shellSet, Set.indicator_diff hsub, Pi.sub_apply]
+  have step1 : ∫ y, paChar (p := p) n φ y * shellLoad (p := p) α m y ∂(haarZp (p := p))
+      = (shellConst (p := p) α m : ℂ)
+        * ∫ y, Set.indicator (shellSet (p := p) m) (paChar (p := p) n φ) y ∂(haarZp (p := p)) := by
+    rw [integral_congr_ae (Filter.Eventually.of_forall hpt)]
+    exact integral_const_mul ((shellConst (p := p) α m : ℂ))
+      (Set.indicator (shellSet (p := p) m) (paChar (p := p) n φ))
+  have step2 : ∫ y, Set.indicator (shellSet (p := p) m) (paChar (p := p) n φ) y ∂(haarZp (p := p))
+      = (∫ y, Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(m : ℤ))} (paChar (p := p) n φ) y
+            ∂(haarZp (p := p)))
+        - ∫ y, Set.indicator {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-((m + 1 : ℕ) : ℤ))} (paChar (p := p) n φ) y
+            ∂(haarZp (p := p)) := by
+    rw [integral_congr_ae (Filter.Eventually.of_forall hind)]
+    exact integral_sub ((paChar_integrable n φ).indicator (ball_measurableSet m))
+      ((paChar_integrable n φ).indicator (ball_measurableSet (m + 1)))
+  rw [step1, step2]
+
+/-- Integrability of `χ·shellLoad α m` (a constant times a finite-measure indicator). -/
+theorem char_shellLoad_integrable (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (α : ℝ) (m : ℕ) :
+    Integrable (fun y => paChar (p := p) n φ y * shellLoad (p := p) α m y) (haarZp (p := p)) := by
+  have hpt : (fun y => paChar (p := p) n φ y * shellLoad (p := p) α m y)
+      = fun y => (shellConst (p := p) α m : ℂ)
+        * Set.indicator (shellSet (p := p) m) (paChar (p := p) n φ) y := by
+    funext y
+    by_cases hy : y ∈ shellSet (p := p) m
+    · simp only [shellLoad, Set.indicator_of_mem hy]; ring
+    · simp only [shellLoad, Set.indicator_of_notMem hy, mul_zero]
+  rw [hpt]
+  exact ((paChar_integrable n φ).indicator (shellSet_measurable m)).const_mul _
+
+/-- `∫ χ·vladIntegrand α n = ∑_{m<n} ∫ χ·shellLoad α m` (distribute the character over the shell sum). -/
+theorem integral_char_vladIntegrand (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (α : ℝ) :
+    ∫ y, paChar (p := p) n φ y * vladIntegrand (p := p) α n y ∂(haarZp (p := p))
+      = ∑ m ∈ Finset.range n,
+          ∫ y, paChar (p := p) n φ y * shellLoad (p := p) α m y ∂(haarZp (p := p)) := by
+  have hdist : (fun y => paChar (p := p) n φ y * vladIntegrand (p := p) α n y)
+      = fun y => ∑ m ∈ Finset.range n, paChar (p := p) n φ y * shellLoad (p := p) α m y := by
+    funext y
+    rw [vladIntegrand_eq_sum, Finset.sum_apply, Finset.mul_sum]
+  rw [hdist, integral_finset_sum _ (fun m _ => char_shellLoad_integrable n φ α m)]
+
+/-- **The split.** `D^α χ(0) = D^α 𝟙_{ball_n}(0) − ∫ χ·vladIntegrand α n`, where `vladIntegrand α n =
+    𝟙_{(ball_n)ᶜ}·K` is the M2c ball integrand. (Pointwise: `(1−χ)K = (1−𝟙_{ball_n})K − χ(1−𝟙_{ball_n})K`,
+    since `𝟙_{ball_n}·(1−χ) = 0`.) -/
+theorem vladimirov_paChar_split (n : ℕ) (φ : AddChar (ZMod (p ^ n)) ℂ) (α : ℝ) :
+    vladimirov α (paChar (p := p) n φ) 0
+      = vladimirov α (ballFun (p := p) n) 0
+        - ∫ y, paChar (p := p) n φ y * vladIntegrand (p := p) α n y ∂(haarZp (p := p)) := by
+  have hchar_int : Integrable (fun y => paChar (p := p) n φ y * vladIntegrand (p := p) α n y)
+      (haarZp (p := p)) := by
+    have hdist : (fun y => paChar (p := p) n φ y * vladIntegrand (p := p) α n y)
+        = fun y => ∑ m ∈ Finset.range n, paChar (p := p) n φ y * shellLoad (p := p) α m y := by
+      funext y
+      rw [vladIntegrand_eq_sum, Finset.sum_apply, Finset.mul_sum]
+    rw [hdist]
+    exact integrable_finset_sum _ (fun m _ => char_shellLoad_integrable n φ α m)
+  have hpt : ∀ y, (paChar (p := p) n φ 0 - paChar (p := p) n φ y) * (vladimirovKernel α 0 y : ℂ)
+      = vladIntegrand (p := p) α n y - paChar (p := p) n φ y * vladIntegrand (p := p) α n y := by
+    intro y
+    have h0χ : paChar (p := p) n φ 0 = 1 := by simp [paChar]
+    have h0b : ballFun (p := p) n 0 = 1 := by
+      have hz : (0 : ℤ_[p]) ∈ {x : ℤ_[p] | ‖x‖ ≤ (p : ℝ) ^ (-(n : ℤ))} := by
+        simp only [Set.mem_setOf_eq, norm_zero]; positivity
+      exact Set.indicator_of_mem hz _
+    by_cases hy : y ∈ {z : ℤ_[p] | ‖z‖ ≤ (p : ℝ) ^ (-(n : ℤ))}
+    · haveI : NeZero (p ^ n) := ⟨pow_ne_zero n ‹Fact p.Prime›.out.pos.ne'⟩
+      have h0 : (p : ZMod (p ^ n)) ^ n = 0 := by rw [← Nat.cast_pow]; exact ZMod.natCast_self _
+      have hz0 : PadicInt.toZModPow n y = 0 := by
+        have := (norm_le_iff_dvd_toZModPow n n le_rfl y).mp hy
+        rwa [h0, zero_dvd_iff] at this
+      have hχy : paChar (p := p) n φ y = 1 := by simp [paChar, hz0]
+      have hby : ballFun (p := p) n y = 1 := Set.indicator_of_mem hy _
+      simp only [vladIntegrand, h0χ, hχy, h0b, hby]; ring
+    · have hby : ballFun (p := p) n y = 0 := Set.indicator_of_notMem hy _
+      simp only [vladIntegrand, h0χ, h0b, hby]; ring
+  have hL : vladimirov α (paChar (p := p) n φ) 0
+      = ∫ y, (paChar (p := p) n φ 0 - paChar (p := p) n φ y) * (vladimirovKernel α 0 y : ℂ)
+        ∂(haarZp (p := p)) := rfl
+  have hR : vladimirov α (ballFun (p := p) n) 0
+      = ∫ y, vladIntegrand (p := p) α n y ∂(haarZp (p := p)) := rfl
+  rw [hL, hR, integral_congr_ae (Filter.Eventually.of_forall hpt),
+    integral_sub (vladIntegrand_integrable α n) hchar_int]
+
+/-- The correction integral: only the outermost shell (`m = n−1`) survives, since `J_m = 0` for `m < n`
+    and `J_n = p⁻ⁿ`. Value `−(p^α)^{n-1}·p⁻¹ = −p^{(n-1)α−1}`. -/
+theorem correction_eq (n : ℕ) (hn : 0 < n) (φ : AddChar (ZMod (p ^ n)) ℂ) (hφ : φ.IsPrimitive) (α : ℝ) :
+    ∫ y, paChar (p := p) n φ y * vladIntegrand (p := p) α n y ∂(haarZp (p := p))
+      = -((((p : ℝ) ^ α) ^ (n - 1) * (p : ℝ)⁻¹ : ℝ) : ℂ) := by
+  have hp0R : (p : ℝ) ≠ 0 := by exact_mod_cast ‹Fact p.Prime›.out.pos.ne'
+  rw [integral_char_vladIntegrand n φ α, Finset.sum_eq_single (n - 1)]
+  · rw [integral_char_shellLoad n φ α (n - 1),
+      paChar_ball_integral_eq_zero n φ hφ (by omega : n - 1 < n),
+      Nat.sub_add_cancel hn, paChar_ball_n_integral n φ, shellConst,
+      zero_sub, mul_neg, ← Complex.ofReal_mul]
+    congr 1
+    rw [Complex.ofReal_inj]
+    field_simp
+    rw [← pow_succ, Nat.sub_add_cancel hn]
+  · intro m hm hne
+    have hmn : m < n := Finset.mem_range.mp hm
+    rw [integral_char_shellLoad n φ α m, paChar_ball_integral_eq_zero n φ hφ hmn,
+      paChar_ball_integral_eq_zero n φ hφ (by omega : m + 1 < n)]
+    ring
+  · intro h
+    exact absurd (Finset.mem_range.mpr (by omega : n - 1 < n)) h
+
+/-- **The general-`n` eigenvalue.** For a *primitive* character `φ` (`n ≥ 1`), `paChar n φ` is an
+    eigenfunction of `D^α` with eigenvalue
+    `λ_n = (1 − p⁻¹)·∑_{k<n}(p^α)^k + (p^α)^{n-1}·p⁻¹ = (1 − p⁻¹)∑_{k<n}(p^α)^k + p^{(n-1)α−1}`.
+    (`D^α χ(0) = D^α 𝟙_{ball_n}(0) − ∫χ·vladIntegrand`, the M2c value plus the single surviving shell.) -/
+theorem vladimirov_paChar_zero (n : ℕ) (hn : 0 < n) (φ : AddChar (ZMod (p ^ n)) ℂ)
+    (hφ : φ.IsPrimitive) (α : ℝ) :
+    vladimirov α (paChar (p := p) n φ) 0
+      = (((1 - (p : ℝ)⁻¹) * ∑ k ∈ Finset.range n, ((p : ℝ) ^ α) ^ k
+          + ((p : ℝ) ^ α) ^ (n - 1) * (p : ℝ)⁻¹ : ℝ) : ℂ) := by
+  rw [vladimirov_paChar_split n φ α, vladimirov_ballFun_zero, correction_eq n hn φ hφ α,
+    sub_neg_eq_add, ← Complex.ofReal_add]
+
+/-- **Full eigenfunction–eigenvalue statement.** For primitive `φ` (`n ≥ 1`),
+    `D^α (paChar n φ) = λ_n · paChar n φ` — a genuine eigenfunction with the explicit eigenvalue `λ_n`.
+    Combines `vladimirov_paChar_eigen` (the eigenfunction property) with `vladimirov_paChar_zero`. -/
+theorem vladimirov_paChar_eigenvalue (n : ℕ) (hn : 0 < n) (φ : AddChar (ZMod (p ^ n)) ℂ)
+    (hφ : φ.IsPrimitive) (α : ℝ) (x : ℤ_[p]) :
+    vladimirov α (paChar (p := p) n φ) x
+      = (((1 - (p : ℝ)⁻¹) * ∑ k ∈ Finset.range n, ((p : ℝ) ^ α) ^ k
+          + ((p : ℝ) ^ α) ^ (n - 1) * (p : ℝ)⁻¹ : ℝ) : ℂ) * paChar (p := p) n φ x := by
+  rw [vladimirov_paChar_eigen α n φ x, vladimirov_paChar_zero n hn φ hφ α, mul_comm]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -280,4 +457,10 @@ open ZeroParadox
 #print axioms norm_le_iff_dvd_toZModPow
 #print axioms paChar_ball_integral_eq_zero
 #print axioms paChar_ball_n_integral
+#print axioms vladIntegrand_eq_sum
+#print axioms integral_char_shellLoad
+#print axioms vladimirov_paChar_split
+#print axioms correction_eq
+#print axioms vladimirov_paChar_zero
+#print axioms vladimirov_paChar_eigenvalue
 end PurityCheck
