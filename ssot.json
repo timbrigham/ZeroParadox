@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1115,
+        "declarations": 1118,
         "files": 136
       },
       "entries": [
@@ -3196,6 +3196,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0e912e48-a267-4f7b-974f-ccb24937b46b",
+          "new": {
+            "file": "ZeroParadox/Settheory/ForkFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gfp_dual_eq_lfp",
+            "short": "gfp_dual_eq_lfp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22729,6 +22767,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8b1864ad-f5e9-48fe-86b7-f0e60754f0d5",
+          "new": {
+            "file": "ZeroParadox/Settheory/ForkFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fork_is_frameflip",
+            "short": "fork_is_frameflip"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8b78df9e-ce9d-4490-a53b-1901eadf4c25",
           "new": {
@@ -25524,6 +25600,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9c123686-a4de-474e-aad6-d27db39e3f8b",
+          "new": {
+            "file": "ZeroParadox/Settheory/ForkFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lfp_dual_eq_gfp",
+            "short": "lfp_dual_eq_gfp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
