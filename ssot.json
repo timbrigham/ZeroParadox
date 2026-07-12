@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1113,
+        "declarations": 1115,
         "files": 136
       },
       "entries": [
@@ -6681,6 +6681,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "245715c7-e3e2-4611-a632-f5d9379ea224",
+          "new": {
+            "file": "ZeroParadox/Category/SeamFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Z_seamFC",
+            "short": "Z_seamFC"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35248,6 +35286,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "de3cb86f-aedb-4d73-91be-4baf1d55b7cd",
+          "new": {
+            "file": "ZeroParadox/Category/SeamFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.catseam_is_frameflip",
+            "short": "catseam_is_frameflip"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
