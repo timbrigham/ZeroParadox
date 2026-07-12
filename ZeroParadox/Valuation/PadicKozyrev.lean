@@ -24,8 +24,11 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 The Vladimirov operator `D^α` (`PadicVladimirov`) has genuine eigenfunctions — the Kozyrev wavelets,
-built from the p-adic additive characters (`PadicCharacter`). This file proves the first one on `ℤ_p`:
-the **level-1 character `paChar 1 φ` is an eigenfunction of `D^α`, with eigenvalue 1**.
+built from the p-adic additive characters (`PadicCharacter`). That the Vladimirov operator's eigenbasis
+is a wavelet basis of such characters-times-ball-indicators is Kozyrev's theorem (S. V. Kozyrev,
+Izv. Math. 66 (2002) 367; arXiv:math-ph/0012019); this file formalizes the compact-`ℤ_p` instance and
+proves the first case on `ℤ_p`: the **level-1 character `paChar 1 φ` is an eigenfunction of `D^α`, with
+eigenvalue 1** (a pure character; a Kozyrev wavelet is such a character times a ball indicator).
 
 The computation is Fourier-free and rests on two facts already built: (i) `paChar 1 φ` is *constant on
 every ball of radius `p⁻¹`* (`paChar_locally_constant`), so the difference `χ(x) − χ(y)` vanishes exactly

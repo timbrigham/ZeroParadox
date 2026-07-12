@@ -27,8 +27,9 @@ Defines the **Taibleson–Vladimirov operator** `D^α` in its singular-integral 
 `(D^α f)(x) = ∫ (f x - f y) · |x-y|^{-(α+1)} dy` against the Haar measure. Two results: (i) `D^α` kills
 constants (the difference `f x - f y` vanishes); (ii) the **annulus measures** `μ(ball_k \ ball_{k+1})
 = p^{-k} - p^{-(k+1)}`, the building block that makes a radial integral over `ℤ_p` a geometric series
-(each drops out of `haarZp_ball`). Pure math; the value is that Mathlib has no p-adic pseudodifferential
-operator, so the construction is built here.
+(each drops out of `haarZp_ball`). Pure math, no novelty claimed: the singular-integral operator is
+standard (Taibleson; Vladimirov–Volovich–Zelenov, *p-adic Analysis and Mathematical Physics*); the value
+here is only that Mathlib has no p-adic pseudodifferential operator, so the construction is built.
 
 ## Structure
 - § I   The operator (singular-integral form)
@@ -279,12 +280,15 @@ theorem vladimirov_ballFun_zero (α : ℝ) (m : ℕ) :
 
 /-! ## § VI — The symbol `|ξ|^α`, read off the connection matrix (Fourier-free)
 
-The Taibleson–Vladimirov operator `D^α` is the Fourier multiplier by `|ξ|_p^α`. Its genuine eigenfunctions
-are the Kozyrev wavelets, which need additive characters (the Fourier wall). But the *symbol itself* can be
-read off the connection matrix without any Fourier transform: a ball of radius `p⁻ᵐ` has dual frequency
-scale `|ξ|_p = p^m` (the reciprocal radius), and the per-shell increment of `D^α` at the center is exactly
-`(1 - p⁻¹)·(p^m)^α = (1 - p⁻¹)·|ξ|^α`. This is an **operator-level** statement about `D^α` on ℤ_p; it makes
-no dynamical or physical claim, and it is not an eigenvalue (the ball indicators are not eigenfunctions). -/
+Over the standard Fourier theory (which is NOT developed here), the Taibleson–Vladimirov operator `D^α` is
+the Fourier multiplier by `|ξ|_p^α`, with the Kozyrev wavelets as eigenfunctions (Vladimirov; Kozyrev,
+Izv. Math. 66 (2002) 367). Neither the Fourier transform nor those eigenfunctions are built here. What is
+proved is an *algebraic* identity that matches that symbol under the standard identification: a ball of
+radius `p⁻ᵐ` has dual frequency scale `|ξ|_p = p^m` (the reciprocal radius), and the per-shell increment of
+`D^α` at the center is exactly `(1 - p⁻¹)·(p^m)^α`. Reading the factor `(p^m)^α` as the symbol `|ξ|^α` is
+that Fourier interpretation; the checkable content is the algebraic identity `(p^α)^m = (p^m)^α`
+(`pow_rpow_symbol`) times the shell-load value. This is an **operator-level** statement about `D^α` on ℤ_p;
+it makes no dynamical or physical claim, and it is not an eigenvalue (ball indicators are not eigenfunctions). -/
 
 omit [Fact p.Prime] in
 /-- The symbol identity: `(p^α)^m = (p^m)^α`. Rewrites the per-shell factor `(p^α)^m` into `|ξ|^α` form
@@ -294,9 +298,9 @@ theorem pow_rpow_symbol (α : ℝ) (m : ℕ) : ((p : ℝ) ^ α) ^ m = ((p : ℝ)
   rw [← Real.rpow_natCast ((p : ℝ) ^ α) m, ← Real.rpow_mul hP, ← Real.rpow_natCast (p : ℝ) m,
     ← Real.rpow_mul hP, mul_comm α (m : ℝ)]
 
-/-- **The `|ξ|^α` symbol, Fourier-free.** The per-shell increment of `D^α` at the center is
-    `(1 - p⁻¹)·(p^m)^α` — the Vladimirov symbol `|ξ|^α` evaluated at the shell's dual frequency scale
-    `|ξ| = p^m`. Restates `vladimirov_shell_load` in symbol form via `pow_rpow_symbol`. -/
+/-- **The `|ξ|^α` symbol factor, Fourier-free.** The per-shell increment of `D^α` at the center is
+    `(1 - p⁻¹)·(p^m)^α`; under the standard Fourier identification `|ξ| = p^m`, the factor `(p^m)^α` is the
+    Vladimirov symbol `|ξ|^α`. Restates `vladimirov_shell_load` via `pow_rpow_symbol` (no Fourier used). -/
 theorem vladimirov_shell_symbol (α : ℝ) (m : ℕ) :
     ∫ y, shellLoad (p := p) α m y ∂(haarZp (p := p))
       = (((1 - (p : ℝ)⁻¹) * ((p : ℝ) ^ m) ^ α : ℝ) : ℂ) := by
@@ -311,28 +315,28 @@ theorem vladimirov_ballFun_geom (α : ℝ) (m : ℕ) (hα : (p : ℝ) ^ α ≠ 1
   push_cast
   ring
 
-/-! ## § VII — The scale operator IS the inversion keystone (frequency = inverse-norm of position)
+/-! ## § VII — Frequency = inverse-norm of position (the radius↔frequency map is `x ↦ x⁻¹`)
 
-The frequency `|ξ| = p^m` at which `D^α` reads its symbol on shell `m` is not a separate structure: it is
-the **norm of the inverse** of any shell point. `‖x⁻¹‖ = ‖x‖⁻¹` (`norm_inv`, the norm face of `z ↦ 1/z`)
-carries the radius `p⁻ᵐ` to the frequency `p^m` — the same reflection `m ↦ −m` that the sibling valuation
-files formalize as `padic_inv_flips_valuation` (`v₂(x⁻¹) = −v₂(x)`, `ZeroParadox/Valuation/PolarityFlip.lean`)
-and `inversion_reverses_filtration` (`ZeroParadox/Valuation/InversionValuation.lean`), and that
-`rInv_swaps` (`ZeroParadox/Valuation/RiemannSphere.lean`) realizes as the literal `0 ↔ ∞` swap. Because
-`ℚ_p` is self-dual under Fourier, position and frequency share one value group, so the reciprocal `x ↦ x⁻¹`
-IS the radius↔frequency scale operator. These lemmas make that identification checkable, not narrated. -/
+The frequency `|ξ| = p^m` at which `D^α`'s symbol is read on shell `m` is the **norm of the inverse** of any
+shell point: `‖x⁻¹‖ = ‖x‖⁻¹` (`norm_inv`) carries the radius `p⁻ᵐ` to `p^m`. This is the norm face of the
+reciprocal map `z ↦ 1/z`, the same reflection `m ↦ −m` recorded in the sibling valuation files as
+`padic_inv_flips_valuation` (`v₂(x⁻¹) = −v₂(x)`, `ZeroParadox/Valuation/PolarityFlip.lean`),
+`inversion_reverses_filtration` (`ZeroParadox/Valuation/InversionValuation.lean`), and `rInv_swaps` (the
+`0 ↔ ∞` swap on the Riemann sphere, `ZeroParadox/Valuation/RiemannSphere.lean`). Since `ℚ_p` is self-dual
+under Fourier, position and frequency lie in one value group, so the radius↔frequency correspondence here is
+`x ↦ x⁻¹`. The lemmas below make the norm equality `‖x⁻¹‖ = p^m` checkable; the link to the sibling files is
+a cross-reference, not a further theorem proved here. -/
 
-/-- **Scale operator = inversion (norm face).** For a shell-`m` point `x` (norm `p⁻ᵐ`), the Vladimirov
+/-- **Frequency = inverse-norm (norm face of `x ↦ x⁻¹`).** For a shell-`m` point `x` (norm `p⁻ᵐ`), the
     frequency scale `p^m` is exactly `‖x⁻¹‖`. This is `‖x⁻¹‖ = ‖x‖⁻¹` (`norm_inv`) sending the radius
-    `p⁻ᵐ` to the frequency `p^m` — the norm face of the framework's `z ↦ 1/z` keystone. -/
+    `p⁻ᵐ` to the frequency `p^m` — the norm face of the reciprocal map `z ↦ 1/z`. -/
 theorem norm_inv_eq_freq (m : ℕ) {x : ℤ_[p]} (hx : ‖x‖ = (p : ℝ) ^ (-(m : ℤ))) :
     ‖((x : ℚ_[p]))⁻¹‖ = (p : ℝ) ^ m := by
   rw [norm_inv, PadicInt.padic_norm_e_of_padicInt, hx, ← zpow_neg, neg_neg, zpow_natCast]
 
-/-- **The symbol's frequency is an inverse-norm.** The shell-`m` load — the per-shell `|ξ|^α` symbol of
-    § VI — evaluated at frequency `‖x⁻¹‖` for any shell point `x`. This states the M3 symbol directly in
-    terms of the inversion keystone: `D^α`'s symbol on shell `m` is `(1 - p⁻¹)·‖x⁻¹‖^α`, the power law read
-    at the inverse-norm of a point of the shell. -/
+/-- **The symbol factor's frequency is an inverse-norm.** The shell-`m` load — the per-shell `|ξ|^α` factor
+    of § VI — evaluated at frequency `‖x⁻¹‖` for any shell point `x`. States it in terms of the reciprocal
+    `x ↦ x⁻¹`: the shell-`m` factor is `(1 - p⁻¹)·‖x⁻¹‖^α`, read at the inverse-norm of a shell point. -/
 theorem vladimirov_shell_symbol_inv (α : ℝ) (m : ℕ) {x : ℤ_[p]}
     (hx : ‖x‖ = (p : ℝ) ^ (-(m : ℤ))) :
     ∫ y, shellLoad (p := p) α m y ∂(haarZp (p := p))

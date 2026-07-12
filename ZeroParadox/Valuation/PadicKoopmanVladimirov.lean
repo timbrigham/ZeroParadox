@@ -31,8 +31,9 @@ of the odometer `x ↦ c + x` (`PadicKoopman`) and the **Taibleson–Vladimirov 
 which says `D^α` is *equivariant* under the odometer: translating then applying the operator is the
 same as applying then translating. Mechanically it is translation-invariance of `D^α`, and its single
 hinge is the odometer's measure-preservation `measurePreserving_odometer` — the exact property the
-Koopman operator of `PadicKoopman` is built from. `D^α` is the generator of the p-adic diffusion
-semigroup, so this is the deterministic dynamics (odometer) commuting with the stochastic generator.
+Koopman operator of `PadicKoopman` is built from. (`D^α` is known to generate a Markov / diffusion
+semigroup — Vladimirov–Volovich–Zelenov, Kochubei — but that semigroup is neither built nor used here;
+this file is the operator-level commutation only.)
 
 **Fences.** This is an **operator-level** statement (an intertwining of maps on functions `ℤ_p → ℂ`),
 stated at the function/domain level because `D^α` is *unbounded* and is not the bounded `L²` Koopman
