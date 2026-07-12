@@ -49,7 +49,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 ## Reading Paths
 
-**Before any path:** [The Bottom Element (⊥)](BOTTOMELEMENT.md) - a dictionary and map of the object the whole framework is built on. It orients you to ⊥, and to what is proved versus still open about it, before you follow any route below.
+**Before any path:** [The Bottom Element (⊥)](BOTTOMELEMENT.md) - a dictionary and map of the object the whole framework is built on - and its companion [The Binary Snap (⊥ → ε₀)](SNAP.md) - the same for the snap, the transition off ⊥. Together they orient you to ⊥ and the snap, and to what is proved versus still open about each, before you follow any route below.
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 

@@ -7,7 +7,7 @@
 
 For plain-language introduction, illustrated companions, and reading paths, see [GUIDE](GUIDE.md). For the claim-by-claim status of every result - proved / argued / open, with Lean witnesses and exact axiom profiles - see the [Claims Ledger](CLAIMS.md).
 
-**New to the framework?** [The Bottom Element (⊥)](BOTTOMELEMENT.md) is a dictionary and map of ⊥, the object the whole framework is built on. It catalogues what ⊥ is, what it cannot be, and where each characterization is established, most with a machine-checked Lean witness linked to the source. Start there for orientation, then return here for the formal index.
+**New to the framework?** [The Bottom Element (⊥)](BOTTOMELEMENT.md) is a dictionary and map of ⊥, the object the whole framework is built on. It catalogues what ⊥ is, what it cannot be, and where each characterization is established, most with a machine-checked Lean witness linked to the source. Its companion [The Binary Snap (⊥ → ε₀)](SNAP.md) does the same for the snap, the forced transition off ⊥. Start there for orientation, then return here for the formal index.
 
 Followed a link that broke after the v3.0 source reorganization? The old→new file and declaration map is in [`ssot.json`](ssot.json); report anything we missed in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
@@ -117,7 +117,7 @@ This prints the kernel's `#print axioms` report for each core result - the basis
 
 The framework is not a line. Several fields each reach a bottom, and those bottoms all play the same structural role, the diagonal fixed point ⊥; the documents above are the spokes into it. Start at the hub, then follow your own field. A document that appears in more than one field's route is a bridge, and the overlap is the point: the fields' bottoms share one structural shape. Whether they are literally one object is a type boundary, not a theorem (see [The Frame-Change](ZP-Q_The_Frame_Change.pdf)).
 
-**Start here (the hub, for everyone):** [The Bottom Element (⊥)](BOTTOMELEMENT.md), the map of ⊥ and what is proved versus open about it → [Bridge Document](ZP-E_Bridge_Document.pdf), the snap assembled as a derived theorem → [The Frame-Change](ZP-Q_The_Frame_Change.pdf), the snap read as a change of point of view and why every field's bottom plays the same structural role. Keep the [Claims Ledger](CLAIMS.md) beside you for proved-versus-conjectural status.
+**Start here (the hub, for everyone):** two companion maps - [The Bottom Element (⊥)](BOTTOMELEMENT.md), the map of the object ⊥, and [The Binary Snap (⊥ → ε₀)](SNAP.md), the map of the transition off it - each with what is proved versus open → [Bridge Document](ZP-E_Bridge_Document.pdf), the snap assembled as a derived theorem → [The Frame-Change](ZP-Q_The_Frame_Change.pdf), the snap read as a change of point of view and why every field's bottom plays the same structural role. Keep the [Claims Ledger](CLAIMS.md) beside you for proved-versus-conjectural status.
 
 **Then follow your field:**
 
