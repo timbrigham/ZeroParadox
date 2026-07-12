@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1118,
+        "declarations": 1123,
         "files": 136
       },
       "entries": [
@@ -4964,6 +4964,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1848b9f3-c2cb-45f9-93ae-0b1149779f5d",
+          "new": {
+            "file": "ZeroParadox/Computability/CodeDataFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeDataSwap_fixed_iff",
+            "short": "codeDataSwap_fixed_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "184ada47-8dbc-446e-b0d6-6e02eb3472c4",
           "new": {
@@ -8079,6 +8117,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2ca96750-44d2-44c4-a54e-2e07bf3d4022",
+          "new": {
+            "file": "ZeroParadox/Computability/CodeDataFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeDataSwap_involutive",
+            "short": "codeDataSwap_involutive"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2ceb3c9d-afd7-4897-a1ad-c68fcf01ef74",
           "new": {
@@ -8937,6 +9013,44 @@
               "ordinal"
             ],
             "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3265dfee-8b8a-4584-979e-454bfcd07454",
+          "new": {
+            "file": "ZeroParadox/Computability/CodeDataFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codeDataSwap",
+            "short": "codeDataSwap"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
             "role": [
               "scaffolding"
             ]
@@ -17504,6 +17618,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6a214437-512f-4d25-9814-4ec8a7633ec7",
+          "new": {
+            "file": "ZeroParadox/Computability/CodeDataFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.codedata_is_frameflip",
+            "short": "codedata_is_frameflip"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6a772e29-3f07-4992-b396-e47830625da6",
           "new": {
@@ -24655,6 +24807,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "963f154a-5cbc-4c3b-8927-258d58d7a75a",
+          "new": {
+            "file": "ZeroParadox/Computability/CodeDataFrameChange.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfConfig_on_fixedLocus",
+            "short": "selfConfig_on_fixedLocus"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
