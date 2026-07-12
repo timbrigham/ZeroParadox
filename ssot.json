@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1106,
+        "declarations": 1111,
         "files": 136
       },
       "entries": [
@@ -7237,6 +7237,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "27e8030f-d5af-4d8b-bf1f-db99f8e948b5",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stillPoint_koopman_fixed",
+            "short": "stillPoint_koopman_fixed"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "282a2af4-f544-4969-aa41-517e4e681be8",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
@@ -7843,6 +7881,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2bd551b7-fdd7-4d09-8501-a3fdfa396bc9",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stillPoint_vladimirov_zero",
+            "short": "stillPoint_vladimirov_zero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27099,6 +27175,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "abace68f-c00d-443b-be89-dfa305e36182",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stillPoint_eigenvalue_positive",
+            "short": "stillPoint_eigenvalue_positive"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "abd4bad3-53ec-4dc5-92fc-e1132e951276",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -33935,6 +34047,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d873f899-be7c-43df-8773-3f0f477181bc",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stillPoint_is_spectral_floor",
+            "short": "stillPoint_is_spectral_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d880a1b6-09f6-4466-9e37-c70ef2d704a3",
           "new": {
@@ -37423,6 +37573,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eb12c8ba-9bbb-4041-9264-7758d4938be8",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.paChar_trivial",
+            "short": "paChar_trivial"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
