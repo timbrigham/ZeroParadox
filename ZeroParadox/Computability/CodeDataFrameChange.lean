@@ -41,8 +41,10 @@ computability realization of "the snap is the change of frame."
 
 Content: a bundling of Mathlib's `Prod.swap` involution with Roger's fixed-point theorem and the
 `quine_period_is_goedel` / `IsComputationalQuine` infrastructure of ZP-K; no mathematical novelty. The
-`Prod.swap` faces are choice-free; the quine face inherits `Classical.choice` from Roger's theorem (the
-Mathlib computability infrastructure), as documented in `Computability/Kleene.lean`.
+pure swap facts are choice-free — `codeDataSwap_involutive` is axiom-free and `codeDataSwap_fixed_iff` is
+`propext`-only; the faces that mention codes and the quine (`selfConfig_on_fixedLocus`,
+`codedata_is_frameflip`) carry `Classical.choice`, inherited from the Mathlib `Code` / Roger fixed-point
+infrastructure, as documented in `Computability/Kleene.lean`.
 
 **Fences.** Computability point-of-view's shape of the frame-change; the abstract cross-domain
 "snap = frame-change" stays conjectural (type boundary; see
@@ -66,13 +68,17 @@ def codeDataSwap : ℕ × ℕ → ℕ × ℕ := Prod.swap
 
 /-- The frame-change is an **involution** (self-inverse), like `rInv` and `op`. -/
 theorem codeDataSwap_involutive : Function.Involutive codeDataSwap := by
-  sorry
+  intro p
+  exact Prod.swap_swap p
 
 /-- The **fixed locus of the frame-change is the self-application diagonal**: a configuration is
     swap-fixed iff its code and datum coincide — a program run on its own code. The computability
     analog of `rInv` fixing the seam `‖x‖ = 1`. -/
 theorem codeDataSwap_fixed_iff (p : ℕ × ℕ) : codeDataSwap p = p ↔ p.1 = p.2 := by
-  sorry
+  unfold codeDataSwap
+  rw [Prod.ext_iff]
+  simp only [Prod.fst_swap, Prod.snd_swap]
+  exact ⟨fun h => h.2, fun h => ⟨h.symm, h⟩⟩
 
 /-! ## § II — The quine on the fixed locus -/
 
@@ -80,8 +86,8 @@ theorem codeDataSwap_fixed_iff (p : ℕ × ℕ) : codeDataSwap p = p ↔ p.1 = p
     (the diagonal) of the frame-change. -/
 theorem selfConfig_on_fixedLocus (c : Code) :
     codeDataSwap (Encodable.encode c, Encodable.encode c)
-      = (Encodable.encode c, Encodable.encode c) := by
-  sorry
+      = (Encodable.encode c, Encodable.encode c) :=
+  (codeDataSwap_fixed_iff (Encodable.encode c, Encodable.encode c)).mpr rfl
 
 /-- **The code↔data frame-flip (computability frame).** The frame-change is (i) an involution
     (self-inverse, like `rInv`/`op`); (ii) its fixed locus is exactly the self-application diagonal
@@ -95,8 +101,10 @@ theorem codedata_is_frameflip :
       ∧ (∀ f : Code → Code, Computable f →
           ∃ c : Code, eval (f c) = eval c
             ∧ codeDataSwap (Encodable.encode c, Encodable.encode c)
-                = (Encodable.encode c, Encodable.encode c)) := by
-  sorry
+                = (Encodable.encode c, Encodable.encode c)) :=
+  ⟨codeDataSwap_involutive, codeDataSwap_fixed_iff, fun f hf =>
+    let ⟨c, hc⟩ := roger_fixed_point_exists f hf
+    ⟨c, hc, selfConfig_on_fixedLocus c⟩⟩
 
 end ZeroParadox
 
