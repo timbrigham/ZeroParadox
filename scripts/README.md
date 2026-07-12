@@ -49,6 +49,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 | [build_zpm.py](build_zpm.py) | `ZP-M_Kleene_Ordinal_Bridge.pdf` |
 | [build_zpp.py](build_zpp.py) | `ZP-P_The_Fixed_Point_Fork.pdf` |
+| [build_zpq.py](build_zpq.py) | `ZP-Q_The_Frame_Change.pdf` |
 | [build_zp_choice_free_core.py](build_zp_choice_free_core.py) | `ZP_Choice_Free_Core_Addendum.pdf` |
 
 ### Illustrated companion builders
