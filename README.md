@@ -115,9 +115,9 @@ This prints the kernel's `#print axioms` report for each core result - the basis
 
 ### Reading Order (by specialty)
 
-The framework is not a line. It is a single object, the bottom element ⊥, reached from several fields at once, and the documents above are its spokes. Start at the hub, then follow your own field. A document that appears in more than one field's route is a bridge, and the overlap is the point: the fields converge at ⊥.
+The framework is not a line. Several fields each reach a bottom, and those bottoms all play the same structural role, the diagonal fixed point ⊥; the documents above are the spokes into it. Start at the hub, then follow your own field. A document that appears in more than one field's route is a bridge, and the overlap is the point: the fields' bottoms share one structural shape. Whether they are literally one object is a type boundary, not a theorem (see [The Frame-Change](ZP-Q_The_Frame_Change.pdf)).
 
-**Start here (the hub, for everyone):** [The Bottom Element (⊥)](BOTTOMELEMENT.md), the map of ⊥ and what is proved versus open about it → [Bridge Document](ZP-E_Bridge_Document.pdf), the snap assembled as a derived theorem → [The Frame-Change](ZP-Q_The_Frame_Change.pdf), the snap read as a change of point of view and why every field's bottom is the same object. Keep the [Claims Ledger](CLAIMS.md) beside you for proved-versus-conjectural status.
+**Start here (the hub, for everyone):** [The Bottom Element (⊥)](BOTTOMELEMENT.md), the map of ⊥ and what is proved versus open about it → [Bridge Document](ZP-E_Bridge_Document.pdf), the snap assembled as a derived theorem → [The Frame-Change](ZP-Q_The_Frame_Change.pdf), the snap read as a change of point of view and why every field's bottom plays the same structural role. Keep the [Claims Ledger](CLAIMS.md) beside you for proved-versus-conjectural status.
 
 **Then follow your field:**
 
@@ -128,7 +128,7 @@ The framework is not a line. It is a single object, the bottom element ⊥, reac
 - **Category theory:** [Category Theory](ZP-G_Category_Theory.pdf) → [Categorical Bridge](ZP-H_Categorical_Bridge.pdf), with the [Native Categories](ZP-H_Native_Categories_Addendum.pdf) addendum → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) and [The Frame-Change](ZP-Q_The_Frame_Change.pdf)
 - **Order, lattice, and state:** [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) → [Inside Zero](ZP-I_Inside_Zero.pdf), then the state layers [Information Theory](ZP-C_Information_Theory.pdf) and [State Layer](ZP-D_State_Layer.pdf)
 
-Each spoke is the same three beats: your field, then the bridge that carries it out, then back to ⊥. Read your own layers, then the synthesis layer they feed ([The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) or [The Frame-Change](ZP-Q_The_Frame_Change.pdf)), then the hub, and you will see your field's bottom is the framework's bottom.
+Each spoke is the same three beats: your field, then the bridge that carries it out, then back to ⊥. Read your own layers, then the synthesis layer they feed ([The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) or [The Frame-Change](ZP-Q_The_Frame_Change.pdf)), then the hub, and you will see your field's bottom is doing the same structural work as every other field's.
 
 **The spine (the argument itself, no field assumed):** [The Bottom Element (⊥)](BOTTOMELEMENT.md) → [Bridge Document](ZP-E_Bridge_Document.pdf) → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf). This is the through-line, and it replaces the old single linear reading order, which tried to send every reader through all of the documents in one sequence.
 
