@@ -364,3 +364,47 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP Choice-Free Core Addendum | v1.3 |
 
 **Next threshold:** ZP-N (constructive-ordinal validation - the unit test for the Classical.choice-necessity question) as a new foundational layer, or a theorem status change (candidate -> derived); a further v3.x on the next substantive reviewer-feedback round or accumulated documentation work.
+
+---
+
+## v4.0 - 2026-07-13
+
+**Why this release:** Two new synthesis layers - ZP-Q (The Frame-Change) and ZP-N (The Constructive Snap, the constructive-ordinal validation the v3.0 threshold anticipated) - together with a snap dictionary-and-map (SNAP.md) and a by-specialty restructure of the reading order.
+
+**What changed (since v3.0):**
+- **ZP-Q The Frame-Change** (new synthesis layer, ZP-P sequel): ⊥→ε₀ read as a change of point of view. The order-theoretic frame-flip universal is proved (`fork_is_frameflip`, choice-free); per-domain instances are built (valuation / p-adic Riemann sphere via `snap_is_frameflip`, category via `catseam_is_frameflip`); the categorical Lawvere universal meets a proven Cantor wall; the cross-domain identity is fenced as a type boundary. Lean: ForkFrameChange, SnapFrameChange, SeamFrameChange.
+- **ZP-N The Constructive Snap** (new layer, choice-free companion to ZP-L): the ε₀ snap from below, rebuilt syntactically on ordinal notations (ONote) without touching Mathlib's choice-saturated `Ordinal`. Three snap results choice-free (`propext` only, free of `Quot.sound`): `exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono`. Finding: ZP-L's `Classical.choice` at ε₀ is representational, not intrinsic. Lean: ConstructiveOrdinals.lean.
+- **SNAP.md - The Binary Snap (⊥ → ε₀) Dictionary and Map**: a reference companion to The Bottom Element (BOTTOMELEMENT.md); that maps the object ⊥, this maps the transition off it, with every witness resolved against the live Lean source.
+- **Reading order restructured** to a by-specialty hub-and-spoke (number theory, proof theory, computability, set theory, category theory, order and analysis), replacing the single linear path (README/GUIDE).
+- **Computability frame-change** (CodeDataFrameChange.lean): the code-data (Gödel) involution, its fixed locus the self-application diagonal, the Kleene quine on it (`codedata_is_frameflip`); the involution axiom-free, the fixed-locus characterization `propext`-only.
+- **p-adic dynamics probes**: the Vladimirov/Taibleson operator on ℤ_p, additive characters, the Kozyrev-wavelet eigenvalue, and the odometer-Koopman commutation - the p-adic dynamics wing dual to the F_B categorical leg.
+- **Documentation hygiene**: removed the redundant Mermaid diagrams from BOTTOMELEMENT.md and SNAP.md (they broke on the GitHub Pages live site and restated the docs' own tables); register.md, README, GUIDE synced.
+
+**Document versions at v4.0:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.19 |
+| ZP-B p-Adic Topology | v1.11 |
+| ZP-C Information Theory | v1.20 |
+| ZP-D State Layer | v1.15 |
+| ZP-E Bridge Document | v3.23 |
+| ZP-F The Counterexamples | v1.5 |
+| ZP-G Category Theory | v1.15 |
+| ZP-H Categorical Bridge | v1.17 |
+| ZP-H Native Categories Addendum | v1.2 |
+| ZP-I Inside Zero | v1.13 |
+| ZP-J Self-Reference | v2.5 |
+| ZP-J AFA Addendum | v1.6 |
+| ZP-J Wheel Addendum | v1.3 |
+| ZP-J Keystone Addendum | v1.2 |
+| ZP-K Computational Grounding | v1.9 |
+| ZP-L Incomputability Convergence | v1.3 |
+| ZP-M Kleene-Ordinal Bridge | v1.3 |
+| ZP-N The Constructive Snap | v1.0 (new) |
+| ZP-P The Fixed-Point Fork | v1.5 |
+| ZP-Q The Frame-Change | v1.0 (new) |
+| Zero Paradox Foreword | v2.11 |
+| ZP Philosophical Question | v1.13 |
+| ZP Choice-Free Core Addendum | v1.3 |
+
+**Next threshold:** v4.1 on the next reviewer-feedback round or accumulated document updates; v5.0 if a further formal layer is added or a theorem status changes.
