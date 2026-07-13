@@ -330,43 +330,10 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 
 ---
 
-## Structure diagrams
-
-> **Sizing** (Mermaid auto-lays-out; the risk is sprawl, not overflow). Target: at most about 8 nodes, short
-> labels, fits one screen. Flow/tree stays shallow; a hub/fan is 1 hub with up to about 6 short spokes.
-
-### The μ / ν fork - ⊥ as the seam
-*3 nodes, width 2, depth 2.*
-
-```mermaid
-flowchart TB
-  mu["least fixed point (μ)<br/>built UP from ⊥ (initial, ε₀)"]
-  nu["greatest fixed point (ν)<br/>closed DOWN to ⊥ (limit, attractor)"]
-  seam(["⊥ = the seam<br/>(least and greatest coincide)"])
-  mu --> seam
-  nu --> seam
-```
-
-### Where ⊥ appears - the constructions
-*7 nodes, hub-and-fan, depth 2. (That these are all one referent is the open conjecture, not shown as fact.)*
-
-```mermaid
-flowchart TB
-  bot((("⊥")))
-  bot --- p["p-adic floor<br/>0 in ℚ₂"]
-  bot --- k["Kleisli initial<br/>empty type"]
-  bot --- h["Hilbert zero object<br/>zero space"]
-  bot --- e["ordinal generation<br/>ε₀ from 0"]
-  bot --- q["Kleene quine<br/>self-reference"]
-  bot --- m["Markov attractor<br/>stationary"]
-```
-
----
-
 *Generated from `bottom_cannot_be.md` and the matrix data by `build_dictionary_map.py`. Witness names are
 resolved against the Lean source at generation time and link to the file that declares them; the `meta`
-entries (marked as such) have no Lean witness. To update: edit a source and rerun. Mermaid and the links
-render natively on GitHub.*
+entries (marked as such) have no Lean witness. To update: edit a source and rerun. The links render
+natively on GitHub.*
 """
 
 def main():
