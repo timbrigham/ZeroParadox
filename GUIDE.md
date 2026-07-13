@@ -44,6 +44,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 | File | Description |
 |------|-------------|
 | [Zero Paradox Foreword](Zero_Paradox_Foreword.pdf) | Plain-language introduction for any reader. Start here. |
+| [The Snap Sphere (interactive)](https://zeroparadox.org/snap-sphere.html) | An interactive figure - the frame-change (the 0 and ∞ inversion, the one-way snap) shown across seven fields. The visual companion to [The Frame-Change](ZP-Q_The_Frame_Change.pdf). |
 
 ---
 
