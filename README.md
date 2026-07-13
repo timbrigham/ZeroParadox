@@ -7,7 +7,7 @@
 
 For plain-language introduction, illustrated companions, and reading paths, see [GUIDE](GUIDE.md). For the claim-by-claim status of every result - proved / argued / open, with Lean witnesses and exact axiom profiles - see the [Claims Ledger](CLAIMS.md).
 
-**New to the framework?** [The Bottom Element (⊥)](BOTTOMELEMENT.md) is a dictionary and map of ⊥, the object the whole framework is built on. It catalogues what ⊥ is, what it cannot be, and where each characterization is established, most with a machine-checked Lean witness linked to the source. Start there for orientation, then return here for the formal index.
+**New to the framework?** [The Bottom Element (⊥)](BOTTOMELEMENT.md) is a dictionary and map of ⊥, the object the whole framework is built on. It catalogues what ⊥ is, what it cannot be, and where each characterization is established, most with a machine-checked Lean witness linked to the source. Its companion [The Binary Snap (⊥ → ε₀)](SNAP.md) does the same for the snap, the forced transition off ⊥. Start there for orientation, then return here for the formal index.
 
 Followed a link that broke after the v3.0 source reorganization? The old→new file and declaration map is in [`ssot.json`](ssot.json); report anything we missed in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
@@ -20,6 +20,7 @@ Followed a link that broke after the v3.0 source reorganization? The old→new f
   - [Formal Verification (Lean 4)](#formal-verification-lean-4)
   - [Reproducing the verification](#reproducing-the-verification)
   - [Formal Framework Documents](#formal-framework-documents)
+  - [Reading Order (by specialty)](#reading-order-by-specialty)
 - [Axiomatic Commitments](#axiomatic-commitments)
 - [Question Register](#question-register)
 - [Version History](#version-history)
@@ -107,8 +108,31 @@ This prints the kernel's `#print axioms` report for each core result - the basis
 | [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.8 | Computational grounding: the snap as a Kleene fixed point. |
 | [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.2 | ε₀ as the exact ordinal threshold where the snap occurs. |
 | [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.2 | The bridge between the Kleene quine and the ε₀ fixed point. |
+| [The Constructive Snap](ZP-N_The_Constructive_Snap.pdf) | ZP-N | v1.0 | The choice-free constructive companion to ZP-L: the ε₀ snap from below on ordinal notations. The three snap results are choice-free (propext only); ZP-L's Classical.choice at ε₀ is representational, not intrinsic. |
 | [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) | ZP-P | v1.3 | Synthesis layer: the least-vs-greatest fixed-point fork, generalizing the Foundation/AFA orthogonal-contact-point claim across frameworks. |
+| [The Frame-Change](ZP-Q_The_Frame_Change.pdf) | ZP-Q | v1.0 | Synthesis layer (ZP-P sequel): ⊥ → ε₀ as a change of point of view. The order-theoretic frame-flip universal is proved; the categorical Lawvere universal meets a proven Cantor wall; the cross-domain identity is a type boundary. |
 | [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.2 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
+
+### Reading Order (by specialty)
+
+The framework is not a line. Several fields each reach a bottom, and those bottoms all play the same structural role, the diagonal fixed point ⊥; the documents above are the spokes into it. Start at the hub, then follow your own field. A document that appears in more than one field's route is a bridge, and the overlap is the point: the fields' bottoms share one structural shape. Whether they are literally one object is a type boundary, not a theorem (see [The Frame-Change](ZP-Q_The_Frame_Change.pdf)).
+
+**Start here (the hub, for everyone):** two companion maps - [The Bottom Element (⊥)](BOTTOMELEMENT.md), the map of the object ⊥, and [The Binary Snap (⊥ → ε₀)](SNAP.md), the map of the transition off it - each with what is proved versus open → [Bridge Document](ZP-E_Bridge_Document.pdf), the snap assembled as a derived theorem → [The Frame-Change](ZP-Q_The_Frame_Change.pdf), the snap read as a change of point of view and why every field's bottom plays the same structural role. Keep the [Claims Ledger](CLAIMS.md) beside you for proved-versus-conjectural status.
+
+**Then follow your field:**
+
+- **Number theory and valuation (p-adic):** [pAdic Topology](ZP-B_pAdic_Topology.pdf) → [The Counterexamples](ZP-F_The_Counterexamples.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf) (the p-adic Riemann sphere)
+- **Proof theory and ordinals:** [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) → [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) → [The Constructive Snap](ZP-N_The_Constructive_Snap.pdf)
+- **Computability and recursion:** [Computational Grounding](ZP-K_Computational_Grounding.pdf) → [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf)
+- **Set theory and foundations (AFA):** [Self-Reference](ZP-J_Self_Reference.pdf), with the [AFA](ZP-J_AFA_Addendum.pdf) and [Keystone](ZP-J_Keystone_Addendum.pdf) addenda → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf)
+- **Category theory:** [Category Theory](ZP-G_Category_Theory.pdf) → [Categorical Bridge](ZP-H_Categorical_Bridge.pdf), with the [Native Categories](ZP-H_Native_Categories_Addendum.pdf) addendum → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) and [The Frame-Change](ZP-Q_The_Frame_Change.pdf)
+- **Order, lattice, and state:** [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) → [Inside Zero](ZP-I_Inside_Zero.pdf), then the state layers [Information Theory](ZP-C_Information_Theory.pdf) and [State Layer](ZP-D_State_Layer.pdf)
+
+Each spoke is the same three beats: your field, then the bridge that carries it out, then back to ⊥. Read your own layers, then the synthesis layer they feed ([The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) or [The Frame-Change](ZP-Q_The_Frame_Change.pdf)), then the hub, and you will see your field's bottom is doing the same structural work as every other field's.
+
+**The spine (the argument itself, no field assumed):** [The Bottom Element (⊥)](BOTTOMELEMENT.md) → [Bridge Document](ZP-E_Bridge_Document.pdf) → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf). This is the through-line, and it replaces the old single linear reading order, which tried to send every reader through all of the documents in one sequence.
+
+**Orientation and general readers:** [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) records the axiom profile; the [Foreword](Zero_Paradox_Foreword.pdf) and [The Philosophical Question](ZP_Philosophical_Question.pdf) give context; plain-language companions and a general-reader path are in [GUIDE.md](GUIDE.md). The [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) (division by zero made total) is a self-contained aside off the set-theory route.
 
 ---
 
@@ -126,7 +150,7 @@ The full labelled account - the supporting commitments (AX-B1, AX-G1, AX-G2, MP-
 
 The framework's open questions, design commitments, and resolved questions are tracked in the **[Claims Ledger](CLAIMS.md)** - Tier 6 (open: the `Classical.choice` necessity question, OQ-E2, the Lawvere conjecture), Tier 5 (chosen commitments), and the Resolved-questions list.
 
-**Verification status:** ZP-A through ZP-M and ZP-P, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4. A second-prover cross-check (e.g. Rocq) is not yet done.
+**Verification status:** ZP-A through ZP-N, ZP-P, and ZP-Q, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4. A second-prover cross-check (e.g. Rocq) is not yet done.
 
 Open questions are discussed publicly in the [GitHub Discussions Open Questions category](https://github.com/timbrigham/ZeroParadox/discussions/categories/open-questions).
 

@@ -1,0 +1,71 @@
+# The Binary Snap (⊥ → ε₀) - Dictionary and Map
+
+*A dictionary and map of the framework's central transition, the snap - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
+
+[![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
+
+For the framework's *object*, the bottom element ⊥, see its companion reference [The Bottom Element](BOTTOMELEMENT.md). For the formal framework index and Lean verification, see [README](README.md). For plain-language introductions and reading paths, see [GUIDE](GUIDE.md). For the claim-by-claim status of every result, see the [Claims Ledger](CLAIMS.md).
+
+---
+
+## What this is
+
+This is a **reference** for the framework's central transition, the **snap** - the forced move off the bottom element ⊥ into the first structured state, ε₀. It is the companion to [The Bottom Element](BOTTOMELEMENT.md): that page maps the *object* ⊥ (the noun); this page maps the *transition* off it (the verb). Where the bottom dictionary is mostly nouns, this one is mostly verbs - the snap is an action.
+
+It is a **beginning, not a resolution.** What is *proved* is that the snap is forced, one-way, generates its ceiling from below, and realizes a frame-change in each domain; what is *committed* is that the domain snaps are one object (MC-1); and what stays *open* is the choice-freeness of the ceiling's minimality. The frame-change faces are experimental probes; the abstract "the snap IS the change of frame" is a conjecture, written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
+
+---
+
+## The short version: the snap, tiered by confidence
+
+The snap is the framework's one theorem - the forced, one-way departure from ⊥ into the first structured state ε₀ - and its central *action*. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
+
+**Proved - the snap is forced, and adds no axiom.** T-SNAP ([`t_snap_derived`](ZeroParadox/Order/Snap.lean)): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. The Binary Snap that earlier layers posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
+
+**Proved - the snap is one-way.** It does not reverse: no join returns to a strictly lower state ([`t_snap_irreversible`](ZeroParadox/Order/Snap.lean), algebraic), and the same irreversibility is proved topologically in the 2-adics ([`c3_irreversible`](ZeroParadox/Valuation/Padic.lean)) and categorically in the probability functor ([`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean)). ⊥ is a source, not a round trip.
+
+**Proved - a frame-change in each domain, and an order-theoretic universal.** Over any complete lattice the order-duality frame-change swaps the fork's two closures and the fork collapses at the diagonal fixed point ([`fork_is_frameflip`](ZeroParadox/Settheory/ForkFrameChange.lean)); this is the standard lfp/gfp duality, choice-free, claimed as no novelty. It is realized concretely in the valuation face ([`snap_is_frameflip`](ZeroParadox/Multihomed/SnapFrameChange.lean): one ω-tower is ε₀-as-⊥ in the encoding chart and ε₀-as-ceiling through the 0 ↔ ∞ inversion) and the category face ([`catseam_is_frameflip`](ZeroParadox/Category/SeamFrameChange.lean)). (The abstract cross-domain reading - that these are one and the same frame-change - stays a conjecture; see below.)
+
+**Proved - the ceiling, reached by a choice-free snap from below.** ε₀ is the closure of 0 under omega-to-the-power ([`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean)); on ordinal notations the snap climbs from below with no choice ([`exp_lt_term`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), [`omegaPow_no_fixedpoint`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), [`tower_strictMono`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), all `propext`-only), and the ceiling is co-witnessed with the 2-adic limit and the machine snap ([`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean)). (That ε₀ *is* the least fixed point - [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) - uses classical logic; whether that is avoidable at the notation level is the open item below.)
+
+**Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape, not a single categorical map. In Set (all endofunctions) no nontrivial total type carries a Lawvere fixed-point witness - Cantor forbids it - so the lattice and 2-adic faces are provably not Set-level Lawvere instances ([`nontrivial_lattice_no_witness`](ZeroParadox/Category/Lawvere.lean), [`q2_no_witness`](ZeroParadox/Category/Lawvere.lean)); their ⊥ is a posited fixed point sharing the diagonal shape. The computability face, by contrast, IS a genuine recursion fixed point ([`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean), Kleene / Rogers) - but it lives in the effective category, where the fixed-point-free diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what unifies them is the diagonal shape, not one mechanism. The universality that holds is order-theoretic (the fork), not categorical - a proved obstruction.
+
+**Committed / open - the identity, and minimality.** That the domain snaps are *numerically one* transition is a modeling commitment (MC-1), a type boundary, not a theorem. And whether ε₀-as-least-fixed-point is choice-free at the notation level is open: the syntax-to-semantics bridge [`tower_NF`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean) inherits `Classical.choice`.
+
+**A note on the frame-change faces.** [`snap_is_frameflip`](ZeroParadox/Multihomed/SnapFrameChange.lean), [`catseam_is_frameflip`](ZeroParadox/Category/SeamFrameChange.lean), and [`fork_is_frameflip`](ZeroParadox/Settheory/ForkFrameChange.lean) are experimental probes in the bottom-diagram mapping campaign, not a finalized layer. The theorems build and are checkable, and they compose known results (no novelty is claimed); the abstract cross-domain statement "the snap ⊥ → ε₀ IS the change of point of view" remains a conjecture. The formal write-up is [ZP-Q The Frame-Change](ZP-Q_The_Frame_Change.pdf).
+
+---
+
+## Dictionary
+
+### The snap is (positive handles, with witnesses)
+
+The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it joins) or what the snap *does* (**verb** - the action itself). Most are verbs; that is the point. *The frame-change rows marked "(probe)" and the order-theoretic universal are experimental - the theorems are checkable, the abstract cross-domain reading is a conjecture.*
+
+| aspect | characterization of the snap | witness (links to Lean source) |
+|---|---|---|
+| theorem | the *forced* transition off ⊥ into the minimum non-⊥ state: the join c₀ ∨ c₁ = c₁ is a valid transition, and c₀, c₁ are provably distinct in both directions. AX-1 (the Binary Snap) is no longer an axiom, it is derived | [`t_snap_derived`](ZeroParadox/Order/Snap.lean) |
+| verb | *one-way*: the departure from ⊥ does not reverse. No join can return to a strictly lower state (algebraic form), and the 2-adic and Kleisli faces prove the same irreversibility topologically and categorically | [`t_snap_irreversible`](ZeroParadox/Order/Snap.lean), [`c3_irreversible`](ZeroParadox/Valuation/Padic.lean), [`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean) |
+| verb | a *change of frame*, valuation face (probe): the same ω-tower descends to the 2-adic floor 0 (ε₀ realized as ⊥) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rises to ∞ (ε₀ realized as the ceiling). The inversion is the passage between the two charts | [`snap_is_frameflip`](ZeroParadox/Multihomed/SnapFrameChange.lean), [`snap_frameflip_tower_tendsto_infty`](ZeroParadox/Multihomed/SnapFrameChange.lean) |
+| verb | a *change of frame*, category face (probe): the categorical seam realizes the same frame-flip via the zero object of the linear functor | [`catseam_is_frameflip`](ZeroParadox/Category/SeamFrameChange.lean) |
+| verb | a *change of frame*, order-theoretic universal (choice-free): order-duality swaps the fork's two closures (least fixed point ↔ greatest fixed point), and the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point. This is the standard lfp/gfp duality, bundled - the domain-independent shape the valuation and category faces realize concretely | [`fork_is_frameflip`](ZeroParadox/Settheory/ForkFrameChange.lean), [`fork_collapse_iff`](ZeroParadox/Settheory/FixedPointFork.lean) |
+| verb | *generation*: the floor generates the ceiling - ε₀ is the closure of 0 under omega-to-the-power (the least fixed point of α ↦ ω^α) | [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) |
+| verb | *constructive, from below, choice-free*: on ordinal notations, each tower term strictly exceeds the last, ω^x has no fixed point, and the tower is strictly monotone - all `propext`-only, free even of `Quot.sound` | [`exp_lt_term`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), [`omegaPow_no_fixedpoint`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), [`tower_strictMono`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean) |
+| noun | the ceiling reached, *co-witnessed*: ε₀ stands with the 2-adic limit and the machine snap in one triangle | [`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean) |
+| noun | *what departs*: the floor the snap leaves - the three-name identity (Quine atom = order-bottom ⊥ = join-identity, axiom-free), extended to the Kleene self-reproducing fixed point | [`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean), [`t_comp`](ZeroParadox/Computability/Kleene.lean), [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean) |
+
+### The snap is not (characterization by exclusion)
+
+Each exclusion is either a **proved obstruction** (a Lean-checked wall), a **modeling commitment** (offered, not proved), or an **open** question. The value is here as much as in the positive handles: the walls are what keep the synthesis honest.
+
+| the snap is not... | witness (or meta / open) |
+|---|---|
+| *one mechanism across categories*. The per-domain frame-flips share a shape, not a single categorical map. In Set no nontrivial total type carries a Lawvere fixed-point witness (Cantor), so the lattice and 2-adic faces are provably not Set-level Lawvere instances - their ⊥ is a posited fixed point sharing the diagonal shape. The computability face is instead a genuine recursion fixed point, but in the effective category, where the diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what unifies the faces is the diagonal shape, not one mechanism - order-theoretic, not categorical. A proved obstruction, not a gap | [`nontrivial_lattice_no_witness`](ZeroParadox/Category/Lawvere.lean), [`q2_no_witness`](ZeroParadox/Category/Lawvere.lean), [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) |
+| *numerically one transition across its carriers*. That the valuation, categorical, order, and computability snaps are the same object is a modeling commitment (MC-1), a type boundary - `x = y` across distinct categories is not a well-formed proposition. The faces share the diagonal-fixed-point shape; that they are literally one object is offered, not proved | *meta (no Lean witness)* |
+| *a physical, temporal, or causal event*. The framework is silent on physics. The snap is an order and derivation transition, not a process unfolding in time; which specific state emerges first is outside its scope | *meta (no Lean witness)* |
+| *dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's computational commitments. No snap axiom appears anywhere in the development | [`t_snap_derived`](ZeroParadox/Order/Snap.lean) |
+| *proved to be a choice-free minimal ceiling*. The from-below snap on ordinal notations is choice-free, but ε₀ as the least fixed point via the syntax-to-semantics bridge (`tower_NF`) inherits `Classical.choice`. Whether the minimality is choice-free at the notation level is open | *meta (no Lean witness)* |
+
+---
+
+*Generated by `build_snap_map.py`. Witness names are resolved against the Lean source at generation time and link to the file that declares them; a name that does not resolve fails loud as a warning, and the `meta` / `open` entries (marked as such) have no Lean witness. To update: edit the catalogue and rerun. The links render natively on GitHub.*

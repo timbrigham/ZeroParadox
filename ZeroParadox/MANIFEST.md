@@ -163,6 +163,15 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/NuRateEdge.lean` - ZP-H tree, edge TC33 — the within-ν edge at the orbit-RATE level (#3 ↔ #2)
 - `ZeroParadox/Valuation/NuRateMatch.lean` - ZP-H tree, TC43 — within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
 - `ZeroParadox/Valuation/PadicAttractor.lean` - ZP-H tree, edge TC05 — the p-adic floor #3 as a dynamical attractor
+- `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
+- `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
+- `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
+- `ZeroParadox/Valuation/PadicJointSpectrum.lean` - The joint spectrum: Koopman ⋈ Vladimirov share the character eigenbasis
+- `ZeroParadox/Valuation/PadicKoopman.lean` - The Koopman operator on L²(ℤ_p)
+- `ZeroParadox/Valuation/PadicKoopmanVladimirov.lean` - Koopman ⋈ Vladimirov: the odometer intertwines with D^α
+- `ZeroParadox/Valuation/PadicKozyrev.lean` - A genuine eigenfunction of D^α: the level-1 p-adic character
+- `ZeroParadox/Valuation/PadicStillPoint.lean` - The still-point: the trivial character is the joint fixed/annihilated bottom
+- `ZeroParadox/Valuation/PadicVladimirov.lean` - The Taibleson–Vladimirov operator D^α on ℤ_p
 - `ZeroParadox/Valuation/PolarityFlip.lean` - 2-adic inversion negates the valuation (a cited Mathlib fact + one tower corollary)
 - `ZeroParadox/Valuation/RateTransport.lean` - ZP-H tree, TC34 — within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - ZP-H tree, edge TC35 — root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
@@ -201,6 +210,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/SeamBridge.lean` - ZP-H tree TC18 — is the seam a genuine BRIDGE between the subtrees, or a coincidentally two-sided object?
 - `ZeroParadox/Category/SeamCoincidence.lean` - ZP-H tree, keystone TC12 — the seam IS the categorical μ=ν coincidence
 - `ZeroParadox/Category/SeamComparisonMap.lean` - ZP-H MC-1 tree test TC38: the canonical μ→ν comparison map at the root seam, and the honest
+- `ZeroParadox/Category/SeamFrameChange.lean` - The frame-change in the category frame: `op`-duality swaps initial ↔ terminal at the seam
 - `ZeroParadox/Category/SeamGeneric.lean` - ZP-H tree — TC13: the seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
 - `ZeroParadox/Category/SeamLimColim.lean` - ZP-H tree TC25 — the seam diagram-level coincidence (lim = colim at the zero object)
 - `ZeroParadox/Category/SeamNotColimit.lean` - ZP-H tree — TC38: the seam is NOT a colimit (coproduct) apex over the μ-bottoms
@@ -217,6 +227,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/SeamConnectorFail.lean` - ZP-H tree TC34 — the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
 - `ZeroParadox/Multihomed/SelfAppForkPlace.lean` - ZP-H tree, theory TH11 — placing the ZP-J selfApp fixed point on the μ/ν fork
 - `ZeroParadox/Multihomed/SelfAppSeam.lean` - ZP-H tree — TC15: the selfApp bottom sits at the μ=ν seam, not on either branch
+- `ZeroParadox/Multihomed/SnapFrameChange.lean` - The snap as a change of frame: ε₀-as-⊥ and ε₀-as-ceiling are two charts, swapped by `rInv`
 - `ZeroParadox/Multihomed/SpanObstruction.lean` - ZP-H tree, TC17 / TC14 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 - `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
@@ -224,9 +235,14 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/TwoFacesBot.lean` - Direction B — the two faces of ⊥ at the seam: VACUOUS (they coincide, but only as a bare singleton)
 - `ZeroParadox/Multihomed/WallSpanRobust.lean` - ZP-H tree, TC19 — span-robustness of the well-founded cross-root wall (#1 vs #2)
 
+### Set theory / AFA (ZP-J)
+
+- `ZeroParadox/Settheory/ForkFrameChange.lean` - The order-theoretic universal frame-change: duality swaps the fork's ends
+
 ### Computability (ZP-K, ZP-J)
 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - ZP-H MC-1 tree test TC48: is choice-purity an IN-STATEMENT μ/ν separating invariant?
+- `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - ZP-H / TC20: does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 - `ZeroParadox/Computability/NatListRegime.lean` - ZP-H tree, TC49 — the third root-cut regime: the nat/list functor (leaf + recursive position)
 - `ZeroParadox/Computability/RootCutTrichotomy.lean` - ZP-H: TC47 — the root cut is a TRICHOTOMY (leaf × recursive position)
@@ -238,4 +254,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (78 core, 65 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (78 core, 78 experimental.)*

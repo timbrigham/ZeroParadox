@@ -48,7 +48,9 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpk.py](build_zpk.py) | `ZP-K_Computational_Grounding.pdf` |
 | [build_zpl.py](build_zpl.py) | `ZP-L_Incomputability_Convergence.pdf` |
 | [build_zpm.py](build_zpm.py) | `ZP-M_Kleene_Ordinal_Bridge.pdf` |
+| [build_zpn.py](build_zpn.py) | `ZP-N_The_Constructive_Snap.pdf` |
 | [build_zpp.py](build_zpp.py) | `ZP-P_The_Fixed_Point_Fork.pdf` |
+| [build_zpq.py](build_zpq.py) | `ZP-Q_The_Frame_Change.pdf` |
 | [build_zp_choice_free_core.py](build_zp_choice_free_core.py) | `ZP_Choice_Free_Core_Addendum.pdf` |
 
 ### Illustrated companion builders
@@ -83,6 +85,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | File | Current output |
 |------|---------------|
 | [build_dictionary_map.py](build_dictionary_map.py) | `BOTTOMELEMENT.md` — the ⊥ dictionary-and-map reference at the repo root. Unlike the PDF builders, this emits GitHub-rendered markdown. It resolves every witness name against the Lean corpus at generation time, so a link only appears if the declaration exists in the source; edit the flat data and rerun to update. |
+| [build_snap_map.py](build_snap_map.py) | `SNAP.md` — the ⊥ → ε₀ snap dictionary-and-map reference at the repo root, the companion to `BOTTOMELEMENT.md` (that maps the object, this maps the transition). Same pattern: GitHub-rendered markdown, with every witness name resolved against the Lean corpus at generation time so a link only appears if the declaration exists; the is/is-not/proved-vs-open catalogue is hand-curated flat data. Edit the catalogue and rerun to update. |
 | [build_manifest.py](build_manifest.py) | `ZeroParadox/MANIFEST.md` — the Lean-sources manifest. Also GitHub-rendered markdown, not a PDF. Classifies every `ZeroParadox/**/*.lean` file core-vs-experimental by its in-file `-- EXPERIMENTAL` header, groups by domain folder, and titles each from its module docstring; the editorial preamble is fixed, the file listing is generated — rerun after any file add/move/rename. |
 
 ### Archive
