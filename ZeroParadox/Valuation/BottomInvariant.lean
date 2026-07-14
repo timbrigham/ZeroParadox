@@ -423,11 +423,63 @@ theorem markov_unique_invariant {ρ : ProbabilityMeasure (Fin 2)}
     (hρ : step markovIMK ρ = ρ) : ρ = ⟨markovIMK.μ, markovIMK.isProb⟩ :=
   attracting_unique_invariant markovIMK attracting_markov hρ
 
+/-! ## § IX — The odometer is NOT attracting (the two modes are genuinely distinct)
+
+`AttractingKernel` is not vacuous: the odometer fails it. Starting from a point mass `δ₀`, the orbit is
+`δ_{↑n}` — always a point mass, wandering densely, never spreading — so it cannot converge to the
+non-atomic Haar law. Formally: the point masses form a compact (`ℤ_p` compact) hence closed set that
+Haar does not belong to. This proves the equidistributing bottom (odometer) is a genuinely different
+dynamical mode from the attracting bottoms (#2, #3): "same shape from anywhere" splits into *converge
+to the law* (attracting) versus *equidistribute to it* (ergodic/minimal), and they do not coincide. -/
+
+/-- **The odometer is not an attracting kernel.** Its invariant (Haar) is not a global attractor of
+    the law-orbit — point masses stay point masses and never converge to Haar. -/
+theorem odometer_not_attracting : ¬ AttractingKernel (odometerIMK (p := p)) := by
+  intro hattr
+  -- the law-orbit from `δ₀` is `δ_{↑n}` (deterministic odometer on point masses)
+  have hstepdp : ∀ x : ℤ_[p], step odometerIMK (MeasureTheory.diracProba x)
+      = MeasureTheory.diracProba (1 + x) := by
+    intro x
+    apply Subtype.ext
+    show (MeasureTheory.diracProba x : Measure ℤ_[p]).bind
+        (Kernel.deterministic (1 + ·) measurable_odometer_map) = Measure.dirac (1 + x)
+    rw [Measure.deterministic_comp_eq_map]
+    show (Measure.dirac x).map (1 + ·) = Measure.dirac (1 + x)
+    rw [Measure.map_dirac' measurable_odometer_map]
+  have horbit : ∀ n : ℕ, (step odometerIMK)^[n] (MeasureTheory.diracProba 0)
+      = MeasureTheory.diracProba ((n : ℤ_[p])) := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ k ih =>
+        rw [Function.iterate_succ_apply', ih, hstepdp]
+        push_cast
+        ring_nf
+  have hconv := hattr (MeasureTheory.diracProba 0)
+  simp only [horbit] at hconv
+  -- the limit lies in the (compact, hence closed) range of `diracProba`
+  have hclosed : IsClosed (Set.range (MeasureTheory.diracProba : ℤ_[p] → ProbabilityMeasure ℤ_[p])) :=
+    (isCompact_range continuous_diracProba).isClosed
+  have hmem : (⟨haarZp (p := p), odometerIMK.isProb⟩ : ProbabilityMeasure ℤ_[p])
+      ∈ Set.range (MeasureTheory.diracProba : ℤ_[p] → ProbabilityMeasure ℤ_[p]) :=
+    hclosed.mem_of_tendsto hconv (Filter.Eventually.of_forall fun _ => Set.mem_range_self _)
+  obtain ⟨y, hy⟩ := hmem
+  -- so Haar would equal a Dirac mass — impossible, Haar is non-atomic
+  have hHaar : haarZp (p := p) = Measure.dirac y := by
+    have := congrArg (fun m : ProbabilityMeasure ℤ_[p] => (m : Measure ℤ_[p])) hy
+    simpa [MeasureTheory.diracProba] using this.symm
+  -- Haar is odometer-invariant, so `δ_y = δ_{1+y}`, forcing `1 = 0`
+  have hinv : (haarZp (p := p)).map (1 + ·) = haarZp (p := p) := (measurePreserving_odometer 1).map_eq
+  rw [hHaar, Measure.map_dirac' measurable_odometer_map] at hinv
+  have hyy : (1 : ℤ_[p]) + y = y := dirac_eq_dirac_iff.mp hinv
+  simp at hyy
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
 section PurityCheck
 open ZeroParadox
+#print axioms odometer_not_attracting
 #print axioms odometerBIM
 #print axioms attractorBIM
 #print axioms odometer_sameShape
