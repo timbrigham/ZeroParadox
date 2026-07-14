@@ -4,6 +4,10 @@ import ZeroParadox.Valuation.PadicAttractor
 import ZeroParadox.Reals.MarkovSpectralGap
 import Mathlib.MeasureTheory.Measure.Dirac
 import Mathlib.Probability.Kernel.Invariance
+import Mathlib.Probability.Kernel.Composition.MeasureComp
+import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+import Mathlib.MeasureTheory.Measure.DiracProba
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -282,6 +286,109 @@ noncomputable def markovIMK : InvariantMarkovKernel (Fin 2) where
         = (PMF.uniformOfFintype (Fin 2)).toMeasure
     rw [Measure.const_comp, measure_univ, one_smul]
 
+/-! ## § VII — Attracting kernels: convergence to the invariant law (the #2 ↔ #3 bridge)
+
+`PadicAttractor.lean` flags the edge "#3-as-attractor → #2 (the Markov attractor)" as OPEN: the two
+carry the *same descriptive vocabulary* but were never connected. § VI already made them instances of
+one structure. Here we add the shared **attractor** property both discharge: from every starting
+distribution, the n-step law converges (weakly) to the invariant law. The odometer (§ II) does NOT
+have it — it equidistributes, it does not converge — so this predicate is exactly what separates the
+attracting bottoms (#2, #3) from the equidistributing one.
+
+This is standard Markov / ergodic theory (Mathlib's `Ergodic` family is a *different* notion —
+invariance of one measure, not convergence of the law-orbit to it; unique ergodicity has no Mathlib
+API). What is proved here is the shared *property* both faces discharge. It does NOT build the explicit
+functor / measure-preserving *comparison* between the two systems that `PadicAttractor` also names as
+missing — that half of the edge stays open. -/
+
+open MeasureTheory Filter Topology
+
+/-- One Markov step as a self-map of probability measures (`ρ ↦ ρ.bind κ`). -/
+noncomputable def step {X : Type*} [MeasurableSpace X] (K : InvariantMarkovKernel X)
+    (ρ : ProbabilityMeasure X) : ProbabilityMeasure X :=
+  haveI := K.markov
+  haveI : IsProbabilityMeasure (ρ : Measure X) := ρ.2
+  ⟨(ρ : Measure X).bind K.κ, inferInstance⟩
+
+/-- **Attracting kernel.** From *every* starting distribution, the n-step law converges (weakly) to
+    the invariant law `μ`. The "attractor" property shared by the framework's #2 (Markov) and #3
+    (p-adic) bottoms. -/
+def AttractingKernel {X : Type*} [MeasurableSpace X] [TopologicalSpace X] [OpensMeasurableSpace X]
+    (K : InvariantMarkovKernel X) : Prop :=
+  ∀ ν : ProbabilityMeasure X,
+    Tendsto (fun n => (step K)^[n] ν) atTop (𝓝 (⟨K.μ, K.isProb⟩ : ProbabilityMeasure X))
+
+/-- **Face #3** (p-adic): the doubling attractor is attracting — from any law, the n-step law → δ₀. -/
+theorem attracting_attractor : AttractingKernel attractorIMK := by
+  intro ν
+  -- one step of this kernel is "push forward by the doubling map"
+  have hstepmap : ∀ ρ : ProbabilityMeasure Q₂,
+      (step attractorIMK ρ : Measure Q₂) = (ρ : Measure Q₂).map (fun x => 2 * x) := by
+    intro ρ
+    show (ρ : Measure Q₂).bind (Kernel.deterministic (fun x : Q₂ => 2 * x) measurable_doubling_map)
+        = (ρ : Measure Q₂).map (fun x => 2 * x)
+    exact Measure.deterministic_comp_eq_map measurable_doubling_map
+  -- the n-step law is `ν` pushed forward by the n-fold doubling
+  have hiter : ∀ n, ((step attractorIMK)^[n] ν : Measure Q₂)
+      = (ν : Measure Q₂).map ((fun x : Q₂ => 2 * x)^[n]) := by
+    intro n
+    induction n with
+    | zero => simp
+    | succ k ih =>
+        rw [Function.iterate_succ_apply', hstepmap, ih,
+          Measure.map_map measurable_doubling_map (measurable_doubling_map.iterate k),
+          ← Function.iterate_succ']
+  -- weak convergence, tested against bounded continuous functions
+  rw [ProbabilityMeasure.tendsto_iff_forall_integral_tendsto]
+  intro f
+  show Tendsto (fun n => ∫ x, f x ∂((step attractorIMK)^[n] ν : Measure Q₂)) atTop
+      (𝓝 (∫ x, f x ∂(Measure.dirac (0 : Q₂))))
+  rw [integral_dirac]
+  -- the per-`f` integral converges to `f 0`
+  have horbit : ∀ x : Q₂, Tendsto (fun n => (fun y : Q₂ => 2 * y)^[n] x) atTop (𝓝 0) := by
+    intro x
+    have h : (fun n => (fun y : Q₂ => 2 * y)^[n] x) = (fun n => (2 : Q₂) ^ n * x) := by
+      funext n; rw [mul_left_iterate]
+    rw [h]; exact doubling_orbit_tendsto_zero x
+  have heq : ∀ n, ∫ x, f x ∂((step attractorIMK)^[n] ν : Measure Q₂)
+      = ∫ x, f ((fun y : Q₂ => 2 * y)^[n] x) ∂(ν : Measure Q₂) := by
+    intro n
+    rw [hiter, integral_map (measurable_doubling_map.iterate n).aemeasurable
+      f.continuous.aestronglyMeasurable]
+  simp only [heq]
+  have hdom : Tendsto (fun n => ∫ x, f ((fun y : Q₂ => 2 * y)^[n] x) ∂(ν : Measure Q₂)) atTop
+      (𝓝 (∫ _x, f (0 : Q₂) ∂(ν : Measure Q₂))) := by
+    apply tendsto_integral_of_dominated_convergence (fun _ => ‖f‖)
+    · intro n
+      exact (f.continuous.measurable.comp (measurable_doubling_map.iterate n)).aestronglyMeasurable
+    · exact integrable_const _
+    · intro n; filter_upwards with x using f.norm_coe_le_norm _
+    · filter_upwards with x using f.continuous.continuousAt.tendsto.comp (horbit x)
+  simpa using hdom
+
+/-- Discrete topology on `Fin 2`, so `ProbabilityMeasure (Fin 2)` carries the weak topology. -/
+instance : TopologicalSpace (Fin 2) := ⊥
+instance : OpensMeasurableSpace (Fin 2) := ⟨le_top⟩
+
+/-- **Face #2** (stochastic): the full-mixing Markov kernel is attracting — from any law, the n-step
+    law reaches uniform (in one step, then stays). -/
+theorem attracting_markov : AttractingKernel markovIMK := by
+  intro ν
+  have hstep : ∀ ρ : ProbabilityMeasure (Fin 2),
+      step markovIMK ρ = ⟨markovIMK.μ, markovIMK.isProb⟩ := by
+    intro ρ
+    apply Subtype.ext
+    show (ρ : Measure (Fin 2)).bind
+        (Kernel.const (Fin 2) ((PMF.uniformOfFintype (Fin 2)).toMeasure))
+        = (PMF.uniformOfFintype (Fin 2)).toMeasure
+    haveI : IsProbabilityMeasure (ρ : Measure (Fin 2)) := ρ.2
+    rw [Measure.const_comp, measure_univ, one_smul]
+  apply tendsto_nhds_of_eventually_eq
+  filter_upwards [eventually_ge_atTop 1] with n hn
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
+  rw [Function.iterate_succ_apply']
+  exact hstep _
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -296,4 +403,6 @@ open ZeroParadox
 #print axioms odometerIMK
 #print axioms attractorIMK
 #print axioms markovIMK
+#print axioms attracting_attractor
+#print axioms attracting_markov
 end PurityCheck
