@@ -141,7 +141,7 @@ All conceptual development, structure, and authorship originate with the human c
 
 This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).
 
-You may share the work with attribution, but you may not modify it or use it commercially. See [LICENSE](LICENSE) for full details.
+You may share the work with attribution, but you may not modify it or use it commercially. See [License](LICENSE) for full details.
 
 ---
 

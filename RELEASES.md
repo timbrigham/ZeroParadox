@@ -1,4 +1,4 @@
-> **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. It is the release history for GitHub releases and Zenodo snapshots. The main entry point for the Zero Paradox is [README.md](README.md).
+> **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. It is the release history for GitHub releases and Zenodo snapshots. The main entry point for the Zero Paradox is the [Formal Index](README.md).
 
 # Zero Paradox: Release History
 

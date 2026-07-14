@@ -1,6 +1,6 @@
 # A Reader's Guide to "Forced but Not Proved"
 
-*The plain-language companion to [fmc.md](fmc.md). This is the on-ramp; the precise, technical version lives there.*
+*The plain-language companion to [Forced Metatheoretic Commitment](fmc.md). This is the on-ramp; the precise, technical version lives there.*
 
 Mathematical claims do not all come with the same certainty. Some are proved outright. Some are argued for, carefully, without being proved. Some are choices we make on purpose. And some are still open. This framework labels every claim by which of these it is, so you never have to guess how sure we are. This guide explains those labels in plain language.
 
@@ -43,4 +43,4 @@ None of the framings in this section, "does nothing contain nothing" or "a botto
 
 The value of a framework like this is not in how grand it sounds. It is in how honestly you can tell what it has and has not established. Every claim here is tagged by its confidence level so that any reader, expert or not, can see exactly how much is proved, how much is argued, and how much is chosen. Keeping that line sharp is the whole point. If we ever blur it, we have failed at the thing that matters most.
 
-*For the precise version, the four criteria a forced commitment must meet, the named falsifiers, and the full list of claims by level, see [fmc.md](fmc.md) and [CLAIMS.md](CLAIMS.md).*
+*For the precise version, the four criteria a forced commitment must meet, the named falsifiers, and the full list of claims by level, see [Forced Metatheoretic Commitment](fmc.md) and the [Claims Ledger](CLAIMS.md).*

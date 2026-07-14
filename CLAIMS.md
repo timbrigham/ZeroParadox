@@ -6,8 +6,8 @@ This ledger is a *view*, not a new source of truth. The authorities it consolida
 
 - **Axiom profiles** — [ZeroParadox/AxiomProfile.lean](ZeroParadox/AxiomProfile.lean) (the checkable artifact; CI-built on every push).
 - **The Lean sources** — under [`ZeroParadox/`](ZeroParadox/) in this repository.
-- **The "argued, not proved" tier** — [fmc.md](fmc.md) (Forced Metatheoretic Commitment: definition, conditions, falsifiers).
-- **Versions and script hashes** — [register.md](register.md).
+- **The "argued, not proved" tier** — [Forced Metatheoretic Commitment](fmc.md) (definition, conditions, falsifiers).
+- **Versions and script hashes** — [Version Registry](register.md).
 
 If a Lean witness or file link below no longer resolves after the v3.0 source reorganization, the old→new map is in [`ssot.json`](ssot.json); report anything stale in [discussion #120](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
@@ -77,7 +77,7 @@ These *realize* the snap floor inside standard analytic structures and inherit `
 
 ## Tier 4 — Argued, Not Proved (Forced Metatheoretic Commitments)
 
-Foundational choices the framework's internal structure rules out alternatives to *by argument, not proof*, and falsifiably. Each is metatheoretic — it lives in the ZF+AFA framing, not the Lean kernel — and carries a named falsifier. See [fmc.md](fmc.md).
+Foundational choices the framework's internal structure rules out alternatives to *by argument, not proof*, and falsifiably. Each is metatheoretic — it lives in the ZF+AFA framing, not the Lean kernel — and carries a named falsifier. See [Forced Metatheoretic Commitment](fmc.md).
 
 | Commitment | What is argued | Proved part (separate) | Named falsifier |
 |------------|----------------|------------------------|-----------------|
@@ -107,7 +107,7 @@ The bottom elements across the layers - the algebraic ⊥, the 0 of Q₂, the Tu
 <details>
 <summary><b>The metatheoretic stance — ZF + AFA, and why AFA is forced</b> - click to expand</summary>
 
-This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice — it is argued to be forced by the framework's own results (Tier 4). What "forced" means here, and the discipline every such claim must meet, is defined in [fmc.md](fmc.md).
+This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice — it is argued to be forced by the framework's own results (Tier 4). What "forced" means here, and the discipline every such claim must meet, is defined in [Forced Metatheoretic Commitment](fmc.md).
 
 Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The forcing comes from the framework's results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which is incompatible with the Foundation axiom's well-foundedness requirement (no infinite descending ∈-chains). The full argument for why AFA specifically is the appropriate extension - rather than simply removing Foundation - is developed in ZP-E Remark R-AFA. (This is an argument, not a derivation in the formal system — see Tier 4 and its named falsifier.)
 
