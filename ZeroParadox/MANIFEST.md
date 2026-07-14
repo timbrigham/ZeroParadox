@@ -158,7 +158,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
-- `ZeroParadox/Valuation/BottomInvariant.lean` - The "same shape from anywhere" universal: a self-map with an invariant probability measure and a start-independent ω-limit, instantiated by two opposite dynamics — the odometer (Haar, ω-limit = univ) and the doubling attractor (δ₀, ω-limit = {0})
+- `ZeroParadox/Valuation/BottomInvariant.lean` - The "same shape from anywhere" universal: a self-map with an invariant probability measure and a start-independent ω-limit, across three faces / two domains — the odometer (ℤ_p, Haar, ω-limit = univ) and the doubling attractor (Q₂, δ₀, ω-limit = {0}) on the valuation face, plus § V's kernel generalization to the stochastic bottom (Fin 2 full-mixing Markov kernel, uniform stationary law)
 - `ZeroParadox/Valuation/ContractionRate.lean` - ZP-H tree, edge TC30 — the contraction-rate dichotomy at the p-adic floor #3
 - `ZeroParadox/Valuation/NuLeafReconcile.lean` - ZP-H tree, edge TC16 — the within-ν edge reconciles at the LEAF, not the ambient
 - `ZeroParadox/Valuation/NuRateEdge.lean` - ZP-H tree, edge TC33 — the within-ν edge at the orbit-RATE level (#3 ↔ #2)

@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): a first abstraction of the "invariant structure at the bottom" — a self-map with an invariant probability measure — instantiated by two already-proved dynamics (the ℤ_p odometer with Haar, and the Q₂ doubling attractor with the Dirac mass at the floor). Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicErgodic
 import ZeroParadox.Valuation.PadicAttractor
+import ZeroParadox.Reals.MarkovSpectralGap
 import Mathlib.MeasureTheory.Measure.Dirac
 import Mathlib.Tactic
 
@@ -38,11 +39,13 @@ spaces**:
 The point of the probe: a "spread" invariant (Haar) and a "concentrated" invariant (δ₀) — opposite in
 character — fit **one** structure. That is evidence the invariant-measure shape is genuinely universal
 across these two dynamics, where the fixed-*point* shape is not (Cantor blocks a genuine one on the
-valuation face). **Caveat on "universal":** both instances live on the framework's *valuation* face
-(`ℤ_p`, `Q₂`). This is *within-domain* evidence — two opposite p-adic dynamics — not yet a cross-domain
-universal. Carrying it to a genuinely different domain (the stochastic / Markov bottom, via a kernel
-generalization of this structure) is the next step; the order / category / set-theory faces are not
-measure-theoretic and fall outside this abstraction entirely.
+valuation face). **Caveat on "universal":** the two `Measure`-based instances live on the framework's *valuation* face
+(`ℤ_p`, `Q₂`) — within-domain evidence, two opposite p-adic dynamics. § V then carries the same idea to
+a **genuinely different domain**: the stochastic / Markov bottom (`markovBIK`, finite Markov kernels
+with a stationary distribution). That gives three faces across two domains — but in two Lean
+frameworks (`Measure` for the continuous faces, `PMF` for the stochastic one); a single structure over
+Mathlib's general `MeasureTheory.Kernel` subsuming all three remains the deeper step. The order /
+category / set-theory faces are not measure-theoretic and fall outside this abstraction entirely.
 
 **Honest scope / the fence.** This is the EXISTENCE level only — each face carries *an* invariant
 probability measure. The *strong* uniform statement — that the measure is UNIQUE (unique ergodicity),
@@ -179,6 +182,37 @@ theorem attractor_sameShape : SameShapeFromAnywhere (fun x : Q₂ => 2 * x) := b
     have hle : ‖y‖ ≤ 0 := ge_of_tendsto htend0 (Filter.Eventually.of_forall hyN)
     simpa using le_antisymm hle (norm_nonneg y)
 
+/-! ## § V — The kernel generalization: a genuinely different (stochastic) domain -/
+
+/-- **A bottom with an invariant DISTRIBUTION** — the stochastic sibling of `BottomInvariantMeasure`.
+    A Markov kernel `κ : X → PMF X` on a finite state space together with a *stationary* distribution
+    `μ` (`μ.bind κ = μ`: one Markov step leaves `μ` invariant). This reaches the framework's stochastic
+    bottom — a NON-p-adic domain. (It is a parallel structure to `BottomInvariantMeasure`: `PMF` is
+    Mathlib's finite-probability framework, `Measure` the continuous one. A single structure over
+    Mathlib's general `MeasureTheory.Kernel` would subsume both — the deeper next step.) -/
+structure BottomInvariantKernel (X : Type*) [Fintype X] where
+  /-- the Markov kernel -/
+  κ : X → PMF X
+  /-- the stationary distribution -/
+  μ : PMF X
+  /-- one Markov step leaves `μ` invariant -/
+  stationary : μ.bind κ = μ
+
+/-- The **stochastic (Markov) face**: the full-mixing doubly-stochastic kernel on `Fin 2`
+    (`MarkovSpectralGap.fullMix`: every state ↦ the uniform distribution) with the uniform
+    distribution as its stationary law. A non-p-adic instance of the invariant-structure universal,
+    in a third domain (finite stochastic dynamics). -/
+noncomputable def markovBIK : BottomInvariantKernel (Fin 2) where
+  κ := fullMix
+  μ := PMF.uniformOfFintype (Fin 2)
+  stationary := by unfold fullMix; exact PMF.bind_const _ _
+
+/-- **Stochastic same shape from anywhere.** From *every* starting distribution, one step of the
+    full-mixing kernel reaches the uniform stationary law — the stochastic form of "start anywhere,
+    get the same shape." -/
+theorem markov_sameShape (μ : PMF (Fin 2)) : μ.bind fullMix = PMF.uniformOfFintype (Fin 2) := by
+  unfold fullMix; exact PMF.bind_const _ _
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -188,4 +222,6 @@ open ZeroParadox
 #print axioms attractorBIM
 #print axioms odometer_sameShape
 #print axioms attractor_sameShape
+#print axioms markovBIK
+#print axioms markov_sameShape
 end PurityCheck
