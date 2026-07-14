@@ -1,0 +1,22 @@
+title: The Zero Paradox
+description: A machine-verified mathematical ontology.
+
+# Apply the site theme to every rendered page. The root .md files carry no
+# front matter, so this default is what wraps them in the layout.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Keep the Lean sources and build tooling out of the published site
+# (the PDFs and .md pages are kept; only code/artifacts are dropped).
+exclude:
+  - ZeroParadox/
+  - scripts/
+  - lakefile.lean
+  - lake-manifest.json
+  - lean-toolchain
+  - Gemfile
+  - Gemfile.lock
+  - "*.py"
