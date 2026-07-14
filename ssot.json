@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1123,
+        "declarations": 1126,
         "files": 136
       },
       "entries": [
@@ -3270,6 +3270,38 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0e9c14c7-f6d6-4e3a-b955-7fc9ef91b927",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicErgodic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.denseRange_zsmul_one",
+            "short": "denseRange_zsmul_one"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10033,6 +10065,38 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "396088c8-d117-4b45-ab19-2ab746a0f90e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicErgodic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.denseRange_odometer_orbit",
+            "short": "denseRange_odometer_orbit"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26045,6 +26109,38 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9dcc31f1-e514-4d75-98b8-b6adbd32ef70",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicErgodic.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ergodic_odometer",
+            "short": "ergodic_odometer"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true

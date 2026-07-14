@@ -165,6 +165,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PadicAttractor.lean` - ZP-H tree, edge TC05 — the p-adic floor #3 as a dynamical attractor
 - `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
+- `ZeroParadox/Valuation/PadicErgodic.lean` - Ergodicity (almost every start) and minimality (every orbit dense) of the odometer on ℤ_p — "start anywhere, get the same shape"
 - `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
 - `ZeroParadox/Valuation/PadicJointSpectrum.lean` - The joint spectrum: Koopman ⋈ Vladimirov share the character eigenbasis
 - `ZeroParadox/Valuation/PadicKoopman.lean` - The Koopman operator on L²(ℤ_p)
