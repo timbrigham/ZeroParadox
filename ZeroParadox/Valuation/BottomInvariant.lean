@@ -389,6 +389,40 @@ theorem attracting_markov : AttractingKernel markovIMK := by
   rw [Function.iterate_succ_apply']
   exact hstep _
 
+/-! ## § VIII — Attracting ⟹ unique invariant law
+
+Mathlib has no general unique-ergodicity API, but for an *attracting* kernel uniqueness is free: if the
+n-step law converges to `μ` from every start, any invariant law `ρ` has a constant orbit (`= ρ`) that
+also converges to `μ`, so `ρ = μ` by uniqueness of limits (the weak topology is Hausdorff). This gives
+the attracting bottoms (#2, #3) a proved-*unique* invariant law — the strong ergodic conclusion,
+obtained from the attracting structure rather than the missing library API. -/
+
+/-- **An attracting kernel has a unique invariant probability law.** Any `ρ` fixed by one step equals
+    the invariant law `μ`. -/
+theorem attracting_unique_invariant {X : Type*} [MeasurableSpace X] [TopologicalSpace X]
+    [OpensMeasurableSpace X] [T2Space (ProbabilityMeasure X)]
+    (K : InvariantMarkovKernel X) (hK : AttractingKernel K)
+    {ρ : ProbabilityMeasure X} (hρ : step K ρ = ρ) :
+    ρ = ⟨K.μ, K.isProb⟩ := by
+  have hconst : ∀ n, (step K)^[n] ρ = ρ := by
+    intro n
+    induction n with
+    | zero => rfl
+    | succ k ih => rw [Function.iterate_succ_apply', ih, hρ]
+  have h1 : Tendsto (fun n => (step K)^[n] ρ) atTop (𝓝 ρ) := by
+    simp only [hconst]; exact tendsto_const_nhds
+  exact tendsto_nhds_unique h1 (hK ρ)
+
+/-- Uniqueness of the invariant law for face #3 (the p-adic doubling attractor): `δ₀`. -/
+theorem attractor_unique_invariant {ρ : ProbabilityMeasure Q₂}
+    (hρ : step attractorIMK ρ = ρ) : ρ = ⟨attractorIMK.μ, attractorIMK.isProb⟩ :=
+  attracting_unique_invariant attractorIMK attracting_attractor hρ
+
+/-- Uniqueness of the invariant law for face #2 (the full-mixing Markov kernel): uniform. -/
+theorem markov_unique_invariant {ρ : ProbabilityMeasure (Fin 2)}
+    (hρ : step markovIMK ρ = ρ) : ρ = ⟨markovIMK.μ, markovIMK.isProb⟩ :=
+  attracting_unique_invariant markovIMK attracting_markov hρ
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -405,4 +439,7 @@ open ZeroParadox
 #print axioms markovIMK
 #print axioms attracting_attractor
 #print axioms attracting_markov
+#print axioms attracting_unique_invariant
+#print axioms attractor_unique_invariant
+#print axioms markov_unique_invariant
 end PurityCheck
