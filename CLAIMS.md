@@ -97,14 +97,14 @@ Explicit, motivated commitments. Listed so the open register holds only genuinel
 
 A commitment marked "not a novel commitment" in the layers means its content is formally grounded in prior layers and derivable there; it is stated as a local axiom only for the self-containment of that layer — the same pattern by which AX-1 was stated as an axiom before being derived as T-SNAP. **AX-1 (Binary Snap Causality) is no longer an axiom:** it is Theorem T-SNAP, derived in ZP-E from A4, the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant — any join-semilattice with bottom already has this property.
 
-<details>
+<details markdown="1">
 <summary><b>The single bottom (MC-1) — in full</b> - click to expand</summary>
 
 The bottom elements across the layers - the algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as one object, the same self-referential (diagonal) fixed point in each framework. This identification splits into a correspondence half, now formally realized in Lean, and an identity half - that the four are numerically one object - which remains a modeling commitment rather than a proven identity. Its faces are the Quine atom (⊥ = {⊥}) in set theory, the Kleene quine in computation, the point v₂(0) = ∞ in valuation, and the initial object in category theory. This identification is substantially grounded rather than stipulated: each domain locates its own bottom through its own logic first, and the cross-layer agreement is then enforced formally (the ZP-E typeclass instance ties ZP-A ⊥ to ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves snap consistency across all four functors). The categorical correspondence is now realized in the standard domain categories of Mathlib: the snap floor is the inverse limit in `TopCat`, the initial object in `ModuleCat ℂ`, and the initial object in the Kleisli category of the probability monad `KleisliCat PMF` - with no morphism returning to it in the stochastic case (the bundled witness is `mc1_correspondence`). What remains is the interpretive choice to call these one object. This choice has a precise established form: in the language of Grothendieck fibrations and descent, the per-domain bottoms are a candidate global object indexed over the domains, and whether they are *one* object is a descent / (gerbe-)triviality question - with a cohomological obstruction, in the manner of Giraud's gerbes or the classical field-of-moduli vs field-of-definition distinction, deciding it. This does not resolve the commitment: classical descent is formulated over a single base site, whereas these domains have no canonical common index, so the reading is a proposed frame, not an instance of a theorem. What it changes is the *shape* of the open residual - "are the bottoms one object or many?" becomes "does the descent / triviality obstruction vanish?", a topological question in place of a metaphysical one. The frame is credited to that literature; the cross-domain application is ours, and unbuilt.
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><b>The metatheoretic stance — ZF + AFA, and why AFA is forced</b> - click to expand</summary>
 
 This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice — it is argued to be forced by the framework's own results (Tier 4). What "forced" means here, and the discipline every such claim must meet, is defined in [Forced Metatheoretic Commitment](fmc.md).
@@ -113,7 +113,7 @@ Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an extern
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><b>The supporting commitments</b> (label, type, statement) - click to expand</summary>
 
 | Label | Type | Statement |
@@ -141,7 +141,7 @@ Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an extern
 
 Open questions are also discussed publicly in the [GitHub Discussions Open Questions category](https://github.com/timbrigham/ZeroParadox/discussions/categories/open-questions).
 
-<details>
+<details markdown="1">
 <summary><b>Resolved questions</b> (closed) - click to expand</summary>
 
 | Item | Status |
@@ -224,7 +224,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-P The Fixed-Point Fork | [FixedPointFork.lean](ZeroParadox/Settheory/FixedPointFork.lean), [Ostrowski.lean](ZeroParadox/Valuation/Ostrowski.lean), [Coalgebra.lean](ZeroParadox/Settheory/Coalgebra.lean) | The least/greatest fixed-point fork collapses iff the operator has a unique fixed point (choice-free); number-system instance ℝ vs ℚ₂ via Ostrowski; categorical-parent instance (Fix empty / Cofix inhabited) via QPF | Clean - June 2026 |
 | Keystone probes (Lawvere / boundary) | [Lawvere.lean](ZeroParadox/Category/Lawvere.lean), [Boundary.lean](ZeroParadox/Multihomed/Boundary.lean), [BoundaryBridge.lean](ZeroParadox/Multihomed/BoundaryBridge.lean) | Face-relative Lawvere verdict (no Set-level face an instance, computability face genuine); the snap as a well-foundedness boundary crossing (relation level + QPF μ/ν bridge); best-effort, full Taylor coalgebraic version open (Tier 6) | Clean - June 2026 |
 
-<details>
+<details markdown="1">
 <summary><b>Per-file axiom footprint</b> - click to expand</summary>
 
 All proofs are machine-checked. The classical axioms that appear (`Classical.choice`) come from Mathlib's computability, analysis, and ordinal libraries — they are infrastructure dependencies, not Zero Paradox commitments, and `Classical.choice` in Lean is distinct from the set-theoretic Axiom of Choice.

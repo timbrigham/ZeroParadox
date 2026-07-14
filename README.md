@@ -35,7 +35,7 @@ The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes,
 
 **Scope of the claim.** The internal coherence is formally established - the central theorem and the supporting layer theorems are verified in Lean 4 given the explicitly stated commitments. Whether those commitments are the right ones, and whether the formalism faithfully tracks the structural notion of zero it sets out to model, are questions Lean cannot answer from inside; they are what this repository invites external review on. The framework has been developed in public from the start for exactly this reason.
 
-<details>
+<details markdown="1">
 <summary><b>The derivation chain</b> - the step-by-step formal skeleton - click to expand</summary>
 
 **P₀** (incompressibility threshold, ZP-C D1)  

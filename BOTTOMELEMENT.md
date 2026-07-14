@@ -155,7 +155,7 @@ appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε�
 filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
 **[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
 
-<details>
+<details markdown="1">
 <summary><b>Why each cell</b> - the reason or witness behind every mark (click to expand)</summary>
 
 **Lat ⊥ (ZPA/ZPE)**
