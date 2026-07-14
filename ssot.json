@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1148,
+        "declarations": 1149,
         "files": 136
       },
       "entries": [
@@ -13489,6 +13489,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4ba99c42-3de7-4d46-9b7b-8b0421121e53",
+          "new": {
+            "file": "ZeroParadox/Valuation/BottomInvariant.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_mp_attractor_to_markov",
+            "short": "no_mp_attractor_to_markov"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "state"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true

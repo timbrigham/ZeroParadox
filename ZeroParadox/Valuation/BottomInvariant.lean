@@ -474,6 +474,38 @@ theorem odometer_not_attracting : ¬ AttractingKernel (odometerIMK (p := p)) := 
   have hyy : (1 : ℤ_[p]) + y = y := dirac_eq_dirac_iff.mp hinv
   simp at hyy
 
+/-! ## § X — The direct comparison is a NO-GO: no measure-preserving map identifies the two
+attracting invariants
+
+`PadicAttractor.lean` names the *explicit measure-preserving comparison* between the two dynamical
+systems — #3 (the p-adic doubling attractor) and #2 (the full-mixing Markov kernel) — as the remaining
+open half of the bridge. § VII proved the two bottoms share the *property* (both attracting); here the
+comparison half is closed as an **obstruction**, not a construction. The two invariant laws have
+incompatible shape: #3's invariant is the point mass `δ₀` (all mass concentrated at the floor `0`),
+#2's is the uniform law (mass `2⁻¹` on each point, spread). A measure-preserving map must carry one
+invariant onto the other by push-forward, and a point mass pushes forward only to a point mass — never
+to a non-degenerate spread law. So no measure-preserving comparison exists in the concentrated→spread
+direction. This is the MC-1 lesson in miniature: the shared shape is real, the direct identification is
+blocked. The bridge is answered — the shared property holds, the direct comparison provably cannot. -/
+
+theorem no_mp_attractor_to_markov :
+    ¬ ∃ φ : Q₂ → Fin 2, MeasurePreserving φ attractorIMK.μ markovIMK.μ := by
+  rintro ⟨φ, hφ⟩
+  -- a measure-preserving map pushes the invariant `δ₀` forward onto `markovIMK.μ`
+  have hmap : (Measure.dirac (0 : Q₂)).map φ = markovIMK.μ := hφ.map_eq
+  rw [Measure.map_dirac' hφ.measurable] at hmap
+  -- evaluate both sides at the singleton `{φ 0}`: the point mass gives `1`, the uniform law gives `2⁻¹`
+  have hlhs : (Measure.dirac (φ 0)) {φ 0} = 1 := by
+    rw [Measure.dirac_apply_of_mem (Set.mem_singleton _)]
+  rw [hmap] at hlhs
+  have hrhs : markovIMK.μ {φ 0} = (2 : ENNReal)⁻¹ := by
+    show (PMF.uniformOfFintype (Fin 2)).toMeasure {φ 0} = (2 : ENNReal)⁻¹
+    rw [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
+      PMF.uniformOfFintype_apply]
+    norm_num
+  rw [hrhs, ENNReal.inv_eq_one] at hlhs
+  exact absurd hlhs (by norm_num)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -494,4 +526,5 @@ open ZeroParadox
 #print axioms attracting_unique_invariant
 #print axioms attractor_unique_invariant
 #print axioms markov_unique_invariant
+#print axioms no_mp_attractor_to_markov
 end PurityCheck
