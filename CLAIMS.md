@@ -169,11 +169,11 @@ Open questions are also discussed publicly in the [GitHub Discussions Open Quest
 
 ## Convergence With Established Work
 
-The Zero Paradox is, in large part, a body of inferences resting on a choice-free, machine-checked core. The strongest non-proof support for the framing is that **independent traditions - set theory, number theory, proof theory, computability, category theory - each arrive near the same structure at zero.** This section maps that convergence honestly.
+The Zero Paradox rests on a choice-free, machine-checked core, and much of what is built on it is now proved rather than inferred - the cross-domain *correspondence*, for one, is Lean-realized (`mc1_correspondence`). What remains inferential is bounded: the metatheoretic commitments (Tier 4) and the numerical *identity* that would make the faces one object (MC-1). The strongest non-proof support for that remaining part is that **independent traditions - set theory, number theory, proof theory, computability, category theory - each arrive near the same structure at zero.** This section maps that convergence honestly.
 
 Three things to read it correctly:
 
-1. **This is convergence evidence, not proof.** It raises the prior that there is a real object at the floor; it closes nothing. Each row's *link status* says exactly how tight the connection is.
+1. **This is convergence evidence, not proof.** It raises the prior that there is a real object at the floor; on its own it closes nothing. Each row's *link status* says exactly how tight the connection is.
 2. **The direction of credit points outward.** In every row the established result is the prior work; ZP is an *instance joining* that program, never a frame that subsumes it. Where ZP claims the faces are literally one object, that is a commitment (MC-1), offered to these communities, not imposed on them.
 3. **Not all of these are independent of each other.** Lawvere, the coalgebra line, and the categorical face are one tradition, not three; counted honestly, the genuinely separate roads are set theory, valuation / number theory, proof theory, computability, and category theory.
 
