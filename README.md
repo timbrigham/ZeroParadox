@@ -54,11 +54,11 @@ The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes,
 
 ### Formal Verification (Lean 4)
 
-Machine-checked proofs of the formal documents using Lean 4 + Mathlib, with source under `ZeroParadox/` in this repository. An **axiom-profile artifact**, [AxiomProfile.lean](ZeroParadox/AxiomProfile.lean), collects the axiom dependencies of the core results in one place: the central theorem T-SNAP depends on no axioms, the choice-free core (lattice, Quine-atom self-reference) is listed, and an honest contrast shows where `Classical.choice` enters (the analytic realizations). The full claim-by-claim status - every result with its Lean witness and exact axiom footprint, the by-document verification table, and the per-file axiom profile - is in the **[Claims Ledger](CLAIMS.md)**.
+Machine-checked proofs of the formal documents using Lean 4 + Mathlib, with source under `ZeroParadox/` in this repository. Every push and pull request to `main` is re-verified from scratch by [a continuous-integration build that runs the full `lake build`](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml), so the published state is always one that compiles. An **axiom-profile artifact**, [AxiomProfile.lean](ZeroParadox/AxiomProfile.lean), collects the axiom dependencies of the core results in one place: the central theorem T-SNAP depends on no axioms, the choice-free core (lattice, Quine-atom self-reference) is listed, and an honest contrast shows where `Classical.choice` enters (the analytic realizations). The full claim-by-claim status - every result with its Lean witness and exact axiom footprint, the by-document verification table, and the per-file axiom profile - is in the **[Claims Ledger](CLAIMS.md)**.
 
 ### Reproducing the Verification
 
-An independent re-check is three commands: `git clone https://github.com/timbrigham/ZeroParadox && cd ZeroParadox && lake build`. `elan` reads the pinned compiler from [lean-toolchain](lean-toolchain) (`leanprover/lean4:v4.30.0-rc2`) automatically, and Mathlib is fetched as a pinned dependency via `lake-manifest.json`; a clean `lake build` means every theorem in `ZeroParadox/` type-checks against the Lean kernel. To inspect the core axiom profile directly: `lake env lean ZeroParadox/AxiomProfile.lean`. The [Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) badge at the top runs `lake build` on every push and pull request to `main`, so the published state is always a state that compiles.
+An independent re-check is three commands: `git clone https://github.com/timbrigham/ZeroParadox && cd ZeroParadox && lake build`. `elan` reads the pinned compiler from [lean-toolchain](lean-toolchain) (`leanprover/lean4:v4.30.0-rc2`) automatically, and Mathlib is fetched as a pinned dependency via `lake-manifest.json`; a clean `lake build` means every theorem in `ZeroParadox/` type-checks against the Lean kernel. To inspect the core axiom profile directly: `lake env lean ZeroParadox/AxiomProfile.lean`.
 
 ### Formal Framework Documents
 
@@ -156,7 +156,3 @@ If referencing this work, please cite:
 ## Contact
 
 For inquiries, discussion, or collaboration, reach out by email at [timbrigham@zeroparadox.org](mailto:timbrigham@zeroparadox.org) or open an issue on [GitHub](https://github.com/timbrigham/ZeroParadox).
-
----
-
-*Zero Paradox | April 2026*
