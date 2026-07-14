@@ -22,7 +22,7 @@ Notation: **(none)** = `'<thm>' does not depend on any axioms` (stronger than ch
 
 ---
 
-## Tier 1 — Proved, axiom-free (depends on no axioms at all)
+## Tier 1 — Proved, Axiom-Free (Depends on No Axioms at All)
 
 The framework's load-bearing claims. The Lean kernel reports no axiom dependency whatsoever.
 
@@ -40,7 +40,7 @@ The framework's load-bearing claims. The Lean kernel reports no axiom dependency
 | Aczel J largest | DC-free Aczel uniqueness (J is the largest self) | `J_self_is_largest` | (none) |
 | T-IZ (limit step) | Every maximal chain's limit is its own successor ⊥ | `t_iz_limit_is_new_null` | (none) |
 
-## Tier 2 — Proved, choice-free `[propext, Quot.sound]`
+## Tier 2 — Proved, Choice-Free `[propext, Quot.sound]`
 
 No `Classical.choice`; at most propositional extensionality and quotient soundness.
 
@@ -53,7 +53,7 @@ No `Classical.choice`; at most propositional extensionality and quotient soundne
 | Coalgebra fork (μ side) | `Fix` empty — choice-free | `fix_isEmpty` | [propext, Quot.sound] |
 | Quine-atom identity | The self-referential fixed points are exactly {⊥} (unique, and = ⊥) | `quine_self_members_eq_bot` | [propext, Quot.sound] |
 
-## Tier 3 — Proved, inherits `Classical.choice` from Mathlib (analytic realizations)
+## Tier 3 — Proved, Inherits `Classical.choice` From Mathlib (Analytic Realizations)
 
 These *realize* the snap floor inside standard analytic structures and inherit `Classical.choice` from Mathlib's classically-built topology / inner-product / category / probability / computability / ordinal libraries. **The dependence is in the realization, not in any core claim** (those are Tier 1–2). All report `[propext, Classical.choice, Quot.sound]`.
 
@@ -75,7 +75,7 @@ These *realize* the snap floor inside standard analytic structures and inherit `
 
 *Whether this inherited dependence is structurally forced by the snap geometry or merely incidental to Mathlib's implementation is **open** (see Tier 6). The one layer classified so far (the `PadicTree` choice-probe) found it mostly incidental and routable.*
 
-## Tier 4 — Argued, not proved (Forced Metatheoretic Commitments)
+## Tier 4 — Argued, Not Proved (Forced Metatheoretic Commitments)
 
 Foundational choices the framework's internal structure rules out alternatives to *by argument, not proof*, and falsifiably. Each is metatheoretic — it lives in the ZF+AFA framing, not the Lean kernel — and carries a named falsifier. See [fmc.md](fmc.md).
 
@@ -84,7 +84,7 @@ Foundational choices the framework's internal structure rules out alternatives t
 | AFA necessity (R-AFA, ZP-E) | That ⊥ = {⊥} forces ZF+AFA over Foundation (a metatheoretic squeeze: Foundation too restrictive, Boffa too permissive, AFA the unique fit) | The *structural* self-application fixed point is Lean-proved: `t_exec` (Tier 1, axiom-free) | A well-founded (Foundation-respecting) model of ⊥ consistent with R3 and L-INF would overturn the forcing |
 | CC-2 set-membership reading | The literal ⊥ ∈ ⊥ (the Quine atom as a set fact) | The structural fixed point `t_exec` is axiom-free; only the set-membership reading is metatheoretic | Same as above — a Foundation-respecting realization of the same structural role |
 
-## Tier 5 — Modeling commitments (chosen, not derived; not open questions)
+## Tier 5 — Modeling Commitments (Chosen, Not Derived; Not Open Questions)
 
 Explicit, motivated commitments. Listed so the open register holds only genuinely unresolved questions.
 
@@ -167,7 +167,7 @@ Open questions are also discussed publicly in the [GitHub Discussions Open Quest
 
 ---
 
-## Convergence with established work
+## Convergence With Established Work
 
 The Zero Paradox is, in large part, a body of inferences resting on a choice-free, machine-checked core. The strongest non-proof support for the framing is that **independent traditions - set theory, number theory, proof theory, computability, category theory - each arrive near the same structure at zero.** This section maps that convergence honestly.
 
@@ -198,7 +198,7 @@ Three things to read it correctly:
 
 ---
 
-## Verification by document (Lean 4)
+## Verification by Document (Lean 4)
 
 Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives under [`ZeroParadox/`](ZeroParadox/); the full theorem-by-theorem detail is in each source file. The reproducibility commands are in the [README](README.md#reproducing-the-verification).
 

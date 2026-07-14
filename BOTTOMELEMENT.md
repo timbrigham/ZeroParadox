@@ -1,4 +1,4 @@
-# The Bottom Element (⊥) - Dictionary and Map
+# The Bottom Element (⊥): Dictionary and Map
 
 *A dictionary and map of the framework's bottom element ⊥ - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
 
@@ -8,7 +8,7 @@ For the formal framework index and Lean verification, see [README](README.md). F
 
 ---
 
-## What this is
+## What This Is
 
 This is a **reference** for the framework's bottom element ⊥: a **dictionary** (what ⊥ is and is not) and a
 **map** (where each characterization is established). It is a **beginning, not a resolution.** What is
@@ -18,7 +18,7 @@ the various bottoms are *one object* stays a conjecture - they are provably dist
 
 ---
 
-## The short version: concepts that should not coincide, but do
+## The Short Version: Concepts That Should Not Coincide, but Do
 
 One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
@@ -32,7 +32,7 @@ One self-referential structure - a thing that is its own fixed point - keeps tur
 
 ---
 
-## Reading key (for a reader with no prior context)
+## Reading Key (for a Reader With No Prior Context)
 
 **Slot codes** (the map columns, and the positive dictionary entries):
 
@@ -81,7 +81,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 
 ## Dictionary
 
-### ⊥ cannot be (characterization by exclusion)
+### ⊥ Cannot Be (Characterization by Exclusion)
 
 | ⊥ cannot be... | witness (links to Lean source) |
 |---|---|
@@ -100,7 +100,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 | recovered by mapping the least fixed point onto the greatest: the comparison map is not onto | [`fixToCofix_not_surjective`](ZeroParadox/Computability/NatListRegime.lean) |
 | reached by a non-contracting orbit: unit-norm and swap orbits provably do not converge to ⊥ | [`unit_orbit_not_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`swap_orbit_not_convergent`](ZeroParadox/Order/MarkovContractionDual.lean) |
 
-### ⊥ is (positive handles - the slots)
+### ⊥ Is (Positive Handles - the Slots)
 
 The handles sort by **aspect**: what ⊥ *is* (**noun**), what ⊥ *does* (**verb**), or **both at once**
 (**hinge**). The hinge is ⊥'s signature: at the floor the two collapse - the fixed point that *is* a thing
@@ -120,7 +120,7 @@ not.*
 
 ---
 
-## Map - slot × construction
+## Map - Slot × Construction
 
 Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` **Lean-verified** - a machine-checked proof, with the witness theorem linked in *Why each cell* below ·
 `✗` refuted (a proved obstruction, also Lean-checked) · `∅` not-applicable by structure (a category

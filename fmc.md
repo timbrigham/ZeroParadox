@@ -6,7 +6,7 @@
 
 A Forced Metatheoretic Commitment is a foundational choice whose alternatives the framework's internal structure rules out by argument, not proof, and falsifiably: a viable alternative would overturn it.
 
-## Why metatheoretic work at all?
+## Why Metatheoretic Work at All?
 
 They are argued, not provable within the formal system. This commitment lives in the metatheory, outside what the Lean kernel verifies, and is falsifiable: a viable alternative would overturn it.
 
@@ -14,7 +14,7 @@ They are argued, not provable within the formal system. This commitment lives in
 
 FMC is a disciplined, falsifiable form of the "intrinsic justification" of axioms described by Gödel (1964) and Penelope Maddy (1988, 2011); see References. Intrinsic justification is itself a contested notion, classically resting on intuition or self-evidence (Maddy, for one, leans toward extrinsic justification by consequences). That contestedness is exactly why we formalize it: an FMC replaces "self-evident" with an explicit argument, a named falsifier, and a clear line between what is proved and what is argued. We are making inferences, with as much reason and structure behind them as possible. Each Forced Metatheoretic Commitment names what would overturn it; that named falsifier is the standing invitation to refute it.
 
-## How and why we use it
+## How and Why We Use It
 
 We try to avoid project-specific vernacular. FMC names a status the framework genuinely needs and no existing label fit.
 
@@ -22,7 +22,7 @@ It is stronger than a free modeling choice (the alternatives are argued away, no
 
 Naming it honestly, rather than calling it "proved" or burying it as a free assumption, is what keeps the foundations legible: a reader sees exactly how much is established, and how.
 
-## Canonical definition
+## Canonical Definition
 
 A claim is an FMC iff asserted with all four of:
 

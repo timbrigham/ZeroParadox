@@ -1,4 +1,4 @@
-# The Binary Snap (⊥ → ε₀) - Dictionary and Map
+# The Binary Snap (⊥ → ε₀): Dictionary and Map
 
 *A dictionary and map of the framework's central transition, the snap - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
 
@@ -8,7 +8,7 @@ For the framework's *object*, the bottom element ⊥, see its companion referenc
 
 ---
 
-## What this is
+## What This Is
 
 This is a **reference** for the framework's central transition, the **snap** - the forced move off the bottom element ⊥ into the first structured state, ε₀. It is the companion to [The Bottom Element](BOTTOMELEMENT.md): that page maps the *object* ⊥ (the noun); this page maps the *transition* off it (the verb). Where the bottom dictionary is mostly nouns, this one is mostly verbs - the snap is an action.
 
@@ -16,7 +16,7 @@ It is a **beginning, not a resolution.** What is *proved* is that the snap is fo
 
 ---
 
-## The short version: the snap, tiered by confidence
+## The Short Version: The Snap, Tiered by Confidence
 
 The snap is the framework's one theorem - the forced, one-way departure from ⊥ into the first structured state ε₀ - and its central *action*. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
@@ -38,7 +38,7 @@ The snap is the framework's one theorem - the forced, one-way departure from ⊥
 
 ## Dictionary
 
-### The snap is (positive handles, with witnesses)
+### The Snap Is (Positive Handles, With Witnesses)
 
 The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it joins) or what the snap *does* (**verb** - the action itself). Most are verbs; that is the point. *The frame-change rows marked "(probe)" and the order-theoretic universal are experimental - the theorems are checkable, the abstract cross-domain reading is a conjecture.*
 
@@ -54,7 +54,7 @@ The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it 
 | noun | the ceiling reached, *co-witnessed*: ε₀ stands with the 2-adic limit and the machine snap in one triangle | [`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean) |
 | noun | *what departs*: the floor the snap leaves - the three-name identity (Quine atom = order-bottom ⊥ = join-identity, axiom-free), extended to the Kleene self-reproducing fixed point | [`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean), [`t_comp`](ZeroParadox/Computability/Kleene.lean), [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean) |
 
-### The snap is not (characterization by exclusion)
+### The Snap Is Not (Characterization by Exclusion)
 
 Each exclusion is either a **proved obstruction** (a Lean-checked wall), a **modeling commitment** (offered, not proved), or an **open** question. The value is here as much as in the positive handles: the walls are what keep the synthesis honest.
 

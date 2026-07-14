@@ -17,7 +17,7 @@ That the classical self-reference arguments (Cantor, Russell, Gödel, Kleene) sh
 - **The recurrence is verified across *heterogeneous* domains** - the computability face is a genuine Lawvere/Kleene fixed point; the lattice and 2-adic faces are *posited* fixed points sharing the shape - each machine-checked in Lean.
 - **The boundary is proved, not assumed** - there is no single cross-category theorem folding the domains into one object (`x = y` across distinct categories is not a well-formed proposition); a Cantor/Lawvere obstruction establishes the impossibility. The framework proves where the shape recurs, and where it stops.
 
-## Where to start
+## Where to Start
 
 - **Mathematician or reviewer** - the formal index is below: [Lean verification](#formal-verification-lean-4), the [document table](#formal-framework-documents), and the [reading order by specialty](#reading-order-by-specialty). Claim-by-claim status, with Lean witnesses and exact axiom profiles, is in the [Claims Ledger](CLAIMS.md).
 - **General reader** - [GUIDE](GUIDE.md): plain language, illustrated companions, and reading paths for every audience.
@@ -56,7 +56,7 @@ The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes,
 
 Machine-checked proofs of the formal documents using Lean 4 + Mathlib, with source under `ZeroParadox/` in this repository. An **axiom-profile artifact**, [AxiomProfile.lean](ZeroParadox/AxiomProfile.lean), collects the axiom dependencies of the core results in one place: the central theorem T-SNAP depends on no axioms, the choice-free core (lattice, Quine-atom self-reference) is listed, and an honest contrast shows where `Classical.choice` enters (the analytic realizations). The full claim-by-claim status - every result with its Lean witness and exact axiom footprint, the by-document verification table, and the per-file axiom profile - is in the **[Claims Ledger](CLAIMS.md)**.
 
-### Reproducing the verification
+### Reproducing the Verification
 
 An independent re-check is three commands: `git clone https://github.com/timbrigham/ZeroParadox && cd ZeroParadox && lake build`. `elan` reads the pinned compiler from [lean-toolchain](lean-toolchain) (`leanprover/lean4:v4.30.0-rc2`) automatically, and Mathlib is fetched as a pinned dependency via `lake-manifest.json`; a clean `lake build` means every theorem in `ZeroParadox/` type-checks against the Lean kernel. To inspect the core axiom profile directly: `lake env lean ZeroParadox/AxiomProfile.lean`. The [Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) badge at the top runs `lake build` on every push and pull request to `main`, so the published state is always a state that compiles.
 
@@ -65,7 +65,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | File | Document | Version | Focus |
 |------|----------|---------|-------|
 | [Lattice Algebra](ZP-A_Lattice_Algebra.pdf) | ZP-A | v1.19 | The lattice-algebra foundation: the bottom element ⊥ and the order it induces. |
-| [pAdic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.11 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
+| [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.11 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.20 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
 | [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.23 | The bridge: the snap assembled as a derived theorem across the layers. |
@@ -86,7 +86,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [The Frame-Change](ZP-Q_The_Frame_Change.pdf) | ZP-Q | v1.0 | Synthesis layer (ZP-P sequel): ⊥ → ε₀ as a change of point of view. The order-theoretic frame-flip universal is proved; the categorical Lawvere universal meets a proven Cantor wall; the cross-domain identity is a type boundary. |
 | [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.3 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
 
-### Reading Order (by specialty)
+### Reading Order (by Specialty)
 
 The framework is not a line. Several fields each reach a bottom, and those bottoms all play the same structural role, the diagonal fixed point ⊥; the documents above are the spokes into it. Start at the hub, then follow your own field. A document that appears in more than one field's route is a bridge, and the overlap is the point: the fields' bottoms share one structural shape. Whether they are literally one object is a type boundary, not a theorem (see [The Frame-Change](ZP-Q_The_Frame_Change.pdf)).
 
@@ -94,7 +94,7 @@ The framework is not a line. Several fields each reach a bottom, and those botto
 
 **Then follow your field:**
 
-- **Number theory and valuation (p-adic):** [pAdic Topology](ZP-B_pAdic_Topology.pdf) → [The Counterexamples](ZP-F_The_Counterexamples.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf) (the p-adic Riemann sphere)
+- **Number theory and valuation (p-adic):** [p-adic Topology](ZP-B_pAdic_Topology.pdf) → [The Counterexamples](ZP-F_The_Counterexamples.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf) (the p-adic Riemann sphere)
 - **Proof theory and ordinals:** [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) → [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) → [The Constructive Snap](ZP-N_The_Constructive_Snap.pdf)
 - **Computability and recursion:** [Computational Grounding](ZP-K_Computational_Grounding.pdf) → [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf)
 - **Set theory and foundations (AFA):** [Self-Reference](ZP-J_Self_Reference.pdf), with the [AFA](ZP-J_AFA_Addendum.pdf) and [Keystone](ZP-J_Keystone_Addendum.pdf) addenda → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf)
@@ -105,7 +105,7 @@ Each spoke is the same three beats: your field, then the bridge that carries it 
 
 **The spine (the argument itself, no field assumed):** [The Bottom Element (⊥)](BOTTOMELEMENT.md) → [Bridge Document](ZP-E_Bridge_Document.pdf) → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf). This is the through-line, and it replaces the old single linear reading order, which tried to send every reader through all of the documents in one sequence.
 
-**Orientation and general readers:** [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) records the axiom profile; the [Foreword](Zero_Paradox_Foreword.pdf) and [The Philosophical Question](ZP_Philosophical_Question.pdf) give context; plain-language companions and a general-reader path are in [GUIDE.md](GUIDE.md). The [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) (division by zero made total) is a self-contained aside off the set-theory route.
+**Orientation and general readers:** [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) records the axiom profile; the [Foreword](Zero_Paradox_Foreword.pdf) and [The Philosophical Question](ZP_Philosophical_Question.pdf) give context; plain-language companions and a general-reader path are in [GUIDE](GUIDE.md). The [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) (division by zero made total) is a self-contained aside off the set-theory route.
 
 ---
 
@@ -131,7 +131,7 @@ Open questions are discussed publicly in the [GitHub Discussions Open Questions 
 
 ## Version History
 
-Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). Previous document versions are preserved in the repository's git history and in each release's Zenodo/DOI snapshot. See [GUIDE.md](GUIDE.md) for development notes and process documentation.
+Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). Previous document versions are preserved in the repository's git history and in each release's Zenodo/DOI snapshot. See [GUIDE](GUIDE.md) for development notes and process documentation.
 
 ---
 

@@ -1,6 +1,6 @@
-# The Bottom Element (⊥) - Structural Findings
+# The Bottom Element (⊥): Structural Findings
 
-*Companion to [The Bottom Element (⊥) - Dictionary and Map](BOTTOMELEMENT.md). That page is the chart; this
+*Companion to [The Bottom Element (⊥): Dictionary and Map](BOTTOMELEMENT.md). That page is the chart; this
 page is the **why** behind two of its columns - `GEN` and `dynamics`. Every theorem named here is linked to
 its Lean source from the map's dictionary.*
 
@@ -11,7 +11,7 @@ dynamics - turned out not to be independent slots but two readings of a single s
 
 ---
 
-## μ and ν - the one axis behind two columns
+## μ and ν - the One Axis Behind Two Columns
 
 Every fixed point of a construction sits on a fork:
 
@@ -23,7 +23,7 @@ A construction's bottom is a **source** (μ), a **sink** (ν), or - where the tw
 
 ---
 
-## Finding 1 - GEN is the μ face (generation by iteration)
+## Finding 1 - GEN Is the μ Face (Generation by Iteration)
 
 `GEN` asks: does ⊥ **generate** the structure above it? The precise content is the least-fixed-point-by-
 iteration schema
@@ -56,7 +56,7 @@ axiom footprints - but the matrix states it as a connection, not a proved cross-
 
 ---
 
-## Finding 2 - dynamics is single-directional, set by μ/ν
+## Finding 2 - Dynamics Is Single-Directional, Set by μ/ν
 
 The matrix's `dynamics` column has **two sub-senses**, drawn as one directional symbol:
 
@@ -92,7 +92,7 @@ statements, the analogy is not.)
 
 ---
 
-## Why the cell vocabulary is five states, not a checkmark
+## Why the Cell Vocabulary Is Five States, Not a Checkmark
 
 A relationship between a construction and an aspect is a **claim with a status**, not a yes/no box. A blank
 would conflate three completely different situations - an open question, a settled structural non-applicability,

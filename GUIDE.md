@@ -53,7 +53,7 @@ This repository is connected to a Copilot Space - a GitHub AI chat with the docu
 
 **General reader:** [The Philosophical Question](ZP_Philosophical_Question.pdf) → [Foreword](Zero_Paradox_Foreword.pdf) → any [Illustrated Companion](#illustrated-companion-documents) → [ZP-E Companion](ZP-E_Illustrated_Companion.pdf) → [ZP-I Companion](ZP-I_Illustrated_Companion.pdf) (framework closure)
 
-**Mathematician:** the formal layers are best read by field, not in one linear sequence. See the [Reading Order (by specialty)](README.md#reading-order-by-specialty) in the formal index, which routes each specialty (number theory, proof theory, computability, set theory, category theory, order and analysis) through its own layers, the bridge that connects it, and the shared bottom ⊥.
+**Mathematician:** the formal layers are best read by field, not in one linear sequence. See the [Reading Order (by Specialty)](README.md#reading-order-by-specialty) in the formal index, which routes each specialty (number theory, proof theory, computability, set theory, category theory, order and analysis) through its own layers, the bridge that connects it, and the shared bottom ⊥.
 
 **Category theory extension:** [ZP-G](ZP-G_Category_Theory.pdf) → [ZP-H](ZP-H_Categorical_Bridge.pdf) → [ZP-H Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) (self-contained after ZP-E)
 
@@ -92,7 +92,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 |------|-------------|
 | [The Philosophical Question That Started This](ZP_Philosophical_Question.pdf) | The philosophical question that motivated the framework, and what the formal results say about it. |
 | [ZP Tools and Methods](ZP_Tools_and_Methods.pdf) | How the framework was developed: Claude's role, what formal tools were and were not used (Rocq, Lean, etc.), the PDF rendering pipeline. |
-| [Forced but Not Proved: A Reader's Guide](fmc_guide.md) | Plain-language guide to the framework's confidence labels. What "proved," "forced," "chosen," and "open" mean, and why some results are chosen rather than proved. The accessible companion to [fmc.md](fmc.md). |
+| [Forced but Not Proved: A Reader's Guide](fmc_guide.md) | Plain-language guide to the framework's confidence labels. What "proved," "forced," "chosen," and "open" mean, and why some results are chosen rather than proved. The accessible companion to [Forced Metatheoretic Commitment](fmc.md). |
 
 ---
 
