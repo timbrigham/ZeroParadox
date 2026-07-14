@@ -3,6 +3,7 @@ import ZeroParadox.Valuation.PadicErgodic
 import ZeroParadox.Valuation.PadicAttractor
 import ZeroParadox.Reals.MarkovSpectralGap
 import Mathlib.MeasureTheory.Measure.Dirac
+import Mathlib.Probability.Kernel.Invariance
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -42,10 +43,12 @@ across these two dynamics, where the fixed-*point* shape is not (Cantor blocks a
 valuation face). **Caveat on "universal":** the two `Measure`-based instances live on the framework's *valuation* face
 (`ℤ_p`, `Q₂`) — within-domain evidence, two opposite p-adic dynamics. § V then carries the same idea to
 a **genuinely different domain**: the stochastic / Markov bottom (`markovBIK`, finite Markov kernels
-with a stationary distribution). That gives three faces across two domains — but in two Lean
-frameworks (`Measure` for the continuous faces, `PMF` for the stochastic one); a single structure over
-Mathlib's general `MeasureTheory.Kernel` subsuming all three remains the deeper step. The order /
-category / set-theory faces are not measure-theoretic and fall outside this abstraction entirely.
+with a stationary distribution). That gives three faces across two domains. § VI then **unifies** them:
+`InvariantMarkovKernel`, a single structure over Mathlib's general `MeasureTheory.Kernel`, of which all
+three faces are instances (the two deterministic p-adic faces via `Kernel.deterministic`, the
+stochastic face as a genuine Markov kernel) — so the universal is now *one* structure, not two parallel
+ones. The order / category / set-theory faces are not measure-theoretic and fall outside this
+abstraction entirely.
 
 **Honest scope / the fence.** This is the EXISTENCE level only — each face carries *an* invariant
 probability measure. The *strong* uniform statement — that the measure is UNIQUE (unique ergodicity),
@@ -189,7 +192,7 @@ theorem attractor_sameShape : SameShapeFromAnywhere (fun x : Q₂ => 2 * x) := b
     `μ` (`μ.bind κ = μ`: one Markov step leaves `μ` invariant). This reaches the framework's stochastic
     bottom — a NON-p-adic domain. (It is a parallel structure to `BottomInvariantMeasure`: `PMF` is
     Mathlib's finite-probability framework, `Measure` the continuous one. A single structure over
-    Mathlib's general `MeasureTheory.Kernel` would subsume both — the deeper next step.) -/
+    Mathlib's general `MeasureTheory.Kernel` subsumes both — realized in § VI, `InvariantMarkovKernel`.) -/
 structure BottomInvariantKernel (X : Type*) [Fintype X] where
   /-- the Markov kernel -/
   κ : X → PMF X
@@ -213,6 +216,72 @@ noncomputable def markovBIK : BottomInvariantKernel (Fin 2) where
 theorem markov_sameShape (μ : PMF (Fin 2)) : μ.bind fullMix = PMF.uniformOfFintype (Fin 2) := by
   unfold fullMix; exact PMF.bind_const _ _
 
+/-! ## § VI — The unification: one structure over Mathlib's general `Kernel` -/
+
+open ProbabilityTheory
+
+/-- **The unified invariant-structure universal.** A Markov kernel `κ : Kernel X X` on a measurable
+    space together with an invariant probability measure `μ` (`Kernel.Invariant κ μ`, i.e.
+    `μ.bind κ = μ`). This is Mathlib's general kernel framework, so it subsumes BOTH earlier structures
+    at once: a *deterministic* self-map is the Dirac kernel `Kernel.deterministic f`, and a finite
+    *Markov* kernel is a genuine `Kernel`. All three faces below — the two continuous p-adic dynamics
+    and the finite stochastic one — are now instances of this *one* structure. -/
+structure InvariantMarkovKernel (X : Type*) [MeasurableSpace X] where
+  /-- the Markov kernel (transition dynamics) -/
+  κ : Kernel X X
+  /-- it is a Markov (probability) kernel -/
+  markov : IsMarkovKernel κ
+  /-- the invariant law -/
+  μ : Measure X
+  /-- it is a probability measure -/
+  isProb : IsProbabilityMeasure μ
+  /-- the law is invariant: one step leaves it unchanged -/
+  invariant : Kernel.Invariant κ μ
+
+private theorem measurable_odometer_map : Measurable ((1 : ℤ_[p]) + ·) := by fun_prop
+
+/-- **Face 1** (valuation, deterministic): the odometer as a `Kernel.deterministic`, with Haar as its
+    invariant law. Invariance reduces to `measurePreserving_odometer`. -/
+noncomputable def odometerIMK : InvariantMarkovKernel ℤ_[p] where
+  κ := Kernel.deterministic (1 + ·) measurable_odometer_map
+  markov := inferInstance
+  μ := haarZp (p := p)
+  isProb := inferInstance
+  invariant := by
+    show (haarZp (p := p)).bind (Kernel.deterministic (1 + ·) measurable_odometer_map)
+        = haarZp (p := p)
+    rw [Measure.deterministic_comp_eq_map]
+    exact (measurePreserving_odometer 1).map_eq
+
+private theorem measurable_doubling_map : Measurable (fun x : Q₂ => 2 * x) := by fun_prop
+
+/-- **Face 2** (valuation, deterministic): the doubling attractor as a `Kernel.deterministic`, with the
+    Dirac mass `δ₀` as its invariant law. -/
+noncomputable def attractorIMK : InvariantMarkovKernel Q₂ where
+  κ := Kernel.deterministic (fun x => 2 * x) measurable_doubling_map
+  markov := inferInstance
+  μ := Measure.dirac 0
+  isProb := inferInstance
+  invariant := by
+    show (Measure.dirac 0).bind (Kernel.deterministic (fun x : Q₂ => 2 * x) measurable_doubling_map)
+        = Measure.dirac 0
+    rw [Measure.deterministic_comp_eq_map]
+    exact attractorBIM.preserving.map_eq
+
+/-- **Face 3** (stochastic): the full-mixing Markov kernel as `Kernel.const`, with the uniform
+    distribution as its stationary law. A genuine Markov kernel in the *same* structure as the two
+    deterministic p-adic faces. -/
+noncomputable def markovIMK : InvariantMarkovKernel (Fin 2) where
+  κ := Kernel.const (Fin 2) ((PMF.uniformOfFintype (Fin 2)).toMeasure)
+  markov := inferInstance
+  μ := (PMF.uniformOfFintype (Fin 2)).toMeasure
+  isProb := inferInstance
+  invariant := by
+    show ((PMF.uniformOfFintype (Fin 2)).toMeasure).bind
+        (Kernel.const (Fin 2) ((PMF.uniformOfFintype (Fin 2)).toMeasure))
+        = (PMF.uniformOfFintype (Fin 2)).toMeasure
+    rw [Measure.const_comp, measure_univ, one_smul]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -224,4 +293,7 @@ open ZeroParadox
 #print axioms attractor_sameShape
 #print axioms markovBIK
 #print axioms markov_sameShape
+#print axioms odometerIMK
+#print axioms attractorIMK
+#print axioms markovIMK
 end PurityCheck
