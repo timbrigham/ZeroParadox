@@ -14,7 +14,7 @@ Followed a link that broke after the v3.0 source reorganization? Report anything
 
 ## What This Is
 
-The Zero Paradox proves that a minimum non-bottom element in a join-semilattice is structurally forced - not assumed. The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
+The Zero Paradox proves that a minimum non-bottom element is structurally forced - not assumed - given the framework's discrete state model (a bare join-semilattice alone can be dense, with no such minimum; that is exactly where the transition fails, in the reals). The result is machine-verified in Lean 4. The supporting structure examines what happens at the bottom element ⊥ across several mathematical frameworks; each independently locates the same structural constraint. One additional hypothesis per framework is required that is not derivable from that framework's axioms alone - these are catalogued in [Axiomatic Commitments](README.md#axiomatic-commitments) in README.md.
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 

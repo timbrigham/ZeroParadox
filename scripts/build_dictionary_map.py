@@ -108,7 +108,7 @@ TERMS = [
 
 # --- Dictionary: negative entries.  (id, description, [witness theorem names]) ---
 APOPHATIC = [
-    ("A1", "a Lean term or otherwise finitely written down (⊥ is descriptionless, so any written form is already a description of it)", []),
+    ("A1", "a Lean term or otherwise finitely written down - this is the *apophatic* ⊥, the descriptionless limit-notion, distinct from the algebraic bottom element the Lean manipulates as a finite, decidable term. The two share the symbol ⊥, not an identity: any written form is a description, so it captures an interpretation of ⊥, never the descriptionless limit itself", []),
     ("A2", "anything that keeps time, space, description, measure or structure (that would be an *interpretation* of ⊥, not ⊥)", []),
     ("A3", "finite: ⊥ is by definition the point where every finite measure diverges to infinity", []),
     ("B1", "the same object as both the proof-theory floor and the attractor floor (one is well-founded, the other is not)",
