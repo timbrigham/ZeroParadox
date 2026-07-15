@@ -1,4 +1,4 @@
-# The Bottom Element (⊥): Dictionary and Map
+# The Bottom Element (⊥) - Dictionary and Map
 
 *A dictionary and map of the framework's bottom element ⊥ - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
 
@@ -6,21 +6,19 @@
 
 For the formal framework index and Lean verification, see [README](README.md). For plain-language introductions, companions, and reading paths, see [GUIDE](GUIDE.md). For the claim-by-claim status of every result, see the [Claims Ledger](CLAIMS.md).
 
-> **See it - [The Bottom Family, an interactive map](bottom-family-tree.html).** One trunk, many kin: every field's bottom element as a leaf, colored by the wall its structure hits. Hover any node for exactly why it sits where it does, with the Lean witness to check yourself.
-
 ---
 
-## What This Is
+## What this is
 
 This is a **reference** for the framework's bottom element ⊥: a **dictionary** (what ⊥ is and is not) and a
 **map** (where each characterization is established). It is a **beginning, not a resolution.** What is
-*proved* is that each construction's bottom belongs to the family and that the slot structure recurs; that
-the various bottoms are *one object* stays a conjecture - they are provably distinct as structures (the
-"walls"). It closes a standing gap: a framework built on ⊥ that had not yet characterized ⊥ itself.
+*proved* is that each construction's bottom belongs to the family and that the slot structure recurs; the
+reading that the various bottoms are *one object* is retired as ill-typed - they are provably distinct as
+structures (the "walls"). It closes a standing gap: a framework built on ⊥ that had not yet characterized ⊥ itself.
 
 ---
 
-## The Short Version: Concepts That Should Not Coincide, but Do
+## The short version: concepts that should not coincide, but do
 
 One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
@@ -30,11 +28,11 @@ One self-referential structure - a thing that is its own fixed point - keeps tur
 
 **Argued - a metatheoretic squeeze, not a theorem.** That ⊥ = {⊥} *forces* ZF+AFA over Foundation is argued, not proved: Foundation too restrictive, Boffa too permissive, AFA the unique fit, with a named falsifier. The *structural* fixed point is machine-checked and axiom-free ([`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean)); the AFA *forcing* is a Forced Metatheoretic Commitment, stronger than a free modeling choice and weaker than a theorem.
 
-**Committed - the identity.** That all of these floors are *numerically one object* across their different carriers and categories is a modeling commitment (MC-1), not a theorem - `x = y` across distinct categories is not even a well-formed proposition. It is offered to these communities, not imposed. The map below is the full account: exactly where the representations align, and where they are provably *distinct* (the "walls").
+**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is [`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under [`rInv`](ZeroParadox/Valuation/RiemannSphere.lean) in ℚ₂).
 
 ---
 
-## Reading Key (for a Reader With No Prior Context)
+## Reading key (for a reader with no prior context)
 
 **Slot codes** (the map columns, and the positive dictionary entries):
 
@@ -83,7 +81,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 
 ## Dictionary
 
-### ⊥ Cannot Be (Characterization by Exclusion)
+### ⊥ cannot be (characterization by exclusion)
 
 | ⊥ cannot be... | witness (links to Lean source) |
 |---|---|
@@ -102,7 +100,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 | recovered by mapping the least fixed point onto the greatest: the comparison map is not onto | [`fixToCofix_not_surjective`](ZeroParadox/Computability/NatListRegime.lean) |
 | reached by a non-contracting orbit: unit-norm and swap orbits provably do not converge to ⊥ | [`unit_orbit_not_tendsto_zero`](ZeroParadox/Valuation/ContractionRate.lean), [`swap_orbit_not_convergent`](ZeroParadox/Order/MarkovContractionDual.lean) |
 
-### ⊥ Is (Positive Handles - the Slots)
+### ⊥ is (positive handles - the slots)
 
 The handles sort by **aspect**: what ⊥ *is* (**noun**), what ⊥ *does* (**verb**), or **both at once**
 (**hinge**). The hinge is ⊥'s signature: at the floor the two collapse - the fixed point that *is* a thing
@@ -122,7 +120,7 @@ not.*
 
 ---
 
-## Map - Slot × Construction
+## Map - slot × construction
 
 Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` **Lean-verified** - a machine-checked proof, with the witness theorem linked in *Why each cell* below ·
 `✗` refuted (a proved obstruction, also Lean-checked) · `∅` not-applicable by structure (a category
@@ -157,7 +155,7 @@ appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε�
 filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
 **[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
 
-<details markdown="1">
+<details>
 <summary><b>Why each cell</b> - the reason or witness behind every mark (click to expand)</summary>
 
 **Lat ⊥ (ZPA/ZPE)**

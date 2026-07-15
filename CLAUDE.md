@@ -471,7 +471,7 @@ point."** This language has recurred across many sessions; it is the real centra
 - The faces of the one diagonal fixed point: the Quine atom (set theory, CC-2), the Kleene quine
   (computability, ZP-K), v₂(0)=∞ (valuation, ZP-B), the unique fixed point of `selfApp`
   (ZP-J `AbstractSelfApp`), unbounded surprisal / no external description (ZP-C), the categorical
-  initial object (ZP-G). MC-1 (the single bottom) is the commitment that identifies them.
+  initial object (ZP-G). MC-1 (the bottom family) is what identifies them as kin.
 - **Name it to evoke the recognized phenomenon, do NOT claim the unification as proved.** "Diagonal"
   anchors it to the diagonal argument and Lawvere's fixed-point theorem (the recognized home for
   self-referential fixed points across Russell / Quine / Kleene / Gödel / Tarski / Cantor). What ZP has
@@ -481,10 +481,12 @@ point."** This language has recurred across many sessions; it is the real centra
 - Full articulation, faces, and the formal-vs-conjectural split:
   `.claude-local/notes/keystone_self_referential_fixed_point_2026-06-10.md`.
 
-### MC-1 status convention — correspondence half is now derived (additive, no new name)
+### MC-1 status convention — RETIRED as a commitment; MC-1 = the bottom family (rolled out 2026-07-15)
 
-**Standing rule (Tim, 2026-06-10).** MC-1 (the cross-framework "single bottom" identification) was
-split this session, the same way AX-1 became T-SNAP and CC-2 became a Forced Metatheoretic Commitment:
+**Standing rule (Tim, ratified 2026-07-14, rolled out 2026-07-15).** MC-1 no longer names a "modeling
+commitment" to one object; it names the **bottom family**. The "MC = Modeling Commitment" prefix is stale
+(the same arc as AX-1→T-SNAP and CC-2→FMC). The earlier "correspondence derived / identity a commitment"
+split is superseded:
 
 - **Correspondence half — now formally realized.** Each domain bottom is the categorical bottom
   (limit or initial object) of its own *real* Mathlib category: F_B `fB_functor : ℕᵒᵖ ⥤ TopCat`
@@ -492,12 +494,19 @@ split this session, the same way AX-1 became T-SNAP and CC-2 became a Forced Met
   `StateSpace 0`), F_C `fC_functor : ℕ ⥤ KleisliCat PMF` (⊥ = initial object `Fin 0`, with
   `fC_no_return` = AX-G2 as a theorem). Bundled witness: `mc1_correspondence` (`MC1Bridge.lean`).
   So the bare label "MC = Modeling Commitment" now **undersells** this half.
-- **Identity half — still a modeling commitment.** That the four bottoms are *numerically one object*
-  across four categories is a chosen identification, the irreducible residue. NOT a theorem.
+- **The family — membership proved.** Each domain's bottom satisfies a shared list of criteria (the slots
+  in BOTTOMELEMENT); per-domain membership is proved, the choice of criteria a design principle.
+- **Identity half — RETIRED as ill-typed.** That the four bottoms are *numerically one object* across
+  distinct categories is NOT a commitment the framework holds — `x = y` across distinct categories is not a
+  well-formed proposition, so it was never a claim. The members are provably distinct (the walls); the only
+  oneness is the shared *shape* (the diagonal fixed point), apophatic, never a formal identity.
 
 **The convention (ADDITIVE, never eliminative):**
-- Keep **"MC-1"** as the formal handle everywhere; do not rename it. When status is described, present
-  the split: correspondence half derived (cite `mc1_correspondence`), identity half a commitment.
+- Keep **"MC-1"** as the formal handle everywhere; it now points at the **bottom family** (CC-2 precedent:
+  keep the label, retire the framing). Do not rename it; `mc1_correspondence` is unchanged. **Never call the
+  cross-category identity a "modeling commitment," "offered," or "one object we commit to"** — it is retired
+  as ill-typed. Present the split: membership PROVED, criteria a design principle, identity RETIRED, members
+  provably distinct.
 - **No new readable name for MC-1.** Unlike CC-2 (which *is* an object = the Quine atom), MC-1 is the
   *identification*; its underlying object already has the confirmed readable name
   [[project_diagonal_fixed_point]] ("the diagonal fixed point"). Coining an MC-branded name would be
@@ -505,8 +514,9 @@ split this session, the same way AX-1 became T-SNAP and CC-2 became a Forced Met
 - **Do not overclaim.** The real categories are not `ZPCategory` instances (they have terminal
   objects), so ⊥ is the *limit* in `TopCat` and the *initial object* in the other two; state that
   distinction honestly. The cross-category identity is never claimed as proved.
-- **Rollout:** reader-facing surfaces first (README done 2026-06-10); other formal docs/companions as
-  each is next revised. Do not touch RELEASES.md.
+- Canonical definition lives in **BOTTOMELEMENT's opening** ("The family - MC-1"); everything references
+  there (draft MC1.md folded in + archived to `.claude-local/notes/` 2026-07-15).
+- **Rollout DONE (2026-07-15):** README, CLAIMS, SNAP + BOTTOMELEMENT via their generators. Do not touch RELEASES.md.
 
 ## GitHub Issues — Transparency and Engagement Policy
 

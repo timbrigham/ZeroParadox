@@ -14,7 +14,7 @@ Followed a link that broke after the v3.0 source reorganization? The old→new f
 That the classical self-reference arguments (Cantor, Russell, Gödel, Kleene) share one diagonal fixed point is **Lawvere's (1969)**. What this framework adds is checkable and specific:
 
 - **It is located at the floor, not the ceiling** - the Gödel inversion. The concrete instance, the **Binary Snap** (the forced exit ⊥ → ε₀), is a theorem, not an axiom, and its core depends on no axioms at all, not even choice.
-- **The recurrence is verified across *heterogeneous* domains** - the computability face is a genuine Lawvere/Kleene fixed point; the lattice and 2-adic faces are *posited* fixed points sharing the shape - each machine-checked in Lean.
+- **The recurrence is verified across *heterogeneous* domains** - the computability face is a genuine Lawvere/Kleene fixed point; the lattice and 2-adic faces are proved fixed points of their own self-maps ([`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`scale_unique_fp`](ZeroParadox/Valuation/Scale.lean)), carrying the shape but not genuine Lawvere instances - Cantor forbids the Set-level witness.
 - **The boundary is proved, not assumed** - there is no single cross-category theorem folding the domains into one object (`x = y` across distinct categories is not a well-formed proposition); a Cantor/Lawvere obstruction establishes the impossibility. The framework proves where the shape recurs, and where it stops.
 
 ## Where to Start
@@ -30,7 +30,7 @@ That the classical self-reference arguments (Cantor, Russell, Gödel, Kleene) sh
 
 The forced transition ⊥ → ε₀ - the **Binary Snap**, this project's shorthand - is a **theorem, not an axiom**. The existence of a minimum non-⊥ state is not assumed; it follows from the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x) alone, machine-verified in Lean 4. The framework adds no axioms specific to the result, and the central theorem is verified to depend on **no axioms at all** - not the Axiom of Choice, not even propositional extensionality. `Classical.choice` enters only where the framework builds on Mathlib's classically-built analysis, order, and computability libraries - the layers that realize the snap inside standard analytic structures (p-adic topology, Hilbert space, ordinals, category theory) - not in the core result itself. The honest contrast, showing exactly where choice appears, is a checkable artifact: [AxiomProfile.lean](ZeroParadox/AxiomProfile.lean).
 
-The identification of ⊥ across the layers as one object (MC-1) is a **modeling commitment**, its correspondence half now Lean-realized. ε₀ is chosen as the proof-theoretic ordinal of PA (Gentzen 1936) - a cited classical fact the framework invokes, not one it re-proves; its role as the exact snap threshold is machine-verified, and the one open residue is the type-level identity across universes (OQ-E2), not the Gentzen relationship itself. The full labelled account is in [Axiomatic Commitments](#axiomatic-commitments).
+The bottoms across the layers form one characterized **family** (MC-1): per-domain membership is proved (the categorical criterion is [`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)), while the reading that they are numerically *one object* is retired as ill-typed - the members are provably distinct (the walls). ε₀ is chosen as the proof-theoretic ordinal of PA (Gentzen 1936) - a cited classical fact the framework invokes, not one it re-proves; its role as the exact snap threshold is machine-verified, and the one open residue is the type-level identity across universes (OQ-E2), not the Gentzen relationship itself. The full labelled account is in [Axiomatic Commitments](#axiomatic-commitments).
 
 The snap is also **irreversible**: the p-adic topology layer (ZP-B) establishes, Lean-verified, that there is no continuous path from any nonzero state back to ⊥ - the total disconnectedness of Q₂ makes any return path discontinuous.
 
@@ -114,9 +114,9 @@ Each spoke is the same three beats: your field, then the bridge that carries it 
 
 This framework adds no axioms specific to the result: the central theorem follows from the standard bottom-element axiom of join-semilattice theory alone, and **AX-1 (Binary Snap Causality) is no longer an axiom** - it is Theorem T-SNAP, derived in ZP-E. The remaining commitments are either directly verifiable by computation or restatements of structure established in earlier layers.
 
-The framework is stated over ZF + AFA (not ZFC). The move to AFA is argued to be forced by the framework's own results, not freely chosen; the discipline every such claim must meet is defined in [Forced Metatheoretic Commitment](fmc.md). The identification of ⊥ across the layers as one object (MC-1) is a modeling commitment whose correspondence half is now Lean-realized.
+The framework is stated over ZF + AFA (not ZFC). The move to AFA is argued to be forced by the framework's own results, not freely chosen; the discipline every such claim must meet is defined in [Forced Metatheoretic Commitment](fmc.md). The bottoms across the layers form one **family** (MC-1): per-domain membership is proved (its correspondence half is `mc1_correspondence`), and the reading that they are numerically *one object* is retired as ill-typed.
 
-The full labelled account - the supporting commitments (AX-B1, AX-G1, AX-G2, MP-1, RP-1, DP-1), the metatheoretic stance and why AFA is forced, and the single-bottom (MC-1) argument in full - is in the **[Claims Ledger](CLAIMS.md)** (Tiers 4-5).
+The full labelled account - the supporting commitments (AX-B1, AX-G1, AX-G2, MP-1, RP-1, DP-1), the metatheoretic stance and why AFA is forced, and the bottom-family (MC-1) account in full - is in the **[Claims Ledger](CLAIMS.md)** (Tiers 4-5).
 
 ---
 

@@ -237,7 +237,7 @@ One self-referential structure - a thing that is its own fixed point - keeps tur
 
 **Argued - a metatheoretic squeeze, not a theorem.** That ⊥ = {⊥} *forces* ZF+AFA over Foundation is argued, not proved: Foundation too restrictive, Boffa too permissive, AFA the unique fit, with a named falsifier. The *structural* fixed point is machine-checked and axiom-free (t_exec); the AFA *forcing* is a Forced Metatheoretic Commitment, stronger than a free modeling choice and weaker than a theorem.
 
-**Committed - the identity.** That all of these floors are *numerically one object* across their different carriers and categories is a modeling commitment (MC-1), not a theorem - `x = y` across distinct categories is not even a well-formed proposition. It is offered to these communities, not imposed. The map below is the full account: exactly where the representations align, and where they are provably *distinct* (the "walls")."""
+**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under rInv in ℚ₂)."""
     return link_in_text(body)
 
 PAGE = """# The Bottom Element (⊥) - Dictionary and Map
@@ -254,9 +254,9 @@ For the formal framework index and Lean verification, see [README](README.md). F
 
 This is a **reference** for the framework's bottom element ⊥: a **dictionary** (what ⊥ is and is not) and a
 **map** (where each characterization is established). It is a **beginning, not a resolution.** What is
-*proved* is that each construction's bottom belongs to the family and that the slot structure recurs; that
-the various bottoms are *one object* stays a conjecture - they are provably distinct as structures (the
-"walls"). It closes a standing gap: a framework built on ⊥ that had not yet characterized ⊥ itself.
+*proved* is that each construction's bottom belongs to the family and that the slot structure recurs; the
+reading that the various bottoms are *one object* is retired as ill-typed - they are provably distinct as
+structures (the "walls"). It closes a standing gap: a framework built on ⊥ that had not yet characterized ⊥ itself.
 
 ---
 
