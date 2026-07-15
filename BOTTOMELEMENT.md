@@ -6,6 +6,8 @@
 
 For the formal framework index and Lean verification, see [README](README.md). For plain-language introductions, companions, and reading paths, see [GUIDE](GUIDE.md). For the claim-by-claim status of every result, see the [Claims Ledger](CLAIMS.md).
 
+> **See it - [The Bottom Family, an interactive map](bottom-family-tree.html).** One trunk, many kin: every field's bottom element as a leaf, colored by the wall its structure hits. Hover any node for exactly why it sits where it does, with the Lean witness to check yourself.
+
 ---
 
 ## What This Is

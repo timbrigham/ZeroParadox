@@ -1,0 +1,417 @@
+---
+layout: null
+---
+{% raw %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Bottom Family - Zero Paradox</title>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#0a0e14; --ground2:#10161f; --panel:#0d131b;
+    --ink:#ece9e0; --ink-dim:#9aa6ad; --ink-faint:#5f6b73;
+    --glow:#6fd3ec; --trunk:#cfe8f0; --branch:#3a6f7e; --branch-dim:#2b525d;
+    --self:#e0a94a;   /* wall-shape: self-application (Cantor / Foundation)   */
+    --limit:#5fbfd0;  /* wall-shape: limit-from-below (density / notation)    */
+    --seam:#b493e0;   /* wall-shape: cross-frame identity (the seam / MC-1)   */
+    --gen:#e6cf7a;    /* generation (epsilon-0, the ceiling the floor builds) */
+    --wither:#7d7266; /* the reals - the branch where the snap fails          */
+    --mu:#e58aa8;     /* dynamics (level 1): mu source / build-up             */
+    --nu:#6f8fe0;     /* dynamics (level 1): nu sink / limit                  */
+    --seamnode:#f2e8cf; /* the mu=nu seam nodes (identity HOLDS) - NOT the    */
+                        /* violet cross-frame wall (identity BLOCKED)         */
+    --sight:#ff3b3b;    /* targeting reticle for the selected node             */
+    --serif:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Cambria Math","Segoe UI Symbol","Noto Serif","DejaVu Serif",serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Mono","Segoe UI Symbol","DejaVu Sans Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  .plate{
+    background:
+      radial-gradient(120% 78% at 50% 106%, rgba(111,211,236,.11), transparent 55%),
+      radial-gradient(100% 66% at 50% -8%, rgba(230,207,122,.06), transparent 60%),
+      var(--ground);
+    color:var(--ink); font-family:var(--serif);
+    min-height:100vh; padding:34px 22px 48px;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .head{max-width:860px; text-align:center; margin-bottom:6px}
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--ink-faint); margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(1.9rem,4.4vw,3rem); font-weight:600; line-height:1.05;
+    margin:0 0 .5rem; text-wrap:balance; letter-spacing:.01em;
+  }
+  h1 .em{color:var(--glow); font-style:italic}
+  .thesis{
+    font-size:clamp(1rem,1.7vw,1.16rem); line-height:1.5; color:var(--ink-dim);
+    max-width:66ch; margin:0 auto; text-wrap:pretty;
+  }
+  .stage{width:100%; max-width:1060px; margin:10px auto 0}
+  svg{width:100%; height:auto; display:block; overflow:visible}
+  .hub-label{font-family:var(--serif); font-style:italic; font-size:20px; fill:var(--ink-dim)}
+  .hub-sub{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; fill:var(--ink-faint)}
+  .grp{font-family:var(--mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase}
+  .leaf-name{font-family:var(--serif); font-size:15.5px; fill:var(--ink)}
+  .leaf-inst{font-family:var(--mono); font-size:10.5px; fill:var(--ink-faint); letter-spacing:.01em}
+  .crown-name{font-family:var(--serif); font-size:19px; fill:var(--gen); font-style:italic}
+  .seam-name{font-family:var(--serif); font-size:15.5px; font-style:italic; fill:var(--seamnode)}
+  .seam-inst{font-family:var(--mono); font-size:10px; fill:var(--ink-faint); letter-spacing:.02em}
+  .base-name{font-family:var(--serif); font-size:18px; fill:var(--glow); font-style:italic}
+  .base-sub{font-family:var(--mono); font-size:11px; fill:var(--ink-faint); letter-spacing:.08em}
+  .wither-name{font-family:var(--serif); font-style:italic; font-size:15px; fill:var(--wither)}
+  .wither-inst{font-family:var(--mono); font-size:10px; fill:var(--ink-faint)}
+
+  /* legibility: knock the branch lines out from behind every label with a
+     background-colored halo (stroke painted under the fill) */
+  svg text{
+    paint-order:stroke; stroke:var(--ground); stroke-width:5px;
+    stroke-linejoin:round; stroke-linecap:round;
+  }
+
+  @keyframes breathe{0%,100%{opacity:.82}50%{opacity:1}}
+  .infinitude{animation:breathe 7s ease-in-out infinite; transform-origin:center}
+  @media (prefers-reduced-motion:reduce){.infinitude{animation:none}}
+
+  .legend{
+    max-width:1060px; width:100%; margin-top:26px;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:14px 22px;
+    border-top:1px solid #1d2731; padding-top:20px;
+  }
+  .lg{display:flex; gap:11px; align-items:flex-start}
+  .sw{flex:0 0 auto; width:15px; height:15px; border-radius:50%; margin-top:3px}
+  .sw.ring{background:transparent; border:2px solid var(--ink-dim)}
+  .sw.dash{background:transparent; border:2px dashed var(--wither); border-radius:2px}
+  .lg .t{font-family:var(--serif); font-size:.9rem; color:var(--ink); line-height:1.3}
+  .lg .t small{display:block; font-family:var(--mono); font-size:.68rem; color:var(--ink-faint);
+    letter-spacing:.03em; margin-top:2px; text-transform:none}
+  .fence{
+    max-width:72ch; margin:24px auto 0; text-align:center; color:var(--ink-faint);
+    font-size:.86rem; line-height:1.56; font-style:italic;
+  }
+  .fence b{color:var(--ink-dim); font-style:normal; font-weight:600}
+  .fence + .fence{margin-top:12px}
+  .tag{
+    display:inline-block; font-family:var(--mono); font-size:.66rem; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-faint);
+    border:1px solid #1d2731; border-radius:999px; padding:4px 12px; margin-top:20px;
+  }
+
+  /* interactive "why it sits here" panel (additive - static plate untouched) */
+  .whycard{
+    max-width:1060px; width:100%; margin:18px auto 0; min-height:138px;
+    border:1px solid #1d2731; border-radius:14px; padding:15px 20px;
+    background:linear-gradient(180deg, rgba(20,28,38,.5), rgba(13,19,27,.5));
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .wc-title{font-family:var(--serif); font-style:italic; font-size:1.18rem; line-height:1.1}
+  .wc-row{display:flex; gap:12px; font-size:.9rem; line-height:1.36; align-items:baseline}
+  .wc-k{flex:0 0 118px; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); text-align:right; padding-top:2px}
+  .wc-v{flex:1; color:var(--ink)}
+  .whycard code{font-family:var(--mono); font-size:.82em; color:var(--glow);
+    background:rgba(111,211,236,.08); padding:1px 5px; border-radius:4px}
+  .wc-chk{font-family:var(--mono); font-size:.72rem; color:var(--ink-faint); margin-top:3px}
+  .wc-prompt{font-family:var(--mono); font-size:.8rem; color:var(--ink-faint); letter-spacing:.03em}
+  .hit{fill:transparent; cursor:pointer}
+  #nodeHL{pointer-events:none; opacity:0; transition:opacity .14s ease}
+</style>
+
+<div class="plate">
+  <div class="head">
+    <div class="eyebrow">Zero Paradox &#183; concept mock-up</div>
+    <h1>The Bottom Family &#8212; <span class="em">one trunk, many kin</span></h1>
+    <p class="thesis">The trunk is the infinitude. It forks first by <em>dynamics</em> &#8212; source (&#956;) or sink (&#957;) &#8212; then again by the <em>shape of the wall</em> (the obstruction its own structure provably hits) each field's touch leaves, and only then into the individual fields at the tips.</p>
+  </div>
+
+  <div class="stage">
+    <svg viewBox="0 0 1000 940" role="img" aria-label="A three-level family tree: the infinitude trunk forks into source (mu) and sink (nu), each of those forks again by wall-shape, and each wall-shape into the individual fields.">
+      <defs>
+        <radialGradient id="void" cx="50%" cy="108%" r="60%">
+          <stop offset="0%" stop-color="#6fd3ec" stop-opacity=".55"/>
+          <stop offset="34%" stop-color="#3aa7c4" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="#6fd3ec" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="trunkg" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#6fd3ec" stop-opacity="0"/>
+          <stop offset="20%" stop-color="#8fdcec" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#cfe8f0" stop-opacity=".95"/>
+        </linearGradient>
+        <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="7"/>
+        </filter>
+        <filter id="nodeglow" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="3.2"/>
+        </filter>
+      </defs>
+
+      <!-- the infinitude: an un-drawn glow the trunk rises out of -->
+      <ellipse class="infinitude" cx="500" cy="920" rx="340" ry="150" fill="url(#void)"/>
+
+      <!-- ================= BRANCHES (under the nodes) ================= -->
+      <g fill="none" stroke-linecap="round">
+        <!-- central spine = the snap arc: trunk -> selfApp seam -> Hilbert seam -> crown -->
+        <path d="M500,934 C 499,790 500,670 500,558" stroke="url(#trunkg)" stroke-width="15" filter="url(#soft)" opacity=".5"/>
+        <path d="M500,934 C 499,790 500,670 500,558" stroke="url(#trunkg)" stroke-width="5"/>
+        <path d="M500,558 C 500,420 500,250 500,160" stroke="var(--trunk)" stroke-width="2.4" opacity=".7"/>
+        <path d="M500,145 L500,90" stroke="var(--gen)" stroke-width="2.2" opacity=".7"/>
+
+        <!-- LEVEL 1 : trunk seam-origin -> mu hub / nu hub -->
+        <path d="M500,558 Q 432,534 304,514" stroke="var(--mu)" stroke-width="6"/>
+        <path d="M500,558 Q 568,534 696,514" stroke="var(--nu)" stroke-width="6"/>
+
+        <!-- LEVEL 2 : mu hub -> wall-shape sub-branches (colored by shape) -->
+        <path d="M300,512 Q 205,404 142,294"  stroke="var(--self)"  stroke-width="2.8" opacity=".62"/>
+        <path d="M300,512 Q 250,368 212,230"  stroke="var(--limit)" stroke-width="2.8" opacity=".62"/>
+        <path d="M300,512 Q 336,432 356,346"  stroke="var(--seam)"  stroke-width="2.8" opacity=".62"/>
+
+        <!-- LEVEL 2 : nu hub -> wall-shape sub-branches, forking to their leaves -->
+        <!-- nu self-application: -> computability (Kleene); set theory now lives at the root seam -->
+        <path d="M700,512 Q 662,400 665,282"  stroke="var(--self)" stroke-width="2.8" opacity=".62"/>
+        <!-- nu limit: fork -> topology + p-adic -->
+        <path d="M700,512 Q 752,464 788,414"  stroke="var(--limit)" stroke-width="2.8" opacity=".62"/>
+        <path d="M788,414 Q 796,322 800,232"  stroke="var(--limit)" stroke-width="2.5" opacity=".55"/>
+        <path d="M788,414 Q 848,356 892,300"  stroke="var(--limit)" stroke-width="2.5" opacity=".55"/>
+        <!-- nu cross-frame: single -> Markov -->
+        <path d="M700,512 L700,372"           stroke="var(--seam)"  stroke-width="2.8" opacity=".62"/>
+
+        <!-- the two canopies arch back and rejoin at the seam (mu = nu) -->
+        <path d="M300,512 C 360,352 425,226 486,158" stroke="var(--seamnode)" stroke-width="2.2" opacity=".5" stroke-dasharray="1 7"/>
+        <path d="M700,512 C 640,352 575,226 514,158" stroke="var(--seamnode)" stroke-width="2.2" opacity=".5" stroke-dasharray="1 7"/>
+
+        <!-- reals: a branch that breaks off low and withers -->
+        <path d="M500,700 Q 646,672 754,660" stroke="var(--wither)" stroke-width="2.6" stroke-dasharray="7 6" opacity=".8"/>
+      </g>
+
+      <!-- ================= CROWN : epsilon-0 ================= -->
+      <circle cx="500" cy="82" r="7" fill="var(--gen)" filter="url(#nodeglow)"/>
+      <circle cx="500" cy="82" r="7" fill="var(--gen)"/>
+      <text class="crown-name" x="500" y="60" text-anchor="middle">&#949;<tspan dy="4" font-size="12">0</tspan><tspan dy="-4"> &#8212; the ceiling</tspan></text>
+
+      <!-- ================= SEAM : Hilbert zero object (mu = nu, VOID = SELF) ================= -->
+      <circle cx="500" cy="152" r="8.5" fill="none" stroke="var(--seamnode)" stroke-width="2.6"/>
+      <circle cx="500" cy="152" r="3" fill="var(--seamnode)"/>
+      <text class="seam-name" x="500" y="128" text-anchor="middle">the upper seam &#183; Hilbert</text>
+      <text class="seam-inst" x="500" y="115" text-anchor="middle">zero object &#183; &#956; = &#957; &#183; VOID = SELF &#183; a concrete rejoining</text>
+
+      <!-- ================= NODES : hub markers ================= -->
+      <circle cx="300" cy="512" r="4.5" fill="var(--mu)"/>
+      <circle cx="700" cy="512" r="4.5" fill="var(--nu)"/>
+
+      <!-- LEVEL-2 group labels (wall-shape) -->
+      <text class="grp" x="196" y="404" text-anchor="middle" fill="var(--self)">self-appl.</text>
+      <text class="grp" x="252" y="356" text-anchor="middle" fill="var(--limit)">limit</text>
+      <text class="grp" x="372" y="430" text-anchor="start"  fill="var(--seam)">cross-frame</text>
+      <text class="grp" x="648" y="422" text-anchor="middle" fill="var(--self)">self-appl.</text>
+      <text class="grp" x="812" y="404" text-anchor="start"  fill="var(--limit)">limit</text>
+      <text class="grp" x="716" y="446" text-anchor="start"  fill="var(--seam)">cross-frame</text>
+
+      <!-- ================= MU LEAVES (source) ================= -->
+      <circle cx="142" cy="294" r="6.5" fill="var(--self)" filter="url(#nodeglow)"/><circle cx="142" cy="294" r="6.5" fill="var(--self)"/>
+      <text class="leaf-name" x="158" y="290" text-anchor="start" style="fill:var(--self)">order</text>
+      <text class="leaf-inst" x="158" y="306" text-anchor="start">lattice &#8869; &#183; join-identity</text>
+
+      <circle cx="212" cy="230" r="6.5" fill="var(--limit)" filter="url(#nodeglow)"/><circle cx="212" cy="230" r="6.5" fill="var(--limit)"/>
+      <text class="leaf-name" x="228" y="226" text-anchor="start" style="fill:var(--limit)">information</text>
+      <text class="leaf-inst" x="228" y="242" text-anchor="start">surprisal &#8594; &#8734;</text>
+
+      <circle cx="356" cy="346" r="6.5" fill="none" stroke="var(--seam)" stroke-width="2.4"/>
+      <text class="leaf-name" x="372" y="342" text-anchor="start" style="fill:var(--seam)">probability</text>
+      <text class="leaf-inst" x="372" y="358" text-anchor="start">empty type &#8709; &#183; VOID</text>
+
+      <!-- ================= NU LEAVES (sink) ================= -->
+      <circle cx="665" cy="276" r="6.5" fill="var(--self)" filter="url(#nodeglow)"/><circle cx="665" cy="276" r="6.5" fill="var(--self)"/>
+      <text class="leaf-name" x="681" y="272" text-anchor="start" style="fill:var(--self)">computability</text>
+      <text class="leaf-inst" x="681" y="288" text-anchor="start">Kleene quine</text>
+
+      <circle cx="800" cy="232" r="6.5" fill="var(--limit)" filter="url(#nodeglow)"/><circle cx="800" cy="232" r="6.5" fill="var(--limit)"/>
+      <text class="leaf-name" x="816" y="228" text-anchor="start" style="fill:var(--limit)">topology</text>
+      <text class="leaf-inst" x="816" y="244" text-anchor="start">{0} as a limit</text>
+
+      <circle cx="892" cy="300" r="6.5" fill="var(--limit)" filter="url(#nodeglow)"/><circle cx="892" cy="300" r="6.5" fill="var(--limit)"/>
+      <text class="leaf-name" x="876" y="296" text-anchor="end" style="fill:var(--limit)">p-adic</text>
+      <text class="leaf-inst" x="876" y="312" text-anchor="end">0 &#183; v<tspan dy="2" font-size="8">2</tspan><tspan dy="-2"> &#8594; &#8734; &#183; 0=&#8734; pole</tspan></text>
+
+      <circle cx="700" cy="372" r="6.5" fill="var(--seam)" filter="url(#nodeglow)"/><circle cx="700" cy="372" r="6.5" fill="var(--seam)"/>
+      <text class="leaf-name" x="716" y="368" text-anchor="start" style="fill:var(--seam)">Markov</text>
+      <text class="leaf-inst" x="716" y="384" text-anchor="start">attractor law</text>
+
+      <!-- ================= SEAM-ORIGIN : selfApp (diagonal fixed point, mu = nu) ================= -->
+      <line x1="465" y1="558" x2="535" y2="558" stroke="var(--seamnode)" stroke-width="2.2" opacity=".8"/>
+      <circle cx="500" cy="558" r="11" fill="none" stroke="var(--seamnode)" stroke-width="2.8"/>
+      <circle cx="500" cy="558" r="4.5" fill="var(--seamnode)" filter="url(#nodeglow)"/>
+      <circle cx="500" cy="558" r="4.5" fill="var(--seamnode)"/>
+      <text class="seam-name" x="500" y="542" text-anchor="middle" style="font-size:16px">the seam &#183; t_exec</text>
+      <text class="seam-inst" x="500" y="581" text-anchor="middle">Quine atom &#8869;={&#8869;} = order &#8869; = join-identity &#183; axiom-free</text>
+      <text class="seam-inst" x="500" y="595" text-anchor="middle" style="fill:var(--seamnode); opacity:.9">&#956; = &#957; &#183; the diagonal fixed point every field instantiates</text>
+
+      <!-- ================= LEVEL-1 hub labels ================= -->
+      <text class="hub-label" x="264" y="506" text-anchor="end" style="fill:var(--mu)">&#956;</text>
+      <text class="hub-sub"   x="264" y="521" text-anchor="end" style="fill:var(--mu)">SOURCE &#8593;</text>
+      <text class="hub-label" x="736" y="506" text-anchor="start" style="fill:var(--nu)">&#957;</text>
+      <text class="hub-sub"   x="736" y="521" text-anchor="start" style="fill:var(--nu)">SINK &#8595;</text>
+
+      <!-- ================= REALS : the withered branch ================= -->
+      <circle cx="758" cy="660" r="6" fill="none" stroke="var(--wither)" stroke-width="2.2"/>
+      <line x1="753" y1="655" x2="763" y2="665" stroke="var(--wither)" stroke-width="1.8"/>
+      <line x1="763" y1="655" x2="753" y2="665" stroke="var(--wither)" stroke-width="1.8"/>
+      <text class="wither-name" x="776" y="656" text-anchor="start">the real numbers</text>
+      <text class="wither-inst" x="776" y="672" text-anchor="start">the snap fails &#183; density, no floor to land on</text>
+
+      <!-- ================= BASE : the infinitude ================= -->
+      <text class="base-name" x="500" y="874" text-anchor="middle">0 &#8212; the infinitude</text>
+      <text class="base-sub"  x="500" y="892" text-anchor="middle">0 = &#8734; &#183; apophatic &#183; never drawn</text>
+
+      <!-- interactive highlight + hit targets (transparent; the static plate is unchanged) -->
+      <g id="nodeHL" stroke="var(--sight)" stroke-linecap="round">
+        <circle r="16.5" fill="none" stroke-width="3"/>
+        <line x1="0" y1="-26" x2="0" y2="-9" stroke-width="2.4"/>
+        <line x1="0" y1="26"  x2="0" y2="9"  stroke-width="2.4"/>
+        <line x1="-26" y1="0" x2="-9" y2="0" stroke-width="2.4"/>
+        <line x1="26"  y1="0" x2="9"  y2="0" stroke-width="2.4"/>
+        <circle r="1.7" fill="var(--sight)" stroke="none"/>
+      </g>
+      <g id="hits">
+        <circle class="hit" data-id="order"         cx="142" cy="294" r="18"/>
+        <circle class="hit" data-id="information"   cx="212" cy="230" r="18"/>
+        <circle class="hit" data-id="probability"   cx="356" cy="346" r="18"/>
+        <circle class="hit" data-id="computability" cx="665" cy="276" r="18"/>
+        <circle class="hit" data-id="topology"      cx="800" cy="232" r="18"/>
+        <circle class="hit" data-id="padic"         cx="892" cy="300" r="18"/>
+        <circle class="hit" data-id="markov"        cx="700" cy="372" r="18"/>
+        <circle class="hit" data-id="seam"          cx="500" cy="558" r="20"/>
+        <circle class="hit" data-id="hilbert"       cx="500" cy="152" r="18"/>
+        <circle class="hit" data-id="crown"         cx="500" cy="82"  r="18"/>
+        <circle class="hit" data-id="reals"         cx="758" cy="660" r="18"/>
+        <circle class="hit" data-id="mu"            cx="300" cy="512" r="20"/>
+        <circle class="hit" data-id="nu"            cx="700" cy="512" r="20"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="whycard" id="whycard">
+    <div class="wc-title" id="wcTitle" style="color:var(--ink-dim)">Why does each bottom sit where it does?</div>
+    <div class="wc-prompt" id="wcBody">Hover or tap any node &#8212; the tree tells you exactly why it lands there, with the checkable Lean witness.</div>
+  </div>
+
+  <div class="legend">
+    <div class="lg"><span class="sw" style="background:var(--self)"></span><span class="t">Self-application wall<small>Cantor / Foundation &#8212; the diagonal blocked</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--limit)"></span><span class="t">Limit-from-below wall<small>density / a notation that can't name its own limit</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--seam)"></span><span class="t">Cross-frame identity wall<small>identification BLOCKED (MC-1): Markov, probability</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--seamnode)"></span><span class="t">The &#956;=&#957; seam<small>where identity HOLDS: root t_exec, upper Hilbert &#8212; not a wall</small></span></div>
+    <div class="lg"><span class="sw ring"></span><span class="t">VOID / SELF (local)<small>the Foundation/AFA fork: empty &#8709; vs self-containing &#8869;={&#8869;}</small></span></div>
+    <div class="lg"><span class="sw" style="background:linear-gradient(135deg,var(--mu),var(--nu))"></span><span class="t"><span style="color:var(--mu)">&#956; source &#8593;</span> / <span style="color:var(--nu)">&#957; sink &#8595;</span><small>level 1: departs from &#8869; vs settles to &#8869;</small></span></div>
+    <div class="lg"><span class="sw dash"></span><span class="t">The withered branch<small>the reals &#8212; where the snap provably fails</small></span></div>
+  </div>
+
+  <p class="fence"><b>Three levels, tip to root.</b> <b>Level 1</b> is dynamics: a bottom is a source (&#956;, structure departs from it) or a sink (&#957;, orbits settle into it). <b>Level 2</b> is the shape of its wall &#8212; self-application, limit-from-below, or cross-frame identity. Each wall-shape appears on <em>both</em> the &#956; and &#957; side, which is what makes it a real second axis and not a re-drawing of the first. <b>Level 3</b> is the field itself. VOID and SELF &#8212; empty &#8709; against self-containing &#8869;={&#8869;} &#8212; are the Foundation/AFA fork, a local mark, not a level; they coincide only at the Hilbert seam. At the <b>root</b> sits <b>t_exec</b> &#8212; the axiom-free identity Quine atom = order &#8869; = join-identity, the diagonal fixed point every field instantiates. It is the seam the whole tree grows from, deeper than any single field's zero object; that it is the one seam everything runs on is the interpretation, the axiom-free identity is the proof.</p>
+
+  <p class="fence"><b>What is drawn vs. what is claimed.</b> Every placement is checkable: the branches are a bottom's dynamics direction and the proved shape of its wall. The trunk &#8212; the infinitude, 0 = &#8734; &#8212; is the interpretation: apophatic, never grasped un-shaped, so it is drawn as light that fades before it resolves. The tree claims one thing past a flat family &#8212; a common root &#8212; and that root lives only here.</p>
+
+  <a href="GUIDE.md" style="display:inline-block; font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); text-decoration:none; border:1px solid #1d2731; border-radius:999px; padding:5px 14px; margin-top:20px">&#8592; back to the Guide</a>
+</div>
+
+<script>
+(function(){
+  var D = {
+    order: {t:'order', c:'--self', why:[
+      ['&#956; source &#8593;','&#8869; departs to the first structured state &mdash; <code>t_snap_derived</code>'],
+      ['self-application wall','the lattice has no diagonal self-witness &mdash; <code>nontrivial_lattice_no_witness</code>'],
+      ['what it is','the order floor: least element = join-identity'],
+      ['identity','order &#8869; = Quine atom = join-identity, axiom-free &mdash; <code>t_exec</code>']],
+      chk:'t_snap_derived'},
+    information: {t:'information', c:'--limit', why:[
+      ['&#956; source &#8593;','snaps off the machine&#8217;s zero state c&#8320; (ZP-E bridge) &mdash; <code>t_snap_derived</code>'],
+      ['limit-from-below wall','surprisal grows without bound &mdash; <code>t2_diverges</code>'],
+      ['what it is','the state with no finite description; surprisal &#8594; &#8734;']],
+      chk:'t2_diverges'},
+    probability: {t:'probability', c:'--seam', why:[
+      ['&#956; source &#8593;','initial object; nothing returns to it &mdash; <code>fC_no_return</code>'],
+      ['cross-frame wall','provably not a zero object, distinct from Hilbert &mdash; <code>split_kleisli_vs_hilbert</code>'],
+      ['what it is','the empty type Fin 0 &mdash; the VOID (&#8709;) face &mdash; <code>fC_zero_isInitial</code>']],
+      chk:'fC_zero_isInitial'},
+    computability: {t:'computability', c:'--self', why:[
+      ['&#957; sink &#8595;','self-encodings approach it &mdash; <code>quine_encodings_approach_bot</code>'],
+      ['self-application wall','a machine run on its own code is undecidable &mdash; <code>self_halting_undecidable</code>'],
+      ['what it is','the Kleene quine: a program that prints itself &mdash; <code>quine_period_is_goedel</code>'],
+      ['identity','joins the seam as the 4th name via <code>t_comp</code> (adds Classical.choice)']],
+      chk:'kleene_quine_is_bot'},
+    topology: {t:'topology', c:'--limit', why:[
+      ['&#957; sink &#8595;','topological no-return &mdash; <code>c3_irreversible</code>'],
+      ['limit-from-below wall','{0} as the limit of shrinking balls &mdash; <code>floorConeIsLimit</code>'],
+      ['what it is','the one-point space: a categorical limit, not initial &mdash; <code>padic_bottom_not_initial</code>']],
+      chk:'floorConeIsLimit'},
+    padic: {t:'p-adic', c:'--limit', why:[
+      ['&#957; sink &#8595;','orbits contract to 0; arrival is a jump &mdash; <code>contraction_orbit_tendsto_zero</code>'],
+      ['limit-from-below wall','v&#8322;(0) = &#8734; &mdash; <code>addVal_bot</code>'],
+      ['the 0 = &#8734; pole','z &#8614; 1/z swaps 0 and &#8734; &mdash; <code>rInv_swaps</code>']],
+      chk:'addVal_bot'},
+    markov: {t:'Markov', c:'--seam', why:[
+      ['&#957; sink &#8595;','the chain settles into it; mixing is lossy &mdash; <code>doubly_stochastic_mean_ergodic</code>'],
+      ['cross-frame wall','no measure-preserving map onto it from the attractor &mdash; <code>no_mp_attractor_to_markov</code>'],
+      ['what it is','the stationary distribution of a random walk &mdash; <code>exists_stationary</code>']],
+      chk:'no_mp_attractor_to_markov'},
+    seam: {t:'the seam &#183; t_exec', c:'--seamnode', why:[
+      ['&#956; = &#957; (the root)','source and sink coincide: the diagonal fixed point &mdash; <code>selfApp_fp_set_eq_singleton</code>'],
+      ['axiom-free identity','Quine atom &#8869;={&#8869;} = order &#8869; = join-identity &mdash; <code>t_exec</code> (no axioms)'],
+      ['why the root','the purest self-reference; everything else is built on it, with more axioms'],
+      ['interpretation','&#8220;the one seam everything runs on&#8221; is the diagonal-fixed-point reading, not a proved unification']],
+      chk:'t_exec'},
+    hilbert: {t:'the upper seam &#183; Hilbert', c:'--seamnode', why:[
+      ['&#956; = &#957; (concrete)','the zero object: initial and terminal at once &mdash; <code>hilbert_bottom_isZero</code>'],
+      ['VOID = SELF','the one place the empty and self-containing faces meet &mdash; <code>biprod_diagonal_only_zero</code>'],
+      ['not the root','one concrete category&#8217;s zero object, an upper rejoining &mdash; not the axiom-free t_exec']],
+      chk:'hilbert_bottom_isZero'},
+    crown: {t:'&#949;&#8320; &#183; the ceiling', c:'--gen', why:[
+      ['generation','the floor generates the ceiling: &#949;&#8320; = closure of 0 under &#969;^&#183; &mdash; <code>epsilonZero_eq_nfp</code>'],
+      ['the snap-arc','0 &#8594; &#949;&#8320;, co-witnessed with the 2-adic limit and the machine snap &mdash; <code>zpm_triangle</code>']],
+      chk:'epsilonZero_eq_nfp'},
+    reals: {t:'the real numbers', c:'--wither', why:[
+      ['the snap FAILS','density: between any point and 0 lies another &mdash; no floor to land on &mdash; <code>f_snap_impossible</code>'],
+      ['not a family member','the withered branch &mdash; where the construction provably breaks']],
+      chk:'f_snap_impossible'},
+    mu: {t:'&#956; &#183; the source pole', c:'--mu', why:[
+      ['dynamics &#8593;','structure departs from &#8869; irreversibly &mdash; a source &mdash; <code>t_snap_derived</code>'],
+      ['the build-up side','least fixed point / inductive / well-founded &mdash; where generation starts'],
+      ['who lives here','order, information, probability'],
+      ['the dual','&#956; and &#957; are the two poles of the self-dual 0=&#8734;, swapped by inversion z &#8614; 1/z &mdash; <code>rInv_swaps</code> &mdash; and coincide at the seam']],
+      chk:'t_snap_derived'},
+    nu: {t:'&#957; &#183; the sink pole', c:'--nu', why:[
+      ['dynamics &#8595;','orbits converge to &#8869; &mdash; a sink &mdash; <code>contraction_orbit_tendsto_zero</code>'],
+      ['the limit side','greatest fixed point / coinductive / non-well-founded &mdash; the limit reached'],
+      ['who lives here','p-adic, topology, Markov, computability'],
+      ['the dual','&#957; and &#956; are the two poles of the self-dual 0=&#8734;, swapped by inversion z &#8614; 1/z &mdash; <code>rInv_swaps</code> &mdash; and coincide at the seam']],
+      chk:'contraction_orbit_tendsto_zero'}
+  };
+  var title=document.getElementById('wcTitle'),
+      body=document.getElementById('wcBody'),
+      hl=document.getElementById('nodeHL'),
+      css=getComputedStyle(document.documentElement);
+  function render(node){
+    var d=D[node.getAttribute('data-id')]; if(!d) return;
+    var col=(css.getPropertyValue(d.c)||'').trim()||'#ece9e0';
+    title.style.color=col; title.innerHTML=d.t;
+    var rows=d.why.map(function(w){
+      return '<div class="wc-row"><div class="wc-k">'+w[0]+'</div><div class="wc-v">'+w[1]+'</div></div>';
+    }).join('');
+    rows+='<div class="wc-chk">check it yourself &#8212; clone the repo and run <code>#print axioms '+d.chk+'</code></div>';
+    body.className=''; body.innerHTML=rows;
+    hl.setAttribute('transform','translate('+node.getAttribute('cx')+','+node.getAttribute('cy')+')');
+    hl.style.opacity=1;
+  }
+  var hits=document.querySelectorAll('.hit');
+  Array.prototype.forEach.call(hits, function(h){
+    h.addEventListener('mouseenter', function(){ render(h); });
+    h.addEventListener('click', function(){ render(h); });
+  });
+})();
+</script>
+</body>
+</html>
+{% endraw %}

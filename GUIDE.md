@@ -6,6 +6,8 @@
 
 For a dictionary and map of ⊥ - the object the whole framework is built on - see [The Bottom Element](BOTTOMELEMENT.md). For the formal framework, Lean verification, and complete question register, see the [Formal Index](README.md).
 
+> **Interactive - [The Bottom Family tree](bottom-family-tree.html).** A single visual map of ⊥ across the fields: hover any node to see why it lands where it does, with the checkable Lean witness. The clearest one-picture view of what the framework assembles.
+
 Followed a link that broke after the v3.0 source reorganization? Report anything stale in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
 ---
