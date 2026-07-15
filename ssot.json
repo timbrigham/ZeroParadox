@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1149,
+        "declarations": 1156,
         "files": 136
       },
       "entries": [
@@ -1850,6 +1850,47 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06924c16-4886-4119-aa2b-b88071fe022d",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ClosureShape",
+            "short": "ClosureShape"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic",
+              "reals",
+              "set-theory",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4177,6 +4218,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "12f9e6d2-25cf-48b9-84c6-7a269dfc0076",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obstruction_quine",
+            "short": "obstruction_quine"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9574,6 +9653,47 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "34f71753-c99e-44bb-917c-59f7e9eb3e4e",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.every_shape_witnessed",
+            "short": "every_shape_witnessed"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic",
+              "reals",
+              "set-theory",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -16130,6 +16250,47 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5ad1c940-d61c-4ca1-986b-e7b075a07fa9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.SelfClosureObstruction",
+            "short": "SelfClosureObstruction"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic",
+              "reals",
+              "set-theory",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5b43f447-beac-47ec-a034-0fd7ee3caa99",
           "new": {
@@ -21868,6 +22029,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7fca2fa4-2c29-4b30-aa9c-c6a2a7bf47a9",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obstruction_no_comparison",
+            "short": "obstruction_no_comparison"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation",
+              "state"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34240,6 +34440,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d0872898-3407-4805-9fc3-d26a4e56b343",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obstruction_no_minimal_real",
+            "short": "obstruction_no_minimal_real"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d08be811-2f47-4b5c-8a8c-2d80789a1604",
           "new": {
@@ -42371,6 +42609,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffdb4e14-4142-4952-8ec7-1806a84091c1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SelfClosureObstruction.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.obstruction_negation",
+            "short": "obstruction_negation"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true

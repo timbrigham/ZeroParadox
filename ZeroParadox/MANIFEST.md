@@ -89,6 +89,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Multihomed/InfoFunctor.lean` - ZP-H Info Functor: F_C into the real category `KleisliCat PMF` (MC-1 remediation)
 - `ZeroParadox/Multihomed/MC1Bridge.lean` - ZP-H MC-1 Correspondence: the snap floor realized across the real domain categories
 - `ZeroParadox/Multihomed/PadicBridge.lean` - B2 (pipeline): the computational bottom maps to the 2-adic floor
+- `ZeroParadox/Multihomed/SelfClosureObstruction.lean` - The wall-side mirror of the diagonal fixed point (experimental probe): `SelfClosureObstruction` + `ClosureShape` sort the framework's ⊥-walls by which closure fails (self-application / limit-from-below / cross-frame-identity = the two faces of ⊥ + the seam); each shape carries a witnessed instance drawn from an existing wall theorem (`obstruction_negation`, `obstruction_quine`, `obstruction_no_minimal_real`, `obstruction_no_comparison`), and `every_shape_witnessed` proves the classification is inhabited at all three shapes
 - `ZeroParadox/Multihomed/TopNumEdge.lean` - Web edge: topology ↔ number theory (the valuation generates the ball topology)
 
 ### Set theory / AFA (ZP-J)
