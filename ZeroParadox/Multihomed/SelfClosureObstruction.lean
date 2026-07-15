@@ -92,7 +92,8 @@ theorem every_shape_witnessed :
 /-!
 ## Engineer's Take
 
-TODO (Tim): Engineer's Take — your own voice.
+This probe maps MC-1 by the obstructions it surfaces. We can't directly view the root cause, and we
+read it off the error conditions it creates from the input provided.
 -/
 
 end ZeroParadox
