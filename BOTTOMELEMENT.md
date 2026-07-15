@@ -85,7 +85,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 
 | ⊥ cannot be... | witness (links to Lean source) |
 |---|---|
-| a Lean term or otherwise finitely written down (⊥ is descriptionless, so any written form is already a description of it) | *meta (no Lean witness)* |
+| a Lean term or otherwise finitely written down - this is the *apophatic* ⊥, the descriptionless limit-notion, distinct from the algebraic bottom element the Lean manipulates as a finite, decidable term. The two share the symbol ⊥, not an identity: any written form is a description, so it captures an interpretation of ⊥, never the descriptionless limit itself | *meta (no Lean witness)* |
 | anything that keeps time, space, description, measure or structure (that would be an *interpretation* of ⊥, not ⊥) | *meta (no Lean witness)* |
 | finite: ⊥ is by definition the point where every finite measure diverges to infinity | *meta (no Lean witness)* |
 | the same object as both the proof-theory floor and the attractor floor (one is well-founded, the other is not) | [`no_strictMono_real_to_ordinal`](ZeroParadox/Multihomed/TreeObstructions.lean), [`simplex_antichain`](ZeroParadox/Multihomed/TreeObstructions.lean) |

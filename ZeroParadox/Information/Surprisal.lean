@@ -212,6 +212,54 @@ theorem l_run : c₀ ≠ c₁ := by decide
     No program can produce ⊥ without a non-null intermediate state. -/
 theorem tq_ih : c₁ ≠ c₀ := Ne.symm l_run
 
+/-! ## Section VI: The Binary Alphabet is Forced — the minimal non-degenerate distribution
+
+⊥ is a *degenerate* distribution: a point mass with all weight on a single outcome (`distP = pure null`),
+carrying zero information. Any *non-degenerate* statistical state needs at least two distinct outcomes, so
+the minimal non-⊥ statistical structure is binary. There is no "half state": the outcome space has exactly
+two values, and every distribution is either one of the two point masses (the ⊥-like endpoints) or a genuine
+mixture over both. This is the *information-theoretic* forcing of the discrete binary jump — a distinct
+mechanism from the order forcing (`t_snap_derived`), the self-execution forcing (ZP-K `da1_closed_concrete`),
+and the incompressibility forcing (`l_inf`). Every mechanism forces the same transition. -/
+
+/-- No half-state: every ontological state is `null` or `exist`; there is no third, intermediate value. -/
+theorem binaryState_exhaustive (s : BinaryState) : s = nullSt ∨ s = firstSt := by
+  cases s
+  · exact Or.inl rfl
+  · exact Or.inr rfl
+
+/-- The outcome space has exactly two values — the minimal alphabet for a non-degenerate distribution. -/
+theorem binaryState_card_two : Fintype.card BinaryState = 2 := by decide
+
+/-- ⊥ (the null distribution) is degenerate: a point mass supported on the single outcome `null`. -/
+theorem distP_support_singleton : distP.support = {nullSt} := by
+  rw [distP, PMF.support_pure]
+
+/-- The first-atomic-state distribution is likewise a point mass, supported on the single outcome `exist`. -/
+theorem distQ_support_singleton : distQ.support = {firstSt} := by
+  rw [distQ, PMF.support_pure]
+
+/-- THE FORCING (checkable direction): a distribution exhibiting two *distinct* outcomes with positive
+    probability is not a point mass — it is genuinely non-degenerate. Contrapositive: a point mass (⊥) has a
+    single outcome, so to leave the degenerate ⊥ you need at least two outcomes. The binary jump. -/
+theorem not_pure_of_two_support {α : Type*} {p : PMF α} {x y : α}
+    (hx : x ∈ p.support) (hy : y ∈ p.support) (hxy : x ≠ y) : ∀ a, p ≠ PMF.pure a := by
+  intro a hpa
+  rw [hpa, PMF.support_pure, Set.mem_singleton_iff] at hx hy
+  exact hxy (hx.trans hy.symm)
+
+/-- THE FORCING (full converse): on a one-outcome space every distribution is the point mass — you cannot
+    have a non-degenerate distribution with fewer than two outcomes. So a non-degenerate state forces ≥2
+    outcomes; binary is the minimal. -/
+theorem pmf_subsingleton_isPure {α : Type*} [Subsingleton α] (p : PMF α) (a : α) :
+    p = PMF.pure a := by
+  have hpa : p a = 1 := by
+    have h := p.tsum_coe
+    rwa [tsum_eq_single a (fun c hc => absurd (Subsingleton.elim c a) hc)] at h
+  ext b
+  rw [Subsingleton.elim b a, hpa]
+  simp [PMF.pure_apply]
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -231,5 +279,11 @@ open ZeroParadox
 #print axioms l_inf
 #print axioms l_run
 #print axioms tq_ih
+#print axioms binaryState_exhaustive
+#print axioms binaryState_card_two
+#print axioms distP_support_singleton
+#print axioms distQ_support_singleton
+#print axioms not_pure_of_two_support
+#print axioms pmf_subsingleton_isPure
 
 end PurityCheck
