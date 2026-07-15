@@ -81,8 +81,9 @@ def obstruction_no_comparison : SelfClosureObstruction :=
     no_closure := no_mp_attractor_to_markov }
 
 /-- The classification is inhabited at every shape: each of the three closure-shapes has at least one
-    witnessed obstruction. The two face-wall shapes (fixed point + limit) and the seam-wall shape are
-    all realized — the walls sort into exactly the architecture of ⊥. -/
+    witnessed obstruction. The classification is inhabited at each of ⊥'s two face-wall shapes (fixed
+    point + limit) and its seam-wall shape — the sort into (two faces + seam) is our organizing design,
+    not a claim of exhaustiveness. -/
 theorem every_shape_witnessed :
     (∃ o : SelfClosureObstruction, o.shape = ClosureShape.selfApplication) ∧
     (∃ o : SelfClosureObstruction, o.shape = ClosureShape.limitFromBelow) ∧
