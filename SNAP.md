@@ -1,4 +1,4 @@
-# The Binary Snap (⊥ → ε₀): Dictionary and Map
+# The Binary Snap (⊥ → ε₀) - Dictionary and Map
 
 *A dictionary and map of the framework's central transition, the snap - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
 
@@ -8,7 +8,7 @@ For the framework's *object*, the bottom element ⊥, see its companion referenc
 
 ---
 
-## What This Is
+## What this is
 
 This is a **reference** for the framework's central transition, the **snap** - the forced move off the bottom element ⊥ into the first structured state, ε₀. It is the companion to [The Bottom Element](BOTTOMELEMENT.md): that page maps the *object* ⊥ (the noun); this page maps the *transition* off it (the verb). Where the bottom dictionary is mostly nouns, this one is mostly verbs - the snap is an action.
 
@@ -16,11 +16,11 @@ It is a **beginning, not a resolution.** What is *proved* is that the snap is fo
 
 ---
 
-## The Short Version: The Snap, Tiered by Confidence
+## The short version: the snap, tiered by confidence
 
 The snap is the framework's one theorem - the forced, one-way departure from ⊥ into the first structured state ε₀ - and its central *action*. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
-**Proved - the snap is forced, and adds no axiom.** T-SNAP ([`t_snap_derived`](ZeroParadox/Order/Snap.lean)): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. The Binary Snap that earlier versions of the project posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
+**Proved - the snap is forced, and adds no axiom.** T-SNAP ([`t_snap_derived`](ZeroParadox/Order/Snap.lean)): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. The Binary Snap that earlier layers posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
 
 **Proved - the snap is one-way.** It does not reverse: no join returns to a strictly lower state ([`t_snap_irreversible`](ZeroParadox/Order/Snap.lean), algebraic), and the same irreversibility is proved topologically in the 2-adics ([`c3_irreversible`](ZeroParadox/Valuation/Padic.lean)) and categorically in the probability functor ([`fC_no_return`](ZeroParadox/Multihomed/InfoFunctor.lean)). ⊥ is a source, not a round trip.
 
@@ -28,7 +28,7 @@ The snap is the framework's one theorem - the forced, one-way departure from ⊥
 
 **Proved - the ceiling, reached by a choice-free snap from below.** ε₀ is the closure of 0 under omega-to-the-power ([`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean)); on ordinal notations the snap climbs from below with no choice ([`exp_lt_term`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), [`omegaPow_no_fixedpoint`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), [`tower_strictMono`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), all `propext`-only), and the ceiling is co-witnessed with the 2-adic limit and the machine snap ([`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean)). (That ε₀ *is* the least fixed point - [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean) - uses classical logic; whether that is avoidable at the notation level is the open item below.)
 
-**Proved - a wall: one shared shape, but no single categorical map across the domains.** The per-domain frame-flips share the diagonal shape - the order-theoretic fork is the universal that holds across them - but no single categorical map folds them into one. In Set (all endofunctions) no nontrivial total type carries a Lawvere fixed-point witness - Cantor forbids it - so the lattice and 2-adic faces are provably not Set-level Lawvere instances ([`nontrivial_lattice_no_witness`](ZeroParadox/Category/Lawvere.lean), [`q2_no_witness`](ZeroParadox/Category/Lawvere.lean)); their ⊥ is a posited fixed point sharing the diagonal shape. The computability face, by contrast, IS a genuine recursion fixed point ([`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean), Kleene / Rogers) - but it lives in the effective category, where the fixed-point-free diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what they share is the diagonal shape, realized genuinely in the computability face and only posited in the others. The universality that holds is order-theoretic (the fork), not categorical - a proved obstruction to a single cross-category map.
+**Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape, not a single categorical map. In Set (all endofunctions) no nontrivial total type carries a Lawvere fixed-point witness - Cantor forbids it - so the lattice and 2-adic faces are provably not Set-level Lawvere instances ([`nontrivial_lattice_no_witness`](ZeroParadox/Category/Lawvere.lean), [`q2_no_witness`](ZeroParadox/Category/Lawvere.lean)); their ⊥ is a posited fixed point sharing the diagonal shape. The computability face, by contrast, IS a genuine recursion fixed point ([`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean), Kleene / Rogers) - but it lives in the effective category, where the fixed-point-free diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what unifies them is the diagonal shape, not one mechanism. The universality that holds is order-theoretic (the fork), not categorical - a proved obstruction.
 
 **Committed / open - the identity, and minimality.** That the domain snaps are *numerically one* transition is a modeling commitment (MC-1), a type boundary, not a theorem. And whether ε₀-as-least-fixed-point is choice-free at the notation level is open: the syntax-to-semantics bridge [`tower_NF`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean) inherits `Classical.choice`.
 
@@ -38,7 +38,7 @@ The snap is the framework's one theorem - the forced, one-way departure from ⊥
 
 ## Dictionary
 
-### The Snap Is (Positive Handles, With Witnesses)
+### The snap is (positive handles, with witnesses)
 
 The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it joins) or what the snap *does* (**verb** - the action itself). Most are verbs; that is the point. *The frame-change rows marked "(probe)" and the order-theoretic universal are experimental - the theorems are checkable, the abstract cross-domain reading is a conjecture.*
 
@@ -54,17 +54,39 @@ The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it 
 | noun | the ceiling reached, *co-witnessed*: ε₀ stands with the 2-adic limit and the machine snap in one triangle | [`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean) |
 | noun | *what departs*: the floor the snap leaves - the three-name identity (Quine atom = order-bottom ⊥ = join-identity, axiom-free), extended to the Kleene self-reproducing fixed point | [`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean), [`t_comp`](ZeroParadox/Computability/Kleene.lean), [`kleene_quine_is_bot`](ZeroParadox/Computability/Kleene.lean) |
 
-### The Snap Is Not (Characterization by Exclusion)
+### The snap is not (characterization by exclusion)
 
 Each exclusion is either a **proved obstruction** (a Lean-checked wall), a **modeling commitment** (offered, not proved), or an **open** question. The value is here as much as in the positive handles: the walls are what keep the synthesis honest.
 
 | the snap is not... | witness (or meta / open) |
 |---|---|
-| *a single cross-category map*. The per-domain frame-flips share the diagonal shape - the order-theoretic fork - but no single categorical map folds them into one. In Set no nontrivial total type carries a Lawvere fixed-point witness (Cantor), so the lattice and 2-adic faces are provably not Set-level Lawvere instances - their ⊥ is a posited fixed point sharing the diagonal shape. The computability face is instead a genuine recursion fixed point, but in the effective category, where the diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what they share is the diagonal shape - order-theoretic, not categorical. A proved obstruction to a single cross-category map, not a gap | [`nontrivial_lattice_no_witness`](ZeroParadox/Category/Lawvere.lean), [`q2_no_witness`](ZeroParadox/Category/Lawvere.lean), [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) |
+| *one mechanism across categories*. The per-domain frame-flips share a shape, not a single categorical map. In Set no nontrivial total type carries a Lawvere fixed-point witness (Cantor), so the lattice and 2-adic faces are provably not Set-level Lawvere instances - their ⊥ is a posited fixed point sharing the diagonal shape. The computability face is instead a genuine recursion fixed point, but in the effective category, where the diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what unifies the faces is the diagonal shape, not one mechanism - order-theoretic, not categorical. A proved obstruction, not a gap | [`nontrivial_lattice_no_witness`](ZeroParadox/Category/Lawvere.lean), [`q2_no_witness`](ZeroParadox/Category/Lawvere.lean), [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) |
 | *numerically one transition across its carriers*. That the valuation, categorical, order, and computability snaps are the same object is a modeling commitment (MC-1), a type boundary - `x = y` across distinct categories is not a well-formed proposition. The faces share the diagonal-fixed-point shape; that they are literally one object is offered, not proved | *meta (no Lean witness)* |
 | *a physical, temporal, or causal event*. The framework is silent on physics. The snap is an order and derivation transition, not a process unfolding in time; which specific state emerges first is outside its scope | *meta (no Lean witness)* |
 | *dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's computational commitments. No snap axiom appears anywhere in the development | [`t_snap_derived`](ZeroParadox/Order/Snap.lean) |
 | *proved to be a choice-free minimal ceiling*. The from-below snap on ordinal notations is choice-free, but ε₀ as the least fixed point via the syntax-to-semantics bridge (`tower_NF`) inherits `Classical.choice`. Whether the minimality is choice-free at the notation level is open | *meta (no Lean witness)* |
+
+---
+
+## The boundary map
+
+The dictionary above sorts the snap by *aspect* - what it is, what it does. This section re-cuts the same results by *field*. Walk into any one of the framework's domains and ask a single question: **is the departure from ⊥ mandatory here, or is it walled?** Every cell has a verdict; nothing is left merely posited.
+
+The pattern is worth stating plainly. The self-referential *shape* - the diagonal fixed point - recurs across every face, but it is not one object across them (that identification is a modeling commitment, MC-1, a type boundary). What is mandatory across almost every field is the *snap itself*, and each field compels it by its own native mechanism. One field is the telling exception: in the real numbers the snap provably fails, and the failure is a theorem.
+
+**Two notions, kept apart.** There is a narrower, stronger one - a genuine Lawvere fixed point, self-application with no escape - and it is walled across almost every field: Cantor forbids the Set-level witness for any nontrivial total type ([`nontrivial_lattice_no_witness`](ZeroParadox/Category/Lawvere.lean), [`q2_no_witness`](ZeroParadox/Category/Lawvere.lean)), so only the computability face carries a genuine one ([`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean), in the effective category). The snap is mandatory far more widely than that fixed point is genuine. "The Lawvere fixed point is genuine in only one field" (read off the Lawvere register) and "the snap is mandatory across almost every field" (read off the table below) are both true - they measure different things. One shared technique; a different procedure in each field.
+
+| field | the snap here is... | by what mechanism, or against what wall | witness (links to Lean source) |
+|---|---|---|---|
+| computability | **Mandatory** | a genuine self-reference fixed point - a machine run on its own code, whose halting is undecidable, so ⊥ cannot describe its own escape | [`self_halting_undecidable`](ZeroParadox/Computability/Kleene.lean), [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) |
+| valuation (p-adic) | **Mandatory** | the ultrametric sends the floor to v(0) = ⊤, and the doubling dynamics contracts every starting law onto that floor | [`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean), [`attracting_attractor`](ZeroParadox/Valuation/BottomInvariant.lean) |
+| proof theory (ordinals) | **Mandatory, and minimal** | ε₀ is the proof-theoretic ordinal of PA; the ω-tower climbs from below choice-free, ε₀ is the least fixed point of α ↦ ω^α, and the tower is cofinal in it (the from-below climb is choice-free; the least-fixed-point and cofinality facts use classical logic) | [`tower_strictMono`](ZeroParadox/Ordinal/ConstructiveOrdinals.lean), [`epsilonZero_eq_nfp`](ZeroParadox/Ordinal/Gentzen.lean), [`epsilonZero_le_fixedPoint`](ZeroParadox/Ordinal/Gentzen.lean), [`fundamentalSeq_cofinal`](ZeroParadox/Ordinal/Gentzen.lean) |
+| information | **Mandatory** | surprisal is unbounded at the floor - the bottom carries no finite description to stay at | [`info_bottom_diverges`](ZeroParadox/Information/BottomMeasure.lean) |
+| category | **Mandatory, one-way** | the initial object has a unique morphism out to every object and none back; ⊥ is a pure source, not a round trip | [`t2_universal_constituent`](ZeroParadox/Category/Category.lean), [`t4_chains_forward_only`](ZeroParadox/Category/Category.lean) |
+| order / set theory | **Mandatory** (choice-free spine) | the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point, and the self-containing ⊥ = {⊥} realizes it. That the field snaps are numerically one object is a commitment (MC-1), not proved | [`fork_collapse_iff`](ZeroParadox/Settheory/FixedPointFork.lean), [`selfMem_eq_singleton_bot`](ZeroParadox/Computability/SelfApp.lean) |
+| real numbers | **Walled - the snap fails** | density: between 0 and any positive lies a smaller positive, so there is no minimum non-⊥ to snap to. The one field where the transition provably cannot happen - and that impossibility is itself a theorem | [`f_snap_impossible`](ZeroParadox/Reals/OrderedField.lean), [`f_no_minimal_positive`](ZeroParadox/Reals/OrderedField.lean) |
+
+The cross-cutting walls - Cantor for the Lawvere fixed point, the MC-1 type boundary for the identity, and the absence of a measure-preserving comparison between the two attracting bottoms ([`no_mp_attractor_to_markov`](ZeroParadox/Valuation/BottomInvariant.lean)) - are catalogued in *The snap is not* above. The walls are not failures of the program; locating them exactly is the program.
 
 ---
 
