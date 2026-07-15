@@ -474,19 +474,30 @@ theorem odometer_not_attracting : ¬ AttractingKernel (odometerIMK (p := p)) := 
   have hyy : (1 : ℤ_[p]) + y = y := dirac_eq_dirac_iff.mp hinv
   simp at hyy
 
-/-! ## § X — The direct comparison is a NO-GO: no measure-preserving map identifies the two
-attracting invariants
+/-! ## § X — A NO-GO in one direction: no measure-preserving map carries the concentrated invariant
+onto the spread one
 
 `PadicAttractor.lean` names the *explicit measure-preserving comparison* between the two dynamical
 systems — #3 (the p-adic doubling attractor) and #2 (the full-mixing Markov kernel) — as the remaining
-open half of the bridge. § VII proved the two bottoms share the *property* (both attracting); here the
-comparison half is closed as an **obstruction**, not a construction. The two invariant laws have
-incompatible shape: #3's invariant is the point mass `δ₀` (all mass concentrated at the floor `0`),
+open half of the bridge. § VII proved the two bottoms share the *property* (both attracting); here one
+direction of the comparison is closed as an **obstruction**, not a construction. The two invariant laws
+have incompatible shape: #3's invariant is the point mass `δ₀` (all mass concentrated at the floor `0`),
 #2's is the uniform law (mass `2⁻¹` on each point, spread). A measure-preserving map must carry one
 invariant onto the other by push-forward, and a point mass pushes forward only to a point mass — never
-to a non-degenerate spread law. So no measure-preserving comparison exists in the concentrated→spread
-direction. This is the MC-1 lesson in miniature: the shared shape is real, the direct identification is
-blocked. The bridge is answered — the shared property holds, the direct comparison provably cannot. -/
+to a non-degenerate spread law. So no measure-preserving map exists in the concentrated→spread direction
+(`no_mp_attractor_to_markov`).
+
+The obstruction is asymmetric, and only this direction is proved. The *reverse* direction
+(spread→concentrated) does admit a measure-preserving map — the degenerate constant collapse
+`φ = const 0 : Fin 2 → Q₂`, for which `uniform.map φ = δ₀` — but a constant map destroys the dynamics and
+is not a *faithful* comparison. So a faithful comparison in either direction is absent, but for different
+reasons (concentrated→spread is impossible outright; spread→concentrated survives only as a degenerate
+collapse), and a faithful reverse comparison remains OPEN.
+
+This is analogous to the MC-1 situation, not a proof of it: the shared *shape* is real (both bottoms are
+attracting), while a direct measure-preserving *identification* of their invariants is blocked in the
+concentrated→spread direction. So the shared-property half of the bridge holds (§ VII); this direction of
+the direct comparison provably cannot. -/
 
 theorem no_mp_attractor_to_markov :
     ¬ ∃ φ : Q₂ → Fin 2, MeasurePreserving φ attractorIMK.μ markovIMK.μ := by
