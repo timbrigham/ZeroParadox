@@ -4029,7 +4029,8 @@
               "order"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-selfapp"
             ],
             "role": [
               "no-go"
@@ -4249,7 +4250,8 @@
               "set-theory"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-selfapp"
             ],
             "role": [
               "no-go"
@@ -13202,7 +13204,8 @@
               "valuation"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-seam"
             ],
             "role": [
               "no-go"
@@ -13641,7 +13644,8 @@
               "state"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-seam"
             ],
             "role": [
               "no-go"
@@ -14076,7 +14080,8 @@
               "valuation"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-selfapp"
             ],
             "role": [
               "no-go"
@@ -21557,7 +21562,8 @@
               "set-theory"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-selfapp"
             ],
             "role": [
               "no-go"
@@ -22061,7 +22067,8 @@
               "state"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-seam"
             ],
             "role": [
               "no-go"
@@ -23815,7 +23822,10 @@
             "domain": [
               "ordinal"
             ],
-            "object": [],
+            "object": [
+              "ceiling",
+              "wall-limit"
+            ],
             "role": [
               "no-go"
             ]
@@ -34461,7 +34471,8 @@
               "reals"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-limit"
             ],
             "role": [
               "no-go"
@@ -41188,7 +41199,8 @@
               "reals"
             ],
             "object": [
-              "snap"
+              "snap",
+              "wall-limit"
             ],
             "role": [
               "no-go"
@@ -42640,7 +42652,8 @@
               "logic"
             ],
             "object": [
-              "bottom"
+              "bottom",
+              "wall-selfapp"
             ],
             "role": [
               "no-go"
@@ -42719,7 +42732,10 @@
           "values": [
             "bottom",
             "ceiling",
-            "snap"
+            "snap",
+            "wall-limit",
+            "wall-seam",
+            "wall-selfapp"
           ]
         },
         "role": {
