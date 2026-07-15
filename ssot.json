@@ -11532,7 +11532,10 @@
             "domain": [
               "computability"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
             "role": [
               "no-go"
             ]
@@ -12037,7 +12040,10 @@
             "domain": [
               "set-theory"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
             "role": [
               "no-go"
             ]
@@ -12181,7 +12187,10 @@
             "domain": [
               "set-theory"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
             "role": [
               "no-go"
             ]
@@ -24845,9 +24854,12 @@
             "domain": [
               "logic"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
             "role": [
-              "scaffolding"
+              "no-go"
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
@@ -27925,7 +27937,10 @@
             "domain": [
               "set-theory"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
             "role": [
               "no-go"
             ]
@@ -29319,7 +29334,8 @@
               "reals"
             ],
             "object": [
-              "snap"
+              "snap",
+              "wall-limit"
             ],
             "role": [
               "no-go"
@@ -30516,7 +30532,10 @@
             "domain": [
               "reals"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-limit"
+            ],
             "role": [
               "no-go"
             ]
@@ -31205,7 +31224,10 @@
             "domain": [
               "reals"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-limit"
+            ],
             "role": [
               "no-go"
             ]
@@ -36624,7 +36646,10 @@
             "domain": [
               "set-theory"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
             "role": [
               "no-go"
             ]
@@ -42398,7 +42423,10 @@
             "domain": [
               "set-theory"
             ],
-            "object": [],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
             "role": [
               "no-go"
             ]
