@@ -6,8 +6,8 @@ This ledger is a *view*, not a new source of truth. The authorities it consolida
 
 - **Axiom profiles** — [ZeroParadox/AxiomProfile.lean](ZeroParadox/AxiomProfile.lean) (the checkable artifact; CI-built on every push).
 - **The Lean sources** — under [`ZeroParadox/`](ZeroParadox/) in this repository.
-- **The "argued, not proved" tier** — [fmc.md](fmc.md) (Forced Metatheoretic Commitment: definition, conditions, falsifiers).
-- **Versions and script hashes** — [register.md](register.md).
+- **The "argued, not proved" tier** — [Forced Metatheoretic Commitment](fmc.md) (definition, conditions, falsifiers).
+- **Versions and script hashes** — [Version Registry](register.md).
 
 If a Lean witness or file link below no longer resolves after the v3.0 source reorganization, the old→new map is in [`ssot.json`](ssot.json); report anything stale in [discussion #120](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
@@ -22,7 +22,7 @@ Notation: **(none)** = `'<thm>' does not depend on any axioms` (stronger than ch
 
 ---
 
-## Tier 1 — Proved, axiom-free (depends on no axioms at all)
+## Tier 1 — Proved, Axiom-Free (Depends on No Axioms at All)
 
 The framework's load-bearing claims. The Lean kernel reports no axiom dependency whatsoever.
 
@@ -40,7 +40,7 @@ The framework's load-bearing claims. The Lean kernel reports no axiom dependency
 | Aczel J largest | DC-free Aczel uniqueness (J is the largest self) | `J_self_is_largest` | (none) |
 | T-IZ (limit step) | Every maximal chain's limit is its own successor ⊥ | `t_iz_limit_is_new_null` | (none) |
 
-## Tier 2 — Proved, choice-free `[propext, Quot.sound]`
+## Tier 2 — Proved, Choice-Free `[propext, Quot.sound]`
 
 No `Classical.choice`; at most propositional extensionality and quotient soundness.
 
@@ -53,7 +53,7 @@ No `Classical.choice`; at most propositional extensionality and quotient soundne
 | Coalgebra fork (μ side) | `Fix` empty — choice-free | `fix_isEmpty` | [propext, Quot.sound] |
 | Quine-atom identity | The self-referential fixed points are exactly {⊥} (unique, and = ⊥) | `quine_self_members_eq_bot` | [propext, Quot.sound] |
 
-## Tier 3 — Proved, inherits `Classical.choice` from Mathlib (analytic realizations)
+## Tier 3 — Proved, Inherits `Classical.choice` From Mathlib (Analytic Realizations)
 
 These *realize* the snap floor inside standard analytic structures and inherit `Classical.choice` from Mathlib's classically-built topology / inner-product / category / probability / computability / ordinal libraries. **The dependence is in the realization, not in any core claim** (those are Tier 1–2). All report `[propext, Classical.choice, Quot.sound]`.
 
@@ -75,16 +75,16 @@ These *realize* the snap floor inside standard analytic structures and inherit `
 
 *Whether this inherited dependence is structurally forced by the snap geometry or merely incidental to Mathlib's implementation is **open** (see Tier 6). The one layer classified so far (the `PadicTree` choice-probe) found it mostly incidental and routable.*
 
-## Tier 4 — Argued, not proved (Forced Metatheoretic Commitments)
+## Tier 4 — Argued, Not Proved (Forced Metatheoretic Commitments)
 
-Foundational choices the framework's internal structure rules out alternatives to *by argument, not proof*, and falsifiably. Each is metatheoretic — it lives in the ZF+AFA framing, not the Lean kernel — and carries a named falsifier. See [fmc.md](fmc.md).
+Foundational choices the framework's internal structure rules out alternatives to *by argument, not proof*, and falsifiably. Each is metatheoretic — it lives in the ZF+AFA framing, not the Lean kernel — and carries a named falsifier. See [Forced Metatheoretic Commitment](fmc.md).
 
 | Commitment | What is argued | Proved part (separate) | Named falsifier |
 |------------|----------------|------------------------|-----------------|
 | AFA necessity (R-AFA, ZP-E) | That ⊥ = {⊥} forces ZF+AFA over Foundation (a metatheoretic squeeze: Foundation too restrictive, Boffa too permissive, AFA the unique fit) | The *structural* self-application fixed point is Lean-proved: `t_exec` (Tier 1, axiom-free) | A well-founded (Foundation-respecting) model of ⊥ consistent with R3 and L-INF would overturn the forcing |
 | CC-2 set-membership reading | The literal ⊥ ∈ ⊥ (the Quine atom as a set fact) | The structural fixed point `t_exec` is axiom-free; only the set-membership reading is metatheoretic | Same as above — a Foundation-respecting realization of the same structural role |
 
-## Tier 5 — Modeling commitments (chosen, not derived; not open questions)
+## Tier 5 — Modeling Commitments (Chosen, Not Derived; Not Open Questions)
 
 Explicit, motivated commitments. Listed so the open register holds only genuinely unresolved questions.
 
@@ -97,23 +97,23 @@ Explicit, motivated commitments. Listed so the open register holds only genuinel
 
 A commitment marked "not a novel commitment" in the layers means its content is formally grounded in prior layers and derivable there; it is stated as a local axiom only for the self-containment of that layer — the same pattern by which AX-1 was stated as an axiom before being derived as T-SNAP. **AX-1 (Binary Snap Causality) is no longer an axiom:** it is Theorem T-SNAP, derived in ZP-E from A4, the standard bottom-element axiom of join-semilattice theory (∀ x, ⊥ ∨ x = x). AX-1 was redundant — any join-semilattice with bottom already has this property.
 
-<details>
+<details markdown="1">
 <summary><b>The single bottom (MC-1) — in full</b> - click to expand</summary>
 
 The bottom elements across the layers - the algebraic ⊥, the 0 of Q₂, the Turing initial configuration c₀, and the categorical initial object - are identified as one object, the same self-referential (diagonal) fixed point in each framework. This identification splits into a correspondence half, now formally realized in Lean, and an identity half - that the four are numerically one object - which remains a modeling commitment rather than a proven identity. Its faces are the Quine atom (⊥ = {⊥}) in set theory, the Kleene quine in computation, the point v₂(0) = ∞ in valuation, and the initial object in category theory. This identification is substantially grounded rather than stipulated: each domain locates its own bottom through its own logic first, and the cross-layer agreement is then enforced formally (the ZP-E typeclass instance ties ZP-A ⊥ to ZP-C c₀; AX-G1 grounds the categorical initial in ZP-A ⊥; ZP-H T-H3 proves snap consistency across all four functors). The categorical correspondence is now realized in the standard domain categories of Mathlib: the snap floor is the inverse limit in `TopCat`, the initial object in `ModuleCat ℂ`, and the initial object in the Kleisli category of the probability monad `KleisliCat PMF` - with no morphism returning to it in the stochastic case (the bundled witness is `mc1_correspondence`). What remains is the interpretive choice to call these one object. This choice has a precise established form: in the language of Grothendieck fibrations and descent, the per-domain bottoms are a candidate global object indexed over the domains, and whether they are *one* object is a descent / (gerbe-)triviality question - with a cohomological obstruction, in the manner of Giraud's gerbes or the classical field-of-moduli vs field-of-definition distinction, deciding it. This does not resolve the commitment: classical descent is formulated over a single base site, whereas these domains have no canonical common index, so the reading is a proposed frame, not an instance of a theorem. What it changes is the *shape* of the open residual - "are the bottoms one object or many?" becomes "does the descent / triviality obstruction vanish?", a topological question in place of a metaphysical one. The frame is credited to that literature; the cross-domain application is ours, and unbuilt.
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><b>The metatheoretic stance — ZF + AFA, and why AFA is forced</b> - click to expand</summary>
 
-This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice — it is argued to be forced by the framework's own results (Tier 4). What "forced" means here, and the discipline every such claim must meet, is defined in [fmc.md](fmc.md).
+This framework is stated over ZF + AFA (Zermelo-Fraenkel with Anti-Foundation Axiom), not standard ZFC, and AFA permits self-containing sets (x = {x}). This affects only one commitment, the Quine atom (CC-2); the remaining results do not depend on non-well-founded sets. The Axiom of Choice is not assumed. The move to AFA is not a free choice — it is argued to be forced by the framework's own results (Tier 4). What "forced" means here, and the discipline every such claim must meet, is defined in [Forced Metatheoretic Commitment](fmc.md).
 
 Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, contradicting the self-execution argument. The forcing comes from the framework's results: ZP-A R3 and ZP-C L-INF together establish that ⊥ admits no finite external description, which is incompatible with the Foundation axiom's well-foundedness requirement (no infinite descending ∈-chains). The full argument for why AFA specifically is the appropriate extension - rather than simply removing Foundation - is developed in ZP-E Remark R-AFA. (This is an argument, not a derivation in the formal system — see Tier 4 and its named falsifier.)
 
 </details>
 
-<details>
+<details markdown="1">
 <summary><b>The supporting commitments</b> (label, type, statement) - click to expand</summary>
 
 | Label | Type | Statement |
@@ -141,7 +141,7 @@ Standard ZFC is incompatible with CC-2: a well-founded ⊥ would admit an extern
 
 Open questions are also discussed publicly in the [GitHub Discussions Open Questions category](https://github.com/timbrigham/ZeroParadox/discussions/categories/open-questions).
 
-<details>
+<details markdown="1">
 <summary><b>Resolved questions</b> (closed) - click to expand</summary>
 
 | Item | Status |
@@ -167,13 +167,13 @@ Open questions are also discussed publicly in the [GitHub Discussions Open Quest
 
 ---
 
-## Convergence with established work
+## Convergence With Established Work
 
-The Zero Paradox is, in large part, a body of inferences resting on a choice-free, machine-checked core. The strongest non-proof support for the framing is that **independent traditions - set theory, number theory, proof theory, computability, category theory - each arrive near the same structure at zero.** This section maps that convergence honestly.
+The Zero Paradox rests on a choice-free, machine-checked core, and much of what is built on it is now proved rather than inferred - the cross-domain *correspondence*, for one, is Lean-realized (`mc1_correspondence`). What remains inferential is bounded: the metatheoretic commitments (Tier 4) and the numerical *identity* that would make the faces one object (MC-1). The strongest non-proof support for that remaining part is that **independent traditions - set theory, number theory, proof theory, computability, category theory - each arrive near the same structure at zero.** This section maps that convergence honestly.
 
 Three things to read it correctly:
 
-1. **This is convergence evidence, not proof.** It raises the prior that there is a real object at the floor; it closes nothing. Each row's *link status* says exactly how tight the connection is.
+1. **This is convergence evidence, not proof.** It raises the prior that there is a real object at the floor; on its own it closes nothing. Each row's *link status* says exactly how tight the connection is.
 2. **The direction of credit points outward.** In every row the established result is the prior work; ZP is an *instance joining* that program, never a frame that subsumes it. Where ZP claims the faces are literally one object, that is a commitment (MC-1), offered to these communities, not imposed on them.
 3. **Not all of these are independent of each other.** Lawvere, the coalgebra line, and the categorical face are one tradition, not three; counted honestly, the genuinely separate roads are set theory, valuation / number theory, proof theory, computability, and category theory.
 
@@ -198,7 +198,7 @@ Three things to read it correctly:
 
 ---
 
-## Verification by document (Lean 4)
+## Verification by Document (Lean 4)
 
 Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source lives under [`ZeroParadox/`](ZeroParadox/); the full theorem-by-theorem detail is in each source file. The reproducibility commands are in the [README](README.md#reproducing-the-verification).
 
@@ -224,7 +224,7 @@ Machine-checked proofs of the formal documents using Lean 4 + Mathlib. Source li
 | ZP-P The Fixed-Point Fork | [FixedPointFork.lean](ZeroParadox/Settheory/FixedPointFork.lean), [Ostrowski.lean](ZeroParadox/Valuation/Ostrowski.lean), [Coalgebra.lean](ZeroParadox/Settheory/Coalgebra.lean) | The least/greatest fixed-point fork collapses iff the operator has a unique fixed point (choice-free); number-system instance ℝ vs ℚ₂ via Ostrowski; categorical-parent instance (Fix empty / Cofix inhabited) via QPF | Clean - June 2026 |
 | Keystone probes (Lawvere / boundary) | [Lawvere.lean](ZeroParadox/Category/Lawvere.lean), [Boundary.lean](ZeroParadox/Multihomed/Boundary.lean), [BoundaryBridge.lean](ZeroParadox/Multihomed/BoundaryBridge.lean) | Face-relative Lawvere verdict (no Set-level face an instance, computability face genuine); the snap as a well-foundedness boundary crossing (relation level + QPF μ/ν bridge); best-effort, full Taylor coalgebraic version open (Tier 6) | Clean - June 2026 |
 
-<details>
+<details markdown="1">
 <summary><b>Per-file axiom footprint</b> - click to expand</summary>
 
 All proofs are machine-checked. The classical axioms that appear (`Classical.choice`) come from Mathlib's computability, analysis, and ordinal libraries — they are infrastructure dependencies, not Zero Paradox commitments, and `Classical.choice` in Lean is distinct from the set-theoretic Axiom of Choice.

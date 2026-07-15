@@ -3,7 +3,9 @@
 
 Companion to build_dictionary_map.py (BOTTOMELEMENT.md). That file maps the *object* ⊥ (the noun);
 this file maps the *transition* off it - the snap (the verb). Same discipline: the is / is-not /
-proved-vs-open catalogue is hand-curated flat data below, and every witness theorem name is RESOLVED
+proved-vs-open catalogue AND the per-field Boundary Map (each field's verdict: is the snap mandatory
+here, and by what mechanism, or is it walled) are hand-curated flat data below, and every witness name
+is RESOLVED
 against the actual Lean source (`ZeroParadox/**/*.lean`) at generation time - each resolvable name becomes
 a relative link `ZeroParadox/File.lean`; names that do not resolve are printed as a warning. So the page
 cannot link a witness the Lean does not contain, and a renamed/moved/deleted witness fails LOUD.
@@ -118,6 +120,47 @@ IS_NOT = [
      []),
 ]
 
+# --- The Boundary Map: the same results re-cut by FIELD.  (field, verdict, mechanism-or-wall, [witnesses]) ---
+# Per-field verdict on the snap: mandatory (and by what native mechanism) or walled (and against what obstruction).
+# The word "forcing" is deliberately avoided (it reads as Cohen forcing to a set theorist); the snap is "mandatory".
+BOUNDARY_MAP = [
+    ("computability", "**Mandatory**",
+     "a genuine self-reference fixed point - a machine run on its own code, whose halting is undecidable, so ⊥ cannot describe its own escape",
+     ["self_halting_undecidable", "computability_face_fixedPoint"]),
+    ("valuation (p-adic)", "**Mandatory**",
+     "the ultrametric sends the floor to v(0) = ⊤, and the doubling dynamics contracts every starting law onto that floor",
+     ["addVal_bot", "attracting_attractor"]),
+    ("proof theory (ordinals)", "**Mandatory, and minimal**",
+     "ε₀ is the proof-theoretic ordinal of PA; the ω-tower climbs from below choice-free, ε₀ is the least fixed point of α ↦ ω^α, and the tower is cofinal in it (the from-below climb is choice-free; the least-fixed-point and cofinality facts use classical logic)",
+     ["tower_strictMono", "epsilonZero_eq_nfp", "epsilonZero_le_fixedPoint", "fundamentalSeq_cofinal"]),
+    ("information", "**Mandatory**",
+     "surprisal is unbounded at the floor - the bottom carries no finite description to stay at",
+     ["info_bottom_diverges"]),
+    ("category", "**Mandatory, one-way**",
+     "the initial object has a unique morphism out to every object and none back; ⊥ is a pure source, not a round trip",
+     ["t2_universal_constituent", "t4_chains_forward_only"]),
+    ("order / set theory", "**Mandatory** (choice-free spine)",
+     "the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point, and the self-containing ⊥ = {⊥} realizes it. That the field snaps are numerically one object is a commitment (MC-1), not proved",
+     ["fork_collapse_iff", "selfMem_eq_singleton_bot"]),
+    ("real numbers", "**Walled - the snap fails**",
+     "density: between 0 and any positive lies a smaller positive, so there is no minimum non-⊥ to snap to. The one field where the transition provably cannot happen - and that impossibility is itself a theorem",
+     ["f_snap_impossible", "f_no_minimal_positive"]),
+]
+
+def render_boundary_map():
+    intro = """## The boundary map
+
+The dictionary above sorts the snap by *aspect* - what it is, what it does. This section re-cuts the same results by *field*. Walk into any one of the framework's domains and ask a single question: **is the departure from ⊥ mandatory here, or is it walled?** Every cell has a verdict; nothing is left merely posited.
+
+The pattern is worth stating plainly. The self-referential *shape* - the diagonal fixed point - recurs across every face, but it is not one object across them (that identification is a modeling commitment, MC-1, a type boundary). What is mandatory across almost every field is the *snap itself*, and each field compels it by its own native mechanism. One field is the telling exception: in the real numbers the snap provably fails, and the failure is a theorem.
+
+**Two notions, kept apart.** There is a narrower, stronger one - a genuine Lawvere fixed point, self-application with no escape - and it is walled across almost every field: Cantor forbids the Set-level witness for any nontrivial total type (nontrivial_lattice_no_witness, q2_no_witness), so only the computability face carries a genuine one (computability_face_fixedPoint, in the effective category). The snap is mandatory far more widely than that fixed point is genuine. "The Lawvere fixed point is genuine in only one field" (read off the Lawvere register) and "the snap is mandatory across almost every field" (read off the table below) are both true - they measure different things. One shared technique; a different procedure in each field."""
+    table = render_table(
+        [[field, verdict, mech, render_witnesses(ws)] for (field, verdict, mech, ws) in BOUNDARY_MAP],
+        ["field", "the snap here is...", "by what mechanism, or against what wall", "witness (links to Lean source)"])
+    outro = """The cross-cutting walls - Cantor for the Lawvere fixed point, the MC-1 type boundary for the identity, and the absence of a measure-preserving comparison between the two attracting bottoms (no_mp_attractor_to_markov) - are catalogued in *The snap is not* above. The walls are not failures of the program; locating them exactly is the program."""
+    return link_in_text(intro) + "\n\n" + table + "\n\n" + link_in_text(outro)
+
 def render_rosetta():
     body = """## The short version: the snap, tiered by confidence
 
@@ -176,6 +219,10 @@ Each exclusion is either a **proved obstruction** (a Lean-checked wall), a **mod
 
 ---
 
+{boundary_map}
+
+---
+
 *Generated by `build_snap_map.py`. Witness names are resolved against the Lean source at generation time and link to the file that declares them; a name that does not resolve fails loud as a warning, and the `meta` / `open` entries (marked as such) have no Lean witness. To update: edit the catalogue and rerun. The links render natively on GitHub.*
 """
 
@@ -186,11 +233,12 @@ def main():
                               ["aspect", "characterization of the snap", "witness (links to Lean source)"]),
         is_not=render_table([[d, render_witnesses(ws)] for (d, ws) in IS_NOT],
                             ["the snap is not...", "witness (or meta / open)"]),
+        boundary_map=render_boundary_map(),
     )
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(page)
     print(f"wrote {OUT}")
-    print(f"{len(INDEX)} declarations indexed - {len(IS_FACES)} positive faces - {len(IS_NOT)} exclusions")
+    print(f"{len(INDEX)} declarations indexed - {len(IS_FACES)} positive faces - {len(IS_NOT)} exclusions - {len(BOUNDARY_MAP)} boundary-map fields")
     if UNRESOLVED:
         print("UNRESOLVED witnesses (shown un-linked - check external/field/typo): " + ", ".join(sorted(set(UNRESOLVED))))
     else:
