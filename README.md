@@ -13,7 +13,7 @@ Followed a link that broke after the v3.0 source reorganization? The old→new f
 
 That the classical self-reference arguments (Cantor, Russell, Gödel, Kleene) share one diagonal fixed point is **Lawvere's (1969)**. What this framework adds is checkable and specific:
 
-- **It is located at the floor, not the ceiling** - the Gödel inversion. The concrete instance, the **Binary Snap** (the forced exit ⊥ → ε₀), is a theorem, not an axiom, and its core depends on no axioms at all, not even choice.
+- **It is located at the floor, not the ceiling** - the Gödel inversion. The concrete instance, the **Binary Snap** (the forced exit ⊥ → ε₀), is a theorem, not an axiom; its core snap is even Lean-kernel-axiom-free (not even choice - choice enters only at the separate identification of the ceiling with the ordinal ε₀).
 - **The recurrence is verified across *heterogeneous* domains** - the computability face is a genuine Lawvere/Kleene fixed point; the lattice and 2-adic faces are proved fixed points of their own self-maps ([`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`scale_unique_fp`](ZeroParadox/Valuation/Scale.lean)), carrying the shape but not genuine Lawvere instances - Cantor forbids the Set-level witness.
 - **The boundary is proved, not assumed** - there is no single cross-category theorem folding the domains into one object (`x = y` across distinct categories is not a well-formed proposition); a Cantor/Lawvere obstruction establishes the impossibility. The framework proves where the shape recurs, and where it stops.
 
