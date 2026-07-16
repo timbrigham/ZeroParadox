@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1162,
+        "declarations": 1208,
         "files": 136
       },
       "entries": [
@@ -755,6 +755,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "008ededd-8f1e-4007-84cc-eaa95e844bd4",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fMeta",
+            "short": "fMeta"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -969,6 +1007,44 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "02380ac2-612f-4abc-ad68-ac810c40ee9c",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quineHost_selfMem_iff",
+            "short": "quineHost_selfMem_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -1740,6 +1816,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "051e2547-a8eb-428c-b117-c9ebe56448f6",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_lfp_bot",
+            "short": "id_lfp_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -3100,6 +3212,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0d8eee62-485e-449c-bbe8-967ae53ab5f6",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fMeta_eq_id",
+            "short": "fMeta_eq_id"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0dc11348-367d-401b-a8cf-2648a4ad0b28",
           "new": {
@@ -3558,6 +3708,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f5318e9-3789-4bd7-85bd-515ab4d61798",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_operator_fixedPoints_univ",
+            "short": "meta_operator_fixedPoints_univ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4780,6 +4968,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "15b9087d-f421-4a24-bbf5-f47ddc559c37",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.oneAtom_not_wellFounded",
+            "short": "oneAtom_not_wellFounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "15b9297e-5787-40e2-a70d-c64ac5f2cc75",
           "new": {
@@ -4842,6 +5068,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "162cb210-cfe3-4c4f-bea3-a62e65b1689b",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fixedPoints_top_val",
+            "short": "fixedPoints_top_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4915,6 +5179,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1687e9ac-f45a-4cdf-809d-89c46e442173",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.afaStructure_isQuineHost",
+            "short": "afaStructure_isQuineHost"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5878,6 +6180,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1cfdf0f2-dc09-4655-881f-1e152e67daae",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.QuineHost",
+            "short": "QuineHost"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1d2f006f-eb40-4f82-851b-d249e8208349",
           "new": {
@@ -6784,6 +7124,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "22782b64-9fa0-40e7-85ea-84bc67c20c2c",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.reflexive_object_refuted",
+            "short": "reflexive_object_refuted"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "The hard bridge located: reflexive object refuted in Type (Cantor), escape is the fork/domain regime",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -8909,6 +9288,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2ed6408b-d8cd-4de2-9759-7790359e78a1",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lawvere_fixedpoint_selfApp",
+            "short": "lawvere_fixedpoint_selfApp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2f190bda-0a0e-4389-b933-5b262e2c8197",
           "new": {
@@ -8971,6 +9388,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2f95266a-fcb8-432a-be55-a0a332064545",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fixedPoints_bot_val",
+            "short": "fixedPoints_bot_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9623,6 +10078,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "33f49f22-d134-46ab-a3a4-8f090fc64ffb",
+          "new": {
+            "file": "ZeroParadox/Computability/ComputableCrossing.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.computable_no_fixedpointfree",
+            "short": "computable_no_fixedpointfree"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12243,6 +12737,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "43e050f8-7beb-449a-9f8e-b470bee91c4b",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gap_is_fork_at_meta",
+            "short": "gap_is_fork_at_meta"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "43f82de0-c092-4a54-a9f7-b3bb889b62d5",
           "new": {
@@ -12418,6 +12950,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "44b19914-4ea5-46b7-b6d4-e63411635702",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_collapse_iff_object_collapse",
+            "short": "meta_collapse_iff_object_collapse"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14686,6 +15256,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5193d730-278a-4287-8a50-55e7932d7b62",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_reflexive_object_bool",
+            "short": "no_reflexive_object_bool"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "The hard bridge located: reflexive object refuted in Type (Cantor), escape is the fork/domain regime",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17285,6 +17894,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "618565b0-780d-461c-a0e3-d48c7664266a",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_fork_open",
+            "short": "id_fork_open"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "62056177-989e-4ce6-bd8c-ba6c47474529",
           "new": {
@@ -17347,6 +17994,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "624e1754-c172-4a3d-8c7c-33a8cd85562f",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.collapse_detector_is_the_instance",
+            "short": "collapse_detector_is_the_instance"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18481,6 +19166,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6aea0c81-78a7-49da-89f7-f5e93e400c05",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lawvere_trigger_refuted",
+            "short": "lawvere_trigger_refuted"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6b3fa921-da3f-4726-97c0-b5e082f2b599",
           "new": {
@@ -19279,6 +20003,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f788611-86b9-42b8-a4fc-5bbe05a2ed8f",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_pinnable",
+            "short": "selfApp_pinnable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21440,6 +22202,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c1e1422-966d-46f3-b223-431640d5467f",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_lands_on_nu",
+            "short": "selfApp_lands_on_nu"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The mu/nu branch unification via the diagonal-fixed-point discriminator (Tim's diagram-branch unification)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25243,6 +26044,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "92b9e2ed-85bd-431a-9d6b-f636e4d098b7",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_gfp_val",
+            "short": "meta_gfp_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "92c802f8-6f0c-4b28-aed4-cd72054628ed",
           "new": {
@@ -25269,6 +26108,80 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "92dd42a6-077b-4c4e-b71d-ec33a62adccd",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_no_pinnable_instance",
+            "short": "id_no_pinnable_instance"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9313e9ad-f3c1-4d47-854f-8722ebd3fed8",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_fixedPoints_univ",
+            "short": "id_fixedPoints_univ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25892,6 +26805,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "968fcbb9-2145-412d-b319-ff9bebd8e7b0",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.detectors_are_instances",
+            "short": "detectors_are_instances"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "96999441-3ac5-4dda-b350-95ce10e102f8",
           "new": {
@@ -26280,6 +27231,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9983c919-d1e9-49c2-b517-e0f66c39f677",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mu_nu_branch_exclusion",
+            "short": "mu_nu_branch_exclusion"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The mu/nu branch unification via the diagonal-fixed-point discriminator (Tim's diagram-branch unification)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26873,6 +27863,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9c8d0c22-2dd8-4f81-8ed8-ed62f024a09c",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_reproduces_gap",
+            "short": "meta_reproduces_gap"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9cbcafe5-9ce7-47e4-9333-627329846c42",
           "new": {
@@ -27046,6 +28074,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9d8b7f25-1332-472a-b620-1a5201d11231",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_lfp_val",
+            "short": "meta_lfp_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27382,6 +28448,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a07b4fcc-7a17-4f50-a98b-5a064745ec77",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quineHost_not_wellFounded",
+            "short": "quineHost_not_wellFounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a0c1e305-5ccd-42ff-ab9a-a740b4ce8179",
           "new": {
@@ -27516,6 +28621,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a223ffd6-bf2d-4b83-b0bc-64bb591337ef",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.existence_without_uniqueness",
+            "short": "existence_without_uniqueness"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28809,6 +29952,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ac361c80-28b9-43f7-941e-3fb2a64a1980",
+          "new": {
+            "file": "ZeroParadox/Computability/ComputableCrossing.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_fixedpoint_exists_computable",
+            "short": "selfref_fixedpoint_exists_computable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ac7bb771-bf9d-4e67-8b12-ab4d0c0dbb28",
           "new": {
@@ -29052,6 +30234,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "adb02e9a-515b-4272-a409-5cadee415923",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zfSet_no_quine_bottom",
+            "short": "zfSet_no_quine_bottom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30559,6 +31780,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b6697cca-4d52-46ab-b6aa-29ae6d0e93cc",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.monotone_regime_derives_pinned",
+            "short": "monotone_regime_derives_pinned"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Capstone: the monotone/fork regime derives the framework's existence+uniqueness content (what IS crossed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6af115b-d39d-44f8-9af0-b42b99a06a88",
           "new": {
             "file": "ZeroParadox/Multihomed/SnapFrameChange.lean",
@@ -31023,6 +32282,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b8fc4ae5-4a97-4fb0-9130-fe3ae2a2f810",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BoffaMem",
+            "short": "BoffaMem"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32292,6 +33587,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c3276ea4-a4cc-4990-a0f4-fe457b83975e",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.OneAtom",
+            "short": "OneAtom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34156,6 +35487,82 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cd20c6d1-e1ef-45dc-b799-1e6dafe90e92",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_monotone_not",
+            "short": "not_monotone_not"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "The Cantor obstruction (negation) is non-monotone — the wall is a non-monotone/Set phenomenon",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cda41bce-5772-49ad-8e23-3f235b7ca56a",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_pinnable_instance_iff_fork_open",
+            "short": "no_pinnable_instance_iff_fork_open"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cdf7c1ff-747e-40c0-95ec-7b50c2e20d1f",
           "new": {
@@ -34520,6 +35927,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cebc2abc-c4cf-4c35-8c0d-c66c550773dc",
+          "new": {
+            "file": "ZeroParadox/Computability/ComputableCrossing.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_point_surjective",
+            "short": "eval_point_surjective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cecacab4-dd5e-4b82-8f30-971cc60c3fad",
           "new": {
@@ -34872,6 +36317,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d25c797f-c1d3-40b4-97e4-a8a600dce18c",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boffaMem_all_selfMem",
+            "short": "boffaMem_all_selfMem"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35999,6 +37480,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d9bfc095-3813-4afb-b1c8-ee08b22f2226",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boffa_fails_unique",
+            "short": "boffa_fails_unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38413,6 +39932,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e5294ae7-de4c-4cc9-b54c-ffa55e3ff1a9",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.instance_always_exists",
+            "short": "instance_always_exists"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e58250a5-b4d4-4ae0-8301-01346eb5534e",
           "new": {
@@ -38477,6 +40034,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e59f65fa-4f72-4f7e-8d52-eedcf7865b58",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gap_is_fork_at_operators",
+            "short": "gap_is_fork_at_operators"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39647,6 +41242,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ec64347a-8f9e-4cca-97c0-fcbfb56fbdf3",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gap_poles_swap_under_dual",
+            "short": "gap_poles_swap_under_dual"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42017,6 +43650,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fa7ff782-f83a-4043-b033-d3d0f6f334bb",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.f_id_on_fixedPoints",
+            "short": "f_id_on_fixedPoints"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fa95d2ef-f93e-4392-ba3b-eb3701928225",
           "new": {
@@ -42157,6 +43828,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fb10d3ea-b090-476a-a1ad-9924e82a3039",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_gfp_top",
+            "short": "id_gfp_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fb526e62-2969-4f0e-9519-38c081ff0522",
           "new": {
@@ -42221,6 +43928,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb9db5e1-819e-45a4-a0b2-2e64bd10d742",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.instance_pinnable_iff_fork_collapse",
+            "short": "instance_pinnable_iff_fork_collapse"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true

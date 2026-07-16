@@ -89,7 +89,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Multihomed/InfoFunctor.lean` - ZP-H Info Functor: F_C into the real category `KleisliCat PMF` (MC-1 remediation)
 - `ZeroParadox/Multihomed/MC1Bridge.lean` - ZP-H MC-1 Correspondence: the snap floor realized across the real domain categories
 - `ZeroParadox/Multihomed/PadicBridge.lean` - B2 (pipeline): the computational bottom maps to the 2-adic floor
-- `ZeroParadox/Multihomed/SelfClosureObstruction.lean` - The wall-side mirror of the diagonal fixed point (experimental probe): `SelfClosureObstruction` + `ClosureShape` sort the framework's ⊥-walls by which closure fails (self-application / limit-from-below / cross-frame-identity = the two faces of ⊥ + the seam); each shape carries a witnessed instance drawn from an existing wall theorem (`obstruction_negation`, `obstruction_quine`, `obstruction_no_minimal_real`, `obstruction_no_comparison`), and `every_shape_witnessed` proves the classification is inhabited at all three shapes
+- `ZeroParadox/Multihomed/SelfClosureObstruction.lean` - Self-Closure Obstructions: the wall-side mirror of the diagonal fixed point (experimental probe)
 - `ZeroParadox/Multihomed/TopNumEdge.lean` - Web edge: topology ↔ number theory (the valuation generates the ball topology)
 
 ### Set theory / AFA (ZP-J)
@@ -101,6 +101,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Settheory/Model.lean` - ZPJ — Concrete ValuationStructure Instance: (ℕ∞, min, ⊤)
 - `ZeroParadox/Settheory/OntBridge.lean` - ZPJ — OntologicalStates → AbstractSelfApp → AFA Content
 - `ZeroParadox/Settheory/QuineDichotomy.lean` - ZPJ — the Quine-atom dichotomy
+- `ZeroParadox/Settheory/QuineHost.lean` - The Quine-Host Requirements — the AFA fragment the framework actually needs
 - `ZeroParadox/Settheory/SetTheoryAFA.lean` - ZP-J: Executability of Self-Reference
 - `ZeroParadox/Settheory/Wall.lean` - Zero as a Wall — the metatheoretic boundary, as a failure-mode taxonomy (formal object)
 - `ZeroParadox/Settheory/Wall_OneRoot.lean` - Two small facts: self-loops exist without well-foundedness; the Lawvere lemma needs no order
@@ -159,7 +160,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
-- `ZeroParadox/Valuation/BottomInvariant.lean` - The "same shape from anywhere" universal: a self-map with an invariant probability measure and a start-independent ω-limit, across three faces / two domains — the odometer (ℤ_p, Haar, ω-limit = univ) and the doubling attractor (Q₂, δ₀, ω-limit = {0}) on the valuation face, plus § V's kernel generalization to the stochastic bottom (Fin 2 full-mixing Markov kernel, uniform stationary law); § VI unifies all three under ONE structure over Mathlib's general `MeasureTheory.Kernel` (`InvariantMarkovKernel` — deterministic faces via `Kernel.deterministic`, the stochastic face a genuine Markov kernel); § VII proves the shared ATTRACTOR property (`AttractingKernel`: from any start, the n-step law converges weakly to the invariant law) for the #2 (Markov) and #3 (p-adic doubling) faces — a formal advance on the `PadicAttractor`-flagged open #3↔#2 bridge; the odometer, being equidistributing, is not attracting; § VIII proves an attracting kernel has a UNIQUE invariant law (`attracting_unique_invariant`, applied to #2 and #3) — the strong ergodic conclusion via the attracting structure, bypassing the missing Mathlib unique-ergodicity API; § IX proves the odometer is NOT attracting (`odometer_not_attracting`, via the compact-hence-closed range of point masses not containing non-atomic Haar) — so "same shape from anywhere" genuinely splits into converge-to-law (attracting #2, #3) vs equidistribute (the odometer), and the discriminator is non-vacuous; § X closes the open PadicAttractor #3↔#2 comparison edge as a NO-GO (`no_mp_attractor_to_markov`): no measure-preserving map identifies #3's invariant (δ₀, concentrated) with #2's (uniform, spread) — a point mass cannot push forward to a spread law, so the shared *property* holds while the direct *identification* is provably blocked (the MC-1 lesson as a theorem)
+- `ZeroParadox/Valuation/BottomInvariant.lean` - A first universal: the bottom carries an invariant probability measure
 - `ZeroParadox/Valuation/ContractionRate.lean` - ZP-H tree, edge TC30 — the contraction-rate dichotomy at the p-adic floor #3
 - `ZeroParadox/Valuation/NuLeafReconcile.lean` - ZP-H tree, edge TC16 — the within-ν edge reconciles at the LEAF, not the ambient
 - `ZeroParadox/Valuation/NuRateEdge.lean` - ZP-H tree, edge TC33 — the within-ν edge at the orbit-RATE level (#3 ↔ #2)
@@ -167,7 +168,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PadicAttractor.lean` - ZP-H tree, edge TC05 — the p-adic floor #3 as a dynamical attractor
 - `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
-- `ZeroParadox/Valuation/PadicErgodic.lean` - Ergodicity (almost every start) and minimality (every orbit dense) of the odometer on ℤ_p — "start anywhere, get the same shape"
+- `ZeroParadox/Valuation/PadicErgodic.lean` - Ergodicity of the p-adic odometer
 - `ZeroParadox/Valuation/PadicHaar.lean` - p-adic Haar measure on ℤ_p
 - `ZeroParadox/Valuation/PadicJointSpectrum.lean` - The joint spectrum: Koopman ⋈ Vladimirov share the character eigenbasis
 - `ZeroParadox/Valuation/PadicKoopman.lean` - The Koopman operator on L²(ℤ_p)
@@ -241,11 +242,15 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### Set theory / AFA (ZP-J)
 
 - `ZeroParadox/Settheory/ForkFrameChange.lean` - The order-theoretic universal frame-change: duality swaps the fork's ends
+- `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — selfApp as an instance of the general engine (probe)
+- `ZeroParadox/Settheory/MetaFork.lean` - The meta-level fork — the double dereference (probe)
+- `ZeroParadox/Settheory/RequirementsGap.lean` - The instance-vs-requirements gap as a fork instance (probe)
 
 ### Computability (ZP-K, ZP-J)
 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - ZP-H MC-1 tree test TC48: is choice-purity an IN-STATEMENT μ/ν separating invariant?
 - `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
+- `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - ZP-H / TC20: does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 - `ZeroParadox/Computability/NatListRegime.lean` - ZP-H tree, TC49 — the third root-cut regime: the nat/list functor (leaf + recursive position)
 - `ZeroParadox/Computability/RootCutTrichotomy.lean` - ZP-H: TC47 — the root cut is a TRICHOTOMY (leaf × recursive position)
@@ -257,4 +262,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (78 core, 78 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (80 core, 84 experimental.)*
