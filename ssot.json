@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1201,
+        "declarations": 1203,
         "files": 136
       },
       "entries": [
@@ -7124,6 +7124,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "22782b64-9fa0-40e7-85ea-84bc67c20c2c",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.reflexive_object_refuted",
+            "short": "reflexive_object_refuted"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "The hard bridge located: reflexive object refuted in Type (Cantor), escape is the fork/domain regime",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15178,6 +15217,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5193d730-278a-4287-8a50-55e7932d7b62",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_reflexive_object_bool",
+            "short": "no_reflexive_object_bool"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "The hard bridge located: reflexive object refuted in Type (Cantor), escape is the fork/domain regime",
           "verify": {
             "axioms": null,
             "sorry_free": true

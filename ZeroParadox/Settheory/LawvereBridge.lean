@@ -132,6 +132,42 @@ theorem selfApp_lands_on_nu :
     ¬ WellFounded (fun a b : L => AbstractSelfApp.selfApp b = a) :=
   mu_nu_branch_exclusion bot AbstractSelfApp.fixed_bot
 
+/-! ## § VI. The hard bridge — located, not crossed (the wall is Cantor; the escape is the fork)
+
+To *derive* `fixed_bot` from Lawvere rather than assume it, you need a **reflexive object** — a
+point-surjection `e : D → (D → D)` — so that `selfApp := fun x => e x x` and Lawvere supplies its fixed
+point. The theorems below prove this cannot be done in plain type theory, and say exactly why and where
+to look instead.
+
+**The wall.** `reflexive_object_refuted`: on any `D` carrying a fixed-point-free self-map, no reflexive
+object exists — Lawvere's own engine, run at that map, refutes it (Cantor). Type theory always has such
+maps (`no_reflexive_object_bool`), so `AbstractSelfApp.fixed_bot` genuinely *cannot* be sourced from a
+Set-level reflexive object; assuming it is forced, not lazy.
+
+**Where to look next (the escape, and we have been building it).** The obstruction is precisely the
+presence of a *fixed-point-free* map. Remove those and the reflexive object returns. That is exactly the
+**monotone / domain regime**: on a complete lattice every monotone map has a fixed point
+(`instance_always_exists`, Knaster-Tarski) — the order cousin of Kleene's theorem that every continuous
+map on a pointed CPO has a least fixed point. No fixed-point-free maps there, so reflexive objects DO
+exist (Scott's `D∞`), and Lawvere fires. So the framework's ⊥ *is* a Lawvere fixed point — but in the
+fork/domain regime (`RequirementsGap`/`MetaFork`), never in Set. The bridge is not missing; it lives on
+the ν side, and the next concrete target is `D∞` / continuous maps on a pointed CPO. -/
+
+/-- **The reflexive object is refuted wherever a fixed-point-free map exists.** A point-surjection
+`e : D → (D → D)` would, by Lawvere, force any `f : D → D` to have a fixed point; a fixed-point-free `f`
+contradicts that. So no reflexive object exists on such `D` — the precise reason `fixed_bot` is assumed,
+not derived from a Set-level reflexive object. -/
+theorem reflexive_object_refuted {D : Type*} (f : D → D) (hf : ∀ x, f x ≠ x)
+    (e : D → (D → D)) : ¬ Function.Surjective e := by
+  intro he
+  obtain ⟨b, hb⟩ := lawvere_fixedpoint e he f
+  exact hf b hb
+
+/-- Concrete instance of the wall: no reflexive object on `Bool` — Boolean negation is the
+fixed-point-free witness (`bool_not_no_fixedpoint`). -/
+theorem no_reflexive_object_bool (e : Bool → (Bool → Bool)) : ¬ Function.Surjective e :=
+  reflexive_object_refuted (fun b => !b) (fun b => bool_not_no_fixedpoint b) e
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -144,5 +180,7 @@ open ZeroParadox
 #print axioms lawvere_trigger_refuted
 #print axioms mu_nu_branch_exclusion
 #print axioms selfApp_lands_on_nu
+#print axioms reflexive_object_refuted
+#print axioms no_reflexive_object_bool
 
 end PurityCheck
