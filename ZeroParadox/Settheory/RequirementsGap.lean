@@ -150,10 +150,18 @@ requirements gap is its fork. Two things are conjectural and deliberately unprov
    proof of the universal.
 
 Both are connection/architecture conjectures of the same status class as "the keystone is a
-manifestation of Lawvere" — never a Lean claim. The candidate standard-math home for making (1)
-precise is Yoneda / representability (an object is its relational signature `Hom(-, X)`;
-instance-vs-requirements = representable-vs-general-presheaf; representability being what may fail).
-See `.claude-local/notes/instance_vs_requirements_gap_2026-07-15.md`.
+manifestation of Lawvere" — never a Lean claim.
+
+The candidate standard-math home for making (1) precise is Yoneda / representability: an object is its
+relational signature `Hom(-, X)`, and instance-vs-requirements = representable-vs-general-presheaf,
+where representability — a universal element, equivalently a terminal object of the category of
+elements — is exactly what may fail (Mac Lane, *Categories for the Working Mathematician* §III.2;
+Mac Lane-Moerdijk, *Sheaves in Geometry and Logic*, 1992). The companion reading — that a
+self-referential object is *characterized, not constructed*, known only by how it relates — is the
+final-coalgebra / coinductive picture of Aczel (*Non-Well-Founded Sets*, 1988) and Barwise-Moss
+(*Vicious Circles*, 1996). All of that machinery is standard and owned by those sources; the only part
+original here is the *reading* that ties it to the apophatic-⊥ / 0↔∞ keystone, which stays a
+conjecture. See `.claude-local/notes/instance_vs_requirements_gap_2026-07-15.md`.
 
 ## Axiom Purity Check -/
 section PurityCheck
