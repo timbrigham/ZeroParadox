@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1204,
+        "declarations": 1205,
         "files": 136
       },
       "entries": [
@@ -31691,6 +31691,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b6697cca-4d52-46ab-b6aa-29ae6d0e93cc",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.monotone_regime_derives_pinned",
+            "short": "monotone_regime_derives_pinned"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Capstone: the monotone/fork regime derives the framework's existence+uniqueness content (what IS crossed)",
           "verify": {
             "axioms": null,
             "sorry_free": true

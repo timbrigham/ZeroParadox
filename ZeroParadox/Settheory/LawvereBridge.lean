@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the vertical dereference toward Lawvere — the framework's self-application fixed point as an INSTANCE of Lawvere's general fixed-point engine (existence), with location-at-⊥ and uniqueness as the framework's added content. Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Settheory.Wall
+import ZeroParadox.Settheory.FixedPointFork
 import ZeroParadox.Computability.SelfApp
 import Mathlib.Tactic
 
@@ -182,6 +183,21 @@ theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
   have hle : (False : Prop) ≤ True := by tauto
   exact (h hle) not_false trivial
 
+/-! ## § VIII. What IS crossed — the monotone regime derives the framework's content -/
+
+/-- **The crossing, for the framework's `∃!` content.** In the monotone/domain regime the two things
+`AbstractSelfApp` assumes — that a self-application fixed point *exists* and is *unique* — are DERIVED,
+not posited: existence-with-uniqueness is exactly the fork collapsing (`fork_collapse_iff`), and bare
+existence is Knaster-Tarski. So the `∃!` content of the keystone is crossable via the fork
+(`RequirementsGap`/`MetaFork`), with no reflexive object needed. What is NOT reached this way is a
+*literal Lawvere sourcing* of ⊥ via a reflexive object `D ≅ [D → D]` — that needs Scott's `D∞`
+inverse-limit domain, which Mathlib does not provide (`Control.Fix` / ωCPO give the continuous
+fixed point, not the reflexive object). That construction is the precisely-located expedition; the
+existence/uniqueness bridge is already here. -/
+theorem monotone_regime_derives_pinned {α : Type*} [CompleteLattice α] (f : α →o α)
+    (hcollapse : f.lfp = f.gfp) : ∃! x, f x = x :=
+  (fork_collapse_iff f).mp hcollapse
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -197,5 +213,6 @@ open ZeroParadox
 #print axioms reflexive_object_refuted
 #print axioms no_reflexive_object_bool
 #print axioms not_monotone_not
+#print axioms monotone_regime_derives_pinned
 
 end PurityCheck
