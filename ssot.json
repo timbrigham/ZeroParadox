@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1205,
+        "declarations": 1208,
         "files": 136
       },
       "entries": [
@@ -10078,6 +10078,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "33f49f22-d134-46ab-a3a4-8f090fc64ffb",
+          "new": {
+            "file": "ZeroParadox/Computability/ComputableCrossing.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.computable_no_fixedpointfree",
+            "short": "computable_no_fixedpointfree"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29913,6 +29952,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ac361c80-28b9-43f7-941e-3fb2a64a1980",
+          "new": {
+            "file": "ZeroParadox/Computability/ComputableCrossing.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfref_fixedpoint_exists_computable",
+            "short": "selfref_fixedpoint_exists_computable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ac7bb771-bf9d-4e67-8b12-ab4d0c0dbb28",
           "new": {
@@ -35839,6 +35917,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cebc2abc-c4cf-4c35-8c0d-c66c550773dc",
+          "new": {
+            "file": "ZeroParadox/Computability/ComputableCrossing.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_point_surjective",
+            "short": "eval_point_surjective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
           "verify": {
             "axioms": null,
             "sorry_free": true

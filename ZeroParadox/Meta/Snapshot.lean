@@ -34,6 +34,7 @@ import ZeroParadox.Category.SeamUniqueness
 import ZeroParadox.Category.TopNoGo
 import ZeroParadox.Category.TreeSeam
 import ZeroParadox.Computability.ChoicePurityInvariant
+import ZeroParadox.Computability.ComputableCrossing
 import ZeroParadox.Computability.Kleene
 import ZeroParadox.Computability.MarkovNuUniversal
 import ZeroParadox.Computability.NatListRegime
