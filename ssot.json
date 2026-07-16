@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1181,
+        "declarations": 1195,
         "files": 136
       },
       "entries": [
@@ -755,6 +755,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "008ededd-8f1e-4007-84cc-eaa95e844bd4",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fMeta",
+            "short": "fMeta"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -3174,6 +3212,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0d8eee62-485e-449c-bbe8-967ae53ab5f6",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fMeta_eq_id",
+            "short": "fMeta_eq_id"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0dc11348-367d-401b-a8cf-2648a4ad0b28",
           "new": {
@@ -3632,6 +3708,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0f5318e9-3789-4bd7-85bd-515ab4d61798",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_operator_fixedPoints_univ",
+            "short": "meta_operator_fixedPoints_univ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4954,6 +5068,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "162cb210-cfe3-4c4f-bea3-a62e65b1689b",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fixedPoints_top_val",
+            "short": "fixedPoints_top_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9170,6 +9322,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "2f95266a-fcb8-432a-be55-a0a332064545",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fixedPoints_bot_val",
+            "short": "fixedPoints_bot_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "2f9ac8cc-7432-4cc8-a388-28a63cda4988",
           "new": {
             "file": "ZeroParadox/Valuation/PadicCharacter.lean",
@@ -12431,6 +12621,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "43e050f8-7beb-449a-9f8e-b470bee91c4b",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gap_is_fork_at_meta",
+            "short": "gap_is_fork_at_meta"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "43f82de0-c092-4a54-a9f7-b3bb889b62d5",
           "new": {
@@ -12606,6 +12834,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "44b19914-4ea5-46b7-b6d4-e63411635702",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_collapse_iff_object_collapse",
+            "short": "meta_collapse_iff_object_collapse"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25507,6 +25773,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "92b9e2ed-85bd-431a-9d6b-f636e4d098b7",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_gfp_val",
+            "short": "meta_gfp_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "92c802f8-6f0c-4b28-aed4-cd72054628ed",
           "new": {
@@ -25571,6 +25875,42 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9313e9ad-f3c1-4d47-854f-8722ebd3fed8",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_fixedPoints_univ",
+            "short": "id_fixedPoints_univ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27213,6 +27553,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9c8d0c22-2dd8-4f81-8ed8-ed62f024a09c",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_reproduces_gap",
+            "short": "meta_reproduces_gap"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9cbcafe5-9ce7-47e4-9333-627329846c42",
           "new": {
@@ -27386,6 +27764,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9d8b7f25-1332-472a-b620-1a5201d11231",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.meta_lfp_val",
+            "short": "meta_lfp_val"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39015,6 +39431,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e5294ae7-de4c-4cc9-b54c-ffa55e3ff1a9",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.instance_always_exists",
+            "short": "instance_always_exists"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e58250a5-b4d4-4ae0-8301-01346eb5534e",
           "new": {
@@ -39079,6 +39533,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e59f65fa-4f72-4f7e-8d52-eedcf7865b58",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gap_is_fork_at_operators",
+            "short": "gap_is_fork_at_operators"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42647,6 +43139,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fa7ff782-f83a-4043-b033-d3d0f6f334bb",
+          "new": {
+            "file": "ZeroParadox/Settheory/MetaFork.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.f_id_on_fixedPoints",
+            "short": "f_id_on_fixedPoints"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
           "verify": {
             "axioms": null,
             "sorry_free": true
