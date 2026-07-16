@@ -592,7 +592,7 @@ During working sessions, apply the Communication Quality Rubric to evaluate Tim'
 
 ## Session Handoff File
 
-`.claude-local/handoff.md` is the standardized session state file. At the start of every session, read it first. At the end of every session (or before a planned context switch), overwrite it with the current state: what was just done, the immediate next action, and anything deferred. Always use this exact filename — one file, always current, always overwritten.
+`.claude-local/handoff.md` is the standardized session state file. At the start of every session, read it first. At the end of every session (or before a planned context switch), overwrite it with the current state. It has **two parts, in order**: first, **keeping the conversation thread alive** — the live orientation a fresh session needs to resume mid-thought rather than cold-start; then the **factual ledger** — what was just done, the immediate next action, and anything deferred. The thread leads, the ledger follows; the components, structure, and rationale of the thread part are defined privately (memory `feedback_handoff_thread_first`). Always use this exact filename — one file, always current, always overwritten.
 
 ## High-Value Insight Capture — Standing Rule
 
