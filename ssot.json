@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1203,
+        "declarations": 1204,
         "files": 136
       },
       "entries": [
@@ -35361,6 +35361,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cd20c6d1-e1ef-45dc-b799-1e6dafe90e92",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_monotone_not",
+            "short": "not_monotone_not"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "The Cantor obstruction (negation) is non-monotone — the wall is a non-monotone/Set phenomenon",
           "verify": {
             "axioms": null,
             "sorry_free": true

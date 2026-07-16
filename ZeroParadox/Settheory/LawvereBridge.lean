@@ -168,6 +168,20 @@ fixed-point-free witness (`bool_not_no_fixedpoint`). -/
 theorem no_reflexive_object_bool (e : Bool → (Bool → Bool)) : ¬ Function.Surjective e :=
   reflexive_object_refuted (fun b => !b) (fun b => bool_not_no_fixedpoint b) e
 
+/-! ## § VII. Why the wall is Set-specific — the obstruction is non-monotone -/
+
+/-- **The Cantor obstruction is non-monotone.** The fixed-point-free map that refutes the reflexive
+object in Type is negation, and `Not : Prop → Prop` is not monotone — it reverses `False ≤ True`. So the
+obstruction witness simply does not live in the monotone world. Combined with `instance_always_exists`
+(no monotone map on a complete lattice is fixed-point-free), this pins the wall precisely: the
+refutation of the reflexive object is a *non-monotone* phenomenon, absent from the monotone/domain regime
+where the framework's ⊥ lives. The crossing is on the ν side because the obstruction cannot follow it
+there. -/
+theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
+  intro h
+  have hle : (False : Prop) ≤ True := by tauto
+  exact (h hle) not_false trivial
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -182,5 +196,6 @@ open ZeroParadox
 #print axioms selfApp_lands_on_nu
 #print axioms reflexive_object_refuted
 #print axioms no_reflexive_object_bool
+#print axioms not_monotone_not
 
 end PurityCheck
