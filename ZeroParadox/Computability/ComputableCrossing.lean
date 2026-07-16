@@ -94,7 +94,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 These inherit the classical footprint of Mathlib's computability infrastructure ([propext,
-Classical.choice, Quot.sound]) — Kleene's/Roger's theorems themselves use choice. This is the same
+Classical.choice, Quot.sound]) — Kleene's/Rogers' theorems themselves use choice. This is the same
 footprint ZP-K already carries; the crossing is not choice-free, and that is honest for the
 computability face. -/
 section PurityCheck
