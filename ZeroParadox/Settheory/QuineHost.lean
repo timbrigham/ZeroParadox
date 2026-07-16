@@ -19,11 +19,14 @@ you fill it.>
 ## Formal Overview (AI-assisted)
 
 The framework's set-theoretic commitment used to read "we adopt ZF + AFA." That
-over-states it: the development never uses the full Anti-Foundation Axiom (AFA's
-"every graph has a unique decoration"), only the fragment that supplies a *unique
-self-containing bottom* ⊥ = {⊥}. Naming "AFA specifically" is a judgment call about
-which axiom system to adopt; naming the *requirements*, with AFA as one witness, is
-the honest statement.
+over-states it: the development's set-theoretic *assumption* is only the fragment
+that supplies a *unique self-containing bottom* ⊥ = {⊥}, not the full Anti-Foundation
+Axiom (AFA's "every graph has a unique decoration"). Naming "AFA specifically" is a
+judgment call about which axiom system to adopt; naming the *requirements*, with AFA
+as one witness, is the honest statement. (This is an assumption-side claim, not a
+sufficiency claim: where AFA-specific content is used elsewhere — e.g. decoration
+uniqueness in `ZeroParadox/Settheory/APG.lean` — it is proved on its own terms, not
+assumed from full AFA.)
 
 This file makes that reframe a citable object. `QuineHost` is a typeclass encoding
 the two requirements a host theory must supply:
@@ -33,12 +36,14 @@ the two requirements a host theory must supply:
 
 A third requirement, **(X) Foundation-free**, is NOT assumed: it is *forced* by (Y)
 and proved here (`quineHost_not_wellFounded`). The three standard theories then sort
-cleanly, each as a theorem:
+out — two as machine-checked theorems, Boffa by a mechanism-witness:
 
-- **ZFC + Foundation fails (Y)** in-kernel: `zfSet_no_quine_bottom`
-  (via `no_quine_atom`, `ZeroParadox/Settheory/Wall.lean`).
-- **Boffa fails (Z)**: self-membership without the uniqueness clause admits many
-  atoms (`boffa_fails_unique`).
+- **ZFC + Foundation fails (Y)** in-kernel about Mathlib's real `ZFSet`:
+  `zfSet_no_quine_bottom` (via `no_quine_atom`, `ZeroParadox/Settheory/Wall.lean`).
+- **Boffa fails (Z)**: its axiom admits a proper class of Quine atoms rather than one
+  (Boffa 1968); the mechanism — self-membership without the uniqueness clause admits
+  many atoms — is witnessed by a toy model (`boffa_fails_unique`), not an in-kernel
+  result about Boffa's axiom itself.
 - **AFA satisfies (X), (Y), (Z)**: it is the canonical example, exhibited as
   `afaStructure_isQuineHost` off the framework's own `AFAStructure`
   (`ZeroParadox/Settheory/SetTheoryAFA.lean`), with a concrete satisfiable model
@@ -79,11 +84,12 @@ open ZPSemilattice
 
     This is the AFA *fragment* the framework actually uses, not the full Anti-Foundation
     Axiom. AFA (Aczel, Non-Well-Founded Sets, CSLI 1988) is the canonical set theory
-    meeting these requirements (§ VI); Boffa's axiom meets (Y) but fails (Z) (§ IV);
-    ZFC + Foundation fails (Y) in-kernel (§ III). Naming the requirements, rather than
-    committing to "AFA specifically," is the honest form of the framework's
-    set-theoretic commitment: a design choice of *these requirements*, witnessed by
-    AFA, not an adoption of AFA. -/
+    meeting these requirements (§ VI); Boffa's axiom (Boffa 1968; and the AFA/Boffa
+    comparison in Barwise & Moss, Vicious Circles, CSLI 1996) meets (Y) but admits a
+    proper class of Quine atoms, so fails (Z) (§ IV); ZFC + Foundation fails (Y)
+    in-kernel (§ III). Naming the requirements, rather than committing to "AFA
+    specifically," is the honest form of the framework's set-theoretic commitment: a
+    design choice of *these requirements*, witnessed by AFA, not an adoption of AFA. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet carries Foundation (ZFSet.mem_wf), which forbids x ∈ x, so it cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." QuineHost is the minimal set-theory-native encoding of the framework's requirements on a host theory (fields bot_selfMem/selfMem_unique), distinct from the lattice-level AFAStructure in SetTheoryAFA.lean.
 class QuineHost (L : Type*) where
   /-- The host's membership relation. -/
