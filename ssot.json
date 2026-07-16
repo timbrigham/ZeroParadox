@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1195,
+        "declarations": 1199,
         "files": 136
       },
       "entries": [
@@ -9239,6 +9239,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2ed6408b-d8cd-4de2-9759-7790359e78a1",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lawvere_fixedpoint_selfApp",
+            "short": "lawvere_fixedpoint_selfApp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19011,6 +19049,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6aea0c81-78a7-49da-89f7-f5e93e400c05",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lawvere_trigger_refuted",
+            "short": "lawvere_trigger_refuted"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6b3fa921-da3f-4726-97c0-b5e082f2b599",
           "new": {
@@ -19809,6 +19886,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f788611-86b9-42b8-a4fc-5bbe05a2ed8f",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_pinnable",
+            "short": "selfApp_pinnable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28311,6 +28426,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a223ffd6-bf2d-4b83-b0bc-64bb591337ef",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.existence_without_uniqueness",
+            "short": "existence_without_uniqueness"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
           "verify": {
             "axioms": null,
             "sorry_free": true

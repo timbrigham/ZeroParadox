@@ -97,6 +97,7 @@ import ZeroParadox.Settheory.APG
 import ZeroParadox.Settheory.AczelConn
 import ZeroParadox.Settheory.Coalgebra
 import ZeroParadox.Settheory.FixedPointFork
+import ZeroParadox.Settheory.LawvereBridge
 import ZeroParadox.Settheory.MetaFork
 import ZeroParadox.Settheory.Model
 import ZeroParadox.Settheory.OntBridge
