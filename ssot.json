@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1172,
+        "declarations": 1181,
         "files": 136
       },
       "entries": [
@@ -1778,6 +1778,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "051e2547-a8eb-428c-b117-c9ebe56448f6",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_lfp_bot",
+            "short": "id_lfp_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17437,6 +17473,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "618565b0-780d-461c-a0e3-d48c7664266a",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_fork_open",
+            "short": "id_fork_open"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "62056177-989e-4ce6-bd8c-ba6c47474529",
           "new": {
@@ -17499,6 +17573,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "624e1754-c172-4a3d-8c7c-33a8cd85562f",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.collapse_detector_is_the_instance",
+            "short": "collapse_detector_is_the_instance"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25432,6 +25544,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "92dd42a6-077b-4c4e-b71d-ec33a62adccd",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_no_pinnable_instance",
+            "short": "id_no_pinnable_instance"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "935e3e03-3332-41ec-8607-6bfa38d76553",
           "new": {
             "file": "ZeroParadox/Valuation/BottomInvariant.lean",
@@ -26034,6 +26184,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "968fcbb9-2145-412d-b319-ff9bebd8e7b0",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.detectors_are_instances",
+            "short": "detectors_are_instances"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34458,6 +34646,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "cda41bce-5772-49ad-8e23-3f235b7ca56a",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_pinnable_instance_iff_fork_open",
+            "short": "no_pinnable_instance_iff_fork_open"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "cdf7c1ff-747e-40c0-95ec-7b50c2e20d1f",
           "new": {
@@ -40033,6 +40259,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ec64347a-8f9e-4cca-97c0-fcbfb56fbdf3",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gap_poles_swap_under_dual",
+            "short": "gap_poles_swap_under_dual"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ed074e46-d77e-4a64-b398-9d32059181c3",
           "new": {
@@ -42533,6 +42797,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fb10d3ea-b090-476a-a1ad-9924e82a3039",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.id_gfp_top",
+            "short": "id_gfp_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fb526e62-2969-4f0e-9519-38c081ff0522",
           "new": {
@@ -42597,6 +42897,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb9db5e1-819e-45a4-a0b2-2e64bd10d742",
+          "new": {
+            "file": "ZeroParadox/Settheory/RequirementsGap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.instance_pinnable_iff_fork_collapse",
+            "short": "instance_pinnable_iff_fork_collapse"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
           "verify": {
             "axioms": null,
             "sorry_free": true
