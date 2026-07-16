@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the Lawvere bridge CROSSED in the computability face — the universal machine `eval` is the reflexive object Set refutes, and Roger/Kleene's recursion theorem is Lawvere firing there. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the Lawvere bridge CROSSED in the computability face — the universal machine `eval` is the reflexive object Set refutes, and Rogers/Kleene's recursion theorem is Lawvere firing there. Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Settheory.LawvereBridge
 import Mathlib.Computability.PartrecCode
@@ -31,12 +31,15 @@ the OTHER, which the framework already contains: the **computable** regime.
 
 The universal machine `eval : Code → (ℕ →. ℕ)` is point-surjective onto the computable functions
 (`Nat.Partrec.Code.exists_code`) — the reflexive object. And the computable world has **no
-fixed-point-free total computable endomap**: Roger's fixed-point theorem
+fixed-point-free total computable endomap**: Rogers' fixed-point theorem
 (`Nat.Partrec.Code.fixed_point`) gives every total computable `f : Code → Code` a fixed point up to
 `eval`. That is exactly the obstruction, absent — the dual of `reflexive_object_refuted`. So Lawvere
 fires in the computable category, and the self-referential fixed point *exists* there: Kleene's second
 recursion theorem (`fixed_point₂`), which is the framework's own Kleene fixed point
-(`kleene_fixed_point_exists`, ZP-K).
+(`kleene_fixed_point_exists`, ZP-K). That Kleene's recursion theorem is an instance of Lawvere's
+fixed-point theorem is standard — Lawvere (1969) derives the recursion theorem; Yanofsky (2003) gives the
+unified treatment. (The reflexive structure of the computable category is studied as *Turing categories*
+/ partial combinatory algebras — Cockett-Hofstra; Longley.)
 
 **The crossing, stated honestly.** The framework's Kleene fixed point IS the Lawvere fixed point in the
 reflexive computable structure `eval` — the ν-side existence that Set (`reflexive_object_refuted`)
@@ -46,7 +49,7 @@ inch I had wrongly called a `D∞`-only expedition. The framework expedites the 
 carrying the computable reflexive object.
 
 ## Structure
-- § I  The obstruction is absent in the computable world (Roger — the dual of the wall)
+- § I  The obstruction is absent in the computable world (Rogers — the dual of the wall)
 - § II The reflexive object exists: `eval` is point-surjective onto the computable functions
 - § III The self-referential fixed point exists there (Kleene's recursion theorem)
 -/
@@ -57,7 +60,7 @@ open Nat.Partrec Nat.Partrec.Code
 
 /-! ## § I. The obstruction is absent in the computable world -/
 
-/-- **No fixed-point-free total computable endomap.** Roger's fixed-point theorem: every total computable
+/-- **No fixed-point-free total computable endomap.** Rogers' fixed-point theorem: every total computable
 `f : Code → Code` has a fixed point up to `eval`. This is the exact dual of `reflexive_object_refuted` —
 the fixed-point-free map that refutes the reflexive object in Set simply does not exist among the total
 computable endomaps. So the computable reflexive object is *not* refuted. -/
@@ -80,7 +83,8 @@ theorem eval_point_surjective {f : ℕ →. ℕ} (hf : Nat.Partrec f) : ∃ c : 
 has a code `c` with `eval c = f c` — a self-referential fixed point. This is the framework's Kleene fixed
 point (`kleene_fixed_point_exists`, ZP-K), and here it is exhibited as Lawvere firing in the reflexive
 computable structure: the ν-side existence that `reflexive_object_refuted` forbids in Set, realized where
-the obstruction is absent. The hard bridge is crossed in the computability face. -/
+the obstruction is absent. The reflexive-object sourcing of ⊥ — the specific inch the framework had not
+reached — is crossed here in the computability face. -/
 theorem selfref_fixedpoint_exists_computable {f : Code → ℕ →. ℕ} (hf : Partrec₂ f) :
     ∃ c : Code, eval c = f c :=
   Nat.Partrec.Code.fixed_point₂ hf

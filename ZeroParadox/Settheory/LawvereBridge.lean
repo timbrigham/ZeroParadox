@@ -90,6 +90,7 @@ theorem selfApp_pinnable : ∃! x : L, AbstractSelfApp.selfApp x = x :=
 
 /-! ## § III. Uniqueness is extra — existence never forces it -/
 
+omit [AbstractSelfApp L] in
 /-- **Existence does not force uniqueness.** A self-map can have a fixed point yet not a unique one — the
 identity fixes everything. So the framework's `unique_fp` is genuine added content beyond Lawvere's
 existence: it is the fork collapse / `(Z)`, not an automatic consequence of the engine. -/
@@ -150,9 +151,12 @@ presence of a *fixed-point-free* map. Remove those and the reflexive object retu
 **monotone / domain regime**: on a complete lattice every monotone map has a fixed point
 (`instance_always_exists`, Knaster-Tarski) — the order cousin of Kleene's theorem that every continuous
 map on a pointed CPO has a least fixed point. No fixed-point-free maps there, so reflexive objects DO
-exist (Scott's `D∞`), and Lawvere fires. So the framework's ⊥ *is* a Lawvere fixed point — but in the
-fork/domain regime (`RequirementsGap`/`MetaFork`), never in Set. The bridge is not missing; it lives on
-the ν side, and the next concrete target is `D∞` / continuous maps on a pointed CPO. -/
+exist, and Lawvere fires. So the framework's ⊥ can be realized as a Lawvere fixed point wherever a
+reflexive object exists — never in Set, but in any regime free of fixed-point-free maps. The bridge is
+not missing; it lives on the ν side, and it is in fact *crossed* in the computability face
+(`ZeroParadox/Computability/ComputableCrossing.lean`): the universal machine is the reflexive object and
+Kleene's recursion theorem is Lawvere firing there. A Scott `D∞` domain would be a second route to the
+same crossing (Mathlib lacks `D∞`, so that one is unbuilt), no longer needed. -/
 
 /-- **The reflexive object is refuted wherever a fixed-point-free map exists.** A point-surjection
 `e : D → (D → D)` would, by Lawvere, force any `f : D → D` to have a fixed point; a fixed-point-free `f`
@@ -189,11 +193,13 @@ theorem not_monotone_not : ¬ Monotone (Not : Prop → Prop) := by
 `AbstractSelfApp` assumes — that a self-application fixed point *exists* and is *unique* — are DERIVED,
 not posited: existence-with-uniqueness is exactly the fork collapsing (`fork_collapse_iff`), and bare
 existence is Knaster-Tarski. So the `∃!` content of the keystone is crossable via the fork
-(`RequirementsGap`/`MetaFork`), with no reflexive object needed. What is NOT reached this way is a
-*literal Lawvere sourcing* of ⊥ via a reflexive object `D ≅ [D → D]` — that needs Scott's `D∞`
-inverse-limit domain, which Mathlib does not provide (`Control.Fix` / ωCPO give the continuous
-fixed point, not the reflexive object). That construction is the precisely-located expedition; the
-existence/uniqueness bridge is already here. -/
+(`RequirementsGap`/`MetaFork`), with no reflexive object needed. The *literal Lawvere sourcing* of ⊥ via
+a reflexive object is reached not here but in the computability face
+(`ZeroParadox/Computability/ComputableCrossing.lean`): the universal machine `eval` is point-surjective
+onto the computable functions, and Kleene's recursion theorem sources the fixed point there. So the
+order/fork face gives the `∃!` content (above) and the computability face gives the reflexive-object
+realization; a Scott `D∞` domain route (`D ≅ [D → D]`) is a third path, unbuilt in Mathlib and no longer
+needed for the crossing. -/
 theorem monotone_regime_derives_pinned {α : Type*} [CompleteLattice α] (f : α →o α)
     (hcollapse : f.lfp = f.gfp) : ∃! x, f x = x :=
   (fork_collapse_iff f).mp hcollapse
