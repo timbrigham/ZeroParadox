@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1162,
+        "declarations": 1172,
         "files": 136
       },
       "entries": [
@@ -969,6 +969,44 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "02380ac2-612f-4abc-ad68-ac810c40ee9c",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quineHost_selfMem_iff",
+            "short": "quineHost_selfMem_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -4780,6 +4818,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "15b9087d-f421-4a24-bbf5-f47ddc559c37",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.oneAtom_not_wellFounded",
+            "short": "oneAtom_not_wellFounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "15b9297e-5787-40e2-a70d-c64ac5f2cc75",
           "new": {
@@ -4915,6 +4991,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1687e9ac-f45a-4cdf-809d-89c46e442173",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.afaStructure_isQuineHost",
+            "short": "afaStructure_isQuineHost"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5868,6 +5982,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1cfdf0f2-dc09-4655-881f-1e152e67daae",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.QuineHost",
+            "short": "QuineHost"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27382,6 +27534,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a07b4fcc-7a17-4f50-a98b-5a064745ec77",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quineHost_not_wellFounded",
+            "short": "quineHost_not_wellFounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a0c1e305-5ccd-42ff-ab9a-a740b4ce8179",
           "new": {
@@ -29052,6 +29243,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "adb02e9a-515b-4272-a409-5cadee415923",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zfSet_no_quine_bottom",
+            "short": "zfSet_no_quine_bottom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31034,6 +31264,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b8fc4ae5-4a97-4fb0-9130-fe3ae2a2f810",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BoffaMem",
+            "short": "BoffaMem"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b947fc04-2679-4f10-a922-858305ee76f0",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
@@ -32292,6 +32558,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c3276ea4-a4cc-4990-a0f4-fe457b83975e",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.OneAtom",
+            "short": "OneAtom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34882,6 +35184,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d25c797f-c1d3-40b4-97e4-a8a600dce18c",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boffaMem_all_selfMem",
+            "short": "boffaMem_all_selfMem"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d282c6e8-5292-417f-a228-70009f838ec0",
           "new": {
@@ -35999,6 +36337,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d9bfc095-3813-4afb-b1c8-ee08b22f2226",
+          "new": {
+            "file": "ZeroParadox/Settheory/QuineHost.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.boffa_fails_unique",
+            "short": "boffa_fails_unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
             "sorry_free": true
