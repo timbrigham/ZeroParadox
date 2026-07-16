@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1208,
+        "declarations": 1212,
         "files": 136
       },
       "entries": [
@@ -9098,6 +9098,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2e114849-df18-4aa1-9297-a9ac0ac02cdf",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.orbit_dichotomy",
+            "short": "orbit_dichotomy"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21512,6 +21550,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "779c6064-6dab-4966-9081-7020e15aa793",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iterate_smul",
+            "short": "iterate_smul"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "77a0fdaa-af96-430a-b9c9-2bfeee662120",
           "new": {
@@ -21882,6 +21956,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7ab401de-4c48-4f28-b978-4c8cf21d6bfa",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_fix_dichotomy",
+            "short": "linear_fix_dichotomy"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7ae50dda-d3a2-4e3f-b1d1-5fe30ce64738",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
@@ -22241,6 +22353,44 @@
             ]
           },
           "reason": "The mu/nu branch unification via the diagonal-fixed-point discriminator (Tim's diagram-branch unification)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c3aac42-8190-433b-ba4c-3efb1265713d",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_fix_finite_subsingleton",
+            "short": "linear_fix_finite_subsingleton"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
           "verify": {
             "axioms": null,
             "sorry_free": true
