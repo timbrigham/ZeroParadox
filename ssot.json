@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1199,
+        "declarations": 1201,
         "files": 136
       },
       "entries": [
@@ -22095,6 +22095,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7c1e1422-966d-46f3-b223-431640d5467f",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_lands_on_nu",
+            "short": "selfApp_lands_on_nu"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The mu/nu branch unification via the diagonal-fixed-point discriminator (Tim's diagram-branch unification)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7c759e47-f3b9-43f9-bad5-e4f92e372310",
           "new": {
@@ -27075,6 +27114,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9983c919-d1e9-49c2-b517-e0f66c39f677",
+          "new": {
+            "file": "ZeroParadox/Settheory/LawvereBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mu_nu_branch_exclusion",
+            "short": "mu_nu_branch_exclusion"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "set-theory"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The mu/nu branch unification via the diagonal-fixed-point discriminator (Tim's diagram-branch unification)",
           "verify": {
             "axioms": null,
             "sorry_free": true
