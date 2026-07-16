@@ -24,7 +24,7 @@ Relation to the engine: the liar is exactly Curry at `C = False` (`Not p` is `p 
 of the existing engine, not a re-pointing. Via the Lawvere naming (`Wall.lean` `lawvere_fixedpoint` /
 `cantor_via_engine`), a point-surjective internal comprehension proves every `C` — the sharpest statement
 of why unrestricted comprehension / a reflexive object is inconsistent (the type-level cousin is
-`LawvereBridge.reflexive_object_refuted`).
+`reflexive_object_refuted`).
 
 Placement: Curry is a **wall / μ** face (self-reference that cannot be internalized), the most violent
 form — not "no truth value" but "every value at once." Its floor dual is again the Quine atom (ν): where

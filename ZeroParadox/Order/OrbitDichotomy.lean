@@ -35,7 +35,7 @@ namespace ZeroParadox
 (`s p = p`, and no `x ≠ p` returns to itself under iteration). Then any `s`-invariant set `S` is a
 subsingleton or infinite — never a finite set of size ≥ 2. The finite middle is excluded because a
 witness `x ≠ p` in `S` drags its whole (infinite) forward orbit into `S`. -/
-theorem orbit_dichotomy {X : Type*} (s : X → X) (hs : Function.Injective s) (p : X) (hp : s p = p)
+theorem orbit_dichotomy {X : Type*} (s : X → X) (hs : Function.Injective s) (p : X) (_hp : s p = p)
     (hper : ∀ (x : X) (n : ℕ), 0 < n → s^[n] x = x → x = p)
     {S : Set X} (hSinv : ∀ x ∈ S, s x ∈ S) :
     S.Subsingleton ∨ S.Infinite := by
