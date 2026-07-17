@@ -36,8 +36,9 @@ def build():
             '&#956;/&#957; fork &#8212; the <b>wall</b> faces where self-reference cannot close (no fixed '
             'point) and the <b>floor</b> faces where it does (a fixed point exists). Every entry is tied '
             'to &#8869; and carries a machine-checked Lean 4 witness. The diagonal-family unification is '
-            'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the axiom-free formalization '
-            'and the tie to the bottom element. It supersedes the earlier private "Zero as a Wall" '
+            'Lawvere (1969) / Yanofsky (2003), cited; the contribution is the formalization '
+            'and the tie to the bottom element (core choice-free; the computability faces '
+            'choice-carrying). It supersedes the earlier private "Zero as a Wall" '
             'working draft.</i>',
             S['note']),
         sp(10),
@@ -185,7 +186,7 @@ def build():
     E.append(sp(4))
 
     E.append(result_box(
-        'The Kleene quine (SelfApp.lean / Lawvere.lean) &#8212; the computability floor',
+        'The Kleene quine (Lawvere.lean) &#8212; the computability floor',
         [
             'computability_face_fixedPoint: every computable self-map on codes has a fixed point &#8212; '
             'Kleene\'s recursion theorem, the reflexive object of the computable category (the crossing '
@@ -306,8 +307,8 @@ def build():
         'Tarski (1936); Curry (1942); L&#246;b (1955); Rice (1953); Kleene\'s recursion theorem. The '
         'point-surjective theorem is in Mathlib (Function.exists_fixed_point_of_surjective); the '
         'framework\'s engine re-derives it axiom-free for a self-contained family. The contribution of '
-        'this addendum is the axiom-free formalization of the family and its tie to the bottom element '
-        '&#8212; a placement, not an extension.'))
+        'this addendum is the formalization of the family (core choice-free; the computability faces '
+        'choice-carrying) and its tie to the bottom element &#8212; a placement, not an extension.'))
 
     E += [
         hr(),
