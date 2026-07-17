@@ -9,10 +9,11 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): <Your take, in your own voice. This file is the "we don't commit to AFA,
-we commit to these requirements" move made checkable — the honest replacement for
-"AFA specifically." Claude never writes this section; the release gate blocks until
-you fill it.>
+So this one is an interesting one. In order to connect AFA and ZFC directly, it's
+impossible to do due to type mismatches. What it is possible to do is make a list of
+requirements that AFA satisfies, or that in theory another framework could fill, and
+match based on those attributes. That's my computer programmer logic from my day job
+slipping in.
 
 ---
 
