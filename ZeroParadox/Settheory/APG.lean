@@ -57,14 +57,16 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 - § VI   Self-loop uniqueness (PROVED)
 - § VII  k-cycle node uniqueness (PROVED: corollary of § IV)
 - § VII' Cyclic vertex uniqueness (PROVED: cyclic_decoration_eq_bot)
-- § VIII Acyclic vertex uniqueness (sorry: needs WellFounded on finite graphs)
+- § VIII Acyclic vertex uniqueness (superseded by § IX; local step proved, full route commented out)
 - § IX   Global decoration uniqueness (PROVED: direct strong induction on reach cardinality)
 
 ## What remains
 
-- Acyclic case (§ VIII): structurally clear — induct on depth, congrArg on collect —
-  but requires [Fintype V] and a WellFounded instance on acyclic vertices.
-  Currently sorry'd but not load-bearing: decoration_unique bypasses it entirely.
+- Nothing load-bearing. The acyclic-specific route (§ VIII) — induct on depth, congrArg on
+  collect, requiring [Fintype V] and a WellFounded instance on acyclic vertices — was not
+  needed: § IX (decoration_unique) proves global uniqueness directly by strong induction on
+  reach cardinality. The § VIII full theorem is commented out; its local step
+  (acyclic_induction_step) is proved.
 
 ## Dependencies
 

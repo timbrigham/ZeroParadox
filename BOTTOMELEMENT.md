@@ -266,6 +266,8 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 
 The classical self-reference arguments are not separate theorems that happen to rhyme; they are one diagonal fixed point seen under different conditions (Lawvere 1969; Yanofsky 2003). The framework maps the full roster against ⊥, organized by the μ/ν fork and built off a single engine - [`negation_no_fixedpoint`](ZeroParadox/Settheory/Wall.lean) / [`lawvere_fixedpoint`](ZeroParadox/Settheory/Wall.lean), both axiom-free. On the **wall** side (μ) self-reference cannot close: the argument runs as a proof that no reflexive object exists. On the **floor** side (ν) it does close - the fixed point is genuinely produced, and lands at ⊥. Cantor, Russell, Turing, Tarski, Curry, Löb, and Gödel's second incompleteness are all **axiom-free**; only the two computability floor faces (the Kleene quine and Rice's exists-but-undecidable) carry `Classical.choice`, inherited from Mathlib's recursion theory. This roster is ZP-R (the Cross-Category Fixed Point layer and its Diagonal Family Addendum) - a *placement* of ⊥ among recognized results, not a new theorem; the cross-face identity stays a type boundary, the same walls the map above records.
 
+**See it:** the interactive [Diagonal Family](diagonal-family.html) map renders this roster as one engine forking into walls (μ) and floors (ν), each node linking its Lean witness and axiom footprint.
+
 | face | side | what it says | witness | axioms |
 |---|---|---|---|---|
 | Cantor | μ wall | no surjection onto its own power set - the reflexive object is refuted | [`cantor_via_engine`](ZeroParadox/Settheory/Wall.lean) | (none) |

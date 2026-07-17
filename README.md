@@ -22,7 +22,7 @@ That the classical self-reference arguments (Cantor, Russell, Gödel, Kleene) sh
 - **Mathematician or reviewer** - the formal index is below: [Lean verification](#formal-verification-lean-4), the [document table](#formal-framework-documents), and the [reading order by specialty](#reading-order-by-specialty). Claim-by-claim status, with Lean witnesses and exact axiom profiles, is in the [Claims Ledger](CLAIMS.md).
 - **General reader** - [Guide](GUIDE.md): plain language, illustrated companions, and reading paths for every audience.
 - **Just want the object** - [The Bottom Element (⊥)](BOTTOMELEMENT.md) and [The Binary Snap (⊥ → ε₀)](SNAP.md): dictionaries and maps of ⊥ and the transition off it, most characterizations carrying a machine-checked Lean witness.
-- **See it** - [The Bottom Family](bottom-family-tree.html): an interactive map of ⊥ across the fields - hover any node for why it sits where it does, with the Lean witness to check.
+- **See it** - two interactive maps: [The Bottom Family](bottom-family-tree.html) (⊥ across the fields) and [The Diagonal Family](diagonal-family.html) (the self-reference arguments - Cantor, Russell, Gödel, Tarski, Turing, the recursion theorem - as one fixed point, forked into walls and floors) - hover any node for why it sits where it does, with the Lean witness to check.
 
 ---
 

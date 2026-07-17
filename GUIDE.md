@@ -8,6 +8,8 @@ For a dictionary and map of ⊥ - the object the whole framework is built on - s
 
 > **Interactive - [The Bottom Family tree](bottom-family-tree.html).** A single visual map of ⊥ across the fields: hover any node to see why it lands where it does, with the checkable Lean witness. The clearest one-picture view of what the framework assembles.
 
+> **Interactive - [The Diagonal Family](diagonal-family.html).** The self-reference arguments - Cantor, Russell, Gödel, Tarski, Turing, the recursion theorem - as one diagonal fixed point, forked by whether self-reference can close: walls (it cannot) and floors (it does). Hover any node for the checkable Lean witness.
+
 Followed a link that broke after the v3.0 source reorganization? Report anything stale in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
 ---
