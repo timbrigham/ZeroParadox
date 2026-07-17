@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1232,
+        "declarations": 1234,
         "files": 136
       },
       "entries": [
@@ -8775,6 +8775,44 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2b19d5b7-208e-4afa-bf2d-8c939d963d41",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_min_eq_max",
+            "short": "epsilon0_min_eq_max"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -33435,6 +33473,45 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "be0ea1fd-02dc-46bb-9217-6e45f3ac8be6",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_eq_nfp_bot",
+            "short": "epsilon0_eq_nfp_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling",
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
