@@ -440,7 +440,7 @@
         },
         {
           "claim_id": "MC-1-identity",
-          "date": "2026-07-04",
+          "date": null,
           "domain": [
             "category",
             "information",
@@ -452,15 +452,19 @@
             {
               "date": "2026-07-04",
               "status": "commitment"
+            },
+            {
+              "date": null,
+              "status": "retired"
             }
           ],
           "id": "b8c3c9d6-9e2b-4836-b486-96729baa7484",
           "object": [
             "bottom"
           ],
-          "reason": null,
+          "reason": "MC-1 cross-category identity retired as ill-typed (not a well-formed proposition); 2026-07-15 convention. Members provably distinct; shared diagonal shape survives apophatically.",
           "statement": "The four domain bottoms are numerically one object (MC-1, identity half — a modeling commitment, not type-statable).",
-          "status": "commitment",
+          "status": "retired",
           "to": null
         },
         {
@@ -599,7 +603,8 @@
             "conj",
             "corr",
             "deep",
-            "proved"
+            "proved",
+            "retired"
           ]
         }
       }

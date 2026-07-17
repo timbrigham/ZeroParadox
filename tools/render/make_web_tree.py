@@ -128,7 +128,7 @@ def main():
         S.append(f'<line x1="58" y1="{ry-4}" x2="100" y2="{ry-4}" stroke="{c}" stroke-width="2.6" {da}/>')
         S.append(f'<text x="110" y="{ry}" font-size="11" fill="#33333f">{esc(t)}</text>')
     S.append(f'<text x="{W-58}" y="{ly+64}" text-anchor="end" font-size="9.5" fill="#9a9ab0">'
-             f'Two hubs feed one floor. The literal one-object identity stays a commitment, not drawn.</text>')
+             f'Two hubs feed one floor. The literal one-object identity is retired as ill-typed, not drawn.</text>')
 
     S.append('</svg>')
     os.makedirs(TM, exist_ok=True)

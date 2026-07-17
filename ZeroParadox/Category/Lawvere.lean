@@ -142,8 +142,9 @@ theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code
     So the keystone unifies a **shape** (the diagonal), not a single mechanism: the total faces carry a
     *posited* fixed point that shares the diagonal shape; the computability face carries a fixed point
     that is *genuinely produced* by the diagonal — in its own category. The cross-face identification is
-    the MC-1-style commitment (shape-identity), confirmed precise; it is **not** a single-mechanism
-    theorem, and the lattice/2-adic faces are *provably not* Set-level Lawvere instances. This is the
+    a shared *shape* (the diagonal), confirmed precise; it is **not** a cross-category object identity
+    (that reading is retired as ill-typed — MC-1 names the bottom family, members provably distinct), and
+    **not** a single-mechanism theorem, and the lattice/2-adic faces are *provably not* Set-level Lawvere instances. This is the
     sharpened, partly-proven replacement for the bare Tier-6 conjecture. -/
 
 end ZeroParadox
