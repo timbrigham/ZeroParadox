@@ -96,6 +96,8 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [The Constructive Snap](ZP-N_The_Constructive_Snap.pdf) | ZP-N | v1.0 | The choice-free constructive companion to ZP-L: the ε₀ snap from below on ordinal notations. The three snap results are choice-free (propext only); ZP-L's Classical.choice at ε₀ is representational, not intrinsic. |
 | [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) | ZP-P | v1.5 | Synthesis layer: the least-vs-greatest fixed-point fork, generalizing the Foundation/AFA orthogonal-contact-point claim across frameworks. |
 | [The Frame-Change](ZP-Q_The_Frame_Change.pdf) | ZP-Q | v1.0 | Synthesis layer (ZP-P sequel): ⊥ → ε₀ as a change of point of view. The order-theoretic frame-flip universal is proved; the categorical Lawvere universal meets a proven Cantor wall; the cross-domain identity is a type boundary. |
+| [Cross-Category Fixed Point](ZP-R_Cross_Category_Fixed_Point.pdf) | ZP-R | v1.0 | Synthesis / placement layer: locates and realizes the framework's self-application fixed point ⊥ as a Lawvere fixed point across three faces: refuted in Set (Cantor), a fork (not a reflexive object) in the monotone/domain regime, and realized in the computability face (Rogers/Kleene, the crossing). Existence-as-Lawvere, uniqueness, and location are each proved but face-local and non-composable; the global identification is a fenced conjecture. |
+| [Diagonal Family Addendum](ZP-R_Diagonal_Family_Addendum.pdf) | ZP-R Diagonal Family Addendum | v1.0 | The complete roster of the self-referential relationship at ⊥, by the μ/ν fork: wall faces (Cantor, Russell, Turing, Tarski, Curry) where self-reference cannot close, and floor faces (Quine atom, Kleene quine, Löb / Gödel 2nd, Rice) where it does. Every variant Lean-witnessed and tied to ⊥. Reads after ZP-R. |
 | [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) | Choice-Free Core | v1.3 | Framework-wide note: the central results are choice-free (T-SNAP is axiom-free); Classical.choice appears only in the analytic realizations, inherited from Mathlib. Anchored on AxiomProfile.lean. |
 
 ### Reading Order (by Specialty)
@@ -115,7 +117,7 @@ The framework is not a line. Several fields each reach a bottom, and those botto
 
 Each spoke is the same three beats: your field, then the bridge that carries it out, then back to ⊥. Read your own layers, then the synthesis layer they feed ([The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) or [The Frame-Change](ZP-Q_The_Frame_Change.pdf)), then the hub, and you will see your field's bottom is doing the same structural work as every other field's.
 
-**The spine (the argument itself, no field assumed):** [The Bottom Element (⊥)](BOTTOMELEMENT.md) → [Bridge Document](ZP-E_Bridge_Document.pdf) → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf). This is the through-line, and it replaces the old single linear reading order, which tried to send every reader through all of the documents in one sequence.
+**The spine (the argument itself, no field assumed):** [The Bottom Element (⊥)](BOTTOMELEMENT.md) → [Bridge Document](ZP-E_Bridge_Document.pdf) → [The Fixed-Point Fork](ZP-P_The_Fixed_Point_Fork.pdf) → [The Frame-Change](ZP-Q_The_Frame_Change.pdf) → [Cross-Category Fixed Point](ZP-R_Cross_Category_Fixed_Point.pdf). This is the through-line, and it replaces the old single linear reading order, which tried to send every reader through all of the documents in one sequence.
 
 **Orientation and general readers:** [The Choice-Free Core](ZP_Choice_Free_Core_Addendum.pdf) records the axiom profile; the [Foreword](Zero_Paradox_Foreword.pdf) and [The Philosophical Question](ZP_Philosophical_Question.pdf) give context; plain-language companions and a general-reader path are in [Guide](GUIDE.md). The [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) (division by zero made total) is a self-contained aside off the set-theory route.
 
@@ -135,7 +137,7 @@ The full labelled account - the supporting commitments (AX-B1, AX-G1, AX-G2, MP-
 
 The framework's open questions, design commitments, and resolved questions are tracked in the **[Claims Ledger](CLAIMS.md)** - Tier 6 (open: the `Classical.choice` necessity question, OQ-E2, the Lawvere conjecture), Tier 5 (chosen commitments), and the Resolved-questions list.
 
-**Verification status:** ZP-A through ZP-N, ZP-P, and ZP-Q, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4. A second-prover cross-check (e.g. Rocq) is not yet done.
+**Verification status:** ZP-A through ZP-N, ZP-P, ZP-Q, and ZP-R, plus the ZP-H native-category functors and `mc1_correspondence`, are machine-verified in Lean 4. A second-prover cross-check (e.g. Rocq) is not yet done.
 
 Open questions are discussed publicly in the [GitHub Discussions Open Questions category](https://github.com/timbrigham/ZeroParadox/discussions/categories/open-questions).
 

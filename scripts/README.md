@@ -51,6 +51,8 @@ If you are primarily interested in the mathematical content, the PDF documents t
 | [build_zpn.py](build_zpn.py) | `ZP-N_The_Constructive_Snap.pdf` |
 | [build_zpp.py](build_zpp.py) | `ZP-P_The_Fixed_Point_Fork.pdf` |
 | [build_zpq.py](build_zpq.py) | `ZP-Q_The_Frame_Change.pdf` |
+| [build_zpr.py](build_zpr.py) | `ZP-R_Cross_Category_Fixed_Point.pdf` |
+| [build_zpr_addendum.py](build_zpr_addendum.py) | `ZP-R_Diagonal_Family_Addendum.pdf` |
 | [build_zp_choice_free_core.py](build_zp_choice_free_core.py) | `ZP_Choice_Free_Core_Addendum.pdf` |
 
 ### Illustrated companion builders
