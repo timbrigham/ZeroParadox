@@ -243,7 +243,10 @@ def build():
             'The framework\'s two structural regimes &#8212; the well-founded "wall" and the '
             'non-well-founded "self-referential object" &#8212; are the two regimes of Lawvere\'s '
             'engine: a fixed point refuted versus realized, discriminated by the self-loop.',
-            'Witness: mu_nu_branch_exclusion (LawvereBridge.lean). Lean purity: choice-free. ✓',
+            'Witnesses: the computability realization is proved in R3-pos above '
+            '(selfref_fixedpoint_exists_computable, ComputableCrossing.lean; choice-carrying); the '
+            '&#956;/&#957; discrimination is mu_nu_branch_exclusion (LawvereBridge.lean; '
+            'choice-free). ✓',
         ]
     ))
     E.append(sp(6))
@@ -262,7 +265,7 @@ def build():
         'carries which property</i>.'))
 
     E.append(def_box(
-        'F4 &#8212; existence, uniqueness, and location are each proved, but no single face carries all three',
+        'F1 &#8212; existence, uniqueness, and location are each proved, but no single face carries all three',
         [
             'Three properties are in play, and it is tempting to read them as one package on a single '
             'object. They are not. Each is established, and each in a <i>different</i> face:',
@@ -283,13 +286,13 @@ def build():
             'face: the category of numbered sets carries no canonical order-bottom.',
             'This is not a gap in the result. The honest statement is not "the framework lacks location '
             'and uniqueness," but "the framework has all three, proved, and no single category can '
-            'carry them together." It is the same phenomenon as F5, one level up.',
+            'carry them together." It is the same phenomenon as F2, one level up.',
         ]
     ))
     E.append(sp(6))
 
     E.append(def_box(
-        'F5 &#8212; representation is not transfer; &#8869; carries its face',
+        'F2 &#8212; representation is not transfer; &#8869; carries its face',
         [
             'The crossing is face-local. Realizing &#8869; as a Lawvere fixed point in the '
             'computability face does not make it available in Set, where the same construction remains '
@@ -309,7 +312,7 @@ def build():
     E.append(callout(
         'The fences are not hedging. Each per-face result &#8212; the Set wall, the fork, the '
         'computability crossing &#8212; is a full theorem on its own side of them. What the fences '
-        'scope is only the global identification (Tier 3): that the keystone is Lawvere across all its '
+        'scope is only the global identification: that the keystone is Lawvere across all its '
         'faces. That remains a conjecture; ZP-R is the first concrete progress on it (one face '
         'realized, the obstruction located), not its proof.',
         bg=BLUE_LITE, border=BLUE
@@ -362,7 +365,7 @@ def build():
             '<i>proved</i> &#8212; in the fork / AFA face (T-EXEC; unique_fp) &#8212; not open. What is '
             'structural is that they are not composable with existence-as-Lawvere, which lives in the '
             'computability face where the fixed point is non-unique (infinite_quine_family). That '
-            'non-composability is the F4 / F5 result, not a missing piece.',
+            'non-composability is the F1 / F2 result, not a missing piece.',
         ]
     ))
     E.append(sp(6))
@@ -399,12 +402,12 @@ def build():
              'selfref_fixedpoint_exists_computable (ZeroParadox/Computability/ComputableCrossing.lean)'],
             ['R4 (&#956;/&#957; = Lawvere regimes)',
              'mu_nu_branch_exclusion (ZeroParadox/Settheory/LawvereBridge.lean)'],
-            ['F4 location (fixed point = &#8869;)',
+            ['F1 location (fixed point = &#8869;)',
              't_exec, t_exec_iff (ZeroParadox/Settheory/SetTheoryAFA.lean)'],
-            ['F4 uniqueness (&#8869; the only fixed point)',
+            ['F1 uniqueness (&#8869; the only fixed point)',
              'quine_atom_unique (ZeroParadox/Settheory/SetTheoryAFA.lean); '
              'AbstractSelfApp.unique_fp (ZeroParadox/Computability/SelfApp.lean)'],
-            ['F4 non-uniqueness in the computability face',
+            ['F1 non-uniqueness in the computability face',
              'infinite_quine_family (ZeroParadox/Computability/Kleene.lean)'],
         ],
         col_widths=[TW * 0.34, TW * 0.66],
@@ -433,7 +436,7 @@ def build():
             '<i>End of ZP-R | A Cross-Category Account of the Self-Referential Fixed Point | '
             'the fork (choice-free) | Set refuted (Cantor) | monotone / domain: fork, not a reflexive '
             'object (Scott D<sub>&#8734;</sub> unbuilt) | computability: crossed (Rogers / Kleene) | '
-            'F4: existence, uniqueness, location each proved, none composable | F5: &#8869; carries its '
+            'F1: existence, uniqueness, location each proved, none composable | F2: &#8869; carries its '
             'face | global identification held as a fenced conjecture.</i>',
             S['endnote']),
     ]
