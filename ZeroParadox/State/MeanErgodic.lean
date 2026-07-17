@@ -5,7 +5,7 @@ import ZeroParadox.Reals.PerronFrobenius
 set_option maxHeartbeats 800000
 
 /-!
-# Mean ergodic convergence for doubly-stochastic kernels (STRETCH; stub-first)
+# Mean ergodic convergence for doubly-stochastic kernels (STRETCH)
 
 A doubly-stochastic transfer operator is an ℓ²-contraction (Cauchy–Schwarz), so Mathlib's von Neumann mean
 ergodic theorem gives FULL Cesàro (Birkhoff-average) convergence — deeper than the subsequential existence in

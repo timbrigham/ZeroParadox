@@ -62,7 +62,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### State / Hilbert (ZP-D)
 
 - `ZeroParadox/State/HilbFunctor.lean` - ZP-H Hilbert Functor: F_D into the real category `ModuleCat ℂ` (MC-1 remediation)
-- `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH; stub-first)
+- `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH)
 - `ZeroParadox/State/ReversibleSpectrum.lean` - Reversible chains have real spectrum (genuine Hilbert / self-adjoint content)
 - `ZeroParadox/State/StateSpace.lean` - ZP-D: State Layer (Hilbert Space)
 
