@@ -240,6 +240,34 @@ One self-referential structure - a thing that is its own fixed point - keeps tur
 **The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under rInv in ℚ₂)."""
     return link_in_text(body)
 
+# --- The diagonal family: the self-reference arguments as one fixed point (ZP-R) ---
+# (face, side, what it says, witness-name, axiom footprint).  The witness column links via
+# link_witness (fail-loud: an unresolved name lands in the UNRESOLVED warning, so a rename cannot
+# silently rot). Axiom footprints are the #print axioms result of each witness, verified against source.
+DIAGONAL_FAMILY = [
+    ("Cantor",       "μ wall",  "no surjection onto its own power set - the reflexive object is refuted", "cantor_via_engine", "(none)"),
+    ("Russell",      "μ wall",  "membership is not surjective - no set of all non-self-membered sets", "russell_via_engine", "(none)"),
+    ("Turing",       "μ wall",  "no machine decides its own halting - no self-decider", "no_self_decider", "(none)"),
+    ("Tarski",       "μ wall",  "no internal truth predicate - the liar sentence has no witness", "tarski_no_internal_truth", "(none)"),
+    ("Curry",        "μ wall",  "no naming surjection - Curry's paradox forces any conclusion", "curry_no_bottom", "(none)"),
+    ("the wall",     "μ",       "no well-founded relation admits a self-loop (the engine's floor)", "wf_no_selfloop", "(none)"),
+    ("Gödel 1st",    "between", "the undecidable diagonal sentence, built by the shared engine", "lawvere_fixedpoint", "(none)"),
+    ("Quine atom",   "ν floor", "the self-containing set ⊥ = {⊥} - executable self-reference, landing at ⊥", "t_exec", "(none)"),
+    ("Löb",          "ν floor", "provability of (□A → A) yields A - the provability-logic fixed point", "loeb", "(none)"),
+    ("Gödel 2nd",    "ν floor", "no consistent system proves its own consistency", "godel_two", "(none)"),
+    ("Kleene quine", "ν floor", "a program that reproduces itself - the recursion theorem fires", "computability_face_fixedPoint", "`Classical.choice`"),
+    ("Rice",         "ν floor", "the fixed point provably exists, yet its membership is undecidable", "rice_face_has_bottom", "`Classical.choice`"),
+]
+
+def render_diagonal_family():
+    intro = """## The diagonal family - the self-reference arguments as one fixed point
+
+The classical self-reference arguments are not separate theorems that happen to rhyme; they are one diagonal fixed point seen under different conditions (Lawvere 1969; Yanofsky 2003). The framework maps the full roster against ⊥, organized by the μ/ν fork and built off a single engine - negation_no_fixedpoint / lawvere_fixedpoint, both axiom-free. On the **wall** side (μ) self-reference cannot close: the argument runs as a proof that no reflexive object exists. On the **floor** side (ν) it does close - the fixed point is genuinely produced, and lands at ⊥. Cantor, Russell, Turing, Tarski, Curry, Löb, and Gödel's second incompleteness are all **axiom-free**; only the two computability floor faces (the Kleene quine and Rice's exists-but-undecidable) carry `Classical.choice`, inherited from Mathlib's recursion theory. This roster is ZP-R (the Cross-Category Fixed Point layer and its Diagonal Family Addendum) - a *placement* of ⊥ among recognized results, not a new theorem; the cross-face identity stays a type boundary, the same walls the map above records."""
+    rows = [[face, side, gloss, link_witness(w), ax]
+            for (face, side, gloss, w, ax) in DIAGONAL_FAMILY]
+    table = render_table(rows, ["face", "side", "what it says", "witness", "axioms"])
+    return link_in_text(intro) + "\n\n" + table
+
 PAGE = """# The Bottom Element (⊥) - Dictionary and Map
 
 *A dictionary and map of the framework's bottom element ⊥ - what it is, what it is not, and where each characterization is established, most with a machine-checked Lean witness linked to the source.*
@@ -330,6 +358,10 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 
 ---
 
+{diagonal_family}
+
+---
+
 *Generated from `bottom_cannot_be.md` and the matrix data by `build_dictionary_map.py`. Witness names are
 resolved against the Lean source at generation time and link to the file that declares them; the `meta`
 entries (marked as such) have no Lean witness. To update: edit a source and rerun. The links render
@@ -348,6 +380,7 @@ def main():
                               ["slot", "aspect", "characterization of ⊥", "witness (links to Lean source)"]),
         map=render_map(),
         cell_details=render_cell_details(),
+        diagonal_family=render_diagonal_family(),
     )
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(page)
