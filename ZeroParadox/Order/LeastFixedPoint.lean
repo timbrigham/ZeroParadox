@@ -107,7 +107,7 @@ theorem lfp_isLeastFixedPointFrom {α : Type*} [CompleteLattice α] (f : α →o
 
 /-! ## § III. The general ordinal μ: `nfp` of a normal function
 
-For any normal ordinal function, its near-fixed-point `nfp f a` (the supremum of the finite iterates
+For any normal ordinal function, its next fixed point `nfp f a` (the supremum of the finite iterates
 from `a`) is the least fixed point from `a` — the Kleene ascent μ on ordinals. Reuses Mathlib's
 `le_nfp`, `nfp_fp`, `nfp_le_fp`. -/
 
@@ -188,8 +188,9 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-The order-generic schema and its wrappers (`lfp_isLeastFixedPointFrom`, `selfApp_*`) are expected to
-be axiom-clean. The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) inherit
+The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at
+all); the Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`.
+The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) inherit
 `Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory — representational, not
 intrinsic to the snap (cf. the ZP-N choice-free snap-from-below). The Kleene face inherits
 `[propext, Classical.choice, Quot.sound]` from the `Code`/`Partrec` machinery. Recorded honestly. -/
