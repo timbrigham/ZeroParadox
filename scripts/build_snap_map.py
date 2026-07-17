@@ -197,6 +197,8 @@ This is a **reference** for the framework's central transition, the **snap** - t
 
 It is a **beginning, not a resolution.** What is *proved* is that the snap is forced, one-way, generates its ceiling from below, realizes a frame-change in each domain, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the ceiling's minimality. The frame-change faces are experimental probes; the abstract "the snap IS the change of frame" is a conjecture, written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
 
+> **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: it starts at 0, departs by a single discrete step, and reapproaches 0 - the floor and the ceiling co-located at that one point (the 0 = ∞ pole). Hover any point for the checkable Lean witness.
+
 ---
 
 {rosetta}

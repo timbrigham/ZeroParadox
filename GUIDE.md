@@ -10,6 +10,8 @@ For a dictionary and map of ⊥ - the object the whole framework is built on - s
 
 > **Interactive - [The Diagonal Family](diagonal-family.html).** The self-reference arguments - Cantor, Russell, Gödel, Tarski, Turing, the recursion theorem - as one diagonal fixed point, forked by whether self-reference can close: walls (it cannot) and floors (it does). Hover any node for the checkable Lean witness.
 
+> **Interactive - [The Snap Loop](snap-loop.html).** The whole object in one picture: 0, a forced discrete step away, and a reapproach back to 0 - the ⊥ → ε₀ snap-arc realized as a loop in the 2-adic integers, with the floor and the ceiling co-located at 0. Hover any point for the checkable Lean witness.
+
 Followed a link that broke after the v3.0 source reorganization? Report anything stale in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
 ---

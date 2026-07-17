@@ -1,0 +1,238 @@
+---
+layout: null
+---
+{% raw %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Snap Loop - Zero Paradox</title>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#0a0e14; --panel:#0d131b;
+    --ink:#ece9e0; --ink-dim:#9aa6ad; --ink-faint:#5f6b73;
+    --pole:#6fd3ec;    /* 0 = bottom = ceiling, co-located (the 0=inf pole) */
+    --snap:#e0864a;    /* the forced discrete step off 0 */
+    --tower:#6f8fe0;   /* the omega-tower reapproach (2-adic norm descent)  */
+    --ball:#2b525d;    /* the 2-adic balls B(0, 2^-n)                       */
+    --sight:#ff3b3b;
+    --serif:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Cambria Math","Segoe UI Symbol","Noto Serif","DejaVu Serif",serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Mono","Segoe UI Symbol","DejaVu Sans Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  .plate{
+    background:
+      radial-gradient(90% 70% at 50% 52%, rgba(111,211,236,.10), transparent 60%),
+      var(--ground);
+    color:var(--ink); font-family:var(--serif);
+    min-height:100vh; padding:34px 22px 48px;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .head{max-width:880px; text-align:center; margin-bottom:6px}
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--ink-faint); margin-bottom:14px}
+  h1{font-size:clamp(1.9rem,4.4vw,3rem); font-weight:600; line-height:1.05;
+    margin:0 0 .5rem; text-wrap:balance; letter-spacing:.01em}
+  h1 .em{color:var(--pole); font-style:italic}
+  .thesis{font-size:clamp(1rem,1.7vw,1.16rem); line-height:1.5; color:var(--ink-dim);
+    max-width:68ch; margin:0 auto; text-wrap:pretty}
+  .stage{width:100%; max-width:900px; margin:10px auto 0}
+  svg{width:100%; height:auto; display:block; overflow:visible}
+  .lbl{font-family:var(--serif); font-size:15px; fill:var(--ink)}
+  .sub{font-family:var(--mono); font-size:10px; fill:var(--ink-faint); letter-spacing:.02em}
+  .pole-name{font-family:var(--serif); font-size:18px; font-style:italic; fill:var(--pole)}
+  .ring-tag{font-family:var(--mono); font-size:9.5px; fill:var(--ink-faint); letter-spacing:.05em}
+  svg text{paint-order:stroke; stroke:var(--ground); stroke-width:5px; stroke-linejoin:round; stroke-linecap:round}
+  @keyframes breathe{0%,100%{opacity:.8}50%{opacity:1}}
+  .pulse{animation:breathe 6s ease-in-out infinite; transform-origin:center}
+  @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+  .legend{max-width:900px; width:100%; margin-top:24px;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px 22px;
+    border-top:1px solid #1d2731; padding-top:20px}
+  .lg{display:flex; gap:11px; align-items:flex-start}
+  .sw{flex:0 0 auto; width:15px; height:15px; border-radius:50%; margin-top:3px}
+  .sw.ring{background:transparent; border:2px dashed var(--ball)}
+  .lg .t{font-family:var(--serif); font-size:.9rem; color:var(--ink); line-height:1.3}
+  .lg .t small{display:block; font-family:var(--mono); font-size:.68rem; color:var(--ink-faint);
+    letter-spacing:.03em; margin-top:2px}
+  .fence{max-width:74ch; margin:24px auto 0; text-align:center; color:var(--ink-faint);
+    font-size:.86rem; line-height:1.56; font-style:italic}
+  .fence b{color:var(--ink-dim); font-style:normal; font-weight:600}
+  .fence + .fence{margin-top:12px}
+
+  .whycard{max-width:900px; width:100%; margin:18px auto 0; min-height:132px;
+    border:1px solid #1d2731; border-radius:14px; padding:15px 20px;
+    background:linear-gradient(180deg, rgba(20,28,38,.5), rgba(13,19,27,.5));
+    display:flex; flex-direction:column; gap:8px}
+  .wc-title{font-family:var(--serif); font-style:italic; font-size:1.18rem; line-height:1.1}
+  .wc-row{display:flex; gap:12px; font-size:.9rem; line-height:1.36; align-items:baseline}
+  .wc-k{flex:0 0 120px; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); text-align:right; padding-top:2px}
+  .wc-v{flex:1; color:var(--ink)}
+  .whycard code{font-family:var(--mono); font-size:.82em; color:var(--pole);
+    background:rgba(111,211,236,.08); padding:1px 5px; border-radius:4px}
+  .wc-chk{font-family:var(--mono); font-size:.72rem; color:var(--ink-faint); margin-top:3px}
+  .wc-prompt{font-family:var(--mono); font-size:.8rem; color:var(--ink-faint); letter-spacing:.03em}
+  .hit{fill:transparent; cursor:pointer}
+  #nodeHL{pointer-events:none; opacity:0; transition:opacity .14s ease}
+</style>
+
+<div class="plate">
+  <div class="head">
+    <div class="eyebrow">Zero Paradox &#183; interactive map</div>
+    <h1>The Snap Loop &#8212; <span class="em">0, a forced step, and back</span></h1>
+    <p class="thesis">The whole object in one picture: <em>zero, a forced step away from zero, an eventual reapproach to zero.</em> Encoded into the 2-adic integers, the &#969;-tower ⊥ &#8594; &#949;&#8320; is a loop &#8212; it starts at 0, departs by one <em>discrete</em> jump, and spirals back to 0. The floor ⊥ and the ceiling &#949;&#8320; land on the <em>same point</em> 0: the 0 = &#8734; pole, made literal and machine-checked.</p>
+  </div>
+
+  <div class="stage">
+    <svg viewBox="0 0 1000 820" role="img" aria-label="A 2-adic loop: concentric balls around a central point 0; a forced discrete step departs 0 out to the outer ball, then the tower spirals back inward to 0. The center is labelled bottom = epsilon-0 = 0.">
+      <defs>
+        <radialGradient id="pole" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#6fd3ec" stop-opacity=".9"/>
+          <stop offset="55%" stop-color="#3aa7c4" stop-opacity=".25"/>
+          <stop offset="100%" stop-color="#6fd3ec" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="soft" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="nodeglow" x="-120%" y="-120%" width="340%" height="340%"><feGaussianBlur stdDeviation="3"/></filter>
+        <marker id="arrowSnap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--snap)"/></marker>
+        <marker id="arrowTower" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--tower)"/></marker>
+      </defs>
+
+      <!-- ============ the 2-adic balls B(0, 2^-n) (concentric, dashed) ============ -->
+      <g fill="none" stroke="var(--ball)" stroke-dasharray="2 7">
+        <circle cx="500" cy="410" r="250" stroke-width="1.6"/>
+        <circle cx="500" cy="410" r="160" stroke-width="1.5"/>
+        <circle cx="500" cy="410" r="102" stroke-width="1.4"/>
+        <circle cx="500" cy="410" r="65"  stroke-width="1.3"/>
+        <circle cx="500" cy="410" r="41"  stroke-width="1.2"/>
+      </g>
+      <text class="ring-tag" x="500" y="148" text-anchor="middle">&#8214;&#183;&#8214; = 1/2</text>
+      <text class="ring-tag" x="500" y="238" text-anchor="middle">1/4</text>
+      <text class="ring-tag" x="500" y="296" text-anchor="middle">1/8</text>
+
+      <!-- ============ the reapproach: the omega-tower spirals inward to 0 ============ -->
+      <!-- n1(right) -> n2(top) -> n3(left) -> n4(bottom) -> center, a clockwise inward spiral -->
+      <path d="M750,410 Q742,278 500,250 Q402,278 398,410 Q402,540 500,475 Q556,528 500,410"
+            fill="none" stroke="var(--tower)" stroke-width="3" marker-end="url(#arrowTower)"/>
+
+      <!-- ============ the snap: one forced discrete step from 0 out to the first ball ============ -->
+      <path d="M520,410 L735,410" fill="none" stroke="var(--snap)" stroke-width="4.5" marker-end="url(#arrowSnap)"/>
+      <text class="lbl" x="628" y="392" text-anchor="middle" style="fill:var(--snap)">the snap</text>
+      <text class="sub" x="628" y="428" text-anchor="middle">0 &#8594; norm 1/2 &#183; one jump</text>
+
+      <!-- ============ stage nodes on the balls ============ -->
+      <circle cx="750" cy="410" r="6.5" fill="var(--snap)" filter="url(#nodeglow)"/><circle cx="750" cy="410" r="6.5" fill="var(--snap)"/>
+      <text class="lbl" x="766" y="406" text-anchor="start">stage 1</text>
+      <text class="sub" x="766" y="422" text-anchor="start">norm 1/2 &#183; farthest</text>
+
+      <circle cx="500" cy="250" r="6" fill="var(--tower)" filter="url(#nodeglow)"/><circle cx="500" cy="250" r="6" fill="var(--tower)"/>
+      <text class="sub" x="500" y="232" text-anchor="middle" style="fill:var(--tower)">stage 2 &#183; 1/4</text>
+
+      <circle cx="398" cy="410" r="6" fill="var(--tower)" filter="url(#nodeglow)"/><circle cx="398" cy="410" r="6" fill="var(--tower)"/>
+      <text class="sub" x="382" y="406" text-anchor="end" style="fill:var(--tower)">stage 3 &#183; 1/8</text>
+
+      <circle cx="500" cy="475" r="5.5" fill="var(--tower)"/>
+      <text class="sub" x="500" y="502" text-anchor="middle" style="fill:var(--tower)">&#8230; &#8594; 0</text>
+
+      <!-- ============ the pole: 0 = bottom = ceiling, co-located ============ -->
+      <ellipse class="pulse" cx="500" cy="410" rx="46" ry="46" fill="url(#pole)"/>
+      <circle cx="500" cy="410" r="8.5" fill="var(--pole)" filter="url(#nodeglow)"/>
+      <circle cx="500" cy="410" r="8.5" fill="var(--pole)"/>
+      <text class="pole-name" x="500" y="392" text-anchor="middle">&#8869; = &#949;&#8320; = 0</text>
+
+      <!-- ============ interactive highlight + hit targets ============ -->
+      <g id="nodeHL" stroke="var(--sight)" stroke-linecap="round">
+        <circle r="16.5" fill="none" stroke-width="3"/>
+        <line x1="0" y1="-26" x2="0" y2="-9" stroke-width="2.4"/><line x1="0" y1="26" x2="0" y2="9" stroke-width="2.4"/>
+        <line x1="-26" y1="0" x2="-9" y2="0" stroke-width="2.4"/><line x1="26" y1="0" x2="9" y2="0" stroke-width="2.4"/>
+        <circle r="1.7" fill="var(--sight)" stroke="none"/>
+      </g>
+      <g id="hits">
+        <circle class="hit" data-id="pole"    cx="500" cy="410" r="22"/>
+        <circle class="hit" data-id="snap"    cx="628" cy="410" r="20"/>
+        <circle class="hit" data-id="stage1"  cx="750" cy="410" r="18"/>
+        <circle class="hit" data-id="reapp"   cx="500" cy="250" r="18"/>
+        <circle class="hit" data-id="closure" cx="500" cy="475" r="18"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="whycard" id="whycard">
+    <div class="wc-title" id="wcTitle" style="color:var(--ink-dim)">Why is the whole object one loop?</div>
+    <div class="wc-prompt" id="wcBody">Hover or tap any point &#8212; the loop tells you which phase it is and why, with the checkable Lean witness.</div>
+  </div>
+
+  <div class="legend">
+    <div class="lg"><span class="sw" style="background:var(--pole)"></span><span class="t">0 = &#8869; = &#949;&#8320;<small>floor and ceiling co-located &#8212; the 0 = &#8734; pole</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--snap)"></span><span class="t">The snap<small>one forced discrete step off 0 (norm 0 &#8594; 1/2)</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--tower)"></span><span class="t">The reapproach<small>the &#969;-tower ascends; its 2-adic norm descends back to 0</small></span></div>
+    <div class="lg"><span class="sw ring"></span><span class="t">The 2-adic balls<small>B(0, 2&#8315;&#8319;) &#8212; ⊥ is their inverse limit, the shells shrinking to 0</small></span></div>
+  </div>
+
+  <p class="fence"><b>The object, in one loop.</b> Every stage of the &#969;-tower, encoded into &#8484;&#8322; by <code>cnfToZp2</code>, is one trajectory: it <b>starts</b> at the floor 0 (<code>cnfToZp2 (towerNONote 0) = 0</code>); it <b>departs</b> by a single <em>discrete</em> jump &#8212; every stage n &#8805; 1 is off 0, and the 2-adic norm goes 0 &#8594; 1/2 with no continuous path between (the snap&#8217;s discreteness); and it <b>reapproaches</b> 0 as n &#8594; &#8734; (the &#949;&#8320; closure, back at the floor). Start, departure, reapproach &#8212; the whole framework, as one loop.</p>
+
+  <p class="fence"><b>What is drawn vs. what is claimed.</b> This is the &#8484;&#8322; <em>realization</em> of the snap-arc, via the map <code>cnfToZp2</code> &#8212; one concrete carrier, machine-checked (<code>snap_arc_z2_loop</code>). It loops <em>because</em> the map co-locates the floor ⊥ and the ceiling &#949;&#8320; at the single point 0 &#8212; the 0 = &#8734; pole (<code>rInv_swaps</code>, the 2-adic self-inversion). The literal &#949;&#8320; = 0 across the type boundary stays <em>unproved</em> (ill-typed, per MC-1 / ZP-P); what is proved is the co-location at 0 in &#8484;&#8322; and the departure-and-return.</p>
+
+  <a href="SNAP.md" style="display:inline-block; font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); text-decoration:none; border:1px solid #1d2731; border-radius:999px; padding:5px 14px; margin-top:20px">&#8592; The Binary Snap</a>
+</div>
+
+<script>
+(function(){
+  var D = {
+    pole: {t:'0 = &#8869; = &#949;&#8320; &#183; the pole', c:'--pole', why:[
+      ['the co-location','the seed&#8217;s image AND the tower&#8217;s limit are the SAME point 0 in &#8484;&#8322; &mdash; <code>seed_maps_to_bot_both</code>'],
+      ['0 = &#8734;','floor ⊥ and ceiling &#949;&#8320; sit on top of each other at 0 &mdash; the 0=&#8734; pole &mdash; <code>rInv_swaps</code>'],
+      ['why a loop','because start and limit coincide here, the arc closes &mdash; <code>snap_arc_z2_loop</code>'],
+      ['the fence','the literal &#949;&#8320; = 0 stays a type boundary (ill-typed) &mdash; <code>cnf_bridge_type_boundary</code>']],
+      chk:'snap_arc_z2_loop'},
+    snap: {t:'the snap &#183; a forced step', c:'--snap', why:[
+      ['departs 0','every stage n &#8805; 1 is off 0 &mdash; a genuine departure &mdash; <code>snap_arc_z2_loop</code>'],
+      ['discrete','norm 0 &#8594; 1/2 in one jump; no continuous path off 0 (the snap&#8217;s discreteness)'],
+      ['what it is','the framework&#8217;s forced first step: ⊥ cannot stay ⊥']],
+      chk:'snap_arc_z2_loop'},
+    stage1: {t:'stage 1 &#183; the landing', c:'--snap', why:[
+      ['the farthest','the first tower stage: 2-adic norm 1/2 (valuation 1), the outermost ball &mdash; <code>cnfToZp2_tower_valuation</code>'],
+      ['then inward','from here the norm only decreases &mdash; the reapproach begins']],
+      chk:'cnfToZp2_tower_valuation'},
+    reapp: {t:'the reapproach &#183; the &#969;-tower', c:'--tower', why:[
+      ['ascend = descend','the ordinal ascent ⊥ &#8594; &#949;&#8320; is a 2-adic-norm DESCENT: 1/2, 1/4, 1/8, &#8230; &#8594; 0 &mdash; <code>tower_converges_to_zero</code>'],
+      ['what it is','the tower climbs in Ordinal while spiralling back to 0 in &#8484;&#8322;'],
+      ['the shells','each stage sits on a smaller 2-adic ball B(0, 2&#8315;&#8319;)']],
+      chk:'tower_converges_to_zero'},
+    closure: {t:'&#949;&#8320; &#183; back at 0', c:'--tower', why:[
+      ['the closure','the tower&#8217;s limit lands back at the center 0 = ⊥ &mdash; the loop closes'],
+      ['construction, not value','what is shared is the CONSTRUCTION (one &#969;-tower), not a number &mdash; <code>mu_construction_correspondence</code>'],
+      ['the fence','&#949;&#8320; and 0 are two carrier-specific closures; &#949;&#8320; = 0 stays ill-typed &mdash; <code>cnf_bridge_type_boundary</code>']],
+      chk:'mu_construction_correspondence'}
+  };
+  var title=document.getElementById('wcTitle'), body=document.getElementById('wcBody'),
+      hl=document.getElementById('nodeHL'), css=getComputedStyle(document.documentElement);
+  function render(node){
+    var d=D[node.getAttribute('data-id')]; if(!d) return;
+    var col=(css.getPropertyValue(d.c)||'').trim()||'#ece9e0';
+    title.style.color=col; title.innerHTML=d.t;
+    var rows=d.why.map(function(w){
+      return '<div class="wc-row"><div class="wc-k">'+w[0]+'</div><div class="wc-v">'+w[1]+'</div></div>';
+    }).join('');
+    rows+='<div class="wc-chk">check it yourself &#8212; clone the repo and run <code>#print axioms '+d.chk+'</code></div>';
+    body.className=''; body.innerHTML=rows;
+    hl.setAttribute('transform','translate('+node.getAttribute('cx')+','+node.getAttribute('cy')+')');
+    hl.style.opacity=1;
+  }
+  var hits=document.querySelectorAll('.hit');
+  Array.prototype.forEach.call(hits, function(h){
+    h.addEventListener('mouseenter', function(){ render(h); });
+    h.addEventListener('click', function(){ render(h); });
+  });
+})();
+</script>
+</body>
+</html>
+{% endraw %}
