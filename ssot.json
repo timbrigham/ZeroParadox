@@ -611,7 +611,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1208,
+        "declarations": 1232,
         "files": 136
       },
       "entries": [
@@ -2996,6 +2996,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0c3e06de-2821-4a5d-b1dd-32d5a4a5a118",
+          "new": {
+            "file": "ZeroParadox/Settheory/Curry.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.curry_paradox",
+            "short": "curry_paradox"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0c5a8c72-f052-46ee-9606-4d316a199fda",
           "new": {
@@ -5079,6 +5118,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "15d12da0-5825-43d3-bd81-6a0a585c0f85",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.godel_two",
+            "short": "godel_two"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "162cb210-cfe3-4c4f-bea3-a62e65b1689b",
           "new": {
             "file": "ZeroParadox/Settheory/MetaFork.lean",
@@ -5744,6 +5822,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "19cc458b-33f5-4773-870a-4eb01ff2f357",
+          "new": {
+            "file": "ZeroParadox/Settheory/Tarski.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.liar_no_truth_value",
+            "short": "liar_no_truth_value"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "19dd8622-ba8d-408f-81e5-774e006a18ac",
           "new": {
@@ -6354,6 +6471,42 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1e2e4409-75b0-4cc1-89b0-85846891c27d",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.hs",
+            "short": "hs"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9098,6 +9251,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2e114849-df18-4aa1-9297-a9ac0ac02cdf",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.orbit_dichotomy",
+            "short": "orbit_dichotomy"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17782,6 +17973,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "60205f55-5ede-4d8c-8bcd-dd6f1168f2a6",
+          "new": {
+            "file": "ZeroParadox/Settheory/Tarski.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tarski_liar_from_naming",
+            "short": "tarski_liar_from_naming"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "6103c85d-95f3-4cbf-886b-6520330b6202",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -21150,6 +21380,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "75890095-1acf-4a07-94e8-ea4f0c272dbf",
+          "new": {
+            "file": "ZeroParadox/Computability/Rice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rice_face_has_bottom",
+            "short": "rice_face_has_bottom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "758b2bb3-632f-48f9-bcd8-ca54cba03619",
           "new": {
@@ -21502,6 +21770,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "779c6064-6dab-4966-9081-7020e15aa793",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.iterate_smul",
+            "short": "iterate_smul"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21882,6 +22186,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "7ab401de-4c48-4f28-b978-4c8cf21d6bfa",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_fix_dichotomy",
+            "short": "linear_fix_dichotomy"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "7ae50dda-d3a2-4e3f-b1d1-5fe30ce64738",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKozyrev.lean",
@@ -22241,6 +22583,44 @@
             ]
           },
           "reason": "The mu/nu branch unification via the diagonal-fixed-point discriminator (Tim's diagram-branch unification)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c3aac42-8190-433b-ba4c-3efb1265713d",
+          "new": {
+            "file": "ZeroParadox/Order/OrbitDichotomy.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.linear_fix_finite_subsingleton",
+            "short": "linear_fix_finite_subsingleton"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New experimental probe OrbitDichotomy.lean — the 1-or-∞ (no finite middle) dichotomy as an orbit argument (Tim's meta-pattern trunk; linear/scaling branch)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23951,6 +24331,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "859d853d-16dd-4835-9709-92cb01c66aeb",
+          "new": {
+            "file": "ZeroParadox/Settheory/Curry.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.liar_is_curry_at_false",
+            "short": "liar_is_curry_at_false"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26250,6 +26669,80 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "93dcb2d5-9e39-4695-80d8-1f5f861caee3",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.contract",
+            "short": "contract"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "93eacceb-3d3b-4c87-a667-b472e95099de",
+          "new": {
+            "file": "ZeroParadox/Computability/Rice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.rice_face",
+            "short": "rice_face"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29793,6 +30286,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aba375d7-b272-4a1f-bf57-263b10f29c28",
+          "new": {
+            "file": "ZeroParadox/Settheory/Tarski.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tarski_Tschema_liar_absurd",
+            "short": "tarski_Tschema_liar_absurd"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34837,6 +35369,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "c9c8b255-c4d1-4f6c-8e45-592f26ffe8d3",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb",
+            "short": "loeb"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ca3dd30c-34fb-49a2-980c-261733d0a7a6",
           "new": {
@@ -35526,6 +36096,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cd42b3bd-0f5f-4e14-bc21-3a248b9ff901",
+          "new": {
+            "file": "ZeroParadox/Settheory/Curry.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.curry_no_bottom",
+            "short": "curry_no_bottom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cda41bce-5772-49ad-8e23-3f235b7ca56a",
           "new": {
             "file": "ZeroParadox/Settheory/RequirementsGap.lean",
@@ -36063,6 +36672,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cfda97e0-157d-45ea-8d27-9280b50a21ee",
+          "new": {
+            "file": "ZeroParadox/Settheory/Tarski.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tarski_no_internal_truth",
+            "short": "tarski_no_internal_truth"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38769,6 +39417,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e05f8299-9e42-4de9-b338-91da6069671c",
+          "new": {
+            "file": "ZeroParadox/Computability/Rice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.halting_undecidable",
+            "short": "halting_undecidable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e064d52e-f5f1-4bca-a0df-0d969743e644",
           "new": {
@@ -39232,6 +39918,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e2a6bdbf-8e8c-42d6-b6a0-b426320896f7",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ProvabilityLogic",
+            "short": "ProvabilityLogic"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39848,6 +40572,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e4dc9e6b-ec42-4d13-8e7b-aed589013f08",
+          "new": {
+            "file": "ZeroParadox/Settheory/Curry.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.curry_from_naming",
+            "short": "curry_from_naming"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41144,6 +41907,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "eb7bd5dd-c124-46ce-aa1c-18c9464a3aa8",
+          "new": {
+            "file": "ZeroParadox/Settheory/Tarski.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tarski_no_truth_bottom",
+            "short": "tarski_no_truth_bottom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom",
+              "wall-selfapp"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "eb998389-e404-453b-a765-b7233185b36c",
           "new": {
@@ -42091,6 +42893,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f2beed18-1d8f-40cd-ab01-c2471d439475",
+          "new": {
+            "file": "ZeroParadox/Computability/Rice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.quine_exists_yet_rice",
+            "short": "quine_exists_yet_rice"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f2d72339-9140-4d15-979c-84b59ec91612",
           "new": {
@@ -42581,6 +43421,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f5a143fc-7b20-4f3e-b4e3-770f88998d4b",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.ax_I",
+            "short": "ax_I"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43201,6 +44077,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f7c7c165-bd56-45b8-a663-762f35dd9ac1",
+          "new": {
+            "file": "ZeroParadox/Settheory/Loeb.lean",
+            "namespace": "ZeroParadox.ProvabilityLogic",
+            "qualified": "ZeroParadox.ProvabilityLogic.loeb_sentence_is_fixedpoint",
+            "short": "loeb_sentence_is_fixedpoint"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "logic"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
           "verify": {
             "axioms": null,
             "sorry_free": true
