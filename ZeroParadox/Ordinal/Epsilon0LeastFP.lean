@@ -52,6 +52,13 @@ theorem epsilon0_ne_bot : ε₀ ≠ (⊥ : Ordinal) := by
   rw [Ordinal.bot_eq_zero]
   exact epsilon0_ne_zero
 
+/-- **ε₀'s Veblen coordinates are (1, 0).** ε₀ = `veblen 1 0` (Mathlib `epsilon := veblen 1`, so this is
+    definitional): the element at index 0 of level 1 — the origin of the Veblen coordinate system, hence
+    the *minimum* fixed-point closure (matching `epsilon0_least_fixedpoint`), not a definitional pick of a
+    large ordinal. The hierarchy continues above ε₀ (ε₁, ε₂, …, ζ₀ = `veblen 2 0`, …) up to Γ₀, the
+    Feferman–Schütte ordinal closing the two-argument Veblen hierarchy; the framework lives below Γ₀. -/
+theorem epsilon0_eq_veblen_one_zero : ε₀ = Ordinal.veblen 1 0 := rfl
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -62,4 +69,5 @@ open ZeroParadox
 #print axioms epsilon0_least_fixedpoint
 #print axioms epsilon0_ne_zero
 #print axioms epsilon0_ne_bot
+#print axioms epsilon0_eq_veblen_one_zero
 end PurityCheck

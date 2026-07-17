@@ -56,6 +56,7 @@ section Epsilon0CannotBeIndex
 #check @ZeroParadox.epsilonZero_eq_nfp        -- ε₀ = nfp (ω^·) 0
 #check @ZeroParadox.epsilon0_is_fixedpoint    -- ω ^ ε₀ = ε₀ (it is a fixed point)
 #check @ZeroParadox.epsilon0_isLeastFixedPointFrom  -- ε₀ = the least fixed point from the base ⊥ (μ schema)
+#check @ZeroParadox.epsilon0_eq_veblen_one_zero     -- ε₀ = veblen 1 0 — coords (1,0), the minimum closure, below Γ₀
 
 /-! ### § III. ε₀ is BOTH min AND max at once — direction/instance-specific, never collapsed -/
 #check @ZeroParadox.epsilon0_min_eq_max       -- one object: sup of the tower ∧ least fixed point
