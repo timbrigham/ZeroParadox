@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1252,
+        "declarations": 1253,
         "files": 136
       },
       "entries": [
@@ -2447,6 +2447,46 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08de54f4-4c1f-46f8-ad6b-8be6f80a3935",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_arc_z2_loop",
+            "short": "snap_arc_z2_loop"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },

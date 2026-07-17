@@ -150,6 +150,33 @@ theorem cnf_bridge_type_boundary :
     (∀ n : ℕ, NONote.repr (towerNONote n) = fundamentalSeq n) :=
   ⟨epsilon0_isLeastFixedPointFrom, tower_converges_to_zero, towerNONote_repr⟩
 
+/-! ## § VI. The snap arc as one object — the ℤ_[2] loop through ⊥ -/
+
+/-- **The snap arc, as one `ℤ_[2]` loop through ⊥.** The ordinal ascent ⊥ → ε₀ realizes, through
+    `cnfToZp2`, as a single arc in `ℤ_[2]` with three phases:
+
+    1. **START at the floor** — `cnfToZp2 (towerNONote 0) = 0`: the arc begins at ⊥.
+    2. **DEPARTURE by a discrete jump** — `∀ n ≥ 1, cnfToZp2 (towerNONote n) ≠ 0`: the trajectory
+       genuinely leaves 0. The first stage has 2-adic valuation 1 (`cnfToZp2_tower_valuation`), hence
+       norm 1/2, so the norm jumps 0 → 1/2 with no intermediate stage — there is no continuous path
+       off 0, the snap's discreteness rendered as geometry.
+    3. **REAPPROACH** — `Filter.Tendsto … (nhds 0)`: the stages return toward 0 in norm
+       (`tower_converges_to_zero`).
+
+    The mechanism is that `cnfToZp2` **co-locates the ⊥ floor and the ε₀ ceiling at the single point 0
+    in `ℤ_[2]`** — the 0 = ∞ pole made literal (cf. `rInv_swaps`, the 2-adic self-inversion that
+    swaps the floor and the ceiling). Honest fence: this is the `ℤ_[2]` realization *via the map*, NOT
+    a proof of `ε₀ = 0`, which stays ill-typed (`cnf_bridge_type_boundary`, MC-1 / ZP-P). -/
+theorem snap_arc_z2_loop :
+    cnfToZp2 (towerNONote 0) = 0 ∧
+    (∀ n : ℕ, 1 ≤ n → cnfToZp2 (towerNONote n) ≠ 0) ∧
+    Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop (nhds 0) := by
+  refine ⟨cnfToZp2_zero, ?_, tower_converges_to_zero⟩
+  intro n hn heq
+  have hval : (cnfToZp2 (towerNONote n)).valuation = n := cnfToZp2_tower_valuation n
+  rw [heq, PadicInt.valuation_zero] at hval
+  omega
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -164,5 +191,6 @@ open ZeroParadox
 #print axioms tower_image_loops_to_seed
 #print axioms mu_construction_correspondence
 #print axioms cnf_bridge_type_boundary
+#print axioms snap_arc_z2_loop
 
 end PurityCheck
