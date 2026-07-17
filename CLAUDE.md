@@ -4,6 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Gate exemption — this file and operational meta.** `CLAUDE.md` itself (and other internal operating-instruction / meta files, as opposed to the mathematical publication content) is **exempt from the Editorial Review Gate and the Adversary Review Gate** below. The review gates are scoped to externally-facing publication prose — formal documents, companions, README.md/GUIDE.md, build-script prose. `CLAUDE.md` is the operating manual, not publication content, so it needs **version control only**: commit and push normally, and use `git push --no-verify` if the pre-push hook blocks on a stale review signal for a `CLAUDE.md`-only change.
 
+## Core Objects — Read the Lean First (Hard Rule)
+
+The framework has three core objects, each pinned by an authoritative Lean characterization. **Before writing ANY prose, figure, docstring, companion text, or claim about ⊥ (the bottom), the snap (⊥ → ε₀), or ε₀ — first READ that object's Lean source and ground every statement in a named theorem there.** Do NOT reconstruct these objects from working memory, from prose notes, or from this summary; the Lean is the ground truth. State the theorem, not a gloss. If this summary and the Lean ever appear to disagree, **the Lean wins — stop and ask Tim.**
+
+**The three objects and their authoritative Lean files:**
+- **⊥ (the bottom element)** — `ZeroParadox/BottomCannotBe.lean` (the `#check`-only "what ⊥ is / is not" index) + reader map `BOTTOMELEMENT.md`.
+- **The snap (⊥ → ε₀)** — `ZeroParadox/Order/Snap.lean` (T-SNAP, `t_snap_derived`) + reader map `SNAP.md`. (No `#check` characterization index yet — a parity gap to close.)
+- **ε₀** — `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` (the `#check`-only "what ε₀ is / is not" index) + `Epsilon0LeastFP.lean` / `Epsilon0MinMax.lean`.
+
+The `CannotBe` indexes are `#check`-only — they create no declarations and so structurally cannot overclaim; reading one shows exactly what the object IS and IS NOT, each line a live theorem.
+
+**Bedrock invariants — machine-checked; never violate, always verify against the theorem (do not assume):**
+- **ε₀ ≠ 0. Always. In any reading, carrier, or encoding.** (`epsilon0_ne_zero`.) Never "fence ε₀ = 0" or treat 0 as a candidate value for ε₀ — it is not a well-formed possibility.
+- **ε₀ ≠ ⊥.** (`epsilon0_ne_bot`.) ⊥ = 0 is the *base* the ε₀-tower is seeded at; ε₀ is its *closure* — the base is never its own closure.
+- **ε₀ is both min AND max at once** — least fixed point ≡ tower supremum (`epsilon0_min_eq_max`); direction-/instance-specific, never collapsed to one face.
+- **ε₀ requires two conditions**: the ω-tower operator `α↦ω^α` AND the base ⊥ (`ε₀ = nfp(ω^·)⊥`, `epsilon0_eq_nfp_bot`; Mathlib `ε₀ = deriv(ω^·) 0`). It is the *minimum* step next to the pole (Veblen coords (1,0); the 1/∞ reading), never the pole.
+- **⊥ = 0 = ∞ is the pole** — *stated*, not fenced (the framework's own identity; `rInv_swaps`). This is NOT ⊥ = ε₀ (which is false).
+- The snap-arc **returns to a NEW ⊥** (a successor null, `t_iz_limit_is_new_null`), never the same ⊥ and never ε₀.
+
+**Why this rule exists (2026-07-17):** a run of prose/figure errors — fencing ε₀ = 0, "co-locating ⊥ and ε₀," flattening min≡max to one face, calling ε₀ "a large ordinal / ceiling" — all came from reconstructing these objects from working memory instead of reading the Lean. The fix is mechanical: read the `CannotBe` index first, cite the theorem, never gloss.
+
 ## Editorial Review Gate — Hard Rule
 
 **Any commit touching document prose requires editorial review to have completed before the commit is made.** This applies to:
