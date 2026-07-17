@@ -10,7 +10,7 @@ The framework has three core objects, each pinned by an authoritative Lean chara
 
 **The three objects and their authoritative Lean files:**
 - **⊥ (the bottom element)** — `ZeroParadox/BottomCannotBe.lean` (the `#check`-only "what ⊥ is / is not" index) + reader map `BOTTOMELEMENT.md`.
-- **The snap (⊥ → ε₀)** — `ZeroParadox/Order/Snap.lean` (T-SNAP, `t_snap_derived`) + reader map `SNAP.md`. (No `#check` characterization index yet — a parity gap to close.)
+- **The snap (⊥ → ε₀)** — `ZeroParadox/Order/SnapCannotBe.lean` (the `#check`-only "what the snap is / is not" index) + home file `ZeroParadox/Order/Snap.lean` (T-SNAP, `t_snap_derived`) + reader map `SNAP.md`.
 - **ε₀** — `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` (the `#check`-only "what ε₀ is / is not" index) + `Epsilon0LeastFP.lean` / `Epsilon0MinMax.lean`.
 
 The `CannotBe` indexes are `#check`-only — they create no declarations and so structurally cannot overclaim; reading one shows exactly what the object IS and IS NOT, each line a live theorem.
