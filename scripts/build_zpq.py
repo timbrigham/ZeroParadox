@@ -1,7 +1,10 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.0 | July 2026
+Version 1.1 | July 2026
 
+v1.1: Frame-change prose precision — the tower's ENCODINGS converge to ⊥ (a new bottom) and, via rInv,
+diverge to ∞; ε₀ is never "realised as ⊥/the ceiling" (ε₀ ≠ ⊥). The theorems (snap_is_frameflip) were
+always about the encodings; only the prose gloss is corrected.
 v1.0: Initial release. Synthesis layer, ZP-P's sequel. The snap ⊥ → ε₀ is a change of point of view.
 Three tiers: (§I) the abstract frame-flip schema — over any complete lattice, order-duality swaps the
 fork's two closures (lfp ↔ gfp) and the fork collapses at the diagonal fixed point (fork_is_frameflip,
@@ -17,7 +20,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -262,11 +265,11 @@ def build():
     E.append(body(
         'The valuation instance is the originating figure of the framework: the p-adic Riemann '
         'sphere. Under the tower-rank encoding (P8.lean) the &#969;-tower climbing to '
-        '&#949;<sub>0</sub> lands on the 2-adic floor 0 &#8212; so in that chart &#949;<sub>0</sub> '
-        'is realised as the bottom. Viewed through the inversion rInv (the one-point compactification '
-        'of &#8474;<sub>2</sub>, RiemannSphere.lean), the same tower rises to &#8734; &#8212; in that '
-        'chart &#949;<sub>0</sub> is realised as the ceiling. rInv is the homeomorphism that swaps '
-        'the poles 0 &#8596; &#8734;.'))
+        '&#949;<sub>0</sub> has stage-encodings that converge to the 2-adic floor 0 = &#8869; &#8212; so in '
+        'that chart the ascent to &#949;<sub>0</sub> resolves onto a new bottom (the encodings converge '
+        'to &#8869;; &#949;<sub>0</sub> &#8800; &#8869;). Viewed through the inversion rInv (the one-point '
+        'compactification of &#8474;<sub>2</sub>, RiemannSphere.lean), the same encodings diverge to '
+        '&#8734;. rInv is the homeomorphism that swaps the poles 0 &#8596; &#8734;.'))
 
     E.append(sp(6))
     _fig = sphere_figure()
@@ -283,12 +286,12 @@ def build():
     E.append(result_box(
         'Theorem: snap_is_frameflip (SnapFrameChange.lean)',
         [
-            'The one &#969;-tower has two limits, one per chart: it falls to the floor 0 = &#8869; '
-            'in the encoding chart (&#949;<sub>0</sub> as &#8869;, cnf_encode_tower_tendsto_zero), '
-            'and rises to the antipode &#8734; in the rInv chart (&#949;<sub>0</sub> as the ceiling, '
-            'snap_frameflip_tower_tendsto_infty), with rInv the frame-change swapping the poles '
-            '(rInv_swaps: 0 &#8596; &#8734;).',
-            'The descent to &#8869; and the ascent to the ceiling are the same tower under the '
+            'The one &#969;-tower&#8217;s encodings have two limits, one per chart: they fall to the '
+            'floor 0 = &#8869; in the encoding chart (converging to a new bottom, '
+            'cnf_encode_tower_tendsto_zero), and rise to the antipode &#8734; in the rInv chart '
+            '(snap_frameflip_tower_tendsto_infty), with rInv the frame-change swapping the poles '
+            '(rInv_swaps: 0 &#8596; &#8734;). The encodings converge to &#8869;; &#949;<sub>0</sub> &#8800; &#8869;.',
+            'The descent to &#8869; and the ascent to &#8734; are the same tower-encodings under the '
             'frame-change &#8212; the valuation-frame realisation of the snap as a change of frame.',
             'Lean purity: [propext, Classical.choice, Quot.sound] &#8212; choice-carrying '
             '(Classical.choice from the Riemann-sphere continuity machinery). ✓',
