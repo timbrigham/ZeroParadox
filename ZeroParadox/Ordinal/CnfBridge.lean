@@ -33,10 +33,10 @@ proposition is not well-formed.
    `cnfToZp2` to the `ℤ_[2]` bottom 0. One seed, two carriers, each carrier's ⊥.
 
 3. **The 2-adic realization is a loop through ⊥** (`tower_image_loops_to_seed`): under `cnfToZp2`
-   the seed's image *and* the tower's norm-limit are the *same point* 0 = ⊥. So the ordinal ascent
-   ⊥ → ε₀ realizes, through the map, as a `ℤ_[2]` path that departs from 0 and returns to 0 — the
-   concrete 2-adic face of the framework's "0 that is ∞" (the diagonal fixed point): the ⊥ floor and
-   the ε₀ ceiling both sit at 0 in `ℤ_[2]`.
+   the seed's image *and* the tower's norm-limit are both the *value* 0. So the ordinal ascent
+   ⊥ → ε₀ realizes, through the map, as a `ℤ_[2]` path that departs 0 and whose norm returns to 0.
+   This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (adjacent, never the same), and
+   the finite stages are all ≠ 0 (next to the floor, never it); the returned-to ⊥ is a new instance.
 
 4. **The construction-level correspondence** (`mu_construction_correspondence`): ONE sequence
    `towerNONote : ℕ → NONote` (the μ-ascent seeded at the NONote bottom) has TWO type-specific
@@ -104,10 +104,11 @@ theorem seed_maps_to_bot_both :
 
 /-! ## § III. The 2-adic realization loops through ⊥ (the diagonal fixed point, concretely) -/
 
-/-- **Loop through ⊥.** Under `cnfToZp2` the seed's image and the tower's norm-limit are the *same*
-    point 0 = ⊥ in `ℤ_[2]`. So the ordinal ascent ⊥ → ε₀ realizes as a `ℤ_[2]` path departing from 0
-    and returning to 0: the ⊥ floor and the ε₀ ceiling both sit at 0 in `ℤ_[2]`. Concrete 2-adic face
-    of the "0 that is ∞" diagonal fixed point. -/
+/-- **Loop through ⊥.** Under `cnfToZp2` the seed's image and the tower's norm-limit are both the
+    *value* 0 in `ℤ_[2]`. So the ordinal ascent ⊥ → ε₀ realizes as a `ℤ_[2]` path departing 0 and
+    whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (ε₀ is the first
+    step off ⊥ — always adjacent, never the same), and the finite stages are all ≠ 0 (next to the
+    floor, never it). `ε₀ = 0` stays ill-typed (`cnf_bridge_type_boundary`). -/
 theorem tower_image_loops_to_seed :
     cnfToZp2 (towerNONote 0) = 0 ∧
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
@@ -163,10 +164,11 @@ theorem cnf_bridge_type_boundary :
     3. **REAPPROACH** — `Filter.Tendsto … (nhds 0)`: the stages return toward 0 in norm
        (`tower_converges_to_zero`).
 
-    The mechanism is that `cnfToZp2` **co-locates the ⊥ floor and the ε₀ ceiling at the single point 0
-    in `ℤ_[2]`** — the 0 = ∞ pole made literal (cf. `rInv_swaps`, the 2-adic self-inversion that
-    swaps the floor and the ceiling). Honest fence: this is the `ℤ_[2]` realization *via the map*, NOT
-    a proof of `ε₀ = 0`, which stays ill-typed (`cnf_bridge_type_boundary`, MC-1 / ZP-P). -/
+    The loop closes because the tower's 2-adic **norm** reapproaches 0, landing back on the floor — NOT
+    because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the first step off ⊥), always adjacent, never identical, and
+    the finite stages never even reach 0 (always next to, never the same). Honest fence: this is the
+    `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0`, which stays ill-typed
+    (`cnf_bridge_type_boundary`, MC-1 / ZP-P). -/
 theorem snap_arc_z2_loop :
     cnfToZp2 (towerNONote 0) = 0 ∧
     (∀ n : ℕ, 1 ≤ n → cnfToZp2 (towerNONote n) ≠ 0) ∧

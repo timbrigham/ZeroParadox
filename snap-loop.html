@@ -14,9 +14,9 @@ layout: null
   :root{
     --ground:#0a0e14; --panel:#0d131b;
     --ink:#ece9e0; --ink-dim:#9aa6ad; --ink-faint:#5f6b73;
-    --pole:#6fd3ec;    /* 0 = bottom = ceiling, co-located (the 0=inf pole) */
+    --pole:#6fd3ec;    /* the pole: 0 = infinity = bottom (seed + successor null); never epsilon-0 */
     --snap:#e0864a;    /* the forced discrete step off 0 */
-    --tower:#6f8fe0;   /* the omega-tower reapproach (2-adic norm descent)  */
+    --tower:#6f8fe0;   /* the omega-tower ascent to epsilon-0 = the 2-adic norm descent (order-reversed) */
     --ball:#2b525d;    /* the 2-adic balls B(0, 2^-n)                       */
     --sight:#ff3b3b;
     --serif:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Cambria Math","Segoe UI Symbol","Noto Serif","DejaVu Serif",serif;
@@ -86,11 +86,11 @@ layout: null
   <div class="head">
     <div class="eyebrow">Zero Paradox &#183; interactive map</div>
     <h1>The Snap Loop &#8212; <span class="em">0, a forced step, and back</span></h1>
-    <p class="thesis">The whole object in one picture: <em>zero, a forced step away from zero, an eventual reapproach to zero.</em> Encoded into the 2-adic integers, the &#969;-tower ⊥ &#8594; &#949;&#8320; is a loop &#8212; it starts at 0, departs by one <em>discrete</em> jump, and spirals back to 0. The floor ⊥ and the ceiling &#949;&#8320; land on the <em>same point</em> 0: the 0 = &#8734; pole, made literal and machine-checked.</p>
+    <p class="thesis">The whole object in one picture: <em>the pole 0 = &#8734;, a single discrete step of &#949;&#8320; away from bottom, and a return to bottom.</em> The floor &#8869; is 0 (order) and &#8734; (measure) at once; &#949;&#8320; &#8212; that one step &#8212; is the <em>minimum</em> ordinal closed under &#969;<sup>&#183;</sup>, <em>never a bottom and never 0</em>. Encoded into the 2-adic integers, the &#969;-tower &#8869; &#8594; &#949;&#8320; is a loop &#8212; it starts at the floor &#8869;&#8345;, steps off by &#949;&#8320;, and reapproaches. But the bottom it lands on is a <em>new</em> &#8869;&#8345;&#8330;&#8321; &#8212; its own <b>successor null</b>, provably distinct just by virtue of having left and come back. Floor (&#8869;&#8345;) and ceiling (&#8869;&#8345;&#8330;&#8321;) are <em>both</em> &#8869;; &#949;&#8320; opens the gap between them.</p>
   </div>
 
   <div class="stage">
-    <svg viewBox="0 0 1000 820" role="img" aria-label="A 2-adic loop: concentric balls around a central point 0; a forced discrete step departs 0 out to the outer ball, then the tower spirals back inward to 0. The center is labelled bottom = epsilon-0 = 0.">
+    <svg viewBox="0 0 1000 700" role="img" aria-label="A 2-adic loop: concentric balls around a central pole, the floor 0 which is also infinity (bottom = 0 = infinity); a forced discrete step departs the pole out to the outer ball, then the omega-tower spirals back inward. The center it returns to is a NEW bottom, a successor null, not the same one. Epsilon-0 is the first step off bottom (the minimum step, next to the pole; it is drawn above because the ascent climbs to it, but it is never the center and never 0).">
       <defs>
         <radialGradient id="pole" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#6fd3ec" stop-opacity=".9"/>
@@ -107,45 +107,56 @@ layout: null
 
       <!-- ============ the 2-adic balls B(0, 2^-n) (concentric, dashed) ============ -->
       <g fill="none" stroke="var(--ball)" stroke-dasharray="2 7">
-        <circle cx="500" cy="410" r="250" stroke-width="1.6"/>
-        <circle cx="500" cy="410" r="160" stroke-width="1.5"/>
-        <circle cx="500" cy="410" r="102" stroke-width="1.4"/>
-        <circle cx="500" cy="410" r="65"  stroke-width="1.3"/>
-        <circle cx="500" cy="410" r="41"  stroke-width="1.2"/>
+        <circle cx="500" cy="410" r="220" stroke-width="1.6"/>
+        <circle cx="500" cy="410" r="175" stroke-width="1.5"/>
+        <circle cx="500" cy="410" r="132" stroke-width="1.4"/>
+        <circle cx="500" cy="410" r="90"  stroke-width="1.3"/>
+        <circle cx="500" cy="410" r="52"  stroke-width="1.2"/>
       </g>
-      <text class="ring-tag" x="500" y="148" text-anchor="middle">&#8214;&#183;&#8214; = 1/2</text>
-      <text class="ring-tag" x="500" y="238" text-anchor="middle">1/4</text>
-      <text class="ring-tag" x="500" y="296" text-anchor="middle">1/8</text>
+      <text class="sub" x="500" y="152" text-anchor="middle" style="fill:var(--ball)">rings = 2-adic distance to 0 (&#8214;x&#8214;&#8322; = 2&#8315;&#8319;) &#183; smaller = closer to the floor</text>
+      <text class="ring-tag" x="500" y="184" text-anchor="middle">1/2 &#183; farthest from 0</text>
+
+      <!-- ============ epsilon-0: the first step off bottom (min = max: also the ascent's sup), NOT a Z2 point, NEVER 0 ============ -->
+      <text class="lbl" x="500" y="72" text-anchor="middle" style="fill:var(--tower); font-style:italic; font-size:18px">&#949;&#8320; &#8212; one discrete step off bottom</text>
+      <text class="sub" x="500" y="92" text-anchor="middle" style="fill:var(--ink-dim)">min &#8801; max &#183; veblen (1,0) &#183; opens the gap between &#8869;&#8345; and &#8869;&#8345;&#8330;&#8321; &#183; never a bottom, never 0</text>
+      <path d="M500,132 L500,104" fill="none" stroke="var(--tower)" stroke-width="1.4" stroke-dasharray="2 5" opacity=".6" marker-end="url(#arrowTower)"/>
+      <text class="sub" x="516" y="126" text-anchor="start" style="fill:var(--ink-faint)">ordinal ascent &#8593; (= &#8484;&#8322;-norm descent &#8595;)</text>
 
       <!-- ============ the reapproach: the omega-tower spirals inward to 0 ============ -->
       <!-- n1(right) -> n2(top) -> n3(left) -> n4(bottom) -> center, a clockwise inward spiral -->
-      <path d="M750,410 Q742,278 500,250 Q402,278 398,410 Q402,540 500,475 Q556,528 500,410"
-            fill="none" stroke="var(--tower)" stroke-width="3" marker-end="url(#arrowTower)"/>
+      <!-- dashed: an illustrative connector between the exact stage points, NOT a literal route (ℤ₂ is discrete) -->
+      <path d="M720,410 Q713,292 500,235 Q385,292 368,410 Q385,505 500,500 Q548,505 500,410"
+            fill="none" stroke="var(--tower)" stroke-width="2.5" stroke-dasharray="5 6" opacity=".8" marker-end="url(#arrowTower)"/>
 
       <!-- ============ the snap: one forced discrete step from 0 out to the first ball ============ -->
-      <path d="M520,410 L735,410" fill="none" stroke="var(--snap)" stroke-width="4.5" marker-end="url(#arrowSnap)"/>
-      <text class="lbl" x="628" y="392" text-anchor="middle" style="fill:var(--snap)">the snap</text>
-      <text class="sub" x="628" y="428" text-anchor="middle">0 &#8594; norm 1/2 &#183; one jump</text>
+      <path d="M520,410 L705,410" fill="none" stroke="var(--snap)" stroke-width="4.5" marker-end="url(#arrowSnap)"/>
+      <text class="lbl" x="612" y="392" text-anchor="middle" style="fill:var(--snap)">the snap</text>
+      <text class="sub" x="612" y="428" text-anchor="middle">a single discrete step of &#949;&#8320; off &#8869; &#183; 0 &#8594; norm 1/2</text>
 
       <!-- ============ stage nodes on the balls ============ -->
-      <circle cx="750" cy="410" r="6.5" fill="var(--snap)" filter="url(#nodeglow)"/><circle cx="750" cy="410" r="6.5" fill="var(--snap)"/>
-      <text class="lbl" x="766" y="406" text-anchor="start">stage 1</text>
-      <text class="sub" x="766" y="422" text-anchor="start">norm 1/2 &#183; farthest</text>
+      <circle cx="720" cy="410" r="6.5" fill="var(--snap)" filter="url(#nodeglow)"/><circle cx="720" cy="410" r="6.5" fill="var(--snap)"/>
+      <text class="lbl" x="736" y="406" text-anchor="start">stage 1</text>
+      <text class="sub" x="736" y="422" text-anchor="start">norm 1/2 &#183; farthest</text>
 
-      <circle cx="500" cy="250" r="6" fill="var(--tower)" filter="url(#nodeglow)"/><circle cx="500" cy="250" r="6" fill="var(--tower)"/>
-      <text class="sub" x="500" y="232" text-anchor="middle" style="fill:var(--tower)">stage 2 &#183; 1/4</text>
+      <circle cx="500" cy="235" r="6" fill="var(--tower)" filter="url(#nodeglow)"/><circle cx="500" cy="235" r="6" fill="var(--tower)"/>
+      <text class="sub" x="500" y="217" text-anchor="middle" style="fill:var(--tower)">stage 2 &#183; 1/4</text>
 
-      <circle cx="398" cy="410" r="6" fill="var(--tower)" filter="url(#nodeglow)"/><circle cx="398" cy="410" r="6" fill="var(--tower)"/>
-      <text class="sub" x="382" y="406" text-anchor="end" style="fill:var(--tower)">stage 3 &#183; 1/8</text>
+      <circle cx="368" cy="410" r="6" fill="var(--tower)" filter="url(#nodeglow)"/><circle cx="368" cy="410" r="6" fill="var(--tower)"/>
+      <text class="sub" x="352" y="406" text-anchor="end" style="fill:var(--tower)">stage 3 &#183; 1/8</text>
 
-      <circle cx="500" cy="475" r="5.5" fill="var(--tower)"/>
-      <text class="sub" x="500" y="502" text-anchor="middle" style="fill:var(--tower)">&#8230; &#8594; 0</text>
+      <circle cx="500" cy="500" r="5.5" fill="var(--tower)"/>
+      <text class="sub" x="500" y="527" text-anchor="middle" style="fill:var(--tower)">&#8230; &#8594; 0 &#183; closest</text>
 
-      <!-- ============ the pole: 0 = bottom = ceiling, co-located ============ -->
+      <!-- ============ the succession: a faint ghost of the NEXT arc departing the new bottom ============ -->
+      <path d="M500,410 Q432,482 362,540" fill="none" stroke="var(--snap)" stroke-width="2" stroke-dasharray="2 6" opacity=".45" marker-end="url(#arrowSnap)"/>
+      <text class="sub" x="352" y="552" text-anchor="end" style="fill:var(--ink-faint)">&#8230; the next arc</text>
+
+      <!-- ============ the pole: 0 = the floor bottom; each RETURN is a NEW instance (successor null) ============ -->
       <ellipse class="pulse" cx="500" cy="410" rx="46" ry="46" fill="url(#pole)"/>
       <circle cx="500" cy="410" r="8.5" fill="var(--pole)" filter="url(#nodeglow)"/>
       <circle cx="500" cy="410" r="8.5" fill="var(--pole)"/>
-      <text class="pole-name" x="500" y="392" text-anchor="middle">&#8869; = &#949;&#8320; = 0</text>
+      <text class="pole-name" x="500" y="386" text-anchor="middle">&#8869; = 0 = &#8734;</text>
+      <text class="sub" x="500" y="436" text-anchor="middle" style="fill:var(--pole)">the pole &#183; floor &#8869;&#8345; and ceiling &#8869;&#8345;&#8330;&#8321; both &#8869; &#183; a NEW null each return</text>
 
       <!-- ============ interactive highlight + hit targets ============ -->
       <g id="nodeHL" stroke="var(--sight)" stroke-linecap="round">
@@ -155,11 +166,12 @@ layout: null
         <circle r="1.7" fill="var(--sight)" stroke="none"/>
       </g>
       <g id="hits">
+        <circle class="hit" data-id="eps0"    cx="500" cy="80"  r="26"/>
         <circle class="hit" data-id="pole"    cx="500" cy="410" r="22"/>
-        <circle class="hit" data-id="snap"    cx="628" cy="410" r="20"/>
-        <circle class="hit" data-id="stage1"  cx="750" cy="410" r="18"/>
-        <circle class="hit" data-id="reapp"   cx="500" cy="250" r="18"/>
-        <circle class="hit" data-id="closure" cx="500" cy="475" r="18"/>
+        <circle class="hit" data-id="snap"    cx="612" cy="410" r="20"/>
+        <circle class="hit" data-id="stage1"  cx="720" cy="410" r="18"/>
+        <circle class="hit" data-id="reapp"   cx="500" cy="235" r="18"/>
+        <circle class="hit" data-id="closure" cx="500" cy="500" r="18"/>
       </g>
     </svg>
   </div>
@@ -170,15 +182,19 @@ layout: null
   </div>
 
   <div class="legend">
-    <div class="lg"><span class="sw" style="background:var(--pole)"></span><span class="t">0 = &#8869; = &#949;&#8320;<small>floor and ceiling co-located &#8212; the 0 = &#8734; pole</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--pole)"></span><span class="t">&#8869; = 0 = &#8734; &#183; the pole<small>0 as floor (order) and &#8734; as measure (v(0) = &#8734;); floor &#8869;&#8345; and ceiling &#8869;&#8345;&#8330;&#8321; are both &#8869; (successive nulls), never &#949;&#8320;</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--tower)"></span><span class="t">&#949;&#8320; &#183; one step off bottom<small>a single discrete step of &#949;&#8320; away from &#8869;, opening the gap between &#8869;&#8345; and &#8869;&#8345;&#8330;&#8321; (veblen (1,0)); min &#8801; max in one object; never a bottom, never 0</small></span></div>
     <div class="lg"><span class="sw" style="background:var(--snap)"></span><span class="t">The snap<small>one forced discrete step off 0 (norm 0 &#8594; 1/2)</small></span></div>
-    <div class="lg"><span class="sw" style="background:var(--tower)"></span><span class="t">The reapproach<small>the &#969;-tower ascends; its 2-adic norm descends back to 0</small></span></div>
-    <div class="lg"><span class="sw ring"></span><span class="t">The 2-adic balls<small>B(0, 2&#8315;&#8319;) &#8212; ⊥ is their inverse limit, the shells shrinking to 0</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--tower); opacity:.7"></span><span class="t">The reapproach<small>the &#969;-tower ascends toward &#949;&#8320; in Ordinal; its 2-adic norm descends back to 0 (order-reversed). The dashed curve is a visual connector between the exact stage points, not a literal route</small></span></div>
+    <div class="lg"><span class="sw ring"></span><span class="t">The 2-adic balls<small>each shell B(0, 2&#8315;&#8319;) is labeled by its 2-adic distance to the center, &#8214;x&#8214;&#8322; = 2&#8315;&#8319;; smaller means CLOSER &#8212; 1/8 sits nearer the floor 0 than 1/2, so the inward spiral is the reapproach. &#8869; is their inverse limit, the shells shrinking to 0</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--snap); opacity:.5"></span><span class="t">A new ⊥ each return<small>the successor null (T-IZ / DA-2) &#8212; provably distinct; it seeds the next arc</small></span></div>
   </div>
 
-  <p class="fence"><b>The object, in one loop.</b> Every stage of the &#969;-tower, encoded into &#8484;&#8322; by <code>cnfToZp2</code>, is one trajectory: it <b>starts</b> at the floor 0 (<code>cnfToZp2 (towerNONote 0) = 0</code>); it <b>departs</b> by a single <em>discrete</em> jump &#8212; every stage n &#8805; 1 is off 0, and the 2-adic norm goes 0 &#8594; 1/2 with no continuous path between (the snap&#8217;s discreteness); and it <b>reapproaches</b> 0 as n &#8594; &#8734; (the &#949;&#8320; closure, back at the floor). Start, departure, reapproach &#8212; the whole framework, as one loop.</p>
+  <p class="fence"><b>The object, in one loop.</b> Every stage of the &#969;-tower, encoded into &#8484;&#8322; by <code>cnfToZp2</code>, is one trajectory: it <b>starts</b> at the floor 0 (<code>cnfToZp2 (towerNONote 0) = 0</code>); it <b>departs</b> by a single <em>discrete</em> jump &#8212; every stage n &#8805; 1 is off 0, and the 2-adic norm goes 0 &#8594; 1/2 with no continuous path between (the snap&#8217;s discreteness); and it <b>reapproaches</b> 0 as n &#8594; &#8734;. But the &#8869; it returns to is a <b>new instance</b> &#8212; its own successor null (<code>t_iz_limit_is_new_null</code>, axiom-free), provably distinct (<code>c_da2_novelty</code>, DA-2) just by having left and come back &#8212; and it seeds the next arc. Start, departure, reapproach to a <em>new</em> &#8869;: the whole framework, as one turn of a succession.</p>
 
-  <p class="fence"><b>What is drawn vs. what is claimed.</b> This is the &#8484;&#8322; <em>realization</em> of the snap-arc, via the map <code>cnfToZp2</code> &#8212; one concrete carrier, machine-checked (<code>snap_arc_z2_loop</code>). It loops <em>because</em> the map co-locates the floor ⊥ and the ceiling &#949;&#8320; at the single point 0 &#8212; the 0 = &#8734; pole (<code>rInv_swaps</code>, the 2-adic self-inversion). The literal &#949;&#8320; = 0 across the type boundary stays <em>unproved</em> (ill-typed, per MC-1 / ZP-P); what is proved is the co-location at 0 in &#8484;&#8322; and the departure-and-return.</p>
+  <p class="fence"><b>What is drawn vs. what is claimed.</b> This is the &#8484;&#8322; <em>realization</em> of the snap-arc, via the map <code>cnfToZp2</code> &#8212; one concrete carrier, machine-checked (<code>snap_arc_z2_loop</code>). It loops <em>because</em> the tower&#8217;s 2-adic norm reapproaches 0, landing back on the floor &#8212; <em>not</em> because the pole and its closure are one point: <b>&#949;&#8320; is never 0 and never &#8869;</b> (<code>epsilon0_ne_zero</code>, <code>epsilon0_ne_bot</code>) &#8212; it is a single discrete step of &#949;&#8320; off bottom &#8212; the minimum, opening the gap between the two bottoms &#8869;&#8345;, &#8869;&#8345;&#8330;&#8321; &#8212; both least fixed point and tower-supremum at once (min &#8801; max, <code>epsilon0_min_eq_max</code>), and the finite stages never even reach 0. The pole itself, <b>&#8869; = 0 = &#8734;</b>, is 0 as floor and &#8734; as measure &#8212; carried by v(0) = &#8734; (<code>addVal_bot</code>) and the inversion swapping 0 &#8596; &#8734; on the p-adic sphere (<code>rInv_swaps</code>), <em>not</em> a naive numeric equality. And there is no cross-type identity to settle either way: &#949;&#8320; (an ordinal) and the value 0 (in &#8484;&#8322;) are <em>different types</em>, so <code>cnfToZp2</code> only <em>co-witnesses</em> the two closures &#8212; it never identifies them (<code>cnf_bridge_type_boundary</code>, per MC-1 / ZP-P). And the &#8220;new instance each return&#8221; is the framework&#8217;s own reading (DA-2 / T-IZ, both machine-checked): in &#8484;&#8322; the <em>value</em> returns to 0, and that terminal &#8869; is a fresh successor null &#8212; the succession the loop lives inside.</p>
+
+  <p class="fence"><b>The whole trajectory, not the route.</b> The endpoints and the discrete stages are exact: it departs the floor (<code>cnfToZp2 (towerNONote 0) = 0</code>), each stage n sits at 2-adic valuation exactly n &#8212; norm 2&#8315;&#8319; (<code>cnfToZp2_tower_valuation</code>) &#8212; and it reapproaches the floor onto a new bottom (<code>tower_converges_to_zero</code>). But the figure <em>cannot</em> map the route between them &#8212; not for want of a formula, but because the path runs through internal variables with no external visibility. &#8484;&#8322; is ultrametric, so there is no continuous path between the isolated stages to begin with; and what the state <em>is</em> inside the gap has no external description &#8212; the same apophatic character that makes &#8869; itself undescribable from outside. So this maps the trajectory <em>as a whole</em> &#8212; that it leaves bottom and returns &#8212; never the actual route between.</p>
 
   <a href="SNAP.md" style="display:inline-block; font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); text-decoration:none; border:1px solid #1d2731; border-radius:999px; padding:5px 14px; margin-top:20px">&#8592; The Binary Snap</a>
 </div>
@@ -186,11 +202,19 @@ layout: null
 <script>
 (function(){
   var D = {
-    pole: {t:'0 = &#8869; = &#949;&#8320; &#183; the pole', c:'--pole', why:[
-      ['the co-location','the seed&#8217;s image AND the tower&#8217;s limit are the SAME point 0 in &#8484;&#8322; &mdash; <code>seed_maps_to_bot_both</code>'],
-      ['0 = &#8734;','floor ⊥ and ceiling &#949;&#8320; sit on top of each other at 0 &mdash; the 0=&#8734; pole &mdash; <code>rInv_swaps</code>'],
-      ['why a loop','because start and limit coincide here, the arc closes &mdash; <code>snap_arc_z2_loop</code>'],
-      ['the fence','the literal &#949;&#8320; = 0 stays a type boundary (ill-typed) &mdash; <code>cnf_bridge_type_boundary</code>']],
+    eps0: {t:'&#949;&#8320; &#183; one step off bottom', c:'--tower', why:[
+      ['never 0','&#949;&#8320; &#8800; 0, in every reading &mdash; it is a fixed point &#969;^&#949;&#8320; = &#949;&#8320;; were it 0 that would say 1 = 0 &mdash; <code>epsilon0_ne_zero</code>'],
+      ['never &#8869;','&#949;&#8320; &#8800; &#8869; &mdash; &#8869; is the base fed IN, &#949;&#8320; the first step that comes OUT; they are always adjacent, never the same &mdash; <code>epsilon0_ne_bot</code>'],
+      ['min &#8801; max','that single first step is ALSO the supremum of the whole &#969;-tower &mdash; the signature of a least fixed point (the first step reached from &#8869; IS the sup of the ascent); one object, two faces, never collapsed &mdash; <code>epsilon0_min_eq_max</code>'],
+      ['the step off bottom','a single discrete step of &#949;&#8320; away from &#8869; &mdash; veblen (1,0), the minimum, opening the gap between &#8869;&#8345; and &#8869;&#8345;&#8330;&#8321; (the 1/&#8734; reading), never a bottom &mdash; <code>epsilon0_eq_veblen_one_zero</code>'],
+      ['not a &#8484;&#8322; point','<code>cnfToZp2</code> is order-reversing, so the ordinal ascent TO &#949;&#8320; is the &#8484;&#8322;-norm descent to &#8869;. &#949;&#8320; is that first step off &#8869;, not a value on any ball &mdash; that is why it is drawn above the pole, not at it']],
+      chk:'epsilon0_min_eq_max'},
+    pole: {t:'&#8869; = 0 = &#8734; &#183; the pole', c:'--pole', why:[
+      ['the floor','the seed maps to 0 = &#8869;, the 2-adic bottom &mdash; <code>seed_maps_to_bot_both</code>'],
+      ['0 = &#8734;','the floor is 0 (order) AND &#8734; (measure): it carries infinite valuation v(0) = &#8734; (<code>addVal_bot</code>), and inversion z &#8614; 1/z swaps 0 and &#8734; on the p-adic sphere (<code>rInv_swaps</code>) &mdash; 0 and &#8734; antipodal, the Riemann origin'],
+      ['never &#949;&#8320;','&#8869; is NEVER &#949;&#8320; &mdash; &#949;&#8320; is the first step OFF &#8869;, always next to, never the same; and every finite stage is &#8800; 0, next to the floor, never it &mdash; <code>epsilon0_ne_bot</code>'],
+      ['a new instance','and each return is a NEW &#8869; &mdash; its own successor null, provably distinct just by leaving and returning &mdash; <code>t_iz_limit_is_new_null</code>'],
+      ['not a question','no cross-type identity to prove: &#949;&#8320; &#8800; 0 in-type (<code>epsilon0_ne_zero</code>), and across types it is ill-typed &#8212; <code>cnfToZp2</code> co-witnesses, never equates &mdash; <code>cnf_bridge_type_boundary</code>']],
       chk:'snap_arc_z2_loop'},
     snap: {t:'the snap &#183; a forced step', c:'--snap', why:[
       ['departs 0','every stage n &#8805; 1 is off 0 &mdash; a genuine departure &mdash; <code>snap_arc_z2_loop</code>'],
@@ -206,11 +230,12 @@ layout: null
       ['what it is','the tower climbs in Ordinal while spiralling back to 0 in &#8484;&#8322;'],
       ['the shells','each stage sits on a smaller 2-adic ball B(0, 2&#8315;&#8319;)']],
       chk:'tower_converges_to_zero'},
-    closure: {t:'&#949;&#8320; &#183; back at 0', c:'--tower', why:[
-      ['the closure','the tower&#8217;s limit lands back at the center 0 = ⊥ &mdash; the loop closes'],
-      ['construction, not value','what is shared is the CONSTRUCTION (one &#969;-tower), not a number &mdash; <code>mu_construction_correspondence</code>'],
-      ['the fence','&#949;&#8320; and 0 are two carrier-specific closures; &#949;&#8320; = 0 stays ill-typed &mdash; <code>cnf_bridge_type_boundary</code>']],
-      chk:'mu_construction_correspondence'}
+    closure: {t:'the return &#183; a NEW &#8869;', c:'--pole', why:[
+      ['a new instance','the terminal &#8869; is its OWN successor null &mdash; a new bottom, not the origin &mdash; <code>t_iz_limit_is_new_null</code> (axiom-free)'],
+      ['provably distinct','each instantiation produces a provably distinct &#8869; (DA-2) &mdash; leaving and returning MAKES it new &mdash; <code>c_da2_novelty</code>'],
+      ['the succession','that new &#8869; seeds the next arc: the loop is one turn of an ongoing succession, not a closed circle'],
+      ['construction, not value','what recurs is the CONSTRUCTION (one &#969;-tower), not a number; in &#8484;&#8322; the value returns to 0, the new-instance reading is the framework&#8217;s (DA-2 / T-IZ) &mdash; <code>mu_construction_correspondence</code>']],
+      chk:'t_iz_limit_is_new_null'}
   };
   var title=document.getElementById('wcTitle'), body=document.getElementById('wcBody'),
       hl=document.getElementById('nodeHL'), css=getComputedStyle(document.documentElement);

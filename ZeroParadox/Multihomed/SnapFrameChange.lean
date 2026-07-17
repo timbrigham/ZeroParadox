@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of "the snap is the change of frame" — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 (ε₀ realized AS ⊥ in the encoding chart), while the SAME tower, viewed through the Riemann-sphere frame-change rInv (0↔∞), ascends to the antipode ∞ (ε₀ realized as the ceiling). rInv is the passage between the two charts. Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of "the snap is the change of frame" — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to a new bottom ⊥ₙ₊₁ in the encoding chart, while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Ordinal.P8
 import ZeroParadox.Valuation.RiemannSphere
 import Mathlib.Tactic
@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The snap as a change of frame: ε₀-as-⊥ and ε₀-as-ceiling are two charts, swapped by `rInv`
+# The snap as a change of frame: the tower's two limits (⊥ and ∞) are two charts, swapped by `rInv`
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
 are indexed in ZeroParadox/MANIFEST.md.
@@ -24,17 +24,17 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 Two prior results meet here. **P8** (`Ordinal/P8.lean`) built the tower-rank encoding
 `cnf_encode : {α < ε₀} → ℤ₂`, and proved that the ω-tower's encodings converge to `0`
-(`cnf_encode_tower_tendsto_zero`): the tower climbing to `ε₀` lands on the 2-adic floor `0 = ⊥`, so in
-this **encoding chart** `ε₀` is realized *as* the bottom. **RiemannSphere** (`Valuation/RiemannSphere.lean`)
+(`cnf_encode_tower_tendsto_zero`): the tower climbing to `ε₀` has stage-encodings that land on the 2-adic floor `0 = ⊥` (a new bottom ⊥ₙ₊₁), so in
+this **encoding chart** the ascent to `ε₀` resolves onto the bottom — the encodings *converge to* ⊥, not `ε₀` *being* ⊥ (`ε₀ ≠ ⊥`). **RiemannSphere** (`Valuation/RiemannSphere.lean`)
 built the inversion `rInv` on the one-point compactification `OnePoint ℚ₂`, a homeomorphism that swaps
 the floor `0` with the point at infinity `∞` (`rInv_swaps`) — the change of frame / chart-transition.
 
 The result is the **valuation-frame realization** of "the snap is the change of frame":
 `snap_frameflip_tower_tendsto_infty` — the *same* tower encodings, pushed into `OnePoint ℚ₂` and viewed
 through `rInv`, tend to `∞`. So one sequence, two charts: it falls to the floor `0` in the encoding
-chart (ε₀-as-⊥) and rises to the antipode `∞` in the `rInv` chart (ε₀-as-ceiling), and `rInv` is the
+chart and rises to the antipode `∞` in the `rInv` chart, and `rInv` is the
 passage between them. `snap_is_frameflip` bundles both limits with the `0 ↔ ∞` swap: the descent to ⊥
-and the ascent to the ceiling are the *same* tower under the frame-change.
+and the ascent to ∞ are the *same* tower-encodings under the frame-change.
 
 **Fences.** This is the **valuation point of view's** shape of the frame-change, not the abstract
 cross-domain claim: the general statement "the snap `⊥ → ε₀` IS the change of point of view" remains a
@@ -79,11 +79,11 @@ theorem snap_frameflip_tower_tendsto_infty :
 
 /-! ## § II — The two charts, bundled -/
 
-/-- **The snap as a change of frame (valuation-frame realization).** The one ω-tower has two limits, one
-    per chart: it descends to the floor `0 = ⊥` in the encoding chart (`ε₀` realized as ⊥) and rises to
-    the antipode `∞` in the `rInv` chart (`ε₀` realized as the ceiling); and `rInv` is the frame-change
-    that swaps the two poles `0 ↔ ∞`. The descent to ⊥ and the ascent to the ceiling are the *same*
-    tower under the frame-change. -/
+/-- **The snap as a change of frame (valuation-frame realization).** The one ω-tower's encodings have two limits, one
+    per chart: they descend to the floor `0 = ⊥` in the encoding chart (the ascent to ε₀ resolving onto a
+    new bottom ⊥ₙ₊₁) and rise to the antipode `∞` in the `rInv` chart; and `rInv` is the frame-change
+    that swaps the two poles `0 ↔ ∞`. The descent to ⊥ and the ascent to ∞ are the *same*
+    tower-encodings under the frame-change. (ε₀ ≠ ⊥: the encodings converge to ⊥, they do not realize ε₀ as ⊥.) -/
 theorem snap_is_frameflip :
     Tendsto (fun k => cnf_encode (towerOrd k)) atTop (𝓝 (0 : ℤ_[2]))
       ∧ Tendsto (fun k => rInv (OnePoint.some (((cnf_encode (towerOrd k)) : ℤ_[2]) : ℚ_[2])))

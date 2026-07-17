@@ -90,17 +90,17 @@ IS_FACES = [
      ["t_snap_derived"]),
     ("verb", "*one-way*: the departure from ⊥ does not reverse. No join can return to a strictly lower state (algebraic form), and the 2-adic and Kleisli faces prove the same irreversibility topologically and categorically",
      ["t_snap_irreversible", "c3_irreversible", "fC_no_return"]),
-    ("verb", "a *change of frame*, valuation face (probe): the same ω-tower descends to the 2-adic floor 0 (ε₀ realized as ⊥) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rises to ∞ (ε₀ realized as the ceiling). The inversion is the passage between the two charts",
+    ("verb", "a *change of frame*, valuation face (probe): the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
      ["snap_is_frameflip", "snap_frameflip_tower_tendsto_infty"]),
     ("verb", "a *change of frame*, category face (probe): the categorical seam realizes the same frame-flip via the zero object of the linear functor",
      ["catseam_is_frameflip"]),
     ("verb", "a *change of frame*, order-theoretic universal (choice-free): order-duality swaps the fork's two closures (least fixed point ↔ greatest fixed point), and the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point. This is the standard lfp/gfp duality, bundled - the domain-independent shape the valuation and category faces realize concretely",
      ["fork_is_frameflip", "fork_collapse_iff"]),
-    ("verb", "*generation*: the floor generates the ceiling - ε₀ is the closure of 0 under omega-to-the-power (the least fixed point of α ↦ ω^α)",
+    ("verb", "*generation*: the floor's first step off itself - ε₀ is the least fixed point of α ↦ ω^α, the first ordinal fixed by omega-to-the-power",
      ["epsilonZero_eq_nfp"]),
     ("verb", "*constructive, from below, choice-free*: on ordinal notations, each tower term strictly exceeds the last, ω^x has no fixed point, and the tower is strictly monotone - all `propext`-only, free even of `Quot.sound`",
      ["exp_lt_term", "omegaPow_no_fixedpoint", "tower_strictMono"]),
-    ("noun", "the ceiling reached, *co-witnessed*: ε₀ stands with the 2-adic limit and the machine snap in one triangle",
+    ("noun", "the first step reached, *co-witnessed*: ε₀ stands with the 2-adic limit and the machine snap in one triangle",
      ["zpm_triangle"]),
     ("noun", "*what departs*: the floor the snap leaves - the three-name identity (Quine atom = order-bottom ⊥ = join-identity, axiom-free), extended to the Kleene self-reproducing fixed point",
      ["t_exec", "t_comp", "kleene_quine_is_bot"]),
@@ -116,7 +116,7 @@ IS_NOT = [
      []),
     ("*dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's computational commitments. No snap axiom appears anywhere in the development",
      ["t_snap_derived"]),
-    ("*proved to be a choice-free minimal ceiling*. The from-below snap on ordinal notations is choice-free, but ε₀ as the least fixed point via the syntax-to-semantics bridge (`tower_NF`) inherits `Classical.choice`. Whether the minimality is choice-free at the notation level is open",
+    ("*proved to be a choice-free minimal first step*. The from-below snap on ordinal notations is choice-free, but ε₀ as the least fixed point via the syntax-to-semantics bridge (`tower_NF`) inherits `Classical.choice`. Whether the minimality is choice-free at the notation level is open",
      []),
 ]
 
@@ -170,9 +170,9 @@ The snap is the framework's one theorem - the forced, one-way departure from ⊥
 
 **Proved - the snap is one-way.** It does not reverse: no join returns to a strictly lower state (t_snap_irreversible, algebraic), and the same irreversibility is proved topologically in the 2-adics (c3_irreversible) and categorically in the probability functor (fC_no_return). ⊥ is a source, not a round trip.
 
-**Proved - a frame-change in each domain, and an order-theoretic universal.** Over any complete lattice the order-duality frame-change swaps the fork's two closures and the fork collapses at the diagonal fixed point (fork_is_frameflip); this is the standard lfp/gfp duality, choice-free, claimed as no novelty. It is realized concretely in the valuation face (snap_is_frameflip: one ω-tower is ε₀-as-⊥ in the encoding chart and ε₀-as-ceiling through the 0 ↔ ∞ inversion) and the category face (catseam_is_frameflip). (The abstract cross-domain reading - that these are one and the same frame-change - stays a conjecture; see below.)
+**Proved - a frame-change in each domain, and an order-theoretic universal.** Over any complete lattice the order-duality frame-change swaps the fork's two closures and the fork collapses at the diagonal fixed point (fork_is_frameflip); this is the standard lfp/gfp duality, choice-free, claimed as no novelty. It is realized concretely in the valuation face (snap_is_frameflip: one ω-tower's encodings converge to ⊥ in the encoding chart and diverge to ∞ through the 0 ↔ ∞ inversion) and the category face (catseam_is_frameflip). (The abstract cross-domain reading - that these are one and the same frame-change - stays a conjecture; see below.)
 
-**Proved - the ceiling, reached by a choice-free snap from below.** ε₀ is the closure of 0 under omega-to-the-power (epsilonZero_eq_nfp); on ordinal notations the snap climbs from below with no choice (exp_lt_term, omegaPow_no_fixedpoint, tower_strictMono, all `propext`-only), and the ceiling is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle). (That ε₀ *is* the least fixed point - epsilonZero_eq_nfp - uses classical logic; whether that is avoidable at the notation level is the open item below.)
+**Proved - the first step from bottom, reached by a choice-free snap from below.** ε₀ is the least fixed point of omega-to-the-power reached from 0 (epsilonZero_eq_nfp); on ordinal notations the snap climbs from below with no choice (exp_lt_term, omegaPow_no_fixedpoint, tower_strictMono, all `propext`-only), and the first step is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle). (That ε₀ *is* the least fixed point - epsilonZero_eq_nfp - uses classical logic; whether that is avoidable at the notation level is the open item below.)
 
 **Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape, not a single categorical map. In Set (all endofunctions) no nontrivial total type carries a Lawvere fixed-point witness - Cantor forbids it - so the lattice and 2-adic faces are provably not Set-level Lawvere instances (nontrivial_lattice_no_witness, q2_no_witness); their ⊥ is a proved fixed point of its own self-map (q2_unique_fp, selfApp_fp_set_eq_singleton), carrying the diagonal shape but not a genuine Set-level Lawvere instance. The computability face, by contrast, IS a genuine recursion fixed point (computability_face_fixedPoint, Kleene / Rogers) - but it lives in the effective category, where the fixed-point-free diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what unifies them is the diagonal shape, not one mechanism. The universality that holds is order-theoretic (the fork), not categorical - a proved obstruction.
 
@@ -195,9 +195,9 @@ For the framework's *object*, the bottom element ⊥, see its companion referenc
 
 This is a **reference** for the framework's central transition, the **snap** - the forced move off the bottom element ⊥ into the first structured state, ε₀. It is the companion to [The Bottom Element](BOTTOMELEMENT.md): that page maps the *object* ⊥ (the noun); this page maps the *transition* off it (the verb). Where the bottom dictionary is mostly nouns, this one is mostly verbs - the snap is an action.
 
-It is a **beginning, not a resolution.** What is *proved* is that the snap is forced, one-way, generates its ceiling from below, realizes a frame-change in each domain, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the ceiling's minimality. The frame-change faces are experimental probes; the abstract "the snap IS the change of frame" is a conjecture, written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
+It is a **beginning, not a resolution.** What is *proved* is that the snap is forced, one-way, takes its first step from below, realizes a frame-change in each domain, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the first step's minimality. The frame-change faces are experimental probes; the abstract "the snap IS the change of frame" is a conjecture, written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
 
-> **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: it starts at 0, departs by a single discrete step, and reapproaches 0 - the floor and the ceiling co-located at that one point (the 0 = ∞ pole). Hover any point for the checkable Lean witness.
+> **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: a single discrete step of ε₀ away from bottom, then a return to bottom (a new successor null). Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
 
 ---
 
