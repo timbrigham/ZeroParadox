@@ -9,10 +9,10 @@ defaults:
     values:
       layout: default
 
-# Keep the Lean sources and build tooling out of the published site
-# (the PDFs and .md pages are kept; only code/artifacts are dropped).
+# Keep build tooling out of the published site. The PDFs, .md pages, AND the
+# Lean sources under ZeroParadox/ are served, so the relative "check it yourself"
+# citation links resolve on the site; only build artifacts/tooling are dropped.
 exclude:
-  - ZeroParadox/
   - scripts/
   - lakefile.lean
   - lake-manifest.json
