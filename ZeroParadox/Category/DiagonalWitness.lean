@@ -94,10 +94,15 @@ theorem hasWitnessRel_top_of_surjective {β : Type u} {α : Type u} (f : α → 
     the Set-level Cantor obstruction as a level set of `HasWitnessRel`, and it is exactly why the lattice
     and 2-adic faces are *posited* (a designated self-map has a fixed point without a witness), not
     genuine, at the coarse end. Mirrors `no_witness_of_nontrivial` (`Category/Lawvere.lean`). -/
-theorem no_witnessRel_top_of_nontrivial {β : Type u} {b₀ b₁ : β} (hne : b₀ ≠ b₁) :
+theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivial β] :
     ¬ HasWitnessRel β (fun _ => True) := by
-  obtain ⟨g, hg⟩ := fixedPointFree_of_nontrivial hne
-  exact no_witnessRel_of_admissible_fpf trivial hg
+  -- Choice-free: with `DecidableEq β` the swap needs no classical decision (constructive-footprint audit,
+  -- 2026-07-18). The framework's carriers have `DecidableEq`, so this is the base-level, choice-free form.
+  obtain ⟨b₀, b₁, hne⟩ := exists_pair_ne β
+  refine no_witnessRel_of_admissible_fpf (g := fun x => if x = b₀ then b₁ else b₀) trivial (fun x => ?_)
+  by_cases hx : x = b₀
+  · subst hx; simpa using hne.symm
+  · simp only [if_neg hx]; exact fun h => hx h.symm
 
 /-- **The fine end is inhabited (non-degeneracy).** A one-element carrier has a witness for *every*
     admissible class — there is no fixed-point-free endomap to obstruct it, so the diagonal always

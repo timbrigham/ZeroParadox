@@ -4496,7 +4496,7 @@
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
-            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "axioms": "[propext]",
             "sorry_free": true
           }
         },
