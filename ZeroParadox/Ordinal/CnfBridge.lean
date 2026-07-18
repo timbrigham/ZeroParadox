@@ -53,10 +53,9 @@ proposition is not well-formed.
 
 ## Engineer's Take
 
-TODO (Tim): your take on the construction-level reading of the CNF/ℤ₂ bridge — one μ-construction on
-NONote, two carrier realizations (ε₀ in Ordinal, 0 in ℤ₂), the seed ⊥ shared and the 2-adic ascent
-looping back to ⊥; and why "construction ≡ construction" is the right resolution while "ε₀ = 0" stays
-a type boundary.
+By using the abstract shape of epsilon zero from least fixed point, we can now define a generic
+relationship for this one specific proven construction. We can't cross a type boundary, however we can dictate shared shape
+and position.
 -/
 
 namespace ZeroParadox

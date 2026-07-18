@@ -54,8 +54,8 @@ ZP-invented structure.
 
 ## Engineer's Take
 
-TODO (Tim): your take on the μ / ceiling face — the least fixed point reached from the seed, the
-ascent analogue of the AbstractSelfApp floor, and why ε₀ fits while Kleene's Code stays fenced.
+Define epsilon 0 as a minimum fixed point in an abstract class, instead of a fixed class for a given
+framework. Denotes a common placement relative to zero.
 -/
 
 namespace ZeroParadox
