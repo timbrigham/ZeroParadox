@@ -18,10 +18,8 @@ cannot overclaim* ε₀'s nature.
 
 ## Engineer's Take
 
-TODO (Tim): your take on the ε₀ object — what it is, and (the part that keeps getting mangled) what it
-is NOT. ε₀ ≠ 0, always; ε₀ ≠ ⊥; it is the first fixed point of the ω-tower seeded at the base ⊥ (two
-conditions: the tower operator AND the base), simultaneously least fixed point and tower-supremum, the
-minimum step directly next to the pole 0 = ∞ (the 1/∞ / veblen-(1,0) reading), never the pole itself.
+A canonical official representation of what ε₀ can and cannot be. Defined in Lean and referenced by the
+proof assistant during development.
 
 ---
 

@@ -19,8 +19,8 @@ null, never the same bottom (`c_da2_novelty`, `da1_minimal_path`, `t_iz_limit_is
 
 ## Engineer's Take
 
-TODO (Tim): your take on the snap object — what it is (the one forced, one-way, discrete step ⊥ → ε₀,
-a derived theorem and not an axiom), and what it is NOT (not reversible; not a return to the same ⊥).
+A canonical official representation of what the snap can and cannot be. Defined in Lean and referenced
+by the proof assistant during development.
 -/
 
 section SnapCannotBeIndex
