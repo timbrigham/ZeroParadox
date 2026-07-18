@@ -82,12 +82,12 @@ def main():
              f'{N} domain nodes · {len(data["edges"])} edges · every proved/deep edge carries a live '
              f'sorry-free witness — the gate rejects any that do not</text>')
 
-    # commitment ring (dotted): MC-1 identity — the literal one-object claim, not an edge
+    # shape ring (dotted): MC-1 — the shared apophatic shape; the one-object identity is retired as ill-typed
     S.append(f'<ellipse cx="{CX}" cy="{CY}" rx="{R+96}" ry="{R+84}" fill="none" '
              f'stroke="#9a9ab0" stroke-width="2" stroke-dasharray="2 7"/>')
     S.append(f'<text x="{CX}" y="{CY-R-90}" text-anchor="middle" font-size="12.5" fill="#7a7a92" '
-             f'font-style="italic">MC-1 identity: "these bottoms are one object" — a modeling '
-             f'commitment (not drawn as an edge)</text>')
+             f'font-style="italic">MC-1: the shared diagonal shape; "these bottoms are one object" is '
+             f'retired as ill-typed — members provably distinct (not an edge)</text>')
 
     # spokes: each domain node is a face of ⊥ at the floor
     for d, (x, y) in dom_pos.items():
@@ -172,7 +172,7 @@ def main():
         ("deep",       "proved transport of a cold-audited theorem across the boundary (e.g. Perron-Frobenius)"),
         ("corr",       "correspondence / co-location at the shared floor — witness-backed, but not a transform"),
         ("conj",       "conjectural / intended — NOT built (e.g. Lawvere unification; no witness, cannot be proved-coded)"),
-        ("commitment", "modeling commitment — the literal one-object identity (MC-1); not formalizable, not an edge"),
+        ("commitment", "MC-1 one-object identity — retired as ill-typed (not a well-formed proposition); the shared shape survives, not an edge"),
     ]
     for k, (st, txt) in enumerate(leg):
         col, wd, dash, _ = STATUS_STYLE[st]

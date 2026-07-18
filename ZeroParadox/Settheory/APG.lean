@@ -57,14 +57,16 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 - § VI   Self-loop uniqueness (PROVED)
 - § VII  k-cycle node uniqueness (PROVED: corollary of § IV)
 - § VII' Cyclic vertex uniqueness (PROVED: cyclic_decoration_eq_bot)
-- § VIII Acyclic vertex uniqueness (sorry: needs WellFounded on finite graphs)
+- § VIII Acyclic vertex uniqueness (superseded by § IX; local step proved, full route commented out)
 - § IX   Global decoration uniqueness (PROVED: direct strong induction on reach cardinality)
 
 ## What remains
 
-- Acyclic case (§ VIII): structurally clear — induct on depth, congrArg on collect —
-  but requires [Fintype V] and a WellFounded instance on acyclic vertices.
-  Currently sorry'd but not load-bearing: decoration_unique bypasses it entirely.
+- Nothing load-bearing. The acyclic-specific route (§ VIII) — induct on depth, congrArg on
+  collect, requiring [Fintype V] and a WellFounded instance on acyclic vertices — was not
+  needed: § IX (decoration_unique) proves global uniqueness directly by strong induction on
+  reach cardinality. The § VIII full theorem is commented out; its local step
+  (acyclic_induction_step) is proved.
 
 ## Dependencies
 
@@ -372,7 +374,7 @@ theorem cyclic_decoration_eq_bot
       have h2 : k ≥ m + p.length := by exact_mod_cast hge2
       omega
 
-/-! ## § VIII. Acyclic Vertex Uniqueness (sorry)
+/-! ## § VIII. Acyclic Vertex Uniqueness (superseded by § IX)
 
     For acyclic vertices, the induction step is clear:
       - IH: d₁ and d₂ agree on all apg_children of v
@@ -380,11 +382,12 @@ theorem cyclic_decoration_eq_bot
       - collect(d₁ '' apg_children v) = collect(d₂ '' apg_children v)  [congrArg collect]
       - d₁ v = collect(d₁ '' apg_children v) = collect(d₂ '' apg_children v) = d₂ v
 
-    What's missing: the well-founded induction principle itself. For [Fintype V],
-    the apg_children relation on acyclic vertices has no infinite descending chains
-    (finite type, acyclic subgraph = DAG), giving a WellFoundedRelation. Building
-    this WellFounded instance requires connecting IsAcyclic to a finiteness argument.
-    Deferred to the next session. -/
+    The local step `acyclic_induction_step` below is proved. The full acyclic-vertex route
+    would then need a well-founded induction principle (for [Fintype V], the apg_children
+    relation on acyclic vertices has no infinite descending chains). That route was not needed:
+    § IX (`decoration_unique`) proves global uniqueness directly by strong induction on
+    reachable-set cardinality, handling acyclic and cyclic vertices in one argument. The
+    commented-out `acyclic_decoration_unique` below records the abandoned approach. -/
 
 /-- Local induction step: if d₁ and d₂ agree on all apg_children of v, they agree on v. -/
 theorem acyclic_induction_step

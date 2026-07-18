@@ -11,7 +11,7 @@ set_option maxHeartbeats 1000000
 
 Every finite stochastic action has a fixed point. Built via Cesàro averaging on the compact simplex
 (Mathlib has `isCompact_stdSimplex` but no Brouwer / Markov–Kakutani fixed-point, so existence is built, not
-pulled off a shelf). STUB-FIRST: architecture with `sorry`, fill incrementally.
+pulled off a shelf).
 
 ## Engineer's Take
 This file is one of a series of iterative attempts on this branch to build a map of how the various

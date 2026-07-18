@@ -440,7 +440,7 @@
         },
         {
           "claim_id": "MC-1-identity",
-          "date": "2026-07-04",
+          "date": null,
           "domain": [
             "category",
             "information",
@@ -452,15 +452,19 @@
             {
               "date": "2026-07-04",
               "status": "commitment"
+            },
+            {
+              "date": null,
+              "status": "retired"
             }
           ],
           "id": "b8c3c9d6-9e2b-4836-b486-96729baa7484",
           "object": [
             "bottom"
           ],
-          "reason": null,
+          "reason": "MC-1 cross-category identity retired as ill-typed (not a well-formed proposition); 2026-07-15 convention. Members provably distinct; shared diagonal shape survives apophatically.",
           "statement": "The four domain bottoms are numerically one object (MC-1, identity half — a modeling commitment, not type-statable).",
-          "status": "commitment",
+          "status": "retired",
           "to": null
         },
         {
@@ -599,7 +603,8 @@
             "conj",
             "corr",
             "deep",
-            "proved"
+            "proved",
+            "retired"
           ]
         }
       }
@@ -611,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1232,
+        "declarations": 1256,
         "files": 136
       },
       "entries": [
@@ -2303,6 +2308,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "07fe68c9-b780-44c7-a2ef-328445cb18e5",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cnf_bridge_type_boundary",
+            "short": "cnf_bridge_type_boundary"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "081f7d76-e591-4847-9411-d3b25420dc4c",
           "new": {
@@ -2403,6 +2447,46 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "08de54f4-4c1f-46f8-ad6b-8be6f80a3935",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snap_arc_z2_loop",
+            "short": "snap_arc_z2_loop"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -5601,6 +5685,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "18c96ac8-938e-4a41-93d0-cfeda64abaed",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mu_construction_correspondence",
+            "short": "mu_construction_correspondence"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "19144c71-30c7-4aa0-b44e-71242c2bf7a2",
           "new": {
@@ -6327,6 +6450,44 @@
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1d03d057-42ab-4a60-9651-e4f31d6e3918",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_image_loops_to_seed",
+            "short": "tower_image_loops_to_seed"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -8783,6 +8944,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2b19d5b7-208e-4afa-bf2d-8c939d963d41",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_min_eq_max",
+            "short": "epsilon0_min_eq_max"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2b3cf6a5-b185-463d-9598-709280c1ad2f",
           "new": {
@@ -10053,6 +10252,42 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "32a6e4b8-83b5-4311-9651-d946e2d84b80",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fundamentalSeq_strictMono'",
+            "short": "fundamentalSeq_strictMono'"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -14981,6 +15216,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4eca3b61-3d99-4110-8339-96de1e2921a9",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_isLeastFixedPointFrom",
+            "short": "selfApp_isLeastFixedPointFrom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4ed40d5b-f184-47db-a08e-a37b3aee277d",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -15047,6 +15320,42 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4f27efaf-f9f2-4f13-bd21-8035565a153e",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsLeastFixedPointFrom.unique",
+            "short": "IsLeastFixedPointFrom.unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
             "sorry_free": true
           }
         },
@@ -18235,6 +18544,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "624e1361-f74b-44ae-ad02-c27e89250c2c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_orders_agree",
+            "short": "tower_orders_agree"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "624e1754-c172-4a3d-8c7c-33a8cd85562f",
           "new": {
             "file": "ZeroParadox/Settheory/RequirementsGap.lean",
@@ -19203,6 +19551,45 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "69a84b1f-f2c5-4146-98d3-dd2343515d33",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.seed_maps_to_bot_both",
+            "short": "seed_maps_to_bot_both"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -23792,6 +24179,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "822eb975-d14a-4bf8-b74d-f57f4f67af10",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isLeastFixedPointFrom_nfp",
+            "short": "isLeastFixedPointFrom_nfp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8235f009-a062-44b7-8353-e7e48b3a87bd",
           "new": {
@@ -25730,6 +26155,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8ff926b5-6d70-45af-9a2d-017b4e35779b",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.kleene_fixed_point_from_exists",
+            "short": "kleene_fixed_point_from_exists"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "900c5bd0-9181-44ff-bc78-fe6ef0710c7d",
           "new": {
@@ -27554,6 +28017,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "98b93dd0-1745-44a4-a69e-c8cbac678bcd",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_repr_orderEmbedding",
+            "short": "tower_repr_orderEmbedding"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "98f1beb2-9020-47ee-8c0d-11105420ffe0",
           "new": {
@@ -28348,6 +28847,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9c6a6465-9c49-4930-ba24-0eefd2488c5b",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_ne_bot",
+            "short": "epsilon0_ne_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -32678,6 +33215,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b863672b-7bb7-428d-9cec-a2892f0cb576",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsLeastFixedPointFrom",
+            "short": "IsLeastFixedPointFrom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b8b08b4f-5718-43b6-90bb-225d9a0f04f8",
           "new": {
@@ -33435,6 +34010,45 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "be0ea1fd-02dc-46bb-9217-6e45f3ac8be6",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0MinMax.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_eq_nfp_bot",
+            "short": "epsilon0_eq_nfp_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling",
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -35516,6 +36130,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ca6d69ed-0725-4b2d-83df-5fa19e1067b7",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfApp_mu_unique",
+            "short": "selfApp_mu_unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "(none) - does not depend on any axioms",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ca8f3412-4105-4b98-bcf6-46b722f8d77c",
           "new": {
@@ -36638,6 +37290,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cf42ab93-32f6-4664-a443-6feffc9b3c3c",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_isLeastFixedPointFrom",
+            "short": "epsilon0_isLeastFixedPointFrom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -41358,6 +42048,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e86cb8c4-4b40-4ea7-a802-26bbf5571678",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_ne_zero",
+            "short": "epsilon0_ne_zero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e8bbb7e5-be36-4804-96f6-f239a43eaa19",
           "new": {
@@ -41458,6 +42186,44 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e8efd3a4-c540-45c6-b43b-9d0fcf87db3b",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_mu_eq_iSup",
+            "short": "epsilon0_mu_eq_iSup"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -42594,6 +43360,42 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f0ea4c49-608f-477e-8ada-bd99aeb75c4c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/CnfBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_valuation_orderEmbedding",
+            "short": "tower_valuation_orderEmbedding"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
             "sorry_free": true
           }
         },
@@ -44088,6 +44890,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f74fc6c8-44be-491c-ac63-3011b15b9dca",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_eq_veblen_one_zero",
+            "short": "epsilon0_eq_veblen_one_zero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f7c7c165-bd56-45b8-a663-762f35dd9ac1",
           "new": {
             "file": "ZeroParadox/Settheory/Loeb.lean",
@@ -45035,6 +45875,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fc9186b0-c584-4a74-a3b0-d0771de3086f",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.epsilon0_isLeastFixedPointFrom_via_nfp",
+            "short": "epsilon0_isLeastFixedPointFrom_via_nfp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fc924ec7-4ea6-47ca-9d3d-fa0a64a9ebc1",
           "new": {
@@ -45538,6 +46416,42 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffca0f38-58d6-4138-8d54-6397cf518308",
+          "new": {
+            "file": "ZeroParadox/Order/LeastFixedPoint.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.lfp_isLeastFixedPointFrom",
+            "short": "lfp_isLeastFixedPointFrom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": "[propext, Quot.sound]",
             "sorry_free": true
           }
         },

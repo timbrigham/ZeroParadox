@@ -262,6 +262,29 @@ filled count. The full reasoning behind the `GEN` and `dynamics` columns is writ
 
 ---
 
+## The diagonal family - the self-reference arguments as one fixed point
+
+The classical self-reference arguments are not separate theorems that happen to rhyme; they are one diagonal fixed point seen under different conditions (Lawvere 1969; Yanofsky 2003). The framework maps the full roster against ⊥, organized by the μ/ν fork and built off a single engine - [`negation_no_fixedpoint`](ZeroParadox/Settheory/Wall.lean) / [`lawvere_fixedpoint`](ZeroParadox/Settheory/Wall.lean), both axiom-free. On the **wall** side (μ) self-reference cannot close: the argument runs as a proof that no reflexive object exists. On the **floor** side (ν) it does close - the fixed point is genuinely produced, and lands at ⊥. Cantor, Russell, Turing, Tarski, Curry, Löb, and Gödel's second incompleteness are all **axiom-free**; only the two computability floor faces (the Kleene quine and Rice's exists-but-undecidable) carry `Classical.choice`, inherited from Mathlib's recursion theory. This roster is ZP-R (the Cross-Category Fixed Point layer and its Diagonal Family Addendum) - a *placement* of ⊥ among recognized results, not a new theorem; the cross-face identity stays a type boundary, the same walls the map above records.
+
+**See it:** the interactive [Diagonal Family](diagonal-family.html) map renders this roster as one engine forking into walls (μ) and floors (ν), each node linking its Lean witness and axiom footprint.
+
+| face | side | what it says | witness | axioms |
+|---|---|---|---|---|
+| Cantor | μ wall | no surjection onto its own power set - the reflexive object is refuted | [`cantor_via_engine`](ZeroParadox/Settheory/Wall.lean) | (none) |
+| Russell | μ wall | membership is not surjective - no set of all non-self-membered sets | [`russell_via_engine`](ZeroParadox/Settheory/Wall.lean) | (none) |
+| Turing | μ wall | no machine decides its own halting - no self-decider | [`no_self_decider`](ZeroParadox/Settheory/Wall.lean) | (none) |
+| Tarski | μ wall | no internal truth predicate - the liar sentence has no witness | [`tarski_no_internal_truth`](ZeroParadox/Settheory/Tarski.lean) | (none) |
+| Curry | μ wall | no naming surjection - Curry's paradox forces any conclusion | [`curry_no_bottom`](ZeroParadox/Settheory/Curry.lean) | (none) |
+| the wall | μ | no well-founded relation admits a self-loop (the engine's floor) | [`wf_no_selfloop`](ZeroParadox/Settheory/Wall.lean) | (none) |
+| Gödel 1st | between | the undecidable diagonal sentence, built by the shared engine | [`lawvere_fixedpoint`](ZeroParadox/Settheory/Wall.lean) | (none) |
+| Quine atom | ν floor | the self-containing set ⊥ = {⊥} - executable self-reference, landing at ⊥ | [`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean) | (none) |
+| Löb | ν floor | provability of (□A → A) yields A - the provability-logic fixed point | [`loeb`](ZeroParadox/Settheory/Loeb.lean) | (none) |
+| Gödel 2nd | ν floor | no consistent system proves its own consistency | [`godel_two`](ZeroParadox/Settheory/Loeb.lean) | (none) |
+| Kleene quine | ν floor | a program that reproduces itself - the recursion theorem fires | [`computability_face_fixedPoint`](ZeroParadox/Category/Lawvere.lean) | `Classical.choice` |
+| Rice | ν floor | the fixed point provably exists, yet its membership is undecidable | [`rice_face_has_bottom`](ZeroParadox/Computability/Rice.lean) | `Classical.choice` |
+
+---
+
 *Generated from `bottom_cannot_be.md` and the matrix data by `build_dictionary_map.py`. Witness names are
 resolved against the Lean source at generation time and link to the file that declares them; the `meta`
 entries (marked as such) have no Lean witness. To update: edit a source and rerun. The links render

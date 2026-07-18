@@ -29,6 +29,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Order/PerronCapstone.lean` - Capstone: Perron–Frobenius for finite stochastic operators
 - `ZeroParadox/Order/PowerSet.lean` - ZP-H Extension: Power Set Lattice as Structural Floor Witness
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
+- `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ (what the snap is / is not; `#check`-only)
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
@@ -62,7 +63,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### State / Hilbert (ZP-D)
 
 - `ZeroParadox/State/HilbFunctor.lean` - ZP-H Hilbert Functor: F_D into the real category `ModuleCat ℂ` (MC-1 remediation)
-- `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH; stub-first)
+- `ZeroParadox/State/MeanErgodic.lean` - Mean ergodic convergence for doubly-stochastic kernels (STRETCH)
 - `ZeroParadox/State/ReversibleSpectrum.lean` - Reversible chains have real spectrum (genuine Hilbert / self-adjoint content)
 - `ZeroParadox/State/StateSpace.lean` - ZP-D: State Layer (Hilbert Space)
 
@@ -117,6 +118,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/B6_CanonicalCNF.lean` - B6 (pipeline): canonical (CNF / log-ω) ordinal → 2-adic, valuation growth NOT tower-defined
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
+- `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ (what ε₀ is / is not; `#check`-only)
 - `ZeroParadox/Ordinal/Gentzen.lean` - ZP-L: Incomputability Convergence
 - `ZeroParadox/Ordinal/Goodstein.lean` - Goodstein's theorem (full, hereditary base) — ε₀ ordinal descent
 - `ZeroParadox/Ordinal/Incompleteness.lean` - ZP-M: Kleene–Ordinal Bridge Layer
@@ -135,6 +137,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 - `ZeroParadox/AxiomProfile.lean` - Axiom Profile — the choice-free core of the Zero Paradox
 - `ZeroParadox/BottomCannotBe.lean` - Machine-checked verification index of results characterizing ⊥ (the bottom element)
+- `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked keystone index of self-reference (the diagonal fixed point), routing every face by the μ/ν fork; `#check`-only
 
 ### Meta / tooling (not framework content)
 
@@ -232,7 +235,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/SeamConnectorFail.lean` - ZP-H tree TC34 — the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
 - `ZeroParadox/Multihomed/SelfAppForkPlace.lean` - ZP-H tree, theory TH11 — placing the ZP-J selfApp fixed point on the μ/ν fork
 - `ZeroParadox/Multihomed/SelfAppSeam.lean` - ZP-H tree — TC15: the selfApp bottom sits at the μ=ν seam, not on either branch
-- `ZeroParadox/Multihomed/SnapFrameChange.lean` - The snap as a change of frame: ε₀-as-⊥ and ε₀-as-ceiling are two charts, swapped by `rInv`
+- `ZeroParadox/Multihomed/SnapFrameChange.lean` - The snap as a change of frame: the tower's two limits (⊥ and ∞) are two charts, swapped by `rInv`
 - `ZeroParadox/Multihomed/SpanObstruction.lean` - ZP-H tree, TC17 / TC14 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 - `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms

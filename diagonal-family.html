@@ -1,0 +1,370 @@
+---
+layout: null
+---
+{% raw %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Diagonal Family - Zero Paradox</title>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#0a0e14; --ground2:#10161f; --panel:#0d131b;
+    --ink:#ece9e0; --ink-dim:#9aa6ad; --ink-faint:#5f6b73;
+    --engine:#b493e0;  /* the one diagonal engine (Lawvere)            */
+    --wall:#e0864a;    /* mu - self-reference CANNOT close (obstruction)*/
+    --floor:#5fbfd0;   /* nu - self-reference DOES close (a fixed point)*/
+    --between:#e6cf7a; /* Godel 1st - the undecidable diagonal sentence */
+    --bottom:#6fd3ec;  /* the Quine atom floor = the framework's own bot*/
+    --choice:#7d7266;  /* carries Classical.choice (Mathlib recursion)  */
+    --sight:#ff3b3b;
+    --serif:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Cambria Math","Segoe UI Symbol","Noto Serif","DejaVu Serif",serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Mono","Segoe UI Symbol","DejaVu Sans Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  .plate{
+    background:
+      radial-gradient(120% 78% at 50% 106%, rgba(180,147,224,.12), transparent 55%),
+      radial-gradient(100% 66% at 50% -8%, rgba(230,207,122,.06), transparent 60%),
+      var(--ground);
+    color:var(--ink); font-family:var(--serif);
+    min-height:100vh; padding:34px 22px 48px;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .head{max-width:900px; text-align:center; margin-bottom:6px}
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--ink-faint); margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(1.9rem,4.4vw,3rem); font-weight:600; line-height:1.05;
+    margin:0 0 .5rem; text-wrap:balance; letter-spacing:.01em;
+  }
+  h1 .em{color:var(--engine); font-style:italic}
+  .thesis{
+    font-size:clamp(1rem,1.7vw,1.16rem); line-height:1.5; color:var(--ink-dim);
+    max-width:70ch; margin:0 auto; text-wrap:pretty;
+  }
+  .stage{width:100%; max-width:1060px; margin:10px auto 0}
+  svg{width:100%; height:auto; display:block; overflow:visible}
+  .hub-label{font-family:var(--serif); font-style:italic; font-size:20px; fill:var(--ink-dim)}
+  .hub-sub{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; fill:var(--ink-faint)}
+  .leaf-name{font-family:var(--serif); font-size:15.5px; fill:var(--ink)}
+  .leaf-inst{font-family:var(--mono); font-size:10.5px; fill:var(--ink-faint); letter-spacing:.01em}
+  .engine-name{font-family:var(--serif); font-size:16px; font-style:italic; fill:var(--engine)}
+  .engine-inst{font-family:var(--mono); font-size:10px; fill:var(--ink-faint); letter-spacing:.02em}
+  .between-name{font-family:var(--serif); font-size:14.5px; font-style:italic; fill:var(--between)}
+
+  svg text{
+    paint-order:stroke; stroke:var(--ground); stroke-width:5px;
+    stroke-linejoin:round; stroke-linecap:round;
+  }
+  @keyframes breathe{0%,100%{opacity:.82}50%{opacity:1}}
+  .pulse{animation:breathe 7s ease-in-out infinite; transform-origin:center}
+  @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+  .legend{
+    max-width:1060px; width:100%; margin-top:26px;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px 22px;
+    border-top:1px solid #1d2731; padding-top:20px;
+  }
+  .lg{display:flex; gap:11px; align-items:flex-start}
+  .sw{flex:0 0 auto; width:15px; height:15px; border-radius:50%; margin-top:3px}
+  .sw.dash{background:transparent; border:2px dashed var(--choice); border-radius:50%}
+  .lg .t{font-family:var(--serif); font-size:.9rem; color:var(--ink); line-height:1.3}
+  .lg .t small{display:block; font-family:var(--mono); font-size:.68rem; color:var(--ink-faint);
+    letter-spacing:.03em; margin-top:2px; text-transform:none}
+  .fence{
+    max-width:74ch; margin:24px auto 0; text-align:center; color:var(--ink-faint);
+    font-size:.86rem; line-height:1.56; font-style:italic;
+  }
+  .fence b{color:var(--ink-dim); font-style:normal; font-weight:600}
+  .fence + .fence{margin-top:12px}
+
+  .whycard{
+    max-width:1060px; width:100%; margin:18px auto 0; min-height:138px;
+    border:1px solid #1d2731; border-radius:14px; padding:15px 20px;
+    background:linear-gradient(180deg, rgba(20,28,38,.5), rgba(13,19,27,.5));
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .wc-title{font-family:var(--serif); font-style:italic; font-size:1.18rem; line-height:1.1}
+  .wc-row{display:flex; gap:12px; font-size:.9rem; line-height:1.36; align-items:baseline}
+  .wc-k{flex:0 0 128px; font-family:var(--mono); font-size:.66rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-faint); text-align:right; padding-top:2px}
+  .wc-v{flex:1; color:var(--ink)}
+  .whycard code{font-family:var(--mono); font-size:.82em; color:var(--engine);
+    background:rgba(180,147,224,.08); padding:1px 5px; border-radius:4px}
+  .wc-chk{font-family:var(--mono); font-size:.72rem; color:var(--ink-faint); margin-top:3px}
+  .wc-prompt{font-family:var(--mono); font-size:.8rem; color:var(--ink-faint); letter-spacing:.03em}
+  .hit{fill:transparent; cursor:pointer}
+  #nodeHL{pointer-events:none; opacity:0; transition:opacity .14s ease}
+  .tag{
+    display:inline-block; font-family:var(--mono); font-size:.66rem; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-faint);
+    border:1px solid #1d2731; border-radius:999px; padding:4px 12px; margin-top:20px;
+  }
+</style>
+
+<div class="plate">
+  <div class="head">
+    <div class="eyebrow">Zero Paradox &#183; interactive map</div>
+    <h1>The Diagonal Family &#8212; <span class="em">one engine, two fates</span></h1>
+    <p class="thesis">One diagonal fixed point sits behind Cantor, Russell, G&#246;del, Tarski, Turing and the recursion theorem (Lawvere 1969). The same engine forks by a single question &#8212; <em>can self-reference close?</em> On the <em>wall</em> side (&#956;) it cannot: the argument runs as a proof that no fixed point exists. On the <em>floor</em> side (&#957;) it does: the fixed point is produced &#8212; and at &#8869; it is the framework&#8217;s own.</p>
+  </div>
+
+  <div class="stage">
+    <svg viewBox="0 0 1000 900" role="img" aria-label="The diagonal family: one engine at the base forks into a wall side (mu, self-reference cannot close) with Cantor, Russell, Turing, Tarski, Curry, and a floor side (nu, self-reference closes) with the Quine atom, Kleene quine, Loeb, Godel's second theorem, and Rice; Godel's first theorem sits between.">
+      <defs>
+        <radialGradient id="core" cx="50%" cy="100%" r="62%">
+          <stop offset="0%" stop-color="#b493e0" stop-opacity=".5"/>
+          <stop offset="40%" stop-color="#8a6fc0" stop-opacity=".2"/>
+          <stop offset="100%" stop-color="#b493e0" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="7"/>
+        </filter>
+        <filter id="nodeglow" x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="3.2"/>
+        </filter>
+      </defs>
+
+      <!-- the engine's glow it all rises out of -->
+      <ellipse class="pulse" cx="500" cy="815" rx="300" ry="120" fill="url(#core)"/>
+
+      <!-- ================= BRANCHES ================= -->
+      <g fill="none" stroke-linecap="round">
+        <!-- engine -> fork -->
+        <path d="M500,806 C 500,760 500,712 500,676" stroke="var(--engine)" stroke-width="5" filter="url(#soft)" opacity=".5"/>
+        <path d="M500,806 C 500,760 500,712 500,676" stroke="var(--engine)" stroke-width="3"/>
+        <!-- fork -> wall hub (left) / floor hub (right) -->
+        <path d="M500,676 Q 420,650 300,628" stroke="var(--wall)"  stroke-width="5.5"/>
+        <path d="M500,676 Q 580,650 700,628" stroke="var(--floor)" stroke-width="5.5"/>
+        <!-- Godel 1st sits on the trunk, just above the fork -->
+        <path d="M500,676 L500,470" stroke="var(--between)" stroke-width="2" stroke-dasharray="2 6" opacity=".7"/>
+
+        <!-- WALL (mu) hub -> leaves -->
+        <path d="M300,626 Q 200,548 150,470" stroke="var(--wall)" stroke-width="2.6" opacity=".6"/>
+        <path d="M300,626 Q 176,470 150,360" stroke="var(--wall)" stroke-width="2.6" opacity=".6"/>
+        <path d="M300,626 Q 236,468 258,332" stroke="var(--wall)" stroke-width="2.6" opacity=".6"/>
+        <path d="M300,626 Q 312,486 356,392" stroke="var(--wall)" stroke-width="2.6" opacity=".6"/>
+        <path d="M300,626 Q 360,520 402,452" stroke="var(--wall)" stroke-width="2.6" opacity=".6"/>
+
+        <!-- FLOOR (nu) hub -> leaves -->
+        <path d="M700,626 Q 620,540 598,452"  stroke="var(--floor)" stroke-width="2.6" opacity=".6"/>
+        <path d="M700,626 Q 664,486 642,392"  stroke="var(--floor)" stroke-width="2.6" opacity=".6"/>
+        <path d="M700,626 Q 760,520 744,404"  stroke="var(--floor)" stroke-width="2.6" opacity=".6"/>
+        <path d="M700,626 Q 812,486 838,360"  stroke="var(--floor)" stroke-width="2.6" opacity=".6"/>
+        <path d="M700,626 Q 800,548 850,470"  stroke="var(--floor)" stroke-width="2.6" opacity=".6"/>
+      </g>
+
+      <!-- ================= ENGINE (root) ================= -->
+      <circle cx="500" cy="676" r="11" fill="none" stroke="var(--engine)" stroke-width="2.8"/>
+      <circle cx="500" cy="676" r="4.5" fill="var(--engine)" filter="url(#nodeglow)"/>
+      <circle cx="500" cy="676" r="4.5" fill="var(--engine)"/>
+      <text class="engine-name" x="500" y="712" text-anchor="middle">the diagonal engine</text>
+      <text class="engine-inst" x="500" y="728" text-anchor="middle">no reflexive object carries a fixed-point-free map &#183; axiom-free</text>
+
+      <!-- ================= HUB markers ================= -->
+      <circle cx="300" cy="626" r="4.5" fill="var(--wall)"/>
+      <circle cx="700" cy="626" r="4.5" fill="var(--floor)"/>
+      <text class="hub-label" x="288" y="620" text-anchor="end" style="fill:var(--wall)">&#956;</text>
+      <text class="hub-sub"   x="288" y="635" text-anchor="end" style="fill:var(--wall)">WALL &#183; CANNOT CLOSE</text>
+      <text class="hub-label" x="712" y="620" text-anchor="start" style="fill:var(--floor)">&#957;</text>
+      <text class="hub-sub"   x="712" y="635" text-anchor="start" style="fill:var(--floor)">FLOOR &#183; DOES CLOSE</text>
+
+      <!-- ================= WALL LEAVES (mu) ================= -->
+      <circle cx="150" cy="470" r="6.5" fill="var(--wall)" filter="url(#nodeglow)"/><circle cx="150" cy="470" r="6.5" fill="var(--wall)"/>
+      <text class="leaf-name" x="150" y="450" text-anchor="middle" style="fill:var(--wall)">Cantor</text>
+      <text class="leaf-inst" x="150" y="490" text-anchor="middle">no onto its power set</text>
+
+      <circle cx="150" cy="360" r="6.5" fill="var(--wall)" filter="url(#nodeglow)"/><circle cx="150" cy="360" r="6.5" fill="var(--wall)"/>
+      <text class="leaf-name" x="150" y="340" text-anchor="middle" style="fill:var(--wall)">Russell</text>
+      <text class="leaf-inst" x="150" y="380" text-anchor="middle">membership not onto</text>
+
+      <circle cx="258" cy="332" r="6.5" fill="var(--wall)" filter="url(#nodeglow)"/><circle cx="258" cy="332" r="6.5" fill="var(--wall)"/>
+      <text class="leaf-name" x="258" y="312" text-anchor="middle" style="fill:var(--wall)">Turing</text>
+      <text class="leaf-inst" x="258" y="352" text-anchor="middle">no self-halting decider</text>
+
+      <circle cx="356" cy="392" r="6.5" fill="var(--wall)" filter="url(#nodeglow)"/><circle cx="356" cy="392" r="6.5" fill="var(--wall)"/>
+      <text class="leaf-name" x="366" y="388" text-anchor="start" style="fill:var(--wall)">Tarski</text>
+      <text class="leaf-inst" x="366" y="404" text-anchor="start">no internal truth</text>
+
+      <circle cx="402" cy="452" r="6.5" fill="var(--wall)" filter="url(#nodeglow)"/><circle cx="402" cy="452" r="6.5" fill="var(--wall)"/>
+      <text class="leaf-name" x="412" y="448" text-anchor="start" style="fill:var(--wall)">Curry</text>
+      <text class="leaf-inst" x="412" y="464" text-anchor="start">no naming surjection</text>
+
+      <!-- ================= FLOOR LEAVES (nu) ================= -->
+      <!-- Quine atom = the framework's own bottom (highlighted, bottom colour) -->
+      <circle cx="598" cy="452" r="7.5" fill="none" stroke="var(--bottom)" stroke-width="2.6"/>
+      <circle cx="598" cy="452" r="4" fill="var(--bottom)" filter="url(#nodeglow)"/>
+      <circle cx="598" cy="452" r="4" fill="var(--bottom)"/>
+      <text class="leaf-name" x="588" y="448" text-anchor="end" style="fill:var(--bottom)">Quine atom</text>
+      <text class="leaf-inst" x="588" y="464" text-anchor="end">&#8869;={&#8869;} &#183; the floor</text>
+
+      <circle cx="642" cy="392" r="6.5" fill="none" stroke="var(--floor)" stroke-width="2.4" stroke-dasharray="3 3"/>
+      <text class="leaf-name" x="632" y="388" text-anchor="end" style="fill:var(--floor)">Kleene quine</text>
+      <text class="leaf-inst" x="632" y="404" text-anchor="end">a self-printing program</text>
+
+      <circle cx="744" cy="404" r="6.5" fill="var(--floor)" filter="url(#nodeglow)"/><circle cx="744" cy="404" r="6.5" fill="var(--floor)"/>
+      <text class="leaf-name" x="754" y="400" text-anchor="start" style="fill:var(--floor)">L&#246;b</text>
+      <text class="leaf-inst" x="754" y="416" text-anchor="start">&#9633;A&#8594;A yields A</text>
+
+      <circle cx="838" cy="360" r="6.5" fill="var(--floor)" filter="url(#nodeglow)"/><circle cx="838" cy="360" r="6.5" fill="var(--floor)"/>
+      <text class="leaf-name" x="838" y="340" text-anchor="middle" style="fill:var(--floor)">G&#246;del 2nd</text>
+      <text class="leaf-inst" x="838" y="380" text-anchor="middle">no self-consistency proof</text>
+
+      <circle cx="850" cy="470" r="6.5" fill="none" stroke="var(--floor)" stroke-width="2.4" stroke-dasharray="3 3"/>
+      <text class="leaf-name" x="850" y="450" text-anchor="middle" style="fill:var(--floor)">Rice</text>
+      <text class="leaf-inst" x="850" y="490" text-anchor="middle">exists, yet undecidable</text>
+
+      <!-- ================= BETWEEN : Godel 1st ================= -->
+      <circle cx="500" cy="466" r="6" fill="var(--between)" filter="url(#nodeglow)"/><circle cx="500" cy="466" r="6" fill="var(--between)"/>
+      <text class="between-name" x="500" y="446" text-anchor="middle">G&#246;del 1st</text>
+      <text class="leaf-inst" x="500" y="484" text-anchor="middle">the undecidable diagonal sentence</text>
+
+      <!-- ================= CREDIT strip ================= -->
+      <text class="engine-inst" x="500" y="812" text-anchor="middle" style="fill:var(--ink-faint)">Lawvere 1969 &#183; Yanofsky 2003 &#8212; one scheme behind them all</text>
+
+      <!-- interactive highlight + hit targets -->
+      <g id="nodeHL" stroke="var(--sight)" stroke-linecap="round">
+        <circle r="16.5" fill="none" stroke-width="3"/>
+        <line x1="0" y1="-26" x2="0" y2="-9" stroke-width="2.4"/>
+        <line x1="0" y1="26"  x2="0" y2="9"  stroke-width="2.4"/>
+        <line x1="-26" y1="0" x2="-9" y2="0" stroke-width="2.4"/>
+        <line x1="26"  y1="0" x2="9"  y2="0" stroke-width="2.4"/>
+        <circle r="1.7" fill="var(--sight)" stroke="none"/>
+      </g>
+      <g id="hits">
+        <circle class="hit" data-id="engine"  cx="500" cy="676" r="20"/>
+        <circle class="hit" data-id="cantor"  cx="150" cy="470" r="18"/>
+        <circle class="hit" data-id="russell" cx="150" cy="360" r="18"/>
+        <circle class="hit" data-id="turing"  cx="258" cy="332" r="18"/>
+        <circle class="hit" data-id="tarski"  cx="356" cy="392" r="18"/>
+        <circle class="hit" data-id="curry"   cx="402" cy="452" r="18"/>
+        <circle class="hit" data-id="quine"   cx="598" cy="452" r="20"/>
+        <circle class="hit" data-id="kleene"  cx="642" cy="392" r="18"/>
+        <circle class="hit" data-id="loeb"    cx="744" cy="404" r="18"/>
+        <circle class="hit" data-id="godel2"  cx="838" cy="360" r="18"/>
+        <circle class="hit" data-id="rice"    cx="850" cy="470" r="18"/>
+        <circle class="hit" data-id="godel1"  cx="500" cy="466" r="18"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="whycard" id="whycard">
+    <div class="wc-title" id="wcTitle" style="color:var(--ink-dim)">Why does each argument sit where it does?</div>
+    <div class="wc-prompt" id="wcBody">Hover or tap any node &#8212; the family tells you which fate it takes and why, with the checkable Lean witness.</div>
+  </div>
+
+  <div class="legend">
+    <div class="lg"><span class="sw" style="background:var(--engine)"></span><span class="t">The diagonal engine<small>one fixed-point lemma behind every argument (Lawvere)</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--wall)"></span><span class="t">&#956; wall &#8212; cannot close<small>the argument IS a proof that no fixed point exists</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--floor)"></span><span class="t">&#957; floor &#8212; does close<small>the fixed point is genuinely produced</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--bottom)"></span><span class="t">The Quine atom &#8869;<small>the floor face that is the framework&#8217;s own bottom</small></span></div>
+    <div class="lg"><span class="sw dash"></span><span class="t">Carries Classical.choice<small>Kleene, Rice &#8212; inherited from Mathlib recursion theory</small></span></div>
+    <div class="lg"><span class="sw" style="background:var(--between)"></span><span class="t">G&#246;del&#8217;s first<small>the undecidable diagonal sentence, built by the engine</small></span></div>
+  </div>
+
+  <p class="fence"><b>One engine, two fates.</b> Every argument here is the <em>same</em> diagonal fixed point under one question &#8212; can self-reference close on itself? On the <b>&#956; wall</b> side the answer is no, and the classical argument (Cantor, Russell, Turing, Tarski, Curry) <em>is</em> the proof that no fixed point exists. On the <b>&#957; floor</b> side the answer is yes: the fixed point is produced (the Quine atom, the Kleene quine, L&#246;b, G&#246;del&#8217;s second, Rice). G&#246;del&#8217;s first theorem sits between &#8212; the diagonal sentence the engine builds. The &#956; wall faces plus L&#246;b and G&#246;del&#8217;s second are <b>axiom-free</b>; the two computability floor faces (Kleene quine, Rice) carry <code>Classical.choice</code> from Mathlib&#8217;s recursion theory.</p>
+
+  <p class="fence"><b>What is drawn vs. what is claimed.</b> The unification is <b>Lawvere&#8217;s (1969)</b>, restated by <b>Yanofsky (2003)</b> &#8212; the arguments as one scheme is prior art, cited not claimed. This figure is a <em>placement</em> of the framework&#8217;s &#8869; among these recognized arguments, not a new theorem; the cross-face identity stays a type boundary &#8212; the same shape, provably distinct carriers. The one floor face that is the framework&#8217;s own bottom is the Quine atom &#8869;={&#8869;}, the seam the Bottom Family tree grows from.</p>
+
+  <a href="BOTTOMELEMENT.md" style="display:inline-block; font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); text-decoration:none; border:1px solid #1d2731; border-radius:999px; padding:5px 14px; margin-top:20px">&#8592; The Bottom Element</a>
+</div>
+
+<script>
+(function(){
+  var D = {
+    engine: {t:'the diagonal engine', c:'--engine', why:[
+      ['the one lemma','no reflexive object carries a fixed-point-free map &mdash; <code>lawvere_fixedpoint</code>'],
+      ['the pure root','&not;(p &harr; &not;p): negation has no fixed point &mdash; <code>negation_no_fixedpoint</code>'],
+      ['axioms','none &mdash; both depend on no axioms at all'],
+      ['the fork','whether a domain HAS a fixed-point-free self-map decides wall (mu) vs floor (nu)']],
+      chk:'lawvere_fixedpoint'},
+    cantor: {t:'Cantor', c:'--wall', why:[
+      ['mu wall','no set surjects onto its own power set &mdash; <code>cantor_via_engine</code>'],
+      ['what fails','the reflexive object is refuted; self-reference cannot close'],
+      ['axioms','none']],
+      chk:'cantor_via_engine'},
+    russell: {t:'Russell', c:'--wall', why:[
+      ['mu wall','membership is not surjective &mdash; no set of all non-self-members &mdash; <code>russell_via_engine</code>'],
+      ['what fails','the naming map has no fixed point'],
+      ['axioms','none']],
+      chk:'russell_via_engine'},
+    turing: {t:'Turing', c:'--wall', why:[
+      ['mu wall','no machine decides its own halting &mdash; <code>no_self_decider</code>'],
+      ['what fails','a self-halting decider would be a fixed-point-free witness'],
+      ['axioms','none']],
+      chk:'no_self_decider'},
+    tarski: {t:'Tarski', c:'--wall', why:[
+      ['mu wall','no internal truth predicate &mdash; the liar has no witness &mdash; <code>tarski_no_internal_truth</code>'],
+      ['what fails','truth cannot be named inside the system'],
+      ['axioms','none']],
+      chk:'tarski_no_internal_truth'},
+    curry: {t:'Curry', c:'--wall', why:[
+      ['mu wall','no naming surjection &mdash; Curry&#8217;s paradox forces any conclusion &mdash; <code>curry_no_bottom</code>'],
+      ['what fails','unrestricted self-reference collapses into triviality'],
+      ['axioms','none']],
+      chk:'curry_no_bottom'},
+    quine: {t:'the Quine atom &#183; &#8869;', c:'--bottom', why:[
+      ['nu floor','&#8869;={&#8869;}: self-reference closes &mdash; executable, landing at &#8869; &mdash; <code>t_exec</code>'],
+      ['the framework&#8217;s own','this floor face IS the bottom the whole framework runs on'],
+      ['axioms','none &mdash; axiom-free'],
+      ['the tie','it is the root seam the Bottom Family tree grows from']],
+      chk:'t_exec'},
+    kleene: {t:'the Kleene quine', c:'--floor', why:[
+      ['nu floor','a program that reproduces itself &mdash; the recursion theorem fires &mdash; <code>computability_face_fixedPoint</code>'],
+      ['a genuine instance','the reflexive object (the universal machine) is real here'],
+      ['axioms','carries Classical.choice (Mathlib recursion theory)']],
+      chk:'computability_face_fixedPoint'},
+    loeb: {t:'L&#246;b', c:'--floor', why:[
+      ['nu floor','provability of (&#9633;A &#8594; A) yields A &mdash; the provability-logic fixed point &mdash; <code>loeb</code>'],
+      ['what closes','the self-referential modal sentence resolves'],
+      ['axioms','none']],
+      chk:'loeb'},
+    godel2: {t:'G&#246;del&#8217;s second', c:'--floor', why:[
+      ['nu floor','no consistent system proves its own consistency &mdash; <code>godel_two</code>'],
+      ['a corollary of L&#246;b','the fixed point closes into the consistency statement'],
+      ['axioms','none']],
+      chk:'godel_two'},
+    rice: {t:'Rice', c:'--floor', why:[
+      ['nu floor','the fixed point provably EXISTS, yet its membership is undecidable &mdash; <code>rice_face_has_bottom</code>'],
+      ['exists-but-undecidable','the pivot face: produced, but not decidable &mdash; <code>quine_exists_yet_rice</code>'],
+      ['axioms','carries Classical.choice (Mathlib recursion theory)']],
+      chk:'rice_face_has_bottom'},
+    godel1: {t:'G&#246;del&#8217;s first', c:'--between', why:[
+      ['between the fates','the undecidable diagonal sentence the engine builds &mdash; <code>lawvere_fixedpoint</code>'],
+      ['neither pure wall nor floor','a fixed point that names its own unprovability'],
+      ['axioms','none (via the engine)']],
+      chk:'lawvere_fixedpoint'}
+  };
+  var title=document.getElementById('wcTitle'),
+      body=document.getElementById('wcBody'),
+      hl=document.getElementById('nodeHL'),
+      css=getComputedStyle(document.documentElement);
+  function render(node){
+    var d=D[node.getAttribute('data-id')]; if(!d) return;
+    var col=(css.getPropertyValue(d.c)||'').trim()||'#ece9e0';
+    title.style.color=col; title.innerHTML=d.t;
+    var rows=d.why.map(function(w){
+      return '<div class="wc-row"><div class="wc-k">'+w[0]+'</div><div class="wc-v">'+w[1]+'</div></div>';
+    }).join('');
+    rows+='<div class="wc-chk">check it yourself &#8212; clone the repo and run <code>#print axioms '+d.chk+'</code></div>';
+    body.className=''; body.innerHTML=rows;
+    hl.setAttribute('transform','translate('+node.getAttribute('cx')+','+node.getAttribute('cy')+')');
+    hl.style.opacity=1;
+  }
+  var hits=document.querySelectorAll('.hit');
+  Array.prototype.forEach.call(hits, function(h){
+    h.addEventListener('mouseenter', function(){ render(h); });
+    h.addEventListener('click', function(){ render(h); });
+  });
+})();
+</script>
+</body>
+</html>
+{% endraw %}

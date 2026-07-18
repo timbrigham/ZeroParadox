@@ -79,7 +79,7 @@ end ZeroParadox
 /-! ## Honest scope
 The encoding here is the **tower-rank** map `α ↦ 2 ^ (least tower stage above α)`, not the canonical
 Cantor-Normal-Form binary encoding the parked note envisioned. It genuinely realizes the *geometric*
-goal — ε₀ is the 2-adic limit of the ω-tower (`cnf_encode_tower_tendsto_zero`), so ε₀ ↦ 0 = ⊥ — but
+goal — ε₀ is the ordinal supremum of the ω-tower, whose encodings 2-adically converge to 0 = ⊥ (`cnf_encode_tower_tendsto_zero`), so ε₀ ↦ 0 = ⊥ — but
 because the rank is *defined via* the tower, the valuation growth is built in: this is a constructed
 witness of the limit, not a strongly *independent* ordinal↔2-adic structural identity. The canonical-CNF
 version (revealing genuine binary structure, a stronger independent route) remains the harder open piece.

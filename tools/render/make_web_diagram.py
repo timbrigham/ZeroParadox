@@ -55,8 +55,8 @@ def main():
     S.append(f'<ellipse cx="{CX}" cy="{CY}" rx="{R+108}" ry="{R+92}" fill="none" '
              f'stroke="#9a9ab0" stroke-width="2" stroke-dasharray="2 7"/>')
     S.append(f'<text x="{CX}" y="{CY-R-98}" text-anchor="middle" font-size="12.5" fill="#7a7a92" '
-             f'font-style="italic">MC-1: "these are one object" = modeling commitment '
-             f'(not type-statable; not drawn as an edge)</text>')
+             f'font-style="italic">MC-1: "these are one object" — retired as ill-typed '
+             f'(not type-statable; members provably distinct; not an edge)</text>')
 
     # spokes: each bottom-face domain = its domain's floor (the correspondence half)
     for n, (x, y) in zip(nodes, pos):
@@ -109,7 +109,7 @@ def main():
         ("#1a9988", "",                      "core — a cross-domain identity / Rosetta restatement of the keystone (role=core)"),
         ("#d98a16", 'stroke-dasharray="6 5"',"no-go — an obstruction spanning two domains (role=no-go)"),
         ("#cdcdda", "",                      "spoke — each domain's bottom is that domain's floor (a bottom face of ⊥)"),
-        ("#9a9ab0", 'stroke-dasharray="2 6"',"commitment ring — the literal one-object identity (MC-1); a commitment, not an edge"),
+        ("#9a9ab0", 'stroke-dasharray="2 6"',"shape ring — the shared diagonal shape (MC-1); the one-object identity is retired as ill-typed, not an edge"),
     ]
     S.append(f'<rect x="40" y="{ly-22}" width="{W-80}" height="132" rx="10" fill="#ffffff" '
              f'stroke="#e3e3ee" stroke-width="1"/>')

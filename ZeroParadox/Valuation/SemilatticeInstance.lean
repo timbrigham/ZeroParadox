@@ -26,7 +26,7 @@ Theorem T-IZ: Every maximal ascending chain in the Zero Paradox framework is a
 Cauchy sequence that converges to its own successor null in the 2-adic metric.
 
 This layer has five components:
-- § I:   Cauchy convergence — topological core (proved axiom-free)
+- § I:   Cauchy convergence — topological core (inherits Classical.choice from Mathlib analysis)
 - § Ib:  h_strict from R1+T3 via depth-index chain — closes R-IZ-A (proved)
 - § II:  Valuation-complexity bridge — SUPERSEDED by AFA path (see § III-B)
 - § III: T-IZ theorem, successor null, and framework closure (proved)
@@ -45,7 +45,7 @@ needed. t_iz_complete chains all four formal steps into one theorem.
 Dependencies: ZP-E (full synthesis: ZP-A, ZP-B, ZP-C, ZP-D), ZP-K (KleeneStructure), plus:
 - Mathlib.Analysis.SpecificLimits.Basic — geometric tendsto lemmas
 
-Key results: t_iz_cauchy (topological core, axiom-free), t_iz_complete (all steps formal).
+Key results: t_iz_cauchy (topological core; inherits Classical.choice from Mathlib analysis), t_iz_complete (all steps formal).
 -/
 
 namespace ZeroParadox
@@ -80,7 +80,8 @@ theorem t_iz_conv_zero
   exact tendsto_zero_iff_norm_tendsto_zero.mpr h
 
 /-- T-IZ (Cauchy core): An ascending chain with v₂(Sₙ) ≥ n converges to 0 in Q₂.
-    Proved axiom-free once the two sorry lemmas above are filled. This is the topological
+    Not axiom-free: the proof inherits Classical.choice from Mathlib analysis (squeeze_zero,
+    tendsto_zero_iff_norm_tendsto_zero). This is the topological
     half of T-IZ — the half that lives in pure analysis without AIT or ZF+AFA. -/
 theorem t_iz_cauchy
     (S : ℕ → Q₂)

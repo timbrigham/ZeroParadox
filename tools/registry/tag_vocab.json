@@ -32,7 +32,7 @@
     "glosses": {
       "bridge": "a transform connecting two domains (ZPH functors). An EDGE, not a cell.",
       "no-go": "an apophatic / obstruction result — establishes what ⊥ is NOT (no morphism, not-initial, counterexample, negation has no fixed point). The framework's fence made first-class. ~87 candidates in the corpus (padic_bottom_not_initial, negation_no_fixedpoint, the *_NoGo/*_Obstruction files, the reals counterexample, the wall ZPP_Wall). NOTE: role is ALSO a hardcoded sjv schema enum, so this needs the sjv-side role enum updated (see interop).",
-      "commitment": "a labeled modeling commitment / identity claim (MC-1). Held, not proved.",
+      "commitment": "the MC-1 one-object identity claim, retired as ill-typed (not a well-formed proposition); the shared shape survives, members provably distinct.",
       "core": "a central load-bearing result (T-SNAP, the Quine-atom keystone).",
       "face": "a (object, domain) cell — an object realized inside one domain.",
       "go": "a confirmed-POSITIVE gauge result — a probe/construction that SUCCEEDS (the GO verdict), the positive complement of `no-go`. Marks the experimental campaign's confirmed positives (a connection/convergence/construction that works). Distinct from `face`: `go` is a gauge VERDICT on a probe (did it work?), `face` is a structural ⊥-realization in a domain. From the no-go-gauge campaign — GO and NO-GO are the matched verdict pair. Like no-go, apply SPARINGLY (headline probe verdicts, not every positive lemma).",

@@ -37,6 +37,28 @@ theorem epsilon0_is_fixedpoint : ω ^ ε₀ = ε₀ :=
 theorem epsilon0_least_fixedpoint (o : Ordinal) (h : ω ^ o = o) : ε₀ ≤ o :=
   epsilon_zero_le_of_omega0_opow_le (le_of_eq h)
 
+/-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
+    (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
+    guard beneath every ε₀ characterization. -/
+theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
+  intro h
+  have hf := epsilon0_is_fixedpoint
+  rw [h, opow_zero] at hf
+  exact one_ne_zero hf
+
+/-- **Invariant — ε₀ ≠ ⊥.** Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`) and ε₀ ≠ 0, ε₀ is never
+    the bottom ⊥. ⊥ is the base the ε₀-tower is seeded at (`epsilon0_eq_nfp_bot`), never its closure. -/
+theorem epsilon0_ne_bot : ε₀ ≠ (⊥ : Ordinal) := by
+  rw [Ordinal.bot_eq_zero]
+  exact epsilon0_ne_zero
+
+/-- **ε₀'s Veblen coordinates are (1, 0).** ε₀ = `veblen 1 0` (Mathlib `epsilon := veblen 1`, so this is
+    definitional): the element at index 0 of level 1 — the origin of the Veblen coordinate system, hence
+    the *minimum* fixed-point closure (matching `epsilon0_least_fixedpoint`), not a definitional pick of a
+    large ordinal. The hierarchy continues above ε₀ (ε₁, ε₂, …, ζ₀ = `veblen 2 0`, …) up to Γ₀, the
+    Feferman–Schütte ordinal closing the two-argument Veblen hierarchy; the framework lives below Γ₀. -/
+theorem epsilon0_eq_veblen_one_zero : ε₀ = Ordinal.veblen 1 0 := rfl
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -45,4 +67,7 @@ section PurityCheck
 open ZeroParadox
 #print axioms epsilon0_is_fixedpoint
 #print axioms epsilon0_least_fixedpoint
+#print axioms epsilon0_ne_zero
+#print axioms epsilon0_ne_bot
+#print axioms epsilon0_eq_veblen_one_zero
 end PurityCheck
