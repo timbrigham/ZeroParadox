@@ -6,6 +6,7 @@ import ZeroParadox.Settheory.SetTheoryAFA
 import ZeroParadox.Computability.Rice
 import ZeroParadox.Computability.Kleene
 import ZeroParadox.Order.LeastFixedPoint
+import ZeroParadox.Category.DiagonalWitness
 
 /-!
 # Machine-checked characterization index of self-reference — the diagonal fixed point
@@ -55,7 +56,7 @@ section DiagonalFixedPointIndex
 /-! ### § II. Wall faces (μ) — self-reference CANNOT close (no fixed point / no reflexive object) -/
 #check @ZeroParadox.wf_no_selfloop           -- the general wall: a well-founded relation has no self-loop (no x with r x x)
 #check @ZeroParadox.cantor_via_engine        -- Cantor: no surjection A → (A → Prop)
-#check @ZeroParadox.russell_via_engine       -- Russell: no surjection A → (A → A → Prop) (self-membership)
+#check @ZeroParadox.russell_via_engine       -- Russell: no surjection A → (A → Prop) via membership `mem : A → A → Prop`
 #check @ZeroParadox.no_self_decider          -- Turing: no surjection A → (A → Bool) (the halting diagonal)
 #check @ZeroParadox.tarski_no_internal_truth -- Tarski: no internal truth predicate (undefinability)
 #check @ZeroParadox.tarski_no_truth_bottom   -- Tarski's bottom: truth is the wall dual — no floor
@@ -71,5 +72,22 @@ section DiagonalFixedPointIndex
 #check @ZeroParadox.ProvabilityLogic.godel_two     -- Gödel's second: consistency unprovable — the provability floor
 #check @ZeroParadox.rice_face_has_bottom     -- Rice: the floor exists (the pivot face)
 #check @ZeroParadox.quine_exists_yet_rice    -- Rice pivot: the fixed point is present yet membership at it is undecidable
+
+/-! ### § IV. The minimum-requirements level (`Category/DiagonalWitness.lean`) — the underlying level beneath the fork
+
+The faces above are collected; this is what they minimally have in common, one level down: a **diagonal
+witness relative to an admissible endomap class M** (`HasWitnessRel`). The wall/floor fork is one monotone
+predicate over the lattice of map-classes, and the witness-carrying classes form an Alexandrov-closed set —
+the topology the collection sits on. The genuine *nontrivial* floor (the Kleene quine) lives one axis
+further out, in the effective category (eval-equality); located here, fenced there. -/
+#check @ZeroParadox.HasWitnessRel                  -- the minimum requirement: a witness relative to admissible maps M
+#check @ZeroParadox.fixedPoint_of_witnessRel       -- the engine: a relative witness forces a fixed point for admissible g
+#check @ZeroParadox.no_witnessRel_of_admissible_fpf -- the wall: an admissible fixed-point-free map kills the witness
+#check @ZeroParadox.witnessRel_antitone            -- antitone in M — the spine of the topology
+#check @ZeroParadox.witnessSet_isLowerSet          -- THE TOPOLOGY: the witness set is Alexandrov-closed (a lower set)
+#check @ZeroParadox.hasWitnessRel_of_subsingleton  -- the fine end is inhabited (non-degeneracy)
+#check @ZeroParadox.no_witnessRel_top_of_nontrivial -- the coarse end: nontrivial ⇒ no witness (Cantor; posited faces)
+#check @ZeroParadox.effective_floor_fixedPoint       -- axis 2: the genuine nontrivial floor (Kleene recursion, effective category)
+#check @ZeroParadox.no_computable_evalFixedPointFree -- axis 2 mechanism: no computable fixed-point-free map, so the wall lifts
 
 end DiagonalFixedPointIndex
