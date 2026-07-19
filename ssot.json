@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1284,
+        "declarations": 1287,
         "files": 136
       },
       "entries": [
@@ -7961,6 +7961,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "24a7b238-3b56-4c03-ac76-02ff6712d81c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbertSuccession",
+            "short": "hilbertSuccession"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2542a435-97d2-4a1b-9f94-92a709a3d8a8",
           "new": {
@@ -10247,6 +10281,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "302f155c-d3be-4b98-b10d-9d53011e1361",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccession",
+            "short": "ordinalSuccession"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31926,6 +31997,43 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "adc4908e-7419-4ff7-8d2c-f755febee379",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.SeparatedSuccession",
+            "short": "SeparatedSuccession"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true

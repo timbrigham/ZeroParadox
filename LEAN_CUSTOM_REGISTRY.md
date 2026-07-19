@@ -36,6 +36,14 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
+### `SeparatedSuccession` — `ZeroParadox/Multihomed/SeparatedSuccession.lean:54`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** An interface bundling a carrier with a separation relation and an ℕ-indexed succession whose consecutive terms are always separated. Mathlib has chains and apartness relations separately but no bundled "separated succession" interface. Used as the type bridge between differently-typed framework charts of one succession — the ordinal ε-chain (separation = strict order, `succession_lt_succ`) and the Hilbert state-chain (separation = orthogonality, `t5_strict_orthogonal`) — exhibited as two implementations of one shape rather than forced into an ill-typed cross-universe identity.
+
+---
+
 ### `ValuationStructure` — `ZeroParadox/Valuation/Scale.lean:62`
 
 **Relationship to Mathlib:** Replaces `Mathlib.RingTheory.Valuation.Valued`
