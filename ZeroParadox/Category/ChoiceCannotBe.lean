@@ -254,8 +254,11 @@ proved about where choice does work. -/
 -- has **never been re-proved choice-free**, so do not call it merely representational. What ZP-N
 -- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
 -- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
--- UNCLASSIFIED — the honest tier — and it cannot be reclassified by rewriting the proof, because
--- `Ordinal` carries choice in the TYPE, before any proof runs.
+-- UNCLASSIFIED — the honest tier. NOT because "choice is in the `Ordinal` type": that claim was
+-- asserted here earlier and is FALSE as measured — `Ordinal` is `[propext, Quot.sound]`. The choice
+-- enters through the order instance and the operations (`Ordinal.instLinearOrder`, `nfp`, `omega0`,
+-- `epsilon`, each `[propext, Classical.choice, Quot.sound]`). UNCLASSIFIED means simply that nobody has
+-- re-proved it choice-free — an open question, not a demonstrated obstruction.
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
 

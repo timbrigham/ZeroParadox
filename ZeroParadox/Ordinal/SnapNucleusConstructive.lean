@@ -16,11 +16,16 @@ machine-checked impossibility rather than a failed attempt.
 
 ## What this does NOT establish
 
-* **`snapNucleus` is not made choice-free here, and cannot be.** Mathlib's `Ordinal` is a quotient of
-  well-ordered types; `Classical.choice` sits in the *type*, before any proof runs. No rewriting of
-  `snapNucleus`'s proof can remove it. Nothing below is a re-proof, replacement, or discharge of
-  `snapNucleus`, `snapNucleus_bot`, or any result in `SnapNucleus.lean`. Those stand exactly as they are,
-  with the footprint they have.
+* **`snapNucleus` is not made choice-free here.** Nothing below is a re-proof, replacement, or discharge
+  of `snapNucleus`, `snapNucleus_bot`, or any result in `ZeroParadox/Ordinal/SnapNucleus.lean`. Those
+  stand exactly as they are, with the footprint they have.
+  **Correction of record (2026-07-19):** this bullet previously read "and cannot be," justified by
+  "Mathlib's `Ordinal` is a quotient of well-ordered types; `Classical.choice` sits in the *type*." That
+  is **false as measured** — `#print axioms Ordinal` reports `[propext, Quot.sound]`, no choice. Choice
+  enters through the order instance and the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`,
+  `Ordinal.omega0`, `Ordinal.epsilon`). The claim was reasoning from a quotient construction instead of
+  measuring it, and the "cannot be" conclusion drawn from it does not stand. Whether `snapNucleus` is
+  re-provable choice-free is **open and untried**; its footprint is UNCLASSIFIED.
 * **This is a different declaration on a different carrier.** Everything here lives on `ONote` (raw
   Cantor-normal-form syntax) and on `SynONote`, the type synonym below carrying the comparator-derived
   order. `ONote` is not `Ordinal` and `SynONote` is not `Ordinal`. Exactly one theorem below mentions
@@ -420,8 +425,10 @@ end ZeroParadox
 
 Target: `[propext]` or cleaner on everything, including the `LinearOrder`/`SemilatticeInf` structure.
 Contrast the measured `[propext, Classical.choice, Quot.sound]` on `snapNucleus` in
-`ZeroParadox/Ordinal/SnapNucleus.lean`, which is irreducible — `Classical.choice` is in the `Ordinal`
-type itself, not in the proof. -/
+`ZeroParadox/Ordinal/SnapNucleus.lean`. That footprint is **UNCLASSIFIED, not irreducible** — an earlier
+version of this line called it irreducible on the grounds that "choice is in the `Ordinal` type," which is
+FALSE as measured: `Ordinal` is `[propext, Quot.sound]`. Choice enters via `Ordinal.instLinearOrder`,
+`nfp`, `omega0` and `epsilon`. Whether it is removable is open; nobody has tried. -/
 
 section PurityCheck
 open ZeroParadox

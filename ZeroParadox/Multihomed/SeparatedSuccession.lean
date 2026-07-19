@@ -6,11 +6,13 @@ set_option maxHeartbeats 400000
 /-!
 # The type bridge: a separated succession as an interface, with two known implementations
 
-The snap's succession of new bottoms shows up in two charts of the framework that are DIFFERENT TYPES:
+The snap's succession of **targets** shows up in two charts of the framework that are DIFFERENT TYPES
+(they are targets, not bottoms: `ε₀ ≠ ⊥` is bedrock, `epsilon0_ne_bot`; each rung *plays the bottom role*
+for the next iteration without *being* ⊥ — role, not identity):
 - the **ordinal chart** — the ε-numbers `ε₀ < ε₁ < ε₂ < …`, consecutive ones separated by strict order
-  (`Ordinal/SnapSuccession.lean`, `succession_lt_succ`);
+  (`ZeroParadox/Ordinal/SnapSuccession.lean`, `succession_lt_succ`);
 - the **Hilbert chart** — the state vectors `T(S₀), T(S₁), …`, consecutive ones separated by orthogonality
-  (`State/StateSpace.lean`, `t5_strict_orthogonal`, on ZP-D's DP-1).
+  (`ZeroParadox/State/StateSpace.lean`, `t5_strict_orthogonal`, on ZP-D's DP-1).
 
 These are the same phenomenon — "when one instance ends, another begins separated from the last" — but their
 carriers are distinct types at **different universe levels** (`Ordinal : Type 1`, `StateSpace n : Type 0`).

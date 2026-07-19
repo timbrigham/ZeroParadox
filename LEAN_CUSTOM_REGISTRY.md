@@ -232,7 +232,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 ---
 
-*Last updated: 2026-06-24. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
+*Last updated: 2026-07-19. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
 
 ### `IsLeastFixedPointFrom` — `ZeroParadox/Order/LeastFixedPoint.lean:77`
 
