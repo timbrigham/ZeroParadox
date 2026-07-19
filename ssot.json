@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1312,
+        "declarations": 1337,
         "files": 136
       },
       "entries": [
@@ -1866,6 +1866,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "04f89219-aaa6-400b-ab79-b3fe6116603d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.uniformChartSelection_iff_choiceFragment",
+            "short": "uniformChartSelection_iff_choiceFragment"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "05055468-6d58-4bfe-bed2-b69c3b99db43",
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
@@ -2823,6 +2857,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0a57f293-7791-4d86-b542-693071b6664f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleOrbitG",
+            "short": "poleOrbitG"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0a5e5c4b-d161-4d06-965f-8a2da4adb2e8",
           "new": {
@@ -3688,6 +3756,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0e6d2ded-f0da-4634-b14c-0fa28af3e64b",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isInftyG_separates",
+            "short": "isInftyG_separates"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6418,6 +6520,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1a9c07fd-ee93-4d17-adb6-e694dbc6c9ce",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chart_selection_is_free",
+            "short": "chart_selection_is_free"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1ae972ed-a04b-45d3-8ee5-eb25534cc6f4",
           "new": {
@@ -6590,6 +6726,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ca7867a-2331-4f6b-8159-e4b28ec0187b",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleAdmissible",
+            "short": "poleAdmissible"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10610,6 +10780,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "31dd59b9-af46-4334-b2b4-7dc14e0076ea",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Chart",
+            "short": "Chart"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3213daa8-17be-4c29-b5a7-e09ba452630a",
           "new": {
@@ -12013,6 +12217,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3a102deb-8098-4e0e-8833-52ece7d3e06e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.UniformChartSelection",
+            "short": "UniformChartSelection"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15781,6 +16019,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4e20affb-e012-43dc-97bc-27174644cd8e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleSelect_rInv_invariant",
+            "short": "poleSelect_rInv_invariant"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4e34cbdc-f447-42d3-bd60-d1d1cbf28efd",
           "new": {
@@ -18044,6 +18316,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "598e9c34-e152-455f-bc89-a1640327ab0a",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleAdmissible_nonempty",
+            "short": "poleAdmissible_nonempty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "59b34c5f-cbc3-4912-a18d-713843c994e4",
           "new": {
@@ -20211,6 +20517,40 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6881b2ad-cdd2-4ab5-8b7f-3629c944fb94",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.chart_selection_is_freeG",
+            "short": "chart_selection_is_freeG"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": "none",
             "sorry_free": true
           }
         },
@@ -24484,6 +24824,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7e74a1a3-0f43-4590-ba26-5e4cc80ecca6",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.builtChartAdmissible",
+            "short": "builtChartAdmissible"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7eb81867-3290-454f-b18f-58d77390ef1b",
           "new": {
@@ -26160,6 +26534,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "88f02590-6ab8-4392-bb13-ffc6adf6c8eb",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleSelectG_mem_orbit",
+            "short": "poleSelectG_mem_orbit"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "89546137-e111-44d2-93fb-d0be1f902846",
           "new": {
@@ -27627,6 +28035,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "91712239-c4b2-4b62-958c-a087eb5dbb83",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.builtChart_selection_settled",
+            "short": "builtChart_selection_settled"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "91bc99a6-9626-424b-a508-d6b4721860d0",
           "new": {
             "file": "ZeroParadox/Ordinal/NaturalOpsPow.lean",
@@ -28376,6 +28818,40 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9517c8e6-d0a0-4719-8e69-919388097c83",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.select_of_decidable",
+            "short": "select_of_decidable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30178,6 +30654,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9dcf4187-1673-42c9-b57a-fb65c7286f8f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isInftyG",
+            "short": "isInftyG"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9e078a39-8f6f-4b81-87d8-5833dc75a5f8",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -31376,6 +31886,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a8c3e815-df9f-4f84-9d4b-5d9c7763f99a",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleSelect",
+            "short": "poleSelect"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38798,6 +39342,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d0262e93-f311-4ed0-a7d0-91716a6db63e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.builtChartAdmissible_decidable",
+            "short": "builtChartAdmissible_decidable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d0288fa5-1a1c-41c0-ade5-7905bcca85eb",
           "new": {
@@ -39042,6 +39620,40 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d22a3729-e586-4034-a7df-169e307a47c1",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.infty_ne_floorG",
+            "short": "infty_ne_floorG"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39332,6 +39944,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d306f739-5994-4b0c-8eb7-0edf445cc453",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.uniformChartSelection_of_classical",
+            "short": "uniformChartSelection_of_classical"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39981,6 +40627,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d7cc9ebb-5873-45c5-bcae-8461f338049d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.floorPole",
+            "short": "floorPole"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43564,6 +44244,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e7c88897-fe48-4959-95cf-943f1e937466",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_uniformChartSelection",
+            "short": "em_of_uniformChartSelection"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": "propext, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e801ab71-6e17-4e8e-9b56-dc31c33ca264",
           "new": {
@@ -46249,6 +46963,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f62c96de-ba2c-426a-9d3d-030067df84a2",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleSelectG",
+            "short": "poleSelectG"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f66709db-6571-4089-8266-3fdbc6fb4c46",
           "new": {
@@ -46350,6 +47098,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f6ca26b8-b98e-4341-9809-32fd7d6aa23f",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleOrbit",
+            "short": "poleOrbit"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46719,6 +47501,40 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": "[propext, Classical.choice, Quot.sound]",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f795e61a-faea-4b1a-a25d-1fe5d044aec9",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.poleSelectG_constant_on_orbit",
+            "short": "poleSelectG_constant_on_orbit"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -47920,6 +48736,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fd4877e6-ec52-4e6c-aeb0-2c48fde8d38d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PoleChartSelection.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.infty_ne_floor",
+            "short": "infty_ne_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": null,
             "sorry_free": true
