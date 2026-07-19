@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1275,
+        "declarations": 1278,
         "files": 136
       },
       "entries": [
@@ -6884,6 +6884,40 @@
             "role": [
               "go"
             ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1ef47329-81f7-4a27-a84d-a21401276ace",
+          "new": {
+            "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dnegNucleus",
+            "short": "dnegNucleus"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -43260,6 +43294,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "eb3b103a-4fa1-4f7b-aa60-5fc61793f212",
+          "new": {
+            "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dnegNucleus_apply",
+            "short": "dnegNucleus_apply"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "eb6bd87c-0c38-4387-970b-c2a14cacf39b",
           "new": {
@@ -43695,6 +43763,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee3d6eca-3744-4e67-898d-3122dec90109",
+          "new": {
+            "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dnegNucleus_isClosed_iff",
+            "short": "dnegNucleus_isClosed_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
