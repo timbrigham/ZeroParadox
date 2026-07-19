@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1266,
+        "declarations": 1271,
         "files": 136
       },
       "entries": [
@@ -944,6 +944,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "014aaed1-807e-405b-96d2-cd9257b7eeda",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_bot_ne_bot",
+            "short": "snapNucleus_bot_ne_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19726,6 +19763,46 @@
             "object": [],
             "role": [
               "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "69235e6b-6f8b-4853-8c36-3f2099f17a5b",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus",
+            "short": "snapNucleus"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
@@ -42298,6 +42375,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e8063851-4773-418f-a5d2-abb6d32ae522",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_apply",
+            "short": "snapNucleus_apply"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e8297b31-cba0-4c94-9d2a-ee461460a084",
           "new": {
@@ -46775,6 +46887,83 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff23b01d-f7f3-4fa7-8bc7-5ea439ef18aa",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_bot",
+            "short": "snapNucleus_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffbc3146-2889-4636-82e1-a7692662ecce",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_epsilon0",
+            "short": "snapNucleus_epsilon0"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true

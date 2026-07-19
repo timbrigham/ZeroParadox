@@ -140,6 +140,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked keystone index of self-reference (the diagonal fixed point), routing every face by the μ/ν fork; `#check`-only
 - `ZeroParadox/Category/DiagonalWitness.lean` - The minimum-requirements level under the keystone: the relativized Lawvere witness `HasWitnessRel`, its map-class topology (`IsLowerSet`), and the effective-category floor (axis 2). Packages Lawvere/Yanofsky/effective-topos; the floor faces' shared landing at ⊥ is the one uncopied placement.
 - `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - The nucleus/sublocale home of "a predicated difference generates a system": identifies the conjecture with Lawvere–Tierney (nucleus → sublocale → lattice) structure, and machine-checks that double negation generates the classical (Boolean) core (`Heyting.Regular`). `example`-only; states no new result.
+- `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap IS a nucleus: `snapNucleus : Nucleus Ordinal` (the next-fixed-point of the snap-step `α ↦ ω^α`), a genuine point-free Lawvere–Tierney modality that sends the bottom ⊥ to ε₀ (`snapNucleus_bot`). The framework's own snap/ε₀/⊥ triad as a concrete difference-generator instance. Meet-preservation is free on the ordinal chain, so a `Nucleus` needs no frame/top; the missing top (the point-at-infinity) is needed only for the meta-lattice of nuclei.
 
 ### Meta / tooling (not framework content)
 
