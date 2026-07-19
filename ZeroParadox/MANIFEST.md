@@ -138,6 +138,8 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/AxiomProfile.lean` - Axiom Profile — the choice-free core of the Zero Paradox
 - `ZeroParadox/BottomCannotBe.lean` - Machine-checked verification index of results characterizing ⊥ (the bottom element)
 - `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked keystone index of self-reference (the diagonal fixed point), routing every face by the μ/ν fork; `#check`-only
+- `ZeroParadox/Category/DiagonalWitness.lean` - The minimum-requirements level under the keystone: the relativized Lawvere witness `HasWitnessRel`, its map-class topology (`IsLowerSet`), and the effective-category floor (axis 2). Packages Lawvere/Yanofsky/effective-topos; the floor faces' shared landing at ⊥ is the one uncopied placement.
+- `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - The nucleus/sublocale home of "a predicated difference generates a system": identifies the conjecture with Lawvere–Tierney (nucleus → sublocale → lattice) structure, and machine-checks that double negation generates the classical (Boolean) core (`Heyting.Regular`). `example`-only; states no new result.
 
 ### Meta / tooling (not framework content)
 
