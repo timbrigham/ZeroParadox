@@ -334,7 +334,7 @@ open ZeroParadox
 #print axioms chart_selection_is_free
 #print axioms poleSelect_rInv_invariant
 
--- Group C — § II. The decidable-selection contrast should be axiom-free.
+-- Group C — § II. The decidable-selection contrast: `[propext]`.
 #print axioms builtChartAdmissible_decidable
 #print axioms select_of_decidable
 #print axioms builtChart_selection_settled

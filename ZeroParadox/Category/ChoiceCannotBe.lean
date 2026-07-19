@@ -38,13 +38,27 @@ as the framework claiming choice as one of its constructions, or as a claim abou
 
 The ordinary English word "choice" — an act of picking, adopting a point of view, selecting a chart —
 and the kernel axiom `Classical.choice` are **not the same thing**, and conflating them is this
-framework's standing temptation. They are separated by a one-directional implication:
+framework's standing temptation. The literature that separates them:
 
-> **Diaconescu (1975)** (independently Goodman–Myhill 1978): the axiom of choice implies excluded
-> middle. **One direction only** — the converse fails.
+> **Diaconescu (1975)** (independently Goodman–Myhill 1978): in a topos, the axiom of choice implies
+> excluded middle. His theorem is stated as an **equivalence** — a coequalizer of two nonintersecting
+> monomorphisms has a section *iff* subobjects have complements (p. 176); "AC implies complemented
+> subobjects" is the corollary (p. 178). In modern terms: choice for inhabited subobjects of a
+> two-element object **is** excluded middle.
+>
+> **Cohen (1963)**, with Fraenkel–Mostowski: *full* AC is strictly stronger than excluded middle. This
+> is an independence result about ZF, **not** anything Diaconescu proved — do not attribute it to him.
 
-So choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
-constructive base. Every evocative reading in the framework's prose — "choice is which way you view the
+So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
+constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
+`ExcludedMiddleBridge.lean`'s `ChoiceFragment` has exactly Diaconescu's shape — choice for inhabited
+predicates on `Bool` — so in a topos it would be *equivalent* to excluded middle. In Lean it measurably
+is not: excluded middle does not yield it (the construction dies at `Decidable (S true)`). That gap is a
+fact about **Lean's `Prop`/`Type` stratification**, not about Diaconescu's theorem: the fragment selects
+into `Bool`, so it is really `∀ p, Decidable p` — data-valued excluded middle — while `ExcludedMiddle` is
+the `Prop`-valued form, and `Or` in `Prop` does not eliminate into `Bool`. A topos has no such split,
+which is why Diaconescu gets an equivalence and we do not. **That reconciliation is the framework's own
+small finding; the equivalence is his.** Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
 (`Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
@@ -54,22 +68,35 @@ record on exactly this error — `Category/DoubleNegationNucleus.lean` (once tit
 difference-generator"; it is the *excluded-middle* modality) and `Category/ExcludedMiddleBridge.lean`
 (once stated unscoped, as though excluded middle made every Heyting algebra Boolean).
 
-### The census, stated correctly
+### No count is recorded here, deliberately
 
-A live full build reports **882** `#print axioms` results across roughly **150** files. Of those:
+**This file states no figure for how many declarations carry `Classical.choice`, and none should be added
+to it.** Three reasons, in order of importance.
 
-* **658** carry `Classical.choice`;
-* **135** are fully axiom-free (no `propext`, no `Quot.sound`, no choice);
-* the remainder carry `propext` and/or `Quot.sound` without choice.
+**A count measures Mathlib, not this framework.** Every choice footprint anyone has actually traced has
+come from a Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
+`compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
+tactic call. None has come from the framework's own mathematics. A corpus-wide total therefore reports how
+classically Mathlib happens to be built, and reports it in a way that reads as a property of this project.
 
-A prior internal note recorded "22 of ~1266 (~1.7%)" choice-carrying. That figure was **wrong by roughly
-29×** and is corrected here so the error cannot recur. The framework is not choice-free; it is
-majority-choice-carrying by proof footprint.
+**It invites precisely the wrong conclusion.** A large choice-carrying fraction reads as "most of this
+framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
+core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`), and every footprint
+examined beyond it has been *accidental*, meaning a choice-free re-proof exists. Two such re-proofs have
+been carried out (§ I). No essential case has ever been found.
 
-**Reproduce the census yourself — do not take these numbers on trust.** That is the whole point: the
-figure being corrected here was wrong precisely because it was quoted rather than measured. Every
-`ZeroParadox` file carries a `PurityCheck` section, so a full build emits one `#print axioms` line per
-indexed declaration. From the repository root (PowerShell), as two separate calls:
+**And in practice the number will not stay right.** It has been wrong twice already. The first version
+was quoted rather than measured, off by roughly 29×. The replacement was measured correctly and then went
+stale within the same session, because further files landed before it was written down; a claim-review
+referee caught it. Both are the same error — citing a figure that is not being regenerated at the moment
+of use — and a docstring cannot regenerate anything. Keeping a number here guarantees a third instance.
+
+What is true, and is what this file asserts instead: **the framework is not choice-free, the core is, and
+every examined footprint has been removable.** That statement does not go stale.
+
+**If you want a count, measure it — do not look for one to cite.** Every `ZeroParadox` file carries a
+`PurityCheck` section, so a full build emits one `#print axioms` line per indexed declaration. From the
+repository root (PowerShell), as two separate calls:
 
 ```
 lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8
@@ -79,15 +106,25 @@ $all = Get-Content build.log | Select-String -Pattern "depends on axioms|does no
 "total:       $($all.Count)"
 "with choice: $(($all | Where-Object { $_ -match 'Classical.choice' }).Count)"
 "axiom-free:  $(($all | Where-Object { $_ -match 'does not depend' }).Count)"
+$f = $all | ForEach-Object { if ($_ -match '(ZeroParadox[/\\][^:]+\.lean)') { $matches[1] } } |
+     Sort-Object -Unique
+"files:       $($f.Count)"
 ```
 
-The counts are of emitted *reports*, so a declaration `#check`ed in more than one file is counted once
-per report; that is why the total exceeds the number of distinct declarations. Re-run it after any
-change — a number in a docstring goes stale silently, and this one already did once.
+**The build must be a full one.** `lake build` emits `#print axioms` lines only for modules it builds or
+replays in that invocation, so a targeted build (`lake build ZeroParadox.Some.Module`) undercounts, and a
+count taken before later files were added is stale the moment they land. Re-run the whole snippet at the
+moment you cite it.
 
-The detailed accidental-versus-essential classification covers only about **22 of the 658 (~3%)**. The
-working hypothesis that all footprints are accidental therefore rests on a sample with **~97% of the
-corpus unexamined**. It is a hypothesis, not a finding.
+The counts are of emitted *reports*, so a declaration `#check`ed in more than one file is counted once
+per report; the total therefore exceeds the number of distinct declarations. Whatever it returns is a
+fact about the build you just ran, not a fact to carry anywhere.
+
+**The survey is partial, and that is the honest caveat that matters.** Only a small number of footprints
+have been traced to a source and classified; the overwhelming majority of the corpus is unexamined. So
+"every footprint is accidental" is a **working hypothesis supported by every case tested and refuted by
+none**, not a finding about the corpus. Do not upgrade it, and do not quantify it — the fraction examined
+moves with every commit for the same reason the count does.
 
 ### Accidental versus essential
 
@@ -104,7 +141,7 @@ Diener–Ishihara). Cited, not claimed.
 
 ### What this index does NOT do
 
-It does **not** claim the framework is choice-free — it is not, on 658 counts. It does **not** claim any
+It does **not** claim the framework is choice-free — it is not. It does **not** claim any
 footprint is provably removable beyond the specific cases actually re-proved. And it cannot: `#print
 axioms` reports **a proof's** footprint, never **a theorem's** necessity. A choice-carrying proof is
 evidence about how the proof was written, and nothing more.
@@ -137,9 +174,12 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- compactification there is a canonical selector, constant on the pole orbit.
 #check @ZeroParadox.chart_selection_is_freeG
 
--- The metric-collapse content on the syntactic side: `[propext]`. (Contrast the measured
--- `[propext, Classical.choice, Quot.sound]` on the ℚ₂-carrier statement `tower_converges_to_zero` —
--- same content, different phrasing, and the choice is the carrier's, not the collapse's.)
+-- The metric-collapse content on the syntactic side: `[propext]`. Contrast the measured
+-- `[propext, Classical.choice, Quot.sound]` on `tower_converges_to_zero`. **These are DIFFERENT
+-- statements on DIFFERENT carriers, not one statement rephrased** — the bridge `synVal` = 2-adic
+-- valuation is NOT proved, and cannot be without importing the stack under investigation. So this is
+-- EVIDENCE that the choice in the ℚ₂ statement is Mathlib-imposed, not a demonstration that the metric
+-- collapse is choice-free. See `SyntacticCollapse.lean`'s "What this does NOT establish".
 #check @ZeroParadox.synCollapse_epsN
 #check @ZeroParadox.synVal_mono
 
@@ -189,7 +229,7 @@ Not "what choice is" — that is Lean's, not the framework's. What this corpus h
 proved about where choice does work. -/
 
 -- A CHOICE-CARRYING CASE, indexed on purpose. Everything in § I is a negative result, which risks
--- reading as "the framework is choice-free" — it is not (658 counts). This is the ν-side inhabitation
+-- reading as "the framework is choice-free" — it is not. This is the ν-side inhabitation
 -- via Mathlib's QPF `Cofix`, measured `[propext, Classical.choice, Quot.sound]`. Its home file argues
 -- the footprint is a library artifact of the M-type construction rather than a necessity, citing
 -- Ahrens-Capriotti-Spadotti and Veltri (FSCD 2021) that polynomial final coalgebras are choice-free in
@@ -202,8 +242,11 @@ proved about where choice does work. -/
 -- `[propext]`. Both are difference-generators seeded at ⊥ — negation is DEFINED as `a ⇨ ⊥`, and
 -- `HeytingAlgebra` extends `OrderBot`, so ⊥ is required before negation exists at all. Same seed,
 -- opposite footprints, and opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ (⊥ is always regular),
--- `snapNucleus` provably moves it (`snapNucleus_bot_ne_bot`). The footprint difference is
--- representational — ZP-N re-proves the ordinal ascent choice-free on `ONote` — not intrinsic.
+-- `snapNucleus` provably moves it (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
+-- has **never been re-proved choice-free**, so do not call it merely representational. What ZP-N
+-- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
+-- `ONote`), which is suggestive for the nucleus and is not the nucleus. Until someone re-proves
+-- `snapNucleus` itself, its `Classical.choice` is UNCLASSIFIED — the honest tier.
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
 
