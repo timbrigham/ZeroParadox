@@ -26,20 +26,26 @@ is its own type of boundary, and adjoining it is what turns "one modality" (the 
 into "one point in a lattice of systems."
 
 **Honest scope.** The frame structure of `WithTop Ordinal` and the nucleus/sublocale lattice are recognized
-Mathlib / locale theory — this file only *instantiates* them and records the placement (the top is the
-framework's ∞ = 0 = ⊥ boundary). The concrete lift of the specific snap into a `Nucleus (WithTop Ordinal)`
-whose sublocale is the snap-generated system is the next step (see `snap_is_a_nucleus_2026-07-18` note),
-built on `OrderHom.nextFixed`. `example`-only here: states no new result.
+Mathlib / locale theory — §§ I–II only *instantiate* them and record the placement (the top is the
+framework's ∞ = 0 = ⊥ boundary). § IV then lifts the specific snap into the lattice: `snapNucleusTop` reuses
+the ordinal snap-closure through `WithTop.map`, and `snapSublocale = snapNucleusTop.toSublocale` is the
+snap-generated system as a named point in the lattice. The lift is a construction; the frame/lattice
+machinery it lands in is recognized structure, credited outward.
 
 ## Engineer's Take
 
-TODO (Tim): your take on the point at infinity completing the lattice of systems — that the ceiling the
-unbounded ascent marches toward is what turns one modality into one point in a whole lattice of them.
+The question that led here was about the boundary. That unbounded upward system that marches toward
+infinity, that very unboundedness is what creates the new instance of a new system, and that is its own
+type of boundary.
+
+What I wanted to see was what that boundary does once it is actually in place. It is what takes a single
+system and sets it among all the others, so they stand together instead of alone. The point at infinity is
+where one system becomes one of many.
 -/
 
 namespace ZeroParadox
 
-open Order
+open Order Ordinal
 
 /-! ### § I. The boundary at infinity makes the ordinals a frame -/
 
@@ -77,4 +83,69 @@ systems. -/
 /-- The single modality on the bare ordinals (from `SnapNucleus.lean`). -/
 noncomputable example : Nucleus Ordinal := snapNucleus
 
+/-! ### § IV. The snap lifted into the lattice — the snap's own system as a named point
+
+The bare-ordinal snap-closure `nfp (α ↦ ω^α)` pushed up through `WithTop.map` (⊤ ↦ ⊤, ↑a ↦ ↑(nfp a)) is a
+genuine `Nucleus (WithTop Ordinal)` — so the snap now lives IN the lattice of systems, and its `toSublocale`
+is the snap-generated system as a named object beside every other. The three nucleus conditions lift by
+casing on top-vs-ordinal; meet-preservation is again free on the chain. -/
+
+/-- The snap as a nucleus on the ordinals-with-top: `nfp (α ↦ ω^α)` lifted by `WithTop.map`. -/
+noncomputable def snapNucleusTop : Nucleus (WithTop Ordinal) where
+  toFun := WithTop.map (Ordinal.nfp (fun α => Ordinal.omega0 ^ α))
+  map_inf' a b := by
+    have hmono : Monotone (WithTop.map (Ordinal.nfp (fun α => Ordinal.omega0 ^ α))) := by
+      intro x y hxy
+      induction x using WithTop.recTopCoe with
+      | top => rw [top_le_iff] at hxy; subst hxy; exact le_rfl
+      | coe a =>
+        induction y using WithTop.recTopCoe with
+        | top => exact le_top
+        | coe b =>
+          rw [WithTop.coe_le_coe] at hxy
+          simp only [WithTop.map_coe]
+          exact WithTop.coe_le_coe.mpr
+            (Ordinal.nfp_monotone (isNormal_opow one_lt_omega0).strictMono.monotone hxy)
+    rcases le_total a b with h | h
+    · rw [inf_eq_left.mpr h, inf_eq_left.mpr (hmono h)]
+    · rw [inf_eq_right.mpr h, inf_eq_right.mpr (hmono h)]
+  idempotent' x := by
+    induction x using WithTop.recTopCoe with
+    | top => simp
+    | coe a =>
+      simp only [WithTop.map_coe]
+      exact le_of_eq (congrArg _
+        (Ordinal.nfp_eq_self (Ordinal.nfp_fp (isNormal_opow one_lt_omega0) a)))
+  le_apply' x := by
+    induction x using WithTop.recTopCoe with
+    | top => simp
+    | coe a =>
+      simp only [WithTop.map_coe]
+      exact WithTop.coe_le_coe.mpr (Ordinal.le_nfp _ a)
+
+/-- Unfolding: the lifted nucleus is `WithTop.map` of the ordinal snap-closure. -/
+@[simp] theorem snapNucleusTop_apply (x : WithTop Ordinal) :
+    snapNucleusTop x = WithTop.map (Ordinal.nfp (fun α => Ordinal.omega0 ^ α)) x := rfl
+
+/-- The lift agrees with the base snap at the bottom: it sends `↑⊥` to `↑ε₀` (`epsilon0_eq_nfp_bot`),
+    matching `snapNucleus_bot` one level down. -/
+theorem snapNucleusTop_coe_bot :
+    snapNucleusTop ((⊥ : Ordinal) : WithTop Ordinal) = (epsilonZero : WithTop Ordinal) := by
+  rw [snapNucleusTop_apply, WithTop.map_coe]
+  exact congrArg _ epsilon0_eq_nfp_bot.symm
+
+/-- **The snap's generated system.** Its sublocale — a named point in the lattice of systems on
+    `WithTop Ordinal`. This is "the snap generates a system," fully closed: the object exists and sits in
+    the lattice. -/
+noncomputable def snapSublocale : Sublocale (WithTop Ordinal) := snapNucleusTop.toSublocale
+
 end ZeroParadox
+
+/-! ## Axiom Purity Check -/
+
+section PurityCheck
+open ZeroParadox
+#print axioms snapNucleusTop
+#print axioms snapNucleusTop_coe_bot
+#print axioms snapSublocale
+end PurityCheck
