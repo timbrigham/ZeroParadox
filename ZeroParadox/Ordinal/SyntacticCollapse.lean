@@ -103,19 +103,26 @@ is not vacuous, and it is the piece that is choice-free here.
 
 ## Prior art
 
-**Adjacent literature, cited so the delta is visible.** Syntactic complexity measures on ordinal
-notations are an established subject: Buchholz, Cichon and Weiermann, *A Uniform Approach to Fundamental
-Sequences and Hierarchies*, MLQ 40 (1994) 273-286, builds fundamental sequences from the interplay
-between Bachmann systems and a **term-complexity function, which they call a norm**. `synVal` is a
-measure of that general kind, so this is a neighbouring construction rather than an original one, and
-that literature is where to look if the measure ever needs strengthening beyond the tower.
+**Adjacent literature, and the delta stated precisely (read from source).** Syntactic complexity measures
+on ordinal notations are an established subject: Buchholz, Cichon and Weiermann, *A Uniform Approach to
+Fundamental Sequences and Hierarchies*, MLQ 40 (1994) 273-286, builds fundamental sequences from the
+interplay between Bachmann systems and a term-complexity function they call a **norm**.
 
-*Citation honesty:* the above is taken from the paper's **abstract**, which is what could be obtained —
-the archived scan is a fax image with no text layer, so the body was not read. In particular **no claim
-is made here about how their norm is computed** (whether it counts coefficients, symbols, or nesting),
-and therefore none about how it compares in detail to `synVal`'s leading-exponent depth. Cited as
-adjacent prior work, not as a source this file relies on; nothing below depends on it. Anyone
-strengthening `synVal` should read the paper properly first.
+**`synVal` is NOT a norm in their sense, and the reason is the delta.** Their Definition 1(6) (p. 275)
+fixes a norm by a *finite-fibre* condition, not by counting anything:
+
+  `N` is a norm on `τ` iff `∀ α n, card {β < α : N β ≤ n} < ω`.
+
+`synVal` fails this outright. Every finite ordinal notation `oadd 0 n 0` has `synVal = 1`, so
+`{β < ω : synVal β ≤ 1}` is infinite. `synVal` reads only the leading-exponent depth and discards the
+coefficient — and it is exactly that discarded data which would keep the fibres finite. So this file's
+measure is a *depth function*, deliberately coarser than a norm, adequate for the tower (where the
+coefficient is always `1`) and inadequate as a norm in general.
+
+Their Lemma 2 is the near neighbour: it defines an iteration-depth function `G α := min {i : α[0]^i = 0}`
+— structurally the same idea as `synVal` — and shows it is a norm only under an *additional* finiteness
+hypothesis (Lemma 2(b)). That is the precise sense in which this construction is neighbouring rather than
+novel, and that paper is where to look if the measure ever needs strengthening past the tower.
 
 `ONote` / `NONote` and `ONote.cmp` are Mathlib (`Mathlib.SetTheory.Ordinal.Notation`). The technique
 of working on the syntactic substrate to avoid the choice inherited from Mathlib's `Ordinal` is not
