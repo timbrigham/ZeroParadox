@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1311,
+        "declarations": 1312,
         "files": 136
       },
       "entries": [
@@ -41005,6 +41005,40 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dcf7572c-ad34-4f15-baa8-bfac37aa6a7a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_mono",
+            "short": "synVal_mono"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "synVal monotone for ONote.cmp - the property that earns it the name valuation; produced by the definition-faithfulness verification pass",
+          "verify": {
+            "axioms": "propext",
             "sorry_free": true
           }
         },

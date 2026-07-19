@@ -173,6 +173,28 @@ theorem le_synVal_of_tower_le :
       show n + 1 ≤ synVal e + 1
       exact Nat.succ_le_succ hrec
 
+/-- **`synVal` is monotone for the syntactic order.** Moving up in `ONote.cmp` never decreases the
+syntactic valuation.
+
+This is the property that earns `synVal` the name *valuation* rather than merely *depth counter*. Without
+it, `synVal` would be an arbitrary structural statistic that happened to agree with the tower; with it,
+`synVal` is order-compatible, and `le_synVal_of_tower_le` above is its specialization at the tower.
+Added after a verification pass questioned whether the definition was faithful — the check was worth
+running, and this is what it produced. Choice-free, by induction on the lexicographic structure of
+`ONote.cmp`, reusing `cmp_exp_ne_gt_of_ne_gt`.
+
+Scope, unchanged: this is monotonicity of the *syntactic* valuation. It is still not claimed to agree
+with the 2-adic valuation on general notations — see the header. -/
+theorem synVal_mono :
+    ∀ (x y : ONote), ONote.cmp x y ≠ Ordering.gt → synVal x ≤ synVal y
+  | 0, _, _ => Nat.zero_le _
+  | oadd e n a, 0, h => absurd (rfl : ONote.cmp (oadd e n a) 0 = Ordering.gt) h
+  | oadd e₁ n₁ a₁, oadd e₂ n₂ a₂, h => by
+      have hexp : ONote.cmp e₁ e₂ ≠ Ordering.gt := cmp_exp_ne_gt_of_ne_gt h
+      have ih : synVal e₁ ≤ synVal e₂ := synVal_mono e₁ e₂ hexp
+      show synVal e₁ + 1 ≤ synVal e₂ + 1
+      exact Nat.succ_le_succ ih
+
 /-! ### The ε-N collapse statement
 
 Stated directly, not via `Filter.Tendsto` or `Metric` — that API is where the classical
@@ -216,6 +238,7 @@ section PurityCheck
 #print axioms synVal_unbounded
 #print axioms cmp_exp_ne_gt_of_ne_gt
 #print axioms le_synVal_of_tower_le
+#print axioms synVal_mono
 #print axioms synCollapse_epsN
 #print axioms synCollapse_norm_bound
 #print axioms synCollapse_exact

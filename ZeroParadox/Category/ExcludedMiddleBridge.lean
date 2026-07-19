@@ -112,7 +112,20 @@ is all Diaconescu's argument consumes.
 Two things make this the faithful fragment rather than a weakened stand-in. First, the chooser is a
 *function of the predicate*, so extensionally equal predicates receive equal choices — that is precisely
 the leverage Diaconescu's argument uses. Second, it is genuinely implied by Lean's `Classical.choice`
-(`choiceFragment_of_classical` below), so the hypothesis is not vacuous. -/
+(`choiceFragment_of_classical` below), so the hypothesis is not vacuous.
+
+**Faithfulness check (run 2026-07-19).** The worry worth taking seriously is the converse: if
+`ExcludedMiddle → ChoiceFragment` were provable, the two would be equivalent and § II would be excluded
+middle implying itself in costume, not a choice principle implying it. Measured result: the natural
+construction `fun S => if S true then true else false` under only `ExcludedMiddle` **fails to elaborate**
+— `failed to synthesize instance of type class Decidable (S true)`. That is the `Prop`→`Bool` elimination
+barrier: excluded middle supplies a disjunction in `Prop`, which cannot be eliminated to produce data.
+The same construction closes immediately under `classical`, at footprint
+`[propext, Classical.choice, Quot.sound]`. So the route from a decision to a *chooser* runs through
+choice, not through excluded middle, and the fragment sits genuinely above `ExcludedMiddle`.
+**Honest limit:** a failed proof attempt is not a proof of unprovability. This is strong evidence — the
+failure is at the exact structural barrier that separates choice from excluded middle in type theory —
+not a formal independence result, which would need a metatheoretic argument outside Lean. -/
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
 
