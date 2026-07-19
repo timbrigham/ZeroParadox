@@ -76,7 +76,8 @@ theorem snapNucleus_isClosed_iff (x : Ordinal) :
 
 /-! ### § II. The succession is the ε-hierarchy, strictly climbing -/
 
-/-- The first bottom of the succession is the framework's ε₀: `ε_ 0 = ε₀`. -/
+/-- The first rung of the succession is the framework's ε₀: `ε_ 0 = ε₀`. It is the snap's first
+    **target**, seeded at ⊥ — not a bottom (`ε₀ ≠ ⊥`, `epsilon0_ne_bot`). -/
 theorem succession_zero : Ordinal.epsilon 0 = epsilonZero := by
   rw [epsilon_eq_deriv, deriv_zero_right, ← Ordinal.bot_eq_zero]
   exact epsilon0_eq_nfp_bot.symm
@@ -95,9 +96,13 @@ theorem snapNucleus_fixes_epsilon (o : Ordinal) :
   rw [epsilon_eq_deriv]
   exact deriv_fp (isNormal_opow one_lt_omega0) o
 
-/-- **The successor null — the next bottom is the snap from just past the current one.** `ε_ (succ o)` is
-    the snap-closure seeded at `succ (ε_ o)`: when one instance ends at `ε_ o`, the next begins by snapping
-    from one step above it. (Mathlib `epsilon_succ_eq_nfp`.) -/
+/-- **Re-seeding — the next rung is the snap from just past the current one.** `ε_ (succ o)` is the
+    snap-closure seeded at `succ (ε_ o)`: when one instance ends at `ε_ o`, the next begins by snapping
+    from one step above it. (Mathlib `epsilon_succ_eq_nfp`.)
+
+    NOT to be read as "the successor null": `ε_ o` *plays the bottom role* for this next step without
+    *being* ⊥, and the framework's successor null (`t_iz_limit_is_new_null`) is a `ZPSemilattice` fact
+    about a different object. The header's role/identity distinction applies here. -/
 theorem succession_succ (o : Ordinal) :
     Ordinal.epsilon (Order.succ o)
       = Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon o)) :=

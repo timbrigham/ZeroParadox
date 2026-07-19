@@ -81,9 +81,10 @@ Nothing here mentions `ℚ_[2]`. `X` is an arbitrary type with a designated floo
 statements that carry the negative finding, and they are axiom-free.
 
 **Prior art for the shape of this result.** "Selection is free once a decidable discriminator is present"
-has a recognized topological shadow in Diaconescu's own second corollary (1975, p. 178): in the sheaf
-topos `Sh(T)` over a space, every open set is complemented exactly when the relevant decidability is
-available. The elementary content here is not new; what is being established is the *negative*
+has a recognized topological shadow in Diaconescu's second corollary (1975, p. 178), which concerns
+complemented subobjects in a sheaf topos. Stated as the paper states it — **one direction**, not a
+biconditional; an earlier draft of this note over-read it as an iff. Cited as an adjacent shadow of the
+elementary fact used here, not as its source. The elementary content here is not new; what is being established is the *negative*
 framework-specific fact that the framework's own pole supplies such a discriminator by construction. -/
 
 /-- **The pole discriminator.** Answers "am I at `∞` or at an affine point?" — a constructor match,

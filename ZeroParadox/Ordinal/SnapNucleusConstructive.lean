@@ -4,7 +4,7 @@ import Mathlib.Order.Nucleus
 set_option maxHeartbeats 1000000
 
 /-!
-# The snap nucleus has no choice-free syntactic counterpart: a proved obstruction
+# No snap-shaped closure on the `ONote` carrier: a proved obstruction
 
 ## What this file is
 
@@ -61,13 +61,17 @@ carrier, not a limitation of the proof.
 
 Both halves are measured here, and they split:
 
-* **The choice is still accidental in the ZP-N sense.** Every theorem in this file, including the
+* **Nothing in the reasoning here needs choice.** Every theorem in this file, including the
   impossibility itself and the full `LinearOrder`/`SemilatticeInf` structure on `SynONote`, is
-  choice-free. Nothing in the *reasoning* about the snap needs choice.
-* **The construction is nevertheless structurally unavailable constructively — for a different
-  reason.** What blocks the counterpart is not choice but **expressive reach**: the constructive
-  carrier cannot name the object the closure produces. That is a genuine obstruction, and it is the
-  first one the framework has found that is not a Mathlib artifact.
+  choice-free. **This does NOT classify `snapNucleus`'s own footprint as accidental** — that would be
+  an eliminability claim, and no re-proof of `snapNucleus` exists. Its status is **UNCLASSIFIED**
+  (`ZeroParadox/Ordinal/SnapNucleus.lean` records the same).
+* **The counterpart route via this carrier is blocked — for a different reason than choice.** What
+  blocks it is **expressive reach**: *this* carrier cannot name the object the closure produces.
+  **Scope, narrowly:** the result is about `ONote`-shaped notation systems, not about constructive
+  mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here —
+  it is open and untouched, and none is in Mathlib. So this is **not** a proof that the snap nucleus is
+  constructively impossible, and **not** a claim that ε₀ requires choice.
 
 These are compatible and should not be conflated. "The proof needs no choice" and "the carrier cannot
 hold the answer" are different failures, and only the second one bites here.
@@ -115,8 +119,22 @@ on the syntactic substrate to avoid inherited choice is ZP-N's
 (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`); `synVal` and its monotonicity are from
 `ZeroParadox/Ordinal/SyntacticCollapse.lean`, reused here. Nuclei are Mathlib's `Order/Nucleus.lean`
 (point-free Lawvere-Tierney). That Cantor normal form names exactly the ordinals below ε₀ is classical
-proof theory, not a result of this file. The contribution is the obstruction statement and its proof on
-these objects.
+proof theory, not a result of this file.
+
+**The closest specialist precedent, named.** Castéran and Contejean's *hydra-battles* development (Coq)
+carries a CNF datatype `T1` for the ordinals **below** ε₀, constructive (axiom-free / intuitionistic
+outside its Schütte module), with ε₀ as the notation system's **ceiling** — and, per our own prior-art
+survey of 2026-06-27, *not* phrased as a least fixed point and carrying no least-fixed-point theorem.
+That is the same carrier and the same ceiling as here. Grimm's Gaia development (INRIA RR-8407) builds a
+comparable `T1 ≈ ε₀` and treats ε₀ as a fixed point of `ω^·`, but **explicitly uses excluded middle and
+choice** — the classical comparison point.
+
+**The delta against them**, stated narrowly: neither states the *impossibility*. They build the
+constructive system and observe where it stops; this file proves that no idempotent endomap of that
+carrier can have the ε-numbers as its closed points, which is what converts "the system stops here" into
+"a closure operator of this shape cannot exist here." Given `omegaPow_no_fixedpoint` that conversion is
+two lines (see the triviality assessment) — the contribution is the statement and its placement, not
+depth.
 
 ## Engineer's Take
 

@@ -11,7 +11,7 @@ import ZeroParadox.Settheory.Wall
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
 
-A fourth index, **not a fourth framework object** � alongside `ZeroParadox/BottomCannotBe.lean`,
+A fourth index, **not a fourth framework object** — alongside `ZeroParadox/BottomCannotBe.lean`,
 `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` and `ZeroParadox/Order/SnapCannotBe.lean`. A `#check`-only
 index: it states no new results and reproduces no logic. Every line `#check`s an already-proven
 declaration in its home file, and the `import`s force those files to compile, so the index cannot point
@@ -85,11 +85,12 @@ core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`
 examined beyond it has been *accidental*, meaning a choice-free re-proof exists. Two such re-proofs have
 been carried out (§ I). No essential case has ever been found.
 
-**And in practice the number will not stay right.** It has been wrong twice already. The first version
-was quoted rather than measured, off by roughly 29×. The replacement was measured correctly and then went
-stale within the same session, because further files landed before it was written down; a claim-review
-referee caught it. Both are the same error — citing a figure that is not being regenerated at the moment
-of use — and a docstring cannot regenerate anything. Keeping a number here guarantees a third instance.
+**And in practice the number will not stay right.** It has been wrong three times. The first version was
+quoted rather than measured and was off by more than an order of magnitude. The replacement was measured
+correctly and went stale within the same session, because further files landed before it was written
+down; a claim-review referee caught it. The figure that then sat in the project's operating manual was
+stale again by the following review, for the same reason. All three are one error — citing a figure that
+is not being regenerated at the moment of use — and a docstring cannot regenerate anything.
 
 What is true, and is what this file asserts instead: **the framework is not choice-free, the core is, and
 every examined footprint has been removable.** That statement does not go stale.
@@ -120,11 +121,11 @@ The counts are of emitted *reports*, so a declaration `#check`ed in more than on
 per report; the total therefore exceeds the number of distinct declarations. Whatever it returns is a
 fact about the build you just ran, not a fact to carry anywhere.
 
-**The survey is partial, and that is the honest caveat that matters.** Only a small number of footprints
-have been traced to a source and classified; the overwhelming majority of the corpus is unexamined. So
-"every footprint is accidental" is a **working hypothesis supported by every case tested and refuted by
-none**, not a finding about the corpus. Do not upgrade it, and do not quantify it — the fraction examined
-moves with every commit for the same reason the count does.
+**The survey is partial, and that is the honest caveat that matters.** Only some footprints have been
+traced to a source and classified; much of the corpus is unexamined. So "every footprint is accidental"
+is a **working hypothesis supported by every case tested and refuted by none**, not a finding about the
+corpus. Do not upgrade it, and — for the same reason no count is recorded above — **do not quantify the
+examined fraction either**; it moves with every commit.
 
 ### Accidental versus essential
 
