@@ -112,8 +112,13 @@ method.
 
 ## Engineer's Take
 
-TODO (Tim): does the order→valuation direction (item 4) match how you think about the collapse —
-position forcing the norm down, rather than a sequence being exhibited?
+The snap is a one way operator away from zero to epsilon zero, and eventually that value sequence that is
+created returns to zero. If zero is truly infinite to start with, we are isolating only a subsection of
+the whole for the duration, and it eventually returns to a new bottom.
+
+It is definitely a separate instance that you return to, versus where you left from. It is still part of
+the entire family, so the question becomes whether you are looking at it from the family or the instance
+point of view.
 -/
 
 namespace ZeroParadox

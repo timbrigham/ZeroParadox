@@ -49,10 +49,11 @@ Nothing here is declared `axiom`, and nothing here uses `sorry`.
 
 ## Engineer's Take
 
-TODO (Tim): your take on the choice → excluded middle → Boolean-`Prop` chain — what it means that the
-modality generating classical logic is choice-free while the thing that *delivers* it is not, and why the
-§ IV fence (a Heyting algebra that stays non-Boolean even with excluded middle in hand) is the part worth
-keeping.
+Choice itself is a representation based on a constructed model here. My point of interest is whether in
+theory we could generate the same structure as choice, and with that, start replacing it at scale.
+
+The claims that they are the same object and simultaneously true, versus one must be true and the other
+false, are point of view specific. And point of view is a selection choice.
 
 ---
 

@@ -59,9 +59,11 @@ in `ZeroParadox/Category/ExcludedMiddleBridge.lean`.
 
 ## Engineer's Take
 
-TODO (Tim): your take on double negation being a difference-generator in the same sense the snap is — the
-modality `a ↦ aᶜᶜ` (the classical / excluded-middle collapse) whose closed points are the elements settled
-to a definite value.
+Why is Diaconescu not applied here? That was where this started, and the answer was that it already was
+applied, just not visibly.
+
+The question that came out of it is whether we are defining the excluded middle itself using the negation
+operator against the bottom element. We are.
 -/
 
 namespace ZeroParadox
