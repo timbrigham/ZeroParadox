@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1288,
+        "declarations": 1300,
         "files": 136
       },
       "entries": [
@@ -10364,6 +10364,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3046a2e1-0493-425b-9350-75d7da1668af",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ChoiceFragment",
+            "short": "ChoiceFragment"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "30a39b8c-933c-44dd-a020-64b70d5f69d5",
           "new": {
@@ -15977,6 +16011,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4fffa276-cc2b-4b02-9ed5-646f8b2a8bfd",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_choiceFragment",
+            "short": "em_of_choiceFragment"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "502d6ad9-21c5-48b0-bb90-c33fea27005a",
           "new": {
@@ -17695,6 +17763,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5946b405-97c9-4248-ab28-3ebd7dd53f1f",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fin3_middle_not_closed_point",
+            "short": "fin3_middle_not_closed_point"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "59611082-494b-475f-81a1-06a8f9aaf9c4",
           "new": {
@@ -17870,6 +17972,40 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5a1b185b-86cd-48c8-8123-c0273bec5acd",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_iff_dnegNucleus_trivial",
+            "short": "em_iff_dnegNucleus_trivial"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext",
             "sorry_free": true
           }
         },
@@ -25604,6 +25740,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "871e6611-4c6b-447f-99c2-b84bc91cb36b",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.choiceFragment_all_props_regular",
+            "short": "choiceFragment_all_props_regular"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "875a3295-df68-42a5-bb4c-bad7f93dd14b",
           "new": {
             "file": "ZeroParadox/Valuation/PadicBallIndicator.lean",
@@ -32632,6 +32802,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b11b728d-59fb-45e5-8a77-4048349f9c7a",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.choiceFragment_of_classical",
+            "short": "choiceFragment_of_classical"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b15b7d7a-c813-439d-a604-b756dfc1b2c6",
           "new": {
@@ -33713,6 +33917,40 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b6cf3987-eee0-40c5-b615-8626cf7b2001",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ExcludedMiddle",
+            "short": "ExcludedMiddle"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35621,6 +35859,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c285c13a-2761-4c78-aa66-43b0f153120b",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fin3_middle_not_regular",
+            "short": "fin3_middle_not_regular"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c3276ea4-a4cc-4990-a0f4-fe457b83975e",
           "new": {
             "file": "ZeroParadox/Settheory/QuineHost.lean",
@@ -37326,6 +37598,40 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "cbb8a3b7-05c1-4898-bfa0-5f64c7c6a6ac",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.choiceFragment_dnegNucleus_trivial",
+            "short": "choiceFragment_dnegNucleus_trivial"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext, Quot.sound",
             "sorry_free": true
           }
         },
@@ -40364,6 +40670,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dce13bb4-0f4d-4d45-a799-85bb2a02365a",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_iff_all_props_regular",
+            "short": "em_iff_all_props_regular"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "dce27654-10d3-4098-a765-91c2f65fe598",
           "new": {
@@ -43354,6 +43694,40 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ea2e20eb-e9c3-4b31-8530-d9040f97925e",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prop_isRegular_iff",
+            "short": "prop_isRegular_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
+          "verify": {
+            "axioms": "propext",
             "sorry_free": true
           }
         },
@@ -46558,6 +46932,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fad8768d-cb05-41ed-a00a-1e0e77a62cea",
+          "new": {
+            "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fin3Biheyting",
+            "short": "fin3Biheyting"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
           "verify": {
             "axioms": null,
             "sorry_free": true
