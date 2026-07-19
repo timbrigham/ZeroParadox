@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1300,
+        "declarations": 1311,
         "files": 136
       },
       "entries": [
@@ -1088,6 +1088,40 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "02060815-0ad5-4086-8f34-6fc0609a349d",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synCollapse_norm_bound",
+            "short": "synCollapse_norm_bound"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -9525,6 +9559,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2cf43e58-7c26-4657-9408-613f58db02b2",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cmp_exp_ne_gt_of_ne_gt",
+            "short": "cmp_exp_ne_gt_of_ne_gt"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2d09079f-7725-450b-b7d6-fa65fdb94db5",
           "new": {
@@ -11411,6 +11479,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "374a8001-34a9-4d31-bd78-858138b6449e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_unbounded",
+            "short": "synVal_unbounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17764,6 +17866,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5943ba90-94b0-4897-a3fd-b533218e4369",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_zero",
+            "short": "synVal_zero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5946b405-97c9-4248-ab28-3ebd7dd53f1f",
           "new": {
             "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
@@ -17970,6 +18106,40 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5a166c71-ab14-497d-bc32-76f92303f4f4",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_omegaPow",
+            "short": "synVal_omegaPow"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31437,6 +31607,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "aa24b9d9-42fd-4b57-b3a1-4233189a2ede",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synCollapse_epsN",
+            "short": "synCollapse_epsN"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "aa47893a-1565-4965-8ea7-39221bdf1800",
           "new": {
@@ -39283,6 +39487,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d470ba47-78fe-4ae3-aa7d-bf331a80eea3",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_tower",
+            "short": "synVal_tower"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d471ff2e-727d-49aa-acc1-956fd68bae7d",
           "new": {
@@ -39637,6 +39875,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d78b78e6-7ec2-4235-bc80-3abb4538afb7",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal_oadd",
+            "short": "synVal_oadd"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41360,6 +41632,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "dfdab438-0eae-47ee-9b00-76334d9e179a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.le_synVal_of_tower_le",
+            "short": "le_synVal_of_tower_le"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e05ac17b-1e97-4b7c-8d26-3cc896509233",
           "new": {
@@ -41570,6 +41876,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e0d61ca5-76f8-46a3-8cbb-314349dce2a6",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synVal",
+            "short": "synVal"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47656,6 +47996,40 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fdd73f3b-0eac-4f38-a3ba-014a5c8f169e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.synCollapse_exact",
+            "short": "synCollapse_exact"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
           "verify": {
             "axioms": null,
             "sorry_free": true
