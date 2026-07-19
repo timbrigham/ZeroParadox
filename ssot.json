@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1266,
+        "declarations": 1287,
         "files": 136
       },
       "entries": [
@@ -944,6 +944,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "014aaed1-807e-405b-96d2-cd9257b7eeda",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_bot_ne_bot",
+            "short": "snapNucleus_bot_ne_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6859,6 +6896,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1ef47329-81f7-4a27-a84d-a21401276ace",
+          "new": {
+            "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dnegNucleus",
+            "short": "dnegNucleus"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "dropped",
           "id": "1f182e78-38cd-4efb-b550-ec1ec6ce1629",
           "new": {
@@ -7878,6 +7949,40 @@
             "role": [
               "infra"
             ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "24a7b238-3b56-4c03-ac76-02ff6712d81c",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbertSuccession",
+            "short": "hilbertSuccession"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -9533,6 +9638,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2da58f3a-a4b8-4bfe-a25d-7b18aa3048f4",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapMetaLattice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleusTop_apply",
+            "short": "snapNucleusTop_apply"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2dbc35d2-e525-4dcf-9cb0-3ee9f14b4a80",
           "new": {
@@ -10141,6 +10281,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "302f155c-d3be-4b98-b10d-9d53011e1361",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinalSuccession",
+            "short": "ordinalSuccession"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12545,6 +12722,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "3f28ff0b-646a-4b83-9d54-829aaba642e3",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_fixes_epsilon",
+            "short": "snapNucleus_fixes_epsilon"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3f8b9db4-6354-4cb7-83a0-6cb1c2b35fb4",
           "new": {
@@ -14472,6 +14686,43 @@
             "role": [
               "no-go"
             ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "48c527be-1613-498f-aae2-e419395bb6ba",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succession_zero",
+            "short": "succession_zero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
@@ -19739,6 +19990,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "69235e6b-6f8b-4853-8c36-3f2099f17a5b",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus",
+            "short": "snapNucleus"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "69340b2e-a4b5-41dd-953b-5a5973afaa9a",
           "new": {
@@ -20555,6 +20846,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6d7fef1c-63a5-426d-a170-db904d655e03",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succession_succ",
+            "short": "succession_succ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6d81d7f9-c2b5-416a-af64-560d1f0e5b79",
           "new": {
@@ -21097,6 +21424,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "72593453-fc1f-4fc5-b0d5-9597a827998e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapMetaLattice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapSublocale",
+            "short": "snapSublocale"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30244,6 +30610,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a46ea459-edd7-48b9-868a-83ac81412766",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succession_lt_succ",
+            "short": "succession_lt_succ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a490ac48-a034-4620-8c34-a19c3a0fa43a",
           "new": {
@@ -31605,6 +32007,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "adc4908e-7419-4ff7-8d2c-f755febee379",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.SeparatedSuccession",
+            "short": "SeparatedSuccession"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "dropped",
           "id": "adf5a669-5032-4969-b42a-e6dad78f6140",
           "new": {
@@ -32185,6 +32624,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1cbd7f2-6c8c-4319-a2cf-ef9114edb3d4",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_isClosed_iff",
+            "short": "snapNucleus_isClosed_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33249,6 +33725,46 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b76d1906-efdf-4128-a4ea-8c6b97efa9f3",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapMetaLattice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleusTop",
+            "short": "snapNucleusTop"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b771773c-811b-4f06-a2cb-197549622499",
           "new": {
@@ -33641,6 +34157,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b8f34dc5-c543-46b1-ac39-38f7a345fe6c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapMetaLattice.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleusTop_coe_bot",
+            "short": "snapNucleusTop_coe_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42298,6 +42852,41 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e8063851-4773-418f-a5d2-abb6d32ae522",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_apply",
+            "short": "snapNucleus_apply"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e8297b31-cba0-4c94-9d2a-ee461460a084",
           "new": {
@@ -42996,6 +43585,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "eb3b103a-4fa1-4f7b-aa60-5fc61793f212",
+          "new": {
+            "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dnegNucleus_apply",
+            "short": "dnegNucleus_apply"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "eb6bd87c-0c38-4387-970b-c2a14cacf39b",
           "new": {
@@ -43431,6 +44054,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ee3d6eca-3744-4e67-898d-3122dec90109",
+          "new": {
+            "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dnegNucleus_isClosed_iff",
+            "short": "dnegNucleus_isClosed_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45542,6 +46199,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "fa1a4722-be27-4e59-9d2c-92e0f4a6dff8",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.succession_strictMono",
+            "short": "succession_strictMono"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "fa2d3fab-0a98-44e6-b111-3ab2ce2778bc",
           "new": {
@@ -46775,6 +47470,83 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ff23b01d-f7f3-4fa7-8bc7-5ea439ef18aa",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_bot",
+            "short": "snapNucleus_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "bottom",
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffbc3146-2889-4636-82e1-a7692662ecce",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.snapNucleus_epsilon0",
+            "short": "snapNucleus_epsilon0"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "category"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
