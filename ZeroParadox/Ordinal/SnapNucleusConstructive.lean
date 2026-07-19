@@ -120,8 +120,12 @@ these objects.
 
 ## Engineer's Take
 
-TODO (Tim): if the carrier cannot name what the closure produces, is that a defect of the carrier or is
-it the snap telling us where the boundary of the system actually is?
+Epsilon zero as a name means nothing specific on its own. What matters is that it is being used in the
+same fashion. The relativity here is mapped very specifically, and it is relative to the framework it is
+being used in.
+
+It is interesting to think of epsilon zero as a constant like pi, specifically because of its filling a
+role. That is literally what pi is doing. I simply never thought of it under those terms.
 -/
 
 namespace ZeroParadox
