@@ -129,6 +129,21 @@ That is the same carrier and the same ceiling as here. Grimm's Gaia development 
 comparable `T1 ≈ ε₀` and treats ε₀ as a fixed point of `ω^·`, but **explicitly uses excluded middle and
 choice** — the classical comparison point.
 
+**The order construction below is ALSO theirs, and the citation above does not by itself cover it.**
+Read from source (`Epsilon0/T1.v`, archived at `.claude-local/hydra_battles_T1.v`): hydra-battles already
+carries the CNF datatype (`Inductive T1`), a structural lexicographic comparator `compare_T1`, the
+derived `lt α β := compare α β = Lt`, transitivity `lt_trans` by the same structural induction, and the
+strict-order bundle `t1_strorder` — all on raw terms, by the same stay-on-the-syntax technique used here
+for `SynONote`. So `syn_cmp_trans_lt` and `instLinearOrderSynONote` are a **re-derivation in a different
+proof assistant, not a new construction**, and the "genuinely non-trivial engineering" framing below is
+about the effort in Lean, never about novelty. Cited here explicitly because scoping the credit only to
+"the carrier and the ceiling" would have left this uncredited — the failure mode where a theorem-backed
+layer carries a distinctive construction with its own separate prior art.
+
+**What is not theirs:** the impossibility statement itself, and the Lean realization. Mathlib has no
+usable equivalent — its `ONote` order is `repr`-routed (hence choice-carrying) and its `cmp_compares` is
+`NF`-conditional with `NF` itself `repr`-defined, which is why the order had to be rebuilt here at all.
+
 **The delta against them**, stated narrowly: neither states the *impossibility*. They build the
 constructive system and observe where it stops; this file proves that no idempotent endomap of that
 carrier can have the ε-numbers as its closed points, which is what converts "the system stops here" into

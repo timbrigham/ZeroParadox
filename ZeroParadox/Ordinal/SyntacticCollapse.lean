@@ -120,9 +120,19 @@ measure is a *depth function*, deliberately coarser than a norm, adequate for th
 coefficient is always `1`) and inadequate as a norm in general.
 
 Their Lemma 2 is the near neighbour: it defines an iteration-depth function `G α := min {i : α[0]^i = 0}`
-— structurally the same idea as `synVal` — and shows it is a norm only under an *additional* finiteness
-hypothesis (Lemma 2(b)). That is the precise sense in which this construction is neighbouring rather than
-novel, and that paper is where to look if the measure ever needs strengthening past the tower.
+— structurally the same idea as `synVal`. **On a Bachmann system, G IS a norm**, unconditionally: Lemma
+2(a)'s proof (p. 276) concludes "Thus (τ, ·[·], G) is a normed Bachmann system. By Lemma 1(b) G is a
+norm." Lemma 2(b) is a *separate sufficient condition* for the weaker bare-fundamental-sequences setting,
+not an extra hypothesis (an earlier draft of this paragraph said otherwise and was wrong; corrected
+2026-07-19 against the paper).
+
+**That correction sharpens the delta rather than softening it.** Iteration depth is not inherently too
+coarse to be a norm — in their setting it satisfies the finite-fibre condition. `synVal` fails it for a
+reason specific to *this* carrier: `ONote`'s `oadd e n a` carries a coefficient slot, so infinitely many
+notations (`oadd 0 n 0` for every `n`) share depth 1. Their fundamental-sequence setting has no such slot
+below a given point. So the gap is not "depth is a weak measure" but "this carrier lets a coefficient
+hide inside a depth class" — which is exactly the information `synVal` discards, and exactly why it
+suffices for the tower (where the coefficient is pinned at 1) and nowhere else.
 
 `ONote` / `NONote` and `ONote.cmp` are Mathlib (`Mathlib.SetTheory.Ordinal.Notation`). The technique
 of working on the syntactic substrate to avoid the choice inherited from Mathlib's `Ordinal` is not
