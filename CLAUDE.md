@@ -32,6 +32,43 @@ The `CannotBe` indexes are `#check`-only — they create no declarations and so 
 
 **Why this rule exists (2026-07-17):** a run of prose/figure errors — fencing ε₀ = 0, "co-locating ⊥ and ε₀," flattening min≡max to one face, calling ε₀ "a large ordinal / ceiling" — all came from reconstructing these objects from working memory instead of reading the Lean. The fix is mechanical: read the `CannotBe` index first, cite the theorem, never gloss.
 
+## Rules That Must Reach Spawned Agents — Hard Rules
+
+**Why this section exists (measured 2026-07-19).** A spawned agent receives, automatically: this file in
+full, the user-level `CLAUDE.md`, the Lean `.claudecodes` block, the project-standards block — **and the
+memory INDEX only, not memory file bodies.** So a rule whose content lives in a memory body reaches a
+subagent as one line among ~100 in an index, competing for attention with ninety-nine others, firing at
+no particular moment. That is not a control.
+
+**The consequence, verified:** a subagent invented a factual detail about a cited paper while the line
+*"Draft from source only — public math claims must trace to a specific source passage"* was sitting in
+its index. The rule was visible and did not bind. **A rule that must not be violated belongs HERE or in
+the task brief. Memory is for context, not enforcement.** When delegating, carry the relevant rules below
+into the brief explicitly — the same way the encoding and glob warnings are already carried.
+
+- **Draft from source.** Never describe the content of a source you have not read. Cite existence (title,
+  venue, that it exists) freely; assert specific technical content **only with the passage in hand**. If
+  you cannot read it, say so explicitly — do **not** soften a specific into a vaguer assertion about a
+  paper nobody opened. Applies to Lean docstrings citing external papers, companion sections, discussion
+  comments, and outreach. Before concluding a PDF is unreadable, try `pypdf`/`pdfminer` directly
+  (`.claude-local/extract_pdf_text.py`); a fetch tool's failure is not a fact about the source.
+- **Start new files from the templates.** Any new `.lean` file starts from `.claude-local/templates/`
+  (`TEMPLATE_lean.lean`, `TEMPLATE_experimental_mapping.lean`) and its `README.md`. Note the template's
+  namespace line is stale — namespaces are FLAT (`ZeroParadox`), not `ZeroParadox.ZPX`.
+- **Never write a bare "bottom."** Always say which level: the structureless referent / a specific
+  structured instance (a face) / the family-and-schema. The bare word sliding between senses is the
+  project's longest-standing source of confusion. (`/remember-bottom` re-orients.)
+- **The literal string `ε₀ = 0`** may appear ONLY as a guard or fence forbidding it, or as a theorem where
+  ε₀ is an argument. Never a bare assertion, never in conversation — even to deny it. Canary:
+  `epsilon0_ne_zero`.
+- **Standard mathematical term first**, ZP term after as a declared shorthand — never the reverse. This is
+  the defense against the "ontology built on an equivocation" reading.
+- **Verify an API exists before naming it in a plan.** Grep the Mathlib pin; a plan citing a lemma that
+  does not exist in the pinned version is worse than no plan.
+- **Never delete a Lean file a subagent produced**, even a failed experiment — say so in the brief.
+- **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
+  restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
+
 ## Editorial Review Gate — Hard Rule
 
 **Any commit touching document prose requires editorial review to have completed before the commit is made.** This applies to:
@@ -160,7 +197,7 @@ It must **exit 0** before the release body is drafted. The script mechanically v
 
 **`.zenodo.json` check — mandatory before every release:** Read `.zenodo.json` and verify the `description` field accurately reflects the current layer count and layer list. Update it in the same PR as `RELEASES.md` if anything is stale. Zenodo reads this file at release creation time; it cannot be updated retroactively via the repo (only via the Zenodo web UI).
 
-**Engineer's Take check — mandatory before every release (hard gate):** Before cutting any release, grep the Lean sources for outstanding Engineer's Take placeholders — at minimum `TODO (Tim)` and `TODO: Engineer's Take` across `ZeroParadox/*.lean` (also scan for any `## Engineer's Take` heading followed immediately by an empty section). Every ZP-X Lean file included in the release must have its Engineer's Take filled in Tim's own voice. **A release is BLOCKED until all are filled.** Claude never writes these — they must be Tim's own language (see the Engineer's Take convention) — so this gate catches the omission, it does not fill it. Surface the list of unfilled takes to Tim and wait for his prose. (Added 2026-06-11 after the four ZP-H functor takes plus ZP-L's were almost missed at the v2.4 threshold.)
+**Engineer's Take check — mandatory before every release (hard gate):** Before cutting any release, grep the Lean sources for outstanding Engineer's Take placeholders — at minimum `TODO (Tim)` and `TODO: Engineer's Take` across **`ZeroParadox/**/*.lean`** (also scan for any `## Engineer's Take` heading followed immediately by an empty section). **The glob MUST be recursive.** This instruction previously read `ZeroParadox/*.lean`, which post-reorg matches only 3 files out of 187 — a manual check run that way would pass silently on an unfilled Take in any subdirectory. `check_release_ready.py` already uses the recursive form and is correct; only this prose was wrong (fixed 2026-07-19). Every ZP-X Lean file included in the release must have its Engineer's Take filled in Tim's own voice. **A release is BLOCKED until all are filled.** Claude never writes these — they must be Tim's own language (see the Engineer's Take convention) — so this gate catches the omission, it does not fill it. Surface the list of unfilled takes to Tim and wait for his prose. (Added 2026-06-11 after the four ZP-H functor takes plus ZP-L's were almost missed at the v2.4 threshold.)
 
 **RELEASES.md format:** `## vX.Y - YYYY-MM-DD` header, then **Why this release** (one sentence), **What changed** (bullets), **Document versions at this release** (table), **Next threshold**. Match existing entries in RELEASES.md for exact formatting.
 
