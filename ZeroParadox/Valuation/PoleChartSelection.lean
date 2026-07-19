@@ -8,9 +8,8 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): is the "internal indistinguishability" of the two charts something you want to *commit* to
-about ⊥, or is the built sphere's distinguishable pole the honest object and the chart-selection reading
-should be retired?
+We were running this comparison backwards. The poles do not require choice. The selection of a pole, zero
+or infinity or not selected yet, is what acts as a representation of choice itself.
 
 ---
 

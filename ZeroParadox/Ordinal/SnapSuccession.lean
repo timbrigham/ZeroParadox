@@ -35,8 +35,10 @@ contribution being the reading of the chain as the snap's succession of new bott
 
 ## Engineer's Take
 
-TODO (Tim): your take on the succession — the new bottoms as a strictly climbing chain, each one the snap
-run from just past the last, and where the orthogonal-tangent idea still has to be pinned down.
+While it does return to bottom, it is a brand new instance of bottom at that point in time, just by virtue
+of leaving and coming back.
+
+Bottom is not ever epsilon zero. Always next to, but never the same as.
 -/
 
 namespace ZeroParadox

@@ -20,8 +20,8 @@ cannot overclaim*.
 
 ## Engineer's Take
 
-TODO (Tim): what does it change for you that the framework's own snap is axiom-free while two-thirds of
-the corpus carries `Classical.choice` — is that a result, or just a measurement?
+We have built what bottom is not, and what the snap is not. The same kind of file for what choice is not
+was in order, as a way to organize and reference that object.
 
 ---
 

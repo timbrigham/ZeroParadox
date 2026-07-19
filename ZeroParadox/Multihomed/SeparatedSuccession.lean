@@ -33,8 +33,9 @@ ordinal implementation separates unconditionally, the Hilbert one only given a g
 
 ## Engineer's Take
 
-TODO (Tim): your take on the type bridge — that we state the required attributes of the class and show the
-framework is a known implementation, rather than claiming the two charts are the same object.
+By using the abstract shape of epsilon zero from least fixed point, we can now define a generic
+relationship to the entire class. We cannot cross a type boundary, however we can dictate shared shape and
+position.
 -/
 
 namespace ZeroParadox
