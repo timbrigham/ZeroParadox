@@ -20,6 +20,11 @@ middle fully available), carrying an element with `aᶜᶜ ≠ a`. The nucleus s
 general statement "excluded middle collapses the double-negation nucleus" is FALSE and is not asserted
 anywhere in this file.
 
+**Correction of record.** This file was first drafted in exactly that general (wrong) form — "choice →
+excluded middle → the double-negation nucleus is trivial", unscoped — and the `Prop`-vs-arbitrary-Heyting
+distinction was caught before it was built. § IV exists because of that near-miss, which is why the fence
+is the load-bearing part of the file rather than a footnote. Recorded rather than quietly avoided.
+
 **The instance hazard, and how it is handled.** `Prop` carries two relevant instances:
 `Prop.instHeytingAlgebra` (Mathlib/Order/Heyting/Basic.lean) and `Prop.instBooleanAlgebra`
 (Mathlib/Order/BooleanAlgebra/Defs.lean). The Boolean one discharges its `top_le_sup_compl` field with

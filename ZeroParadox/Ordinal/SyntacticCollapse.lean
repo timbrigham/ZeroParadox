@@ -3,6 +3,19 @@ import ZeroParadox.Ordinal.ConstructiveOrdinals
 /-!
 # Syntactic surrogate for the 2-adic metric collapse (choice-free)
 
+## The conjecture under test
+
+The framework carries a standing conjecture: **`Classical.choice` is structurally forced by the ZP metric
+collapse**, rather than merely imposed by Mathlib. Its own stated test is whether the snap and
+`tower_converges_to_zero` can be proved without choice — if yes, choice is incidental; if no, it is forced.
+
+That test has two halves, and they are in different states. The **snap half is resolved, incidental**:
+`ZeroParadox.t_snap_derived` (`ZeroParadox/Order/Snap.lean`) depends on *no axioms at all*. The **metric
+half** — the half the conjecture actually names — had never been attempted before this file. This file
+moves it, and moves it only as far as *evidence*: `tower_converges_to_zero` itself still carries choice,
+and the bridge from what is proved here to that statement is not proved (see "What this does NOT
+establish"). Nothing here settles the conjecture in either direction.
+
 ## What this file is
 
 An **experiment**, and a **surrogate**. It asks whether the *content* of the ZP-L/Gentzen metric
@@ -29,6 +42,10 @@ Everything below is defined by structural recursion on `ONote` constructors. Not
 4. `le_synVal_of_tower_le` — **the non-trivial one.** *Every* notation that is not `cmp`-below
    `tower n` has `synVal ≥ n`. So the valuation lower bound is not a property of one hand-picked
    sequence: it is forced by position in the syntactic order.
+4b. `synVal_mono` — `synVal` is **monotone** for `ONote.cmp`. This is what earns it the name
+   *valuation* rather than *depth counter*, and `le_synVal_of_tower_le` is its specialization at the
+   tower. Added after a verification pass challenged whether the definition was faithful; the check
+   was worth running, and this is what it produced.
 5. `synCollapse_epsN` / `synCollapse_norm_bound` — the ε-N statement, written out directly
    (`∀ k, ∃ N, ∀ n ≥ N, …`) rather than through `Filter.Tendsto`/`Metric`, since that API is where
    the classical dependencies sit. The norm form is stated in `ℕ` as `2 ^ k ≤ 2 ^ synVal ·`, which
@@ -64,14 +81,15 @@ Different carrier, different statement. In particular:
   observation about two separate computations, not a theorem linking them. On general notations
   `synVal` is *not* claimed to equal the 2-adic valuation at all — it ignores the coefficient and
   the remainder, which contribute in general.
-* **It does not show the metric collapse is choice-free.** The honest reading, if the purity
-  check below comes back clean, is bounded: *the convergence content is available choice-free on
-  the syntactic side, which is evidence that the `Classical.choice` in the 2-adic statement is
-  Mathlib-imposed (accidental) rather than forced by the ZP structure.* Evidence, not proof.
+* **It does not show the metric collapse is choice-free.** The honest reading is bounded: *the
+  convergence content is available choice-free on the syntactic side, which is evidence that the
+  `Classical.choice` in the 2-adic statement is Mathlib-imposed (accidental) rather than forced by
+  the ZP structure.* Evidence, not proof.
 
 ## Triviality assessment
 
-Items 1, 2, 3 and 5 are, honestly, close to trivial: `synVal (tower n) = n` is "the depth of an
+Items 1, 2, 3 and 5 are, honestly, close to trivial (4b is elementary too — the same lexicographic
+induction as item 4, generalized): `synVal (tower n) = n` is "the depth of an
 `n`-fold nesting is `n`", and unboundedness/ε-N follow immediately. An unbounded-valuation claim of
 that shape holds of any sequence built by iterating a depth-increasing constructor, so on its own it
 is weak evidence.

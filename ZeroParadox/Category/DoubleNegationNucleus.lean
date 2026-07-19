@@ -29,7 +29,9 @@ axiom footprint `[propext]` — no `Classical.choice`, no `Quot.sound`. That did
 Mathlib's `compl_compl_inf_distrib` proves meet-preservation via `sup`/`compl_sup_distrib` and so reports
 `Classical.choice`; `dneg_inf_distrib` below re-proves it using only the meet side, dropping the footprint
 to `[propext]`. The result: **the modality that generates classical logic is itself built with no
-classical input.** This matters here specifically because of the direction of Diaconescu's theorem —
+classical input** — where "generates classical logic" means precisely that its closed points are the
+regular elements, the Boolean core, and nothing more (see the Fence below). This matters here
+specifically because of the direction of Diaconescu's theorem —
 choice implies excluded middle, and Lean's own kernel derives `Classical.em` from `Classical.choice` by
 exactly that argument. So a proof of the excluded-middle modality that leaked `Classical.choice` was
 tacitly routing through Diaconescu to build the very thing Diaconescu delivers. Cutting that path is what
@@ -47,6 +49,13 @@ the axiom of choice implies excluded middle, and the converse fails). The framew
 "choice = which way you view the self-dual split" reading is the looser, informal thread — discussed in
 `DifferenceGeneratesSystem.lean`, not asserted here; the object built here is the double-negation
 (excluded-middle) nucleus, nothing stronger.
+
+**Correction of record: this file once made that error itself.** It was originally titled "Choice as a
+difference-generator" and named this object the framework's *choice modality*. That was wrong — choice is
+strictly stronger than what `a ↦ aᶜᶜ` delivers — and it was corrected in commit `655c761` off an adversary
+kill-list. Recorded here rather than quietly rewritten, because a reader checking the framework's claims
+is entitled to know which ones it previously got wrong. The arrow that actually connects the two is built
+in `ZeroParadox/Category/ExcludedMiddleBridge.lean`.
 
 ## Engineer's Take
 
