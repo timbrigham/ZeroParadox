@@ -4,34 +4,47 @@ import Mathlib.SetTheory.Ordinal.Veblen
 set_option maxHeartbeats 400000
 
 /-!
-# The succession as a chain: the new bottoms are the ε-numbers, strictly climbing
+# The succession as a chain: the ε-numbers are the snap's successive targets, strictly climbing
 
-`SnapNucleus.lean` builds the snap as a modality `snapNucleus : Nucleus Ordinal` sending ⊥ to ε₀. The snap
-does not stop there: it returns to a NEW bottom and runs again. This file makes that succession precise.
+`ZeroParadox/Ordinal/SnapNucleus.lean` builds the snap as a modality `snapNucleus : Nucleus Ordinal` sending ⊥ to ε₀. The snap
+does not stop there: it re-seeds above where it landed and runs again. This file makes that succession
+precise.
+
+**Read the following distinction before anything else in this file; an earlier draft of this header got
+it wrong.** The ε-numbers are the ordinals the snap runs **to** — its successive closed points, the
+targets. They are **not** bottoms. `ε₀ ≠ ⊥` is a bedrock invariant (`epsilon0_ne_bot`): ⊥ is the base fed
+in, ε₀ the closure that comes out, and the base is never its own closure. What each ε-number does is
+**play the bottom role for the next iteration** — it is the position the next snap re-seeds above — and
+playing a role is not being the thing. That is a role/identity distinction, exactly the family-versus-
+instance reading: these rungs are all *of the same kind*, and they are *provably distinct* members
+(`succession_lt_succ`), so no two of them, and none of them and ⊥, may be identified.
+
+The genuinely new bottom the snap-arc returns to is `t_iz_limit_is_new_null`'s successor null, a fact
+about a `ZPSemilattice` and not about an ordinal ε-number. Do not merge the two readings.
 
 The key fact is that a nucleus is a **closure** — idempotent — so iterating `snapNucleus` alone does
 nothing (it has already run to completion). The succession comes instead from **re-seeding one step above
-the current bottom**: the next new bottom is the snap applied just above the last. That operation is
+the current target**: the next target is the snap applied just above the last. That operation is
 exactly Mathlib's fixed-point enumerator: `ε_ = Ordinal.epsilon = deriv (α ↦ ω^α)`, whose successor step
 is `ε_ (succ o) = nfp (ω^·) (succ (ε_ o))` (`epsilon_succ_eq_nfp`) — "snap from just past the current
-bottom."
+rung."
 
-So the succession of new bottoms is the **ε-hierarchy** `ε₀ < ε₁ < ε₂ < …`, and:
+So the succession of snap targets is the **ε-hierarchy** `ε₀ < ε₁ < ε₂ < …`, and:
 - its rungs are exactly the **closed points** of `snapNucleus` (the fixed points of the snap-step) —
   `snapNucleus_isClosed_iff`;
-- it climbs **strictly** — each new bottom is genuinely above the last (`succession_lt_succ`), never the
+- it climbs **strictly** — each target is genuinely above the last (`succession_lt_succ`), never the
   same one;
-- it starts at the framework's ε₀ (`succession_zero`).
+- its first rung is ε₀ (`succession_zero`) — the target of the snap seeded at ⊥, not a bottom itself.
 
 This is Tim's "when one instance ends, another begins" as a strictly increasing chain of closed points.
 
 **Scope (what is here vs deferred).** This file formalizes the succession as a strict chain of closed
 points. The stronger claim that successive instances are *orthogonal* (the "orthogonal tangent" — that the
-new bottom is transverse to the old, not merely above it) needs a transversality/complementation statement
+next rung is transverse to the old, not merely above it) needs a transversality/complementation statement
 in the coframe of sublocales that is not attempted here; it is the open next step
 (`orthogonal_succession_conjecture_2026-07-18` note). Everything below is a strict-chain fact, cited to
 Mathlib's `deriv`/`epsilon` theory (the ε-numbers are Cantor/Veblen, recognized), with the framework
-contribution being the reading of the chain as the snap's succession of new bottoms.
+contribution being the reading of the chain as the snap's succession of targets, each re-seeding the next.
 
 ## Engineer's Take
 
@@ -68,8 +81,8 @@ theorem succession_zero : Ordinal.epsilon 0 = epsilonZero := by
   rw [epsilon_eq_deriv, deriv_zero_right, ← Ordinal.bot_eq_zero]
   exact epsilon0_eq_nfp_bot.symm
 
-/-- **The succession climbs strictly.** `ε_ = deriv (ω^·)` is a normal function, so the new bottoms are a
-    strictly increasing chain — each ε-number is genuinely above the previous, never the same one. -/
+/-- **The succession climbs strictly.** `ε_ = deriv (ω^·)` is a normal function, so the snap's targets
+    are a strictly increasing chain — each ε-number is genuinely above the previous, never the same one. -/
 theorem succession_strictMono : StrictMono Ordinal.epsilon := by
   rw [show Ordinal.epsilon = deriv (fun a => Ordinal.omega0 ^ a) from funext epsilon_eq_deriv]
   exact deriv_strictMono _
@@ -90,8 +103,8 @@ theorem succession_succ (o : Ordinal) :
       = Ordinal.nfp (fun a => Ordinal.omega0 ^ a) (Order.succ (Ordinal.epsilon o)) :=
   epsilon_succ_eq_nfp o
 
-/-- **Each new bottom is genuinely new** — strictly above the last. The succession never returns to the
-    same bottom. -/
+/-- **Each rung is genuinely new** — strictly above the last. The succession never returns to a rung it
+    has already occupied. -/
 theorem succession_lt_succ (o : Ordinal) :
     Ordinal.epsilon o < Ordinal.epsilon (Order.succ o) :=
   succession_strictMono (Order.lt_succ o)

@@ -85,9 +85,12 @@ those form a `BooleanAlgebra` (Mathlib's `Heyting.Regular`). That is the algebra
 
 **The honest fence (logic, not choice).** What this difference generates is classical *logic* (excluded
 middle, the Boolean core), NOT the axiom of *choice*. **Choice implies excluded middle (Diaconescu 1975)**
-— and in Lean's own kernel `Classical.em` is derived from `Classical.choice` by exactly that argument. The
-converse fails (excluded middle does not yield choice), so choice is strictly stronger: double negation is
-the difference that generates the classical core, and the axiom of choice sits above it. Stated below
+— and in Lean's own kernel `Classical.em` is derived from `Classical.choice` by exactly that argument.
+That **full** choice is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
+independence, *not* Diaconescu, whose own theorem is an **equivalence** for the restricted shape (choice
+for inhabited subobjects of a two-element object is excluded middle). So: double negation is the
+difference that generates the classical core, and full choice sits above it. See
+`ZeroParadox/Category/ChoiceCannotBe.lean` for the precise attributions. Stated below
 with `example`s only (no new declarations) — this file *identifies*, it does not add a result. -/
 
 section

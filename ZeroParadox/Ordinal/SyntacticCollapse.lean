@@ -103,6 +103,13 @@ is not vacuous, and it is the piece that is choice-free here.
 
 ## Prior art
 
+**Adjacent literature, cited so the delta is visible.** Order-monotone syntactic complexity measures on
+ordinal notations are studied — Buchholz, Cichon and Weiermann, *A Uniform Approach to Fundamental
+Sequences and Hierarchies*, MLQ 40 (1994) 273-286, whose **norm** counts coefficients. `synVal`
+deliberately does not: it reads only the leading-exponent depth and discards coefficient and remainder.
+So this is a neighbouring construction rather than a duplicate, and the norm literature is the place to
+look if the measure ever needs strengthening beyond the tower.
+
 `ONote` / `NONote` and `ONote.cmp` are Mathlib (`Mathlib.SetTheory.Ordinal.Notation`). The technique
 of working on the syntactic substrate to avoid the choice inherited from Mathlib's `Ordinal` is not
 new here either — it is ZP-N's (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`), which established

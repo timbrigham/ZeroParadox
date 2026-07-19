@@ -44,8 +44,12 @@ is *not* Boolean. Nothing here derives LEM, and nothing here bears on whether an
 *requires* it (that is the essential-vs-accidental question, tracked separately).
 
 **What this is and is NOT (the excluded-middle / choice distinction).** This modality generates classical
-*logic* — excluded middle. It is NOT the axiom of *choice*: choice is strictly stronger (Diaconescu 1975:
-the axiom of choice implies excluded middle, and the converse fails). The framework's conversational
+*logic* — excluded middle. It is NOT the axiom of *choice*: **full** choice is strictly stronger, which is
+Cohen's 1963 independence result (with Fraenkel–Mostowski), **not** Diaconescu's. What Diaconescu (1975)
+proved is an *equivalence*: in a topos, choice for inhabited subobjects of a two-element object **is**
+excluded middle. Attributing "the converse fails" to him is a misreading; see
+`ZeroParadox/Category/ChoiceCannotBe.lean` for the full statement and for why the restricted fragment
+nonetheless comes apart from excluded middle in Lean specifically. The framework's conversational
 "choice = which way you view the self-dual split" reading is the looser, informal thread — discussed in
 `DifferenceGeneratesSystem.lean`, not asserted here; the object built here is the double-negation
 (excluded-middle) nucleus, nothing stronger.

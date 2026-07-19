@@ -44,6 +44,22 @@ Diaconescu's argument — but as a derivation of the classical axioms, not as a 
 choice principle as a hypothesis. This file supplies that hypothesis form so the arrow can be composed
 with § I. § I and § IV are elementary and equally not new; the contribution is the assembly.
 
+**A correction to how this file first stated its prior art (2026-07-19).** It originally said Diaconescu
+proved "choice ⇒ excluded middle, one direction only, converse fails." That is wrong twice over. First,
+Diaconescu's theorem is an **equivalence** — a coequalizer of two nonintersecting monomorphisms has a
+section *iff* subobjects have complements (1975, p. 176), the choice direction being his corollary
+(p. 178); in modern terms, choice for inhabited subobjects of a two-element object **is** excluded middle.
+Second, that *full* AC is strictly stronger than excluded middle is **Cohen 1963** / Fraenkel–Mostowski
+independence, not Diaconescu.
+**This matters here because `ChoiceFragment` has exactly Diaconescu's restricted shape** — choice for
+inhabited predicates on `Bool` — so in a topos it would be equivalent to `ExcludedMiddle`, and the
+faithfulness check below would have to fail. It does not fail. The reason is that Lean stratifies `Prop`
+and `Type`: `ChoiceFragment` selects into `Bool`, making it data-valued excluded middle
+(`∀ p, Decidable p`), while `ExcludedMiddle` is the `Prop`-valued form, and `Or` in `Prop` does not
+eliminate into `Bool`. A topos has no such split. **So the one-way-ness measured below is a fact about
+Lean's stratification, and is this file's own small finding — not, as first written, a restatement of
+Diaconescu.**
+
 **No new axioms.** The choice principle in § II is a `def ... : Prop` hypothesis, discharged by the caller.
 Nothing here is declared `axiom`, and nothing here uses `sorry`.
 
@@ -128,10 +144,15 @@ construction `fun S => if S true then true else false` under only `ExcludedMiddl
 barrier: excluded middle supplies a disjunction in `Prop`, which cannot be eliminated to produce data.
 The same construction closes immediately under `classical`, at footprint
 `[propext, Classical.choice, Quot.sound]`. So the route from a decision to a *chooser* runs through
-choice, not through excluded middle, and the fragment sits genuinely above `ExcludedMiddle`.
+choice, not through excluded middle, and the fragment **appears to sit above** `ExcludedMiddle` in Lean.
 **Honest limit:** a failed proof attempt is not a proof of unprovability. This is strong evidence — the
-failure is at the exact structural barrier that separates choice from excluded middle in type theory —
-not a formal independence result, which would need a metatheoretic argument outside Lean. -/
+failure is at the exact structural barrier that separates the two in type theory — not a formal
+independence result, which would need a metatheoretic argument outside Lean.
+**And note what the barrier is and is not.** It is Lean's `Prop`/`Type` stratification: the fragment
+yields data (`Bool`), so it is really `∀ p, Decidable p`, while `ExcludedMiddle` is `Prop`-valued and does
+not eliminate into data. It is **not** a general fact about choice versus excluded middle — in a topos,
+where no such split exists, Diaconescu's theorem makes this very fragment *equivalent* to excluded middle.
+The gap measured here is a property of the ambient type theory, not of the two principles. -/
 def ChoiceFragment : Prop :=
   ∃ ch : (Bool → Prop) → Bool, ∀ S : (Bool → Prop), (∃ b, S b) → S (ch S)
 

@@ -78,7 +78,13 @@ open OnePoint
 /-! ## § I.a — The generic pole: selection is free
 
 Nothing here mentions `ℚ_[2]`. `X` is an arbitrary type with a designated floor `x₀`. These are the
-statements that carry the negative finding, and they are axiom-free. -/
+statements that carry the negative finding, and they are axiom-free.
+
+**Prior art for the shape of this result.** "Selection is free once a decidable discriminator is present"
+has a recognized topological shadow in Diaconescu's own second corollary (1975, p. 178): in the sheaf
+topos `Sh(T)` over a space, every open set is complemented exactly when the relevant decidability is
+available. The elementary content here is not new; what is being established is the *negative*
+framework-specific fact that the framework's own pole supplies such a discriminator by construction. -/
 
 /-- **The pole discriminator.** Answers "am I at `∞` or at an affine point?" — a constructor match,
 hence computable and axiom-free. It does *not* answer "is this affine point the floor?", which needs
@@ -119,16 +125,18 @@ def poleSelectG {X : Type*} (x₀ : X) (s : OnePoint X) : OnePoint X :=
 @[simp] theorem poleSelectG_coe {X : Type*} (x₀ x : X) :
     poleSelectG x₀ (OnePoint.some x) = OnePoint.some x := rfl
 
-/-- **Theorem (§ I.a) — the selector lands in the orbit.** -/
+/-- **Proposition (§ I.a) — the selector lands in the orbit.** Infrastructure for
+`chart_selection_is_freeG`, which is the section's Theorem. -/
 theorem poleSelectG_mem_orbit {X : Type*} (x₀ : X) {s : OnePoint X} (hs : s ∈ poleOrbitG x₀) :
     poleSelectG x₀ s ∈ poleOrbitG x₀ := by
   rcases hs with h | h <;> subst h
   · exact Or.inr rfl
   · exact Or.inr rfl
 
-/-- **Theorem (§ I.a) — the selector is constant on the pole orbit.** Both ends are sent to the same
+/-- **Proposition (§ I.a) — the selector is constant on the pole orbit.** Both ends are sent to the same
 chart, so the selection is well defined on the orbit as an unordered pair: it does not depend on which
-representative you are handed. This is the substantive selection statement, and it is axiom-free. -/
+representative you are handed. Axiom-free, and the substantive half of `chart_selection_is_freeG`, which
+is the section's Theorem. -/
 theorem poleSelectG_constant_on_orbit {X : Type*} (x₀ : X) {s t : OnePoint X}
     (hs : s ∈ poleOrbitG x₀) (ht : t ∈ poleOrbitG x₀) :
     poleSelectG x₀ s = poleSelectG x₀ t := by

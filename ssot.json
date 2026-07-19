@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1337,
+        "declarations": 1358,
         "files": 136
       },
       "entries": [
@@ -2414,6 +2414,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "07c7f150-6d9c-4dd9-adb8-76462ac77bc7",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.SynONote",
+            "short": "SynONote"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "07fbcb52-98c4-462c-addf-cfd7d44de553",
           "new": {
@@ -3539,6 +3573,40 @@
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0d89037e-a1e1-44ef-9b43-9462ebd5f805",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mathlib_ONote_order_not_antisymm",
+            "short": "mathlib_ONote_order_not_antisymm"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": "propext, Classical.choice, Quot.sound",
             "sorry_free": true
           }
         },
@@ -4997,6 +5065,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "13da9110-746a-4ea4-b11c-1ba671bba9d5",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.cmp_lt_tower",
+            "short": "cmp_lt_tower"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7235,6 +7337,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "200927c7-663d-4959-b87d-5a4de71707fa",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.syn_cmp_trans_lt",
+            "short": "syn_cmp_trans_lt"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10887,6 +11023,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "325ee295-e93c-4c30-b442-7bc7c50e2b28",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_snap_closure",
+            "short": "no_snap_closure"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "3265dfee-8b8a-4584-979e-454bfcd07454",
           "new": {
             "file": "ZeroParadox/Computability/CodeDataFrameChange.lean",
@@ -10914,6 +11084,40 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "327f32fb-6af1-4c45-8c46-e7384a220c69",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.syn_cmp_gt_iff_lt",
+            "short": "syn_cmp_gt_iff_lt"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19878,6 +20082,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "62dfdddf-70bf-4e7d-b5d7-7965760dc52f",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.syn_cmp_refl",
+            "short": "syn_cmp_refl"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "62e232b3-cf44-4162-9322-605e93b6572a",
           "new": {
@@ -19904,6 +20142,74 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "634eece5-0ed4-4253-89ad-6bdbfefd6f01",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_snap_nucleus",
+            "short": "no_snap_nucleus"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "641f4eca-d6d9-47ab-926d-95f7617a500d",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.swap_then",
+            "short": "swap_then"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25181,6 +25487,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8073c011-37d0-40c5-8bf5-d0557cb6b37a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.syn_cmp_swap",
+            "short": "syn_cmp_swap"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "DA-1"
             ]
@@ -26425,6 +26765,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "87da5875-5858-4b20-8ad8-dc66ce6f9fda",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.then_eq_lt_iff",
+            "short": "then_eq_lt_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "885e4330-71db-4a3a-b52e-ac976cf64da4",
           "new": {
@@ -26666,6 +27040,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "897d80a8-d251-4319-b903-d955d991cbbe",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_cofinal",
+            "short": "tower_cofinal"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27656,6 +28064,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9076bdd3-62d0-44d5-9b0b-932c5e31f5b3",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.instPreorderSynONote",
+            "short": "instPreorderSynONote"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30141,6 +30583,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9b640636-9d38-402a-b1a3-afd0b83bbde4",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.omegaPow_ne_self",
+            "short": "omegaPow_ne_self"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9bb96cfb-2ea1-4457-b6bf-1ece0a3b5384",
           "new": {
@@ -30473,6 +30949,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9d0476cf-1ce1-4dee-8233-ec2d7e3c0615",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tower_no_upper_bound",
+            "short": "tower_no_upper_bound"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9d228f8f-7a69-4d67-9974-09cbfc8f8124",
           "new": {
@@ -30787,6 +31297,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9eda7838-376b-466c-aa8b-2df531ef712e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_snap_closure_iff",
+            "short": "no_snap_closure_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34200,6 +34744,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b4387ec8-fa75-4393-82d8-bbf3ec04dedf",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.idNucleus",
+            "short": "idNucleus"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b44a52e0-bc1e-429d-bde8-9661c2519d56",
           "new": {
@@ -34479,6 +35057,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b5754884-2dea-4a49-8070-afb805d1a54b",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.syn_cmp_trans_le",
+            "short": "syn_cmp_trans_le"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43399,6 +44011,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e3ef1f1b-8c7a-473f-93bd-be9eef52095a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.instLinearOrderSynONote",
+            "short": "instLinearOrderSynONote"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e404ea70-fb7e-432c-a4ca-abc4bbc8d4ce",
           "new": {
@@ -45993,6 +46639,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f18d9fa4-a5cb-4c12-b56e-b5fb6b999b31",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofSyn",
+            "short": "ofSyn"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f1c5ec0a-210d-44f5-868d-c1237967d57f",
           "new": {
@@ -47679,6 +48359,40 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f927fe36-f1e0-48b3-bb62-584a05373711",
+          "new": {
+            "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSyn",
+            "short": "toSyn"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": null,
             "sorry_free": true

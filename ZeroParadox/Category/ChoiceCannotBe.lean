@@ -11,7 +11,7 @@ import ZeroParadox.Settheory.Wall
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
 
-The fourth index alongside `ZeroParadox/BottomCannotBe.lean`,
+A fourth index, **not a fourth framework object** � alongside `ZeroParadox/BottomCannotBe.lean`,
 `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` and `ZeroParadox/Order/SnapCannotBe.lean`. A `#check`-only
 index: it states no new results and reproduces no logic. Every line `#check`s an already-proven
 declaration in its home file, and the `import`s force those files to compile, so the index cannot point
@@ -51,7 +51,7 @@ framework's standing temptation. The literature that separates them:
 
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
-`ExcludedMiddleBridge.lean`'s `ChoiceFragment` has exactly Diaconescu's shape — choice for inhabited
+`ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` has exactly Diaconescu's shape — choice for inhabited
 predicates on `Bool` — so in a topos it would be *equivalent* to excluded middle. In Lean it measurably
 is not: excluded middle does not yield it (the construction dies at `Decidable (S true)`). That gap is a
 fact about **Lean's `Prop`/`Type` stratification**, not about Diaconescu's theorem: the fragment selects
@@ -131,7 +131,7 @@ moves with every commit for the same reason the count does.
 * **ACCIDENTAL** — a choice-free re-proof exists. Detected by *re-proving*, which is the only
   demonstration available: `dneg_inf_distrib` (§ I) is the worked example — Mathlib's route through
   `compl_sup_distrib` reports `Classical.choice`; staying on the meet side drops it to `[propext]`.
-  `SyntacticCollapse.lean` records another: a single tactic call was the whole footprint.
+  `ZeroParadox/Ordinal/SyntacticCollapse.lean` records another: a single tactic call was the whole footprint.
 * **ESSENTIAL** — the theorem implies excluded middle, or a choice fragment, over an intuitionistic
   base. **No essential case has been found anywhere in the framework.** That is an absence of evidence
   from a partial survey, not a theorem.
@@ -179,14 +179,14 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- statements on DIFFERENT carriers, not one statement rephrased** — the bridge `synVal` = 2-adic
 -- valuation is NOT proved, and cannot be without importing the stack under investigation. So this is
 -- EVIDENCE that the choice in the ℚ₂ statement is Mathlib-imposed, not a demonstration that the metric
--- collapse is choice-free. See `SyntacticCollapse.lean`'s "What this does NOT establish".
+-- collapse is choice-free. See `ZeroParadox/Ordinal/SyntacticCollapse.lean`'s "What this does NOT establish".
 #check @ZeroParadox.synCollapse_epsN
 #check @ZeroParadox.synVal_mono
 
 -- The ν-side inhabitation witnesses at the root cut: NO axioms. These matter because they REFUTE the
 -- general form of "choice enters precisely where the diagonal fixed point is asserted inhabited."
 -- Inhabiting a non-well-founded (greatest) fixed point can be entirely choice-free. FENCE: the
--- refutation is functor-specific, not universal — the QPF `Cofix` route in `ChoicePurityInvariant.lean`
+-- refutation is functor-specific, not universal — the QPF `Cofix` route in `ZeroParadox/Computability/ChoicePurityInvariant.lean`
 -- (`cofix_nonempty'`) DOES carry `Classical.choice`, as a Mathlib M-type artifact. So: the general claim
 -- is false; the per-functor question stays open case by case.
 #check @ZeroParadox.strict_cofix_nonempty
@@ -198,8 +198,9 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 
 /-! ## § II. What choice is NOT to be confused with — the excluded-middle boundary
 
-The modality of §I generates classical LOGIC. That is excluded middle, and it is strictly weaker than
-choice. This section indexes the boundary and its scope fence. -/
+The modality of §I generates classical LOGIC — excluded middle — which is strictly weaker than **full**
+choice (Cohen 1963). The RESTRICTED fragment is a different matter: see the header. This section indexes
+the boundary and its scope fence. -/
 
 -- What the modality's closed points actually are: the regular elements `aᶜᶜ = a` — the Boolean core.
 -- That is the whole of "generates classical logic", and it is NOT choice.
@@ -208,11 +209,16 @@ choice. This section indexes the boundary and its scope fence. -/
 -- Excluded middle ⟺ every `Prop` is a closed point of the nucleus. Scoped to `Prop`; see the fence below.
 #check @ZeroParadox.em_iff_dnegNucleus_trivial
 
--- DIACONESCU, hypothesis form: a choice fragment implies excluded middle. ONE DIRECTION — the converse
--- fails, which is exactly why choice and excluded middle are not interchangeable. PRIOR ART, not a
--- framework result: Diaconescu (1975), "Axiom of choice and complementation"; independently
--- Goodman–Myhill (1978), "Choice implies excluded middle". The framework contributes only the
--- hypothesis-form packaging (Lean's kernel realizes the arrow as a derivation, not a reusable theorem).
+-- DIACONESCU, hypothesis form: a choice fragment implies excluded middle. PRIOR ART, not a framework
+-- result: Diaconescu (1975), "Axiom of choice and complementation"; independently Goodman–Myhill (1978),
+-- "Choice implies excluded middle". The framework contributes only the hypothesis-form packaging (Lean's
+-- kernel realizes the arrow as a derivation, not a reusable theorem).
+-- DIRECTION, stated precisely — an earlier version of this comment had it wrong. Diaconescu's theorem is
+-- an EQUIVALENCE for this restricted shape (choice for inhabited subobjects of a two-element object IS
+-- excluded middle); "the converse fails" belongs to FULL AC and is Cohen 1963, not Diaconescu. That the
+-- fragment nonetheless does not follow from `ExcludedMiddle` *in Lean* is a fact about Lean's
+-- `Prop`/`Type` stratification, measured in `ZeroParadox/Category/ExcludedMiddleBridge.lean`, and is the framework's own
+-- finding rather than Diaconescu's.
 #check @ZeroParadox.em_of_choiceFragment
 
 -- THE SCOPE FENCE. Excluded middle does NOT make an arbitrary Heyting algebra Boolean: the middle
@@ -274,7 +280,7 @@ proved about where choice does work. -/
 -- with `Classical.em` and so carries `Classical.choice` IN ITS OWN TERM; `Prop.instHeytingAlgebra` is
 -- `[propext]`. A `Prop`-scoped statement that does not PIN its instance can silently resolve through the
 -- Boolean one and acquire choice — which would make every choice-freeness claim about `Prop` vacuous.
--- Every `Prop`-scoped statement in `ExcludedMiddleBridge.lean` pins `@… Prop Prop.instHeytingAlgebra`
+-- Every `Prop`-scoped statement in `ZeroParadox/Category/ExcludedMiddleBridge.lean` pins `@… Prop Prop.instHeytingAlgebra`
 -- explicitly for this reason. Pin the instance, or measure nothing.
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
