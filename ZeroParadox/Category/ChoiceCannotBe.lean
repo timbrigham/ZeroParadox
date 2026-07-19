@@ -1,5 +1,6 @@
 import ZeroParadox.Order.Snap
 import ZeroParadox.Ordinal.SnapNucleus
+import ZeroParadox.Ordinal.SnapNucleusConstructive
 import ZeroParadox.Category.DoubleNegationNucleus
 import ZeroParadox.Category.ExcludedMiddleBridge
 import ZeroParadox.Valuation.PoleChartSelection
@@ -252,10 +253,25 @@ proved about where choice does work. -/
 -- `snapNucleus` provably moves it (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
 -- has **never been re-proved choice-free**, so do not call it merely representational. What ZP-N
 -- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
--- `ONote`), which is suggestive for the nucleus and is not the nucleus. Until someone re-proves
--- `snapNucleus` itself, its `Classical.choice` is UNCLASSIFIED — the honest tier.
+-- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
+-- UNCLASSIFIED — the honest tier — and it cannot be reclassified by rewriting the proof, because
+-- `Ordinal` carries choice in the TYPE, before any proof runs.
 #check @ZeroParadox.snapNucleus
 #check @ZeroParadox.snapNucleus_bot_ne_bot
+
+-- AND THE NATURAL COUNTERPART ROUTE IS BLOCKED — the attempt was made, and it failed provably.
+-- `no_snap_closure`: no idempotent endomap of the notation carrier has the ε-numbers as its closed
+-- points. Idempotence alone suffices; `no_snap_nucleus` is the `Nucleus`-typed corollary, non-vacuous
+-- because `idNucleus` exhibits nuclei on that carrier.
+-- **READ THE OBSTRUCTION CORRECTLY — it is NOT about choice.** Every proof in that file is `[propext]`.
+-- What blocks the counterpart is EXPRESSIVE REACH: the carrier cannot name what the closure produces,
+-- because ε₀ is the supremum of Cantor normal form rather than a member. So this does NOT make
+-- `snapNucleus`'s footprint accidental, does NOT make it essential, and does NOT show the snap nucleus
+-- is constructively impossible in general — a notation system extending past ε₀ is untouched and open.
+-- It closes one route and leaves the classification exactly where it was: UNCLASSIFIED.
+#check @ZeroParadox.no_snap_closure
+#check @ZeroParadox.no_snap_nucleus
+#check @ZeroParadox.idNucleus
 
 -- The choice fragment is NON-VACUOUS: `Classical.choice` supplies it. Without this, `em_of_choiceFragment`
 -- could be dismissed as an implication with an unsatisfiable hypothesis. Classical by construction —

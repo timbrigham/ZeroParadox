@@ -103,12 +103,19 @@ is not vacuous, and it is the piece that is choice-free here.
 
 ## Prior art
 
-**Adjacent literature, cited so the delta is visible.** Order-monotone syntactic complexity measures on
-ordinal notations are studied — Buchholz, Cichon and Weiermann, *A Uniform Approach to Fundamental
-Sequences and Hierarchies*, MLQ 40 (1994) 273-286, whose **norm** counts coefficients. `synVal`
-deliberately does not: it reads only the leading-exponent depth and discards coefficient and remainder.
-So this is a neighbouring construction rather than a duplicate, and the norm literature is the place to
-look if the measure ever needs strengthening beyond the tower.
+**Adjacent literature, cited so the delta is visible.** Syntactic complexity measures on ordinal
+notations are an established subject: Buchholz, Cichon and Weiermann, *A Uniform Approach to Fundamental
+Sequences and Hierarchies*, MLQ 40 (1994) 273-286, builds fundamental sequences from the interplay
+between Bachmann systems and a **term-complexity function, which they call a norm**. `synVal` is a
+measure of that general kind, so this is a neighbouring construction rather than an original one, and
+that literature is where to look if the measure ever needs strengthening beyond the tower.
+
+*Citation honesty:* the above is taken from the paper's **abstract**, which is what could be obtained —
+the archived scan is a fax image with no text layer, so the body was not read. In particular **no claim
+is made here about how their norm is computed** (whether it counts coefficients, symbols, or nesting),
+and therefore none about how it compares in detail to `synVal`'s leading-exponent depth. Cited as
+adjacent prior work, not as a source this file relies on; nothing below depends on it. Anyone
+strengthening `synVal` should read the paper properly first.
 
 `ONote` / `NONote` and `ONote.cmp` are Mathlib (`Mathlib.SetTheory.Ordinal.Notation`). The technique
 of working on the syntactic substrate to avoid the choice inherited from Mathlib's `Ordinal` is not
