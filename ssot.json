@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1287,
+        "declarations": 1288,
         "files": 136
       },
       "entries": [
@@ -6921,7 +6921,7 @@
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
-            "axioms": null,
+            "axioms": "propext",
             "sorry_free": true
           }
         },
@@ -15347,6 +15347,40 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4d17817c-3b0a-41d8-baf4-049ef237f16c",
+          "new": {
+            "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dneg_inf_distrib",
+            "short": "dneg_inf_distrib"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "choice-free meet-preservation for dnegNucleus (drops Classical.choice to [propext])",
+          "verify": {
+            "axioms": "propext",
             "sorry_free": true
           }
         },
@@ -44089,7 +44123,7 @@
           },
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
-            "axioms": null,
+            "axioms": "propext",
             "sorry_free": true
           }
         },
