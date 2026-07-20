@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1366,
+        "declarations": 1384,
         "files": 136
       },
       "entries": [
@@ -1518,6 +1518,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "036daa36-aad0-487e-9285-6871e3af9612",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_not_injective",
+            "short": "e0Repr_not_injective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6909,6 +6943,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1cec5502-3291-4953-bb63-3a192c00b4b7",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_coe",
+            "short": "e0Repr_coe"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1cfdf0f2-dc09-4655-881f-1e152e67daae",
           "new": {
             "file": "ZeroParadox/Settheory/QuineHost.lean",
@@ -10950,6 +11018,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "32004c4d-83a8-434e-9ccb-78c0f3d56e15",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Coe_lt_top",
+            "short": "e0Coe_lt_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "3213daa8-17be-4c29-b5a7-e09ba452630a",
           "new": {
@@ -11493,6 +11595,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "34761c1f-6c53-4ebd-b1fd-90aa1df3bbcf",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0OmegaPow_coe",
+            "short": "e0OmegaPow_coe"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "34d59c50-8f0b-44f1-be49-526ea004bb13",
           "new": {
@@ -11955,6 +12091,40 @@
             "role": []
           },
           "reason": "SyntacticCollapse: choice-free syntactic surrogate for the 2-adic metric collapse (evidence the choice in tower_converges_to_zero is Mathlib-imposed)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3779c68f-117e-485c-afc6-24d81051314a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0DecidableLT",
+            "short": "e0DecidableLT"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13580,6 +13750,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4130ae59-6988-429b-8a49-c03e5255a524",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.E0Note",
+            "short": "E0Note"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -16476,6 +16680,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4f43008c-34bf-4e16-80e9-de1cbf02ee0a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Coe",
+            "short": "e0Coe"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4f836b53-8214-4bf1-a388-3c10e12b941e",
           "new": {
@@ -17993,6 +18231,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "57cbc795-8b51-4721-8e6c-7b7d2975822d",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0OmegaPow",
+            "short": "e0OmegaPow"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25408,6 +25680,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7f792ec5-3f14-4a5a-8d86-2d8d88334163",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0_le_top",
+            "short": "e0_le_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7f7a1f04-bd71-493a-99f9-3947056f2ef3",
           "new": {
@@ -25654,6 +25960,40 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "80ad8fac-6dc9-4f86-bc6f-ec8400ecda3e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_top",
+            "short": "e0Repr_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26201,6 +26541,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "83b70615-8a1b-4ac3-9b3e-2d093189964a",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_le_epsilon0",
+            "short": "e0Repr_le_epsilon0"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30611,6 +30985,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9ae9f4f7-e7a6-425a-a73b-e089607e4a44",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0OmegaPow_fixedpoint_iff",
+            "short": "e0OmegaPow_fixedpoint_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9aea53db-534d-42ed-a6bd-92643f43a8d2",
           "new": {
@@ -31514,6 +31922,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9f577710-217f-4469-8a00-8f80669b2211",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.repr_lt_epsilon0",
+            "short": "repr_lt_epsilon0"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9f5f467a-f09b-4b33-a1b3-ee29a9de1638",
           "new": {
@@ -32380,6 +32822,40 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a686f421-ef65-4375-9a1a-8a375e39d6dd",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0DecidableEq",
+            "short": "e0DecidableEq"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34984,6 +35460,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b46250bd-8b30-429b-b7ff-4c9b5ab01b40",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr",
+            "short": "e0Repr"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b4a7a9e6-f43d-4562-80fb-e21d1b0b6ef7",
           "new": {
@@ -36476,6 +36986,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bd0bb8e8-8616-40e4-9354-e49a3da9c798",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_eq_epsilon0_iff",
+            "short": "e0Repr_eq_epsilon0_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bd24011c-037c-4b5f-a37e-52dd8e32e3c4",
           "new": {
@@ -36615,6 +37159,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bd458bef-d775-47fe-9f5c-eceaceb365fd",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0OmegaPow_top",
+            "short": "e0OmegaPow_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43404,6 +43982,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e0bdf80a-2512-45bc-b34d-6185458b0313",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0DecidableLE",
+            "short": "e0DecidableLE"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
           "verify": {
             "axioms": null,
             "sorry_free": true
