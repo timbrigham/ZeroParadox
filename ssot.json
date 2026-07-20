@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1358,
+        "declarations": 1366,
         "files": 136
       },
       "entries": [
@@ -11824,6 +11824,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "36b01c36-db87-4ad3-ac2d-338552570def",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.order_footprint_is_uninformative",
+            "short": "order_footprint_is_uninformative"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "36ba6e54-ace7-4ccb-9de4-c5d07e0f6e9b",
           "new": {
@@ -16905,6 +16939,40 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "51172f5e-98ec-4623-af0d-d1cf9591890c",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.comparable_of_classical",
+            "short": "comparable_of_classical"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
+          "verify": {
+            "axioms": "propext, Classical.choice, Quot.sound",
             "sorry_free": true
           }
         },
@@ -28147,6 +28215,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "90cb5da0-5066-4af4-bdca-9a4e35eabd79",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Pt",
+            "short": "Pt"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "90d8fd71-0cbc-43be-ab3c-ae2f5ede9e41",
           "new": {
@@ -29119,6 +29221,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9408f6c1-8471-4e32-86b3-dcee56e2fafe",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Two",
+            "short": "Two"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32803,6 +32939,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "aa9449ee-4c51-4a41-abd5-12eb6c401eaf",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.p_of_pt_le",
+            "short": "p_of_pt_le"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "aaae4db3-8e98-4dee-a369-cf80bb0a27ac",
           "new": {
             "file": "ZeroParadox/Valuation/PadicCharacter.lean",
@@ -36046,6 +36216,40 @@
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bb2a845f-199b-4a32-9e31-97f071ce357b",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.em_of_wellOrder_comparable",
+            "short": "em_of_wellOrder_comparable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
+          "verify": {
+            "axioms": "propext, Quot.sound",
             "sorry_free": true
           }
         },
@@ -42598,6 +42802,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "de57561b-6f0c-44d3-b1e4-f109e5e114bd",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_p_of_le_pt",
+            "short": "not_p_of_le_pt"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "de76c0e5-2f74-4253-be2a-c3ce1531f84c",
           "new": {
@@ -47205,6 +47443,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f49bf2b0-223d-433b-a710-719c29281eb8",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.twoRel",
+            "short": "twoRel"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "OrdinalChoiceEssential: the framework's first ESSENTIAL choice case - comparability of arbitrary well-orders yields excluded middle (Kraus-Nordvall Forsberg-Xu taboo, cited); plus the demonstration that Ordinal order footprints are uninformative",
           "verify": {
             "axioms": null,
             "sorry_free": true
