@@ -138,7 +138,7 @@ comparable `T1 ≈ ε₀` and treats ε₀ as a fixed point of `ω^·`, but **ex
 choice** — the classical comparison point.
 
 **The order construction below is ALSO theirs, and the citation above does not by itself cover it.**
-Read from source (`Epsilon0/T1.v`, archived at `.claude-local/hydra_battles_T1.v`): hydra-battles already
+Read from source — `coq-community/hydra-battles`, `theories/ordinals/Epsilon0/T1.v` — hydra-battles already
 carries the CNF datatype (`Inductive T1`), a structural lexicographic comparator `compare_T1`, the
 derived `lt α β := compare α β = Lt`, transitivity `lt_trans` by the same structural induction, and the
 strict-order bundle `t1_strorder` — all on raw terms, by the same stay-on-the-syntax technique used here
