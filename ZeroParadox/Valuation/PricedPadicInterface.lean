@@ -186,26 +186,95 @@ def v2nat : ℕ → ℕ → ℕ
 nonzero `n` gets the finite count `v2nat n n`. Choice-free. -/
 def v2 (n : ℕ) : ℕ∞ := if n = 0 then ⊤ else (v2nat n n : ℕ∞)
 
+/-! ### Fuel saturation
+
+`v2nat n f` is constant once `f ≥ n`, so `v2` (which uses fuel `= n`) is well-behaved. These lemmas
+are the only non-immediate step in the valuation face, used once to prove `v2_scale`. -/
+
+/-- The recursion step, as a rewrite. -/
+theorem v2nat_succ (n f : ℕ) :
+    v2nat n (f + 1) = if n % 2 = 1 then 0 else if n = 0 then 0 else v2nat (n / 2) f + 1 := rfl
+
+/-- One extra unit of fuel does not change the value, once there is already enough. -/
+theorem fuel_irrel (b a : ℕ) (h : a ≤ b) : v2nat a b = v2nat a (b + 1) := by
+  induction b generalizing a with
+  | zero =>
+      have ha : a = 0 := Nat.le_zero.mp h
+      subst ha; rfl
+  | succ b ih =>
+      rw [v2nat_succ, v2nat_succ]
+      by_cases h1 : a % 2 = 1
+      · rw [if_pos h1, if_pos h1]
+      · by_cases h0 : a = 0
+        · rw [if_neg h1, if_pos h0, if_neg h1, if_pos h0]
+        · rw [if_neg h1, if_neg h0, if_neg h1, if_neg h0]
+          have hle : a / 2 ≤ b := by omega
+          rw [ih (a / 2) hle]
+
+/-- Adding any amount of fuel beyond a sufficient amount does not change the value. -/
+theorem v2nat_add (k a b : ℕ) (h : a ≤ b) : v2nat a (b + k) = v2nat a b := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+      rw [show b + (k + 1) = (b + k) + 1 from by ring, ← fuel_irrel (b + k) a (by omega), ih]
+
+/-- Any fuel `≥ n` computes the same value as fuel `= n`. -/
+theorem v2nat_stable (f n : ℕ) (h : n ≤ f) : v2nat n f = v2nat n n := by
+  rw [show f = n + (f - n) from by omega]
+  exact v2nat_add (f - n) n n (le_refl n)
+
 /-- **ZP-J `val_bot`, choice-free.** The bottom has infinite valuation. (Mirror of `q2Val_bot`.) -/
-theorem v2_bot : v2 0 = ⊤ := by sorry
+theorem v2_bot : v2 0 = ⊤ := by simp [v2]
 
 /-- **ZP-J `val_unique`, choice-free.** Only the bottom has infinite valuation. (Mirror of
 `q2Val_unique`.) -/
-theorem v2_unique (n : ℕ) (h : v2 n = ⊤) : n = 0 := by sorry
+theorem v2_unique (n : ℕ) (h : v2 n = ⊤) : n = 0 := by
+  by_contra hn
+  rw [v2, if_neg hn] at h
+  simp at h
 
 /-- **ZP-J `scale_bot`, choice-free.** Doubling fixes the bottom. (Mirror of `q2Scale_bot`.) -/
-theorem nScale_bot : 2 * 0 = 0 := by sorry
+theorem nScale_bot : 2 * 0 = 0 := rfl
 
-/-- **ZP-J `val_scale`, choice-free.** Doubling raises the valuation by one, off the bottom. The one
-lemma needing fuel saturation. (Mirror of `q2Val_scale`.) -/
-theorem v2_scale (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = v2 n + 1 := by sorry
+/-- **The `val_scale` content, choice-free.** Doubling raises the 2-adic count by one, off the bottom —
+here with the successor taken on ℕ (`v2nat n n + 1`) and then cast, so the statement is choice-free.
+This is the mathematical content of ZP-J's `val_scale` on this carrier; the one lemma needing fuel
+saturation. Compare `v2_scale`, which states the same fact in the axiom's literal `+ 1`-in-`ℕ∞` form and
+thereby inherits `Classical.choice` from Mathlib's `ℕ∞` additive instance (`enat_add_choice`), not from
+the carrier. -/
+theorem v2_scale_nat (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = ((v2nat n n + 1 : ℕ) : ℕ∞) := by
+  have h2n : 2 * n ≠ 0 := by omega
+  rw [v2, if_neg h2n]
+  congr 1
+  have e : v2nat (2 * n) (2 * n) = v2nat (2 * n) ((2 * n - 1) + 1) := by
+    rw [Nat.sub_add_cancel (by omega)]
+  rw [e, v2nat_succ, if_neg (by omega : ¬ (2 * n) % 2 = 1), if_neg h2n,
+      show (2 * n) / 2 = n from by omega, v2nat_stable (2 * n - 1) n (by omega)]
+
+/-- **`ℕ∞` addition carries `Classical.choice` — the localization instrument.** Mathlib's additive
+instance on `ℕ∞ = WithTop ℕ` is classical, so any `ℕ∞` sum inherits `Classical.choice` at the instance
+level, regardless of the summands. `Nat.cast : ℕ → ℕ∞` is by contrast choice-free (`v2` above proves
+it). This is why the `val_scale` axiom, stated as `val x + 1 : ℕ∞`, carries choice on **every** carrier
+— the choice is the ambient `ℕ∞` instance, not the valuation and not anything p-adic. The documented
+instance hazard, here located exactly. -/
+theorem enat_add_choice (a b : ℕ) : (a : ℕ∞) + (b : ℕ∞) = ((a + b : ℕ) : ℕ∞) :=
+  (Nat.cast_add a b).symm
+
+/-- **ZP-J `val_scale`, literal form — carries the `ℕ∞`-instance choice.** The same fact as
+`v2_scale_nat`, written with the successor in `ℕ∞` exactly as the ZP-J axiom states it (`val x + 1`).
+Its footprint is `[propext, Classical.choice, Quot.sound]`, and the choice is `enat_add_choice`'s — the
+ambient `ℕ∞` additive instance — **not** the carrier's and **not** p-adic. Mirror of `q2Val_scale`, whose
+choice is this same `ℕ∞` sum together with `PadicInt.valuation`; this file separates the two
+contributions. -/
+theorem v2_scale (n : ℕ) (hn : n ≠ 0) : v2 (2 * n) = v2 n + 1 := by
+  rw [v2_scale_nat n hn, v2, if_neg hn, Nat.cast_add_one]
 
 /-- **The fixed-point content, choice-free.** The bottom is the unique fixed point of doubling. (Mirror
 of `q2Scale_unique_fp`.) -/
-theorem nScale_unique_fp (n : ℕ) (h : 2 * n = n) : n = 0 := by sorry
+theorem nScale_unique_fp (n : ℕ) (h : 2 * n = n) : n = 0 := by omega
 
 /-- Doubling moves everything except the bottom. (Mirror of `scale_ne_fixed`.) -/
-theorem nScale_ne_self (n : ℕ) (hn : n ≠ 0) : 2 * n ≠ n := by sorry
+theorem nScale_ne_self (n : ℕ) (hn : n ≠ 0) : 2 * n ≠ n := by omega
 
 /-! ## § II. The ball face — digit streams
 
@@ -281,12 +350,16 @@ the instrument is the deliverable. -/
 section PurityCheck
 open ZeroParadox
 
--- Constructive side: the valuation face.
+-- Constructive side: the valuation face. `v2_scale_nat` (the content) is choice-free; `v2_scale` (the
+-- literal `ℕ∞` axiom form) carries `Classical.choice`, and `enat_add_choice` localizes that choice to
+-- the ambient `ℕ∞` additive instance — not the carrier, not p-adic.
 #print axioms v2nat
 #print axioms v2
 #print axioms v2_bot
 #print axioms v2_unique
 #print axioms nScale_bot
+#print axioms v2_scale_nat
+#print axioms enat_add_choice
 #print axioms v2_scale
 #print axioms nScale_unique_fp
 #print axioms nScale_ne_self
