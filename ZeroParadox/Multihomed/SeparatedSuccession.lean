@@ -6,9 +6,10 @@ set_option maxHeartbeats 400000
 /-!
 # The type bridge: a separated succession as an interface, with two known implementations
 
-The snap's succession of **targets** shows up in two charts of the framework that are DIFFERENT TYPES
-(they are targets, not bottoms: `ε₀ ≠ ⊥` is bedrock, `epsilon0_ne_bot`; each rung *plays the bottom role*
-for the next iteration without *being* ⊥ — role, not identity):
+The snap's succession of **targets** — its **iterative bottoms** — shows up in two charts of the framework
+that are DIFFERENT TYPES. (Iterative bottom: a bottom relative to its iteration, the base the next snap
+re-seeds above, never ⊥ itself. `ε₀ ≠ ⊥` is bedrock, `epsilon0_ne_bot`. The qualifier carries the role
+without asserting the identity; standardized 2026-07-19, `.claude-local/vocabulary_reference.md` § 1b.)
 - the **ordinal chart** — the ε-numbers `ε₀ < ε₁ < ε₂ < …`, consecutive ones separated by strict order
   (`ZeroParadox/Ordinal/SnapSuccession.lean`, `succession_lt_succ`);
 - the **Hilbert chart** — the state vectors `T(S₀), T(S₁), …`, consecutive ones separated by orthogonality

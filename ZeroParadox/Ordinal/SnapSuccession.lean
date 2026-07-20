@@ -12,12 +12,19 @@ precise.
 
 **Read the following distinction before anything else in this file; an earlier draft of this header got
 it wrong.** The ε-numbers are the ordinals the snap runs **to** — its successive closed points, the
-targets. They are **not** bottoms. `ε₀ ≠ ⊥` is a bedrock invariant (`epsilon0_ne_bot`): ⊥ is the base fed
-in, ε₀ the closure that comes out, and the base is never its own closure. What each ε-number does is
-**play the bottom role for the next iteration** — it is the position the next snap re-seeds above — and
-playing a role is not being the thing. That is a role/identity distinction, exactly the family-versus-
-instance reading: these rungs are all *of the same kind*, and they are *provably distinct* members
-(`succession_lt_succ`), so no two of them, and none of them and ⊥, may be identified.
+targets. They are **not** ⊥. `ε₀ ≠ ⊥` is a bedrock invariant (`epsilon0_ne_bot`): ⊥ is the base fed in,
+ε₀ the closure that comes out, and the base is never its own closure.
+
+**The standard term for a rung is an ITERATIVE BOTTOM** (ratified 2026-07-19; see
+`.claude-local/vocabulary_reference.md` § 1b). Each rung serves as the base the *next* iteration re-seeds
+above — a bottom relative to its iteration, never ⊥ itself. The qualifier is load-bearing: "iterative
+bottom" names the role, the bare noun would assert the identity. Do **not** call these "local bottoms" —
+that phrase is already in use for the *per-domain* MC-1 family (`Category/GlobalZero.lean`), and would
+collapse family-versus-succession; it also collides with the locale vocabulary this file's neighbours use.
+
+This is the role/identity distinction, the same shape as the family-versus-instance reading: the rungs are
+all *of the same kind*, and they are *provably distinct* members (`succession_lt_succ`), so no two of
+them, and none of them and ⊥, may be identified.
 
 The genuinely new bottom the snap-arc returns to is `t_iz_limit_is_new_null`'s successor null, a fact
 about a `ZPSemilattice` and not about an ordinal ε-number. Do not merge the two readings.
