@@ -17,7 +17,14 @@ classical convenience that a cleverer proof could remove. It is non-constructive
 
 ## PRIOR ART — the mathematics here is KNOWN and is NOT claimed as new
 
-This is a **re-formalization in Lean of a published taboo**, first formalized in cubical Agda:
+This is a **Lean formalization of a published taboo**. The mathematics is Kraus, Nordvall Forsberg
+and Xu's and is not claimed as new. Their Theorem 38 is a **paper proof**: it appears in their
+Appendix D without their formalized-result marker, their formalization is scoped to Cantor normal
+forms and Brouwer trees, and their Agda index records the corresponding statement as commented out
+(`-- × (isTrichotomous O._<_ ↔ LEM) × (isConvex O._≤_ ↔ LEM)`, whose second clause is exactly the
+connexity statement of Theorem 38(d)). **No machine-checked version of this taboo was located**, in
+their development or elsewhere. That is a report of one search, not a priority claim — the honest
+statement is that we did not find one, not that none exists.
 
 * **N. Kraus, F. Nordvall Forsberg, C. Xu, "Connecting Constructive Notions of Ordinals in
   Homotopy Type Theory," MFCS 2021, arXiv:2104.02549.** Theorem 1: for `Ord` (extensional
@@ -30,12 +37,14 @@ This is a **re-formalization in Lean of a published taboo**, first formalized in
   This is the decidability-side companion to the result below.
 * **Escardó, TypeTopology, `Ordinals.Taboos`**, e.g.
   `EM-if-Every-Discrete-Ordinal-Is-Trichotomous`; and de Jong-Kraus-Nordvall Forsberg-Xu,
-  "Ordinal Exponentiation in Homotopy Type Theory," arXiv:2501.14542, Lemma 38 (every
-  order-preserving map between ordinals is a simulation iff LEM) — neighbouring taboos in the
-  same genre. The field's own word for these is **taboo**.
+  "Constructive Ordinal Exponentiation," arXiv:2501.14542, **Lemma 54**
+  in the current version (every order-preserving map between ordinals is a simulation iff LEM),
+  which *is* marked formalized and whose proof credits Escardó's `Ordinals.OrdinalOfOrdinals` —
+  neighbouring taboos in the same genre. The field's own word for these is **taboo**.
 
-**The honest delta is the proof assistant and the packaging, not the mathematics.** Two small
-differences from KNX are worth stating precisely, and neither is a mathematical advance:
+**The mathematics is theirs and is not claimed as new.** What is added here is a machine-checked
+proof of it — we did not locate one elsewhere — together with the packaging. Three differences from
+KNX are worth stating precisely, and none is a mathematical advance:
 
 1. KNX state connexity in the **data** form `(X ≤ Y) ⊎ (X ≥ Y)`. The hypothesis below is the
    **propositional** form `Nonempty (r ≼i s) ∨ Nonempty (s ≼i r)` — a *weaker* hypothesis, so the
@@ -43,6 +52,10 @@ differences from KNX are worth stating precisely, and neither is a mathematical 
    (Mathlib's `InitialSeg.total` is the data form, and is where Mathlib spends a literal
    `Classical.choice`; see the trace below.)
 2. It is stated against `InitialSeg` rather than `Ordinal`, for the measurement reason in § III.
+3. KNX's `Ord` is **extensional** wellfounded orders — replacing trichotomy with extensionality is
+   their explicit design point — whereas Mathlib's `IsWellOrder` builds trichotomy in. The proof is
+   unaffected, since the witnesses below carry constructive `Std.Trichotomous` instances, but the
+   two statements are about different carriers and the difference should not go unstated.
 
 ## What this DOES establish
 
@@ -167,7 +180,8 @@ theorem not_p_of_le_pt (p : Prop) (h : Nonempty (twoRel p ≼i @emptyRelation Pt
 /-- **Comparability of well-orders implies excluded middle.**
 
 Prior art: Kraus-Nordvall Forsberg-Xu, arXiv:2104.02549, Theorem 38(d) (there in the data form
-`⊎`, and in cubical Agda). This is that theorem, with their witnesses, for the propositional
+`⊎`, as a paper proof — their Agda development does not cover it). This is that theorem, with
+their witnesses, for the propositional
 (`∨`) form of comparability — which is the form Mathlib's `le_total` on `Ordinal` has.
 
 Choice-free: the classical content is entirely in the hypothesis, which is what makes this an
