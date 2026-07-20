@@ -59,9 +59,12 @@ theorem logDepthExists : ∀ o : Ordinal, o < ε₀ →
       obtain ⟨m, hm⟩ := ih (Ordinal.log ω o) hlt (lt_trans hlt ho)
       exact ⟨m + 1, by rw [Function.iterate_succ_apply]; exact hm⟩
 
-open Classical in
 /-- **Canonical log-depth** of `α < ε₀`: the number of `log ω` steps to reach 0. Read from the
-    ordinal's own CNF structure (leading-exponent descent), with NO reference to the tower. -/
+    ordinal's own CNF structure (leading-exponent descent), with NO reference to the tower.
+
+    No `open Classical in` here, deliberately: it was present and measurably did nothing — see the
+    note on `cnfRank` in `ZeroParadox/Ordinal/P8.lean`. `Ordinal.instLinearOrder`'s
+    `toDecidableLE := Classical.decRel _` already supplies what `Nat.find` needs. -/
 noncomputable def cnfLogDepth (α : {α : Ordinal // α < ε₀}) : ℕ :=
   Nat.find (logDepthExists α.1 α.2)
 

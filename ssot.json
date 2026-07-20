@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1386,
+        "declarations": 1389,
         "files": 136
       },
       "entries": [
@@ -15908,6 +15908,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4afe5cbb-c725-4d0d-9519-0308c615879e",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereDecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bool_no_witness",
+            "short": "bool_no_witness"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereDecidable: decidable-equality counterparts of the Lawvere two-point swap, exhibiting the choice price of full generality side by side",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "E2-tower-floor"
             ]
@@ -25129,6 +25163,40 @@
             ]
           },
           "reason": "Dedup: rename-twin of fresh add_new weak_gseq (same HEAD decl); old identity WeakGoodstein.gseq renamed in source, deps remapped to fresh entry",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7cada34d-f34a-4ca1-a158-337e3e3b43c8",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereDecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_witness_of_nontrivial_decidable",
+            "short": "no_witness_of_nontrivial_decidable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereDecidable: decidable-equality counterparts of the Lawvere two-point swap, exhibiting the choice price of full generality side by side",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40425,6 +40493,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ce811025-1022-46bb-9a59-3619a77230b1",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereDecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fixedPointFree_of_nontrivial_decidable",
+            "short": "fixedPointFree_of_nontrivial_decidable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereDecidable: decidable-equality counterparts of the Lawvere two-point swap, exhibiting the choice price of full generality side by side",
           "verify": {
             "axioms": null,
             "sorry_free": true
