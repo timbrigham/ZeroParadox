@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1414,
+        "declarations": 1443,
         "files": 136
       },
       "entries": [
@@ -3830,6 +3830,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "0dde073b-2cc2-42bc-bdc6-707eea91f329",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natToZ2_bot",
+            "short": "natToZ2_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "0df7d8a3-6db6-4711-9c48-05d50338bd8a",
           "new": {
@@ -5069,6 +5105,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "138cc2d3-7d90-4a9a-963f-d0f81d130be0",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2_scale_nat",
+            "short": "v2_scale_nat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "138d2f43-14b4-4b21-a89a-0e69f6ab49f5",
           "new": {
@@ -5201,6 +5273,42 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "13ea417e-ebcc-4b80-93cb-1fafc0bfdf8e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.agree_all_iff",
+            "short": "agree_all_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7339,6 +7447,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1ee48da2-424e-4dc0-b5e9-15156324f961",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.separated_of_apart",
+            "short": "separated_of_apart"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "1ef47329-81f7-4a27-a84d-a21401276ace",
           "new": {
             "file": "ZeroParadox/Category/DoubleNegationNucleus.lean",
@@ -8857,6 +9001,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "26ee2a33-1bb4-49a8-916e-64b49bd140db",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2nat_add",
+            "short": "v2nat_add"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12941,6 +13121,44 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3a5b0866-465b-46f0-bb95-b903e5c76132",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.botStr",
+            "short": "botStr"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "node-information"
             ]
@@ -14981,6 +15199,42 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "45976c35-3b51-4077-9852-efd2d31d2525",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Str",
+            "short": "Str"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "E4-info-floor"
             ]
@@ -15666,6 +15920,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "48817216-eb0d-4a37-b38f-77d44824aa86",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.clopen_gap_at_bot",
+            "short": "clopen_gap_at_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20316,6 +20608,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "601173af-2d2c-451a-8bd4-c95e9b80966a",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2_unique",
+            "short": "v2_unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "60205f55-5ede-4d8c-8bcd-dd6f1168f2a6",
           "new": {
             "file": "ZeroParadox/Settheory/Tarski.lean",
@@ -23132,6 +23462,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "70ff404d-bd1c-49dc-b964-e7c3cd88f308",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nScale_ne_self",
+            "short": "nScale_ne_self"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "71f71b3a-72ae-485e-b6eb-56fb68830c00",
           "new": {
@@ -24696,6 +25062,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7800e2c1-c1b5-439f-bab7-25c06c7e4534",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2_bot",
+            "short": "v2_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "781c85a6-913b-4a38-acb6-984376e9edd0",
           "new": {
@@ -26144,6 +26548,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7f48d5d7-350a-441a-8107-34a8ba45a060",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decidableAgreeTo",
+            "short": "decidableAgreeTo"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27610,6 +28050,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "86a157d1-eacf-4aa1-9cc6-37a82f77f157",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natToZ2",
+            "short": "natToZ2"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "871e6611-4c6b-447f-99c2-b84bc91cb36b",
           "new": {
             "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
@@ -28468,6 +28944,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8cb8c208-9132-4981-83a4-090639428747",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.enat_add_choice",
+            "short": "enat_add_choice"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29936,6 +30448,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "930e9819-6df9-4dfa-9bcd-e542f6635781",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2nat",
+            "short": "v2nat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9313e9ad-f3c1-4d47-854f-8722ebd3fed8",
           "new": {
             "file": "ZeroParadox/Settheory/MetaFork.lean",
@@ -30245,6 +30793,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "94ce7cf7-2aec-4bf0-be3d-786411c78090",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nScale_unique_fp",
+            "short": "nScale_unique_fp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30827,6 +31413,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "97ac9817-b417-477d-9efa-3ebe40a34864",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2nat_succ",
+            "short": "v2nat_succ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33124,6 +33746,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a3e6feba-72ac-47d3-9bef-2af647fa408c",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.agree_trans",
+            "short": "agree_trans"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a427150d-b277-4968-b71b-54102335dd33",
           "new": {
@@ -34062,6 +34720,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "aac42f3e-ae8e-4ed7-a728-e53eb9df9656",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nScale_bot",
+            "short": "nScale_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "aaceaf84-44d2-4f0a-a78f-848c20772078",
           "new": {
@@ -34531,6 +35225,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac9f9c1e-45c9-47bc-a405-64ae414d22e0",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.AgreeTo",
+            "short": "AgreeTo"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36761,6 +37491,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b7845cd8-a899-4b7e-bb7f-dc0cc14383ef",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Apart",
+            "short": "Apart"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b78670e2-9589-4b96-84bc-21136c5ca444",
           "new": {
@@ -37300,6 +38066,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ba665a46-a40e-41ac-be7f-86ce138a2947",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natToZ2_scale",
+            "short": "natToZ2_scale"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -38056,6 +38858,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bed7c58b-6697-4e1b-b6a2-64dbec5150af",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.agree_mono",
+            "short": "agree_mono"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40497,6 +41335,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "cb9b7094-ec16-467d-9f77-121c2a7d4ec9",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fuel_irrel",
+            "short": "fuel_irrel"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cbb8a3b7-05c1-4898-bfa0-5f64c7c6a6ac",
           "new": {
             "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
@@ -42154,6 +43028,44 @@
             "role": []
           },
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d31320a5-3d65-4152-b826-1f8bf8860b74",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.crossVal_bot_agrees",
+            "short": "crossVal_bot_agrees"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48442,6 +49354,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "f124cd21-9e23-4547-a547-b716639e16e0",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_apart_of_agree_all",
+            "short": "not_apart_of_agree_all"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "f18d9fa4-a5cb-4c12-b56e-b5fb6b999b31",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -49191,6 +50139,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f55b814c-534b-4e87-92ea-a4c0200ecb5d",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2_scale",
+            "short": "v2_scale"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f55e3fae-3c4a-4aed-809a-5da64c5e9220",
           "new": {
@@ -49577,6 +50561,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f692c16a-4abf-4d92-82b5-994edd037e72",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2nat_stable",
+            "short": "v2nat_stable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50778,6 +51798,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fae1ec84-a3cc-424f-ba64-1d1f3019e27e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.v2",
+            "short": "v2"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
           "verify": {
             "axioms": null,
             "sorry_free": true
