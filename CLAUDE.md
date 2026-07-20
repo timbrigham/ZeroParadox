@@ -46,6 +46,31 @@ The `CannotBe` indexes are `#check`-only — they create no declarations and so 
 findings. Ratified 2026-07-19 after three rounds; memory `feedback_er_ar_max_iterations` carries the
 detail.
 
+### The cap is enforced by the REVIEWER, not by the caller — pass it the round number
+
+**Why: a rule about a loop does not fire from inside the loop.** Each round is locally justified ("a gate
+found real defects; fix them"), so the caller never evaluates the trigger — on 2026-07-19 three rounds ran
+against a 2-round cap while the rule sat visible in the memory index, because nobody was *counting*. The
+fix is structural: the reviewer stands outside the loop, so give it the number and let it decide.
+
+**Before spawning any review round:**
+```
+python .claude-local/gate_round.py bump
+```
+It prints the round number and, past the ordinary cap, the stop condition. `reset` at the start of a new
+arc or after a clean push. State lives in `.claude-local/gate_round.json`, so it survives compaction.
+
+**Put this in every review brief, with N substituted:**
+> This is **gate round N** against a cap of 2 (ORDINARY) / 5 (BEDROCK). Your verdict must be one of:
+> **PASS** — nothing found.
+> **FAIL-BEDROCK** — you found a violated core invariant, a FABRICATED external-source claim, or a false
+> premise carrying a conclusion. The loop continues.
+> **STOP-ORDINARY** — round N is past the ordinary cap and nothing you found is bedrock-tier. Report the
+> findings, then state explicitly that the correct action is to PUSH, not to iterate. Do not recommend
+> another round.
+> If N is past the ordinary cap, you must actively choose between FAIL-BEDROCK and STOP-ORDINARY — a bare
+> "FAIL" is not a valid verdict, because it hands the stopping decision back to the party inside the loop.
+
 **Two measured reasons the loop cannot converge, which the cap exists to bound:**
 1. **Fixes introduce errors.** Every fix is new prose carrying new claims. Two of round 3's eight
    findings were created by round 2's fixes. A loop whose corrections generate errors asymptotes above
