@@ -145,6 +145,11 @@ into the brief explicitly — the same way the encoding and glob warnings are al
   `.claude-local/notes/`.
 - **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
   restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
+  **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
+  file, so the reviews must cover it. Order: finish the work → insert Tim's Take (with approval) → run
+  editorial/adversary/prior-art on the COMPLETE file → push. Gating first and adding the Take after
+  leaves it unreviewed and (under the SHA-256-per-file signal scheme) stales every signal, forcing a
+  needless re-run.
 
 ## Editorial Review Gate — Hard Rule
 
