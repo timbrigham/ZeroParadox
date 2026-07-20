@@ -159,11 +159,11 @@ into the brief explicitly — the same way the encoding and glob warnings are al
 1. Before committing any of the above, run `/editorial-review` (pre-commit mode — no arguments needed; it reads `git diff --staged` automatically)
 2. Wait for the editorial agent to return a verdict
 3. If FAIL: resolve every item in the kill list before committing
-4. If PASS: the agent writes `.claude-local/er_cleared.txt` with the current HEAD hash — proceed with the commit
+4. If PASS: the agent writes `.claude-local/er_cleared.txt` recording the SHA-256 of each reviewed file (see the SHA-256-per-file scheme below) — proceed with the commit
 
 Same-session self-review does not satisfy this requirement. `/editorial-review` spawns a fresh agent with no conversation history.
 
-The pre-push hook checks `.claude-local/er_cleared.txt` and `.claude-local/ar_cleared.txt` against HEAD before allowing any push. If either signal is missing or stale the push is blocked. Override with `git push --no-verify` only when both reviews have been run and the signal files are stale due to a trivial amendment.
+The pre-push hook validates `.claude-local/er_cleared.txt` and `.claude-local/ar_cleared.txt` (and `pa_cleared.txt` on a `.lean` trigger) using the **SHA-256-per-file scheme** (2026-07-20): each signal records the content SHA-256 of every file the review certified (line 1 = verdict record; lines 2+ = `<sha256>  <path>`), and it is valid iff (a) every recorded file still hashes to its recorded value and (b) every *reviewable* file in the push is covered by a recorded hash. Reviewable = changed files minus pure data/binary (`ssot.json`, PDFs, images, lockfiles), so a data-only commit no longer stales a review — that was the old HEAD-equality scheme's failure mode. If nothing reviewable changed, no signal is required. `--no-verify` should now be genuinely rare; if a signal is stale it is because a reviewed file actually changed (re-run the review) or a new reviewable file is uncovered.
 
 ## Adversary Review Gate — Hard Rule
 
@@ -179,7 +179,7 @@ The pre-push hook checks `.claude-local/er_cleared.txt` and `.claude-local/ar_cl
 1. Before executing any of the above, Claude must explicitly ask: "Adversary review complete for this content?"
 2. Wait for Tim's confirmation before proceeding — do not self-assess whether review is needed
 3. If review has not been run, offer to run `/adversary-review` on the relevant content first
-4. If PASS: the agent writes `.claude-local/ar_cleared.txt` with the current HEAD hash
+4. If PASS: the agent writes `.claude-local/ar_cleared.txt` recording the SHA-256 of each reviewed file (see the SHA-256-per-file scheme below)
 5. Only after explicit confirmation may the public-facing action execute
 
 Same-session self-review does not satisfy this requirement. The review must be a separate adversarial context (spawned Agent with no conversation history).
