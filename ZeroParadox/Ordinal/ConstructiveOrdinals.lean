@@ -23,9 +23,16 @@ point (ε₀) is precisely what the notation system cannot reach.
 ## Result (proved, this build)
 The snap-from-below is **choice-free**: `exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` all
 report `[propext]` only — no `Classical.choice` — in contrast to every ε₀ result in ZP-L (all carry
-`Classical.choice`, inherited from Mathlib's `Ordinal`). So ZP-L's choice at ε₀ is **representational,
-not intrinsic**: the snap's downward structure (the ω-tower climbs without bound; no notation is a fixed
-point of ω^·) is genuinely constructive.
+`Classical.choice`, inherited from Mathlib's `Ordinal` machinery). What that shows is narrow and worth
+stating narrowly: **the snap's downward structure is constructive** (the ω-tower climbs without bound; no
+notation is a fixed point of `ω^·`).
+
+**It does NOT classify ZP-L's footprint as "representational, not intrinsic"** — an earlier version of
+this paragraph said exactly that, and it is retracted (2026-07-19). That is an *eliminability* claim, and
+no re-proof of those ε₀ results exists; their status is **UNCLASSIFIED**. Two corrections belong with it:
+`Ordinal` itself is `[propext, Quot.sound]` — **choice is not in the type**; it enters through
+`Ordinal.instLinearOrder`, `nfp`, `omega0`, `epsilon`. And a choice-free result *about the ascent* is
+suggestive for the ε₀ results without being a re-proof of them.
 
 Side finding: `tower_NF` (well-formedness) *does* carry `Classical.choice` — because Mathlib's `NF`
 predicate is defined through `repr` into `Ordinal`. The snap facts do not depend on `NF`, so they stay

@@ -32,6 +32,28 @@ The `CannotBe` indexes are `#check`-only — they create no declarations and so 
 
 **Why this rule exists (2026-07-17):** a run of prose/figure errors — fencing ε₀ = 0, "co-locating ⊥ and ε₀," flattening min≡max to one face, calling ε₀ "a large ordinal / ceiling" — all came from reconstructing these objects from working memory instead of reading the Lean. The fix is mechanical: read the `CannotBe` index first, cite the theorem, never gloss.
 
+## Review-Loop Cap — Severity-Tiered, Hard Rule
+
+**The gates will always find something. Stopping is a decision about SEVERITY, not a wait for silence.**
+
+- **BEDROCK severity → up to 5 iterations.** A violated core invariant (`ε₀ ≠ 0`, `ε₀ ≠ ⊥`, min≡max
+  flattened, the snap-arc returning to the same ⊥, a cross-type `=`), a **fabricated** claim about an
+  external source, or a false premise carrying a conclusion. These must not ship — keep iterating.
+- **ORDINARY severity → 2 iterations, then push `--no-verify`.** Citation scope, a mischaracterized
+  lemma, hedging a tier too strong, path-convention drift, wording. These never reach zero.
+
+**The stopping question is "did this round find anything BEDROCK?" — if no, stop**, even on ten ordinary
+findings. Ratified 2026-07-19 after three rounds; memory `feedback_er_ar_max_iterations` carries the
+detail.
+
+**Two measured reasons the loop cannot converge, which the cap exists to bound:**
+1. **Fixes introduce errors.** Every fix is new prose carrying new claims. Two of round 3's eight
+   findings were created by round 2's fixes. A loop whose corrections generate errors asymptotes above
+   zero.
+2. **Fix-the-site, not-the-class.** Three of round 3's findings were unpropagated instances of round 2's
+   fixes. **Before declaring a kill fixed, grep the corpus for the CLAIM, not the named file.** Note that
+   retractions quoting an error pollute that search — read hits, do not count them.
+
 ## Rules That Must Reach Spawned Agents — Hard Rules
 
 **Why this section exists (measured 2026-07-19).** A spawned agent receives, automatically: this file in
