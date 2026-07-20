@@ -30,15 +30,10 @@ past what the notation system can name (`tower_cofinal`,
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
 the `Ordinal.partialOrder` *instance term*, so every statement mentioning that order inherits it however
-it is proved — `a ≤ a` carries choice while `a = a` does not
-(`order_footprint_is_uninformative`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`). Axiom footprints
+it is proved — `a ≤ a` carries choice while `a = a` does not (`order_footprint_le` and
+`order_footprint_eq`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`, stated as two theorems
+precisely so that file's purity block *prints* the contrast rather than asserting it). Axiom footprints
 on ε₀ results measure the ambient instance, not the proofs.
-
-*Caveat on that witness, recorded rather than glossed:* `order_footprint_is_uninformative` states the
-two halves as a **conjunction**, so its single `#print axioms` reports their union and cannot exhibit the
-contrast it is cited for. The contrast was measured separately and holds (`a ≤ a` →
-`[propext, Classical.choice, Quot.sound]`; `a = a` → `[propext, Quot.sound]`), but the *file* asserts it
-where it should print it. Splitting it into two theorems is owed.
 
 This file replaces the unanswerable question with a measurable one: not *is the choice real*, but *what
 does crossing cost*.

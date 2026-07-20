@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1384,
+        "declarations": 1386,
         "files": 136
       },
       "entries": [
@@ -4880,6 +4880,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "126909b4-25a7-4cfd-b8a3-a9bb237da843",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.order_footprint_le",
+            "short": "order_footprint_le"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "order_footprint_is_uninformative split into two theorems so the purity block prints the choice contrast (AR round-3 finding 1)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17688,6 +17722,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "53971a00-3f18-423f-aaab-50a7b3609859",
+          "new": {
+            "file": "ZeroParadox/Ordinal/OrdinalChoiceEssential.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.order_footprint_eq",
+            "short": "order_footprint_eq"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "order_footprint_is_uninformative split into two theorems so the purity block prints the choice contrast (AR round-3 finding 1)",
           "verify": {
             "axioms": null,
             "sorry_free": true

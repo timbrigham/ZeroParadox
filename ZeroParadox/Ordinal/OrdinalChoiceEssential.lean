@@ -214,7 +214,7 @@ theorem comparable_of_classical :
 
 The taboo above deliberately never mentions `Ordinal`'s `≤`. It cannot: **`Classical.choice` sits
 in the `Ordinal.partialOrder` instance term itself**, so every statement mentioning that order
-inherits it no matter how the statement is proved. `order_footprint_is_uninformative` below is the
+inherits it no matter how the statement is proved. `order_footprint_le` / `order_footprint_eq` below are the
 demonstration — `a ≤ a`, proved by `le_refl`, carries `Classical.choice`, while `a = a` does not.
 
 Traced to source, three independent classical entry points feed that instance:
@@ -237,20 +237,30 @@ the ε₀ term. Re-proving these choice-free *inside* Mathlib's `Ordinal` is not
 structurally impossible; a choice-free analogue has to be built on a notation carrier, which is
 ZP-N's programme. -/
 
-/-- **The measurement is uninformative for `Ordinal`'s order.** `a ≤ a` carries
-`Classical.choice`; `a = a` does not. The difference is not in the proofs — both are immediate —
-but in whether the statement mentions the `Ordinal.partialOrder` instance term. -/
-theorem order_footprint_is_uninformative (a : Ordinal) : a ≤ a ∧ a = a :=
-  ⟨le_refl a, rfl⟩
+/-! **The measurement is uninformative for `Ordinal`'s order.** The next two theorems are the
+demonstration, and they are deliberately stated **separately** rather than as one conjunction: a
+conjunction reports the *union* of its halves' axioms, so it could only assert the contrast in prose,
+never print it. Split, the purity block below exhibits it — the same statement about the same element,
+differing only in whether it mentions the `Ordinal.partialOrder` instance term. Both proofs are
+immediate; the difference is not in the proofs. -/
+
+/-- Reflexivity of `≤` on `Ordinal`. Mentions the order instance, and therefore carries
+`Classical.choice` however it is proved. Compare `order_footprint_eq`. -/
+theorem order_footprint_le (a : Ordinal) : a ≤ a := le_refl a
+
+/-- Reflexivity of `=` on `Ordinal`. The same element, no order instance, no choice.
+Compare `order_footprint_le`. -/
+theorem order_footprint_eq (a : Ordinal) : a = a := rfl
 
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
 § I-II must be choice-free: the classical content is the hypothesis, not the proof.
-`comparable_of_classical` is classical by construction (the source end of the arrow), and
-`order_footprint_is_uninformative` is the § III demonstration — both are expected to carry
-`Classical.choice` and neither is a purity claim. -/
+`comparable_of_classical` is classical by construction (the source end of the arrow), and is expected
+to carry `Classical.choice` — that is not a purity claim. `order_footprint_le` and
+`order_footprint_eq` are the § III demonstration: read them as a **pair**, since the contrast between
+the two lines is the result. -/
 
 section PurityCheck
 open ZeroParadox
@@ -262,7 +272,10 @@ open ZeroParadox
 
 -- Classical by design.
 #print axioms comparable_of_classical
-#print axioms order_footprint_is_uninformative
+
+-- § III, the contrast. Same element; only the second mentions the order instance.
+#print axioms order_footprint_eq
+#print axioms order_footprint_le
 
 -- The § III trace, measured rather than asserted.
 #print axioms Ordinal.partialOrder
