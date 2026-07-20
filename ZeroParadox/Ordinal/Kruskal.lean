@@ -26,7 +26,31 @@ re-proves):
 
 Mathlib does **not** contain Kruskal's tree theorem (its `Kruskal*` lemmas are Kruskal-Katona, an
 unrelated set-family result). The rose-tree type, the embedding order, and the Nash-Williams assembly
-on top of Higman are the original content here.
+on top of Mathlib's Higman are the original *formalization* content here; the mathematics is classical
+and credited under Prior art below.
+
+## Prior art — the theorem is classical, and the `Classical.choice` here is a route artifact
+
+Kruskal's tree theorem (Kruskal 1960) and Higman's lemma (Higman 1952) are classical results; this file
+formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must be credited:
+
+- **The Nash-Williams route this file takes.** The minimal bad sequence argument is Nash-Williams
+  (1963). Mathlib's `exists_min_bad_of_exists_bad` / `minBadSeqOfBadSeq` is that argument, and it is
+  where `Classical.choice` enters — a `Nat.find` / `Classical.choose` selection over infinite bad
+  sequences, iterated by `Nat.rec`. Sternagel's Isabelle/HOL *Certified Kruskal's Tree Theorem* takes
+  the same classical route.
+- **The constructive route, which shows the choice is not required by the theorem.** Kruskal's theorem
+  and Higman's lemma both have choice-free constructive proofs by a different technique — almost-full
+  relations (Coquand) and bar induction (Fridlender) — that avoid the minimal bad sequence argument
+  entirely. Larchey-Wendling's *Coq-Kruskal* is a mechanized, **axiom-free**, unrestricted proof of the
+  tree theorem on that technique, with no decidability assumption on the ground relation and no Brouwer's
+  Thesis. Seisenberger (*An intuitionistic proof of Kruskal's theorem*, Arch. Math. Logic, 2003) gives
+  an intuitionistic proof via inductive definitions; Coquand & Fridlender (1993) give the constructive
+  Higman's lemma. So the `Classical.choice` this file inherits through Mathlib's route is a **route
+  artifact**, not a requirement of the theorem — a choice-free proof exists, in an almost-full framework
+  Mathlib does not currently carry. This file does not build that route; it uses Mathlib's. The residual
+  content of the minimal bad sequence argument is dependent choice / open induction (Berger), a choice
+  principle, not a logical taboo.
 
 ## Engineer's Take
 This file is one of a series of iterative attempts on this branch to build a map of how the various
