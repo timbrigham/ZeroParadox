@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1389,
+        "declarations": 1408,
         "files": 136
       },
       "entries": [
@@ -3314,6 +3314,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0c0b378e-89f3-4dd5-96e6-9b0565de169d",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Glue",
+            "short": "Glue"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9600,6 +9634,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2a6504cd-d7fa-4865-a6fe-18c7bac2489b",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fixedPointFree_of_classical",
+            "short": "fixedPointFree_of_classical"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2aaaa0c5-1cec-462f-93c9-edd82e0f6387",
           "new": {
@@ -10503,6 +10571,40 @@
             ]
           },
           "reason": "New experimental probe LawvereBridge.lean — selfApp fixed point as an instance of Lawvere's general engine (conjecture step c, the Lawvere stab)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2f02bbe5-dbae-418a-9f39-1dfc5b6332a8",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.WeakExcludedMiddle",
+            "short": "WeakExcludedMiddle"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12159,6 +12261,74 @@
             "role": []
           },
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "37b2c119-1d6a-4081-b43c-b66e46733ce1",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gx_eq_gb0",
+            "short": "gx_eq_gb0"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "37c13493-82ab-4f05-960f-df4e35d15368",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tokRel",
+            "short": "tokRel"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -19715,6 +19885,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5d95c789-4f8f-4e0a-8897-24325df538bf",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Tok",
+            "short": "Tok"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5dee1325-2391-4b66-9d2e-7bc69503d23e",
           "new": {
@@ -22457,6 +22661,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6df9011d-c86e-4255-8933-5dedf8b5caef",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_classical_supplier",
+            "short": "wem_of_classical_supplier"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6e280426-2bb1-4a35-9bd0-4b02affe5812",
           "new": {
@@ -23889,6 +24127,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "75c64210-f3c7-4df6-8479-7937b3760533",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tokInv_respects",
+            "short": "tokInv_respects"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "75d448ba-82e7-4702-bff8-7bd54c00f803",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -24276,6 +24548,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "77a238e0-bc11-47a1-8970-9bbee6cd42fc",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gb1",
+            "short": "gb1"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33078,6 +33384,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a7f22cbb-7e97-4335-b61f-c99c7da1554b",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gb0",
+            "short": "gb0"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a8400a5f-ae30-4d2a-a27b-5edb744834fc",
           "new": {
@@ -33756,6 +34096,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "aba083c6-83c0-4d59-b50b-63742a67cd51",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glue_b0_ne_b1",
+            "short": "glue_b0_ne_b1"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37051,6 +37425,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bc9c5d5c-a1af-4de7-8008-f1412935bd16",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tokInv",
+            "short": "tokInv"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bcf8a5e5-8804-4686-86a8-e65eb55db187",
           "new": {
             "file": "ZeroParadox/Valuation/PadicVladimirov.lean",
@@ -38416,6 +38824,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c4b6b3af-9da3-400d-bc83-2ba0e3d09abe",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.decidable_route_unaffected",
+            "short": "decidable_route_unaffected"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42021,6 +42463,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d62d1e67-7dcd-495b-bf6c-038d8d86d0d4",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glue_cases",
+            "short": "glue_cases"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d6348d7e-2aca-4959-a2da-c2aad6878549",
           "new": {
@@ -42445,6 +42921,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d8d3df94-f727-45fd-9591-09b91b7cb838",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_fixedPointFree",
+            "short": "wem_of_fixedPointFree"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45282,6 +45792,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "e4c9d53c-8002-4538-9ac3-e11cd63b0971",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gx",
+            "short": "gx"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "e4dc9e6b-ec42-4d13-8e7b-aed589013f08",
           "new": {
             "file": "ZeroParadox/Settheory/Curry.lean",
@@ -45750,6 +46294,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e71e952e-0825-4baa-9a9a-0f9585b3932f",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.gx_eq_gb1",
+            "short": "gx_eq_gb1"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50989,6 +51567,40 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ff89b102-e0cf-485c-be18-30312e282272",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.glueInv",
+            "short": "glueInv"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ffbc3146-2889-4636-82e1-a7692662ecce",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleus.lean",
@@ -51090,6 +51702,40 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ffe15f34-7228-40e7-86b0-1fb078ae79df",
+          "new": {
+            "file": "ZeroParadox/Category/LawvereTaboo.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_excludedMiddle",
+            "short": "wem_of_excludedMiddle"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
           "verify": {
             "axioms": null,
             "sorry_free": true

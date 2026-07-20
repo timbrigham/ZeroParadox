@@ -60,11 +60,20 @@ def tree : SimpleGraph Vtx where
     rcases h with ⟨d, hd⟩ | ⟨d, hd⟩
     · exact Or.inr ⟨d, hd⟩
     · exact Or.inl ⟨d, hd⟩
+  -- The length argument is written out explicitly rather than closed by `simp`, deliberately.
+  -- `simp` discharged this goal but pulled `Classical.choice` into the graph OBJECT, and every
+  -- lemma mentioning `tree` then inherited it — including `adj_prefix_iff`, which is pure list
+  -- algebra. This file imports no `Padic`; the classical footprint was entirely self-inflicted here.
+  -- Measured effect of writing it out: `tree` and `adj_prefix_iff` drop to `[propext, Quot.sound]`.
+  -- The instance hazard in a structure field, and the third worked instance of the pattern
+  -- (cf. `dneg_inf_distrib`, `ZeroParadox/Category/DoubleNegationNucleus.lean`).
   loopless := by
     refine ⟨?_⟩
     intro x hx
     rcases hx with ⟨d, hd⟩ | ⟨d, hd⟩ <;>
-      exact absurd (congrArg List.length hd) (by simp)
+      · have hlen := congrArg List.length hd
+        rw [List.length_append, List.length_singleton] at hlen
+        omega
 
 /-! ## § II. `tree_isTree`
 
