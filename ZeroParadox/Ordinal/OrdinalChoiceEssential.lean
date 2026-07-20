@@ -72,13 +72,16 @@ Nothing here is declared `axiom`, and nothing here uses `sorry`.
 
 ## Engineer's Take
 
-TODO (Tim):
+We have all kinds of concrete instances of where choice is needed, just not in the core of T-SNAP.
+So why is this one different.
 
-Question to seed it: the framework's line has been "every footprint we looked at was Mathlib's,
-not ours." This says the *order itself* is genuinely non-constructive, and that our ε₀ results
-are borrowing a tool far stronger than they need. Is that a defect to fix (rebuild ε₀ on
-notations, where comparison is decidable), or is it telling us the snap only ever made sense
-against a comparable substrate?
+It is different because we have instances where choice is used, not where it is needed. A footprint
+tells you how a proof was written, never whether the theorem requires it. Nearly everything we have
+examined is a leaf that inherits choice from upstream, and the question is not well posed until it is
+traced. This is the first one we followed all the way down to a root.
+
+Enumerating the roots rather than sampling the leaves is the next step after we finish with the
+ordinals.
 
 ---
 

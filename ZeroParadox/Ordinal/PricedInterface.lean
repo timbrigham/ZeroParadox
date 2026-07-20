@@ -15,6 +15,27 @@ each side of the constructive/classical boundary, exhibited on declarations that
 single named map, in a setting where the classical target is a real library type (Mathlib's `Ordinal`)
 rather than an axiomatized module.
 
+## Why this file exists — a correction of record
+
+ZP-N v1.0 states as its headline finding that ZP-L's `Classical.choice` at ε₀ is "representational, not
+intrinsic," justified by ZP-L working in Mathlib's `Ordinal` type, "which is choice-saturated." **Both
+halves are wrong.**
+
+The justification is false as measured: `#print axioms Ordinal` reports `[propext, Quot.sound]` — there
+is no choice in the type. And the conclusion overreaches its evidence by one step: everything ZP-N proved
+choice-free (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is a fact about the *ascent*, while ε₀ is
+the supremum the notation system provably cannot name (`no_snap_closure`,
+`ZeroParadox/Ordinal/SnapNucleusConstructive.lean`).
+
+Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
+the `Ordinal.partialOrder` *instance term*, so every statement mentioning that order inherits it however
+it is proved — `a ≤ a` carries choice while `a = a` does not
+(`order_footprint_is_uninformative`, `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`). Axiom footprints
+on ε₀ results measure the ambient instance, not the proofs.
+
+This file replaces the unanswerable question with a measurable one: not *is the choice real*, but *what
+does crossing cost*.
+
 ## The measured price of the crossing
 
 Measured by `#print axioms` (the purity check at the bottom of this file is the instrument; these are
@@ -165,8 +186,17 @@ No theorem here relates the two faces, and none is claimed.
 
 ## Engineer's Take
 
-TODO (Tim): Is "you can stay on this side for free, and here is the exact toll to cross" the right way
-to think about a foundational boundary, or does calling it a toll make it sound more optional than it is?
+If ZP-N is unclassified, we should reevaluate the Lean and see if we can get it right before bumping the
+version.
+
+I was hoping this was one of those cases where you take the entire class and make it an instance of that,
+the same as we have for other solutions where the scope was one order of magnitude too high or too low.
+In programming terms it is the initialization of a class you did not need.
+
+The idea is to build it using this framework and then cross reference it to the more general category.
+That looks like an interface between constructive and choice based logic, and that in itself is valuable
+even if it means going single instance versus general. I think that is exactly how this interface is
+going to have to work.
 -/
 
 namespace ZeroParadox
