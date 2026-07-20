@@ -28,7 +28,7 @@ Measured starting point (`ZeroParadox/Ordinal/Gentzen.lean`):
 * `ZeroParadox.cnfToZp2_valuation_unbounded` — `[propext, Classical.choice, Quot.sound]`
 
 The diagnosis under test is that the choice enters *before any topology*, through `NONote`/`NF`,
-which Mathlib defines via `ONote.repr` — the syntax→semantics bridge into the choice-saturated
+which Mathlib defines via `ONote.repr` — the syntax→semantics bridge into the classically-built
 `Ordinal` type. If so, the convergence content should be reachable choice-free on the raw-syntax side.
 
 Everything below is defined by structural recursion on `ONote` constructors. Nothing here calls

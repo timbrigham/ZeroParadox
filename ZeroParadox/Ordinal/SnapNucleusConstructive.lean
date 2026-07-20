@@ -87,7 +87,7 @@ hold the answer" are different failures, and only the second one bites here.
 ## Does `ONote` carry a choice-free `SemilatticeInf`? (measured: yes, but not Mathlib's)
 
 Mathlib gives `ONote` only a `Preorder` (`Mathlib/SetTheory/Ordinal/Notation.lean`), defined as
-`le x y := repr x ≤ repr y` — routed through `ONote.repr` into the choice-saturated `Ordinal`. It is
+`le x y := repr x ≤ repr y` — routed through `ONote.repr` into `Ordinal`'s classically-built order machinery. It is
 also genuinely **not** a partial order: `mathlib_ONote_order_not_antisymm` below exhibits `1 + ω` and
 `ω` as distinct notations with equal `repr`, so antisymmetry fails. Mathlib's order on `ONote` is
 therefore unusable here on both counts, and both counts are proved rather than asserted.
@@ -323,7 +323,7 @@ counterpart is `ONote.repr_inj`, and it requires `NF` on both arguments — the 
 violates.
 
 So Mathlib's order on `ONote` is unusable here on two independent counts: it routes through `repr`
-into the choice-saturated `Ordinal`, and it is not a partial order, let alone a `SemilatticeInf`. That
+into `Ordinal`'s classically-built order machinery, and it is not a partial order, let alone a `SemilatticeInf`. That
 is why `SynONote` above builds its order from `ONote.cmp` instead. -/
 
 /-- **Mathlib's `repr`-based order on `ONote` is not antisymmetric.** Two distinct notations —
