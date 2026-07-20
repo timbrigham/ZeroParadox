@@ -19,7 +19,8 @@ implies excluded middle (em_of_wellOrder_comparable; the taboo is Kraus / Nordva
 arXiv:2104.02549 Thm 38(d), cited not claimed) — and genuinely more than ε₀ needs. And here is a
 carrier sized to the job: E0Note = WithTop ONote, whose crossing into Ordinal is one named map with a
 measured price (PricedInterface.lean; carrier choice-free, crossing carries choice at every decl).
-Construction credited to Castéran & Contejean (hydra-battles ON_plus / ON_correct).
+Construction credited to Castéran (hydra-battles ON_plus / ON_correct; those files carry his name
+alone, the library as a whole is his and Contejean's).
 
 Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
 PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
@@ -65,9 +66,11 @@ def build():
         'downward structure &#8212; the &#969;-tower climbs without bound, and no ordinal notation is '
         'a fixed point of x &#8614; &#969;<sup>x</sup> &#8212; is genuinely constructive, provable '
         'with no Axiom of Choice. But the machinery ZP-L reaches for to state that structure '
-        'semantically is not: comparing arbitrary well-orders implies excluded middle. The choice is '
-        'neither an artifact nor intrinsic to the snap. It is the price of a tool stronger than the '
-        'job requires.'))
+        'semantically is not: comparing arbitrary well-orders implies excluded middle. So the choice '
+        'is not a mere artifact of how a proof was written. It is the price of a tool stronger than '
+        'the job requires. Whether ZP-L&#8217;s &#949;<sub>0</sub> results could be re-proved without '
+        'it remains <b>unclassified</b> &#8212; no choice-free re-proof of them exists, and nothing '
+        'here supplies one.'))
     E.append(body(
         'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
         'And it builds a carrier sized to &#949;<sub>0</sub> &#8212; ordinal notations with one point '
@@ -239,10 +242,12 @@ def build():
             'notations the representation map is not injective, which e0Repr_not_injective proves. '
             'Restricting to normal forms is the standard repair and is not done here, because that '
             'predicate is itself defined through the representation map.',
-            'The construction is <b>not new</b>. The carrier is Cast&#233;ran and Contejean&#8217;s '
-            'generic sum of notation systems (hydra-battles, ON_plus) instantiated with a one-point '
-            'right summand, and the map is an instance of their ON_correct, already instantiated at '
-            '&#949;<sub>0</sub>. What is contributed here is the measurement.',
+            'The construction is <b>not new</b>. The carrier is Cast&#233;ran&#8217;s generic sum of '
+            'notation systems (hydra-battles, ON_plus &#8212; that file carries his name alone, though '
+            'the library as a whole is his and Contejean&#8217;s) instantiated with a one-point right '
+            'summand. The map is an instance of the same <i>notion</i> his ON_correct defines, not a '
+            'member of that class: ON_correct has three fields and only the first is established here, '
+            'as the bullet above records. What is contributed is the measurement.',
         ]
     ))
     E.append(sp(6))
@@ -307,8 +312,10 @@ def build():
             '[propext, Quot.sound]. The crossing (e0Repr and every lemma about it): '
             '[propext, Classical.choice, Quot.sound]. The carrier side carries no choice anywhere.',
             'Together these locate the Classical.choice in ZP-L&#8217;s &#949;<sub>0</sub> results: it '
-            'is not in the Ordinal type, and not in the snap, but in the order instance the semantic '
-            'statement passes through &#8212; where it is load-bearing rather than removable. Zero '
+            'is not in the Ordinal type, and not in the ascent (which is proved choice-free here), but '
+            'in the order instance the semantic statement passes through &#8212; where its classical '
+            'content is load-bearing. Locating it is not eliminating it: whether those '
+            '&#949;<sub>0</sub> results admit a choice-free re-proof is <b>unclassified</b>. Zero '
             'sorry. Verified: lake build, July 2026.',
         ]
     ))
