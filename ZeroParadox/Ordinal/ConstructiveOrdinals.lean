@@ -10,7 +10,8 @@ ZP-N is the choice-free constructive companion to the ZP-L/M ordinal snap. See t
 ---
 
 The probe (`.claude-local/notes/choice_probe_ordinal_2026-06-15.md`) showed that ZP-L's
-`Classical.choice` at ε₀ is *inherited* from Mathlib's choice-saturated `Ordinal` type — but the
+`Classical.choice` at ε₀ is *inherited* from Mathlib's classically-built `Ordinal` machinery — the order
+instance and the operations, NOT the type, which measures `[propext, Quot.sound]` — but the
 syntactic notation substrate (`ONote.cmp`) is choice-free (`propext`-only). ZP-N rebuilds the
 snap-from-below **syntactically**, never touching `repr`/`Ordinal`, so the results are choice-free.
 

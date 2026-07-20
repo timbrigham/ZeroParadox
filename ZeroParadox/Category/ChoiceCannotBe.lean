@@ -53,8 +53,12 @@ framework's standing temptation. The literature that separates them:
 So *full* choice is strictly stronger than excluded middle, which is in turn strictly stronger than the
 constructive base. **The restricted fragment is a different matter, and the distinction matters here.**
 `ZeroParadox/Category/ExcludedMiddleBridge.lean`'s `ChoiceFragment` has exactly Diaconescu's shape — choice for inhabited
-predicates on `Bool` — so in a topos it would be *equivalent* to excluded middle. In Lean it measurably
-is not: excluded middle does not yield it (the construction dies at `Decidable (S true)`). That gap is a
+predicates on `Bool` — so in a topos it would be *equivalent* to excluded middle. In Lean it **appears
+not to be**: the natural construction of the fragment from excluded middle fails to elaborate, dying at
+`Decidable (S true)`, and closes only under `classical`. **That is strong evidence, not a proof of
+unprovability** — a failed elaboration is not a negative result, and a formal independence claim would
+need a metatheoretic argument outside Lean (the home file
+`ZeroParadox/Category/ExcludedMiddleBridge.lean` states this limit explicitly). The apparent gap is a
 fact about **Lean's `Prop`/`Type` stratification**, not about Diaconescu's theorem: the fragment selects
 into `Bool`, so it is really `∀ p, Decidable p` — data-valued excluded middle — while `ExcludedMiddle` is
 the `Prop`-valued form, and `Or` in `Prop` does not eliminate into `Bool`. A topos has no such split,

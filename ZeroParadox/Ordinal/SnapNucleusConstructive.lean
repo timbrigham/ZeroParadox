@@ -66,9 +66,12 @@ carrier, not a limitation of the proof.
 
 Both halves are measured here, and they split:
 
-* **Nothing in the reasoning here needs choice.** Every theorem in this file, including the
-  impossibility itself and the full `LinearOrder`/`SemilatticeInf` structure on `SynONote`, is
-  choice-free. **This does NOT classify `snapNucleus`'s own footprint as accidental** — that would be
+* **Nothing in the reasoning here needs choice.** Every theorem in the constructive development —
+  including the impossibility itself and the full `LinearOrder`/`SemilatticeInf` structure on
+  `SynONote` — is choice-free. **The one exception is deliberate and disclosed:**
+  `mathlib_ONote_order_not_antisymm` measures `[propext, Classical.choice, Quot.sound]` because it is a
+  statement *about* Mathlib's `repr`-based order, not part of the constructive development.
+  **This does NOT classify `snapNucleus`'s own footprint as accidental** — that would be
   an eliminability claim, and no re-proof of `snapNucleus` exists. Its status is **UNCLASSIFIED**
   (`ZeroParadox/Ordinal/SnapNucleus.lean` records the same).
 * **The counterpart route via this carrier is blocked — for a different reason than choice.** What
