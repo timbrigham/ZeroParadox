@@ -44,9 +44,12 @@ formalizes the labeled tree theorem on Mathlib's WQO machinery. Two threads must
   relations (Coquand) and bar induction (Fridlender) — that avoid the minimal bad sequence argument
   entirely. Larchey-Wendling's *Coq-Kruskal* is a mechanized, **axiom-free**, unrestricted proof of the
   tree theorem on that technique, with no decidability assumption on the ground relation and no Brouwer's
-  Thesis. Seisenberger (*An intuitionistic proof of Kruskal's theorem*, Arch. Math. Logic, 2003) gives
-  an intuitionistic proof via inductive definitions; Coquand & Fridlender (1993) give the constructive
-  Higman's lemma. So the `Classical.choice` this file inherits through Mathlib's route is a **route
+  Thesis. It removes the restrictions of the two earlier intuitionistic proofs: Seisenberger's, via an
+  inductive characterization of well-quasi-orders (*Kruskal's Tree Theorem in a Constructive Theory of
+  Inductive Definitions*, Synthese Library 306, 2001), which assumes decidability of the ground relation;
+  and Veldman's (*An intuitionistic proof of Kruskal's theorem*, Arch. Math. Logic 43(2), 2004,
+  pp. 215-264), which uses Brouwer's Thesis. Coquand & Fridlender (1993) give the constructive Higman's
+  lemma. So the `Classical.choice` this file inherits through Mathlib's route is a **route
   artifact**, not a requirement of the theorem — a choice-free proof exists, in an almost-full framework
   Mathlib does not currently carry. This file does not build that route; it uses Mathlib's. The residual
   content of the minimal bad sequence argument is dependent choice / open induction (Berger), a choice
