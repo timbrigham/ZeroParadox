@@ -36,10 +36,11 @@ The `Valuation/` cluster splits, and the split is the whole scoping finding:
   content is *agreement to depth n* and *the valuation of the bottom is the top of the value monoid* —
   combinatorial and valuative statements that use neither division, nor completeness, nor ℝ. **This is
   the slice built here.**
-* **Group B — genuinely needs the complete field.** `RiemannSphere.lean` / `rInv_swaps` (field
-  inversion plus continuity at two special points), `Ostrowski.lean` (a classification of absolute
-  values into ℝ), and the Haar/Kozyrev/ergodic layer (invariant measure, spectral theory). There is no
-  cheaper carrier for these, and this file does not attempt one. Recorded as needing the field.
+* **Group B — genuinely needs the complete field.** `ZeroParadox/Valuation/RiemannSphere.lean` /
+  `rInv_swaps` (field inversion plus continuity at two special points),
+  `ZeroParadox/Valuation/Ostrowski.lean` (a classification of absolute values into ℝ), and the
+  Haar/Kozyrev/ergodic layer (invariant measure, spectral theory). There is no cheaper carrier for
+  these, and this file does not attempt one. Recorded as needing the field.
 
 ## The layered localization of the crossing's choice
 
@@ -191,7 +192,16 @@ design, not the tree.
 
 ## Engineer's Take
 
-TODO (Tim): <your take, in your own voice.>
+Same interface move as the ordinal side, on the p-adic carrier. You take a class that came in one order
+of magnitude too big and you initialize the single instance you actually needed, then cross reference it
+back to the general one.
+
+The point of the roots work was to separate where choice is used from where it is needed, and a footprint
+only ever shows you the first. Build the carrier small enough to state the Group A content without the
+whole Padic type, and the only choice left is what you pay at the crossing.
+
+The surprise was that the price was not all p-adic. The still machinery is priced and the motion is free,
+and that interface between the constructive side and the choice side is the thing worth having.
 -/
 
 namespace ZeroParadox
