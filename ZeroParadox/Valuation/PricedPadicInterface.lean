@@ -58,12 +58,21 @@ same layer-0 valuation, so dropping the field for the ring of integers buys noth
 ## The measured price of the crossing
 
 Measured by the `#print axioms` block at the bottom of this file (the instrument is the deliverable;
-these are the numbers it reported).
+these are the numbers it reported, not the numbers that were hoped for).
 
-* **Constructive side — choice-free.** [FOOTPRINTS FILLED AFTER FINAL BUILD — this line is a
-  placeholder and will be replaced with the per-declaration numbers the purity block prints; if it is
-  still here, the file is mid-fill.]
-* **The crossing — `Classical.choice`.** [FOOTPRINTS FILLED AFTER FINAL BUILD.]
+* **Constructive side — choice-free.** The carrier carries no `Classical.choice`. `v2nat`, `v2`,
+  `nScale_bot`, `AgreeTo`, `Apart`, `agree_trans`, `agree_mono`, `separated_of_apart` and
+  `not_apart_of_agree_all` report **no axioms at all**; `v2_bot`, `v2_unique` and `clopen_gap_at_bot`
+  report `[propext]`; `v2_scale_nat`, `nScale_unique_fp`, `nScale_ne_self` report `[propext, Quot.sound]`
+  and `agree_all_iff` reports `[Quot.sound]` (the `funext`).
+* **One instance-level exception, on the constructive side, reported not hidden.** The ZP-J `val_scale`
+  axiom in its literal form `v2_scale : v2 (2n) = v2 n + 1` reports `[propext, Classical.choice,
+  Quot.sound]` — **but the `Classical.choice` is not the carrier's.** It is the ambient `ℕ∞` additive
+  instance: `enat_add_choice` shows that *any* `ℕ∞` sum carries it, while `Nat.cast : ℕ → ℕ∞` is
+  choice-free (`v2` proves it). The content of the axiom is choice-free — `v2_scale_nat` states the same
+  fact with the successor on `ℕ` and comes out `[propext, Quot.sound]`. See "The `ℕ∞`-addition finding".
+* **The crossing — `Classical.choice`.** `natToZ2`, `natToZ2_bot`, `natToZ2_scale` and
+  `crossVal_bot_agrees` all report `[propext, Classical.choice, Quot.sound]`.
 
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers, and shows the Group A content does not need it. It does **not** show that
@@ -71,17 +80,36 @@ Mathlib's p-adic results are eliminable, and it does **not** show `padicValNat`'
 *in Mathlib* — that would require re-proving Mathlib's valuation API on a different definition, which is
 not attempted here. `#print axioms` reports how a proof was written, never what a theorem requires.
 
+## The `ℕ∞`-addition finding — reported, not explained away
+
+The one `Classical.choice` on the constructive side was not predicted. It arrives through Mathlib's
+additive instance on `ℕ∞ = WithTop ℕ`, not through anything about the valuation or the p-adics:
+`enat_add_choice` (`(a : ℕ∞) + (b : ℕ∞) = ↑(a + b)`) reports `[propext, Classical.choice, Quot.sound]`,
+so **every** `ℕ∞` sum inherits choice at the instance level. This is the documented instance hazard,
+here located exactly — and it has a consequence for the ZP-J layer: because `ValuationStructure.val`
+targets `ℕ∞` and `val_scale` is stated as `val x + 1`, the *statement* of that axiom carries
+`Classical.choice` on **any** carrier, `ℕ` and `ℤ_[2]` alike. So `Scale.lean` § V's `q2Val_scale`
+footprint is not evidence that the p-adic completion is doing the classical work; part of it is this
+same `ℕ∞` sum. This file separates the two contributions: `v2_scale_nat` isolates the choice-free
+valuation content, and `enat_add_choice` isolates the instance choice, so the remaining
+`Classical.choice` in the crossing (`natToZ2`, `crossVal_bot_agrees`) is attributable to the p-adic
+target alone.
+
 ## The carrier, and what it actually is
 
 Two faces, matching the two faces of Group A:
 
 * **The valuation face — ℕ with `v2 : ℕ → ℕ∞`.** `v2` is a 2-adic valuation defined by structural fuel
   recursion (`v2nat`), not well-founded recursion, so it is computable and choice-free. `v2 0 = ⊤`; on
-  nonzero inputs it counts factors of 2. On this carrier the four ZP-J `ValuationStructure` axioms hold
-  choice-free with `scale = (2 * ·)`: `v2_bot`, `v2_unique`, `nScale_bot`, `v2_scale`; and the
-  fixed-point content `nScale_unique_fp` (the bottom is the unique fixed point of doubling) is proved
-  directly. This is the exact choice-free mirror of `Scale.lean` § V, which proves the same axioms in
-  `ℤ_[2]` via `PadicInt.valuation` and carries choice.
+  nonzero inputs it counts factors of 2. On this carrier three of the four ZP-J `ValuationStructure`
+  axioms hold choice-free with `scale = (2 * ·)`: `scale_bot` (`nScale_bot`), `val_bot` (`v2_bot`),
+  `val_unique` (`v2_unique`); and the fixed-point content `nScale_unique_fp` (the bottom is the unique
+  fixed point of doubling) is proved directly. The fourth axiom, `val_scale`, holds choice-free *in
+  content* (`v2_scale_nat`) but carries `Classical.choice` *in its literal `ℕ∞`-successor form*
+  (`v2_scale`) — from the ambient `ℕ∞` instance, not the carrier (see "The `ℕ∞`-addition finding").
+  This is the choice-free mirror of `Scale.lean` § V, which proves the same axioms in `ℤ_[2]` via
+  `PadicInt.valuation`; the comparison localizes which part of § V's choice is p-adic and which is the
+  shared `ℕ∞` sum.
 * **The ball face — digit streams `Str := ℕ → Fin 2`.** `AgreeTo n x y` ("agree to depth n") is the
   ball relation; `Apart x y := ∃ n, x n ≠ y n` is its positive complement. The ultrametric strong
   triangle (depth form), nested balls, descent to a single point, and total separation all hold
@@ -116,7 +144,7 @@ is the right one — and the credit is theirs, not ours.
 
 The valuation face is elementary: `v2nat` is a short structural recursion, and its only non-immediate
 lemma is fuel saturation (the value stabilizes once the fuel exceeds the input), used once to prove
-`v2_scale`. The ball face is pure combinatorics on `ℕ → Fin 2`; `agree_all_iff` is `funext` in one
+`v2_scale_nat`. The ball face is pure combinatorics on `ℕ → Fin 2`; `agree_all_iff` is `funext` in one
 direction (hence its `Quot.sound`), and `clopen_gap_at_bot` is the decidability of a bounded quantifier.
 The crossing is `Nat.cast` into `ℤ_[2]` and one comparison at the bottom. Nothing here is deep. The
 value, if any, is the same as its ordinal sibling's: the boundary is *stated as a price* on a specific
@@ -155,7 +183,8 @@ design, not the tree.
 
 ## Structure
 
-- § I   The valuation face — `v2` on ℕ, the four ZP-J axioms, choice-free.
+- § I   The valuation face — `v2` on ℕ, the ZP-J axioms priced (three choice-free; `val_scale`'s
+        content choice-free, its literal `ℕ∞` form carrying the instance choice).
 - § II  The ball face — digit streams, agreement, apartness, separation, choice-free.
 - § III The crossing — one named map ℕ → `ℤ_[2]`, priced.
 - § IV  Axiom Purity Check — the deliverable.
@@ -189,7 +218,7 @@ def v2 (n : ℕ) : ℕ∞ := if n = 0 then ⊤ else (v2nat n n : ℕ∞)
 /-! ### Fuel saturation
 
 `v2nat n f` is constant once `f ≥ n`, so `v2` (which uses fuel `= n`) is well-behaved. These lemmas
-are the only non-immediate step in the valuation face, used once to prove `v2_scale`. -/
+are the only non-immediate step in the valuation face, used once to prove `v2_scale_nat`. -/
 
 /-- The recursion step, as a rewrite. -/
 theorem v2nat_succ (n f : ℕ) :
@@ -294,30 +323,45 @@ def AgreeTo (n : ℕ) (x y : Str) : Prop := ∀ i, i < n → x i = y i
 complement of equality — the hypothesis under which separation is choice-free. -/
 def Apart (x y : Str) : Prop := ∃ n, x n ≠ y n
 
+/-- Agreement to a fixed depth is decidable — a bounded quantifier over decidable equality on `Fin 2`.
+This is the decidability that makes `clopen_gap_at_bot` choice-free. -/
+instance decidableAgreeTo (n : ℕ) (x y : Str) : Decidable (AgreeTo n x y) :=
+  Nat.decidableBallLT n (fun i _ => x i = y i)
+
 /-- **Ultrametric strong triangle, depth form.** Agreement to a fixed depth is transitive. -/
 theorem agree_trans (n : ℕ) (x y z : Str) (hxy : AgreeTo n x y) (hyz : AgreeTo n y z) :
-    AgreeTo n x z := by sorry
+    AgreeTo n x z := fun i hi => (hxy i hi).trans (hyz i hi)
 
 /-- **Nested balls.** Agreeing to depth `n` implies agreeing to any shallower depth. -/
 theorem agree_mono {m n : ℕ} (hmn : m ≤ n) (x y : Str) (h : AgreeTo n x y) :
-    AgreeTo m x y := by sorry
+    AgreeTo m x y := fun i hi => h i (lt_of_lt_of_le hi hmn)
 
 /-- **Descent to a single point: `⋂ₙ Bₙ(x) = {x}`.** Agreeing to every depth is equality. The forward
 direction is `funext`. -/
-theorem agree_all_iff (x y : Str) : (∀ n, AgreeTo n x y) ↔ x = y := by sorry
+theorem agree_all_iff (x y : Str) : (∀ n, AgreeTo n x y) ↔ x = y := by
+  constructor
+  · intro h; funext i; exact h (i + 1) i (Nat.lt_succ_self i)
+  · rintro rfl n i _; rfl
 
 /-- **Separation from apartness.** If two streams are apart, some ball separates them. Takes the
 positive `Apart` hypothesis — this is exactly where a negative `x ≠ y` would force choice. -/
-theorem separated_of_apart (x y : Str) (h : Apart x y) : ∃ n, ¬ AgreeTo n x y := by sorry
+theorem separated_of_apart (x y : Str) (h : Apart x y) : ∃ n, ¬ AgreeTo n x y := by
+  obtain ⟨m, hm⟩ := h
+  exact ⟨m + 1, fun hag => hm (hag m (Nat.lt_succ_self m))⟩
 
 /-- **The gap at the bottom is decidable (the constructive content of "clopen").** For every depth,
 either `x` is in the ball around the bottom stream or it is not — no intermediate. This is the
 step-function character of p-adic balls, choice-free via decidability of a bounded quantifier. -/
 theorem clopen_gap_at_bot (n : ℕ) (x : Str) :
-    AgreeTo n botStr x ∨ ¬ AgreeTo n botStr x := by sorry
+    AgreeTo n botStr x ∨ ¬ AgreeTo n botStr x := by
+  rcases decidableAgreeTo n botStr x with h | h
+  · exact Or.inr h
+  · exact Or.inl h
 
 /-- Agreement at every depth is incompatible with apartness. -/
-theorem not_apart_of_agree_all (x y : Str) (h : ∀ n, AgreeTo n x y) : ¬ Apart x y := by sorry
+theorem not_apart_of_agree_all (x y : Str) (h : ∀ n, AgreeTo n x y) : ¬ Apart x y := by
+  rintro ⟨m, hm⟩
+  exact hm (h (m + 1) m (Nat.lt_succ_self m))
 
 /-! ## § III. The crossing — one named map into `ℤ_[2]`
 
@@ -329,15 +373,17 @@ This is where the classical assumption is paid. `natToZ2` is `Nat.cast`; `q2Val`
 noncomputable def natToZ2 (n : ℕ) : ℤ_[2] := (n : ℤ_[2])
 
 /-- The crossing respects the bottom: 0 goes to 0. -/
-theorem natToZ2_bot : natToZ2 0 = 0 := by sorry
+theorem natToZ2_bot : natToZ2 0 = 0 := by rw [natToZ2, Nat.cast_zero]
 
 /-- The crossing respects the scale: doubling on ℕ maps to doubling on `ℤ_[2]`. -/
-theorem natToZ2_scale (n : ℕ) : natToZ2 (2 * n) = 2 * natToZ2 n := by sorry
+theorem natToZ2_scale (n : ℕ) : natToZ2 (2 * n) = 2 * natToZ2 n := by
+  unfold natToZ2; push_cast; ring
 
 /-- **The valuation crossing at the bottom.** The choice-free `v2` and the choice-carrying `q2Val`
 agree at the bottom: both give `⊤`. Writing `q2Val` is the moment choice is paid; the equality is the
 minimal statement that the crossing respects the valuation at the bottom. -/
-theorem crossVal_bot_agrees : q2Val (natToZ2 0) = v2 0 := by sorry
+theorem crossVal_bot_agrees : q2Val (natToZ2 0) = v2 0 := by
+  rw [natToZ2_bot, q2Val_bot, v2_bot]
 
 end ZeroParadox
 
