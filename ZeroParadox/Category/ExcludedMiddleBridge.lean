@@ -224,10 +224,11 @@ The witness is the three-element chain `Fin 3`, made a Heyting algebra by
 `LinearOrder.toBiheytingAlgebra`, whose complement is `compl a = if a = ⊥ then ⊤ else ⊥`. The middle
 element `1` then has `1ᶜ = ⊥ = 0` and `1ᶜᶜ = ⊤ = 2 ≠ 1`. -/
 
-/-- The three-element chain as a bi-Heyting algebra. Mathlib provides this as a reducible
-non-instance (`LinearOrder.toBiheytingAlgebra`); it is made a local instance here so that `ᶜ` and
-`dnegNucleus` resolve on `Fin 3`. -/
-local instance fin3Biheyting : BiheytingAlgebra (Fin 3) := LinearOrder.toBiheytingAlgebra (Fin 3)
+-- The bi-Heyting structure on `Fin 3` is Mathlib's own: `Fin.instBiheytingAlgebra [NeZero n]`
+-- (`Mathlib/Order/Fin/Basic.lean:70`), itself built from `LinearOrder.toBiheytingAlgebra`. This file
+-- imports it, so `ᶜ` and `dnegNucleus` resolve on `Fin 3` with nothing declared here.
+-- An earlier draft declared a local instance and described Mathlib as providing this "only as a
+-- reducible non-instance" — false by implicature, and a latent instance diamond. Removed 2026-07-19.
 
 /-- **Theorem (§ IV) — the fence.** The middle element of the three-element chain is **not** regular:
 `1ᶜᶜ = 2 ≠ 1`. So `Fin 3` is a Heyting algebra that is not Boolean, exhibited in a metatheory with

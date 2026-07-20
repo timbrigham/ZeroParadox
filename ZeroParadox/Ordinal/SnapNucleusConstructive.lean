@@ -140,7 +140,7 @@ carries the CNF datatype (`Inductive T1`), a structural lexicographic comparator
 derived `lt α β := compare α β = Lt`, transitivity `lt_trans` by the same structural induction, and the
 strict-order bundle `t1_strorder` — all on raw terms, by the same stay-on-the-syntax technique used here
 for `SynONote`. So `syn_cmp_trans_lt` and `instLinearOrderSynONote` are a **re-derivation in a different
-proof assistant, not a new construction**, and the "genuinely non-trivial engineering" framing below is
+proof assistant, not a new construction**, and the "genuinely non-trivial engineering" framing above is
 about the effort in Lean, never about novelty. Cited here explicitly because scoping the credit only to
 "the carrier and the ceiling" would have left this uncredited — the failure mode where a theorem-backed
 layer carries a distinctive construction with its own separate prior art.

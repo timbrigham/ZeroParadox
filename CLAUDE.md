@@ -53,12 +53,18 @@ found real defects; fix them"), so the caller never evaluates the trigger — on
 against a 2-round cap while the rule sat visible in the memory index, because nobody was *counting*. The
 fix is structural: the reviewer stands outside the loop, so give it the number and let it decide.
 
-**Before spawning any review round:**
+**The CALLER bumps, exactly once, before spawning the round:**
 ```
-python .claude-local/gate_round.py bump
+python .claude-local/gate_round.py bump      # caller only, once per ROUND (not per gate)
+python .claude-local/gate_round.py show      # reviewers and anyone else: read-only
 ```
-It prints the round number and, past the ordinary cap, the stop condition. `reset` at the start of a new
-arc or after a clean push. State lives in `.claude-local/gate_round.json`, so it survives compaction.
+`reset` at the start of a new arc or after a clean push. State lives in `.claude-local/gate_round.json`,
+so it survives compaction.
+
+**Reviewers must NEVER `bump`** — they are handed the number in the brief and may only `show`. Measured
+2026-07-19: the caller bumped to round 1, a spawned reviewer ran `bump` itself, and reported round 2. A
+double-increment is not cosmetic — it burns the cap early and can force a premature STOP-ORDINARY while a
+bedrock defect is still live. If several gates run in one round, they all share that round's number.
 
 **Put this in every review brief, with N substituted:**
 > This is **gate round N** against a cap of 2 (ORDINARY) / 5 (BEDROCK). Your verdict must be one of:

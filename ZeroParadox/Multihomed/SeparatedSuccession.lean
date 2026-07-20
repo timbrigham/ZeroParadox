@@ -9,7 +9,7 @@ set_option maxHeartbeats 400000
 The snap's succession of **targets** — its **iterative bottoms** — shows up in two charts of the framework
 that are DIFFERENT TYPES. (Iterative bottom: a bottom relative to its iteration, the base the next snap
 re-seeds above, never ⊥ itself. `ε₀ ≠ ⊥` is bedrock, `epsilon0_ne_bot`. The qualifier carries the role
-without asserting the identity; standardized 2026-07-19, `.claude-local/vocabulary_reference.md` § 1b.)
+without asserting the identity; standardized 2026-07-19.)
 - the **ordinal chart** — the ε-numbers `ε₀ < ε₁ < ε₂ < …`, consecutive ones separated by strict order
   (`ZeroParadox/Ordinal/SnapSuccession.lean`, `succession_lt_succ`);
 - the **Hilbert chart** — the state vectors `T(S₀), T(S₁), …`, consecutive ones separated by orthogonality

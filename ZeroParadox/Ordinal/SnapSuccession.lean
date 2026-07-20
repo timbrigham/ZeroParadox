@@ -15,8 +15,8 @@ it wrong.** The ε-numbers are the ordinals the snap runs **to** — its success
 targets. They are **not** ⊥. `ε₀ ≠ ⊥` is a bedrock invariant (`epsilon0_ne_bot`): ⊥ is the base fed in,
 ε₀ the closure that comes out, and the base is never its own closure.
 
-**The standard term for a rung is an ITERATIVE BOTTOM** (ratified 2026-07-19; see
-`.claude-local/vocabulary_reference.md` § 1b). Each rung serves as the base the *next* iteration re-seeds
+**The standard term for a rung is an ITERATIVE BOTTOM** (ratified 2026-07-19). Each rung serves as the
+base the *next* iteration re-seeds
 above — a bottom relative to its iteration, never ⊥ itself. The qualifier is load-bearing: "iterative
 bottom" names the role, the bare noun would assert the identity. Do **not** call these "local bottoms" —
 that phrase is already in use for the *per-domain* MC-1 family (`Category/GlobalZero.lean`), and would
