@@ -137,8 +137,9 @@ into the brief explicitly — the same way the encoding and glob warnings are al
 - **NO SCRATCH FILES IN THE REPO.** Any probe, temp script, or measurement file goes in the session
   scratchpad directory, never under `ZeroParadox/` or anywhere else in the working tree. A reviewer that
   needs to measure something writes it to the scratchpad, runs it, and deletes it. **Measured
-  2026-07-19:** a review agent left `ZeroParadox/ZZTestOrd.lean` in the source tree and it was committed —
-  a scratch probe is now in the permanent history. Put this line in every subagent brief.
+  2026-07-19:** a review agent left a `ZZTestOrd.lean` probe in the source tree (since deleted, so the
+  path no longer exists) and it was committed — a scratch probe is now in the permanent history. Put this
+  line in every subagent brief.
 - **Reviews are READ-ONLY on the working tree.** A gate reads, measures, and reports; it does not modify
   repo files. The only writes a gate may make are its signal file and its findings note under
   `.claude-local/notes/`.
