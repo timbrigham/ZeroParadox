@@ -384,4 +384,13 @@ open ZeroParadox
 #print axioms e0Repr_le_epsilon0
 #print axioms e0Repr_eq_epsilon0_iff
 #print axioms e0Repr_not_injective
+
+-- The ε₀-producing operations themselves, measured here because this file already imports Veblen.
+-- ZP-N's prose names these (with `typein` and `omega0`, printed in
+-- `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`) as where `Classical.choice` actually enters
+-- Mathlib's ordinals. Printed rather than asserted: naming a site without measuring it is exactly
+-- the error ZP-N v1.0 made, and a claim about where choice lives should be reproducible.
+#print axioms Ordinal.nfp
+#print axioms Ordinal.deriv
+#print axioms Ordinal.epsilon
 end PurityCheck

@@ -287,4 +287,13 @@ open ZeroParadox
 #print axioms InitialSeg.eq_or_principal
 #print axioms InitialSeg.total
 
+-- Two of the operations built on that instance. `nfp`, `deriv` and `epsilon` are named alongside
+-- these in ZP-N's prose but live in `Mathlib.SetTheory.Ordinal.FixedPoint` / `Veblen`, outside this
+-- file's deliberately minimal import closure; they are printed in
+-- `ZeroParadox/Ordinal/PricedInterface.lean`, which already imports Veblen. Between the two purity
+-- blocks all five are measured rather than asserted — the discipline whose absence is ZP-N v1.0's
+-- correction of record.
+#print axioms Ordinal.typein
+#print axioms Ordinal.omega0
+
 end PurityCheck

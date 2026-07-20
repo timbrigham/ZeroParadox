@@ -77,8 +77,7 @@ classically built, so `Classical.choice` is expected here. **Status: UNCLASSIFIE
 and no choice-free re-proof of these results exists. Note also that the choice is NOT in the `Ordinal`
 type, which measures `[propext, Quot.sound]`; it enters through the order instance and the operations.
 ZP-N's choice-free snap-from-below on `ONote` is suggestive for these results without being a re-proof of
-them (
-`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). Recorded honestly below. -/
+them (cf. `ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). Recorded honestly below. -/
 
 section PurityCheck
 open ZeroParadox

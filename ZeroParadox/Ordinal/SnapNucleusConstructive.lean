@@ -131,9 +131,9 @@ proof theory, not a result of this file.
 
 **The closest specialist precedent, named.** Castéran and Contejean's *hydra-battles* development (Coq)
 carries a CNF datatype `T1` for the ordinals **below** ε₀, constructive (axiom-free / intuitionistic
-outside its Schütte module), with ε₀ as the notation system's **ceiling** — and, per our own prior-art
+outside its Schütte module), with ε₀ as the notation system's **supremum** — and, per our own prior-art
 survey of 2026-06-27, *not* phrased as a least fixed point and carrying no least-fixed-point theorem.
-That is the same carrier and the same ceiling as here. Grimm's Gaia development (INRIA RR-8407) builds a
+That is the same carrier and the same supremum as here. Grimm's Gaia development (INRIA RR-8407) builds a
 comparable `T1 ≈ ε₀` and treats ε₀ as a fixed point of `ω^·`, but **explicitly uses excluded middle and
 choice** — the classical comparison point.
 
@@ -145,7 +145,7 @@ strict-order bundle `t1_strorder` — all on raw terms, by the same stay-on-the-
 for `SynONote`. So `syn_cmp_trans_lt` and `instLinearOrderSynONote` are a **re-derivation in a different
 proof assistant, not a new construction**, and the "genuinely non-trivial engineering" framing above is
 about the effort in Lean, never about novelty. Cited here explicitly because scoping the credit only to
-"the carrier and the ceiling" would have left this uncredited — the failure mode where a theorem-backed
+"the carrier and the supremum" would have left this uncredited — the failure mode where a theorem-backed
 layer carries a distinctive construction with its own separate prior art.
 
 **Two further hydra-battles constructions are cited here because a sibling file instantiates them.**
