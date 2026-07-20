@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1408,
+        "declarations": 1414,
         "files": 136
       },
       "entries": [
@@ -11074,6 +11074,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "31750884-7e6d-4e72-88e9-4a4097f1998d",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfContaining_iff_bot",
+            "short": "selfContaining_iff_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "BottomUndecidable: the keystone cost lands at DecidableEq (wem_of_decidableEq_glue); self-containment shown ORTHOGONAL to it (same self-map on Glue p and Bool), refuting the exciting form of the bottom-undecidability conjecture",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23064,6 +23098,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "70f5980b-c61b-431d-9b96-bd3a3ecc88c0",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_glue_identity",
+            "short": "wem_of_glue_identity"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "BottomUndecidable: the keystone cost lands at DecidableEq (wem_of_decidableEq_glue); self-containment shown ORTHOGONAL to it (same self-map on Glue p and Bool), refuting the exciting form of the bottom-undecidability conjecture",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "71f71b3a-72ae-485e-b6eb-56fb68830c00",
           "new": {
@@ -27425,6 +27493,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8669b417-7997-4b52-bb07-c952ff30732e",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfContained_glue",
+            "short": "selfContained_glue"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "BottomUndecidable: the keystone cost lands at DecidableEq (wem_of_decidableEq_glue); self-containment shown ORTHOGONAL to it (same self-map on Glue p and Bool), refuting the exciting form of the bottom-undecidability conjecture",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37747,6 +37849,40 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "bd48488c-c477-48d0-841a-ef6d61ff6705",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wem_of_decidableEq_glue",
+            "short": "wem_of_decidableEq_glue"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "BottomUndecidable: the keystone cost lands at DecidableEq (wem_of_decidableEq_glue); self-containment shown ORTHOGONAL to it (same self-map on Glue p and Bool), refuting the exciting form of the bottom-undecidability conjecture",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "bdc19d67-ae50-4f67-8a39-669861ed5179",
           "new": {
@@ -39002,6 +39138,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c566ffb2-d5ef-45f2-a879-3c99967d4928",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfContained_bool",
+            "short": "selfContained_bool"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "BottomUndecidable: the keystone cost lands at DecidableEq (wem_of_decidableEq_glue); self-containment shown ORTHOGONAL to it (same self-map on Glue p and Bool), refuting the exciting form of the bottom-undecidability conjecture",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42199,6 +42369,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d48e72f4-9a30-4f87-b894-7a59b3947768",
+          "new": {
+            "file": "ZeroParadox/Category/BottomUndecidable.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfContaining_decidable",
+            "short": "selfContaining_decidable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": []
+          },
+          "reason": "BottomUndecidable: the keystone cost lands at DecidableEq (wem_of_decidableEq_glue); self-containment shown ORTHOGONAL to it (same self-map on Glue p and Bool), refuting the exciting form of the bottom-undecidability conjecture",
           "verify": {
             "axioms": null,
             "sorry_free": true
