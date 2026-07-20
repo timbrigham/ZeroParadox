@@ -1,22 +1,34 @@
 """
 Zero Paradox — ZP-N: The Constructive Snap PDF Builder
-Version 1.0 | July 2026
+Version 2.0 | July 2026
 
-v1.0: Initial release. The choice-free constructive companion to ZP-L. The ε₀ snap-from-below is rebuilt
-syntactically on ordinal notations (ONote / Cantor normal form), never touching Mathlib's choice-saturated
-Ordinal type, so the three snap results are choice-free — [propext] only, free even of Quot.sound:
-exp_lt_term (an exponent is strictly below its own term), omegaPow_no_fixedpoint (no notation is a fixed
-point of x ↦ ω^x), tower_strictMono (the ω-tower climbs without bound below ε₀). Finding: ZP-L's
-Classical.choice at ε₀ is representational (inherited from Mathlib's Ordinal), not intrinsic. Side finding:
-tower_NF (well-formedness) DOES carry Classical.choice — choice lives at the syntax→semantics bridge. Open:
-the matching minimality (ε₀ is the LEAST fixed point) quantifies over the limit no notation names.
-Lean: ConstructiveOrdinals.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
+v2.0: Major revision. Corrects v1.0's mechanism and adds the construction it was missing.
+
+v1.0 claimed ZP-L's Classical.choice at ε₀ was "representational, not intrinsic," on the grounds that
+Mathlib's Ordinal type is "choice-saturated." That justification is false as measured — #print axioms
+Ordinal reports [propext, Quot.sound], no choice in the type — and the conclusion overreached its
+evidence: everything v1.0 proved choice-free is a fact about the ASCENT, while ε₀ is past what the
+notation system can name (tower_cofinal). The claim was also not measurable by the instrument used:
+Classical.choice sits in the Ordinal.partialOrder INSTANCE TERM, so every statement mentioning that
+order inherits it however proved (order_footprint_le vs order_footprint_eq).
+
+v2.0 says something sharper and true. The ascent is constructive (unchanged from v1.0, and still the
+layer's genuine content). The classical dependency in the ε₀ results comes from Mathlib's order
+instance and operations, which are genuinely non-constructive — comparability of arbitrary well-orders
+implies excluded middle (em_of_wellOrder_comparable; the taboo is Kraus / Nordvall Forsberg / Xu,
+arXiv:2104.02549 Thm 38(d), cited not claimed) — and genuinely more than ε₀ needs. And here is a
+carrier sized to the job: E0Note = WithTop ONote, whose crossing into Ordinal is one named map with a
+measured price (PricedInterface.lean; carrier choice-free, crossing carries choice at every decl).
+Construction credited to Castéran & Contejean (hydra-battles ON_plus / ON_correct).
+
+Lean: ConstructiveOrdinals.lean, SnapNucleusConstructive.lean, OrdinalChoiceEssential.lean,
+PricedInterface.lean. Follows all rules in scripts/PDF_Rendering_Standards.md.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '2.0'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -35,11 +47,11 @@ def build():
         Paragraph('the &#949;<sub>0</sub> snap from below, choice-free on ordinal notations', S['subtitle']),
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
-            '<i>The choice-free constructive companion to ZP-L. The snap-from-below is rebuilt '
-            'syntactically on ordinal notations (ONote), never touching Mathlib&#8217;s '
-            'choice-saturated Ordinal type; the three snap results are choice-free &#8212; [propext] '
-            'only &#8212; in contrast to every &#949;<sub>0</sub> result in ZP-L, which carries '
-            'Classical.choice. Proved sorry-free in Lean 4 (ConstructiveOrdinals.lean).</i>',
+            '<i>The constructive companion to ZP-L. The snap-from-below is rebuilt syntactically on '
+            'ordinal notations (ONote), where it is choice-free &#8212; [propext] only. Beside it: a '
+            'carrier sized to &#949;<sub>0</sub> whose crossing into Mathlib&#8217;s Ordinal is one '
+            'named map with a measured price, and a proof that the generality ZP-L borrows is '
+            'genuinely non-constructive. Proved sorry-free in Lean 4.</i>',
             S['note']),
         sp(10),
         hr(),
@@ -47,13 +59,21 @@ def build():
     ]
 
     E.append(body(
-        'ZP-L derived the snap at &#949;<sub>0</sub>, but every &#949;<sub>0</sub> result in its Lean '
-        'development carries Classical.choice &#8212; inherited from Mathlib&#8217;s Ordinal type, '
-        'which is choice-saturated. ZP-N asks whether that choice is intrinsic to the snap or merely '
-        'representational. The answer is representational. The snap&#8217;s downward structure &#8212; '
-        'the &#969;-tower climbs without bound, and no ordinal notation is a fixed point of '
-        'x &#8614; &#969;<sup>x</sup> &#8212; is genuinely constructive, provable with no Axiom of '
-        'Choice.'))
+        'ZP-L derived the snap at &#949;<sub>0</sub>, and every &#949;<sub>0</sub> result in its Lean '
+        'development carries Classical.choice. ZP-N asks where that choice actually lives and whether '
+        'the snap needs it. Two answers, and they point in opposite directions. The snap&#8217;s '
+        'downward structure &#8212; the &#969;-tower climbs without bound, and no ordinal notation is '
+        'a fixed point of x &#8614; &#969;<sup>x</sup> &#8212; is genuinely constructive, provable '
+        'with no Axiom of Choice. But the machinery ZP-L reaches for to state that structure '
+        'semantically is not: comparing arbitrary well-orders implies excluded middle. The choice is '
+        'neither an artifact nor intrinsic to the snap. It is the price of a tool stronger than the '
+        'job requires.'))
+    E.append(body(
+        'So this layer does two things. It rebuilds the ascent syntactically, where it is choice-free. '
+        'And it builds a carrier sized to &#949;<sub>0</sub> &#8212; ordinal notations with one point '
+        'adjoined on top &#8212; where the crossing into Mathlib&#8217;s semantic ordinals is a single '
+        'named map whose cost can be read off directly. Staying on the notation side is free of choice; '
+        'crossing is not; and the crossing is one function rather than a diffuse dependency.'))
     E.append(body(
         'The move is to work at the level of ordinal <i>notations</i> (ONote, Cantor-normal-form '
         'terms), whose comparison ONote.cmp is choice-free (propext-only) and never passes through '
@@ -158,12 +178,30 @@ def build():
 
     E.append(body(
         'The point of ZP-N is the contrast with ZP-L. There, every &#949;<sub>0</sub> result carries '
-        'Classical.choice; here, the same downward structure is proved with [propext] only. The '
-        'difference is entirely the substrate: ZP-L works in Mathlib&#8217;s Ordinal type, which is '
-        'choice-saturated, while ZP-N works in ONote, which is not. So the Classical.choice in '
-        'ZP-L&#8217;s snap is <b>representational, not intrinsic</b>: it is inherited from the '
-        'semantic representation, and vanishes once the same fact is stated syntactically. Choice '
-        'enters the ordinal snap only at the syntax&#8594;semantics bridge, not in the snap itself.'))
+        'Classical.choice; here, the same downward structure is proved with [propext] only. It is '
+        'tempting to conclude that the choice is therefore an artifact of representation. It is not, '
+        'and the reason is worth stating precisely, because the natural diagnosis is wrong twice over.'))
+    E.append(body(
+        'First, the choice is not in the type. #print axioms Ordinal reports [propext, Quot.sound]. It '
+        'is in the <i>order instance</i> and the operations built on it &#8212; Ordinal.partialOrder, '
+        'instLinearOrder, typein, omega0, nfp, deriv, epsilon. Second, and consequently, an axiom '
+        'footprint on any &#949;<sub>0</sub> result measures that ambient instance rather than the '
+        'proof: a &#8804; a carries Classical.choice while a = a does not, for the same element, '
+        'differing only in whether the statement mentions the order (order_footprint_le, '
+        'order_footprint_eq). The instrument cannot answer the question it was being asked.'))
+    E.append(body(
+        'What it can answer is a different question: is that instance&#8217;s classical content real? '
+        'It is. Merely knowing, of any two well-orders, that one of them embeds in the other &#8212; '
+        'without being handed which &#8212; already yields excluded middle (em_of_wellOrder_comparable, '
+        'itself choice-free: the classical content is the hypothesis, not the proof). The hypothesis is '
+        'a bare disjunction, not a procedure that computes the answer, which makes the implication '
+        'sharper than it first sounds; it is also the form Mathlib&#8217;s le_total actually takes. '
+        'This is a known taboo in constructive mathematics, not a result of this framework: it is '
+        'Theorem 38(d) of Kraus, Nordvall Forsberg and Xu, stated there in the data form, and their '
+        'witnesses are the ones used here. So the generality Mathlib&#8217;s order provides &#8212; '
+        'comparing '
+        '<i>any</i> two well-orders &#8212; genuinely requires the classical assumption. '
+        '&#949;<sub>0</sub> never needed that generality.'))
 
     E.append(remark_box(
         'Remark: even well-formedness inherits choice (the bridge, made visible)',
@@ -174,6 +212,37 @@ def build():
             'on NF, so they stay choice-free; but the fact that even &#8220;this notation is '
             'well-formed&#8221; inherits choice pins the location precisely: choice lives at the '
             'syntax&#8594;semantics bridge, exactly where ZP-L crosses it and ZP-N does not.',
+        ]
+    ))
+    E.append(sp(6))
+
+    E.append(body(
+        'That diagnosis suggests its own remedy: build a carrier sized to the job. E0Note is ordinal '
+        'notations with a single point adjoined on top, that point standing for &#949;<sub>0</sub>. '
+        'Below the top, comparison is the existing syntactic comparator and stays decidable; the map '
+        'e0Repr sends the carrier into Mathlib&#8217;s Ordinal. Measured, the boundary is priced: the '
+        'carrier side carries no Classical.choice anywhere, and the map carries it at every '
+        'declaration. Staying constructive is free; crossing costs the classical assumption; and the '
+        'crossing is one named function.'))
+
+    E.append(def_box(
+        'Scope fences on the carrier &#8212; what it is and is not',
+        [
+            'The fixed point at the top is <b>stipulated, not discovered</b>. Defining the tower '
+            'operator to fix the adjoined point makes the closure exist by fiat at the added point; '
+            'only its uniqueness is a theorem. This does not weaken no_snap_closure, which says no '
+            'such closure exists on the notations alone.',
+            'E0Note is a notation system for <b>&#949;<sub>0</sub> + 1</b>, not for &#949;<sub>0</sub>. '
+            'The standard alternative is a Veblen system where &#949;<sub>0</sub> is an ordinary term; '
+            'the top&#8217;s honest advantage is that it is minimal and leaves the comparator untouched.',
+            'Correctness in Cast&#233;ran&#8217;s sense (ON_correct) is <b>not</b> claimed: on raw '
+            'notations the representation map is not injective, which e0Repr_not_injective proves. '
+            'Restricting to normal forms is the standard repair and is not done here, because that '
+            'predicate is itself defined through the representation map.',
+            'The construction is <b>not new</b>. The carrier is Cast&#233;ran and Contejean&#8217;s '
+            'generic sum of notation systems (hydra-battles, ON_plus) instantiated with a one-point '
+            'right summand, and the map is an instance of their ON_correct, already instantiated at '
+            '&#949;<sub>0</sub>. What is contributed here is the measurement.',
         ]
     ))
     E.append(sp(6))
@@ -207,6 +276,17 @@ def build():
             ['omegaPow_no_fixedpoint', 'ZeroParadox/Ordinal/ConstructiveOrdinals.lean', 'propext only'],
             ['tower_strictMono', 'ZeroParadox/Ordinal/ConstructiveOrdinals.lean', 'propext only'],
             ['tower_NF', 'ZeroParadox/Ordinal/ConstructiveOrdinals.lean', 'Classical.choice'],
+            ['tower_cofinal', 'ZeroParadox/Ordinal/SnapNucleusConstructive.lean', 'propext only'],
+            ['no_snap_closure', 'ZeroParadox/Ordinal/SnapNucleusConstructive.lean', 'propext only'],
+            ['em_of_wellOrder_comparable', 'ZeroParadox/Ordinal/OrdinalChoiceEssential.lean',
+             'propext, Quot.sound'],
+            ['order_footprint_eq', 'ZeroParadox/Ordinal/OrdinalChoiceEssential.lean',
+             'propext, Quot.sound'],
+            ['order_footprint_le', 'ZeroParadox/Ordinal/OrdinalChoiceEssential.lean',
+             'Classical.choice'],
+            ['E0Note (carrier)', 'ZeroParadox/Ordinal/PricedInterface.lean', 'no axioms'],
+            ['e0Repr (the crossing)', 'ZeroParadox/Ordinal/PricedInterface.lean', 'Classical.choice'],
+            ['e0Repr_not_injective', 'ZeroParadox/Ordinal/PricedInterface.lean', 'Classical.choice'],
         ],
         col_widths=[TW * 0.34, TW * 0.46, TW * 0.20],
     ))
@@ -220,9 +300,16 @@ def build():
             'ONote; repr / Ordinal are never touched.',
             'Well-formedness (tower_NF): [propext, Classical.choice, Quot.sound] &#8212; Classical.choice '
             'inherited from Mathlib&#8217;s NF / repr, which passes through the Ordinal type.',
-            'This localises the Classical.choice in ZP-L&#8217;s &#949;<sub>0</sub> results to the '
-            'syntax&#8594;semantics bridge: the snap itself is constructive. Zero sorry. Verified: '
-            'lake build, July 2026.',
+            'The taboo (em_of_wellOrder_comparable): [propext, Quot.sound] &#8212; choice-free by '
+            'design, because the classical content is the hypothesis rather than the proof. Its '
+            'converse (comparable_of_classical) carries Classical.choice, as it must.',
+            'The carrier (E0Note, e0Coe): no axioms at all; its decidable-order instances '
+            '[propext, Quot.sound]. The crossing (e0Repr and every lemma about it): '
+            '[propext, Classical.choice, Quot.sound]. The carrier side carries no choice anywhere.',
+            'Together these locate the Classical.choice in ZP-L&#8217;s &#949;<sub>0</sub> results: it '
+            'is not in the Ordinal type, and not in the snap, but in the order instance the semantic '
+            'statement passes through &#8212; where it is load-bearing rather than removable. Zero '
+            'sorry. Verified: lake build, July 2026.',
         ]
     ))
     E.append(sp(6))
@@ -232,9 +319,10 @@ def build():
         Paragraph(
             '<i>End of ZP-N | The Constructive Snap | the snap from below on ordinal notations, '
             'choice-free ([propext] only): exp_lt_term, omegaPow_no_fixedpoint, tower_strictMono | '
-            'ZP-L&#8217;s &#949;<sub>0</sub> choice is representational, not intrinsic | tower_NF '
-            'carries choice, at the syntax&#8594;semantics bridge | minimality (&#949;<sub>0</sub> the '
-            'least fixed point) open.</i>',
+            'the classical dependency is in Mathlib&#8217;s order instance, where comparing arbitrary '
+            'well-orders implies excluded middle (taboo cited to Kraus, Nordvall Forsberg and Xu) | '
+            'a carrier sized to &#949;<sub>0</sub>, with the crossing priced at one named map | '
+            'minimality (&#949;<sub>0</sub> the least fixed point) open.</i>',
             S['endnote']),
     ]
 

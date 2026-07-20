@@ -278,6 +278,10 @@ open ZeroParadox
 #print axioms order_footprint_le
 
 -- The § III trace, measured rather than asserted.
+-- FIRST: the type itself, which carries NO choice. This one line is the load-bearing measurement
+-- behind the whole correction of record — ZP-N v1.0 asserted the opposite ("choice-saturated") and
+-- built a conclusion on it. Printed here so a reader can reproduce it rather than take it on trust.
+#print axioms Ordinal
 #print axioms Ordinal.partialOrder
 #print axioms Ordinal.instLinearOrder
 #print axioms InitialSeg.eq_or_principal
