@@ -57,6 +57,11 @@ second ambient), **not** a proof that the p-adic `‖c‖₂` and Markov `|λ₂
 same object — that cross-ambient identity is the interpretation, not the Lean claim. No category,
 inverse limit, or final coalgebra is constructed; the ν reading of "unique geometric attractor" is an
 interpretation. This is an edge/rate test on node #2 of the bottom-diagram tree.
+
+**Prior art.** The spectral-gap ⇒ geometric-ergodicity mechanism (subdominant eigenvalue modulus governing
+the convergence rate) is standard finite-Markov theory: Levin–Peres, *Markov Chains and Mixing Times*. The
+value here is only the concrete `Fin 2` instantiation and its use as a second-ambient shape witness, not the
+mechanism. (Sibling `ZeroParadox/Reals/MarkovSpectralGap.lean` cites the same home.)
 -/
 
 namespace ZeroParadox

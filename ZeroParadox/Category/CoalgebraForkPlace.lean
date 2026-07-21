@@ -166,7 +166,8 @@ section PurityCheck
 --   fork_places_on_root  / coalgebra_fork_strict_on_idPF : inherit Classical.choice from the ν leg.
 -- The μ side is choice-free; choice enters exactly on the ν (Cofix) side, via Mathlib's M-type
 -- machinery (Cofix.dest_corec / cofix_nonempty) — a library artifact, not a necessity (for a
--- polynomial functor the final coalgebra is constructible choice-free; Veltri, FSCD 2021). So the
+-- polynomial functor the final coalgebra is constructible choice-free; Ahrens–Capriotti–Spadotti,
+-- TLCA 2015, arXiv:1504.02949; Veltri, FSCD 2021 for the finite-powerset case). So the
 -- placement (μ choice-free / ν choice-carrying) is also visible in the axiom profile, not just the
 -- mediator direction.
 #print axioms fix_isFixedPoint

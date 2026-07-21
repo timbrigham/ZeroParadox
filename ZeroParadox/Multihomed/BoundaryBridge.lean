@@ -33,7 +33,7 @@ non-well-founded side to the well-founded side.
 ## Scope fence — why this is NOT the full Taylor coalgebraic statement (deliberate, tooling-limited)
 The **full** Rung C would state this in Taylor's sense: ⊥ is a non-well-founded *coalgebra* (broken-pullback
 definition), the ascent is the initial algebra, and the snap is the ν→μ crossing, with the depth result
-**well-founded ⟺ recursive** (Taylor's General Recursion Theorem; Taylor Prop 111: well-foundedness is
+**well-founded ⟺ recursive** (Taylor's General Recursion Theorem: well-foundedness is
 *necessary* for recursion — the rigorous "you cannot recurse through ⊥"). We do **not** formalize that here,
 because Mathlib currently lacks the required machinery:
 * the **next-time operator** on subobject lattices (Jacobs) — absent;
@@ -41,7 +41,7 @@ because Mathlib currently lacks the required machinery:
 * the **General Recursion Theorem** for well-founded coalgebras — absent.
 Building these would be a standalone Lean/Mathlib contribution in its own right. We therefore **cite** the
 depth result rather than re-prove it:
-* Paul Taylor, *Well-founded coalgebras and recursion* (General Recursion Theorem; Prop 111).
+* Paul Taylor, *Well-founded coalgebras and recursion* (General Recursion Theorem).
 * Adámek–Milius–Moss, *On Well-Founded and Recursive Coalgebras*, 2020 (arXiv:1910.09401)
   (well-founded ⟺ recursive ⟺ morphism to the initial algebra).
 
