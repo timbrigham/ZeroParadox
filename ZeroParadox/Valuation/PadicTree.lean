@@ -89,7 +89,7 @@ is the contradiction. `tree_acyclic` and its infrastructure below measure `[prop
 Connectedness is immediate: every vertex reaches the root by repeatedly dropping its last digit. -/
 
 /-- A prefix of `p ++ [e]` is either all of it, or already a prefix of `p`: the "either you are the
-    boundary element, or you lie strictly inside the parent" dichotomy used in `edge_pres`. -/
+    boundary element, or you lie strictly inside the parent" dichotomy used in `prefix_pres`. -/
 private theorem prefix_concat_split {α : Type*} {c p : List α} {e : α}
     (h : c <+: p ++ [e]) : c = p ++ [e] ∨ c <+: p := by
   obtain ⟨t, ht⟩ := h
