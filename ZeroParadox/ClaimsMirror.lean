@@ -174,6 +174,33 @@ theorem claim_Perron_info_state {n : ℕ}
       = Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)) :=
   stationary_transports_to_unit_eigenvector f μ hμ
 
+/-- Claim `node-computability` (proved). Statement: "In computability, ⊥ is realized as the Kleene quine,
+    the self-reproducing program and diagonal fixed point of the computation layer." Exact representation:
+    in a KleeneStructure, the Kleene quine (any self-containing / Quine-atom element) equals ⊥.
+    Backing: `kleene_quine_is_bot`. -/
+theorem claim_node_computability {L : Type*} [ZPSemilattice L] [KleeneStructure L]
+    (q : L) (hq : IsQuineAtom q) : q = bot :=
+  kleene_quine_is_bot q hq
+
+/-! ## § VI. Claims that are NOT theorems (the faithful non-representation)
+
+Three claim-graph nodes are, by their own recorded status, not Lean theorems. Representing them faithfully
+means writing no theorem for them — the absence is the representation, and each absence is itself a checked
+fact about the claim's status.
+
+- `Lawvere-unification` (conj): "The diagonal fixed point keystone is a manifestation of Lawvere's
+  fixed-point theorem." A conjectural cross-domain *connection*, not a single provable proposition (the
+  claim graph marks it `conj`). Stated, never asserted; no theorem here.
+
+- `Lawvere-set-comp` (conj): "the set-theoretic and computational diagonal fixed points are two faces of
+  one Lawvere fixed point." Conjecture only — and the Set face is provably *not* a Lawvere instance (the
+  Cantor obstruction), so this edge stays unbuilt. A theorem asserting it would be false; hence none.
+
+- `MC-1-identity` (retired): "the four domain bottoms are numerically one object." Retired 2026-07-15 as
+  ill-typed — `x = y` across distinct categories is not a well-formed proposition, so it cannot be stated
+  in Lean at all. The non-representability *is* the finding: the members are provably distinct (the
+  walls); only the shared diagonal shape survives, apophatically. No theorem here, by type. -/
+
 end ZeroParadox
 
 section PurityCheck
@@ -196,4 +223,5 @@ open ZeroParadox
 #print axioms claim_E3_quines_floor
 #print axioms claim_E4_info_floor
 #print axioms claim_Perron_info_state
+#print axioms claim_node_computability
 end PurityCheck
