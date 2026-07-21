@@ -2,6 +2,8 @@ import ZeroParadox.Order.Lattice
 import ZeroParadox.Order.Snap
 import ZeroParadox.Settheory.SetTheoryAFA
 import ZeroParadox.Computability.Kleene
+import ZeroParadox.Information.BottomMeasure
+import ZeroParadox.Valuation.PricedPadicInterface
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -69,6 +71,20 @@ theorem claim_DA1 : IsQuineAtom (bot : MachinePhase) :=
 theorem claim_T_SNAP : c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   t_snap_derived
 
+/-! ## § II. Floor domains (information, valuation) -/
+
+/-- Claim `node-information` (proved). Statement: "In information theory, ⊥ is realized as the null
+    state of maximal informational extremity (L-INF)." Exact representation: the surprisal is unbounded
+    (no finite bound holds), the L-INF divergence at the null state. Backing: `info_bottom_diverges`. -/
+theorem claim_node_information : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n :=
+  info_bottom_diverges
+
+/-- Claim `node-valuation` (proved). Statement: "In the p-adic valuation domain, ⊥ is realized at the
+    floor where the additive 2-adic valuation diverges, v₂(0) = ∞ (⊤)." Exact representation: the 2-adic
+    valuation of 0 is ⊤. Backing: `v2_bot`. -/
+theorem claim_node_valuation : v2 0 = ⊤ :=
+  v2_bot
+
 end ZeroParadox
 
 section PurityCheck
@@ -77,4 +93,6 @@ open ZeroParadox
 #print axioms claim_node_set_theory
 #print axioms claim_DA1
 #print axioms claim_T_SNAP
+#print axioms claim_node_information
+#print axioms claim_node_valuation
 end PurityCheck
