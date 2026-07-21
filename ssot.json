@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1443,
+        "declarations": 1448,
         "files": 136
       },
       "entries": [
@@ -8420,6 +8420,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "231a2122-0015-4b91-87f1-df351ea900cd",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.walk_pres",
+            "short": "walk_pres"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Choice-free tree_isTree re-proof: new direct-acyclicity infrastructure + tree_acyclic in PadicTree.lean",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18646,6 +18682,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "56efa5a3-c129-4426-b792-70a64a0c3804",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.neighbor_ge_is_child",
+            "short": "neighbor_ge_is_child"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Choice-free tree_isTree re-proof: new direct-acyclicity infrastructure + tree_acyclic in PadicTree.lean",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35712,6 +35784,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "af0c3599-5019-4454-8c76-4c6a2f241932",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_min_len",
+            "short": "exists_min_len"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Choice-free tree_isTree re-proof: new direct-acyclicity infrastructure + tree_acyclic in PadicTree.lean",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "af1b2b9f-a3c3-4d3b-b209-a43d2a9e0687",
           "new": {
@@ -38968,6 +39076,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bfd79d2c-eea9-4358-a71d-3a2c57f4c52e",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.prefix_pres",
+            "short": "prefix_pres"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Choice-free tree_isTree re-proof: new direct-acyclicity infrastructure + tree_acyclic in PadicTree.lean",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42776,6 +42920,42 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d281f1e0-1948-4cdb-b411-e2a497d7bb29",
+          "new": {
+            "file": "ZeroParadox/Valuation/PadicTree.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tree_acyclic",
+            "short": "tree_acyclic"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "Choice-free tree_isTree re-proof: new direct-acyclicity infrastructure + tree_acyclic in PadicTree.lean",
           "verify": {
             "axioms": null,
             "sorry_free": true
