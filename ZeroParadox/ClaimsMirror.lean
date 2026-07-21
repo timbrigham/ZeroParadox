@@ -4,6 +4,9 @@ import ZeroParadox.Settheory.SetTheoryAFA
 import ZeroParadox.Computability.Kleene
 import ZeroParadox.Information.BottomMeasure
 import ZeroParadox.Valuation.PricedPadicInterface
+import ZeroParadox.Ordinal.ProofFloorCanonical
+import ZeroParadox.Algebra.Wheel
+import ZeroParadox.Multihomed.MC1Bridge
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -43,6 +46,7 @@ deep · commitment · retired.
 namespace ZeroParadox
 
 open ZPSemilattice
+open CategoryTheory
 
 /-! ## § I. Logical core -/
 
@@ -85,6 +89,49 @@ theorem claim_node_information : ∀ M : ℝ, ∃ n : ℕ, M < surprisal n :=
 theorem claim_node_valuation : v2 0 = ⊤ :=
   v2_bot
 
+/-! ## § III. Remaining bottom-realization nodes (ordinal, algebra, state) -/
+
+/-- Claim `node-ordinal` (proved). Statement: "In the ordinal/proof-theory domain, ⊥ is realized as
+    the floor the ε₀-tower descends to (heval floor = ⊥)." Exact representation: the hereditary
+    evaluation at the floor is the ordinal bottom. Backing: `heval_floor_eq_bot`. -/
+theorem claim_node_ordinal (b : ℕ) : heval b 0 = (⊥ : Ordinal) :=
+  heval_floor_eq_bot b
+
+/-- Claim `node-algebra` (proved). Statement: "In algebra, ⊥ is realized as the bottom of the wheel of
+    fractions (0·∞ = ⊥)." Exact representation: in the ZP wheel, 0 · ∞ is the wheel bottom.
+    Backing: `zpw_zero_mul_inf_eq_bot`. -/
+theorem claim_node_algebra : zpwMul (.fin 0) .inf = .bot :=
+  zpw_zero_mul_inf_eq_bot
+
+/-- Claim `node-state` (proved). Statement: "In the state/Hilbert domain, ⊥ is realized as the zero
+    module (StateSpace 0), the initial object of the state category." Exact representation: an
+    initial-object witness exists for the state floor. Backing: `fD_zero_isInitial`. -/
+theorem claim_node_state : Nonempty (Limits.IsInitial (fD_functor.obj 0)) :=
+  ⟨fD_zero_isInitial⟩
+
+/-! ## § IV. MC-1 correspondence (each domain bottom is its category's categorical bottom) -/
+
+/-- Claim `MC-1-correspondence` (corr). Statement: "Each domain bottom is the categorical bottom of its
+    own real category (MC-1, correspondence half — formally realized)." Exact representation: the bundled
+    three-realization witness exists. Backing: `mc1_correspondence`. -/
+theorem claim_MC1_correspondence : Nonempty MC1Correspondence :=
+  ⟨mc1_correspondence⟩
+
+/-- Claim `MC1-cat-state` (corr). Statement: "the state/Hilbert bottom is the initial object of its real
+    category (fD zero is initial)." Backing: `fD_zero_isInitial`. -/
+theorem claim_MC1_cat_state : Nonempty (Limits.IsInitial (fD_functor.obj 0)) :=
+  ⟨fD_zero_isInitial⟩
+
+/-- Claim `MC1-cat-information` (corr). Statement: "the information bottom is the initial object of its
+    real category (fC zero is initial)." Backing: `fC_zero_isInitial`. -/
+theorem claim_MC1_cat_information : Nonempty (Limits.IsInitial (fC_functor.obj 0)) :=
+  ⟨fC_zero_isInitial⟩
+
+/-- Claim `MC1-cat-valuation` (corr). Statement: "the p-adic (valuation) bottom is the inverse limit of
+    the ball system in the category realization (⋂ balls = {0})." Backing: `fB_bottom_is_limit`. -/
+theorem claim_MC1_cat_valuation : (⋂ n, q2Ball n) = {(0 : Q₂)} :=
+  fB_bottom_is_limit
+
 end ZeroParadox
 
 section PurityCheck
@@ -95,4 +142,11 @@ open ZeroParadox
 #print axioms claim_T_SNAP
 #print axioms claim_node_information
 #print axioms claim_node_valuation
+#print axioms claim_node_ordinal
+#print axioms claim_node_algebra
+#print axioms claim_node_state
+#print axioms claim_MC1_correspondence
+#print axioms claim_MC1_cat_state
+#print axioms claim_MC1_cat_information
+#print axioms claim_MC1_cat_valuation
 end PurityCheck
