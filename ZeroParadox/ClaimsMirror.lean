@@ -7,6 +7,9 @@ import ZeroParadox.Valuation.PricedPadicInterface
 import ZeroParadox.Ordinal.ProofFloorCanonical
 import ZeroParadox.Algebra.Wheel
 import ZeroParadox.Multihomed.MC1Bridge
+import ZeroParadox.Multihomed.TopNumEdge
+import ZeroParadox.Category.Category
+import ZeroParadox.Category.LinFunctor
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -132,6 +135,45 @@ theorem claim_MC1_cat_information : Nonempty (Limits.IsInitial (fC_functor.obj 0
 theorem claim_MC1_cat_valuation : (⋂ n, q2Ball n) = {(0 : Q₂)} :=
   fB_bottom_is_limit
 
+/-! ## § V. Category bottom and the floor-reaching correspondence (E-series, Perron) -/
+
+/-- Claim `node-category` (proved). Statement: "In category theory, ⊥ is realized as the initial object
+    (the universal constituent of ZP-G)." Exact representation: in any ZPCategory, the ZP-G bottom is an
+    initial object. Backing: `ZPCategory.zpIsInitial`. -/
+theorem claim_node_category {C : Type*} [Category C] [ZPCategory C] :
+    Nonempty (Limits.IsInitial (ZPCategory.zpInitial : C)) :=
+  ⟨ZPCategory.zpIsInitial⟩
+
+/-- Claim `E2-tower-floor` (proved). Statement: "Proof-theory reaches the p-adic floor: the ε₀-tower's
+    2-adic encodings eventually enter every closed ball around 0." Backing: `tower_enters_every_ball`. -/
+theorem claim_E2_tower_floor (n : ℕ) :
+    ∀ᶠ k in Filter.atTop,
+      cnf_encode (towerOrd k) ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ))) :=
+  tower_enters_every_ball n
+
+/-- Claim `E3-quines-floor` (proved). Statement: "Computation reaches the p-adic floor: the computational
+    quine family enters every closed ball around 0 (unbounded family, existential form)." Backing:
+    `quines_enter_every_ball`. -/
+theorem claim_E3_quines_floor (n : ℕ) :
+    ∃ c, IsComputationalQuine c ∧
+      (2 : ℤ_[2]) ^ (Encodable.encode c) ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ))) :=
+  quines_enter_every_ball n
+
+/-- Claim `E4-info-floor` (proved). Statement: "Information reaches the p-adic floor: the surprisal-depth
+    points 2^k eventually enter every closed ball around 0." Backing: `info_points_enter_every_ball`. -/
+theorem claim_E4_info_floor (n : ℕ) :
+    ∀ᶠ k in Filter.atTop, (2 : ℤ_[2]) ^ k ∈ Metric.closedBall (0 : ℤ_[2]) ((2 : ℝ) ^ (-(n : ℤ))) :=
+  info_points_enter_every_ball n
+
+/-- Claim `Perron-info-state` (deep). Statement: "Perron–Frobenius transport across the
+    information→state boundary: the stochastic transfer operator has a unit eigenvector (the
+    stationary/floor state)." Backing: `stationary_transports_to_unit_eigenvector`. -/
+theorem claim_Perron_info_state {n : ℕ}
+    (f : Fin n → PMF (Fin n)) (μ : PMF (Fin n)) (hμ : μ.bind f = μ) :
+    linMap (a := ⟨n⟩) (b := ⟨n⟩) f (Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)))
+      = Finsupp.equivFunOnFinite.symm (fun i => ((μ i).toReal : ℂ)) :=
+  stationary_transports_to_unit_eigenvector f μ hμ
+
 end ZeroParadox
 
 section PurityCheck
@@ -149,4 +191,9 @@ open ZeroParadox
 #print axioms claim_MC1_cat_state
 #print axioms claim_MC1_cat_information
 #print axioms claim_MC1_cat_valuation
+#print axioms claim_node_category
+#print axioms claim_E2_tower_floor
+#print axioms claim_E3_quines_floor
+#print axioms claim_E4_info_floor
+#print axioms claim_Perron_info_state
 end PurityCheck
