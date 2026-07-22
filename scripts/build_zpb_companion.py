@@ -1,5 +1,6 @@
 """
-Build ZP-B Illustrated Companion (v1.9)
+Build ZP-B Illustrated Companion (v1.12)
+v1.12: PRECISION FIX (release-prep), grounded in the formal ZP-B claims (C3, T5). Corrected two review-flagged overclaims: (1) the "entirely disjoint / 0 unreachable" framing — zero is a genuine LIMIT of nonzero states (not isolated; the v1.4/v1.7 correction), and the true barrier is C3 (no continuous PATH from a nonzero state to zero), the only crossing being a discrete jump (the Binary Snap); (2) "infinite valuation distance" (category error) — v₂(0) is an infinite VALUATION, not a distance (2-adic distances stay finite); it places zero in a clopen class distinct from every nonzero state. Kept the general-reader register (accessible, not jargon).
 v1.10: vocab fix: null state → ⊥.
 v1.9: Strip version number from companion footer.
 v1.8: Dan feedback (2026-05-21): "dense" → "densely ordered"; rewrite para 2 of "Why p-Adic
@@ -118,7 +119,7 @@ def nested_balls_diagram():
 
     return d
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -178,8 +179,11 @@ def build():
     E.append(cbody(
         'The 2-adic numbers take a different route. As a number system, &#8474;&#8322; also has no '
         'smallest nonzero element — you can always find something smaller. What changes is the '
-        '<i>topology</i>: in &#8474;&#8322;, zero (0) and every nonzero state live in '
-        'completely separate clopen regions — entirely disjoint, with no continuous path between them. '
+        '<i>topology</i>: in &#8474;&#8322;, zero is still a limit of nonzero states — they can '
+        'converge on it as closely as you like, so it is not isolated. What &#8474;&#8322; forbids is a '
+        'continuous path: there is no continuous route from any nonzero state back to zero (Corollary '
+        'C3). The space is totally disconnected, so the only way to reach zero is a discrete jump across '
+        'a clopen gap, never a continuous slide — and that discrete jump is the Binary Snap. '
         'The gap is not enforced by the number system running out of small values. It is built into '
         'the geometry as a hard topological barrier. This is why &#8474;&#8322; — the 2-adic number '
         'field — is the natural mathematical language for a framework built on AX-B1 (the claim that '
@@ -202,9 +206,12 @@ def build():
     E.append(Paragraph('What Is ZP-B Doing?', CS['h1']))
     E.append(cbody(
         'ZP-B puts the Zero Paradox on a specific geometric foundation: the 2-adic number field '
-        'ℚ₂. This is not standard Euclidean geometry. In ℚ₂, distance works in a fundamentally '
-        'different way — one that places zero at infinite valuation distance from every nonzero element, '
-        'enforcing a hard structural gap.'))
+        'ℚ₂. This is not standard Euclidean geometry. In ℚ₂, closeness is 2-adic: two numbers are '
+        'close when their difference is divisible by 2 many times over. The 2-adic valuation of zero, '
+        'v₂(0), is infinite, which places zero in a clopen class distinct from every nonzero state. It '
+        'is not that zero is infinitely far away — 2-adic distances stay finite, and nonzero states lie '
+        'arbitrarily close to it — but that zero is cleanly walled off in its own clopen class, so any '
+        'return would have to jump the gap rather than cross it continuously.'))
     E.append(cbody(
         'The starting point is a single axiom: AX-B1 (Binary Existence) — a state either exists '
         'or it does not. From this, together with a minimality principle (MP-1), the document '
