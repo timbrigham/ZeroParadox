@@ -21,7 +21,7 @@ The index above is where the precise line between proved and conjectural is kept
 
 ## Core (finalized results - read these)
 
-The framework's reviewed, load-bearing Lean, organized by domain folder. The formal layers ZP-A through ZP-P live here; `BottomCannotBe.lean` (Bottom-Meta) is the curated index over them.
+The framework's reviewed, load-bearing Lean, organized by domain folder; the formal layers' proofs live here, with `BottomCannotBe.lean` (Bottom-Meta) as the curated index over them.
 
 ### Order / lattice (ZP-A, ZP-E)
 

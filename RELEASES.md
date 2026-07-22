@@ -408,3 +408,51 @@ Each GitHub release triggers an automatic Zenodo snapshot with a permanent DOI. 
 | ZP Choice-Free Core Addendum | v1.3 |
 
 **Next threshold:** v4.1 on the next reviewer-feedback round or accumulated document updates; v5.0 if a further formal layer is added or a theorem status changes.
+
+---
+
+## v5.0 - 2026-07-22
+
+**Why this release:** A new formal layer - ZP-R (Cross-Category Fixed Point), with its Diagonal Family Addendum - locating the framework's self-application fixed point ⊥ across the diagonal-family faces; together with the machine-checked claim graph (ClaimsMirror.lean), the snap-nucleus meta-lattice, and a round of bedrock corrections that struck a false premise shared by three documents.
+
+**What changed (since v4.0):**
+- **ZP-R Cross-Category Fixed Point** (new synthesis / placement layer): locates and realizes ⊥ as a Lawvere fixed point across three faces - refuted in Set (Cantor), a fork rather than a reflexive object in the monotone / domain regime, and realized in the computability face (the crossing). Existence-as-Lawvere, uniqueness, and location are each proved but face-local and non-composable; the global identification is held as a fenced conjecture. Choice-free spine, choice-carrying computability realization. Lean: RequirementsGap, MetaFork, LawvereBridge, ComputableCrossing.
+- **ZP-R Diagonal Family Addendum** (new): the complete diagonal-family roster tied to ⊥ by the μ/ν fork - wall faces (Cantor, Russell, Turing, Tarski, Curry) where self-reference cannot close, and floor faces (Quine atom, Kleene quine, Löb / Gödel 2nd, Rice) where it closes and lands at ⊥. Unification credited to Lawvere (1969) / Yanofsky (2003); the contribution is the axiom-free core formalization and the tie to ⊥, with the cross-face identity a type boundary. Supersedes the private ZP-W "Zero as a Wall" draft.
+- **ClaimsMirror.lean - the claim graph made checkable**: a machine-checked mirror of the SSOT claim store. Each claim marked proved / corroborated / deep is restated and discharged from the existing machinery, so a claim's status is a verified link to a green declaration rather than a label; the three non-theorems are represented by their deliberate absence. Nineteen claim nodes are linked to their declarations.
+- **The snap-nucleus meta-lattice**: the snap lifted to a nucleus on WithTop Ordinal (snapNucleus sends ⊥ to ε₀), the double-negation nucleus (closed points the Boolean core), and the lattice of systems (Nucleus Frame / Sublocale Coframe) unlocked by the point at infinity.
+- **Bedrock corrections (premise / theorem-status)**: a false premise shared by three documents - "a well-founded ⊥ would admit an external interpreter" / "well-founded implies a finite membership tree" (ω is well-founded and infinite) - was struck, with Foundation-incompatibility rebased on the self-membership of the Quine atom ⊥ = {⊥} (no_quine_atom, choice-free). Corrected in ZP-E (v3.24), ZP-A (v1.20), and the Foreword (v2.12); CC-2 relabelled a Forced Metatheoretic Commitment. ZP-I (v1.14) purity corrected - the p-adic convergence spine carries Mathlib's Classical.choice and is not axiom-free.
+- **Constructive-ordinal deepening (ZP-N v1.0 to v2.0)**: the classical dependency located and shown load-bearing (comparability of arbitrary well-orders implies excluded middle, cited to Kraus / Nordvall Forsberg / Xu), the axiom-footprint instrument shown uninformative for ε₀ results, and a carrier sized to ε₀ with its crossing price measured. Whether ZP-L's ε₀ results are eliminable remains unclassified.
+- **The choice reference index (ChoiceCannotBe.lean) and roots enumeration**: a check-only index of the framework's relationship to Classical.choice, plus the two essential cases where the core does invoke it - comparability of arbitrary well-orders implies excluded middle, and the general fixed-point-free endomap principle implies weak excluded middle - each a choice-free reduction.
+- **Prior-art audit**: ten confirmed citation gaps closed across seven Lean files.
+- **Precision fixes and infrastructure**: ZP-C (v1.21), ZP-J AFA Addendum (v1.7), ZP-L (v1.4), the ZP-B companion, and SNAP.md; review signals moved to a per-file SHA-256 scheme and a severity-tiered review cap.
+
+**Document versions at v5.0:**
+| Document | Version |
+|----------|---------|
+| ZP-A Lattice Algebra | v1.20 |
+| ZP-B p-Adic Topology | v1.11 |
+| ZP-C Information Theory | v1.21 |
+| ZP-D State Layer | v1.15 |
+| ZP-E Bridge Document | v3.24 |
+| ZP-F The Counterexamples | v1.5 |
+| ZP-G Category Theory | v1.15 |
+| ZP-H Categorical Bridge | v1.17 |
+| ZP-H Native Categories Addendum | v1.2 |
+| ZP-I Inside Zero | v1.14 |
+| ZP-J Self-Reference | v2.5 |
+| ZP-J AFA Addendum | v1.7 |
+| ZP-J Wheel Addendum | v1.3 |
+| ZP-J Keystone Addendum | v1.2 |
+| ZP-K Computational Grounding | v1.9 |
+| ZP-L Incomputability Convergence | v1.4 |
+| ZP-M Kleene-Ordinal Bridge | v1.3 |
+| ZP-N The Constructive Snap | v2.0 |
+| ZP-P The Fixed-Point Fork | v1.5 |
+| ZP-Q The Frame-Change | v1.1 |
+| ZP-R Cross-Category Fixed Point | v1.0 (new) |
+| ZP-R Diagonal Family Addendum | v1.0 (new) |
+| Zero Paradox Foreword | v2.12 |
+| ZP Philosophical Question | v1.13 |
+| ZP Choice-Free Core Addendum | v1.3 |
+
+**Next threshold:** v5.1 on the next reviewer-feedback round or accumulated document updates; v6.0 if a further formal layer is added or a theorem status changes.
