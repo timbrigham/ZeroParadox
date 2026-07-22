@@ -92,7 +92,7 @@ IS_FACES = [
      ["t_snap_irreversible", "c3_irreversible", "fC_no_return"]),
     ("verb", "a *change of frame*, valuation face (probe): the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
      ["snap_is_frameflip", "snap_frameflip_tower_tendsto_infty"]),
-    ("verb", "a *change of frame*, category face (probe): the categorical seam realizes the same frame-flip via the zero object of the linear functor",
+    ("verb", "a *change of frame*, category face (probe): the categorical seam realizes the same frame-flip as an op-self-dual zero object of the module category ModuleCat ℂ - initial and terminal at once, with the op-duality frame-change swapping the two",
      ["catseam_is_frameflip"]),
     ("verb", "a *change of frame*, order-theoretic universal (choice-free): order-duality swaps the fork's two closures (least fixed point ↔ greatest fixed point), and the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point. This is the standard lfp/gfp duality, bundled - the domain-independent shape the valuation and category faces realize concretely",
      ["fork_is_frameflip", "fork_collapse_iff"]),

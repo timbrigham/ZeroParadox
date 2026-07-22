@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.3 | June 2026
+Version 1.4 | July 2026
+v1.4: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers) — Section II heading and prose.
 v1.3: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.1: Rendered version changelog removed (C1 sweep). Fixed 3 null glyphs — subscript-letter entities
 &#8345; (ₙ) and &#8338; (ₒ) bypass fix() and are absent from STIX; replaced with <sub> markup.
@@ -12,7 +13,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -43,7 +44,7 @@ def build():
         'to standard results in ordinal theory and computability. '
         'First, Classical.choice appears at the non-constructive diagonal step in each '
         'of the four mathematical settings of the ZP framework — topology, information '
-        'theory, set theory, and computation. Second, Roger\'s fixed-point theorem '
+        'theory, set theory, and computation. Second, Rogers\' fixed-point theorem '
         '(Kleene\'s second recursion theorem) is formalized as a wrapper, formalizing the '
         'computational fixed-point structure. Third, the ordinal &#949;&#8320; is fully '
         'characterized as the first fixed point of &#945; &#8614; &#969;^&#945; and the '
@@ -105,16 +106,16 @@ def build():
     ))
     E.append(sp(6))
 
-    # ── Section II: Roger Fixed-Point Stability ─────────────────────────────────
+    # ── Section II: Rogers Fixed-Point Stability ─────────────────────────────────
     print('[build_zpl] Building Section II...')
     E += [
         hr(),
-        Paragraph('Section II: Roger Fixed-Point Stability', S['h1']),
+        Paragraph('Section II: Rogers Fixed-Point Stability', S['h1']),
         hr(),
     ]
 
     E.append(body(
-        'Roger\'s fixed-point theorem (also known as Kleene\'s second recursion theorem) '
+        'Rogers\' fixed-point theorem (also known as Kleene\'s second recursion theorem) '
         'states that any computable transformation of a code has a behavioral fixed point: '
         'a code c such that running f(c) and running c produce the same partial function. '
         'For any computable transformation, at least one fixed-point code exists.'))
