@@ -93,8 +93,26 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 The results inherit `Classical.choice` from Mathlib's `Ordinal` fixed-point theory (`nfp`, `epsilon`),
-which is classically built — representational, not intrinsic to the snap (cf. ZP-N's choice-free
-snap-from-below on `ONote`). Recorded honestly. -/
+which is classically built.
+
+**Status of that footprint: UNCLASSIFIED.** An earlier version of this note called it "representational,
+not intrinsic to the snap." That is retracted — it is an eliminability claim with no re-proof behind it.
+What ZP-N actually re-proved choice-free is the ordinal *ascent* on `ONote` (`exp_lt_term`,
+`omegaPow_no_fixedpoint`, `tower_strictMono`), which is suggestive for the nucleus and is not the nucleus.
+`snapNucleus` itself has never been re-proved choice-free.
+
+**Where the choice actually is (measured 2026-07-19; an earlier version of this note asserted the wrong
+mechanism).** It is **NOT** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext,
+Quot.sound]`, no choice. It enters through the *order instance and the operations*: `Ordinal.instLinearOrder`,
+`Ordinal.nfp`, `Ordinal.omega0` and `Ordinal.epsilon` each measure `[propext, Classical.choice,
+Quot.sound]`, and `snapNucleus` is built from `nfp` over `omega0 ^ ·` on that order. The earlier claim
+that "choice is in the type, so no rewrite can remove it" was reasoning from a quotient construction
+rather than measuring, and it was false — so the "irremovable" conclusion drawn from it does not stand
+either.
+`ZeroParadox/Ordinal/SnapNucleusConstructive.lean` shows the natural counterpart route is **blocked** —
+no idempotent endomap of the notation carrier can have the ε-numbers as closed points — but note that
+obstruction is about **expressive reach, not choice** (its own proofs are `[propext]`), so it does not
+settle whether this footprint is eliminable by some other route. Recorded honestly, at the honest tier. -/
 
 section PurityCheck
 open ZeroParadox

@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.23 | June 2026
+Version 3.24 | July 2026
+v3.24: R-AFA false premise corrected (bedrock) — struck the invalid "well-founded ⟹ finite ∈-tree / finite ∈-rank ⟹ finitely interpretable" step (false: ω is well-founded and infinite). Foundation-incompatibility now rests on the self-membership of ⊥ = {⊥} (Regularity; no_quine_atom, choice-free), with R3/L-INF demoted from independent proofs to corroboration. Status brought current: forcing + realizability stated as machine-checked (QuineHost — quineHost_not_wellFounded, oneAtom_not_wellFounded, afaStructure_isQuineHost); CC-2 = Forced Metatheoretic Commitment, not Conditional Claim; named falsifier narrowed to the requirements-choice. Also CC-1 "modelling commitment" → "derived via ZP-J cc1_derived" (DA-2); DA-3 cardinality-anomaly link hedged to conjecture (DA-3-C1 / OQ-E2); closing endnote rewritten from editorial-history narration to a description of what the document is.
 v3.23: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v3.21: FMC precision (sweep Step 4 remediation, against fmc.md) — R-AFA "the metatheoretic necessity of AFA is derived" → "argued, not proved (a metatheoretic squeeze, not a derivation)"; named falsifier added to R-AFA; CC-2 status lines now split the proved structural fixed point (T-EXEC, axiom-free) from the argued set-membership reading; "establish that Foundation is incompatible" → "make the case that".
 v3.20: Rendered version refs removed — DA-2/DA-3 section notes ("New in v2.0") and endnote version (C1 sweep — no version changelogs in rendered PDF content).
@@ -79,7 +80,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.23'
+VERSION = '3.24'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -392,40 +393,55 @@ def build():
         bridge_box(
             'Remark R-AFA — Why Foundation is Ruled Out; AFA as Forced Replacement',
             [
-                'CC-2 is stated as a Conditional Claim within ZP-A\'s algebraic scope: it is not derived '
-                'from A1&#8211;A4. The choice of ZF + AFA over ZF + Foundation is, however, not arbitrary. '
-                'Two independent cross-framework arguments make the case that Foundation is incompatible with '
-                'the framework\'s results.',
-                '<b>R3 rules out Foundation (structural).</b> Under ZF + Foundation, every set has a '
-                'well-founded &#8712;-rank: its membership chain terminates in finitely many steps. Any '
-                'well-founded set has a finite &#8712;-tree that can be fully traversed by an external '
-                'interpreter — the traversal function is external to and distinct from the set. But R3 '
-                '(ZP-A) establishes that &#8869; admits no external interpreter by structure: &#8869; = '
-                '{&#8869;} has no describer position external to itself. A well-founded &#8869; would '
-                'contradict R3. Foundation and R3 are incompatible.',
-                '<b>L-INF rules out Foundation (informational).</b> The surprisal I(n) = n at 2-adic depth '
-                'n is unbounded (ZP-C L-INF): for any finite M, there exists depth n with I(n) > M. A '
-                'well-founded set has finite &#8712;-rank and is therefore finitely interpretable — any '
-                'interpreter navigating a finite &#8712;-tree can hold it. This contradicts L-INF\'s '
-                'requirement that no finite interpreter can hold &#8869;. Foundation and L-INF are '
-                'incompatible.',
+                'CC-2 &#8212; the identification of &#8869; with the Quine atom &#8869; = {&#8869;} &#8212; '
+                'is a set-theoretic step beyond ZP-A\'s algebra: it is not derived from A1&#8211;A4. The '
+                'choice of ZF + AFA over ZF + Foundation that it entails is nonetheless not arbitrary: it is '
+                'forced by the membership structure the framework\'s bottom must have.',
+                '<b>Foundation rules out the bottom (structural).</b> The framework\'s bottom is the Quine '
+                'atom &#8869; = {&#8869;}: it is a member of itself, &#8869; &#8712; &#8869;. ZF + Foundation '
+                '(the Axiom of Regularity) forbids exactly this — under a well-founded membership relation no '
+                'set lies on a membership cycle of any length, so in particular no set is a member of itself. '
+                'This is a theorem of ZF + Foundation, not a framework-specific stipulation; it is '
+                'machine-checked here as no_quine_atom / no_membership_cycle '
+                '(ZeroParadox/Settheory/Wall.lean, footprint [propext, Quot.sound], choice-free). A '
+                'Foundation-respecting universe therefore cannot host &#8869; at all.',
+                '<b>The framework\'s readings of &#8869; corroborate this (they do not prove it).</b> R3 '
+                '(ZP-A) &#8212; &#8869; = {&#8869;} has no describer position external to itself &#8212; and '
+                'L-INF (ZP-C) &#8212; the 2-adic surprisal I(n) = n is unbounded, so no finite interpreter '
+                'can hold &#8869; &#8212; each describe an object with no external vantage and unbounded '
+                'self-referential depth. That is exactly the profile of a non-well-founded, self-membered '
+                'set: the two readings motivate why &#8869; must be the circular object Foundation excludes, '
+                'rather than serving as independent proofs of the exclusion.',
                 '<b>AFA as the forced replacement.</b> Under ZF + AFA, Quine atoms (x = {x}) are the '
-                'minimal non-well-founded objects. Their membership structure is circular: &#8869; &#8712; '
-                '&#8869; &#8712; &#8869; &#8712; &#8230;, i.e., &#8869; is a member of itself at every '
-                'depth. This infinite circular chain cannot be traversed by any finite interpreter — '
-                'consistent with R3 (no external position) and L-INF (unbounded depth). AFA is not a '
-                'free choice but the minimal set-theoretic metatheory consistent with the framework\'s '
-                'results.',
-                '<b>What remains conditional.</b> CC-2 retains Conditional Claim status for two reasons. '
-                'First, AFA admits many non-well-founded sets; we commit to the specific Quine atom form '
-                '&#8869; = {&#8869;} as the minimal option consistent with A4. Among non-well-founded sets '
-                'permitted by AFA, &#8869; = {&#8869;} is uniquely minimal: it has exactly one member '
-                '(itself) and introduces no internal differentiation — any extension (&#8869; = {&#8869;, x} '
-                'for x &#8800; &#8869;) would add members carrying their own membership chains, exceeding '
-                'what A4\'s purely algebraic additive-identity constraint requires. Second, the identification '
-                'of &#8869; as a set-theoretic object — rather than a purely algebraic element — is itself '
-                'a modelling step beyond A1&#8211;A4. The metatheoretic necessity of AFA is argued, not proved (a metatheoretic squeeze argument, not a derivation in the formal system); the '
-                'specific realisation as &#8869; = {&#8869;} is minimally committed. The standing falsifier: a well-founded (Foundation-respecting) model of &#8869; consistent with R3 and L-INF would overturn the forcing, since the argument turns on well-founded sets being finitely interpretable.',
+                'minimal non-well-founded objects: the membership structure of &#8869; = {&#8869;} is '
+                'circular (&#8869; &#8712; &#8869; &#8712; &#8869; &#8712; &#8230;), so it lives in a '
+                'non-well-founded metatheory, and AFA is the minimal such theory that supplies exactly one '
+                'of them.',
+                '<b>What is machine-checked (the requirements framework).</b> The question of which host '
+                'theory can admit &#8869; is reduced to three requirements a host must supply &#8212; '
+                'Foundation-freeness, a Quine atom, and its uniqueness &#8212; and largely closed in the '
+                'framework\'s set-theory layer (the QuineHost development, '
+                'ZeroParadox/Settheory/QuineHost.lean, formalized later in the ZP-J AFA layer). Proved '
+                'there: Foundation-freeness is <i>forced</i> for any such host (quineHost_not_wellFounded, '
+                'axiom-free); ZF + Foundation is excluded (zfSet_no_quine_bottom &#8212; no set is '
+                'self-membered) and Boffa\'s anti-foundation axiom is excluded as too permissive, admitting '
+                'a proper class of atoms rather than one (boffa_fails_unique); and the requirements are '
+                '<i>realizable</i> &#8212; a concrete one-atom model exhibits them (oneAtom_not_wellFounded, '
+                'axiom-free) and AFA is the canonical example (afaStructure_isQuineHost). So the AFA choice '
+                'is not merely argued: the forcing and the realizability are settled results.',
+                '<b>What remains &#8212; a narrow Forced Metatheoretic Commitment.</b> With the forcing and '
+                'realizability proved, one step is not a theorem: that a Quine atom and its uniqueness are '
+                'the <i>right</i> two requirements to demand &#8212; the commitment to &#8869; = {&#8869;} '
+                'as the minimal option consistent with A4\'s additive-identity role (it has exactly one '
+                'member, itself, and introduces no internal differentiation; any extension '
+                '&#8869; = {&#8869;, x} with x &#8800; &#8869; would add members carrying their own '
+                'membership chains). This is a <b>Forced Metatheoretic Commitment</b> &#8212; stronger than '
+                'a free choice, weaker than a theorem &#8212; not a Conditional Claim; the set-membership '
+                'face &#8869; &#8712; &#8869; stays metatheoretic, while the structural self-application '
+                'fixed point is machine-checked (t_exec, ZeroParadox/Settheory/SetTheoryAFA.lean, '
+                'axiom-free). The named falsifier is correspondingly narrow: a differently-motivated '
+                'requirement set that hosts &#8869; without demanding a unique Quine atom would reopen this '
+                'choice &#8212; it would not touch the forcing or the realizability, which are settled.',
             ]
         ),
         sp(4),
@@ -459,9 +475,9 @@ def build():
     E.append(body('DA-1 and T-SNAP establish that the Binary Snap is a structural consequence of reaching P<sub>0</sub> '
                   'within an instantiation. Three questions remain open after DA-1:'))
     E += [
-        li('CC-1 (ZP-A) says S<sub>0</sub> = ⊥ is a modelling commitment — not derived from A1–A4. This '
-           'leaves open whether ⊥ is unique across all instantiations or whether each instantiation '
-           'carries its own ⊥.'),
+        li('CC-1 (ZP-A) posits S<sub>0</sub> = ⊥ — not derivable from A1–A4 alone (later derived via '
+           'ZP-J, cc1_derived). This leaves open whether ⊥ is unique across all instantiations or whether '
+           'each instantiation carries its own ⊥.'),
         li('ZP-B R1 distinguishes universal structure from universe-contingent parameters. ε<sub>0</sub> is '
            'contingent per instantiation. Whether ⊥ is similarly contingent is not addressed in ZP-A through ZP-D.'),
         li('T-SNAP fires wherever P<sub>0</sub> conditions are met. If the terminal state of instantiation I<sub>n</sub> '
@@ -496,7 +512,7 @@ def build():
         sp(4),
         body('Grounding: A4 is the load-bearing axiom of ZP-A — it defines ⊥ as the additive identity under '
              '∨, the element that contributes nothing to any join and is therefore present in everything '
-             'above it. DA-2 does not redefine ⊥. It clarifies that the modelling commitment of CC-1 can be '
+             'above it. DA-2 does not redefine ⊥. It clarifies that the CC-1 identity condition (S<sub>0</sub> = ⊥) can be '
              'satisfied by any state meeting A4\'s algebraic conditions — not only by a cosmologically '
              'primitive ⊥. The identity condition is structural, not historical: what matters is the '
              'algebraic role a state plays in the subsequent semilattice, not where it came from.'),
@@ -601,8 +617,9 @@ def build():
         'DA-2 establishes that instantiations form a directed tree and that branching at each ⊥ node '
         'produces multiple successor instantiations. This raises a question about the cardinality of '
         'branching: is the fan at each node countably or uncountably infinite? The answer, which DA-3 '
-        'formalises, is that this question is perspective-dependent — and that this perspective-dependence '
-        'is the same structural feature that underlies the major cardinality anomalies of classical set theory.'))
+        'formalises, is that this question is perspective-dependent — and DA-3 further conjectures '
+        '(Claim DA-3-C1, deferred to OQ-E2) that this perspective-dependence is the same structural feature '
+        'underlying the major cardinality anomalies of classical set theory.'))
 
     E.append(Paragraph('II. Perspective-Dependence of Branching Cardinality', S['h2']))
     E.append(body(
@@ -825,14 +842,15 @@ def build():
         sp(12),
         hr(),
         Paragraph(
-            '<i>End of ZP-E | Three formal inserts: DA-1, DA-2, DA-3 | T-SNAP Step 7: AX-G2 removed as formal dependency; ZP-G is downstream, irreversibility grounded in ZP-A R1 and ZP-B C3 | Forward references to ZP-PQ now point to The Philosophical Question That Started This | '
-            'DA-1 formally closed via ZP-K: da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proved in Lean 4 | '
-            'Paths 1 and 3 IN LEAN SCOPE | Path 2 recharacterized: foundational commitment, missing principle not missing proof; forward: The Philosophical Question That Started This | '
-            'R-AFA minimality explicit: &#8869; = {&#8869;} uniquely minimal among AFA non-well-founded sets | '
-            'DA-1 path hierarchy foregrounded: three informal paths are corroboration of DP-2\'s precondition, not parallel proofs | '
-            'Remark R-&#949;<sub>0</sub>: &#949;<sub>0</sub> symbol justified | '
-            'Remark R-AFA: Foundation ruled out by R3 + L-INF; AFA forced | '
-            'One open question: OQ-E2 | Remaining axioms: AX-B1, AX-G1, AX-G2</i>',
+            '<i>ZP-E carries three formal inserts (DA-1, DA-2, DA-3). T-SNAP is derived: its irreversibility '
+            'rests on ZP-A R1 and ZP-B C3, with ZP-G downstream. DA-1 is closed in Lean via ZP-K '
+            '(da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase)); Paths 1 and 3 are in Lean scope and '
+            'Path 2 is a foundational commitment (a missing principle, not a missing proof). Remark '
+            'R-&#949;<sub>0</sub> justifies the &#949;<sub>0</sub> symbol as a structural analogy. Remark '
+            'R-AFA rules Foundation out by the self-membership of &#8869; = {&#8869;} (Regularity, '
+            'no_quine_atom): the forcing and realizability of the AFA requirements are machine-checked '
+            '(QuineHost), and a narrow Forced Metatheoretic Commitment remains. Open question: OQ-E2. '
+            'Remaining axioms: AX-B1, AX-G1, AX-G2.</i>',
             S['endnote']),
     ]
 

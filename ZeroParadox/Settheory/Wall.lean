@@ -48,6 +48,12 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   for Cantor. `lawvere_fixedpoint` and `cantor_via_engine` below are independent axiom-free re-derivations,
   kept for a self-contained family. The honest delta is the PRESENTATION — all four (Lawvere + Cantor +
   Russell + Turing) as corollaries off one named engine — not the theorems, which are not new.
+- The **well-founded / membership / Bool / logical** re-proofs below have exact library equivalents too,
+  kept as self-contained hubs alongside the function-fixed-point ones: `wf_no_selfloop` is Mathlib's
+  `WellFounded.irrefl` (`Std.Irrefl r` unfolds to `¬ r x x`); `no_quine_atom` (`x ∉ x`) is
+  `ZFSet.mem_irrefl`; `bool_not_no_fixedpoint` is `Bool.not_ne_self`; and `negation_no_fixedpoint`
+  (`¬(p ↔ ¬p)`) is core Lean's `not_iff_self` / `iff_not_self`. The delta is again the PRESENTATION — one
+  named engine with these as its faces — not the lemmas, which are standard.
 
 ## The wall as a failure-mode taxonomy (built one condition-set at a time)
 

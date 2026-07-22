@@ -17,6 +17,13 @@ The `CannotBe` indexes are `#check`-only — they create no declarations and so 
 
 **The keystone index (the phenomenon the three objects share):** `ZeroParadox/DiagonalFixedPoint.lean` — the `#check`-only index routing every formalized face of **self-reference** (the diagonal fixed point) by the μ/ν fork: wall faces where self-reference cannot close (no fixed point — Cantor, Russell, Turing, Tarski, Curry) and floor faces where it closes and lands at ⊥ (the Quine atom, the Kleene quine, Löb/Gödel-2, Rice), all off Lawvere's engine. It is the direct route to self-reference the three object indexes point back toward. It states no new claim: the cross-face unification is Lawvere (1969) / Yanofsky (2003), cited prior art, and the cross-face identity across domains stays a **type boundary**, never a Lean `=`.
 
+**The choice index (NOT a fourth core object — read it before writing about choice or constructivity):** `ZeroParadox/Category/ChoiceCannotBe.lean` — the `#check`-only index of the framework's **relationship to `Classical.choice`**. `Classical.choice` is an ambient kernel axiom, **not** a framework object, so this index is scoped differently from the three above: where choice is provably not needed, what it must not be confused with, and what is actually established. **Read it before writing any prose, docstring, note, or outreach copy touching choice, constructivity, purity, axiom footprints, or the "choice = point of view / chart selection" reading.** Three standing traps it exists to stop:
+- **The equivocation (hit four separate times on 2026-07-19).** The ordinary English "choice" — an act of picking, a point of view, a chart selection — is **not** the axiom `Classical.choice`. Every evocative "choice = which way you view the split" reading is a **model** of the choice-vs-no-choice distinction, never the axiom. State it as a model or not at all. **Attribution, stated precisely — an earlier version of this bullet had it wrong and seeded the error into five Lean files:** Diaconescu (1975) proves an **EQUIVALENCE** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects have complements (p. 176), the choice direction being his corollary (p. 178); in modern terms, choice for inhabited subobjects of a two-element object **IS** excluded middle. That **full** AC is strictly stronger is **Cohen 1963** / Fraenkel-Mostowski independence, **not** Diaconescu — never attribute strictness or a failing converse to him. That the restricted fragment nonetheless *appears* not to follow from excluded middle in Lean — the natural construction fails to elaborate and closes only under `classical`, which is **strong evidence, never a proof of unprovability** — looks like a fact about **Lean's `Prop`/`Type` stratification** (the fragment selects into `Bool`, making it data-valued excluded middle), which a topos lacks; that reconciliation is the framework's own finding. **Never state the Lean gap as a negative result**: a failed elaboration is not an independence theorem, and claiming one would need a metatheoretic argument outside Lean. Full statement: `ZeroParadox/Category/ChoiceCannotBe.lean`.
+- **NO COUNT — measure on demand, never record one.** Do **not** write a figure for how many declarations carry `Classical.choice` into this file, into any `.lean` docstring, or into any note. `ZeroParadox/Category/ChoiceCannotBe.lean` deliberately records none and gives the three reasons: a corpus total measures how classically **Mathlib** is built rather than anything about this framework; it reads as "most of this is non-constructive" when the load-bearing fact is that **T-SNAP is axiom-free** and every examined footprint has been removable; and the number has already been wrong three times (once quoted rather than measured, once measured and gone stale inside a single session — this bullet itself carried the stale one). That index supplies the PowerShell to measure on demand. **The framework is not choice-free; the core is; every examined footprint has been removable** — that statement does not go stale, and it is the one to use.
+- **The instance hazard.** Choice often enters at the **instance** level, invisible in the lemma: `Prop.instBooleanAlgebra` carries `Classical.choice` while `Prop.instHeytingAlgebra` is `[propext]`. A `Prop`-scoped statement that does not PIN its instance silently acquires choice and every purity claim about it becomes vacuous. Measure the instance and the tactic, not just the lemma.
+
+**The claims mirror (the claim graph made checkable — read/update it whenever a claim's STATUS is asserted or changed):** `ZeroParadox/ClaimsMirror.lean` — the machine-checked representation of the SSOT `claims` store. Each claim node the store marks `proved` / `corr` / `deep` is **restated exactly and discharged from the existing machinery**, so a claim's status is a **verified link to a green declaration, not a label**; the purity block prints each claim's honest axiom footprint (three faces axiom-free — `node-order`, `node-set-theory`, `T-SNAP`; the p-adic floor `[propext]`; the rest carry Mathlib choice). The three non-theorems are represented by their **deliberate absence**: the two `Lawvere-*` conjectures (one Set face provably *not* a Lawvere instance) and the retired `MC-1-identity` (ill-typed — `x = y` across distinct categories is not a well-formed proposition) carry **no theorem**, and that non-representation is itself the checked fact. **Why it exists (2026-07-21):** a `proved` label is only as good as the decl under it, and a false premise attached to a *true* conclusion is invisible from the outside — nothing downstream breaks, so being right about the conclusion hides a wrong reason (the ZP-A / ZP-E Foundation-squeeze false premise survived to high revision exactly this way). The mirror is the mechanical guard: the kernel re-derives each claim indifferent to how it was reached, so a status that is not actually backed shows up as a decl that will not elaborate. **The rule:** before asserting a claim is proved (in prose, a docstring, a companion, outreach), check it has a green entry here; and whenever a core claim is added, or a claim's status changes, update `ClaimsMirror.lean` and its SSOT `link_claim` in the **same** change — the same reflex as the purity check and the SJV sync.
+
 **Bedrock invariants — machine-checked; never violate, always verify against the theorem (do not assume):**
 - **ε₀ ≠ 0. Always. In any reading, carrier, or encoding.** (`epsilon0_ne_zero`.) Never "fence ε₀ = 0" or treat 0 as a candidate value for ε₀ — it is not a well-formed possibility.
 - **ε₀ ≠ ⊥.** (`epsilon0_ne_bot`.) ⊥ = 0 is the *base* the ε₀-tower is seeded at; ε₀ is its *closure* — the base is never its own closure.
@@ -26,6 +33,125 @@ The `CannotBe` indexes are `#check`-only — they create no declarations and so 
 - The snap-arc **returns to a NEW ⊥** (a successor null, `t_iz_limit_is_new_null`), never the same ⊥ and never ε₀.
 
 **Why this rule exists (2026-07-17):** a run of prose/figure errors — fencing ε₀ = 0, "co-locating ⊥ and ε₀," flattening min≡max to one face, calling ε₀ "a large ordinal / ceiling" — all came from reconstructing these objects from working memory instead of reading the Lean. The fix is mechanical: read the `CannotBe` index first, cite the theorem, never gloss.
+
+## Review-Loop Cap — Severity-Tiered, Hard Rule
+
+**The gates will always find something. Stopping is a decision about SEVERITY, not a wait for silence.**
+
+- **BEDROCK severity → up to 5 iterations.** A violated core invariant (`ε₀ ≠ 0`, `ε₀ ≠ ⊥`, min≡max
+  flattened, the snap-arc returning to the same ⊥, a cross-type `=`), a **fabricated** claim about an
+  external source, or a false premise carrying a conclusion. These must not ship — keep iterating.
+- **ORDINARY severity → 2 iterations, then push `--no-verify`.** Citation scope, a mischaracterized
+  lemma, hedging a tier too strong, path-convention drift, wording. These never reach zero.
+
+**The stopping question is "did this round find anything BEDROCK?" — if no, stop**, even on ten ordinary
+findings. Ratified 2026-07-19 after three rounds; memory `feedback_er_ar_max_iterations` carries the
+detail.
+
+### The cap is enforced by the REVIEWER, not by the caller — pass it the round number
+
+**Why: a rule about a loop does not fire from inside the loop.** Each round is locally justified ("a gate
+found real defects; fix them"), so the caller never evaluates the trigger — on 2026-07-19 three rounds ran
+against a 2-round cap while the rule sat visible in the memory index, because nobody was *counting*. The
+fix is structural: the reviewer stands outside the loop, so give it the number and let it decide.
+
+**The CALLER bumps, exactly once, before spawning the round:**
+```
+python .claude-local/gate_round.py bump      # caller only, once per ROUND (not per gate)
+python .claude-local/gate_round.py show      # reviewers and anyone else: read-only
+```
+`reset` at the start of a new arc or after a clean push. State lives in `.claude-local/gate_round.json`,
+so it survives compaction.
+
+**Reviewers must NEVER `bump`** — they are handed the number in the brief and may only `show`. Measured
+2026-07-19: the caller bumped to round 1, a spawned reviewer ran `bump` itself, and reported round 2. A
+double-increment is not cosmetic — it burns the cap early and can force a premature STOP-ORDINARY while a
+bedrock defect is still live. If several gates run in one round, they all share that round's number.
+
+**Put this in every review brief, with N substituted:**
+> This is **gate round N** against a cap of 2 (ORDINARY) / 5 (BEDROCK). Your verdict must be one of:
+> **PASS** — nothing found.
+> **FAIL-BEDROCK** — you found a violated core invariant, a FABRICATED external-source claim, or a false
+> premise carrying a conclusion. The loop continues.
+> **STOP-ORDINARY** — round N is past the ordinary cap and nothing you found is bedrock-tier. Report the
+> findings, then state explicitly that the correct action is to PUSH, not to iterate. Do not recommend
+> another round.
+> If N is past the ordinary cap, you must actively choose between FAIL-BEDROCK and STOP-ORDINARY — a bare
+> "FAIL" is not a valid verdict, because it hands the stopping decision back to the party inside the loop.
+
+**Two measured reasons the loop cannot converge, which the cap exists to bound:**
+1. **Fixes introduce errors.** Every fix is new prose carrying new claims. Two of round 3's eight
+   findings were created by round 2's fixes. A loop whose corrections generate errors asymptotes above
+   zero.
+2. **Fix-the-site, not-the-class.** Three of round 3's findings were unpropagated instances of round 2's
+   fixes. **Before declaring a kill fixed, grep the corpus for the CLAIM, not the named file.** Note that
+   retractions quoting an error pollute that search — read hits, do not count them.
+
+## Staging — `git add` NAMED PATHS, never `-A`, Hard Rule
+
+**`git add -A` stages whatever happens to be in the tree, including files this session did not create.**
+
+**Measured 2026-07-19:** a background review agent wrote a scratch probe into `ZeroParadox/`, and the next
+`git add -A` swept it into a commit unnoticed. It is in the permanent history now. Background agents run
+*concurrently* with commits, so the working tree is not a stable snapshot of what you intended to change.
+
+**The rule:** stage the specific paths you edited — `git add path/one path/two`. Before committing, run
+`git status --short` and confirm every staged path is one you meant to touch. If a path appears that you
+did not edit, find out where it came from before committing it.
+
+`-A` is acceptable only when nothing has been spawned since the last commit and `git status` has been
+eyeballed. When in doubt, name the paths.
+
+## Rules That Must Reach Spawned Agents — Hard Rules
+
+**Why this section exists (measured 2026-07-19).** A spawned agent receives, automatically: this file in
+full, the user-level `CLAUDE.md`, the Lean `.claudecodes` block, the project-standards block — **and the
+memory INDEX only, not memory file bodies.** So a rule whose content lives in a memory body reaches a
+subagent as one line among ~100 in an index, competing for attention with ninety-nine others, firing at
+no particular moment. That is not a control.
+
+**The consequence, verified:** a subagent invented a factual detail about a cited paper while the line
+*"Draft from source only — public math claims must trace to a specific source passage"* was sitting in
+its index. The rule was visible and did not bind. **A rule that must not be violated belongs HERE or in
+the task brief. Memory is for context, not enforcement.** When delegating, carry the relevant rules below
+into the brief explicitly — the same way the encoding and glob warnings are already carried.
+
+- **Draft from source.** Never describe the content of a source you have not read. Cite existence (title,
+  venue, that it exists) freely; assert specific technical content **only with the passage in hand**. If
+  you cannot read it, say so explicitly — do **not** soften a specific into a vaguer assertion about a
+  paper nobody opened. Applies to Lean docstrings citing external papers, companion sections, discussion
+  comments, and outreach. Before concluding a PDF is unreadable, try `pypdf`/`pdfminer` directly
+  (`.claude-local/extract_pdf_text.py`); a fetch tool's failure is not a fact about the source.
+- **Start new files from the templates.** Any new `.lean` file starts from `.claude-local/templates/`
+  (`TEMPLATE_lean.lean`, `TEMPLATE_experimental_mapping.lean`) and its `README.md`. Note the template's
+  namespace line is stale — namespaces are FLAT (`ZeroParadox`), not `ZeroParadox.ZPX`.
+- **Never write a bare "bottom."** Always say which level: the structureless referent / a specific
+  structured instance (a face) / the family-and-schema. The bare word sliding between senses is the
+  project's longest-standing source of confusion. (`/remember-bottom` re-orients.)
+- **The literal string `ε₀ = 0`** may appear ONLY as a guard or fence forbidding it, or as a theorem where
+  ε₀ is an argument. Never a bare assertion, never in conversation — even to deny it. Canary:
+  `epsilon0_ne_zero`.
+- **Standard mathematical term first**, ZP term after as a declared shorthand — never the reverse. This is
+  the defense against the "ontology built on an equivocation" reading.
+- **Verify an API exists before naming it in a plan.** Grep the Mathlib pin; a plan citing a lemma that
+  does not exist in the pinned version is worse than no plan.
+- **Never delete a Lean file a subagent produced**, even a failed experiment — say so in the brief.
+- **NO SCRATCH FILES IN THE REPO.** Any probe, temp script, or measurement file goes in the session
+  scratchpad directory, never under `ZeroParadox/` or anywhere else in the working tree. A reviewer that
+  needs to measure something writes it to the scratchpad, runs it, and deletes it. **Measured
+  2026-07-19:** a review agent left a `ZZTestOrd.lean` probe in the source tree (since deleted, so the
+  path no longer exists) and it was committed — a scratch probe is now in the permanent history. Put this
+  line in every subagent brief.
+- **Reviews are READ-ONLY on the working tree.** A gate reads, measures, and reports; it does not modify
+  repo files. The only writes a gate may make are its signal file and its findings note under
+  `.claude-local/notes/`.
+- **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
+  restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
+  **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
+  file, so the reviews must cover it. Order: finish the work → insert Tim's Take (with approval) → run
+  editorial/adversary/prior-art on the COMPLETE file → push. Gating first and adding the Take after
+  leaves it unreviewed and (under the SHA-256-per-file signal scheme) stales every signal, forcing a
+  needless re-run.
 
 ## Editorial Review Gate — Hard Rule
 
@@ -40,11 +166,11 @@ The `CannotBe` indexes are `#check`-only — they create no declarations and so 
 1. Before committing any of the above, run `/editorial-review` (pre-commit mode — no arguments needed; it reads `git diff --staged` automatically)
 2. Wait for the editorial agent to return a verdict
 3. If FAIL: resolve every item in the kill list before committing
-4. If PASS: the agent writes `.claude-local/er_cleared.txt` with the current HEAD hash — proceed with the commit
+4. If PASS: the agent writes `.claude-local/er_cleared.txt` recording the SHA-256 of each reviewed file (see the SHA-256-per-file scheme below) — proceed with the commit
 
 Same-session self-review does not satisfy this requirement. `/editorial-review` spawns a fresh agent with no conversation history.
 
-The pre-push hook checks `.claude-local/er_cleared.txt` and `.claude-local/ar_cleared.txt` against HEAD before allowing any push. If either signal is missing or stale the push is blocked. Override with `git push --no-verify` only when both reviews have been run and the signal files are stale due to a trivial amendment.
+The pre-push hook validates `.claude-local/er_cleared.txt` and `.claude-local/ar_cleared.txt` (and `pa_cleared.txt` on a `.lean` trigger) using the **SHA-256-per-file scheme** (2026-07-20): each signal records the content SHA-256 of every file the review certified (line 1 = verdict record; lines 2+ = `<sha256>  <path>`), and it is valid iff (a) every recorded file still hashes to its recorded value and (b) every *reviewable* file in the push is covered by a recorded hash. Reviewable = changed files minus pure data/binary (`ssot.json`, PDFs, images, lockfiles), so a data-only commit no longer stales a review — that was the old HEAD-equality scheme's failure mode. If nothing reviewable changed, no signal is required. `--no-verify` should now be genuinely rare; if a signal is stale it is because a reviewed file actually changed (re-run the review) or a new reviewable file is uncovered.
 
 ## Adversary Review Gate — Hard Rule
 
@@ -60,7 +186,7 @@ The pre-push hook checks `.claude-local/er_cleared.txt` and `.claude-local/ar_cl
 1. Before executing any of the above, Claude must explicitly ask: "Adversary review complete for this content?"
 2. Wait for Tim's confirmation before proceeding — do not self-assess whether review is needed
 3. If review has not been run, offer to run `/adversary-review` on the relevant content first
-4. If PASS: the agent writes `.claude-local/ar_cleared.txt` with the current HEAD hash
+4. If PASS: the agent writes `.claude-local/ar_cleared.txt` recording the SHA-256 of each reviewed file (see the SHA-256-per-file scheme below)
 5. Only after explicit confirmation may the public-facing action execute
 
 Same-session self-review does not satisfy this requirement. The review must be a separate adversarial context (spawned Agent with no conversation history).
@@ -155,7 +281,7 @@ It must **exit 0** before the release body is drafted. The script mechanically v
 
 **`.zenodo.json` check — mandatory before every release:** Read `.zenodo.json` and verify the `description` field accurately reflects the current layer count and layer list. Update it in the same PR as `RELEASES.md` if anything is stale. Zenodo reads this file at release creation time; it cannot be updated retroactively via the repo (only via the Zenodo web UI).
 
-**Engineer's Take check — mandatory before every release (hard gate):** Before cutting any release, grep the Lean sources for outstanding Engineer's Take placeholders — at minimum `TODO (Tim)` and `TODO: Engineer's Take` across `ZeroParadox/*.lean` (also scan for any `## Engineer's Take` heading followed immediately by an empty section). Every ZP-X Lean file included in the release must have its Engineer's Take filled in Tim's own voice. **A release is BLOCKED until all are filled.** Claude never writes these — they must be Tim's own language (see the Engineer's Take convention) — so this gate catches the omission, it does not fill it. Surface the list of unfilled takes to Tim and wait for his prose. (Added 2026-06-11 after the four ZP-H functor takes plus ZP-L's were almost missed at the v2.4 threshold.)
+**Engineer's Take check — mandatory before every release (hard gate):** Before cutting any release, grep the Lean sources for outstanding Engineer's Take placeholders — at minimum `TODO (Tim)` and `TODO: Engineer's Take` across **`ZeroParadox/**/*.lean`** (also scan for any `## Engineer's Take` heading followed immediately by an empty section). **The glob MUST be recursive.** This instruction previously read `ZeroParadox/*.lean`, which post-reorg matches only 3 files out of 187 — a manual check run that way would pass silently on an unfilled Take in any subdirectory. `check_release_ready.py` already uses the recursive form and is correct; only this prose was wrong (fixed 2026-07-19). Every ZP-X Lean file included in the release must have its Engineer's Take filled in Tim's own voice. **A release is BLOCKED until all are filled.** Claude never writes these — they must be Tim's own language (see the Engineer's Take convention) — so this gate catches the omission, it does not fill it. Surface the list of unfilled takes to Tim and wait for his prose. (Added 2026-06-11 after the four ZP-H functor takes plus ZP-L's were almost missed at the v2.4 threshold.)
 
 **RELEASES.md format:** `## vX.Y - YYYY-MM-DD` header, then **Why this release** (one sentence), **What changed** (bullets), **Document versions at this release** (table), **Next threshold**. Match existing entries in RELEASES.md for exact formatting.
 

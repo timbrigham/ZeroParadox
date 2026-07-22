@@ -44,9 +44,14 @@ theorem tower_monotone : Monotone (fun n : ℕ => (fun a => ω ^ a)^[n] 0) := by
   rw [Function.iterate_succ_apply']
   exact (Ordinal.isNormal_opow one_lt_omega0).strictMono.le_apply
 
-open Classical in
 /-- **Tower-rank.** For `α < ε₀`, the least `n` with `α` below the `n`-th ω-tower stage
-    (`lt_epsilon_zero`). The "ordinal depth" of `α` in the tower. -/
+    (`lt_epsilon_zero`). The "ordinal depth" of `α` in the tower.
+
+    No `open Classical in` here, deliberately: it was present and measurably did nothing. `Nat.find`
+    needs a `DecidablePred`, and `Ordinal.instLinearOrder` already supplies it through its
+    `toDecidableLE := Classical.decRel _` field — one of the Mathlib roots recorded in
+    `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` § III. The `open` was a second, cosmetic route
+    to choice this declaration had already taken; removing it changes no footprint. -/
 noncomputable def cnfRank (α : {α : Ordinal // α < ε₀}) : ℕ :=
   Nat.find (lt_epsilon_zero.mp α.2)
 

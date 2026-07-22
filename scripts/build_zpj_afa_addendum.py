@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J AFA Addendum: Decoration Uniqueness from Valuation Structure
-Version 1.6 | July 2026
+Version 1.7 | July 2026
+v1.7: Lean Source Files box now lists SetTheoryAFA.lean (the AFAStructure typeclass home, cited by the def_box); "seven"→"eight" source files; stripped the "as of May 2026" dated qualifier from the endnote.
 v1.6: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.5: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Rendered self-version ref removed from endnote ("Version 1.0 covers…") (C1 sweep). Fixed 2 null glyphs: scaleᵏ (&#7503; modifier-k → <sup>k</sup>).
@@ -18,7 +19,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -416,7 +417,7 @@ def build():
         '<i>acyclic_decoration_unique</i> with a sorry placeholder. That stub is not '
         'used by the proof of decoration_unique: the final proof proceeds by direct '
         'strong induction using acyclic_induction_step, without using the stub. '
-        'All active (non-commented-out) theorems in the seven source files are '
+        'All active (non-commented-out) theorems in the eight source files are '
         'sorry-free.'))
 
     E.append(label_box(
@@ -426,6 +427,8 @@ def build():
             'toAbstractSelfApp',
             'SelfApp.lean   &#8212; AbstractSelfApp, derived_bot_self_mem, '
             'derived_quine_unique, toAFAStructure',
+            'SetTheoryAFA.lean &#8212; AFAStructure typeclass (selfMem, quine_unique, '
+            'bot_self_mem), IsQuineAtom',
             'AczelConn.lean &#8212; J_self, selfMem_determines_singleton, '
             'DC-free identification theorems',
             'OntBridge.lean &#8212; OntologicalStates as AbstractSelfApp instance',
@@ -476,7 +479,7 @@ def build():
         'it. The derivation chain (ValuationStructure &#8594; AbstractSelfApp &#8594; '
         'AFAStructure) is established in ZP-J; this document applies it to the APG '
         'decoration problem. It covers the uniqueness result for finite graphs. '
-        'All active theorems sorry-free in Lean 4 as of May 2026 '
+        'All active theorems are sorry-free in Lean 4 '
         '(one commented-out stub; see §V).',
         S['endnote']))
 

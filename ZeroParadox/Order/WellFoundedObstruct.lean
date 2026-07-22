@@ -107,18 +107,33 @@ open Filter Topology
 theorem no_infinite_descent : ∀ f : ℕ → ℕ, ¬ StrictAnti f :=
   fun f => not_strictAnti_of_wellFoundedLT f
 
-/-- **The load-bearing bridge — well-foundedness forces the descent to reach the floor.** Any orbit
-    `g : ℕ → ℕ` that strictly decreases at every nonzero step (`g k ≠ 0 → g (k+1) < g k`) must reach
-    the floor: `∃ N, g N = 0`. This routes the μ side *through* `no_infinite_descent`: if `g` never
-    hit `0`, every step would be strict, making `g` the forbidden `StrictAnti` orbit. So
-    well-foundedness — not arithmetic alone — is what closes the descent. -/
+/-- **The load-bearing bridge — the descent reaches the floor.** Any orbit `g : ℕ → ℕ` that strictly
+    decreases at every nonzero step (`g k ≠ 0 → g (k+1) < g k`) must reach the floor: `∃ N, g N = 0`.
+
+    **Proved by induction on the bound `g 0`, deliberately, not through `no_infinite_descent`.**
+    An earlier version routed the μ side through that lemma — `by_contra`, then "if the floor were
+    never reached, every step is strict, so `g` is the forbidden `StrictAnti` orbit." That reading is
+    conceptually right and the statement is unchanged, but it borrowed a general well-foundedness
+    lemma (Mathlib's `not_strictAnti_of_wellFoundedLT`, for an arbitrary `Preorder` with
+    `WellFoundedLT`) for a statement about `ℕ` whose descent is already bounded by a natural number
+    *in the hypothesis*. The counter's value **is** the step budget, so the induction is available
+    directly. Measured consequence: `[propext, Classical.choice, Quot.sound]` → `[propext, Quot.sound]`.
+
+    The conceptual claim survives intact — well-foundedness is still what closes the descent; on `ℕ`
+    it is the induction principle rather than an imported lemma. See `no_infinite_descent` above for
+    the general statement, which keeps its own footprint. -/
 theorem descent_with_strict_steps_reaches_floor (g : ℕ → ℕ)
     (hstep : ∀ k, g k ≠ 0 → g (k + 1) < g k) : ∃ N, g N = 0 := by
-  by_contra h
-  -- if the floor is never reached, every step is strict, so `g` is StrictAnti — forbidden.
-  have hne : ∀ k, g k ≠ 0 := fun k hk => h ⟨k, hk⟩
-  refine no_infinite_descent g (strictAnti_nat_of_succ_lt (fun k => ?_))
-  exact hstep k (hne k)
+  have key : ∀ b n, g n ≤ b → ∃ N, g N = 0 := by
+    intro b
+    induction b with
+    | zero => intro n hn; exact ⟨n, Nat.le_zero.mp hn⟩
+    | succ m ih =>
+        intro n hn
+        rcases Nat.eq_zero_or_pos (g n) with h0 | h0
+        · exact ⟨n, h0⟩
+        · exact ih (n + 1) (by have := hstep n h0.ne'; omega)
+  exact key (g 0) 0 le_rfl
 
 /-! ## The deflation side — descent on the μ floor terminates in finite time -/
 

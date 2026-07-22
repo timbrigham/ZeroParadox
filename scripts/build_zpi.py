@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.13 | June 2026
+Version 1.14 | July 2026
+v1.14: PURITY CORRECTION (release-prep) — the "axiom-free" label was wrong for the p-adic convergence spine. Verified against #print axioms: t_iz_cauchy, t_iz_valuation_unbounded, t_iz_c3_compatible, t_iz_complete, t_iz_complete_from_axioms, t_iz_h_bound_from_depth_chain, t_iz_norm_tendsto_zero, t_iz_conv_zero all carry [propext, Classical.choice, Quot.sound] — the choice inherited from Mathlib's p-adic analysis, not a framework commitment. Only Step 6 (t_iz_limit_is_new_null) and t_snap_derived are axiom-free; c_t_iz_null_balance is [propext]. Corrected ~15 rendered "axiom-free" claims about the choice-carrying theorems throughout (topological core, Step 1, the proof-obligation and traceability tables, the OQ register, the endnote). Supersedes the v1.2 "proved axiom-free" note.
 v1.13: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.11: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.10: Vocabulary fixes — "null state" → "⊥" in two body prose locations; version references "(v1.1)", "v2.0" removed from body prose. Palette rebuild.
@@ -29,7 +30,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -218,7 +219,7 @@ def build():
             '(1) The norms &#8214;S(n)&#8214;<sub>2</sub> &#8594; 0 (squeeze between 0 and the '
             'geometric sequence 2<sup>-n</sup>, both tending to 0).',
             '(2) S(n) &#8594; 0 in Q<sub>2</sub> (norm &#8594; 0 iff sequence &#8594; 0 in a normed group).',
-            'Lean: t_iz_cauchy — proved axiom-free in SemilatticeInstance.lean. This is the topological core of T-IZ.',
+            'Lean: t_iz_cauchy — proved (sorry-free) in SemilatticeInstance.lean; footprint carries Classical.choice inherited from Mathlib&#8217;s p-adic analysis (see &#167; III). This is the topological core of T-IZ.',
         ]
     ))
     E.append(sp(6))
@@ -272,7 +273,7 @@ def build():
             'K(c<sub>1</sub> | n) / |c<sub>1</sub>| = 1 (ZP-C D1).',
             'Lean scope: Kolmogorov complexity K is uncomputable and absent from standard proof '
             'libraries. Bridge is Outside Lean Scope — same category as DA-1 Path 3 (ZP-C D1 + AIT) '
-            'in ZP-E. The topological core (§ A above) is proved axiom-free; the bridge follows the '
+            'in ZP-E. The topological core (§ A above) is proved in Lean, carrying Classical.choice from Mathlib&#8217;s p-adic analysis (§ III); the bridge follows the '
             'ZP-E informal argument. See ZP-E § IV for the full DA-1 Path 3 treatment that the bridge extends.',
         ],
         color=INDIGO
@@ -280,7 +281,8 @@ def build():
     E.append(sp(6))
     E.append(body(
         'Remark R-II.2: The formal spine of T-IZ is Steps 1 and 6. Step 1 (Cauchy convergence '
-        'to 0 in Q<sub>2</sub>) is proved axiom-free in Lean. Step 6 (DA-2 licenses the Cauchy '
+        'to 0 in Q<sub>2</sub>, t_iz_cauchy) is proved in Lean carrying Classical.choice from Mathlib&#8217;s '
+        'p-adic analysis. Step 6 (DA-2 licenses the Cauchy '
         'limit as &#8869;&#8242;) is proved axiom-free in Lean via t_iz_limit_is_new_null. The chain '
         'from Step 1 to Step 6 is complete without the bridge. Steps 2–5 describe the original '
         'ZP-E informational argument connecting 2-adic depth to Kolmogorov complexity and DA-1 '
@@ -318,7 +320,7 @@ def build():
     E += [
         li('Step 1 — Cauchy convergence: The ascending chain has &#8214;S(n)&#8214;<sub>2</sub> &#8804; 2<sup>-n</sup> '
            '(from v<sub>2</sub>(S(n)) &#8805; n — Lean-derived via h_strict_from_r1_t3 given IsDepthChain; R-IZ-A closed). '
-           'By T-IZ-A (&#167; II.A), S(n) &#8594; 0 in Q<sub>2</sub>. Proved axiom-free in Lean: t_iz_cauchy. ✓'),
+           'By T-IZ-A (&#167; II.A), S(n) &#8594; 0 in Q<sub>2</sub>. Proved in Lean: t_iz_cauchy (carries Classical.choice from Mathlib p-adic analysis, &#167; III). ✓'),
         li('Step 2 — Valuation-complexity bridge (informational context): As v<sub>2</sub>(S(n)) &#8594; &#8734;, '
            'K(S(n)|n)/|S(n)| &#8594; 1. Original informational route to DA-1 Path 3. '
            'Not a proof dependency for T-IZ — DA-1 is now formally closed by ZP-K via Kleene. '
@@ -343,7 +345,7 @@ def build():
         ['Chain is Cauchy in (Q<sub>2</sub>, ‖·‖<sub>2</sub>)',
          'T3 (monotonicity) + ZP-B T2 (valuation-depth correspondence)',
          'Follows from existing structure — no new axiom',
-         'Lean: t_iz_cauchy ✓ (proved axiom-free)'],
+         'Lean: t_iz_cauchy ✓ (proved; carries Classical.choice, Mathlib p-adic)'],
         ['‖S(n)‖<sub>2</sub> → 0 (Cauchy limit = 0)',
          'ZP-B completeness — Q<sub>2</sub> is a complete p-adic field',
          'Already in framework',
@@ -351,7 +353,7 @@ def build():
         ['sup v<sub>2</sub>(S(n)) = ∞',
          'ZP-A R1 (no top) + ZP-B T2 (valuation = depth)',
          'Follows from no-top property — no new axiom',
-         'Lean: t_iz_valuation_unbounded ✓ (proved axiom-free)'],
+         'Lean: t_iz_valuation_unbounded ✓ (proved; carries Classical.choice, Mathlib p-adic)'],
         ['v<sub>2</sub> → ∞ ⟹ K/|S| → 1',
          'ZP-C D1 (P<sub>0</sub>) + L-INF + ZP-B (binary construction)',
          'Informational context — not a proof dependency',
@@ -380,28 +382,42 @@ def build():
     E.append(Paragraph('III. Lean Scope', S['h2']))
     E.append(body(
         'The Lean file SemilatticeInstance.lean formalizes the formal spine of T-IZ: Step 1 (Cauchy convergence, '
-        '§ I) and Step 6 (DA-2 licensing of &#8869;&#8242;, § IV). These two steps are proved '
-        'axiom-free and together constitute the complete formal proof. Steps 2–5 (the '
+        '§ I) and Step 6 (DA-2 licensing of &#8869;&#8242;, § IV), which together constitute the complete formal '
+        'proof. The two steps sit on different footings, and the document states this honestly: Step 6 '
+        '(t_iz_limit_is_new_null) is proved <i>axiom-free</i> — it is pure DA-2 structure. Step 1 (t_iz_cauchy) '
+        'is proved sorry-free but carries Classical.choice — inherited not from the p-adics as such, but from '
+        'Mathlib&#8217;s classical real-analysis convergence lemmas (squeeze_zero, the geometric-limit lemma, '
+        'tendsto_zero_iff_norm_tendsto_zero) that the metric limit rests on; Mathlib provides no '
+        'constructive-convergence alternative. The framework&#8217;s <i>algebraic</i> p-adic facts — the '
+        'valuation itself (e.g. v2_bot, [propext]) — are by contrast choice-free; only the analytic step of '
+        'taking a limit pulls the choice in. That footprint reports the analytic library the '
+        'proof stands on, not a framework commitment. Steps 2–5 (the '
         'valuation-complexity bridge and DA-1/T-SNAP path) describe the original ZP-E '
         'informational argument and are retained as motivational context. DA-1 is now formally '
-        'closed by ZP-K via Kleene\'s second recursion theorem. The following theorems are proved '
-        'axiom-free in SemilatticeInstance.lean:'))
+        'closed by ZP-K via Kleene\'s second recursion theorem. The theorems in SemilatticeInstance.lean, '
+        'with their axiom footprints:'))
     E += [
-        li('t_iz_cauchy: the ascending chain converges to 0 (topological core, proved axiom-free).'),
-        li('t_iz_limit_is_new_null: the Cauchy limit satisfies the DA-2 &#8869; role (proved directly).'),
-        li('c_t_iz_null_balance: a non-bottom state cannot satisfy the &#8869; role (proved directly).'),
-        li('t_iz_c3_compatible: C3 irreversibility is preserved — Cauchy sequences &#8800; continuous paths (proved directly).'),
-        li('t_iz_h_bound_from_depth_chain: h_bound derived from IsDepthChain + IsStrictStateSequence — '
-           'pure ZP-A lattice conditions. Closes the &#8214;S<sub>0</sub>&#8214; factor gap between '
-           '&#167;Ib and t_iz_complete (optional transparency lemma).'),
+        li('t_iz_limit_is_new_null: the Cauchy limit satisfies the DA-2 &#8869; role (the structural core of '
+           'the snap-arc; <b>axiom-free</b>).'),
+        li('c_t_iz_null_balance: a non-bottom state cannot satisfy the &#8869; role (choice-free, [propext]).'),
+        li('t_iz_cauchy: the ascending chain converges to 0 (topological core; carries Classical.choice from '
+           'Mathlib&#8217;s p-adic convergence, not a framework commitment).'),
+        li('t_iz_valuation_unbounded: sup v<sub>2</sub>(S(n)) = &#8734; (carries Classical.choice, Mathlib p-adic).'),
+        li('t_iz_c3_compatible: C3 irreversibility is preserved — Cauchy sequences &#8800; continuous paths '
+           '(carries Classical.choice, Mathlib p-adic).'),
+        li('t_iz_h_bound_from_depth_chain: h_bound derived from IsDepthChain + IsStrictStateSequence — the '
+           'hypotheses are pure ZP-A lattice conditions, though the analytic proof carries Classical.choice. '
+           'Closes the &#8214;S<sub>0</sub>&#8214; factor gap between &#167;Ib and t_iz_complete (optional '
+           'transparency lemma).'),
         li('t_iz_complete_from_axioms: T-IZ complete variant taking lattice hypotheses instead of bare h_bound — '
-           'full R1+T3 &#8594; convergence chain auditable in one theorem '
-           '(optional transparency variant; t_iz_complete is the canonical theorem).'),
+           'full R1+T3 &#8594; convergence chain auditable in one theorem (carries Classical.choice; '
+           'optional transparency variant; t_iz_complete is the canonical theorem).'),
         sp(4),
     ]
     E.append(derived(
-        'Status: DERIVED THEOREM — formal spine: t_iz_cauchy (Step 1, proved axiom-free) + '
-        't_iz_limit_is_new_null (Step 6, proved axiom-free via DA-2). These two steps '
+        'Status: DERIVED THEOREM — formal spine: t_iz_cauchy (Step 1, proved; carries Classical.choice '
+        'from Mathlib p-adic analysis) + '
+        't_iz_limit_is_new_null (Step 6, axiom-free via DA-2). These two steps '
         'constitute the complete formal proof of T-IZ. '
         't_iz_valuation_unbounded, c_t_iz_null_balance, t_iz_c3_compatible also proved. '
         'Transparency variants: t_iz_h_bound_from_depth_chain + t_iz_complete_from_axioms '
@@ -587,8 +603,8 @@ def build():
         ['T-IZ: Inside Zero Theorem',
          'DERIVED — T-IZ',
          'Every maximal ascending chain converges to its own successor null in Q<sub>2</sub>. '
-         'Formal spine: Step 1 (t_iz_cauchy, axiom-free) + Step 6 (t_iz_limit_is_new_null, '
-         'axiom-free via DA-2). Steps 2–5 are informational context — original ZP-E path; '
+         'Formal spine: Step 1 (t_iz_cauchy, carries Mathlib p-adic Classical.choice) + Step 6 '
+         '(t_iz_limit_is_new_null, axiom-free via DA-2). Steps 2–5 are informational context — original ZP-E path; '
          'DA-1 now formally closed by ZP-K/Kleene. No new axioms required.'],
         ['OQ-E2: Cardinality-semilattice correspondence',
          'PARTIALLY CLOSED — &#937; = &#969; forced',
@@ -603,16 +619,17 @@ def build():
         ['Valuation-complexity bridge',
          'CONTEXTUAL — informational layer',
          'Original ZP-E path connecting 2-adic depth to Kolmogorov complexity and DA-1 Path 3. '
-         'Not a proof dependency for T-IZ: formal spine is Steps 1 + 6 (both axiom-free); '
+         'Not a proof dependency for T-IZ: formal spine is Steps 1 + 6 (Step 6 axiom-free; Step 1 carries Mathlib p-adic choice); '
          'DA-1 formally closed by ZP-K via Kleene\'s second recursion theorem. '
          'Retained as motivational context documenting convergence of the topological and '
          'informational layers at P<sub>0</sub>. Outside Lean scope (Kolmogorov complexity '
          'absent from standard proof libraries) — but no longer load-bearing.'],
         ['T-IZ Lean sorry fill',
          'CLOSED — SemilatticeInstance.lean v1.1',
-         't_iz_norm_tendsto_zero and t_iz_conv_zero filled; t_iz_cauchy proved axiom-free. '
+         't_iz_norm_tendsto_zero and t_iz_conv_zero filled; t_iz_cauchy proved (carries Mathlib p-adic Classical.choice). '
          'All SemilatticeInstance.lean theorems compile with no sorry. '
-         'Axiom footprint: standard foundational axioms only (no domain-specific assumptions).'],
+         'Axiom footprint: standard foundational axioms only (propext, Quot.sound, and Classical.choice '
+         'from Mathlib p-adic analysis on the convergence theorems; the DA-2 step is axiom-free).'],
         ['AX-1: Binary Snap Causality',
          'CLOSED — T-SNAP (ZP-E)',
          'AX-1 retired. T-SNAP is derived. T-IZ extends T-SNAP to the ordinal limit.'],
@@ -633,7 +650,7 @@ def build():
         ['T-IZ: Inside Zero',
          'ZP-A R1 (no top — engine); ZP-B T2, completeness; ZP-C L-INF, D1; ZP-E DA-1, T-SNAP, DA-2',
          'None',
-         'Derived — T-IZ ✓ (formal spine Steps 1+6: both proved axiom-free; bridge: contextual)'],
+         'Derived — T-IZ ✓ (formal spine Steps 1+6: Step 6 axiom-free, Step 1 carries Mathlib p-adic choice; bridge: contextual)'],
         ['Null Balance 0 + x + (&#8722;x) = 0',
          'T-IZ + T-SNAP + DA-2 (ZP-E)',
          'None',
@@ -650,7 +667,7 @@ def build():
         ['t_iz_cauchy (Lean)',
          'ZP-B (Q<sub>2</sub> normed field); geometric tendsto; Mathlib.Analysis.SpecificLimits.Basic',
          'None',
-         'Lean: proved axiom-free ✓ (t_iz_norm_tendsto_zero, t_iz_conv_zero filled)'],
+         'Lean: proved ✓ (t_iz_norm_tendsto_zero, t_iz_conv_zero filled; carries Mathlib p-adic Classical.choice)'],
         ['t_iz_limit_is_new_null (Lean)',
          'da2_bottom_characterization',
          'None',
@@ -696,7 +713,7 @@ def build():
             '<i>End of ZP-I | Theorem T-IZ: Inside Zero | '
             'R-IZ-A closed: strict valuation growth derived from ZP-A R1 + T3 via IsDepthChain (h_strict_from_r1_t3, &#167;Ib) | '
             'Framework closure: no construction-level hypothesis required | '
-            'Formal spine: Steps 1 + 6 both proved axiom-free (t_iz_cauchy + t_iz_limit_is_new_null) | '
+            'Formal spine: Step 6 axiom-free (t_iz_limit_is_new_null), Step 1 carries Mathlib p-adic Classical.choice (t_iz_cauchy) | '
             'Valuation-complexity bridge: informational context, not load-bearing | '
             'DA-1 formally closed by ZP-K/Kleene | '
             'Remaining axioms: AX-B1, AX-G1, AX-G2 | No new axioms required</i>',

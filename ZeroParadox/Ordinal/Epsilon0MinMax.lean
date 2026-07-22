@@ -72,9 +72,12 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 Both results are corollaries of Mathlib's `Ordinal` fixed-point theory (`nfp`, `epsilon`), which is
-classically built, so `Classical.choice` is expected here — representational, inherited from Mathlib's
-`Ordinal`, not intrinsic to the snap (cf. ZP-N's choice-free snap-from-below on `ONote`,
-`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). Recorded honestly below. -/
+classically built, so `Classical.choice` is expected here. **Status: UNCLASSIFIED** — calling it
+"representational, not intrinsic" (as an earlier version of this note did) is an *eliminability* claim,
+and no choice-free re-proof of these results exists. Note also that the choice is NOT in the `Ordinal`
+type, which measures `[propext, Quot.sound]`; it enters through the order instance and the operations.
+ZP-N's choice-free snap-from-below on `ONote` is suggestive for these results without being a re-proof of
+them (cf. `ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). Recorded honestly below. -/
 
 section PurityCheck
 open ZeroParadox

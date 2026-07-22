@@ -232,4 +232,22 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 ---
 
-*Last updated: 2026-06-24. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
+*Last updated: 2026-07-19. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
+
+### `IsLeastFixedPointFrom` — `ZeroParadox/Order/LeastFixedPoint.lean:77`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Mathlib's least-fixed-point API (`OrderHom.lfp`, `isLeast_lfp`) is fixed to a `CompleteLattice` carrier. This predicate states the SAME mu characterization (least fixed point at or above a seed) over a bare relation, so it applies to the framework's non-lattice carriers — the axiom-clean `ZPSemilattice` L, and `Ordinal`, which is not a complete lattice. It is the order-generic placement schema, grounded back to `OrderHom.lfp` in that file's section II.
+
+### `ProvabilityLogic` — `ZeroParadox/Settheory/Loeb.lean:60`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Mathlib carries no modal or provability logic — no Loeb, no GL, no derivability conditions, no modal Kripke apparatus (grep-verified). A minimal typeclass carrying just the Hilbert-Bernays-Loeb apparatus, so that Loeb's theorem can be presented as a face of the diagonal family.
+
+### `QuineHost` — `ZeroParadox/Settheory/QuineHost.lean:95`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Mathlib's `ZFSet` carries Foundation (`ZFSet.mem_wf`), which forbids `x in x` and so cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." `QuineHost` is the minimal set-theory-native encoding of the framework's requirements on a host theory (fields `bot_selfMem` / `selfMem_unique`), distinct from the lattice-level `AFAStructure` in `SetTheoryAFA.lean`.

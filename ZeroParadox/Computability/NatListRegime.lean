@@ -55,6 +55,12 @@ this is a "third root-cut regime strictly between pure-seam (`constPF_unit`, `Fi
 (`idPF_NatListRegime`, `Fix` empty)" is the framework interpretation: `constPF_unit`/`idPF_NatListRegime` are defined here but their
 `Fix ≃ Cofix` / `Fix` empty placements are stated as the regime description, not separately proven in
 this file. The witnessed substance is the `natPF_NatListRegime` triple above.
+
+**Prior art.** The initial-algebra (μ) vs final-coalgebra (ν) framework — and that the canonical comparison
+`Fix → Cofix` embeds the finite/well-founded data into the possibly-infinite unfoldings without being
+surjective — is standard (co)algebra/(co)induction theory; the classic survey home is Jacobs & Rutten,
+"A Tutorial on (Co)Algebras and (Co)Induction," EATCS Bulletin 62 (1997). The delta here is the concrete
+`natPF_NatListRegime` witness (`natInfinity` as the omitted element), not the framework.
 -/
 
 namespace ZeroParadox

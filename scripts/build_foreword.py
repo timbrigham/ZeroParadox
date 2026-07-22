@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.11, revised July 2026)
+Zero Paradox — Foreword PDF Builder (v2.12, revised July 2026)
+v2.12: SYNC TO CLAIMS.md + bedrock false-premise fix (release-prep). (1) Struck the false "a well-founded ⊥ would admit an external interpreter" premise (the finite-interpretability fallacy, same class as ZP-E v3.24 / ZP-A v1.20) from the CC-2 row and Section III; ZFC-incompatibility now rests on ⊥={⊥} self-membership (Regularity, no_quine_atom). (2) AX-B1 corrected from "Directly Verifiable / not a novel commitment" to "the one substantive modeling commitment" (discrete over continuum; only ax_b1_distinct's distinctness is decide-checked; f_snap_impossible). (3) Commitment accounting synced to CLAIMS.md: MC-1 = the bottom family (not a commitment; identity retired as ill-typed), CC-1 derived via ZP-J cc1_derived, CC-2 a Forced Metatheoretic Commitment. Supersedes the v2.8 "argued to be ruled out" softening (which left the premise) and the v1.6 "Directly Verifiable" AX-B1 relabel.
 v2.11: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
 v2.10: §IV — cited Yanofsky (2003) and Lawvere's year (1969) for the diagonal-fixed-point unification; prior-art positioning, paired with the new CLAIMS "Convergence with established work" section.
 v2.9: C8 dual-date templating (Initial/Current meta line; hardcoded month removed).
@@ -54,7 +55,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.11'
+VERSION = '2.12'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -101,10 +102,12 @@ def commitments_table():
         Paragraph('Statement', S['label']),
     ]
     rows = [
-        ('AX-B1', 'Directly Verifiable',
-         'Binary Existence. A state either exists or it does not. '
-         'Not a novel commitment — directly verifiable by computation rather than requiring '
-         'a leap of faith. The distinction between null and exist can be checked by a finite procedure.'),
+        ('AX-B1', 'Modeling Commitment (the substantive one)',
+         'Binary Existence. A state either exists or it does not — existence is discrete/Boolean, '
+         'not a continuum of partial existence. This is the framework&#8217;s one substantive modeling '
+         'commitment: the decide proof (ax_b1_distinct) verifies the two states are distinct given the '
+         'two-element type, but the choice of a discrete alphabet over a continuum is the commitment '
+         'itself, not what decide checks (the snap provably fails in the reals, f_snap_impossible).'),
         ('AX-G1', 'Axiom',
          'Initial Object Exists. There is a starting point that reaches every other object. '
          'Not a novel commitment — the existence of ⊥ as the bottom element of the ZP-A semilattice already guarantees this; ZP-G names it in categorical language.'),
@@ -123,21 +126,22 @@ def commitments_table():
         ('AX-1',  'Retired axiom → Theorem T-SNAP',
          'Binary Snap Causality. Previously an axiom; now derived as Theorem T-SNAP via '
          'the L-RUN / TQ-IH / DA-1 chain in ZP-C and ZP-E.'),
-        ('MC-1',  'Modeling Commitment',
-         'Cross-Framework Identification. The four concrete frameworks (ZP-A semilattice, '
-         'ZP-B p-adic topology, ZP-C information theory, ZP-D Hilbert space) are '
-         'identified as instantiations of the abstract categorical structure in ZP-G. '
-         'Demonstrated by the four functors in ZP-H; asserted as structural '
-         'correspondence, not derived within any single layer.'),
-        ('CC-1',  'Conditional Claim',
-         'S₀ = ⊥. The initial state equals the null state. '
-         'T2 establishes ⊥ ≤ S₀ unconditionally; CC-1 strengthens this to equality '
-         'as an explicit modeling choice. Conditional on this identification '
-         'holding in a given instantiation.'),
+        ('MC-1',  'The bottom family (not a commitment)',
+         'The four domain bottoms (ZP-A semilattice, ZP-B p-adic topology, ZP-C information theory, '
+         'ZP-D Hilbert space) form one family, each a member characterized by shared criteria and the '
+         'same diagonal fixed-point shape. Membership is proved per domain — the categorical '
+         'correspondence is realized in Lean (mc1_correspondence, the four functors in ZP-H). The former '
+         'numerical identity — that the four are one object — is retired as ill-typed (x = y across '
+         'distinct categories is not a well-formed proposition); the members are provably distinct (the walls).'),
+        ('CC-1',  'Derived (was a Conditional Claim)',
+         'S₀ = ⊥. The initial state equals the null state. T2 establishes ⊥ ≤ S₀ unconditionally; '
+         'the strengthening to equality is now derived, not stipulated — closed via ZP-J cc1_derived '
+         '(axiom-free, Lean) in any AFAStructure lattice.'),
         ('CC-2',  'Forced Metatheoretic Commitment',
          '⊥ = {⊥}. The null state is self-containing — a Quine atom under ZF+AFA. '
-         'The metatheoretic choice of AFA over Foundation is not free: Foundation is argued to be ruled out '
-         'by R3 and ZP-C L-INF. Foundation and AFA are dual framings of the same object — '
+         'The metatheoretic choice of AFA over Foundation is not free: ⊥ = {⊥} is a member of itself, '
+         'which Foundation (the Axiom of Regularity) forbids (no_quine_atom), so Foundation cannot host it. '
+         'Foundation and AFA are dual framings of the same object — '
          'Foundation excludes the Quine atom; AFA uniquely permits it. '
          'Fixed-point content formally verified in ZFC by ZP-J (ScaleBridge). '
          'Set-theoretic interpretation requires ZF+AFA.'),
@@ -345,18 +349,20 @@ def build():
         Paragraph(
             'Every formal system rests on commitments it does not derive. The Zero Paradox '
             'framework is unusually explicit about its own. As of the current version, this '
-            'framework introduces no novel axioms. Stated explicitly: two structural commitments '
-            '(grounded in prior layers), two methodological principles, one design commitment, '
-            'one modeling commitment (MC-1), and two conditional claims (CC-1, CC-2):',
+            'framework introduces no novel axioms. Stated explicitly: one substantive modeling '
+            'commitment (AX-B1), two structural commitments grounded in prior layers (AX-G1, AX-G2), '
+            'two methodological principles, and one design commitment. CC-1 is now derived (ZP-J), CC-2 '
+            'is a Forced Metatheoretic Commitment, and MC-1 names the bottom family rather than a commitment:',
             S['body']),
         Paragraph(
             'A note on metatheory: this framework is stated over ZF + AFA '
             '(Zermelo–Fraenkel set theory with Aczel\'s Anti-Foundation Axiom), '
             'not standard ZFC. AFA permits self-containing sets — in particular, sets x '
             'satisfying x = {x}. This matters only for CC-2 in the table below; '
-            'every other result in this framework holds in standard ZF. Standard ZFC is '
-            'incompatible with CC-2: a well-founded ⊥ would admit an external interpreter, '
-            'contradicting the self-execution argument. The Axiom of Choice is not assumed '
+            'every other result in this framework holds in standard ZF. Standard ZFC (with '
+            'Foundation) is incompatible with CC-2: ⊥ = {⊥} is a member of itself, which the Axiom of '
+            'Regularity forbids (no set is self-membered, no_quine_atom), so a Foundation universe '
+            'cannot host it. The Axiom of Choice is not assumed '
             'as a framework commitment. One exception at the infrastructure level: ZP-K\'s '
             'Kleene computability machinery depends on Classical.choice as a standard Lean '
             'library axiom — the same dependency carried by any theorem using Mathlib\'s '
@@ -482,13 +488,14 @@ def build():
             S['body']),
         Paragraph(
             'The open commitments are honest. No novel axioms are introduced. '
-            'Two structural commitments, two principles, one design commitment, '
-            'one modeling commitment, and two conditional claims are stated. '
-            'The framework does not launder their status. '
-            'AX-B1 — binary existence — is not a novel commitment: it is directly verifiable '
-            'by computation. Whether a finite type has two distinct elements requires no '
-            'classical axioms — it can be decided mechanically. The theorems stand on their '
-            'own axioms regardless.',
+            'One substantive modeling commitment (AX-B1), two structural commitments, two principles, '
+            'and one design commitment are stated; CC-1 is derived, CC-2 is a Forced Metatheoretic '
+            'Commitment, and MC-1 is the bottom family. The framework does not launder their status. '
+            'AX-B1 — binary existence — is the framework&#8217;s one substantive modeling commitment: '
+            'that existence is discrete rather than a continuum of partial states. The decide proof '
+            '(ax_b1_distinct) checks only that the two states are distinct given the two-element type; '
+            'the discreteness choice itself is the commitment, and the snap provably fails on a '
+            'continuum (f_snap_impossible). The theorems stand on their own axioms regardless.',
             S['body']),
     ]
 

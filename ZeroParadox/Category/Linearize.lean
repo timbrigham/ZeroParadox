@@ -36,7 +36,9 @@ namespace ZeroParadox
 open CategoryTheory Limits ZeroParadox
 
 /-- **Object map of the linearization comparison**: the free ℂ-module on a type `A`, `A ↦ (A →₀ ℂ)`. On
-    finite `A = Fin n` this is `ℂ^n`; a finite stochastic map becomes its stochastic-matrix linear map. -/
+    finite `A = Fin n` this is `ℂ^n`; a finite stochastic map becomes its stochastic-matrix linear map.
+    (This is exactly the object map of Mathlib's free-module functor `ModuleCat.free ℂ`
+    (`Algebra/Category/ModuleCat/Adjunctions.lean`); re-inlined here for a self-contained probe.) -/
 noncomputable def linObj (A : Type) : ModuleCat ℂ := ModuleCat.of ℂ (A →₀ ℂ)
 
 /-- The linearization sends the Info bottom `Fin 0` to a zero/initial object of `ModuleCat ℂ`

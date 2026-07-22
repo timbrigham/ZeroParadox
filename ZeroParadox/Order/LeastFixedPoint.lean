@@ -191,8 +191,11 @@ end ZeroParadox
 The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at
 all); the Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`.
 The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) inherit
-`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory — representational, not
-intrinsic to the snap (cf. the ZP-N choice-free snap-from-below). The Kleene face inherits
+`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory. **Status: UNCLASSIFIED** —
+"representational, not intrinsic" was asserted here in an earlier version and is retracted: that is an
+eliminability claim and no choice-free re-proof of these faces exists. The choice is not in the `Ordinal`
+type (`[propext, Quot.sound]`) but in the order instance and the operations. ZP-N's choice-free
+snap-from-below is suggestive, not a re-proof. The Kleene face inherits
 `[propext, Classical.choice, Quot.sound]` from the `Code`/`Partrec` machinery. Recorded honestly. -/
 
 section PurityCheck

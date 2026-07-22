@@ -143,7 +143,8 @@ section PurityCheck
 -- The arity-two μ side is choice-free exactly as the arity-one (idPF_Coalgebra) μ side: doubling the recursive
 -- positions changes neither the emptiness nor its axiom footprint. The ν choice is the Mathlib
 -- corecursion artifact, not a necessity (polynomial-functor final coalgebra is constructible
--- choice-free in principle; Veltri, FSCD 2021).
+-- choice-free in principle; Ahrens–Capriotti–Spadotti, TLCA 2015, arXiv:1504.02949; Veltri, FSCD 2021
+-- for the finite-powerset case).
 #print axioms binFix_isEmpty
 #print axioms binCofix_nonempty
 #print axioms binPF_fork_strict
