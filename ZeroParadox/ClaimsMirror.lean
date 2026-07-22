@@ -19,7 +19,20 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): <your take, in your own voice>
+For a while it looked like this whole framework might be standing on what is technically a false
+assumption, and that was scary and fascinating at the same time. The part worth keeping in mind is that
+the theories came before the Lean. The PDFs and the ideas predate the formal files, and some of the early
+material came out of conversations, a fair number of them across several other models. The conclusions
+were reached first and the proofs were retrofitted under them afterward.
+
+I thought the SSOT was already doing this kind of mapping. It was partway there, and what was missing was
+the link from each claim to the declaration that discharges it. So the job of this file is to change
+nothing in the prose and just write the Lean that is an exact representation of each claim. A lot of these
+were already proved, some of them a long time ago, the MC-1 correspondence among them. The proof was never
+the missing piece. The link between the claim and the proof was.
+
+I want this file kept as a reference in the same way we did for the bottom, so we never lose track of this
+again.
 
 ---
 

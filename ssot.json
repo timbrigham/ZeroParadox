@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1448,
+        "declarations": 1467,
         "files": 136
       },
       "entries": [
@@ -3096,6 +3096,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "node-valuation"
+            ]
+          },
+          "disposition": "new",
+          "id": "0a9becb7-2550-4bae-b76e-5ca8cdc15e67",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_valuation",
+            "short": "claim_node_valuation"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6086,6 +6120,40 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "node-set-theory"
+            ]
+          },
+          "disposition": "new",
+          "id": "17279d60-6700-42c2-9649-187a9f88e7f7",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_set_theory",
+            "short": "claim_node_set_theory"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -13886,6 +13954,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": [
+              "node-order"
+            ]
+          },
+          "disposition": "new",
+          "id": "3e8dd0b4-8cec-4fa1-8982-e7edcd3904b2",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_order",
+            "short": "claim_node_order"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": []
           },
           "disposition": "renamed",
@@ -14604,6 +14706,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "T-SNAP"
+            ]
+          },
+          "disposition": "new",
+          "id": "432b9d44-ca24-4ac4-b781-bebb9dbae0a0",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_T_SNAP",
+            "short": "claim_T_SNAP"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17020,6 +17156,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": [
+              "E3-quines-floor"
+            ]
+          },
+          "disposition": "new",
+          "id": "4de1da6b-2f29-423a-af56-bfaed4ae11d7",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_E3_quines_floor",
+            "short": "claim_E3_quines_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": []
           },
           "disposition": "renamed",
@@ -17051,6 +17221,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "node-state"
+            ]
+          },
+          "disposition": "new",
+          "id": "4defda1c-ea34-4dc5-9210-a1415c2d2fda",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_state",
+            "short": "claim_node_state"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -22169,6 +22373,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": [
+              "Perron-info-state"
+            ]
+          },
+          "disposition": "new",
+          "id": "69a48300-4b1c-4fd5-a154-69f024da1dec",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_Perron_info_state",
+            "short": "claim_Perron_info_state"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": []
           },
           "disposition": "new",
@@ -22904,6 +23142,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "MC1-cat-state"
+            ]
+          },
+          "disposition": "new",
+          "id": "6d75bb67-ad6a-4e97-8a20-d921282d993d",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_MC1_cat_state",
+            "short": "claim_MC1_cat_state"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25310,6 +25582,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "MC1-cat-valuation"
+            ]
+          },
+          "disposition": "new",
+          "id": "798e723a-af5c-414b-90e2-9dee18786829",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_MC1_cat_valuation",
+            "short": "claim_MC1_cat_valuation"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -31124,6 +31430,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": [
+              "node-computability"
+            ]
+          },
+          "disposition": "new",
+          "id": "95bb5a15-290c-4166-9343-775f610029b3",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_computability",
+            "short": "claim_node_computability"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": []
           },
           "disposition": "renamed",
@@ -31485,6 +31825,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "node-category"
+            ]
+          },
+          "disposition": "new",
+          "id": "9754b7ff-40d7-4e73-89f1-0403ef53970b",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_category",
+            "short": "claim_node_category"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39624,6 +39998,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": [
+              "node-ordinal"
+            ]
+          },
+          "disposition": "new",
+          "id": "c269f742-72a0-4b88-a325-e1017dab1959",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_ordinal",
+            "short": "claim_node_ordinal"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": []
           },
           "disposition": "renamed",
@@ -40234,6 +40642,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": [
+              "node-algebra"
+            ]
+          },
+          "disposition": "new",
+          "id": "c5a744f9-4d14-4025-b4cf-3216c3e397ff",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_algebra",
+            "short": "claim_node_algebra"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": []
           },
           "disposition": "renamed",
@@ -40667,6 +41109,40 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "node-information"
+            ]
+          },
+          "disposition": "new",
+          "id": "c71febeb-e90d-48df-bf38-82c4a9e753e3",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_node_information",
+            "short": "claim_node_information"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42822,6 +43298,40 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": [
+              "DA-1"
+            ]
+          },
+          "disposition": "new",
+          "id": "d1c54170-89a2-4980-a509-f2880b2b4c99",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_DA1",
+            "short": "claim_DA1"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": []
           },
           "disposition": "new",
@@ -43639,6 +44149,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "MC-1-correspondence"
+            ]
+          },
+          "disposition": "new",
+          "id": "d55f095a-468d-46b9-8959-c4333d40e4a4",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_MC1_correspondence",
+            "short": "claim_MC1_correspondence"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44946,6 +45490,40 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "E4-info-floor"
+            ]
+          },
+          "disposition": "new",
+          "id": "db897938-62dc-4624-9b76-2500617dab0a",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_E4_info_floor",
+            "short": "claim_E4_info_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -47810,6 +48388,40 @@
           "reason": "PoleChartSelection: NEGATIVE result - chart selection at the built pole is axiom-free, refuting the naive 'choice = chart selection' reading; § II is a labelled conditional model",
           "verify": {
             "axioms": "propext, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "E2-tower-floor"
+            ]
+          },
+          "disposition": "new",
+          "id": "e7ccd134-0360-4460-ae37-db81bb6ea326",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_E2_tower_floor",
+            "short": "claim_E2_tower_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -51429,6 +52041,40 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": [
+              "MC1-cat-information"
+            ]
+          },
+          "disposition": "new",
+          "id": "f9a98457-5274-4f11-8639-47f8e5215f47",
+          "new": {
+            "file": "ZeroParadox/ClaimsMirror.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.claim_MC1_cat_information",
+            "short": "claim_MC1_cat_information"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
