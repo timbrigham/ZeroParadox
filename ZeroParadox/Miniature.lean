@@ -50,6 +50,23 @@ It reads top to bottom:
 * **The capstone (`shape`)** bundles all of it: wall (no fixed point), floor (fixed point), the collapse
   irreversible, the snap-limit both-a-limit-and-a-bottom, and the fan-out — the whole shape in one theorem.
 
+**What the floor stands for — self-reference and the Quine atom.** This file represents the floor as bare
+fixed-point existence (`floor_of_witness`: a witness forces a fixed point; `cZero_has_fp`: the collapse fixes a
+point). In the full framework that fixed point is a *self-referential* object — **the Quine atom** (Quine;
+Aczel): the set that is its own only member, `⊥ = {⊥}`. It is one structural fact in several languages — the
+Quine atom (set theory / ZF+AFA), the Kleene quine (a program that prints itself, computability), the
+order-bottom `⊥`, and the algebraic join-identity are proved to be the *same* element
+(`Computability/Kleene.lean`; `Settheory/SetTheoryAFA.lean` `t_exec`). The wall's seed here, `negation_no_fp`
+(`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
+*closing* — landing on the thing that is its own answer.
+
+We show the *limited* version deliberately. The **shape** — self-reference forced either to a wall or to a
+self-referential floor — is what the minimal core exhibits, and a bare fixed point is enough to carry it. The
+full Quine atom needs a non-well-founded set theory (ZF+AFA) to host `⊥ = {⊥}` literally; that host is the
+*flesh*, cited to its home, not rebuilt here. Honest split: the *structural* self-application fixed point is
+Lean-proved and axiom-free (`t_exec`); the *literal* set-membership `⊥ = {⊥}` is a metatheoretic modeling
+commitment (ZF+AFA), a theorem nowhere — the framework's own fence, kept here.
+
 **Honest status.** The *content* is re-derived, not new: the engine is **Lawvere (1969) / Yanofsky (2003)**
 (`Settheory/Wall.lean`); the classifier is `Category/DiagonalWitness.lean`; the four corners are
 `Valuation/PoleCorners.lean`; the min=max is `Ordinal/Epsilon0MinMax.lean` `epsilon0_min_eq_max` (the real ε₀
@@ -92,7 +109,10 @@ when some self-application has, in its range, the diagonal of every admissible `
 def HasWitnessRel (β : Type u) (M : (β → β) → Prop) : Prop :=
   ∃ (α : Type u) (e : α → (α → β)), ∀ g : β → β, M g → ∃ a, (fun x => g (e x x)) = e a
 
-/-- **The floor condition.** A witness forces every admissible endomap to have a fixed point. -/
+/-- **The floor condition.** A witness forces every admissible endomap to have a fixed point — self-reference
+*closes*. In the full framework that fixed point is the self-referential **Quine atom** `⊥ = {⊥}` / Kleene
+quine (`Settheory/SetTheoryAFA.lean` `t_exec`); here it is bare existence — see the docstring's
+"What the floor stands for". -/
 theorem floor_of_witness {β : Type*} {M : (β → β) → Prop} (h : HasWitnessRel β M)
     {g : β → β} (hg : M g) : ∃ b, g b = b := by
   obtain ⟨α, e, he⟩ := h
