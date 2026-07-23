@@ -21,15 +21,16 @@ The index above is where the precise line between proved and conjectural is kept
 
 ## Core (finalized results - read these)
 
-The framework's reviewed, load-bearing Lean, organized by domain folder; the formal layers' proofs live here, with `BottomCannotBe.lean` (Bottom-Meta) as the curated index over them.
+The framework's reviewed, load-bearing Lean, organized by domain folder. The formal layers ZP-A through ZP-P live here; `BottomCannotBe.lean` (Bottom-Meta) is the curated index over them.
 
 ### Order / lattice (ZP-A, ZP-E)
 
 - `ZeroParadox/Order/Lattice.lean` - ZP-A: Lattice Algebra
+- `ZeroParadox/Order/LeastFixedPoint.lean` - The μ abstraction: least fixed point reached from a seed (the ceiling analogue of `AbstractSelfApp`)
 - `ZeroParadox/Order/PerronCapstone.lean` - Capstone: Perron–Frobenius for finite stochastic operators
 - `ZeroParadox/Order/PowerSet.lean` - ZP-H Extension: Power Set Lattice as Structural Floor Witness
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
-- `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ (what the snap is / is not; `#check`-only)
+- `ZeroParadox/Order/SnapCannotBe.lean` - Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
@@ -45,6 +46,8 @@ The framework's reviewed, load-bearing Lean, organized by domain folder; the for
 - `ZeroParadox/Valuation/PlaceAllPrimes.lean` - ZP-H Direction A, Cycle A5 (depth c) — the framework's OWN bottom family = all places of ℚ
 - `ZeroParadox/Valuation/PlaceForcing.lean` - ZP-H Direction A, Cycle A2 — the archimedean place is the product-formula balancer
 - `ZeroParadox/Valuation/PlaceMetric.lean` - ZP-H Direction A, Cycle A3 — the place is load-bearing in the DYNAMICS: ⊥ as a place-relative limit
+- `ZeroParadox/Valuation/PoleChartSelection.lean` - Chart selection at the pole: free on the built sphere, choice-forcing only under an added commitment
+- `ZeroParadox/Valuation/PricedPadicInterface.lean` - A priced p-adic interface: a choice-free carrier for ZP-B/ZP-J Group A, a map into `ℤ_[2]`, and both sides' axiom footprints
 - `ZeroParadox/Valuation/RiemannSphere.lean` - The p-adic Riemann sphere: inversion swaps the floor 0 and its antipode ∞
 - `ZeroParadox/Valuation/Scale.lean` - ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
 - `ZeroParadox/Valuation/ScaleBridge.lean` - ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice
@@ -77,8 +80,16 @@ The framework's reviewed, load-bearing Lean, organized by domain folder; the for
 ### Category theory (ZP-G, ZP-H)
 
 - `ZeroParadox/Category/AxG2Reduce.lean` - B4 (pipeline): AX-G2 is derivable from strict-initiality (a ZP-G posit collapses)
+- `ZeroParadox/Category/BottomUndecidable.lean` - Where the keystone's classical cost sits: unresolved identity, and NOT self-containment
 - `ZeroParadox/Category/Category.lean` - ZP-G: Category Theory
+- `ZeroParadox/Category/ChoiceCannotBe.lean` - Machine-checked characterization index of the framework's relationship to `Classical.choice`
+- `ZeroParadox/Category/DiagonalWitness.lean` - The minimum requirements to be a diagonal fixed point — the relativized Lawvere witness
+- `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - Nuclei and sublocales — the home of "a predicated difference generates a system"
+- `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: the excluded-middle modality
+- `ZeroParadox/Category/ExcludedMiddleBridge.lean` - The excluded-middle bridge: choice → excluded middle → the `Prop` nucleus is trivial
 - `ZeroParadox/Category/Lawvere.lean` - ZPJ — The Lawvere bridge (keystone Tier-6 upgrade probe)
+- `ZeroParadox/Category/LawvereDecidable.lean` - Lawvere's engine, priced: the same theorems over decidable equality
+- `ZeroParadox/Category/LawvereTaboo.lean` - The diagonal engine's supplier is a constructive taboo
 
 ### Multi-homed bridges (ZP-H)
 
@@ -91,6 +102,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder; the for
 - `ZeroParadox/Multihomed/MC1Bridge.lean` - ZP-H MC-1 Correspondence: the snap floor realized across the real domain categories
 - `ZeroParadox/Multihomed/PadicBridge.lean` - B2 (pipeline): the computational bottom maps to the 2-adic floor
 - `ZeroParadox/Multihomed/SelfClosureObstruction.lean` - Self-Closure Obstructions: the wall-side mirror of the diagonal fixed point (experimental probe)
+- `ZeroParadox/Multihomed/SeparatedSuccession.lean` - The type bridge: a separated succession as an interface, with two known implementations
 - `ZeroParadox/Multihomed/TopNumEdge.lean` - Web edge: topology ↔ number theory (the valuation generates the ball topology)
 
 ### Set theory / AFA (ZP-J)
@@ -98,12 +110,15 @@ The framework's reviewed, load-bearing Lean, organized by domain folder; the for
 - `ZeroParadox/Settheory/APG.lean` - ZPJ — Accessible Pointed Graphs and AFA Decoration Uniqueness
 - `ZeroParadox/Settheory/AczelConn.lean` - ZPJ — Aczel Fixed Point Connection
 - `ZeroParadox/Settheory/Coalgebra.lean` - ZP-P instance: the categorical parent (initial algebra vs final coalgebra)
+- `ZeroParadox/Settheory/Curry.lean` - Curry's paradox — the diagonal family's EXPLOSION face (probe)
 - `ZeroParadox/Settheory/FixedPointFork.lean` - ZP-P: The Fixed-Point Fork
+- `ZeroParadox/Settheory/Loeb.lean` - Löb's theorem — the diagonal family's PROVABILITY-modal face (probe, from scratch)
 - `ZeroParadox/Settheory/Model.lean` - ZPJ — Concrete ValuationStructure Instance: (ℕ∞, min, ⊤)
 - `ZeroParadox/Settheory/OntBridge.lean` - ZPJ — OntologicalStates → AbstractSelfApp → AFA Content
 - `ZeroParadox/Settheory/QuineDichotomy.lean` - ZPJ — the Quine-atom dichotomy
 - `ZeroParadox/Settheory/QuineHost.lean` - The Quine-Host Requirements — the AFA fragment the framework actually needs
 - `ZeroParadox/Settheory/SetTheoryAFA.lean` - ZP-J: Executability of Self-Reference
+- `ZeroParadox/Settheory/Tarski.lean` - Tarski's undefinability of truth — the diagonal family's TRUTH face (probe)
 - `ZeroParadox/Settheory/Wall.lean` - Zero as a Wall — the metatheoretic boundary, as a failure-mode taxonomy (formal object)
 - `ZeroParadox/Settheory/Wall_OneRoot.lean` - Two small facts: self-loops exist without well-foundedness; the Lawvere lemma needs no order
 
@@ -111,21 +126,31 @@ The framework's reviewed, load-bearing Lean, organized by domain folder; the for
 
 - `ZeroParadox/Computability/Kleene.lean` - ZP-K: Computational Grounding of Self-Reference
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)
+- `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
 
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
 
 - `ZeroParadox/Ordinal/B6_CanonicalCNF.lean` - B6 (pipeline): canonical (CNF / log-ω) ordinal → 2-adic, valuation growth NOT tower-defined
+- `ZeroParadox/Ordinal/CnfBridge.lean` - The CNF/ℤ₂ value bridge, at the construction level (Gentzen.lean item 4)
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
+- `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
-- `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ (what ε₀ is / is not; `#check`-only)
+- `ZeroParadox/Ordinal/Epsilon0MinMax.lean` - ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
 - `ZeroParadox/Ordinal/Gentzen.lean` - ZP-L: Incomputability Convergence
 - `ZeroParadox/Ordinal/Goodstein.lean` - Goodstein's theorem (full, hereditary base) — ε₀ ordinal descent
 - `ZeroParadox/Ordinal/Incompleteness.lean` - ZP-M: Kleene–Ordinal Bridge Layer
 - `ZeroParadox/Ordinal/KirbyParis.lean` - Kirby–Paris hydra termination (the ε₀ gap) — proved
 - `ZeroParadox/Ordinal/Kruskal.lean` - Kruskal's Tree Theorem (labeled) — finite rose trees are well-quasi-ordered
 - `ZeroParadox/Ordinal/NaturalOpsPow.lean` - Natural sum on powers of ω — the deferred CNF characterization (ported)
+- `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - Comparability of well-orders is a constructive taboo
 - `ZeroParadox/Ordinal/P8.lean` - P8 re-attempt: ε₀ → 0 in ℤ₂ via a tower-rank 2-adic encoding
+- `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: a carrier sized to ε₀, a map into `Ordinal`, and both sides' axiom footprints
+- `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
+- `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
+- `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` - No snap-shaped closure on the `ONote` carrier: a proved obstruction
+- `ZeroParadox/Ordinal/SnapSuccession.lean` - The succession as a chain: the ε-numbers are the snap's successive targets, strictly climbing
+- `ZeroParadox/Ordinal/SyntacticCollapse.lean` - Syntactic surrogate for the 2-adic metric collapse (choice-free)
 - `ZeroParadox/Ordinal/WeakGoodstein.lean` - Weak Goodstein termination (second-domain depth test: ordinals / proof theory)
 
 ### Algebra / wheel (ZP-J)
@@ -137,21 +162,9 @@ The framework's reviewed, load-bearing Lean, organized by domain folder; the for
 
 - `ZeroParadox/AxiomProfile.lean` - Axiom Profile — the choice-free core of the Zero Paradox
 - `ZeroParadox/BottomCannotBe.lean` - Machine-checked verification index of results characterizing ⊥ (the bottom element)
-- `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked keystone index of self-reference (the diagonal fixed point), routing every face by the μ/ν fork; `#check`-only
-- `ZeroParadox/Category/DiagonalWitness.lean` - The minimum-requirements level under the keystone: the relativized Lawvere witness `HasWitnessRel`, its map-class topology (`IsLowerSet`), and the effective-category floor (axis 2). Packages Lawvere/Yanofsky/effective-topos; the floor faces' shared landing at ⊥ is the one uncopied placement.
-- `ZeroParadox/Category/DifferenceGeneratesSystem.lean` - The nucleus/sublocale home of "a predicated difference generates a system": identifies the conjecture with Lawvere–Tierney (nucleus → sublocale → lattice) structure, and machine-checks that double negation generates the classical (Boolean) core (`Heyting.Regular`). `example`-only; states no new result.
-- `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: `dnegNucleus : Nucleus X` (the map `a ↦ aᶜᶜ` on any Heyting algebra), the excluded-middle / classical-collapse modality, the double-negation-side parallel of `snapNucleus`. Its closed points are exactly the regular elements — the Boolean core (`dnegNucleus_isClosed_iff`). Textbook (¬¬ subtopos / Glivenko); generates classical logic (excluded middle), NOT the axiom of choice - **full** AC is strictly stronger by **Cohen 1963** / Fraenkel-Mostowski, NOT by Diaconescu, whose own theorem is an *equivalence* for the restricted shape. **Choice-free: footprint `[propext]`** — `dneg_inf_distrib` re-proves meet-preservation on the meet side only, avoiding the `sup` route (`compl_sup_distrib`) through which Mathlib's `compl_compl_inf_distrib` carries `Classical.choice`. Since Lean derives `Classical.em` from `Classical.choice` by Diaconescu's argument, this is the statement that the modality whose closed points are the classical core is itself built with no classical input. **Correction of record:** this file once named the object the framework's "choice modality" - wrong (choice is strictly stronger), corrected in `655c761` off an adversary kill-list, and recorded in the file rather than quietly rewritten.
-- `ZeroParadox/Category/ChoiceCannotBe.lean` - Machine-checked characterization index of the framework's **relationship to `Classical.choice`** - the fourth `CannotBe` index, after ⊥, the snap, and ε₀. **A framing difference from the other three:** choice is NOT a framework object, it is an ambient kernel axiom, so this indexes where choice is provably not needed, what it must not be confused with, and what is actually established. **Headline fence:** the English word "choice" (an act of picking, a point of view, a chart selection) and the axiom `Classical.choice` are NOT the same thing, and every "choice = which way you view the split" reading is a MODEL of the choice-vs-no-choice distinction, never the axiom. Prior art stated precisely: **Diaconescu (1975) proves an EQUIVALENCE** for the shape our `ChoiceFragment` has (choice for inhabited subobjects of a two-element object IS excluded middle); that *full* AC is strictly stronger is **Cohen 1963** / Fraenkel-Mostowski independence, NOT Diaconescu - do not attribute it to him. That excluded middle nonetheless *appears* not to yield the fragment in Lean - the natural construction fails to elaborate and closes only under `classical`, which is **strong evidence, not a proof of unprovability** - looks like a fact about **Lean's `Prop`/`Type` stratification** (the fragment selects into `Bool`, so it is data-valued excluded middle), which a topos lacks - that reconciliation is the framework's own small finding. `#check`-only - creates no declarations, so it structurally cannot overclaim, and the `import`s force every indexed proof to recompile. **Records NO count of choice-carrying declarations, deliberately** - a corpus total measures how classically Mathlib is built rather than anything about this framework, it reads as "most of this is non-constructive" when the load-bearing fact is that T-SNAP is axiom-free and every examined footprint has been removable, and the figure has already been wrong three times (once quoted rather than measured, once measured and gone stale within a session). The file supplies the PowerShell to measure on demand instead. Indexes both directions: the choice-free results (§ I) and an actual choice-carrying case (`cofix_nonempty'`) beside its axiom-free counterpart, so the file cannot read as "the framework is choice-free" - it is not.
-- `ZeroParadox/Valuation/PoleChartSelection.lean` - A **NEGATIVE result**, and the negative result is the point. Tests the reading "choice is which way you view the zero/infinity split." **§ I: refuted for the built pole.** On `OnePoint X` the two pole points are different constructors, so a canonical selector exists with **no axioms at all** (`chart_selection_is_freeG`); selecting a chart at the framework's own pole (`Sphere := OnePoint ℚ_[2]`, `rInv_swaps`) is constructively free, and the involution imposes nothing. Stated generically in `X` FIRST for a measured reason: at `ℚ_[2]` even the bare constructor-match discriminator measures `[propext, Classical.choice, Quot.sound]`, because `ℚ_[2]` is a Cauchy completion whose `Zero` instance is already noncomputable - that footprint is the price of `ℚ_[2]` existing, NOT the price of selection, and the generic section is the control that makes the attribution checkable. **§ II: a labelled CONDITIONAL model** of what the reading would need - the charts must be internally indistinguishable - with the non-constructivity inserted by hypothesis at exactly one place (`poleAdmissible`, an arbitrary undecided proposition) under an explicit **smuggling notice**; `em_of_uniformChartSelection` reuses `ChoiceFragment`/`em_of_choiceFragment` rather than reproving Diaconescu, and `select_of_decidable` machine-checks the contrast (decidable chart predicate ⇒ selection free). **§ III: the gap, named** - the reading holds only under the modeling commitment that the two charts are internally indistinguishable, which is the framework's apophatic claim about ⊥ and is a commitment, not a theorem. On `OnePoint ℚ_[2]` that claim is false by constructor.
-- `ZeroParadox/Ordinal/SyntacticCollapse.lean` - An EXPERIMENT and a SURROGATE, not a re-proof. Tests whether the *content* of the 2-adic metric collapse is available without `Classical.choice` by staying on raw `ONote` syntax (never calling `repr`, never touching `NONote`/`NF` or the topology stack). `synVal : ONote → ℕ` (leading-exponent depth) with `synVal_tower`, `synCollapse_epsN` (convergence in explicit ε-N form, not via `Filter.Tendsto`), the load-bearing `le_synVal_of_tower_le` (the valuation floor is forced by position in the syntactic order, not exhibited by one chosen sequence), and `synVal_mono` (monotone for `ONote.cmp` - what earns `synVal` the name *valuation* rather than *depth counter*; produced by a verification pass that challenged whether the definition was faithful). All `[propext]`. Tests the standing conjecture "choice is forced by the metric collapse": the snap half is already resolved incidental (`t_snap_derived` is axiom-free), the metric half had never been attempted, and this moves it only to evidence. **Does NOT establish that the metric collapse is choice-free** - `tower_converges_to_zero` (`Ordinal/Gentzen.lean`) is a different statement on a different carrier and is neither replaced nor discharged, and the bridge `synVal = 2-adic valuation` is NOT proved in Lean. The honest reading is bounded: evidence that the choice in the 2-adic statement is Mathlib-imposed rather than forced. The file carries its own triviality assessment.
-- `ZeroParadox/Category/ExcludedMiddleBridge.lean` - The bridge separating choice from excluded middle: a choice fragment (a hypothesis, never an axiom) implies excluded middle (`em_of_choiceFragment`, Diaconescu 1975 / Goodman-Myhill 1978, prior art - the framework claims only the packaging, no hypothesis-form version found in Mathlib), which holds iff every proposition is a closed point of `dnegNucleus` on `Prop` (`em_iff_dnegNucleus_trivial`, `[propext]`). **Scoped to `Prop`, and § IV machine-checks why:** `fin3_middle_not_closed_point` exhibits the three-element chain as a Heyting algebra that stays non-Boolean *inside Mathlib's classical metatheory* (`1ᶜᶜ = 2 ≠ 1`), so "excluded middle collapses the double-negation nucleus" is FALSE in general and is asserted nowhere. Instance hazard handled explicitly: `Prop.instBooleanAlgebra` carries `Classical.choice` (it discharges `top_le_sup_compl` with `Classical.em`) while `Prop.instHeytingAlgebra` is `[propext]`, so every `Prop`-scoped statement pins the Heyting instance. `ChoiceFragment` was probed in BOTH directions: `ExcludedMiddle -> ChoiceFragment` fails at the `Prop`-to-`Bool` elimination barrier (`Decidable (S true)`) and closes only under `classical`, so the fragment sits genuinely above excluded middle - evidence, NOT a formal independence result. **Correction of record:** the file was first drafted in the unscoped general form, which § IV refutes.
-- `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap IS a nucleus: `snapNucleus : Nucleus Ordinal` (the next-fixed-point of the snap-step `α ↦ ω^α`), a genuine point-free Lawvere–Tierney modality that sends the bottom ⊥ to ε₀ (`snapNucleus_bot`). The framework's own snap/ε₀/⊥ triad as a concrete difference-generator instance. Meet-preservation is free on the ordinal chain, so a `Nucleus` needs no frame/top; the missing top (the point-at-infinity) is needed only for the meta-lattice of nuclei.
-- `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity (`WithTop Ordinal`) makes the ordinals a frame, on which the nuclei form a `Frame` and the sublocales a `Coframe` — the lattice the bare (top-less) ordinals lack. The snap is lifted into it: `snapNucleusTop : Nucleus (WithTop Ordinal)` (sends `↑⊥` to `↑ε₀`, `snapNucleusTop_coe_bot`) with `snapSublocale` its generated system, a named point in the lattice. Provably the top's doing: the machinery fires on `WithTop Ordinal`, not bare `Ordinal`.
-- `ZeroParadox/Ordinal/PricedInterface.lean` - **The constructive/classical boundary with its cost MEASURED.** `E0Note` = `WithTop ONote`: ordinal notations plus an adjoined top, comparison decidable (`e0DecidableLE/LT/Eq`). Measured price: the **carrier side carries NO choice anywhere** (ranging from no-axioms to `[propext, Quot.sound]`), the **crossing (`e0Repr` into Mathlib's `Ordinal`) carries `Classical.choice` at EVERY declaration**. So the boundary is priced: staying constructive is clean, crossing costs the classical assumption, and the crossing is one named map. **The construction is NOT ours** - Castéran's hydra-battles `OrdinalNotations/ON_plus.v` builds the sum of notation systems generically with `lt_eq_lt_dec` proving decidability preservation (that file carries his name alone; the library as a whole is his and Contejean's), and the map is an instance of the same *notion* his `ON_correct` defines - **not** a member of that class: `ON_correct` has three fields and only the first is established here, as the fence below records. His is **already instantiated at ε₀** in `Schutte/Correctness_E0.v`. Even the price observation is his (hydra-battles localizes its classical content in the Schütte module deliberately). **What is ours, stated thin:** the measurement against a real library type; `repr_lt_epsilon0` for ALL raw `ONote` including non-normal forms; the fixed point's uniqueness half. **Fences:** the closure at the top is **STIPULATED** (`e0OmegaPow ⊤ = ⊤` is `rfl`) - only uniqueness is a theorem, and this does NOT weaken `no_snap_closure`, which was fenced to `ONote`-shaped systems; `E0Note` is a notation system for **ε₀ + 1**, not ε₀; **`ON_correct` is NOT claimed** - `e0Repr_not_injective` proves the map fails injectivity on raw `ONote` (the `1 + ω` / `ω` witness), and restricting to `NF` is the standard repair, not done here because `NF` is `repr`-defined; the "two faces of one interface" pairing (logic-side `dnegNucleus` + carrier-side map) is **our presentation**, searched and not found in the literature. The all-`[propext]` prediction for the carrier was **wrong** and the file records that the measurement, not the prediction, stands.
-- `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` - **The framework's first ESSENTIAL choice case - and a finding that invalidates a whole class of measurement.** `em_of_wellOrder_comparable` (`[propext, Quot.sound]`, choice-free): comparability of arbitrary well-orders **implies excluded middle**, so the classical content of Mathlib's ordinal order is not a packaging artifact. `comparable_of_classical` shows the hypothesis is non-vacuous (Mathlib's `InitialSeg.total` supplies it, spending a literal `Classical.choice`). **PRIOR ART, cited not claimed:** this is Kraus / Nordvall Forsberg / Xu, arXiv:2104.02549 Thm 38(d), **with their witnesses**; the delta is the proof assistant and the propositional (`∨`) form matching Mathlib's `le_total`, not a mathematical advance. Escardó's TypeTopology `Taboos.Decomposability` is the decidability-side companion. **The methodological finding: `Classical.choice` sits in the `Ordinal.partialOrder` INSTANCE TERM**, so every statement mentioning that order inherits it however it is proved - `order_footprint_le` and `order_footprint_eq` are stated as two theorems rather than one conjunction precisely so the purity block PRINTS the contrast (`a ≤ a` carries choice; `a = a` does not) instead of asserting it. **Consequence: recorded footprints on ε₀ results measure the ambient instance, not the proofs, and are evidence in NEITHER direction.** Roots traced to source: `InitialSeg.eq_or_principal`, `InitialSeg.total`, and `instLinearOrder`'s `Classical.decRel`. **Scope fence:** this does NOT implicate the ε₀ results - the taboo needs *arbitrary* well-orders including ones built from a proposition, while ε₀ concerns notation-nameable ordinals where comparison is decidable (`ONote.cmp` is `[propext]`). The honest framing is that the ε₀ results borrow a tool far stronger than they need.
-- `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` - **A machine-checked IMPOSSIBILITY, scoped to `ONote`-shaped notation systems.** Asks whether the snap has a closure-shaped counterpart on that carrier. Answer: **no, and not for choice reasons.** **Scope fence:** this does NOT show the snap nucleus is constructively impossible in general - a notation system extending past ε₀ (Veblen, Bachmann-Howard) is untouched and open, and none is in Mathlib - and it does NOT classify `snapNucleus`'s own footprint, which stays **UNCLASSIFIED** (no re-proof of it exists - and note that choice is NOT in the `Ordinal` type, which measures `[propext, Quot.sound]`; it enters via `Ordinal.instLinearOrder` / `nfp` / `omega0` / `epsilon`). `no_snap_closure` - for ANY idempotent `j : ONote → ONote`, its closed points cannot be exactly the ε-numbers; idempotence alone suffices, no order or monotonicity assumed. `no_snap_nucleus` is the `Nucleus`-typed corollary, non-vacuous because `idNucleus` exhibits nuclei on the carrier. The reason is **expressive reach, not `Classical.choice`**: a nucleus achieves idempotence by landing on a fixed point, `omegaPow_no_fixedpoint` says the notation system has none, and `tower_cofinal`/`tower_no_upper_bound` locate why - ε₀ is the SUPREMUM of Cantor normal form, not a member, so **the system cannot name its own closure from inside**. Keep the two failure modes distinct: the proofs here are all `[propext]`, so nothing in THIS file's reasoning needs choice - but that does not classify `snapNucleus`'s own footprint, per the fence above. What is unavailable is the *construction*. Also establishes a choice-free `LinearOrder`/`SemilatticeInf` on a `SynONote` synonym built from `ONote.cmp` directly (`instLinearOrderSynONote`, `[propext]`), because **Mathlib's `ONote` order is unusable twice over**: it routes through `repr` into `Ordinal`'s classically-built order machinery, AND it is not antisymmetric - `mathlib_ONote_order_not_antisymm` exhibits `1 + ω` and `ω` as distinct notations with equal `repr`, which is why Mathlib declares only `Preorder`. Carries its own triviality assessment: given `omegaPow_no_fixedpoint` the impossibility is two lines; the value is converting "we tried and it did not work" into "it cannot exist, and here is why."
-- `ZeroParadox/Ordinal/SnapSuccession.lean` - The succession as a strict chain: the ε-numbers (`ε_ = deriv (ω^·)`) are the snap's successive **targets**, exactly the closed points of `snapNucleus` (`snapNucleus_isClosed_iff`), climbing strictly (`succession_lt_succ`), each the snap re-seeded one step above the last (`succession_succ`). **They are NOT ⊥** - `ε₀ ≠ ⊥` is bedrock (`epsilon0_ne_bot`). The standard term for a rung is an **iterative bottom**: a bottom relative to its iteration, the base the next snap re-seeds above, never ⊥ itself (role, not identity - the family/instance distinction; standardized 2026-07-19, and NOT "local bottom", which is already taken for the per-domain MC-1 family in `ZeroParadox/Category/GlobalZero.lean`). The genuinely new bottom the arc returns to is `t_iz_limit_is_new_null`'s successor null, a `ZPSemilattice` fact, not an ordinal ε-number. An earlier header said "the new bottoms are the ε-numbers" and was corrected 2026-07-19 after it contradicted the file's own Engineer's Take. The orthogonality of the rungs is realized in the Hilbert chart (ZP-D `t5_strict_orthogonal`); the cross-chart bridge is `Multihomed/SeparatedSuccession.lean`.
-- `ZeroParadox/Multihomed/SeparatedSuccession.lean` - The type bridge as an interface: `SeparatedSuccession` (carrier + separation relation + ℕ-succession + separated-law), with two known implementations — `ordinalSuccession` (ε-numbers, separation = strict order, `succession_lt_succ`) and `hilbertSuccession` (state vectors, separation = orthogonality, ZP-D `t5_strict_orthogonal`). The carriers are distinct types at different universes, so the shared shape is the interface, never a cross-type identity (instance-vs-requirements / Yoneda). `[ZP-CUSTOM]`.
+- `ZeroParadox/ClaimsMirror.lean` - ZP Claims Mirror — the machine-checked representation of the claim graph
+- `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked characterization index of self-reference — the diagonal fixed point
+- `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
 
 ### Meta / tooling (not framework content)
 
@@ -178,8 +191,20 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ### Valuation / number theory (ZP-B, ZP-F)
 
+- `ZeroParadox/Valuation/AxisSweepProbe.lean` - Experimental probes: the fork is trivially satisfiable, and the pole vs chain / branching pairs
 - `ZeroParadox/Valuation/BottomInvariant.lean` - A first universal: the bottom carries an invariant probability measure
+- `ZeroParadox/Valuation/BoundaryGap.lean` - The boundary embedding: the exact gap to the Bruhat-Tits tree
+- `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
+- `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → forbidden return → the snap
+- `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: homogeneity and ultrametric are derived; compactness is AX-B1
+- `ZeroParadox/Valuation/CompletenessCriticProbe.lean` - Completeness-critic probe: what property of the generic object do the four axes NOT capture?
+- `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound
 - `ZeroParadox/Valuation/ContractionRate.lean` - ZP-H tree, edge TC30 — the contraction-rate dichotomy at the p-adic floor #3
+- `ZeroParadox/Valuation/ForkPoleProbe.lean` - Experimental probe: is the μ/ν fork independent of the pole?
+- `ZeroParadox/Valuation/IndependenceProbe.lean` - Experimental probe: are the chain axis and the branching axis independent?
+- `ZeroParadox/Valuation/InfinitudeFloor.lean` - The floor's infinite complexity AS an infinitude of zeros (research spike)
+- `ZeroParadox/Valuation/IrreversibilityProbe.lean` - Experimental probe: is irreversibility (the snap direction) a fifth independent requirement?
+- `ZeroParadox/Valuation/LocalFloor.lean` - Every node is a floor, literally: a genuine InfinitudeFloor at each node of the generic tree
 - `ZeroParadox/Valuation/NuLeafReconcile.lean` - ZP-H tree, edge TC16 — the within-ν edge reconciles at the LEAF, not the ambient
 - `ZeroParadox/Valuation/NuRateEdge.lean` - ZP-H tree, edge TC33 — the within-ν edge at the orbit-RATE level (#3 ↔ #2)
 - `ZeroParadox/Valuation/NuRateMatch.lean` - ZP-H tree, TC43 — within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
@@ -195,9 +220,13 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PadicStillPoint.lean` - The still-point: the trivial character is the joint fixed/annihilated bottom
 - `ZeroParadox/Valuation/PadicVladimirov.lean` - The Taibleson–Vladimirov operator D^α on ℤ_p
 - `ZeroParadox/Valuation/PolarityFlip.lean` - 2-adic inversion negates the valuation (a cited Mathlib fact + one tower corollary)
+- `ZeroParadox/Valuation/PoleCompletion.lean` - The pole completion: the floor is a genuine self-application fixed point (the Quine atom on the tree)
+- `ZeroParadox/Valuation/PoleCorners.lean` - The four corners: 0 and ∞ have exactly four representations to each other
+- `ZeroParadox/Valuation/PoleCornersBridge.lean` - Bridge: the four corners are the corners of the tower to ω (shared-shape correspondence)
 - `ZeroParadox/Valuation/RateTransport.lean` - ZP-H tree, TC34 — within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - ZP-H tree, edge TC35 — root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)
+- `ZeroParadox/Valuation/TowerHeightFloor.lean` - Height meets floor: the ordinal tower IS an InfinitudeFloor, order-reversed — ε₀ ≠ ⊥ preserved
 
 ### State / Hilbert (ZP-D)
 
@@ -280,4 +309,4 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 ---
 
-*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (80 core, 85 experimental.)*
+*Generated by `build_manifest.py` from the Lean tree + each file's `-- EXPERIMENTAL` header. Rerun after adding, moving, or renaming a file. (110 core, 101 experimental.)*

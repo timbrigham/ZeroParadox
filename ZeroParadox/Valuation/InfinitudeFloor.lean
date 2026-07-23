@@ -1,3 +1,4 @@
+-- EXPERIMENTAL (branch scaffolding): bottom-as-boundary pivot, worked through from the ground up; mostly re-derivation of existing framework results, kept for transparency. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import Mathlib.Data.ENat.Lattice
 import Mathlib.RingTheory.PowerSeries.Order
 import Mathlib.Topology.Order.MonotoneConvergence
