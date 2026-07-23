@@ -23,7 +23,8 @@ fine. The movement of the thought process itself was what I needed.
 
 The mutual-independence sweep settled that the four axes (pole, fork, chain, branching) are distinct and
 non-redundant. The **completeness-critic** asks the opposite question: is there a property of the generic
-object (the 2-adic tree boundary — a compact, totally disconnected, perfect Cantor set) that the four axes do
+object (the 2-adic tree boundary — a compact, totally disconnected, perfect Cantor set, in the sense of
+Brouwer's 1910 topological characterization) that the four axes do
 **not** pin down? If yes, that is a candidate fifth requirement.
 
 **The finding: the four axes do not fix the tree's arity.** The branching axis says "there is a node with
@@ -48,7 +49,7 @@ So the completeness picture: no forced fifth *structural* axis, the four are mut
 thing left open is the arity — recovered here as AX-B1, a modeling commitment rather than a derived axis. This
 is evidence the four structural axes plus the single AX-B1 commitment are the whole story.
 
-**§ IV — Perfectness (no isolated points) is DERIVED, not a new axis.** A second Cantor-set property:
+**§ V — Perfectness (no isolated points) is DERIVED, not a new axis.** A second Cantor-set property:
 *perfect* = every point is a limit of distinct points (no isolated point). `boundary_perfect`: in the tree
 boundary `End`, for every end `x` and every depth `n`, there is a **different** end `y` agreeing with `x` on
 the first `n` digits (flip the digit at position `n`). So every point is a limit of distinct points — the
@@ -102,7 +103,7 @@ theorem arity_is_uncaptured :
       ¬ (((false, false, true) : Bool × Bool × Bool) ≤ (true, false, false))) :=
   ⟨binary_branch, ternary_branch⟩
 
-/-! ### § V. Branching does not even force FINITE arity — so compactness is part of the commitment too. -/
+/-! ### § IV. Branching does not even force FINITE arity — so compactness is part of the commitment too. -/
 
 /-- **Infinite branching.** In `Set ℕ`, the bottom `∅` has infinitely many pairwise-incomparable successors —
 the singletons `{i}` (`{i} ⊆ {j}` iff `i = j`). So the branching axis does not force *finite* arity, let
@@ -113,7 +114,7 @@ theorem infinite_branch :
   refine ⟨fun i => Set.empty_subset _, fun i j hij hsub => ?_⟩
   exact hij (hsub rfl)
 
-/-! ### § IV. Perfectness (no isolated points) is derived from branching. -/
+/-! ### § V. Perfectness (no isolated points) is derived from branching. -/
 
 /-- **The boundary is perfect.** For every end `x` and every depth `n`, there is a different end `y` agreeing
 with `x` on the first `n` digits (flip digit `n`). So no point is isolated — every point is a limit of

@@ -21,7 +21,8 @@ the thought process itself was what I needed.
 
 ## Formal Overview (AI-assisted)
 
-The generic object is a **Cantor set** (compact, totally disconnected, perfect, homogeneous, ultrametric).
+The generic object is a **Cantor set** (compact, totally disconnected, perfect, homogeneous, ultrametric; the
+compact/perfect/totally-disconnected core is Brouwer's 1910 topological characterization).
 Earlier probes settled *perfect* (derived from branching) and *arity* (un-captured = AX-B1). This last pass
 clears the remaining named properties, to make the completeness verdict airtight.
 
@@ -44,7 +45,7 @@ successors in `Set ℕ`). So compactness is not forced by the four axes — it r
 binary) arity, which is `AX-B1`. Compactness is therefore a consequence of the one modeling commitment, not an
 independent fifth axis.
 
-**Completeness verdict, now airtight.** Every named Cantor-set property is accounted for: *perfect*,
+**Completeness verdict, for the named properties.** Every named Cantor-set property is accounted for: *perfect*,
 *homogeneous*, *ultrametric*, *totally disconnected* — all **derived** from the four structural axes (pole,
 fork, chain, branching); *compact* and the *arity* — the **one modeling commitment** AX-B1. No un-captured
 property remains that would be a fifth structural axis. The generic object = four structural axes + AX-B1.

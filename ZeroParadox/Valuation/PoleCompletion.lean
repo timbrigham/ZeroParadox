@@ -42,7 +42,9 @@ The self-referential content of that fold is here, and it is **a genuine typecla
 ZPSemilattice* — could NOT be an `AbstractSelfApp` instance; its ×2/0 fixed point is proved only as a
 standalone parallel. The tree boundary clears exactly that bar: it *is* a semilattice, so the same
 fixed-point fact is a **genuine instance**. Self-reference closing at the floor is not merely analogous to
-the Quine atom here — it is one, by the framework's own definition.
+the Quine atom's **structural** fixed point here — it is one, by the framework's own definition. (The literal
+set-membership `⊥ = {⊥}` stays a metatheoretic commitment, as everywhere; this is the structural
+self-application face, the axiom-free `t_exec` half.)
 
 **Honest fence.** The tree↔ℚ₂ digit isomorphism is not formalized in this file, so the mirror to `q2SelfApp`
 is a proved PARALLEL (same map, same unique fixed point), never a Lean `=`; and the "both children at once

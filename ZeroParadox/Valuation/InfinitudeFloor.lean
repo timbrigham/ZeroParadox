@@ -43,14 +43,19 @@ framework's `addVal_bot` (v₂(0) = ⊤, `Valuation/FloorWitness.lean`) as a fac
 separate assertion. "Same" is realized as "both are consequences of one requirements-structure, met by one
 witness," not as a cross-type `=`.
 
-Substance is in the WITNESS: the intended instance is ℤ₂ (floor = 0, cx = the 2-adic valuation,
-member n = 2ⁿ⁺¹ so cx(member n) = n+1, climbing to ⊤ = v₂(0)). Status: **STUB (sorry)** — the abstract
-requirements + payoff theorem + a toy witness (inhabitability) here; the ℤ₂ witness to follow.
+Substance is in the WITNESS: the non-degenerate instance is ℚ₂ (floor = 0, cx = the 2-adic valuation,
+member n = 2ⁿ⁺¹ so cx(member n) climbs to ⊤ = v₂(0)). All of it is present and proved: the abstract
+requirements, the payoff theorem, a toy witness (ℕ∞), the power-series witness, and the full ℚ₂ witness with
+the 0 = ∞ inversion.
 
 ## Structure
 - § I   The requirements typeclass `InfinitudeFloor`.
-- § II  The identity (well-typed) and its consequence (the infinitude forces infinite complexity).
-- § III A toy witness (inhabitability); the ℤ₂ witness deferred to the fill.
+- § II  Two support lemmas about `ℕ∞`.
+- § III The identity (well-typed) and its consequence (the infinitude forces infinite complexity).
+- § IV  A toy witness (`ℕ∞`, inhabitability).
+- § V   The power-series witness (`R⟦X⟧`, order at the floor).
+- § VI  The inversion extension (both poles, concurrently and one after the other).
+- § VII The genuine 2-adic witness (`ℚ₂`).
 -/
 
 namespace ZeroParadox
@@ -74,9 +79,9 @@ class InfinitudeFloor (α : Type*) where
   /-- **the identity**: the floor's complexity is the supremum of the infinitude's. -/
   cx_floor_eq_iSup : cx floor = ⨆ n, cx (member n)
 
-/-! ### § II. Two supпорt lemmas about `ℕ∞` -/
+/-! ### § II. Two support lemmas about `ℕ∞` -/
 
-/-- The supremum of all naturals in `ℕ∞` is `⊤` (the value group is Archimedean-unbounded). -/
+/-- The supremum of all naturals in `ℕ∞` is `⊤` (`ℕ∞` is Archimedean-unbounded). -/
 private theorem iSup_coe_top : ⨆ k : ℕ, (k : ℕ∞) = ⊤ := by
   rw [iSup_eq_top]
   intro b hb
@@ -135,9 +140,9 @@ instance : InfinitudeFloor ℕ∞ where
   cx_member_strictMono := by intro a b h; simp only [id_eq]; exact_mod_cast h
   cx_floor_eq_iSup := by simp only [id_eq]; exact iSup_coe_top.symm
 
-/-! ### § V. The substantive witness — a discrete valuation ring, AS a frame-change
+/-! ### § V. The substantive witness — a power-series ring, AS a frame-change
 
-The non-degenerate witness, and the point of the whole spike. In `R⟦X⟧` (a discrete valuation ring), the
+The non-degenerate witness, and the point of the whole spike. In `R⟦X⟧`, the
 `floor` is `0` — the genuine *bottom* — yet it carries `⊤` complexity (`order 0 = ⊤`, the framework's
 `powerSeries_order_bot`). The infinitude of zeros is the chain `X, X², X³, …`, distinct nulls whose orders
 climb `1, 2, 3, …`. The identity `order 0 = ⨆ order (Xⁿ⁺¹)` is not a surprising coincidence: it is the
@@ -146,7 +151,7 @@ infinitude climbing to it*. This is the complexity ↔ infinitude frame-flip, a 
 / `catseam_is_frameflip`: the same pole, looked at from the valuation chart and the infinitude chart. -/
 
 open PowerSeries in
-/-- **The DVR witness.** `R⟦X⟧` instantiates `InfinitudeFloor`: floor `0` (order `⊤`), the infinitude the
+/-- **The power-series witness.** `R⟦X⟧` instantiates `InfinitudeFloor`: floor `0` (order `⊤`), the infinitude the
 uniformizer powers `Xⁿ⁺¹` (orders climbing to `⊤`). The floor is the bottom, its complexity is the top —
 the 0 = ∞ inversion, realized on the framework's own concrete floor witness. -/
 noncomputable instance powerSeriesInfinitudeFloor {R : Type*} [CommRing R] [Nontrivial R] :

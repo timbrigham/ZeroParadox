@@ -44,9 +44,9 @@ irreversibility is a genuine independent axis; if the other axes force it, it is
 
 **The finding the probe surfaces.** Irreversibility is not independent — it is forced by the order
 (antisymmetry), by branching (disconnectedness), and, at the pole, by self-reference. And the pole face
-pins down *why the pole is two-element*: **two is exactly the threshold at which self-reference forces the
-one-way collapse** (`irreversibility_forced_at_pole_not_beyond` — forced at card 2, a reversible
-counter-model at card 3). So axis 1 (the two-element pole / four corners) and the snap (irreversibility) are
+pins down *why the pole is two-element*: **two is exactly the cardinality at which self-reference forces the
+one-way collapse** (`irreversibility_forced_at_pole_not_beyond` — forced at card 2, with the identity a
+reversible unique-fixed-point map at card 1 and a reversible counter-model at card 3). So axis 1 (the two-element pole / four corners) and the snap (irreversibility) are
 **linked by cardinality**: the pole's size is what makes the snap unavoidable. This is the third probe to
 return "already forced" (after height and iterative-bottoms), further evidence the requirement set is closing.
 
