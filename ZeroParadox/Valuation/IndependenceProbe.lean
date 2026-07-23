@@ -11,6 +11,10 @@ Having found no fifth axis, I wanted to keep probing, and check the four we keep
 chain and the branching are genuinely two, a line with no fork and a fork with no line, so neither one is
 hiding inside the other.
 
+This came once I wanted to check the axes we keep are not secretly the same. Sometimes it helps to work through
+this from the ground up. Much of what is here re-derives results the framework already has, and that is fine.
+The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

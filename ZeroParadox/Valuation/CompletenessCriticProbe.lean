@@ -12,6 +12,10 @@ I went hunting for what the four axes miss, and it is the arity. Branching says 
 many, so a p-ary tree meets all four for any p. That free choice is exactly the binary commitment we already
 flagged as the one real modeling assumption, and the hunt found it on its own.
 
+This was the hunt for what the four axes miss, which turned out to be the arity. Sometimes it helps to work
+through this from the ground up. Much of what is here re-derives results the framework already has, and that is
+fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

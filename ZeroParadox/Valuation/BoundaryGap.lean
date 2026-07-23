@@ -12,6 +12,10 @@ I wanted to know exactly what the boundary is, where it sits, why it walls, and 
 always to define the boundary exactly, so the open question had to be stated tightly rather than left loose.
 What stays open is the one honest gap between this tree and the standard one.
 
+This was me wanting the boundary pinned down exactly, with its open question stated tightly. Sometimes it helps
+to work through this from the ground up. Much of what is here re-derives results the framework already has, and
+that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

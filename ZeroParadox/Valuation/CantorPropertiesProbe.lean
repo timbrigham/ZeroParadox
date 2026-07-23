@@ -12,6 +12,10 @@ One last pass on what the object has that the axes might miss, before writing th
 ultrametric both fall out of the structure, and compactness rides on the same binary commitment, so nothing
 new is hiding.
 
+This was one last pass on the object before writing it up. Sometimes it helps to work through this from the
+ground up. Much of what is here re-derives results the framework already has, and that is fine. The movement of
+the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

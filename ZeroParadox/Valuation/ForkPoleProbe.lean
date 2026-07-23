@@ -12,6 +12,10 @@ I kept going on the axes, and this one is the interesting pair. The fork and the
 requirements, and yet on the pole the fork forces the snap. The two are independent as axes, and it is their
 meeting that makes the collapse.
 
+This was the interesting pair, the fork and the pole, separate and yet meeting to make the snap. Sometimes it
+helps to work through this from the ground up. Much of what is here re-derives results the framework already
+has, and that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

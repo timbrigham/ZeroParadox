@@ -13,6 +13,10 @@ I asked what if the root's third edge were both of the other two at once. If the
 branches folded together, then the floor points back at itself, and on the tree's boundary that fold is a
 real self-application whose only fixed point is the floor.
 
+This was the what-if, the root's third edge being both of the other two at once. Sometimes it helps to work
+through this from the ground up. Much of what is here re-derives results the framework already has, and that is
+fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

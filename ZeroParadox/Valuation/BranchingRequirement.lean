@@ -13,6 +13,10 @@ directly above one another as the tower rises. Trees grow outward and upward, an
 so the branches not stacking is what makes this a field instead of a line. It is a real requirement, and the
 pole corners do not carry it.
 
+This was me hunting for a requirement beyond the corners, the branches not stacking as the tower rises.
+Sometimes it helps to work through this from the ground up. Much of what is here re-derives results the
+framework already has, and that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

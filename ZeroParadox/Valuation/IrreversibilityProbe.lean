@@ -14,6 +14,10 @@ of the rest. We know exactly which direction we cannot make the transition on, a
 direction is not free, it is forced. The pole is two elements because two is where self-reference forces the
 collapse.
 
+This was the first real probe, testing whether the snap is its own requirement or falls out of the rest.
+Sometimes it helps to work through this from the ground up. Much of what is here re-derives results the
+framework already has, and that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

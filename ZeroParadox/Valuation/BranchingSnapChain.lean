@@ -14,6 +14,10 @@ tied to where it branches into infinity, and the behavior there is tied directly
 behind the snap. The branching into infinity is exactly what forbids the return, so the wall is the
 fanning-out itself.
 
+This was me tying the tower's branching into infinity to the snap's forbidden return. Sometimes it helps to
+work through this from the ground up. Much of what is here re-derives results the framework already has, and
+that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

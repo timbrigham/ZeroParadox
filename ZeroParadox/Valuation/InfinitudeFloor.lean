@@ -20,6 +20,11 @@ one instance out of the set meeting a specific set of requirements, which is the
 making. A re-description of the pole is exactly what you should get here, and that is the win, not a letdown.
 It is literally changing your perspective to look back at the same object.
 
+This was early, when I was chasing whether bottom being infinity could be an arbitrarily long chain of
+functions linked together. Sometimes it helps to work through this from the ground up. Much of what is here
+re-derives results the framework already has, and that is fine. The movement of the thought process itself was
+what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

@@ -13,6 +13,10 @@ can transition from any one of the points to any other, and that encodes both mu
 exactly which direction we cannot make that transition on, and why, and that forbidden direction is the very
 shape we keep hitting, the very definition of the snap.
 
+This came as I tried to pin down whether the four ways zero and infinity meet form a closed and complete set.
+Sometimes it helps to work through this from the ground up. Much of what is here re-derives results the
+framework already has, and that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

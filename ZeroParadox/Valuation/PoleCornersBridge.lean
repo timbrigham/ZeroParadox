@@ -15,6 +15,11 @@ out looking at. These four corners are the corners of the whole tower to omega, 
 the framework's own bridge map. The one direction we cannot reverse is the definition of the snap, and it is
 the same wall we kept hitting from the start.
 
+This landed when I looked at it from the top down and saw the same single point versus infinite field we
+started with. Sometimes it helps to work through this from the ground up. Much of what is here re-derives
+results the framework already has, and that is fine. The movement of the thought process itself was what I
+needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

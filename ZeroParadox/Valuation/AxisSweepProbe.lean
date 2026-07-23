@@ -13,6 +13,10 @@ I kept going on the axes until I ran out of pairs. The fixed-point fork turns ou
 so its content is which operation is the witness, not that a witness exists. And the pole, the chain, and the
 branching sit at cardinalities two, infinite, and three, each a different thing.
 
+This came mid-sweep, as I worked the axis pairs to the end. Sometimes it helps to work through this from the
+ground up. Much of what is here re-derives results the framework already has, and that is fine. The movement of
+the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

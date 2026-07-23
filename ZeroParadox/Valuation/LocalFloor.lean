@@ -13,6 +13,10 @@ This is supposed to be the generic object, so I wanted every node to actually be
 infer from self-similarity. No inferences is the solid plan. The floors behave the same way at every level
 because each one is literally the same floor structure, built.
 
+This was me wanting the generic object made literal, every node a floor, no inferences. Sometimes it helps to
+work through this from the ground up. Much of what is here re-derives results the framework already has, and
+that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

@@ -11,6 +11,11 @@ The arity being open is quite literally the ability to reference this with more 
 variables, and that was one of our original conditions. This makes the loop close in Lean: the ladder shows
 there is no ceiling on how many variables a node can carry, so the width is free and unbounded.
 
+This closed the loop, the arity being open as the ability to reference ever more complex variables, one of our
+original conditions. Sometimes it helps to work through this from the ground up. Much of what is here
+re-derives results the framework already has, and that is fine. The movement of the thought process itself was
+what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)

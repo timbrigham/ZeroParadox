@@ -14,6 +14,10 @@ The height and the floor fight because they point opposite ways. That they fight
 being bottom, is exactly why this needed to be built rather than avoided. The order-reversing map is what
 holds them apart while joining them, and that fight is the whole content.
 
+This came from being sure the fight between the height and the floor was the reason to build it, not avoid it.
+Sometimes it helps to work through this from the ground up. Much of what is here re-derives results the
+framework already has, and that is fine. The movement of the thought process itself was what I needed.
+
 ---
 
 ## Formal Overview (AI-assisted)
