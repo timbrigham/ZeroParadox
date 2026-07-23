@@ -48,10 +48,10 @@ else:
         "failed or was left unproven. The raw output is in the run log.")
 out.append("")
 out.append(
-    "**What was checked:** the engine (self-reference forces a fixed point) · the "
-    "wall (where it can't close) · the floor (where it closes: the self-referential "
-    "bottom) · the snap (the one-way jump to a limit that is also a bottom) · "
-    "the fan-out (the branching field).")
+    "**What was checked:** the engine (self-reference, when it closes, forces a fixed "
+    "point) · the wall (where it can't close) · the floor (where it closes: the "
+    "self-referential bottom) · the snap (the one-way jump to a limit that is also the "
+    "least fixed point) · the fan-out (the branching field).")
 out.append("")
 out.append("**Axiom footprint (for the specialist):**")
 if axfree:
