@@ -53,10 +53,12 @@ It reads top to bottom:
 **What the floor stands for — self-reference and the Quine atom.** This file represents the floor as bare
 fixed-point existence (`floor_of_witness`: a witness forces a fixed point; `cZero_has_fp`: the collapse fixes a
 point). In the full framework that fixed point is a *self-referential* object — **the Quine atom** (Quine;
-Aczel): the set that is its own only member, `⊥ = {⊥}`. It is one structural fact in several languages — the
-Quine atom (set theory / ZF+AFA), the Kleene quine (a program that prints itself, computability), the
-order-bottom `⊥`, and the algebraic join-identity are proved to be the *same* element
-(`Computability/Kleene.lean`; `Settheory/SetTheoryAFA.lean` `t_exec`). The wall's seed here, `negation_no_fp`
+Aczel): the set that is its own only member, `⊥ = {⊥}`. It is one structural fact in several languages. Three
+of them — the Quine atom (set theory / ZF+AFA), the order-bottom `⊥`, and the algebraic join-identity — are
+proved to be the *same* element, axiom-free (`Settheory/SetTheoryAFA.lean` `t_exec`); the fourth, the Kleene
+quine (a program that prints itself, computability), is *joined* to them by an explicit structural commitment —
+the `KleeneStructure` typeclass names the computational fixed point as the same role, not derived
+(`Computability/Kleene.lean`). The wall's seed here, `negation_no_fp`
 (`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
 *closing* — landing on the thing that is its own answer.
 
