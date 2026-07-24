@@ -14,8 +14,6 @@ For a dictionary and map of ⊥ - the object the whole framework is built on - s
 
 > **Interactive - [The Snap Loop](snap-loop.html).** The whole object in one picture: a single discrete step of ε₀ away from bottom, and a return to bottom - the ⊥ → ε₀ snap-arc realized as a loop in the 2-adic integers. Floor and ceiling are both ⊥ (successive nulls); ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
 
-Followed a link that broke after the v3.0 source reorganization? Report anything stale in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
-
 ---
 
 ## What This Is

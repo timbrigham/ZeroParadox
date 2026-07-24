@@ -75,7 +75,21 @@ summary{cursor:pointer;font-weight:640}
 {{ content }}
 </main>
 <footer class="site-footer">
+Broken link after the v3.0 source reorganization? The <a href="{{ '/ssot.json' | relative_url }}">file map</a> resolves old paths; report anything stale in the <a href="https://github.com/timbrigham/ZeroParadox/discussions/120">link-integrity thread</a>.<br>
 The Zero Paradox &middot; CC BY-NC-ND 4.0 &middot; <a href="https://github.com/timbrigham/ZeroParadox">GitHub</a> &middot; <a href="https://doi.org/10.5281/zenodo.20060860">DOI</a>
 </footer>
+<script>
+// On this site the Lean sources are served raw (unhighlighted); route their links to
+// GitHub's syntax-highlighted blob view instead. The markdown links stay repo-relative,
+// so github.com and the citation-path checker are unaffected - this runs only in-browser,
+// only on the site, and falls back to the raw file if JavaScript is off.
+document.querySelectorAll('a[href$=".lean"], a[href*=".lean#"]').forEach(function (a) {
+  var p = a.pathname.replace(/^\//, '');
+  if (p.indexOf('ZeroParadox/') !== 0) return;
+  a.href = 'https://github.com/timbrigham/ZeroParadox/blob/main/' + p + (a.hash || '');
+  a.target = '_blank';
+  a.rel = 'noopener';
+});
+</script>
 </body>
 </html>
