@@ -1,0 +1,36 @@
+name: Minimal Core
+
+# The "prove it yourself" gate. Re-checks ZeroParadox/Miniature.lean — the
+# self-contained minimal core — and writes a dual-audience verification report
+# to the run summary. Manual by design (workflow_dispatch) so it can be fired by
+# hand against any branch; also runs automatically when the file itself changes.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - illustrated
+    paths:
+      - 'ZeroParadox/Miniature.lean'
+      - 'scripts/minimal_core_report.py'
+      - '.github/workflows/minimal_core.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'ZeroParadox/Miniature.lean'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify the Minimal Core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Re-elaborate the Minimal Core and write the report
+        run: |
+          lake env lean ZeroParadox/Miniature.lean 2>&1 | tee mc.log
+          python3 scripts/minimal_core_report.py mc.log | tee -a "$GITHUB_STEP_SUMMARY"

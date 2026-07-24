@@ -3,7 +3,7 @@
 
 *A Lean 4 formalization: one diagonal fixed point at the bottom of five mathematical fields - the snap off it a theorem, the recurrence machine-verified, the boundary proved.*
 
-[![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
+[![Minimal Core](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml) [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
 Followed a link that broke after the v3.0 source reorganization? The old→new file and declaration map is in [`ssot.json`](ssot.json); report anything we missed in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
 
@@ -19,6 +19,7 @@ That the classical self-reference arguments (Cantor, Russell, Gödel, Kleene) sh
 
 ## Where to Start
 
+- **Start here (the shortest path)** - [The Minimal Core](MINIMAL_CORE.md): the whole shape the framework is built on - engine, wall, floor, the snap in both directions, the fan-out - in one self-contained Lean file, on the smallest objects that can carry it, checkable in one command. The compact front door for either a mathematician or a general reader.
 - **Mathematician or reviewer** - the formal index is below: [Lean verification](#formal-verification-lean-4), the [document table](#formal-framework-documents), and the [reading order by specialty](#reading-order-by-specialty). Claim-by-claim status, with Lean witnesses and exact axiom profiles, is in the [Claims Ledger](CLAIMS.md).
 - **General reader** - [Guide](GUIDE.md): plain language, illustrated companions, and reading paths for every audience.
 - **Just want the object** - [The Bottom Element (⊥)](BOTTOMELEMENT.md) and [The Binary Snap (⊥ → ε₀)](SNAP.md): dictionaries and maps of ⊥ and the transition off it, most characterizations carrying a machine-checked Lean witness.

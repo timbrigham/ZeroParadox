@@ -2,9 +2,11 @@
 
 *Plain-language introduction, illustrated companions, and reading paths for all audiences.*
 
-[![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
+[![Minimal Core](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml) [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
 For a dictionary and map of ⊥ - the object the whole framework is built on - see [The Bottom Element](BOTTOMELEMENT.md). For the formal framework, Lean verification, and complete question register, see the [Formal Index](README.md).
+
+> **Start here - [The Minimal Core](MINIMAL_CORE.md).** The whole shape the framework is built on - engine, wall, floor, the snap in both directions, and the fan-out - in one self-contained Lean file, on the smallest objects that can carry it. Written to be read either way: plain-language idea first, checkable file behind it. The shortest path to what the project is about.
 
 > **Interactive - [The Bottom Family tree](bottom-family-tree.html).** A single visual map of ⊥ across the fields: hover any node to see why it lands where it does, with the checkable Lean witness. The clearest one-picture view of what the framework assembles.
 
