@@ -2,7 +2,7 @@
 
 *See the whole paradox in the smallest environment that can host it.*
 
-[![Minimal Core](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml) [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
+[![Minimal Core](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml) [![Complete Project](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml)
 
 One self-contained Lean file - [`ZeroParadox/Miniature.lean`](ZeroParadox/Miniature.lean), under three hundred lines, importing only Mathlib - exhibits the entire **shape** the Zero Paradox is built on, on the smallest concrete objects that can carry it. Every step is decidable or one line: computed, not asserted.
 
