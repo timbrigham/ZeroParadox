@@ -1,11 +1,18 @@
 # The Zero Paradox
-**April 2026**
 
 *A Lean 4 formalization: one diagonal fixed point at the bottom of five mathematical fields - the snap off it a theorem, the recurrence machine-verified, the boundary proved.*
 
-[![Minimal Core](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml) [![Lean Action CI](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
+[![Minimal Core](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/minimal_core.yml) [![Complete Project](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/timbrigham/ZeroParadox/actions/workflows/lean_action_ci.yml) [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/timbrigham) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20060860.svg)](https://doi.org/10.5281/zenodo.20060860)
 
-Followed a link that broke after the v3.0 source reorganization? The old→new file and declaration map is in [`ssot.json`](ssot.json); report anything we missed in the [v3.0 reorg link-integrity thread](https://github.com/timbrigham/ZeroParadox/discussions/120).
+---
+
+## Where to Start
+
+- **Start here (the shortest path)** - [The Minimal Core](MINIMAL_CORE.md): the whole shape the framework is built on - engine, wall, floor, the snap in both directions, the fan-out - in one self-contained Lean file, on the smallest objects that can carry it, checkable in one command. The compact front door for either a mathematician or a general reader.
+- **General reader** - [Guide](GUIDE.md): plain language, illustrated companions, and reading paths for every audience.
+- **Mathematician or reviewer** - the formal index is below: [Lean verification](#formal-verification-lean-4), the [document table](#formal-framework-documents), and the [reading order by specialty](#reading-order-by-specialty). Claim-by-claim status, with Lean witnesses and exact axiom profiles, is in the [Claims Ledger](CLAIMS.md).
+- **Just want the object** - [The Bottom Element (⊥)](BOTTOMELEMENT.md) and [The Binary Snap (⊥ → ε₀)](SNAP.md): dictionaries and maps of ⊥ and the transition off it, most characterizations carrying a machine-checked Lean witness.
+- **See it** - three interactive maps: [The Bottom Family](bottom-family-tree.html) (⊥ across the fields), [The Diagonal Family](diagonal-family.html) (the self-reference arguments as one fixed point, forked into walls and floors), and [The Snap Loop](snap-loop.html) (the ⊥ → ε₀ snap-arc as one 2-adic loop through 0) - hover any node for why it lands where it does, with the Lean witness to check.
 
 ---
 
@@ -16,14 +23,6 @@ That the classical self-reference arguments (Cantor, Russell, Gödel, Kleene) sh
 - **It is located at the floor, not the ceiling** - the Gödel inversion. The concrete instance, the **Binary Snap** (the forced exit ⊥ → ε₀), is a theorem, not an axiom; its core snap is even Lean-kernel-axiom-free (not even choice - choice enters only at the separate identification of the ceiling with the ordinal ε₀).
 - **The recurrence is verified across *heterogeneous* domains** - the computability face is a genuine Lawvere/Kleene fixed point; the lattice and 2-adic faces are proved fixed points of their own self-maps ([`q2_unique_fp`](ZeroParadox/Computability/SelfApp.lean), [`scale_unique_fp`](ZeroParadox/Valuation/Scale.lean)), carrying the shape but not genuine Lawvere instances - Cantor forbids the Set-level witness.
 - **The boundary is proved, not assumed** - there is no single cross-category theorem folding the domains into one object (`x = y` across distinct categories is not a well-formed proposition); a Cantor/Lawvere obstruction establishes the impossibility. The framework proves where the shape recurs, and where it stops.
-
-## Where to Start
-
-- **Start here (the shortest path)** - [The Minimal Core](MINIMAL_CORE.md): the whole shape the framework is built on - engine, wall, floor, the snap in both directions, the fan-out - in one self-contained Lean file, on the smallest objects that can carry it, checkable in one command. The compact front door for either a mathematician or a general reader.
-- **Mathematician or reviewer** - the formal index is below: [Lean verification](#formal-verification-lean-4), the [document table](#formal-framework-documents), and the [reading order by specialty](#reading-order-by-specialty). Claim-by-claim status, with Lean witnesses and exact axiom profiles, is in the [Claims Ledger](CLAIMS.md).
-- **General reader** - [Guide](GUIDE.md): plain language, illustrated companions, and reading paths for every audience.
-- **Just want the object** - [The Bottom Element (⊥)](BOTTOMELEMENT.md) and [The Binary Snap (⊥ → ε₀)](SNAP.md): dictionaries and maps of ⊥ and the transition off it, most characterizations carrying a machine-checked Lean witness.
-- **See it** - three interactive maps: [The Bottom Family](bottom-family-tree.html) (⊥ across the fields), [The Diagonal Family](diagonal-family.html) (the self-reference arguments as one fixed point, forked into walls and floors), and [The Snap Loop](snap-loop.html) (the ⊥ → ε₀ snap-arc as one 2-adic loop through 0) - hover any node for why it lands where it does, with the Lean witness to check.
 
 ---
 
@@ -164,7 +163,7 @@ You may share the work with attribution, but you may not modify it or use it com
 
 If referencing this work, please cite:
 
-> Brigham, Timothy. The Zero Paradox (April 2026). https://github.com/timbrigham/ZeroParadox
+> Brigham, Timothy. The Zero Paradox (2026). https://github.com/timbrigham/ZeroParadox
 
 ---
 
