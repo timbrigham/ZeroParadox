@@ -18,6 +18,13 @@ boundaries and why they have to be where they are, and the snap and why it has t
 directions to really be the snap, because it is both a limit and a bottom. It is the most compact way of showing
 what the whole project is about, in a couple hundred lines of Lean.
 
+I write software for a living, so one part of this lands close to home. A program that is never run does
+nothing. That is the whole point. The commitment that the bottom executes itself is the commitment
+that time enters the picture, as a state change, and that is the exact claim this framework is making. It is
+also the thing almost everyone walks straight past, even the professionals, because it gets phrased so
+quietly. So I am going to say it plainly: this is the spot where a static structure becomes something that
+happens.
+
 ---
 
 ## Formal Overview (AI-assisted)
@@ -25,7 +32,8 @@ what the whole project is about, in a couple hundred lines of Lean.
 The smallest self-contained artifact that exhibits the **shape** the whole framework is built on: the
 **engine**, the **wall** and **floor** and *why each must be where it is*, the **snap** *in both directions*
 (it is both a limit and a bottom), and the **fan-out** (the branching field) — each on the smallest domain that
-can hold it, where every "why" is **decidable or one-line** (computed, not asserted).
+can hold it, where most "why"s are **decided by computation or proved in a line or two** (computed, not
+asserted).
 
 It reads top to bottom:
 
@@ -55,10 +63,21 @@ fixed-point existence (`floor_of_witness`: a witness forces a fixed point; `cZer
 point). In the full framework that fixed point is a *self-referential* object — **the Quine atom** (Quine;
 Aczel): the set that is its own only member, `⊥ = {⊥}`. It is one structural fact in several languages. Three
 of them — the Quine atom (set theory / ZF+AFA), the order-bottom `⊥`, and the algebraic join-identity — are
-proved to be the *same* element, axiom-free (`Settheory/SetTheoryAFA.lean` `t_exec`); the fourth, the Kleene
-quine (a program that prints itself, computability), is *joined* to them by an explicit structural commitment —
-the `KleeneStructure` typeclass names the computational fixed point as the same role, not derived
-(`Computability/Kleene.lean`). The wall's seed here, `negation_no_fp`
+proved to be the *same* element within a single carrier, axiom-free (`Settheory/SetTheoryAFA.lean`
+`t_exec_triple_iff`; its two-face half is `t_exec`);
+the fourth, the Kleene quine (a program that prints itself, computability), is *joined* to them by an explicit
+structural commitment — the `KleeneStructure` typeclass carries the computational fixed point as filling the
+same role, without asserting an identity across types, not derived (`Computability/Kleene.lean`).
+
+**That fourth commitment is where time enters — and it is the easiest thing here to walk past.** The other
+three faces are *static*: order-bottom, self-membered set, algebraic identity are timeless facts that simply
+hold, and nothing about them ever *happens*. The Kleene quine is the only one that *runs*, and running is a
+before and an after. So committing that the self-contained bottom is the self-executing bottom (⊥ is the
+machine in its ground state, which must execute itself) is committing that **time enters the framework as a
+state change**. It is what makes the framework dynamic at all: nothing static occurs on its own, so without
+it ⊥ would rest as a fixed point forever and the snap would never happen. Stated as what it is — a
+*commitment*, never a theorem — which is exactly why the computational face is joined by hand rather than
+derived from the static three. The wall's seed here, `negation_no_fp`
 (`¬(p ↔ ¬p)`), is that same self-reference *failing to close* (Cantor, Turing, Tarski); the floor is it
 *closing* — landing on the thing that is its own answer.
 
