@@ -56,10 +56,10 @@ Every step above is either something a machine already checked, or a commitment 
 |---|---|---|
 | Self-reference, once it closes, forces a fixed point - the engine | `lawvere` (Lawvere 1969 / Yanofsky 2003) | proved, no axioms |
 | Three faces are one element: the Quine atom, the order-bottom, the join-identity | `t_exec_triple_iff` | proved, no axioms |
-| The fourth face, the running program, is that same element | the `KleeneStructure` typeclass | **a commitment, not a theorem** |
+| The fourth face, the running program, does that same job - in time | the `KleeneStructure` typeclass | **a commitment, not a theorem** |
 | The machine's before- and after-states are distinct (that execution *is* the state change is part of the model, not this theorem) | `l_run` (`c₀ ≠ c₁`) | proved |
 
-**If you want to disagree, the place to do it is the commitment:** that the self-contained bottom and the self-executing program are the same thing. Everything else above is either machine-checked or follows from it. The full claim-by-claim status, with every witness and its exact axiom footprint, is in the [Claims Ledger](CLAIMS.md).
+**If you want to disagree, the place to do it is the commitment:** that the self-contained bottom and the self-executing program do the same job, one of them in time. Everything else above is either machine-checked or follows from it. The full claim-by-claim status, with every witness and its exact axiom footprint, is in the [Claims Ledger](CLAIMS.md).
 
 ---
 
