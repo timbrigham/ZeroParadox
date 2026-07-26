@@ -251,3 +251,45 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Mathlib's `ZFSet` carries Foundation (`ZFSet.mem_wf`), which forbids `x in x` and so cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." `QuineHost` is the minimal set-theory-native encoding of the framework's requirements on a host theory (fields `bot_selfMem` / `selfMem_unique`), distinct from the lattice-level `AFAStructure` in `SetTheoryAFA.lean`.
+
+### `trivialSelfApp` — `ZeroParadox/Computability/SelfApp.lean:177`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** A deliberately degenerate `AbstractSelfApp` witness — the constant-bottom self-application — built to bound what the typeclass hypothesis can be made to yield. Not a modelling instance but a NO-GO gauge: it shows every `ZPSemilattice` carries an `AbstractSelfApp`, so no property of the carrier follows from the bare hypothesis. Mathlib has no notion of a deliberately vacuous instance of a project-local class.
+
+### `LoopsInPlace` — `ZeroParadox/Computability/Occurrence.lean:81`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Names the self-looping configuration of a state-transition function (`f s = some s`) as a first-class predicate, so the trichotomy and the trap result can be stated about it. Mathlib's `Computability/StateTransition.lean` supplies `Reaches` and `eval` but no name for "steps to itself", which is the case that turns out to be the self-referential object rather than a third route.
+
+### `IsComputationalBottom` — `ZeroParadox/Computability/Occurrence.lean:110`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Bundles the framework's own two requirements on the computational bottom — that it is a fixed point of its own step, and that the snap departs from it — so their joint satisfiability can be decided. Framework-specific by construction; no Mathlib notion corresponds. The bundle is proved uninhabited (`machine_snap_impossible`), which is the point of naming it.
+
+### `Occurs` — `ZeroParadox/Computability/Occurrence.lean:168`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Names the framework's "the transition fires" as a step-indexed predicate on codes (`∃ k, evaln k c n ≠ none`), so the classical halting results apply to it. Mathlib carries the halting predicate (`ComputablePred.halting_problem`) but not this reading of it; the identification of framework-occurrence with this predicate is the framework's modelling choice and is fenced as such at the definition.
+
+### `Extremal` — `ZeroParadox/Computability/Occurrence.lean:233`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** Names the two-element computational pole — a configuration is extremal when it is halted or looping in place — so the pole swap can be shown to preserve it as a set. Mathlib's `Computability/StateTransition.lean` has `Reaches` and `eval` but no notion of "sits at one of the two extremes of a state-transition function".
+
+### `flipPoles` — `ZeroParadox/Computability/Occurrence.lean:238`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** The computational analogue of `rInv` / `swap` — an involution on step functions that exchanges the halted and self-looping poles while fixing every configuration that steps onward. Mathlib has no such operation on `σ → Option σ`. Fenced at the definition: it is an automorphism of the SPACE of machines, not of one machine, so it is the same shape at a different level and never a cross-type identity.
+
+### `HasFirstStep` — `ZeroParadox/Reals/OrderedField.lean:68`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** AX-B1, the framework's one substantive modelling commitment, stated as an explicit predicate rather than baked into a two-element carrier. Mathlib's nearest notions are `IsAtom` (a lattice `⊥ ⋖ a` condition) and `Order.IsSuccLimit` (stated relative to a `SuccOrder`); this is the bare order-theoretic form over an arbitrary preorder with a distinguished bottom, which is what lets the commitment be carried as a visible hypothesis and refuted pointwise against its own counterexample (`axb1_fails_in_ordered_field`).

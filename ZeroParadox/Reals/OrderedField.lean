@@ -42,6 +42,58 @@ namespace ZeroParadox
 
 /-! ### General case: any LinearOrderedField -/
 
+/-! ## § 0. AX-B1 AS AN EXPLICIT COMMITMENT
+
+**The framework's one substantive modelling commitment is DISCRETENESS**, and until now it was in
+the least visible of the three encodings (CLAUDE.md, "Commitments Go In HYPOTHESES"): baked into a
+carrier. `ax_b1_distinct : nullState ≠ firstAtomicState := by decide` only checks that the two
+constructors of a two-element type differ — **it does not check the choice of a discrete alphabet
+over a continuum**, which is the actual commitment.
+
+Stated as a predicate, the commitment becomes visible at every use site, and something else falls
+out for free: **it is exactly what the reals lack.** `f_snap_impossible` in this same file proves
+no ordered field has it. The commitment and its counterexample are now the same proposition, in
+opposite directions.
+
+The ZP-C forcing lemmas (`pmf_subsingleton_isPure`, `binaryState_exhaustive`) discharge the
+"no half-state" worry — leaving ⊥ needs a second outcome — but they force only the ≥ 2 lower bound.
+**The residual commitment is that the outcome space is DISCRETE, and that is `HasFirstStep`.** -/
+
+section AxB1
+
+/-- **AX-B1, stated explicitly.** There is a first step above the bottom: something strictly above
+    it with nothing strictly between. This is the commitment, as a hypothesis one can discharge or
+    refuse — not a fact hidden in a two-element carrier. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `IsAtom`/`Order.IsSuccLimit` are stated over lattices or successor orders; this is the bare order-theoretic form of the framework's discreteness commitment over an arbitrary preorder with a distinguished bottom, so it can be carried as an explicit hypothesis and refuted pointwise (see `axb1_fails_in_ordered_field`).
+def HasFirstStep {α : Type*} [Preorder α] (bot : α) : Prop :=
+  ∃ a, bot < a ∧ ¬ ∃ δ, bot < δ ∧ δ < a
+
+/-- **The first step is unique** where the order is linear — so the commitment, once made, fixes
+    the snap's target rather than leaving a choice. -/
+theorem firstStep_unique {α : Type*} [LinearOrder α] {bot a b : α}
+    (ha : bot < a ∧ ¬ ∃ δ, bot < δ ∧ δ < a)
+    (hb : bot < b ∧ ¬ ∃ δ, bot < δ ∧ δ < b) : a = b := by
+  rcases lt_trichotomy a b with h | h | h
+  · exact absurd ⟨a, ha.1, h⟩ hb.2
+  · exact h
+  · exact absurd ⟨b, hb.1, h⟩ ha.2
+
+/-- **And this is what the commitment buys.** Assume AX-B1 over a linear order and the snap's
+    target exists and is UNIQUE — the transition has a well-defined destination. The hypothesis
+    is visible on the face of the statement, so no reader can mistake the conclusion for
+    something derived without it.
+
+    Stated over a general `LinearOrder`, deliberately: in an ordered field the hypothesis is
+    provably unsatisfiable (`axb1_fails_in_ordered_field`), so the same statement there would be
+    vacuous — a theorem true only because nothing satisfies it. -/
+theorem axb1_gives_unique_target {α : Type*} [LinearOrder α] (bot : α)
+    (h : HasFirstStep bot) :
+    ∃! a : α, bot < a ∧ ¬ ∃ δ, bot < δ ∧ δ < a := by
+  obtain ⟨a, ha⟩ := h
+  exact ⟨a, ha, fun b hb => firstStep_unique hb ha⟩
+
+end AxB1
+
 section General
 
 variable {F : Type*} [Field F] [LinearOrder F] [IsStrictOrderedRing F]
@@ -68,6 +120,13 @@ theorem f_snap_blocked (ε₀ : F) (hε : 0 < ε₀) : ∃ δ : F, 0 < δ ∧ δ
 theorem f_snap_impossible : ¬∃ ε₀ : F, 0 < ε₀ ∧ ¬∃ δ : F, 0 < δ ∧ δ < ε₀ := by
   intro ⟨ε₀, hpos, hno_smaller⟩
   exact hno_smaller (f_snap_blocked ε₀ hpos)
+
+/-- **AX-B1 FAILS in every ordered field** — the commitment, refuted pointwise against its own
+    counterexample. This is `f_snap_impossible` restated in the explicit form, and it is the same
+    proposition read in the opposite direction: what the framework commits to is exactly what the
+    reals do not have. -/
+theorem axb1_fails_in_ordered_field : ¬ HasFirstStep (0 : F) :=
+  f_snap_impossible
 
 end General
 
@@ -116,6 +175,9 @@ The Archimedean/non-Archimedean split is the structural boundary of the paradox.
 See: ZPB.lean (c3_irreversible, t5_totallyDisconnected) for the non-Archimedean side. -/
 
 section PurityCheck
+#print axioms firstStep_unique
+#print axioms axb1_gives_unique_target
+#print axioms axb1_fails_in_ordered_field
 #print axioms f_density
 #print axioms f_no_minimal_positive
 #print axioms f_snap_blocked

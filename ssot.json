@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1467,
+        "declarations": 1508,
         "files": 136
       },
       "entries": [
@@ -2141,6 +2141,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06301166-46c0-4528-ba33-049440b10155",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flip_live_to_dead",
+            "short": "flip_live_to_dead"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -7696,6 +7734,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "1ff905cc-6d6a-4bcd-8ef6-cd73d8e0c05c",
+          "new": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.axb1_fails_in_ordered_field",
+            "short": "axb1_fails_in_ordered_field"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "reals"
+            ],
+            "object": [
+              "snap",
+              "wall-limit"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "200927c7-663d-4959-b87d-5a4de71707fa",
           "new": {
             "file": "ZeroParadox/Ordinal/SnapNucleusConstructive.lean",
@@ -7944,6 +8021,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "20dcefea-f55b-4934-b82d-8aa921ffc705",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsComputationalBottom",
+            "short": "IsComputationalBottom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9583,6 +9698,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "28d5df7d-c2af-4fe9-9ca9-4258849e03f1",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.execution_requires_branching",
+            "short": "execution_requires_branching"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "commitment"
+            ]
+          },
+          "reason": "The conditional form: IF the bottom is a fixed point AND execution occurs, THEN the dynamics branches at the bottom and cannot be a step function. The positive statement of the NO-GO.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12196,6 +12349,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "35542c10-23a5-441e-9390-4e99faf34244",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flipPoles_involutive",
+            "short": "flipPoles_involutive"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "35782d9f-4b84-44fe-8c10-91d91ea6573a",
           "new": {
@@ -13439,6 +13630,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3af0dcad-51c6-4f0a-9263-7c1b6a9cbffb",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.machine_trichotomy",
+            "short": "machine_trichotomy"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17336,6 +17565,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4e838c2f-9151-4ac3-96a8-d1d4a2b2a1ae",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.execution_requires_nondeterminism",
+            "short": "execution_requires_nondeterminism"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "commitment"
+            ]
+          },
+          "reason": "The conditional form: IF the bottom is a fixed point AND execution occurs, THEN the dynamics branches at the bottom and cannot be a step function. The positive statement of the NO-GO.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4eca3b61-3d99-4110-8339-96de1e2921a9",
           "new": {
             "file": "ZeroParadox/Order/LeastFixedPoint.lean",
@@ -18492,6 +18759,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "537eac6d-6e4a-47bd-b275-a19477beae56",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flipPoles_fixes_progress",
+            "short": "flipPoles_fixes_progress"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20521,6 +20826,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5de5aaa2-b002-4de8-87da-2d784792f3c9",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Occurs",
+            "short": "Occurs"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5dee1325-2391-4b66-9d2e-7bc69503d23e",
           "new": {
@@ -21937,6 +22280,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "67bb274a-ef3c-449d-8661-744661ececbc",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_of_halted",
+            "short": "eval_of_halted"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "67d60906-0c79-40eb-8c50-4c767292114f",
           "new": {
@@ -22216,6 +22597,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "68d55135-e681-4f54-b3ce-f77e217636c6",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flip_dead_to_live",
+            "short": "flip_dead_to_live"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23538,6 +23957,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6f0ed056-1fad-40a7-94ba-1880d93d3a2f",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.occurrence_shape",
+            "short": "occurrence_shape"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom",
+              "snap"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -25517,6 +25975,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7827f466-e7af-4bbe-8679-56485edf8c77",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.live_step_not_wellFounded",
+            "short": "live_step_not_wellFounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "The bridge: computational live/dead IS the well-foundedness (nu/mu) divide, joining Occurrence.lean to Multihomed/Boundary.lean's floor_not_wellFounded and Settheory/Wall.lean's wf_no_selfloop.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "784f36d4-8e69-4b55-9a22-5f9c4be5550e",
           "new": {
@@ -25693,6 +26190,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7a08b7ce-19f0-46bd-bfcf-f3ad43138c56",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_halted_means_stepping",
+            "short": "not_halted_means_stepping"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27662,6 +28195,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "828e71a0-9952-4a48-932e-1ea5e5c7cd78",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.dead_yields_live_withholds",
+            "short": "dead_yields_live_withholds"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "830e7f34-6591-4133-b092-7903cfb320e6",
           "new": {
@@ -29035,6 +29606,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "8ab9a4c6-5eed-4304-8588-69f934f5d402",
+          "new": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.firstStep_unique",
+            "short": "firstStep_unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "8accbace-483e-4ce4-8345-e7ac94ba29ed",
           "new": {
             "file": "ZeroParadox/Valuation/PadicKoopman.lean",
@@ -29096,6 +29705,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8af5d47f-53fc-4f15-b96f-bdbf08aa9a95",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.eval_of_loop_is_empty",
+            "short": "eval_of_loop_is_empty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -29358,6 +30005,44 @@
             ]
           },
           "reason": "New file ZeroParadox/Valuation/PricedPadicInterface.lean — p-adic Group A priced carrier (29 decls)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8cc5ecfb-8233-47f9-922b-a6749809446b",
+          "new": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.HasFirstStep",
+            "short": "HasFirstStep"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -32995,6 +33680,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9c71482e-0bf9-421b-9eb7-c84b7f0b3755",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.deterministic_has_no_fanout",
+            "short": "deterministic_has_no_fanout"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9c8d0c22-2dd8-4f81-8ed8-ed62f024a09c",
           "new": {
             "file": "ZeroParadox/Settheory/MetaFork.lean",
@@ -33487,6 +34210,44 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9ef0d4df-e617-4581-951f-5652c8f3061a",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfApp.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.abstractSelfApp_always_inhabited",
+            "short": "abstractSelfApp_always_inhabited"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34804,6 +35565,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a8fb8844-d369-41d5-9555-253e2fe000da",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.occurs_iff_halts",
+            "short": "occurs_iff_halts"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a90c1050-f861-4608-afe8-87e11b7504ab",
           "new": {
@@ -34830,6 +35629,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a910a69b-9a58-4a4a-a859-ddf0209b740a",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Extremal",
+            "short": "Extremal"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35609,6 +36446,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ac6d8445-ecdc-4c41-b896-144b7f79d5d2",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_unstarted_state",
+            "short": "no_unstarted_state"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ac7bb771-bf9d-4e67-8b12-ab4d0c0dbb28",
           "new": {
@@ -36010,6 +36885,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ae073fc1-084d-436b-9cbd-41320712a0c9",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfApp.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trivialSelfApp",
+            "short": "trivialSelfApp"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ae19d4dc-f7ca-4ac4-afc8-4df3d57d6244",
           "new": {
@@ -36378,6 +37291,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b01332e9-8292-43bd-bb91-9c846333fe88",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nondeterministic_escapes_the_trap",
+            "short": "nondeterministic_escapes_the_trap"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b082f91d-d7ce-4c69-b3f2-141292f32448",
           "new": {
@@ -36590,6 +37541,44 @@
           "reason": "ExcludedMiddleBridge: choice fragment -> EM -> Prop nucleus trivial, plus the Fin 3 non-Boolean fence",
           "verify": {
             "axioms": "propext, Classical.choice, Quot.sound",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1456d62-833a-4aa2-a8eb-adbef424b054",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flipPoles",
+            "short": "flipPoles"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -37754,6 +38743,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b68014f9-34c0-4c1c-9665-ec16516f6eaa",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.step_dichotomy",
+            "short": "step_dichotomy"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6af115b-d39d-44f8-9af0-b42b99a06a88",
           "new": {
             "file": "ZeroParadox/Multihomed/SnapFrameChange.lean",
@@ -38811,6 +39836,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "bc91f4b9-6fb7-49e2-9e28-bd77178d9282",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.loop_is_a_trap",
+            "short": "loop_is_a_trap"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "bc9c5d5c-a1af-4de7-8008-f1412935bd16",
           "new": {
             "file": "ZeroParadox/Category/LawvereTaboo.lean",
@@ -38834,6 +39897,44 @@
             "role": []
           },
           "reason": "LawvereTaboo: the general fixed-point-free-endomap principle implies weak excluded middle (choice-free), making Lawvere.lean's classical essential rather than accidental",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "bcdcebc8-327c-4b5d-be3a-0b6fd63a087c",
+          "new": {
+            "file": "ZeroParadox/Computability/SelfApp.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trivial_selfMem_iff",
+            "short": "trivial_selfMem_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40740,6 +41841,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c5edd794-c623-4aec-8989-2673d987dcaa",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.occurrence_undecidable",
+            "short": "occurrence_undecidable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43368,6 +44507,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d22ad95c-cabc-41df-8c4b-a6c9d475a01b",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.occurrence_semidecidable_nonoccurrence_not",
+            "short": "occurrence_semidecidable_nonoccurrence_not"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d24e8dc4-8f9f-4a06-89f4-93fd14615e2a",
           "new": {
@@ -43766,6 +44943,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d33b7de4-e2f3-4e8f-99d6-0a8be2753217",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.the_live_bottom_is_coherent",
+            "short": "the_live_bottom_is_coherent"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d34e3c2f-1f3b-4c6d-97a7-fd8bd34ca31c",
           "new": {
@@ -43793,6 +45008,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d359f6f2-8e66-4237-afef-455263acc861",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.LoopsInPlace",
+            "short": "LoopsInPlace"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44267,6 +45520,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d5d8f5d3-03bb-4958-bbd4-be89e84f04f8",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.flipPoles_preserves_extremal",
+            "short": "flipPoles_preserves_extremal"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d5db4d49-cc54-4ab1-b9b0-c10cabaa0547",
           "new": {
@@ -44293,6 +45584,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d5e97bac-319f-48d5-8d1d-d92e6fcf5eec",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stuckPhase",
+            "short": "stuckPhase"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -44913,6 +46242,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "d9a2a2a3-5fb4-4e9d-a9d5-2974d5427838",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.loops_not_unique",
+            "short": "loops_not_unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Occurrence.lean completed to Miniature's shape: pole swap (flipPoles involution), the fan-out finding (determinism is what blocks the snap), uniqueness limit, and the capstone.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "d9a8059b-8ae6-490a-8f17-dd9c672841b1",
           "new": {
@@ -45524,6 +46891,45 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "db8a14f9-e75f-4634-aab8-256675429c01",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.inversion_is_the_wf_divide",
+            "short": "inversion_is_the_wf_divide"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "The bridge: computational live/dead IS the well-foundedness (nu/mu) divide, joining Occurrence.lean to Multihomed/Boundary.lean's floor_not_wellFounded and Settheory/Wall.lean's wf_no_selfloop.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -46748,6 +48154,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e13b648f-464a-4e4e-a131-4031360a0353",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.selfloop_is_zero_and_infinity",
+            "short": "selfloop_is_zero_and_infinity"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "The pole coincidence in the computability face: a self-loop is zero in the output chart and infinity in the step chart. Cited by CLAUDE.md's corrected pole-identity line.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49746,6 +51191,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ee417254-1797-49df-9f7a-031079126654",
+          "new": {
+            "file": "ZeroParadox/Order/Snap.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.tsnap_holds_but_nothing_moves",
+            "short": "tsnap_holds_but_nothing_moves"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ee7ee3f7-26bc-4b39-a50d-f819bddeed65",
           "new": {
@@ -49804,6 +51287,44 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "eee7a6f7-a5ec-4933-a150-11a22080f6b1",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.machine_snap_impossible",
+            "short": "machine_snap_impossible"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50531,6 +52052,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f33bf750-72fd-484b-9885-c90662a665f9",
+          "new": {
+            "file": "ZeroParadox/Reals/OrderedField.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.axb1_gives_unique_target",
+            "short": "axb1_gives_unique_target"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
