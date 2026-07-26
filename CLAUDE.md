@@ -132,6 +132,28 @@ read the hook's output. Nothing else changed.
 command with a pipe is not a gate, and it fails *silently* — the push looks green. Anything that reaches
 a public remote must pass the gate on its own merits, not because a reader closed the pipe early.
 
+**Scope of the pipe hazard, measured after the fix:** `head` and `grep -q` (and `grep -m`, `sed q`, any
+consumer that exits before EOF) all sever the pipe early; `tail` does not, because it reads to EOF. With
+`trap '' PIPE` installed the hook survives all of them and still exits 1. **The rule stands anyway** —
+do not rely on the trap being present in a fresh clone, since hooks are not version-controlled.
+
+### And NEVER write a `--no-verify` fallback into a push command. Hard Rule.
+
+**Measured 2026-07-26 — self-inflicted, same session as the pipe bypass.** A command of the shape
+
+```
+git push origin <branch> ... || git push --no-verify origin <branch> ...
+```
+
+was written to "handle" a possible block. **That is an unconditional, silent gate bypass**: if the gate
+fires, the fallback pushes anyway, and the transcript shows a successful push. It did not fire that time
+only because the push was `CLAUDE.md`-only and therefore gate-exempt. It would have bypassed a real block.
+
+`--no-verify` is legitimate **only** as a deliberate, separately-typed decision for a known-good reason
+(the documented case is a `CLAUDE.md`-only change against a stale signal), never as an automatic fallback
+and never chained with `||`. If a push is blocked, **read the reason and fix it** — the block is the
+control working.
+
 ## Staging — `git add` NAMED PATHS, never `-A`, Hard Rule
 
 **`git add -A` stages whatever happens to be in the tree, including files this session did not create.**
