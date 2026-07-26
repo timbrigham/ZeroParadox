@@ -425,8 +425,11 @@ boundary makes such an identification unstatable.
 **Prior art, and a distinction that must not be collapsed.** That a computational object
 is named by many indices rather than one is standard: the **Padding Lemma** — every
 partial recursive function has infinitely many indices — is its classical home, and an
-external computability reader raised it against ZP-K directly. It is the right reference
-for "why an index cannot stand in for the thing indexed."
+external computability reader mentioned it as possibly related when asked about ZP-K.
+It is the right reference for the direction it actually gives: **a function does not
+determine an index**, since infinitely many indices compute it. (Stated as a named lemma
+without individual attribution; it appears as a hypothesis of Rogers' isomorphism theorem
+rather than as a result of his, so do not attach a name to it.)
 It is **not** what `infinite_quine_family` proves, and the two must not be conflated:
 padding supplies infinitely many indices for the *same* function, whereas this family is
 witnessed by the constant codes, and `Code.const 0` and `Code.const 1` compute *different*
