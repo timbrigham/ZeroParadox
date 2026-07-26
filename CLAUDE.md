@@ -99,6 +99,39 @@ bedrock defect is still live. If several gates run in one round, they all share 
    fixes. **Before declaring a kill fixed, grep the corpus for the CLAIM, not the named file.** Note that
    retractions quoting an error pollute that search — read hits, do not count them.
 
+## NEVER pipe `git push` through `head`/`tail` — it BYPASSES the pre-push gate. Hard Rule.
+
+**Measured and reproduced 2026-07-26.** The same push, same repository state, same signals:
+
+```
+git push --dry-run origin <ref>                    → exit 1   (blocked, correctly)
+git push --dry-run origin <ref> 2>&1 | head -5     → exit 0   (SUCCEEDS — gate bypassed)
+```
+
+**Mechanism.** `head` exits after N lines and closes the pipe. The hook is still writing (it produces
+~90 lines: file-reference resolver, invariants, hash check, font checks, then the review-signal check
+*last*). It dies of SIGPIPE **before reaching its `exit 1`**, and git proceeds with the push. The review
+gate never runs — and its output is at the END, so any truncation short enough to be useful is long
+enough to skip it.
+
+**This actually happened.** A twelve-file push whose `pa_cleared.txt` was stale was blocked on the first
+attempt, then went to `origin` on a second attempt run as `git push … 2>&1 | head -40` — issued only to
+read the hook's output. Nothing else changed.
+
+**Two defences, both now in place:**
+1. **The hook is SIGPIPE-immune.** `trap '' PIPE` on line 2 of `.git/hooks/pre-push` (and the
+   version-controlled copy at `.claude-local/proposed_pre_push_hook.sh`). Verified: the truncated push
+   above now exits 1, and a nothing-to-push still exits 0. **Hooks live in `.git/` and are NOT
+   version-controlled — this fix must be re-installed per clone from the staged copy.**
+2. **Do not truncate push output.** Redirect to a file and read that:
+   `git push origin <branch> > /tmp/push.log 2>&1; echo $?` then inspect the log. Never
+   `| head`, `| tail`, `| grep -m`, or any consumer that exits early. The same hazard applies to any
+   hook-running command whose output you truncate.
+
+**Why this is filed as a hard rule and not a footnote:** a gate that can be cleared by re-running the
+command with a pipe is not a gate, and it fails *silently* — the push looks green. Anything that reaches
+a public remote must pass the gate on its own merits, not because a reader closed the pipe early.
+
 ## Staging — `git add` NAMED PATHS, never `-A`, Hard Rule
 
 **`git add -A` stages whatever happens to be in the tree, including files this session did not create.**
