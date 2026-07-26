@@ -9,11 +9,13 @@
   follows from φ epsilonZero = c₁ alone (given monotonicity), via the snapEmbed bridge
   and c₁'s absorbing property in MachinePhase.
 
-  **Gap 2 (ZP-K / ZP-L):** The Kleene quine construction (ZP-K) establishes that
-  the quine atom IS ⊥ = c₀ (bottom of MachinePhase). The ZP-L snap establishes that
-  ε₀ forces the transition to c₁. The formal path from c₀ = ⊥ (Kleene, ZP-K)
-  through the snap at ε₀ to c₁ (ZP-L), mediated by the 2-adic encoding,
-  is the missing structural triangle: ⊥ → ε₀ → c₁.
+  **Gap 2 (ZP-K / ZP-L):** ZP-K establishes that the Quine atom is ⊥ = c₀ (bottom of
+  MachinePhase) — an order-theoretic fact about MachinePhase, with no `Code` and no
+  execution in the statement. Reading c₀ as *the Kleene quine* is ZP-K's
+  `KleeneStructure` commitment, not a theorem, and no equation between a `Code` and a
+  `MachinePhase` is well-formed. The ZP-L snap establishes that ε₀ forces the transition
+  to c₁. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated by
+  the 2-adic encoding, is the missing structural triangle: ⊥ → ε₀ → c₁.
 
   The central formal object is:
       snapEmbed : MachinePhase → ℤ_[2]
@@ -134,11 +136,15 @@ theorem snap_unconditional (φ : Ordinal → MachinePhase)
 
 /-! ## §III. The Kleene–Ordinal Triangle
 
-ZP-K established: the Kleene quine IS ⊥ = c₀ (da1_closed_concrete).
+ZP-K established: ⊥ = c₀ is the unique Quine atom of MachinePhase
+(`da1_closed_concrete`). Note what that theorem does *not* say — it mentions no `Code`
+and no execution. Reading c₀ as *the Kleene quine* is ZP-K's `KleeneStructure`
+commitment, not a theorem, and it is not a Lean `=`: a quine is a `Code` and c₀ is a
+`MachinePhase`, so no equation between them is well-formed. See ZP-K § II / § III.
 ZP-L established: ε₀ forces the snap from c₀ to c₁.
 
-The triangle:
-    c₀ = ⊥ (Kleene quine, ZP-K)
+The triangle (the top node read under that commitment):
+    c₀ = ⊥ (the Quine atom; read as the Kleene quine, ZP-K)
          ↕ snap at ε₀
     c₁     (snap state, ZP-L)
          ↕ snapEmbed
@@ -194,10 +200,12 @@ theorem both_fixed_points_exist :
 
 /-! ### Remark R-M.1: DA-1 Path 2 and the Limits of the Diagonalization Frame
 
-`both_fixed_points_exist` establishes that Kleene diagonalization (a code acting on
-its own Gödel number) and ordinal diagonalization (ε₀ = ω^ε₀, least fixed point) are
-the same structural pattern running in two different domains. Both are forced fixed
-points of a self-referential operation.
+`both_fixed_points_exist` shows that Kleene diagonalization (a code acting on its own
+Gödel number) and ordinal diagonalization (ε₀ = ω^ε₀, least fixed point) each produce a
+fixed point in their own domain. The statement is a conjunction of two existentials, so
+it establishes that both exist, not that they are one structural pattern; reading them as
+the same pattern is the framework's interpretation, and no equation between a `Code` and
+an `Ordinal` is well-formed.
 
 L-INF (ZP-C Lemma L-INF: ⊥ has divergent surprisal — unbounded information content,
 incompressible by any finite description) is structurally analogous. The Kleene and

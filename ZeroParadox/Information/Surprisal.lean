@@ -219,8 +219,12 @@ carrying zero information. Any *non-degenerate* statistical state needs at least
 the minimal non-⊥ statistical structure is binary. There is no "half state": the outcome space has exactly
 two values, and every distribution is either one of the two point masses (the ⊥-like endpoints) or a genuine
 mixture over both. This is the *information-theoretic* forcing of the discrete binary jump — a distinct
-mechanism from the order forcing (`t_snap_derived`), the self-execution forcing (ZP-K `da1_closed_concrete`),
-and the incompressibility forcing (`l_inf`). Every mechanism forces the same transition. -/
+mechanism from the order forcing (`t_snap_derived`), the incompressibility forcing (`l_inf`), and the
+self-execution route (ZP-K). Every route forces the same transition, and they do not all rest on the same
+kind of ground — the README states each one's requirement alongside its witness, and the self-execution
+route's requirement is the load-bearing one: `da1_closed_concrete` proves ⊥ is the unique Quine atom of
+MachinePhase and mentions no `Code` and no execution, so "⊥ must execute itself" rests on ZP-K's
+`KleeneStructure` commitment rather than on that theorem. -/
 
 /-- No half-state: every ontological state is `null` or `exist`; there is no third, intermediate value. -/
 theorem binaryState_exhaustive (s : BinaryState) : s = nullSt ∨ s = firstSt := by

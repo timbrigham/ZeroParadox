@@ -23,7 +23,8 @@ requires it.
 ## Formal Overview (AI-assisted)
 
 Theorem T-IZ: Every maximal ascending chain in the Zero Paradox framework is a
-Cauchy sequence that converges to its own successor null in the 2-adic metric.
+Cauchy sequence that converges to a limit playing the ⊥ role; reading that limit as the
+chain's own *successor* null is a commitment, not part of the statement.
 
 This layer has five components:
 - § I:   Cauchy convergence — topological core (inherits Classical.choice from Mathlib analysis)
@@ -38,9 +39,10 @@ Because L has no top, the ascending chain cannot stop. Unbounded ascent forces v
 which is exactly ‖Sₙ‖₂ → 0, the Cauchy convergence condition. The chain approaches the
 2-adic depth of zero by its own forward motion — not by reversing direction.
 
-The originally informal steps 2–6 of T-IZ are now formally closed via the AFA/Kleene path
-(ZP-K): DA-1 fires at any element identified as ⊥' by DA-2 — no Kolmogorov complexity
-needed. t_iz_complete chains all four formal steps into one theorem.
+The originally informal steps 2–6 of T-IZ are formalized here without the Kolmogorov
+bridge: DA-1 fires at any element identified as ⊥' by DA-2, and step 4 discharges from
+AFAStructure fields alone, so no Kolmogorov complexity is computed. Step 2's K bridge is
+bypassed, not shown closed. t_iz_complete chains all four formal steps into one theorem.
 
 Dependencies: ZP-E (full synthesis: ZP-A, ZP-B, ZP-C, ZP-D), ZP-K (KleeneStructure), plus:
 - Mathlib.Analysis.SpecificLimits.Basic — geometric tendsto lemmas
@@ -214,17 +216,22 @@ theorem h_strict_from_r1_t3
 This section described the informal route: v₂(Sₙ) → ∞ ⟹ K(Sₙ|n)/|Sₙ| → 1 ⟹ DA-1 fires.
 It was Outside Lean Scope because Kolmogorov complexity K is uncomputable and absent from Mathlib.
 
-**This bridge is no longer needed.** ZP-K (da1_paths_unified) establishes that the AFA/Kleene
-path and the K/AIT path are the same structural property. DA-1 fires at any element identified
-as ⊥' by DA-2 — via da1_computational (ZP-K), which requires no K computation.
+**This bridge is not needed for the Lean route.** The reason is narrower than it once read here:
+step 4 of `t_iz_complete` is `IsQuineAtom (bot : L')`, discharged from `AFAStructure` fields alone,
+so no Kolmogorov complexity enters the proof. It is NOT that ZP-K showed the two paths to be one
+thing — `da1_paths_unified` is a *conjunction* of two witnesses, and ZP-K states explicitly that a
+conjunction is not an identity and that the two sides cannot be equated in Lean (different types).
+Reading the AFA/Kleene path and the K/AIT path as the same structural property is the framework's
+interpretation, and it is not what retires this bridge.
 
-Steps 2–6 of T-IZ are formally closed in § III-B via the AFA path. The K bridge is retained
-here as a record of the original motivating argument. -/
+Steps 2–6 of T-IZ are formalized in § III-B without computing Kolmogorov complexity. The K
+bridge is bypassed, not shown closed, and is retained here as a record of the original
+motivating argument. -/
 
 /-! ## III. T-IZ — Inside Zero Theorem -/
 
 /-- T-IZ: Every maximal ascending chain in Q₂ with unbounded 2-adic valuation
-    converges to 0 — generating its own successor null.
+    converges to 0; reading that as generating its own successor null is the framework's.
 
     The theorem has six steps (see ZP-I PDF § III):
     (1) Cauchy convergence to 0: t_iz_cauchy — proved in § I.
@@ -234,8 +241,9 @@ here as a record of the original motivating argument. -/
     (5) T-SNAP fires, generating ⊥': ZP-E t_snap_derived.
     (6) DA-2 licenses ⊥' as successor null: ZP-E da2_bottom_characterization.
 
-    Steps (2)–(6) are now formally closed via the AFA/Kleene path — see t_iz_complete
-    in § III-B. The K bridge (step 2) is superseded; all remaining steps use ZP-K. -/
+    Steps (2)–(6) are formalized in § III-B without computing Kolmogorov complexity —
+    see t_iz_complete. Step 2's K bridge is bypassed rather than shown closed: the
+    remaining steps route through AFAStructure fields. -/
 theorem t_inside_zero
     (S : ℕ → Q₂)
     (_h_start : S 0 ≠ 0)
@@ -284,8 +292,10 @@ theorem t_iz_c3_compatible :
 /-! ## III-B. T-IZ (Formally Complete) — AFA/Kleene Path
 
 The Kolmogorov complexity bridge in § II was the motivating argument for DA-1 firing at
-the limit. It is superseded: ZP-K (da1_paths_unified) establishes that the AFA/structural
-path and the K/AIT path are the same structural property viewed in two formal languages.
+the limit. It is not needed here, because this route discharges step 4 from `AFAStructure`
+fields and never computes K. That is a fact about this proof, not a demonstration that the
+AFA/structural path and the K/AIT path are one property: ZP-K's `da1_paths_unified` is a
+conjunction of witnesses, and ZP-K fences the identity reading explicitly as a commitment.
 
 DA-1 fires at any element identified as ⊥' by DA-2 — da1_computational (ZP-K) applies
 to any KleeneStructure instance. No K computation is needed.
@@ -295,7 +305,7 @@ T-IZ is now formally complete in four steps:
   Steps 3/6: DA-2 identifies limit as ⊥'        — t_iz_limit_is_new_null
   Step 4: DA-1 fires at ⊥' via AFA/Kleene       — da1_computational (ZP-K)
   Step 5: T-SNAP fires from ⊥'                  — bot_join (A4, definitional)
-  Step 2: K bridge                               — superseded (not needed) -/
+  Step 2: K bridge                               — bypassed (not computed on this route) -/
 
 /-- T-IZ (formally complete): all four formal steps in one theorem.
     The successor semilattice L' carries a KleeneStructure; the terminal element
@@ -309,7 +319,7 @@ theorem t_iz_complete
     (h_role : ∀ x : L', join terminal x = x) :
     -- Step 1: chain converges to 0 in Q₂
     Filter.Tendsto S Filter.atTop (nhds 0) ∧
-    -- Steps 3/6: terminal IS the successor null (DA-2)
+    -- Steps 3/6: terminal plays the ⊥ role, hence IS bot (DA-2); "successor" is the reading
     terminal = bot ∧
     -- Step 4: DA-1 fires at the successor null via AFA/Kleene — no K required
     ZeroParadox.IsQuineAtom (bot : L') ∧

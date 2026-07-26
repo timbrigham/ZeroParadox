@@ -85,7 +85,7 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.15 | The categorical layer: ⊥ as initial object, the informational singularity. |
 | [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.17 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.2 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
-| [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.14 | Inside zero: each maximal chain converging to its own successor ⊥. |
+| [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.14 | Inside zero: each maximal chain converging to a limit that plays the ⊥ role, read as a successor ⊥. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.5 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.7 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.3 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |

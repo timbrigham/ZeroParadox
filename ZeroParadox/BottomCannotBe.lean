@@ -253,16 +253,21 @@ section CannotBeIndex
 -- theorem. INV is Mathlib's abstraction INSTANTIATED here. See .claude-local/notes/inv_cop_prior_art_2026-06-30.md.
 
 /-! ## SELF-REFERENCE / the diagonal fixed point (NEW slot — corpus sweep 2026-06-30)
-    More than a bare fixed point (CONCURRENCY): ⊥ is the *self-referential* / diagonal fixed point —
-    the Quine atom = the Kleene quine, where description and instantiation coincide. The keystone the
-    object previously carried with a single concurrency handle. #check-only. -/
--- ⊥ IS the (unique) self-executing Kleene/Quine fixed point. (NB: `kleene_quine_is_bot` is under
---  `[KleeneStructure]` — the quine-atom property is class-supplied, like `unique_fp`; not free-standing.)
+    More than a bare fixed point (CONCURRENCY): ⊥ is the *self-referential* / diagonal fixed point.
+    The framework reads the Quine atom and the Kleene quine as one face, description and
+    instantiation coinciding; that identification is a commitment (ZP-K `KleeneStructure`), never a
+    theorem, and it is not a Lean `=` — the two live in different types. The keystone the object
+    previously carried with a single concurrency handle. #check-only. -/
+-- ⊥ IS the (unique) Quine-atom fixed point. (NB: `kleene_quine_is_bot` is under
+--  `[KleeneStructure]` — the quine-atom property is class-supplied, like `unique_fp`; not free-standing.
+--  Its statement is `IsQuineAtom q → q = bot`, with no Kleene clause; the *self-executing* reading is
+--  the framework's, carried by the class commitment, not by this theorem. See ZP-K § II / § III.)
 #check @ZeroParadox.kleene_quine_is_bot       -- any Quine atom q = ⊥.
 #check @ZeroParadox.computational_quine_exists -- the Kleene self-referential fixed point exists.
--- a genuine PERIODICITY fact (the self-reference made concrete, beyond bare `f x = x`): the fixed point's
--- own Gödel number IS the period of its evaluation, `eval c n = eval c (encode c + n)` — index and
--- function tied. (A true periodicity statement, not a deep "diagonal identity" — kept literal.)
+-- a PERIODICITY fact: the fixed point's own Gödel number is *a* period of its evaluation,
+-- `eval c n = eval c (encode c + n)`. Not *the* period — it is not shown to be least, and a constant
+-- code is periodic with every period — so this does not tie index to function. (A literal periodicity
+-- statement, not a deep "diagonal identity". See ZP-K § VI.)
 #check @ZeroParadox.quine_period_is_goedel
 -- cross-domain: the two diagonalization fixed points (Kleene-periodic code; least ε₀ with ω^ε₀=ε₀) coexist.
 #check @ZeroParadox.both_fixed_points_exist

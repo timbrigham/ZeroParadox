@@ -63,10 +63,10 @@ section DiagonalFixedPointIndex
 #check @ZeroParadox.curry_no_bottom          -- Curry: no naming surjection; pretending otherwise explodes
 
 /-! ### § III. Floor faces (ν) — self-reference CLOSES, and the fixed point lands at ⊥ -/
-#check @ZeroParadox.t_exec                   -- the Quine atom: ⊥ self-executes (self-reference closes at the bottom)
+#check @ZeroParadox.t_exec                   -- the Quine atom: any self-containing element = ⊥ (self-reference closes at the bottom). "⊥ self-executes" is the framework's reading, not this statement
 #check @ZeroParadox.da1_closed_concrete      -- concrete Quine atom: `IsQuineAtom (bot : MachinePhase)`
-#check @ZeroParadox.kleene_quine_is_bot      -- the Kleene quine IS ⊥ (the computability floor)
-#check @ZeroParadox.t_comp                   -- T-COMP: the Quine-atom / Kleene-quine / selfApp floor faces are one
+#check @ZeroParadox.kleene_quine_is_bot      -- any Quine atom = ⊥, under `[KleeneStructure]`. NB the statement has no Kleene clause; "the Kleene quine IS ⊥" is ZP-K's commitment, and is not a Lean `=` (Code vs L)
+#check @ZeroParadox.t_comp                   -- T-COMP: proves the Quine-atom / order-bottom / join-identity faces equivalent (three). The Kleene face is a `KleeneStructure` class field, not a clause
 #check @ZeroParadox.selfApp_isLeastFixedPointFrom  -- ⊥ is the least fixed point of self-application (the order floor)
 #check @ZeroParadox.ProvabilityLogic.loeb_sentence_is_fixedpoint  -- Löb: the provability diagonal closes (the Löb sentence is a fixed point)
 #check @ZeroParadox.ProvabilityLogic.godel_two     -- Gödel's second: consistency unprovable — the provability floor

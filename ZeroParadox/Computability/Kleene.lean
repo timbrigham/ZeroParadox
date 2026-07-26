@@ -16,47 +16,56 @@ to do anything, it has to do it itself. Kleene's theorem is basically saying
 that there is always a version of that logic. It isn't specific to one
 programming language or way of looking at things. Much like the bootstrapping
 problem in any sufficiently powerful language. It is not specific to one system.
-Any language powerful enough eventually has to face it. T-COMP is the four-way
-equivalence. Being bottom, being the Quine atom, satisfying the join identity,
-and being a Kleene fixed point are all the same structural fact stated in four
-different formal languages. DA-1 Paths 1 and 3 were always naming the same thing.
+Any language powerful enough eventually has to face it. T-COMP proves three of
+them equivalent. Being bottom, being the Quine atom, and satisfying the join
+identity are the same structural fact stated three ways. Being a Kleene fixed
+point is the fourth, and it comes in as a requirement of the class rather than
+as something the theorem shows. That one is the soft joint, and that is exactly
+why I keep coming back to it.
 
 ---
 
 ## Formal Overview (AI-assisted)
 
-Establishes the four-way equivalence between the structural roles of ⊥:
+Relates four structural roles of ⊥, of which three are proved equivalent:
 
   (1) Quine atom       — set-theoretic self-reference (ZF + AFA)
   (2) Bottom element   — order-theoretic minimum (ZP-A)
   (3) Join identity    — algebraic generator (ZP-A A4)
   (4) Kleene fixed point — computational self-reference (Mathlib: fixed_point₂)
 
-The central result (T-COMP): in any ZP-K structure, ⊥ satisfies the Kleene
-fixed-point property. The KleeneStructure typeclass takes (1)–(4) to name the same
-structural role in four formal languages — this is the motivating commitment, not a
-consequence derived by the theorems. T-COMP establishes (1)↔(2)↔(3) via T-EXEC;
-(4) is present by typeclass requirement.
+The central result (T-COMP) establishes (1) ↔ (2) ↔ (3) via T-EXEC. Its proof term is
+`t_exec_triple_iff`, a ZP-J result that does not mention computation; ⊥ is then the
+element those three pick out. **(4) is not a clause of that theorem** — it is present
+by typeclass requirement, as the class field `botCode_is_quine`. The KleeneStructure
+typeclass taking (1)–(4) to name the same structural role in four formal languages is
+the motivating commitment, not a consequence derived by the theorems. Note the two
+sides also differ in shape: (1)–(3) pick out a unique element, while the computational
+fixed points form an infinite family (§ VI).
 
 ## Structure
 
 - § I   The Kleene fixed point — statement and computational Quine definition
-- § II  KleeneStructure typeclass — bridges AFAStructure to computability
-- § III T-COMP: the four-way equivalence
-- § IV  DA-1 closure — the description-instantiation gap formally dissolved
-- § V   MachinePhase instance — DA-1 closed concretely for ZP-E's machine
+- § II  KleeneStructure typeclass — the commitment bridging AFAStructure to computability
+- § III T-COMP: three proved equivalent, and where the fourth face sits
+- § IV  DA-1 closure — the witnesses the description-instantiation argument rests on
+- § V   MachinePhase instance — DA-1's concrete witness for ZP-E's machine
 - § VI  Function-Gödel-number correspondence — period = index, non-computability boundary
 
 ## Key insight (April 26, 2026)
 
-⊥ in the computational instantiation (ZP-C D7) is not a state OF a Turing machine.
-⊥ IS the universal Turing machine in its ground state. U is not a description awaiting
-an external executor — U IS the executor. Kleene's second recursion theorem
-(Mathlib: Nat.Partrec.Code.fixed_point₂) guarantees the existence of this fixed point
-for any partially computable transformation. The KleeneStructure typeclass takes the
-AFA Quine atom (⊥ = {⊥}) and the Kleene computational Quine (∃ c, eval c = f c) to
-be the same structural property —
-the motivating commitment, not a theorem proved here.
+This is the framework's reading, and it is a commitment throughout — no theorem in this
+file establishes it. On that reading, ⊥ in the computational instantiation (ZP-C D7) is
+not a state OF a Turing machine: ⊥ IS the universal Turing machine in its ground state,
+and U is not a description awaiting an external executor but IS the executor.
+
+What Lean supplies underneath: Kleene's second recursion theorem (Mathlib:
+Nat.Partrec.Code.fixed_point₂) guarantees a fixed point exists for any partially
+computable transformation. The KleeneStructure typeclass then takes the AFA Quine atom
+(⊥ = {⊥}) and the Kleene computational quine (∃ c, eval c = f c) to be the same
+structural property. That identification is the motivating commitment, not a theorem
+proved here, and it cannot be stated as an equation — `Code` and `L` are different
+types.
 
 ## Dependencies
 
@@ -69,8 +78,18 @@ Mathlib: Nat.Partrec.Code.fixed_point (Roger's fixed-point theorem).
 All proved ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
 Source: Mathlib computability infrastructure — Kleene's theorem (fixed_point₂) and
 Roger's theorem (fixed_point) themselves use classical logic and choice.
-ZP-J T-EXEC (axiom-free) is preserved; the classical axioms enter through
-Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
+ZP-J T-EXEC (axiom-free) is preserved as a ZP-J result; the classical axioms enter
+through Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
+
+Note a distinction that is easy to get backwards. Several results here are ZP-J
+theorems restated under a stronger hypothesis — `t_comp` (proof term
+`t_exec_triple_iff`), `kleene_quine_is_bot` (`t_exec`), `da1_computational`
+(`bot_is_quine_atom`). The `[KleeneStructure L]` hypothesis is inert *on those proof
+routes*, and the fences below say so. It is **not** absent from their axiom footprints:
+`#print axioms` traverses the statement, and the hypothesis reaches
+`IsComputationalQuine` → `selfApply` → Mathlib `eval`. So all three report the full
+triple, as the block at the end of this file shows. Inert-in-the-proof and
+absent-from-the-footprint are different properties; do not infer either from the other.
 
 § VI theorems: all fully proved — self_halting_undecidable, isComputationalQuine_undecidable,
 quine_period_is_goedel, quine_goedel_injective, and infinite_quine_family.
@@ -103,10 +122,12 @@ theorem kleene_fixed_point_exists (f : Code → ℕ →. ℕ) (hf : Partrec₂ f
 /-- The self-application transformation: the map sending each code c to the
     partial function encoding "run c on c's own Gödel number plus offset n."
     A fixed point of selfApply satisfies a periodicity condition with period encode(c):
-    eval c n = eval c (encode c + n) for all n. The period is the code's own Gödel
-    number. Non-uniqueness is expected: distinct codes have distinct Gödel numbers,
-    so each generates a fixed point with a distinct period — the family of fixed
-    points is infinite and its members are not mutually constrained.
+    eval c n = eval c (encode c + n) for all n — so a code's own Gödel number is a
+    period of it, though not necessarily the least. Non-uniqueness is expected, and it
+    holds for two separate reasons: distinct fixed points have distinct Gödel numbers
+    (encoding is injective), and the family is infinite (`infinite_quine_family`,
+    witnessed by the constant codes). Neither reason follows from the other. (Note this
+    says nothing about codes that are not fixed points; most are not.)
 
     The Gödel numbering uses Mathlib's `Encodable.encode : Code → ℕ`, which gives
     each code a canonical index. selfApply_partrec confirms this is computable. -/
@@ -140,62 +161,106 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
     computational setting is richer. A fixed point c of selfApply satisfies:
       eval c n = eval c (Encodable.encode c + n)  for all n
     This is a periodicity condition on eval c, not a global identity constraint.
-    Multiple programs can satisfy it independently — and this is structurally expected:
-    each bottom element in the DA-2 instantiation succession carries its own Gödel
-    number, so each generates a distinct fixed point with a distinct period. The
-    infinite family of computational fixed points corresponds to the infinite family
-    of bottom elements across instantiation chains. A single unique quine would
-    contradict DA-2.
+    Multiple programs can satisfy it independently — including the constant codes,
+    which satisfy it vacuously (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI), so the condition is strictly
+    weaker than self-reference.
+    The framework reads the resulting family as the DA-2 instantiation succession —
+    each bottom element carrying its own Gödel number, hence its own fixed point and
+    period — so that a single unique quine would contradict DA-2. That reading is an
+    interpretation of the non-uniqueness, not a theorem: nothing here exhibits a map
+    from instantiation index to code, and the type boundary makes such an
+    identification unstatable.
     Uniqueness in ZP-K is inherited from ZP-J (set-theoretic side via T-EXEC):
     any element satisfying IsQuineAtom equals ⊥ — this is kleene_quine_is_bot.
-    The computational witnesses (botCode) are identified with ⊥ through the
-    KleeneStructure bridge, not through behavioral equality of codes. -/
+    The framework reads the computational witnesses (botCode) as naming ⊥. That reading
+    is the KleeneStructure commitment; it is not established by behavioral equality of
+    codes, and it is not a Lean identity — see the type-boundary note above. -/
 
 /-! ## § II. KleeneStructure — Bridging Computation and AFA -/
 
-/-- A ZP-A semilattice has KleeneStructure if it carries an AFAStructure
-    and additionally has a computational witness for the bottom element's
-    self-referential nature via Kleene's theorem.
+/-- A ZP-A semilattice has KleeneStructure if it carries an AFAStructure and
+    additionally names a `Code` satisfying `IsComputationalQuine`.
 
-    The key field: botCode is a computational Quine — the code that IS its
-    own program, the universal Turing machine in ground state. This is the
-    computational expression of AFAStructure.bot_self_mem.
+    **This class is a COMMITMENT, and it is the framework's, not a theorem.** It
+    asserts that the AFA Quine atom and the Kleene computational quine name the same
+    structural property — the reading "botCode is the code that IS its own program,
+    the universal Turing machine in ground state, and this is the computational
+    expression of `bot_self_mem`". Nothing in this file derives that identification,
+    and nothing could state it as an equation: `botCode` is a `Code` and `bot` is an
+    element of `L`, so no `=` exists between them.
 
-    KleeneStructure is the formal identification of:
-      AFA self-containment (bot_self_mem) ↔ Kleene fixed point (botCode_is_quine)
-    These are the same structural property in two formal languages. -/
+    Three things to keep in view when relying on this class:
+    * `botCode_is_quine` requires only `IsComputationalQuine`, a *periodicity*
+      condition satisfied by constant codes (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI). It does not by
+      itself pin self-reference.
+    * `bot_self_mem_from_kleene` restates the `AFAStructure` field `bot_self_mem`
+      that this class already inherits. It records the intent of the bridge; it adds
+      no content beyond the inherited field.
+    * The AFA side has exactly one self-containing element (`quine_unique`); the
+      computational side has infinitely many fixed points (`infinite_quine_family`).
+      The commitment relates a unique element to a family, and § VI says what that
+      family is. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Bridges AFAStructure (set-theoretic self-containment) with Mathlib's computability library (Nat.Partrec.Code). No Mathlib typeclass connects AFA and Code. KleeneStructure asserts that the AFA Quine atom and the Kleene computational Quine (∃ c, eval c = f c) name the same structural property — this identification is the motivating commitment, not a derived theorem.
 class KleeneStructure (L : Type*) [ZPSemilattice L] extends AFAStructure L where
-  /-- The code witnessing ⊥'s computational self-reference. -/
+  /-- The code the framework nominates as ⊥'s computational witness. Nothing here
+      distinguishes it: it is whatever code the instance supplies. -/
   botCode : Code
-  /-- botCode is a computational Quine: a Kleene fixed point of self-application.
-      This is the computational expression of bot_self_mem. -/
+  /-- botCode satisfies `IsComputationalQuine` — a periodicity condition, which constant
+      codes also satisfy (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI). Reading it as "the computational
+      expression of bot_self_mem" is the class's commitment, not a consequence of this
+      field. -/
   botCode_is_quine : IsComputationalQuine botCode
-  /-- The AFA self-containment (bot_self_mem) and the Kleene fixed-point property
-      (botCode_is_quine) are the same structural fact.
-      The bridge: ⊥ = {⊥} in set theory ↔ eval botCode = selfApply botCode in computation. -/
+  /-- Restates the inherited `AFAStructure` field `bot_self_mem`; it records the intent
+      of the bridge and adds no content beyond what `extends AFAStructure L` already
+      supplies.
+      The intended reading — ⊥ = {⊥} in set theory alongside
+      eval botCode = selfApply botCode in computation — is the commitment. The two are
+      not equated and cannot be: one is about an element of `L`, the other about a
+      `Code`. -/
   bot_self_mem_from_kleene : AFAStructure.selfMem (bot : L)
 
-/-! ## § III. T-COMP — The Four-Way Equivalence -/
+/-! ## § III. T-COMP — the three-way equivalence, and where the fourth face sits -/
 
 /-- T-COMP (Computational Grounding Theorem):
-    In any KleeneStructure lattice, the four characterisations of the null
-    ground element are equivalent:
+    In any KleeneStructure lattice, **three** characterisations of the null ground
+    element are proved equivalent:
       (1) Quine atom  — IsQuineAtom q  (AFA self-containment, set-theoretic)
       (2) Bottom      — q = ⊥          (order-theoretic minimum)
       (3) Join identity — ∀ x, q ∨ x = x  (algebraic generator)
-      (4) Kleene fixed point            (computational self-reference)
 
-    The bridge from mathematical self-reference to computational execution is
-    not a bridge. These name the same structural role in four formal languages.
+    **Honest fence.** Lean proves (1) ↔ (2) ↔ (3), and that is the whole content of
+    this statement — the proof term is literally `t_exec_triple_iff`, a ZP-J result
+    that does not mention computation. The fourth characterisation,
 
-    Proof: (1) ↔ (2) ↔ (3) is ZP-J t_exec_triple_iff. (4) is in botCode_is_quine. -/
+      (4) Kleene fixed point — computational self-reference,
+
+    is **not** a clause of this theorem. It enters as the `KleeneStructure` class field
+    `botCode_is_quine` — a typeclass *requirement*, as the file header states. Reading
+    (1)–(4) as "the same structural role in four formal languages" is the framework's
+    interpretation of that arrangement, not a theorem proved here.
+
+    Two facts that keep the fence honest:
+    * (4) is a condition on a `Code`, (1)–(3) are conditions on an element of `L`.
+      There is no equality across those types, and none is claimed.
+    * (1)–(3) pick out a **unique** element (`quine_unique`), while the computational
+      fixed points form an **infinite** family (`infinite_quine_family`,
+      `quine_goedel_injective`). A unique element and an infinite family are not
+      identified by this theorem; see the note in § II on why the non-uniqueness is
+      structurally expected, and § VI on what the family actually is. -/
 theorem t_comp {L : Type*} [ZPSemilattice L] [KleeneStructure L] (q : L) :
     IsQuineAtom q ↔ q = bot ∧ ∀ x : L, join q x = x :=
   t_exec_triple_iff q
 
-/-- The Kleene fixed point and the AFA Quine atom identify the same element.
-    Any element satisfying either property equals ⊥. -/
+/-- Any element satisfying the AFA Quine-atom property equals ⊥.
+
+    **Honest fence.** The statement quantifies over elements of `L` and mentions no
+    computational fixed point; the proof term is `t_exec`, a pure ZP-J result. The
+    `KleeneStructure` hypothesis is inert *on this proof route* — it supplies the
+    `AFAStructure` this inherits from, and nothing else is used. It is not absent from
+    the axiom footprint, which follows the statement (see the footprint note in the
+    header). That the Kleene fixed point and the AFA Quine atom
+    "identify the same element" is the class's motivating commitment (header, § II),
+    not what this theorem shows. -/
 theorem kleene_quine_is_bot {L : Type*} [ZPSemilattice L] [KleeneStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=
   t_exec q hq
@@ -210,35 +275,54 @@ theorem roger_fixed_point_exists (f : Code → Code) (hf : Computable f) :
 
 /-! ## § IV. DA-1 Closure -/
 
-/-- DA-1 (Computational Grounding): In any KleeneStructure lattice, the bottom
-    element is a Quine atom — necessarily executing, not a static description.
+/-- DA-1 (Computational Grounding): in any KleeneStructure lattice, the bottom
+    element is a Quine atom.
 
-    The proof: bot_is_quine_atom from ZP-J (⊥ is self-containing by bot_self_mem,
-    unique by quine_unique). The KleeneStructure adds the computational witness:
-    ⊥ is the universal Turing machine in ground state, whose Kleene fixed-point
-    property is exactly bot_self_mem. -/
+    **Honest fence.** The proof is `bot_is_quine_atom` from ZP-J: ⊥ is self-containing
+    by the class field `bot_self_mem` and unique by `quine_unique`. Both are *fields*,
+    so this statement unpacks the structure's own requirements — it does not derive
+    them. Nothing computational appears in the statement or the proof.
+
+    The reading "⊥ is necessarily *executing*, not a static description" is the
+    framework's interpretation of `bot_self_mem` under the KleeneStructure commitment,
+    and DA-1's central claim. It is meaning attached to the Lean fact, not a separate
+    Lean theorem. -/
 theorem da1_computational {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
     IsQuineAtom (bot : L) :=
   bot_is_quine_atom
 
-/-- DA-1 paths are unified: the AFA self-containment argument (Path 1) and the
-    Kolmogorov incompressibility argument (Path 3) are the same structural fact —
-    the Kleene fixed-point property — expressed in two formal languages.
+/-- Both DA-1 witnesses hold together: ⊥ is an AFA Quine atom, and the class's chosen
+    `botCode` is a computational quine.
 
-    Path 1 (AFA): nothing external to ⊥ can execute ⊥ → ⊥ = {⊥}
-    Path 3 (AIT): no shorter external program generates ⊥ → ⊥ is executing
-    Both: ⊥ is its own program. IsComputationalQuine botCode witnesses this. -/
+    **Honest fence.** The statement is a **conjunction**, and a conjunction is not an
+    identity. Each conjunct comes from a class field (`bot_self_mem`,
+    `botCode_is_quine`); nothing here shows the two are the same fact, and they cannot
+    be equated in Lean — one is a property of an element of `L`, the other of a `Code`.
+
+    The framework's reading — that Path 1 (AFA: nothing external to ⊥ can execute it)
+    and Path 3 (AIT: no shorter external program generates it) are one structural fact
+    expressed in two languages — is DA-1's argument, carried by this pair of witnesses,
+    not proved by it.
+
+    Note also that `IsComputationalQuine` is a *periodicity* condition, satisfied by
+    constant codes (`hconst_quine`, in the proof of `infinite_quine_family`). So the
+    second conjunct alone does not pin self-reference; see § VI. -/
 theorem da1_paths_unified {L : Type*} [ZPSemilattice L] [KleeneStructure L] :
     IsQuineAtom (bot : L) ∧ IsComputationalQuine (KleeneStructure.botCode (L := L)) :=
   ⟨bot_is_quine_atom, KleeneStructure.botCode_is_quine⟩
 
-/-- The description-instantiation gap is dissolved:
-    ⊥ is not a description that could await an external executor.
-    ⊥ IS the executor — the universal Turing machine in ground state.
-    The Kleene fixed-point property means no external program is "prior" to ⊥:
-    ⊥ is its own minimal program.
-    Therefore the static-description alternative (DA-1's negative case) is
-    structurally eliminated, not just argued away. -/
+/-- ⊥ is a Quine atom, and it is the only one.
+
+    **Honest fence.** Both conjuncts are ZP-J results recombined (`bot_is_quine_atom`,
+    `t_exec`); neither mentions computation, and the `KleeneStructure` hypothesis is
+    inert in the proof. The statement is about existence-and-uniqueness of the
+    self-containing element in `L`, nothing more.
+
+    The framework's reading — that ⊥ is not a description awaiting an external
+    executor but IS the executor, so DA-1's static-description alternative is closed —
+    is the argument this witness supports. It is DA-1's claim, not this theorem's
+    content, and "no external program is prior to ⊥" is a requirement the framework
+    imposes rather than something derived here. -/
 theorem description_instantiation_gap_closed {L : Type*} [ZPSemilattice L]
     [KleeneStructure L] : IsQuineAtom (bot : L) ∧
     ∀ (q : L), IsQuineAtom q → q = bot := by
@@ -268,46 +352,107 @@ instance machinePhaseAFA : AFAStructure MachinePhase where
   bot_self_mem   := rfl
 
 /-- KleeneStructure instance for MachinePhase.
-    botCode is the computational Quine whose existence is guaranteed by
-    kleene_fixed_point_exists (Kleene's second recursion theorem). The code
-    IS its own program — the computational expression of ⊥ = {⊥}. -/
+    `botCode` is `Classical.choose` applied to `computational_quine_exists` — *some*
+    code satisfying `IsComputationalQuine`, whose existence is guaranteed by
+    `kleene_fixed_point_exists` (Kleene's second recursion theorem). It is not a
+    distinguished code, and the predicate it satisfies is a periodicity condition that
+    constant codes also meet (§ VI). Reading it as "the code that IS its own program,
+    the computational expression of ⊥ = {⊥}" is the framework's commitment, carried by
+    the class, not a property this instance establishes. -/
 -- [ZP-CUSTOM] instance: KleeneStructure MachinePhase (noncomputable) | reason: botCode chosen via Classical.choose — no algorithm can identify which Code IS the botCode (isComputationalQuine_undecidable). The noncomputable marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Stripping it would misrepresent the result.
 noncomputable instance machinePhaseKleene : KleeneStructure MachinePhase where
   botCode               := Classical.choose computational_quine_exists
   botCode_is_quine      := Classical.choose_spec computational_quine_exists
   bot_self_mem_from_kleene := rfl
 
-/-- DA-1 closed (concrete): In the MachinePhase semilattice, ⊥ is a Quine atom.
-    The initial state c₀ is self-containing and self-executing — not a static
-    description awaiting an external interpreter. Follows from da1_computational
-    applied to the MachinePhase KleeneStructure instance. -/
+/-- DA-1 closed (concrete): in the MachinePhase semilattice, ⊥ is a Quine atom.
+    Follows from `da1_computational` at the MachinePhase KleeneStructure instance.
+
+    **Honest fence — read this before citing the theorem.** What Lean proves is exactly
+    `IsQuineAtom (bot : MachinePhase)`: the initial state is self-containing, and it is
+    the only such state. The self-containment comes from the `AFAStructure` instance
+    for `MachinePhase` (`machinePhaseAFA`'s `bot_self_mem`), not from any computational
+    field — `KleeneStructure`'s `bot_self_mem_from_kleene` is inert on this proof
+    route.
+
+    The reading "c₀ is self-**executing** — not a static description awaiting an
+    external interpreter" is DA-1's claim and the framework's requirement on the
+    computational bottom. It is meaning attached to this Lean fact, **not** what the
+    statement carries. Two specifics that matter when this theorem is cited as
+    computational grounding:
+    * The statement mentions no `Code` and no execution.
+    * `botCode` here is `Classical.choose computational_quine_exists` — *some*
+      computational quine, not a distinguished one. `IsComputationalQuine` is a
+      periodicity condition satisfied by constant codes (`hconst_quine`, a `have` inside `infinite_quine_family`, § VI), so the
+      chosen witness need not itself exhibit self-reference. -/
 theorem da1_closed_concrete : IsQuineAtom (bot : MachinePhase) :=
   da1_computational
 
 /-! ## § VI. Function-Gödel-Number Correspondence
 
 Every computational quine c has a Gödel number encode(c) that is not external
-metadata — it is the period of the function computed by c in the selfApply sense.
-The DA-2 instantiation succession generates an infinite family of quines with
-distinct Gödel numbers. For each quine cᵢ in this family, the pair (eval cᵢ, encode cᵢ)
-is the unique signature of cᵢ: the function and the index are inseparable.
+metadata — it is *a* period of the function computed by c in the selfApply sense. (Not
+*the* period: nothing here shows it is the least one, and a constant code is periodic
+with every period.)
+The computational quines form an infinite family with distinct Gödel numbers. Within
+that family a code is recovered from its Gödel number, since encoding is injective on
+all of `Code`. That does not make the function and the index mutually determining: the
+index is only *a* period of the function, and constant codes are periodic with every
+period, so the function does not fix the index. Reading that family as the DA-2 instantiation
+succession — one bottom element per instantiation, each with its own code — is the
+framework's interpretation and is NOT what the theorems below establish; see the fence
+immediately following for what actually witnesses the family.
+
+**Honest fence on what "computational quine" does and does not pin.**
+`IsComputationalQuine` is the *periodicity* condition eval c n = eval c (encode c + n).
+A constant code satisfies it vacuously — a constant ignores its input and is periodic
+with every period — and the proof of `infinite_quine_family` below witnesses the family
+with exactly those (`hconst_quine`, `Code.const k`). So the predicate is strictly weaker
+than "self-referential": genuine Kleene fixed points satisfy it (`computational_quine_exists`,
+via the second recursion theorem, and that witness is real), and so do constants. The
+(function, index) pairing is therefore a signature of the *code*, and should not be read
+on its own as a signature of self-reference.
+
+**And on the shape of the family.** These fixed points are genuinely many and genuinely
+distinct — `infinite_quine_family` and `quine_goedel_injective` prove it — while the
+set-theoretic side has exactly one self-containing element (`quine_unique`). A unique
+element and an infinite indexed family are different shapes, so the correspondence here
+is between the *succession* of instantiations and the family, not an identification of
+one element with one code. The framework's reading of that correspondence is in § II;
+no theorem in this file identifies a `Code` with an element of a lattice, and the type
+boundary makes such an identification unstatable.
+
+**Prior art, and a distinction that must not be collapsed.** That a computational object
+is named by many indices rather than one is standard: the **Padding Lemma** — every
+partial recursive function has infinitely many indices — is its classical home, and an
+external computability reader raised it against ZP-K directly. It is the right reference
+for "why an index cannot stand in for the thing indexed."
+It is **not** what `infinite_quine_family` proves, and the two must not be conflated:
+padding supplies infinitely many indices for the *same* function, whereas this family is
+witnessed by the constant codes, and `Code.const 0` and `Code.const 1` compute *different*
+functions. So the family here is broad, not a padding orbit. Cite padding for the
+index-multiplicity point; do not cite it for this theorem.
 
 Three formal results capture this structure:
-  (1) quine_period_is_goedel — the period IS the Gödel number (definitionally)
+  (1) quine_period_is_goedel — the Gödel number IS a period (definitionally; not shown
+      to be the least one)
   (2) self_halting_undecidable and isComputationalQuine_undecidable — the boundary
       between computation and self-reference is genuinely non-computable, not merely
       unimplemented; Classical.choose in machinePhaseKleene reflects this
-  (3) infinite_quine_family — the quine family is infinite, confirming that DA-2
-      instantiation succession generates unboundedly many distinct (function, index) pairs
+  (3) infinite_quine_family — the quine family is infinite: unboundedly many distinct
+      (function, index) pairs exist. Its witnesses are the constant codes, so it bounds
+      the family from below without showing those members are instantiation bottoms
 
 The noncomputable marker on machinePhaseKleene is therefore load-bearing, not a
 proof artifact. No algorithm can identify which code IS the botCode for a given
 KleeneStructure instance — the choice is structurally outside classical computation. -/
 
-/-- For any computational quine c, the Gödel number encode(c) is the period of
+/-- For any computational quine c, the Gödel number encode(c) is a period of
     eval c in the selfApply sense: eval c n = eval c (encode(c) + n) for all n.
-    This makes explicit what IsComputationalQuine encodes definitionally: the function
-    and the Gödel number are not independently specifiable. The index IS the period. -/
+    This makes explicit what IsComputationalQuine encodes definitionally: the index is
+    a period. Note "a", not "the" — nothing here shows encode(c) is the *least* period,
+    and a constant code is periodic with every period, so this alone does not make the
+    function and the Gödel number mutually determining. -/
 theorem quine_period_is_goedel (c : Code) (hc : IsComputationalQuine c) :
     ∀ n : ℕ, eval c n = eval c (Encodable.encode c + n) := by
   intro n
@@ -316,9 +461,14 @@ theorem quine_period_is_goedel (c : Code) (hc : IsComputationalQuine c) :
   exact h
 
 /-- Among computational quines, distinct Gödel numbers imply distinct codes.
-    The encoding is injective on all of Code, hence on quines.
-    Across the DA-2 instantiation succession, each ⊥ₙ has a distinct botCodeₙ with
-    a distinct Gödel number — the map instantiation-index ↦ encode(botCodeₙ) is injective. -/
+
+    **Honest fence.** The proof is `Encodable.encode_inj` — injectivity of the encoding
+    on all of `Code`. Both quine hypotheses are bound to `_` and are unused, so this is
+    a fact about the encoding, not about quines specifically. No map from an
+    instantiation index to a code exists anywhere in this development, and none could be
+    stated as an equality against a lattice element (§ VI fence above). The framework's
+    reading — that each successive bottom carries its own distinct code — is an
+    interpretation of the family, not a theorem here. -/
 theorem quine_goedel_injective (c₁ c₂ : Code)
     (_ : IsComputationalQuine c₁) (_ : IsComputationalQuine c₂)
     (h : Encodable.encode c₁ = Encodable.encode c₂) : c₁ = c₂ :=
@@ -492,7 +642,9 @@ theorem isComputationalQuine_undecidable :
 /-- The family of computational quines is infinite: for any n, a quine with
     Gödel number greater than n exists.
     Combined with quine_goedel_injective, this gives an infinite injection into quines.
-    The DA-2 instantiation succession has no finite bound.
+    Note what witnesses it: the constant codes. So the family is unbounded, and this
+    theorem does not show its members are instantiation bottoms — reading it as "the
+    DA-2 succession has no finite bound" is the framework's interpretation.
     Proof: Code.const k is a quine for every k (constant functions satisfy the selfApply
     condition: both sides reduce to Part.some k). Code.const is injective (Mathlib:
     const_inj) and Encodable.encode is injective, so encode ∘ Code.const is an injective
@@ -542,5 +694,8 @@ open ZeroParadox ZeroParadox ZPSemilattice ZeroParadox
 #print axioms da1_closed_concrete
 #print axioms isComputationalQuine_undecidable
 #print axioms infinite_quine_family
+#print axioms self_halting_undecidable
+#print axioms quine_period_is_goedel
+#print axioms quine_goedel_injective
 
 end PurityCheck

@@ -23,11 +23,13 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
-- DA-1 (Instantiation as Execution): Paths 1 and 3 are now in Lean scope via ZP-K.
-  ZPK.machinePhaseKleene gives MachinePhase a KleeneStructure instance; ZPK.da1_closed_concrete
-  proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing and
-  self-executing, not a static description. Path 2 (informational bridge, L-INF) remains
-  outside Lean scope. See § I-DA1 for the full argument and ZP-K for the formal closure.
+- DA-1 (Instantiation as Execution): Paths 1 and 3 are in Lean scope via ZP-K.
+  machinePhaseKleene gives MachinePhase a KleeneStructure instance; da1_closed_concrete
+  proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing, and it is
+  the only such state. The further reading "self-executing, not a static description" is
+  DA-1's claim, carried by the KleeneStructure commitment rather than by that theorem
+  (which mentions no Code and no execution). Path 2 (informational bridge, L-INF) remains
+  outside Lean scope. See § I-DA1 for the full argument and ZP-K for what is and is not proved.
 - DA-2 (Instantiation Succession): algebraic characterisation of the ⊥ role across instantiations
 - DA-3 (Perspective-Relative Cardinality): DA-3-D1 as a definition; DA-3-C1 is a
   candidate claim and is not formalised here
@@ -69,25 +71,38 @@ DA-1 states: a machine configuration at the incompressibility threshold P₀ is 
 live execution event, not a static description.
 
 Three paths support this (ZP-E v3.6 framing):
-  Path 1 — Structural (ZP-J T-EXEC + ZP-K): nothing external to ⊥ can execute ⊥;
-    ⊥ must execute itself → ⊥ = {⊥} is forced. ZPK.machinePhaseAFA gives MachinePhase
-    an AFAStructure instance encoding this. ZPK.da1_closed_concrete : IsQuineAtom bot.
-    IN LEAN SCOPE via ZP-K.
+  Path 1 — Structural (ZP-J T-EXEC + ZP-K): the argument is that nothing external to ⊥
+    can execute ⊥, so ⊥ must execute itself, forcing ⊥ = {⊥}. machinePhaseAFA gives
+    MachinePhase an AFAStructure instance encoding the conclusion as class fields, and
+    da1_closed_concrete : IsQuineAtom (bot : MachinePhase) is the Lean witness.
+    PARTLY IN LEAN SCOPE: the witness is real, and the premise "nothing external can
+    execute ⊥" is the framework's requirement, not a theorem.
   Path 2 — Informational (ZP-C L-INF): surprisal at ⊥ is unbounded → no finite
     interpreter can hold ⊥ → static-description state eliminated.
     OUTSIDE LEAN SCOPE: "unbounded surprisal → necessarily executing" is an ontological
     bridge claim not derivable in type theory.
-  Path 3 — Computational (ZP-K Kleene): no shorter program is prior to ⊥ →
-    ⊥ is its own program. ZPK.machinePhaseKleene gives MachinePhase a KleeneStructure
-    instance with botCode witnessing the Kleene fixed point.
-    IN LEAN SCOPE via ZP-K.
+  Path 3 — Computational (ZP-K Kleene): the argument is that no shorter program is prior
+    to ⊥, so ⊥ is its own program. machinePhaseKleene gives MachinePhase a
+    KleeneStructure instance whose botCode field names a code satisfying
+    IsComputationalQuine.
+    A COMMITMENT, NOT A SECOND PROOF: botCode is Classical.choose of an arbitrary such
+    code, and IsComputationalQuine is a periodicity condition that constant codes also
+    satisfy. See ZP-K § II and § VI.
 
-DA-1 Lean scope status (updated ZP-K, April 2026):
-  Paths 1 and 3: formally closed — ZPK.da1_closed_concrete : IsQuineAtom (bot : MachinePhase).
+DA-1 Lean scope status:
+  Path 1: witnessed by da1_closed_concrete : IsQuineAtom (bot : MachinePhase) —
+    which proves ⊥ is the unique self-containing state and mentions no Code and no
+    execution. The executional reading rests on the KleeneStructure commitment.
+  Path 3: carried by the KleeneStructure requirement, not by an independent theorem.
+    da1_paths_unified holds both witnesses together as a conjunction; a conjunction
+    of witnesses is not a proof that the two paths are one fact.
   Path 2: outside Lean scope — informational bridge remains an ontological commitment.
-  T-SNAP derivation: complete independently via l_run, tq_ih, bot_join (see t_snap_derived).
+  T-SNAP derivation: complete independently via l_run, tq_ih, bot_join (see t_snap_derived)
+    — and note T-SNAP does not depend on any of the above.
 
-Prior "Outside Lean Scope" designation is superseded. ZP-K is the formal closure. -/
+So DA-1 is closed given its commitments, not closed outright; ZP-K supplies the
+witnesses and names the commitment, and ZP-K § III states exactly which parts are
+proved. -/
 
 /-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
 

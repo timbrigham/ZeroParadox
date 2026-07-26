@@ -37,7 +37,8 @@ next to the pole 0 = ∞ (Veblen coordinates (1, 0); the reciprocal 1/∞), *adj
 ε₀ is a fixed point (`ω^ε₀ = ε₀`); were it 0 that would say `1 = 0`. Since `⊥ = 0`, also `ε₀ ≠ ⊥`:
 ⊥ is the *base fed in*, ε₀ the *closure that comes out* — never equal. Any prose, figure, or docstring
 that entertains `ε₀ = 0` (a "fence," a "co-location at 0") is wrong by this guard. When a 2-adic
-encoding sends the tower's images toward the value 0, that 0 is ⊥ (a fresh successor null), NOT ε₀;
+encoding sends the tower's images toward the value 0, that 0 is ⊥ (read as a successor null — the
+2-adic arc in fact reapproaches the same 0), NOT ε₀;
 `cnfToZp2` is order-reversing, so the ordinal ascent toward ε₀ is the ℤ₂-norm descent toward ⊥.
 
 Read this index (and the theorems it points at) before writing anything about ε₀.
@@ -65,14 +66,15 @@ section Epsilon0CannotBeIndex
 #check @ZeroParadox.epsilonZero_fixedPoint    -- ε₀ the fixed point the snap lands the ascent on
 #check @ZeroParadox.snap_exactly_at_epsilon_zero
 #check @ZeroParadox.c1_epsilon_zero_identification
-#check @ZeroParadox.zpm_triangle              -- ε₀ ∧ 2-adic limit ∧ Kleene quine co-witnessed
+#check @ZeroParadox.zpm_triangle              -- ε₀ ∧ 2-adic limit: tower stages, snap value, convergence, embedding (NB no computational conjunct)
+#check @ZeroParadox.both_fixed_points_exist   -- quine ∧ ε₀ co-witnessed: each diagonalization yields a fixed point in its own domain (a conjunction, not a cross-domain identity)
 
 /-! ### § V. The 2-adic realization (`cnfToZp2` order-reversing; ε₀ ≠ 0 preserved, no identity) -/
 #check @ZeroParadox.snap_arc_z2_loop          -- start 0, ∀n≥1 ≠0, reapproach 0 (the loop)
 #check @ZeroParadox.mu_construction_correspondence  -- one tower, two carrier closures (ε₀ ; 0)
 #check @ZeroParadox.cnf_bridge_type_boundary  -- co-witness only; ε₀ = 0 never asserted (ill-typed)
 
-/-! ### § VI. The loop returns to a NEW ⊥ (a successor null), never to ε₀ -/
-#check @ZeroParadox.t_iz_limit_is_new_null    -- the limit is its own successor ⊥ (a fresh instance)
+/-! ### § VI. The loop returns to a ⊥, never to ε₀ (the *successor* reading is a commitment) -/
+#check @ZeroParadox.t_iz_limit_is_new_null    -- role half only: (∀ x, join terminal x = x) → terminal = bot. No chain, no limit, no novelty in the statement; "a fresh instance" is the framework's reading, not this theorem
 
 end Epsilon0CannotBeIndex
