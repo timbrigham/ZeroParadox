@@ -13,7 +13,19 @@ The framework has three core objects, each pinned by an authoritative Lean chara
 - **The snap (⊥ → ε₀)** — `ZeroParadox/Order/SnapCannotBe.lean` (the `#check`-only "what the snap is / is not" index) + home file `ZeroParadox/Order/Snap.lean` (T-SNAP, `t_snap_derived`) + reader map `SNAP.md`.
 - **ε₀** — `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` (the `#check`-only "what ε₀ is / is not" index) + `Epsilon0LeastFP.lean` / `Epsilon0MinMax.lean`.
 
-The `CannotBe` indexes are `#check`-only — they create no declarations and so structurally cannot overclaim; reading one shows exactly what the object IS and IS NOT, each line a live theorem.
+The `CannotBe` indexes are `#check`-only — they create no declarations, so a line cannot point at a dead or renamed result; reading one shows what the object IS and IS NOT, each line a live theorem.
+
+**⚠ The `#check` lines cannot overclaim. The `--` glosses beside them absolutely can, and have.** This file used to say the indexes "structurally cannot overclaim" full stop; that is true of the *declarations* and **false of the comments**, which are ordinary unverified prose sitting in a file whose stated premise is that it cannot overclaim. Measured 2026-07-26: two glosses in `DiagonalFixedPoint.lean` (`-- the Kleene quine IS ⊥`, a flat cross-type identity on a theorem stating `IsQuineAtom q → q = bot`) survived **four** adversary rounds inside that blind spot, and three more were found in `SnapCannotBe.lean`.
+
+**The standing convention (Tim, 2026-07-26) — every gloss carries one of two labels, and there is no third option:**
+- **`Statement:`** — an accurate restatement of what the declaration actually proves. Best form is an
+  elaborating `example` (a wrong gloss then fails to compile); prose is acceptable where an `example`
+  would be unwieldy, but it must be checkable by reading the statement.
+- **`Reading:`** — the framework's interpretation, explicitly NOT a claim about what the theorem says.
+
+This is as much for a human reader as for a checker: the label tells you at a glance whether you are looking at mathematics or at interpretation. **The rule generalizes beyond the indexes** — the same defect class (prose asserting conjuncts the cited statement lacks) was found this session in ordinary docstrings, in `CLAIMS.md` rows, and in this file itself.
+
+**Why the labels, and not another sweep.** Grepping for a claim's vocabulary cannot terminate — there is always another claim, and a sweep that greps `da1_closed_concrete` misses the site that says `da1_paths_unified`. Checking **witnesses against statements** is finite: bounded by the number of citations. `ZeroParadox/ClaimsMirror.lean` already proves the principle works — `claim_DA1` states the honest content precisely because it had to elaborate.
 
 **The keystone index (the phenomenon the three objects share):** `ZeroParadox/DiagonalFixedPoint.lean` — the `#check`-only index routing every formalized face of **self-reference** (the diagonal fixed point) by the μ/ν fork: wall faces where self-reference cannot close (no fixed point — Cantor, Russell, Turing, Tarski, Curry) and floor faces where it closes and lands at ⊥ (the Quine atom, the Kleene quine, Löb/Gödel-2, Rice), all off Lawvere's engine. It is the direct route to self-reference the three object indexes point back toward. It states no new claim: the cross-face unification is Lawvere (1969) / Yanofsky (2003), cited prior art, and the cross-face identity across domains stays a **type boundary**, never a Lean `=`.
 
@@ -30,7 +42,7 @@ The `CannotBe` indexes are `#check`-only — they create no declarations and so 
 - **ε₀ is both min AND max at once** — least fixed point ≡ tower supremum (`epsilon0_min_eq_max`); direction-/instance-specific, never collapsed to one face.
 - **ε₀ requires two conditions**: the ω-tower operator `α↦ω^α` AND the base ⊥ (`ε₀ = nfp(ω^·)⊥`, `epsilon0_eq_nfp_bot`; Mathlib `ε₀ = deriv(ω^·) 0`). It is the *minimum* step next to the pole (Veblen coords (1,0); the 1/∞ reading), never the pole.
 - **⊥ = 0 = ∞ is the pole** — *stated*, not fenced (the framework's own identity; `rInv_swaps`). This is NOT ⊥ = ε₀ (which is false).
-- The snap-arc **returns to a NEW ⊥** (a successor null, `t_iz_limit_is_new_null`), never the same ⊥ and never ε₀.
+- The snap-arc **returns to a bottom, never to ε₀** (`epsilon0_ne_bot`). The framework reads that bottom as a **new** one — a successor null, the next instantiation. What is *proved* is the **role** half: anything playing the bottom role **is** the bottom (`t_iz_limit_is_new_null`, which is one direction of `da2_bottom_characterization` — its statement is `(∀ x, join terminal x = x) → terminal = bot`, with no chain, no limit and no novelty in it). The **novelty is a commitment, not a theorem**: within a single lattice `bot` is unique, so "a different bottom" is not expressible there, and in the 2-adic realization the arc reapproaches the *same* 0 (`snap_arc_z2_loop`). **Never cite `t_iz_limit_is_new_null` as a witness for novelty.** (Corrected 2026-07-26: it had been named here as the novelty witness for months. Found by an adversary gate probing a *second* claim after the ZP-K sweep closed — see the note on the witness-vs-statement defect class.)
 
 **Why this rule exists (2026-07-17):** a run of prose/figure errors — fencing ε₀ = 0, "co-locating ⊥ and ε₀," flattening min≡max to one face, calling ε₀ "a large ordinal / ceiling" — all came from reconstructing these objects from working memory instead of reading the Lean. The fix is mechanical: read the `CannotBe` index first, cite the theorem, never gloss.
 
