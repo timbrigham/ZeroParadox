@@ -288,14 +288,17 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** The computational analogue of `rInv` / `swap` — an involution on step functions that exchanges the halted and self-looping poles while fixing every configuration that steps onward. Mathlib has no such operation on `σ → Option σ`. Fenced at the definition: it is an automorphism of the SPACE of machines, not of one machine, so it is the same shape at a different level and never a cross-type identity.
 
-### `HasFirstStep` — `ZeroParadox/Reals/OrderedField.lean:68`
-
-**Relationship to Mathlib:** No Mathlib analog
-
-**Reason:** AX-B1, the framework's one substantive modelling commitment, stated as an explicit predicate rather than baked into a two-element carrier. Mathlib's nearest notions are `IsAtom` (a lattice `⊥ ⋖ a` condition) and `Order.IsSuccLimit` (stated relative to a `SuccOrder`); this is the bare order-theoretic form over an arbitrary preorder with a distinguished bottom, which is what lets the commitment be carried as a visible hypothesis and refuted pointwise against its own counterexample (`axb1_fails_in_ordered_field`).
 
 ### `stepCoalg` — `ZeroParadox/Computability/GroundZero.lean:73`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** The connector between a `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the polynomial functor `X ↦ 1 + X`. Mathlib carries both sides — `Computability/StateTransition.lean` and `Data/QPF/Univariate/Basic.lean` — and no map between them, because the two live in unrelated corners of the library. This is that bridge, and it is where the framework's operational face (`Occurrence.lean`) meets its coalgebraic one (`NatListRegime.lean`). The construction itself is standard: reading a partial step function as a `1 + X`-coalgebra is textbook (Jacobs, *Introduction to Coalgebra*, Ch. 2), and no novelty is claimed for it.
+
+### `TriStep` — `ZeroParadox/Computability/GroundZero.lean:169`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** A deliberate COUNTER-MODEL, not a construction to build on: a three-valued step outcome (halted / idle / stepping) whose only purpose is to be the carrier in which the § I forcing fails. Mathlib has no three-valued step outcome because there is no reason to want one. It must never be used as a framework object.
+
+**Prior art (added 2026-07-27):** the halted-versus-idle distinction is the ACP split between *successful termination* and *deadlock* (Baeten & Weijland, *Process Algebra*, 1990) - process algebra calls the third value **deadlock**, where the framework reads it as *unstarted*. Same object, opposite valence; the standard term should lead in any reader-facing prose.

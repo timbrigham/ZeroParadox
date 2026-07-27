@@ -1,4 +1,5 @@
 import Mathlib.Algebra.Order.Field.Basic
+import Mathlib.Order.Cover
 import Mathlib.Data.Real.Basic
 
 /-!
@@ -16,11 +17,14 @@ quantum physics and Newtonian.
 
 ## Formal Overview (AI-assisted)
 
-The Binary Snap requires a metric where no halving is possible. ℝ fails that
-test by construction — so does any field with a compatible linear order
-([Field F] [LinearOrder F] [IsStrictOrderedRing F]). ℚ₂ passes it because
-zero's valuation is +∞: the gap between zero and any nonzero element is not a
-limit but a structural fact.
+The Binary Snap requires a setting where halving does not undercut every candidate
+first step. ℝ fails that test by construction — so does any field with a compatible
+linear order ([Field F] [LinearOrder F] [IsStrictOrderedRing F]). In ℚ₂ the halving
+argument does not apply (dividing by 2 moves AWAY from zero, lowering the valuation),
+and v₂(0) = +∞ while every non-zero element has finite valuation. **That removes the
+obstruction; it does not supply a first step** — the 2-adic norms still accumulate at
+zero (‖2ⁿ‖₂ = 2⁻ⁿ), so zero is a limit of the non-zero elements there, not isolated
+from them. The first step is AX-B1 (§ 0), a commitment.
 
 **General case (any [Field F] [LinearOrder F] [IsStrictOrderedRing F]):**
 
@@ -61,36 +65,49 @@ The ZP-C forcing lemmas (`pmf_subsingleton_isPure`, `binaryState_exhaustive`) di
 
 section AxB1
 
-/-- **AX-B1, stated explicitly.** There is a first step above the bottom: something strictly above
-    it with nothing strictly between. This is the commitment, as a hypothesis one can discharge or
-    refuse — not a fact hidden in a two-element carrier. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's `IsAtom`/`Order.IsSuccLimit` are stated over lattices or successor orders; this is the bare order-theoretic form of the framework's discreteness commitment over an arbitrary preorder with a distinguished bottom, so it can be carried as an explicit hypothesis and refuted pointwise (see `axb1_fails_in_ordered_field`).
-def HasFirstStep {α : Type*} [Preorder α] (bot : α) : Prop :=
-  ∃ a, bot < a ∧ ¬ ∃ δ, bot < δ ∧ δ < a
+/-- **AX-B1, in standard order-theoretic vocabulary: the bottom is COVERED by something.**
 
-/-- **The first step is unique** where the order is linear — so the commitment, once made, fixes
-    the snap's target rather than leaving a choice. -/
+    Mathlib's `CovBy` (notation `a ⋖ b`) says `b` is directly above `a` with nothing strictly
+    between. The framework's discreteness commitment is exactly `∃ a, bot ⋖ a`, so AX-B1 is
+    kept as the name and `CovBy` supplies the content and the lemmas.
+
+    **Honest transition note (2026-07-27).** This was first written (2026-07-26) as a bespoke
+    predicate carrying a custom-registry tag that asserted Mathlib had no analog. **That was
+    wrong.** `CovBy` already existed, is stated over the weaker `[LT α]` rather than
+    `[Preorder α]`, and carries `CovBy.unique_right`, `not_covBy`, and the biconditional below.
+    The framework had simply never identified its own one substantive modelling commitment with
+    the standard notion. Recorded here rather than quietly corrected, so that the same
+    unidentified-notion failure is easier to spot if it appears elsewhere. -/
+def HasFirstStep {α : Type*} [LT α] (bot : α) : Prop := ∃ a, bot ⋖ a
+
+/-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as
+    such — proved here by hand only to keep the footprint at `[propext]`. Mathlib's version
+    routes through `LinearOrder` machinery that pulls in `Classical.choice`, and the framework
+    prefers the pure route where one is available. Same statement, cheaper proof. -/
 theorem firstStep_unique {α : Type*} [LinearOrder α] {bot a b : α}
-    (ha : bot < a ∧ ¬ ∃ δ, bot < δ ∧ δ < a)
-    (hb : bot < b ∧ ¬ ∃ δ, bot < δ ∧ δ < b) : a = b := by
+    (ha : bot ⋖ a) (hb : bot ⋖ b) : a = b := by
   rcases lt_trichotomy a b with h | h | h
-  · exact absurd ⟨a, ha.1, h⟩ hb.2
+  · exact absurd h (hb.2 ha.1)
   · exact h
-  · exact absurd ⟨b, hb.1, h⟩ ha.2
+  · exact absurd h (ha.2 hb.1)
 
-/-- **And this is what the commitment buys.** Assume AX-B1 over a linear order and the snap's
-    target exists and is UNIQUE — the transition has a well-defined destination. The hypothesis
-    is visible on the face of the statement, so no reader can mistake the conclusion for
-    something derived without it.
-
-    Stated over a general `LinearOrder`, deliberately: in an ordered field the hypothesis is
-    provably unsatisfiable (`axb1_fails_in_ordered_field`), so the same statement there would be
-    vacuous — a theorem true only because nothing satisfies it. -/
+/-- **What the commitment buys.** Assume AX-B1 and the snap's target exists and is UNIQUE, so
+    the transition has a well-defined destination. The hypothesis is visible on the face of the
+    statement, so no reader can mistake the conclusion for something derived without it. -/
 theorem axb1_gives_unique_target {α : Type*} [LinearOrder α] (bot : α)
-    (h : HasFirstStep bot) :
-    ∃! a : α, bot < a ∧ ¬ ∃ δ, bot < δ ∧ δ < a := by
+    (h : HasFirstStep bot) : ∃! a : α, bot ⋖ a := by
   obtain ⟨a, ha⟩ := h
   exact ⟨a, ha, fun b hb => firstStep_unique hb ha⟩
+
+/-- **AX-B1 fails exactly where the order is dense — a BICONDITIONAL, and it is Mathlib's.**
+
+    `denselyOrdered_iff_forall_not_covBy`. This is stronger than the framework's own statement:
+    ZP-F shows the snap fails in the reals, and this shows that failing *is* density. The two
+    are the same condition, not two facts that happen to coincide. -/
+theorem axb1_fails_everywhere_iff_dense {α : Type*} [Preorder α] :
+    DenselyOrdered α ↔ ∀ bot : α, ¬ HasFirstStep bot := by
+  rw [denselyOrdered_iff_forall_not_covBy]
+  exact ⟨fun h bot ⟨a, hcov⟩ => h bot a hcov, fun h a b hcov => h a ⟨b, hcov⟩⟩
 
 end AxB1
 
@@ -121,12 +138,17 @@ theorem f_snap_impossible : ¬∃ ε₀ : F, 0 < ε₀ ∧ ¬∃ δ : F, 0 < δ 
   intro ⟨ε₀, hpos, hno_smaller⟩
   exact hno_smaller (f_snap_blocked ε₀ hpos)
 
-/-- **AX-B1 FAILS in every ordered field** — the commitment, refuted pointwise against its own
-    counterexample. This is `f_snap_impossible` restated in the explicit form, and it is the same
-    proposition read in the opposite direction: what the framework commits to is exactly what the
-    reals do not have. -/
-theorem axb1_fails_in_ordered_field : ¬ HasFirstStep (0 : F) :=
-  f_snap_impossible
+/-- **AX-B1 FAILS in every ordered field.** Ordered fields are densely ordered in Mathlib
+    (`LinearOrderedSemiField.toDenselyOrdered`), and in a dense order nothing covers anything
+    (`not_covBy`). So the commitment is refuted pointwise against its own counterexample: what
+    the framework commits to is exactly what the reals do not have.
+
+    Proved through Mathlib rather than through `f_snap_impossible` — the halving argument above
+    is the same fact reached by hand, and is kept because it is the elementary route a reader
+    can check without the order-theory library. -/
+theorem axb1_fails_in_ordered_field : ¬ HasFirstStep (0 : F) := by
+  rintro ⟨a, hcov⟩
+  exact not_covBy hcov
 
 end General
 
@@ -161,23 +183,33 @@ element exists — there is no "first step" from zero.
 
 **ZP-F / ZP-B Classification (Ostrowski's theorem):**
 
-- Archimedean fields (ℝ, ℚ, any LinearOrderedField): snap impossible — this file.
-- Non-Archimedean fields (ℚ₂): snap forced — ZP-B (C3, t5_totallyDisconnected).
+- Archimedean fields (ℝ, ℚ, any field with a compatible linear order): the snap is
+  **impossible** — proved in this file (`f_snap_impossible` = `axb1_fails_in_ordered_field`).
+- Non-Archimedean (ℚ₂): the snap is **not blocked**, which is a strictly weaker statement.
 
-Ostrowski's theorem states that every complete valued field extending ℚ is either
-Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p).
-ZP-F covers the Archimedean case. ZP-B covers the non-Archimedean case (p = 2, forced
-by binary existence and minimality). Together they constitute a completeness result:
-the snap's domain of validity is exactly the non-Archimedean completions of ℚ.
+**ZP-B does NOT force the snap, and cannot.** What it proves is topological: the gap at 0 is
+clopen (`t3_isolation`) and the return across it admits no continuous path (`c3_irreversible`,
+via `t5_totallyDisconnected`). Neither yields a first step, and no metric result could: the
+2-adic norm values accumulate at 0 (‖2ⁿ‖₂ = 2⁻ⁿ), so ℚ₂ has no closest non-zero element either
+— ZP-B's own `eps0 k = 2 ^ k` is parameterized by a chosen maximum accessible valuation and its
+definition records the value as contingent. **The first step is AX-B1**, the commitment stated
+in § 0 above, not a consequence of the 2-adic structure.
 
-The Archimedean/non-Archimedean split is the structural boundary of the paradox.
+So the classification is a statement about where the snap is RULED OUT. Ostrowski's theorem
+(see `ZeroParadox/Valuation/Ostrowski.lean` for the framework's own statement of it) separates
+the Archimedean completions of ℚ from the non-Archimedean ones; ZP-F rules the snap out on the
+Archimedean side, and ZP-B removes the topological obstruction on the other. That the snap
+actually occurs there is carried by AX-B1 together with the framework's commitments, never by
+C3 or T5 alone.
 
-See: ZPB.lean (c3_irreversible, t5_totallyDisconnected) for the non-Archimedean side. -/
+See `ZeroParadox/Valuation/Padic.lean` (`c3_irreversible`, `t5_totallyDisconnected`,
+`t3_isolation`) for the non-Archimedean side. -/
 
 section PurityCheck
 #print axioms firstStep_unique
 #print axioms axb1_gives_unique_target
 #print axioms axb1_fails_in_ordered_field
+#print axioms axb1_fails_everywhere_iff_dense
 #print axioms f_density
 #print axioms f_no_minimal_positive
 #print axioms f_snap_blocked

@@ -39,6 +39,24 @@ as `f : σ → Option σ` (`none` = halted, `some s'` = next configuration), bot
 - § IV  The inversion: the dead bottom yields, the live bottom withholds
 - § V   Occurrence is halting, hence undecidable; non-occurrence is not even semi-decidable
 
+**Prior art (added 2026-07-27, from the review of this file).** Most of what follows is
+elementary or standard, and saying so is the point:
+* `step_dichotomy` is Lean core's `Option.eq_none_or_eq_some` at `f s`;
+  `deterministic_has_no_fanout` is `Option.some_injective` (Mathlib's `StateTransition` uses the
+  equivalent `Option.mem_unique` for this).
+* `occurs_iff_halts` re-expresses Mathlib's `evaln_complete` — Kleene's Normal Form Theorem.
+* `LoopsInPlace` / `loop_is_a_trap` name what automata theory calls a **trap state** and Markov
+  theory an **absorbing state** — Baier & Katoen, *Principles of Model Checking* (MIT Press,
+  2008) p. 157. `flipPoles`'s dead-to-live half is the standard **totalization** construction,
+  same book p. 97; the involution as such was searched for and not found.
+* § IV's 0/∞ reading is the coalgebra for `X ↦ 1 + X`, whose final coalgebra is ℕ ∪ {∞}
+  (Jacobs, *Introduction to Coalgebra*, Ex. 2.4.1 p. 66; Rutten, TCS 249 (2000) p. 16). The
+  framework's own `NatListRegime.lean` already carries that functor and cites Jacobs & Rutten
+  (EATCS Bulletin 62, 1997); `GroundZero.lean` is where the two are finally connected.
+* `execution_requires_branching` is a **tautology** — its witnesses are the hypotheses handed
+  back. Its value is that the commitments are VISIBLE in the signature, not that the theorem is
+  deep. Do not describe its conclusion as earned.
+
 **What is claimed and what is not.** The mathematics is classical throughout — the halting
 results are Turing (1936) via Mathlib, and the bottom-as-divergence reading is domain theory
 (Scott). Nothing here is offered as new mathematics. What this file contributes is the

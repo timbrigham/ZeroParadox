@@ -38,12 +38,29 @@ machine carrier assumed. A self-looping configuration unfolds to exactly that po
 set-theoretic (`quine_unique`). This is its computational counterpart, and unlike the ZP-K
 identification it is a Lean `=` inside a single type, not a cross-type reading.
 
+**Prior art — this is known, and the delta runs against us (recorded 2026-07-27).**
+`notEL_unique` is **Escardó's `not-finite-is-∞'`** (TypeTopology, module
+`TypeTopology.GenericConvergentSequence`), and his `CoNaturals.UniversalProperty` proves ℕ∞ is
+the final coalgebra of `𝟙 + (−)` by the same bisimulation route. **His proof is `--safe
+--without-K` from function extensionality alone**, where ours carries `Classical.choice` from
+Mathlib's QPF quotient — so the standard version is not merely prior, it is purer, and that is
+a live purity lead. The classical home is **Rutten, "Universal coalgebra: a theory of systems",
+TCS 249 (2000)**: p. 16, *"∞ only takes a step to itself and hence never terminates"*; Ex.
+10.2(4) p. 44 for `(ℕ̄, pred)` final; §12 pp. 51–52 running this exact bisimulation on this exact
+carrier. Mathlib itself has no `Conat` and no such lemma, so the Lean formalization is a genuine
+small addition — the mathematics is not.
+
+**And the framework already had it, in another dress:** `Miniature.lean`'s
+`enat_fp_iff : x + 1 = x ↔ x = ⊤` is this same fact in the `ℕ∞ = WithTop ℕ` presentation.
+
 **What is NOT claimed.** That the framework's bottom *is* such a behaviour remains a modelling
 commitment — the results here are conditional on non-termination, and say nothing about whether
 the framework's bottom non-terminates. Nothing here makes the snap occur: occurrence is still
 the halting problem (`occurs_iff_halts`, `occurrence_undecidable`). And the mathematics is not
 new — the final coalgebra of `X ↦ 1 + X` being `ℕ ∪ {∞}` is standard (Jacobs, *Introduction to
-Coalgebra*, Ch. 2 p. 66); what is assembled here is the bridge, not the coalgebra.
+Coalgebra*, Ex. 2.4.1 p. 66). **Note the scope of that citation:** Jacobs supports the *object*,
+not the uniqueness *lemma*; for the lemma see Escardó and Rutten above. What is assembled here
+is the bridge, not the coalgebra.
 
 **Axiom footprint (measured, not quoted).** § I is axiom-free. § II and § III carry
 `[propext, Classical.choice, Quot.sound]`, inherited from Mathlib's QPF machinery — so the
@@ -76,6 +93,7 @@ def stepCoalg : σ → natPF_NatListRegime.Obj σ :=
 /-- Every configuration is a leaf or a successor. The head is `Bool`, so there is no third case
     and in particular no "exists but has not begun" — that state is absent from the type, not
     ruled out by argument. The coalgebraic form of `no_unstarted_state`. -/
+-- Prior art: this is Mathlib's `Bool.dichotomy` (`Data/Bool/Basic.lean`) at `(stepCoalg f s).1`.
 theorem head_is_leaf_or_step (s : σ) :
     (stepCoalg f s).1 = false ∨ (stepCoalg f s).1 = true := by
   cases (stepCoalg f s).1
@@ -110,7 +128,12 @@ theorem notEL_dest {x : Cofix natPF_NatListRegime.Obj} (h : ¬ EventuallyLeaf x)
     element-hood in any machine carrier assumed.
 
     This is the computational counterpart of `quine_unique`, and unlike ZP-K's identification it
-    is a Lean `=` within one type rather than a reading across types. -/
+    is a Lean `=` within one type rather than a reading across types.
+
+    **Prior art:** Escardó's `not-finite-is-∞'` (TypeTopology), proved there from function
+    extensionality alone; Rutten, TCS 249 (2000) §12 pp. 51–52 for the same bisimulation on the
+    same carrier. Also `Miniature.lean`'s `enat_fp_iff` in the `WithTop ℕ` presentation. Cited,
+    not claimed. -/
 theorem notEL_unique (x : Cofix natPF_NatListRegime.Obj) (h : ¬ EventuallyLeaf x) :
     x = natInfinity := by
   refine Cofix.bisim (fun a b => ¬ EventuallyLeaf a ∧ b = natInfinity) ?_ x natInfinity ⟨h, rfl⟩
@@ -153,7 +176,12 @@ The results above are not facts about dynamics. They are facts about the head be
 This section supplies the counter-model that shows it, so the file carries its own falsifier. -/
 
 /-- A three-valued step outcome: halted, stepping, or **idle** — present, not halted, and not
-    taking a step. Exactly the state `σ → Option σ` cannot express. -/
+    taking a step. Exactly the state `σ → Option σ` cannot express.
+
+    **Standard term first:** process algebra already separates these as *successful termination*
+    versus *deadlock* — the defining ACP-versus-CCS distinction (Baeten & Weijland, *Process
+    Algebra*, 1990). What is called `idle` here is what that literature calls **deadlock**; the
+    framework reads the same state as *unstarted*. Same object, opposite valence. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: a deliberate counter-model, not a construction to build on. Mathlib has no three-valued step outcome because there is no reason to want one; this exists solely to be the carrier in which the forcing fails, and it should never be used as a framework object.
 inductive TriStep (σ : Type) : Type
   | halted : TriStep σ
