@@ -1,5 +1,6 @@
 """
-Build: The Philosophical Question That Started This (v1.13)
+Build: The Philosophical Question That Started This (v1.14)
+v1.14: rendered layer COUNT eliminated (project-wide counter removal) - "Thirteen formal layers"/"Thirteen layers" de-counted; stale "ZP-A through ZP-M" range dropped from the body and the endnote.
 v1.13: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
 v1.11: fix() guard added via Paragraph override — snap line and all raw Paragraph calls
        now pass through unicode-to-entity conversion (Watch-3 resolved).
@@ -39,7 +40,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -229,7 +230,7 @@ def build():
         'compelled given the framework\'s minimal axiomatic commitments — '
         'not assumed, not answered, but derived from those commitments.'))
     E.append(body(
-        'Thirteen formal layers later — ZP-A through ZP-M — the picture is more nuanced '
+        'Many formal layers later, the picture is more nuanced '
         'than "yes, fully proved" or "no, still assumed." What the framework found is a '
         'third possibility: the question itself, applied with sufficient precision, '
         'dissolves. This document is about that dissolution — and about the precise '
@@ -301,7 +302,7 @@ def build():
         'The theorem needed category theory to show it wasn\'t an artifact of one '
         'particular mathematical language. And the whole structure needed a closure '
         'result to show it wasn\'t just a description of emergence but a complete cycle. '
-        'Thirteen layers, added one at a time, each forced by what the layer before it '
+        'The layers, added one at a time, each forced by what the layer before it '
         'could not yet say.'))
     E.append(body(
         'Two features of the construction matter for what follows. First, '
@@ -567,7 +568,7 @@ def build():
             '<i>End of document  |  The Philosophical Question That Started This  |  '
             'Zero Paradox Project  |  ' + version_date() + '  |  '
             'Not a formal result — a philosophical essay. '
-            'The formal mathematics lives in the committed PDFs, ZP-A through ZP-M.</i>',
+            'The formal mathematics lives in the committed PDFs.</i>',
             S['endnote']),
     ]
 

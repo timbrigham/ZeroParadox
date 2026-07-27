@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.4 | July 2026
+Version 1.5 | July 2026
+v1.5: axiom-footprint list label corrected - t_comp described as a four-way equivalence; it proves three, the computational face being an assumption rather than a clause. Footprint figures themselves unchanged (measured, not quoted).
 v1.4: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers) — Section II heading and prose.
 v1.3: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.1: Rendered version changelog removed (C1 sweep). Fixed 3 null glyphs — subscript-letter entities
@@ -13,7 +14,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -96,7 +97,7 @@ def build():
             'path without requiring K to be explicitly computed.',
             'Axiom footprint evidence — the following ZP-K theorems all carry '
             '[propext, Classical.choice, Quot.sound]:',
-            '  t_comp (T-COMP four-way equivalence)',
+            '  t_comp (T-COMP three-way equivalence; the computational face is an assumption, not a clause)',
             '  da1_paths_unified',
             '  isComputationalQuine_undecidable',
             '  infinite_quine_family',

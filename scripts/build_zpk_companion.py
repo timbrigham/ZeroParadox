@@ -1,6 +1,9 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.12 | May 2026
+Version 1.15 | May 2026
+v1.15: witness audit (mechanical). "proved via da1_closed_concrete" for the Quine atom now records that MachinePhase defines selfMem as x = bottom, so the content of that theorem is the uniqueness rather than the membership.
+v1.14: DA-1 Path 3 reclassified to FOUNDATIONAL COMMITMENT (see ZP-K v1.11) - the companion had it as "Now IN LEAN SCOPE via ZP-K". Also struck a false predicate introduced by the v1.13 fix: "precludes any external initiating agent" had been left attached when "all four" became "three of the four", making it assert preclusion specifically of the order and algebra characterisations. Removed rather than reworded.
+v1.13: T-COMP overclaim corrected (bedrock). The companion had no R-K.0 equivalent and was the most overclaiming document of the set: "establishes that the four descriptions are all equivalent", "each arrow represents a proved equivalence", "they are the same property", "the expressions are provably equivalent". Now states THREE proved and the computational face joined by assumption; the single-structural-identity claim is labelled as the framework's READING and as the motivation for building KleeneStructure, not something ZP-K derives. Key Result box corrected likewise.
 v1.12: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.10: four_way_diagram — removed the redundant internal caption String that overlapped the bottom "Computation (Kleene)" box (Diagram Rule 4; the external ccaption already captions the diagram).
 v1.9: FMC precision (sweep Step 4) — DA-1 Path 1 line splits the axiom-free structural fixed point (what ZP-J proved) from the literal ⊥ = {⊥} (the ZF+AFA setting).
@@ -124,7 +127,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.12'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -169,13 +172,16 @@ def build():
         '(order-theoretic minimum) are the same object. ZP-K adds a fourth language: '
         'computability theory. It proves that there is a fourth description of ⊥, this time '
         'in terms of Turing machines and Kleene\'s second recursion theorem — and that all '
-        'four descriptions name the same structural role.'))
+        'THREE of the four descriptions are proved to name the same structural role; the '
+        'computational one is joined to them by assumption, not by proof.'))
     E.append(cbody(
         'The consequence for DA-1 is direct: ⊥ is not a description of a Turing machine. '
         '⊥ IS an instance of a Turing machine — specifically its ground state, serving as its own program. '
         'The "description vs. execution" gap that DA-1 had to close is structurally '
         'dissolved: there is no gap, because ⊥ in the four formal languages of this framework '
-        'is shown to be the same structural object — and that structural identity is what dissolves the gap.'))
+        'is proved to be the same structural object for three of the four descriptions, the '
+        'computational one being assumed rather than derived — and it is that structural identity, '
+        'as the framework reads it, which dissolves the gap.'))
     E.append(sp(4))
 
     # What Is a Kleene Fixed Point?
@@ -209,28 +215,34 @@ def build():
     # The four-way equivalence
     E.append(Paragraph('T-COMP: The Four-Way Equivalence', CS['h1']))
     E.append(cbody(
-        'ZP-K\'s central theorem, T-COMP (Computational Grounding), establishes that the '
-        'four descriptions below are all equivalent — they all identify the same object:'))
+        'ZP-K\'s central theorem, T-COMP (Computational Grounding), proves that THREE of the '
+        'four descriptions below are equivalent - self-containment, order, and algebra all '
+        'identify the same object. The fourth, the computational one, is not a clause of the '
+        'theorem: it is supplied as an assumption when the structure is built. The framework '
+        'holds to that distinction:'))
     E.append(four_way_diagram())
     E.append(ccaption(
-        'The null ground element ⊥ at the center, described in four formal languages. '
-        'Each arrow represents a proved equivalence. T-COMP proves all four identify the same object.'))
+        'The null ground element ⊥ at the center, described in four formal languages. The arrows '
+        'among the first three are proved equivalences. The computational description is joined to '
+        'them by assumption, not by proof.'))
     E.append(sp(4))
     E.append(four_way_table())
     E.append(sp(6))
     E.append(cbody(
-        'The key insight is that the four descriptions are not independent convergences — '
-        'they are projections of a single structural identity. The Kleene fixed-point property '
-        'is not analogous to the AFA Quine atom property. They are the same property, stated '
-        'in different mathematical vocabularies. ZP-K makes this explicit by constructing a '
-        'KleeneStructure — a formal bridge connecting the set-theoretic (AFAStructure) '
-        'and computational (Kleene fixed-point) descriptions.'))
+        'The framework READS the four descriptions as projections of a single structural '
+        'identity rather than as independent convergences - that the Kleene fixed-point property '
+        'and the AFA Quine atom property are one property in two vocabularies. That reading is '
+        'the motivation for building a KleeneStructure, the formal bridge connecting the '
+        'set-theoretic (AFAStructure) and computational (Kleene fixed-point) descriptions. It is '
+        'not something ZP-K derives: the bridge is built because the reading is held, not the '
+        'other way round.'))
     E.append(sp(4))
     E.append(remember_box(
         'Remember: T-COMP is not saying that set theory and computability theory are the same. '
         'It is saying that the specific structural role played by ⊥ — self-containment, '
-        'minimality, join-identity — happens to be expressible in all four languages, '
-        'and that the expressions are provably equivalent. The equivalence is local to this '
+        'minimality, join-identity — is expressible in several languages, and that THREE of '
+        'those expressions are provably equivalent; the computational one is joined by '
+        'assumption. The equivalence is local to this '
         'structural role, not a global identification of the frameworks.'))
     E.append(sp(8))
 
@@ -251,18 +263,22 @@ def build():
         'is an ontological bridge claim that type theory cannot directly verify. It is a '
         'well-motivated philosophical argument, not a formal proof.'))
     E.append(cbody(
-        '<b>Path 3 (Computational — Kleene):</b> No shorter program generates ⊥. Therefore '
-        '⊥ is its own program — a Kleene fixed point of self-application. '
-        '<b>Now IN LEAN SCOPE via ZP-K:</b> machinePhaseKleene provides botCode_is_quine — '
-        'a concrete computational Quine whose existence is guaranteed by Kleene\'s second '
-        'recursion theorem. The code IS its own program.'))
+        '<b>Path 3 (Computational — Kleene):</b> No shorter program generates ⊥, so ⊥ is its '
+        'own program — a Kleene fixed point of self-application. <b>This remains a foundational '
+        'commitment, not a Lean result.</b> ZP-K supplies botCode_is_quine as a requirement of '
+        'the KleeneStructure class, assumed when the structure is built rather than derived; and '
+        'the condition it asks for is a periodicity condition that even a constant code meets. '
+        'The "no shorter program" reading needs Kolmogorov complexity, which is uncomputable and '
+        'plays no formal part here.'))
     E.append(sp(4))
     E.append(key_result_box(
         'da1_closed_concrete (Kleene.lean)',
         'IsQuineAtom(&#8869; : MachinePhase) — proved in Lean 4. '
-        'The initial machine state c&#8320; is self-containing and self-executing — not a '
+        'The initial machine state c&#8320; is self-containing; the framework commits that it is '
+        'also self-EXECUTING, which the Lean does not prove — not a '
         'static description awaiting an external interpreter. '
-        'DA-1 Paths 1 and 3: IN LEAN SCOPE. Path 2: outside Lean scope (ontological bridge). ✓'))
+        'DA-1 Path 1 (structural): IN LEAN SCOPE. Path 3: the computational witness is a '
+        'KleeneStructure assumption, not a derivation. Path 2: outside Lean scope (ontological bridge).'))
     E.append(sp(6))
     E.append(cbody(
         'What does it mean that ⊥ IS an instance of a Turing machine in its ground state? '
@@ -271,9 +287,9 @@ def build():
         'DP-2 (ZP-E) proved that these are distinct machine states even when both '
         'produce the same output value. The Kleene fixed-point result says: c₀ is not '
         'waiting for someone to press "run." It is already executing — the execution and '
-        'the description are the same act. T-COMP makes this precise: in all four languages, '
-        '⊥ satisfies the self-referential fixed-point condition that precludes any external '
-        'initiating agent.'))
+        'the description are the same act - a framework reading. What T-COMP proves is narrower: '
+        'three of the four descriptions of ⊥ are equivalent to one another. It says nothing '
+        'about external agents, and nothing about execution.'))
     E.append(sp(4))
     E.append(example_box('Real-world analogy — The light that sees itself', [
         'Consider a camera that, instead of photographing external scenes, photographs only '
@@ -324,7 +340,7 @@ def build():
         'but unprovable in PA &#8212; a fixed point, not an oscillation.'))
     E.append(cbody(
         'ZP-K&#8217;s construction achieves the same structural form in the setting of &#8869;. '
-        '&#8869; = {&#8869;} (the AFA Quine atom, proved via da1_closed_concrete) is '
+        '&#8869; = {&#8869;} (the AFA Quine atom; da1_closed_concrete gives this for MachinePhase, where selfMem is defined as x = &#8869;, so the content is the uniqueness rather than the membership) is '
         'self-containing, not self-negating: x = f(x) where f is set-membership, not '
         'x = NOT x. The Kleene fixed point gives the same structure computationally: '
         'a code whose behavior is determined entirely by itself. Both witnesses resolve '
@@ -348,9 +364,13 @@ def build():
     E.append(key_result_box(
         'Key Result — ZP-K',
         'T-COMP: IsQuineAtom(q) ↔ q = &#8869; ∧ (∀ x, q &#8744; x = x). '
-        'The four-way equivalence (AFA / order / algebra / Kleene) is proved. '
-        'da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase). '
-        'DA-1 Paths 1 and 3 IN LEAN SCOPE. ✓'))
+        'THREE characterisations are proved equivalent - self-containment (AFA), order, and algebra. '
+        'The computational face is NOT a fourth clause of this theorem: it enters as an assumption, '
+        'the KleeneStructure field botCode_is_quine. '
+        'da1_closed_concrete : IsQuineAtom(&#8869; : MachinePhase) proves the structural half only - '
+        'it mentions no code and no execution. '
+        'DA-1 Path 1 (structural) is in Lean scope. Path 3 (computational) is a foundational '
+        'commitment - its witness is a class field, assumed rather than derived.'))
     E.append(sp(6))
 
     print(f'Building: {out_path}')

@@ -18,13 +18,13 @@ structures (the "walls"). It closes a standing gap: a framework built on ⊥ tha
 
 ---
 
-## The short version: concepts that should not coincide, but do
+## The short version: concepts that should not correspond, but do
 
-One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
+One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each correspondence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
 **Proved, with one commitment - the same element.** In any Kleene-structured ZP lattice, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** ([`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean)). The fourth name, the *Kleene fixed point* (a program that reproduces itself, computability), is *joined* to the other three by an explicit structural commitment: the KleeneStructure typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with the program that prints itself by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
 
-**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ ([`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean)); unbounded surprisal, the state with no finite description ([`t2_diverges`](ZeroParadox/Information/Surprisal.lean)); the categorical bottom of each real Mathlib category, an inverse limit or initial object ([`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski ([`completions_exhaustive`](ZeroParadox/Valuation/Ostrowski.lean), [`real_not_equiv_padic`](ZeroParadox/Valuation/Ostrowski.lean)). They all instantiate one abstract schema, choice-free ([`fork_collapse_iff`](ZeroParadox/Settheory/FixedPointFork.lean)); and the ε₀ ceiling is co-witnessed with the 2-adic limit and the machine snap ([`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean)).
+**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ ([`addVal_bot`](ZeroParadox/Valuation/FloorWitness.lean)); unbounded surprisal, the state with no finite description ([`t2_diverges`](ZeroParadox/Information/Surprisal.lean)); the categorical bottom of each real Mathlib category, an inverse limit or initial object ([`mc1_correspondence`](ZeroParadox/Multihomed/MC1Bridge.lean)); and the case where the correspondence *fails*, ℝ vs ℚ₂ by Ostrowski ([`completions_exhaustive`](ZeroParadox/Valuation/Ostrowski.lean), [`real_not_equiv_padic`](ZeroParadox/Valuation/Ostrowski.lean)). They all instantiate one abstract schema, choice-free ([`fork_collapse_iff`](ZeroParadox/Settheory/FixedPointFork.lean)); and ε₀ is co-witnessed with the 2-adic limit and the machine snap ([`zpm_triangle`](ZeroParadox/Ordinal/Incompleteness.lean)).
 
 **Mostly proved - a narrow residue argued.** The framework's set-theoretic *commitment* is not *AFA specifically* but a fragment it assumes of its host theory: a unique Quine atom ⊥ = {⊥}. That fragment is a checkable object, the QuineHost typeclass. Foundation-freeness is *forced* by the Quine atom ([`quineHost_not_wellFounded`](ZeroParadox/Settheory/QuineHost.lean), axiom-free - a self-loop cannot live in a well-founded world); ordinary set theory (Foundation) is excluded in-kernel about the real theory ([`zfSet_no_quine_bottom`](ZeroParadox/Settheory/QuineHost.lean) - no set is self-membered under Foundation); Boffa's axiom is set aside because it admits a proper class of Quine atoms rather than one (Boffa 1968), a gap a toy model makes concrete ([`boffa_fails_unique`](ZeroParadox/Settheory/QuineHost.lean)) rather than an in-kernel fact about Boffa's axiom; and AFA is exhibited as the example meeting all three ([`afaStructure_isQuineHost`](ZeroParadox/Settheory/QuineHost.lean)). What remains argued is only that a Quine atom and its uniqueness are the right two requirements - a Forced Metatheoretic Commitment with a named falsifier, stronger than a free choice and weaker than a theorem. The set-membership face ⊥ ∈ ⊥ stays metatheoretic; the structural fixed point is machine-checked and axiom-free ([`t_exec`](ZeroParadox/Settheory/SetTheoryAFA.lean)).
 
@@ -74,7 +74,7 @@ valuation) come from other layers. The partial numbering is scoped, not missing 
 | μ / ν | least fixed point (μ, built up from the floor) vs greatest fixed point (ν, closed down) |
 | Quine atom / Kleene quine | a self-containing set (x = {x}) / a program that prints itself |
 | the snap | the framework's discrete jump off ⊥ into the first structured state |
-| ε₀ | the ordinal reached by iterating omega-to-the-power from 0 (a proof-theoretic ceiling) |
+| ε₀ | the fixed point of omega-to-the-power reached from 0 - both min and max at once (epsilon0_min_eq_max): the least such fixed point (the minimum closure, a floor in the fixed-point order) and the supremum of the ascending tower (a ceiling) - never only a ceiling |
 | v₂ → ∞ | the 2-adic valuation going to infinity at 0 (0 is infinitely divisible by 2) |
 
 ---
@@ -142,7 +142,7 @@ dictionary above.)
 | ε₀ (ordinal, ZPL/M) | ✓* | ✓ | ✓ | ∅ | ✓ | ✓* | ✓ | ↕ |
 | selfApp (abstract ⊥) | ✓ | ✓ | ∅ | ∅ | ✓ | ✓ | ∅ | ↑* |
 
-The honest content is in the non-`✓` cells, and splitting them is the point: a `∅`
+The informative content is in the non-`✓` cells, and splitting them is the point: a `∅`
 is a settled structural fact (a category error, not a gap), a `✗` is news (a proved obstruction), and a `✓*` holds only via a bridge. Two things worth reading off the table:
 (1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
 point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
@@ -151,7 +151,7 @@ selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the flo
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
 0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
 
-**The value is in the non-`✓` cells** - the proved obstructions (`✗`) and the structural non-applicabilities (`∅`), not the
+**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`) and the structural non-applicabilities (`∅`), not the
 filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
 **[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
 

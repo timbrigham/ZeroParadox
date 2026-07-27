@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.12, revised July 2026)
+Zero Paradox — Foreword PDF Builder (v2.13, revised July 2026)
+v2.13: T-COMP overclaim corrected (bedrock). "a four-way equivalence connecting the Quine atom, bottom, the join-identity element, and Kleene's fixed point" -> a three-way equivalence, with Kleene's fixed point named as an assumption of the KleeneStructure class rather than a fourth clause; "DA-1 is closed concretely ... grounding the framework in the theory of computation" -> da1_closed_concrete proves the structural half only, and the step to self-execution is a commitment, not a consequence.
 v2.12: SYNC TO CLAIMS.md + bedrock false-premise fix (release-prep). (1) Struck the false "a well-founded ⊥ would admit an external interpreter" premise (the finite-interpretability fallacy, same class as ZP-E v3.24 / ZP-A v1.20) from the CC-2 row and Section III; ZFC-incompatibility now rests on ⊥={⊥} self-membership (Regularity, no_quine_atom). (2) AX-B1 corrected from "Directly Verifiable / not a novel commitment" to "the one substantive modeling commitment" (discrete over continuum; only ax_b1_distinct's distinctness is decide-checked; f_snap_impossible). (3) Commitment accounting synced to CLAIMS.md: MC-1 = the bottom family (not a commitment; identity retired as ill-typed), CC-1 derived via ZP-J cc1_derived, CC-2 a Forced Metatheoretic Commitment. Supersedes the v2.8 "argued to be ruled out" softening (which left the premise) and the v1.6 "Directly Verifiable" AX-B1 relabel.
 v2.11: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
 v2.10: §IV — cited Yanofsky (2003) and Lawvere's year (1969) for the diagonal-fixed-point unification; prior-art positioning, paired with the new CLAIMS "Convergence with established work" section.
@@ -55,7 +56,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.12'
+VERSION = '2.13'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -324,10 +325,12 @@ def build():
             'finite self-referential graph has at most one consistent decoration into the lattice.',
             S['body']),
         Paragraph(
-            'The computational grounding layer (ZP-K) proves T-COMP: a four-way equivalence '
-            'connecting the Quine atom, ⊥, the join-identity element, and Kleene\'s fixed '
-            'point. DA-1 is closed concretely here via da1_closed_concrete, grounding '
-            'the framework in the theory of computation through Kleene\'s second recursion theorem.',
+            'The computational grounding layer (ZP-K) proves T-COMP: a three-way equivalence '
+            'connecting the Quine atom, ⊥, and the join-identity element. Kleene\'s fixed point '
+            'is not a fourth clause of it - the computational face enters as an assumption of the '
+            'KleeneStructure class. da1_closed_concrete proves the structural half of DA-1, that '
+            'the bottom is a Quine atom; it mentions no code and no execution, and the step from '
+            'there to self-execution is a framework commitment rather than a consequence.',
             S['body']),
         Paragraph(
             'The incomputability convergence layer (ZP-L) establishes ε₀ — the first '
