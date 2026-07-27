@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1508,
+        "declarations": 1515,
         "files": 136
       },
       "entries": [
@@ -13959,6 +13959,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3cf4dfd5-9cad-4f01-b7e9-db81d7d7e8c6",
+          "new": {
+            "file": "ZeroParadox/Computability/GroundZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stepCoalg",
+            "short": "stepCoalg"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -28233,6 +28271,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "82f4811d-5731-4c41-83bd-e93a025da338",
+          "new": {
+            "file": "ZeroParadox/Computability/GroundZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.loop_dest_is_own_successor",
+            "short": "loop_dest_is_own_successor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "830e7f34-6591-4133-b092-7903cfb320e6",
           "new": {
@@ -38631,6 +38707,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b5bdb688-03be-4e6d-a1c9-9d6bf3d23f2c",
+          "new": {
+            "file": "ZeroParadox/Computability/GroundZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.notEL_dest",
+            "short": "notEL_dest"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "scaffolding"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b5c99ee1-f355-415a-a4f4-f851a79f06c8",
           "new": {
@@ -40415,6 +40529,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "be37e2dc-73f7-4b0f-930a-e4064dd86a7a",
+          "new": {
+            "file": "ZeroParadox/Computability/GroundZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.notEL_unique",
+            "short": "notEL_unique"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "becc14f9-f6a5-42ae-9e5e-cfeb6b5dbbdd",
           "new": {
@@ -41306,6 +41458,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c387a6b3-d25e-4519-9e54-2d839f828090",
+          "new": {
+            "file": "ZeroParadox/Computability/GroundZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.loop_unfolds_to_infinity",
+            "short": "loop_unfolds_to_infinity"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -49002,6 +49192,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "e46cb825-ed87-49d1-b10e-89110450af3e",
+          "new": {
+            "file": "ZeroParadox/Computability/GroundZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.head_is_leaf_or_step",
+            "short": "head_is_leaf_or_step"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "e479a0bd-20b4-4ec9-b065-9dc913544cd6",
           "new": {
@@ -52624,6 +52852,44 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f5a39345-3380-4a3d-b362-6a889d1cfcc9",
+          "new": {
+            "file": "ZeroParadox/Computability/GroundZero.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_halted_is_stepping_head",
+            "short": "not_halted_is_stepping_head"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": null,
             "sorry_free": true

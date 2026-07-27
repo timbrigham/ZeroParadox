@@ -125,6 +125,9 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### Computability (ZP-K, ZP-J)
 
 - `ZeroParadox/Computability/Kleene.lean` - ZP-K: Computational Grounding of Self-Reference
+- `ZeroParadox/Computability/ComputationCannotBe.lean` - `#check`-only index: what COMPUTATION can and cannot be, with every gloss labelled Statement or Reading
+- `ZeroParadox/Computability/GroundZero.lean` - The bottom as a behaviour rather than a configuration: a step function read as a coalgebra for `X ↦ 1 + X`, where the head is `Bool` so no unstarted state is expressible (axiom-free), the behaviour that never reaches a leaf is UNIQUE (`notEL_unique` - it is `natInfinity`), and a self-looping configuration unfolds to exactly that point (`loop_unfolds_to_infinity`). Bridges `Occurrence.lean` to `NatListRegime.lean`; the coalgebra itself is standard (Jacobs, Ch. 2).
+- `ZeroParadox/Computability/Occurrence.lean` - Occurrence in the computational face: no unstarted state, the loop is a trap, occurrence IS halting
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
