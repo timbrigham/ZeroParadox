@@ -153,6 +153,48 @@ theorem q2_selfMem_singleton :
 
 end PadicParallel
 
+/-! ## § V. NO-GO gauge — `AbstractSelfApp` is a STRUCTURE, not a property
+
+A permanent guard against a reading this class invites. `AbstractSelfApp` supplies a *chosen*
+self-application map; carrying one says nothing about the carrier, because **every**
+`ZPSemilattice` carries one. Measured 2026-07-26.
+
+The consequence is not cosmetic: because `toAFAStructure` is an instance, the whole AFA layer
+— `IsQuineAtom`, `bot_is_quine_atom`, `t_exec` — comes free from the degenerate map below.
+So the anti-foundation layer is satisfied by a structure in which nothing refers to anything.
+
+**What this does NOT say.** The framework's real instances (`boundaryDouble` on the tree
+boundary, `x ↦ 2x` on the 2-adics, `x ↦ {x}` in the set face) are genuinely non-constant and
+carry genuine content. The gauge bounds what may be inferred from the *hypothesis*, not what
+those instances establish. -/
+
+section NoGoGauge
+
+variable (L : Type*) [ZPSemilattice L]
+
+/-- The constant-bottom self-application: every element maps to `bot`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a deliberately degenerate `AbstractSelfApp` witness, built to bound what the typeclass hypothesis can be made to yield. Not a modelling instance — a NO-GO gauge.
+@[reducible] def trivialSelfApp : AbstractSelfApp L where
+  selfApp := fun _ => bot
+  fixed_bot := rfl
+  unique_fp := fun _ hx => hx.symm
+
+/-- **The gauge.** Every `ZPSemilattice` carries an `AbstractSelfApp`. Therefore no property
+    of `L` follows from the bare hypothesis `[AbstractSelfApp L]` — any argument of the form
+    "L carries `AbstractSelfApp`, therefore [something about L]" is vacuous. -/
+theorem abstractSelfApp_always_inhabited : Nonempty (AbstractSelfApp L) :=
+  ⟨trivialSelfApp L⟩
+
+/-- Under the degenerate instance, "self-containing" collapses to "is the bottom" — the
+    predicate carries no information beyond naming `bot`. -/
+theorem trivial_selfMem_iff (x : L) :
+    (@AbstractSelfApp.selfApp L _ (trivialSelfApp L) x = x) ↔ x = bot := by
+  constructor
+  · intro h; exact h.symm
+  · intro h; subst h; rfl
+
+end NoGoGauge
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/

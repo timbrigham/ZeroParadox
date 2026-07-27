@@ -129,6 +129,28 @@ theorem t_snap_derived :
     c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   ⟨l_run, tq_ih, rfl⟩
 
+/-! ### NO-GO gauge — T-SNAP constrains the SHAPE of a transition, not that one occurs
+
+A permanent guard, added 2026-07-26. `t_snap_derived` is `⟨l_run, tq_ih, rfl⟩`, where `l_run`
+is `by decide`: it proves the two phases are distinct and that the join absorbs. Neither
+asserts that the machine ever moves. The counter-model below makes that checkable rather than
+arguable — T-SNAP is *true* in a dynamics where nothing ever happens.
+
+Occurrence is supplied elsewhere and is a **commitment**: `l_inf`'s docstring states plainly
+that the step from unbounded surprisal to forced execution is an ontological bridge, not a
+mathematical consequence. See `ZeroParadox/Computability/Occurrence.lean` for where that
+question goes in the computational face. -/
+
+/-- A dynamics on machine phases under which nothing ever changes. -/
+def stuckPhase : MachinePhase → MachinePhase := id
+
+/-- **The gauge.** T-SNAP holds while nothing moves: the phases are distinct, the join
+    absorbs, and every state is a fixed point of the dynamics. So T-SNAP cannot be cited as
+    showing the snap *occurs*. -/
+theorem tsnap_holds_but_nothing_moves :
+    (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧ (∀ p : MachinePhase, stuckPhase p = p) :=
+  ⟨t_snap_derived, fun _ => rfl⟩
+
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
     Complements ZPB.c3_irreversible (topological irreversibility in Q₂). -/
