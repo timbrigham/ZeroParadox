@@ -369,6 +369,45 @@ The framework's value is its *delta* against prior art, so an uncited closest-pr
 
 **Scope — synthesis/bridge layers only.** A trigger fires on content that unifies, connects, or identifies a structure across more than one field or framework (e.g. the diagonal-fixed-point keystone, ZP-P, ZP-G/H). It does **not** fire on theorem-backed layers whose central claim is a single named classical theorem the framework merely invokes (ZP-B / Ostrowski, ZP-L/M / Gentzen) — those are already anchored. *Caveat (the ZP-D lesson):* a theorem-backed layer can still carry a distinctive *construction* with its own prior art that the cited theorem does not cover — caught by trigger 5 below, not by synthesis-detection.
 
+### ⚠ TRIGGER 0 — SEARCH BEFORE YOU BUILD. Hard rule, and it is the cheapest one here.
+
+**If you can state the claim in one sentence of standard mathematical English, search for it
+BEFORE writing Lean.** Not after. The post-hoc gate below still runs; this sits in front of it.
+
+**Measured 2026-07-27 — three findings in a single day, every one of them searchable beforehand:**
+
+| what was built | what already existed | cost of not looking |
+|---|---|---|
+| `notEL_unique` (non-terminating element of the final coalgebra of `1 + X` is unique) | **Escardó's `not-finite-is-∞'`** (TypeTopology) — and proved from function extensionality alone, where ours carries `Classical.choice` | a whole build, and a *purer* proof left on the table |
+| `HasFirstStep` (a first step above the bottom, nothing between) | **Mathlib's `CovBy`**, over a weaker typeclass, plus `CovBy.unique_right` and `not_covBy` | a false `[ZP-CUSTOM]` registry entry, **and we missed `denselyOrdered_iff_forall_not_covBy` — a BICONDITIONAL stronger than the framework's own claim** |
+| the Glauber one-bit probes | **one sentence** of Krapivsky-Redner-Ben-Naim p. 123; the premise of Hajek (1988); five lemmas already in Mathlib as `Real.sigmoid` | 256 lines reduced to 162, proof body to 6 lines; three claims retracted |
+
+**The point is NOT embarrassment-avoidance. Searching first gets you MORE.** In those three cases
+it would have handed us a stronger theorem (the density biconditional), a purer proof (Escardó's),
+free derivative/analyticity/continuity lemmas (`Real.sigmoid`), and the standard NAME for a thing
+described longhand ("critical slowing down").
+
+**The three-step check, ~10 minutes:**
+1. **Grep our own corpus.** *This was the cheapest miss and it happened three times in one day* —
+   `NatListRegime.lean` already had the `1 + X` coalgebra, `Miniature.lean` already had
+   `enat_fp_iff`, `State/ReversibleSpectrum.lean` already had `Reversible` (a third definition of
+   detailed balance was written anyway). Not literature. A grep.
+2. **Grep the pinned Mathlib** for the concept, not just the name you would have chosen.
+3. **One literature search** if the object has a name (Glauber dynamics, coalgebra, covering
+   relation). `.claude-local/papers/` FIRST — it is the downloaded-source library.
+
+**The exception, and it is real:** if you *cannot* yet state the claim in one sentence, building
+is how you find the shape and searching returns noise. Build, then search before promoting. The
+trigger is nameability, not a stopwatch — a rule of "never build first" would be wrong and would
+stop real work.
+
+**Standard framing, once found, is ADOPTED — not noted and worked around** (Tim, 2026-07-27:
+*"anytime that we have official framing we need to make use of it"*). Keep the framework's own
+label as the handle where one exists (the CC-2 / AX-B1 pattern: `HasFirstStep` stayed a name and
+became `∃ a, bot ⋖ a`), and take the library's lemmas. **One caveat measured the same day:** check
+purity before swapping a proof — adopting `CovBy.unique_right` pushed `firstStep_unique` from
+`[propext]` to full choice, so the hand proof was kept and the standard name cited instead.
+
 **Trigger conditions:**
 1. **A new synthesis/bridge layer is created** — prior-art search before its first push. (Highest yield; every gap found in the 2026-06-22 arc originated at layer creation.)
 2. **A synthesis layer's central/distinctive claim is revised or strengthened** — re-run for that claim.
