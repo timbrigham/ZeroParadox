@@ -190,8 +190,20 @@ from 0 by a discrete gap — the topological identity of the Snap. -/
 theorem t3_isolation (r : ℝ) (hr : r ≠ 0) : IsClopen (Metric.closedBall (0 : Q₂) r) :=
   t2_closedBall_isClopen 0 r hr
 
-/-- D5: The Minimum Viable Deviation ε₀ = 2^k where k is the maximum 2-adic valuation
-    accessible in the instantiation. Structural role is universal; value is contingent. -/
+/-- D5: The Minimum Viable Deviation, written `2 ^ k` for an integer EXPONENT `k`.
+
+    **Corrected 2026-07-28.** The previous docstring said "`k` is the maximum 2-adic valuation
+    accessible", which contradicts this file's own ball convention `B(0, 2⁻ⁿ)`: a *maximum*
+    valuation gives a *minimum* scale, so the exponent is `k = -v` where `v` is that valuation.
+    `k` is the exponent, `v` is the valuation, and they differ by sign. No semantic change —
+    the definition is unaltered, and `k : ℤ` was always free to be negative.
+
+    Structural role universal; value contingent — and contingent for a *structural* reason: it
+    is dimensionful, so it depends on a choice of units and cannot be instantiation-independent
+    (ZP-B R1, v1.12).
+
+    **Note this definition is inert**: nothing in the development depends on it. It records the
+    framework's parameterization of the snap threshold, not a load-bearing construction. -/
 noncomputable def eps0 (k : ℤ) : ℝ := 2 ^ k
 
 /-! ## Theorem T5 — Q₂ is Totally Disconnected
