@@ -1,5 +1,6 @@
 """
-Build ZP-B: p-Adic Topology (v1.11)
+Build ZP-B: p-Adic Topology (v1.12)
+v1.12: D5 Planck-scale reference struck (last live site in the corpus). An adversary review flagged "eps0 plays the structural role of a Planck-scale quantity" as a crank signal on 2026-05-21 - "the Planck-scale analogy does the opposite of what is intended: it makes the document read as a physics grand-theory" - and it was cut from the Foreword (v1.8) and both Reals/ZP-F companions (v1.3). ZP-B kept it. Replaced with the structural reason the value is contingent: eps0 is DIMENSIONFUL, so its value depends on a unit choice and cannot be instantiation-independent. That is Buckingham pi, not empirical ignorance, and it makes R1's universal/contingent split a statement about dimensions rather than about our universe.
 v1.10: Rendered self-version tags removed from C2/C3 corollary titles (C1 sweep); "null state" → ⊥ in AX-B1 Lean-encoding note (vocab gate).
 v1.9: K-17 vocab fix — "First Atomic State" -> "minimum nonzero state (ε₀)" in AX-B1 box.
 v1.8: Adversary-review pass — R1 remark (Section VI) "universal ontology of state emergence"
@@ -17,7 +18,7 @@ distinguish pure topology (the theorem statement) from ZP-specific framing (the 
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -97,7 +98,7 @@ def build():
     E.append(label_box('Definition D5 — Minimum Viable Deviation &#949;₀', [
         '&#949;<sub>0</sub> = 2<super>k</super> for some integer k, where k is the maximum valuation accessible in the instantiation.',
         'Structural role (universal): &#949;<sub>0</sub> is always the first element crossed by the Snap. Fixed by the structure of Q<sub>2</sub> and AX-B1.',
-        'Numerical value (contingent): determined by physical constants of the instantiation. Planck-scale quantities in our universe.',
+        'Numerical value (contingent): &#949;<sub>0</sub> is a dimensionful quantity, so its numerical value depends on a choice of units and cannot be instantiation-independent. The contingency is structural, not empirical ignorance. This document makes no claim about its magnitude in any physical unit system.',
         'Status: DEFINED — universe-contingent parameter.',
     ]))
 
