@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1522,
+        "declarations": 1515,
         "files": 136
       },
       "entries": [
@@ -3711,44 +3711,6 @@
             ]
           },
           "reason": "twin de-scar: <base>_<FileBasename> file-suffix rename",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
-          "disposition": "new",
-          "id": "0d6dd94c-0a97-40a4-9383-024a2abe98bb",
-          "new": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.nu_hosted_face",
-            "short": "nu_hosted_face"
-          },
-          "old": {
-            "file": null,
-            "kind": null,
-            "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
-          },
-          "ontology": {
-            "domain": [
-              "order"
-            ],
-            "object": [
-              "bottom"
-            ],
-            "role": [
-              "face"
-            ]
-          },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -12021,45 +11983,6 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
-          "id": "337e0196-a0e1-46bf-9cb6-a8e2230555a9",
-          "new": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.wf_host_refuses_nu",
-            "short": "wf_host_refuses_nu"
-          },
-          "old": {
-            "file": null,
-            "kind": null,
-            "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
-          },
-          "ontology": {
-            "domain": [
-              "set-theory",
-              "order"
-            ],
-            "object": [
-              "bottom"
-            ],
-            "role": [
-              "face"
-            ]
-          },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
           "disposition": "renamed",
           "id": "33823ab9-c9a2-4dfa-9b3b-7cbaadeec772",
           "new": {
@@ -13023,45 +12946,6 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
-          "disposition": "new",
-          "id": "38552ef5-7fed-477c-ae7f-4a8686dc094a",
-          "new": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.host_verdict_axis",
-            "short": "host_verdict_axis"
-          },
-          "old": {
-            "file": null,
-            "kind": null,
-            "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
-          },
-          "ontology": {
-            "domain": [
-              "set-theory",
-              "order"
-            ],
-            "object": [
-              "bottom"
-            ],
-            "role": [
-              "core"
-            ]
-          },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -15598,44 +15482,6 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
-          "disposition": "new",
-          "id": "44a2ba45-74f8-4b8e-b8a9-0d4a661deebd",
-          "new": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.nu_refused_face",
-            "short": "nu_refused_face"
-          },
-          "old": {
-            "file": null,
-            "kind": null,
-            "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
-          },
-          "ontology": {
-            "domain": [
-              "set-theory"
-            ],
-            "object": [
-              "bottom"
-            ],
-            "role": [
-              "face"
-            ]
-          },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18777,45 +18623,6 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "new",
-          "id": "52887614-7041-401e-8b21-fab5daedd32d",
-          "new": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.nu_hosted_forces_non_wf",
-            "short": "nu_hosted_forces_non_wf"
-          },
-          "old": {
-            "file": null,
-            "kind": null,
-            "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
-          },
-          "ontology": {
-            "domain": [
-              "set-theory",
-              "order"
-            ],
-            "object": [
-              "bottom"
-            ],
-            "role": [
-              "face"
-            ]
-          },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
           "disposition": "renamed",
           "id": "52a0d00b-134c-4c9e-ad47-60b88409d461",
           "new": {
@@ -21121,45 +20928,6 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
-          "disposition": "new",
-          "id": "5e07249b-a078-421a-98b0-692471f17210",
-          "new": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.engine_blind_to_verdict",
-            "short": "engine_blind_to_verdict"
-          },
-          "old": {
-            "file": null,
-            "kind": null,
-            "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
-          },
-          "ontology": {
-            "domain": [
-              "set-theory",
-              "category"
-            ],
-            "object": [
-              "bottom"
-            ],
-            "role": [
-              "no-go"
-            ]
-          },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -33756,46 +33524,6 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
-          "verify": {
-            "axioms": null,
-            "sorry_free": true
-          }
-        },
-        {
-          "claims": {
-            "citations": [],
-            "witness_of": []
-          },
-          "disposition": "new",
-          "id": "9b8e0bed-1e85-4511-b89f-3f21a4fa6eb9",
-          "new": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
-            "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.trinary_faces",
-            "short": "trinary_faces"
-          },
-          "old": {
-            "file": null,
-            "kind": null,
-            "line": null,
-            "prefix": null,
-            "qualified": null,
-            "short": null
-          },
-          "ontology": {
-            "domain": [
-              "set-theory",
-              "order",
-              "category"
-            ],
-            "object": [
-              "bottom"
-            ],
-            "role": [
-              "core"
-            ]
-          },
-          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true

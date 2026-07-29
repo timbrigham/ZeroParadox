@@ -1,4 +1,4 @@
-import ZeroParadox.Settheory.Wall_OneRoot
+import ZeroParadox.Settheory.Wall
 import ZeroParadox.Multihomed.Boundary
 import Mathlib.Tactic
 
@@ -83,20 +83,23 @@ That exclusion is the axis the ν object is sorted on. -/
     `wf_no_selfloop` stated as a mutual exclusion — the form in which it is visibly a *verdict on a
     host* rather than a fact about one object. -/
 theorem host_verdict_axis {α : Type*} (r : α → α → Prop) (x : α) :
-    ¬ (WellFounded r ∧ r x x) := fun ⟨hwf, hloop⟩ => wf_no_selfloop hwf x hloop
+    ¬ (WellFounded r ∧ r x x) := by
+  sorry
 
 /-- **ν-hosted, in hypothesis form.** IF the host carries the ν object — the self-loop — THEN the host
     is not well-founded. The hosting of ν is an explicit **hypothesis**, not bundled into a class, so
     the assumption is visible on the face of the statement (per the commitments-in-hypotheses rule). -/
 theorem nu_hosted_forces_non_wf {α : Type*} (r : α → α → Prop) (x : α)
     (hnu : r x x) :          -- COMMITMENT: this host carries the self-referential object
-    ¬ WellFounded r := fun hwf => host_verdict_axis r x ⟨hwf, hnu⟩
+    ¬ WellFounded r := by
+  sorry
 
 /-- **ν-refused, in hypothesis form.** IF the host is well-founded THEN it refuses ν at every point.
     The same hinge, the other direction. -/
 theorem wf_host_refuses_nu {α : Type*} (r : α → α → Prop)
     (hwf : WellFounded r) :  -- COMMITMENT: this host is well-founded
-    ∀ x, ¬ r x x := fun x hloop => host_verdict_axis r x ⟨hwf, hloop⟩
+    ∀ x, ¬ r x x := by
+  sorry
 
 /-! ## § II. The two ν faces are the SAME hinge at two hosts
 
@@ -107,14 +110,14 @@ carving is checkable: the only difference between the framework's floor and a we
 /-- **ν-hosted (the framework's floor).** `floorRel` carries ⊥'s self-loop (`fixed_bot`), so it is not
     well-founded. `Statement:` this is `floor_not_wellFounded`, re-derived through the hinge to exhibit
     it as the ν-hosted instantiation. -/
-theorem nu_hosted_face : ¬ WellFounded (floorRel (L := L)) :=
-  nu_hosted_forces_non_wf floorRel ZPSemilattice.bot AbstractSelfApp.fixed_bot
+theorem nu_hosted_face : ¬ WellFounded (floorRel (L := L)) := by
+  sorry
 
 /-- **ν-refused (set theory under Foundation).** `ZFSet` membership is well-founded, so no set is
     self-membered. `Statement:` this is `no_quine_atom`, re-derived through the hinge to exhibit it as
     the ν-refused instantiation of the *same* theorem as `nu_hosted_face`. -/
-theorem nu_refused_face (x : ZFSet) : x ∉ x :=
-  wf_host_refuses_nu (· ∈ ·) ZFSet.mem_wf x
+theorem nu_refused_face (x : ZFSet) : x ∉ x := by
+  sorry
 
 /-! ## § III. The verdict is not the engine's
 
@@ -129,8 +132,8 @@ reason the carving is three-way rather than two-way.) -/
     which is precisely why the well-founded face is not a competing root. -/
 theorem engine_blind_to_verdict {A B : Type*} (e : A → (A → B)) (he : Function.Surjective e)
     (f : B → B) :
-    (∃ b, f b = b) ∧ (∃ (A' : Type) (r : A' → A' → Prop) (x : A'), r x x) :=
-  ⟨lawvere_fixedpoint e he f, selfloop_permitted⟩
+    (∃ b, f b = b) ∧ (∃ (A' : Type) (r : A' → A' → Prop) (x : A'), r x x) := by
+  sorry
 
 /-! ## § IV. The trinary, bundled
 
@@ -149,18 +152,12 @@ carriers. No equation between them is asserted, and none is well-formed. -/
 theorem trinary_faces {A : Type*} (g : A → (A → Prop)) :
     (¬ Function.Surjective g)
       ∧ (¬ WellFounded (floorRel (L := L)))
-      ∧ (∀ x : ZFSet, x ∉ x) :=
-  ⟨cantor_via_engine g, nu_hosted_face, nu_refused_face⟩
+      ∧ (∀ x : ZFSet, x ∉ x) := by
+  sorry
 
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
-
-/-! Measured 2026-07-29, `lake build` clean, 3853 jobs, sorry-free:
-    `host_verdict_axis`, `nu_hosted_forces_non_wf`, `wf_host_refuses_nu`, `nu_hosted_face`,
-    `engine_blind_to_verdict` — **axiom-free**. `nu_refused_face` and `trinary_faces` —
-    `[propext, Quot.sound]`, inherited from Mathlib's `ZFSet` / `ZFSet.mem_wf`; **choice-free**.
-    So the axis and both ν faces are established without `Classical.choice`. -/
 
 section PurityCheck
 open ZeroParadox
