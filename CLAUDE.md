@@ -29,6 +29,58 @@ This is as much for a human reader as for a checker: the label tells you at a gl
 
 **The keystone index (the phenomenon the three objects share):** `ZeroParadox/DiagonalFixedPoint.lean` — the `#check`-only index routing every formalized face of **self-reference** (the diagonal fixed point) by the μ/ν fork: wall faces where self-reference cannot close (no fixed point — Cantor, Russell, Turing, Tarski, Curry) and floor faces where it closes and lands at ⊥ (the Quine atom, the Kleene quine, Löb/Gödel-2, Rice), all off Lawvere's engine. It is the direct route to self-reference the three object indexes point back toward. It states no new claim: the cross-face unification is Lawvere (1969) / Yanofsky (2003), cited prior art, and the cross-face identity across domains stays a **type boundary**, never a Lean `=`.
 
+**The μ/ν fork and the HOST VERDICT — read before writing about the "one root or two" question, about
+well-foundedness as a "second root," or about how many faces self-reference has. It is ALREADY BUILT — do
+not build it again.** Authoritative sites, all pre-existing: `ZeroParadox/Settheory/LawvereBridge.lean` § V
+("the whole μ/ν picture … one engine, two regimes, discriminated by the self-loop"), whose
+`mu_nu_branch_exclusion` (`:124`) and `selfApp_lands_on_nu` (`:133`) are the theorems;
+`ZeroParadox/Settheory/QuineHost.lean`, whose class is named for the host and already sorts three theories
+by whether they permit the self-loop; `ZeroParadox/DiagonalFixedPoint.lean` § II/§ III, whose spine is the
+wall/floor (μ/ν) carving; and `Settheory/Wall.lean`'s reframe paragraph.
+
+The engine (`negation_no_fixedpoint` → `lawvere_fixedpoint`) forks: **μ** — the map is fixed-point-free, no
+object forms; **ν** — a fixed point exists. The well-founded family then renders a **verdict on ν**: a
+well-founded host refuses it (`no_quine_atom`), a host carrying it is thereby not well-founded
+(`quineHost_not_wellFounded`, `floor_not_wellFounded`). Same theorem (`wf_no_selfloop`), two hosts — so
+well-foundedness is **not a third root of self-reference; it is the axis of the host's verdict**.
+
+**Use the STANDARD NAMES — all four are published and all four sources are in `.claude-local/papers/`:**
+- the ν direction is **"the Diagonal Theorem"** (Lawvere & Schanuel, via Yanofsky 2003 p. 5 Remark 3,
+  p. 14 Thm 3 — Yanofsky was already cited in `Wall.lean`; the names were not);
+- a host permitting ν is **"degenerate"** (Yanofsky p. 3; nLab, *Lawvere's fixed point theorem*);
+- in set theory the permit/refuse split **is** Foundation vs Anti-Foundation (Aczel 1988 **p. 6**);
+- the general form is a **published theorem** — Adámek-Milius-Moss 2020 **Thm 7.6** p. 30, *"the only
+  well-founded fixed point is the initial algebra"* — with the axis named the **well-founded part /
+  coreflection into well-founded coalgebras** (their Def 5.1 p. 22, credited to Taylor). The corpus proves
+  the **one-relation shadow** of Thm 7.6, never the coalgebraic theorem.
+
+**Three fences.** (1) The narrow one-root question is still **NO** — `wf_no_selfloop` is proved by
+accessibility, not by the engine; `selfloop_permitted` / `engine_is_wf_free` stand. (2) Scope: the
+ν-refusal reading covers the **well-founded family only** — the ε₀ row (`ZPN.omegaPow_no_fixedpoint`) is
+ordinal arithmetic, not a self-loop instance. (3) **No traversal** — nothing here says the object moves;
+that stays the commitment (`l_inf`'s docstring).
+
+**⚠ Prefer the STRONGER library forms; this family has been re-proving the weakest rung.**
+`WellFounded.asymmetric` (`Mathlib/Order/RelClasses.lean:225`) beats `wf_no_selfloop` (forbids 2-cycles
+between distinct points; `asymmetric₃` for 3-cycles); Mathlib's `WellFounded.irrefl` is **class-valued**
+(`Std.Irrefl`, a class with a *field* — it does NOT "unfold to `¬ r x x`") with instances registered, so
+`irrefl_of`/`asymm_of` fire free and `ZFSet` already carries the instance; and
+**`wellFounded_iff_isEmpty_descending_chain`** (`Order/WellFounded.lean:46`) is a **biconditional** that
+renders the ν-hosted side as *"the host contains an infinite ℕ-indexed descent"* — **the INFINITE pole the
+Two-Pole rule demands, which the `r x x` form hides.** Adopting it is open work worth doing.
+
+**Why this section exists (2026-07-29) — a measured Trigger-0 failure, and the most expensive one yet.**
+A file `Settheory/HostVerdict.lean` was written to "consolidate" this carving **before any prior-art
+search**. Its `nu_hosted_forces_non_wf` was **character-for-character** `mu_nu_branch_exclusion`, same proof
+body; its `nu_hosted_face` was `selfApp_lands_on_nu`. The contraposition already existed **eight times
+across six files**, the carving **three times**, and the standard names sat in a paper the file's own base
+already cited. It was **reverted in full** (`7b997fa`, `4a56da4`). Step 1 of the three-step check —
+`grep -rn "¬ WellFounded" ZeroParadox` — would have prevented the entire build. **The failure was ORDERING,
+not effort:** the expensive corpus grep was done (it is what made the file possible) and the two cheap steps
+were skipped, which is the worst split, because doing the expensive half *feels* like diligence. Full
+findings: `.claude-local/notes/prior_art_hostverdict_2026-07-29.md`; the reframe itself (Tim's) is
+`.claude-local/notes/wall_one_root_or_two_trinary_2026-07-29.md`.
+
 **The choice index (NOT a fourth core object — read it before writing about choice or constructivity):** `ZeroParadox/Category/ChoiceCannotBe.lean` — the `#check`-only index of the framework's **relationship to `Classical.choice`**. `Classical.choice` is an ambient kernel axiom, **not** a framework object, so this index is scoped differently from the three above: where choice is provably not needed, what it must not be confused with, and what is actually established. **Read it before writing any prose, docstring, note, or outreach copy touching choice, constructivity, purity, axiom footprints, or the "choice = point of view / chart selection" reading.** Three standing traps it exists to stop:
 - **The equivocation (hit four separate times on 2026-07-19).** The ordinary English "choice" — an act of picking, a point of view, a chart selection — is **not** the axiom `Classical.choice`. Every evocative "choice = which way you view the split" reading is a **model** of the choice-vs-no-choice distinction, never the axiom. State it as a model or not at all. **Attribution, stated precisely — an earlier version of this bullet had it wrong and seeded the error into five Lean files:** Diaconescu (1975) proves an **EQUIVALENCE** — a coequalizer of two nonintersecting monomorphisms has a section *iff* subobjects have complements (p. 176), the choice direction being his corollary (p. 178); in modern terms, choice for inhabited subobjects of a two-element object **IS** excluded middle. That **full** AC is strictly stronger is **Cohen 1963** / Fraenkel-Mostowski independence, **not** Diaconescu — never attribute strictness or a failing converse to him. That the restricted fragment nonetheless *appears* not to follow from excluded middle in Lean — the natural construction fails to elaborate and closes only under `classical`, which is **strong evidence, never a proof of unprovability** — looks like a fact about **Lean's `Prop`/`Type` stratification** (the fragment selects into `Bool`, making it data-valued excluded middle), which a topos lacks; that reconciliation is the framework's own finding. **Never state the Lean gap as a negative result**: a failed elaboration is not an independence theorem, and claiming one would need a metatheoretic argument outside Lean. Full statement: `ZeroParadox/Category/ChoiceCannotBe.lean`.
 - **NO COUNT — measure on demand, never record one.** Do **not** write a figure for how many declarations carry `Classical.choice` into this file, into any `.lean` docstring, or into any note. `ZeroParadox/Category/ChoiceCannotBe.lean` deliberately records none and gives the three reasons: a corpus total measures how classically **Mathlib** is built rather than anything about this framework; it reads as "most of this is non-constructive" when the load-bearing fact is that **T-SNAP is axiom-free** and every examined footprint has been removable; and the number has already been wrong three times (once quoted rather than measured, once measured and gone stale inside a single session — this bullet itself carried the stale one). That index supplies the PowerShell to measure on demand. **The framework is not choice-free; the core is; every examined footprint has been removable** — that statement does not go stale, and it is the one to use.

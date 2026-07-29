@@ -50,10 +50,28 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   Russell + Turing) as corollaries off one named engine — not the theorems, which are not new.
 - The **well-founded / membership / Bool / logical** re-proofs below have exact library equivalents too,
   kept as self-contained hubs alongside the function-fixed-point ones: `wf_no_selfloop` is Mathlib's
-  `WellFounded.irrefl` (`Std.Irrefl r` unfolds to `¬ r x x`); `no_quine_atom` (`x ∉ x`) is
-  `ZFSet.mem_irrefl`; `bool_not_no_fixedpoint` is `Bool.not_ne_self`; and `negation_no_fixedpoint`
-  (`¬(p ↔ ¬p)`) is core Lean's `not_iff_self` / `iff_not_self`. The delta is again the PRESENTATION — one
-  named engine with these as its faces — not the lemmas, which are standard.
+  `WellFounded.irrefl` (`Mathlib/Order/WellFounded.lean:67`); `no_quine_atom` (`x ∉ x`) is
+  `ZFSet.mem_irrefl` (`Mathlib/SetTheory/ZFC/Basic.lean:631`); `bool_not_no_fixedpoint` is
+  `Bool.not_ne_self`; and `negation_no_fixedpoint` (`¬(p ↔ ¬p)`) is core Lean's `not_iff_self` /
+  `iff_not_self`. The delta is again the PRESENTATION — one named engine with these as its faces — not
+  the lemmas, which are standard.
+- **⚠ Three stronger library forms, measured 2026-07-29. Read before re-proving anything in this family.**
+  A gloss here previously said "`Std.Irrefl r` unfolds to `¬ r x x`" — **it does not**; `Std.Irrefl` is a
+  *class with a field* (core `Init/Core.lean:2588`), so `WellFounded.irrefl h : Std.Irrefl r` and you
+  project `(WellFounded.irrefl h).irrefl x`. That matters, because Mathlib's form being class-valued is
+  what makes the following free:
+  * **`WellFounded.asymmetric`** (`Mathlib/Order/RelClasses.lean:225`) is **strictly stronger** than
+    `wf_no_selfloop` — it forbids 2-cycles between *distinct* points, with `asymmetric₃` (`:229`) for
+    3-cycles. Irreflexivity is its `a := b` instance. This file has been re-proving the weakest rung of a
+    published chain.
+  * **Instance resolution already carries it.** `IsWellFounded → Std.Asymm` is registered
+    (`RelClasses.lean:230`), so `irrefl_of` / `asymm_of` fire on any type with the instance — and `ZFSet`
+    has it (`ZFC/Basic.lean:623`). Hand-rolled `∀`-form restatements get none of that machinery.
+  * **`wellFounded_iff_isEmpty_descending_chain`** (`Mathlib/Order/WellFounded.lean:46`) is a
+    **biconditional**: `WellFounded r ↔ IsEmpty {f : ℕ → α // ∀ n, r (f (n+1)) (f n)}`. A self-loop is
+    the *constant* descending chain, so it renders the non-well-founded side as **"the host contains an
+    infinite ℕ-indexed descent."** That is the **INFINITE pole** the two-pole hard rule asks for, which
+    the `r x x` form hides — the library hands it over, and this family has never cited it.
 
 ## The wall as a failure-mode taxonomy (built one condition-set at a time)
 
@@ -81,6 +99,35 @@ experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloo
 Russell are its corollaries, triggered by the engine (`Not` is fixed-point-free). Within the diagonal family
 this is a real unification *theorem*, not the grand conjecture; the well-founded family (below) is proved by a
 different mechanism (induction), and whether it folds in too is the open one-root-or-two question.
+
+**Reframe of that question (2026-07-29) — and it is NOT a new result; every piece below is published.**
+The engine's two regimes (μ = no fixed point / ν = a fixed point exists, see `negation_no_fixedpoint`) have
+**standard names**, and so does the split the well-founded family performs on them:
+- The ν direction is **"the Diagonal Theorem"**, credited to Lawvere & Schanuel — Yanofsky (2003), p. 5
+  Remark 3 and p. 14 Theorem 3. (Yanofsky is already cited above; the *names* were not.)
+- A host that permits ν is **"degenerate"** — Yanofsky p. 3: *"if there is a onto T → Y^T then Y must be
+  'degenerate' i.e. every map from Y to Y must have a fixed point"*, and *"Paradoxes are ways of showing
+  that if you permit one to violate a limitation, then you will get an inconsistent system."* Corroborated
+  by nLab, *Lawvere's fixed point theorem*. "Non-well-founded" is one concrete form of that degeneracy.
+- In set theory the permit/refuse split **is** Foundation vs Anti-Foundation, in Aczel's own words
+  (*Non-Well-Founded Sets*, 1988, p. 6): *"Non-well-founded sets exist… Of course we must relinquish the
+  foundation axiom, but it will turn out that we need drop none of the other axioms of set theory."*
+- The general categorical form is a **published theorem**: Adámek-Milius-Moss (2020, arXiv:1910.09401v2)
+  **Theorem 7.6**, p. 30 — *"the only well-founded fixed point is the initial algebra"*: a well-founded
+  host admits no fixed point except the μ end. The standard name for the *axis* is the **well-founded part
+  / the coreflection into well-founded coalgebras** (their Definition 5.1, p. 22, credited to Taylor).
+  What this file proves is the **one-relation shadow** of that theorem, not the coalgebraic statement.
+
+**So the framework's own narrow observation, stated without overclaim:** the theorems this taxonomy assigns
+to the well-founded family are, on inspection, *refusals of the engine's own ν output* rather than an
+independent root of self-reference — `wf_no_selfloop` instantiated per host (`no_quine_atom` where the host
+is well-founded; `quineHost_not_wellFounded` / `floor_not_wellFounded` where it is not). That is a claim
+about **this repo's taxonomy**, not about mathematics, and the literature above already presents the split
+this way. Note the scope limit: it covers the **well-founded family only** — the ε₀ row
+(`ZPN.omegaPow_no_fixedpoint`) is ordinal arithmetic, *not* a self-loop instantiation, so "every row is a
+ν-refusal" would be false. The narrow one-root question is still answered **no**: `wf_no_selfloop` is proved
+by accessibility, not by the engine (`Wall_OneRoot.lean`'s `selfloop_permitted` / `engine_is_wf_free` stand).
+Full development: `.claude-local/notes/wall_one_root_or_two_trinary_2026-07-29.md`.
 
 The failure SIGNATURE changes with the conditions — distinct ways the one self-reference resists
 internalization, not one failure repeated. The formal/metatheoretic frontier is itself part of the map:

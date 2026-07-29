@@ -53,8 +53,19 @@ section DiagonalFixedPointIndex
 #check @ZeroParadox.lawvere_fixedpoint       -- a point-surjection forces a fixed point of every endomap (the diagonal engine)
 #check @ZeroParadox.negation_no_fixedpoint   -- the dual: negation has no fixed point (¬(p ↔ ¬p)) — the wall's seed
 
-/-! ### § II. Wall faces (μ) — self-reference CANNOT close (no fixed point / no reflexive object) -/
-#check @ZeroParadox.wf_no_selfloop           -- the general wall: a well-founded relation has no self-loop (no x with r x x)
+/-! ### § II. Wall faces (μ) — self-reference CANNOT close (no fixed point / no reflexive object)
+
+**Scope note (2026-07-29) — `wf_no_selfloop` sits here but is NOT a μ engine face, and conflating the two
+was a live contradiction in this corpus.** The faces below it are engine faces: the map is fixed-point-free
+(negation), so *no object forms anywhere*. `wf_no_selfloop` says something different — it is a **verdict a
+HOST renders on the engine's ν output**: a well-founded host refuses the self-loop (`no_quine_atom`), while a
+host that carries it is thereby not well-founded (`quineHost_not_wellFounded`, `floor_not_wellFounded`, both
+in § III's family). Same theorem, two hosts. It is kept in this section because the *signature* is a refusal,
+but do not read it as "no fixed point exists" — the object exists and is refused, which is § III's object
+seen from a well-founded host. Standard framing: Aczel 1988 p. 6 (Foundation vs Anti-Foundation);
+Adámek-Milius-Moss 2020 Thm 7.6 ("the only well-founded fixed point is the initial algebra"). See
+`Settheory/Wall.lean`'s one-root-or-two reframe. -/
+#check @ZeroParadox.wf_no_selfloop           -- the host verdict, NOT an engine face: a well-founded relation has no self-loop (no x with r x x). Weakest rung — Mathlib's `WellFounded.asymmetric` is stronger
 #check @ZeroParadox.cantor_via_engine        -- Cantor: no surjection A → (A → Prop)
 #check @ZeroParadox.russell_via_engine       -- Russell: no surjection A → (A → Prop) via membership `mem : A → A → Prop`
 #check @ZeroParadox.no_self_decider          -- Turing: no surjection A → (A → Bool) (the halting diagonal)
