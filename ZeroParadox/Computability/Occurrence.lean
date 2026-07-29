@@ -235,11 +235,15 @@ theorem live_step_not_wellFounded (s : σ) (hloop : LoopsInPlace f s) :
   intro hwf
   exact wf_no_selfloop hwf s (by rw [hloop]; rfl)
 
-/-- The inversion of § IV read through the bridge: **well-founded computes, non-well-founded
-    does not.** A halted configuration is on the recursive side and yields its value; a live
-    one is on the corecursive side and yields nothing. This is the recursion/corecursion
-    divide (Taylor; Adámek-Milius-Moss, cited in the CLAIMS convergence ledger), and it is why
-    the dead bottom gives something while the live one withholds. -/
+/-- The inversion of § IV, read through the bridge — stated at the level where the vocabulary
+    actually applies. The live branch is relational: a self-loop makes the **whole step
+    relation** non-well-founded (the ν / corecursion side), and such a configuration yields
+    nothing. The dead branch is only that a halted configuration yields its value — **not** a
+    claim that the relation is well-founded, which one halting configuration cannot establish
+    (see the § IV-b note; "recursive"/"corecursive" are properties of the coalgebra, never of a
+    single state). So this is the one proved direction of the recursion/corecursion divide
+    (Taylor; Adámek-Milius-Moss, cited in the CLAIMS convergence ledger), and it is why the dead
+    bottom gives something while the live one withholds. -/
 theorem inversion_is_the_wf_divide (s : σ) :
     (f s = none → s ∈ StateTransition.eval f s) ∧
     (LoopsInPlace f s → ¬ WellFounded (fun a b : σ => b ∈ f a)
