@@ -55,6 +55,77 @@ private theorem acc_irrefl {α : Type*} {r : α → α → Prop} : ∀ {a : α},
 theorem floor_not_wellFounded : ¬ WellFounded (floorRel (L := L)) := fun hwf =>
   acc_irrefl (hwf.apply bot) AbstractSelfApp.fixed_bot
 
+/-! ## § I-b. The INFINITE-POLE reading of the same floor — an infinite descent, not merely a loop
+
+§ I states the floor's non-well-foundedness as a **self-loop** (`r x x`) — the EMPTY-pole form: nothing
+below ⊥, the loop goes nowhere. The two-pole hard rule (`CLAUDE.md`) asks where the zero that runs to
+infinity is, and the library already supplies the answer: well-foundedness is equivalent to the absence of
+an **infinite descending chain** (the descending-chain condition), so the same fact reads as *"an infinite
+descent issues from the floor."* That is the INFINITE pole of ⊥ in this face, and it is the one § I hides.
+
+Standard form, read at source in the pinned Mathlib (`v4.30.0-rc2`):
+* `wellFounded_iff_isEmpty_descending_chain` (`Mathlib/Order/WellFounded.lean:51`) —
+  `WellFounded r ↔ IsEmpty { f : ℕ → α // ∀ n, r (f (n+1)) (f n) }`.
+* `not_acc_iff_exists_descending_chain` (`:34`) — `¬ Acc r x ↔ ∃ f, f 0 = x ∧ ∀ n, r (f (n+1)) (f n)`;
+  the **pointwise** version, which is what "at the floor" needs.
+
+**Purity — MEASURED 2026-07-29, and the measurement overturned the expectation. Read this before
+adopting the standard form anywhere else.** Mathlib's *extract-a-chain* direction (`:36-38`) builds the
+sequence with `.choose_spec`, so it carries `Classical.choice`. The natural inference — "supply the witness
+yourself and use only the other direction, and you stay choice-free" — is **FALSE**, and was measured false
+here: `#print axioms` follows the **statement**, so citing the *biconditional at all* pulls in the choice
+used by the direction you did not take. Measured footprints:
+
+* `floor_descent_from_bot` — **does not depend on any axioms.** The explicit descent at ⊥ is free.
+* `bot_not_acc` — **axiom-free**, but only because it is proved BY HAND from `fixed_bot`. The one-line
+  version via `not_acc_iff_exists_descending_chain.mpr` measured `[propext, Classical.choice, Quot.sound]`.
+* `floor_not_wellFounded_via_descent` — `[propext, Classical.choice, Quot.sound]`, inherited from
+  `wellFounded_iff_isEmpty_descending_chain`. § I's `floor_not_wellFounded` is **axiom-free** and remains
+  the load-bearing statement.
+
+So this follows the `CovBy` precedent exactly: **keep the hand proof, cite the standard name.** The DCC
+route is retained below for the citation and the reading, not as the cheapest proof — and the framework's
+own rule applies (`CLAUDE.md`): inert-in-the-proof and absent-from-the-footprint are different properties;
+measure, never infer.
+
+**FENCE — the constant chain is the DEGENERATE descent.** The witness here is `fun _ => bot`, i.e. the
+self-loop re-read as a chain; it is the *smallest* infinite descent, not a rich one. A genuine
+non-constant descent is strictly more, and does **not** follow from a self-loop — `Occurrence.lean`'s
+§ IV-b table already records the non-implication ("infinite descent through distinct states has no
+self-loop"). So this section converts the empty-pole form into the infinite-pole form at ⊥; it does not
+claim the floor hosts a non-degenerate descent. -/
+
+/-- The floor's descending chain: the constant sequence at ⊥. Explicit (no choice), and a descending
+    chain for `floorRel` precisely because ⊥ is a fixed point of `selfApp` (`fixed_bot`). -/
+def floorDescent : ℕ → L := fun _ => bot
+
+/-- **The floor hosts an infinite descent FROM ⊥** — the infinite-pole reading, pointwise at the bottom.
+    `Statement:` there is a sequence starting at ⊥ that descends under `floorRel` at every step. The
+    witness is `floorDescent`, so this is choice-free.
+    `Reading:` the bottom is not a still point with nothing under it; the same configuration is an
+    unending descent. Empty pole and infinite pole, one object. -/
+theorem floor_descent_from_bot :
+    ∃ f : ℕ → L, f 0 = bot ∧ ∀ n, floorRel (f (n + 1)) (f n) :=
+  ⟨floorDescent, rfl, fun _ => AbstractSelfApp.fixed_bot⟩
+
+/-- **⊥ is not accessible** — the empty pole stated as inaccessibility. Proved by hand from `fixed_bot`
+    (via this file's `acc_irrefl`), **axiom-free**.
+    That this is *equivalent* to the descent above is Mathlib's `not_acc_iff_exists_descending_chain`
+    (`Order/WellFounded.lean:34`) — cited, deliberately **not** used: routing through that biconditional
+    puts `Classical.choice` in the footprint (measured — see the purity note in § I-b). So "unreachable
+    from below" and "an infinite descent issues from it" are the same fact about ⊥ in the two charts, and
+    both halves are available here without choice. -/
+theorem bot_not_acc : ¬ Acc (floorRel (L := L)) bot :=
+  fun h => acc_irrefl h AbstractSelfApp.fixed_bot
+
+/-- **§ I's conclusion, re-derived by the infinite-descent route.** Same statement as
+    `floor_not_wellFounded`; different witness — there the self-loop contradicts accessibility, here an
+    explicit infinite chain contradicts the descending-chain condition. Kept as a distinct declaration
+    because the *route* is the content: it is the citation to the standard DCC characterization. -/
+theorem floor_not_wellFounded_via_descent : ¬ WellFounded (floorRel (L := L)) := by
+  rw [wellFounded_iff_isEmpty_descending_chain, not_isEmpty_iff]
+  exact ⟨⟨floorDescent, fun _ => AbstractSelfApp.fixed_bot⟩⟩
+
 /-! ## § II. The ascent is well-founded (the ε₀ tower)
 
     The ordinal order is well-founded (ordinals are well-ordered); ε₀ and the snap ascent live inside it.
@@ -131,6 +202,9 @@ end ZeroParadox
 section PurityCheck
 open ZeroParadox
 #print axioms floor_not_wellFounded
+#print axioms floor_descent_from_bot
+#print axioms bot_not_acc
+#print axioms floor_not_wellFounded_via_descent
 #print axioms ascent_wellFounded
 #print axioms phase_not_wellFounded
 #print axioms phase_acc_of_up
