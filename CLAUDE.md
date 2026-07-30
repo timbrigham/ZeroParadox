@@ -172,12 +172,13 @@ already here, and nothing says so"*:
   returned nothing. Fix: instantiate at the two ends + state the fence (the floor is non-well-founded, so
   the exclusion holds ABOVE it and fails AT it).
 * **min≡max.** Related coincidences, never cross-linked, so the "both poles" and "both extremes" readings
-  drifted as if separate. **Two kinds, do not merge them** (corrected 2026-07-30 after asserting one): 
-  **lfp = gfp**, a genuine `fork_collapse_iff` instance requiring a UNIQUE fixed point —
-  `selfApp_bot_is_both_extremal` (fixed-point set exactly `{⊥}`) and the categorical zero object; versus
-  **lfp = ⨆ of the approximating tower**, the Kleene shape needing no uniqueness — `epsilon0_min_eq_max`.
-  ε₀ is NOT a `fork_collapse_iff` instance: `α ↦ ω^α` has a proper class of fixed points
-  (`omega0_opow_epsilon`), so nothing collapses there.
+  drifted as if separate. **NONE of them is a `fork_collapse_iff` instance** — corrected TWICE on
+  2026-07-30, because the first fix relocated the error rather than removing it. `fork_collapse_iff` needs
+  `[CompleteLattice α]` and a monotone `f : α →o α`; `Ordinal` with `α ↦ ω^α` has a proper class of fixed
+  points (`omega0_opow_epsilon`, so nothing collapses), `ZPSemilattice` is a bare join-semilattice whose
+  `selfApp` is not an `OrderHom`, and the categorical seam lives in `ModuleCat ℂ`. **They share a SHAPE,
+  which across distinct structures is a type boundary, never a common theorem.** State the shape; never an
+  instance-of relation.
 * **Turing machines.** `Occurrence.lean`'s results are stated over `σ → Option σ`, which **is** Mathlib's
   `StateTransition`; `Turing.TM0/TM1/TM2.step` all have that exact type and Mathlib's TM development is
   *built on* it. So those results already cover every Mathlib Turing machine — and the corpus had never

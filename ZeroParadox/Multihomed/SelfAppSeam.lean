@@ -79,15 +79,26 @@ theorem selfApp_bot_is_greatest_fp :
     (greatest f.p.) coincide at this node — exactly the μ=ν seam condition. So the selfApp /
     Quine-atom bottom sits at the seam, not on either branch.
 
-    **⚠ CORRECTED 2026-07-30 (adversary gate, bedrock).** An earlier revision of this cross-link called `epsilon0_min_eq_max` an instance of `fork_collapse_iff`. **It is not.** `fork_collapse_iff` needs a UNIQUE fixed point, and `α ↦ ω^α` has a proper class of them — `ε₁, ε₂, …` all satisfy `ω ^ ε_ o = ε_ o` (Mathlib `omega0_opow_epsilon`) — so `lfp ≠ gfp` there and nothing collapses. There are TWO related coincidences, not one phenomenon with four witnesses:
-    * **lfp = gfp** (a genuine `fork_collapse_iff` instance, needing uniqueness): `selfApp_bot_is_both_extremal`, whose fixed-point set is exactly `{⊥}` (`selfMem_eq_singleton_bot`), and the categorical zero object (`catseam_is_frameflip`, initial ∧ terminal).
-    * **lfp = ⨆ of the approximating tower** (the Kleene shape, no uniqueness required): `epsilon0_min_eq_max`, which is literally what it states — ε₀ is the least fixed point AND the supremum of the ω-tower.
+    **⚠ CORRECTED TWICE, 2026-07-30 (adversary gate, bedrock). Read the whole of this before citing
+    any "min≡max family".** An earlier revision called `epsilon0_min_eq_max` an instance of
+    `fork_collapse_iff`; a second revision fixed that but then called `selfApp_bot_is_both_extremal` and the
+    categorical zero object instances instead. **BOTH claims are false, for the same reason: nothing here
+    satisfies `fork_collapse_iff`'s hypotheses.** It requires `[CompleteLattice α]` and a *monotone*
+    `f : α →o α` (`Settheory/FixedPointFork.lean`). Measured against that:
+    * `epsilon0_min_eq_max` — `α ↦ ω^α` on `Ordinal` has a **proper class** of fixed points (`ε₁, ε₂, …`
+      all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so `lfp ≠ gfp` and nothing collapses.
+    * `selfApp_bot_is_both_extremal` — `ZPSemilattice` is a **bare join-semilattice**, not a complete
+      lattice, and `AbstractSelfApp.selfApp : L → L` is **not an `OrderHom`**.
+    * `catseam_is_frameflip` — lives in `ModuleCat ℂ`, a **category**, not a lattice at all.
 
-    **The family this belongs to.** Same shape as `epsilon0_min_eq_max`
-    (at ε₀), `catseam_is_frameflip` (initial AND terminal, categorically), and the abstract condition
-    `fork_collapse_iff` (`lfp = gfp` iff the fixed point is unique). It is also the order-theoretic form of
-    **⊥'s two poles**: "both extremes at once" and "both zero and infinity at once" are one phenomenon. In
-    the four-corner classification (`Valuation/PoleCorners.lean`) this is `cornerId`. -/
+    **So there is no common instance and no "four witnesses of one phenomenon".** What these share is a
+    SHAPE — one object carrying both extremal characterizations at once — and per this project's standing
+    rule a shared shape across distinct structures is a **type boundary**, never a common theorem. State
+    the shape; do not state an instance-of relation. Each fact stands on its own carrier:
+    ε₀ is least-fixed-point **and** tower-supremum (the Kleene shape); ⊥ is least **and** greatest fixed
+    point of `selfApp`; the seam is initial **and** terminal. `fork_collapse_iff` is a *fourth*, separate
+    fact about complete lattices — the general condition under which a fork collapses — and is **not** the
+    genus of the other three. -/
 theorem selfApp_bot_is_both_extremal :
     (∀ x : L, AbstractSelfApp.selfApp x = x → le (bot : L) x)
     ∧ (∀ x : L, AbstractSelfApp.selfApp x = x → le x (bot : L)) :=
