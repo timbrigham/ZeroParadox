@@ -60,7 +60,19 @@ theorem epsilon0_eq_nfp_bot :
     the least fixed point reached from a seed *is* the supremum of the ascending iterates. Bundles
     `epsilonZero_eq_iSup` (max, `Gentzen.lean`) with `epsilonZero_fixedPoint` and
     `epsilon0_least_fixedpoint` (min, `Epsilon0LeastFP.lean`) — previously an impression spread across
-    two files, here one statement. -/
+    two files, here one statement.
+
+    **The family this belongs to (cross-link added 2026-07-30).** "One object carrying both extremal
+    characterizations at once" is a recurring shape, not a curiosity of ε₀. Four witnesses:
+    `epsilon0_min_eq_max` (here, at ε₀); `selfApp_bot_is_both_extremal` (`Multihomed/SelfAppSeam.lean`,
+    at ⊥ — least AND greatest fixed point of `selfApp`); `catseam_is_frameflip`
+    (`Category/SeamFrameChange.lean` — initial AND terminal, i.e. least AND greatest categorically); and
+    the abstract condition `fork_collapse_iff` (`Settheory/ForkFrameChange.lean`) — `lfp = gfp` exactly
+    when the fixed point is unique. **This is the same phenomenon as ⊥'s two poles**: min≡max is the
+    order-theoretic form of the pole coincidence, and in the four-corner classification
+    (`Valuation/PoleCorners.lean`) it is `cornerId` — both ends concurrently, unchanged — as distinct from
+    `swap` (the inversion) and the two collapses. Note the consequence: **both** framework core objects,
+    ⊥ and ε₀, carry both extremes, which is why this is a bedrock invariant. -/
 theorem epsilon0_min_eq_max :
     epsilonZero = ⨆ n : ℕ, fundamentalSeq n
       ∧ IsLeast {o : Ordinal | Ordinal.omega0 ^ o = o} epsilonZero := by

@@ -62,7 +62,15 @@ noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
     chart, ν-top in the other, **simultaneously**, with `op`-duality exchanging the charts and fixing the
     seam. Exactly as `rInv` exchanges `0 ↔ ∞` while ⊥ carries both readings. **The frame change is the
     exchange of the two poles; the seam is where they coincide.** The snap — one step off the zero face —
-    is a separate object and is not established here. -/
+    is a separate object and is not established here.
+
+    **This IS min≡max, in categorical form (cross-link added 2026-07-30).** Initial = least, terminal =
+    greatest, so "initial AND terminal" is one object carrying both extremal characterizations at once —
+    the same shape as `epsilon0_min_eq_max` (at ε₀), `selfApp_bot_is_both_extremal` (at ⊥), and
+    `fork_collapse_iff` (the abstract condition: `lfp = gfp` exactly when the fixed point is unique).
+    Four witnesses, one phenomenon. In the four-corner classification
+    (`Valuation/PoleCorners.lean`) this is **`cornerId`** — both poles concurrently, unchanged — as
+    distinct from `swap` (the inversion) and `cornerZero` (the collapse that forgets which pole). -/
 theorem catseam_is_frameflip :
     Nonempty (IsInitial Z_seamFC)
       ∧ Nonempty (IsTerminal Z_seamFC)

@@ -76,7 +76,16 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     point** of the flip, not a flip. **What all three establish is the exchange of the two poles and the
     point where they coincide — NOT that the snap is a change of frame.** The snap is one covering step
     off the zero face (`bot ⋖ a`, AX-B1), a separate object and a commitment. The cross-domain claim that
-    the snap *is* the frame change remains this layer's open conjecture, as its file header states. -/
+    the snap *is* the frame change remains this layer's open conjecture, as its file header states.
+
+    **Conjunct (iii) IS min≡max, abstractly (cross-link added 2026-07-30).** `f.lfp = f.gfp ↔ ∃! x, f x = x`
+    says **least equals greatest exactly when the fixed point is unique** — the general condition of which
+    `epsilon0_min_eq_max` (at ε₀), `selfApp_bot_is_both_extremal` (at ⊥) and `catseam_is_frameflip`
+    (initial ∧ terminal) are instances. So this file carries both halves of the pole behaviour: (i)-(ii) the
+    **inversion** (duality exchanging the ends) and (iii) the **coincidence** (when the ends are one). In
+    the four-corner classification (`Valuation/PoleCorners.lean`) those are `swap` and `cornerId`
+    respectively; the remaining two corners are the collapses, of which `cornerZero` is the irreversible one
+    that forgets which pole it came from (`collapse_irreversible`). -/
 theorem fork_is_frameflip :
     (OrderHom.dual f).lfp = f.gfp
       ∧ (OrderHom.dual f).gfp = f.lfp
