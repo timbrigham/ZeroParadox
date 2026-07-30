@@ -161,6 +161,39 @@ where an existing class carries a commitment, add a **companion explicit-hypothe
 refactoring the class. First candidates: `KleeneStructure`'s identification, and **AX-B1**, which is the
 framework's one substantive modelling commitment and currently the least visible of the three (encoding 1).
 
+## The recurring defect is UNSTATED ADJACENCY — the fix is a pointer, not a theorem
+
+**This corpus's characteristic failure is not wrong theorems. It is true theorems whose reach nobody
+recorded.** Measured four times on 2026-07-29/30, each time the honest finding was *"the mathematics is
+already here, and nothing says so"*:
+
+* **Oscillation.** Asked whether the framework excludes liar-type flip-flop. `wf_no_cycle` already proved
+  it — its own docstring says *"this also rules out 2-cycles"* — and grepping the Lean for "oscillation"
+  returned nothing. Fix: instantiate at the two ends + state the fence (the floor is non-well-founded, so
+  the exclusion holds ABOVE it and fails AT it).
+* **min≡max.** Four witnesses of one phenomenon (`epsilon0_min_eq_max`, `selfApp_bot_is_both_extremal`,
+  `catseam_is_frameflip`, and the general condition `fork_collapse_iff`), never cross-linked, so the
+  "both poles" and "both extremes" readings drifted as if separate.
+* **Turing machines.** `Occurrence.lean`'s results are stated over `σ → Option σ`, which **is** Mathlib's
+  `StateTransition`; `Turing.TM0/TM1/TM2.step` all have that exact type and Mathlib's TM development is
+  *built on* it. So those results already cover every Mathlib Turing machine — and the corpus had never
+  mentioned `Turing.*` once.
+* **The descending-chain form.** The INFINITE-pole reading of the floor sat in a Mathlib biconditional
+  (`wellFounded_iff_isEmpty_descending_chain`) that this family had never cited.
+
+**The rule.** When a question arises and the answer turns out to be already proved, **the deliverable is a
+POINTER, not a new declaration.** Adding an elementary instantiation is the failure mode the prior-art gate
+keeps catching (see Trigger 0). Ask in order: is it proved here already? is it in Mathlib? is the gap only
+that nobody wrote it where the question gets asked? If the last — write it *there*, at the site the reader
+lands on, not five sections away.
+
+**Two corollaries worth their own line.** (1) **Generality is why the results are weak, and also why they
+are free** — a theorem over `σ → Option σ` is elementary *because* it covers everything, and covering
+everything is the payoff; state both halves. (2) **Adjacency is not identity.** "Turing machines are
+witnesses" is licensed; "the bottom is a Turing machine" is a cross-carrier identity and the same type
+boundary as everywhere else. The `QuineHost` precedent is the model: never "we commit to AFA", always "here
+are the requirements, and AFA is a witness meeting them."
+
 ## Determinism is the SINGLE recurring cost — name it, don't rediscover it
 
 **Every "the bottom cannot move" result in this corpus is powered by SINGLE-VALUEDNESS, not by

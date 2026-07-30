@@ -71,6 +71,43 @@ with `Occurs` is a modelling choice, stated as such.
 
 namespace ZeroParadox
 
+/-! ## § 0. ADJACENCY — what this file's carrier already is, and what it therefore already covers
+
+**Read before adding anything to this file.** Everything below is stated over `f : σ → Option σ`. That is
+not an ad-hoc encoding: it is **exactly Mathlib's `StateTransition`**, whose module header reads *"state
+transition systems defined by a function `σ → Option σ`, where `σ` is the type of states."* This file
+already imports it and uses `StateTransition.Reaches` / `StateTransition.eval`.
+
+**Consequence 1 — Turing machines are covered, for free, as witnesses rather than analogies.** Mathlib's
+Turing machine step functions have precisely this type:
+`Turing.TM0.step (M : Machine Γ Λ) : Cfg Γ Λ → Option (Cfg Γ Λ)`
+(`Mathlib/Computability/TuringMachine/PostTuringMachine.lean:159`), likewise `TM1.step` (`:349`) and the
+`TM2` family. Moreover Mathlib's own TM development is **built on** `StateTransition` — `TuringMachine/
+Computable.lean:38` opens it and uses `EvalsTo` / `EvalsToInTime`; `TuringMachine/Config.lean:566,576`
+applies `StateTransition.eval step` to a TM step function directly. So the instance relation is Mathlib's
+architecture, not something this framework needs to establish.
+
+Therefore `machine_trichotomy`, `loop_is_a_trap`, `machine_snap_impossible`,
+`deterministic_has_no_fanout` and the § IV inversion **already hold of every Mathlib Turing machine**, with
+no additional work and no modelling choice. **Do NOT build an "a Turing machine is an instance of this
+shape" theorem — it would restate Mathlib's own construction.**
+
+**What that does and does not license.** It licenses: *the framework's occurrence results hold for anything
+with a single-valued step function, of which Turing machines are one witness among many.* It does **not**
+license "the framework's bottom is a Turing machine" — that is an identity across carriers, and the same
+type boundary as everywhere else. The requirements are Mathlib's (`StateTransition`), the witness is
+Mathlib's (`Turing.TM0`); what is this file's own is the **reading** of the trichotomy, nothing more.
+Compare `Settheory/QuineHost.lean`: the honest form was never "we commit to AFA" but "here are the
+requirements, and AFA is a witness meeting them."
+
+**Consequence 2 — `StateTransition`'s API is under-used here; check it before hand-rolling.** Beyond
+`Reaches` and `eval` it already carries `Reaches₁`, a full `Reaches₀` family (`trans`, `refl`, `single`,
+`head`, `tail`, `tail'`), `reaches₁_eq`, `reaches_total`, `mem_eval`, `evalInduction`, and
+**`eval_maximal₁`** — *a halted state reaches nothing further* — which is adjacent to `loop_is_a_trap` and
+is nowhere cited in this corpus. Several results in this file were already found by the prior-art gate to
+duplicate Lean-core or Mathlib lemmas (see the header's prior-art block); that gate looked at `Option` and
+`PartrecCode`, **not** at `StateTransition`'s own API. Assume more overlap is there. -/
+
 /-! ## § I. A machine is never "not yet started" -/
 
 variable {σ : Type*} (f : σ → Option σ)
