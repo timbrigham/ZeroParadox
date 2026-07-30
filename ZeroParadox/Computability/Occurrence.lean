@@ -104,7 +104,24 @@ theorem no_unstarted_state (s : σ) : ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some
 def LoopsInPlace (s : σ) : Prop := f s = some s
 
 /-- The exhaustive cases at a single configuration: halted, looping in place, or stepping
-    onward. The middle case is not a third route — it is the self-referential object itself. -/
+    onward. The middle case is not a third route — it is the self-referential object itself.
+
+    **Read this before asking how the first two cases differ — it is the question this file gets asked
+    most, and the answer lives five sections away in § VI.**
+
+    All three are distinct **as states**: `f s = none`, `f s = some s`, and `f s = some s'` with
+    `s' ≠ s` are different facts under any dynamics. But under a **FUNCTION** the first two share a
+    **FATE**: `loop_is_a_trap` and `eval_of_halted` each give a *singleton* reachable set, so halted
+    and self-looping both go nowhere and are terminal alike. Only under a **RELATION** can the
+    self-loop retain the possibility of moving — `nondeterministic_escapes_the_trap` exhibits a
+    relation where `s` loops **and** reaches something else.
+
+    So "could this still move?" is a **modal** question, and this framework encodes that modality as
+    the **function-vs-relation choice**, nothing else. That is why § III's NO-GO is powered by
+    determinism rather than by the self-loop (§ VI states it: *"the obstruction of § III is the absence
+    of fan-out, not the presence of a fixed point"*), and why the trichotomy is genuinely three-valued
+    **only** in the non-deterministic setting — make the step single-valued and the third case is a
+    relabelled trap. -/
 theorem machine_trichotomy (s : σ) :
     f s = none ∨ LoopsInPlace f s ∨ ∃ s', f s = some s' ∧ s' ≠ s := by
   unfold LoopsInPlace
