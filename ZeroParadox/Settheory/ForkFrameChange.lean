@@ -67,7 +67,16 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     frame-change swaps the fork's two closures `lfp ↔ gfp`, and (iii) the fork collapses to a single
     contact point iff the self-map has a unique fixed point (the diagonal fixed point) — `fork_collapse_iff`.
     The domain-independent shape realized concretely by the valuation (`snap_is_frameflip`) and category
-    (`catseam_is_frameflip`) frame-flips. Choice-free. -/
+    (`catseam_is_frameflip`) frame-flips. Choice-free.
+
+    **Scope note (2026-07-30).** Of the three `*_is_frameflip` handles this is the only one whose name
+    matches its statement: duality genuinely does exchange the fork's two ends. The other two overclaim and
+    carry corrections in their own docstrings — `snap_is_frameflip` proves the tower limit's two
+    chart-readings (**no snap appears in it**), and `catseam_is_frameflip` proves the seam is a **fixed
+    point** of the flip, not a flip. **What all three establish is the exchange of the two poles and the
+    point where they coincide — NOT that the snap is a change of frame.** The snap is one covering step
+    off the zero face (`bot ⋖ a`, AX-B1), a separate object and a commitment. The cross-domain claim that
+    the snap *is* the frame change remains this layer's open conjecture, as its file header states. -/
 theorem fork_is_frameflip :
     (OrderHom.dual f).lfp = f.gfp
       ∧ (OrderHom.dual f).gfp = f.lfp

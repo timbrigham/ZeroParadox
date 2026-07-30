@@ -48,11 +48,21 @@ open CategoryTheory CategoryTheory.Limits
 /-- The zero-object seam `Z = fD_functor.obj 0` (the Hilbert bottom). -/
 noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
 
-/-- **The frame-change in the category frame.** The seam is the μ-bottom (initial, chart A) and the ν-top
-    (terminal, chart B); the `op`-duality frame-change swaps the two charts — carrying the seam's
-    initial-ness to a terminal-ness of `op Z` and its terminal-ness to an initial-ness of `op Z`. So the
-    seam is `op`-self-dual: the fixed point of the frame-change that swaps initial ↔ terminal, exactly as
-    `rInv` swaps `0 ↔ ∞`. -/
+/-- **The seam is a FIXED POINT of the frame-change (category frame).**
+
+    ⚠ **NAME CORRECTION (Tim, 2026-07-30). The handle `catseam_is_frameflip` is retained per the CC-2 /
+    MC-1 convention — do not rename — but it OVERCLAIMS: the seam is not a frame flip, it is what the
+    frame flip FIXES.** The docstring already said so ("the fixed point of the frame-change"); the name
+    did not. No snap appears in this statement either.
+
+    `Statement:` the seam is **initial AND terminal** (a zero object), and so is its opposite — four
+    `Nonempty` witnesses. That is `op`-self-duality.
+
+    `Reading:` this is "the bottom is **concurrently both poles**" in categorical dress — μ-bottom in one
+    chart, ν-top in the other, **simultaneously**, with `op`-duality exchanging the charts and fixing the
+    seam. Exactly as `rInv` exchanges `0 ↔ ∞` while ⊥ carries both readings. **The frame change is the
+    exchange of the two poles; the seam is where they coincide.** The snap — one step off the zero face —
+    is a separate object and is not established here. -/
 theorem catseam_is_frameflip :
     Nonempty (IsInitial Z_seamFC)
       ∧ Nonempty (IsTerminal Z_seamFC)
