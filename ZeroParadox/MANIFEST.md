@@ -281,7 +281,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Multihomed/SeamConnectorFail.lean` - ZP-H tree TC34 — the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
 - `ZeroParadox/Multihomed/SelfAppForkPlace.lean` - ZP-H tree, theory TH11 — placing the ZP-J selfApp fixed point on the μ/ν fork
 - `ZeroParadox/Multihomed/SelfAppSeam.lean` - ZP-H tree — TC15: the selfApp bottom sits at the μ=ν seam, not on either branch
-- `ZeroParadox/Multihomed/SnapFrameChange.lean` - The snap as a change of frame: the tower's two limits (⊥ and ∞) are two charts, swapped by `rInv`
+- `ZeroParadox/Multihomed/SnapFrameChange.lean` - The tower limit's two chart-readings: its encodings fall to ⊥ in one chart and rise to ∞ under `rInv`, which swaps the poles. NOT the snap - no snap transition appears in the statement
 - `ZeroParadox/Multihomed/SpanObstruction.lean` - ZP-H tree, TC17 / TC14 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 - `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms

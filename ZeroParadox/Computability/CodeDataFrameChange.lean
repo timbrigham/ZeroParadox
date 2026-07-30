@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the computability-frame realization of "the snap is the change of frame" — the code↔data (Gödel) involution swaps a configuration's program-role and data-role (both Gödel-numbered as ℕ); its fixed locus is the self-application diagonal (code = data), where the Kleene/Roger quine lives (the self-reproducing fixed point = ⊥). The computability analog of RiemannSphere's rInv (0↔∞) and Category's op (initial↔terminal). Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the computability-frame realization of the POLE EXCHANGE (NOT of the snap) — the code↔data (Gödel) involution swaps a configuration's program-role and data-role (both Gödel-numbered as ℕ); its fixed locus is the self-application diagonal (code = data), where the Kleene/Roger quine lives (the self-reproducing fixed point = ⊥). The computability analog of RiemannSphere's rInv (0↔∞) and Category's op (initial↔terminal). Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Computability.Kleene
 import Mathlib.Tactic
@@ -37,7 +37,9 @@ The Kleene/Roger quine lives on that fixed locus. Every code's self-application 
 transformation `f`, a fixed-point code `c` with `eval (f c) = eval c` whose self-configuration sits on
 the diagonal. `codedata_is_frameflip` bundles the three faces: the frame-change is an involution, its
 fixed locus is exactly the self-application diagonal, and the self-reproducing quine lies on it — the
-computability realization of "the snap is the change of frame."
+computability realization of the POLE EXCHANGE. (NOT of the snap: the frame-change is the code/data
+involution, and no snap transition appears in these statements. See ZP-Q v1.4 and
+`Multihomed/SnapFrameChange.lean`'s declaration docstring.)
 
 Content: a bundling of Mathlib's `Prod.swap` involution with Roger's fixed-point theorem and the
 `quine_period_is_goedel` / `IsComputationalQuine` infrastructure of ZP-K; no mathematical novelty. The

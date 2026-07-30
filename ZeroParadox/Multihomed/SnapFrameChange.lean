@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The snap as a change of frame: the tower's two limits (⊥ and ∞) are two charts, swapped by `rInv`
+# The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv` (NOT the snap)
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
 are indexed in ZeroParadox/MANIFEST.md.
