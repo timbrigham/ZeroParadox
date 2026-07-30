@@ -161,6 +161,58 @@ where an existing class carries a commitment, add a **companion explicit-hypothe
 refactoring the class. First candidates: `KleeneStructure`'s identification, and **AX-B1**, which is the
 framework's one substantive modelling commitment and currently the least visible of the three (encoding 1).
 
+## Point-of-view claims: declare the KIND and the STATUS. Gate-enforced.
+
+**"Point of view" / "chart" / "frame" was doing FIVE different jobs with one word.** The cost, measured
+2026-07-30: a full day of gate rounds, two bedrock findings, and a correction that itself over-corrected
+into *denying* the framework's own thesis. The sequence is worth keeping because both halves are traps:
+
+1. `snap_is_frameflip` was cited as proving the snap **is** a change of frame. Its statement contains no
+   snap. Witness-vs-statement defect.
+2. The fix then wrote *"the POLE EXCHANGE (**NOT** of the snap)"* into a dozen sites — which **denies** a
+   reading that is well-motivated and is ZP-Q's stated conjecture. Over-correction, and the same class as
+   `feedback_triage_review_vs_grounded_figures`: a review pass gutting a grounded claim.
+
+**Neither is possible if every POV claim declares WHICH KIND it is and WHETHER IT IS PROVED.**
+
+**THE FIVE KINDS** — genuinely different phenomena, previously all called "chart":
+
+| KIND | means | example witness |
+|---|---|---|
+| **COINCIDENCE** | both readings hold of ONE object **simultaneously** | `selfloop_is_zero_and_infinity`; `epsilon0_min_eq_max`; `catseam_is_frameflip` |
+| **INVERSION** | a map **exchanges** the readings; always an involution | `rInv_swaps`, `swap_involutive`, `flipPoles_involutive` |
+| **DRIFT** | two measures run **opposite** along one sequence | `pole_inversion` (element descends, complexity ascends) |
+| **CARRIER** | the claim's **truth value** depends which carrier you are in | snap available in ℚ₂, impossible in ℝ — both completions of ℚ (Ostrowski) |
+| **INVARIANT** | the quantity **does not transform**; flipping the chart gains nothing | measure-zero-ness, cardinality |
+
+**THE STATUS — folded into the EXISTING `Statement:` / `Reading:` labels. This adds no new label:**
+- **`Statement:` + KIND** — the theorem proves it. Name the witness.
+- **`Reading:` + KIND** — the framework reads X as an instance of that kind. Conjectural.
+
+**There is deliberately NO slot for denying a reading.** That is what makes trap 2 unwriteable. If a
+theorem does not establish an identification, say `Reading:` and mark it conjectural — never "NOT the snap".
+
+**Enforcement is MECHANICAL, because this is the FOURTH convention of this shape and the previous three
+all leak.** (`vocabulary_reference.md`: the bare-"bottom" rule, "iterative bottoms", standard-math-first.)
+`feedback_jargon_blindspot` records why: Claude is embedded in the project's language and structurally
+cannot self-detect vocabulary drift, so discipline-level rules fail here by construction.
+- `python .claude-local/check_pov.py` — **WARNS**, wired into `.git/hooks/pre-commit` (staged copy at
+  `.claude-local/proposed_pre_commit_hook.sh`; hooks are not version-controlled, re-install per clone).
+  It never blocks a commit — the stub-first protocol commits incomplete work on purpose, and a blocking
+  commit gate with false positives trains the `--no-verify` reflex that would cost the push gate too.
+- `python .claude-local/check_pov.py --block` — **BLOCKS**, wired into `pre-push` § 3b. Validated
+  2026-07-30 end-to-end: injecting a real POV overclaim made `git push --dry-run` exit 1 on the POV
+  check; removing it passed.
+- **Baselined.** The corpus already carries **90** untagged sites (measured). Demanding a tag on all of
+  them is a migration, not a gate, and a gate that blocks everything on day one gets muted. So
+  `.claude-local/pov_baseline.txt` grandfathers them and the gate blocks on **NEW** sites only —
+  as-touched rollout, same as the file-path and CC-2 conventions. **Shrink the baseline as files are
+  touched; never grow it deliberately.**
+
+**Do not flag the intentional collisions.** `project_notation_notes`: the ⊥ / ε₀ / P₀ overloads are
+deliberate. The checker allowlists them, and anything that starts crying wolf must be narrowed, not
+tolerated — a muted gate is worse than none.
+
 ## The recurring defect is UNSTATED ADJACENCY — the fix is a pointer, not a theorem
 
 **This corpus's characteristic failure is not wrong theorems. It is true theorems whose reach nobody
