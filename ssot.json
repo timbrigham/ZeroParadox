@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1529,
+        "declarations": 1532,
         "files": 136
       },
       "entries": [
@@ -21122,6 +21122,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5db10ff2-8066-4f85-b7ed-fa9f0ad368da",
+          "new": {
+            "file": "ZeroParadox/Valuation/BottomInvariant.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitMul_preserving_dirac",
+            "short": "unitMul_preserving_dirac"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "BottomInvariant SS VII: the both-at-once regime. A p-adic unit multiplier fixes the floor (concentrated invariant, machine-checked) and preserves every sphere (precondition of the spread invariant, Haar half NOT formalized). Closes the file's own gap that its two invariant characters lived on two different maps. Instantiation, not new mathematics.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5de5aaa2-b002-4de8-87da-2d784792f3c9",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -27375,6 +27413,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "7d0323d3-e3b2-49a0-870e-dd4e0f437afb",
+          "new": {
+            "file": "ZeroParadox/Valuation/BottomInvariant.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitMul_norm_const",
+            "short": "unitMul_norm_const"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "BottomInvariant SS VII: the both-at-once regime. A p-adic unit multiplier fixes the floor (concentrated invariant, machine-checked) and preserves every sphere (precondition of the spread invariant, Haar half NOT formalized). Closes the file's own gap that its two invariant characters lived on two different maps. Instantiation, not new mathematics.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7d7eedda-a77b-4be8-a066-8a6b3711c013",
           "new": {
@@ -33280,6 +33356,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "98f6fcc7-e56c-4fcb-baf6-d420b1cfeb83",
+          "new": {
+            "file": "ZeroParadox/Valuation/BottomInvariant.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.unitMul_fixes_floor",
+            "short": "unitMul_fixes_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "BottomInvariant SS VII: the both-at-once regime. A p-adic unit multiplier fixes the floor (concentrated invariant, machine-checked) and preserves every sphere (precondition of the spread invariant, Haar half NOT formalized). Closes the file's own gap that its two invariant characters lived on two different maps. Instantiation, not new mathematics.",
           "verify": {
             "axioms": null,
             "sorry_free": true

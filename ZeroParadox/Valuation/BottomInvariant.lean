@@ -519,9 +519,71 @@ theorem no_mp_attractor_to_markov :
 
 end ZeroParadox
 
+/-! ## § VII — The BOTH-AT-ONCE regime: a unit multiplier carries both characters
+
+**Nothing here is new mathematics.** That multiplication by a unit fixes the origin and preserves norms is
+elementary; the content is the **identification**, and it closes a gap this file's own § I leaves open.
+
+§ II and § III exhibit the *spread* invariant (odometer, Haar) and the *concentrated* invariant (doubling
+map, `δ₀`) — **on two different maps**. So the file shows the two characters are compatible with one
+*structure*, never that one *dynamic* carries both. This section supplies a dynamic that does, and it is
+already in the corpus: multiplication by a 2-adic **unit** (`Valuation/ContractionRate.lean`,
+`unit_orbit_norm_const`, witnessed by `three_is_unit : ‖(3 : Q₂)‖ = 1`).
+
+**The three regimes, decided by the valuation of the multiplier:**
+| multiplier | orbit behaviour | invariant character |
+|---|---|---|
+| ideal, `‖c‖ < 1` (e.g. `×2` — the framework's own `selfApp` on `ℚ₂`, `q2_unique_fp`) | contracts to `0` | **concentrated only** |
+| **unit, `‖u‖ = 1` (e.g. `×3`)** | norm constant on every orbit | **BOTH** |
+| odometer `x ↦ 1 + x` | no fixed point, orbits dense | **spread only** |
+
+**Why the unit row carries both.** It **fixes the floor** (`unitMul_fixes_floor`), so `δ₀` is invariant —
+the concentrated character, proved below. And it **preserves every sphere** (`unitMul_norm_const`), so it is
+a norm-preserving additive bijection of `ℤ_p` and therefore preserves the Haar probability measure — the
+spread character.
+
+**⚠ HONEST FENCE — the Haar half is NOT formalized here.** That an automorphism of a compact group
+preserves its Haar probability measure is standard, but this file does not prove it for `unitMul`; only the
+`δ₀` half is machine-checked below. Do not cite this section for the Haar claim.
+
+**And note what sphere-preservation costs:** the spheres are invariant sets of intermediate measure, so
+`unitMul` is **not ergodic** for Haar — it admits *many* invariant measures. That is the failure of unique
+ergodicity, which § I flags as the strong statement it cannot prove (Mathlib has no unique-ergodicity API).
+This section only *locates* a dynamic where the failure is visible; it proves neither the failure nor the
+uniqueness. Reading: `.claude-local/notes/paradox_as_simultaneous_inversion_2026-07-30.md`. -/
+
+section BothAtOnce
+variable {p : ℕ} [Fact p.Prime]
+
+/-- Multiplication by a `p`-adic unit **fixes the floor**, so the concentrated invariant `δ₀` is available
+    to it. (True of any multiplier; stated here because it is one half of the both-at-once claim.) -/
+theorem unitMul_fixes_floor (u : ℤ_[p]) : u * 0 = 0 := mul_zero u
+
+/-- Multiplication by a **unit preserves every sphere**: the norm is unchanged. This is
+    `ContractionRate.unit_orbit_norm_const` at one step, on `ℤ_[p]`. It is what makes the map
+    Haar-preserving (not formalized here) and simultaneously **non-ergodic** — each sphere is an
+    invariant set. -/
+theorem unitMul_norm_const {u : ℤ_[p]} (hu : ‖u‖ = 1) (x : ℤ_[p]) : ‖u * x‖ = ‖x‖ := by
+  rw [norm_mul, hu, one_mul]
+
+/-- **The concentrated character, machine-checked.** Multiplication by `u` preserves the Dirac mass at the
+    floor, because it fixes the floor. Together with `unitMul_norm_const` (the spread character's
+    precondition) this is the both-at-once regime — one dynamic, two invariant characters. -/
+theorem unitMul_preserving_dirac (u : ℤ_[p]) :
+    MeasureTheory.MeasurePreserving (fun x : ℤ_[p] => u * x)
+      (MeasureTheory.Measure.dirac 0) (MeasureTheory.Measure.dirac 0) := by
+  have hm : Measurable (fun x : ℤ_[p] => u * x) := by fun_prop
+  refine ⟨hm, ?_⟩
+  simpa using MeasureTheory.Measure.map_dirac hm 0
+
+end BothAtOnce
+
 /-! ## Axiom Purity Check -/
 section PurityCheck
 open ZeroParadox
+#print axioms unitMul_fixes_floor
+#print axioms unitMul_norm_const
+#print axioms unitMul_preserving_dirac
 #print axioms odometer_not_attracting
 #print axioms odometerBIM
 #print axioms attractorBIM
