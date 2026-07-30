@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1526,
+        "declarations": 1529,
         "files": 136
       },
       "entries": [
@@ -3388,6 +3388,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0b65682e-875d-43d2-b482-06ac0737288a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/Boundary.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ascent_no_oscillation",
+            "short": "ascent_no_oscillation"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Boundary.lean SS III-b: oscillation (2-cycle) excluded on the ordinal ascent, present at the floor. Instantiates wf_no_cycle at the two ends of the boundary; no new mathematics, the content is the fence.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30820,6 +30859,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8fb53c65-e51e-4991-9e4a-0ff7d9cd7674",
+          "new": {
+            "file": "ZeroParadox/Multihomed/Boundary.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.floor_has_cycle",
+            "short": "floor_has_cycle"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Boundary.lean SS III-b: oscillation (2-cycle) excluded on the ordinal ascent, present at the floor. Instantiates wf_no_cycle at the two ends of the boundary; no new mathematics, the content is the fence.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8fe57b41-dc48-4c68-8401-c1216cf925c1",
           "new": {
@@ -39725,6 +39802,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b8639e61-a459-45fd-8999-0d568253db5a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/Boundary.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.oscillation_split",
+            "short": "oscillation_split"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "order"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Boundary.lean SS III-b: oscillation (2-cycle) excluded on the ordinal ascent, present at the floor. Instantiates wf_no_cycle at the two ends of the boundary; no new mathematics, the content is the fence.",
           "verify": {
             "axioms": null,
             "sorry_free": true

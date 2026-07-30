@@ -149,6 +149,61 @@ theorem snap_crosses_boundary :
     ¬ WellFounded (floorRel (L := L)) ∧ WellFounded ((· < ·) : Ordinal → Ordinal → Prop) :=
   ⟨floor_not_wellFounded, ascent_wellFounded⟩
 
+/-! ## § III-b. Oscillation — excluded on the ascent, MANDATORY at the floor
+
+**This section states no new mathematics.** It instantiates `Settheory/Wall.lean`'s `wf_no_cycle`
+(*"a well-founded relation has no cycle of ANY length … this also rules out 2-cycles"*) at the two ends of
+§ III's boundary, and records the fence, which is the only non-obvious part. A **2-cycle `x → y → x` is an
+oscillation**, so cycle-freeness is exactly the exclusion of liar-type flip-flop.
+
+**The fence, and it is load-bearing.** `wf_no_cycle` needs **well-foundedness**, and the floor provably
+does not have it (`floor_not_wellFounded`). So the exclusion holds on the ascent and **fails at the floor,
+where a cycle is not merely permitted but present**: ⊥'s self-loop *is* a 1-cycle. So "the snap does not
+oscillate" is true **above** the floor and false **at** it. Do not state it unqualified.
+
+That is the μ/ν split once more: cycles excluded where the order is well-founded, cycles mandatory where it
+is not. Prior art for the direct 2-cycle form is Mathlib's **`WellFounded.asymmetric`**
+(`Mathlib/Order/RelClasses.lean:225`, `r a b → ¬ r b a`, with `asymmetric₃` at `:229`) — strictly stronger
+than the self-loop form this corpus usually reaches for, and previously uncited here.
+
+**Purity, measured 2026-07-30 (not predicted).** `floor_has_cycle` is **axiom-free** — the cycle at the
+floor is exhibited by `fixed_bot` and needs nothing. `ascent_no_oscillation` and `oscillation_split` carry
+`[propext, Classical.choice, Quot.sound]`, inherited from Mathlib's `Ordinal`, not from anything done here.
+Note the direction that asymmetry runs: **exhibiting the floor's cycle is free; excluding cycles on the
+ascent costs the ordinal library.** -/
+
+/-- **No oscillation on the ascent.** No ordinal is reachable from itself by one-or-more `<`-steps, so the
+    ε₀ ascent admits no cycle of any length — in particular no 2-cycle, i.e. no flip-flop between two
+    ordinals. `Statement:` cycle-freeness of `<` on `Ordinal`, which is `wf_no_cycle` at
+    `ascent_wellFounded`; proved directly here since `<` on ordinals is already transitive. -/
+theorem ascent_no_oscillation (o : Ordinal) :
+    ¬ Relation.TransGen ((· < ·) : Ordinal → Ordinal → Prop) o o := by
+  intro h
+  have key : ∀ a b : Ordinal, Relation.TransGen (· < ·) a b → a < b := by
+    intro a b hab
+    induction hab with
+    | single hlt => exact hlt
+    | tail _ hlt ih => exact lt_trans ih hlt
+  exact lt_irrefl o (key o o h)
+
+/-- **A cycle at the floor — present, not merely permitted.** ⊥ is a fixed point of `selfApp`
+    (`fixed_bot`), so `floorRel` relates ⊥ to itself and ⊥ lies on a 1-cycle. This is why
+    `ascent_no_oscillation` cannot be extended downward: the hypothesis it needs is exactly what
+    `floor_not_wellFounded` denies. -/
+theorem floor_has_cycle :
+    Relation.TransGen (floorRel (L := L)) ZPSemilattice.bot ZPSemilattice.bot :=
+  Relation.TransGen.single AbstractSelfApp.fixed_bot
+
+/-- **The oscillation split, in one statement.** Above the floor no cycle exists; at the floor one does.
+    `Statement:` a conjunction of the two facts above, at two different relations on two different carriers.
+    `Reading:` the framework's "the snap fires once and does not flip back" is the FIRST conjunct only — a
+    statement about the ascent. The second conjunct is the floor's self-reference, and it is a cycle by
+    construction. No cross-carrier identity is asserted; `Ordinal` and `L` are distinct types. -/
+theorem oscillation_split (o : Ordinal) :
+    ¬ Relation.TransGen ((· < ·) : Ordinal → Ordinal → Prop) o o
+      ∧ Relation.TransGen (floorRel (L := L)) ZPSemilattice.bot ZPSemilattice.bot :=
+  ⟨ascent_no_oscillation o, floor_has_cycle⟩
+
 /-! ## § IV. Rung B — the snap as ONE crossing on a single carrier
 
     Glue the self-looping floor and the ordinal ascent into one carrier `Phase`, and show the
@@ -209,6 +264,9 @@ open ZeroParadox
 #print axioms bot_not_acc
 #print axioms floor_not_wellFounded_via_descent
 #print axioms ascent_wellFounded
+#print axioms ascent_no_oscillation
+#print axioms floor_has_cycle
+#print axioms oscillation_split
 #print axioms phase_not_wellFounded
 #print axioms phase_acc_of_up
 #print axioms snap_crossing
