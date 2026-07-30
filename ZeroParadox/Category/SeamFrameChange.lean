@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the category-frame realization of "the snap is the change of frame" — the zero-object seam is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other, and the op-duality frame-change swaps the two charts (initial ↔ terminal), fixing the seam as an op-self-dual zero object. The categorical analog of RiemannSphere's rInv swapping 0↔∞. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the category-frame realization of the POLE EXCHANGE (NOT of the snap - see the declaration docstring) — the zero-object seam is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other, and the op-duality frame-change swaps the two charts (initial ↔ terminal), fixing the seam as an op-self-dual zero object. The categorical analog of RiemannSphere's rInv swapping 0↔∞. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.State.HilbFunctor
 import ZeroParadox.Category.TreeSeam
 import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
@@ -28,8 +28,8 @@ which swaps the poles **initial ↔ terminal**. The zero-object seam `Z = fD_fun
 (`hilbert_bottom_isZero`) is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other;
 this file bundles that P1 coincidence with the P2 frame-change: `op` carries the seam's initial-ness to
 its op's terminal-ness and its terminal-ness to its op's initial-ness. The seam is the fixed point of
-the frame-change — an `op`-self-dual zero object — the category-frame realization of "the snap is the
-change of frame."
+the frame-change — an `op`-self-dual zero object — the category-frame realization of the POLE EXCHANGE.
+(NOT of the snap: no snap appears in `catseam_is_frameflip`; see its docstring.)
 
 `catseam_is_frameflip`: the seam is (i) initial and (ii) terminal in `ModuleCat ℂ` (the two charts), and
 under the `op` frame-change it is (iii) terminal and (iv) initial in `(ModuleCat ℂ)ᵒᵖ` (the swap). Off
@@ -64,7 +64,11 @@ noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
     exchange of the two poles; the seam is where they coincide.** The snap — one step off the zero face —
     is a separate object and is not established here.
 
-    **This IS min≡max, in categorical form (cross-link added 2026-07-30).** Initial = least, terminal =
+    **⚠ CORRECTED 2026-07-30 (adversary gate, bedrock).** An earlier revision of this cross-link called `epsilon0_min_eq_max` an instance of `fork_collapse_iff`. **It is not.** `fork_collapse_iff` needs a UNIQUE fixed point, and `α ↦ ω^α` has a proper class of them — `ε₁, ε₂, …` all satisfy `ω ^ ε_ o = ε_ o` (Mathlib `omega0_opow_epsilon`) — so `lfp ≠ gfp` there and nothing collapses. There are TWO related coincidences, not one phenomenon with four witnesses:
+    * **lfp = gfp** (a genuine `fork_collapse_iff` instance, needing uniqueness): `selfApp_bot_is_both_extremal`, whose fixed-point set is exactly `{⊥}` (`selfMem_eq_singleton_bot`), and the categorical zero object (`catseam_is_frameflip`, initial ∧ terminal).
+    * **lfp = ⨆ of the approximating tower** (the Kleene shape, no uniqueness required): `epsilon0_min_eq_max`, which is literally what it states — ε₀ is the least fixed point AND the supremum of the ω-tower.
+
+    **This IS a genuine lfp = gfp instance, in categorical form.** Initial = least, terminal =
     greatest, so "initial AND terminal" is one object carrying both extremal characterizations at once —
     the same shape as `epsilon0_min_eq_max` (at ε₀), `selfApp_bot_is_both_extremal` (at ⊥), and
     `fork_collapse_iff` (the abstract condition: `lfp = gfp` exactly when the fixed point is unique).

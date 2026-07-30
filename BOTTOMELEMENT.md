@@ -18,7 +18,7 @@ structures (the "walls"). It closes a standing gap: a framework built on ⊥ tha
 
 ---
 
-## The short version: concepts that should not correspond, but do
+## The short version: concepts that should not coincide, but do
 
 One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 

@@ -65,7 +65,7 @@ that stays the commitment (`l_inf`'s docstring).
 between distinct points; `asymmetric₃` for 3-cycles); Mathlib's `WellFounded.irrefl` is **class-valued**
 (`Std.Irrefl`, a class with a *field* — it does NOT "unfold to `¬ r x x`") with instances registered, so
 `irrefl_of`/`asymm_of` fire free and `ZFSet` already carries the instance; and
-**`wellFounded_iff_isEmpty_descending_chain`** (`Order/WellFounded.lean:46`) is a **biconditional** that
+**`wellFounded_iff_isEmpty_descending_chain`** (`Order/WellFounded.lean:51`) is a **biconditional** that
 renders the ν-hosted side as *"the host contains an infinite ℕ-indexed descent"* — **the INFINITE pole the
 Two-Pole rule demands, which the `r x x` form hides.** Adopting it is open work worth doing.
 
@@ -171,9 +171,13 @@ already here, and nothing says so"*:
   it — its own docstring says *"this also rules out 2-cycles"* — and grepping the Lean for "oscillation"
   returned nothing. Fix: instantiate at the two ends + state the fence (the floor is non-well-founded, so
   the exclusion holds ABOVE it and fails AT it).
-* **min≡max.** Four witnesses of one phenomenon (`epsilon0_min_eq_max`, `selfApp_bot_is_both_extremal`,
-  `catseam_is_frameflip`, and the general condition `fork_collapse_iff`), never cross-linked, so the
-  "both poles" and "both extremes" readings drifted as if separate.
+* **min≡max.** Related coincidences, never cross-linked, so the "both poles" and "both extremes" readings
+  drifted as if separate. **Two kinds, do not merge them** (corrected 2026-07-30 after asserting one): 
+  **lfp = gfp**, a genuine `fork_collapse_iff` instance requiring a UNIQUE fixed point —
+  `selfApp_bot_is_both_extremal` (fixed-point set exactly `{⊥}`) and the categorical zero object; versus
+  **lfp = ⨆ of the approximating tower**, the Kleene shape needing no uniqueness — `epsilon0_min_eq_max`.
+  ε₀ is NOT a `fork_collapse_iff` instance: `α ↦ ω^α` has a proper class of fixed points
+  (`omega0_opow_epsilon`), so nothing collapses there.
 * **Turing machines.** `Occurrence.lean`'s results are stated over `σ → Option σ`, which **is** Mathlib's
   `StateTransition`; `Turing.TM0/TM1/TM2.step` all have that exact type and Mathlib's TM development is
   *built on* it. So those results already cover every Mathlib Turing machine — and the corpus had never

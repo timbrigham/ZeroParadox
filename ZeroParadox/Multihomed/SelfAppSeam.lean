@@ -79,7 +79,11 @@ theorem selfApp_bot_is_greatest_fp :
     (greatest f.p.) coincide at this node — exactly the μ=ν seam condition. So the selfApp /
     Quine-atom bottom sits at the seam, not on either branch.
 
-    **The family this belongs to (cross-link added 2026-07-30).** Same shape as `epsilon0_min_eq_max`
+    **⚠ CORRECTED 2026-07-30 (adversary gate, bedrock).** An earlier revision of this cross-link called `epsilon0_min_eq_max` an instance of `fork_collapse_iff`. **It is not.** `fork_collapse_iff` needs a UNIQUE fixed point, and `α ↦ ω^α` has a proper class of them — `ε₁, ε₂, …` all satisfy `ω ^ ε_ o = ε_ o` (Mathlib `omega0_opow_epsilon`) — so `lfp ≠ gfp` there and nothing collapses. There are TWO related coincidences, not one phenomenon with four witnesses:
+    * **lfp = gfp** (a genuine `fork_collapse_iff` instance, needing uniqueness): `selfApp_bot_is_both_extremal`, whose fixed-point set is exactly `{⊥}` (`selfMem_eq_singleton_bot`), and the categorical zero object (`catseam_is_frameflip`, initial ∧ terminal).
+    * **lfp = ⨆ of the approximating tower** (the Kleene shape, no uniqueness required): `epsilon0_min_eq_max`, which is literally what it states — ε₀ is the least fixed point AND the supremum of the ω-tower.
+
+    **The family this belongs to.** Same shape as `epsilon0_min_eq_max`
     (at ε₀), `catseam_is_frameflip` (initial AND terminal, categorically), and the abstract condition
     `fork_collapse_iff` (`lfp = gfp` iff the fixed point is unique). It is also the order-theoretic form of
     **⊥'s two poles**: "both extremes at once" and "both zero and infinity at once" are one phenomenon. In

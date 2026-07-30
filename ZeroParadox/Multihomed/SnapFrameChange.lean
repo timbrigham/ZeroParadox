@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of "the snap is the change of frame" — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to a new bottom ⊥ₙ₊₁ in the encoding chart, while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of the POLE EXCHANGE (NOT of the snap - see the declaration docstring) — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to a new bottom ⊥ₙ₊₁ in the encoding chart, while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Ordinal.P8
 import ZeroParadox.Valuation.RiemannSphere
 import Mathlib.Tactic
@@ -29,7 +29,8 @@ this **encoding chart** the ascent to `ε₀` resolves onto the bottom — the e
 built the inversion `rInv` on the one-point compactification `OnePoint ℚ₂`, a homeomorphism that swaps
 the floor `0` with the point at infinity `∞` (`rInv_swaps`) — the change of frame / chart-transition.
 
-The result is the **valuation-frame realization** of "the snap is the change of frame":
+The result is the **valuation-frame realization of the POLE EXCHANGE** (not of the snap — see the
+declaration docstring below):
 `snap_frameflip_tower_tendsto_infty` — the *same* tower encodings, pushed into `OnePoint ℚ₂` and viewed
 through `rInv`, tend to `∞`. So one sequence, two charts: it falls to the floor `0` in the encoding
 chart and rises to the antipode `∞` in the `rInv` chart, and `rInv` is the

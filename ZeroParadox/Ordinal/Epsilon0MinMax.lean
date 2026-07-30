@@ -62,7 +62,11 @@ theorem epsilon0_eq_nfp_bot :
     `epsilon0_least_fixedpoint` (min, `Epsilon0LeastFP.lean`) — previously an impression spread across
     two files, here one statement.
 
-    **The family this belongs to (cross-link added 2026-07-30).** "One object carrying both extremal
+    **⚠ CORRECTED 2026-07-30 (adversary gate, bedrock).** An earlier revision of this cross-link called `epsilon0_min_eq_max` an instance of `fork_collapse_iff`. **It is not.** `fork_collapse_iff` needs a UNIQUE fixed point, and `α ↦ ω^α` has a proper class of them — `ε₁, ε₂, …` all satisfy `ω ^ ε_ o = ε_ o` (Mathlib `omega0_opow_epsilon`) — so `lfp ≠ gfp` there and nothing collapses. There are TWO related coincidences, not one phenomenon with four witnesses:
+    * **lfp = gfp** (a genuine `fork_collapse_iff` instance, needing uniqueness): `selfApp_bot_is_both_extremal`, whose fixed-point set is exactly `{⊥}` (`selfMem_eq_singleton_bot`), and the categorical zero object (`catseam_is_frameflip`, initial ∧ terminal).
+    * **lfp = ⨆ of the approximating tower** (the Kleene shape, no uniqueness required): `epsilon0_min_eq_max`, which is literally what it states — ε₀ is the least fixed point AND the supremum of the ω-tower.
+
+    **The family this belongs to.** "One object carrying both extremal
     characterizations at once" is a recurring shape, not a curiosity of ε₀. Four witnesses:
     `epsilon0_min_eq_max` (here, at ε₀); `selfApp_bot_is_both_extremal` (`Multihomed/SelfAppSeam.lean`,
     at ⊥ — least AND greatest fixed point of `selfApp`); `catseam_is_frameflip`

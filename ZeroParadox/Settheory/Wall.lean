@@ -76,8 +76,12 @@ Foundation," the in-kernel refutation of the literal Quine atom.
     The **pointwise** form is `not_acc_iff_exists_descending_chain` (`:34`) —
     `¬ Acc r x ↔ ∃ f, f 0 = x ∧ ∀ n, r (f (n+1)) (f n)` — which is the one that locates the descent AT a
     given point. ⚠ Its *extract-a-chain* direction (`:36-38`) builds the sequence with `.choose_spec` and
-    so carries `Classical.choice`; supply an explicit witness and use only the `mpr` direction to stay
-    choice-free. (Line numbers verified at source 2026-07-29; an earlier revision of this bullet cited
+    so carries `Classical.choice`. **⚠ The natural inference — "supply the witness yourself and use only
+    the other direction to stay choice-free" — is FALSE, and was MEASURED false**: `#print axioms`
+    follows the STATEMENT, so citing the biconditional at all pulls in the choice used by the direction
+    you did not take. See `Multihomed/Boundary.lean` § I-b's purity block, where the one-line `mpr`
+    version measured `[propext, Classical.choice, Quot.sound]` and only a HAND proof came back
+    axiom-free. (Line numbers verified at source 2026-07-29; an earlier revision of this bullet cited
     `:46`, which is a line inside `acc_iff_isEmpty_descending_chain`'s proof, not the lemma.)
 
 ## The wall as a failure-mode taxonomy (built one condition-set at a time)

@@ -78,14 +78,19 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     off the zero face (`bot ⋖ a`, AX-B1), a separate object and a commitment. The cross-domain claim that
     the snap *is* the frame change remains this layer's open conjecture, as its file header states.
 
-    **Conjunct (iii) IS min≡max, abstractly (cross-link added 2026-07-30).** `f.lfp = f.gfp ↔ ∃! x, f x = x`
+    **⚠ CORRECTED 2026-07-30 (adversary gate, bedrock).** An earlier revision of this cross-link called `epsilon0_min_eq_max` an instance of `fork_collapse_iff`. **It is not.** `fork_collapse_iff` needs a UNIQUE fixed point, and `α ↦ ω^α` has a proper class of them — `ε₁, ε₂, …` all satisfy `ω ^ ε_ o = ε_ o` (Mathlib `omega0_opow_epsilon`) — so `lfp ≠ gfp` there and nothing collapses. There are TWO related coincidences, not one phenomenon with four witnesses:
+    * **lfp = gfp** (a genuine `fork_collapse_iff` instance, needing uniqueness): `selfApp_bot_is_both_extremal`, whose fixed-point set is exactly `{⊥}` (`selfMem_eq_singleton_bot`), and the categorical zero object (`catseam_is_frameflip`, initial ∧ terminal).
+    * **lfp = ⨆ of the approximating tower** (the Kleene shape, no uniqueness required): `epsilon0_min_eq_max`, which is literally what it states — ε₀ is the least fixed point AND the supremum of the ω-tower.
+
+    **Conjunct (iii), abstractly.** `f.lfp = f.gfp ↔ ∃! x, f x = x`
     says **least equals greatest exactly when the fixed point is unique** — the general condition of which
     `epsilon0_min_eq_max` (at ε₀), `selfApp_bot_is_both_extremal` (at ⊥) and `catseam_is_frameflip`
     (initial ∧ terminal) are instances. So this file carries both halves of the pole behaviour: (i)-(ii) the
     **inversion** (duality exchanging the ends) and (iii) the **coincidence** (when the ends are one). In
     the four-corner classification (`Valuation/PoleCorners.lean`) those are `swap` and `cornerId`
     respectively; the remaining two corners are the collapses, of which `cornerZero` is the irreversible one
-    that forgets which pole it came from (`collapse_irreversible`). -/
+    that forgets which pole it came from (`cornerZero_not_injective` there; `Miniature.lean`'s
+    `collapse_irreversible` is the same fact on that file's own two-element pole, a different carrier). -/
 theorem fork_is_frameflip :
     (OrderHom.dual f).lfp = f.gfp
       ∧ (OrderHom.dual f).gfp = f.lfp

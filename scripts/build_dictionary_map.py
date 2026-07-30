@@ -227,7 +227,7 @@ def render_rosetta():
     for w in ROSETTA_WITNESSES:
         if w not in INDEX and w not in FIELD_OVERRIDE:
             UNRESOLVED.append(w)
-    body = """## The short version: concepts that should not correspond, but do
+    body = """## The short version: concepts that should not coincide, but do
 
 One self-referential structure - a thing that is its own fixed point - keeps turning up in fields that do not expect to meet. Here is each coincidence, ordered by how sure we are of it. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
