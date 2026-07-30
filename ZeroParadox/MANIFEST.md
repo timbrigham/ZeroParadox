@@ -93,7 +93,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 ### Multi-homed bridges (ZP-H)
 
-- `ZeroParadox/Multihomed/Boundary.lean` - ZPJ — The well-foundedness boundary (keystone snap-as-boundary probe)
+- `ZeroParadox/Multihomed/Boundary.lean` - The well-foundedness boundary: the floor is non-well-founded (self-loop and infinite-descent readings), the ordinal ascent is well-founded
 - `ZeroParadox/Multihomed/BoundaryBridge.lean` - ZPJ — The snap-boundary, QPF bridge (best-effort; Rung C-QPF)
 - `ZeroParadox/Multihomed/CategoricalBridge.lean` - ZP-H: Categorical Bridge
 - `ZeroParadox/Multihomed/EigenvectorExists.lean` - Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)

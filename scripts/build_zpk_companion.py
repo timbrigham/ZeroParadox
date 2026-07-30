@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.15 | May 2026
+Version 1.16 | May 2026
+v1.16: BEDROCK - two class-field overclaims struck. The four-way table's Computation row asserted "no shorter external generator exists" (Kolmogorov content this same document strikes elsewhere as having no formal part here), and the computational-Quine paragraph asserted it as an "in other words" restatement of the fixed-point definition, which says nothing about minimality. Section heading "The Four-Way Equivalence" corrected - t_comp proves three.
 v1.15: witness audit (mechanical). "proved via da1_closed_concrete" for the Quine atom now records that MachinePhase defines selfMem as x = bottom, so the content of that theorem is the uniqueness rather than the membership.
 v1.14: DA-1 Path 3 reclassified to FOUNDATIONAL COMMITMENT (see ZP-K v1.11) - the companion had it as "Now IN LEAN SCOPE via ZP-K". Also struck a false predicate introduced by the v1.13 fix: "precludes any external initiating agent" had been left attached when "all four" became "three of the four", making it assert preclusion specifically of the order and algebra characterisations. Removed rather than reworded.
 v1.13: T-COMP overclaim corrected (bedrock). The companion had no R-K.0 equivalent and was the most overclaiming document of the set: "establishes that the four descriptions are all equivalent", "each arrow represents a proved equivalence", "they are the same property", "the expressions are provably equivalent". Now states THREE proved and the computational face joined by assumption; the single-structural-identity claim is labelled as the framework's READING and as the motivation for building KleeneStructure, not something ZP-K derives. Key Result box corrected likewise.
@@ -109,7 +110,8 @@ def four_way_table():
          '⊥ contributes nothing to any join; the additive zero'],
         ['Computation (Kleene)',
          'eval botCode = selfApply botCode — fixed point',
-         '⊥ is its own program; no shorter external generator exists'],
+         'a fixed point of self-application; reading it as "⊥ is its own program" is the '
+         'framework\'s commitment, not a consequence'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body']),
@@ -127,7 +129,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -194,8 +196,9 @@ def build():
     E.append(cbody(
         'A Kleene fixed point of self-application is called a computational Quine: a program c '
         'such that running c produces the same output as running c on its own source code. '
-        'In other words, c\'s behavior is determined entirely by c itself — no external program '
-        'shorter than c generates it. The program IS its own description.'))
+        'The definition says only that: it fixes what c does, and it says nothing about '
+        'minimality — there is no claim here that no shorter program generates c, which would '
+        'need Kolmogorov complexity and plays no formal part in this document.'))
     E.append(cbody(
         'This is not a running computation that might loop forever. Kleene\'s theorem is an '
         'existence proof — it guarantees the fixed point exists before any execution takes '
@@ -213,7 +216,7 @@ def build():
     E.append(sp(8))
 
     # The four-way equivalence
-    E.append(Paragraph('T-COMP: The Four-Way Equivalence', CS['h1']))
+    E.append(Paragraph('T-COMP: The Three-Way Equivalence, and What Computation Adds', CS['h1']))
     E.append(cbody(
         'ZP-K\'s central theorem, T-COMP (Computational Grounding), proves that THREE of the '
         'four descriptions below are equivalent - self-containment, order, and algebra all '

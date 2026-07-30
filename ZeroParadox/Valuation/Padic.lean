@@ -198,9 +198,13 @@ theorem t3_isolation (r : ℝ) (hr : r ≠ 0) : IsClopen (Metric.closedBall (0 :
     `k` is the exponent, `v` is the valuation, and they differ by sign. No semantic change —
     the definition is unaltered, and `k : ℤ` was always free to be negative.
 
-    Structural role universal; value contingent — and contingent for a *structural* reason: it
-    is dimensionful, so it depends on a choice of units and cannot be instantiation-independent
-    (ZP-B R1, v1.12).
+    Structural role universal; value contingent — contingent on the **chosen exponent `k`**, i.e.
+    on which valuation is taken to be the finest accessible one. That is a normalisation choice,
+    **not** a physical measurement and **not** a dimension: ε₀ is a *position* (the first step
+    above the bottom, `Ordinal.epsilon 0`, Veblen (1,0)) and a position carries no units, exactly
+    as ⊥ carries none. (Corrected 2026-07-29: an earlier revision said "it is dimensionful, so it
+    depends on a choice of units", which imported a magnitude reading of ε₀ and contradicted the
+    same box's own no-physical-claims disclaimer.)
 
     **Note this definition is inert**: nothing in the development depends on it. It records the
     framework's parameterization of the snap threshold, not a load-bearing construction. -/

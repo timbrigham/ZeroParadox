@@ -184,7 +184,9 @@ element exists — there is no "first step" from zero.
 **ZP-F / ZP-B Classification (Ostrowski's theorem):**
 
 - Archimedean fields (ℝ, ℚ, any field with a compatible linear order): the snap is
-  **impossible** — proved in this file (`f_snap_impossible` = `axb1_fails_in_ordered_field`).
+  **impossible** — proved in this file by two distinct theorems, `f_snap_impossible` and
+  `axb1_fails_in_ordered_field`: the same fact reached by hand and via `CovBy`, with distinct
+  statements. They are **not** the same declaration and no equation between them is asserted.
 - Non-Archimedean (ℚ₂): the snap is **not blocked**, which is a strictly weaker statement.
 
 **ZP-B does NOT force the snap, and cannot.** What it proves is topological: the gap at 0 is

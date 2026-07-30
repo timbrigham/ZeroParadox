@@ -62,8 +62,8 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   what makes the following free:
   * **`WellFounded.asymmetric`** (`Mathlib/Order/RelClasses.lean:225`) is **strictly stronger** than
     `wf_no_selfloop` — it forbids 2-cycles between *distinct* points, with `asymmetric₃` (`:229`) for
-    3-cycles. Irreflexivity is its `a := b` instance. This file has been re-proving the weakest rung of a
-    published chain.
+    3-cycles. Irreflexivity is its `a := b` instance. So `wf_no_selfloop` is the weakest rung of a published chain; this file states it
+    deliberately as the one-cycle case, with `wf_no_cycle` below covering cycles of any length.
   * **Instance resolution already carries it.** `IsWellFounded → Std.Asymm` is registered
     (`RelClasses.lean:230`), so `irrefl_of` / `asymm_of` fire on any type with the instance — and `ZFSet`
     has it (`ZFC/Basic.lean:623`). Hand-rolled `∀`-form restatements get none of that machinery.
@@ -115,14 +115,21 @@ The engine's two regimes (μ = no fixed point / ν = a fixed point exists, see `
 - A host that permits ν is **"degenerate"** — Yanofsky p. 3: *"if there is a onto T → Y^T then Y must be
   'degenerate' i.e. every map from Y to Y must have a fixed point"*, and *"Paradoxes are ways of showing
   that if you permit one to violate a limitation, then you will get an inconsistent system."* Corroborated
-  by nLab, *Lawvere's fixed point theorem*. "Non-well-founded" is one concrete form of that degeneracy.
+  by nLab, *Lawvere's fixed point theorem* (fetched, not on disk — so treat that corroboration as
+  weaker than the quoted primary sources). "Non-well-founded" is one concrete form of that degeneracy.
 - In set theory the permit/refuse split **is** Foundation vs Anti-Foundation, in Aczel's own words
   (*Non-Well-Founded Sets*, 1988, p. 6): *"Non-well-founded sets exist… Of course we must relinquish the
   foundation axiom, but it will turn out that we need drop none of the other axioms of set theory."*
 - The general categorical form is a **published theorem**: Adámek-Milius-Moss (2020, arXiv:1910.09401v2)
   **Theorem 7.6**, p. 30 — *"the only well-founded fixed point is the initial algebra"*: a well-founded
   host admits no fixed point except the μ end. The standard name for the *axis* is the **well-founded part
-  / the coreflection into well-founded coalgebras** (their Definition 5.1, p. 22, credited to Taylor).
+  / the coreflection into well-founded coalgebras** (their Definition 5.1, p. 22, credited there to their
+  own **[5]** — Adámek-Milius-Moss, *Fixed points of functors*, JLAMP 95, 2018 — and the coreflection to
+  **[6]**, Adámek-Milius-Moss-Sousa, *Well-pointed coalgebras*, LMCS 9(2), 2014). **Taylor [27,28] is
+  credited in that paper with introducing well-founded coalgebras for a general endofunctor and with the
+  General Recursion Theorem — NOT with the well-founded part and NOT with the coreflection**; an earlier
+  revision of this bullet misattributed Definition 5.1 to him. (`CLAIMS.md`'s ledger row crediting Taylor
+  with "well-founded ⟺ recursive" is correct and is a different claim.)
   What this file proves is the **one-relation shadow** of that theorem, not the coalgebraic statement.
 
 **So the framework's own narrow observation, stated without overclaim:** the theorems this taxonomy assigns

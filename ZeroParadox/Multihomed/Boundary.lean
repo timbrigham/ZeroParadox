@@ -14,8 +14,11 @@ binary snap an official home as a boundary crossing.
 
 ---
 
-**Status: PROBE, stub-first, local branch `keystone-boundary`.** Rung A of the iterative A→B plan
-(see `.claude-local/notes/wellfounded_coalgebra_foray_2026-06-23.md`).
+**Status: CORE (promoted 2026-07-29, Tim's call).** Formerly a probe; promoted because its results are
+cited from `Settheory/Wall.lean` as the adoption site for the descending-chain characterization, and § I-b's
+declarations are machine-verified with measured footprints. Rung A of the iterative A→B plan (see
+`.claude-local/notes/wellfounded_coalgebra_foray_2026-06-23.md`) — Rung C, the full Taylor coalgebraic
+statement, remains open and is **not** claimed here.
 
 Conjecture (Taylor/AMM framing): the forced snap ⊥→ε₀ crosses the **well-foundedness boundary** —
 from the non-well-founded floor (⊥ is the self-loop / back edge, where recursion cannot reach,

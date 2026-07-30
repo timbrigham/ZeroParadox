@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.12 | May 2026
+Version 1.13 | May 2026
+v1.13: BEDROCK - the 2026-07-26 class-field-as-theorem root cause propagated, six sites. botCode described as "the code witnessing bottom's computational self-reference" and botCode_is_quine as "botCode IS its own program" now name it as a CLASS FIELD carrying a periodicity condition that constant codes also satisfy; the preamble no longer says Kleene's theorem "provides the formal witness"; the machinePhaseKleene def-box no longer says "a program that IS its own program". Section III heading and the verification table said "four-way equivalence" while t_comp proves THREE. R-K.0 gains the type-level statement of the gap: (1)-(3) are properties of an element of L, (4) is a property of a Code, and there is NO function or equivalence between Code and L anywhere in the development - the fourth condition is bundled by the class, not connected by a mapping.
 v1.12: witness audit (mechanical corrections). bot_self_mem_from_kleene described as "the Kleene side implies the AFA side" - it is a RESTATEMENT of the inherited AFAStructure field, adding no content, per Kleene.lean's own note. And "required together because they are the same structural fact" now names both as class FIELDS and the sameness as the framework's reading, which is the motivation for the class rather than something derived within it.
 v1.11: DA-1 Path 3 RECLASSIFIED (Tim, 2026-07-27) - from CLOSED / IN SCOPE to FOUNDATIONAL COMMITMENT, the status Path 2 already carries. Its witness botCode_is_quine is a KleeneStructure CLASS FIELD, assumed at instantiation, not a second independent proof; IsComputationalQuine is a periodicity condition a constant code satisfies vacuously; and the Kolmogorov reading ("no shorter program is prior to bottom") has no formal content here, K being uncomputable and absent from the development. Brings ZP-K into line with CLAIMS.md, which already stated this correctly. Three sites: the resolves-Paths prose, the Lean-scope status box, and the Open Items row.
 v1.10: T-COMP overclaim corrected (bedrock, cross-document attribution class). Preamble no longer says the four structural roles "are shown to be the same structural object" - three are PROVED to coincide (T-EXEC), the computational role is a KleeneStructure typeclass field, which is exactly what Remark R-K.0 already said 145 lines later. Footer's chained cross-type identity "Quine atom = bot = join identity = Kleene fixed point" replaced, and "DA-1 closed" narrowed to "DA-1 structural half" (da1_closed_concrete mentions no code and no execution). R-K.0 itself unchanged - it was already correct.
@@ -39,7 +40,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -66,10 +67,12 @@ def build():
         'self-reference structure. The key insight: ⊥ in the computational '
         'instantiation is not a state of a Turing machine. ⊥ is the ground state of a universal '
         'Turing machine — the state from which no external executor is required. Kleene\'s '
-        'second recursion theorem provides the formal witness: a code that is its own program, '
-        'the computational expression of ⊥ = {⊥}.'))
+        'second recursion theorem supplies a fixed point of the self-application operator; that '
+        'this fixed point is to be read as the computational expression of ⊥ = {⊥} is the '
+        'framework\'s commitment, carried by the KleeneStructure class, not a property the '
+        'theorem establishes.'))
     E.append(body(
-        'The central result is a four-way equivalence within this framework, in the precise sense '
+        'The central result is a three-way equivalence within this framework, in the precise sense '
         'defined by Remark R-K.0: the structural roles of ⊥ — Quine atom (set-theoretic), bottom '
         'element (order-theoretic), and join identity (algebraic) — are PROVED to coincide, while '
         'the fourth role, Kleene fixed point (computational), is required as a typeclass field '
@@ -177,8 +180,9 @@ def build():
             '(inherited) selfMem : L → Prop  — self-membership predicate',
             '(inherited) quine_unique  — AFA uniqueness',
             '(inherited) bot_self_mem  — ⊥ is self-containing',
-            '(new) botCode : Code  — the code witnessing ⊥\'s computational self-reference',
-            '(new) botCode_is_quine : IsComputationalQuine botCode  — botCode IS its own program',
+            '(new) botCode : Code  — a code selected from the existence proof; not a distinguished code',
+            '(new) botCode_is_quine : IsComputationalQuine botCode  — a CLASS FIELD, not a theorem: '
+            'the periodicity condition eval c n = eval c (encode c + n), which constant codes also satisfy',
             '(new) bot_self_mem_from_kleene : selfMem ⊥  — a RESTATEMENT of the inherited AFAStructure '
             'field bot_self_mem, adding no content beyond it. Not an implication from the Kleene side.',
             '',
@@ -208,17 +212,20 @@ def build():
     print('[build_zpk] Building Section III...')
     E += [
         hr(),
-        Paragraph('Section III: T-COMP — The Four-Way Equivalence', S['h1']),
+        Paragraph('Section III: T-COMP — The Three-Way Equivalence, and the Bundled '
+                  'Computational Condition', S['h1']),
         hr(),
     ]
 
     E.append(body(
         'ZP-J T-EXEC established a three-way equivalence: Quine atom (set-theoretic) ↔ '
-        'bottom element (order-theoretic) ↔ join identity (algebraic). ZP-K adds the '
-        'fourth: Kleene fixed point (computational). The four characterisations of ⊥ are '
-        'present simultaneously in any KleeneStructure lattice.'))
+        'bottom element (order-theoretic) ↔ join identity (algebraic). T-COMP proves exactly '
+        'those three equivalent. ZP-K bundles a fourth face — Kleene fixed point '
+        '(computational) — as a KleeneStructure class field, so all four are present '
+        'simultaneously in any KleeneStructure lattice, but the fourth is required at '
+        'instantiation rather than proved equivalent to the others.'))
     E.append(remark_box(
-        'Remark R-K.0 — What "Four-Way Equivalence" Means',
+        'Remark R-K.0 — What T-COMP Proves, and What "Four-Way" Meant',
         [
             'The equivalence among (1)–(4) has two distinct sources:',
             '(1)–(3) are equivalent by T-EXEC (ZP-J): any element that is a Quine atom is also '
@@ -230,6 +237,13 @@ def build():
             'sense) entails satisfying condition (4) (being a Kleene fixed point), or vice versa. '
             'The two are combined by the typeclass definition — they are required together because '
             'we take them to be the same structural fact, not because one is derived from the other.',
+            'Stated at the level of types, which is where the gap is visible: conditions '
+            '(1)-(3) are properties of one element q of the lattice L, and T-COMP relates them '
+            'to each other. Condition (4) is a property of a Code. There is no function, and no '
+            'equivalence, between Code and L anywhere in the development — so the fourth '
+            'condition is not connected to the other three by a mapping; it is required '
+            'alongside them by the class. da1_paths_unified records exactly this and no more: '
+            'it is a conjunction of a fact about bot in L and a fact about botCode in Code.',
             'In short: "four-way equivalence" means "all four hold in any KleeneStructure '
             'instance." (1)–(3) are independently proved equivalent. (4) is bundled in by the '
             'typeclass requirement. The philosophical claim — that Kleene computational '
@@ -391,8 +405,10 @@ def build():
             '  bot_self_mem_from_kleene := rfl',
             '',
             'botCode is selected non-constructively from the existence proof provided by '
-            'Kleene\'s theorem. It is the computational Quine witnessing that ⊥\'s '
-            'self-reference has a computational expression: a program that IS its own program.',
+            'Kleene\'s theorem — an arbitrary witness, not a distinguished code. Reading it as '
+            '"the program that IS its own program" is the framework\'s commitment carried by the '
+            'class, not a property this instance establishes: IsComputationalQuine is a '
+            'periodicity condition, strictly weaker than self-reference.',
         ]
     ))
     E.append(sp(6))
@@ -476,7 +492,7 @@ def build():
          'kleene_fixed_point_exists + selfApply_partrec',
          'Standard Mathlib foundational axioms',
          'Lean: computational_quine_exists ✓'],
-        ['T-COMP: four-way equivalence',
+        ['T-COMP: three-way equivalence',
          'ZP-J T-EXEC (t_exec_triple_iff)',
          'Standard Mathlib foundational axioms',
          'Lean: t_comp ✓'],

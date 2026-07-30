@@ -45,10 +45,14 @@ elementary or standard, and saying so is the point:
   `deterministic_has_no_fanout` is `Option.some_injective` (Mathlib's `StateTransition` uses the
   equivalent `Option.mem_unique` for this).
 * `occurs_iff_halts` re-expresses Mathlib's `evaln_complete` — Kleene's Normal Form Theorem.
-* `LoopsInPlace` / `loop_is_a_trap` name what automata theory calls a **trap state** and Markov
-  theory an **absorbing state** — Baier & Katoen, *Principles of Model Checking* (MIT Press,
-  2008) p. 157. `flipPoles`'s dead-to-live half is the standard **totalization** construction,
-  same book p. 97; the involution as such was searched for and not found.
+* `LoopsInPlace` / `loop_is_a_trap` name what automata theory calls a **trap state** — Baier &
+  Katoen, *Principles of Model Checking* (MIT Press, 2008) **p. 157**, which is also where the
+  **totalization** construction lives that `flipPoles`'s dead-to-live half reproduces (a total DFA
+  is obtained by adding a nonfinal trap state carrying a self-loop). The Markov-chain term
+  **absorbing state** is *Notation 10.6*, **p. 753** of the same book. (Page numbers corrected
+  2026-07-29 against the extracted source: an earlier revision cited p. 157 for the absorbing
+  state and p. 97 for totalization; both were wrong.) The involution as such was searched for and
+  not found.
 * § IV's 0/∞ reading is the coalgebra for `X ↦ 1 + X`, whose final coalgebra is ℕ ∪ {∞}
   (Jacobs, *Introduction to Coalgebra*, Ex. 2.4.1 p. 66; Rutten, TCS 249 (2000) p. 16). The
   framework's own `NatListRegime.lean` already carries that functor and cites Jacobs & Rutten

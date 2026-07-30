@@ -241,8 +241,11 @@ The negative conditions of this index. See `ZeroParadox/Computability/Occurrence
 
 #check @ZeroParadox.loop_unfolds_to_infinity
 -- Statement: a self-looping configuration's unfolding equals `natInfinity`.
--- Reading: the machine bottom and the coalgebraic infinity are the same point. Unlike ZP-K's
---   identification this is a genuine equality within one type, not a cross-type reading.
+-- Reading: the machine bottom's BEHAVIOUR and the coalgebraic infinity are the same point of the
+--   final coalgebra. The `=` is between two `Cofix` elements, within one type; the configuration
+--   `s : σ` is NOT equated with anything — it lives in a different type. (The home file states it
+--   correctly: "the BEHAVIOUR of a self-looping machine configuration IS `natInfinity`"; an earlier
+--   revision of this gloss dropped those words and asserted the identification was cross-type-free.)
 --   It says nothing about whether the FRAMEWORK's bottom self-loops — that is the commitment.
 
 #check @ZeroParadox.tri_unstarted_state_exists

@@ -5,8 +5,13 @@ set_option maxHeartbeats 400000
 /-!
 # Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
 
-Experiment G1 (T6 compute-the-invariant), independent of the MC-1 arc. The snap ceiling ε₀ is where the
-ω-tower closes. Falsifiable prediction: ε₀ is not just *a* fixed point of `α ↦ ω^α` but the **least** one —
+Experiment G1 (T6 compute-the-invariant), independent of the MC-1 arc. ε₀ is where the ω-tower closes —
+its **minimal** closure. **Do not call it a "ceiling" or "a large ordinal"** (an earlier revision of this
+line said "the snap ceiling"): positionally ε₀ is the FIRST — `Ordinal.epsilon 0`, index zero in the
+epsilon enumeration, Veblen coordinates (1,0), the minimum step next to the pole — and that is exactly what
+`epsilon0_least_fixedpoint` below proves. Its magnitude as a tower supremum is large; its position is
+first. Both faces are live (`epsilon0_min_eq_max`), and collapsing to the magnitude face is the recorded
+error this line used to commit. Being a position, it carries no units. Falsifiable prediction: ε₀ is not just *a* fixed point of `α ↦ ω^α` but the **least** one —
 the snap is located at the *minimal* ordinal closed under exponentiation, not at some larger Veblen point.
 Would FAIL if some `o < ε₀` satisfied `ω^o = o` (then the snap closure wouldn't be minimal).
 
