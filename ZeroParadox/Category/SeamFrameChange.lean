@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the category-frame realization of the POLE EXCHANGE (NOT of the snap - see the declaration docstring) — the zero-object seam is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other, and the op-duality frame-change swaps the two charts (initial ↔ terminal), fixing the seam as an op-self-dual zero object. The categorical analog of RiemannSphere's rInv swapping 0↔∞. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the category-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — the zero-object seam is the μ-bottom (initial) in one chart and the ν-top (terminal) in the other, and the op-duality frame-change swaps the two charts (initial ↔ terminal), fixing the seam as an op-self-dual zero object. The categorical analog of RiemannSphere's rInv swapping 0↔∞. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.State.HilbFunctor
 import ZeroParadox.Category.TreeSeam
 import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
@@ -29,7 +29,9 @@ which swaps the poles **initial ↔ terminal**. The zero-object seam `Z = fD_fun
 this file bundles that P1 coincidence with the P2 frame-change: `op` carries the seam's initial-ness to
 its op's terminal-ness and its terminal-ness to its op's initial-ness. The seam is the fixed point of
 the frame-change — an `op`-self-dual zero object — the category-frame realization of the POLE EXCHANGE.
-(NOT of the snap: no snap appears in `catseam_is_frameflip`; see its docstring.)
+`Statement:` INVERSION — `op`-duality exchanges initial and terminal, and the seam is its fixed point.
+`Reading:` INVERSION — the framework reads the snap as an instance of this exchange. Conjectural: no snap
+appears in `catseam_is_frameflip`, and ZP-Q holds the identification open.
 
 `catseam_is_frameflip`: the seam is (i) initial and (ii) terminal in `ModuleCat ℂ` (the two charts), and
 under the `op` frame-change it is (iii) terminal and (iv) initial in `(ModuleCat ℂ)ᵒᵖ` (the swap). Off

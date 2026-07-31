@@ -1,7 +1,8 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.4 | July 2026
+Version 1.5 | July 2026
 
+v1.5: BEDROCK, the v1.4 fix was HALF-APPLIED (adversary round 4). v1.4 struck the eps0 half of the fork_collapse_iff instance claim and LEFT the other half: the rendered text still said selfApp_bot_is_both_extremal and the categorical seam are 'genuine instances'. They are not - fork_collapse_iff needs a complete lattice and a monotone map; ZPSemilattice is a bare join-semilattice whose selfApp is not an OrderHom, and the seam is in ModuleCat. So the repo was shipping a PDF asserting what its own four Lean docstrings call false. NONE of them is an instance; they share a shape, which across distinct structures is a type boundary.
 v1.4: BEDROCK (adversary gate) - the min=max cross-link asserted epsilon0_min_eq_max is an instance of fork_collapse_iff (lfp = gfp). FALSE: that needs a UNIQUE fixed point and the omega-power map has a proper class of them (omega0_opow_epsilon), so nothing collapses at eps0. Its actual content is least-fixed-point = supremum-of-the-tower, the Kleene shape. Corrected here, at four Lean sites, and in CLAUDE.md.
 v1.3: the v1.2 correction completed - the rendered SUBTITLE still read "bottom -> eps0 as a change of point of view", the identification v1.2 struck in the body, so the title page asserted what page two denies. Fix-the-site-not-the-class, caught by the editorial gate. Docstring header version also lagged.
 v1.2: BEDROCK framing correction (Tim, 2026-07-30). The layer identified the SNAP with the frame-change; the Lean does not. Read at source, snap_is_frameflip proves the tower limit's two chart-readings and contains NO snap transition (no c0->c1, no bot-covers-a, no bot->eps0); catseam_is_frameflip proves the seam is a FIXED POINT of the flip (initial AND terminal), not a flip. What the three *_is_frameflip theorems establish is the exchange of the two poles and the point where they coincide. THE FRAME-CHANGE IS THE POLE EXCHANGE - bottom read as both 0 and infinity - and the SNAP is one covering step off the zero face (HasFirstStep, AX-B1, a commitment). Merging them is what made it look paradoxical that a frame-change reverses while the snap does not. Four sites corrected; the declaration handles are retained per the CC-2/MC-1 convention (cross-references stay valid) with the overclaim flagged in each Lean docstring. Also records that fork_collapse_iff (iii) is the general min=max condition, with epsilon0_min_eq_max, selfApp_bot_is_both_extremal and the categorical seam as its instances.
@@ -23,7 +24,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -121,7 +122,7 @@ def build():
         'way and reverses only under an inversion that swaps the two poles. These are not two facts. '
         'They are two faces of one self-dual object, and the inversion is the <i>frame-change</i>. '
         '<b>The frame-change is that pole exchange &#8212; &#8869; being read as both 0 and &#8734; &#8212; '
-        'and it is NOT the snap.</b> The snap is one covering step off the zero face '
+        'and the snap is a separate object.</b> The snap is one covering step off the zero face '
         '(&#8869; &#8918; a, HasFirstStep), which is AX-B1, a modelling commitment; the frame-change is an '
         'involution and is proved. Merging the two is what makes it look paradoxical that a frame-change '
         'reverses while the snap does not: they were never the same map. '
@@ -212,11 +213,13 @@ def build():
             'fixed point &#8212; fork_collapse_iff).',
             'This is the domain-independent form of the POLE BEHAVIOUR: the two charts are swapped by the '
             'frame-change, and the bottom is where they meet. Note what (iii) says &#8212; least = greatest '
-            'exactly when the fixed point is unique. Its genuine instances are those with a UNIQUE fixed point: '
-            'selfApp_bot_is_both_extremal (fixed-point set exactly the bottom) and the categorical seam '
-            '(initial &#8743; terminal). &#949;<sub>0</sub> is NOT one: the map &#945; &#8614; &#969;<super>&#945;</super> has a '
-            'proper class of fixed points, so nothing collapses there; epsilon0_min_eq_max states the different '
-            'coincidence least-fixed-point = supremum-of-the-tower. It does NOT assert that the snap is a change of frame; '
+            'exactly when the fixed point is unique &#8212; and note the hypotheses: it needs a COMPLETE LATTICE and a '
+            'MONOTONE map. NONE of the framework&#8217;s min&#8801;max facts satisfies those, so none is an instance of it. '
+            'epsilon0_min_eq_max is over the ordinals, where the omega-power map has a proper class of fixed points, so nothing '
+            'collapses; selfApp_bot_is_both_extremal is over a bare join-semilattice whose self-application is not a monotone map; '
+            'the categorical seam lives in a category, not a lattice. What they share is a SHAPE &#8212; one object carrying both '
+            'extremal characterisations at once &#8212; and a shared shape across distinct structures is a type boundary, never a '
+            'common theorem. State the shape, not an instance-of relation. It does NOT assert that the snap is a change of frame; '
             'that identification remains this layer&#8217;s open conjecture.',
             'Lean purity: [propext, Quot.sound] &#8212; choice-free. ✓',
         ]

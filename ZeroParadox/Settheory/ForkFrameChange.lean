@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the ORDER-THEORETIC universal form of the POLE EXCHANGE (NOT of the snap) — over any complete lattice, the frame-change (order-duality) swaps the fork's two closures (lfp ↔ gfp), and the fork collapses to the diagonal fixed point exactly when the two coincide (fork_collapse_iff). The domain-independent snap_is_frameflip; choice-free. The CATEGORICAL universal is a proven wall (category-relative, Cantor — see Category/Lawvere.lean); this is the order-level universal that does hold. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the ORDER-THEORETIC universal form of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here) — over any complete lattice, the frame-change (order-duality) swaps the fork's two closures (lfp ↔ gfp), and the fork collapses to the diagonal fixed point exactly when the two coincide (fork_collapse_iff). The domain-independent snap_is_frameflip; choice-free. The CATEGORICAL universal is a proven wall (category-relative, Cantor — see Category/Lawvere.lean); this is the order-level universal that does hold. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Settheory.FixedPointFork
 import Mathlib.Tactic
 
@@ -32,7 +32,9 @@ the diagonal fixed point.
 
 `fork_is_frameflip` bundles both faces: the duality-swap (P2) with `fork_collapse_iff` (P1). This is the
 order-theoretic universal `snap_is_frameflip` — the domain-independent shape that the valuation
-(`snap_is_frameflip`) and category (`catseam_is_frameflip`) instances realize concretely.
+(`snap_is_frameflip`) and category (`catseam_is_frameflip`) faces SHARE. Not "instances": neither
+satisfies `fork_collapse_iff`'s hypotheses (complete lattice, monotone map) — see the declaration
+docstring below, which states this in full.
 
 **Fences.** This is the **order-theoretic** universal (Knaster–Tarski world), choice-free. It is NOT the
 categorical Lawvere universal, which is a proven **wall**: `Category/Lawvere.lean` shows the Lawvere
@@ -74,7 +76,8 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     carry corrections in their own docstrings — `snap_is_frameflip` proves the tower limit's two
     chart-readings (**no snap appears in it**), and `catseam_is_frameflip` proves the seam is a **fixed
     point** of the flip, not a flip. **What all three establish is the exchange of the two poles and the
-    point where they coincide — NOT that the snap is a change of frame.** The snap is one covering step
+    point where they coincide. That the snap IS an instance of that exchange is ZP-Q's conjecture, not
+    established by these theorems.** The snap is one covering step
     off the zero face (`bot ⋖ a`, AX-B1), a separate object and a commitment. The cross-domain claim that
     the snap *is* the frame change remains this layer's open conjecture, as its file header states.
 

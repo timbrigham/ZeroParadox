@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of the POLE EXCHANGE (NOT of the snap - see the declaration docstring) — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to a new bottom ⊥ₙ₊₁ in the encoding chart, while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the valuation-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here - see the declaration docstring) — P8's tower encoding sends the ω-tower (climbing to ε₀) to the 2-adic floor 0 = ⊥: its stage-encodings converge to a new bottom ⊥ₙ₊₁ in the encoding chart, while the SAME encodings, viewed through the Riemann-sphere frame-change rInv (0↔∞), diverge to the antipode ∞. rInv is the passage between the two charts. (The encodings converge to ⊥; ε₀, the ordinal sup of the stages, is never ⊥ — ε₀ ≠ ⊥.) Conjectural synthesis at the operator/space level; the abstract cross-domain "snap = frame-change" stays open. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Ordinal.P8
 import ZeroParadox.Valuation.RiemannSphere
 import Mathlib.Tactic
@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv` (NOT the snap)
+# The tower limit's two chart-readings: ⊥ and ∞ are two charts, swapped by `rInv`
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
 are indexed in ZeroParadox/MANIFEST.md.
