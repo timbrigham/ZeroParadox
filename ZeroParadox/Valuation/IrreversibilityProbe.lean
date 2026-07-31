@@ -48,9 +48,13 @@ pins down *why the pole is two-element*: **two is exactly the cardinality at whi
 one-way collapse** (`irreversibility_forced_at_pole_not_beyond` — forced at card 2, with the identity a
 reversible unique-fixed-point map at card 1 and a reversible counter-model at card 3). So axis 1 (the two-element pole / four corners) and the snap (irreversibility) are
 **linked by cardinality**: the pole's size is what makes the one-way *collapse* unavoidable **given a
-self-map with a unique fixed point**. Not the snap, and not occurrence — non-injectivity is not motion,
-and nothing here says anything moves. This is the third probe to return "already forced" in the
-*derivability* sense (after height and iterative-bottoms), further evidence the requirement set is
+self-map with a unique fixed point**.
+
+`Statement:` non-injectivity at cardinality two, nothing more — no motion appears in it.
+`Reading:` the framework reads that collapse as the snap. Conjectural: the statement mentions no
+transition, so occurrence is not carried by it.
+
+This is the third probe to return "already forced" in the *derivability* sense (after height and iterative-bottoms), further evidence the requirement set is
 closing.
 
 **Honest scope.** Probes B/C test the *self-map* notion of irreversibility (injective vs. collapse); the
@@ -101,8 +105,12 @@ theorem probe3_reversible_with_unique_fp :
 self-reference forces the one-way collapse: at the two-element pole every self-map with a unique fixed point
 is non-injective, while at three elements a reversible witness with a unique fixed point exists. This links
 the pole's cardinality (axis 1) to **irreversibility**: the pole is two-element *because* two is where a
-unique fixed point already costs injectivity. **Not** "where self-reference forces the snap" — that was
-this line until 2026-07-31, and non-injectivity is not occurrence; nothing here says anything moves. -/
+unique fixed point already costs injectivity.
+
+    `Statement:` non-injectivity, given a unique fixed point on a two-element carrier.
+    `Reading:` the framework reads this as the snap's irreversibility. Conjectural — the statement
+    carries no transition. (Until 2026-07-31 this line read "where self-reference forces the snap",
+    which asserted occurrence.) -/
 theorem irreversibility_forced_at_pole_not_beyond :
     (∀ f : Pole → Pole, (∃! p, f p = p) → ¬ Function.Injective f) ∧
     (∃ g : Fin 3 → Fin 3, (∃! x, g x = x) ∧ Function.Bijective g) :=

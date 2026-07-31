@@ -1,5 +1,6 @@
 """
 Build ZP-F: The Counterexamples (v1.5)
+v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
 v1.4: Vocabulary fix — "departure from the null state" → "departure from ⊥" in preamble. Palette rebuild.
 v1.3: K-16 vocabulary fix — "topological isolation of zero" → "valuative gap at zero
 (v_p(0) = +∞)" in §VI body prose.
@@ -19,7 +20,7 @@ v1.2: §VI Remark: Dual Limit Condition extended — squeeze as structurally
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -44,7 +45,11 @@ def build():
     E.append(Paragraph('I. Purpose and Scope', S['h1']))
     E.append(body(
         'The Zero Paradox framework requires a metric space in which a minimal first '
-        'departure from &#8869; is structurally forced — the Binary Snap. '
+        'departure from &#8869; has a structurally forced SHAPE — the Binary Snap. '
+        'What is derived is that shape, not that the departure is taken: a join-semilattice in '
+        'which T-SNAP holds and nothing moves is exhibited in the Lean source '
+        '(tsnap_holds_but_nothing_moves), so occurrence is a commitment of the framework rather '
+        'than one of its theorems. '
         'This document establishes the negative result: no linearly ordered field can '
         'serve as that substrate. The real numbers &#8477; are the canonical and most '
         'familiar instance; the theorem applies to any field carrying a compatible '

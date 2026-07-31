@@ -24,8 +24,12 @@ has, and that is fine. The movement of the thought process itself was what I nee
 Continuing the mutual-independence sweep of the four axes. This probes **axis 2, the μ/ν fork** (a self-map
 with a unique fixed point — the fixed-point structure) against **axis 1, the pole** (the two-element carrier
 `{0, ∞}`). The `IrreversibilityProbe` already found these two *interact* (on the pole, a self-map with a
-unique fixed point is necessarily non-injective — the one-way collapse). That is irreversibility,
-**not** the snap and not occurrence. So the sharp question: are they nonetheless
+unique fixed point is necessarily non-injective — the one-way collapse).
+
+`Statement:` non-injectivity on the pole. `Reading:` the framework reads that collapse as the snap;
+conjectural, since no transition appears in the statement.
+
+So the sharp question: are they nonetheless
 **independent as requirements**, or does one entail the other?
 
 Two witnesses (model / counter-model):

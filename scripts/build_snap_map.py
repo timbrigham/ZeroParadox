@@ -131,7 +131,7 @@ IS_NOT = [
 # the snap is available or blocked, and only the reals are blocked - provably.
 BOUNDARY_MAP = [
     ("computability", "**Available**",
-     "a genuine self-reference fixed point - a machine run on its own code, whose halting is undecidable, so ⊥ cannot describe its own escape",
+     "a genuine self-reference fixed point - a machine run on its own code, whose halting is undecidable, so no finite description settles what it does",
      ["self_halting_undecidable", "computability_face_fixedPoint"]),
     ("valuation (p-adic)", "**Available**",
      "the ultrametric sends the floor to v(0) = ⊤, and the doubling dynamics contracts every starting law onto that floor",
@@ -140,7 +140,7 @@ BOUNDARY_MAP = [
      "ε₀ is the proof-theoretic ordinal of PA; the ω-tower climbs from below choice-free, ε₀ is the least fixed point of α ↦ ω^α, and the tower is cofinal in it (the from-below climb is choice-free; the least-fixed-point and cofinality facts use classical logic)",
      ["tower_strictMono", "epsilonZero_eq_nfp", "epsilonZero_le_fixedPoint", "fundamentalSeq_cofinal"]),
     ("information", "**Available**",
-     "surprisal is unbounded at the floor - the bottom carries no finite description to stay at",
+     "surprisal is unbounded at the floor - the bottom has no finite description, so nothing external holds it in place",
      ["info_bottom_diverges"]),
     ("category", "**Available, one-way**",
      "the initial object has a unique morphism out to every object and none back; ⊥ is a pure source, not a round trip",
@@ -158,9 +158,9 @@ def render_boundary_map():
 
 The dictionary above sorts the snap by *aspect* - what it is, what it does. This section re-cuts the same results by *field*. Walk into any one of the framework's domains and ask a single question: **is the departure from ⊥ available here, or is it walled?** Every cell has a verdict; nothing is left merely posited.
 
-**Available does not mean it happens.** No field in this table establishes that the snap *occurs* - that is a framework commitment, not a theorem, and `tsnap_holds_but_nothing_moves` exhibits a model in which T-SNAP holds and nothing moves. What each row records is that the field's own structure supplies the ingredients and raises no obstruction. One row is different in kind: in the reals the snap is provably blocked.
+**Available does not mean it happens.** No field in this table establishes that the snap *occurs* - that is a framework commitment, not a theorem, and tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. What each row records is that the field's own structure supplies the ingredients and raises no obstruction. One row is different in kind: in the reals the snap is provably blocked.
 
-The pattern is worth stating plainly. The self-referential *shape* - the diagonal fixed point - recurs across every face, but the faces are not one object across them - they are one **family** (MC-1): the numerical identity is retired as ill-typed and the members are provably distinct. What is available across almost every field is the *snap itself*, each by its own native mechanism. One field is the telling exception: in the real numbers the snap provably fails, and the failure is a theorem - the only entry in the table that is a result rather than an absence of obstruction.
+The pattern is worth stating plainly. The self-referential *shape* - the diagonal fixed point - recurs across every face, but the faces are not one object across them - they are one **family** (MC-1): the numerical identity is retired as ill-typed and the members are provably distinct. What is available across almost every field is the *snap itself*, each by its own native mechanism. One field is the telling exception: in the real numbers the snap provably fails, and the failure is a theorem. Every row here cites machine-checked results; what singles out the reals is that theirs records an *obstruction* where the others record a *mechanism*.
 
 **Two notions, kept apart.** There is a narrower, stronger one - a genuine Lawvere fixed point, self-application with no escape - and it is walled across almost every field: Cantor forbids the Set-level witness for any nontrivial total type (nontrivial_lattice_no_witness, q2_no_witness), so only the computability face carries a genuine one (computability_face_fixedPoint, in the effective category). The snap is available far more widely than that fixed point is genuine. "The Lawvere fixed point is genuine in only one field" (read off the Lawvere register) and "the snap is available across almost every field" (read off the table below) are both true - they measure different things. One shared technique; a different procedure in each field."""
     table = render_table(
@@ -174,7 +174,7 @@ def render_rosetta():
 
 The snap is the framework's one theorem - the one-way departure from ⊥ into the first structured state ε₀ - and its central *action*. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
-**Proved - the snap is DERIVED rather than assumed, and adds no axiom.** T-SNAP (t_snap_derived): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. **"Derived" is a claim about where the transition comes from, not that it is taken:** T-SNAP constrains the SHAPE of the transition and the same file's `tsnap_holds_but_nothing_moves` proves it holds where nothing moves. Occurrence is a commitment. The Binary Snap that earlier layers posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
+**Proved - the snap is DERIVED rather than assumed, and adds no axiom.** T-SNAP (t_snap_derived): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. **"Derived" is a claim about where the transition comes from, not that it is taken:** T-SNAP constrains the SHAPE of the transition and the same file's tsnap_holds_but_nothing_moves proves it holds where nothing moves. Occurrence is a commitment. The Binary Snap that earlier layers posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
 
 **Proved - the snap is one-way.** It does not reverse: no join returns to a strictly lower state (t_snap_irreversible, algebraic), and the same irreversibility is proved topologically in the 2-adics (c3_irreversible) and categorically in the probability functor (fC_no_return). ⊥ is a source, not a round trip.
 

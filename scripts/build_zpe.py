@@ -481,6 +481,7 @@ def build():
            'each instantiation carries its own ⊥.'),
         li('ZP-B R1 distinguishes universal structure from universe-contingent parameters. ε<sub>0</sub> is '
            'contingent per instantiation. Whether ⊥ is similarly contingent is not addressed in ZP-A through ZP-D.'),
+        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Every "fires" below narrates the commitment that instantiation occurs, not a consequence of the theorem.'),
         li('T-SNAP fires wherever P<sub>0</sub> conditions are met. If the terminal state of instantiation I<sub>n</sub> '
            'satisfies P<sub>0</sub> conditions, T-SNAP should apply — but this requires formally connecting that '
            'terminal state to a new ⊥. DA-2 provides this connection.'),
@@ -553,7 +554,9 @@ def build():
            'valid ε<sub>0</sub> for a distinct I<sub>n+1</sub>. T-SNAP does not select among branches. Because ⊥ = {⊥} '
            '(ZP-A CC-2) is the single self-containing ⊥ with no internal differentiation, every '
            'ε<sub>0</sub> that represents a first differentiation in any direction is a valid outcome. '
-           'Branching is not optional; it follows from T-SNAP applied to an undifferentiated ⊥.'),
+           'The work here is done by the undifferentiated ⊥ of CC-2, not by T-SNAP: given that '
+           'instantiation occurs, no direction is privileged, so the structure branches rather than '
+           'threading a line. T-SNAP fixes the shape of each step; it does not supply the occurrence.'),
         li('No back edges: C-DA2 establishes that no instantiation can reach the ⊥ of any ancestor instantiation.'),
         sp(4),
     ]
@@ -715,7 +718,7 @@ def build():
          'CLOSED — ZP-C T1',
          'Derived from AX-B1 and RP-1.'],
         ['OQ-E1: Sequence vs. tree',
-         'CLOSED — DA-2',
+         'CLOSED given the occurrence commitment — DA-2',
          'The structure is a forward-directed tree, not a linear sequence. Given that instantiation occurs — a '
          'framework commitment, not a consequence of T-SNAP — DA-2 supplies the succession and the '
          'branching follows. '

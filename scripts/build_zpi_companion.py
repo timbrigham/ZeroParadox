@@ -1,6 +1,7 @@
 """
 Build ZP-I Illustrated Companion
 Version 1.23 | May 2026
+v1.24: FORCING OVERCLAIM RETRACTED (companion sync with ZP-I v1.15). "T-SNAP (bottom -> eps0, necessarily)" asserted occurrence; T-SNAP fixes the transition's shape and does not establish that it is taken (Order/Snap.lean's tsnap_holds_but_nothing_moves holds in a model where nothing moves). Occurrence is a framework commitment.
 v1.23: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.21: "(no sorryAx)" applied to step 1 source; ZP-internal labels removed from step table; "No new axioms" clarified to scope; "the framework" scoped to ZP-I (ER/AR fixes).
 v1.20: Conditions scoped in prose ("every" → conditional); "(axiom-free)" corrected to "(no sorryAx)" for theorems using propext/Classical.choice (ER/AR fixes).
@@ -289,7 +290,7 @@ def cycle_diagram():
     return d
 
 
-VERSION = '1.23'
+VERSION = '1.24'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -538,7 +539,7 @@ def build():
     # ── The Complete Cycle ─────────────────────────────────────────────────────
     E.append(Paragraph('The Complete Cycle', CS['h1']))
     E.append(cbody(
-        'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀, necessarily). ZP-I gives us '
+        'ZP-E gave us the beginning: T-SNAP (⊥ → ε₀ - shape derived, occurrence committed to). ZP-I gives us '
         'the end that is also a beginning: T-IZ (the chain → ⊥′). Together, they '
         'describe a self-contained derivation cycle. ZP-I is not merely an emergence result  - '
         'it is a structural account of a repeating pattern:'))
@@ -549,6 +550,9 @@ def build():
         '<br/>'
         '3. <b>R1 (no top)</b>: the chain cannot stop. It continues ascending through ω state changes.'
         '<br/>'
+        '<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step and does not establish that '
+        'any step is taken; a model in which T-SNAP holds and nothing moves is exhibited in the Lean '
+        'source. Every "fires" below narrates the commitment that instantiation occurs. '
         '4. <b>T-IZ</b>: the chain\'s unbounded depth forces convergence to 0. At the '
         'limit, DA-1 fires, T-SNAP fires again, and ⊥′ is generated. The branch closes.'
         '<br/>'

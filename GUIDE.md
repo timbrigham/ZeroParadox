@@ -22,7 +22,7 @@ The Zero Paradox proves that a minimum non-bottom element is structurally forced
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 
-No snap-specific axioms appear anywhere in the framework. The Binary Snap - the forced transition from the bottom element ⊥ to the minimum non-bottom state - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap - the transition from the bottom element ⊥ to the minimum non-bottom state, whose shape is derived rather than assumed - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
 
 ---
 

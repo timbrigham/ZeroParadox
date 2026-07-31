@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
 Version 1.3 | July 2026
+v1.4: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
 v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
@@ -18,7 +19,7 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -64,7 +65,8 @@ def build():
     print('[build_zp_choice_free_core] Building preamble...')
     E.append(body(
         'Build the file ZeroParadox/AxiomProfile.lean and read the Lean kernel\'s output. It reports '
-        'that the central theorem of this framework &#8212; the Binary Snap, T-SNAP, the forced '
+        'that the central theorem of this framework &#8212; the Binary Snap, T-SNAP, whose SHAPE is '
+        'derived while its occurrence stays a framework commitment, the '
         'transition &#8869; &#8594; &#949;<sub>0</sub> &#8212; depends on <b>no axioms at all</b>: not '
         'the Axiom of Choice, not even propositional extensionality. The lattice algebra (ZP-A) and '
         'the Quine-atom self-reference that is the framework\'s keystone (ZP-J) are likewise '
