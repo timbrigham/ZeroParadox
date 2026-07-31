@@ -1554,7 +1554,7 @@
               "infra"
             ]
           },
-          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
+          "reason": "OutputSeparates.lean: one-step unfolding of the constant stream, from Cofix.dest_corec. RETRACTED FRAMING: an earlier reason said 'emission, not arity, separates' - see binCofix_subsingleton's reason.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6785,7 +6785,7 @@
               "go"
             ]
           },
-          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
+          "reason": "OutputSeparates.lean: two behaviours of Cofix streamPF are distinct, told apart by one observation of the head. Rutten 10.2(5) at A=2, B=1. NOTE the decl NAME retains the word 'output', which the round-1 gates showed is the wrong discriminator - the head type is. Name kept per the CC-2/MC-1 convention (cross-references stay valid); the docstring carries the correction.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18074,7 +18074,7 @@
               "infra"
             ]
           },
-          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
+          "reason": "OutputSeparates.lean: the two-element-head chain functor, Rutten 10.2(5) at A=2, B=1. Held at the same arity as idPF_Coalgebra so the head type is the only thing varying against binPF. RETRACTED FRAMING: an earlier reason said 'emission, not arity, separates' - see binCofix_subsingleton's reason.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36082,7 +36082,7 @@
               "no-go"
             ]
           },
-          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
+          "reason": "OutputSeparates.lean: for CONSTANT-ARITY polynomial functors the HEAD type decides whether the final coalgebra is a single point, and the arity does not. Two Lean instances of Rutten TCS 249 (2000) Ex 10.2(5) p.44 (final system of A x S^B is A^{B*}); no new mathematics. RETRACTED FRAMING: an earlier reason on these entries said 'emission, not arity, separates' - false, since natPF_NatListRegime has the same Bool head type and a one-point non-terminating part; it is a dependent-arity functor covered by Rutten 10.2(4)/(6), not by 10.2(5).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50766,7 +50766,7 @@
               "infra"
             ]
           },
-          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
+          "reason": "OutputSeparates.lean: the constant Bool-stream behaviour, used to witness two distinct points of Cofix streamPF. RETRACTED FRAMING: an earlier reason said 'emission, not arity, separates' - see binCofix_subsingleton's reason.",
           "verify": {
             "axioms": null,
             "sorry_free": true

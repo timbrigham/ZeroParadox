@@ -1,6 +1,6 @@
 -- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): two Lean instances of Rutten's final-system
--- formula for polynomial functors - the HEAD type decides whether the final coalgebra is a single point, and
--- the arity does not. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- formula for CONSTANT-ARITY polynomial functors - for those the HEAD type decides whether the final coalgebra
+-- is a single point, and the arity does not. Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Category.RootCutBinary
@@ -34,8 +34,8 @@ I defer to my AI assistant regarding the specifics of how the internals work.
 and cross-links a third the corpus already had.
 
 **The governing result — Rutten, *Universal coalgebra: a theory of systems*, TCS 249 (2000),
-Example 10.2(5), printed p. 44** (`.claude-local/papers/rutten_universal_coalgebra_2000.pdf`): for
-`F(S) = A × S^B` the final system is `A^{B*}`. A polynomial functor `⟨A, fun _ => B⟩` is exactly that
+Example 10.2(5), printed p. 44** (`.claude-local/papers/rutten_universal_coalgebra_2000.pdf`; Rutten
+credits it to his [52], Manes & Arbib 1986): for `F(S) = A × S^B` the final system is `A^{B*}`. A polynomial functor `⟨A, fun _ => B⟩` is exactly that
 `F`, so its final coalgebra has `|A|^{|B*|}` elements — **a single point iff `|A| = 1`, for every `B`
 whatsoever.** The head type decides; the arity `B` is irrelevant to whether the pole is a point.
 
@@ -60,24 +60,37 @@ refutes it: `natPF_NatListRegime = ⟨Bool, fun b => cond b PUnit PEmpty⟩` has
 single point. The stated discriminator was identical on both sides of the comparison.
 
 The real error was **comparing across families**: `natPF`'s child type *depends on its head*, so it is
-**not** of the form `⟨A, fun _ => B⟩` and Rutten 10.2(5) does not apply to it at all. Nothing here
-bears on `natPF`, and this file must not be cited as explaining `notEL_unique`.
+**not** of the form `⟨A, fun _ => B⟩` and Rutten 10.2(5) does not apply to it. Nothing here bears on
+`natPF`, and this file must not be cited as explaining `notEL_unique`.
+
+**But `natPF` is outside 10.2(5), NOT outside the literature.** Rutten gives the dependent-arity case
+three lines below on the same printed page — Example 10.2(6), `F(S) = C + (A × S^B)`, *"this example
+subsumes all of the above examples"* — and `natPF.Obj X ≅ 1 + X` is his item (4), whose final system is
+`(ℕ̄, pred)`. That is what `notEL_unique` witnesses, and `Computability/GroundZero.lean:49` already
+cites it. So **both** sides of the retracted comparison sit on one page of Rutten; the error was
+reading one item as if it governed the other item's family.
 
 `Reading:` CARRIER — the framework reads this as the computational-face counterpart of
-`Valuation/BranchingRequirement.lean`, which proves branching is what makes the 2-adic boundary a
-continuum "rather than a single chain's single end". On the 2-adic tree a branch choice **is** a
+`Valuation/BranchingRequirement.lean`, which argues branching is what makes the 2-adic boundary a
+continuum "rather than a single chain's single end" — that file proves the *seed*
+(`branches_incomparable`) and leans on `PadicTree`'s boundary for the continuum half, as its own
+honest-scope paragraph states. On the 2-adic tree a branch choice **is** a
 digit, so branching and head-labelling coincide there and come apart here. **Conjectural**: different
 carriers, no map between them is claimed, and no framework bottom is identified with any behaviour in
 this file (⊥ does not appear in it).
 
-`Reading:` a criterion covering all three functors above **and** `natPF` would be *the number of head
-values with inhabited child type* (`natPF`: one; `binPF`: one; `streamPF`: two). **Conjectural — not
-proved here, and not Rutten's**, whose formula is stated for constant arity only.
+**A replacement criterion was proposed and it is FALSE — recorded so it is not re-proposed.** The
+suggestion was *the number of head values with inhabited child type*. Machine-checked against it:
+`natPF` has count one yet `Cofix natPF` is not a point (`natZero ≠ natInfinity`), and `constPF` has
+count zero yet `Cofix (constPF Bool)` has two elements. It survives only if restricted to the
+non-terminating part, which is not what it said. Dropped rather than repaired — it predicted nothing
+the cited formulas do not.
 
-**Fences.** `output_separates` proves exactly **two** distinct behaviours, not the continuum; the
-cardinality `2^ω` is Rutten's formula, not proved here. **Uncountability is NOT Adámek–Milius–Moss's**
-— their Example 7.7 (p. 31, arXiv:1910.09401v2) gives the terminal coalgebra `A^∞ ∪ A*` and the
-initial algebra `A*` and states no cardinality; cite Rutten 10.2(5) for that. The general formula is
+**Fences.** `output_separates` proves exactly **two** distinct behaviours, not the continuum. Rutten
+10.2(5) identifies the carrier as `2^{1*}` and states **no cardinality** — that the set is uncountable
+is **Cantor's**, and is claimed nowhere here. **Uncountability is likewise NOT Adámek–Milius–Moss's**:
+their Example 7.7 (p. 31, arXiv:1910.09401v2) gives the terminal coalgebra `A^∞ ∪ A*` and the initial
+algebra `A*`, and no cardinality either. The general formula is
 cited, not formalized: what is machine-checked here is two of its instances.
 
 ## Structure
