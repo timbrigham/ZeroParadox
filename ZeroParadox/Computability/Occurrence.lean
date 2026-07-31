@@ -103,8 +103,11 @@ requirements, and AFA is a witness meeting them."
 **Consequence 2 — `StateTransition`'s API is under-used here; check it before hand-rolling.** Beyond
 `Reaches` and `eval` it already carries `Reaches₁`, a full `Reaches₀` family (`trans`, `refl`, `single`,
 `head`, `tail`, `tail'`), `reaches₁_eq`, `reaches_total`, `mem_eval`, `evalInduction`, and
-**`eval_maximal₁`** — *a halted state reaches nothing further* — which is adjacent to `loop_is_a_trap` and
-is nowhere cited in this corpus. Several results in this file were already found by the prior-art gate to
+**`eval_maximal₁`** and its non-subscript sibling **`eval_maximal`** — *a halted state reaches nothing
+further* — which are adjacent to `loop_is_a_trap` and are nowhere cited in this corpus. `reaches_total`
+is likewise uncited; § VI is the natural place to point at it, though § VI's own result is a
+one-step fact (via `Option.some_injective`) and `reaches_total` is the reachability-level form —
+adjacent, not the lemma § VI applies. Several results in this file were already found by the prior-art gate to
 duplicate Lean-core or Mathlib lemmas (see the header's prior-art block); that gate looked at `Option` and
 `PartrecCode`, **not** at `StateTransition`'s own API. Assume more overlap is there. -/
 

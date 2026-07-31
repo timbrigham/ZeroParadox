@@ -546,6 +546,14 @@ spread character.
 preserves its Haar probability measure is standard, but this file does not prove it for `unitMul`; only the
 `δ₀` half is machine-checked below. Do not cite this section for the Haar claim.
 
+**The standard result IS available in the pin, and this fence should be closable rather than merely
+declared** (prior-art gate, 2026-07-30): `mulEquivHaarChar_eq_one_of_compactSpace`
+(`Mathlib/MeasureTheory/Measure/Haar/MulEquivHaarChar.lean:136`,
+`[CompactSpace G] (φ : G ≃ₜ* G) : mulEquivHaarChar φ = 1`), whose additive alias
+`addEquivAddHaarChar_eq_one_of_compactSpace` is the one that applies here — `ℤ_p` is a compact additive
+topological group and `unitMul u` is a topological additive automorphism for `u` a unit. So the gap is a
+*build*, not an absence. Stated as adjacency, not as a claim: nothing below is proved from it.
+
 **And note what sphere-preservation costs:** the spheres are invariant sets of intermediate measure, so
 `unitMul` is **not ergodic** for Haar — it admits *many* invariant measures. That is the failure of unique
 ergodicity, which § I flags as the strong statement it cannot prove (Mathlib has no unique-ergodicity API).
@@ -568,13 +576,31 @@ theorem unitMul_norm_const {u : ℤ_[p]} (hu : ‖u‖ = 1) (x : ℤ_[p]) : ‖u
 
 /-- **The concentrated character, machine-checked.** Multiplication by `u` preserves the Dirac mass at the
     floor, because it fixes the floor. Together with `unitMul_norm_const` (the spread character's
-    precondition) this is the both-at-once regime — one dynamic, two invariant characters. -/
+    precondition) this is the both-at-once regime — one dynamic, two invariant characters.
+
+    Prior art (cited, not reproved): the pushforward step is discharged by `simp`, which has BOTH
+    Dirac pushforward lemmas registered — `MeasureTheory.Measure.map_dirac'`
+    (`Mathlib/MeasureTheory/Measure/Dirac.lean:86`, `@[simp]`, takes `(hf : Measurable f)`) and the
+    instance-based sibling `Measure.map_dirac` (`:224`, `@[simp]`, `[MeasurableSingletonClass _]`,
+    no measurability hypothesis). Either closes it, because `unitMul` FIXES the point, so the
+    pushforward returns the same Dirac.
+
+    **⚠ This proof previously read `simpa using Measure.map_dirac hm 0`, and that term was
+    ill-typed** — `map_dirac` takes one explicit argument, not two. It was silently discarded
+    because `simpa`'s `simp` closed the goal unaided; the build's standing
+    `try 'simp' instead of 'simpa'` warning was the only trace. Caught 2026-07-30 by the prior-art
+    gate running the term through `lake env lean` instead of reading it — a probe beat a read. The
+    proof is now plainly `simp`, so the docstring and the tactic agree. Note that `hm` is still
+    needed: it is the first component of the `MeasurePreserving` structure.
+
+    The same argument appears at `attractorBIM.preserving` above. This file's other `map_dirac'`
+    uses rewrite in a hypothesis at `:473` and `:507`, and in the goal at `:448`. -/
 theorem unitMul_preserving_dirac (u : ℤ_[p]) :
     MeasureTheory.MeasurePreserving (fun x : ℤ_[p] => u * x)
       (MeasureTheory.Measure.dirac 0) (MeasureTheory.Measure.dirac 0) := by
   have hm : Measurable (fun x : ℤ_[p] => u * x) := by fun_prop
   refine ⟨hm, ?_⟩
-  simpa using MeasureTheory.Measure.map_dirac hm 0
+  simp
 
 end BothAtOnce
 

@@ -71,13 +71,13 @@ types.
 
 ZP-J (T-EXEC: IsQuineAtom q ↔ q = ⊥, bot_self_mem).
 Mathlib: Nat.Partrec.Code.fixed_point₂ (Kleene's second recursion theorem).
-Mathlib: Nat.Partrec.Code.fixed_point (Roger's fixed-point theorem).
+Mathlib: Nat.Partrec.Code.fixed_point (Rogers' fixed-point theorem).
 
 ## Axiom footprint (verified)
 
 All proved ZP-K theorems depend on [propext, Classical.choice, Quot.sound].
 Source: Mathlib computability infrastructure — Kleene's theorem (fixed_point₂) and
-Roger's theorem (fixed_point) themselves use classical logic and choice.
+Rogers' theorem (fixed_point) themselves use classical logic and choice.
 ZP-J T-EXEC (axiom-free) is preserved as a ZP-J result; the classical axioms enter
 through Code/Partrec machinery, not through the ZPSemilattice or AFAStructure fields.
 
@@ -265,7 +265,7 @@ theorem kleene_quine_is_bot {L : Type*} [ZPSemilattice L] [KleeneStructure L]
     (q : L) (hq : IsQuineAtom q) : q = bot :=
   t_exec q hq
 
-/-- Roger's fixed-point theorem (Mathlib: fixed_point) as used in ZP-K:
+/-- Rogers' fixed-point theorem (Mathlib: fixed_point) as used in ZP-K:
     for any total computable transformation of codes, a fixed point exists.
     This is the foundation of the Kleene connection — programs can always
     be self-referential. -/

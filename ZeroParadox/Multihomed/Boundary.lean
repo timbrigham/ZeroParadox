@@ -175,7 +175,15 @@ ascent costs the ordinal library.** -/
 /-- **No oscillation on the ascent.** No ordinal is reachable from itself by one-or-more `<`-steps, so the
     ε₀ ascent admits no cycle of any length — in particular no 2-cycle, i.e. no flip-flop between two
     ordinals. `Statement:` cycle-freeness of `<` on `Ordinal`, which is `wf_no_cycle` at
-    `ascent_wellFounded`; proved directly here since `<` on ordinals is already transitive. -/
+    `ascent_wellFounded`; proved directly here since `<` on ordinals is already transitive.
+
+    **Prior art (cited, not reproved).** The inner step below — `TransGen (· < ·) a b → a < b` — is
+    the forward direction of Mathlib's `Relation.transGen_eq_self` (`Mathlib/Logic/Relation.lean:594`,
+    `[IsTrans α r] : TransGen r = r`), which `Ordinal` satisfies. The hand proof is kept per the
+    `CovBy` precedent (keep the proof, cite the standard name); the footprint here is already
+    `[propext, Classical.choice, Quot.sound]` from `Ordinal`, not from anything done here.
+    The asymmetry route is `WellFounded.asymmetric` (`Mathlib/Order/RelClasses.lean:225`), whose
+    `Std.Asymm` instance is registered — recorded at `Settheory/Wall.lean:67`. -/
 theorem ascent_no_oscillation (o : Ordinal) :
     ¬ Relation.TransGen ((· < ·) : Ordinal → Ordinal → Prop) o o := by
   intro h

@@ -35,7 +35,7 @@ holds — for ε₀ via `nfp` — since the supremum lives in a different type f
 - **Self-reference face** (`selfApp_isLeastFixedPointFrom`): ⊥ is the least fixed point of `selfApp`
   from the seed ⊥. Here seed = closure = ⊥: the μ construction collapses onto the seed. This is the
   degenerate/floor μ — the Gödel-inversion content that self-reference sits *at* the floor.
-- **Kleene face** (FENCED — `kleene_fixed_point_from_exists`): Roger's/Kleene's recursion fixed point
+- **Kleene face** (FENCED — `kleene_fixed_point_from_exists`): Rogers'/Kleene's recursion fixed point
   on `Code`. Same *shape* (a self-map has a fixed point), different *setting*: `Code` carries no
   complete-lattice order for `lfp`, its fixed points are NOT unique (`infinite_quine_family`), and
   there is no seed→closure ascent. It cannot form an `IsLeastFixedPointFrom`; recorded as an
@@ -168,7 +168,7 @@ theorem selfApp_mu_unique {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 
 /-! ## § VI. The Kleene face — FENCED (same shape, different setting)
 
-Roger's/Kleene's recursion theorem gives a fixed point of any computable self-map of `Code`. This is
+Rogers'/Kleene's recursion theorem gives a fixed point of any computable self-map of `Code`. This is
 the same μ-*shape* (a self-map has a fixed point) in a different *setting*: `Code` carries no
 complete-lattice order, so there is no `lfp`; its fixed points are NOT unique
 (`infinite_quine_family`); and there is no seed→closure ascent. Hence it does **not** instantiate

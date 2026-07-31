@@ -26,7 +26,7 @@ ZPL has four components:
     appears at the non-constructive diagonal step in each of the four ZP layers
     listed in §I. Not a Lean proposition — evidenced by #print axioms.
 
-(2) Roger Fixed-Point Stability — for any computable f, some code is behaviorally
+(2) Rogers' Fixed-Point Stability — for any computable f, some code is behaviorally
     fixed by f (eval (f c) = eval c).
     In Lean scope. Follows from ZPK's roger_fixed_point_exists.
 
@@ -89,10 +89,10 @@ section AxiomFootprintEvidence
 
 end AxiomFootprintEvidence
 
-/-! ## § II. Roger Fixed-Point Stability
+/-! ## § II. Rogers' Fixed-Point Stability
 
 Any computable transformation of a Code has a behavioral fixed point — a code c
-such that eval (f c) = eval c. This is Roger's fixed-point theorem (Kleene's
+such that eval (f c) = eval c. This is Rogers' fixed-point theorem (Kleene's
 second recursion theorem): the fixed-point structure is stable under any
 computable transformation.
 
@@ -101,7 +101,7 @@ eval botCode for ALL computable f. This overclaims — botCode is one specific
 Classical.choose witness and carries no special stability under arbitrary f.
 The existential version is the correct formalization. -/
 
-/-- Roger's fixed-point theorem (Kleene's second recursion theorem): for any
+/-- Rogers' fixed-point theorem (Kleene's second recursion theorem): for any
     computable transformation f, some code is behaviorally fixed by f.
     Proved as a wrapper around ZPK's roger_fixed_point_exists. -/
 theorem roger_fixed_point_stability (f : Code → Code) (hf : Computable f) :

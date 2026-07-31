@@ -1,6 +1,7 @@
 """
 Build ZP-K Illustrated Companion
-Version 1.16 | May 2026
+Version 1.17 | May 2026
+v1.17: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v1.16: BEDROCK - two class-field overclaims struck. The four-way table's Computation row asserted "no shorter external generator exists" (Kolmogorov content this same document strikes elsewhere as having no formal part here), and the computational-Quine paragraph asserted it as an "in other words" restatement of the fixed-point definition, which says nothing about minimality. Section heading "The Four-Way Equivalence" corrected - t_comp proves three.
 v1.15: witness audit (mechanical). "proved via da1_closed_concrete" for the Quine atom now records that MachinePhase defines selfMem as x = bottom, so the content of that theorem is the uniqueness rather than the membership.
 v1.14: DA-1 Path 3 reclassified to FOUNDATIONAL COMMITMENT (see ZP-K v1.11) - the companion had it as "Now IN LEAN SCOPE via ZP-K". Also struck a false predicate introduced by the v1.13 fix: "precludes any external initiating agent" had been left attached when "all four" became "three of the four", making it assert preclusion specifically of the order and algebra characterisations. Removed rather than reworded.
@@ -129,7 +130,7 @@ def four_way_table():
     t = Table(data, colWidths=[TW*0.22, TW*0.30, TW*0.48])
     t.setStyle(ts); return t
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -307,7 +308,7 @@ def build():
     # Purity note
     E.append(Paragraph('A Note on Proof Purity', CS['h1']))
     E.append(cbody(
-        'The computability machinery in ZP-K (Kleene\'s theorem, Roger\'s fixed-point theorem) '
+        'The computability machinery in ZP-K (Kleene\'s theorem, Rogers\' fixed-point theorem) '
         'requires classical logic — a standard dependency for any theorem that uses '
         'Mathlib\'s computability library, not a novel Zero Paradox commitment. '
         'The ZP-A, ZP-J, and core ZP-E results remain free of this dependency.'))

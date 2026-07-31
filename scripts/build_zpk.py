@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-K: Computational Grounding of Self-Reference PDF Builder
-Version 1.13 | May 2026
+Version 1.14 | May 2026
+v1.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v1.13: BEDROCK - the 2026-07-26 class-field-as-theorem root cause propagated, six sites. botCode described as "the code witnessing bottom's computational self-reference" and botCode_is_quine as "botCode IS its own program" now name it as a CLASS FIELD carrying a periodicity condition that constant codes also satisfy; the preamble no longer says Kleene's theorem "provides the formal witness"; the machinePhaseKleene def-box no longer says "a program that IS its own program". Section III heading and the verification table said "four-way equivalence" while t_comp proves THREE. R-K.0 gains the type-level statement of the gap: (1)-(3) are properties of an element of L, (4) is a property of a Code, and there is NO function or equivalence between Code and L anywhere in the development - the fourth condition is bundled by the class, not connected by a mapping.
 v1.12: witness audit (mechanical corrections). bot_self_mem_from_kleene described as "the Kleene side implies the AFA side" - it is a RESTATEMENT of the inherited AFAStructure field, adding no content, per Kleene.lean's own note. And "required together because they are the same structural fact" now names both as class FIELDS and the sameness as the framework's reading, which is the motivation for the class rather than something derived within it.
 v1.11: DA-1 Path 3 RECLASSIFIED (Tim, 2026-07-27) - from CLOSED / IN SCOPE to FOUNDATIONAL COMMITMENT, the status Path 2 already carries. Its witness botCode_is_quine is a KleeneStructure CLASS FIELD, assumed at instantiation, not a second independent proof; IsComputationalQuine is a periodicity condition a constant code satisfies vacuously; and the Kolmogorov reading ("no shorter program is prior to bottom") has no formal content here, K being uncomputable and absent from the development. Brings ZP-K into line with CLAIMS.md, which already stated this correctly. Three sites: the resolves-Paths prose, the Lean-scope status box, and the Open Items row.
@@ -40,7 +41,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -340,7 +341,7 @@ def build():
     E.append(body(
         'All ZP-K theorems carry the standard foundational axioms shared by all Mathlib '
         'computability results. These enter exclusively through Kleene\'s theorem and '
-        'Roger\'s theorem, which use classical logic and the axiom of choice. They do not '
+        'Rogers\' theorem, which use classical logic and the axiom of choice. They do not '
         'enter through ZPSemilattice or AFAStructure.'))
     E.append(body(
         'ZP-J T-EXEC and all its corollaries remain axiom-free. The classical axioms are '
@@ -551,7 +552,7 @@ def build():
          'Computational quines are not unique in general. Uniqueness flows from ZP-J T-EXEC '
          '(set-theoretic side). No uniqueness theorem for computational quines is needed or '
          'appropriate.'],
-        ['Roger\'s fixed-point theorem',
+        ['Rogers\' fixed-point theorem',
          'CLOSED — roger_fixed_point_exists',
          'For any computable f : Code → Code, ∃ c, eval (f c) = eval c. '
          'Lean: roger_fixed_point_exists — standard foundational axioms only. ✓'],

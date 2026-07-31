@@ -1,5 +1,6 @@
 """
-Zero Paradox — Foreword PDF Builder (v2.13, revised July 2026)
+Zero Paradox — Foreword PDF Builder (v2.14, revised July 2026)
+v2.14: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers Jr.). ZP-L made this exact correction at its v1.4 and it was never swept to the rest of the corpus; Mathlib carries the same typo upstream at Computability/PartrecCode.lean:36,1001. Prose only, no claim changed.
 v2.13: T-COMP overclaim corrected (bedrock). "a four-way equivalence connecting the Quine atom, bottom, the join-identity element, and Kleene's fixed point" -> a three-way equivalence, with Kleene's fixed point named as an assumption of the KleeneStructure class rather than a fourth clause; "DA-1 is closed concretely ... grounding the framework in the theory of computation" -> da1_closed_concrete proves the structural half only, and the step to self-execution is a commitment, not a consequence.
 v2.12: SYNC TO CLAIMS.md + bedrock false-premise fix (release-prep). (1) Struck the false "a well-founded ⊥ would admit an external interpreter" premise (the finite-interpretability fallacy, same class as ZP-E v3.24 / ZP-A v1.20) from the CC-2 row and Section III; ZFC-incompatibility now rests on ⊥={⊥} self-membership (Regularity, no_quine_atom). (2) AX-B1 corrected from "Directly Verifiable / not a novel commitment" to "the one substantive modeling commitment" (discrete over continuum; only ax_b1_distinct's distinctness is decide-checked; f_snap_impossible). (3) Commitment accounting synced to CLAIMS.md: MC-1 = the bottom family (not a commitment; identity retired as ill-typed), CC-1 derived via ZP-J cc1_derived, CC-2 a Forced Metatheoretic Commitment. Supersedes the v2.8 "argued to be ruled out" softening (which left the premise) and the v1.6 "Directly Verifiable" AX-B1 relabel.
 v2.11: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
@@ -56,7 +57,7 @@ Follows all rules in pdf rendering standards.md:
 import os
 from zp_utils import *
 
-VERSION = '2.13'
+VERSION = '2.14'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -335,7 +336,7 @@ def build():
         Paragraph(
             'The incomputability convergence layer (ZP-L) establishes ε₀ — the first '
             'ordinal fixed point of ω^x — as the formal snap threshold. It connects '
-            'ordinal arithmetic, p-adic convergence, and Roger\'s fixed-point stability '
+            'ordinal arithmetic, p-adic convergence, and Rogers\' fixed-point stability '
             'in a single canonical snap map. All 25 theorems are Lean-verified.',
             S['body']),
         Paragraph(

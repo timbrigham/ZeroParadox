@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the computability-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here) — the code↔data (Gödel) involution swaps a configuration's program-role and data-role (both Gödel-numbered as ℕ); its fixed locus is the self-application diagonal (code = data), where the Kleene/Roger quine lives (the self-reproducing fixed point = ⊥). The computability analog of RiemannSphere's rInv (0↔∞) and Category's op (initial↔terminal). Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the computability-frame realization of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here) — the code↔data (Gödel) involution swaps a configuration's program-role and data-role (both Gödel-numbered as ℕ); its fixed locus is the self-application diagonal (code = data), where the Kleene/Rogers quine lives (the self-reproducing fixed point = ⊥). The computability analog of RiemannSphere's rInv (0↔∞) and Category's op (initial↔terminal). Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Computability.Kleene
 import Mathlib.Tactic
@@ -31,8 +31,8 @@ object — its **fixed locus is the self-application diagonal**: `codeDataSwap p
 (`codeDataSwap_fixed_iff`), i.e. the configurations where a program's code equals its datum, a program
 run on its own code.
 
-The Kleene/Roger quine lives on that fixed locus. Every code's self-application configuration
-`(encode c, encode c)` is swap-fixed (`selfConfig_on_fixedLocus`), and Roger's fixed-point theorem
+The Kleene/Rogers quine lives on that fixed locus. Every code's self-application configuration
+`(encode c, encode c)` is swap-fixed (`selfConfig_on_fixedLocus`), and Rogers' fixed-point theorem
 (`roger_fixed_point_exists`, Mathlib `Nat.Partrec.Code.fixed_point`) supplies, for any computable
 transformation `f`, a fixed-point code `c` with `eval (f c) = eval c` whose self-configuration sits on
 the diagonal. `codedata_is_frameflip` bundles the three faces: the frame-change is an involution, its
@@ -44,12 +44,13 @@ self-application diagonal (`codedata_is_frameflip`).
 `Reading:` INVERSION — the framework reads the snap as an instance of this exchange. Conjectural: no snap
 transition appears in these statements. See `Multihomed/SnapFrameChange.lean`'s declaration docstring.
 
-Content: a bundling of Mathlib's `Prod.swap` involution with Roger's fixed-point theorem and the
+Content: a bundling of Mathlib's `Prod.swap` involution with Rogers' fixed-point theorem and the
 `quine_period_is_goedel` / `IsComputationalQuine` infrastructure of ZP-K; no mathematical novelty. The
 pure swap facts are choice-free — `codeDataSwap_involutive` is axiom-free and `codeDataSwap_fixed_iff` is
 `propext`-only; the faces that mention codes and the quine (`selfConfig_on_fixedLocus`,
-`codedata_is_frameflip`) carry `Classical.choice`, inherited from the Mathlib `Code` / Roger fixed-point
-infrastructure, as documented in `Computability/Kleene.lean`.
+`codedata_is_frameflip`) carry `Classical.choice`, inherited from the Mathlib `Code` / Rogers fixed-point
+infrastructure, as documented in `Computability/Kleene.lean`. (Axiom footprints only — the KIND and
+status of the claim itself are the `Statement:` / `Reading:` INVERSION labels above.)
 
 **Fences.** Computability point-of-view's shape of the frame-change; the abstract cross-domain
 "snap = frame-change" stays conjectural (type boundary; see
@@ -96,7 +97,7 @@ theorem selfConfig_on_fixedLocus (c : Code) :
 
 /-- **The code↔data frame-flip (computability frame).** The frame-change is (i) an involution
     (self-inverse, like `rInv`/`op`); (ii) its fixed locus is exactly the self-application diagonal
-    (code = datum); and (iii) the Roger/Kleene quine — the self-reproducing fixed point — lives on that
+    (code = datum); and (iii) the Rogers/Kleene quine — the self-reproducing fixed point — lives on that
     locus: for any computable transformation `f` there is a fixed-point code `c` (`eval (f c) = eval c`)
     whose self-application configuration is swap-fixed. The computability realization of the POLE EXCHANGE;
     the snap-as-instance reading is ZP-Q's conjecture, not established here (no snap transition appears in

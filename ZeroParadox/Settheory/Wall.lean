@@ -50,7 +50,7 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   Russell + Turing) as corollaries off one named engine — not the theorems, which are not new.
 - The **well-founded / membership / Bool / logical** re-proofs below have exact library equivalents too,
   kept as self-contained hubs alongside the function-fixed-point ones: `wf_no_selfloop` is Mathlib's
-  `WellFounded.irrefl` (`Mathlib/Order/WellFounded.lean:67`); `no_quine_atom` (`x ∉ x`) is
+  `WellFounded.irrefl` (`Mathlib/Order/WellFounded.lean:66`); `no_quine_atom` (`x ∉ x`) is
   `ZFSet.mem_irrefl` (`Mathlib/SetTheory/ZFC/Basic.lean:631`); `bool_not_no_fixedpoint` is
   `Bool.not_ne_self`; and `negation_no_fixedpoint` (`¬(p ↔ ¬p)`) is core Lean's `not_iff_self` /
   `iff_not_self`. The delta is again the PRESENTATION — one named engine with these as its faces — not
@@ -65,8 +65,8 @@ Foundation," the in-kernel refutation of the literal Quine atom.
     3-cycles. Irreflexivity is its `a := b` instance. So `wf_no_selfloop` is the weakest rung of a published chain; this file states it
     deliberately as the one-cycle case, with `wf_no_cycle` below covering cycles of any length.
   * **Instance resolution already carries it.** `IsWellFounded → Std.Asymm` is registered
-    (`RelClasses.lean:230`), so `irrefl_of` / `asymm_of` fire on any type with the instance — and `ZFSet`
-    has it (`ZFC/Basic.lean:623`). Hand-rolled `∀`-form restatements get none of that machinery.
+    (`Mathlib/Order/RelClasses.lean:234`), so `irrefl_of` / `asymm_of` fire on any type with the instance — and `ZFSet`
+    has it (`Mathlib/SetTheory/ZFC/Basic.lean:622`). Hand-rolled `∀`-form restatements get none of that machinery.
   * **`wellFounded_iff_isEmpty_descending_chain`** (`Mathlib/Order/WellFounded.lean:**51**`) is a
     **biconditional**: `WellFounded r ↔ IsEmpty {f : ℕ → α // ∀ n, r (f (n+1)) (f n)}`. A self-loop is
     the *constant* descending chain, so it renders the non-well-founded side as **"the host contains an
