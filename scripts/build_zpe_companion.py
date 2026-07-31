@@ -154,7 +154,7 @@ def axioms_table():
     rows = [
         ['AX-B1',
          'Binary Existence. A state either exists or it does not. No third option. '
-         'Directly verifiable by computation — not a novel commitment.'],
+         'The framework&#8217;s ONE substantive modelling commitment: that the outcome space is DISCRETE rather than a continuum. The two states being distinct is decidable; the choice of a discrete alphabet is not, and the real numbers are where it fails.'],
         ['AX-G1',
          'Initial Object Exists. There is a starting point that reaches everything. '
          'Not a novel commitment — grounded in ⊥ as the bottom element of the ZP-A semilattice.'],

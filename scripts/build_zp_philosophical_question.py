@@ -506,10 +506,12 @@ def build():
         'cannot even be nothing, because "being nothing" is itself a property, and '
         'pure absence has none. The moment you characterize it, you give it structure; '
         'the moment it has structure, it has a bottom element; and a bottom element is ⊥. '
-        'So the void and the null state are the same object. ⊥ = {⊥} — the null '
-        'state contains itself — means no prior state was ever needed to generate it. '
-        'It always already generated itself. The saying had it exactly backwards: '
-        'nothing, precisely because it is nothing, has no choice but to become something.'))
+        'So the void and ⊥ are the same object. ⊥ = {⊥} — ⊥ contains itself — means no '
+        'prior state was ever needed to generate it. It always already generated itself. '
+        'The framework reads the saying as exactly backwards: that nothing, precisely '
+        'because it is nothing, has no choice but to become something. That reading is '
+        'the argument this section makes, and it is the framework\'s commitment; it is '
+        'not carried by any theorem above, and the previous section says why.'))
     E.append(body(
         'Whether this closes the final gap depends on what you, as an individual, think a gap requires. '
         'It does not satisfy in the way a Lean proof satisfies. But it may be the '
@@ -567,7 +569,8 @@ def build():
     E.append(Paragraph(
         '⊥ → ε₀', S['snap']))
     E.append(Paragraph(
-        'The Snap is not a starting assumption. It is what the structure demands.',
+        'The Snap\'s shape is not a starting assumption; it is what the structure fixes. '
+        'That the Snap is taken remains the framework\'s commitment.',
         S['subtitle']))
 
     E += [

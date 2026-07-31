@@ -280,8 +280,10 @@ RULED OUT**, not where it is supplied: ZP-F rules it out on the Archimedean side
 removes the topological obstruction on the other. Non-Archimedean structure is therefore
 necessary and **not** sufficient — that the snap actually occurs is carried by AX-B1 together
 with the framework's commitments, never by C3 or T5 alone. (An earlier revision of this
-paragraph asserted the biconditional "possible if and only if non-Archimedean"; the reverse
-direction does not hold.)
+paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
+fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density obstruction but supplies
+no closest nonzero element, so it does not yield the step. The converse — a first step exists ⟹ the
+field is non-Archimedean — does hold, by `f_snap_impossible` on the Archimedean side.)
 
 The ultrametric is not a technical convenience — it is the structural fact that
 the Archimedean property would erase. C3's irreversibility is Ostrowski's
