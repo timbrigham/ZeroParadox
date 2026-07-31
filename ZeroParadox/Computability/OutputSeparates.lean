@@ -70,7 +70,10 @@ open QPF
     the total relation: the heads agree because `Unit` is a subsingleton, and the children are related
     for free. This is the NEGATIVE half — doubling the arity leaves the infinite pole a point. -/
 theorem binCofix_subsingleton (x y : Cofix binPF.Obj) : x = y := by
-  sorry
+  refine Cofix.bisim (fun _ _ => True) ?_ x y trivial
+  intro a b _
+  rw [liftr_iff]
+  exact ⟨(), (Cofix.dest a).2, (Cofix.dest b).2, rfl, rfl, fun _ => trivial⟩
 
 /-! ## § II — Output separates -/
 
@@ -86,13 +89,18 @@ def constStream (b : Bool) : Cofix streamPF.Obj :=
 /-- One step of the constant behaviour: it emits `b` and continues as itself. -/
 theorem constStream_dest (b : Bool) :
     Cofix.dest (constStream b) = ⟨b, fun _ => constStream b⟩ := by
-  sorry
+  unfold constStream
+  rw [Cofix.dest_corec]
+  rfl
 
 /-- **OUTPUT SEPARATES.** Two behaviours of the same arity as `idPF` — one recursive position each,
     both non-terminating — are nevertheless **distinct**, told apart by a single observation of the
     head. Contrast `notEL_unique`, where all non-terminating behaviours collapse to one point. -/
 theorem output_separates : constStream false ≠ constStream true := by
-  sorry
+  intro h
+  have hd : Cofix.dest (constStream false) = Cofix.dest (constStream true) := congrArg _ h
+  rw [constStream_dest, constStream_dest] at hd
+  exact Bool.false_ne_true (congrArg Sigma.fst hd)
 
 /-! ## § III — The contrast -/
 
@@ -106,7 +114,15 @@ theorem emission_not_arity_separates :
 
 end ZeroParadox
 
-/-! ## Axiom Purity Check -/
+/-! ## Axiom Purity Check
+
+**Measured 2026-07-30, all four: `[propext, Classical.choice, Quot.sound]`.** The choice is inherited
+from Mathlib's `QPF.Cofix`, which is `Quot (@Mcongr F q)` over the M-type construction — every
+statement here mentions `Cofix`, and `#print axioms` follows the STATEMENT, not the proof. This
+matches the ν-side footprint `Category/CoalgebraForkPlace.lean` already records (μ side choice-free,
+ν side not). None of it is a new commitment: the proofs themselves are one `Cofix.bisim`, one
+`Cofix.dest_corec`, and one `congrArg` on a `Sigma.fst`.
+-/
 section PurityCheck
 open ZeroParadox
 
