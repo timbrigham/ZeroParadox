@@ -189,8 +189,24 @@ into *denying* the framework's own thesis. The sequence is worth keeping because
 - **`Statement:` + KIND** — the theorem proves it. Name the witness.
 - **`Reading:` + KIND** — the framework reads X as an instance of that kind. Conjectural.
 
+**ONE THEOREM MAY CARRY TWO KINDS — write one `Statement:` line per KIND it actually proves.** A bundle
+carrying two is the **normal case for a self-dual object**, not an exception. `catseam_is_frameflip` is the
+worked example: (i) and (ii) say the seam is initial AND terminal — **COINCIDENCE** — while (iii) says `op`
+exchanges those characterisations and fixes the seam — **INVERSION**. Being both is exactly what makes it
+self-dual; either label alone is a mischaracterisation. **Measured 2026-07-30, one commit after this table
+was written:** the gloss went in tagged INVERSION only, disagreeing with the COINCIDENCE entry in this very
+table, and the prior-art gate caught it. The convention as first drafted implied one KIND per claim, and the
+mislabel followed immediately.
+
 **There is deliberately NO slot for denying a reading.** That is what makes trap 2 unwriteable. If a
 theorem does not establish an identification, say `Reading:` and mark it conjectural — never "NOT the snap".
+
+**And the DENIAL is checked directly, not inferred from a missing tag.** Measured 2026-07-30: the tag-check
+passed at **zero** new untagged claims while **seven** denial sites sat live in the corpus, and the editorial
+gate had to find four of them by eye. A denial is wrong regardless of how it is tagged, so `check_pov.py`
+carries a `DENIAL` pattern checked **unconditionally and never baselined**. **The generalizable lesson, which
+applies to every gate this project writes:** a convention with a *forbidden form* must detect the forbidden
+form itself — detecting only the *absence of the required form* leaves the violation invisible.
 
 **Enforcement is MECHANICAL, because this is the FOURTH convention of this shape and the previous three
 all leak.** (`vocabulary_reference.md`: the bare-"bottom" rule, "iterative bottoms", standard-math-first.)

@@ -29,8 +29,12 @@ which swaps the poles **initial ↔ terminal**. The zero-object seam `Z = fD_fun
 this file bundles that P1 coincidence with the P2 frame-change: `op` carries the seam's initial-ness to
 its op's terminal-ness and its terminal-ness to its op's initial-ness. The seam is the fixed point of
 the frame-change — an `op`-self-dual zero object — the category-frame realization of the POLE EXCHANGE.
-`Statement:` INVERSION — `op`-duality exchanges initial and terminal, and the seam is its fixed point.
-`Reading:` INVERSION — the framework reads the snap as an instance of this exchange. Conjectural: no snap
+`Statement:` COINCIDENCE — the seam is initial AND terminal in `ModuleCat ℂ`, both at once
+(`catseam_is_frameflip` (i) and (ii)). This is the KIND `CLAUDE.md`'s table lists it under.
+`Statement:` INVERSION — and `op`-duality exchanges those two characterisations, fixing the seam
+(`catseam_is_frameflip` (iii)). The theorem bundles both KINDs; that is what makes it a *self-dual*
+zero object rather than either fact alone.
+`Reading:` INVERSION — the framework reads the snap as an instance of that exchange. Conjectural: no snap
 appears in `catseam_is_frameflip`, and ZP-Q holds the identification open.
 
 `catseam_is_frameflip`: the seam is (i) initial and (ii) terminal in `ModuleCat ℂ` (the two charts), and
@@ -63,8 +67,8 @@ noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
     `Reading:` this is "the bottom is **concurrently both poles**" in categorical dress — μ-bottom in one
     chart, ν-top in the other, **simultaneously**, with `op`-duality exchanging the charts and fixing the
     seam. Exactly as `rInv` exchanges `0 ↔ ∞` while ⊥ carries both readings. **The frame change is the
-    exchange of the two poles; the seam is where they coincide.** The snap — one step off the zero face —
-    is a separate object and is not established here.
+    exchange of the two poles; the seam is where they coincide.** No snap transition appears in the
+    statement, so the snap-as-instance reading stays ZP-Q's conjecture.
 
     **⚠ CORRECTED TWICE, 2026-07-30 (adversary gate, bedrock). Read the whole of this before citing
     any "min≡max family".** An earlier revision called `epsilon0_min_eq_max` an instance of
@@ -73,7 +77,11 @@ noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
     satisfies `fork_collapse_iff`'s hypotheses.** It requires `[CompleteLattice α]` and a *monotone*
     `f : α →o α` (`Settheory/FixedPointFork.lean`). Measured against that:
     * `epsilon0_min_eq_max` — `α ↦ ω^α` on `Ordinal` has a **proper class** of fixed points (`ε₁, ε₂, …`
-      all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so `lfp ≠ gfp` and nothing collapses.
+      all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so the uniqueness side of (iii)
+      fails. The case is in fact stronger than that and the earlier wording under-stated it: `Ordinal`
+      carries no `CompleteLattice` instance in the pin, so `lfp` and `gfp` are not defined there at all
+      and `lfp ≠ gfp` is not even a well-formed proposition. The hypotheses fail before the conclusion
+      can be stated.
     * `selfApp_bot_is_both_extremal` — `ZPSemilattice` is a **bare join-semilattice**, not a complete
       lattice, and `AbstractSelfApp.selfApp : L → L` is **not an `OrderHom`**.
     * `catseam_is_frameflip` — lives in `ModuleCat ℂ`, a **category**, not a lattice at all.

@@ -90,7 +90,7 @@ IS_FACES = [
      ["t_snap_derived"]),
     ("verb", "*one-way*: the departure from ⊥ does not reverse. No join can return to a strictly lower state (algebraic form), and the 2-adic and Kleisli faces prove the same irreversibility topologically and categorically",
      ["t_snap_irreversible", "c3_irreversible", "fC_no_return"]),
-    ("verb", "a chart-reading of the LIMIT (not of the snap - no snap transition appears in the statement), valuation face: the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
+    ("verb", "a chart-reading of the LIMIT - `Statement:` INVERSION, `Reading:` INVERSION and conjectural, since no snap transition appears in the statement - valuation face: the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
      ["snap_is_frameflip", "snap_frameflip_tower_tendsto_infty"]),
     ("verb", "a chart-reading of the SEAM (the seam is what the frame-flip FIXES, not a flip, and no snap appears), category face: the categorical seam is an op-self-dual zero object of the module category ModuleCat ℂ - initial and terminal at once, with the op-duality frame-change swapping the two",
      ["catseam_is_frameflip"]),
@@ -209,7 +209,7 @@ It is a **beginning, not a resolution.** What is *proved* is that the snap is fo
 
 ### The snap is (positive handles, with witnesses)
 
-The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it joins) or what the snap *does* (**verb** - the action itself). Most are verbs; that is the point. *(The frame-change is the POLE EXCHANGE - the bottom read as both 0 and infinity - and is NOT the snap; see ZP-Q v1.4 and the declaration docstrings.)* *The per-domain frame-flips and the order-theoretic universal are proved theorems, written up in ZP-Q (The Frame-Change); they compose known results, so no new theorem is claimed. Only the abstract cross-domain reading - that these are literally one change of frame - is a conjecture (a type boundary).*
+The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it joins) or what the snap *does* (**verb** - the action itself). Most are verbs; that is the point. *(The frame-change is the POLE EXCHANGE - the bottom read as both 0 and infinity. Whether the snap is an instance of that exchange is ZP-Q's open conjecture, not a settled identification either way; see ZP-Q and the declaration docstrings.)* *The per-domain frame-flips and the order-theoretic universal are proved theorems, written up in ZP-Q (The Frame-Change); they compose known results, so no new theorem is claimed. Only the abstract cross-domain reading - that these are literally one change of frame - is a conjecture (a type boundary).*
 
 {is_faces}
 

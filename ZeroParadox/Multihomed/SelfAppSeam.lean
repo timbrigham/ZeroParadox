@@ -86,7 +86,11 @@ theorem selfApp_bot_is_greatest_fp :
     satisfies `fork_collapse_iff`'s hypotheses.** It requires `[CompleteLattice α]` and a *monotone*
     `f : α →o α` (`Settheory/FixedPointFork.lean`). Measured against that:
     * `epsilon0_min_eq_max` — `α ↦ ω^α` on `Ordinal` has a **proper class** of fixed points (`ε₁, ε₂, …`
-      all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so `lfp ≠ gfp` and nothing collapses.
+      all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so the uniqueness side of (iii)
+      fails. The case is in fact stronger than that and the earlier wording under-stated it: `Ordinal`
+      carries no `CompleteLattice` instance in the pin, so `lfp` and `gfp` are not defined there at all
+      and `lfp ≠ gfp` is not even a well-formed proposition. The hypotheses fail before the conclusion
+      can be stated.
     * `selfApp_bot_is_both_extremal` — `ZPSemilattice` is a **bare join-semilattice**, not a complete
       lattice, and `AbstractSelfApp.selfApp : L → L` is **not an `OrderHom`**.
     * `catseam_is_frameflip` — lives in `ModuleCat ℂ`, a **category**, not a lattice at all.

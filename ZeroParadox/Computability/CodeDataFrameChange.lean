@@ -98,8 +98,9 @@ theorem selfConfig_on_fixedLocus (c : Code) :
     (self-inverse, like `rInv`/`op`); (ii) its fixed locus is exactly the self-application diagonal
     (code = datum); and (iii) the Roger/Kleene quine — the self-reproducing fixed point — lives on that
     locus: for any computable transformation `f` there is a fixed-point code `c` (`eval (f c) = eval c`)
-    whose self-application configuration is swap-fixed. The computability realization of "the snap is the
-    change of frame." -/
+    whose self-application configuration is swap-fixed. The computability realization of the POLE EXCHANGE;
+    the snap-as-instance reading is ZP-Q's conjecture, not established here (no snap transition appears in
+    this statement). -/
 theorem codedata_is_frameflip :
     Function.Involutive codeDataSwap
       ∧ (∀ p : ℕ × ℕ, codeDataSwap p = p ↔ p.1 = p.2)

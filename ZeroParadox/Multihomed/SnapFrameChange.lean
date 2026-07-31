@@ -29,8 +29,13 @@ this **encoding chart** the ascent to `ε₀` resolves onto the bottom — the e
 built the inversion `rInv` on the one-point compactification `OnePoint ℚ₂`, a homeomorphism that swaps
 the floor `0` with the point at infinity `∞` (`rInv_swaps`) — the change of frame / chart-transition.
 
-The result is the **valuation-frame realization of the POLE EXCHANGE** (not of the snap — see the
-declaration docstring below):
+`Statement:` INVERSION — `rInv` exchanges the floor `0` with `∞`, and one tower of encodings reads as
+converging to either pole depending which chart it is viewed through (`snap_is_frameflip`).
+`Reading:` INVERSION — the framework reads the snap as an instance of that exchange. Conjectural: no
+snap transition appears in the statement.
+
+The result is the **valuation-frame realization of the POLE EXCHANGE** (the snap-as-instance reading is
+ZP-Q's conjecture, not established here — see the declaration docstring below):
 `snap_frameflip_tower_tendsto_infty` — the *same* tower encodings, pushed into `OnePoint ℚ₂` and viewed
 through `rInv`, tend to `∞`. So one sequence, two charts: it falls to the floor `0` in the encoding
 chart and rises to the antipode `∞` in the `rInv` chart, and `rInv` is the
@@ -92,10 +97,11 @@ theorem snap_frameflip_tower_tendsto_infty :
     So: one object, two chart-readings, and a chart map swapping them.
 
     `Reading:` **the FRAME CHANGE is ⊥ being both `0` and `∞`** — the two readings of the bottom — and
-    `rInv` is what exchanges them. The **SNAP is a different object**: one covering step off the zero face
+    `rInv` is what exchanges them. The **SNAP is a separate statement**: one covering step off the zero face
     (`bot ⋖ a`, `HasFirstStep`, AX-B1), which is a commitment, not a chart change. Merging the two is what
     the layer's older framing did, and it is what produced the standing puzzle that a frame flip is an
-    involution (reversible) while the snap is one-way. They were never the same map.
+    involution (reversible) while the snap is one-way. That mismatch is what an identification would have to
+    resolve; ZP-Q holds it open rather than settling it either way.
     (ε₀ ≠ ⊥: the encodings converge to ⊥, they do not realize ε₀ as ⊥.) -/
 theorem snap_is_frameflip :
     Tendsto (fun k => cnf_encode (towerOrd k)) atTop (𝓝 (0 : ℤ_[2]))
