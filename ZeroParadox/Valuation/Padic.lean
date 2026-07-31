@@ -256,17 +256,32 @@ The ultrametric property (T1) is the metric expression of non-Archimedean struct
 C3 (irreversibility) is the positive complement to ZP-F's f_snap_impossible:
 
 - In Archimedean fields (ZP-F): halving is always available, no minimal positive
-  element exists — the snap is impossible.
+  element exists — the snap is **impossible** (`f_snap_impossible`,
+  `axb1_fails_in_ordered_field`).
 - In Q₂ (this file): the ultrametric creates a genuine topological gap at zero
-  (T2, T3, C3) — the snap is forced.
+  (T2, T3, C3) — the snap is **not blocked**, which is a strictly weaker statement.
+
+**⚠ CORRECTED 2026-07-31. This line read "the snap is forced" and that is FALSE**, as
+`ZeroParadox/Reals/OrderedField.lean:192-199` states directly: *"ZP-B does NOT force the snap,
+and cannot."* What this file proves is topological — the gap at 0 is clopen (`t3_isolation`)
+and the return across it admits no continuous path (`c3_irreversible`). **Neither yields a
+first step, and no metric result could:** the 2-adic norm values accumulate at 0
+(‖2ⁿ‖₂ = 2⁻ⁿ), so ℚ₂ has no closest non-zero element either. **The first step is AX-B1**, a
+modelling commitment, not a consequence of the 2-adic structure. Two files gave opposite
+answers here for months; `OrderedField.lean` is the one that reasoned it through.
 
 **ZP-B / ZP-F Classification (Ostrowski's theorem):**
 
 Ostrowski's theorem states that every complete valued field extending ℚ is either
 Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p).
 ZP-B covers the non-Archimedean case (p = 2, forced by AX-B1 and minimality).
-ZP-F covers the Archimedean case. Together the classification is complete:
-the snap is possible if and only if the field is non-Archimedean.
+ZP-F covers the Archimedean case. **The classification is a statement about where the snap is
+RULED OUT**, not where it is supplied: ZP-F rules it out on the Archimedean side, and ZP-B
+removes the topological obstruction on the other. Non-Archimedean structure is therefore
+necessary and **not** sufficient — that the snap actually occurs is carried by AX-B1 together
+with the framework's commitments, never by C3 or T5 alone. (An earlier revision of this
+paragraph asserted the biconditional "possible if and only if non-Archimedean"; the reverse
+direction does not hold.)
 
 The ultrametric is not a technical convenience — it is the structural fact that
 the Archimedean property would erase. C3's irreversibility is Ostrowski's

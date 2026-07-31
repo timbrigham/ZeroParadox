@@ -41,8 +41,8 @@ ascending chain. `chain_no_pole`: `ℕ` is an infinite chain and not two-element
 a branch (a node `c` with two `≤`-incomparable successors `a`, `b`) forces **three distinct** elements. The
 pole has exactly **two** (`Fintype.card Pole = 2`), so it **cannot host a branch**; a branch is realized at
 **four** in `Bool × Bool` (`pole_and_branching_independent`). So the two axes are independent, and a
-**cardinality ladder** appears: **two** is the pole (where the `IrreversibilityProbe` found self-reference
-forces the snap), **three** is the minimum for branching (the field), so the pole is strictly below the
+**cardinality ladder** appears: **two** is the pole (where the `IrreversibilityProbe` found a unique
+fixed point already costs injectivity - irreversibility, not occurrence), **three** is the minimum for branching (the field), so the pole is strictly below the
 branching threshold — the minimal snap sits under the minimal field.
 
 **Running tally (completeness).** No fifth axis (height, iterative-bottoms, irreversibility — all forced).

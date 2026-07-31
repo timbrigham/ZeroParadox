@@ -141,7 +141,11 @@ ZP-K established: ⊥ = c₀ is the unique Quine atom of MachinePhase
 and no execution. Reading c₀ as *the Kleene quine* is ZP-K's `KleeneStructure`
 commitment, not a theorem, and it is not a Lean `=`: a quine is a `Code` and c₀ is a
 `MachinePhase`, so no equation between them is well-formed. See ZP-K § II / § III.
-ZP-L established: ε₀ forces the snap from c₀ to c₁.
+ZP-L established: **given** that the snap happens at ε₀, it happens **nowhere below** it. The
+same caution as the ZP-K sentence above applies here: `snap_unconditional` is named for its lack
+of a fixed-point hypothesis, not for lacking hypotheses — it takes `hε₀ : φ epsilonZero = c₁` as
+an argument, so the snap is assumed and its *minimality* is what is derived. ZP-L does not force
+the snap. (Corrected 2026-07-31; this line read "ε₀ forces the snap from c₀ to c₁".)
 
 The triangle (the top node read under that commitment):
     c₀ = ⊥ (the Quine atom; read as the Kleene quine, ZP-K)

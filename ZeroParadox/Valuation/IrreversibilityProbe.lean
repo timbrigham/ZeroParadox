@@ -97,8 +97,9 @@ theorem probe3_reversible_with_unique_fp :
 /-- **Irreversibility is forced at the pole (card 2), not at card 3.** Two is the threshold at which
 self-reference forces the one-way collapse: at the two-element pole every self-map with a unique fixed point
 is non-injective, while at three elements a reversible witness with a unique fixed point exists. This links
-the pole's cardinality (axis 1) to the snap (irreversibility): the pole is two-element *because* two is where
-self-reference forces the snap. -/
+the pole's cardinality (axis 1) to **irreversibility**: the pole is two-element *because* two is where a
+unique fixed point already costs injectivity. **Not** "where self-reference forces the snap" — that was
+this line until 2026-07-31, and non-injectivity is not occurrence; nothing here says anything moves. -/
 theorem irreversibility_forced_at_pole_not_beyond :
     (∀ f : Pole → Pole, (∃! p, f p = p) → ¬ Function.Injective f) ∧
     (∃ g : Fin 3 → Fin 3, (∃! x, g x = x) ∧ Function.Bijective g) :=

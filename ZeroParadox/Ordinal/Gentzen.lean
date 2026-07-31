@@ -426,14 +426,24 @@ The hypothesis
   hfp : ∀ α, ω^α = α → φ α = c₁
 encodes that ordinal fixed points of ω^· (the ordinal analogues of Kleene fixed points)
 map to the snap state c₁. Under this hypothesis, combined with monotonicity (hmono) and
-tower alignment (h0), the snap is forced to occur at ε₀ as the minimal threshold:
+tower alignment (h0), φ is forced to take the value c₁ at ε₀ and at no smaller ordinal — a statement
+about WHERE the value changes, not that anything occurs:
   - every ordinal below ε₀ maps to c₀ (snap_threshold_is_epsilon_zero)
   - ε₀ maps to c₁ (epsilonZero_fixedPoint + hfp)
   - ε₀ is the minimal ordinal assigned c₁ (from the two above)
 
-The computational side — that the snap MUST occur — is proved in ZPE (T-SNAP). The bridge
-here is structural: IF maps aligned with the fixed-point structure snap at fixed points,
-THEN ε₀ is the minimal snap threshold (no snap before ε₀, and φ ε₀ = c₁). -/
+**⚠ CORRECTED 2026-07-31. This paragraph read "The computational side — that the snap MUST
+occur — is proved in ZPE (T-SNAP)", and that is FALSE.** T-SNAP constrains the *shape* of a
+transition, never that one occurs: `Order/Snap.lean:132-152` says so in its own NO-GO gauge and
+makes it checkable with `tsnap_holds_but_nothing_moves`, a machine-checked model in which
+T-SNAP holds and **nothing moves** (`stuckPhase := id`). `t_snap_derived` is `⟨l_run, tq_ih,
+rfl⟩`, where `l_run` is `by decide` — it proves the two phases are distinct and that the join
+absorbs. Occurrence is a **commitment**; `Information/Surprisal.lean`'s `l_inf` docstring is
+the framework's designated honest statement of where the argument for it stops.
+
+So nothing below is unconditional. The bridge here is structural, and note that `hfp` **is**
+the snap rather than a route to it: IF maps aligned with the fixed-point structure snap at
+fixed points, THEN ε₀ is the minimal snap threshold (no snap before ε₀, and φ ε₀ = c₁). -/
 
 /-- ε₀ is the minimal snap threshold: for any map φ : Ordinal → MachinePhase satisfying
     (a) hmono: φ is order-non-decreasing (join (φ α) (φ β) = φ β for α ≤ β),
@@ -606,7 +616,8 @@ open ZeroParadox
 --      every ordinal below ε₀ also maps to c₀ (lower bound on snap threshold)
 #print axioms snap_threshold_is_epsilon_zero
 -- § VI: proved — ε₀ is the minimal snap threshold for any monotone, tower-aligned,
---      fixed-point-respecting map (snap is forced at ε₀, not before)
+--      fixed-point-respecting map (the threshold is ε₀, not before - a bound on where, not an
+--      assertion that a transition occurs)
 #print axioms snap_exactly_at_epsilon_zero
 -- § VI: proved — canonical witness map exhibiting the bridge properties
 #print axioms kleene_ordinal_snap_bridge
