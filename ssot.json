@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1532,
+        "declarations": 1538,
         "files": 136
       },
       "entries": [
@@ -1518,6 +1518,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "03292d9a-1f30-4ec3-8c4f-dc2306681ffd",
+          "new": {
+            "file": "ZeroParadox/Computability/OutputSeparates.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constStream_dest",
+            "short": "constStream_dest"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6712,6 +6749,43 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "199d3add-115d-448d-8882-a7951e455dec",
+          "new": {
+            "file": "ZeroParadox/Computability/OutputSeparates.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.output_separates",
+            "short": "output_separates"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17975,6 +18049,43 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "4f1583d7-b1ca-4155-9f01-536375d9de5f",
+          "new": {
+            "file": "ZeroParadox/Computability/OutputSeparates.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.streamPF",
+            "short": "streamPF"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "4f27efaf-f9f2-4f13-bd21-8035565a153e",
           "new": {
             "file": "ZeroParadox/Order/LeastFixedPoint.lean",
@@ -23599,6 +23710,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6bcdcc76-f164-4a48-94c8-be85f6ba6f38",
+          "new": {
+            "file": "ZeroParadox/Computability/OutputSeparates.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.emission_not_arity_separates",
+            "short": "emission_not_arity_separates"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35898,6 +36046,43 @@
             "role": []
           },
           "reason": "PricedInterface: the constructive/classical boundary with its cost measured - carrier choice-free, crossing carries Classical.choice at every declaration. Construction is Casteran's ON_plus/ON_correct, cited; the measurement is the delta.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a69989ea-16b0-420d-a704-16965304f4d4",
+          "new": {
+            "file": "ZeroParadox/Computability/OutputSeparates.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.binCofix_subsingleton",
+            "short": "binCofix_subsingleton"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -50545,6 +50730,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e7944d4d-c229-4987-ac80-6d2a6c3e9abb",
+          "new": {
+            "file": "ZeroParadox/Computability/OutputSeparates.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.constStream",
+            "short": "constStream"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability",
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
           "verify": {
             "axioms": null,
             "sorry_free": true
