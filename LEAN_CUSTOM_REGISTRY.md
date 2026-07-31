@@ -295,7 +295,7 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** The connector between a `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the polynomial functor `X ↦ 1 + X`. Mathlib carries both sides — `Computability/StateTransition.lean` and `Data/QPF/Univariate/Basic.lean` — and no map between them, because the two live in unrelated corners of the library. This is that bridge, and it is where the framework's operational face (`Occurrence.lean`) meets its coalgebraic one (`NatListRegime.lean`). The construction itself is standard: reading a partial step function as a `1 + X`-coalgebra is textbook (Jacobs, *Introduction to Coalgebra*, Ch. 2), and no novelty is claimed for it.
 
-### `streamPF` — `ZeroParadox/Computability/OutputSeparates.lean:128`
+### `streamPF` — `ZeroParadox/Computability/OutputSeparates.lean:131`
 
 **Relationship to Mathlib:** No Mathlib analog
 

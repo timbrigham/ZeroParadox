@@ -37,7 +37,8 @@ and cross-links a third the corpus already had.
 Example 10.2(5), printed p. 44** (`.claude-local/papers/rutten_universal_coalgebra_2000.pdf`; Rutten
 credits it to his [52], Manes & Arbib 1986): for `F(S) = A × S^B` the final system is `A^{B*}`. A polynomial functor `⟨A, fun _ => B⟩` is exactly that
 `F`, so its final coalgebra has `|A|^{|B*|}` elements — **a single point iff `|A| = 1`, for every `B`
-whatsoever.** The head type decides; the arity `B` is irrelevant to whether the pole is a point.
+whatsoever.** The head type decides; the arity `B` is irrelevant to whether the final coalgebra is a
+single point.
 
 The two instances proved here:
 
@@ -81,7 +82,9 @@ this file (⊥ does not appear in it).
 
 **A replacement criterion was proposed and it is FALSE — recorded so it is not re-proposed.** The
 suggestion was *the number of head values with inhabited child type*. Machine-checked against it:
-`natPF` has count one yet `Cofix natPF` is not a point (`natZero ≠ natInfinity`), and `constPF` has
+`natPF` has count one yet `Cofix natPF` is not a point (`eventuallyLeaf_ne_infinity`,
+`Computability/NatListRegime.lean:152`: any behaviour reaching a leaf differs from `natInfinity`,
+so there are at least two), and `constPF` has
 count zero yet `Cofix (constPF Bool)` has two elements. It survives only if restricted to the
 non-terminating part, which is not what it said. Dropped rather than repaired — it predicted nothing
 the cited formulas do not.
@@ -103,7 +106,7 @@ namespace ZeroParadox
 
 open QPF
 
-/-! ## § I — `A = 1`: the head is a singleton, so the final coalgebra is -/
+/-! ## § I — `A = 1`: the head is a singleton, so the final coalgebra is one too -/
 
 /-- **Two recursive positions, one behaviour.** `binPF`'s head type is `Unit`, so every node of the
     tree looks alike and there is nothing to tell two infinite trees apart. Proved by bisimulation on
