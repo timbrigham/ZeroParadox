@@ -295,6 +295,12 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 **Reason:** The connector between a `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the polynomial functor `X ↦ 1 + X`. Mathlib carries both sides — `Computability/StateTransition.lean` and `Data/QPF/Univariate/Basic.lean` — and no map between them, because the two live in unrelated corners of the library. This is that bridge, and it is where the framework's operational face (`Occurrence.lean`) meets its coalgebraic one (`NatListRegime.lean`). The construction itself is standard: reading a partial step function as a `1 + X`-coalgebra is textbook (Jacobs, *Introduction to Coalgebra*, Ch. 2), and no novelty is claimed for it.
 
+### `streamPF` — `ZeroParadox/Computability/OutputSeparates.lean:104`
+
+**Relationship to Mathlib:** No Mathlib analog
+
+**Reason:** The two-element-head chain polynomial functor `⟨Bool, fun _ => PUnit⟩`, held at the same arity as `idPF_Coalgebra` so that the head type is the only thing varying against `binPF`. Its final coalgebra is the `Bool`-streams. Mathlib has `Stream'` and it has `PFunctor`/`QPF`, and it connects them nowhere: `Stream` appears zero times under `Mathlib/Data/QPF/` and `Mathlib/Data/PFunctor/`, and `PFunctor`/`QPF` zero times under `Mathlib/Data/Stream/`. No novelty is claimed — the cardinality of its final coalgebra is Rutten, TCS 249 (2000), Example 10.2(5), p. 44 (`A^{B*}`), cited not reproved.
+
 ### `TriStep` — `ZeroParadox/Computability/GroundZero.lean:169`
 
 **Relationship to Mathlib:** No Mathlib analog

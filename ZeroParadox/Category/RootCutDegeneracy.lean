@@ -21,6 +21,15 @@ and therefore the least and greatest fixed points are equivalent — a **root-le
 
 - `root_seam : QPF.Fix (constPF A).Obj ≃ QPF.Cofix (constPF A).Obj`.
 
+**Prior art / adjacency (added 2026-07-30, prior-art gate).** `cofixEquiv` is the `B = 0` case of a
+published formula: Rutten, *Universal coalgebra*, TCS 249 (2000), **Example 10.2(5), p. 44** — for
+`F(S) = A × S^B`, i.e. the polynomial functor `⟨A, fun _ => B⟩`, the final system is `A^{B*}`. With
+`B = PEmpty`, `B*` is a single point and `A^1 = A`, which is exactly what `cofixEquiv` says. Two
+further instances are proved in `ZeroParadox/Computability/OutputSeparates.lean` (`A = 1, B = 2`
+gives a subsingleton; `A = 2, B = 1` gives the `Bool`-streams), and together the three show the
+**head type**, not the arity, is what decides whether the final coalgebra is a single point. Cited,
+not reproved; no novelty is claimed for any of them.
+
 The dichotomy theorem `root_cut_dichotomy` records both halves with the discriminating structural
 feature stated in the type: the constant functor (no recursive position) gives `Fix ≃ Cofix`, while
 the identity functor (one recursive position) gives `IsEmpty (Fix) ∧ Nonempty (Cofix)` — i.e. they are

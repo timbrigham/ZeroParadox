@@ -23725,8 +23725,8 @@
           "new": {
             "file": "ZeroParadox/Computability/OutputSeparates.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.emission_not_arity_separates",
-            "short": "emission_not_arity_separates"
+            "qualified": "ZeroParadox.head_not_arity_separates",
+            "short": "head_not_arity_separates"
           },
           "old": {
             "file": null,
@@ -23746,7 +23746,7 @@
               "go"
             ]
           },
-          "reason": "OutputSeparates.lean: emission, not arity, separates divergent behaviours in the final coalgebra. binPF (two recursive positions, Unit head) has a subsingleton Cofix; streamPF (one position, Bool head) admits two distinct behaviours. The computational-face counterpart of Valuation/BranchingRequirement.",
+          "reason": "Renamed from emission_not_arity_separates after the adversary and prior-art gates: 'emission' was the wrong discriminator (natPF_NatListRegime has the same Bool head type and a one-point infinite part). Rutten TCS 249 (2000) Ex 10.2(5) p.44 gives the governing formula - for a constant-arity polynomial functor the HEAD type decides, the arity does not.",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -1,6 +1,6 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): what a functor must carry before its
--- non-terminating behaviours are distinguishable at all — the computational-face counterpart of the
--- branching requirement already proved on the valuation face. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): two Lean instances of Rutten's final-system
+-- formula for polynomial functors - the HEAD type decides whether the final coalgebra is a single point, and
+-- the arity does not. Curated results indexed in ZeroParadox/MANIFEST.md.
 
 import ZeroParadox.Computability.GroundZero
 import ZeroParadox.Category.RootCutBinary
@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# The infinite pole is a POINT unless the functor emits: output separates, arity does not
+# The head decides, the arity does not: two instances of Rutten's final-system formula
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer.
 
@@ -30,41 +30,59 @@ I defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`GroundZero.notEL_unique` proves that in the `1 + X` regime **every** non-terminating behaviour is the
-*same* point, `natInfinity`. That is a single chain's single end, and it is why the computational
-face's INFINITE pole reads as degenerate: the functor cannot hold more than one divergent behaviour.
+**This file claims NO new mathematics.** It records two Lean-checked instances of a published formula,
+and cross-links a third the corpus already had.
 
-This file asks what has to change, and answers it with a **negative** and a **positive** result:
+**The governing result — Rutten, *Universal coalgebra: a theory of systems*, TCS 249 (2000),
+Example 10.2(5), printed p. 44** (`.claude-local/papers/rutten_universal_coalgebra_2000.pdf`): for
+`F(S) = A × S^B` the final system is `A^{B*}`. A polynomial functor `⟨A, fun _ => B⟩` is exactly that
+`F`, so its final coalgebra has `|A|^{|B*|}` elements — **a single point iff `|A| = 1`, for every `B`
+whatsoever.** The head type decides; the arity `B` is irrelevant to whether the pole is a point.
 
-* **Arity does not separate.** `binPF = ⟨Unit, fun _ => Bool⟩` has **two** recursive positions, yet
-  `Cofix binPF.Obj` is a **subsingleton** (`binCofix_subsingleton`). Two children per node buy nothing,
-  because the head type is `Unit`: every node looks alike, so there is exactly one infinite tree.
-  `RootCutBinary`'s `arity_collapse` already showed arity does not change the *seam* question; this
-  shows it does not change the *separation* question either.
-* **Output separates.** `streamPF = ⟨Bool, fun _ => PUnit⟩` has **one** recursive position — a chain,
-  the same arity as `idPF` — but its head carries a `Bool`. Two of its behaviours are then provably
-  distinct (`output_separates`), distinguished by one observation of the head.
+The two instances proved here:
 
-So the discriminator is **what a step emits**, not how many successors it has. `Reading:` this is the
-computational-face reading of `Valuation/BranchingRequirement.lean`, where branching supplies "the
-*infinity* in one instance out of infinity" — on the 2-adic tree a branch choice **is** a digit, so
-branching and emission coincide there and come apart here. Conjectural as an identification: the two
-live in different carriers and no map between them is claimed.
+* `binCofix_subsingleton` — `binPF = ⟨Unit, fun _ => Bool⟩` (`A = 1`, `B = 2`): `1^{2*}` is one
+  element, so `Cofix binPF.Obj` is a **subsingleton**. Two recursive positions buy nothing.
+  `Category/RootCutBinary.lean`'s `arity_collapse` already showed arity does not move the *seam*
+  question; this shows it does not move the *cardinality* question either.
+* `output_separates` — `streamPF = ⟨Bool, fun _ => PUnit⟩` (`A = 2`, `B = 1`): `2^{1*}` is the
+  `Bool`-streams, and two of them are provably distinct.
 
-**Prior art, cited not reproved.** The ladder is Adámek–Milius–Moss 2020 (arXiv:1910.09401v2)
-Example 7.7 p. 31: for `F X = A × X + 1` the terminal coalgebra is `A^∞ ∪ A*` and the initial algebra
-is `A*` — the `A ×` is exactly the emission that makes `A^∞` large. Rutten, *Universal coalgebra*, TCS
-249 (2000) p. 16 is the `A = 1` degenerate case: in `N̄` the point `∞` "only takes a step to itself and
-hence never terminates", and it is the *only* such point. Nothing here is new mathematics; what is new
-is stating it about this framework's own functors.
+**The corpus already had the `B = 0` instance and it was never connected:**
+`Category/RootCutDegeneracy.lean`'s `cofixEquiv : Cofix (constPF A).Obj ≃ A`, since `B* ` is then a
+single point and `A^1 = A`. Three instances of one formula, in three files.
 
-**Fences.** This proves *at least two* distinct behaviours, not the continuum — `A^∞` uncountable is
-AMM's, not proved here. Nothing about whether any framework bottom *is* a `streamPF` behaviour: no
-carrier is identified, and `binCofix_subsingleton` is about `binPF`, not about ⊥.
+**⚠ CORRECTED 2026-07-30 (adversary + prior-art gates, bedrock). Read before citing this file against
+`notEL_unique`.** An earlier revision was titled *"the infinite pole is a POINT unless the functor
+emits"* and concluded *"the discriminator is what a step emits."* **That is false**, and its own foil
+refutes it: `natPF_NatListRegime = ⟨Bool, fun b => cond b PUnit PEmpty⟩` has head type `Bool` — the
+**same head type as `streamPF`** — yet `GroundZero.notEL_unique` proves its non-terminating part is a
+single point. The stated discriminator was identical on both sides of the comparison.
+
+The real error was **comparing across families**: `natPF`'s child type *depends on its head*, so it is
+**not** of the form `⟨A, fun _ => B⟩` and Rutten 10.2(5) does not apply to it at all. Nothing here
+bears on `natPF`, and this file must not be cited as explaining `notEL_unique`.
+
+`Reading:` CARRIER — the framework reads this as the computational-face counterpart of
+`Valuation/BranchingRequirement.lean`, which proves branching is what makes the 2-adic boundary a
+continuum "rather than a single chain's single end". On the 2-adic tree a branch choice **is** a
+digit, so branching and head-labelling coincide there and come apart here. **Conjectural**: different
+carriers, no map between them is claimed, and no framework bottom is identified with any behaviour in
+this file (⊥ does not appear in it).
+
+`Reading:` a criterion covering all three functors above **and** `natPF` would be *the number of head
+values with inhabited child type* (`natPF`: one; `binPF`: one; `streamPF`: two). **Conjectural — not
+proved here, and not Rutten's**, whose formula is stated for constant arity only.
+
+**Fences.** `output_separates` proves exactly **two** distinct behaviours, not the continuum; the
+cardinality `2^ω` is Rutten's formula, not proved here. **Uncountability is NOT Adámek–Milius–Moss's**
+— their Example 7.7 (p. 31, arXiv:1910.09401v2) gives the terminal coalgebra `A^∞ ∪ A*` and the
+initial algebra `A*` and states no cardinality; cite Rutten 10.2(5) for that. The general formula is
+cited, not formalized: what is machine-checked here is two of its instances.
 
 ## Structure
-- § I   Arity does not separate: `Cofix binPF.Obj` is a subsingleton
-- § II  Output does: `streamPF`, its constant behaviours, and their distinctness
+- § I   `A = 1`: `Cofix binPF.Obj` is a subsingleton (arity is irrelevant)
+- § II  `A = 2`: `streamPF`, its constant behaviours, and their distinctness
 - § III The contrast, bundled
 -/
 
@@ -72,23 +90,28 @@ namespace ZeroParadox
 
 open QPF
 
-/-! ## § I — Arity does not separate -/
+/-! ## § I — `A = 1`: the head is a singleton, so the final coalgebra is -/
 
 /-- **Two recursive positions, one behaviour.** `binPF`'s head type is `Unit`, so every node of the
     tree looks alike and there is nothing to tell two infinite trees apart. Proved by bisimulation on
-    the total relation: the heads agree because `Unit` is a subsingleton, and the children are related
-    for free. This is the NEGATIVE half — doubling the arity leaves the infinite pole a point. -/
+    the total relation: `liftr_iff` demands a *shared head*, and `Unit` supplies it by structure eta,
+    after which the children are related for free. The technique is gated on the head type — the same
+    proof fails for `streamPF` (§ II), where the conclusion is false.
+
+    This is Rutten 10.2(5) at `A = 1, B = 2`: `1^{2*}` is one element. Compare
+    `Category/RootCutDegeneracy.lean`'s `cofixEquiv` (`A` arbitrary, `B = 0`) and `output_separates`
+    below (`A = 2, B = 1`). -/
 theorem binCofix_subsingleton (x y : Cofix binPF.Obj) : x = y := by
   refine Cofix.bisim (fun _ _ => True) ?_ x y trivial
   intro a b _
   rw [liftr_iff]
   exact ⟨(), (Cofix.dest a).2, (Cofix.dest b).2, rfl, rfl, fun _ => trivial⟩
 
-/-! ## § II — Output separates -/
+/-! ## § II — `A = 2`: a two-element head, and the behaviours come apart -/
 
-/-- The **labelled chain** functor: one recursive position, like `idPF`, but each node emits a `Bool`.
-    `Cofix streamPF.Obj` is the type of `Bool`-streams. -/
--- [ZP-CUSTOM] no Mathlib analog | reason: the minimal polynomial functor that separates divergent behaviours - one recursive position (so arity is held fixed against binPF) with a Bool-labelled head, isolating emission as the discriminating ingredient.
+/-- The **labelled chain** functor: one recursive position, the same arity as `idPF_Coalgebra`, but a
+    two-element head. `Cofix streamPF.Obj` is Rutten's `2^{1*}`, the `Bool`-streams. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: the two-element-head chain functor, held at the same arity as idPF_Coalgebra so that the head type is the only thing varying against binPF; Mathlib has Stream' but no PFunctor/QPF presentation of it (no Stream in Data/QPF or Data/PFunctor, no PFunctor in Data/Stream).
 def streamPF : PFunctor.{0, 0} := ⟨Bool, fun _ => PUnit⟩
 
 /-- The constant behaviour emitting `b` forever. -/
@@ -102,9 +125,10 @@ theorem constStream_dest (b : Bool) :
   rw [Cofix.dest_corec]
   rfl
 
-/-- **OUTPUT SEPARATES.** Two behaviours of the same arity as `idPF` — one recursive position each,
-    both non-terminating — are nevertheless **distinct**, told apart by a single observation of the
-    head. Contrast `notEL_unique`, where all non-terminating behaviours collapse to one point. -/
+/-- **THE HEAD SEPARATES.** Two behaviours at chain arity — one recursive position each, fewer than
+    `binPF`'s two, and both non-terminating — are nevertheless **distinct**, told apart by a single
+    observation of the head. Fewer successors than the subsingleton case, and yet more behaviours:
+    that is the point. Rutten 10.2(5) at `A = 2, B = 1`. -/
 theorem output_separates : constStream false ≠ constStream true := by
   intro h
   have hd : Cofix.dest (constStream false) = Cofix.dest (constStream true) := congrArg _ h
@@ -113,11 +137,11 @@ theorem output_separates : constStream false ≠ constStream true := by
 
 /-! ## § III — The contrast -/
 
-/-- **The discriminator is emission, not arity.** Bundling the two halves: doubling the recursive
-    positions (`binPF`, two children, no label) leaves the final coalgebra a subsingleton, while
-    labelling a single-successor node (`streamPF`, one child, a `Bool` head) already yields two
-    distinct behaviours. -/
-theorem emission_not_arity_separates :
+/-- **The head decides, not the arity.** Bundling the two instances: doubling the recursive positions
+    while holding the head a singleton (`binPF`, `A = 1, B = 2`) leaves the final coalgebra a
+    subsingleton, while doubling the head at chain arity (`streamPF`, `A = 2, B = 1`) already yields
+    two distinct behaviours. Both are instances of Rutten 10.2(5), `|A|^{|B*|}`; neither is new. -/
+theorem head_not_arity_separates :
     (∀ x y : Cofix binPF.Obj, x = y) ∧ constStream false ≠ constStream true :=
   ⟨binCofix_subsingleton, output_separates⟩
 
@@ -138,6 +162,6 @@ open ZeroParadox
 #print axioms binCofix_subsingleton
 #print axioms constStream_dest
 #print axioms output_separates
-#print axioms emission_not_arity_separates
+#print axioms head_not_arity_separates
 
 end PurityCheck
