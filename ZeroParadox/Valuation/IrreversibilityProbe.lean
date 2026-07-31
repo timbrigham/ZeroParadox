@@ -47,8 +47,11 @@ irreversibility is a genuine independent axis; if the other axes force it, it is
 pins down *why the pole is two-element*: **two is exactly the cardinality at which self-reference forces the
 one-way collapse** (`irreversibility_forced_at_pole_not_beyond` — forced at card 2, with the identity a
 reversible unique-fixed-point map at card 1 and a reversible counter-model at card 3). So axis 1 (the two-element pole / four corners) and the snap (irreversibility) are
-**linked by cardinality**: the pole's size is what makes the snap unavoidable. This is the third probe to
-return "already forced" (after height and iterative-bottoms), further evidence the requirement set is closing.
+**linked by cardinality**: the pole's size is what makes the one-way *collapse* unavoidable **given a
+self-map with a unique fixed point**. Not the snap, and not occurrence — non-injectivity is not motion,
+and nothing here says anything moves. This is the third probe to return "already forced" in the
+*derivability* sense (after height and iterative-bottoms), further evidence the requirement set is
+closing.
 
 **Honest scope.** Probes B/C test the *self-map* notion of irreversibility (injective vs. collapse); the
 framework's snap is the *order* / *topological* one, forced by antisymmetry / branching respectively. The

@@ -279,8 +279,11 @@ theorem dp2_execution_distinguishability :
     even when the operation returns ⊥ as its output value.
     The "return to null" is postInstantiation — a new null, not preInstantiation.
     Given DP-2, this is DA-1 at the formally minimal level: instantiation is execution.
-    One step from c₀ to c₁ is structurally unavoidable; the output value is irrelevant
-    to whether execution occurred. -/
+    What the statement carries is that the two configurations are DISTINCT while sharing an
+    output value — the output is irrelevant to whether execution occurred. **It does not carry
+    that the step is taken.** An earlier revision read "structurally unavoidable", which
+    contradicts this file's own NO-GO gauge above (`tsnap_holds_but_nothing_moves`): occurrence
+    is a commitment, and `l_inf`'s docstring is where the argument for it stops. -/
 theorem da1_minimal_path :
     let before := preInstantiation
     let after  := postInstantiation

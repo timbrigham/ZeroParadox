@@ -13,8 +13,9 @@
   MachinePhase) — an order-theoretic fact about MachinePhase, with no `Code` and no
   execution in the statement. Reading c₀ as *the Kleene quine* is ZP-K's
   `KleeneStructure` commitment, not a theorem, and no equation between a `Code` and a
-  `MachinePhase` is well-formed. The ZP-L snap establishes that ε₀ forces the transition
-  to c₁. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated by
+  `MachinePhase` is well-formed. ZP-L establishes that ε₀ is the *minimal* threshold — **given** that the transition happens,
+  it happens nowhere below ε₀. It does not establish that it happens: `snap_unconditional`
+  takes `hε₀ : φ epsilonZero = c₁` as a hypothesis. See the fuller note at § V. The formal path from c₀ = ⊥ through the snap at ε₀ to c₁ (ZP-L), mediated by
   the 2-adic encoding, is the missing structural triangle: ⊥ → ε₀ → c₁.
 
   The central formal object is:

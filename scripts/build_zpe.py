@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-E: Bridge Document PDF Builder
-Version 3.24 | July 2026
+Version 3.25 | July 2026
+v3.25: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. Four sites: the branching-tree implication, the OQ-E1 row, and two claim-table validity grounds, all of which used occurrence as the ground. OQ-E1 is now 'closed given the occurrence commitment', matching CLAIMS.md and the DA-1 row's existing 'closed given DP-2' form.
 v3.24: R-AFA false premise corrected (bedrock) — struck the invalid "well-founded ⟹ finite ∈-tree / finite ∈-rank ⟹ finitely interpretable" step (false: ω is well-founded and infinite). Foundation-incompatibility now rests on the self-membership of ⊥ = {⊥} (Regularity; no_quine_atom, choice-free), with R3/L-INF demoted from independent proofs to corroboration. Status brought current: forcing + realizability stated as machine-checked (QuineHost — quineHost_not_wellFounded, oneAtom_not_wellFounded, afaStructure_isQuineHost); CC-2 = Forced Metatheoretic Commitment, not Conditional Claim; named falsifier narrowed to the requirements-choice. Also CC-1 "modelling commitment" → "derived via ZP-J cc1_derived" (DA-2); DA-3 cardinality-anomaly link hedged to conjecture (DA-3-C1 / OQ-E2); closing endnote rewritten from editorial-history narration to a description of what the document is.
 v3.23: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v3.21: FMC precision (sweep Step 4 remediation, against fmc.md) — R-AFA "the metatheoretic necessity of AFA is derived" → "argued, not proved (a metatheoretic squeeze, not a derivation)"; named falsifier added to R-AFA; CC-2 status lines now split the proved structural fixed point (T-EXEC, axiom-free) from the argued set-membership reading; "establish that Foundation is incompatible" → "make the case that".
@@ -80,7 +81,7 @@ Follows all rules in pdf rendering standards:
 import os
 from zp_utils import *
 
-VERSION = '3.24'
+VERSION = '3.25'
 FIRST_RELEASED = 'April 2026'
 
 # ── Local overrides: ZP-E uses justified body text ────────────────────────────
@@ -585,8 +586,11 @@ def build():
 
     E.append(Paragraph('VII. Implications Within the Framework', S['h2']))
     E += [
-        body('<b>Structural Implication: Branching Tree Structure.</b> T-SNAP establishes that a Binary Snap occurs — '
-             'that ⊥ transitions to some ε₀ > ⊥. DA-2 establishes that any terminal state satisfying P₀ '
+        body('<b>Structural Implication: Branching Tree Structure.</b> T-SNAP fixes the SHAPE of the Binary Snap — '
+             'that if ⊥ transitions it goes to some ε₀ > ⊥, and that the step is one-way. It does not '
+             'establish that the transition is taken: occurrence is a framework commitment, and the NO-GO '
+             'gauge tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. '
+             'DA-2 establishes that any terminal state satisfying P₀ '
              'conditions acts as ⊥ for a successor instantiation, generating a forward-directed branching '
              'tree. The branching structure follows from T-SNAP + DA-2 jointly. Note: T-SNAP alone does '
              'not establish that it fires on all outbound vectors simultaneously — that universality is the '
@@ -712,7 +716,9 @@ def build():
          'Derived from AX-B1 and RP-1.'],
         ['OQ-E1: Sequence vs. tree',
          'CLOSED — DA-2',
-         'The structure is a forward-directed tree, not a linear sequence. Branching is mandatory via T-SNAP. '
+         'The structure is a forward-directed tree, not a linear sequence. Given that instantiation occurs — a '
+         'framework commitment, not a consequence of T-SNAP — DA-2 supplies the succession and the '
+         'branching follows. '
          'Countable vs. uncountable branching is perspective-dependent (DA-3).'],
         ['OQ-E2: Cardinality-semilattice correspondence',
          'OPEN',
@@ -814,9 +820,9 @@ def build():
         ['C-DA2: Ontological Novelty of ⊥',
          'Valid — Derived. Follows directly from DA-2 and ZP-B C3. ✓'],
         ['Directed instantiation tree',
-         'Valid — Derived structural consequence of T-SNAP + DA-2. Branching is mandatory, not optional. Forward edges only.'],
+         'Valid given the occurrence commitment — structural consequence of T-SNAP + DA-2. Once instantiation is taken to occur, branching follows and is not optional. Forward edges only.'],
         ['Branching tree structure',
-         'Valid — T-SNAP + DA-2 jointly. T-SNAP establishes the snap occurs; DA-2 establishes the branching tree structure. Universality (all outbound vectors) is DA-2\'s scope, not T-SNAP alone.'],
+         'Valid given the occurrence commitment — T-SNAP + DA-2 jointly. T-SNAP fixes the snap’s SHAPE and does NOT establish that it occurs; DA-2 establishes the branching tree structure. Universality (all outbound vectors) is DA-2\'s scope, not T-SNAP alone.'],
         ['Monotonicity and path irrecoverability',
          'Valid — Structural consequence. Monotonicity (T3) constrains direction; additive ontology (R1) prohibits reduction. Path choice is undetermined by algebra.'],
         ['Ordinal direction of state sequences',

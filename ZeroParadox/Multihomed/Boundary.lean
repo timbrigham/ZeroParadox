@@ -20,7 +20,7 @@ declarations are machine-verified with measured footprints. Rung A of the iterat
 `.claude-local/notes/wellfounded_coalgebra_foray_2026-06-23.md`) — Rung C, the full Taylor coalgebraic
 statement, remains open and is **not** claimed here.
 
-Conjecture (Taylor/AMM framing): the forced snap ⊥→ε₀ crosses the **well-foundedness boundary** —
+Conjecture (Taylor/AMM framing): the snap ⊥→ε₀ crosses the **well-foundedness boundary** —
 from the non-well-founded floor (⊥ is the self-loop / back edge, where recursion cannot reach,
 Taylor Prop 111) to the well-founded ascent (the ε₀ ordinal tower, recursively generated).
 

@@ -220,8 +220,9 @@ the minimal non-⊥ statistical structure is binary. There is no "half state": t
 two values, and every distribution is either one of the two point masses (the ⊥-like endpoints) or a genuine
 mixture over both. This is the *information-theoretic* forcing of the discrete binary jump — a distinct
 mechanism from the order forcing (`t_snap_derived`), the incompressibility forcing (`l_inf`), and the
-self-execution route (ZP-K). Every route forces the same transition, and they do not all rest on the same
-kind of ground — the README states each one's requirement alongside its witness, and the self-execution
+self-execution route (ZP-K). Every route constrains the same transition — its shape, not its occurrence; none of the four makes
+the step happen, and `tsnap_holds_but_nothing_moves` (`Order/Snap.lean`) exhibits a model in which
+the order route holds and nothing moves. They also do not all rest on the same kind of ground — the README states each one's requirement alongside its witness, and the self-execution
 route's requirement is the load-bearing one: `da1_closed_concrete` proves ⊥ is the unique Quine atom of
 MachinePhase and mentions no `Code` and no execution, so "⊥ must execute itself" rests on ZP-K's
 `KleeneStructure` commitment rather than on that theorem. -/
