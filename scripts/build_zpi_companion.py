@@ -552,7 +552,7 @@ def build():
         '<br/>'
         '<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step and does not establish that '
         'any step is taken; a model in which T-SNAP holds and nothing moves is exhibited in the Lean '
-        'source. Every "fires" below narrates the commitment that instantiation occurs. '
+        'source. Throughout this document, "fires" narrates the framework&#8217;s commitment that instantiation occurs - before this note as well as after it. '
         '4. <b>T-IZ</b>: the chain\'s unbounded depth forces convergence to 0. At the '
         'limit, DA-1 fires, T-SNAP fires again, and ⊥′ is generated. The branch closes.'
         '<br/>'

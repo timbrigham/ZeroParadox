@@ -207,7 +207,7 @@ def build():
         'neighbourhood of zero contains a smaller positive element. The snap requires zero '
         'to be something different — a structural origin from which the first departure is '
         'forced, with no smaller departure possible. In Q&#8322;, zero carries the infinite '
-        '2-adic valuation; it is valuatively distinguished in exactly the sense required. '
+        '2-adic valuation; it is valuatively distinguished from every nonzero element. That removes the density obstruction; it does not by itself supply a first step, since the 2-adic norm values accumulate at 0 and Q&#8322; has no closest nonzero element either. The first step is AX-B1. '
         'The snap does not fail in &#8477; by accident. It fails because &#8477; and the '
         'snap require incompatible roles for zero: limit point versus structural origin.'))
     E.append(sp(4))

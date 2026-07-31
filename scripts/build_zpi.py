@@ -328,7 +328,7 @@ def build():
            'Retained as motivational context connecting the topological and informational layers.'),
         li('Step 3 — P<sub>0</sub> is satisfied at the limit: ZP-C D1 gives K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 '
            'at the limit. The configuration is algorithmically incompressible. ZP-C D1 applies.'),
-        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Every "fires" below narrates the commitment that instantiation occurs, not a consequence of the theorem.'),
+        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the commitment that instantiation occurs - before this note as well as after it - not a consequence of the theorem.'),
         li('Step 4 — DA-1 fires: A configuration at P<sub>0</sub> is a live execution event — '
            'not a static description. DA-1 (ZP-E) applies, with the same three-path argument as in ZP-E § IV. '
            'The TrackedOutput formal core (DP-2, Snap.lean § VI) establishes the machine-state transition.'),

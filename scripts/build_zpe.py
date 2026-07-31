@@ -595,7 +595,8 @@ def build():
              'gauge tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. '
              'DA-2 establishes that any terminal state satisfying P₀ '
              'conditions acts as ⊥ for a successor instantiation, generating a forward-directed branching '
-             'tree. The branching structure follows from T-SNAP + DA-2 jointly. Note: T-SNAP alone does '
+             'tree. The branching comes from CC-2\'s undifferentiated ⊥ and the succession from DA-2, '
+             'both conditional on instantiation occurring. Note: T-SNAP alone does '
              'not establish that it fires on all outbound vectors simultaneously — that universality is the '
              'scope of DA-2, not a direct consequence of the snap theorem itself.'),
         body('<b>Monotonicity and Path Irrecoverability.</b> Within an instantiation, state sequences are monotone — no state '
@@ -785,7 +786,7 @@ def build():
         ['Multiverse — structural implication',
          'T-SNAP + DA-2 jointly',
          'None',
-         'Structural implication — T-SNAP gives the snap; DA-2 gives the branching tree'],
+         'Structural implication given the occurrence commitment — T-SNAP gives the snap\'s shape, CC-2\'s undifferentiated ⊥ the branching, DA-2 the succession'],
         ['OQ-E2: Cardinality correspondence',
          'DA-3',
          'N/A',

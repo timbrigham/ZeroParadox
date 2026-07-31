@@ -230,9 +230,10 @@ def build():
         'has no formal answer. Existence must be assumed somewhere. T-SNAP bears directly '
         'on that assumption: if the null state (⊥, the bottom of a join-semilattice) is '
         'taken as the mathematical formalization of "nothing," then the Binary Snap '
-        '(⊥ → ε₀, the first transition from nothing to something) is structurally '
-        'compelled given the framework\'s minimal axiomatic commitments — '
-        'not assumed, not answered, but derived from those commitments.'))
+        '(⊥ → ε₀, the first transition from nothing to something) has its SHAPE fixed by '
+        'the framework\'s minimal axiomatic commitments — where it goes and that it does '
+        'not reverse are derived rather than assumed. That the transition is taken at all '
+        'is a further commitment, and the framework makes it rather than proving it.'))
     E.append(body(
         'Many formal layers later, the picture is more nuanced '
         'than "yes, fully proved" or "no, still assumed." What the framework found is a '
@@ -340,7 +341,7 @@ def build():
         'not merely an emergence theorem.'))
     E.append(body(
         'The topological and algebraic cores of these results are verified in Lean 4. '
-        'T-SNAP is derived. The Binary Snap is not assumed.'))
+        'T-SNAP is derived: the Binary Snap\'s shape is not assumed. Its occurrence still is.'))
     E.append(hr())
 
     # ── Section 2 ──────────────────────────────────────────────────────────────
@@ -467,15 +468,17 @@ def build():
         'informality objection. It does not happen to the null state.',
 
         'WHAT SNAPS',
-        'The null state ⊥. Binary. Instantaneous. Irreversible. '
+        'The bottom element ⊥. Binary. Instantaneous. Irreversible. '
         'The transition ⊥ → ε₀ is not a process, not a gradual emergence, '
         'not a dissolving. It is a snap. The Binary Snap is the antipode of '
         'dissolution. Where dissolution shows a question was malformed, '
-        'the Snap shows a transition was forced. '
+        'the Snap shows a transition with a forced SHAPE — where it goes, and that '
+        'it does not come back. '
         'T-SNAP: ⊥ ∨ ε₀ = ε₀. '
         'No subtraction (R1). No continuous return (C3). No categorical reversal (AX-G2). '
-        'The Snap is the structure of the transition. It does not dissolve. '
-        'It fires.'
+        'Those fix what the transition is, not that it is taken: that it is taken '
+        'remains this framework\'s commitment. The Snap is the structure of the '
+        'transition. It does not dissolve.'
     ))
     E.append(sp(8))
 
