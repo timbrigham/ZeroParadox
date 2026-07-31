@@ -67,7 +67,26 @@ between distinct points; `asymmetric₃` for 3-cycles); Mathlib's `WellFounded.i
 `irrefl_of`/`asymm_of` fire free and `ZFSet` already carries the instance; and
 **`wellFounded_iff_isEmpty_descending_chain`** (`Order/WellFounded.lean:51`) is a **biconditional** that
 renders the ν-hosted side as *"the host contains an infinite ℕ-indexed descent"* — **the INFINITE pole the
-Two-Pole rule demands, which the `r x x` form hides.** Adopting it is open work worth doing.
+Two-Pole rule demands, which the `r x x` form hides.**
+
+**⚠ THAT ADOPTION IS DONE — do not build it again.** It landed 2026-07-29 (`27b1911`) at
+`ZeroParadox/Multihomed/Boundary.lean` § I-b: `floor_descent_from_bot`, `bot_not_acc`,
+`floor_not_wellFounded_via_descent`. `ZeroParadox/Settheory/Wall.lean:74-75` already says "Now adopted."
+**This line said "Adopting it is open work worth doing" until 2026-07-30 — while § "unstated adjacency"
+BELOW, in this same file, already listed the descending-chain form among the CLOSED finds. One file,
+two contradictory answers, 186 lines apart.** That is the exact trap that produced the `HostVerdict.lean`
+Trigger-0 revert, and it was live in the manual meant to prevent it. Sweep this file too when a find closes.
+- **Purity, measured not inferred:** citing the biconditional at all costs `Classical.choice` (its `mp`
+  builds the chain with `.choose_spec`, and `#print axioms` follows the STATEMENT). So
+  `floor_not_wellFounded_via_descent` carries `[propext, Classical.choice, Quot.sound]` while § I's
+  `floor_not_wellFounded` stays axiom-free and remains load-bearing. `bot_not_acc` is axiom-free **only
+  because it is proved by hand**; the one-line `not_acc_iff_exists_descending_chain.mpr` route measured
+  choice. Same verdict as the `CovBy` precedent: keep the hand proof, cite the standard name.
+- **Fence:** the witness is `fun _ => bot`, the **degenerate** (constant) descent. A genuine non-constant
+  descent is strictly more and does **not** follow from a self-loop — still open.
+- Correct neighbour names in the pin: `not_acc_iff_exists_descending_chain` (`:34`) and
+  `RelEmbedding.wellFounded_iff_isEmpty` (`Order/OrderIsoNat.lean:71`). There is no
+  `not_acc_iff` and no `RelEmbedding.wellFounded_iff_no_descending_seq`.
 
 **Why this section exists (2026-07-29) — a measured Trigger-0 failure, and the most expensive one yet.**
 A file `Settheory/HostVerdict.lean` was written to "consolidate" this carving **before any prior-art
