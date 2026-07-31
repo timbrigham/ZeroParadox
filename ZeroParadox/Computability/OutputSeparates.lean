@@ -15,7 +15,16 @@ Experimental probe in the bottom-diagram mapping campaign — not a finalized la
 
 ## Engineer's Take
 
-TODO (Tim): <your take, in your own voice.>
+I know I am obsessed with this, and it still feels to me like we can get a self starting system out
+of self reference.
+
+The difference is on the computation side. It is not a loop. It is a recursive algorithm.
+
+When I looked at the extended naturals with a point at infinity and the predecessor map, that read to
+me like multiple levels of nested loops, and nested loops are something I would personally refactor
+into a recursive algorithm.
+
+I defer to my AI assistant regarding the specifics of how the internals work.
 
 ---
 
