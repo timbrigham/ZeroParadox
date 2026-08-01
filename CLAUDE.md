@@ -1038,6 +1038,27 @@ When assigning a label, ask: "Is this result the central claim of its section, o
 - Present CC-2 with the readable name **"the Quine atom."** This is a recognized set-theory term (Quine, Aczel) — it carries real gravity and a literature anchor, and it is NOT ZP-invented jargon (avoid inventing a ZP-branded name — that would undo the de-jargoning work).
 - **Keep "CC-2" as the formal handle and note it alongside** — e.g., "the Quine atom (CC-2)" on first/significant mention. Do NOT remove or rename the CC-2 identifier anywhere; every existing cross-reference stays valid.
 - Gloss once per document as "the self-containing bottom, ⊥ = {⊥}."
+- **⚠ SCOPE THE GLOSS — BANKED 2026-08-01 (Tim), NOT YET ROLLED OUT.** `⊥ = {⊥}` is well-formed and
+  true **in the ZF+AFA metatheory** — that is anti-foundation's actual content and Aczel's Quine atom
+  is a real object, so **do NOT retire it** (a flat retirement would deny a true theorem of a real set
+  theory: the `snap_is_frameflip` over-correction pattern). But asserted of the **Lean carrier** it is
+  a **cross-type `=`** — `bot : L` against `{bot} : Set L` — which is on this file's bedrock-violation
+  list. **Carrier-level statements take the INSTANCE-OF-FAMILY form**, which the corpus already
+  proves: `IsQuineAtom q := selfMem q ∧ ∀ x, selfMem x → x = q` (the family predicate),
+  `da1_closed_concrete : IsQuineAtom (bot : MachinePhase)` (⊥ as an instance), and
+  `selfMem_eq_singleton_bot : {x | selfMemDerived x} = {bot}` (a `Set L` equality, `[propext,
+  Quot.sound]`). This is the **QuineHost pattern** — never "⊥ *is* {⊥}", always "here are the
+  requirements, and ⊥ is a witness meeting them."
+  - **Why it was missed, and it is a measurement error worth copying the lesson from.** The rollout
+    note below says *"Lean is clean (CC-2 is never a Lean identifier — 0 occurrences)"*. True of the
+    **label** and false of the **claim**: `ZeroParadox/Algebra/Wheel.lean` asserts the bare equation
+    **ten times** (`:26, :38, :44, :68, :158, :190, :322, :390, :440, :525`). **Grep the CLAIM, not the
+    name** — the same rule this file states for kill-propagation, missed here at the measurement step.
+  - **Provenance, because it is easy to misremember (it was, this session):** the 2026-07-14 ratification
+    retired **MC-1**'s identity and cites CC-2 only as the precedent for *keeping a label*. **CC-2's own
+    identity was never reviewed.** And the two defects are NOT the same: MC-1's was **ill-typed**
+    (cross-category, never a proposition); CC-2's is **well-typed in the metatheory and cross-type in
+    the carrier**. Scope it; do not retire it.
 - **Do not overclaim status.** It remains a Forced Metatheoretic Commitment, not a Lean theorem. The structural self-application fixed point is Lean-proved (ZP-J T-EXEC); the literal set-membership ⊥ ∈ ⊥ is metatheoretic (lives in the ZF+AFA framing, not the Lean kernel). The readable name conveys significance, not proof-status.
 
 **Rollout (phased, not a 12-PDF marathon):**
