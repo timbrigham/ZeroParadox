@@ -45,7 +45,8 @@ making wheel theory the algebraic representation of the porthole rather than a c
 - In wheel theory: /0 is a first-class defined element — the porthole is structurally open
 
 **The gap:** Derivation requires ring structure not present in the current ZP typeclasses.
-`WheelValuationStructure` (§VII) is the correct bridge. See §VIII for the full status.
+`WheelValuationStructure` (§VII) is the intended bridge, and §VII-b is the NO-GO gauge showing it is
+degenerately inhabited and so constrains nothing on its own. See §VIII for the full status.
 
 This file:
   § I.   Wheel typeclass (Carlström Def 1.1: 8 axioms, 14 unbundled fields)
@@ -55,6 +56,7 @@ This file:
   § V.   Porthole theorems: /0 = ∞, 0·/0 = ⊥ₗ (proved)
   § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
   § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
+  § VII-b. NO-GO gauge: the class is degenerately inhabited; nondegeneracy as an explicit predicate
   § VIII. Main conjecture: resolved (construction formalized in `ZPJ_WheelFrac.lean`)
   § IX.   Purity check
 
@@ -388,8 +390,23 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     val(0) = ⊤ must hold — it is forced by the self-referential structure ⊥ = {⊥},
     not freely assumed. Val(⊥) = ∞ is the algebraic signature of the Quine atom:
     the ring's zero is simultaneously the floor of the domain (as ⊥) and the point
-    where its measure hits infinity (as val(⊥) = ⊤). This identification is
-    structural necessity, not a modeling choice.
+    where its measure hits infinity (as val(⊥) = ⊤).
+
+    **⚠ SCOPE, corrected 2026-08-01.** This paragraph used to end "This identification is structural
+    necessity, not a modeling choice." That is contradicted by the `wvs_val_zero` field docstring
+    thirty lines below ("an axiom — an assumed requirement, not a derived result") and by the
+    published ZP-J addendum ("Ring structure is an input, not a conclusion"). The argument motivates
+    the identification; the type-checker does not verify its necessity.
+
+    **PRIOR ART — this class is Mathlib's `AddValuation A ℕ∞` minus `map_one` (found 2026-08-01).**
+    `ℕ∞` is a `LinearOrderedAddCommMonoidWithTop`, so `AddValuation A ℕ∞` is well-formed at exactly
+    this generality; `wvs_val_mul` is `v.map_mul` and `wvs_val_zero` is `v.map_zero`. **The porthole
+    condition is therefore not an axiom under the standard structure — it is a theorem, and this
+    corpus already proves it:** `Valuation/FloorWitness.lean:31`'s `addVal_bot` is `v.map_zero`.
+    The one axiom the class omits, `map_one : v 1 = 0`, is precisely what admits the degenerate
+    instance of § VII-b — the constant-`⊤` map violates it, and every genuine `AddValuation A ℕ∞`
+    satisfies `WVSNondegenerate` with witness `1`. **Adopting `AddValuation` would dissolve § VII-b
+    rather than fence it; that is the recommended next step and is not done here.**
 
     However, the "infinitudes of zero" argument works at the *identification* layer —
     it tells you which element plays the porthole role. To *construct* a Wheel from
@@ -408,8 +425,11 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     The wheel axioms (Carlström Def 1.1) follow from the ring axioms on L plus the submonoid structure of S.
     This construction is now formalized in `ZPJ_WheelFrac.lean` (`ZPJ_WheelFrac.instWheel`) — the
     Tier 3 result of the porthole conjecture (§VIII). -/
--- [ZP-CUSTOM] no Mathlib analog | reason: bridge typeclass connecting ZP structural
--- hierarchy to Wheel theory via the wheel of fractions construction.
+-- [ZP-CUSTOM] replaces: Mathlib `AddValuation A ℕ∞` (RingTheory/Valuation/Basic.lean) | reason:
+-- same three fields minus `map_one`; kept as a named handle for the wheel bridge. The tag previously
+-- read "no Mathlib analog", which was false — corrected 2026-08-01, same class as the HasFirstStep /
+-- CovBy entry. `WVSNondegenerate` is `AddValuation.supp v ≠ ⊤`; it is NOT `Valuation.IsNontrivial`
+-- (`∃ x, v x ≠ 0 ∧ v x ≠ 1` — two conjuncts, strictly stronger), so do not swap that in.
 class WheelValuationStructure (L : Type*) extends CommRing L where
   /-- The porthole valuation: measures proximity to the porthole element. -/
   wvs_val : L → ℕ∞
@@ -428,9 +448,11 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
 
 /-! ### The gauge (2026-08-01)
 
-**Nothing in the corpus consumes this class** — no theorem takes `[WheelValuationStructure L]` and
-no instance is registered — and the results that carry the wheel (`Algebra/WheelFrac.lean`'s
-`instWheel`) are built on `[CommRing A]` plus a multiplicative submonoid, never on this class. That
+**No mathematical result depends on this class** — outside the gauge below, no theorem takes
+`[WheelValuationStructure L]` and no instance is registered — and the results that carry the wheel
+(`Algebra/WheelFrac.lean`'s `instWheel`) are built on `[CommRing A]` plus a multiplicative submonoid,
+never on this class. (`WVSNondegenerate` below does take the class; it is part of the gauge, and it
+asserts nothing about a carrier on its own.) That
 is what keeps the defect below **preventive** rather than propagating. The published documents were
 already honest about it: the ZP-J addendum states *"Ring structure is an input, not a conclusion"*
 and says this class's porthole condition *"is an assumed axiom … not type-checked as necessary."*
@@ -446,7 +468,7 @@ not checkable while an inhabiting term is. -/
 @[reducible] def degenerateWVS (A : Type*) [inst : CommRing A] : WheelValuationStructure A where
   toCommRing := inst
   wvs_val := fun _ => ⊤
-  wvs_val_mul := fun _ _ => (top_add (⊤ : ℕ∞)).symm
+  wvs_val_mul := fun _ _ => rfl
   wvs_val_zero := rfl
 
 /-- **The gauge.** Every commutative ring carries a `WheelValuationStructure`. Therefore no property
@@ -470,10 +492,18 @@ theorem degenerateWVS_not_nondegenerate (A : Type*) [CommRing A] :
   rintro ⟨x, hx⟩
   exact hx rfl
 
-/-! **Axiom footprint (measured, 2026-08-01):** both theorems report
-`[propext, Classical.choice, Quot.sound]`. The choice is inherited from Mathlib's `ℕ∞ = WithTop ℕ`
-instances, which the *statements* mention — `#print axioms` follows the statement, not the proof —
-so it is not removable from this side. -/
+/-! **Axiom footprint (measured, 2026-08-01): all three theorems are AXIOM-FREE** — `#print axioms`
+reports "does not depend on any axioms".
+
+**This block previously claimed `[propext, Classical.choice, Quot.sound]`, blamed Mathlib's `ℕ∞`
+instances for it, and concluded the choice was "not removable from this side." All three were wrong,
+and an adversary gate refuted them by measurement.** The class and the `wvs_val 0 = ⊤` statement are
+each axiom-free, so the statement contributed nothing; the entire footprint came from the *proof* —
+a call to `top_add` — and `(⊤ : ℕ∞) = ⊤ + ⊤` holds by `rfl`, so it was removable by two characters.
+**The error was asserting non-removability by INFERENCE rather than by measurement**, which is the
+distinction `Category/ChoiceCannotBe.lean` exists to police, in the same push. `CLAUDE.md` states the
+rule verbatim: *inert-in-the-proof and absent-from-the-footprint are different properties — never
+infer either from the other. Measure it.* -/
 
 -- ============================================================
 -- § VIII. The Main Conjecture (Resolved)
@@ -536,6 +566,11 @@ section PurityCheck
 #print axioms zpw_zero_ne_bot
 #print axioms zpwVal_zero_eq_top
 #print axioms zpwVal_inv_zero
+-- § VII-b NO-GO gauge. All three are axiom-free; the § VII-b footprint block's claim is checked here
+-- rather than asserted, which is the whole point of the correction recorded there.
+#print axioms degenerateWVS
+#print axioms wheelValuationStructure_always_inhabited
+#print axioms degenerateWVS_not_nondegenerate
 end PurityCheck
 
 end ZeroParadox

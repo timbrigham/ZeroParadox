@@ -18,8 +18,10 @@ A fourth index, **not a fourth framework object** — alongside `ZeroParadox/Bot
 `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` and `ZeroParadox/Order/SnapCannotBe.lean`. A `#check`-only
 index: it states no new results and reproduces no logic. Every line `#check`s an already-proven
 declaration in its home file, and the `import`s force those files to compile, so the index cannot point
-at a dead or renamed result. A `#check`-only index creates no declarations and therefore *structurally
-cannot overclaim*.
+at a dead or renamed result. A `#check`-only index creates no declarations, so **the `#check` LINES**
+cannot overclaim. **The prose around them absolutely can, and in this file it did** — § IV records a
+universal negative that stood here while two counterexamples sat in the corpus. Read every claim below
+that is not a `#check` as ordinary unverified prose.
 
 ## Engineer's Take
 
@@ -88,10 +90,11 @@ classically Mathlib happens to be built, and reports it in a way that reads as a
 
 **It invites precisely the wrong conclusion.** A large choice-carrying fraction reads as "most of this
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
-core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`), and every footprint
-examined beyond it has been *accidental*, meaning a choice-free re-proof exists. Two such re-proofs have
-been carried out (§ I). **Two ESSENTIAL cases are also located and named (§ IV)** — so "accidental" is
-the common finding, not the only one.
+core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`). Beyond it the picture
+is mixed and the categories are what matter, not a total: some footprints are *accidental* (a choice-free
+re-proof exists — two carried out, § I), two are **ESSENTIAL** (§ IV), and others are **UNCLASSIFIED**,
+meaning nobody has tried. A count collapses those three into one number and loses the only distinction
+that carries information.
 
 **And in practice the number will not stay right.** It has been wrong three times. The first version was
 quoted rather than measured and was off by more than an order of magnitude. The replacement was measured
@@ -101,18 +104,22 @@ stale again by the following review, for the same reason. All three are one erro
 is not being regenerated at the moment of use — and a docstring cannot regenerate anything.
 
 What is true, and is what this file asserts instead: **the framework is not choice-free; the core is
-(`t_snap_derived`, no axioms at all); most examined footprints have proved removable; and two are
-provably NOT removable (§ IV).**
+(`t_snap_derived`, no axioms at all); examined footprints fall into three classes — accidental,
+essential, unclassified — and § I and § IV name the cases in the first two.** No fraction is given, for
+the reason stated above.
 
 **⚠ AND NOTE WHAT THIS SENTENCE USED TO SAY, because the correction is the more useful lesson.** It read
 *"every examined footprint has been removable — that statement does not go stale."* Both halves were
 wrong within a day: `em_of_wellOrder_comparable` and `wem_of_fixedPointFree` were committed 2026-07-20,
-one day after this file was last touched, and they are footprints that are examined and **not**
-removable. **A universal negative is the most dangerous sentence shape in a `CannotBe` index** — the
+one day after this file was last touched. **They are not themselves footprints** — both are choice-free
+reductions (`[propext, Quot.sound]`). What they establish is that the *principles* they reduce from
+cannot be re-proved constructively, which is a non-removability result the earlier sentence denied. **A universal negative is the most dangerous sentence shape in a `CannotBe` index** — the
 `#check` lines cannot overclaim, but a prose claim quantified over *the whole framework* is falsified by
-any single future commit, and nothing mechanical notices. This one survived into `CLAUDE.md` (which
-recommended it as the safe formulation) and into `RELEASES.md`, which had already announced the two cases
-this file went on denying. **Write "none located as of &lt;date&gt;", never "none exists."**
+any single future commit, and nothing mechanical notices. This one had also been copied into `CLAUDE.md`,
+which recommended it as *the* safe formulation. Note what did **not** happen: `RELEASES.md:425` announced
+the two essential cases correctly and went on contradicting this file for eleven days, with nothing to
+reconcile them — **the published record was right and the mandated index was wrong.**
+**Write "none located as of <date>", never "none exists."**
 
 **If you want a count, measure it — do not look for one to cite.** Every `ZeroParadox` file carries a
 `PurityCheck` section, so a full build emits one `#print axioms` line per indexed declaration. From the
@@ -141,10 +148,12 @@ per report; the total therefore exceeds the number of distinct declarations. Wha
 fact about the build you just ran, not a fact to carry anywhere.
 
 **The survey is partial, and that is the honest caveat that matters.** Only some footprints have been
-traced to a source and classified; much of the corpus is unexamined. So "every footprint is accidental"
-is a **working hypothesis supported by every case tested and refuted by none**, not a finding about the
-corpus. Do not upgrade it, and — for the same reason no count is recorded above — **do not quantify the
-examined fraction either**; it moves with every commit.
+traced to a source and classified; much of the corpus is unexamined. **The hypothesis that every
+footprint is accidental was held here until 2026-08-01 and is REFUTED** — § IV exhibits two that are
+not. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
+has been examined, it has been classifiable*, into accidental, essential, or unclassified. Do not
+upgrade that, and — for the same reason no count is recorded above — **do not quantify the examined
+fraction either**; it moves with every commit.
 
 ### Accidental versus essential
 
@@ -165,9 +174,11 @@ Diener–Ishihara). Cited, not claimed.
 ### What this index does NOT do
 
 It does **not** claim the framework is choice-free — it is not. It does **not** claim any
-footprint is provably removable beyond the specific cases actually re-proved. And it cannot: `#print
-axioms` reports **a proof's** footprint, never **a theorem's** necessity. A choice-carrying proof is
-evidence about how the proof was written, and nothing more.
+footprint is provably removable beyond the specific cases actually re-proved. **On the negative side it
+claims exactly two non-removability results, and neither comes from a measurement** — § IV's cases are
+**reductions**, and that is the only route available: `#print axioms` reports **a proof's** footprint,
+never **a theorem's** necessity. A choice-carrying proof is evidence about how the proof was written,
+and nothing more; to show a principle *needs* choice you must derive a taboo from it.
 -/
 
 section ChoiceCannotBeIndex
