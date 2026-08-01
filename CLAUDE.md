@@ -1156,6 +1156,43 @@ During working sessions, apply the Communication Quality Rubric to evaluate Tim'
 
 `.claude-local/handoff.md` is the standardized session state file. At the start of every session, read it first. At the end of every session (or before a planned context switch), overwrite it with the current state. It has **two parts, in order**: first, **keeping the conversation thread alive** — the live orientation a fresh session needs to resume mid-thought rather than cold-start; then the **factual ledger** — what was just done, the immediate next action, and anything deferred. The thread leads, the ledger follows; the components, structure, and rationale of the thread part are defined privately (memory `feedback_handoff_thread_first`). Always use this exact filename — one file, always current, always overwritten.
 
+## Development mode — LOAD THE SECTION BEFORE YOU WORK. (Tim, 2026-07-31.)
+
+**Before fresh mathematical development, read the whole relevant subsystem. Do not start from
+targeted search.** This is scoped to *development*; error-sweeps have their own discipline and a
+different unit (see below).
+
+```
+python .claude-local/where.py "<Tim's phrasing, verbatim>"     # -> ranked folders + token cost
+python .claude-local/where.py --files "<phrase>"               # + the file list
+python .claude-local/where.py --spine                          # what the always-load spine costs
+```
+
+Then load: **the ~50k spine** (the five `#check`-only indexes — `BottomCannotBe`, `SnapCannotBe`,
+`Epsilon0CannotBe`, `DiagonalFixedPoint`, `ChoiceCannotBe` — plus `MANIFEST.md`, `CLAIMS.md`,
+`BOTTOMELEMENT.md`, `SNAP.md`) **plus the one or two folders it names.** Most subfolders are 5k–66k
+tokens; the largest, `Valuation/`, is ~123k. Total lands at 80k–170k, comfortably resident.
+
+**Why, and it is not about catching errors.** Every real finding of 2026-07-31 came from **colliding
+two facts** — `selfApp` fixes ⊥ *and* `α ↦ ω^α` does not; ⊥'s down-set is empty *and* R1 forbids
+subtraction; `nfp` is seed-independent *and* the corpus says "⊥ the seed". **You cannot collide facts
+you are fetching one at a time.** Targeted search returns the fact you asked for and nothing adjacent,
+which is precisely what a collision needs.
+
+**Two honest limits.** (1) `where.py` scores term distinctiveness — it produces a *shortlist*, not an
+answer, and on one of four test queries the right folder ranked third. Load two or three. (2) It
+**cannot** route a genuinely new concept with no corpus vocabulary; fall back to `--spine`.
+
+**Tim's Engineer's Takes are the bridge, and `where.py` reports them.** The Lean body says `cx`,
+`member`, `infinitude`; Tim says *"bottom itself is infinitely complex."* The Takes are the only
+corpus written in the register a question arrives in, they are attached to the file they describe, and
+**all 146 together are ~16k tokens.** Measured 2026-07-31: on four separate questions the answering
+Take was found *after* the work, never before.
+
+**Not this, for error-sweeps.** A claim-sweep's unit is the **rendered PDF text**, never the source —
+a claim survived four vocabulary changes and one split across two Python string literals. See
+`vocabulary_reference.md`.
+
 ## High-Value Insight Capture — Standing Rule
 
 Any observation made during a session that could lead to a new theorem, new layer,
@@ -1183,6 +1220,39 @@ immediately — without waiting to be asked. Do not defer to the end of the sess
 
 **The test:** Would a future session miss something important if this wasn't written down?
 If yes, write it now.
+
+### But the note is the DRAFT. The POINTER is the deliverable. (Measured 2026-07-31.)
+
+**Writing the note is not the durable act; being pointed at from a read surface is.** Measured across
+767 notes: **only ~10% were referenced from anywhere a future session actually reads** — `CLAUDE.md`,
+`.claude-local/handoff.md`, a `.lean` docstring, or a memory file. The other ~90% were write-only. On
+the same day, four separate findings were rediscovered the slow way while the relevant note sat
+unread, and every piece of context that *did* reach the session came from a Lean docstring, this file,
+or a memory — **not one came from a note.**
+
+So the rule above is half a rule. After writing the note, **wire the finding to the artifact**, at the
+site the reader lands on — which is what § "unstated adjacency" already demands of findings generally
+(*"write it there, at the site the reader lands on, not five sections away"*). Applied to notes: put
+the sentence in the `.lean` docstring / `CLAUDE.md` / the memory, and let the note hold the long form.
+
+**⚠ AND A NOTE RECORDING PENDING WORK GOES FALSE THE MOMENT THE WORK IS DONE.** This is worse than
+going unread: an unread note is inert, a stale one actively misleads. Measured 2026-07-31:
+`zpa_launders_axb1_as_a_metric_result_2026-07-26.md` says **"Not yet fixed"** of a bedrock defect that
+ZP-A **v1.21 struck days later** — and a triage pass nearly reopened it on that basis. Two sibling
+notes say "pending" and "status at interruption" and are equally unverifiable. **Never act on a note's
+self-reported status; verify at the artifact.** If a finding is a *defect*, its home is a gate finding
+or a fix, never a note that cannot know when it stops being true.
+
+**Folder layout (established 2026-07-31, 767 notes triaged):**
+- `notes/` — **active only.** Live conventions, indexes, corrections that must not be re-introduced.
+- `notes/future-research/` — **open work.** A stated conjecture, an identified gap with a route, an
+  "architecture clear but unbuilt". The test: *could a future session do mathematics from this?*
+  **Read this folder when choosing what to work on.**
+- `notes/archive/{gate-findings,resolved,superseded}/` — historical. Gate reports are an audit trail:
+  write them, never expect to read them.
+
+When triaging, **prefer KEEP when torn** — this is a research record and over-archiving is the
+costlier error.
 
 ## Reviewer Feedback Tracking
 
