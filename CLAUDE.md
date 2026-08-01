@@ -360,12 +360,31 @@ changed instead of presenting the result as self-derived.
 - **BEDROCK severity → up to 5 iterations.** A violated core invariant (`ε₀ ≠ 0`, `ε₀ ≠ ⊥`, min≡max
   flattened, the snap-arc returning to the same ⊥, a cross-type `=`), a **fabricated** claim about an
   external source, or a false premise carrying a conclusion. These must not ship — keep iterating.
-- **ORDINARY severity → 2 iterations, then push `--no-verify`.** Citation scope, a mischaracterized
+- **ORDINARY severity → 2 iterations, then STOP and push normally.** Citation scope, a mischaracterized
   lemma, hedging a tier too strong, path-convention drift, wording. These never reach zero.
 
 **The stopping question is "did this round find anything BEDROCK?" — if no, stop**, even on ten ordinary
 findings. Ratified 2026-07-19 after three rounds; memory `feedback_er_ar_max_iterations` carries the
 detail.
+
+**⚠ NO `--no-verify` IS INVOLVED, AND THIS LINE USED TO SAY OTHERWISE (corrected 2026-08-01, Tim).**
+It read *"2 iterations, then push `--no-verify`"* — wording that predates the reviewer refactor and
+describes a scheme that no longer exists. **Under the current scheme a STOP-ORDINARY reviewer WRITES
+ITS SIGNAL**, so at the ordinary cap the hook clears **on its own merits** and there is nothing to
+bypass. Say so in the brief: *withholding the signal on ordinary findings is not a valid outcome.*
+- **Why the stale wording was worse than merely wrong:** it trained the bypass reflex for a situation
+  that can no longer arise, which is exactly the hazard § *NEVER write a `--no-verify` fallback*
+  exists to prevent. **Measured the day it was corrected:** at the cap, with all three gates saying
+  PUSH and post-review edits having staled every signal, Claude proposed `--no-verify` **citing this
+  line**. Tim overruled it and called for a re-signature round instead.
+- **And he was right on the substance, not just the procedure.** The cap's licence assumes the
+  outstanding findings *stay outstanding*. Once you have **acted** on them, the push contains **new
+  unreviewed prose** — a different thing from known debt, and new prose warrants a gate, not a flag.
+  Vindicated immediately: four of the next round's six editorial findings landed in the one file no
+  gate had yet seen, which existed only because it was edited after the gates finished.
+- **The rule that falls out:** *fixing a finding restarts the obligation for the text you changed.*
+  If you edit after a STOP-ORDINARY, re-sign — do not bypass. If you do not want another round, then
+  do not edit: record the findings as next-touch debt and push what was actually certified.
 
 ### The cap is enforced by the REVIEWER, not by the caller — pass it the round number
 
