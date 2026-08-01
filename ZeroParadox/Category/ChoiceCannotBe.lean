@@ -82,11 +82,14 @@ difference-generator"; it is the *excluded-middle* modality) and `Category/Exclu
 **This file states no figure for how many declarations carry `Classical.choice`, and none should be added
 to it.** Three reasons, in order of importance.
 
-**A count measures Mathlib, not this framework.** Every choice footprint anyone has actually traced has
-come from a Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
+**A count mostly measures Mathlib, not this framework.** Most choice footprints traced so far come from a
+Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
-tactic call. None has come from the framework's own mathematics. A corpus-wide total therefore reports how
-classically Mathlib happens to be built, and reports it in a way that reads as a property of this project.
+tactic call. **Not all: `Category/Lawvere.lean:70`'s bare `classical` in `fixedPointFree_of_nontrivial`
+is the framework's own, and § IV shows it is ESSENTIAL** — the cost is in stating the swap over types
+where it is not computable, which is the framework's chosen generality, not Mathlib's. So a corpus-wide
+total still mixes the two sources and still reads as a property of this project, which is reason enough
+not to record one; but it is not true that the framework contributes none.
 
 **It invites precisely the wrong conclusion.** A large choice-carrying fraction reads as "most of this
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
