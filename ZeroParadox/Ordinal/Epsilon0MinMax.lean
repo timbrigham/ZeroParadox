@@ -52,6 +52,26 @@ theorem epsilon0_eq_nfp_bot :
   rw [Ordinal.bot_eq_zero]
   exact epsilonZero_eq_nfp
 
+/-! ### § I-b. Two fences on the "⊥ the seed" reading (Tim, 2026-07-31)
+
+**The seed is not load-bearing.** `nfp` is by construction the least fixed point `≥` its seed, so
+**every** seed at or below the closure reaches the same closure — verified by probe: for
+`F = (ω ^ ·)`, `nfp F 1 = nfp F 0`, and generally `a ≤ nfp F 0 → nfp F a = nfp F 0` (two lines from
+Mathlib's `Ordinal.nfp_le_fp` and `Ordinal.nfp_fp`; standard, claimed as no novelty). So ⊥ is *a*
+seed, not a distinguished one: **the operator determines the destination, and the starting point is
+incidental.** § I's "⊥ the seed, ε₀ the closure" is true and its emphasis overstates ⊥'s role.
+*(Also: "seeded at the ordinal bottom ⊥ (not merely `0`)" claims a distinction this carrier lacks —
+`Ordinal.bot_eq_zero` makes them definitionally identical.)*
+
+**And the snap runs on the operator that does NOT fix ⊥.** `Computability/SelfApp.lean:73` assumes
+`fixed_bot : selfApp bot = bot` as a **class field**, and every "the bottom cannot move" result
+descends from it. Here the opposite holds and is provable: `ω ^ (0 : Ordinal) = 1 ≠ 0`, so `α ↦ ω^α`
+does **not** fix the ordinal bottom (this is the argument already inside
+`Epsilon0LeastFP.epsilon0_ne_zero`). **Two operators, opposite behaviour at ⊥, and the snap is the
+action of the one that moves it.** Neither observation is stated anywhere else in the corpus.
+Full record: `.claude-local/notes/tower_seed_is_not_load_bearing_2026-07-31.md` and
+`.claude-local/notes/forced_movement_two_operators_2026-07-31.md`. -/
+
 /-! ### § II. The min ≡ max capstone -/
 
 /-- **The min ≡ max capstone.** One theorem, one object: ε₀ (`epsilonZero`) is simultaneously the

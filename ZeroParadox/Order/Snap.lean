@@ -153,7 +153,21 @@ theorem tsnap_holds_but_nothing_moves :
 
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
-    Complements ZPB.c3_irreversible (topological irreversibility in Q₂). -/
+    Complements ZPB.c3_irreversible (topological irreversibility in Q₂).
+
+    **Note the scope, and note where it is empty (Tim, 2026-07-31).** This is parametric in `x y` —
+    it holds at *every* comparable pair, not at ⊥ specifically, and
+    `Valuation/IrreversibilityProbe.lean:34-36` grades it accordingly: *"just antisymmetry — it holds
+    in every model, so it is forced by the order axioms, not independent."* So no-subtraction is
+    **not** a property of the bottom. It is **vacuous** there: the down-set of ⊥ is the singleton
+    `{⊥}`, so there is nothing to subtract, and R1 acquires content only at the first element that
+    has a proper part. **R1 characterises what the snap creates, not the bottom.**
+
+    Corollary worth keeping: order needs two comparable points, so at ⊥ alone the relation is empty
+    and there is no direction. `⊥ ⋖ a` (`Reals/OrderedField.HasFirstStep`, AX-B1's honest encoding) is
+    its first inhabitant — **directionality as a relation is presupposed by `[LT α]`; directionality
+    as a fact arrives with the snap.**
+    Full record: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :
     ¬∃ z : L, join y z = x := by

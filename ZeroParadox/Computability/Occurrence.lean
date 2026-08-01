@@ -135,7 +135,26 @@ theorem no_unstarted_state (s : σ) : ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some
   rintro ⟨hne, hnex⟩
   exact hnex (not_halted_means_stepping f s hne)
 
-/-! ## § II. The trichotomy — and the third case is the bottom -/
+/-! ## § II. The trichotomy — and the third case is the bottom
+
+**Asked and settled 2026-07-31 — do not re-run this search.** Is the bottom really a LOOP, or is it
+a RECURSION (a descent through pairwise-distinct configurations)? The distinction does not do the work
+it appears to: Adámek–Milius–Moss 2020 (arXiv:1910.09401v2) Examples 3.3(1) p. 11 — *"a graph regarded
+as a coalgebra for `P` is recursive **iff it has no infinite path**"* — so a never-halting descent
+through distinct states is no more recursive than a self-loop. **Distinctness buys nothing;
+well-foundedness is the whole content.** Their Examples 4.14(5) p. 18 adds that unfolding a loop into
+a distinct-node chain *preserves* non-well-foundedness, and Aczel (1988) p. 7 warns off the same
+reading directly. In this corpus `GroundZero.notEL_unique` already proves the point: under `1 + X`
+every non-terminating behaviour equals `natInfinity`.
+
+**What the search did yield, and it is worth having:** this file's "the bottom cannot depart" family
+is the shadow of a published theory it does not cite — Osius (1974) → Taylor → Adámek–Milius–Moss
+coalgebraic well-foundedness. `f s = some s` IS a non-well-founded `(X+1)`-coalgebra (AMM Ex. 4.14(2)),
+and Rutten, *Universal coalgebra*, TCS 249 (2000) p. 16 is the one-line statement of this file's
+subject: in `N̄` with `pred`, `∞` *"only takes a step to itself and hence never terminates"* — the
+self-loop is exactly the point of ν that μ omits. `Multihomed/BoundaryBridge.lean:33-52` already cites
+Taylor and AMM and the citation was never propagated here.
+Full record: `.claude-local/notes/recursion_not_loop_2026-07-30.md`. -/
 
 /-- Running in place: a self-looping configuration. Never halts, never changes.
     Note this is `s` being a **fixed point of the step function** — the same shape as
