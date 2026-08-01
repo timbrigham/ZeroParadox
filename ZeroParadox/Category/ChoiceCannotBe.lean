@@ -108,17 +108,13 @@ What is true, and is what this file asserts instead: **the framework is not choi
 essential, unclassified — and § I and § IV name the cases in the first two.** No fraction is given, for
 the reason stated above.
 
-**⚠ AND NOTE WHAT THIS SENTENCE USED TO SAY, because the correction is the more useful lesson.** It read
-*"every examined footprint has been removable — that statement does not go stale."* Both halves were
-wrong within a day: `em_of_wellOrder_comparable` and `wem_of_fixedPointFree` were committed 2026-07-20,
-one day after this file was last touched. **They are not themselves footprints** — both are choice-free
-reductions (`[propext, Quot.sound]`). What they establish is that the *principles* they reduce from
-cannot be re-proved constructively, which is a non-removability result the earlier sentence denied. **A universal negative is the most dangerous sentence shape in a `CannotBe` index** — the
-`#check` lines cannot overclaim, but a prose claim quantified over *the whole framework* is falsified by
-any single future commit, and nothing mechanical notices. This one had also been copied into `CLAUDE.md`,
-which recommended it as *the* safe formulation. Note what did **not** happen: `RELEASES.md:425` announced
-the two essential cases correctly and went on contradicting this file for eleven days, with nothing to
-reconcile them — **the published record was right and the mandated index was wrong.**
+**⚠ THE STANDING LESSON, and it is why this paragraph was rewritten.** This sentence used to read
+*"every examined footprint has been removable — that statement does not go stale."* It was falsified
+the next day (§ IV's two cases, committed 2026-07-20), had been copied into `CLAUDE.md` as the
+recommended safe formulation, and was contradicted by `RELEASES.md` for ten days with nothing to
+reconcile them. **A universal negative is the most dangerous sentence shape in a `CannotBe` index:**
+the `#check` lines cannot overclaim, but prose quantified over *the whole framework* is falsified by
+any single future commit and nothing mechanical notices.
 **Write "none located as of <date>", never "none exists."**
 
 **If you want a count, measure it — do not look for one to cite.** Every `ZeroParadox` file carries a
@@ -381,10 +377,10 @@ Neither says the framework's overall use of choice is essential, and neither is 
 -- form is not needed** — the taboo says the general statement cannot be re-proved constructively, and
 -- the restriction says it does not have to be *there*. Together they localize the classical content
 -- rather than obstruct it: they say where it lives and how far it reaches.
--- SCOPE, and note the shape of this claim: the `DiagonalWitness` audit comment asserts "the framework's
--- carriers have `DecidableEq`" as a general fact. **No corpus-wide survey backs that**, and a universal
--- over every carrier is the same sentence shape this file's own § "No count" warns about. Treat it as
--- true where checked and unverified in general; the two `#check`ed declarations are what is established.
+-- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
+-- has never been measured, so "the restriction covers what we need" is unverified in general — and a
+-- universal over every carrier would be the sentence shape this file's own § "No count" warns about.
+-- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 
 end ChoiceCannotBeIndex

@@ -97,10 +97,13 @@ theorem hasWitnessRel_top_of_surjective {β : Type u} {α : Type u} (f : α → 
 theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivial β] :
     ¬ HasWitnessRel β (fun _ => True) := by
   -- Choice-free: with `DecidableEq β` the swap needs no classical decision (constructive-footprint audit,
-  -- 2026-07-18). This is the base-level, choice-free form; the general one is not merely unproved but
-  -- ESSENTIALLY classical (`Category/LawvereTaboo.lean`'s `wem_of_fixedPointFree`), so the `DecidableEq`
-  -- restriction is what buys the purity. Corrected 2026-08-01: this comment previously added "the
-  -- framework's carriers have `DecidableEq`" — a universal over every carrier that no survey backs.
+  -- 2026-07-18). This is the base-level, choice-free form; the `DecidableEq` restriction is what buys
+  -- the purity. Its SUPPLIER, `Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial`, is essentially
+  -- classical — `Category/LawvereTaboo.lean`'s `wem_of_fixedPointFree` reduces weak excluded middle
+  -- from it. **That is a fact about the supplier, not about this statement: essentiality does not
+  -- transfer supplier → consumer.** Two corrections, both 2026-08-01: this comment once asserted "the
+  -- framework's carriers have `DecidableEq`" (a universal no survey backs), and the fix for that
+  -- then attributed the supplier's essentiality to the general form of this theorem.
   obtain ⟨b₀, b₁, hne⟩ := exists_pair_ne β
   refine no_witnessRel_of_admissible_fpf (g := fun x => if x = b₀ then b₁ else b₀) trivial (fun x => ?_)
   by_cases hx : x = b₀

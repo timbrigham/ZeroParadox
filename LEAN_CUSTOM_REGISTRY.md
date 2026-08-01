@@ -100,11 +100,13 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `WheelValuationStructure` — `ZeroParadox/Algebra/Wheel.lean:413`
+### `WheelValuationStructure` — `ZeroParadox/Algebra/Wheel.lean`
 
-**Relationship to Mathlib:** Extends `CommRing` (no Mathlib analog for the bridge)
+**Relationship to Mathlib:** Strictly **weaker** than `AddValuation A ℕ∞` (`Mathlib/RingTheory/Valuation/Basic.lean`)
 
-**Reason:** The bridge typeclass connecting the ZP valuation hierarchy to wheel theory via the wheel-of-fractions construction. Over a `CommRing L` it carries a valuation `wvs_val : L → ℕ∞` that is additive on products (`wvs_val_mul`), with the assumed condition `wvs_val 0 = ⊤` (`wvs_val_zero`) — an axiom encoding that the ring's zero sits at infinite valuation. The ZP argument motivates the choice; the type-checker does not verify its necessity. No Mathlib typeclass bundles a ring with such a valuation for the wheel construction.
+**Reason:** The bridge typeclass connecting the ZP valuation hierarchy to wheel theory via the wheel-of-fractions construction. Over a `CommRing L` it carries a valuation `wvs_val : L → ℕ∞` that is additive on products (`wvs_val_mul`), with the assumed condition `wvs_val 0 = ⊤` (`wvs_val_zero`) — an axiom encoding that the ring's zero sits at infinite valuation. The ZP argument motivates the choice; the type-checker does not verify its necessity.
+
+**Corrected 2026-08-01** (this entry previously read "no Mathlib analog for the bridge", which was false). `AddValuation.of` takes **four** axioms — `map_zero'`, `map_one'`, the ultrametric `map_add_le_max'`, and `map_mul'`. This class supplies only the first and last, so it is **not** a one-axiom reduct: dropping `map_one'` is what admits the degenerate constant-`⊤` instance (§ VII-b's NO-GO gauge), and dropping the ultrametric makes the class genuinely weaker — `v n = v₂ n + v₃ n` on `ℤ` satisfies every field here and still fails `min (v 2) (v 3) ≤ v 5`. Adopting `AddValuation` would remove the degeneracy at the cost of also assuming the ultrametric inequality; that trade has not been made. Note also that `wvs_val 0 = ⊤` is **not** discharged by adoption — `map_zero'` is a structure field there too, so adoption relocates the assumption rather than deriving it.
 
 ---
 
