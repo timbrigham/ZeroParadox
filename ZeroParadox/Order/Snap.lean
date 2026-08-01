@@ -165,13 +165,15 @@ theorem tsnap_holds_but_nothing_moves :
     * `x := ⊥` — `le ⊥ y` holds for every `y` (`bot_le`), so for any `y ≠ ⊥` the instance is
       **live**, and says no join from `y` returns to the bottom. This is the framework's headline
       reading, indexed at `ZeroParadox/Order/SnapCannotBe.lean:32` as *"no join from ε₀ returns to
-      ⊥"* and mirrored topologically by `c3_irreversible` above.
+      ⊥"* and mirrored topologically by `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean:239`).
 
     `Reading:` R1 has two faces here — its *subtraction* face is empty at ⊥ and acquires content at
     the first element with a proper part, while its *no-return* face is exactly the snap's
     irreversibility. Directionality needs two comparable points; at ⊥ alone `le` is reflexive only,
-    so there is no strict pair, and `⊥ ⋖ a` (`HasFirstStep`, `ZeroParadox/Reals/OrderedField.lean`)
-    is its first inhabitant.
+    so there is no strict pair. In a carrier that has one, `⊥ ⋖ a` (`HasFirstStep`,
+    `ZeroParadox/Reals/OrderedField.lean`) is that first inhabitant — note the carrier switch:
+    `ZPSemilattice`'s `le` is a def with no `LT` instance, so `⋖` is not available here and the
+    comparison is an analogy, not an instantiation.
     Long form: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :

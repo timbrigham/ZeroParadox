@@ -138,8 +138,10 @@ theorem no_unstarted_state (s : σ) : ¬ (f s ≠ none ∧ ¬ ∃ s', f s = some
 /-! ## § II. The trichotomy — and the third case is the bottom
 
 *(Settled 2026-07-31; long form in `.claude-local/notes/recursion_not_loop_2026-07-30.md`.)* Whether
-the bottom is a self-LOOP or a RECURSION — a descent through pairwise-distinct configurations —
-changes no result below. Adámek–Milius–Moss 2020 (arXiv:1910.09401v2) Examples 3.3(1) p. 11: *"a
+the bottom is a self-LOOP or a RECURSION — a descent through pairwise-distinct configurations — does
+not change the well-foundedness verdict, which is what the results below turn on. (Those results are
+stated for `f s = some s`; a distinct-state descent falls outside their hypothesis rather than being
+preserved by them.) Adámek–Milius–Moss 2020 (arXiv:1910.09401v2) Examples 3.3(1) p. 11: *"a
 graph regarded as a coalgebra for `P` is recursive **iff it has no infinite path**"* (recursive in
 their Def. 3.2 sense, not the informal one). So a never-halting descent through distinct states is no
 better founded than a self-loop: **distinctness buys nothing; well-foundedness carries the content.**
@@ -147,8 +149,9 @@ better founded than a self-loop: **distinctness buys nothing; well-foundedness c
 `1 + X`, every non-terminating behaviour equals `natInfinity`.
 
 `Reading:` the "cannot depart" family below is plausibly a one-relation shadow of coalgebraic
-well-foundedness (Osius 1974 → Taylor → Adámek–Milius–Moss), the lineage
-`ZeroParadox/Multihomed/BoundaryBridge.lean:33-52` already cites. Rutten, *Universal coalgebra*,
+well-foundedness (Osius 1974 → Taylor → Adámek–Milius–Moss). Taylor and AMM are already cited at
+`ZeroParadox/Multihomed/BoundaryBridge.lean:33-52`; the Osius attribution is AMM's own, at their
+p. 11 and ref [26] (*J. Pure Appl. Algebra* 4, 1974). Rutten, *Universal coalgebra*,
 TCS 249 (2000) p. 16 states this file's subject in one line: in `N̄` with `pred`, `∞` *"only takes a
 step to itself and hence never terminates"*. -/
 

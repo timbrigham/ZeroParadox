@@ -55,10 +55,12 @@ theorem epsilon0_eq_nfp_bot :
 
 /-! ### § I-b. Two fences on the "⊥ the seed" reading (Tim, 2026-07-31)
 
-**Fence 1 — the seed is not load-bearing.** `nfp` is the least fixed point `≥` its seed, so every
-seed at or below the closure reaches the *same* closure: `a ≤ nfp F 0 → nfp F a = nfp F 0`, by
-`le_antisymm` of two `Ordinal.nfp_le_fp` applications, with `Ordinal.nfp_fp` supplying the fixed
-point at each end. Elementary and not novel — `ZeroParadox/Order/LeastFixedPoint.lean`'s
+**Fence 1 — the seed is not load-bearing.** For a **normal** `F` — which `α ↦ ω^α` is — `nfp F` is
+the least fixed point `≥` its seed, so every seed at or below the closure reaches the *same*
+closure: `a ≤ nfp F 0 → nfp F a = nfp F 0`, by `le_antisymm` of two `Ordinal.nfp_le_fp`
+applications (which want `Monotone F`), with `Ordinal.nfp_fp` (which wants `IsNormal F`) supplying
+the fixed point at each end. **The normality hypothesis is load-bearing and the displayed
+implication is false without it.** Elementary and not novel — `ZeroParadox/Order/LeastFixedPoint.lean`'s
 `isLeastFixedPointFrom_nfp` is the seed-parametric statement, built from those same lemmas. So ⊥ is
 *a* seed, not a distinguished one: `epsilon0_eq_nfp_bot` is true, and the emphasis "⊥ the seed"
 overstates ⊥'s role.
