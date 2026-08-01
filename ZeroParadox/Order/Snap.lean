@@ -155,19 +155,24 @@ theorem tsnap_holds_but_nothing_moves :
     If x ≼ y and x ≠ y, no join from y can return to x.
     Complements ZPB.c3_irreversible (topological irreversibility in Q₂).
 
-    **Note the scope, and note where it is empty (Tim, 2026-07-31).** This is parametric in `x y` —
-    it holds at *every* comparable pair, not at ⊥ specifically, and
-    `Valuation/IrreversibilityProbe.lean:34-36` grades it accordingly: *"just antisymmetry — it holds
-    in every model, so it is forced by the order axioms, not independent."* So no-subtraction is
-    **not** a property of the bottom. It is **vacuous** there: the down-set of ⊥ is the singleton
-    `{⊥}`, so there is nothing to subtract, and R1 acquires content only at the first element that
-    has a proper part. **R1 characterises what the snap creates, not the bottom.**
+    **Scope — which slot ⊥ occupies changes the answer (Tim, 2026-07-31).** The statement is
+    parametric in `x y`, holding at every comparable pair, and
+    `ZeroParadox/Valuation/IrreversibilityProbe.lean:34-36` grades it accordingly: *"just
+    antisymmetry — it holds in every model, so it is forced by the order axioms, not independent."*
+    ⊥ can occupy either slot, and the two instances behave oppositely:
+    * `y := ⊥` — `le x ⊥` and `x ≠ ⊥` cannot both hold, so this instance is **vacuous**. ⊥'s
+      down-set is the singleton `{⊥}`: there is nothing below it to subtract.
+    * `x := ⊥` — `le ⊥ y` holds for every `y` (`bot_le`), so for any `y ≠ ⊥` the instance is
+      **live**, and says no join from `y` returns to the bottom. This is the framework's headline
+      reading, indexed at `ZeroParadox/Order/SnapCannotBe.lean:32` as *"no join from ε₀ returns to
+      ⊥"* and mirrored topologically by `c3_irreversible` above.
 
-    Corollary worth keeping: order needs two comparable points, so at ⊥ alone the relation is empty
-    and there is no direction. `⊥ ⋖ a` (`Reals/OrderedField.HasFirstStep`, AX-B1's honest encoding) is
-    its first inhabitant — **directionality as a relation is presupposed by `[LT α]`; directionality
-    as a fact arrives with the snap.**
-    Full record: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
+    `Reading:` R1 has two faces here — its *subtraction* face is empty at ⊥ and acquires content at
+    the first element with a proper part, while its *no-return* face is exactly the snap's
+    irreversibility. Directionality needs two comparable points; at ⊥ alone `le` is reflexive only,
+    so there is no strict pair, and `⊥ ⋖ a` (`HasFirstStep`, `ZeroParadox/Reals/OrderedField.lean`)
+    is its first inhabitant.
+    Long form: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :
     ¬∃ z : L, join y z = x := by

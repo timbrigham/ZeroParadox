@@ -44,9 +44,10 @@ open Ordinal
 
 /-! ### § I. ε₀ as the ω-tower seeded at the ordinal bottom ⊥ -/
 
-/-- ε₀ is the near-fixed-point iteration of `α ↦ ω^α` seeded at the ordinal bottom ⊥ (not merely `0`).
-    Since `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`), this reseeds `epsilonZero_eq_nfp`: the snap
-    `⊥ → ε₀` is the seed → closure of one Kleene chain — ⊥ the seed, ε₀ the closure. -/
+/-- ε₀ is the near-fixed-point iteration of `α ↦ ω^α` seeded at the ordinal bottom ⊥. Since
+    `(⊥ : Ordinal) = 0` (`Ordinal.bot_eq_zero`, definitionally — this carrier draws no distinction
+    between them), this restates `epsilonZero_eq_nfp` at ⊥: the snap `⊥ → ε₀` is the seed → closure
+    of one Kleene chain. **§ I-b fences the emphasis: the seed is not load-bearing.** -/
 theorem epsilon0_eq_nfp_bot :
     epsilonZero = Ordinal.nfp (fun α => Ordinal.omega0 ^ α) (⊥ : Ordinal) := by
   rw [Ordinal.bot_eq_zero]
@@ -54,25 +55,35 @@ theorem epsilon0_eq_nfp_bot :
 
 /-! ### § I-b. Two fences on the "⊥ the seed" reading (Tim, 2026-07-31)
 
-**The seed is not load-bearing.** `nfp` is by construction the least fixed point `≥` its seed, so
-**every** seed at or below the closure reaches the same closure — verified by probe: for
-`F = (ω ^ ·)`, `nfp F 1 = nfp F 0`, and generally `a ≤ nfp F 0 → nfp F a = nfp F 0` (two lines from
-Mathlib's `Ordinal.nfp_le_fp` and `Ordinal.nfp_fp`; standard, claimed as no novelty). So ⊥ is *a*
-seed, not a distinguished one: **the operator determines the destination, and the starting point is
-incidental.** § I's "⊥ the seed, ε₀ the closure" is true and its emphasis overstates ⊥'s role.
-*(Also: "seeded at the ordinal bottom ⊥ (not merely `0`)" claims a distinction this carrier lacks —
-`Ordinal.bot_eq_zero` makes them definitionally identical.)*
+**Fence 1 — the seed is not load-bearing.** `nfp` is the least fixed point `≥` its seed, so every
+seed at or below the closure reaches the *same* closure: `a ≤ nfp F 0 → nfp F a = nfp F 0`, by
+`le_antisymm` of two `Ordinal.nfp_le_fp` applications, with `Ordinal.nfp_fp` supplying the fixed
+point at each end. Elementary and not novel — `ZeroParadox/Order/LeastFixedPoint.lean`'s
+`isLeastFixedPointFrom_nfp` is the seed-parametric statement, built from those same lemmas. So ⊥ is
+*a* seed, not a distinguished one: `epsilon0_eq_nfp_bot` is true, and the emphasis "⊥ the seed"
+overstates ⊥'s role.
 
-**And the snap runs on the operator that does NOT fix ⊥.** `Computability/SelfApp.lean:73` assumes
-`fixed_bot : selfApp bot = bot` as a **class field**, and every "the bottom cannot move" result
-descends from it. Here the opposite holds and is provable: `ω ^ (0 : Ordinal) = 1 ≠ 0`, so `α ↦ ω^α`
-does **not** fix the ordinal bottom (this is the argument already inside
-`Epsilon0LeastFP.epsilon0_ne_zero`). **Two operators, opposite behaviour at ⊥, and the snap is the
-action of the one that moves it.** Neither observation is stated anywhere else in the corpus.
-Full record: `.claude-local/notes/tower_seed_is_not_load_bearing_2026-07-31.md` and
-`.claude-local/notes/forced_movement_two_operators_2026-07-31.md`. -/
+**Fence 2 — `α ↦ ω^α` does not fix ⊥.** Provable here: `ω ^ (0 : Ordinal) = 1 ≠ 0`, which is the
+argument already inside `epsilon0_ne_zero`. Contrast `ZeroParadox/Computability/SelfApp.lean:73`,
+where `fixed_bot : selfApp bot = bot` is a **class field** — an assumption, the shape CLAUDE.md's
+commitments-in-hypotheses rule warns about. `Reading:` the snap is the action of an operator that
+moves ⊥ rather than one that fixes it.
 
-/-! ### § II. The min ≡ max capstone -/
+**Scope, and it is narrow.** The `AbstractSelfApp` family rests on `fixed_bot`; the determinism
+family does **not** — `machine_snap_impossible` is powered by single-valuedness
+(`ZeroParadox/Computability/Occurrence.lean` § VI), a separate obstruction, and attributing it to
+the fixed point is the error CLAUDE.md's determinism section names. Already-proved neighbours, so
+neither fence is new mathematics: `ZeroParadox/Ordinal/SnapNucleus.lean`'s `snapNucleus_bot_ne_bot`
+(*"it does not fix the floor"* — in a file that imports this one) and the choice-free
+`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`'s `omegaPow_no_fixedpoint`.
+Long form: `.claude-local/notes/future-research/tower_seed_is_not_load_bearing_2026-07-31.md`,
+`.claude-local/notes/future-research/forced_movement_two_operators_2026-07-31.md`. -/
+
+/-! ### § II. The min ≡ max capstone
+
+`Statement:` **COINCIDENCE** — `epsilon0_min_eq_max` proves that one object, ε₀, carries both
+extremal characterisations simultaneously: the least fixed point of `α ↦ ω^α` and the supremum of
+the ω-tower. -/
 
 /-- **The min ≡ max capstone.** One theorem, one object: ε₀ (`epsilonZero`) is simultaneously the
     **supremum** of the ω-tower (the *max* reading) and the **least** fixed point of `α ↦ ω^α` (the
