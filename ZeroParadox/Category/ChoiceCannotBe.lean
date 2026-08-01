@@ -8,6 +8,8 @@ import ZeroParadox.Ordinal.SyntacticCollapse
 import ZeroParadox.Computability.RootCutTrichotomy
 import ZeroParadox.Computability.ChoicePurityInvariant
 import ZeroParadox.Settheory.Wall
+import ZeroParadox.Ordinal.OrdinalChoiceEssential
+import ZeroParadox.Category.LawvereTaboo
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -88,7 +90,8 @@ classically Mathlib happens to be built, and reports it in a way that reads as a
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
 core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`), and every footprint
 examined beyond it has been *accidental*, meaning a choice-free re-proof exists. Two such re-proofs have
-been carried out (§ I). No essential case has ever been found.
+been carried out (§ I). **Two ESSENTIAL cases are also located and named (§ IV)** — so "accidental" is
+the common finding, not the only one.
 
 **And in practice the number will not stay right.** It has been wrong three times. The first version was
 quoted rather than measured and was off by more than an order of magnitude. The replacement was measured
@@ -97,8 +100,19 @@ down; a claim-review referee caught it. The figure that then sat in the project'
 stale again by the following review, for the same reason. All three are one error — citing a figure that
 is not being regenerated at the moment of use — and a docstring cannot regenerate anything.
 
-What is true, and is what this file asserts instead: **the framework is not choice-free, the core is, and
-every examined footprint has been removable.** That statement does not go stale.
+What is true, and is what this file asserts instead: **the framework is not choice-free; the core is
+(`t_snap_derived`, no axioms at all); most examined footprints have proved removable; and two are
+provably NOT removable (§ IV).**
+
+**⚠ AND NOTE WHAT THIS SENTENCE USED TO SAY, because the correction is the more useful lesson.** It read
+*"every examined footprint has been removable — that statement does not go stale."* Both halves were
+wrong within a day: `em_of_wellOrder_comparable` and `wem_of_fixedPointFree` were committed 2026-07-20,
+one day after this file was last touched, and they are footprints that are examined and **not**
+removable. **A universal negative is the most dangerous sentence shape in a `CannotBe` index** — the
+`#check` lines cannot overclaim, but a prose claim quantified over *the whole framework* is falsified by
+any single future commit, and nothing mechanical notices. This one survived into `CLAUDE.md` (which
+recommended it as the safe formulation) and into `RELEASES.md`, which had already announced the two cases
+this file went on denying. **Write "none located as of &lt;date&gt;", never "none exists."**
 
 **If you want a count, measure it — do not look for one to cite.** Every `ZeroParadox` file carries a
 `PurityCheck` section, so a full build emits one `#print axioms` line per indexed declaration. From the
@@ -139,8 +153,11 @@ examined fraction either**; it moves with every commit.
   `compl_sup_distrib` reports `Classical.choice`; staying on the meet side drops it to `[propext]`.
   `ZeroParadox/Ordinal/SyntacticCollapse.lean` records another: a single tactic call was the whole footprint.
 * **ESSENTIAL** — the theorem implies excluded middle, or a choice fragment, over an intuitionistic
-  base. **No essential case has been found anywhere in the framework.** That is an absence of evidence
-  from a partial survey, not a theorem.
+  base. **Two are located: § IV.** Detected by *reducing* — deriving a taboo from the principle — which
+  is the mirror image of the accidental test: accidental is shown by re-proving without choice, essential
+  by showing that re-proving without choice would decide a taboo. Note this is a statement about the
+  PRINCIPLE, not about any one proof of it: `#print axioms` reports a proof's footprint and can never
+  witness necessity, which is exactly why the essential side needs a reduction instead of a measurement.
 
 Prior art for the distinction and its methods: constructive reverse mathematics (Ishihara;
 Diener–Ishihara). Cited, not claimed.
@@ -308,5 +325,51 @@ proved about where choice does work. -/
 -- explicitly for this reason. Pin the instance, or measure nothing.
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
+
+/-! ## § IV. The ESSENTIAL cases — where the choice is NOT removable
+
+Added 2026-08-01. Both were committed 2026-07-20, one day after this index was last touched, and the
+index went on asserting the opposite until this section landed. They satisfy § "Accidental versus
+essential"'s own definition of ESSENTIAL: each derives a **taboo** — excluded middle, or its weak form —
+from a classical principle the framework uses.
+
+**Read the logical shape before citing either.** The theorems are themselves *choice-free reductions*:
+the classical content sits entirely in the **hypothesis**, which is what makes each an implication rather
+than a restatement. What is established is about the **principle**, not about any particular proof:
+re-proving that principle constructively would decide a taboo, so no choice-free re-proof is available.
+Neither says the framework's overall use of choice is essential, and neither is an independence result. -/
+
+-- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
+-- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
+-- PRIOR ART, not a framework result: Kraus-Nordvall Forsberg-Xu, arXiv:2104.02549, **Theorem 38(d)** —
+-- there in the DATA form (`⊎`) and as a paper proof, not covered by their Agda development. The
+-- framework's contribution is the propositional (`∨`) form, on their witnesses.
+#check @ZeroParadox.em_of_wellOrder_comparable
+
+-- Non-vacuity, the source end of the arrow: Mathlib's `InitialSeg.total` supplies the hypothesis and
+-- spends a literal `Classical.choice` in its final branch. Without this the reduction could be dismissed
+-- as an implication with an unsatisfiable antecedent.
+#check @ZeroParadox.comparable_of_classical
+
+-- ESSENTIAL CASE 2 — the general fixed-point-free principle implies WEAK excluded middle, and this one
+-- sits on the KEYSTONE (the diagonal engine) rather than on an imported order instance. Its hypothesis
+-- is the ∀-closure of `Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, so that
+-- theorem's `classical` is essential, not accidental: no rewriting of the proof removes it.
+#check @ZeroParadox.wem_of_fixedPointFree
+
+-- Non-vacuity again: `fixedPointFree_of_nontrivial` supplies the hypothesis, classically by
+-- construction. Contrast `select_of_decidable` (§ III) — where the predicate is decidable the work
+-- disappears; the classical content lives at "undecided", not at "chooses".
+#check @ZeroParadox.fixedPointFree_of_nontrivial
+
+-- AND THE ESCAPE, WHICH IS THE HALF THAT MAKES CASE 2 USEFUL RATHER THAN ALARMING. "Essential" scopes
+-- to the GENERAL principle, quantified over arbitrary `Type`. Restrict the carrier to decidable
+-- equality and the same statement is choice-free — measured `[propext]`, against the general form's
+-- `[propext, Classical.choice, Quot.sound]`. `DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
+-- carries the same audit for the level-set form. **The framework's carriers have `DecidableEq`, so the
+-- framework never needs the essential form** — the taboo says the general statement cannot be re-proved
+-- constructively, and the restriction says it does not have to be. Together they are a localization,
+-- not an obstruction: this is where the classical content lives and how far it reaches.
+#check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 
 end ChoiceCannotBeIndex
