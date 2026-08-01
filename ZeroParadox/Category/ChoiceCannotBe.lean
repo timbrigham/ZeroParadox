@@ -366,10 +366,14 @@ Neither says the framework's overall use of choice is essential, and neither is 
 -- to the GENERAL principle, quantified over arbitrary `Type`. Restrict the carrier to decidable
 -- equality and the same statement is choice-free — measured `[propext]`, against the general form's
 -- `[propext, Classical.choice, Quot.sound]`. `DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
--- carries the same audit for the level-set form. **The framework's carriers have `DecidableEq`, so the
--- framework never needs the essential form** — the taboo says the general statement cannot be re-proved
--- constructively, and the restriction says it does not have to be. Together they are a localization,
--- not an obstruction: this is where the classical content lives and how far it reaches.
+-- carries the same audit for the level-set form. **Where a carrier has `DecidableEq`, the essential
+-- form is not needed** — the taboo says the general statement cannot be re-proved constructively, and
+-- the restriction says it does not have to be *there*. Together they localize the classical content
+-- rather than obstruct it: they say where it lives and how far it reaches.
+-- SCOPE, and note the shape of this claim: the `DiagonalWitness` audit comment asserts "the framework's
+-- carriers have `DecidableEq`" as a general fact. **No corpus-wide survey backs that**, and a universal
+-- over every carrier is the same sentence shape this file's own § "No count" warns about. Treat it as
+-- true where checked and unverified in general; the two `#check`ed declarations are what is established.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 
 end ChoiceCannotBeIndex
