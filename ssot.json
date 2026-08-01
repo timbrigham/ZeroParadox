@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1538,
+        "declarations": 1542,
         "files": 136
       },
       "entries": [
@@ -9711,6 +9711,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "27c2da7e-5178-41cb-86a0-013b8cbd0e9c",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelValuationStructure_always_inhabited",
+            "short": "wheelValuationStructure_always_inhabited"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "NO-GO gauge for WheelValuationStructure: degenerate instance, always-inhabited theorem, explicit nondegeneracy predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "27e8030f-d5af-4d8b-bf1f-db99f8e948b5",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -11443,6 +11481,44 @@
             "role": []
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2fe0182e-b89d-4cc1-bc25-fbdd0b925650",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.WVSNondegenerate",
+            "short": "WVSNondegenerate"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "commitment"
+            ]
+          },
+          "reason": "NO-GO gauge for WheelValuationStructure: degenerate instance, always-inhabited theorem, explicit nondegeneracy predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24052,6 +24128,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6d3ab9e4-186f-4a15-ab78-9aa0bbf35773",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.degenerateWVS_not_nondegenerate",
+            "short": "degenerateWVS_not_nondegenerate"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "NO-GO gauge for WheelValuationStructure: degenerate instance, always-inhabited theorem, explicit nondegeneracy predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6d6b1701-8b85-417d-9047-bae03fa658fa",
           "new": {
@@ -30892,6 +31006,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8f44d61d-3dce-4fec-9809-dc8743083284",
+          "new": {
+            "file": "ZeroParadox/Algebra/Wheel.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.degenerateWVS",
+            "short": "degenerateWVS"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "NO-GO gauge for WheelValuationStructure: degenerate instance, always-inhabited theorem, explicit nondegeneracy predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
