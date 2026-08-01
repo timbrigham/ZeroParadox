@@ -423,6 +423,59 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
   wvs_val_zero : wvs_val 0 = ⊤
 
 -- ============================================================
+-- § VII-b. NO-GO GAUGE — the class is degenerately inhabited
+-- ============================================================
+
+/-! ### The gauge (2026-08-01)
+
+**Nothing in the corpus consumes this class** — no theorem takes `[WheelValuationStructure L]` and
+no instance is registered — and the results that carry the wheel (`Algebra/WheelFrac.lean`'s
+`instWheel`) are built on `[CommRing A]` plus a multiplicative submonoid, never on this class. That
+is what keeps the defect below **preventive** rather than propagating. The published documents were
+already honest about it: the ZP-J addendum states *"Ring structure is an input, not a conclusion"*
+and says this class's porthole condition *"is an assumed axiom … not type-checked as necessary."*
+
+The gauge exists so the trap cannot be sprung later. It mirrors
+`Computability/SelfApp.lean`'s `trivialSelfApp` gauge, and it exists because a warning comment is
+not checkable while an inhabiting term is. -/
+
+/-- **The degenerate instance.** The constant-`⊤` valuation satisfies **every** field on **any**
+    commutative ring: `⊤ = ⊤ + ⊤` discharges multiplicativity and `⊤ = ⊤` discharges the porthole
+    condition. Note the carrier is unrestricted — `ℤ` carries this, so the degeneracy is not an
+    artifact of a trivial ring. -/
+@[reducible] def degenerateWVS (A : Type*) [inst : CommRing A] : WheelValuationStructure A where
+  toCommRing := inst
+  wvs_val := fun _ => ⊤
+  wvs_val_mul := fun _ _ => (top_add (⊤ : ℕ∞)).symm
+  wvs_val_zero := rfl
+
+/-- **The gauge.** Every commutative ring carries a `WheelValuationStructure`. Therefore no property
+    of `A` follows from the bare hypothesis `[WheelValuationStructure A]` — any argument of the form
+    "A carries `WheelValuationStructure`, therefore [something about A]" is **vacuous**, and any
+    future construction over this class must carry `WVSNondegenerate` as an explicit hypothesis. -/
+theorem wheelValuationStructure_always_inhabited (A : Type*) [CommRing A] :
+    Nonempty (WheelValuationStructure A) :=
+  ⟨degenerateWVS A⟩
+
+/-- Nondegeneracy — the content the class does **not** carry. Per the commitments-in-hypotheses rule
+    this is a **predicate to be assumed where needed**, deliberately NOT a class field: a carrier may
+    or may not satisfy it, and bundling it would hide the assumption at every use site. -/
+def WVSNondegenerate (L : Type*) [W : WheelValuationStructure L] : Prop :=
+  ∃ x : L, W.wvs_val x ≠ ⊤
+
+/-- The degenerate instance fails nondegeneracy — so the predicate is not itself vacuous, and it is
+    exactly what separates a real porthole valuation from the constant-`⊤` one. -/
+theorem degenerateWVS_not_nondegenerate (A : Type*) [CommRing A] :
+    ¬ @WVSNondegenerate A (degenerateWVS A) := by
+  rintro ⟨x, hx⟩
+  exact hx rfl
+
+/-! **Axiom footprint (measured, 2026-08-01):** both theorems report
+`[propext, Classical.choice, Quot.sound]`. The choice is inherited from Mathlib's `ℕ∞ = WithTop ℕ`
+instances, which the *statements* mention — `#print axioms` follows the statement, not the proof —
+so it is not removable from this side. -/
+
+-- ============================================================
 -- § VIII. The Main Conjecture (Resolved)
 -- ============================================================
 
@@ -452,10 +505,15 @@ Arbitrary binary multiplication cannot be recovered from a single unary endomorp
 without knowing what operation you are iterating. Ring structure is the missing
 hypothesis; the suggested path (WithTop L, wmul from selfApp) does not close.
 
-**The correct bridge:** `WheelValuationStructure` (§VII) — a commutative ring with
+**The intended bridge:** `WheelValuationStructure` (§VII) — a commutative ring with
 multiplicative valuation satisfying wvs_val(0) = ⊤. From this, the wheel of
 fractions construction Wh(L) = (L × L)/~ yields a Wheel instance, and the porthole
 condition pins wzero. Wheel axioms follow from ring axioms + valuation axioms.
+**Read § VII-b before building on it:** the class as stated is **degenerately inhabited**
+(`wheelValuationStructure_always_inhabited`), so it constrains nothing on its own and anything
+built over the bare hypothesis is vacuous. The working results below take `[CommRing A]` and a
+multiplicative submonoid instead, and do not route through this class. A construction that
+genuinely needs a porthole valuation must assume `WVSNondegenerate` explicitly.
 
 **The construction, formalized:** see `ZPJ_WheelFrac.lean`.
 `ZPJ_WheelFrac.instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
