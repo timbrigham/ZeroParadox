@@ -92,17 +92,22 @@ end AxiomFootprintEvidence
 /-! ## § II. Rogers' Fixed-Point Stability
 
 Any computable transformation of a Code has a behavioral fixed point — a code c
-such that eval (f c) = eval c. This is Rogers' fixed-point theorem (Kleene's
-second recursion theorem): the fixed-point structure is stable under any
-computable transformation.
+such that eval (f c) = eval c. This is **Rogers' fixed-point theorem**: the fixed-point structure is
+stable under any computable transformation. *(Corrected 2026-08-02: this read "Rogers' fixed-point
+theorem (Kleene's second recursion theorem)", equating the two. Mathlib splits them — `fixed_point` is
+Roger's fixed point theorem, `fixed_point₂` is Kleene's second recursion theorem
+(`Mathlib/Computability/PartrecCode.lean:36-37`, docstrings at `:1001` and `:1022`) — and the
+declaration below wraps the `fixed_point` route. They are inter-derivable, so this was naming rather
+than falsehood.)*
 
 Note on scope: the ZPL architecture initially proposed that eval (f botCode) =
 eval botCode for ALL computable f. This overclaims — botCode is one specific
 Classical.choose witness and carries no special stability under arbitrary f.
 The existential version is the correct formalization. -/
 
-/-- Rogers' fixed-point theorem (Kleene's second recursion theorem): for any
-    computable transformation f, some code is behaviorally fixed by f.
+/-- Rogers' fixed-point theorem (Mathlib `Nat.Partrec.Code.fixed_point`; **not** Kleene's second
+    recursion theorem, which Mathlib names `fixed_point₂`): for any computable transformation f,
+    some code is behaviorally fixed by f.
     Proved as a wrapper around ZPK's roger_fixed_point_exists. -/
 theorem roger_fixed_point_stability (f : Code → Code) (hf : Computable f) :
     ∃ c : Code, eval (f c) = eval c :=

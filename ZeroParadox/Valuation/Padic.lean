@@ -258,7 +258,7 @@ C3 (irreversibility) is the positive complement to ZP-F's f_snap_impossible:
 - In **any ordered field** (ZP-F), Archimedean or not: halving is always available, so no
   minimal positive element exists — the snap is **impossible** (`f_snap_impossible`,
   `axb1_fails_in_ordered_field`). Neither theorem has an Archimedean hypothesis; see the
-  classification note below.
+  ZP-B / ZP-F classification paragraph further down this docstring.
 - In Q₂ (this file): the ultrametric creates a genuine topological gap at zero
   (T2, T3, C3) — the snap is **not blocked**, which is a strictly weaker statement.
 
@@ -297,9 +297,16 @@ ZP-B covers the non-Archimedean case (p = 2, forced by AX-B1 and minimality).
 ZP-F covers the ordered-field case. **The classification is a statement about where the snap is
 RULED OUT**, not where it is supplied: **ZP-F rules it out in every ordered field** — which is
 what it actually proves, and is wider than the Archimedean completion — and ZP-B removes the
-topological obstruction in ℚ₂. Ultrametric structure is therefore
-necessary and **not** sufficient — that the snap actually occurs is carried by AX-B1 together
-with the framework's commitments, never by C3 or T5 alone. (An earlier revision of this
+topological obstruction in ℚ₂. Ultrametric structure is therefore **not sufficient** — that the snap
+actually occurs is carried by AX-B1 together
+with the framework's commitments, never by C3 or T5 alone. **Necessity is NOT asserted here**: the
+contraposition below gives *a first step exists ⟹ not an ordered field*, which is incomparable with
+*⟹ ultrametric*. Necessity would hold only after restricting to completions of ℚ, where Ostrowski
+leaves nothing else — a restriction this paragraph does not make. *(Corrected 2026-08-02: this read
+"necessary and not sufficient". The word "necessary" asserted `snap ⟹ ultrametric`, the exact
+implication called incomparable thirteen lines below in this same docstring. It survived because the
+fix that introduced it changed the ADJECTIVE — "non-Archimedean" → "ultrametric" — and left the claim
+wrapped around it standing. All three gates flagged it.)* (An earlier revision of this
 paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
 fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density obstruction but supplies
 no closest nonzero element, so it does not yield the step.)
@@ -310,19 +317,29 @@ no closest nonzero element, so it does not yield the step.)
 proved by **halving**, via `f_snap_blocked`. So what it gives by contraposition is *a first step exists
 ⟹ the carrier is not an ordered field at all*.
 
-That is a **different** shape from "⟹ non-Archimedean", and **under the valuation-theoretic reading of
-"non-Archimedean" — carrying an ultrametric absolute value, the sense used throughout ZP-B — the two are
-incomparable**, neither implying the other:
+That is a **different** shape from "⟹ non-Archimedean". **Quantified over FIELDS, and reading
+"non-Archimedean" in the valuation-theoretic sense — the field carries an ultrametric absolute value,
+the sense used throughout ZP-B — the two are incomparable**, neither implying the other:
 * ℝ(t) with the leading-coefficient order is a **non-Archimedean ordered field**, so
   `f_snap_impossible` covers it while an Archimedean hypothesis would not;
-* ℂ carries an ultrametric-free absolute value and **is not orderable at all**, so it falls under
-  "not an ordered field" while not being non-Archimedean in the valuation sense.
+* ℂ **is not orderable at all** (it has no compatible linear order), so it falls under "not an ordered
+  field"; and its **standard** absolute value is Archimedean, so it is not non-Archimedean in the sense
+  meant. *(Stated of the standard absolute value deliberately: every field also carries the trivial
+  absolute value, which is an ultrametric, and ℂ ≅ ℂ_p as abstract fields — so "ℂ is not
+  non-Archimedean" is false without naming the absolute value. Corrected 2026-08-02.)*
 
-**The reading is load-bearing and is pinned deliberately.** Under the *plain* reading of
-"non-Archimedean" as bare `¬Archimedean`, "not an ordered field" would be strictly **stronger** and ℂ
-would separate nothing (the separating witness there is ℤ, not a field at all). State which reading is
-meant, or the comparison is not well-posed. *(Pinned 2026-08-01 after a prior-art gate showed the
-verdict was reading-dependent — in a paragraph whose own correction (iii) is about an ordering error.)*
+**BOTH the domain and the reading are load-bearing, and both are pinned deliberately.**
+* **Domain — fields.** Over arbitrary carriers the comparison is not even well-posed in the intended
+  direction: **ℤ is not an ordered field and IS Archimedean**, so "not an ordered field" cannot imply
+  "non-Archimedean" there.
+* **Reading.** Under the *plain* reading of "non-Archimedean" as bare `¬Archimedean`, ℂ separates
+  nothing and the witness would have to be ℤ — which the field restriction excludes.
+
+*(Corrected 2026-08-02. The previous version said that under the plain reading "not an ordered field"
+is strictly **stronger**, while naming **ℤ** as its separating witness — two claims that cannot both
+hold, since a separator is exactly what refutes strictness. It also never stated the domain, in the
+sentence instructing readers to state the reading. Originates in a prior-art suggestion that was itself
+imprecise and which was implemented faithfully; editorial and adversary both caught it a round later.)*
 
 *(Three corrections, all 2026-08-01, all caught by gates rather than by me. (i) This paragraph once
 cited `f_snap_impossible` as holding "on the Archimedean side", mis-scoping a theorem that covers every

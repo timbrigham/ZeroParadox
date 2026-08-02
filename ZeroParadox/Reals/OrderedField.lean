@@ -189,15 +189,21 @@ not what does the work; being an ordered field is. The struck claim survived her
 after the same wording was corrected in `ZeroParadox/Valuation/Padic.lean` — an adversary gate
 found it by grepping the CLAIM rather than the file.)*
 
-**ZP-F / ZP-B Classification (Ostrowski's theorem):**
+**ZP-F / ZP-B classification.** *(Ostrowski's theorem classifies the absolute values on ℚ up to
+equivalence, so it governs the ℝ-versus-ℚ_p split only. It does **not** classify ℝ(t), which is not a
+completion of ℚ — the first bullet is therefore wider than Ostrowski and rests on
+`f_snap_impossible`, not on the classification. Heading corrected 2026-08-02; it previously read
+"Classification (Ostrowski's theorem)" while governing a bullet containing ℝ(t).)*
 
 - **Ordered fields** (ℝ, ℚ, and equally the non-Archimedean ones like ℝ(t)): the snap is
   **impossible** — proved in this file by two distinct theorems, `f_snap_impossible` (by halving)
   and `axb1_fails_in_ordered_field` (via density and `CovBy`): the same fact reached two ways,
   with distinct statements. They are **not** the same declaration and no equation between them is
   asserted.
-- Non-Archimedean **and not an ordered field** (ℚ₂ — the p-adics admit no compatible order): the
-  snap is **not blocked**, which is a strictly weaker statement than being forced.
+- Non-Archimedean **and not an ordered field** (ℚ₂): the snap is **not blocked**, which is a strictly
+  weaker statement than being forced. *(The p-adics admit no compatible linear order — standard, by
+  Artin–Schreier: an orderable field must be formally real, i.e. −1 is not a sum of squares, and in
+  ℚ_p it is. Cited 2026-08-02; the claim stood uncited.)*
 
 **ZP-B does NOT force the snap, and cannot.** What it proves is topological: the gap at 0 is
 clopen (`t3_isolation`) and the return across it admits no continuous path (`c3_irreversible`,
@@ -213,10 +219,11 @@ the Archimedean completions of ℚ from the non-Archimedean ones; **ZP-F rules t
 ordered field** — which is what this file actually proves, and is wider than the Archimedean
 completion — and ZP-B removes the topological obstruction in ℚ₂. *(Corrected 2026-08-01: this read
 "ZP-F rules the snap out on the Archimedean side", which understates a theorem needing no Archimedean
-hypothesis. The identical phrasing in `ZeroParadox/Valuation/Padic.lean` was struck in the same arc —
-but only on the second attempt: the first pass corrected this file while asserting the sibling had
-already been fixed, when it had not. **Do not restate another file's state as fact in a correction
-note; grep the claim there instead.** An adversary gate caught it.)* That the snap
+hypothesis. The identical phrasing in `ZeroParadox/Valuation/Padic.lean` was struck in the same arc, **as
+of `a565649`** — and only on the second attempt: the first pass corrected this file while asserting the
+sibling had already been fixed, when it had not. **Do not restate another file's state as fact in a
+correction note — including this one, which is why it is dated: grep the claim there instead.** An
+adversary gate caught it.)* That the snap
 actually occurs there is carried by AX-B1 together with the framework's commitments, never by
 C3 or T5 alone.
 

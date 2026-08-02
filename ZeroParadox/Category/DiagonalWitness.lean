@@ -25,8 +25,11 @@ that "count" in the ambient category. The face table becomes level sets of ONE p
 - **M fine (computable endomaps)** — the fixed-point-free diagonal is **not** admissible, which
   **removes** the § III obstruction. It does not by itself supply the witness: the implication runs one
   way, and **no `HasWitnessRel` theorem for the computable class is proved in this file.** The genuine
-  diagonal fixed point on this side is **Kleene's recursion theorem**, cited rather than derived here
-  (`Nat.Partrec.Code.fixed_point`, aliased below as `computability_face_fixedPoint`).
+  diagonal fixed point on this side is **Rogers' fixed-point theorem**, cited rather than derived here
+  (`Nat.Partrec.Code.fixed_point`, aliased below as `computability_face_fixedPoint`; Mathlib reserves
+  *Kleene's second recursion theorem* for `fixed_point₂`). *(Corrected 2026-08-02: this said "Kleene's
+  recursion theorem" — the same-file sibling of the `:157` fix, left standing 123 lines above it in the
+  same commit.)*
   *(Corrected 2026-08-01: previously written "not admissible ⇒ the witness holds ⇒ a genuine diagonal
   fixed point", which does not follow — an absent obstruction is not a witness.)*
 
@@ -156,8 +159,11 @@ NOT claimed — the framework joins that program. -/
 /-- **Axis-2 genuine floor.** Every *computable* self-map on codes has an eval-fixed point —
     **Rogers' fixed-point theorem** (`computability_face_fixedPoint` = Mathlib
     `Nat.Partrec.Code.fixed_point`). Mathlib reserves the name *Kleene's second recursion theorem*
-    for `fixed_point₂`; the two are inter-derivable, and `ZeroParadox/Category/Lawvere.lean:116,121`
-    words it the same way. The fine end of axis 2. -/
+    for `fixed_point₂`, and literally derives `fixed_point₂` from `fixed_point`, so the two are
+    inter-derivable. `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
+    slash-alias ("Rogers / Kleene's recursion theorem") rather than making this split — compatible, but
+    not the same convention. The fine end of axis 2.
+    *(Corrected 2026-08-02: this claimed `Lawvere.lean` "words it the same way", which it does not.)* -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ∃ c, Nat.Partrec.Code.eval (g c) = Nat.Partrec.Code.eval c :=
   computability_face_fixedPoint hg

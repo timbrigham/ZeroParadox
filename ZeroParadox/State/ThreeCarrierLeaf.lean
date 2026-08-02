@@ -14,12 +14,16 @@ set_option maxHeartbeats 400000
 # ZP-H tree, TC29 — the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to TC19's #3/#2)
 
 > **⚠ READ FIRST — every "TC19" in this file is a CONTESTED label.** `ZeroParadox/MANIFEST.md`
-> contradicts itself about which node TC19 names, so treat all 14 occurrences below as referring to
-> *"the prior node covering the #3/#2 ν-leaves"* and **not** as a verified pointer. Details in
-> § "THE 'TC19' LABEL IS CONTESTED" below. The #3/#2 mathematics is real and unaffected; only the
-> node NUMBER is unreliable. *(Flagged 2026-08-01. The caveat sits here, at the top, because a gate
-> found the first version buried mid-file while the label went on being used as reliable eleven more
-> times — including in this title and in theorem docstrings.)*
+> contradicts itself about which node TC19 names, so treat **every** occurrence in this file — the
+> title above included — as referring to *"the prior node covering the #3/#2 ν-leaves"* and **not** as
+> a verified pointer. Details in § "THE 'TC19' LABEL IS CONTESTED" below. The #3/#2 mathematics is real
+> and unaffected; only the node NUMBER is unreliable. *(Flagged 2026-08-01; count corrected 2026-08-02.
+> The caveat sits here, at the top, because a gate found the first version buried mid-file while the
+> label went on being used as reliable throughout. The first version said "14 occurrences below" and
+> "eleven more times" — measured 2026-08-02 there are **18** in the file, and the three gates reported
+> 19/15/15 using different conventions. **No count is stated here now**, deliberately: a count at the
+> site of a caveat goes stale exactly like the counts this project keeps getting wrong. Measure it:*
+> `Select-String -Path ZeroParadox\State\ThreeCarrierLeaf.lean -Pattern 'TC19'`*.)*
 
 ## Engineer's Take
 

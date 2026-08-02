@@ -490,7 +490,8 @@ already honest about it: the ZP-J addendum states *"Ring structure is an input, 
 and says this class's porthole condition *"is an assumed axiom, motivated by the ZP argument rather
 than type-checked as necessary."* *(Quotation corrected 2026-08-01: an earlier revision rendered the
 tail as "… **not** type-checked as necessary", putting a word inside the quotation marks that the
-source — `scripts/build_zpj_wheel_addendum.py:263-264` (the public mirror; the active script is gitignored) — does not contain.)*
+source — `scripts/build_zpj_wheel_addendum.py` (the public mirror; the active script is gitignored),
+    the paragraph ending "…motivated by the ZP argument rather than type-checked as necessary." — does not contain.)*
 
 The gauge exists so the trap cannot be sprung later. It mirrors
 `Computability/SelfApp.lean`'s `trivialSelfApp` gauge, and it exists because a warning comment is
