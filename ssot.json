@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1542,
+        "declarations": 1549,
         "files": 136
       },
       "entries": [
@@ -3717,6 +3717,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0cb67bd5-e04c-4d79-b4a9-7959481c5531",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox.InvolutiveFork",
+            "qualified": "ZeroParadox.InvolutiveFork.Collapsed",
+            "short": "Collapsed"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -8179,6 +8217,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "206b3eab-9734-45f7-8a44-623257a9eb94",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelFork_not_collapsed",
+            "short": "wheelFork_not_collapsed"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "20b9db32-63ad-4094-b175-ba9b1dfac48a",
           "new": {
@@ -10356,6 +10432,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "2aff96ab-65ca-4853-bc8f-3290d15790fa",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fixed_pole_forces_collapse",
+            "short": "fixed_pole_forces_collapse"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -16989,6 +17103,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "49734546-ec65-4849-986c-199919b2a7d2",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox.InvolutiveFork",
+            "qualified": "ZeroParadox.InvolutiveFork.collapsed_iff_fixed",
+            "short": "collapsed_iff_fixed"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35081,6 +35233,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9e6a8111-310e-4d80-af58-269157ccf533",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelFrac_fork_open",
+            "short": "wheelFrac_fork_open"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9e7d279b-4671-4e0a-af82-3eaa779a32d4",
           "new": {
@@ -40512,6 +40702,44 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b9255bf8-4c28-42c5-a36f-28931c812afa",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wheelFork",
+            "short": "wheelFork"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -52344,6 +52572,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "edc20b92-ea67-4f89-9991-6add3cee2e1e",
+          "new": {
+            "file": "ZeroParadox/Algebra/WheelFrac.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.InvolutiveFork",
+            "short": "InvolutiveFork"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "algebra"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "D-22: promote the involutive-fork witnesses from private/physics-bridge into a tracked file so Wall.lean's NO-GO table row is citable",
           "verify": {
             "axioms": null,
             "sorry_free": true

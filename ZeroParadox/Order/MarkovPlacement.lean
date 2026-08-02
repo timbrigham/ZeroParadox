@@ -8,7 +8,16 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC16 / TC13 — the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+# ZP-H tree, TC45 — the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+
+*(Renumbered 2026-08-02, Tim. This file previously claimed **TC16 / TC13**, both of which are owned by
+other nodes: TC16 is `ZeroParadox/Valuation/NuLeafReconcile.lean` — confirmed from the pre-rename branch,
+where that file's own header and capstone both say TC16 — and TC13 is
+`ZeroParadox/Category/SeamGeneric.lean`. **TC45 is out of sequence deliberately**: it is the only label
+with no existing mention anywhere in the corpus or the notes, and reusing a number that appears in
+historical records would trade one collision for a subtler one. **The number is a label, not a claim;
+nothing mathematical depends on it.** Seven further ownership collisions remain in
+`ZeroParadox/MANIFEST.md` — see the defect ledger.)*
 
 ## Engineer's Take
 

@@ -186,7 +186,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### Order / lattice (ZP-A, ZP-E)
 
 - `ZeroParadox/Order/MarkovContractionDual.lean` - ZP-H tree, edge TC39 — the dual contraction dichotomy on the Markov ν-side (#2)
-- `ZeroParadox/Order/MarkovPlacement.lean` - ZP-H tree, TC16 / TC13 — the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+- `ZeroParadox/Order/MarkovPlacement.lean` - ZP-H tree, TC45 (renumbered 2026-08-02 from a TC16/TC13 claim, both owned elsewhere) — the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
 - `ZeroParadox/Order/OrbitDichotomy.lean` - The orbit dichotomy — "one or infinitely many", no finite middle (probe)
 - `ZeroParadox/Order/PadicLimitCone.lean` - ZP-H MC-1 TC10: the p-adic floor `{0}` is a genuine categorical limit cone
 - `ZeroParadox/Order/ProofFloorHomset.lean` - ZP-H tree, TC43 — Axis III over the proof-theory floor #1 (the hom-set carrier convention)

@@ -101,18 +101,21 @@ experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloo
 | any well-founded relation | NO CYCLE (any length) | `wf_no_cycle` (1-cycle: `wf_no_selfloop`) | axiom-free |
 | set theory + Foundation | NO MEMBERSHIP CYCLE (any length) | `no_membership_cycle` (1-cycle: `no_quine_atom`) | choice-free |
 | ordinal notation naming `<ε₀` | UNREACHABLE FROM BELOW | `omegaPow_no_fixedpoint` | choice-free |
-| lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | **not at HEAD** — see note below | n/a |
+| lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | `fixed_pole_forces_collapse` (`ZeroParadox/Algebra/WheelFrac.lean`) | axiom-free |
 | metric completion of ℚ | NO TRANSFER (same role) | `real_not_equiv_padic` | choice |
 | μ/ν coalgebra | DISTINCT ENDS | `categorical_fork_strict` | choice |
 | computability (Kleene) | EXISTS-BUT-UNDECIDABLE | `infinite_quine_family` (∃, ∞-many) + `isComputationalQuine_undecidable` (¬ComputablePred) | choice |
 
-**⚠ Note on the "lightweight categorical typeclass" row (2026-08-02).** It previously cited
-`fixed_pole_forces_collapse` from a pre-reorg `ZPP_DualityFork` module. **That declaration is not at
-HEAD.** It exists only on `private/physics-bridge`, which is a **permanently local, quarantined branch**
-that never reaches any remote — so a reader of the public repository cannot check it, and it sat in this
-table beside witnesses that *are* checkable. The theorem itself is real (an involutive fork whose pole
-is fixed by the involution is necessarily collapsed), but until it is brought to a tracked file the row
-has **no citable witness**. Do not restore the citation without moving the declaration.
+*(History of the "lightweight categorical typeclass" row, 2026-08-02. It cited
+`fixed_pole_forces_collapse` from a pre-reorg module that **was not at HEAD** — the declaration existed
+only on `private/physics-bridge`, a permanently local, quarantined branch that never reaches any
+remote. So a reader of the public repository could not check it, and it sat in this table beside
+witnesses that are checkable. **Resolved by promoting the declaration**, not by deleting the row:
+`InvolutiveFork`, `collapsed_iff_fixed`, `wheelFork`, `wheelFrac_fork_open`, `wheelFork_not_collapsed`
+and `fixed_pole_forces_collapse` now live in `ZeroParadox/Algebra/WheelFrac.lean` § "The involutive
+fork". The footprint above is **measured, not carried over**: `fixed_pole_forces_collapse` and
+`collapsed_iff_fixed` depend on no axioms at all; the two wheel-of-fractions instances are
+`[propext, Quot.sound]`.)*
 
 `lawvere_fixedpoint` (here, axiom-free) is the GENERAL theorem unifying the **diagonal family** — Cantor and
 Russell are its corollaries, triggered by the engine (`Not` is fixed-point-free). Within the diagonal family
