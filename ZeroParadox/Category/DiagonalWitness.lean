@@ -22,8 +22,13 @@ self-application `e : α → (α → β)` whose range contains the diagonal `fun
 that "count" in the ambient category. The face table becomes level sets of ONE predicate:
 - **M coarse (all endomaps), β nontrivial** — a fixed-point-free swap is admissible ⇒ no witness. Set
   floor faces are *posited*, wall faces *refuted*.
-- **M fine (computable endomaps)** — the fixed-point-free diagonal is not admissible ⇒ the witness holds
-  ⇒ a genuine diagonal fixed point (Kleene).
+- **M fine (computable endomaps)** — the fixed-point-free diagonal is **not** admissible, which
+  **removes** the § III obstruction. It does not by itself supply the witness: the implication runs one
+  way, and **no `HasWitnessRel` theorem for the computable class is proved in this file.** The genuine
+  diagonal fixed point on this side is **Kleene's recursion theorem**, cited rather than derived here
+  (`Nat.Partrec.Code.fixed_point`, aliased below as `computability_face_fixedPoint`).
+  *(Corrected 2026-08-01: previously written "not admissible ⇒ the witness holds ⇒ a genuine diagonal
+  fixed point", which does not follow — an absent obstruction is not a witness.)*
 
 ## The topology (why "underlying level" makes it obvious)
 
@@ -98,11 +103,16 @@ theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivi
     ¬ HasWitnessRel β (fun _ => True) := by
   -- Choice-free: with `DecidableEq β` the swap needs no classical decision (constructive-footprint audit,
   -- 2026-07-18). This is the base-level, choice-free form; the `DecidableEq` restriction is what buys
-  -- the purity. The theorem this MIRRORS (`:96`), `Category/Lawvere.lean`'s
-  -- `fixedPointFree_of_nontrivial`, is essentially classical — `Category/LawvereTaboo.lean`'s
-  -- `wem_of_fixedPointFree` reduces weak excluded middle from it. **That is a fact about that
-  -- theorem, not about this one: essentiality does not transfer between them, and there is no
-  -- dependency here — the swap is inlined below.**
+  -- the purity. The construction inlined below is the one that
+  -- `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` produces, and THAT theorem is
+  -- essentially classical — `ZeroParadox/Category/LawvereTaboo.lean`'s `wem_of_fixedPointFree` reduces
+  -- weak excluded middle from it. **That is a fact about that theorem, not about this one:
+  -- essentiality does not transfer, and there is no dependency here — the swap is inlined, and this
+  -- statement measures `[propext]`, which is what proves the independence.**
+  -- (Corrected 2026-08-01, found independently by all three round-4 gates: an earlier revision called
+  -- this "the theorem this MIRRORS (`:96`)". Line 96 mirrors `no_witness_of_nontrivial`, a DIFFERENT
+  -- declaration; the relation to `fixedPointFree_of_nontrivial` is inlining, not mirroring. That
+  -- revision had itself corrected the word "SUPPLIER" while carrying the wrong theorem name along.)
   obtain ⟨b₀, b₁, hne⟩ := exists_pair_ne β
   refine no_witnessRel_of_admissible_fpf (g := fun x => if x = b₀ then b₁ else b₀) trivial (fun x => ?_)
   by_cases hx : x = b₀

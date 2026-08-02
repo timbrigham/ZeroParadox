@@ -70,11 +70,11 @@ which is why Diaconescu gets an equivalence and we do not. **That reconciliation
 small finding; the equivalence is his.** Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
-(`Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
+(`ZeroParadox/Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
 form: selection there is free, and the non-constructivity in the conditional model is *inserted by
 stipulation* at `poleAdmissible`, not discovered in the pole. Two files carry a written correction of
-record on exactly this error — `Category/DoubleNegationNucleus.lean` (once titled "choice as a
-difference-generator"; it is the *excluded-middle* modality) and `Category/ExcludedMiddleBridge.lean`
+record on exactly this error — `ZeroParadox/Category/DoubleNegationNucleus.lean` (once titled "choice as a
+difference-generator"; it is the *excluded-middle* modality) and `ZeroParadox/Category/ExcludedMiddleBridge.lean`
 (once stated unscoped, as though excluded middle made every Heyting algebra Boolean).
 
 ### No count is recorded here, deliberately
@@ -85,9 +85,11 @@ to it.** Three reasons, in order of importance.
 **A count mostly measures Mathlib, not this framework.** Most choice footprints traced so far come from a
 Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
-tactic call. **Not all: `Category/Lawvere.lean:70`'s bare `classical` in `fixedPointFree_of_nontrivial`
-is the framework's own, and § IV shows it is ESSENTIAL** — the cost is in stating the swap over types
-where it is not computable, which is the framework's chosen generality, not Mathlib's. So a corpus-wide
+tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean:70`'s bare `classical` in
+`fixedPointFree_of_nontrivial` is the framework's own, and § IV shows it is ESSENTIAL** — the cost is in
+stating the swap over types **whose equality is not decidable** (the swap is `if x = b₀ then b₁ else b₀`;
+decidable equality is exactly what the § IV escape restores), which is the framework's chosen
+generality, not Mathlib's. So a corpus-wide
 total still mixes the two sources and still reads as a property of this project, which is reason enough
 not to record one; but it is not true that the framework contributes none.
 
@@ -150,7 +152,9 @@ fact about the build you just ran, not a fact to carry anywhere.
 traced to a source and classified; much of the corpus is unexamined. **The hypothesis that every
 footprint is accidental was held here until 2026-08-01 and is REFUTED** — § IV exhibits two that are
 not. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
-has been examined, it has been classifiable*, into accidental, essential, or unclassified. Do not
+has been examined, it has been **assigned** a class* — accidental, essential, or unclassified. (Not
+"classifiable": with `unclassified` among the buckets, classifiability holds of everything and says
+nothing. Corrected 2026-08-01.) Do not
 upgrade that, and — for the same reason no count is recorded above — **do not quantify the examined
 fraction either**; it moves with every commit.
 
@@ -347,6 +351,12 @@ from a classical principle the framework uses.
 the classical content sits entirely in the **hypothesis**, which is what makes each an implication rather
 than a restatement. What is established is about the **principle**, not about any particular proof:
 re-proving that principle constructively would decide a taboo, so no choice-free re-proof is available.
+**The premise that step rests on, named rather than left implicit** (this file demands exactly that at
+§ "the equivocation" above, then used it here without naming it — corrected 2026-08-01): *excluded
+middle, and weak excluded middle, are not derivable in Lean's choice-free fragment.* That is standard
+and is **not** proved here — it is a metatheoretic fact about the ambient type theory, not a Lean
+theorem, and it is the only thing licensing "no choice-free re-proof exists" rather than the weaker
+"none is known".
 Neither says the framework's overall use of choice is essential, and neither is an independence result. -/
 
 -- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
@@ -363,7 +373,7 @@ Neither says the framework's overall use of choice is essential, and neither is 
 
 -- ESSENTIAL CASE 2 — the general fixed-point-free principle implies WEAK excluded middle, and this one
 -- sits on the KEYSTONE (the diagonal engine) rather than on an imported order instance. Its hypothesis
--- is the ∀-closure of `Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, so that
+-- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, so that
 -- theorem's `classical` is essential, not accidental: no rewriting of the proof removes it.
 #check @ZeroParadox.wem_of_fixedPointFree
 
@@ -375,7 +385,7 @@ Neither says the framework's overall use of choice is essential, and neither is 
 -- AND THE ESCAPE, WHICH IS THE HALF THAT MAKES CASE 2 USEFUL RATHER THAN ALARMING. "Essential" scopes
 -- to the GENERAL principle, quantified over arbitrary `Type`. Restrict the carrier to decidable
 -- equality and the same statement is choice-free — measured `[propext]`, against the general form's
--- `[propext, Classical.choice, Quot.sound]`. `DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
+-- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
 -- carries the same audit for the level-set form. **Where a carrier has `DecidableEq`, the essential
 -- form is not needed** — the taboo says the general statement cannot be re-proved constructively, and
 -- the restriction says it does not have to be *there*. Together they localize the classical content

@@ -44,7 +44,7 @@ The full derivation chain now has a concrete model:
 
   (ℕ∞, min, ⊤) : ZPSemilattice
     + ValuationStructure (scale = +1, val = id)
-    → AbstractSelfApp (via ZPJ_Scale.toAbstractSelfApp)
+    → AbstractSelfApp (via toAbstractSelfApp)
     → AFA content: natInf_selfMem_singleton = {⊤}
 
 All results are sorry-free and derived from ℕ∞ arithmetic + ZPJ_Scale theorems.

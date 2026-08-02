@@ -70,7 +70,7 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 
 ## Dependencies
 
-- ZPJ_Scale.lean: ValuationStructure, val_scale, scale_unique_fp, val_finite_of_ne_bot
+- lean: ValuationStructure, val_scale, scale_unique_fp, val_finite_of_ne_bot
 - Mathlib.Combinatorics.Quiver.Path: directed graph paths
 -/
 

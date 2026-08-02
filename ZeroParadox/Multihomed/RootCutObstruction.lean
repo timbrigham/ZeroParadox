@@ -18,7 +18,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 This module tests **TC18 — strict-fork canonicity of the root**. The tree hypothesis roots the whole
-bottom-diagram at the μ/ν fork. ZP-P (`ZPP_Coalgebra.lean`) places that fork on the leaf-free identity
+bottom-diagram at the μ/ν fork. ZP-P (`lean`) places that fork on the leaf-free identity
 polynomial functor `idPF_Coalgebra`: its initial algebra (W-type, μ) `Fix idPF_Coalgebra.Obj` is **empty**
 (`fix_isEmpty`) and its final coalgebra (M-type, ν) `Cofix idPF_Coalgebra.Obj` is **inhabited**
 (`cofix_nonempty`). The pre-registered question: is the root cut a *genuine* obstruction — i.e. is
@@ -45,7 +45,7 @@ empty/inhabited cardinality wall — the same `IsEmpty (Nonempty → Empty)` con
 empty-vs-inhabited pair exhibits (and the same Axis-III content as the Kleisli `Fin 0` bottom, #4).
 What is ZP-P-specific is only the *identification* of the two empty/inhabited objects as the μ and ν
 fixed points of one functor (carried by `fix_isEmpty` / `cofix_nonempty`, proved in
-`ZPP_Coalgebra.lean`); that those two objects ARE the well-founded vs non-well-founded fixed points is
+`lean`); that those two objects ARE the well-founded vs non-well-founded fixed points is
 the structural claim, and it is borrowed, not re-proved here. So:
 
 - **Proved here (in-statement):** the root cut is a strict, non-invertible map obstruction

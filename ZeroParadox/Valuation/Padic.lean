@@ -272,8 +272,20 @@ answers here for months; `OrderedField.lean` is the one that reasoned it through
 
 **ZP-B / ZP-F Classification (Ostrowski's theorem):**
 
-Ostrowski's theorem states that every complete valued field extending ℚ is either
-Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p).
+Ostrowski's theorem is about **absolute values on ℚ, classified up to equivalence**. Mathlib states
+it as *"every absolute value on `ℚ` is equivalent to either a `p`-adic absolute value or to the
+standard Archimedean (Euclidean) absolute value"*
+(`Mathlib/NumberTheory/Ostrowski.lean`, `Rat.AbsoluteValue.equiv_real_or_padic`). The framework's own
+instance of it is `ZeroParadox/Valuation/Ostrowski.lean`'s `completions_exhaustive` — cite that rather
+than restating the theorem.
+
+*(Corrected 2026-08-01. This paragraph previously read: "every complete valued field extending ℚ is
+either Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p)." That is
+a **different theorem** — about complete fields rather than about ℚ — and it is **false in both
+halves** as written: the complete Archimedean case gives **ℝ or ℂ**, not ℝ alone, and a complete
+non-Archimedean field extending ℚ need not be any ℚ_p. The correct statement was already in the corpus
+at `ZeroParadox/Valuation/Ostrowski.lean` the whole time.)*
+
 ZP-B covers the non-Archimedean case (p = 2, forced by AX-B1 and minimality).
 ZP-F covers the Archimedean case. **The classification is a statement about where the snap is
 RULED OUT**, not where it is supplied: ZP-F rules it out on the Archimedean side, and ZP-B
@@ -282,14 +294,21 @@ necessary and **not** sufficient — that the snap actually occurs is carried by
 with the framework's commitments, never by C3 or T5 alone. (An earlier revision of this
 paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
 fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density obstruction but supplies
-no closest nonzero element, so it does not yield the step. The converse — a first step exists ⟹ the
-field is non-Archimedean — does hold, by `f_snap_impossible` on the Archimedean side.)
+no closest nonzero element, so it does not yield the step.)
+
+**What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
+(`ZeroParadox/Reals/OrderedField.lean:137`) is stated over an **arbitrary ordered field** and proved
+from **density** (`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy`); it carries **no
+Archimedean hypothesis**. So what it gives by contraposition is *a first step exists ⟹ the carrier is
+not an ordered field at all* — a different and stronger shape than "⟹ non-Archimedean", which does not
+follow from it. *(Corrected 2026-08-01: this paragraph previously cited `f_snap_impossible` as holding
+"on the Archimedean side", which mis-scopes a theorem that covers every ordered field.)*
 
 The ultrametric is not a technical convenience — it is the structural fact that
 the Archimedean property would erase. C3's irreversibility is Ostrowski's
 non-Archimedean case made topologically explicit.
 
-See: ZPF.lean (f_snap_impossible) for the Archimedean side. -/
+See `ZeroParadox/Reals/OrderedField.lean` (`f_snap_impossible`) for the ordered-field side. -/
 
 end ZeroParadox
 
