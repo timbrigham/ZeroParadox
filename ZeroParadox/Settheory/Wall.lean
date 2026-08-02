@@ -120,7 +120,7 @@ was carrying an "axiom-free" stamp in a witness table. The row now states what t
 "do not restore the citation without moving the declaration". The declaration was moved and the
 citation restored — but nobody re-asked whether the narrow theorem supported the broad signature.)*
 
-*(History.)* The row cited
+*(History. The row cited
 `fixed_pole_forces_collapse` from a pre-reorg module that **was not at HEAD** — the declaration existed
 only on `private/physics-bridge`, a permanently local, quarantined branch that never reaches any
 remote. So a reader of the public repository could not check it, and it sat in this table beside

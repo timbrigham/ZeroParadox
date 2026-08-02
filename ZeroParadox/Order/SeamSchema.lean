@@ -40,8 +40,10 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
   ν are GENUINELY DISTINCT TYPES and the equivalence is a nontrivial construction.
 
 * **Lattice selfApp seam** (`latticeSeam`): the fixed-point set is the singleton `{⊥}`
-  (`selfApp_fp_set_eq_singleton_bot`), and ⊥ is both least and greatest fixed point
-  (`selfApp_bot_is_both_extremal`). To make this an instance of `SeamSchema` the μ-carrier and the
+  (`selfApp_fp_set_eq_singleton_bot`), and *Statement:* **COINCIDENCE** — ⊥ is both least and
+  greatest fixed point simultaneously, one object under two readings
+  (`selfApp_bot_is_both_extremal`, `ZeroParadox/Multihomed/SelfAppSeam.lean`). Not an INVERSION:
+  no map exchanges the two, and there is nothing here for an involution to swap. To make this an instance of `SeamSchema` the μ-carrier and the
   ν-carrier must BOTH be taken to be the same object — the fixed-point subtype `{x // selfApp x = x}` —
   and the seam witness is `Equiv.refl`. There is no pair of distinct carriers to relate: "least = greatest"
   collapses them to one type before the schema is even applied.

@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# P-adic Haar measure on ℤ_p
+# p-adic Haar measure on ℤ_p
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
 are indexed in ZeroParadox/MANIFEST.md.

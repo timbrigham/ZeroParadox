@@ -227,7 +227,8 @@ In the wider literature the fixed point of an involution is **the center** (a *c
 algebra), and the standard fix for the monotone/involutive clash is an order-**reversing** involution
 (De Morgan negation, orthocomplementation) — a sharper diagnosis than "no shared axiom", and the
 direction to look if this is ever revisited. **Attribution, stated honestly:** this lineage is taken
-from San Martín, *Kleene algebras* (UNLP 2016, p. 2), which is the source actually read; it credits
+from San Martín, *Kleene algebras with implication* (slides, UNLP/CONICET, September 2016,
+slide 2), which is the source actually read; it credits
 Kalman 1958 and Cignoli 1986, **neither of which has been opened here**. Cite San Martín for the
 lineage, or read the originals before citing them directly. Searched 2026-08-02: no prior art located
 for the bare `InvolutiveFork` abstraction standing alone, nor for the μ/ν-versus-2-cycle contrast.

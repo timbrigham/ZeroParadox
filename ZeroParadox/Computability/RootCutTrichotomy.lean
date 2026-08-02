@@ -52,7 +52,8 @@ The three functors under test, all polynomial (`PFunctor`):
 
 The pair `strict_fix_isEmpty` (no leaf ⇒ `Fix` empty) versus `mixed_fix_nonempty` (add a leaf ⇒
 `Fix` nonempty), at fixed recursive-position presence, is the **leaf doing independent work** —
-exactly what `ZeroParadox/Category/RootCutDegeneracy.lean` could not see. The pair `seam_fix_finite` (no position ⇒ `Fix` finite) versus
+exactly what `ZeroParadox/Category/RootCutDegeneracy.lean` and
+`ZeroParadox/Category/RootCutBinary.lean` could not see. The pair `seam_fix_finite` (no position ⇒ `Fix` finite) versus
 `mixed_fix_infinite` (add a position ⇒ `Fix` infinite), at fixed leaf presence, is the **recursive
 position doing independent work**. Together they witness the three regimes as a genuine trichotomy.
 

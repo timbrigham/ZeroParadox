@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# P-adic additive characters and their orthogonality on ℤ_p
+# p-adic additive characters and their orthogonality on ℤ_p
 
 Experimental probe in the bottom-diagram mapping campaign — not a finalized layer. Curated results
 are indexed in ZeroParadox/MANIFEST.md.
@@ -27,7 +27,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 Builds the **p-adic additive characters** on `ℤ_p` that the Vladimirov operator's genuine eigenfunctions
 (Kozyrev wavelets) are made from — without constructing the full `ℚ_p` Fourier transform. The key
 observation: the Kozyrev-relevant character `χ_p(p⁻ⁿ · x)` restricted to `ℤ_p` is exactly
-`φ ∘ toZModPow n`, where `toZModPow n : ℤ_p →+* ZMod(pⁿ)` is the residue map (built with in
+`φ ∘ toZModPow n`, where `toZModPow n : ℤ_p →+* ZMod(pⁿ)` is the residue map (built in
 `PadicHaar`) and `φ` is an additive character of the *finite* group `ZMod(pⁿ)`. So the character
 factors through the finite quotient, sidestepping the `ℚ_p` fractional part.
 
