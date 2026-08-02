@@ -1,6 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.5 | July 2026
+Version 1.6 | August 2026
+v1.6: CORRECTED a misattribution in rendered prose. The choice-free constructibility of the final
+coalgebra FOR A POLYNOMIAL FUNCTOR was credited to Veltri (FSCD 2021) in the Lean-witness table and
+co-credited to him in the remark box. That is the wrong direction: Veltri's subject is the
+finite-powerset functor, which is NOT polynomial, and his results are that certain constructions
+there REQUIRE choice - he hands the polynomial case to Ahrens-Capriotti-Spadotti himself. The
+polynomial claim is now attributed to ACS (TLCA 2015) and Veltri is explicitly marked as contrast.
+His LLPO claim, which IS his and IS about finite-powerset, is unchanged.
 v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.4: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Re-aimed the categorical instance's choice note per the Veltri (FSCD 2021) literature review —
@@ -22,7 +29,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -256,13 +263,14 @@ def build():
     E.append(result_box(
         'Theorem: categorical_fork_strict (Coalgebra.lean)',
         [
-            'IsEmpty (Fix idPF.Obj) &#8743; Nonempty (Cofix idPF.Obj)',
+            'IsEmpty (Fix idPF_Coalgebra.Obj) &#8743; Nonempty (Cofix idPF_Coalgebra.Obj)',
             'The initial algebra (least fixed point, &#956;) is empty; the final coalgebra '
             '(greatest fixed point, &#957;) is inhabited. (Mathlib QPF.Fix / QPF.Cofix.)',
             'Split footprint: fix_isEmpty (&#956; empty) is choice-free [propext, Quot.sound]; '
             'cofix_nonempty (&#957; inhabited) carries Classical.choice from the M-type / '
             'corecursion machinery &#8212; a library artifact, not a necessity: for a polynomial '
-            'functor the final coalgebra is constructible choice-free (Veltri, FSCD 2021). ✓',
+            'functor the final coalgebra is constructible choice-free '
+            '(Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015). ✓',
         ]
     ))
     E.append(sp(6))
@@ -272,8 +280,16 @@ def build():
         [
             'The Classical.choice in cofix_nonempty is inherited from Mathlib\'s M-type machinery, '
             'not forced by the mathematics: for a polynomial functor the final coalgebra is '
-            'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti; Veltri, FSCD 2021, '
-            'the coinductive construction).',
+            'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015, who '
+            'construct it as an &#969;-limit). Their ambient setting is intensional type theory '
+            'with univalence, but the <i>construction</i> itself uses only function '
+            'extensionality &#8212; univalence enters only for their uniqueness result.',
+            'Veltri (FSCD 2021) points the other way and is cited here for contrast, not support: '
+            'his subject is the finite-powerset functor, which is not polynomial, and there the '
+            'choice-free route is the one that is hard &#8212; his finality results are obtained '
+            '<i>assuming</i> choice principles rather than shown to need them, and the one '
+            'genuine necessity he proves is of LLPO, a logic taboo, not of choice. He cites '
+            'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
             'Choice genuinely enters only for the non-polynomial finite-powerset functor, where the '
             'literature pins each presentation: the set-quotient requires the full axiom of choice '
             'for finality, while Worrell\'s (&#969;+&#969;)-limit requires countable choice together '
@@ -377,7 +393,7 @@ def build():
             'is choice-free [propext, Quot.sound]; cofix_nonempty (&#957; inhabited) carries '
             'Classical.choice from the M-type / corecursion machinery.',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
-            'pattern. Zero sorry. Verified: lake build, June 2026.',
+            'pattern. Zero sorry. Verified: lake build, August 2026.',
         ]
     ))
     E.append(sp(6))
