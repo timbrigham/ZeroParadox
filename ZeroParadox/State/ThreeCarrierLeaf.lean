@@ -54,9 +54,13 @@ about the #3/#2 leaves.
 `↥(stdSimplex ℝ (Fin 1))`).
 
 **The prior node is `ZeroParadox/Valuation/NuLeafReconcile.lean` (edge TC16)** — see the label note in
-the header. Its two carriers are exactly the pair named above, and its capstone
-`tc16_nu_leaf_glue_but_generic` is the #3/#2 leaf reconciliation together with its own genericity
-deflation. The neighbouring within-ν edges, `ZeroParadox/Valuation/NuRateEdge.lean` and
+the header. Its two carriers are exactly the pair named above, and its capstone at HEAD is
+`nu_leaf_glue_subsingleton` — the #3/#2 leaf reconciliation together with its own genericity deflation.
+*(The pre-rename branch called that capstone `tc16_nu_leaf_glue_but_generic`; that name is **not at
+HEAD** and is quoted only in the header note above, scoped to the branch. Corrected 2026-08-02 — an
+earlier version of this sentence used the branch-only name in the present tense, which is the same
+not-at-HEAD defect this batch disclosed for `ZeroParadox/Settheory/Wall.lean`, undisclosed here.)*
+The neighbouring within-ν edges, `ZeroParadox/Valuation/NuRateEdge.lean` and
 `ZeroParadox/Valuation/NuRateMatch.lean`, sharpen the same pair at the orbit-rate level.
 
 TC29 **adds the #5 Hilbert seam carrier** `StateSpace 0 =

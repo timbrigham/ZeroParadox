@@ -105,8 +105,9 @@ theorem isZero_iff_isInitial_and_isTerminal {X : C} :
     `Reading:` **COINCIDENCE** — identifying that meeting-point with the framework's *μ=ν seam* (the
     diagonal-fixed-point keystone) is the framework's interpretation, not a Lean claim; the cross-face
     identification stays a type boundary. *(Tagged 2026-08-02. This claim was invisible to
-    `check_pov.py` while its citation carried a dead pre-reorg namespace prefix — the second instance
-    today of a dead citation hiding a claim from a checker that keys on citations.)* -/
+    `check_pov.py` while its citation carried a dead pre-reorg namespace prefix — the second such
+    instance in two days of a dead citation hiding a claim from a checker that keys on citations; the
+    first was `ZeroParadox/Multihomed/SelfAppForkPlace.lean`, 2026-08-01.)* -/
 theorem seam_is_mu_nu_coincidence_SeamCoincidence :
     (IsZero (ZeroParadox.fD_functor.obj 0)
       ↔ Nonempty (IsInitial (ZeroParadox.fD_functor.obj 0))

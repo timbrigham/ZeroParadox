@@ -41,13 +41,13 @@ The 2-adic parallel is then proved standalone: `singleton_from_unique_witness`
 (already proved in ZeroParadox/Settheory/AczelConn.lean) closes the Q₂ case with the same proof term.
 Both domains are formally instances of the same abstract pattern.
 
-## What ZeroParadox/Valuation/Scale.lean and ZeroParadox/Valuation/ScaleBridge.lean resolved
+## What the Scale files resolved
 
-The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap
-was defined in ZeroParadox/Valuation/Scale.lean as ValuationStructure. ZeroParadox/Valuation/Scale.lean derives the
-unique-fixed-point chain without AFA import:
+The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap is
+`ValuationStructure`, defined in `ZeroParadox/Valuation/Scale.lean`. That file derives the
+unique-fixed-point chain without an AFA import:
   ValuationStructure → scale_ne_fixed → AbstractSelfApp (unique_fp as theorem)
-ZeroParadox/Valuation/ScaleBridge.lean further extends this: ValBridge drops the ZPSemilattice
+`ZeroParadox/Valuation/ScaleBridge.lean` further extends this: ValBridge drops the ZPSemilattice
 constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
 of a common ancestor. The formal gap described here is closed.
 -/

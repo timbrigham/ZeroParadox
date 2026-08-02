@@ -81,9 +81,13 @@ section AxB1
 
     **Second standard name, pointer only (added 2026-08-02).** Where a bottom element exists,
     `bot ⋖ a` is Mathlib's notion of `a` being an **atom**: `bot_covBy_iff`
-    (`Mathlib/Order/Atoms.lean:119`) states `⊥ ⋖ a ↔ IsAtom a`, so `HasFirstStep bot` is "the order
-    has an atom" and AX-B1 is atomicity. Corpus mentions of `IsAtom` / `IsAtomic`: **zero** — the
-    framework has been describing a named order-theoretic notion longhand.
+    (`Mathlib/Order/Atoms.lean`) states `⊥ ⋖ a ↔ IsAtom a`, so `HasFirstStep bot` says **the order
+    has an atom** (`∃ a, IsAtom a`). *(Not "AX-B1 is atomicity": `IsAtomic` is strictly stronger —
+    it requires every non-bottom element to sit above an atom, which `bot_covBy_iff` does not give.
+    Corrected 2026-08-02.)* Before this note the framework had been describing a named
+    order-theoretic notion longhand; **measure the corpus count on demand rather than recording one
+    here** — a count written at the site of the only mentions falsifies itself, which the first draft
+    of this very note did by asserting "zero".
     **The match is NOT exact, which is why this is a pointer and not a redefinition:**
     `bot_covBy_iff` needs `[PartialOrder α] [OrderBot α]`; `HasFirstStep` needs only `[LT α]`, and
     `axb1_fails_in_ordered_field` below has no `OrderBot` at all — an ordered field has no bottom, so

@@ -15,7 +15,7 @@ self-membering set the kernel won't allow.
 
 ## Overview
 
-The set-theory FACE of the same μ/ν bottom-fork that `ZPF_SnapDichotomy` is the number-system face of.
+The set-theory FACE of the same μ/ν bottom-fork that `ZeroParadox/Valuation/SnapDichotomy.lean` is the number-system face of.
 Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
 
 - **Existence fork (ν admits / μ forbids):** the self-referential object exists on the non-well-founded

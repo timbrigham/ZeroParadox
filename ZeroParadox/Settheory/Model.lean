@@ -6,7 +6,7 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-The abstract machine in ZeroParadox/Valuation/Scale.lean proves that *if* a type has a scale operation with
+The abstract machine in ZPJ_Scale proves that *if* a type has a scale operation with
 the right valuation behaviour, *then* AFA content follows. This file builds the type
 that has that behaviour. The concrete carrier is ℕ∞ = WithTop ℕ — the extended naturals
 — where the join operation is min, the bottom element is ⊤ (the natural maximum), and

@@ -424,7 +424,7 @@ theorem snap_threshold_is_epsilon_zero
 /-! ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
 The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational
-fixed-point structure (Kleene's recursion theorem, roger_fixed_point_stability) both require
+fixed-point structure (Rogers' fixed-point theorem, roger_fixed_point_stability) both require
 Classical.choice at their non-constructive step — parallel structure, not a proved isomorphism.
 This is the content of §I Axiom Footprint Convergence.
 

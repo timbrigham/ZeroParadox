@@ -567,7 +567,11 @@ condition coincide — proved by `zpw_top_val_iff_inv_is_inf`:
 This is the core of the conjecture, concretely formalized.
 
 **The "infinitudes of zero" insight:** val(0) = ⊤ is not a free hypothesis in
-ZP — it is forced by the self-referential structure ⊥ = {⊥} (the Quine atom).
+ZP — it is **motivated** by the self-referential structure ⊥ = {⊥} (the Quine atom, in the ZF+AFA
+metatheory). *(Not "forced": nothing in the Lean derives `wvs_val 0 = ⊤` from anything — it is an
+assumed class field, as § VII says and as the ZP-J addendum quoted there states. Corrected
+2026-08-02; the scope note at the head of this file says every `⊥ = {⊥}` here is metatheoretic, and
+"forced" was the one occurrence that made it a carrier-level claim.)*
 The ring's zero is simultaneously the lattice floor *and* the point where the
 valuation hits infinity. This structural necessity identifies *which* element
 plays the porthole role (wzero), but it does not construct the binary operation

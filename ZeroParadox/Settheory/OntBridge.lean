@@ -9,8 +9,8 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-ZeroParadox/Valuation/Scale.lean proved the full derivation chain ValuationStructure → AbstractSelfApp → AFA
-content, and ZeroParadox/Settheory/Model.lean gave ℕ∞ as the concrete ValuationStructure instance. That chain
+ZPJ_Scale proved the full derivation chain ValuationStructure → AbstractSelfApp → AFA
+content, and ZPJ_Model gave ℕ∞ as the concrete ValuationStructure instance. That chain
 requires an infinite domain: the val_scale axiom (val(scale x) = val x + 1) has no room
 to operate in a two-element type.
 

@@ -312,34 +312,40 @@ fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density
 no closest nonzero element, so it does not yield the step.)
 
 **What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
-(`ZeroParadox/Reals/OrderedField.lean:137`) is stated over an **arbitrary ordered field**
+(`ZeroParadox/Reals/OrderedField.lean` — a declaration name is self-locating, so no line number; this
+citation read `:137` until 2026-08-02, and *this batch's own* `IsAtom` insertion moved the theorem to
+`:148`, leaving the old number pointing into an unrelated proof body) is stated over an
+**arbitrary ordered field**
 (`[Field F] [LinearOrder F] [IsStrictOrderedRing F]`) and carries **no Archimedean hypothesis**. It is
 proved by **halving**, via `f_snap_blocked`. So what it gives by contraposition is *a first step exists
 ⟹ the carrier is not an ordered field at all*.
 
-That is a **different** shape from "⟹ non-Archimedean". **Quantified over FIELDS, and reading
-"non-Archimedean" in the valuation-theoretic sense — the field carries an ultrametric absolute value,
-the sense used throughout ZP-B — the two are incomparable**, neither implying the other:
-* ℝ(t) with the leading-coefficient order is a **non-Archimedean ordered field**, so
-  `f_snap_impossible` covers it while an Archimedean hypothesis would not;
-* ℂ **is not orderable at all** (it has no compatible linear order), so it falls under "not an ordered
-  field"; and its **standard** absolute value is Archimedean, so it is not non-Archimedean in the sense
-  meant. *(Stated of the standard absolute value deliberately: every field also carries the trivial
-  absolute value, which is an ultrametric, and ℂ ≅ ℂ_p as abstract fields — so "ℂ is not
-  non-Archimedean" is false without naming the absolute value. Corrected 2026-08-02.)*
+That is a **different** shape from "⟹ non-Archimedean". **Quantified over VALUED FIELDS — a field
+together with a distinguished absolute value — and reading "non-Archimedean" as *that distinguished
+absolute value is ultrametric*, the two are incomparable**, neither implying the other:
+* ℝ(t) with the t-adic absolute value and the leading-coefficient order is a non-Archimedean **ordered**
+  field, so `f_snap_impossible` covers it: non-Archimedean without being "not an ordered field";
+* ℂ with its standard absolute value **is not orderable at all** (no compatible linear order) while that
+  absolute value is **Archimedean**: "not an ordered field" without being non-Archimedean.
 
-**BOTH the domain and the reading are load-bearing, and both are pinned deliberately.**
-* **Domain — fields.** Over arbitrary carriers the comparison is not even well-posed in the intended
-  direction: **ℤ is not an ordered field and IS Archimedean**, so "not an ordered field" cannot imply
-  "non-Archimedean" there.
-* **Reading.** Under the *plain* reading of "non-Archimedean" as bare `¬Archimedean`, ℂ separates
-  nothing and the witness would have to be ℤ — which the field restriction excludes.
+**⚠ THE DOMAIN MUST BE VALUED FIELDS, AND THE READING MUST BE THE DISTINGUISHED ABSOLUTE VALUE.
+Corrected 2026-08-02 — the previous version pinned the one combination that makes the verdict FALSE.**
+It quantified over *bare fields* and read "non-Archimedean" existentially ("the field carries an
+ultrametric absolute value"). But **every field carries the trivial absolute value, and the trivial
+absolute value is an ultrametric** — so under that reading the predicate holds of every field, "not an
+ordered field ⟹ non-Archimedean" is trivially true, and the two are **not** incomparable at all. The
+previous version even stated the refuting fact, in the ℂ bullet, and did not carry it back to the pin;
+its ℂ argument silently switched from the existential predicate to a claim about the *standard*
+absolute value, which is a predicate on a valued field, not on a bare field. Under the corrected pin
+both witnesses are genuine and the ℤ example is unnecessary: ℤ is not a field, so the domain excludes
+it without further argument. **This paragraph has now been corrected four times; the failure each time
+was a wrong reason under a defensible conclusion.**
 
-*(Corrected 2026-08-02. The previous version said that under the plain reading "not an ordered field"
-is strictly **stronger**, while naming **ℤ** as its separating witness — two claims that cannot both
-hold, since a separator is exactly what refutes strictness. It also never stated the domain, in the
-sentence instructing readers to state the reading. Originates in a prior-art suggestion that was itself
-imprecise and which was implemented faithfully; editorial and adversary both caught it a round later.)*
+*(Superseded block removed 2026-08-02: a "BOTH the domain and the reading are load-bearing" passage
+sat here restating the domain as bare **fields** and using **ℤ** as a witness. It contradicted the
+correction immediately above and was itself the third revision of the same sentence — a separator is
+exactly what refutes strictness, so "strictly stronger, witnessed by ℤ" could never have held. Deleted
+rather than annotated.)*
 
 *(Three corrections, all 2026-08-01, all caught by gates rather than by me. (i) This paragraph once
 cited `f_snap_impossible` as holding "on the Archimedean side", mis-scoping a theorem that covers every
