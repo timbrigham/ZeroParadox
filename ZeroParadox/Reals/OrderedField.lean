@@ -77,7 +77,18 @@ section AxB1
     `[Preorder α]`, and carries `CovBy.unique_right`, `not_covBy`, and the biconditional below.
     The framework had simply never identified its own one substantive modelling commitment with
     the standard notion. Recorded here rather than quietly corrected, so that the same
-    unidentified-notion failure is easier to spot if it appears elsewhere. -/
+    unidentified-notion failure is easier to spot if it appears elsewhere.
+
+    **Second standard name, pointer only (added 2026-08-02).** Where a bottom element exists,
+    `bot ⋖ a` is Mathlib's notion of `a` being an **atom**: `bot_covBy_iff`
+    (`Mathlib/Order/Atoms.lean:119`) states `⊥ ⋖ a ↔ IsAtom a`, so `HasFirstStep bot` is "the order
+    has an atom" and AX-B1 is atomicity. Corpus mentions of `IsAtom` / `IsAtomic`: **zero** — the
+    framework has been describing a named order-theoretic notion longhand.
+    **The match is NOT exact, which is why this is a pointer and not a redefinition:**
+    `bot_covBy_iff` needs `[PartialOrder α] [OrderBot α]`; `HasFirstStep` needs only `[LT α]`, and
+    `axb1_fails_in_ordered_field` below has no `OrderBot` at all — an ordered field has no bottom, so
+    the atom framing does not even apply to the counterexample that does the work here. `IsAtomless`
+    (which would state the ordered-field side directly) **is not in this Mathlib pin**. -/
 def HasFirstStep {α : Type*} [LT α] (bot : α) : Prop := ∃ a, bot ⋖ a
 
 /-- **The first step is unique.** This is Mathlib's `CovBy.unique_right`, and it is cited as

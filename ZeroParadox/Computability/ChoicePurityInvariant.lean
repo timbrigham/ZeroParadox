@@ -34,8 +34,14 @@ content over `fix_isEmpty`:
   `Nonempty (Cofix idPF_Coalgebra.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),
   whose footprint carries `Classical.choice` from Mathlib's M-type / `Cofix.corec`. We do **not**
   claim ν *requires* choice: for a polynomial functor the final coalgebra is constructible choice-free
-  in principle (Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021). The `Classical.choice` is a Mathlib
-  artifact, recorded in the PurityCheck comment, not asserted as a theorem.
+  in principle — **Ahrens–Capriotti–Spadotti** is the load-bearing citation here. The `Classical.choice`
+  is a Mathlib artifact, recorded in the PurityCheck comment, not asserted as a theorem.
+
+  *(Citation scoped 2026-08-02. Veltri, FSCD 2021 was cited alongside ACS for this claim; that
+  overstates what he shows. His subject is the **finite powerset** functor — which is **not**
+  polynomial — and his headline results run the other way, that certain constructions *require* choice.
+  He is still apt as background: he treats the polynomial case explicitly as contrast, and his `Tree`
+  is the final `List`-coalgebra. Cite him for the contrast, not for the principle.)*
 
 The bundle `root_purity_split` packages both honest halves: the μ-witness is propositionally derivable
 from a purely structural eliminator AND the ν-inhabitant is a concrete corecursion term, in one
@@ -97,7 +103,7 @@ theorem fix_isEmpty_constructive : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj) 
 /-- **ν is inhabited**, re-exported from `ZeroParadox.cofix_nonempty`. The witness is the concrete
 corecursion term (the self-unfolding node). Its footprint carries `Classical.choice` from Mathlib's
 M-type machinery — recorded in PurityCheck, NOT asserted as a necessity (polynomial final coalgebras
-are choice-free in principle: Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021). -/
+are choice-free in principle: Ahrens–Capriotti–Spadotti; see the header for why Veltri is background, not support). -/
 theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 
@@ -129,7 +135,7 @@ section PurityCheck
 --   new term, not a re-export.
 --   The ν side CANNOT be upgraded: Lean has no object-level proposition asserting "this term uses
 --   Classical.choice", and the strongest honest statement (`cofix_nonempty'`) is exactly Mathlib's
---   corecursion inhabitant, whose choice is a library artifact, not a necessity (Veltri, FSCD 2021).
+--   corecursion inhabitant, whose choice is a library artifact, not a necessity (Ahrens-Capriotti-Spadotti).
 --   So the SPLIT itself is not a single theorem-level invariant: half of it (μ choice-freeness) is now
 --   witnessed constructively in-statement, but the other half (ν "needs" choice) remains a measured
 --   #print-axioms comment. The fork's purity asymmetry is therefore HALF-WITNESSED, HALF-COMMENT —

@@ -22,6 +22,16 @@ we're confident calling it a wheel. In particular, `inf_ne_bot` (∞ ≠ ⊥).
 
 ## Formal Overview (AI-assisted)
 
+**⚠ SCOPE OF `⊥ = {⊥}` IN THIS FILE (CC-2 convention, applied 2026-08-02).** Every occurrence below is
+the **ZF+AFA metatheoretic** statement — anti-foundation's actual content, where Aczel's Quine atom is a
+real object and the equation is well-formed and true. **It is never a claim about a Lean carrier.**
+Asserted of a carrier it would be a cross-type `=` (`bot : L` against `{bot} : Set L`), which is on the
+framework's bedrock-violation list. Carrier-level statements take the **instance-of-family** form the
+corpus already proves: `IsQuineAtom q := selfMem q ∧ ∀ x, selfMem x → x = q`, with
+`da1_closed_concrete : IsQuineAtom (bot : MachinePhase)` as an instance and
+`selfMem_eq_singleton_bot : {x | selfMemDerived x} = {bot}` as the `Set L` equality. **Do not "retire"
+the equation** — that would deny a true theorem of a real set theory; scope it.
+
 **Terminology — porthole (shorthand):** The zero-infinity identification point: the
 element where `val(x) = ∞` and `/x = ∞` coincide, corresponding to `⊥ = {⊥}` in
 ZF+AFA and `v₂(0) = ∞` in the 2-adic valuation. In wheel theory this is the element
@@ -187,7 +197,8 @@ end WheelBasic
 /-- The ZP wheel carrier: rationals extended with ∞ (= /0) and ⊥ₗ (= 0·/0).
     This is the minimal type witnessing that the ZP porthole structure forms a wheel.
 
-    - `bot`:    0 · /0 — the absorbing undefined element (ZP: ⊥ = {⊥})
+    - `bot`:    0 · /0 — the absorbing undefined element (ZP: the porthole; the algebraic counterpart
+                of the Quine-atom role, not an identity with it — different types)
     - `fin q`:  a finite rational (ZP: nonzero states; q = 0 is the semilattice ⊥)
     - `inf`:    /0 = ∞ — the infinite element (ZP: v₂(0) = ∞)
 
@@ -468,9 +479,10 @@ class WheelValuationStructure (L : Type*) extends CommRing L where
   /-- Multiplicativity: val is a semiring homomorphism to (ℕ∞, +). -/
   wvs_val_mul : ∀ x y : L, wvs_val (x * y) = wvs_val x + wvs_val y
   /-- Porthole condition: val(0_L) = ⊤. This is an axiom — an assumed requirement,
-      not a derived result. The motivation: in ZP-compatible extensions the ring's zero
-      is the Quine atom ⊥ = {⊥}, whose valuation is infinite; this axiom encodes that
-      as a formal requirement on any instance. The ZP argument motivates the choice;
+      not a derived result. The motivation: in ZP-compatible extensions the ring's zero is intended to
+      **play the Quine-atom role** (`IsQuineAtom`, the family predicate — not to *be* the ZF+AFA Quine
+      atom, which lives in a different type), and anything in that role has infinite valuation; this
+      axiom encodes that as a formal requirement on any instance. The ZP argument motivates the choice;
       the type-checker does not verify the necessity. -/
   wvs_val_zero : wvs_val 0 = ⊤
 
