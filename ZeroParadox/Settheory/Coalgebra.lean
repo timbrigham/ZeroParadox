@@ -108,8 +108,13 @@ section PurityCheck
 --   categorical_fork_strict         : inherits Classical.choice from cofix_nonempty
 -- The well-founded (inductive) side is constructive; the non-well-founded (coinductive) side carries
 -- Classical.choice — but as a Mathlib artifact, NOT a necessity: for a polynomial functor like idPF_Coalgebra the
--- final coalgebra (M-type) is constructible choice-free in principle (Ahrens–Capriotti–Spadotti;
--- Veltri, FSCD 2021, the coinductive construction). Choice genuinely enters the μ/ν story only for the
+-- final coalgebra (M-type) is constructible choice-free in principle (Ahrens–Capriotti–Spadotti,
+-- TLCA 2015, who build it as an ω-limit; the construction needs only funext, univalence entering
+-- only at their uniqueness result). **For Lean's setting specifically, the closer citation is
+-- Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)** — ACS themselves
+-- point there (§1.1) for the M-types-from-W-types construction in the **Axiom-K** fragment, which is
+-- where Lean lives; ACS generalize it "to the whole of HoTT". Citing ACS alone asserts a HoTT→Lean
+-- transfer without a bridge. Choice genuinely enters the μ/ν story only for the
 -- non-polynomial finite-powerset functor — pinned per presentation: full AC for the set-quotient,
 -- countable choice + LLPO (⟺ injectivity of alg_Vω) for Worrell's limit (Veltri). The fork spine
 -- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See AxiomProfile.lean.
@@ -125,7 +130,10 @@ section PurityCheck
    the fork at this abstract polynomial-functor level. (Contrast M1: at the concrete Mathlib-category
    realization the analogous split is invisible — every functor is uniformly choice-carrying because the
    library proves it with choice. The ν choice here is likewise a Mathlib M-type artifact, not a
-   necessity — Veltri, FSCD 2021 — so the discriminator is real but its structural status is fenced.) -/
+   necessity — Ahrens–Capriotti–Spadotti, TLCA 2015 — so the discriminator is real but its structural
+   status is fenced. **Do NOT cite Veltri here**: his subject is the finite-powerset functor, which is
+   not polynomial, and he cites ACS for the polynomial case himself. He is apt only for the
+   finite-powerset claims below.) -/
 end PurityCheck
 
 end ZeroParadox
