@@ -19,7 +19,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC08 proved #5 (`fD_functor.obj 0`, the Hilbert bottom) is the only zero object among the named
+TC08 (`ZeroParadox/Category/SeamUniqueness.lean`) proved #5 (`fD_functor.obj 0`, the Hilbert bottom)
+is the only zero object among the named
 categorical bottoms; the seam file (`ZeroParadox/Category/TreeSeam.lean`) proved it *straddles* — it is initial ∧
 terminal in its own category `ModuleCat ℂ`. The tree's structural claim is stronger: the seam should
 **connect** the μ-subtree and the ν-subtree, i.e. admit a canonical morphism FROM every μ-side bottom

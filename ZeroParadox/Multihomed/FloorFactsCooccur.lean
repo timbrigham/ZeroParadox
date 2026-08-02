@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC44 — co-occurrence of four ambient bottom-facts (thin: new fact is generic)
+# ZP-H tree, edge TC46 — co-occurrence of four ambient bottom-facts (thin: new fact is generic)
 
 ## Engineer's Take
 

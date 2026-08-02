@@ -211,7 +211,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/LocalFloor.lean` - Every node is a floor, literally: a genuine InfinitudeFloor at each node of the generic tree
 - `ZeroParadox/Valuation/NuLeafReconcile.lean` - ZP-H tree, edge TC16 — the within-ν edge reconciles at the LEAF, not the ambient
 - `ZeroParadox/Valuation/NuRateEdge.lean` - ZP-H tree, edge TC33 — the within-ν edge at the orbit-RATE level (#3 ↔ #2)
-- `ZeroParadox/Valuation/NuRateMatch.lean` - ZP-H tree, TC43 — within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
+- `ZeroParadox/Valuation/NuRateMatch.lean` - ZP-H tree, TC40 — within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
 - `ZeroParadox/Valuation/PadicAttractor.lean` - ZP-H tree, edge TC05 — the p-adic floor #3 as a dynamical attractor
 - `ZeroParadox/Valuation/PadicBallIndicator.lean` - The p-adic ball indicator in L²(ℤ_p)
 - `ZeroParadox/Valuation/PadicCharacter.lean` - p-adic additive characters and their orthogonality on ℤ_p
@@ -259,31 +259,31 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/PointednessSharp.lean` - ZP-H tree, TC14 — the pointedness dichotomy SHARPENED (the gap TC09 left open)
 - `ZeroParadox/Category/RootCutBinary.lean` - ZP-H MC-1 tree test TC32: the root cut is binary in arity, not graded
 - `ZeroParadox/Category/RootCutDegeneracy.lean` - ZP-H MC-1 tree test TC26: the root-cut degeneracy dichotomy
-- `ZeroParadox/Category/SeamArrowLevel.lean` - ZP-H tree, TC20 / TC17 — does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
+- `ZeroParadox/Category/SeamArrowLevel.lean` - ZP-H tree, TC20 — does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
 - `ZeroParadox/Category/SeamArrowSignature.lean` - ZP-H tree — TC44: the seam's arrow-level signature (zero object vs bare-initial)
-- `ZeroParadox/Category/SeamBiproductUnit.lean` - ZP-H tree — TC35: the seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
+- `ZeroParadox/Category/SeamBiproductUnit.lean` - ZP-H tree — TC36: the seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
 - `ZeroParadox/Category/SeamBridge.lean` - ZP-H tree TC18 — is the seam a genuine BRIDGE between the subtrees, or a coincidentally two-sided object?
 - `ZeroParadox/Category/SeamCoincidence.lean` - ZP-H tree, keystone TC12 — the seam IS the categorical μ=ν coincidence
 - `ZeroParadox/Category/SeamComparisonMap.lean` - ZP-H MC-1 tree test TC38: the canonical μ→ν comparison map at the root seam, and the honest
 - `ZeroParadox/Category/SeamFrameChange.lean` - The frame-change in the category frame: `op`-duality swaps initial ↔ terminal at the seam
 - `ZeroParadox/Category/SeamGeneric.lean` - ZP-H tree — TC13: the seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
 - `ZeroParadox/Category/SeamLimColim.lean` - ZP-H tree TC25 — the seam diagram-level coincidence (lim = colim at the zero object)
-- `ZeroParadox/Category/SeamNotColimit.lean` - ZP-H tree — TC38: the seam is NOT a colimit (coproduct) apex over the μ-bottoms
-- `ZeroParadox/Category/SeamUniqueness.lean` - ZP-H tree TC-08 — seam uniqueness extended: is any OTHER bottom a zero object?
+- `ZeroParadox/Category/SeamNotColimit.lean` - ZP-H tree — TC37: the seam is NOT a colimit (coproduct) apex over the μ-bottoms
+- `ZeroParadox/Category/SeamUniqueness.lean` - ZP-H tree TC08 — seam uniqueness extended: is any OTHER bottom a zero object?
 - `ZeroParadox/Category/TopNoGo.lean` - In TopCat the empty space is not isomorphic to the one-point space
 - `ZeroParadox/Category/TreeSeam.lean` - ZP-H tree — the #5 straddle resolved: the Hilbert bottom is the μ=ν seam
 
 ### Multi-homed bridges (ZP-H)
 
 - `ZeroParadox/Multihomed/CrossRootCompleteness.lean` - ZP-H tree, cross-root completeness — TC04: #1↔#3 and #5↔#3
-- `ZeroParadox/Multihomed/FloorFactsCooccur.lean` - ZP-H tree, edge TC44 — co-occurrence of four ambient bottom-facts (thin: new fact is generic)
+- `ZeroParadox/Multihomed/FloorFactsCooccur.lean` - ZP-H tree, edge TC46 — co-occurrence of four ambient bottom-facts (thin: new fact is generic)
 - `ZeroParadox/Multihomed/Fork.lean` - Restating two `IsInitial` and one `IsTerminal` witness as `IsColimit` / `IsLimit`
-- `ZeroParadox/Multihomed/RootCutObstruction.lean` - ZP-H tree, TC18 (module TC21) — the ROOT cut is a strict, non-glueable μ/ν obstruction
-- `ZeroParadox/Multihomed/SeamConnectorFail.lean` - ZP-H tree TC34 — the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
+- `ZeroParadox/Multihomed/RootCutObstruction.lean` - ZP-H tree, TC21 — the ROOT cut is a strict, non-glueable μ/ν obstruction
+- `ZeroParadox/Multihomed/SeamConnectorFail.lean` - ZP-H tree TC23 — the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
 - `ZeroParadox/Multihomed/SelfAppForkPlace.lean` - ZP-H tree, theory TH11 — placing the ZP-J selfApp fixed point on the μ/ν fork
 - `ZeroParadox/Multihomed/SelfAppSeam.lean` - ZP-H tree — TC15: the selfApp bottom sits at the μ=ν seam, not on either branch
 - `ZeroParadox/Multihomed/SnapFrameChange.lean` - The tower limit's two chart-readings: its encodings fall to ⊥ in one chart and rise to ∞ under `rInv`, which swaps the poles. no snap transition appears in the statement; the snap-as-instance reading is ZP-Q's conjecture
-- `ZeroParadox/Multihomed/SpanObstruction.lean` - ZP-H tree, TC17 / TC14 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
+- `ZeroParadox/Multihomed/SpanObstruction.lean` - ZP-H tree, TC17 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 - `ZeroParadox/Multihomed/TreeObstructions.lean` - ZP-H: The bottom-diagram tree — machine-checked obstruction core (E4 + SPLIT, rebuilt)
 - `ZeroParadox/Multihomed/TreeT1.lean` - ZP-H tree, edge T1 — the within-μ edge: proof-theory floor ↔ categorical-initial bottoms
 - `ZeroParadox/Multihomed/TreeT2.lean` - ZP-H tree, edge T2 — the within-ν edge: Markov attractor ↔ p-adic inverse-limit
@@ -302,7 +302,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - ZP-H MC-1 tree test TC48: is choice-purity an IN-STATEMENT μ/ν separating invariant?
 - `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
-- `ZeroParadox/Computability/MarkovNuUniversal.lean` - ZP-H / TC20: does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
+- `ZeroParadox/Computability/MarkovNuUniversal.lean` - ZP-H / TC22: does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 - `ZeroParadox/Computability/NatListRegime.lean` - ZP-H tree, TC49 — the third root-cut regime: the nat/list functor (leaf + recursive position)
 - `ZeroParadox/Computability/RootCutTrichotomy.lean` - ZP-H: TC47 — the root cut is a TRICHOTOMY (leaf × recursive position)
 - `ZeroParadox/Computability/StationaryUnique.lean` - ZP-H / TC31: irreducibility forces a unique stationary distribution for node #2

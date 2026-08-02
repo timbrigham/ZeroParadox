@@ -4,7 +4,7 @@ import ZeroParadox.Settheory.Coalgebra
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC18 (module TC21) — the ROOT cut is a strict, non-glueable μ/ν obstruction
+# ZP-H tree, TC21 — the ROOT cut is a strict, non-glueable μ/ν obstruction
 
 ## Engineer's Take
 

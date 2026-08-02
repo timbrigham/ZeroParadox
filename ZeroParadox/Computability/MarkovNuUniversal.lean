@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H / TC20: does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
+# ZP-H / TC22: does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 
 ## Engineer's Take
 

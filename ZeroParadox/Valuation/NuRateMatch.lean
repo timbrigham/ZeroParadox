@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC43 — within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
+# ZP-H tree, TC40 — within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
 
 ## Engineer's Take
 

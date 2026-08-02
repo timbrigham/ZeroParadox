@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC20 / TC17 — does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
+# ZP-H tree, TC20 — does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
 
 ## Engineer's Take
 

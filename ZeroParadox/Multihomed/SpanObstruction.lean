@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC17 / TC14 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
+# ZP-H tree, TC17 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 
 ## Engineer's Take
 
