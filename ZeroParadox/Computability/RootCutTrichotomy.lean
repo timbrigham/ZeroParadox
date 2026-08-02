@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the root cut is a TRICHOTOMY (leaf × recursive position)
+# The root cut is a TRICHOTOMY (leaf × recursive position)
 
 ## Engineer's Take
 

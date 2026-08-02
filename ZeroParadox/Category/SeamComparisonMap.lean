@@ -5,7 +5,7 @@ import ZeroParadox.Category.RootCutDegeneracy
 import ZeroParadox.Category.SeamArrowLevel
 
 /-!
-# the canonical μ→ν comparison map at the root seam, and the honest
+# The canonical μ→ν comparison map at the root seam, and the honest
 fence on "root-seam ≅ node-seam"
 
 ## Engineer's Take

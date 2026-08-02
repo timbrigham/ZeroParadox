@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# a genuine CROSS-category arrow from the μ-bottom #4 to the seam #5
+# A genuine CROSS-category arrow from the μ-bottom #4 to the seam #5
 
 ## Engineer's Take
 
@@ -90,7 +90,7 @@ theorem seam_isZero : Limits.IsZero (fD_functor.obj 0) := by
     exact Fin.elim0 i⟩
   exact ModuleCat.isZero_of_subsingleton (ModuleCat.of ℂ (StateSpace 0))
 
-/-- **— the cross-category arrow lands at the seam.** The free ℂ-module functor
+/-- **The cross-category arrow lands at the seam.** The free ℂ-module functor
     `ModuleCat.free ℂ : Type ⥤ ModuleCat ℂ` (a real functor between framework categories, the left
     adjoint of `forget`) carries #4's carrier `Fin 0` onto a zero object that is **canonically
     isomorphic** to the seam #5 `fD_functor.obj 0`. The isomorphism is the unique-zero-object iso. -/

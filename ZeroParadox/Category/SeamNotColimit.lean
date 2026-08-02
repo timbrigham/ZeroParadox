@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the seam is NOT a colimit (coproduct) apex over the μ-bottoms
+# The seam is NOT a colimit (coproduct) apex over the μ-bottoms
 
 ## Engineer's Take
 

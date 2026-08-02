@@ -4,7 +4,7 @@ import ZeroParadox.Settheory.Coalgebra
 set_option maxHeartbeats 400000
 
 /-!
-# the ROOT cut is a strict, non-glueable μ/ν obstruction
+# The ROOT cut is a strict, non-glueable μ/ν obstruction
 
 ## Engineer's Take
 
@@ -17,7 +17,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This module tests **— strict-fork canonicity of the root**. The tree hypothesis roots the whole
+This module tests **strict-fork canonicity of the root**. The tree hypothesis roots the whole
 bottom-diagram at the μ/ν fork. ZP-P (`ZeroParadox/Settheory/Coalgebra.lean`) places that fork on the leaf-free identity
 polynomial functor `idPF_Coalgebra`: its initial algebra (W-type, μ) `Fix idPF_Coalgebra.Obj` is **empty**
 (`fix_isEmpty`) and its final coalgebra (M-type, ν) `Cofix idPF_Coalgebra.Obj` is **inhabited**

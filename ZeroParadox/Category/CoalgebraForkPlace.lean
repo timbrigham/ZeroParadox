@@ -5,7 +5,7 @@ import ZeroParadox.Settheory.Coalgebra
 set_option maxHeartbeats 400000
 
 /-!
-# the ZP-P W/M coalgebra fork places on the μ/ν root
+# The ZP-P W/M coalgebra fork places on the μ/ν root
 
 ## Engineer's Take
 

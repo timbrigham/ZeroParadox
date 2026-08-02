@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the contraction-rate dichotomy at the p-adic floor #3
+# The contraction-rate dichotomy at the p-adic floor #3
 
 ## Engineer's Take
 

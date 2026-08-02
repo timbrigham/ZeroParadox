@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the p-adic floor #3 as a dynamical attractor
+# The p-adic floor #3 as a dynamical attractor
 
 ## Engineer's Take
 
@@ -57,7 +57,7 @@ What the Lean proves (load-bearing, in the statements):
 **Honest scope (interpretation, NOT proved here).** The "candidate bridge toward #2" is interpretation:
 this file shows #3 is an attractor of a *deterministic ℚ₂-linear* map, whereas #2 is the attractor of a
 *stochastic* map on a simplex. No functor or measure-preserving comparison between the two dynamical
-systems is built — that edge remains OPEN. establishes only that #3 *carries an attractor
+systems is built — that edge remains OPEN. This file establishes only that #3 *carries an attractor
 structure*, putting it in the same descriptive vocabulary as #2; it does not connect the two systems.
 -/
 

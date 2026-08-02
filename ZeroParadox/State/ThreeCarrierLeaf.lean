@@ -11,19 +11,23 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to `ZeroParadox/Valuation/NuLeafReconcile.lean`'s #3/#2)
+# The THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to `ZeroParadox/Valuation/NuLeafReconcile.lean`'s #3/#2)
 
 > **The prior node is `ZeroParadox/Valuation/NuLeafReconcile.lean`** — the one covering the #3/#2
-> ν-leaves, whose capstone `tc16_nu_leaf_glue_but_generic` proves exactly the pair described below,
-> `↥({0} : Set Q₂)` and `↥(stdSimplex ℝ (Fin 1))`. `ZeroParadox/Multihomed/WallSpanRobust.lean` is a
-> **different** node — span-robustness of the well-founded cross-root wall, #1 vs #2.
+> ν-leaves, whose capstone at HEAD is `nu_leaf_glue_subsingleton` and proves exactly the pair
+> described below, `↥({0} : Set Q₂)` and `↥(stdSimplex ℝ (Fin 1))`.
+> `ZeroParadox/Multihomed/WallSpanRobust.lean` is a **different** node — span-robustness of the
+> well-founded cross-root wall, #1 vs #2.
 >
 > *(Kept because the failure mode is instructive, and it outlived the label scheme that caused it.
 > This file's citation was once repointed to `WallSpanRobust.lean` on the authority of a label
 > mapping. **That repoint was wrong** — it produced a citation that RESOLVED while describing content
 > its target does not contain, which is strictly harder to notice than a dead link. **A resolving
-> citation is not a verified one.** The evidence that settles such a question is the declaration, not
-> the label: `tc16_nu_leaf_glue_but_generic` is in `NuLeafReconcile.lean` and nowhere else.)*
+> citation is not a verified one.** The evidence that settles such a question is the declaration, and
+> `nu_leaf_glue_subsingleton` is in `NuLeafReconcile.lean` and nowhere else. Corrected 2026-08-02:
+> this note previously named the capstone `tc16_nu_leaf_glue_but_generic`, a **pre-rename branch name
+> that is not at HEAD**, in the present tense — a dead citation offered as the verification method, in
+> the note about verification methods.)*
 
 ## Engineer's Take
 
@@ -41,24 +45,22 @@ nothing structural about the p-adic, simplex, or Hilbert objects: every result i
 single fact that the carriers are *one-point spaces*. It is **not** a strengthening of `ZeroParadox/Valuation/NuLeafReconcile.lean`'s claim
 about the #3/#2 leaves.
 
-**Why is a separate node and not pure duplication of `ZeroParadox/Valuation/NuLeafReconcile.lean`.** The prior node covers exactly the two
+**Why this is a separate node and not pure duplication of `ZeroParadox/Valuation/NuLeafReconcile.lean`.** The prior node covers exactly the two
 ν-bottom leaves #3 (p-adic floor `↥({0} : Set Q₂)`) and #2 (`Fin 1` stationary point
 `↥(stdSimplex ℝ (Fin 1))`).
 
-**The prior node is `ZeroParadox/Valuation/NuLeafReconcile.lean` (edge )** — see the label note in
+**The prior node is `ZeroParadox/Valuation/NuLeafReconcile.lean`** — see the label note in
 the header. Its two carriers are exactly the pair named above, and its capstone at HEAD is
 `nu_leaf_glue_subsingleton` — the #3/#2 leaf reconciliation together with its own genericity deflation.
 *(The pre-rename branch called that capstone `tc16_nu_leaf_glue_but_generic`; that name is **not at
-HEAD** and is quoted only in the header note above, scoped to the branch. Corrected 2026-08-02 — an
-earlier version of this sentence used the branch-only name in the present tense, which is the same
-not-at-HEAD defect this batch disclosed for `ZeroParadox/Settheory/Wall.lean`, undisclosed here.)*
+HEAD**.)*
 The neighbouring within-ν edges, `ZeroParadox/Valuation/NuRateEdge.lean` and
 `ZeroParadox/Valuation/NuRateMatch.lean`, sharpen the same pair at the orbit-rate level.
 
-**adds the #5 Hilbert seam carrier** `StateSpace 0 =
+**This file adds the #5 Hilbert seam carrier** `StateSpace 0 =
 EuclideanSpace ℂ (Fin 0)` to the leaf-reconciliation set and witnesses the three-way reconciliation
 **in the capstone statement** (`nu_leaf_glue_three`). The #5 carrier is load-bearing in that statement
-— it is not a conjunction of facts `ZeroParadox/Valuation/NuLeafReconcile.lean` already proves. So tree contribution is the *edge to the
+— it is not a conjunction of facts `ZeroParadox/Valuation/NuLeafReconcile.lean` already proves. So this file's tree contribution is the *edge to the
 #5 seam node*: the Hilbert bottom's carrier reconciles with the other two ν-leaves at the point. The
 honest verdict is that this edge, like `ZeroParadox/Valuation/NuLeafReconcile.lean`'s, is the **generic subsingleton** one — it carries no
 Hilbert/p-adic/simplex content — and the file says so in-statement (see the `≃ₜ PUnit` genericity

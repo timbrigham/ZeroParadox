@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
+# Does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 
 ## Engineer's Take
 

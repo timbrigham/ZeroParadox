@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the pointedness dichotomy SHARPENED (the gap `ZeroParadox/Category/CardinalitySplit.lean` left open)
+# The pointedness dichotomy SHARPENED (the gap `ZeroParadox/Category/CardinalitySplit.lean` left open)
 
 ## Engineer's Take
 

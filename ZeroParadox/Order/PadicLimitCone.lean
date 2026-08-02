@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the p-adic floor `{0}` is a genuine categorical limit cone
+# The p-adic floor `{0}` is a genuine categorical limit cone
 
 ## Engineer's Take
 

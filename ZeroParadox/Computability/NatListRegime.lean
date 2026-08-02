@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the third root-cut regime: the nat/list functor (leaf + recursive position)
+# The third root-cut regime: the nat/list functor (leaf + recursive position)
 
 ## Engineer's Take
 

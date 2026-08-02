@@ -3,10 +3,10 @@ import Mathlib.Data.QPF.Univariate.Basic
 import ZeroParadox.Settheory.Coalgebra
 
 /-!
-# the root-cut degeneracy dichotomy
+# The root-cut degeneracy dichotomy
 
 This module sharpens the strict μ/ν fork of `ZeroParadox/Settheory/Coalgebra.lean` into a **dichotomy at the
-root of the tree**. proved the fork *strict* on the leaf-free one-child functor `idPF_Coalgebra`
+root of the tree**. `ZeroParadox/Settheory/Coalgebra.lean` proved the fork *strict* on the leaf-free one-child functor `idPF_Coalgebra`
 (child type `PUnit`, a recursive position): the initial algebra `QPF.Fix idPF_Coalgebra.Obj` is empty and the
 final coalgebra `QPF.Cofix idPF_Coalgebra.Obj` is inhabited, so the two fixed points cannot agree.
 

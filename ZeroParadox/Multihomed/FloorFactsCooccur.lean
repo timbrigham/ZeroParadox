@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# co-occurrence of four ambient bottom-facts (thin: new fact is generic)
+# Co-occurrence of four ambient bottom-facts (thin: new fact is generic)
 
 ## Engineer's Take
 

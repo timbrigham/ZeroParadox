@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the within-ν edge reconciles at the LEAF, not the ambient
+# The within-ν edge reconciles at the LEAF, not the ambient
 
 ## Engineer's Take
 

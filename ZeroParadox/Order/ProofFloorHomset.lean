@@ -24,7 +24,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 `pointedness_dichotomy` proved the Axis-III (carrier-cardinality) dichotomy as a forced
 binary for the two categories whose initial bottoms the framework instantiates with a **Type-valued
 carrier**: `Type` (#4-style, `Fin 0` empty, card 0) and `ModuleCat ℂ` (#5-style, `StateSpace 0`
-singleton, card ≤ 1). asks whether the **proof-theory floor #1** — `0 : ℕ` as the initial object
+singleton, card ≤ 1). This file asks whether the **proof-theory floor #1** — `0 : ℕ` as the initial object
 of the `ℕ` **preorder category** (`nat_floor_isInitial`, the base of the Goodstein/KP/Kruskal descent)
 — extends that ledger or breaks it.
 
@@ -61,7 +61,7 @@ it separates #5 from #4, and adds **no new cardinality value** (the {0,1} dichot
 `nat_floor_initial_singleton_homs` bundles both halves: (NO-GO) the floor is thin, so it has no
 Type-forgetful carrier; (GO) its hom-set carrier is a singleton, card-equal to a point and
 card-distinct from `Fin 0`. The delta over `ZeroParadox/Category/PointednessSharp.lean`: that file
-covered the two Type-forgetful endpoints; this one
+covered the two Type-forgetful endpoints; this file
 adds #1 to the ledger and shows it does *not* break the {0,1} dichotomy — but only once the carrier
 notion is corrected from "forgetful set" to "hom-set", which is the price #1's thinness exacts.
 

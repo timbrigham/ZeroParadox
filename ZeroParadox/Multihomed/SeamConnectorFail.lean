@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
+# The seam #5 fails as a two-sided connector to the ν-LIMIT node #3
 
 ## Engineer's Take
 

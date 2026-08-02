@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# well-foundedness obstructs the attractor character of the μ floor
+# Well-foundedness obstructs the attractor character of the μ floor
 
 ## Engineer's Take
 

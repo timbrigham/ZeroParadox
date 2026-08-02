@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# seam uniqueness extended: is any OTHER bottom a zero object?
+# Seam uniqueness extended: is any OTHER bottom a zero object?
 
 ## Engineer's Take
 

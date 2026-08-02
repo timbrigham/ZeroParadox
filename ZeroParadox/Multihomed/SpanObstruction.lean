@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
+# The #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 
 ## Engineer's Take
 
@@ -48,7 +48,7 @@ the span strength that made T1 GO." That is **false** and is retracted. The caps
 singletons whatsoever and carries **zero** structural content specific to #1 or #3. T1's span was
 GO for a different reason: its legs (`fC_floor_transport` / `fD_floor_transport`) **transport the
 floor's descent morphism onto the categorical bottom's initiality morphism**, and those equations are
-*in* `t1_mu_cluster_glue`'s statement. apex legs transport **nothing** — they are isos of bare
+*in* `t1_mu_cluster_glue`'s statement. This file's apex legs transport **nothing** — they are isos of bare
 points with no universal role. The two spans therefore sit at *different* reconciliation strengths:
 T1's carries a universal role; is the trivial floor of the strength scale. So a singleton-apex
 span existing does **not** show the cross-root cut is a method artifact, because it does not match

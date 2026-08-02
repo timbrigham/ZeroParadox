@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# irreducibility forces a unique stationary distribution for node #2
+# Irreducibility forces a unique stationary distribution for node #2
 
 ## Engineer's Take
 

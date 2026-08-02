@@ -4,7 +4,7 @@ import Mathlib.Data.W.Basic
 import ZeroParadox.Settheory.Coalgebra
 
 /-!
-# is choice-purity an IN-STATEMENT μ/ν separating invariant?
+# Is choice-purity an IN-STATEMENT μ/ν separating invariant?
 
 This module probes Axis V (choice-purity) at the root of the QPF fork. Every prior purity footnote
 (`ZeroParadox/Settheory/Coalgebra.lean`) records, as a `#print axioms` **comment**, that the μ side

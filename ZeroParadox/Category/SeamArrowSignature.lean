@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the seam's arrow-level signature (zero object vs bare-initial)
+# The seam's arrow-level signature (zero object vs bare-initial)
 
 ## Engineer's Take
 
@@ -132,7 +132,7 @@ theorem endo_subsingleton_does_not_separate :
 
 /-! ## The full picture in one statement -/
 
-/-- **, assembled.** A clean four-way summary at the arrow level:
+/-- **The arrow-level picture, assembled.** A clean four-way summary at the arrow level:
     (1) P_in holds at the seam #5; (2) P_in fails at the bare-initial #4 — so P_in *separates*;
     (3) endo-subsingleton holds at #5; (4) endo-subsingleton holds at #4 — so endo-subsingleton
     does *not* separate. The contrast (separator found, generic property correctly excluded) is the

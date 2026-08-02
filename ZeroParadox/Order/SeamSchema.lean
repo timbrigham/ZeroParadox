@@ -7,7 +7,7 @@ import ZeroParadox.Multihomed.SelfAppSeam
 import ZeroParadox.Computability.SelfApp
 
 /-!
-# a shared "seam schema" for the QPF root-seam and the lattice selfApp seam,
+# A shared "seam schema" for the QPF root-seam and the lattice selfApp seam,
 with the cross-setting fence IN the statement.
 
 ## Engineer's Take
@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-fenced the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
+`ZeroParadox/Category/SeamComparisonMap.lean` fenced the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
 #5 Hilbert zero object). This file tests a *different* pairing: the root-seam against the
 **lattice / selfApp seam** of `ZeroParadox/Multihomed/SelfAppSeam.lean` (`{x | selfApp x = x} = {⊥}`, ⊥ both least and greatest fixed
 point). The pre-registered question: do these two seams share a common Lean-statable schema, or is any

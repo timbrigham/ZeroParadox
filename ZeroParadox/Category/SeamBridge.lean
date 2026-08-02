@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# is the seam a genuine BRIDGE between the subtrees, or a coincidentally two-sided object?
+# Is the seam a genuine BRIDGE between the subtrees, or a coincidentally two-sided object?
 
 ## Engineer's Take
 

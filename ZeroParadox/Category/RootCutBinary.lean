@@ -4,7 +4,7 @@ import ZeroParadox.Settheory.Coalgebra
 import ZeroParadox.Category.RootCutDegeneracy
 
 /-!
-# the root cut is binary in arity, not graded
+# The root cut is binary in arity, not graded
 
 This module sharpens the root-cut dichotomy of `ZeroParadox/Category/RootCutDegeneracy.lean` into a statement about the
 **number** of recursive positions. `ZeroParadox/Category/RootCutDegeneracy.lean` established the dichotomy on the two boundary cases:

@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
+# The seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
 
 ## Engineer's Take
 

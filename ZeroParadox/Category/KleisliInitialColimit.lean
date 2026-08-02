@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the Kleisli μ-bottom's `IsInitial` is definitionally an empty-colimit witness (a remark)
+# The Kleisli μ-bottom's `IsInitial` is definitionally an empty-colimit witness (a remark)
 
 ## Engineer's Take
 

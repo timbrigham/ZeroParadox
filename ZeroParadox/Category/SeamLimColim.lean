@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the seam diagram-level coincidence (lim = colim at the zero object)
+# The seam diagram-level coincidence (lim = colim at the zero object)
 
 ## Engineer's Take
 

@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# span-robustness of the well-founded cross-root wall (#1 vs #2)
+# Span-robustness of the well-founded cross-root wall (#1 vs #2)
 
 ## Engineer's Take
 
@@ -27,7 +27,7 @@ stationary point in the probability simplex, whose carrier ℝ is genuinely non-
 `real_carrier_not_wellFounded`).
 
 `no_strictMono_real_to_ordinal` (E4) already proved there is **no direct** order map ℝ → Ordinal.
-asks the strictly stronger question the framework's own G-construction would face: is the wall
+This file asks the strictly stronger question the framework's own G-construction would face: is the wall
 robust against a **span** — a common apex object `S` mapping order-preservingly to *both* the
 well-founded Ordinal leg and the non-well-founded attractor carrier? A span that reconciled would mean
 the root cut is only an obstruction-to-direct-maps; an obstruction even to spans means the well-founded

@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the seam IS the categorical μ=ν coincidence
+# The seam IS the categorical μ=ν coincidence
 
 ## Engineer's Take
 

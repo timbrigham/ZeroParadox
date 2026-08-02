@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
+# Within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2
 
 ## Engineer's Take
 
@@ -28,7 +28,7 @@ comparing the p-adic GEOMETRIC orbit (distance `2^(-n)`) against an ABSORBING Ma
 identically `0`): geometric-vs-absorbing is a rate mismatch. `ZeroParadox/Order/MarkovContractionDual.lean` then built a genuinely GEOMETRIC
 Markov attractor on `Fin 2 → ℝ`: the symmetric doubly-stochastic kernel `P_a` contracts the imbalance
 `v 0 - v 1` by the subdominant eigenvalue `1 - 2a` per step, so
-`imb (P_aᵏ v₀) = (1 - 2a)ᵏ · imb v₀` (`markov_imbalance_pow`). tests the natural
+`imb (P_aᵏ v₀) = (1 - 2a)ᵏ · imb v₀` (`markov_imbalance_pow`). This file tests the natural
 follow-up: **choose the spectral gap to match the p-adic rate.** Set `a = 1/4`, so `1 - 2a = 1/2`.
 Then the Markov imbalance decays as `(1/2)ᵏ` — the SAME geometric envelope `ZeroParadox/Valuation/RateTransport.lean` showed bounds the
 p-adic #3 orbit (`padic_orbit_norm`: `‖2ⁿ·x‖ = 2^(-n)·‖x‖`, and `2^(-n) = (1/2)ⁿ`).

@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the within-ν edge at the orbit-RATE level (#3 ↔ #2)
+# The within-ν edge at the orbit-RATE level (#3 ↔ #2)
 
 ## Engineer's Take
 

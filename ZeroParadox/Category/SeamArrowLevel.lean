@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
+# Does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
 
 ## Engineer's Take
 

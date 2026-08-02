@@ -11,7 +11,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the cross-root edge #4 (Kleisli μ-initial/colimit) ↔ #3 (p-adic ν-limit)
+# The cross-root edge #4 (Kleisli μ-initial/colimit) ↔ #3 (p-adic ν-limit)
 
 ## Engineer's Take
 

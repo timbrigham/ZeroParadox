@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the dual contraction dichotomy on the Markov ν-side (#2)
+# The dual contraction dichotomy on the Markov ν-side (#2)
 
 ## Engineer's Take
 

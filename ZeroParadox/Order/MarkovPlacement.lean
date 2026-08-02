@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+# The unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
 
 
 ## Engineer's Take
