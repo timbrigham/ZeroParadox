@@ -235,7 +235,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 ### State / Hilbert (ZP-D)
 
 - `ZeroParadox/State/ProbeSeparates.lean` - `Fin 0` is empty; the zero ℂ-module on `Fin 0` is inhabited
-- `ZeroParadox/State/ThreeCarrierLeaf.lean` - ZP-H tree, TC29 — the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to TC19's #3/#2)
+- `ZeroParadox/State/ThreeCarrierLeaf.lean` - ZP-H tree, TC29 — the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to TC16's #3/#2, `ZeroParadox/Valuation/NuLeafReconcile.lean`; this read "TC19's" until 2026-08-02, a stale pre-rename filename number — TC19 is `ZeroParadox/Multihomed/WallSpanRobust.lean`, a different node)
 
 ### Reals (counterexamples)
 

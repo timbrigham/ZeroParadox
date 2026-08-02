@@ -11,19 +11,27 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC29 — the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to TC19's #3/#2)
+# ZP-H tree, TC29 — the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to TC16's #3/#2)
 
-> **⚠ READ FIRST — every "TC19" in this file is a CONTESTED label.** `ZeroParadox/MANIFEST.md`
-> contradicts itself about which node TC19 names, so treat **every** occurrence in this file — the
-> title above included — as referring to *"the prior node covering the #3/#2 ν-leaves"* and **not** as
-> a verified pointer. Details in § "THE 'TC19' LABEL IS CONTESTED" below. The #3/#2 mathematics is real
-> and unaffected; only the node NUMBER is unreliable. *(Flagged 2026-08-01; count corrected 2026-08-02.
-> The caveat sits here, at the top, because a gate found the first version buried mid-file while the
-> label went on being used as reliable throughout. The first version said "14 occurrences below" and
-> "eleven more times" — measured 2026-08-02 there are **18** in the file, and the three gates reported
-> 19/15/15 using different conventions. **No count is stated here now**, deliberately: a count at the
-> site of a caveat goes stale exactly like the counts this project keeps getting wrong. Measure it:*
-> `Select-String -Path ZeroParadox\State\ThreeCarrierLeaf.lean -Pattern 'TC19'`*.)*
+> **Label note (resolved 2026-08-02, Tim).** The prior node — the one covering the #3/#2 ν-leaves — is
+> `ZeroParadox/Valuation/NuLeafReconcile.lean`, and its label is **TC16**. This file previously called
+> it TC19 throughout.
+>
+> The confusion was a leftover probe number from before the bulk rename. On `private/physics-bridge`
+> the pre-reorg file (renamed since; `ZPH_MC1_TC19.lean` no longer exists) **had a header and a capstone
+> theorem that both said TC16** (`tc16_nu_leaf_glue_but_generic`), and its content is exactly the pair
+> described below:
+> `↥({0} : Set Q₂)` and `↥(stdSimplex ℝ (Fin 1))`. It became `NuLeafReconcile.lean`, which
+> `ZeroParadox/MANIFEST.md` correctly lists as "edge TC16". `ZeroParadox/Multihomed/WallSpanRobust.lean`
+> is a **different** node — span-robustness of the well-founded cross-root wall, #1 vs #2 — and is
+> correctly labelled TC19. The two manifest entries were never really in conflict; this file was
+> carrying the stale *filename* number.
+>
+> *(Kept because the failure mode is instructive: the citation here was a dangling pre-reorg basename,
+> and on 2026-08-01 it was repointed to `WallSpanRobust.lean` on the authority of the manifest's TC19
+> mapping. **That repoint was wrong** — it produced a citation that resolved while describing content
+> its target does not contain, which an editorial gate caught. A resolving citation is not a verified
+> one, and the right answer was only on the pre-rename branch.)*
 
 ## Engineer's Take
 
@@ -36,32 +44,27 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-**Honest verdict: DECORATIVE (generic one-point case throughout).** Like TC19, this file proves
+**Honest verdict: DECORATIVE (generic one-point case throughout).** Like TC16, this file proves
 nothing structural about the p-adic, simplex, or Hilbert objects: every result is a consequence of the
-single fact that the carriers are *one-point spaces*. It is **not** a strengthening of TC19's claim
+single fact that the carriers are *one-point spaces*. It is **not** a strengthening of TC16's claim
 about the #3/#2 leaves.
 
-**Why TC29 is a separate node and not pure duplication of TC19.** The prior node covers exactly the two
+**Why TC29 is a separate node and not pure duplication of TC16.** The prior node covers exactly the two
 ν-bottom leaves #3 (p-adic floor `↥({0} : Set Q₂)`) and #2 (`Fin 1` stationary point
 `↥(stdSimplex ℝ (Fin 1))`).
 
-**⚠ THE "TC19" LABEL IS CONTESTED — do not rely on it until reconciled (flagged 2026-08-01).** The
-citation here was a dangling pre-reorg basename and was repointed to
-`ZeroParadox/Multihomed/WallSpanRobust.lean` on the authority of `ZeroParadox/MANIFEST.md:291`, which
-maps TC19 there. **But that file's own header says TC19 is "#1 vs #2"** — the proof-theory floor
-(`0 : Ordinal`) against the Markov attractor — which is *not* the #3/#2 pair this paragraph describes.
-`ZeroParadox/MANIFEST.md:238` meanwhile describes "TC19's #3/#2", agreeing with this paragraph and
-contradicting the file. So either the manifest's mapping is wrong, or two distinct nodes carry the
-label. The #3/#2 content described here is real and is covered by the within-ν edge nodes
-(`ZeroParadox/Valuation/NuRateEdge.lean`, `ZeroParadox/Valuation/NuRateMatch.lean`); the TC19 *number*
-is what is unreliable. **A resolving citation is not a verified one** — this repoint turned a
-self-announcing dead link into a live link wrapped around a description the target does not support,
-which is strictly harder to notice. TC29 **adds the #5 Hilbert seam carrier** `StateSpace 0 =
+**The prior node is `ZeroParadox/Valuation/NuLeafReconcile.lean` (edge TC16)** — see the label note in
+the header. Its two carriers are exactly the pair named above, and its capstone
+`tc16_nu_leaf_glue_but_generic` is the #3/#2 leaf reconciliation together with its own genericity
+deflation. The neighbouring within-ν edges, `ZeroParadox/Valuation/NuRateEdge.lean` and
+`ZeroParadox/Valuation/NuRateMatch.lean`, sharpen the same pair at the orbit-rate level.
+
+TC29 **adds the #5 Hilbert seam carrier** `StateSpace 0 =
 EuclideanSpace ℂ (Fin 0)` to the leaf-reconciliation set and witnesses the three-way reconciliation
 **in the capstone statement** (`nu_leaf_glue_three`). The #5 carrier is load-bearing in that statement
-— it is not a conjunction of facts TC19 already proves. So TC29's tree contribution is the *edge to the
+— it is not a conjunction of facts TC16 already proves. So TC29's tree contribution is the *edge to the
 #5 seam node*: the Hilbert bottom's carrier reconciles with the other two ν-leaves at the point. The
-honest verdict is that this edge, like TC19's, is the **generic subsingleton** one — it carries no
+honest verdict is that this edge, like TC16's, is the **generic subsingleton** one — it carries no
 Hilbert/p-adic/simplex content — and the file says so in-statement (see the `≃ₜ PUnit` genericity
 witnesses).
 
@@ -83,7 +86,7 @@ Everything else follows from that alone:
   the trivial one-point space `PUnit`. So each leaf reconciliation distinguishes the carriers from
   nothing — it is vacuous as an invariant.
 - `nu_leaf_glue_three` (capstone) — the load-bearing claim. It conjoins (a) the three-way leaf homeo
-  span `#3 ≃ₜ #2` and `#3 ≃ₜ #5` (this is what is NEW vs TC19: #5 is in the statement), with (b) the
+  span `#3 ≃ₜ #2` and `#3 ≃ₜ #5` (this is what is NEW vs TC16: #5 is in the statement), with (b) the
   genericity witness `#5 ≃ₜ PUnit`. The conjunction says: the Hilbert seam carrier joins the ν-leaf
   glue, but only by the generic subsingleton map. The #5 carrier is load-bearing; the deflation is
   in-statement.
@@ -96,7 +99,7 @@ asymmetry (the connected-vs-totally-disconnected wall) is an **ambient** phenome
 in `ZPH_MC1_TreeT2`** — it is neither proved nor probed here.
 
 **What is Lean vs interpretation.** Lean proves exactly: three carriers are `Unique`; the #5 Hilbert
-carrier reconciles with #3/#2 at the point (the new content over TC19); hom-sets between them are
+carrier reconciles with #3/#2 at the point (the new content over TC16); hom-sets between them are
 `Subsingleton`; each carrier is homeomorphic to `PUnit` (genericity). Any reading of this as "the seam
 leaf glue is canonically forced" is just the restatement that one-point spaces have unique maps — it is
 not framework-specific evidence. The single non-vacuous claim in this corner of the tree (the ambient
@@ -156,13 +159,15 @@ instance hom_padic_hilbert_subsingleton : Subsingleton C(padicFloor_ThreeCarrier
 
 /-- The canonical homeomorphism between two `Unique` spaces (`homeomorphOfUnique`): "any two
     one-point spaces are homeomorphic". Cardinality-driven, not a structural identification.
-    This is the #3 ≃ₜ #2 leaf reconciliation the prior node already established (labelled TC19 — see the contested-label caveat in the header). -/
+    This is the #3 ≃ₜ #2 leaf reconciliation the prior node already established
+    (`ZeroParadox/Valuation/NuLeafReconcile.lean`, edge TC16). -/
 noncomputable def nu_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf simplexPoint_ThreeCarrierLeaf
 
 /-- **The TC29-specific edge: #3 ≃ₜ #5.** The canonical homeomorphism between the p-adic floor and the
     Hilbert seam carrier `StateSpace 0` — again `homeomorphOfUnique` (both are `Unique`). This is the
-    leaf reconciliation the prior node does NOT cover (labelled TC19 — contested, see header): it adds the #5 seam node to the ν-leaf glue set. Generic
+    leaf reconciliation the prior node (`ZeroParadox/Valuation/NuLeafReconcile.lean`, TC16) does NOT
+    cover: it adds the #5 seam node to the ν-leaf glue set. Generic
     (cardinality-driven), per the genericity witnesses below. -/
 noncomputable def seam_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf hilbertCarrier
@@ -183,7 +188,7 @@ noncomputable def hilbert_is_punit : hilbertCarrier ≃ₜ PUnit :=
   Homeomorph.homeomorphOfUnique hilbertCarrier PUnit
 
 /-- **TC29 capstone — the three-carrier ν/seam leaf glue, with #5 Hilbert load-bearing in-statement.**
-    The NEW content over TC19: the statement names the #5 Hilbert seam carrier, not only #3/#2.
+    The NEW content over TC16: the statement names the #5 Hilbert seam carrier, not only #3/#2.
     Conjoins (a) the three-way leaf homeo span `padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf` (= #3 ≃ₜ #2) and
     `padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier` (= #3 ≃ₜ #5, the TC29-specific edge), with (b) the genericity
     deflation `hilbertCarrier ≃ₜ PUnit`. Reading: the Hilbert seam carrier joins the ν-leaf glue, but
