@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZPH_MC1_TC14.pointedness_dichotomy` proved the Axis-III (carrier-cardinality) dichotomy as a forced
+`pointedness_dichotomy` proved the Axis-III (carrier-cardinality) dichotomy as a forced
 binary for the two categories whose initial bottoms the framework instantiates with a **Type-valued
 carrier**: `Type` (#4-style, `Fin 0` empty, card 0) and `ModuleCat ℂ` (#5-style, `StateSpace 0`
 singleton, card ≤ 1). TC43 asks whether the **proof-theory floor #1** — `0 : ℕ` as the initial object

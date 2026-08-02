@@ -325,7 +325,7 @@ section CannotBeIndex
 -- relaxation operator is NON-INJECTIVE (`fullMix` sends the nonzero mean-zero mode to 0) — information is
 -- lost, the relaxation cannot be reversed; off-stationary modes with |λ|<1 decay (`fullMix_mode_decays`,
 -- via the general `tendsto_norm_iterate_zero`). FENCE: NOT universal — permutation/cyclic chains have no
--- gap, are injective, do NOT mix (`ZPH_MC1_TC39.swap_orbit_not_convergent`). Mixing-specific. Cold-audit SOLID.
+-- gap, are injective, do NOT mix (`swap_orbit_not_convergent`). Mixing-specific. Cold-audit SOLID.
 #check @ZeroParadox.fullMix_not_injective
 #check @ZeroParadox.tendsto_norm_iterate_zero
 

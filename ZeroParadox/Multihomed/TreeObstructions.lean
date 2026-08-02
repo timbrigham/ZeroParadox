@@ -48,13 +48,13 @@ probability simplex):
 - `split_kleisli_vs_hilbert` — the Kleisli bottom `Fin 0` (empty) and the Hilbert bottom
   `StateSpace 0` (a singleton) are not in bijection, even though **both are initial objects** in their
   categories. (Axis III: a finer invariant than polarity — cardinality — distinguishes same-polarity
-  bottoms.) `Fin 0` is the carrier of `ZPH_InfoFunctor.fC_functor.obj 0`; `StateSpace 0` of
-  `ZPH_HilbFunctor.fD_functor.obj 0`.
+  bottoms.) `Fin 0` is the carrier of `fC_functor.obj 0`; `StateSpace 0` of
+  `fD_functor.obj 0`.
 - `split_kleisli_vs_padic` — the Kleisli bottom `Fin 0` (empty) is not in bijection with the p-adic
   floor `{0} ⊆ Q₂` (a singleton).
 
 **#5 straddle witness.** `fD_zero_isTerminal` — the Hilbert bottom `fD_functor.obj 0` is **terminal**
-in `ModuleCat ℂ` (the initial half is `ZPH_HilbFunctor.fD_zero_isInitial`). Together they say it is a
+in `ModuleCat ℂ` (the initial half is `fD_zero_isInitial`). Together they say it is a
 *zero object* — initial ∧ terminal (μ ∧ ν) — which is why this node straddles the μ/ν root of the
 tree. Whether the straddle is the root seam (the diagonal fixed point) or a defect of the tree is the
 open question; this file only supplies the missing terminal half so the straddle is fully witnessed.
@@ -146,7 +146,7 @@ theorem split_kleisli_vs_padic :
 /-! ## #5 straddle — the missing terminal half of the Hilbert bottom -/
 
 /-- The Hilbert bottom `fD_functor.obj 0` is terminal in `ModuleCat ℂ`. With
-    `ZPH_HilbFunctor.fD_zero_isInitial` (initial) this witnesses it as a zero object (initial ∧
+    `fD_zero_isInitial` (initial) this witnesses it as a zero object (initial ∧
     terminal = μ ∧ tree ν): the straddling node at the μ/ν root. -/
 noncomputable def fD_zero_isTerminal :
     Limits.IsTerminal (fD_functor.obj 0) := by

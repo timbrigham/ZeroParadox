@@ -38,7 +38,7 @@ stated as a hom-set property*:
 This is a statement about hom-sets only (no object-level data), and:
 
 - `seam_has_Pin` — **P_in holds at #5.** `fD_functor.obj 0` is terminal in `ModuleCat ℂ`
-  (`ZPH_MC1_TreeObstructions.fD_zero_isTerminal`), so every in-hom-set is nonempty (it has the
+  (`fD_zero_isTerminal`), so every in-hom-set is nonempty (it has the
   terminal arrow `IsTerminal.from`).
 - `bare_initial_fails_Pin` — **P_in FAILS at #4.** `Hom(fC_functor.obj 1, fC_functor.obj 0)` is
   **empty** (`fC_no_return`: no stochastic map returns into `Fin 0` from a nonempty type), so there

@@ -30,7 +30,7 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   the system, Gödel territory), not a Lean proposition. We prove the OBJECT-LEVEL refutation of the
   self-loop in well-founded settings.
 - The "same role, not transferable" face is proved elsewhere and referenced, not re-proved here:
-  `ZPP_Ostrowski.real_not_equiv_padic` (ℝ and ℚ_p are both completions of ℚ but no equivalence transfers
+  `real_not_equiv_padic` (ℝ and ℚ_p are both completions of ℚ but no equivalence transfers
   one to the other) and `ZPP.categorical_fork_strict` (μ empty / ν inhabited — the two ends, provably
   distinct).
 - The FORMAL SIGNATURE of the wall is the contrast: shadow realizable choice-free (proved upstream) ∧

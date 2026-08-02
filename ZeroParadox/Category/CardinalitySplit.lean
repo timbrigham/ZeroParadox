@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZPH_MC1_TreeObstructions.split_kleisli_vs_hilbert` records **Axis III**: the Kleisli bottom
+`split_kleisli_vs_hilbert` records **Axis III**: the Kleisli bottom
 `Fin 0` (empty, cardinality 0) and the Hilbert bottom `StateSpace 0` (a singleton, cardinality 1)
 are **both initial objects** of their respective categories, yet their carriers are not in bijection.
 So initiality (polarity) is not a complete invariant of a bottom; a finer invariant — carrier
@@ -120,7 +120,7 @@ theorem initial_carrier_empty_or_subsingleton :
 
 /-- **Cross-link to the original instance.** Both pairs are genuine same-polarity-distinct-cardinality
     pairs: the new `Type`/`ModuleCat` pair (this file) and the `Fin 0`/`StateSpace 0` pair
-    (`ZPH_MC1_TreeObstructions.split_kleisli_vs_hilbert`) both have empty-vs-singleton carriers with
+    (`split_kleisli_vs_hilbert`) both have empty-vs-singleton carriers with
     both members initial. Stated here as the two empty carriers and the two singleton carriers failing
     to be in bijection with each other's class. -/
 theorem two_independent_pairs :

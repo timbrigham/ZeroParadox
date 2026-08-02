@@ -28,7 +28,7 @@ comparing the p-adic GEOMETRIC orbit (distance `2^(-n)`) against an ABSORBING Ma
 identically `0`): geometric-vs-absorbing is a rate mismatch. TC39 then built a genuinely GEOMETRIC
 Markov attractor on `Fin 2 → ℝ`: the symmetric doubly-stochastic kernel `P_a` contracts the imbalance
 `v 0 - v 1` by the subdominant eigenvalue `1 - 2a` per step, so
-`imb (P_aᵏ v₀) = (1 - 2a)ᵏ · imb v₀` (`ZPH_MC1_TC39.markov_imbalance_pow`). TC43 tests the natural
+`imb (P_aᵏ v₀) = (1 - 2a)ᵏ · imb v₀` (`markov_imbalance_pow`). TC43 tests the natural
 follow-up: **choose the spectral gap to match the p-adic rate.** Set `a = 1/4`, so `1 - 2a = 1/2`.
 Then the Markov imbalance decays as `(1/2)ᵏ` — the SAME geometric envelope TC36 showed bounds the
 p-adic #3 orbit (`padic_orbit_norm`: `‖2ⁿ·x‖ = 2^(-n)·‖x‖`, and `2^(-n) = (1/2)ⁿ`).
@@ -46,7 +46,7 @@ p-adic #3 orbit (`padic_orbit_norm`: `‖2ⁿ·x‖ = 2^(-n)·‖x‖`, and `2^(
 **NO-GO residue (the honest fence, also in-statement).** The matched rate does NOT dissolve the
 within-ν wall:
 - `padic_markov_no_orbit_correspondence` — for `x ≠ 0` the p-adic orbit distance is **strictly positive at
-  every finite step** (`ZPH_MC1_TC36.padic_orbit_pos`), whereas the Markov imbalance, started balanced
+  every finite step** (`padic_orbit_pos`), whereas the Markov imbalance, started balanced
   (`imb v₀ = 0`, e.g. the uniform vector), is **identically 0** at every step. So even at matched rate
   1/2 there is no step-for-step distance correspondence: the same envelope can carry a strictly-positive
   p-adic orbit and a degenerate (already-at-floor) Markov orbit. The shared rate is a coincident

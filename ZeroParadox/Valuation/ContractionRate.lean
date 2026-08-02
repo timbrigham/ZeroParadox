@@ -48,7 +48,7 @@ The two halves of the dichotomy, each witnessed in-statement:
 
 - **Attractor half (GO).** `contraction_orbit_tendsto_zero` — for `‖c‖ < 1`, the *global*
   attractor property holds: `∀ x, Tendsto (fun n => c^n * x) atTop (nhds 0)`. Generalizes
-  `ZPH_MC1_TC05.doubling_orbit_tendsto_zero` from `c = 2` to every ideal element.
+  `doubling_orbit_tendsto_zero` from `c = 2` to every ideal element.
 - **Non-attractor half (GO).** `unit_orbit_norm_const` — for a 2-adic unit `u` (`‖u‖ = 1`)
   and any `x`, `‖u^n * x‖ = ‖x‖` for all `n`: the orbit's norm is *constant*, so for `x ≠ 0`
   it never enters a small ball around `0` and `unit_orbit_not_tendsto_zero` shows it does NOT
@@ -119,7 +119,7 @@ theorem nat_orbit_tendsto_zero_iff_two_dvd (k : ℕ) :
 /-- Global attractor for the whole ideal (standard normed-field decay, specialized). For any
     multiplier with `‖c‖ < 1`, the orbit of every starting point converges to the snap floor
     `0`: `∀ x, cⁿ·x → 0`. Proof is the routine `‖cⁿ·x‖ = ‖c‖ⁿ·‖x‖ → 0`. This generalizes
-    `ZPH_MC1_TC05.doubling_orbit_tendsto_zero` (the `c = 2` case) to every element of the
+    `doubling_orbit_tendsto_zero` (the `c = 2` case) to every element of the
     valuation ideal `2 ∣ c`. -/
 theorem contraction_orbit_tendsto_zero {c : Q₂} (hc : ‖c‖ < 1) (x : Q₂) :
     Tendsto (fun n : ℕ => c ^ n * x) atTop (nhds 0) := by

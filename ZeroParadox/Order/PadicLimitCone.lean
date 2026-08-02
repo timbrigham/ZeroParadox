@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZPH_TopFunctor.fB_bottom_is_limit` proves the *set* equation `⋂ n, q2Ball n = {0}`: the
+`fB_bottom_is_limit` proves the *set* equation `⋂ n, q2Ball n = {0}`: the
 intersection of the shrinking clopen balls `B(0, 2⁻ⁿ) ⊆ Q₂` is exactly the snap floor `{0}`.
 That is a statement in `Set Q₂`, not in `TopCat`. The campaign question (TH10) was whether the
 node #3 is a *genuine* ν / categorical limit, i.e. whether the snap floor is the **limit object**

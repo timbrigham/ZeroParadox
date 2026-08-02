@@ -20,7 +20,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC12/TC13 (`ZPH_MC1_TreeSeam.hilbert_bottom_isZero`) proved the seam node #5 is a **zero object**
+TC12/TC13 (`hilbert_bottom_isZero`) proved the seam node #5 is a **zero object**
 (initial ∧ terminal) — an *object-level* coincidence of μ (initial / least-fixed-point / colimit) and
 ν (terminal / greatest-fixed-point / limit). The deeper diagonal-fixed-point reading asks for an
 *arrow-level* coincidence: at the seam the μ-witness arrow and the ν-witness arrow should be **the

@@ -28,7 +28,7 @@ This file tests the last unbuilt cross-root pair of the bottom-diagram tree at t
 **categorical-witness** level: node #4, the Kleisli bottom `Fin 0` (a genuine μ object —
 initial / empty-diagram colimit in `KleisliCat PMF`, witness `ZPH_MC1_TC24`), against node #3,
 the p-adic floor `{0} = ⋂ q2Ball n` (a genuine ν object — the `IsLimit` of the contravariant
-inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`, witness `ZPH_MC1_TC10.floorConeIsLimit`).
+inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`, witness `floorConeIsLimit`).
 
 **The pre-registered race.**
 - *GO conjecture:* state a variance/arrow obstruction in-type strong enough to be a new edge —
@@ -44,7 +44,7 @@ inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`, witness `ZPH_MC1_TC10.floorC
 ambient mismatch):
 
 - `node4_no_incoming` — node #4 receives **no** incoming morphism from a nonempty Kleisli object
-  (`ZPH_InfoFunctor.fC_no_return`). As a μ-bottom it is a *source* (initial: a map *out* to every
+  (`fC_no_return`). As a μ-bottom it is a *source* (initial: a map *out* to every
   object) whose incoming hom-sets from nonempty objects are *empty*.
 - `node3_receives_cone` — node #3, being an `IsLimit` cone apex, is a *target*: it receives an
   *incoming* morphism (the unique `lift`) from **every** cone over the inverse system. We exhibit a

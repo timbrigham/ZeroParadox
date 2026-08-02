@@ -31,7 +31,7 @@ a thin, accurately-labeled co-occurrence record, not as a new structural result.
 element *only on the image of its norm* (`IsLeast (Set.range (‖·‖ : Q₂ → ℝ)) 0`) — not as an
 order-bottom of `Q₂`.
 
-**Re-exported from TC10.** `ZPH_MC1_TC10.floorConeIsLimit` proves the snap floor `{0} ⊆ Q₂` is a
+**Re-exported from TC10.** `floorConeIsLimit` proves the snap floor `{0} ⊆ Q₂` is a
 genuine categorical `IsLimit` of the inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`. We re-expose it
 here as `padic_floor_isLimit` (`Nonempty (IsLimit floorCone)`).
 
@@ -43,7 +43,7 @@ statement `isEmpty_hom_one_to_zero : IsEmpty ((1 : ℕ) ⟶ (0 : ℕ))`, and fro
 ### What the file actually witnesses (load-bearing, in the theorem statements)
 
 The bundle `floor_facts_cooccur` is a pure conjunction of four pre-existing-or-generic facts:
-1. `Nonempty (IsLimit ZPH_MC1_TC10.floorCone)` — #3 sits at a real limit (TC10).
+1. `Nonempty (IsLimit floorCone)` — #3 sits at a real limit (TC10).
 2. `IsEmpty (Limits.IsTerminal (0 : ℕ))` — `0` is not terminal in the `ℕ` preorder (new, generic).
 3. `IsLeast (Set.univ : Set ℕ) 0` ∧ `IsLeast (Set.range ‖·‖) 0` (TC35).
 

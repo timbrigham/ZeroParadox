@@ -28,7 +28,7 @@ the degenerate/inverted value of each. Tim's "typecast by what it is NOT." This 
 then deflated. What the Lean actually contains is *thin*, and the distinctive idea is *conceptual*, not
 formal. Stated plainly:
 
-- **`StrippedBottom` is `ZPJ_SelfApp.AbstractSelfApp` re-skinned + one field.** Its `selfMap` /
+- **`StrippedBottom` is `AbstractSelfApp` re-skinned + one field.** Its `selfMap` /
   `unique_fixed` / `selfMap_fixes` ARE that class's `selfApp` / `unique_fp` / `fixed_bot` triple (the
   diagonal-fixed-point class), with `[Mul X]` in place of `[ZPSemilattice L]`; the only genuinely new
   field is `absorbing`. It is a vocabulary re-framing of an existing class, not a new structure.
@@ -58,7 +58,7 @@ open ZeroParadox
     value of each listed attribute-class: STRUCTURE inverted (`absorbing`) and DYNAMICS inverted (the
     unique fixed point of an iteration self-map).
     **NOTE (honest): the dynamics fields (`selfMap`/`unique_fixed`/`selfMap_fixes`) ARE
-    `ZPJ_SelfApp.AbstractSelfApp`'s triple re-skinned; the only new field is `absorbing`. This is a
+    `AbstractSelfApp`'s triple re-skinned; the only new field is `absorbing`. This is a
     vocabulary re-framing of the existing diagonal-fixed-point class, not a new structure.** The list is
     OPEN. Descriptionlessness is deliberately NOT a field — but that is a philosophical remark (stating
     this structure is itself a description of `b`), with no formal content. -/

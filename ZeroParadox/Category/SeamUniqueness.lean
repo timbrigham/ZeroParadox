@@ -42,14 +42,14 @@ and show each fails — every one of them lands strictly on a single side of the
   order-theoretic shadow of "initial but not terminal" — the poset-as-category bottom is the colimit
   end, not the limit end, exactly because there is no top.
 - `kleisli_bottom_not_zero` (#4) — `fC_functor.obj 0 = Fin 0` is **not** a zero object: a zero
-  object is terminal, but `ZPH_MC1_TreeSeam.kleisli_bottom_not_terminal` proves it is not terminal
+  object is terminal, but `kleisli_bottom_not_terminal` proves it is not terminal
   (`fC_no_return`: no stochastic map returns into the empty type). Strictly μ.
 - `padic_bottom_not_zero` (#3) — the p-adic floor `{0} ⊆ Q₂` is **not** a zero object: a zero
-  object is initial, but `ZPH_MC1_TreeObstructions.padic_bottom_not_initial` proves it is not
+  object is initial, but `padic_bottom_not_initial` proves it is not
   initial. Strictly ν.
 
 `seam_unique_among_named` bundles all four negatives with the positive
-`ZPH_MC1_TreeSeam.hilbert_bottom_isZero` into one statement: among {#3, #4, #5, the ZP-G initial,
+`hilbert_bottom_isZero` into one statement: among {#3, #4, #5, the ZP-G initial,
 the ZP-A bottom} only #5 is a zero object.
 
 **Verdict witnessed: NO-GO on the GO conjecture.** The pre-registered GO conjecture was "another

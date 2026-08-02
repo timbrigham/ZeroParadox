@@ -45,7 +45,7 @@ checking it holds at the actual ZP-D bottom node, with the unfolding spelled out
 
 - `seam_is_mu_nu_coincidence_SeamCoincidence` — the definition instantiated at the actual seam node: `fD_functor.obj 0`
   is a zero object **iff** it is both initial and terminal, and (since it *is* a zero object, via
-  `ZPH_MC1_TreeSeam.hilbert_bottom_isZero`) both sides hold. So the #5 seam is literally the μ=ν
+  `hilbert_bottom_isZero`) both sides hold. So the #5 seam is literally the μ=ν
   coincidence point, not merely a node we labelled "seam".
 
 **Honest fence — what is Lean vs interpretation.** Lean proves: `IsZero ↔ initial ∧ terminal`
@@ -95,10 +95,18 @@ theorem isZero_iff_isInitial_and_isTerminal {X : C} :
   · rintro ⟨⟨hi⟩, ⟨ht⟩⟩
     exact isZero_of_isInitial_isTerminal hi ht
 
-/-- **Keystone at the seam node #5.** The Hilbert bottom `fD_functor.obj 0` is a zero object **iff**
-    it is both initial and terminal (the general keystone, specialized), and both sides in fact hold
-    (it *is* a zero object, by `ZPH_MC1_TreeSeam.hilbert_bottom_isZero`). So the seam is literally the
-    μ=ν coincidence point. -/
+/-- **Keystone at the seam node #5.** `Statement:` **COINCIDENCE** — the Hilbert bottom
+    `fD_functor.obj 0` is a zero object **iff** it is both initial and terminal (the general keystone,
+    specialized), and both sides in fact hold (it *is* a zero object, by `hilbert_bottom_isZero`).
+    Initial **and** terminal hold of the *same* object, and the biconditional plus the witness are both
+    in the statement below — two opposite universal properties meeting at one object, proved rather
+    than asserted.
+
+    `Reading:` **COINCIDENCE** — identifying that meeting-point with the framework's *μ=ν seam* (the
+    diagonal-fixed-point keystone) is the framework's interpretation, not a Lean claim; the cross-face
+    identification stays a type boundary. *(Tagged 2026-08-02. This claim was invisible to
+    `check_pov.py` while its citation carried a dead pre-reorg namespace prefix — the second instance
+    today of a dead citation hiding a claim from a checker that keys on citations.)* -/
 theorem seam_is_mu_nu_coincidence_SeamCoincidence :
     (IsZero (ZeroParadox.fD_functor.obj 0)
       ↔ Nonempty (IsInitial (ZeroParadox.fD_functor.obj 0))

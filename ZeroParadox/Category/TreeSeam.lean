@@ -36,7 +36,7 @@ on one side:
 - `kleisli_bottom_not_terminal` — #4 `fC_functor.obj 0 = Fin 0` is **initial but NOT terminal** (a
   terminal object would need a morphism *into* it from every object, but `fC_no_return` proves the
   hom-set from any nonempty object into `Fin 0` is empty). So #4 is strictly on the μ side.
-- (#3, the p-adic floor, is strictly on the ν side: `ZPH_MC1_TreeObstructions.padic_bottom_not_initial`
+- (#3, the p-adic floor, is strictly on the ν side: `padic_bottom_not_initial`
   — not initial.)
 
 So the μ/ν fork is genuinely populated: #4 strictly μ, #3 strictly ν, #5 the (among-these-three) seam

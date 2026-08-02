@@ -10,7 +10,7 @@ set_option maxHeartbeats 400000
 # TC07 — Is the proof-theory bottom canonical across the depth campaign?
 
 **Node under test:** #1, the proof-theory floor. Three independence/termination results in the campaign
-each "descend": Goodstein (`ZPP_Goodstein.goodstein_terminates`), Kirby–Paris (`ZPP_KirbyParis`), and
+each "descend": Goodstein (`goodstein_terminates`), Kirby–Paris (`ZPP_KirbyParis`), and
 Kruskal (`ZPP_Kruskal`). The campaign claim (TH7) is that all three "descend to the SAME ordinal floor
 `0`."
 

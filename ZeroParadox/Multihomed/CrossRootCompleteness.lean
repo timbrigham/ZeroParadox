@@ -51,7 +51,7 @@ clash as E4, instantiated for #3:
 
 The Hilbert seam `#5 = StateSpace 0` is a **zero object** of `ModuleCat ℂ` — in particular it is
 **initial**. The p-adic floor `{0} ⊆ Q₂` is a **limit / terminal-flavoured** object and is provably
-**not initial** in `TopCat` (`ZPH_MC1_TreeObstructions.padic_bottom_not_initial`). The separator is the
+**not initial** in `TopCat` (`padic_bottom_not_initial`). The separator is the
 categorical-polarity clash:
 
 - `seam_initial_padic_not_initial` — `#5` is initial in `ModuleCat ℂ` **and** `#3`'s one-point space is *not*

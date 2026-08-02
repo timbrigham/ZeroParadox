@@ -69,8 +69,9 @@ coincidence is in the statement, not assembled from two prior witnesses.
 `Reading:` **COINCIDENCE** — "this seam IS the diagonal fixed point / the same seam as the Hilbert zero
 object #5 / a Lambek collapse" is the framework's interpretation of that pattern, not a Lean claim, and
 the cross-face identification stays a type boundary. *(Tagged 2026-08-01. The claim was untagged and
-invisible to `check_pov.py` because the citation carried a dead namespace prefix,
-`ZPP_Coalgebra.categorical_fork_strict`; removing the dead prefix exposed it.)*
+invisible to `check_pov.py` for as long as the citation carried a dead pre-reorg namespace prefix —
+the checker keys on declaration citations and did not recognise the qualified form. Removing the dead
+prefix exposed it. **A dead citation can hide a claim from a checker that keys on citations.**)*
 
 In particular the order-theoretic least=greatest here
 is NOT the same statement as the categorical initial=terminal of the zero object — they are parallel
@@ -129,7 +130,7 @@ theorem bot_is_greatest_fixed_point (x : L) (hx : isFixedPt x) : x ≼ (bot : L)
     every fixed point `x` — the μ side) and the **greatest** fixed point (`x ≼ bot` for every fixed
     point `x` — the ν side). The two extremal comparisons against an arbitrary fixed point are both IN
     the statement; their conjunction is precisely the μ=ν coincidence. This places the selfApp fixed
-    point at the same fork position as the Hilbert zero object #5 (`ZPH_MC1_TreeSeam.hilbert_bottom_isZero`),
+    point at the same fork position as the Hilbert zero object #5 (`hilbert_bottom_isZero`),
     the order-theoretic face of the seam. -/
 theorem selfApp_fixed_point_is_seam :
     isFixedPt (bot : L)

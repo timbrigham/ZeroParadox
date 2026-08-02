@@ -24,7 +24,7 @@ This is a single go/no-go cycle on the placement of node #2 (the Markov-dynamica
 stationary distribution in the probability simplex) in the bottom-diagram μ/ν tree.
 
 **The pre-registered question.** The order ambient blocks #2 from any universal property: the simplex
-is a coordinate-order antichain (`ZPH_MC1_TreeObstructions.simplex_antichain`), so the stationary
+is a coordinate-order antichain (`simplex_antichain`), so the stationary
 point is neither order-least (μ) nor order-greatest (ν). TC20 asked whether *changing the ambient*
 from the order to the **dynamics** rescues a universal property: the stationary distribution is a
 *fixed point* of the Kleisli transfer action `μ ↦ μ.bind f`, and a **unique** fixed point of an

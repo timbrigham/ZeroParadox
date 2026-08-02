@@ -24,7 +24,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 This file sharpens the E4 / TC04 cross-root obstruction between the **proof-theory floor** (#1, the
 base of a well-founded order — `0 : Ordinal`) and the **Markov-dynamical attractor** (#2, the
 stationary point in the probability simplex, whose carrier ℝ is genuinely non-well-founded via
-`ZPH_MC1_TreeObstructions.real_carrier_not_wellFounded`).
+`real_carrier_not_wellFounded`).
 
 `no_strictMono_real_to_ordinal` (E4) already proved there is **no direct** order map ℝ → Ordinal.
 TC19 asks the strictly stronger question the framework's own G-construction would face: is the wall
