@@ -27,9 +27,11 @@ defer to my AI assistant regarding the specifics of how the internals work.
 Builds the **p-adic additive characters** on `ℤ_p` that the Vladimirov operator's genuine eigenfunctions
 (Kozyrev wavelets) are made from — without constructing the full `ℚ_p` Fourier transform. The key
 observation: the Kozyrev-relevant character `χ_p(p⁻ⁿ · x)` restricted to `ℤ_p` is exactly
-`φ ∘ toZModPow n`, where `toZModPow n : ℤ_p →+* ZMod(pⁿ)` is the residue map (built in
-`PadicHaar`) and `φ` is an additive character of the *finite* group `ZMod(pⁿ)`. So the character
-factors through the finite quotient, sidestepping the `ℚ_p` fractional part.
+`φ ∘ toZModPow n`, where `toZModPow n : ℤ_p →+* ZMod(pⁿ)` is **Mathlib's** `PadicInt.toZModPow`
+(`Mathlib/NumberTheory/Padics/RingHoms.lean`) — the residue map, whose surjectivity and kernel are
+*used* in `ZeroParadox/Valuation/PadicHaar.lean`, which does not define it — and `φ` is an additive
+character of the *finite* group `ZMod(pⁿ)`. So the character factors through the finite quotient,
+sidestepping the `ℚ_p` fractional part.
 
 The headline is the **orthogonality integral** `∫_{ℤ_p} χ dHaar = 0` for a nontrivial character `χ` —
 the Fourier-free fact that makes characters an orthogonal system and that the Kozyrev eigenfunction

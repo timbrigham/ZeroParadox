@@ -40,10 +40,21 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
   ν are GENUINELY DISTINCT TYPES and the equivalence is a nontrivial construction.
 
 * **Lattice selfApp seam** (`latticeSeam`): the fixed-point set is the singleton `{⊥}`
-  (`selfApp_fp_set_eq_singleton_bot`), and *Statement:* **COINCIDENCE** — ⊥ is both least and
-  greatest fixed point simultaneously, one object under two readings
-  (`selfApp_bot_is_both_extremal`, `ZeroParadox/Multihomed/SelfAppSeam.lean`). Not an INVERSION:
-  no map exchanges the two, and there is nothing here for an involution to swap. To make this an instance of `SeamSchema` the μ-carrier and the
+  (`selfApp_fp_set_eq_singleton_bot`).
+
+  *Statement:* **COINCIDENCE** — ⊥ is least fixed point AND greatest fixed point simultaneously,
+  one object under two readings (`selfApp_bot_is_both_extremal`,
+  `ZeroParadox/Multihomed/SelfAppSeam.lean`, a conjunction of the two bounds).
+
+  *Reading:* **INVERSION** — order-duality exchanges the *least* and *greatest* characterizations
+  while fixing ⊥ itself. Not witnessed here; no Lean statement in this corpus asserts it.
+  **Both KINDs belong to this object, and either alone mischaracterises it** — the same shape as
+  `catseam_is_frameflip`, where being self-dual is precisely what makes two labels necessary.
+  *(Corrected 2026-08-02: this carried "Not an INVERSION — nothing here for an involution to swap",
+  which is a denial the convention has no slot for, and is very likely false, since order-duality is
+  exactly such an exchanging map.)*
+
+  To make this an instance of `SeamSchema` the μ-carrier and the
   ν-carrier must BOTH be taken to be the same object — the fixed-point subtype `{x // selfApp x = x}` —
   and the seam witness is `Equiv.refl`. There is no pair of distinct carriers to relate: "least = greatest"
   collapses them to one type before the schema is even applied.

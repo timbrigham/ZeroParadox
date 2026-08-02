@@ -396,7 +396,7 @@ Neither says the framework's overall use of choice is essential, and neither is 
 -- the restriction says it does not have to be *there*. Together they localize the classical content
 -- rather than obstruct it: they say where it lives and how far it reaches.
 -- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
--- has never been measured, so "the restriction covers what we need" is unverified in general — and a
+-- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
 -- universal over every carrier would be the sentence shape this file's own § "No count" warns about.
 -- The two `#check`ed declarations are what is established; the reach is not.
 #check @ZeroParadox.fixedPointFree_of_nontrivial_decidable

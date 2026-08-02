@@ -179,7 +179,8 @@ the diagonal point. That much is the theorem below.
 
 **Block conclusion (2026-06-25) — a reasoned judgement, NOT a theorem, and there is no witness for
 it.** The only data common to both is "a self-map plus two elements" with no shared non-trivial
-axiom, so a single non-vacuous lightweight typeclass over both forks appears not to exist. This is a
+axiom, so a single non-vacuous lightweight typeclass over both forks appears not to exist; none
+was located as of 2026-08-02. This is a
 universal negative over all possible typeclasses; nothing in Lean states it, and
 `fixed_pole_forces_collapse` does **not** — it proves the narrow implication in its own signature.
 *(The label was dropped when this § was promoted on 2026-08-02, and `Wall.lean`'s NO-GO table
@@ -228,8 +229,8 @@ algebra), and the standard fix for the monotone/involutive clash is an order-**r
 (De Morgan negation, orthocomplementation) — a sharper diagnosis than "no shared axiom", and the
 direction to look if this is ever revisited. **Attribution, stated honestly:** this lineage is taken
 from San Martín, *Kleene algebras with implication* (slides, UNLP/CONICET, September 2016,
-slide 2), which is the source actually read; it credits
-Kalman 1958 and Cignoli 1986, **neither of which has been opened here**. Cite San Martín for the
+slide 2), which is the source actually read; **the deck** credits
+Kalman 1958 (slide 3) and Cignoli 1986 (slide 5), **neither of which has been opened here**. Cite San Martín for the
 lineage, or read the originals before citing them directly. Searched 2026-08-02: no prior art located
 for the bare `InvolutiveFork` abstraction standing alone, nor for the μ/ν-versus-2-cycle contrast.
 

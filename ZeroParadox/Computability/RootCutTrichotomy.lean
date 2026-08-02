@@ -23,8 +23,12 @@ defer to my AI assistant regarding the specifics of how the internals work.
 Earlier tree tests (`ZeroParadox/Category/RootCutDegeneracy.lean` and `ZeroParadox/Category/RootCutBinary.lean`) separated polynomial-functor bottoms into a **dichotomy** by whether
 the functor has a recursive position: a leaf-free functor with no recursive position is a *seam*
 (`Fix ≃ Cofix`), one with a recursive position but no leaf is *strict* (`Fix` empty, `Cofix`
-inhabited). Both of those tests used **leaf-free** functors — the head set was all-or-nothing on
-recursive positions.
+inhabited). **Neither of those tests varied the leaf independently** — the head set was
+all-or-nothing on recursive positions: `constPF A = ⟨A, fun _ => PEmpty⟩` is **all-leaf** with no
+recursive position, while `idPF_Coalgebra` and `binPF` are leaf-free with one and two. *(This
+sentence read "Both of those tests used **leaf-free** functors", which is false of `constPF`;
+corrected 2026-08-02. The load-bearing half — all-or-nothing on recursive positions — was accurate
+and is what the argument below uses.)*
 
 This file introduces the **mixed** functor — one node type carrying a leaf (no recursive position)
 and another carrying a recursive position — and shows it realizes a **third** root-cut regime, so the

@@ -63,8 +63,8 @@ crossing is one named map rather than a diffuse correspondence.
 
 **What that measurement does and does not license.** It locates where the classical assumption is paid
 on this pair of carriers. It does **not** show that Mathlib's ε₀ results are eliminable — that would
-require re-proving them, on this carrier, and no such re-proof exists here or anywhere in this
-repository. This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.lean` records. The honest
+require re-proving them, on this carrier, and no such re-proof was present in this
+repository as of 2026-08-02. This is the same limit `ZeroParadox/Ordinal/SyntacticCollapse.lean` records. The honest
 sentence remains: *the ε₀ results borrow a tool far stronger than they need.* Note also the standing
 caveat from `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean` — `Classical.choice` sits in
 `Ordinal`'s order *instance term*, so a choice footprint on any `Ordinal`-mentioning statement is

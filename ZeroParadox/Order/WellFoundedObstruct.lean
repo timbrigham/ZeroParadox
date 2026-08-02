@@ -75,7 +75,7 @@ What the Lean proves (load-bearing, in the statements):
 - `ReachesFloorInFiniteTime` — **a single formal predicate** on a generic orbit `orbit : ℕ → α` into
   a type with a `Zero`: `∃ N, ∀ k ≥ N, orbit k = 0`. The one definition both ambients are compared
   under.
-- `padic_orbit_not_reaches_floor` — the p-adic ν-orbit `2ⁿ·x` (`x ≠ 0`) **satisfies the negation**
+- `padic_orbit_not_reaches_floor` — the 2-adic ν-orbit `2ⁿ·x` (`x ≠ 0`) **satisfies the negation**
   `¬ ReachesFloorInFiniteTime`.
 - `floor_reach_separates_mu_nu` — the capstone: the μ orbit satisfies `ReachesFloorInFiniteTime` while the
   ν orbit both **converges to the floor** (`Tendsto … (nhds 0)`, imported from `ZeroParadox/Valuation/PadicAttractor.lean`'s

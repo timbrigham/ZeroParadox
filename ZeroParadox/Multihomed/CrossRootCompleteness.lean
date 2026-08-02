@@ -11,7 +11,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# #1↔#3 and #5↔#3
+# Cross-root completeness: the #1↔#3 and #5↔#3 edges
 
 ## Engineer's Take
 
