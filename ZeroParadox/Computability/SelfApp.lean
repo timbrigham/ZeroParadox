@@ -44,10 +44,10 @@ Both domains are formally instances of the same abstract pattern.
 ## What ZPJ_Scale and ZPJ_ScaleBridge resolved
 
 The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap
-was defined in lean as ValuationStructure. ZPJ_Scale derives the
+was defined in ZeroParadox/Valuation/Scale.lean as ValuationStructure. ZPJ_Scale derives the
 unique-fixed-point chain without AFA import:
   ValuationStructure → scale_ne_fixed → AbstractSelfApp (unique_fp as theorem)
-lean further extends this: ValBridge drops the ZPSemilattice
+ZeroParadox/Valuation/ScaleBridge.lean further extends this: ValBridge drops the ZPSemilattice
 constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
 of a common ancestor. The formal gap described here is closed.
 -/

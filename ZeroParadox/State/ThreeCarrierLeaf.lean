@@ -29,9 +29,22 @@ nothing structural about the p-adic, simplex, or Hilbert objects: every result i
 single fact that the carriers are *one-point spaces*. It is **not** a strengthening of TC19's claim
 about the #3/#2 leaves.
 
-**Why TC29 is a separate node and not pure duplication of TC19.** TC19 (`ZeroParadox/Multihomed/WallSpanRobust.lean`) covers
-exactly the two ν-bottom leaves #3 (p-adic floor `↥({0} : Set Q₂)`) and #2 (`Fin 1` stationary point
-`↥(stdSimplex ℝ (Fin 1))`). TC29 **adds the #5 Hilbert seam carrier** `StateSpace 0 =
+**Why TC29 is a separate node and not pure duplication of TC19.** The prior node covers exactly the two
+ν-bottom leaves #3 (p-adic floor `↥({0} : Set Q₂)`) and #2 (`Fin 1` stationary point
+`↥(stdSimplex ℝ (Fin 1))`).
+
+**⚠ THE "TC19" LABEL IS CONTESTED — do not rely on it until reconciled (flagged 2026-08-01).** The
+citation here was a dangling pre-reorg basename and was repointed to
+`ZeroParadox/Multihomed/WallSpanRobust.lean` on the authority of `ZeroParadox/MANIFEST.md:291`, which
+maps TC19 there. **But that file's own header says TC19 is "#1 vs #2"** — the proof-theory floor
+(`0 : Ordinal`) against the Markov attractor — which is *not* the #3/#2 pair this paragraph describes.
+`ZeroParadox/MANIFEST.md:238` meanwhile describes "TC19's #3/#2", agreeing with this paragraph and
+contradicting the file. So either the manifest's mapping is wrong, or two distinct nodes carry the
+label. The #3/#2 content described here is real and is covered by the within-ν edge nodes
+(`ZeroParadox/Valuation/NuRateEdge.lean`, `ZeroParadox/Valuation/NuRateMatch.lean`); the TC19 *number*
+is what is unreliable. **A resolving citation is not a verified one** — this repoint turned a
+self-announcing dead link into a live link wrapped around a description the target does not support,
+which is strictly harder to notice. TC29 **adds the #5 Hilbert seam carrier** `StateSpace 0 =
 EuclideanSpace ℂ (Fin 0)` to the leaf-reconciliation set and witnesses the three-way reconciliation
 **in the capstone statement** (`nu_leaf_glue_three`). The #5 carrier is load-bearing in that statement
 — it is not a conjunction of facts TC19 already proves. So TC29's tree contribution is the *edge to the

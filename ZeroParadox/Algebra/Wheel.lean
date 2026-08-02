@@ -33,7 +33,7 @@ a defined first-class operation. The resulting structure has two special element
   - `∞ = /0`       — the multiplicative inverse of zero
   - `⊥ₗ = 0 · /0`  — the absorbing "undefined" element
 
-**The ZP Conjecture (see §VIII — construction now formalized in `lean`):**
+**The ZP Conjecture (see §VIII — construction now formalized in `ZeroParadox/Algebra/WheelFrac.lean`):**
 The wheel axioms for /0 are derivable from ring structure rather than independently
 assumed, with the porthole (`val(⊥) = ∞` and `⊥ = {⊥}`) pinning the special element —
 making wheel theory the algebraic representation of the porthole rather than a coincidence.
@@ -57,11 +57,11 @@ This file:
   § VI.  Connection to ValuationStructure: val(⊥) = ∞ ↔ /0 = ∞ (proved)
   § VII.  WheelValuationStructure: the algebraic bridge (typeclass)
   § VII-b. NO-GO gauge: the class is degenerately inhabited; nondegeneracy as an explicit predicate
-  § VIII. Main conjecture: resolved (construction formalized in `lean`)
+  § VIII. Main conjecture: resolved (construction formalized in `ZeroParadox/Algebra/WheelFrac.lean`)
   § IX.   Purity check
 
 Status: Sorry-free. §VIII is now a documentation anchor with no theorem object; the
-construction it points to is proved in `lean` — `instWheel` shows
+construction it points to is proved in `ZeroParadox/Algebra/WheelFrac.lean` — `instWheel` shows
 the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and
 multiplicative submonoid `S` (sorry-free, `Classical.choice`-free, `[propext, Quot.sound]`).
 §VII defines WheelValuationStructure — the typeclass identifying the bridge: a commutative
@@ -446,13 +446,19 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
       - winv([a, b]) = [b, a]    — involution is pair-swap
       - wmul([a,b],[c,d]) = [a·c, b·d] — inherited from ring multiplication
     The wheel axioms (Carlström Def 1.1) follow from the ring axioms on L plus the submonoid structure of S.
-    This construction is now formalized in `lean` (`instWheel`) — the
+    This construction is now formalized in `ZeroParadox/Algebra/WheelFrac.lean` (`instWheel`) — the
     Tier 3 result of the porthole conjecture (§VIII). -/
--- [ZP-CUSTOM] weakens: Mathlib `AddValuation A ℕ∞` (RingTheory/Valuation/Basic.lean) | reason:
--- strictly WEAKER — it drops `map_one'` AND the ultrametric `map_add_le_max'`, so it is not a reduct
--- by one axiom and `AddValuation` cannot simply be substituted. See the PRIOR ART block above for the
--- separating witness. Kept as a named handle for the wheel bridge. (The tag read "no Mathlib analog"
--- until 2026-08-01, and then "same three fields minus `map_one`" for one revision; both were false.
+-- [ZP-CUSTOM] incomparable with: Mathlib `AddValuation A ℕ∞` (RingTheory/Valuation/Basic.lean) | reason:
+-- INCOMPARABLE, not ordered — it drops `map_one'` AND the ultrametric `map_add_le_max'`, so it is not a
+-- reduct by one axiom; but `AddValuation` needs only `[Ring R]` (Basic.lean:1070) while this class
+-- `extends CommRing`, so neither implies the other and `AddValuation` cannot simply be substituted.
+-- The weakening holds only for the valuation conditions over a fixed commutative carrier. See the
+-- PRIOR ART block above for the separating witness. Kept as a named handle for the wheel bridge.
+-- (The tag read "no Mathlib analog" until 2026-08-01, then "same three fields minus `map_one`" for one
+-- revision, then "strictly WEAKER" — all three false. The last survived 32 lines below the block that
+-- forbids the phrase, in the same file, in the same commit that wrote the prohibition; two gates
+-- caught it independently. This tag is the grep target the public registry mirrors, so a stale tag
+-- silently contradicts a corrected registry.
 -- Note `AddValuation.supp` is NOT available here — its `add_mem'` uses `v.map_add`, which this class
 -- does not have — so do not describe `WVSNondegenerate` in terms of `supp`. It is also NOT
 -- `Valuation.IsNontrivial` (`∃ x, v x ≠ 0 ∧ v x ≠ 1`, two conjuncts, strictly stronger).)
@@ -538,7 +544,7 @@ rather than asserted here. (`WVSNondegenerate` is a `def`, so it carries no foot
 /-! ### Resolution
 
 This section is a documentation anchor only — there is no theorem object here. The conjecture
-that the ZP porthole forces the wheel axioms is now a theorem, formalized in `lean`
+that the ZP porthole forces the wheel axioms is now a theorem, formalized in `ZeroParadox/Algebra/WheelFrac.lean`
 (which cannot be imported here without an import cycle, hence the prose pointer rather than a
 re-export).
 
@@ -572,7 +578,7 @@ commutative ring is vacuous. The working results below take `[CommRing A]` and a
 multiplicative submonoid instead, and do not route through this class. A construction that
 genuinely needs a porthole valuation must assume `WVSNondegenerate` explicitly.
 
-**The construction, formalized:** see `lean`.
+**The construction, formalized:** see `ZeroParadox/Algebra/WheelFrac.lean`.
 `instWheel` proves that the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel`
 for any commutative ring `A` and multiplicative submonoid `S` — sorry-free and
 `Classical.choice`-free (`[propext, Quot.sound]`). The porthole `∞ ≠ ⊥` is

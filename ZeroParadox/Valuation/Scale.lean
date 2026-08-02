@@ -40,7 +40,7 @@ AFA content is derived from the valuation structure — not imported from Aczel.
 
 The ZPSemilattice constraint was an encoding artefact: ValuationStructure required
 [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms.
-lean resolves this by defining ValBridge — the same four axioms
+ZeroParadox/Valuation/ScaleBridge.lean resolves this by defining ValBridge — the same four axioms
 with bot as a plain field — and builds a formal ℤ_[2] instance using the standalone
 theorems in §V below. A toValBridge instance makes any ZPSemilattice+ValuationStructure
 type also a ValBridge instance, unifying both tracks under a common ancestor.

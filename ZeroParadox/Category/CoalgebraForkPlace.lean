@@ -20,7 +20,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 This file is one go/no-go cycle of the bottom-diagram tree campaign
 (`thread_obstruction_table_2026-06-29.md`). The node under test is the **ZP-P coalgebra fork**
-(`lean`): the W-type `QPF.Fix F` and the M-type `QPF.Cofix F`. The pre-registered
+(`ZeroParadox/Settheory/Coalgebra.lean`): the W-type `QPF.Fix F` and the M-type `QPF.Cofix F`. The pre-registered
 **CLAIM** is that this fork *places consistently on the μ/ν root* — the W-type sits on the
 **μ-side** (the least-fixed-point / inductive / well-founded carrier, with a recursor *out of* it)
 and the M-type on the **ν-side** (the greatest-fixed-point / coinductive / non-well-founded carrier,

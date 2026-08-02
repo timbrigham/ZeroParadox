@@ -148,13 +148,13 @@ theorem witnessSet_isLowerSet {β : Type u} :
 The `HasWitnessRel` topology above is axis 1: the admissible map-class M *within* a fixed category
 (raw functions, raw equality). The genuine NONTRIVIAL floor lives one axis out — in the **effective
 category**, where "endomap" means computable and "equality" means eval-equality. There the Cantor
-obstruction lifts, and the diagonal genuinely closes: Kleene's second recursion theorem. This is the
+obstruction lifts, and the diagonal genuinely closes: Rogers' fixed-point / Kleene's recursion theorem. This is the
 recognized **effective-topos / Turing-category** setting (Lawvere 1969; Hyland 1982, "The effective
 topos"; Cockett–Hofstra 2008, "Introduction to Turing categories"; van Oosten). Located and cited here,
 NOT claimed — the framework joins that program. -/
 
 /-- **Axis-2 genuine floor.** Every *computable* self-map on codes has an eval-fixed point — Kleene's
-    second recursion theorem (`computability_face_fixedPoint` = Mathlib `Nat.Partrec.Code.fixed_point`).
+    Rogers' fixed-point theorem (`computability_face_fixedPoint` = Mathlib `Nat.Partrec.Code.fixed_point`; Mathlib reserves `Kleene's second recursion theorem` for `fixed_point₂`).
     The fine end of axis 2. -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ∃ c, Nat.Partrec.Code.eval (g c) = Nat.Partrec.Code.eval c :=

@@ -174,20 +174,30 @@ theorem r_snap_impossible : ¬∃ ε₀ : ℝ, 0 < ε₀ ∧ ¬∃ δ : ℝ, 0 <
 
 end Reals
 
-/-! ## Classification Note: Archimedean Fields and the Snap
+/-! ## Classification Note: Ordered Fields and the Snap
 
 The results above establish that the Binary Snap cannot occur in any
-LinearOrderedField. The underlying reason is the Archimedean property:
-in any ordered field where halving is always available, no minimal positive
-element exists — there is no "first step" from zero.
+LinearOrderedField. **The underlying reason is DENSITY, not the Archimedean property:**
+in any ordered field halving is available, so between 0 and any positive x there is
+something smaller — there is no "first step" from zero. Neither theorem below has an
+Archimedean hypothesis, and none is needed.
+
+*(Corrected 2026-08-01. This section was headed "Archimedean Fields and the Snap" and said
+"the underlying reason is the Archimedean property". That is false: a non-Archimedean ordered
+field such as ℝ(t) is still **dense**, so the snap is blocked there too. Being Archimedean is
+not what does the work; being an ordered field is. The struck claim survived here for months
+after the same wording was corrected in `ZeroParadox/Valuation/Padic.lean` — an adversary gate
+found it by grepping the CLAIM rather than the file.)*
 
 **ZP-F / ZP-B Classification (Ostrowski's theorem):**
 
-- Archimedean fields (ℝ, ℚ, any field with a compatible linear order): the snap is
-  **impossible** — proved in this file by two distinct theorems, `f_snap_impossible` and
-  `axb1_fails_in_ordered_field`: the same fact reached by hand and via `CovBy`, with distinct
-  statements. They are **not** the same declaration and no equation between them is asserted.
-- Non-Archimedean (ℚ₂): the snap is **not blocked**, which is a strictly weaker statement.
+- **Ordered fields** (ℝ, ℚ, and equally the non-Archimedean ones like ℝ(t)): the snap is
+  **impossible** — proved in this file by two distinct theorems, `f_snap_impossible` (by halving)
+  and `axb1_fails_in_ordered_field` (via density and `CovBy`): the same fact reached two ways,
+  with distinct statements. They are **not** the same declaration and no equation between them is
+  asserted.
+- Non-Archimedean **and not an ordered field** (ℚ₂ — the p-adics admit no compatible order): the
+  snap is **not blocked**, which is a strictly weaker statement than being forced.
 
 **ZP-B does NOT force the snap, and cannot.** What it proves is topological: the gap at 0 is
 clopen (`t3_isolation`) and the return across it admits no continuous path (`c3_irreversible`,
@@ -199,8 +209,12 @@ in § 0 above, not a consequence of the 2-adic structure.
 
 So the classification is a statement about where the snap is RULED OUT. Ostrowski's theorem
 (see `ZeroParadox/Valuation/Ostrowski.lean` for the framework's own statement of it) separates
-the Archimedean completions of ℚ from the non-Archimedean ones; ZP-F rules the snap out on the
-Archimedean side, and ZP-B removes the topological obstruction on the other. That the snap
+the Archimedean completions of ℚ from the non-Archimedean ones; **ZP-F rules the snap out in every
+ordered field** — which is what this file actually proves, and is wider than the Archimedean
+completion — and ZP-B removes the topological obstruction in ℚ₂. *(Corrected 2026-08-01: this read
+"ZP-F rules the snap out on the Archimedean side", the same phrase struck in
+`ZeroParadox/Valuation/Padic.lean`; it understates the theorem, which needs no Archimedean
+hypothesis.)* That the snap
 actually occurs there is carried by AX-B1 together with the framework's commitments, never by
 C3 or T5 alone.
 

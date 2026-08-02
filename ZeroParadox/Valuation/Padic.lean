@@ -272,12 +272,17 @@ answers here for months; `OrderedField.lean` is the one that reasoned it through
 
 **ZP-B / ZP-F Classification (Ostrowski's theorem):**
 
-Ostrowski's theorem is about **absolute values on ℚ, classified up to equivalence**. Mathlib states
-it as *"every absolute value on `ℚ` is equivalent to either a `p`-adic absolute value or to the
-standard Archimedean (Euclidean) absolute value"*
-(`Mathlib/NumberTheory/Ostrowski.lean`, `Rat.AbsoluteValue.equiv_real_or_padic`). The framework's own
-instance of it is `ZeroParadox/Valuation/Ostrowski.lean`'s `completions_exhaustive` — cite that rather
-than restating the theorem.
+Ostrowski's theorem is about **absolute values on ℚ, classified up to equivalence**: every
+**nontrivial** absolute value on ℚ is equivalent to either a p-adic absolute value or to the standard
+Archimedean (Euclidean) one (`Mathlib/NumberTheory/Ostrowski.lean`,
+`Rat.AbsoluteValue.equiv_real_or_padic`). The framework's own instance is
+`ZeroParadox/Valuation/Ostrowski.lean`'s `completions_exhaustive` — cite that rather than restating
+the theorem.
+
+*(Nontriviality is load-bearing and is stated here deliberately. Mathlib's module **docstring** elides
+it, but the declaration takes `hf_nontriv : f.IsNontrivial` and `completions_exhaustive` carries it as
+`(hf : f.IsNontrivial)`. Quoting the docstring verbatim would reproduce the elision — corrected
+2026-08-01 after a gate caught it.)*
 
 *(Corrected 2026-08-01. This paragraph previously read: "every complete valued field extending ℚ is
 either Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p)." That is
@@ -297,12 +302,25 @@ fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density
 no closest nonzero element, so it does not yield the step.)
 
 **What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
-(`ZeroParadox/Reals/OrderedField.lean:137`) is stated over an **arbitrary ordered field** and proved
-from **density** (`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy`); it carries **no
-Archimedean hypothesis**. So what it gives by contraposition is *a first step exists ⟹ the carrier is
-not an ordered field at all* — a different and stronger shape than "⟹ non-Archimedean", which does not
-follow from it. *(Corrected 2026-08-01: this paragraph previously cited `f_snap_impossible` as holding
-"on the Archimedean side", which mis-scopes a theorem that covers every ordered field.)*
+(`ZeroParadox/Reals/OrderedField.lean:137`) is stated over an **arbitrary ordered field**
+(`[Field F] [LinearOrder F] [IsStrictOrderedRing F]`) and carries **no Archimedean hypothesis**. It is
+proved by **halving**, via `f_snap_blocked`. So what it gives by contraposition is *a first step exists
+⟹ the carrier is not an ordered field at all*.
+
+That is a **different** shape from "⟹ non-Archimedean", and the two are **incomparable** — neither
+implies the other. ℝ(t) with a compatible order is non-Archimedean and still an ordered field (so it is
+covered by `f_snap_impossible` but not by an Archimedean hypothesis); ℂ is not orderable at all. Do not
+call either one stronger.
+
+*(Two corrections, both 2026-08-01, both caught by gates rather than by me. (i) This paragraph once
+cited `f_snap_impossible` as holding "on the Archimedean side", mis-scoping a theorem that covers every
+ordered field. (ii) The fix for (i) then attributed the wrong proof route — "density
+(`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy`)" — which is the route of
+`axb1_fails_in_ordered_field` four lines further down, whose own docstring says it is proved through
+Mathlib **rather than** through `f_snap_impossible`. A wrong reason under a true conclusion breaks
+nothing downstream, which is exactly why it needed a gate to find. (iii) The same fix then called the
+converse a "stronger shape", re-committing the ordering error this very push corrects in
+`ZeroParadox/Algebra/Wheel.lean`.)*
 
 The ultrametric is not a technical convenience — it is the structural fact that
 the Archimedean property would erase. C3's irreversibility is Ostrowski's

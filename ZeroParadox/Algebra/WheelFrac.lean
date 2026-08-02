@@ -12,8 +12,8 @@ A ZP-J wheel sub-file. See the Engineer's Take in `ZeroParadox/Algebra/Wheel.lea
 ---
 
 Constructs the wheel of fractions of a commutative ring `A` with respect to a multiplicative
-submonoid `S`, with the goal of proving it is a `Wheel` (from `lean`). This turns the
-§VIII conjecture of `lean` into a theorem.
+submonoid `S`, with the goal of proving it is a `Wheel` (from `ZeroParadox/Algebra/Wheel.lean`). This turns the
+§VIII conjecture of `ZeroParadox/Algebra/Wheel.lean` into a theorem.
 
 Construction (Carlström, source-verified): `⊙_S A = (A × A) / ≡_S`, where
 
