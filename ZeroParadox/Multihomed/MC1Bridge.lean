@@ -40,7 +40,7 @@ Here the snap floor is realized inside the genuine Mathlib categories:
   (`fC_zero_isInitial`), and there is **no** stochastic map back into it (`fC_no_return`) — AX-G2
   realized as a theorem, the snap's irreversibility.
 
-(`F_A` — the join-semilattice ℕ with 0 initial — is already in `ZPH.lean`; it is omitted here only
+(`F_A` — the join-semilattice ℕ with 0 initial — is already in `ZeroParadox/Multihomed/CategoricalBridge.lean`; it is omitted here only
 to keep ℕ's category instance unambiguous, not for any mathematical reason.)
 
 **Prior art / positioning.** None of the categorical structure here is new. `KleisliCat PMF` is the

@@ -23,7 +23,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 This file runs the **sharper, pre-registered** test that the T2 cold audit explicitly demanded
-(`ZPH_MC1_TreeT2.lean` scope fence; `thread_obstruction_table_2026-06-29.md`). T2 only refuted a
+(`ZeroParadox/Multihomed/TreeT2.lean` scope fence; `thread_obstruction_table_2026-06-29.md`). T2 only refuted a
 **global ambient homeomorphism** between the Markov ν-system's ambient (`stdSimplex ℝ (Fin 2)`,
 connected) and the p-adic ν-system's ambient (`Q₂`, totally disconnected) — and the audit corrected
 that to OPEN because it is the *generic* connected-vs-totally-disconnected wall, not a statement about

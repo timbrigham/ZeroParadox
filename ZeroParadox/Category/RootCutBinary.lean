@@ -6,7 +6,7 @@ import ZeroParadox.Category.RootCutDegeneracy
 /-!
 # ZP-H MC-1 tree test TC32: the root cut is binary in arity, not graded
 
-This module sharpens the root-cut dichotomy of `ZPH_MC1_TC26.lean` into a statement about the
+This module sharpens the root-cut dichotomy of `ZeroParadox/Category/RootCutDegeneracy.lean` into a statement about the
 **number** of recursive positions. TC26 established the dichotomy on the two boundary cases:
 
 * `constPF A` — child type `PEmpty`, **zero** recursive positions: `Fix ≃ Cofix` (a seam);

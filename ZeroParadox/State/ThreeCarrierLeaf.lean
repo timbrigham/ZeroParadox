@@ -29,7 +29,7 @@ nothing structural about the p-adic, simplex, or Hilbert objects: every result i
 single fact that the carriers are *one-point spaces*. It is **not** a strengthening of TC19's claim
 about the #3/#2 leaves.
 
-**Why TC29 is a separate node and not pure duplication of TC19.** TC19 (`ZPH_MC1_TC19.lean`) covers
+**Why TC29 is a separate node and not pure duplication of TC19.** TC19 (`ZeroParadox/Multihomed/WallSpanRobust.lean`) covers
 exactly the two ν-bottom leaves #3 (p-adic floor `↥({0} : Set Q₂)`) and #2 (`Fin 1` stationary point
 `↥(stdSimplex ℝ (Fin 1))`). TC29 **adds the #5 Hilbert seam carrier** `StateSpace 0 =
 EuclideanSpace ℂ (Fin 0)` to the leaf-reconciliation set and witnesses the three-way reconciliation
