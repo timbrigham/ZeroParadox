@@ -58,7 +58,7 @@ section PurityCheck
 -- These inherit `Classical.choice` from Mathlib's classical analysis / number theory (Ostrowski).
 -- That is expected and honest: the number-system fork is an *analytic realization*, which carries
 -- choice — in contrast to the choice-free fork spine (`ZeroParadox.fork_collapse_iff`,
--- `[propext, Quot.sound]` only). Core choice-free; realizations choice-carrying. See AxiomProfile.lean.
+-- `[propext, Quot.sound]` only). Core choice-free; realizations choice-carrying. See `ZeroParadox/AxiomProfile.lean`.
 #print axioms completions_exhaustive
 #print axioms real_not_equiv_padic
 end PurityCheck

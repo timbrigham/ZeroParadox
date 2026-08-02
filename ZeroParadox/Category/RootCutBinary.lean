@@ -147,7 +147,8 @@ section PurityCheck
 -- construction needs only function extensionality, which Lean has; only their
 -- uniqueness half uses univalence. Veltri, FSCD 2021 is CONTRAST, not support: for the
 -- non-polynomial finite-powerset functor his results run the other way, certain
--- constructions REQUIRING choice).
+-- constructions there are obtained ASSUMING choice principles rather than shown to need them;
+-- his own preferred coinductive construction needs neither choice nor LLPO).
 #print axioms binFix_isEmpty
 #print axioms binCofix_nonempty
 #print axioms binPF_fork_strict

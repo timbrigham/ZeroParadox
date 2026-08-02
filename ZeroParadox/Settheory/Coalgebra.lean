@@ -40,7 +40,8 @@ functor the final coalgebra is constructible choice-free (Ahrens et al. — thei
 only function extensionality, which Lean has; only their uniqueness half uses univalence, see
 `ZeroParadox/Computability/ChoicePurityInvariant.lean`. Veltri is CONTRAST, not support: for the
 non-polynomial finite-powerset functor his results run the other way, certain constructions
-REQUIRING choice). See PurityCheck.
+obtained ASSUMING choice principles rather than shown to need them; his own
+preferred coinductive construction needs neither choice nor LLPO). See PurityCheck.
 -/
 
 namespace ZeroParadox
@@ -97,8 +98,9 @@ not a necessity — for a polynomial functor like `idPF_Coalgebra` the final coa
 in principle (Ahrens–Capriotti–Spadotti — their construction needs only function extensionality,
 which Lean has; only their uniqueness half uses univalence). Choice
 genuinely enters the μ/ν story only for the non-polynomial finite-powerset functor, where it is pinned
-per presentation: full AC for the set-quotient, countable choice + LLPO (⟺ injectivity of the canonical
-algebra) for Worrell's (ω+ω)-limit (Veltri, FSCD 2021).
+per presentation: full AC for the set-quotient, countable choice + LLPO for Worrell's (ω+ω)-limit
+(injectivity of the canonical algebra implies LLPO outright, and is equivalent to it under countable
+choice) (Veltri, FSCD 2021).
 -/
 
 section PurityCheck
@@ -110,14 +112,15 @@ section PurityCheck
 -- Classical.choice — but as a Mathlib artifact, NOT a necessity: for a polynomial functor like idPF_Coalgebra the
 -- final coalgebra (M-type) is constructible choice-free in principle (Ahrens–Capriotti–Spadotti,
 -- TLCA 2015, who build it as an ω-limit; the construction needs only funext, univalence entering
--- only at their uniqueness result). **For Lean's setting specifically, the closer citation is
--- Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)** — ACS themselves
--- point there (§1.1) for the M-types-from-W-types construction in the **Axiom-K** fragment, which is
--- where Lean lives; ACS generalize it "to the whole of HoTT". Citing ACS alone asserts a HoTT→Lean
--- transfer without a bridge. Choice genuinely enters the μ/ν story only for the
+-- only at their uniqueness result; Lean has funext). For Lean's Axiom-K setting the closer
+-- citation is **Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)**,
+-- which ACS themselves point at (§1.1) and generalize "to the whole of HoTT". **The full
+-- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.lean` —
+-- read it there, not here.** Choice genuinely enters the μ/ν story only for the
 -- non-polynomial finite-powerset functor — pinned per presentation: full AC for the set-quotient,
--- countable choice + LLPO (⟺ injectivity of alg_Vω) for Worrell's limit (Veltri). The fork spine
--- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See AxiomProfile.lean.
+-- countable choice + LLPO for Worrell's limit; injectivity of `alg_Vω` implies LLPO outright and is
+-- equivalent to it under countable choice (Veltri). The fork spine
+-- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See `ZeroParadox/AxiomProfile.lean`.
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty
 #print axioms categorical_fork_strict
@@ -133,7 +136,7 @@ section PurityCheck
    necessity — Ahrens–Capriotti–Spadotti, TLCA 2015 — so the discriminator is real but its structural
    status is fenced. **Do NOT cite Veltri here**: his subject is the finite-powerset functor, which is
    not polynomial, and he cites ACS for the polynomial case himself. He is apt only for the
-   finite-powerset claims below.) -/
+   finite-powerset claims above.) -/
 end PurityCheck
 
 end ZeroParadox
