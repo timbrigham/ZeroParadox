@@ -38,7 +38,7 @@ The self-referential content of that fold is here, and it is **a genuine typecla
   AbstractSelfApp End` holds: a self-map whose only fixed point is ⊥. Via `SelfApp.toAFAStructure`, `End`
   thereby also carries the AFA / Quine-atom structure.
 
-**The delta from ℚ₂ (the point of the exercise).** `SelfApp.lean:124-127` records that ℚ₂ — *a field, not a
+**The delta from ℚ₂ (the point of the exercise).** `ZeroParadox/Computability/SelfApp.lean` records (the note beginning "Q_[2] is a field, not a ZPSemilattice") that ℚ₂ — *a field, not a
 ZPSemilattice* — could NOT be an `AbstractSelfApp` instance; its ×2/0 fixed point is proved only as a
 standalone parallel. The tree boundary clears exactly that bar: it *is* a semilattice, so the same
 fixed-point fact is a **genuine instance**. Self-reference closing at the floor is not merely analogous to

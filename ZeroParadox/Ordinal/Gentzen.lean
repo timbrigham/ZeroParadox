@@ -96,7 +96,8 @@ such that eval (f c) = eval c. This is **Rogers' fixed-point theorem**: the fixe
 stable under any computable transformation. *(Corrected 2026-08-02: this read "Rogers' fixed-point
 theorem (Kleene's second recursion theorem)", equating the two. Mathlib splits them — `fixed_point` is
 Roger's fixed point theorem, `fixed_point₂` is Kleene's second recursion theorem
-(`Mathlib/Computability/PartrecCode.lean:36-37`, docstrings at `:1001` and `:1022`) — and the
+(`Mathlib/Computability/PartrecCode.lean`, the module index and the docstrings on `fixed_point` and
+`fixed_point₂`) — and the
 declaration below wraps the `fixed_point` route. They are inter-derivable, so this was naming rather
 than falsehood.)*
 
@@ -439,7 +440,7 @@ about WHERE the value changes, not that anything occurs:
 
 **⚠ CORRECTED 2026-07-31. This paragraph read "The computational side — that the snap MUST
 occur — is proved in ZPE (T-SNAP)", and that is FALSE.** T-SNAP constrains the *shape* of a
-transition, never that one occurs: `Order/Snap.lean:132-152` says so in its own NO-GO gauge and
+transition, never that one occurs: `ZeroParadox/Order/Snap.lean` says so in its own NO-GO gauge (the "T-SNAP constrains the SHAPE of a transition, not that one occurs" block) and
 makes it checkable with `tsnap_holds_but_nothing_moves`, a machine-checked model in which
 T-SNAP holds and **nothing moves** (`stuckPhase := id`). `t_snap_derived` is `⟨l_run, tq_ih,
 rfl⟩`, where `l_run` is `by decide` — it proves the two phases are distinct and that the join

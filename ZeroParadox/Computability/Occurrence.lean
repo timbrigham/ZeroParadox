@@ -150,7 +150,8 @@ better founded than a self-loop: **distinctness buys nothing; well-foundedness c
 
 `Reading:` the "cannot depart" family below is plausibly a one-relation shadow of coalgebraic
 well-foundedness (Osius 1974 → Taylor → Adámek–Milius–Moss). Taylor and AMM are already cited at
-`ZeroParadox/Multihomed/BoundaryBridge.lean:33-52`; the Osius attribution is AMM's own, at their
+`ZeroParadox/Multihomed/BoundaryBridge.lean` (§ "Scope fence — why this is NOT the full Taylor
+coalgebraic statement"); the Osius attribution is AMM's own, at their
 p. 11 and ref [26] (*J. Pure Appl. Algebra* 4, 1974). Rutten, *Universal coalgebra*,
 TCS 249 (2000) p. 16 states this file's subject in one line: in `N̄` with `pred`, `∞` *"only takes a
 step to itself and hence never terminates"*. -/

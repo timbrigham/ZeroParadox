@@ -157,7 +157,8 @@ theorem tsnap_holds_but_nothing_moves :
 
     **Scope — which slot ⊥ occupies changes the answer (Tim, 2026-07-31).** The statement is
     parametric in `x y`, holding at every comparable pair, and
-    `ZeroParadox/Valuation/IrreversibilityProbe.lean:34-36` grades it accordingly: *"just
+    `ZeroParadox/Valuation/IrreversibilityProbe.lean` (§ "Order face — forced in every model")
+    grades it accordingly: *"just
     antisymmetry — it holds in every model, so it is forced by the order axioms, not independent."*
     ⊥ can occupy either slot, and the two instances behave oppositely:
     * `y := ⊥` — `le x ⊥` and `x ≠ ⊥` cannot both hold, so this instance is **vacuous**. ⊥'s
