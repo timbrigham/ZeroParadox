@@ -81,7 +81,7 @@ theorem leaf_not_isZero : ¬ IsZero (fD_functor.obj 1) := by
     simp [hw] at hcoord
   exact hne (Subsingleton.elim _ _)
 
-/-- **TC38 NO-GO (load-bearing).** The seam `fD_functor.obj 0` (zero object) is NOT a colimit apex
+/-- **TC37 NO-GO (load-bearing).** The seam `fD_functor.obj 0` (zero object) is NOT a colimit apex
     over the two-object μ-side diagram `{fD_functor.obj 1, fD_functor.obj 1}`: no binary cofan over
     two copies of the nonzero leaf with apex the zero object is an `IsColimit`. The seam cannot be the
     coproduct of (transported) nonzero μ-bottoms. -/
@@ -118,7 +118,7 @@ noncomputable def seam_selfcoproduct_collapse :
   · intro T f g; exact hZ.eq_of_src _ _
   · intro T f g m _ _; exact hZ.eq_of_src _ _
 
-/-- The full TC38 result in one statement: the seam is a zero object, the transported μ-leaf is not,
+/-- The full TC37 result in one statement: the seam is a zero object, the transported μ-leaf is not,
     and consequently no zero-apex colimit cofan exists over two nonzero μ-leaves — while the
     self-collapse cofan over the zero object IS a colimit. The pair = "seam is not a μ-side coproduct
     connector, only a trivial self-cocone." -/

@@ -23,12 +23,12 @@ defer to my AI assistant regarding the specifics of how the internals work.
 This file runs one go/no-go cycle on the within-ν rate edge between bottom-diagram nodes #2 (the
 Markov stationary attractor, ν-dynamical) and #3 (the p-adic floor `{0} ⊆ Q₂`, ν-limit).
 
-**Background — the obstruction TC43 answers.** TC33 obstructed the #3↔#2 edge *at the rate level* by
+**Background — the obstruction TC40 answers.** TC33 obstructed the #3↔#2 edge *at the rate level* by
 comparing the p-adic GEOMETRIC orbit (distance `2^(-n)`) against an ABSORBING Markov orbit (distance
 identically `0`): geometric-vs-absorbing is a rate mismatch. TC39 then built a genuinely GEOMETRIC
 Markov attractor on `Fin 2 → ℝ`: the symmetric doubly-stochastic kernel `P_a` contracts the imbalance
 `v 0 - v 1` by the subdominant eigenvalue `1 - 2a` per step, so
-`imb (P_aᵏ v₀) = (1 - 2a)ᵏ · imb v₀` (`markov_imbalance_pow`). TC43 tests the natural
+`imb (P_aᵏ v₀) = (1 - 2a)ᵏ · imb v₀` (`markov_imbalance_pow`). TC40 tests the natural
 follow-up: **choose the spectral gap to match the p-adic rate.** Set `a = 1/4`, so `1 - 2a = 1/2`.
 Then the Markov imbalance decays as `(1/2)ᵏ` — the SAME geometric envelope TC36 showed bounds the
 p-adic #3 orbit (`padic_orbit_norm`: `‖2ⁿ·x‖ = 2^(-n)·‖x‖`, and `2^(-n) = (1/2)ⁿ`).
@@ -57,7 +57,7 @@ each exactly `C·(1/2)ⁿ`, dominated by one envelope `→ 0`. The shared rate c
 in-statement. What is interpretation, NOT Lean: that #2 and #3 are "the same ν-attractor" — they are
 not (one lives in a connected simplex `stdSimplex ℝ (Fin 2)`, the other in the totally-disconnected
 normed field `Q₂`; `t5_totallyDisconnected`). No category, inverse limit, final coalgebra, or
-cross-ambient map is built. TC43 is an envelope/rate test on the #2↔#3 ν-edge; the edge stays OPEN at
+cross-ambient map is built. TC40 is an envelope/rate test on the #2↔#3 ν-edge; the edge stays OPEN at
 the orbit level — the rate match is the COMPLEMENT to TC33, not a closure of the wall.
 -/
 

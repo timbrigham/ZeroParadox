@@ -37,25 +37,33 @@ content over `fix_isEmpty`:
   in principle. The `Classical.choice` is a Mathlib artifact, recorded in the PurityCheck comment, not
   asserted as a theorem.
 
-  **Prior art, and READ THE SETTING — the obvious citation is for a different type theory.**
-  * **Altenkirch, Ghani, Hancock, McBride, Morris, *Indexed Containers*** (JFP 25, 2015) — and
-    **Abbott, Altenkirch, Ghani, "Containers: constructing strictly positive types"**, TCS 342(1):3-27,
-    2005. **These are the right citation for the claim actually made here**, because the claim is about
-    **Lean**, which is the **Axiom-K / UIP** setting (the corpus says so itself in
-    `ZeroParadox/Category/BottomUndecidable.lean`: "In Lean 4 UIP holds for every type").
+  **Prior art, and READ THE SETTING — each of these three lives in a different type theory, and the
+  differences are the whole point of the block.**
+  * **Altenkirch, Ghani, Hancock, McBride, Morris, *Indexed Containers*** (JFP 25, 2015) — **the
+    Axiom-K citation, and the closest setting to this file.** It says so in its own words: it relies
+    on axiom K, and notes that K together with function extensionality *"corresponds to extensional
+    Type Theory"*. That is the setting the claim here is about, since Lean is an Axiom-K / UIP theory
+    (the corpus says so itself in `ZeroParadox/Category/BottomUndecidable.lean`: "In Lean 4 UIP holds
+    for every type").
+  * **Abbott, Altenkirch, Ghani, "Containers: constructing strictly positive types"**, TCS
+    342(1):3-27, 2005 — the **precursor, in EXTENSIONAL MLTT**, not Axiom-K. Its own text: *"We use
+    here the language of extensional Martin-Löf Type Theory."* Cite it as the origin of the container
+    treatment; do **not** cite it for the Axiom-K setting. *(That attribution was wrong here on
+    2026-08-02 and is corrected — the error the block's own "READ THE SETTING" premise exists to
+    catch, made one reference below the heading.)*
   * **Ahrens, Capriotti, Spadotti, "Non-wellfounded trees in Homotopy Type Theory"** (TLCA 2015,
     LIPIcs 38:17-30, arXiv:1504.02949) constructs the final coalgebra of a polynomial functor as an
-    ω-limit in intensional MLTT **plus univalence** — a setting Lean does *not* have. ACS itself says
-    it *generalizes* the Axiom-K construction of Altenkirch et al. to the whole of HoTT. So ACS is real,
-    correctly directed, and **one setting removed** from the one this file lives in.
+    ω-limit in intensional MLTT, and says it *generalizes* the Altenkirch et al. construction *"to the
+    whole of HoTT"*. **Its univalence dependency is narrower than stated here previously**: ACS says
+    *"we make minimal use of univalence itself: Lemma 5 is the only result that uses it directly"* —
+    and Lemma 5 is the **uniqueness** result, not the construction, which needs only function
+    extensionality. Lean has function extensionality. So ACS is **not** simply "one setting removed";
+    its construction is closer to applicable here than a univalence label suggests, and only its
+    uniqueness half genuinely needs the stronger axiom.
   * **Veltri, FSCD 2021** — cite for **contrast only**. His subject is the **finite powerset** functor,
     which is *not* polynomial, and his headline results run the other way (certain constructions
     *require* AC). He is apt as background — he treats the polynomial case explicitly as contrast, his
     `Tree` is the final `List`-coalgebra, and he himself hands the polynomial fact to Ahrens et al.
-
-  *(Veltri scoped 2026-08-02 after a prior-art gate read all 18 pages; the Altenkirch/Abbott gap found
-  the following round by reading ACS itself, which named them. Neither appeared anywhere in the corpus
-  — the citation had been one setting off, for months, with no internal review able to notice.)*
 
 The bundle `root_purity_split` packages both honest halves: the μ-witness is propositionally derivable
 from a purely structural eliminator AND the ν-inhabitant is a concrete corecursion term, in one

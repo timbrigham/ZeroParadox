@@ -70,7 +70,7 @@ noncomputable def seam_biprod_right (X : ModuleCat ℂ) : X ≅ X ⊞ seam :=
 noncomputable def seam_biprod_left (X : ModuleCat ℂ) : X ≅ seam ⊞ X :=
   isoZeroBiprod (X := seam) hilbert_bottom_isZero
 
-/-- **TC35 (bundled): the seam node is the two-sided unit of the biproduct `⊞` on `ModuleCat ℂ`.**
+/-- **TC36 (bundled): the seam node is the two-sided unit of the biproduct `⊞` on `ModuleCat ℂ`.**
     For every `X` there are canonical isos `X ≅ X ⊞ seam` and `X ≅ seam ⊞ X`, where
     `seam = fD_functor.obj 0` is the Hilbert bottom. The load-bearing content (the two unit isos at
     the concrete seam object) is IN the statement.
@@ -87,7 +87,7 @@ theorem seam_is_biprod_unit (X : ModuleCat ℂ) :
 /-- The honesty witness, also IN a statement: the seam's biproduct-unit role is *equivalent* to its
     zero-object status, not stronger. `IsZero seam` both gives the unit isos (forward) and is implied
     by `seam ⊞ seam` being zero (a degenerate instance of `biprod_isZero_iff`). This makes explicit
-    that TC35 is the algebraic restatement of `hilbert_bottom_isZero`, not an independent property. -/
+    that TC36 is the algebraic restatement of `hilbert_bottom_isZero`, not an independent property. -/
 theorem seam_unit_iff_isZero :
     IsZero seam ↔ Nonempty (seam ≅ seam ⊞ seam) := by
   constructor

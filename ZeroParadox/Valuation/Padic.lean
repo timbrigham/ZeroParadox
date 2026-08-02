@@ -308,7 +308,7 @@ leaves nothing else — a restriction this paragraph does not make. *(Corrected 
 "necessary and not sufficient". The word "necessary" asserted `snap ⟹ ultrametric`, the exact
 implication called incomparable thirteen lines below in this same docstring. It survived because the
 fix that introduced it changed the ADJECTIVE — "non-Archimedean" → "ultrametric" — and left the claim
-wrapped around it standing. All three gates flagged it.)* (An earlier revision of this
+wrapped around it standing.)* (An earlier revision of this
 paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
 fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density obstruction but supplies
 no closest nonzero element, so it does not yield the step.)
@@ -316,9 +316,9 @@ no closest nonzero element, so it does not yield the step.)
 **What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
 (`ZeroParadox/Reals/OrderedField.lean` — a declaration name is self-locating, so **no line number**;
 this citation carried one until 2026-08-02, when an insertion in that file moved the theorem and left
-the number pointing into an unrelated proof body. **No replacement figure is given here on purpose:
-the first attempt at this note quoted the theorem's new line, and the note's own added lines moved it
-again before the commit landed. All three gates caught that.**) is stated over an
+the number pointing into an unrelated proof body. **No replacement figure is given here on purpose —
+a line number in a docstring is invalidated by any edit to the file it names, including edits to the
+docstring itself.**) is stated over an
 **arbitrary ordered field**
 (`[Field F] [LinearOrder F] [IsStrictOrderedRing F]`) and carries **no Archimedean hypothesis**. It is
 proved by **halving**, via `f_snap_blocked`. So what it gives by contraposition is *a first step exists

@@ -167,8 +167,10 @@ section PurityCheck
 -- The μ side is choice-free; choice enters exactly on the ν (Cofix) side, via Mathlib's M-type
 -- machinery (Cofix.dest_corec / cofix_nonempty) — a library artifact, not a necessity (for a
 -- polynomial functor the final coalgebra is constructible choice-free; Ahrens–Capriotti–Spadotti,
--- TLCA 2015, arXiv:1504.02949; Veltri, FSCD 2021 for the finite-powerset case only).
-    -- (setting caveat - ACS is HoTT+univalence, Lean is Axiom-K: see ZeroParadox/Computability/ChoicePurityInvariant.lean) So the
+-- TLCA 2015, arXiv:1504.02949 -- their construction needs only function extensionality, which
+-- Lean has; only their uniqueness half uses univalence. Veltri, FSCD 2021 is CONTRAST, not
+-- support: for the non-polynomial finite-powerset functor his results run the other way,
+-- certain constructions REQUIRING choice). So the
 -- placement (μ choice-free / ν choice-carrying) is also visible in the axiom profile, not just the
 -- mediator direction.
 #print axioms fix_isFixedPoint

@@ -16,8 +16,7 @@ where that file's own header and capstone both say TC16 — and TC13 is
 `ZeroParadox/Category/SeamGeneric.lean`. **TC45 is out of sequence deliberately**: it is the only label
 with no existing mention anywhere in the corpus or the notes, and reusing a number that appears in
 historical records would trade one collision for a subtler one. **The number is a label, not a claim;
-nothing mathematical depends on it.** Seven further ownership collisions remain in
-`ZeroParadox/MANIFEST.md` — see the defect ledger.)*
+nothing mathematical depends on it.**)*
 
 ## Engineer's Take
 

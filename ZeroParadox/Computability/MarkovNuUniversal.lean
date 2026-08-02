@@ -25,7 +25,7 @@ stationary distribution in the probability simplex) in the bottom-diagram μ/ν 
 
 **The pre-registered question.** The order ambient blocks #2 from any universal property: the simplex
 is a coordinate-order antichain (`simplex_antichain`), so the stationary
-point is neither order-least (μ) nor order-greatest (ν). TC20 asked whether *changing the ambient*
+point is neither order-least (μ) nor order-greatest (ν). TC22 asked whether *changing the ambient*
 from the order to the **dynamics** rescues a universal property: the stationary distribution is a
 *fixed point* of the Kleisli transfer action `μ ↦ μ.bind f`, and a **unique** fixed point of an
 endomorphism is a terminal-flavoured (ν / final-coalgebra) universal object. The GO conjecture was
@@ -71,7 +71,7 @@ variable {n : ℕ}
 
 /-- A PMF `μ` is **stationary** for the kernel `f` iff it is a fixed point of the Kleisli transfer
     action `μ ↦ μ.bind f`. This is the dynamical (ν-flavoured) fixed-point predicate whose
-    subsingleton-ness was the TC20 GO conjecture. -/
+    subsingleton-ness was the TC22 GO conjecture. -/
 def IsStationaryPMF (f : Fin n → PMF (Fin n)) (μ : PMF (Fin n)) : Prop := μ.bind f = μ
 
 /-! ## GO half (holds): the stationary set is inhabited -/

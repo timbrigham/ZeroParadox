@@ -98,7 +98,7 @@ theorem seam_role_not_transported :
     ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨ZeroParadox.hilbert_bottom_isZero, padic_bottom_not_initial⟩
 
-/-- The full TC34 verdict assembled: both carriers are singletons; the only inter-carrier map is the
+/-- The full TC23 verdict assembled: both carriers are singletons; the only inter-carrier map is the
     cardinality-forced trivial one (an instance of the generic singleton fact); and the seam's
     zero-object role in `ModuleCat ℂ` is not matched by any initial-object role of #3 in `TopCat`.
     Together: the seam #5 connects to the ν-limit node #3 only as a bare singleton, NOT as a literal

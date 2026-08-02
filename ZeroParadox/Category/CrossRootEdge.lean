@@ -36,7 +36,7 @@ inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`, witness `floorConeIsLimit`).
   asymmetry, not merely "different categories".
 - *NO-GO conjecture:* if the strongest honest statement is just `IsColimit(#4) ∧ IsLimit(#3) ∧
   different-categories`, that is a co-occurrence of the two pre-existing witnesses (TC24 + TC10)
-  plus a generic ambient mismatch — the same bare-glue non-result TC34 already deflated for
+  plus a generic ambient mismatch — the same bare-glue non-result TC23 already deflated for
   #5 ↔ #3 — so verdict NO-GO / OVERCLAIM, no new edge.
 
 **What this file actually proves (load-bearing, in the statements).** The honest finding is the
@@ -63,7 +63,7 @@ into a statement, the two witnesses `IsColimit(#4)` and `IsLimit(#3)` are **pre-
 TC10), and the asymmetry — a colimit object's empty incoming hom vs a limit object's incoming
 factoring map — is a *generic* consequence of "one is a colimit, the other is a limit", true of any
 such pair, not a fact discovered about the snap floors. The objects also live in different ambient
-categories with no canonical functor between them, the bare-glue non-result TC34 already flagged.
+categories with no canonical functor between them, the bare-glue non-result TC23 already flagged.
 So this edge is **NO-GO / OVERCLAIM at the new-edge level**: there is no new cross-domain
 identification, only a sharpened *separation*. The framework records that the #4 ↔ #3 cross-root
 obstruction is categorically witnessable **only** as (a) the co-occurrence of the two universal

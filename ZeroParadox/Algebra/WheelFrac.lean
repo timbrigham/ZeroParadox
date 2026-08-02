@@ -175,13 +175,59 @@ The two forks are **different species**, and this section is the obstruction tha
 * an **involutive** fork has poles forming a 2-CYCLE of an involution — swapped, and *not* fixed when
   the fork is open.
 Imposing the ordered condition on an involutive fork therefore FORCES collapse: they coincide only at
-the diagonal point. The only data common to both is "a self-map plus two elements" with no shared
-non-trivial axiom — i.e. **a single non-vacuous lightweight typeclass over both forks does not exist**.
-Unifying them needs the categorical machinery (both are ℤ/2ℤ actions, but `op` acts on the CATEGORY,
-dualizing μ↔ν, while inversion acts on the ELEMENT set, swapping 0↔∞); that stays the horizon. -/
+the diagonal point. That much is the theorem below.
+
+**Block conclusion (2026-06-25) — a reasoned judgement, NOT a theorem, and there is no witness for
+it.** The only data common to both is "a self-map plus two elements" with no shared non-trivial
+axiom, so a single non-vacuous lightweight typeclass over both forks appears not to exist. This is a
+universal negative over all possible typeclasses; nothing in Lean states it, and
+`fixed_pole_forces_collapse` does **not** — it proves the narrow implication in its own signature.
+*(The label was dropped when this § was promoted on 2026-08-02, and `Wall.lean`'s NO-GO table
+consequently carried the universal negative as an axiom-free machine-checked witness. Restored, and
+the table row corrected, by the adversary gate the same day.)* Unifying them would need the
+categorical machinery (both are ℤ/2ℤ actions, but `op` acts on the CATEGORY, dualizing μ↔ν, while
+inversion acts on the ELEMENT set, swapping 0↔∞); that stays the horizon.
+
+**Prior art — Carlström 2001 § 4 is closer than this § originally said, and proves MORE.** The
+header already cites Carlström for the wheel axioms; the specific result is **Prop. 4.4**
+(`.claude-local/papers/carlstrom_wheels_2001_11.pdf`, p. 27): *"If any two of the elements 0, 1, /0
+and 0/0 are equal in a wheel H, then H is trivial."* The case `0 = /0` **is**
+`fixed_pole_forces_collapse` at the motivating instance, and his conclusion is strictly stronger —
+the whole wheel degenerates, not merely that the two poles coincide. His remark that *"0 can't be
+inverted unless 0 ∈ S, but if that is the case … A⊙S is trivial"* (~p. 16) is likewise the source of
+`wheelFrac_fork_open`'s `0 ∉ S` hypothesis. **The delta is only generality**: `InvolutiveFork` drops
+the wheel axioms entirely, so the argument runs on an involution and two points with no algebra at
+all. Do not present the collapse as a framework finding — it is Carlström's, restated at a weaker
+hypothesis.
+
+**Standard names for what is written by hand here** (Trigger 0 — adopt the framing, keep the handle):
+`Collapsed F` is `Function.IsFixedPt F.dual F.pole₀` (`Mathlib/Dynamics/FixedPoints/Basic.lean`), and
+`collapsed_iff_fixed` is an instance of `Function.Involutive.eq_iff`
+(`Mathlib/Logic/Function/Basic.lean`). The hand proofs are kept — they are shorter here and
+axiom-free — but the library names are the ones to search under. Note also that `pole₁` is
+**redundant data**, pinned by `swap` to `dual pole₀`; it is retained because the two-pole presentation
+is what the framework's prose refers to. In the wider literature the fixed point of an involution is
+**the center** (a *centered* Kleene algebra: Kalman 1958, Cignoli 1986), and the standard fix for the
+monotone/involutive clash is an order-**reversing** involution (De Morgan negation,
+orthocomplementation) — a sharper diagnosis than "no shared axiom", and the direction to look if this
+is ever revisited. Searched 2026-08-02: no prior art located for the bare `InvolutiveFork`
+abstraction standing alone, nor for the μ/ν-versus-2-cycle contrast.
+
+**Unstated adjacency — this abstraction already has at least four instances in-corpus, none wired
+up.** `rInv_involutive` + `rInv_swaps` (`ZeroParadox/Valuation/RiemannSphere.lean`) is the Riemann
+fork the docstring below calls "the motivating instance" and is never actually instantiated; also
+`flipPoles_involutive`, `codeDataSwap_involutive`, and two `swap_involutive`. Wiring them is a
+pointer exercise, not new declarations. -/
 
 /-- An **involutive fork**: an involution `dual` together with two poles it swaps. The wheel / Riemann
-    fork (`z ↦ 1/z` swapping `0 ↔ ∞`) is the motivating instance. -/
+    fork (`z ↦ 1/z` swapping `0 ↔ ∞`) is the motivating instance.
+
+    ⚠ **Name collision — "fork" now carries three unrelated senses.** Mathlib's
+    `CategoryTheory.Limits.Fork` is an equalizer diagram; the framework's own μ/ν *fixed-point* fork
+    (`ZeroParadox/Settheory/FixedPointFork.lean`) is a third. Nothing here is an instance of either.
+    The full name `InvolutiveFork` is load-bearing — do not shorten it to `Fork` at any use site, and
+    read "the categorical machinery" in the § above as *categorical* in the loose sense, not as a
+    reference to `Limits.Fork`. -/
 structure InvolutiveFork (α : Type*) where
   dual : α → α
   dual_invol : Function.Involutive dual

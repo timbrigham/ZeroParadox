@@ -97,16 +97,31 @@ experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloo
 | logical / `Prop` (**the ENGINE**) | NEGATION HAS NO FIXED POINT (`¬(p↔¬p)`) | `negation_no_fixedpoint` (here) | axiom-free |
 | sets/functions, Cantor (**engine-linked ✓**) | no self-surjection onto predicates | `cantor_via_engine` (= engine at the diagonal) | axiom-free |
 | naive comprehension, Russell (**engine-linked ✓**) | no membership realizes every predicate | `russell_via_engine` (via `lawvere_fixedpoint` + engine) | axiom-free |
-| deciders, Turing (**engine-linked ✓**) | no self-surjection onto Bool-deciders (the halting diagonal) | `no_self_decider` (Lawvere + Bool engine); faithful: `ZPK.…undecidable` | axiom-free |
+| deciders, Turing (**engine-linked ✓**) | no self-surjection onto Bool-deciders (the halting diagonal) | `no_self_decider` (Lawvere + Bool engine); faithful: `self_halting_undecidable` (`ZeroParadox/Computability/Kleene.lean`) | axiom-free |
 | any well-founded relation | NO CYCLE (any length) | `wf_no_cycle` (1-cycle: `wf_no_selfloop`) | axiom-free |
 | set theory + Foundation | NO MEMBERSHIP CYCLE (any length) | `no_membership_cycle` (1-cycle: `no_quine_atom`) | choice-free |
 | ordinal notation naming `<ε₀` | UNREACHABLE FROM BELOW | `omegaPow_no_fixedpoint` | choice-free |
-| lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | `fixed_pole_forces_collapse` (`ZeroParadox/Algebra/WheelFrac.lean`) | axiom-free |
+| involutive fork whose pole is FIXED by the involution | THE POLES COINCIDE (the fork collapses) | `fixed_pole_forces_collapse` (`ZeroParadox/Algebra/WheelFrac.lean`) | axiom-free |
 | metric completion of ℚ | NO TRANSFER (same role) | `real_not_equiv_padic` | choice |
 | μ/ν coalgebra | DISTINCT ENDS | `categorical_fork_strict` | choice |
 | computability (Kleene) | EXISTS-BUT-UNDECIDABLE | `infinite_quine_family` (∃, ∞-many) + `isComputationalQuine_undecidable` (¬ComputablePred) | choice |
 
 *(History of the "lightweight categorical typeclass" row, 2026-08-02. It cited
+**⚠ THE ROW'S SIGNATURE WAS ALSO WRONG, AND THAT MATTERED MORE THAN THE MISSING FILE. Corrected
+2026-08-02 (adversary gate, bedrock).** It read
+`| lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | … | axiom-free |`. Against this table's
+own rule at § "failure-mode taxonomy" — *each a checkable witness whose **hypotheses ARE the
+conditions*** — both columns were wrong: the theorem's hypothesis is *the pole is fixed by the
+involution*, and its conclusion is *the poles coincide*. **"No non-vacuous unifier exists" is a
+universal negative quantifying over all possible typeclasses — not a Lean statement at all**, and it
+was carrying an "axiom-free" stamp in a witness table. The row now states what the theorem proves.
+**The broader claim survives as a reasoned block conclusion, labelled as one** in
+`ZeroParadox/Algebra/WheelFrac.lean` § "The involutive fork" — it is not a theorem and has no witness.
+*(How it got in: the demotion note below correctly described the theorem in its NARROW form, and said
+"do not restore the citation without moving the declaration". The declaration was moved and the
+citation restored — but nobody re-asked whether the narrow theorem supported the broad signature.)*
+
+*(History.)* The row cited
 `fixed_pole_forces_collapse` from a pre-reorg module that **was not at HEAD** — the declaration existed
 only on `private/physics-bridge`, a permanently local, quarantined branch that never reaches any
 remote. So a reader of the public repository could not check it, and it sat in this table beside

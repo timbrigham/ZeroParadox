@@ -30,7 +30,7 @@ set_option maxHeartbeats 400000
 > *(Kept because the failure mode is instructive: the citation here was a dangling pre-reorg basename,
 > and on 2026-08-01 it was repointed to `WallSpanRobust.lean` on the authority of the manifest's TC19
 > mapping. **That repoint was wrong** — it produced a citation that resolved while describing content
-> its target does not contain, which an editorial gate caught. A resolving citation is not a verified
+> its target does not contain. A resolving citation is not a verified
 > one, and the right answer was only on the pre-rename branch.)*
 
 ## Engineer's Take

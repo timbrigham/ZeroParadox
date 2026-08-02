@@ -429,7 +429,7 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     carrier. The weakening claim holds **only** for the valuation conditions, over a fixed commutative
     carrier — say that, or say nothing. *(Corrected 2026-08-01. "Strictly weaker than `AddValuation`"
     stood here and in the PUBLIC `LEAN_CUSTOM_REGISTRY.md`; it was the third revision of this one
-    sentence in three gate rounds, and each earlier revision fixed the arithmetic while leaving the
+    sentence across successive revisions, each of which fixed the arithmetic while leaving the
     ordering claim in place.)*
 
     **And the porthole condition is NOT discharged by adopting the standard structure.** `map_zero'`

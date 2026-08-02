@@ -97,7 +97,7 @@ theorem nat_zero_not_terminal : IsEmpty (IsTerminal (0 : ℕ)) :=
 
 /-! ## The four ambient facts, bundled (co-occurrence only — proves no relation between them). -/
 
-/-- **TC44 bundle — co-occurrence of four ambient bottom-facts.** This is a pure conjunction; it
+/-- **TC46 bundle — co-occurrence of four ambient bottom-facts.** This is a pure conjunction; it
 proves the four facts *hold together*, not that any structural relation connects them.
 
 - #3 sits at a real limit: `Nonempty (IsLimit floorCone)` (TC10).

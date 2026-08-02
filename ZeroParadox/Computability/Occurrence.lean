@@ -107,7 +107,7 @@ requirements, and AFA is a witness meeting them."
 further* — which are adjacent to `loop_is_a_trap` and are nowhere cited in this corpus. `reaches_total`
 is likewise uncited; § VI is the natural place to point at it, though § VI's own result is a
 one-step fact (via `Option.some_injective`) and `reaches_total` is the reachability-level form —
-adjacent, not the lemma § VI applies. Several results in this file were already found by the prior-art gate to
+adjacent, not the lemma § VI applies. Several results in this file are already known to
 duplicate Lean-core or Mathlib lemmas (see the header's prior-art block); that gate looked at `Option` and
 `PartrecCode`, **not** at `StateTransition`'s own API. Assume more overlap is there. -/
 
