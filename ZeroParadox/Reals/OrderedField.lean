@@ -216,9 +216,12 @@ completion of ℚ — the first bullet is therefore wider than Ostrowski and res
   with distinct statements. They are **not** the same declaration and no equation between them is
   asserted.
 - Non-Archimedean **and not an ordered field** (ℚ₂): the snap is **not blocked**, which is a strictly
-  weaker statement than being forced. *(The p-adics admit no compatible linear order — standard, by
-  Artin–Schreier: an orderable field must be formally real, i.e. −1 is not a sum of squares, and in
-  ℚ_p it is. Cited 2026-08-02; the claim stood uncited.)*
+  weaker statement than being forced. *(The p-adics admit no compatible linear order. Only the
+  **elementary direction** is used: in an ordered field every square is ≥ 0, so a sum of squares
+  cannot be −1; and −1 **is** a sum of squares in every ℚ_p (its Stufe is finite — 4 for ℚ₂). That
+  direction needs no Artin–Schreier. Artin–Schreier is the **converse** — formally real ⟹ orderable —
+  which is the deep half and is not required here. Cited 2026-08-02, then scoped 2026-08-02 after a
+  gate noted the theorem was named for a biconditional where one elementary direction does the work.)*
 
 **ZP-B does NOT force the snap, and cannot.** What it proves is topological: the gap at 0 is
 clopen (`t3_isolation`) and the return across it admits no continuous path (`c3_irreversible`,

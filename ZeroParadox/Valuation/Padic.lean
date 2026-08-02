@@ -301,7 +301,9 @@ topological obstruction in ℚ₂. Ultrametric structure is therefore **not suff
 actually occurs is carried by AX-B1 together
 with the framework's commitments, never by C3 or T5 alone. **Necessity is NOT asserted here**: the
 contraposition below gives *a first step exists ⟹ not an ordered field*, which is incomparable with
-*⟹ ultrametric*. Necessity would hold only after restricting to completions of ℚ, where Ostrowski
+*⟹ ultrametric* **over valued fields, reading "ultrametric" as the distinguished absolute value —
+the pin stated in full below, and load-bearing: under a bare-field existential reading the comparison
+collapses, since every field carries the trivial ultrametric**. Necessity would hold only after restricting to completions of ℚ, where Ostrowski
 leaves nothing else — a restriction this paragraph does not make. *(Corrected 2026-08-02: this read
 "necessary and not sufficient". The word "necessary" asserted `snap ⟹ ultrametric`, the exact
 implication called incomparable thirteen lines below in this same docstring. It survived because the
@@ -312,9 +314,11 @@ fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density
 no closest nonzero element, so it does not yield the step.)
 
 **What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
-(`ZeroParadox/Reals/OrderedField.lean` — a declaration name is self-locating, so no line number; this
-citation read `:137` until 2026-08-02, and *this batch's own* `IsAtom` insertion moved the theorem to
-`:148`, leaving the old number pointing into an unrelated proof body) is stated over an
+(`ZeroParadox/Reals/OrderedField.lean` — a declaration name is self-locating, so **no line number**;
+this citation carried one until 2026-08-02, when an insertion in that file moved the theorem and left
+the number pointing into an unrelated proof body. **No replacement figure is given here on purpose:
+the first attempt at this note quoted the theorem's new line, and the note's own added lines moved it
+again before the commit landed. All three gates caught that.**) is stated over an
 **arbitrary ordered field**
 (`[Field F] [LinearOrder F] [IsStrictOrderedRing F]`) and carries **no Archimedean hypothesis**. It is
 proved by **halving**, via `f_snap_blocked`. So what it gives by contraposition is *a first step exists

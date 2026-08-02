@@ -56,7 +56,7 @@ within-ν wall:
 each exactly `C·(1/2)ⁿ`, dominated by one envelope `→ 0`. The shared rate constant `1/2` is genuine and
 in-statement. What is interpretation, NOT Lean: that #2 and #3 are "the same ν-attractor" — they are
 not (one lives in a connected simplex `stdSimplex ℝ (Fin 2)`, the other in the totally-disconnected
-normed field `Q₂`; `ZPB.t5_totallyDisconnected`). No category, inverse limit, final coalgebra, or
+normed field `Q₂`; `t5_totallyDisconnected`). No category, inverse limit, final coalgebra, or
 cross-ambient map is built. TC43 is an envelope/rate test on the #2↔#3 ν-edge; the edge stays OPEN at
 the orbit level — the rate match is the COMPLEMENT to TC33, not a closure of the wall.
 -/

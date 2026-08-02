@@ -206,7 +206,7 @@ section CannotBeIndex
 #check @ZeroParadox.fB_bottom_is_limit -- ⋂ nested balls = {0}: exactly one point pinned.
 -- WIDE / infinite MEASURE: a scalar diverges (unbounded value), NOT "reached from everywhere". [ZPC]
 #check @ZeroParadox.t2_diverges                 -- surprisal/information exceeds every bound M.
-#check @ZeroParadox.info_bottom_diverges -- = `ZPC.l_inf` (same fact, the BottomMeasure framing).
+#check @ZeroParadox.info_bottom_diverges -- = `l_inf` (same fact, the BottomMeasure framing).
 -- WIDE / infinite REACH: ⊥ is the universal attractor — every CONTRACTION orbit (‖c‖<1) flows to it. [ℚ₂]
 #check @ZeroParadox.contraction_orbit_tendsto_zero
 -- COINCIDENCE (actual-⊥ core, both genuinely 0 ∈ ℚ₂): the SAME point is `q2_unique_fp` (narrow: the

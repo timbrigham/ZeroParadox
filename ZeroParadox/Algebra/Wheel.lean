@@ -573,7 +573,7 @@ assumed class field, as § VII says and as the ZP-J addendum quoted there states
 2026-08-02; the scope note at the head of this file says every `⊥ = {⊥}` here is metatheoretic, and
 "forced" was the one occurrence that made it a carrier-level claim.)*
 The ring's zero is simultaneously the lattice floor *and* the point where the
-valuation hits infinity. This structural necessity identifies *which* element
+valuation hits infinity. This structural motivation identifies *which* element
 plays the porthole role (wzero), but it does not construct the binary operation
 wmul. The "infinitudes of zero" argument closes the identification gap; it cannot
 close the construction gap.

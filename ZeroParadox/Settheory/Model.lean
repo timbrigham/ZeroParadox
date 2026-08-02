@@ -13,6 +13,11 @@ that has that behaviour. The concrete carrier is ℕ∞ = WithTop ℕ — the ex
 scale is just add-one. ⊤ + 1 = ⊤ in WithTop ℕ, so ⊤ is the unique fixed point.
 Everything else is provable by arithmetic.
 
+*(Editor's note, outside the Take: the Take above says "ZPJ_Scale", a pre-reorg module name that
+resolves to nothing at HEAD — it is now `ZeroParadox/Valuation/Scale.lean`. **The Take is Tim's voice
+and is left exactly as written**; a mechanical path sweep rewrote it on 2026-08-02 and was reverted.
+Only Tim edits a Take, so the pointer lives here instead.)*
+
 ## The model
 
 ℕ∞ with join = min and bot = ⊤ satisfies ZPSemilattice:

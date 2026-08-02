@@ -36,7 +36,8 @@ commitment, not a theorem (ZP-P hard fence).
 PROVED. Two theorems, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty) is choice-free
 `[propext, Quot.sound]`; `cofix_nonempty` (ν inhabited) carries `Classical.choice` from Mathlib's
 M-type / corecursion machinery. That choice is a library artifact, not a necessity: for a polynomial
-functor the final coalgebra is constructible choice-free (Ahrens et al.; Veltri, FSCD 2021). See
+functor the final coalgebra is constructible choice-free (Ahrens et al.; Veltri for the finite-powerset case only).
+(setting caveat - ACS is HoTT+univalence, Lean is Axiom-K: see ZeroParadox/Computability/ChoicePurityInvariant.lean) See
 PurityCheck.
 -/
 
@@ -91,7 +92,8 @@ choice entering exactly on the non-well-founded, self-referential side.
 
 *Editorial addendum (Claude):* that choice on the ν side is inherited from Mathlib's M-type machinery,
 not a necessity — for a polynomial functor like `idPF_Coalgebra` the final coalgebra is constructible choice-free
-in principle (Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021, the coinductive construction). Choice
+in principle (Ahrens–Capriotti–Spadotti).
+(setting caveat - ACS is HoTT+univalence, Lean is Axiom-K: see ZeroParadox/Computability/ChoicePurityInvariant.lean) Choice
 genuinely enters the μ/ν story only for the non-polynomial finite-powerset functor, where it is pinned
 per presentation: full AC for the set-quotient, countable choice + LLPO (⟺ injectivity of the canonical
 algebra) for Worrell's (ω+ω)-limit (Veltri, FSCD 2021).

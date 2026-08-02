@@ -83,7 +83,7 @@ theorem node3_place_eq_q2_norm (q : ℚ) : padic 2 q = ‖(q : ℚ_[2])‖ := by
     archimedean place completes to a **connected** field (ℝ, the base of #2's simplex), the 2-adic place
     to a **totally disconnected** one (`Q₂ = ℚ_[2]`, #3's ambient). This is the genuine in-kernel tie
     between place-type and the topological character that distinguishes the two nodes (the T2 wall),
-    using the framework's own `ZPB.t5_totallyDisconnected`. -/
+    using the framework's own `t5_totallyDisconnected`. -/
 theorem place_topological_signature :
     ConnectedSpace ℝ ∧ TotallyDisconnectedSpace ℚ_[2] :=
   ⟨inferInstance, ZeroParadox.t5_totallyDisconnected⟩

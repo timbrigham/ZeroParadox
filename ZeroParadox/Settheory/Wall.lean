@@ -31,7 +31,7 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   self-loop in well-founded settings.
 - The "same role, not transferable" face is proved elsewhere and referenced, not re-proved here:
   `real_not_equiv_padic` (ℝ and ℚ_p are both completions of ℚ but no equivalence transfers
-  one to the other) and `ZPP.categorical_fork_strict` (μ empty / ν inhabited — the two ends, provably
+  one to the other) and `categorical_fork_strict` (μ empty / ν inhabited — the two ends, provably
   distinct).
 - The FORMAL SIGNATURE of the wall is the contrast: shadow realizable choice-free (proved upstream) ∧
   literal self-loop refuted under well-foundedness (proved here). The wall is that pairing, not a claim
@@ -100,11 +100,11 @@ experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloo
 | deciders, Turing (**engine-linked ✓**) | no self-surjection onto Bool-deciders (the halting diagonal) | `no_self_decider` (Lawvere + Bool engine); faithful: `ZPK.…undecidable` | axiom-free |
 | any well-founded relation | NO CYCLE (any length) | `wf_no_cycle` (1-cycle: `wf_no_selfloop`) | axiom-free |
 | set theory + Foundation | NO MEMBERSHIP CYCLE (any length) | `no_membership_cycle` (1-cycle: `no_quine_atom`) | choice-free |
-| ordinal notation naming `<ε₀` | UNREACHABLE FROM BELOW | `ZPN.omegaPow_no_fixedpoint` | choice-free |
+| ordinal notation naming `<ε₀` | UNREACHABLE FROM BELOW | `omegaPow_no_fixedpoint` | choice-free |
 | lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | **not at HEAD** — see note below | n/a |
-| metric completion of ℚ | NO TRANSFER (same role) | `ZPP.real_not_equiv_padic` | choice |
-| μ/ν coalgebra | DISTINCT ENDS | `ZPP.categorical_fork_strict` | choice |
-| computability (Kleene) | EXISTS-BUT-UNDECIDABLE | `ZPK.infinite_quine_family` (∃, ∞-many) + `ZPK.isComputationalQuine_undecidable` (¬ComputablePred) | choice |
+| metric completion of ℚ | NO TRANSFER (same role) | `real_not_equiv_padic` | choice |
+| μ/ν coalgebra | DISTINCT ENDS | `categorical_fork_strict` | choice |
+| computability (Kleene) | EXISTS-BUT-UNDECIDABLE | `infinite_quine_family` (∃, ∞-many) + `isComputationalQuine_undecidable` (¬ComputablePred) | choice |
 
 **⚠ Note on the "lightweight categorical typeclass" row (2026-08-02).** It previously cited
 `fixed_pole_forces_collapse` from a pre-reorg `ZPP_DualityFork` module. **That declaration is not at
@@ -150,7 +150,7 @@ independent root of self-reference — `wf_no_selfloop` instantiated per host (`
 is well-founded; `quineHost_not_wellFounded` / `floor_not_wellFounded` where it is not). That is a claim
 about **this repo's taxonomy**, not about mathematics, and the literature above already presents the split
 this way. Note the scope limit: it covers the **well-founded family only** — the ε₀ row
-(`ZPN.omegaPow_no_fixedpoint`) is ordinal arithmetic, *not* a self-loop instantiation, so "every row is a
+(`omegaPow_no_fixedpoint`) is ordinal arithmetic, *not* a self-loop instantiation, so "every row is a
 ν-refusal" would be false. The narrow one-root question is still answered **no**: `wf_no_selfloop` is proved
 by accessibility, not by the engine (`Wall_OneRoot.lean`'s `selfloop_permitted` / `engine_is_wf_free` stand).
 Full development: `.claude-local/notes/wall_one_root_or_two_trinary_2026-07-29.md`.

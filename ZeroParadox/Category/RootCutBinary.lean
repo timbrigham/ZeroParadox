@@ -144,7 +144,8 @@ section PurityCheck
 -- positions changes neither the emptiness nor its axiom footprint. The ν choice is the Mathlib
 -- corecursion artifact, not a necessity (polynomial-functor final coalgebra is constructible
 -- choice-free in principle; Ahrens–Capriotti–Spadotti, TLCA 2015, arXiv:1504.02949; Veltri, FSCD 2021
--- for the finite-powerset case).
+-- for the finite-powerset case only).
+    -- (setting caveat - ACS is HoTT+univalence, Lean is Axiom-K: see ZeroParadox/Computability/ChoicePurityInvariant.lean).
 #print axioms binFix_isEmpty
 #print axioms binCofix_nonempty
 #print axioms binPF_fork_strict

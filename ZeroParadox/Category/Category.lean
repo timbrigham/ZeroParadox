@@ -116,7 +116,7 @@ theorem t4_chains_forward_only {C : Type*} [Category C] [ZPC : ZPCategory C]
    boundary: structural implications are Lean-verified; AIT content is not.
    T6-b/c are not load-bearing for any subsequent formal result. The load-bearing
    singularity claim — that surprisal diverges along sequences approaching ⊥ — is
-   separately proved in ZPC.t2_diverges using Q₂'s specific structure, without K. -/
+   separately proved in t2_diverges using Q₂'s specific structure, without K. -/
 
 /-- T6-a — Surprisal of Identity is Zero.
     I(id_A) = K(x_A | x_A) = 0 (up to c): the empty program reproduces x_A given x_A.
@@ -138,7 +138,7 @@ theorem t6b_surprisal_nonneg {C : Type*} [Category C] [ZPCategory C]
     The total surprisal ∑ I(X_k → X_{k+1}) over a morphism chain of length n is ≥ 0.
     Proved by non-negativity of ℕ (Nat.zero_le). This establishes a lower bound only;
     the divergence claim (surprisal → ∞ along sequences approaching 0) is a separate
-    result proved in ZPC.t2_diverges, which uses the specific structure of Q₂. -/
+    result proved in t2_diverges, which uses the specific structure of Q₂. -/
 theorem t6c_surprisal_sum_nonneg {C : Type*} [Category C] [ZPCategory C]
     [ZPS : ZPSurprisal C] {n : ℕ}
     (objs : Fin (n + 1) → C)

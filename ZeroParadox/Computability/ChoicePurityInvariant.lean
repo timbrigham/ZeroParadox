@@ -34,14 +34,28 @@ content over `fix_isEmpty`:
   `Nonempty (Cofix idPF_Coalgebra.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),
   whose footprint carries `Classical.choice` from Mathlib's M-type / `Cofix.corec`. We do **not**
   claim ν *requires* choice: for a polynomial functor the final coalgebra is constructible choice-free
-  in principle — **Ahrens–Capriotti–Spadotti** is the load-bearing citation here. The `Classical.choice`
-  is a Mathlib artifact, recorded in the PurityCheck comment, not asserted as a theorem.
+  in principle. The `Classical.choice` is a Mathlib artifact, recorded in the PurityCheck comment, not
+  asserted as a theorem.
 
-  *(Citation scoped 2026-08-02. Veltri, FSCD 2021 was cited alongside ACS for this claim; that
-  overstates what he shows. His subject is the **finite powerset** functor — which is **not**
-  polynomial — and his headline results run the other way, that certain constructions *require* choice.
-  He is still apt as background: he treats the polynomial case explicitly as contrast, and his `Tree`
-  is the final `List`-coalgebra. Cite him for the contrast, not for the principle.)*
+  **Prior art, and READ THE SETTING — the obvious citation is for a different type theory.**
+  * **Altenkirch, Ghani, Hancock, McBride, Morris, *Indexed Containers*** (JFP 25, 2015) — and
+    **Abbott, Altenkirch, Ghani, "Containers: constructing strictly positive types"**, TCS 342(1):3-27,
+    2005. **These are the right citation for the claim actually made here**, because the claim is about
+    **Lean**, which is the **Axiom-K / UIP** setting (the corpus says so itself in
+    `ZeroParadox/Category/BottomUndecidable.lean`: "In Lean 4 UIP holds for every type").
+  * **Ahrens, Capriotti, Spadotti, "Non-wellfounded trees in Homotopy Type Theory"** (TLCA 2015,
+    LIPIcs 38:17-30, arXiv:1504.02949) constructs the final coalgebra of a polynomial functor as an
+    ω-limit in intensional MLTT **plus univalence** — a setting Lean does *not* have. ACS itself says
+    it *generalizes* the Axiom-K construction of Altenkirch et al. to the whole of HoTT. So ACS is real,
+    correctly directed, and **one setting removed** from the one this file lives in.
+  * **Veltri, FSCD 2021** — cite for **contrast only**. His subject is the **finite powerset** functor,
+    which is *not* polynomial, and his headline results run the other way (certain constructions
+    *require* AC). He is apt as background — he treats the polynomial case explicitly as contrast, his
+    `Tree` is the final `List`-coalgebra, and he himself hands the polynomial fact to Ahrens et al.
+
+  *(Veltri scoped 2026-08-02 after a prior-art gate read all 18 pages; the Altenkirch/Abbott gap found
+  the following round by reading ACS itself, which named them. Neither appeared anywhere in the corpus
+  — the citation had been one setting off, for months, with no internal review able to notice.)*
 
 The bundle `root_purity_split` packages both honest halves: the μ-witness is propositionally derivable
 from a purely structural eliminator AND the ν-inhabitant is a concrete corecursion term, in one

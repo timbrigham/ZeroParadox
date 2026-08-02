@@ -109,7 +109,7 @@ theorem selfApp_fp_set_eq_singleton :
 /-- **μ characterization (least fixed point).** `bot` is ≼ every fixed point of `selfApp` in the ZP-A
     induced order. Load-bearing content: the comparison `bot ≼ x` for an *arbitrary* fixed point — this
     is what "least fixed point" means (the μ / initial-algebra side of the fork). Holds because `bot` is
-    the order-bottom (`ZPA.bot_le`); the fixed-point hypothesis is not even needed, which is the point —
+    the order-bottom (`bot_le`); the fixed-point hypothesis is not even needed, which is the point —
     `bot` is below everything, so it is below every fixed point. -/
 theorem bot_is_least_fixed_point (x : L) (_hx : isFixedPt x) : (bot : L) ≼ x :=
   bot_le x

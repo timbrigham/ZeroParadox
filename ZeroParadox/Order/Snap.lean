@@ -107,7 +107,7 @@ proved. -/
 /-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
 
 Status: DERIVED — cross-framework.
-Dependencies: ZPC.l_run, ZPC.tq_ih, ZPA A4 (bot_join), ZPB C3 (cited below). -/
+Dependencies: l_run, tq_ih, ZPA A4 (bot_join), ZPB C3 (cited below). -/
 
 /-- T-SNAP (algebraic core): In any ZPSemilattice, ⊥ joined with ε₀ gives ε₀.
     The Binary Snap ⊥ → ε₀ is modelled as the join ⊥ ∨ ε₀ = ε₀.
@@ -153,7 +153,7 @@ theorem tsnap_holds_but_nothing_moves :
 
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
-    Complements ZPB.c3_irreversible (topological irreversibility in Q₂).
+    Complements c3_irreversible (topological irreversibility in Q₂).
 
     **Scope — which slot ⊥ occupies changes the answer (Tim, 2026-07-31).** The statement is
     parametric in `x y`, holding at every comparable pair, and

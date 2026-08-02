@@ -403,7 +403,7 @@ Verified results (all sorries filled; no sorryAx anywhere):
 - t_iz_limit_is_new_null: does not depend on any axioms (axiom-free!)
 - c_t_iz_null_balance: propext (via c_da2_novelty)
 - t_iz_c3_compatible: propext, Classical.choice, Quot.sound
-    (inherited from ZPB.c3_irreversible — standard Mathlib topology axioms)
+    (inherited from c3_irreversible — standard Mathlib topology axioms)
 - t_iz_h_bound_from_depth_chain: propext, Classical.choice, Quot.sound
     (Padic.norm_eq_zpow_neg_valuation + zpow_le_zpow_right₀ + mul_le_mul_of_nonneg_right;
      optional transparency lemma — t_iz_complete verified without it)
