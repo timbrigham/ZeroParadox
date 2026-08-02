@@ -28,7 +28,7 @@ Two facts from different ZP layers:
 
 These are the same abstract pattern: the domain's self-application operation has a
 unique fixed point, and that fixed point is the "bottom" of the domain. Neither
-requires DC — uniqueness collapses construction to identification (ZPJ_AczelConn).
+requires DC — uniqueness collapses construction to identification (ZeroParadox/Settheory/AczelConn.lean).
 
 ## What this file does
 
@@ -38,13 +38,13 @@ as theorems rather than class fields — reducing AFAStructure's axiom load to a
 single structural commitment (selfApp + fixed_bot + unique_fp).
 
 The 2-adic parallel is then proved standalone: `singleton_from_unique_witness`
-(already proved in ZPJ_AczelConn) closes the Q₂ case with the same proof term.
+(already proved in ZeroParadox/Settheory/AczelConn.lean) closes the Q₂ case with the same proof term.
 Both domains are formally instances of the same abstract pattern.
 
-## What ZPJ_Scale and ZPJ_ScaleBridge resolved
+## What ZeroParadox/Valuation/Scale.lean and ZeroParadox/Valuation/ScaleBridge.lean resolved
 
 The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap
-was defined in ZeroParadox/Valuation/Scale.lean as ValuationStructure. ZPJ_Scale derives the
+was defined in ZeroParadox/Valuation/Scale.lean as ValuationStructure. ZeroParadox/Valuation/Scale.lean derives the
 unique-fixed-point chain without AFA import:
   ValuationStructure → scale_ne_fixed → AbstractSelfApp (unique_fp as theorem)
 ZeroParadox/Valuation/ScaleBridge.lean further extends this: ValBridge drops the ZPSemilattice

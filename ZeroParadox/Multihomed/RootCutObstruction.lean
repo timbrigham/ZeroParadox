@@ -109,7 +109,7 @@ section PurityCheck
 open ZeroParadox
 
 -- Footprint (measured): all four carry [propext, Classical.choice, Quot.sound]. Choice is the
--- Mathlib M-type / `Cofix` artifact (fenced in ZPP_Coalgebra) — it enters through the `Cofix idPF_Coalgebra.Obj`
+-- Mathlib M-type / `Cofix` artifact (fenced in ZeroParadox/Settheory/Coalgebra.lean) — it enters through the `Cofix idPF_Coalgebra.Obj`
 -- type that every statement here mentions, not through any necessity of the obstruction. The
 -- obstruction's mathematical content (empty domain/codomain → asymmetric function-type emptiness) is
 -- itself choice-free; the footprint reflects the ambient M-type machinery, consistent with

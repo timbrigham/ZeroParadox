@@ -39,9 +39,9 @@ Key results:
     preserves initial object, snap grounded in T4 (orthogonal shift). Concrete witness for F_D.
   OQ-G3 status: each F_B/F_C/F_D has a concrete depth-index witness here (a ZPCategory whose
   initial object is the snap floor). The full functors into the REAL domain categories are now
-  built in the sibling files — fB_functor : ℕᵒᵖ ⥤ TopCat (ZPH_TopFunctor), fD_functor :
-  ℕ ⥤ ModuleCat ℂ (ZPH_HilbFunctor), fC_functor : ℕ ⥤ KleisliCat PMF (ZPH_InfoFunctor), bundled
-  as mc1_correspondence (ZPH_MC1). Those supersede the ℕ-shaped depth proxies in this file.
+  built in the sibling files — fB_functor : ℕᵒᵖ ⥤ TopCat (ZeroParadox/Valuation/TopFunctor.lean), fD_functor :
+  ℕ ⥤ ModuleCat ℂ (ZeroParadox/State/HilbFunctor.lean), fC_functor : ℕ ⥤ KleisliCat PMF (ZeroParadox/Multihomed/InfoFunctor.lean), bundled
+  as mc1_correspondence (ZeroParadox/Multihomed/MC1Bridge.lean). Those supersede the ℕ-shaped depth proxies in this file.
   MC-1's correspondence half is thereby formal; the literal cross-category identity remains a
   modeling commitment (see README Question Register).
 - T-H2: Categorical singularity (domain-absent) and ZPC singularity (divergent
@@ -74,8 +74,8 @@ yield different functors. -/
 
 The four functors F_A, F_B, F_C, F_D map the abstract ZPCategory C to its four domain
 codomains. A complete Lean construction of each functor as a CategoryTheory.Functor into a
-real Mathlib category is now done in the sibling files (ZPH_TopFunctor / ZPH_HilbFunctor /
-ZPH_InfoFunctor, bundled in ZPH_MC1): fB into TopCat, fD into ModuleCat ℂ, fC into the Kleisli
+real Mathlib category is now done in the sibling files (ZeroParadox/Valuation/TopFunctor.lean / ZeroParadox/State/HilbFunctor.lean /
+ZeroParadox/Multihomed/InfoFunctor.lean, bundled in ZeroParadox/Multihomed/MC1Bridge.lean): fB into TopCat, fD into ModuleCat ℂ, fC into the Kleisli
 category of PMF. (Mathlib has no bespoke SLat/pTop/InfoSp/Hilb categories, so those standard
 categories are the genuine realizations.) The proxies below are the original concrete witnesses,
 superseded by those real-category functors; each still provides a concrete ZPCategory witness
@@ -90,7 +90,7 @@ plus the domain-specific theorem grounding the initial-object claim.
   preserves_initial definition, and snap grounding theorem. These depth-index types are
   proxies isomorphic to ℕ — concrete witnesses, not the real domain categories. The full
   functors into the real Mathlib categories (TopCat / ModuleCat ℂ / KleisliCat PMF) are now
-  built in ZPH_TopFunctor / ZPH_HilbFunctor / ZPH_InfoFunctor and bundled in ZPH_MC1; they
+  built in ZeroParadox/Valuation/TopFunctor.lean / ZeroParadox/State/HilbFunctor.lean / ZeroParadox/Multihomed/InfoFunctor.lean and bundled in ZeroParadox/Multihomed/MC1Bridge.lean; they
   supersede these proxies.
   NNRealZPCat appendix remains as the shared categorical witness underlying all three. -/
 

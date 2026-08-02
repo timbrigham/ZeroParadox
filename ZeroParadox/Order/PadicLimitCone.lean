@@ -165,7 +165,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 `Classical.choice` is expected: it enters through Mathlib's `TopCat` / limits / metric library,
-the same dependency carried by `ZPH_TopFunctor` and the ZP-B topology layer. It is a library
+the same dependency carried by `ZeroParadox/Valuation/TopFunctor.lean` and the ZP-B topology layer. It is a library
 dependency, not a new commitment of this construction. -/
 
 section PurityCheck

@@ -26,7 +26,7 @@ floor `0 : ℕ`) and #3 (the p-adic ν-limit floor `{0} ⊆ Q₂`). **The only N
 TC10+TC35 is a generic poset triviality** — see the honest-scope note below. The file is retained as
 a thin, accurately-labeled co-occurrence record, not as a new structural result.
 
-**Re-exported from TC35.** `ZPH_MC1_TC35` witnessed an *order-least* split: node #1 carries
+**Re-exported from TC35.** `ZeroParadox/Valuation/RootAsymmetry.lean` witnessed an *order-least* split: node #1 carries
 `IsLeast (Set.univ : Set ℕ) 0` (a least element of its ambient order), while node #3 carries a least
 element *only on the image of its norm* (`IsLeast (Set.range (‖·‖ : Q₂ → ℝ)) 0`) — not as an
 order-bottom of `Q₂`.

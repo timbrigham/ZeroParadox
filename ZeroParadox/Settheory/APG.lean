@@ -133,7 +133,7 @@ end APGBasics
     - collect_singleton: collect {x} = scale x (links collect to the valuation structure)
 
     ZFSet is NOT a valid instance: Foundation forbids x ∈ x, which any cyclic APG requires.
-    OntologicalStates (ZPJ_OntBridge) has AbstractSelfApp but not ValuationStructure —
+    OntologicalStates (ZeroParadox/Settheory/OntBridge.lean) has AbstractSelfApp but not ValuationStructure —
     decoration of cyclic APGs specifically requires val_scale for the k>1 argument. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
 class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] where

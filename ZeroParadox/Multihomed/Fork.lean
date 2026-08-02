@@ -17,7 +17,7 @@ split with ZP-P's μ/ν (least/greatest fixed point) fork, and to check whether 
 choice-discriminating the way ZP-P's coalgebra layer is.
 
 **Gap (as far as this reaches).** The "split IS the μ/ν fork" claim is a conceptual identification, not a
-Lean theorem connecting this file to `ZPP_Coalgebra`. And the choice-discrimination is **masked** here:
+Lean theorem connecting this file to `ZeroParadox/Settheory/Coalgebra.lean`. And the choice-discrimination is **masked** here:
 all three witnesses footprint `[propext, Classical.choice, Quot.sound]` (inherited library choice), so the
 μ-free/ν-choice signature is invisible at this level — it lives in ZP-P's abstract W/M-types, not these
 realizations. The fork identification is conjecture; this file only restates initiality as a (co)limit.

@@ -57,7 +57,7 @@ T1's role-preserving span.
 **What is honestly proved.** Two facts, both true, witnessed in `apex_span_no_ambient_strictMono`:
 1. a singleton-apex span exists for the two bottom *points* (vacuous: they are singletons), and
 2. the *direct* ambient obstruction survives — `no_strictMono_real_to_ordinal` (in
-   `ZPH_MC1_TreeObstructions`) still rules out a strict-mono embedding of the attractor ambient `ℝ`
+   `ZeroParadox/Multihomed/TreeObstructions.lean`) still rules out a strict-mono embedding of the attractor ambient `ℝ`
    into the well-order. ℝ's `<` is not well-founded; the ordinal's is. That is the real content.
 
 **Honest scope (interpretation vs Lean).** The Lean fact is: the singleton bottom *points* admit a

@@ -190,7 +190,7 @@ section PurityCheck
 --   root_seam            : [propext, Classical.choice, Quot.sound]     — inherits ν's choice
 --   idPF_no_seam         : [propext, Classical.choice, Quot.sound]     — inherits via cofix_nonempty
 --   root_cut_dichotomy   : [propext, Classical.choice, Quot.sound]
--- The same μ-choice-free / ν-choice split as ZPP_Coalgebra: the seam's ν half carries the M-type
+-- The same μ-choice-free / ν-choice split as ZeroParadox/Settheory/Coalgebra.lean: the seam's ν half carries the M-type
 -- choice artifact inherited from Mathlib (Cofix.corec / Cofix.bisim). The μ half (fixEquiv) is
 -- choice-free, exactly as in the strict case. The choice on the ν side is a library artifact, not a
 -- necessity (polynomial-functor final coalgebra is constructible choice-free in principle).

@@ -19,10 +19,10 @@ project as well as Mathlib as a whole.
 ## What this states
 The snap ⊥→ε₀ as the crossing of the well-foundedness boundary, witnessed in **two formalized registers**:
 
-* **Relation / carrier level** (`ZPJ_Boundary`): the self-application floor is non-well-founded (the ⊥
+* **Relation / carrier level** (`ZeroParadox/Multihomed/Boundary.lean`): the self-application floor is non-well-founded (the ⊥
   self-loop, `fixed_bot`); the ordinal ascent is well-founded; on one carrier, the floor is the *sole*
   non-accessible point and every post-snap state is accessible (`snap_crossing`).
-* **Categorical level** (`ZPP_Coalgebra`, the ZP-P μ/ν fork): for the leaf-free functor `idPF_Coalgebra`, the
+* **Categorical level** (`ZeroParadox/Settheory/Coalgebra.lean`, the ZP-P μ/ν fork): for the leaf-free functor `idPF_Coalgebra`, the
   initial algebra (W-type, μ, the well-founded closure) is **empty** and the final coalgebra (M-type, ν,
   the non-well-founded closure) is **inhabited** (`categorical_fork_strict`). The self-referential element
   lives in ν, not μ — the back edge on the non-well-founded side.

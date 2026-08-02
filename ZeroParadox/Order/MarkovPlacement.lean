@@ -29,7 +29,7 @@ is a μ- or ν-object *in its own ambient*. TC05 placed the p-adic floor #3 dyna
 
 This file probes #2 directly. The pre-registered **NO-GO** was: the stationary point has **no
 order-extremal characterization** in the simplex — it is an antichain element of `stdSimplex`
-(`simplex_antichain`, ZPH_MC1_TreeObstructions), so it is neither order-least nor order-greatest. The
+(`simplex_antichain`, ZeroParadox/Multihomed/TreeObstructions.lean), so it is neither order-least nor order-greatest. The
 pre-registered **GO** was a genuine categorical ν-witness (an `IsLimit` / terminal characterization of
 the attractor as a cone over the orbit diagram), paralleling `fB_bottom_is_limit` for #3.
 

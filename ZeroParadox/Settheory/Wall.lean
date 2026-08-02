@@ -101,10 +101,18 @@ experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloo
 | any well-founded relation | NO CYCLE (any length) | `wf_no_cycle` (1-cycle: `wf_no_selfloop`) | axiom-free |
 | set theory + Foundation | NO MEMBERSHIP CYCLE (any length) | `no_membership_cycle` (1-cycle: `no_quine_atom`) | choice-free |
 | ordinal notation naming `<ε₀` | UNREACHABLE FROM BELOW | `ZPN.omegaPow_no_fixedpoint` | choice-free |
-| lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | `ZPP_DualityFork.fixed_pole_forces_collapse` | axiom-free |
+| lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | **not at HEAD** — see note below | n/a |
 | metric completion of ℚ | NO TRANSFER (same role) | `ZPP.real_not_equiv_padic` | choice |
 | μ/ν coalgebra | DISTINCT ENDS | `ZPP.categorical_fork_strict` | choice |
 | computability (Kleene) | EXISTS-BUT-UNDECIDABLE | `ZPK.infinite_quine_family` (∃, ∞-many) + `ZPK.isComputationalQuine_undecidable` (¬ComputablePred) | choice |
+
+**⚠ Note on the "lightweight categorical typeclass" row (2026-08-02).** It previously cited
+`fixed_pole_forces_collapse` from a pre-reorg `ZPP_DualityFork` module. **That declaration is not at
+HEAD.** It exists only on `private/physics-bridge`, which is a **permanently local, quarantined branch**
+that never reaches any remote — so a reader of the public repository cannot check it, and it sat in this
+table beside witnesses that *are* checkable. The theorem itself is real (an involutive fork whose pole
+is fixed by the involution is necessarily collapsed), but until it is brought to a tracked file the row
+has **no citable witness**. Do not restore the citation without moving the declaration.
 
 `lawvere_fixedpoint` (here, axiom-free) is the GENERAL theorem unifying the **diagonal family** — Cantor and
 Russell are its corollaries, triggered by the engine (`Not` is fixed-point-free). Within the diagonal family

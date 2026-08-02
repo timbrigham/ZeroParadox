@@ -18,7 +18,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-A1 (`ZPH_ArchPlace`) located node #2 over ℚ's unique archimedean place. A2 supplies the *role*: the
+A1 (`ZeroParadox/Valuation/ArchPlace.lean`) located node #2 over ℚ's unique archimedean place. A2 supplies the *role*: the
 **product formula** makes that archimedean place not optional but **forced**.
 
 Mathlib's `NumberField.prod_abs_eq_one` at K = ℚ states

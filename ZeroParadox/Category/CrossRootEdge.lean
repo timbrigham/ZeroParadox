@@ -26,7 +26,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 This file tests the last unbuilt cross-root pair of the bottom-diagram tree at the
 **categorical-witness** level: node #4, the Kleisli bottom `Fin 0` (a genuine μ object —
-initial / empty-diagram colimit in `KleisliCat PMF`, witness `ZPH_MC1_TC24`), against node #3,
+initial / empty-diagram colimit in `KleisliCat PMF`, witness `ZeroParadox/Category/KleisliInitialColimit.lean`), against node #3,
 the p-adic floor `{0} = ⋂ q2Ball n` (a genuine ν object — the `IsLimit` of the contravariant
 inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`, witness `floorConeIsLimit`).
 
@@ -151,7 +151,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 `Classical.choice` is expected: it enters through Mathlib's `TopCat` / limits / `KleisliCat` / `PMF`
-/ p-adic libraries, the same dependencies carried by `ZPH_TopFunctor`, `ZPH_InfoFunctor`, and the
+/ p-adic libraries, the same dependencies carried by `ZeroParadox/Valuation/TopFunctor.lean`, `ZeroParadox/Multihomed/InfoFunctor.lean`, and the
 TC10 / TC24 witnesses. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck

@@ -134,7 +134,7 @@ theorem arity_collapse :
 
 section PurityCheck
 -- Measured footprint (lake build, v4.30.0-rc2) — the same μ-choice-free / ν-choice split as
--- ZPP_Coalgebra and TC26:
+-- ZeroParadox/Settheory/Coalgebra.lean and TC26:
 --   binFix_isEmpty    (μ empty)     : [propext, Quot.sound]                       — CHOICE-FREE
 --   binCofix_nonempty (ν inhabited) : [propext, Classical.choice, Quot.sound]     — Mathlib M-type
 --   binPF_fork_strict               : [propext, Classical.choice, Quot.sound]     — inherits ν

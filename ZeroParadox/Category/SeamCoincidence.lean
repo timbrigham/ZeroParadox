@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 The bottom-diagram tree (`tree_test_campaign_2026-06-29.md`) splits the framework bottoms across a μ
 root (initial / least-fixed-point / colimit) and a ν root (terminal / greatest-fixed-point / limit).
-`ZPH_MC1_TreeSeam` already identified node #5 (the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`)
+`ZeroParadox/Category/TreeSeam.lean` already identified node #5 (the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`)
 as a *zero object* and called it "the seam". This file restates the **zero-object definition** as the
 μ=ν seam property and **witnesses it at the real node**. In *any* category, a zero object is by
 definition an object that is simultaneously initial and terminal, i.e. the place where the

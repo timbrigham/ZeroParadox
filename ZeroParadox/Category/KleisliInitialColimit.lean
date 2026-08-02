@@ -28,7 +28,7 @@ cone — leaving the forks asymmetric? **That question is ill-posed in this Math
 `IsInitial X` is *definitionally* `IsColimit (asEmptyCocone X)` (an `abbrev`,
 `Mathlib/CategoryTheory/Limits/Shapes/IsTerminal.lean:59`). There is no such thing as an `IsInitial`
 that is not already an empty-diagram colimit witness — the two are one object. So the answer is forced
-and content-free: the pre-existing `fC_zero_isInitial` from `ZPH_InfoFunctor` already *is* an
+and content-free: the pre-existing `fC_zero_isInitial` from `ZeroParadox/Multihomed/InfoFunctor.lean` already *is* an
 empty-colimit cocone. Nothing in this file is a discovery about the snap floor; it is an unfolding of
 a Mathlib `abbrev` plus two applications of generic category-theory lemmas (true of *any* initial
 object in *any* category), restated with `fC_obj 0` plugged in.
@@ -87,7 +87,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 `Classical.choice` is expected: it enters through Mathlib's `PMF` / `KleisliCat` / colimit library,
-exactly as in `ZPH_InfoFunctor`. No new commitment is introduced by this file. -/
+exactly as in `ZeroParadox/Multihomed/InfoFunctor.lean`. No new commitment is introduced by this file. -/
 
 section PurityCheck
 open ZeroParadox

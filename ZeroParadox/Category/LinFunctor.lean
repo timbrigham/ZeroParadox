@@ -15,11 +15,11 @@ set_option maxHeartbeats 400000
 `map_comp` is the law of total probability as matrix product (`bind_toReal_sum`). `L_bot_isInitial`: `L`
 carries the Info bottom `⟨0⟩` (empty type) to an initial object of `ModuleCat ℂ` (the Hilbert zero module).
 
-This is the real edge the cold audit said `ZPH_MC1_Linearize` only stand-in'd: it REPLACES "two initial
+This is the real edge the cold audit said `ZeroParadox/Category/Linearize.lean` only stand-in'd: it REPLACES "two initial
 objects coincide" with a genuine transform between the two domains, carrying ⊥_C → ⊥_D via an honest functor.
 
 **Prior art (cite, not novel):** linearizing a Markov category is standard — Markov categories (Fritz 2020;
-already cited in `ZPH_MC1`), the classical linear representation of stochastic matrices (FinStoch ↪ Vect).
+already cited in `ZeroParadox/Multihomed/MC1Bridge.lean`), the classical linear representation of stochastic matrices (FinStoch ↪ Vect).
 The free-module (Hilbert) side is Mathlib's (`ModuleCat.free` / `Finsupp.lift`); reused, not reproved.
 
 **Scope (honest):** FINITE types only (objects `Fin n`). A general `PMF` can have infinite support, so its

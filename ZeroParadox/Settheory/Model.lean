@@ -6,7 +6,7 @@ import Mathlib.Tactic
 
 ## Engineer's Take
 
-The abstract machine in ZPJ_Scale proves that *if* a type has a scale operation with
+The abstract machine in ZeroParadox/Valuation/Scale.lean proves that *if* a type has a scale operation with
 the right valuation behaviour, *then* AFA content follows. This file builds the type
 that has that behaviour. The concrete carrier is ℕ∞ = WithTop ℕ — the extended naturals
 — where the join operation is min, the bottom element is ⊤ (the natural maximum), and
@@ -33,7 +33,7 @@ So ⊤ is the ZP-bottom (valuation ∞, unique fixed point), and 0 is the ZP-max
 
 ## The indexed-family picture
 
-The abstract gap in ZPJ_Scale asked for an infinite domain where scale can increase
+The abstract gap in ZeroParadox/Valuation/Scale.lean asked for an infinite domain where scale can increase
 valuation without bound. ℕ∞ resolves this: each n : ℕ is a level with val n = n,
 scale shifts n to n + 1, and ⊤ is the limit point that all sequences converge to.
 The "indexed family (L₀, L₁, L₂, ...)" is just this structure with each Lₙ = {n, ⊤}.
@@ -47,7 +47,7 @@ The full derivation chain now has a concrete model:
     → AbstractSelfApp (via toAbstractSelfApp)
     → AFA content: natInf_selfMem_singleton = {⊤}
 
-All results are sorry-free and derived from ℕ∞ arithmetic + ZPJ_Scale theorems.
+All results are sorry-free and derived from ℕ∞ arithmetic + ZeroParadox/Valuation/Scale.lean theorems.
 -/
 
 namespace ZeroParadox

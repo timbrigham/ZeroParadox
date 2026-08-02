@@ -11,16 +11,16 @@ on our continuing hunt for the most basic structures to hold the bottom element.
 
 ## The question
 
-ZPJ_Scale defines ValuationStructure over `[ZPSemilattice L]`, but the four
+ZeroParadox/Valuation/Scale.lean defines ValuationStructure over `[ZPSemilattice L]`, but the four
 axioms (scale_bot, val_bot, val_unique, val_scale) only ever use `bot` — the
 join operation ⊔ never appears. This means ZPSemilattice is an over-strong
 constraint, and ℤ_[2] cannot be a formal ValuationStructure instance despite
-satisfying all four axioms (proved as standalone theorems in ZPJ_Scale §V).
+satisfying all four axioms (proved as standalone theorems in ZeroParadox/Valuation/Scale.lean §V).
 
 This file tests the conjecture that the constraint is an encoding artefact, not
 a mathematical gap. It defines ValBridge — the same four axioms with `bot` as a
 plain field rather than a ZPSemilattice bottom — and builds a formal ℤ_[2]
-instance using the theorems already proved in ZPJ_Scale.
+instance using the theorems already proved in ZeroParadox/Valuation/Scale.lean.
 
 If the instance builds and the AFA content chain follows, the formal bridge is
 complete: ℤ_[2] provably carries AFA content as a theorem of ZFC, not an
@@ -33,7 +33,7 @@ import from Aczel.
     → scale_unique_fp_free
     → selfMem_eq_singleton_free  ({x | scale x = x} = {bot})
 
-This is the same chain as ZPJ_Scale §II–IV, without the ZPSemilattice dependency.
+This is the same chain as ZeroParadox/Valuation/Scale.lean §II–IV, without the ZPSemilattice dependency.
 -/
 
 namespace ZeroParadox
@@ -44,7 +44,7 @@ open ZeroParadox
 
 /-- Same four axioms as ValuationStructure, but `bot` is a plain field.
     No ZPSemilattice required — the join operation ⊔ never appears in any axiom. -/
--- [ZP-CUSTOM] replaces: ValuationStructure (ZPJ_Scale) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (a ring, not a ZPSemilattice) to be a formal instance. Unifies both tracks under one ancestor.
+-- [ZP-CUSTOM] replaces: ValuationStructure (ZeroParadox/Valuation/Scale.lean) | reason: ValuationStructure required [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms — the constraint was an encoding artefact. ValBridge carries the same four axioms with bot as a plain field, allowing ℤ_[2] (a ring, not a ZPSemilattice) to be a formal instance. Unifies both tracks under one ancestor.
 class ValBridge (L : Type*) where
   bot : L
   scale : L → L
@@ -90,11 +90,11 @@ theorem selfMem_eq_singleton_free :
 /-! ## § III. ℤ_[2] Instance — The Formal Bridge -/
 
 /-- ℤ_[2] with scale = ×2 and val = v₂ is a ValBridge.
-    bot = 0. All four axioms proved in ZPJ_Scale §V as standalone theorems.
-    This is the formal instance that ZPJ_Scale could not build because
+    bot = 0. All four axioms proved in ZeroParadox/Valuation/Scale.lean §V as standalone theorems.
+    This is the formal instance that ZeroParadox/Valuation/Scale.lean could not build because
     ℤ_[2] is not a ZPSemilattice — showing the ZPSemilattice constraint
     was an encoding artefact, not a mathematical requirement. -/
--- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: ℤ_[2] is a ring — it cannot be a ZPSemilattice instance and could not satisfy ValuationStructure. ValBridge's bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in ZPJ_Scale §V (q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale).
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: ℤ_[2] is a ring — it cannot be a ZPSemilattice instance and could not satisfy ValuationStructure. ValBridge's bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in ZeroParadox/Valuation/Scale.lean §V (q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale).
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)

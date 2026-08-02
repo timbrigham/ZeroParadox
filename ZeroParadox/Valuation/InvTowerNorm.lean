@@ -6,7 +6,7 @@ set_option maxHeartbeats 400000
 /-!
 # Batch 2 / G3 (pipeline, T6): the 0↔∞ duality on the 2-adic NORM (metric side of the flip)
 
-Experiment G3 (T6 compute-the-invariant). Item 1 (`ZPH_MC1_PolarityFlip`) realized the 0↔∞ flip on the
+Experiment G3 (T6 compute-the-invariant). Item 1 (`ZeroParadox/Valuation/PolarityFlip.lean`) realized the 0↔∞ flip on the
 *valuation* (`v₂(x⁻¹) = −v₂(x)`). This is the *metric* companion: the snap tower `2ⁿ` has 2-adic norm
 `‖2ⁿ‖ = 2⁻ⁿ → 0` (approach to 0), and its inverse `2⁻ⁿ` has norm `‖(2ⁿ)⁻¹‖ = 2ⁿ → ∞` (approach to ∞). So
 the inversion sends a sequence collapsing to the floor into one diverging to infinity — the zero=infinity

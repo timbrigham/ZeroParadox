@@ -24,7 +24,7 @@ with "snap occurs" formalized topologically as **total disconnectedness** (predi
   (Order-language companion: ZP-F `ZeroParadox.f_snap_impossible`.)
 - ℚ_p (the non-Archimedean completions): totally disconnected → snap.
   (ZP-B anchor: `ZeroParadox.t5_totallyDisconnected`, itself `inferInstance` from Mathlib.)
-- Ostrowski (ZP-P, `ZPP_Ostrowski`): these are the ONLY completions, and they are mutually exclusive.
+- Ostrowski (ZP-P, `ZeroParadox/Valuation/Ostrowski.lean`): these are the ONLY completions, and they are mutually exclusive.
 
 ## Why topological (predicate (a), Tim 2026-06-24)
 The only NON-CIRCULAR choice: "snap := non-Archimedean" just renames Ostrowski. Total disconnectedness

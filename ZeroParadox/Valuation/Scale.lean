@@ -13,7 +13,7 @@ A ZP-J valuation-bridge sub-file. See the Engineer's Take in `ZeroParadox/Setthe
 
 ## The road surface
 
-ZPJ_SelfApp reduced AFAStructure to AbstractSelfApp (two axioms: fixed_bot, unique_fp).
+ZeroParadox/Computability/SelfApp.lean reduced AFAStructure to AbstractSelfApp (two axioms: fixed_bot, unique_fp).
 This file adds the next layer: a ValuationStructure that explains *why* ⊥ is the unique
 fixed point — because scale strictly increases valuation, and ⊥ is the unique element
 with infinite valuation. unique_fp becomes a theorem, not an axiom.
@@ -36,7 +36,7 @@ val strictly increases under scale. Unique fixed point = unique element with val
 
 AFA content is derived from the valuation structure — not imported from Aczel.
 
-## What ZPJ_ScaleBridge resolved
+## What ZeroParadox/Valuation/ScaleBridge.lean resolved
 
 The ZPSemilattice constraint was an encoding artefact: ValuationStructure required
 [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms.

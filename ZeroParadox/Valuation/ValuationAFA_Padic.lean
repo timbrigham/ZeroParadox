@@ -4,7 +4,7 @@ import Mathlib.NumberTheory.Padics.PadicNumbers
 /-!
 # P10 concrete: the bottom-valuation axioms are THEOREMS for the 2-adic numbers
 
-P10 (`ZPJ_ValuationAFA`) derives AFA self-containment from a `BottomValuation` — abstractly a reduction
+P10 (`ZeroParadox/Valuation/ValuationAFA.lean`) derives AFA self-containment from a `BottomValuation` — abstractly a reduction
 (AFA posit ⟸ valuation posit), with one residual posit `v_top_unique`. This file discharges that posit
 on the genuine 2-adic valuation: both `BottomValuation` axioms, instantiated to
 `Padic.addValuation : AddValuation ℚ_[2] (WithTop ℤ)`, are THEOREMS of 2-adic analysis, not posits:

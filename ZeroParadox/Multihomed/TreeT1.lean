@@ -49,7 +49,7 @@ cut would be wrong.
 
 **Honest scope.** The #4↔#5 connection is realized object-wise (a per-`n` module iso) and via the
 common apex #1; a single *functor* `KleisliCat PMF ⥤ ModuleCat ℂ` is not built here (it is genuinely
-obstructed on infinite types — `ZPH_MC1_Linearize` — clean only on the finite snap tower). So T1 is GO
+obstructed on infinite types — `ZeroParadox/Category/Linearize.lean` — clean only on the finite snap tower). So T1 is GO
 at the level of "connected by real bottom-preserving maps", which is exactly the tree's sibling
 prediction; it is not the stronger claim of a single unifying functor.
 -/

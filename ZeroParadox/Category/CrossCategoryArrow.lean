@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC18 (the seam file `ZPH_MC1_TreeSeam`) located the μ=ν two-sidedness of node #5 (the Hilbert
+TC18 (the seam file `ZeroParadox/Category/TreeSeam.lean`) located the μ=ν two-sidedness of node #5 (the Hilbert
 bottom `fD_functor.obj 0 = StateSpace 0`) *inside* `ModuleCat ℂ`: #5 is a zero object of that one
 category. The deflationary reading of TC18 is that the seam's bridging is intra-category — the two
 universal properties (initial ∧ terminal) collapse only within `ModuleCat ℂ`, and the

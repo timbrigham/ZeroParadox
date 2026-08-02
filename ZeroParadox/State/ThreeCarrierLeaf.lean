@@ -96,7 +96,7 @@ that #3's floor remembers a valuation/embedding invariant the bare leaves lack �
 this level, because the valuation structure lives on the **ambient** `Q₂`, and the one-point subspace
 `{0}` forgets it (`padic_is_punit`). This file cannot speak to the real asymmetry. The load-bearing μ/ν
 asymmetry (the connected-vs-totally-disconnected wall) is an **ambient** phenomenon and remains **OPEN
-in `ZPH_MC1_TreeT2`** — it is neither proved nor probed here.
+in `ZeroParadox/Multihomed/TreeT2.lean`** — it is neither proved nor probed here.
 
 **What is Lean vs interpretation.** Lean proves exactly: three carriers are `Unique`; the #5 Hilbert
 carrier reconciles with #3/#2 at the point (the new content over TC16); hom-sets between them are
@@ -174,7 +174,7 @@ noncomputable def seam_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCa
 
 /-- `padicFloor_ThreeCarrierLeaf ≃ₜ PUnit`, again `homeomorphOfUnique`. Genericity witness for #3: the valuation/
     embedding invariant lives on the ambient `Q₂`, and the one-point subspace `{0}` forgets it, so the
-    floor-as-space is a bare point. The real asymmetry is ambient and stays OPEN in `ZPH_MC1_TreeT2`. -/
+    floor-as-space is a bare point. The real asymmetry is ambient and stays OPEN in `ZeroParadox/Multihomed/TreeT2.lean`. -/
 noncomputable def padic_is_punit : padicFloor_ThreeCarrierLeaf ≃ₜ PUnit :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf PUnit
 

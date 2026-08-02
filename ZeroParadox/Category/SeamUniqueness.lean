@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZPH_MC1_TreeSeam` established that node #5 (the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`)
+`ZeroParadox/Category/TreeSeam.lean` established that node #5 (the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`)
 is a **zero object** of `ModuleCat ℂ` — the μ=ν seam node, initial ∧ terminal. The natural
 follow-up (this file, campaign cycle TC-08): **is #5 the only zero-object bottom among the framework
 bottoms, or does another bottom also straddle?**

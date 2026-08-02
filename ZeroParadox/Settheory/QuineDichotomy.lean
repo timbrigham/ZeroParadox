@@ -41,7 +41,7 @@ claim that AFA is machine-checked.
 - no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness`  (`HasLawvereWitness`)
 
 STATUS: PROVED, sorry-free. Pure assembly of ZP-P coalgebra (`categorical_fork_strict`) +
-ZPJ_SelfApp (`selfMem_eq_singleton_bot`) + ZPJ_Lawvere (`nontrivial_lattice_no_witness`).
+ZeroParadox/Computability/SelfApp.lean (`selfMem_eq_singleton_bot`) + ZeroParadox/Category/Lawvere.lean (`nontrivial_lattice_no_witness`).
 -/
 
 set_option maxHeartbeats 400000

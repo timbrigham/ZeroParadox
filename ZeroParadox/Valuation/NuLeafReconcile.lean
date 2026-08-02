@@ -62,7 +62,7 @@ structurally; ν glues only set-theoretically / topologically at the point. That
 homeomorphism between them exists; the *same* construction homeomorphs the p-adic floor with `PUnit`
 (genericity witness). The reading that this genericity = "ν glues only vacuously while μ glues
 structurally, so the tree's branches are asymmetric" is the framework's interpretation of that Lean
-content (the structural μ-glue lives in `ZPH_MC1_TreeT1`, not re-proved here).
+content (the structural μ-glue lives in `ZeroParadox/Multihomed/TreeT1.lean`, not re-proved here).
 -/
 
 namespace ZeroParadox
