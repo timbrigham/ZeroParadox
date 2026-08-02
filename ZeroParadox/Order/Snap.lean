@@ -35,8 +35,9 @@ Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
   candidate claim and is not formalised here
 
 Key result: T-SNAP — the Binary Snap ⊥ → ε₀ is a derived theorem, not an axiom.
-AX-1 is retired. The cross-framework link is established by giving ZPC.MachinePhase
-a ZPSemilattice instance, making T-SNAP a direct consequence of ZPA.bot_join.
+AX-1 is retired. The cross-framework link is established by giving `MachinePhase`
+(`ZeroParadox/Information/Surprisal.lean`) a `ZPSemilattice` instance, making T-SNAP a direct
+consequence of the semilattice bottom law `bot_join` (`ZeroParadox/Order/Lattice.lean`).
 -/
 
 namespace ZeroParadox

@@ -438,8 +438,8 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     assignment inside `AddValuation.of`), and `ZeroParadox/Valuation/FloorWitness.lean:31`'s `addVal_bot`
     is literally the projection `v.map_zero`. Adoption **relocates** the assumption; it does not
     derive it. (Corrected 2026-08-01: an earlier revision of this block said the condition becomes a
-    theorem, and said the class omits one axiom. Both were wrong — an adversary gate refuted them by
-    reading the definition.) Adopting `AddValuation` would dissolve § VII-b's degeneracy, at the cost
+    theorem, and said the class omits one axiom. Both were wrong, and the definition itself is what
+    refutes them.) Adopting `AddValuation` would dissolve § VII-b's degeneracy, at the cost
     of also assuming the ultrametric inequality; that trade is **not** made here.
 
     However, the "infinitudes of zero" argument works at the *identification* layer —

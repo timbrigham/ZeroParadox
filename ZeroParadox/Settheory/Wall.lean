@@ -106,7 +106,6 @@ experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloo
 | μ/ν coalgebra | DISTINCT ENDS | `categorical_fork_strict` | choice |
 | computability (Kleene) | EXISTS-BUT-UNDECIDABLE | `infinite_quine_family` (∃, ∞-many) + `isComputationalQuine_undecidable` (¬ComputablePred) | choice |
 
-*(History of the "lightweight categorical typeclass" row, 2026-08-02. It cited
 **⚠ THE ROW'S SIGNATURE WAS ALSO WRONG, AND THAT MATTERED MORE THAN THE MISSING FILE. Corrected
 2026-08-02 (adversary gate, bedrock).** It read
 `| lightweight categorical typeclass | NO NON-VACUOUS UNIFIER | … | axiom-free |`. Against this table's

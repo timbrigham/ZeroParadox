@@ -272,7 +272,10 @@ Not "what choice is" — that is Lean's, not the framework's. What this corpus h
 proved about where choice does work. -/
 
 -- A CHOICE-CARRYING CASE, indexed on purpose. Everything in § I is a negative result, which risks
--- reading as "the framework is choice-free" — it is not. This is the ν-side inhabitation
+-- Statement: `Nonempty (Cofix idPF_Coalgebra.Obj)` — the ν side is inhabited. Footprint measured
+-- `[propext, Classical.choice, Quot.sound]`.
+-- Reading: the framework does NOT read this as "the framework is choice-free" — it is not.
+-- This is the ν-side inhabitation
 -- via Mathlib's QPF `Cofix`, measured `[propext, Classical.choice, Quot.sound]`. Its home file argues
 -- the footprint is a library artifact of the M-type construction rather than a necessity, citing
 -- Ahrens-Capriotti-Spadotti that polynomial final coalgebras are choice-free in principle.

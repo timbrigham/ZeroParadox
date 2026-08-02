@@ -283,8 +283,7 @@ the theorem.
 
 *(Nontriviality is load-bearing and is stated here deliberately. Mathlib's module **docstring** elides
 it, but the declaration takes `hf_nontriv : f.IsNontrivial` and `completions_exhaustive` carries it as
-`(hf : f.IsNontrivial)`. Quoting the docstring verbatim would reproduce the elision — corrected
-2026-08-01 after a gate caught it.)*
+`(hf : f.IsNontrivial)`. Quoting the docstring verbatim would reproduce the elision. Corrected 2026-08-01.)*
 
 *(Corrected 2026-08-01. This paragraph previously read: "every complete valued field extending ℚ is
 either Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p)." That is

@@ -220,8 +220,8 @@ completion of ℚ — the first bullet is therefore wider than Ostrowski and res
   **elementary direction** is used: in an ordered field every square is ≥ 0, so a sum of squares
   cannot be −1; and −1 **is** a sum of squares in every ℚ_p (its Stufe is finite — 4 for ℚ₂). That
   direction needs no Artin–Schreier. Artin–Schreier is the **converse** — formally real ⟹ orderable —
-  which is the deep half and is not required here. Cited 2026-08-02, then scoped 2026-08-02 after a
-  gate noted the theorem was named for a biconditional where one elementary direction does the work.)*
+  which is the deep half and is not required here — the theorem is named for a biconditional, and only
+  the elementary direction is load-bearing for this claim.)*
 
 **ZP-B does NOT force the snap, and cannot.** What it proves is topological: the gap at 0 is
 clopen (`t3_isolation`) and the return across it admits no continuous path (`c3_irreversible`,
@@ -240,8 +240,7 @@ completion — and ZP-B removes the topological obstruction in ℚ₂. *(Correct
 hypothesis. The identical phrasing in `ZeroParadox/Valuation/Padic.lean` was struck in the same arc, **as
 of `a565649`** — and only on the second attempt: the first pass corrected this file while asserting the
 sibling had already been fixed, when it had not. **Do not restate another file's state as fact in a
-correction note — including this one, which is why it is dated: grep the claim there instead.** An
-adversary gate caught it.)* That the snap
+correction note — including this one, which is why it is dated: grep the claim there instead.**)* That the snap
 actually occurs there is carried by AX-B1 together with the framework's commitments, never by
 C3 or T5 alone.
 

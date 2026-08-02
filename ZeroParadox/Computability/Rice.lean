@@ -95,8 +95,8 @@ theorem quine_exists_yet_rice (C : Set Code)
 /-- **Rice on the family's μ/ν fork: the computability face HAS a bottom element.** Unlike the truth /
     comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor: every computable
     self-map on codes has a fixed point (`computability_face_fixedPoint` — Rogers' fixed-point theorem;
-    `:58`'s `rice₂` is the one that genuinely routes through Kleene's second recursion theorem,
-    `fixed_point₂`),
+    while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through
+    Kleene's second recursion theorem, `fixed_point₂`),
     the Kleene quine, a program computing its own code (verb = noun). So on the one-over-infinity-to-bottom
     map, the computability face is the ν side, where self-reference DOES close on a bottom — and Rice
     (above) is the price paid for it: the floor exists, but membership at it is undecidable. -/
