@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree — TC36: the seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
+# the seam #5 is the additive UNIT of the biproduct on `ModuleCat ℂ`
 
 ## Engineer's Take
 
@@ -38,7 +38,7 @@ The *isomorphism itself* (`isoBiprodZero` / `isoZeroBiprod`) is a fully GENERIC 
 category with zero morphisms and binary biproducts, any object that `IsZero` is a biproduct unit. So
 the construction below carries **no Hilbert-specific or framework-specific content beyond what
 `IsZero (fD_functor.obj 0)` already gives** — it is the algebraic restatement of the seam's
-zero-object status, not an independent property of `StateSpace 0`. The honest delta over TC12/TC13
+zero-object status, not an independent property of `StateSpace 0`. The honest delta over `ZeroParadox/Category/SeamCoincidence.lean` and `ZeroParadox/Category/SeamGeneric.lean`
 (initial ∧ terminal) is only: the same `IsZero` fact also makes the node the unit of `⊞`, because
 "zero object" and "biproduct unit" are the same predicate read two ways. The in-statement
 instantiation at `fD_functor.obj 0` keeps the node concrete; it does **not** make the unit role
@@ -70,7 +70,7 @@ noncomputable def seam_biprod_right (X : ModuleCat ℂ) : X ≅ X ⊞ seam :=
 noncomputable def seam_biprod_left (X : ModuleCat ℂ) : X ≅ seam ⊞ X :=
   isoZeroBiprod (X := seam) hilbert_bottom_isZero
 
-/-- **TC36 (bundled): the seam node is the two-sided unit of the biproduct `⊞` on `ModuleCat ℂ`.**
+/-- **(bundled): the seam node is the two-sided unit of the biproduct `⊞` on `ModuleCat ℂ`.**
     For every `X` there are canonical isos `X ≅ X ⊞ seam` and `X ≅ seam ⊞ X`, where
     `seam = fD_functor.obj 0` is the Hilbert bottom. The load-bearing content (the two unit isos at
     the concrete seam object) is IN the statement.
@@ -87,7 +87,7 @@ theorem seam_is_biprod_unit (X : ModuleCat ℂ) :
 /-- The honesty witness, also IN a statement: the seam's biproduct-unit role is *equivalent* to its
     zero-object status, not stronger. `IsZero seam` both gives the unit isos (forward) and is implied
     by `seam ⊞ seam` being zero (a degenerate instance of `biprod_isZero_iff`). This makes explicit
-    that TC36 is the algebraic restatement of `hilbert_bottom_isZero`, not an independent property. -/
+    that is the algebraic restatement of `hilbert_bottom_isZero`, not an independent property. -/
 theorem seam_unit_iff_isZero :
     IsZero seam ↔ Nonempty (seam ≅ seam ⊞ seam) := by
   constructor

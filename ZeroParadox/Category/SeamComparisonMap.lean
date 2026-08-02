@@ -5,7 +5,7 @@ import ZeroParadox.Category.RootCutDegeneracy
 import ZeroParadox.Category.SeamArrowLevel
 
 /-!
-# ZP-H MC-1 tree test TC38: the canonical μ→ν comparison map at the root seam, and the honest
+# the canonical μ→ν comparison map at the root seam, and the honest
 fence on "root-seam ≅ node-seam"
 
 ## Engineer's Take
@@ -19,7 +19,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC26 proved that for the leaf-free **constant** polynomial functor `constPF A` (child type `PEmpty`,
+`ZeroParadox/Category/RootCutDegeneracy.lean` proved that for the leaf-free **constant** polynomial functor `constPF A` (child type `PEmpty`,
 **no recursive position**) the least and greatest fixed points are equivalent:
 `root_seam : QPF.Fix (constPF A).Obj ≃ QPF.Cofix (constPF A).Obj`. That theorem exhibits *some*
 equivalence (it factors through `A` on both sides). It does **not** identify the canonical
@@ -30,14 +30,14 @@ This file closes that gap and then fences the keystone honestly.
 
 **GO (the genuinely new edge).** For any QPF `F`, the canonical comparison `Fix F → Cofix F` is the
 unique initial-algebra homomorphism into `Cofix F` regarded as an `F`-algebra via the inverse of
-`Cofix.dest`. For `constPF A` we build this inverse (`cofixMk`, the leaf-free constructor of TC26) and
+`Cofix.dest`. For `constPF A` we build this inverse (`cofixMk`, the leaf-free constructor of `ZeroParadox/Category/RootCutDegeneracy.lean`) and
 define
 
   `canonicalCmp : Fix (constPF A).Obj → Cofix (constPF A).Obj := Fix.rec (fun y => cofixMk y.1)`
 
 — a genuine recursion homomorphism, not an ad-hoc bijection. We then prove
 
-  `canonicalCmp_eq_root_seam : canonicalCmp = (root_seam : _ ≃ _)`            (it IS TC26's iso)
+  `canonicalCmp_eq_root_seam : canonicalCmp = (root_seam : _ ≃ _)`            (it IS `ZeroParadox/Category/RootCutDegeneracy.lean`'s iso)
   `canonicalCmp_bijective    : Function.Bijective canonicalCmp`               (hence iso)
   `canonicalCmp_hom          : canonicalCmp ∘ Fix.mk = cofixMk ∘ (constPF map canonicalCmp)`
                                                                               (it is the comparison)
@@ -45,7 +45,7 @@ define
                                                                               via Mathlib Fix.rec_unique)
 
 So the *canonical* μ→ν comparison — the one defined by recursion, with its homomorphism law in the
-statement — is an isomorphism for the no-recursive-position functor. That is strictly more than TC26
+statement — is an isomorphism for the no-recursive-position functor. That is strictly more than `ZeroParadox/Category/RootCutDegeneracy.lean`
 (existence of an equiv): it pins down *which* map and proves the comparison itself invertible.
 
 **NO-GO / honest fence (the load-bearing deflation, IN the statements).** The pre-registered risk was
@@ -57,7 +57,7 @@ decisive and they are stated in Lean:
    and `Cofix` is inhabited, so **no** function `Fix → Cofix` is surjective. The root-seam is governed
    by *absence of a recursive position* in the functor.
 
-2. `node_seam_arrow_collapse_is_generic` — re-exporting TC20: the node-#5 "seam" arrow coincidence
+2. `node_seam_arrow_collapse_is_generic` — re-exporting : the node-#5 "seam" arrow coincidence
    `IsInitial.to = IsTerminal.from` is **generic** to any initial-alone / terminal-alone object and
    fires off the seam (witnessed at node #4, which is initial, not a zero object, yet has `to = 𝟙`).
    The node-seam is governed by *being a zero object*, and even then the arrow-equality adds nothing.
@@ -87,7 +87,7 @@ variable {A : Type u}
 
 /-- The canonical comparison `Fix → Cofix` for the leaf-free constant functor, defined by recursion on
 the initial algebra into `Cofix` as an `F`-algebra. The algebra structure on `Cofix (constPF A).Obj`
-is `fun y => cofixMk y.1` — `cofixMk` (TC26) is the leaf-free constructor, the inverse of
+is `fun y => cofixMk y.1` — `cofixMk` is the leaf-free constructor, the inverse of
 `Cofix.dest` for this functor. This is the genuine recursion homomorphism, not an ad-hoc bijection. -/
 def canonicalCmp : Fix (constPF A).Obj → Cofix (constPF A).Obj :=
   Fix.rec (fun (y : (constPF A).Obj (Cofix (constPF A).Obj)) => cofixMk y.1)
@@ -159,13 +159,13 @@ theorem seam_iff_no_recursive_position :
   obtain ⟨a, _⟩ := hg c
   exact ZeroParadox.fix_isEmpty.false a
 
-/-- **The node-seam arrow collapse is generic (re-export of TC20).** The node-#5 "seam" arrow
+/-- **The node-seam arrow collapse is generic (re-export of `ZeroParadox/Category/SeamArrowLevel.lean`).** The node-#5 "seam" arrow
 coincidence `IsInitial.to = IsTerminal.from` holds at any zero object but is *generic*: each side is
 independently `𝟙`, and the μ-collapse `to = 𝟙` fires off the seam (node #4 is initial, not a zero
 object). So the node-seam is governed by the zero-object universal property, and the arrow-equality
 adds nothing beyond it. -/
 theorem node_seam_arrow_collapse_is_generic :
-    -- it fires OFF the seam: node #4 is initial, not a zero object, yet to = 𝟙 (TC20)
+    -- it fires OFF the seam: node #4 is initial, not a zero object, yet to = 𝟙 (`ZeroParadox/Category/SeamArrowLevel.lean`)
     ∃ (h : Limits.IsInitial (ZeroParadox.fC_functor.obj 0)),
       ¬ Limits.IsZero (ZeroParadox.fC_functor.obj 0)
       ∧ h.to (ZeroParadox.fC_functor.obj 0)
@@ -178,7 +178,7 @@ coincidence at a zero object, governed by the zero-object universal property and
 recorded side by side as DISTINCT phenomena in DISTINCT settings:
 
 * root: `Function.Bijective canonicalCmp` for `constPF Unit`;
-* node: the zero-object arrow coincidence `to = from`, which equals `to = 𝟙 = from` (TC20), a
+* node: the zero-object arrow coincidence `to = from`, which equals `to = 𝟙 = from` (`ZeroParadox/Category/SeamArrowLevel.lean`), a
   collapse that is generic to bare initial / bare terminal objects.
 
 Both are true; neither is derived from the other in this file, and there is no map between the QPF
@@ -193,7 +193,7 @@ theorem root_node_seam_no_identity :
           (ZeroParadox.fD_functor.obj 0)
         = (ZeroParadox.hilbert_bottom_isZero).isTerminal.from
           (ZeroParadox.fD_functor.obj 0)
-    ∧ -- ... but that coincidence is the generic identity collapse (TC20 deflation)
+    ∧ -- ... but that coincidence is the generic identity collapse (`ZeroParadox/Category/SeamArrowLevel.lean` deflation)
       (ZeroParadox.hilbert_bottom_isZero).isInitial.to
           (ZeroParadox.fD_functor.obj 0)
         = 𝟙 (ZeroParadox.fD_functor.obj 0) :=
@@ -205,11 +205,11 @@ theorem root_node_seam_no_identity :
 section PurityCheck
 -- Measured footprint (lake build, v4.30.0-rc2): every result is
 --   [propext, Classical.choice, Quot.sound]
--- the expected library-choice footprint. The `Classical.choice` enters through TC26's ν-side
+-- the expected library-choice footprint. The `Classical.choice` enters through `ZeroParadox/Category/RootCutDegeneracy.lean`'s ν-side
 -- (`cofixMk` / `root_seam`, the Mathlib M-type corecursion artifact) and the categorical seam
 -- (`hilbert_bottom_isZero` / `ModuleCat ℂ`). It is a library dependency, not a new commitment of
 -- this construction; the μ side of the comparison (`Fix.rec`) is choice-free in principle, as in
--- TC26's `fixEquiv`.
+-- `fixEquiv`.
 #print axioms canonicalCmp_hom
 #print axioms canonicalCmp_unique
 #print axioms canonicalCmp_eq_root_seam

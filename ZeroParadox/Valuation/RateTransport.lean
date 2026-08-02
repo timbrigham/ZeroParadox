@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC34 — within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
+# within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 
 ## Engineer's Take
 
@@ -20,13 +20,13 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file tests **TC34**: although the proof-theory floor (#1, `0 : ℕ`, a μ / well-founded-descent
+This file tests **within-Axis-I positive rate-transport**: although the proof-theory floor (#1, `0 : ℕ`, a μ / well-founded-descent
 bottom) and the p-adic floor (#3, `{0} = ⋂ q2Ball n ⊆ Q₂`, a ν / inverse-limit bottom) sit on
-**opposite roots** of the bottom-diagram tree (the cross-root wall TC04/E4 stands — this file does not
+**opposite roots** of the bottom-diagram tree (the cross-root wall `ZeroParadox/Multihomed/CrossRootCompleteness.lean`/E4 stands — this file does not
 touch it), they nevertheless share a **common quantitative invariant**: the same geometric rate
 `n ↦ 2^(-n)` (ratio `c = 1/2 < 1`) bounds the distance-to-floor of a canonical orbit on each side.
 
-This refines TC33: where #3↔#2 (p-adic vs Markov absorbing) was a rate-level **mismatch**
+This refines `ZeroParadox/Valuation/NuRateEdge.lean`: where #3↔#2 (p-adic vs Markov absorbing) was a rate-level **mismatch**
 (the absorbing state's distance is *constant* `1` away from the geometric envelope), #3↔#1 is a
 rate-level **match** — both descend to their floor at rate `1/2`.
 
@@ -136,7 +136,7 @@ theorem nat_descent_tendsto (a : ℕ → ℕ) (hdesc : ∀ n, a (n + 1) ≤ a n 
 
 /-! ### Shared-rate capstone -/
 
-/-- **TC34 capstone (witness, not narration).** The single geometric envelope `C · (2:ℝ)^(-n)`
+/-- **capstone (witness, not narration).** The single geometric envelope `C · (2:ℝ)^(-n)`
     dominates the distance-to-floor of BOTH a μ-descent orbit (#1, `C = a 0`) and the
     ν-attractor orbit (#3, `C = ‖x‖`), and that envelope tends to `0`. The shared rate
     `n ↦ 2^(-n)` is the common quantitative invariant across the μ/ν root — exhibited in-statement
@@ -157,7 +157,7 @@ theorem shared_rate_envelope_bound
     not a shared *orbit profile*: for `x ≠ 0` the p-adic orbit is strictly positive at every step,
     while a terminating ℕ-descent (any orbit that ever hits `0`, e.g. via `a (n+1) ≤ a n / 2`) is
     eventually identically `0`. So no step-for-step geometric-rate *correspondence* exists between the
-    two orbits — only the common upper bound does. This is the TC33 obstruction, localized: rate-MATCH
+    two orbits — only the common upper bound does. This is the `ZeroParadox/Valuation/NuRateEdge.lean` obstruction, localized: rate-MATCH
     at the envelope level, rate-MISMATCH at the orbit level. -/
 theorem padic_nat_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0) :
     (∀ n, 0 < ‖(2 : Q₂) ^ n * x‖) ∧

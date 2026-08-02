@@ -49,11 +49,11 @@ measurementless / **structureless**; structure is the mark of an *interpretation
 conditionless point IS the genuine unification, in the only form ⊥ admits.
 
 Two layers: at the **interpretation layer** the bottoms are distinct (their retained structure differs —
-the campaign's walls); at the **actual-⊥ layer** all structure is stripped and they are one point (TC22's
+the campaign's walls); at the **actual-⊥ layer** all structure is stripped and they are one point (`ZeroParadox/Computability/MarkovNuUniversal.lean`'s
 "keep vs forget structure" is the boundary). Honest fence: the bare iso `{⊥} ≅ PUnit` is *generic*; the
 non-generic content is the **uniqueness** theorem `AbstractSelfApp.unique_fp` (the fixed-point set is a
 *single* point — a priori it needn't be), and the proven exception **#2** (the Markov bottom is a
-simplex/set, TC23 — an interpretation that has NOT bottomed out unless collapsed, TC31). This is the
+simplex/set, `ZeroParadox/Computability/MarkovNuUniversal.lean` — an interpretation that has NOT bottomed out unless collapsed, `ZeroParadox/Computability/StationaryUnique.lean`). This is the
 unification specifically at actual ⊥; it does NOT reopen the falsified identity-of-interpretations thesis.
 -/
 

@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC33 — the within-ν edge at the orbit-RATE level (#3 ↔ #2)
+# the within-ν edge at the orbit-RATE level (#3 ↔ #2)
 
 ## Engineer's Take
 

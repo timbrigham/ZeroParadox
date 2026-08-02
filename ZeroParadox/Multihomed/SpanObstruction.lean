@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC17 — the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
+# the #1↔#3 cross-root obstruction under a SPAN (THIN-BUT-HONEST)
 
 ## Engineer's Take
 
@@ -48,9 +48,9 @@ the span strength that made T1 GO." That is **false** and is retracted. The caps
 singletons whatsoever and carries **zero** structural content specific to #1 or #3. T1's span was
 GO for a different reason: its legs (`fC_floor_transport` / `fD_floor_transport`) **transport the
 floor's descent morphism onto the categorical bottom's initiality morphism**, and those equations are
-*in* `t1_mu_cluster_glue`'s statement. TC17's apex legs transport **nothing** — they are isos of bare
+*in* `t1_mu_cluster_glue`'s statement. apex legs transport **nothing** — they are isos of bare
 points with no universal role. The two spans therefore sit at *different* reconciliation strengths:
-T1's carries a universal role; TC17's is the trivial floor of the strength scale. So a singleton-apex
+T1's carries a universal role; is the trivial floor of the strength scale. So a singleton-apex
 span existing does **not** show the cross-root cut is a method artifact, because it does not match
 T1's role-preserving span.
 
@@ -99,7 +99,7 @@ def span_apex_to_ordinal_floor : PUnit.{1} ≃o ↥({(0 : Ordinal)} : Set Ordina
     · intro _; exact le_refl _
     · intro _; exact le_refl _
 
-/-- **TC17 capstone — the two singleton bottom POINTS admit a trivial common-apex span.**
+/-- **capstone — the two singleton bottom POINTS admit a trivial common-apex span.**
     A single apex `S = PUnit` is isomorphic to the p-adic floor #3 (a homeomorphism) and to the
     ordinal floor #1 (an order-iso): `#3 ⟵ S ⟶ #1`, in-statement. **This is vacuous on purpose:**
     both floor carriers are singletons, so the isos hold for the trivial reason that any two

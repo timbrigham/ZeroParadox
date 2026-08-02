@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree TC23 — the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
+# the seam #5 fails as a two-sided connector to the ν-LIMIT node #3
 
 ## Engineer's Take
 
@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC18/TC27 deflated the Hilbert zero object's two-sidedness as *intra-category* (its zero-object
+`ZeroParadox/Category/SeamBridge.lean` and `ZeroParadox/Category/CrossCategoryArrow.lean` deflated the Hilbert zero object's two-sidedness as *intra-category* (its zero-object
 universal property lives only in `ModuleCat ℂ`) and tested the bridge from the seam #5 toward the
 μ-bottom #4. This file isolates the **other** direction the seam would need to be a genuine
 tree-connector: a canonical structure-respecting map from the seam #5 — `fD_functor.obj 0 =
@@ -45,7 +45,7 @@ invariant is underlying-set cardinality 1, and a cardinality-forced singleton bi
   universal property (it is a **zero object**: initial ∧ terminal there), while node #3 is **not an
   initial object** of `TopCat` (`padic_bottom_not_initial`). So the singleton correspondence cannot
   transport the seam's categorical role to #3: any map seam → #3 is role-blind. The seam connects to
-  the ν-limit node only as a bare singleton, NOT as a categorical bridge — confirming TC18's
+  the ν-limit node only as a bare singleton, NOT as a categorical bridge — confirming `ZeroParadox/Category/SeamBridge.lean`'s
   deflation in the ν-direction.
 
 **Honest fence.** The Lean content is exactly the three facts above: both carriers are singletons; the
@@ -98,7 +98,7 @@ theorem seam_role_not_transported :
     ∧ IsEmpty (Limits.IsInitial (TopCat.of (↥({(0 : Q₂)} : Set Q₂)))) :=
   ⟨ZeroParadox.hilbert_bottom_isZero, padic_bottom_not_initial⟩
 
-/-- The full TC23 verdict assembled: both carriers are singletons; the only inter-carrier map is the
+/-- The full verdict assembled: both carriers are singletons; the only inter-carrier map is the
     cardinality-forced trivial one (an instance of the generic singleton fact); and the seam's
     zero-object role in `ModuleCat ℂ` is not matched by any initial-object role of #3 in `TopCat`.
     Together: the seam #5 connects to the ν-limit node #3 only as a bare singleton, NOT as a literal

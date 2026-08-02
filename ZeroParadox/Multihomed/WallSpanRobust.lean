@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC19 — span-robustness of the well-founded cross-root wall (#1 vs #2)
+# span-robustness of the well-founded cross-root wall (#1 vs #2)
 
 ## Engineer's Take
 
@@ -21,13 +21,13 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file sharpens the E4 / TC04 cross-root obstruction between the **proof-theory floor** (#1, the
+This file sharpens the E4 / `ZeroParadox/Multihomed/CrossRootCompleteness.lean` cross-root obstruction between the **proof-theory floor** (#1, the
 base of a well-founded order — `0 : Ordinal`) and the **Markov-dynamical attractor** (#2, the
 stationary point in the probability simplex, whose carrier ℝ is genuinely non-well-founded via
 `real_carrier_not_wellFounded`).
 
 `no_strictMono_real_to_ordinal` (E4) already proved there is **no direct** order map ℝ → Ordinal.
-TC19 asks the strictly stronger question the framework's own G-construction would face: is the wall
+asks the strictly stronger question the framework's own G-construction would face: is the wall
 robust against a **span** — a common apex object `S` mapping order-preservingly to *both* the
 well-founded Ordinal leg and the non-well-founded attractor carrier? A span that reconciled would mean
 the root cut is only an obstruction-to-direct-maps; an obstruction even to spans means the well-founded
@@ -83,7 +83,7 @@ theorem apex_wf_of_strictMono_to_ordinal {S : Type*} (r : S → S → Prop)
 
 /-! ## The robust wall: no faithful span reconciles #1 and #2 -/
 
-/-- **TC19 robust wall (in-statement).** There is no apex `S` carrying a *non-well-founded* relation
+/-- **robust wall (in-statement).** There is no apex `S` carrying a *non-well-founded* relation
     `r` — the infinite-descent structure the #2 / ℝ attractor leg supplies — that also admits an
     order-preserving leg `f : S → Ordinal` to the #1 well-founded floor. So no span whose apex
     faithfully carries the attractor's descending structure can reconcile #1 with #2.

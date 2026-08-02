@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC28 — well-foundedness obstructs the attractor character of the μ floor
+# well-foundedness obstructs the attractor character of the μ floor
 
 ## Engineer's Take
 
@@ -22,8 +22,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file is the **complementary test to TC05**, refining **Axis I** of the bottom-diagram tree
-(`thread_obstruction_table_2026-06-29.md`). TC05 gave node #3 (the p-adic floor `{0} ⊆ Q₂`) a genuine
+This file is the **complementary test to `ZeroParadox/Valuation/PadicAttractor.lean`**, refining **Axis I** of the bottom-diagram tree
+(`thread_obstruction_table_2026-06-29.md`). `ZeroParadox/Valuation/PadicAttractor.lean` gave node #3 (the p-adic floor `{0} ⊆ Q₂`) a genuine
 **dynamical attractor** character: `0` is the global attractor of the doubling map `x ↦ 2·x`, because
 `‖2‖₂ = ½ < 1` makes the map a strict contraction, so every orbit `2ⁿ·x` is an **infinite,
 non-terminating** sequence converging to `0` *in the limit topology* — and (for `x ≠ 0`) it never
@@ -37,20 +37,20 @@ undermined.
 
 **Pre-registered GO conjecture (the deflation side):** the well-founded floor admits descent maps that
 reach `0` from every point, but every orbit hits `0` in **finitely many steps** and is then constant —
-there is no infinite non-terminating orbit converging to `0` in the TC05 sense, so the "attractor"
+there is no infinite non-terminating orbit converging to `0` in the `ZeroParadox/Valuation/PadicAttractor.lean` sense, so the "attractor"
 character is *vacuous* on the μ floor.
 
 **Pre-registered NO-GO obstruction:** a genuine contraction/attractor with infinite non-terminating
-orbits converging to `0`, matching TC05's topological `Tendsto`, IS constructible on the ℕ/Ordinal
+orbits converging to `0`, matching `ZeroParadox/Valuation/PadicAttractor.lean`'s topological `Tendsto`, IS constructible on the ℕ/Ordinal
 floor — collapsing the μ/ν distinction.
 
 **Verdict: GO.** The NO-GO is *refuted at the structural level*: well-foundedness of ℕ forbids the
-infinite descending orbit that TC05's contraction produces.
+infinite descending orbit that `ZeroParadox/Valuation/PadicAttractor.lean`'s contraction produces.
 
 **Honest framing of the capstone.** The capstone `floor_reach_separates_mu_nu` is, syntactically, a
 conjunction (`μ-side ∧ ν-side`). Its content is not "two unrelated facts": both sides are stated under
 the *same* predicate `ReachesFloorInFiniteTime`, and the in-statement contrast is sharpened from the
-weak "eventually 0 vs never 0" to the real dynamical contrast — the ν side carries TC05's topological
+weak "eventually 0 vs never 0" to the real dynamical contrast — the ν side carries `ZeroParadox/Valuation/PadicAttractor.lean`'s topological
 `Tendsto … (nhds 0)` *together with* `¬ ReachesFloorInFiniteTime`, so the separation read in the
 statement is "reaches the floor in finite time" (μ) vs "converges to the floor as a limit it never
 reaches" (ν). That `ReachesFloorInFiniteTime` is *the* formalization of "attractor character" remains
@@ -60,7 +60,7 @@ What the Lean proves (load-bearing, in the statements):
 
 - `no_infinite_descent` — `∀ f : ℕ → ℕ, ¬ StrictAnti f`: there is no infinite strictly-decreasing
   orbit on the μ floor (`not_strictAnti_of_wellFoundedLT` at ℕ). The obstruction-killer, mirror of
-  TC05's `doubling_norm_lt_one`.
+  `doubling_norm_lt_one`.
 - `descent_with_strict_steps_reaches_floor` — **the load-bearing bridge that puts well-foundedness in
   the proof term.** Any orbit `g : ℕ → ℕ` that strictly decreases at every nonzero step
   (`∀ k, g k ≠ 0 → g (k+1) < g k`) reaches the floor: `∃ N, g N = 0`. Proved *through*
@@ -71,14 +71,14 @@ What the Lean proves (load-bearing, in the statements):
 - `pred_orbit_reaches_floor` — the μ floor's `Nat.pred` orbit **satisfies** `ReachesFloorInFiniteTime`,
   proved via `descent_with_strict_steps_reaches_floor` (i.e. via well-foundedness) plus the
   stays-at-floor fact, so `no_infinite_descent` is genuinely in the proof term, not decorative.
-- `padic_orbit_never_reaches_zero` — for `x ≠ 0` the TC05 doubling orbit `2ⁿ·x` is **never** `0`.
+- `padic_orbit_never_reaches_zero` — for `x ≠ 0` the doubling orbit `2ⁿ·x` is **never** `0`.
 - `ReachesFloorInFiniteTime` — **a single formal predicate** on a generic orbit `orbit : ℕ → α` into
   a type with a `Zero`: `∃ N, ∀ k ≥ N, orbit k = 0`. The one definition both ambients are compared
   under.
 - `padic_orbit_not_reaches_floor` — the p-adic ν-orbit `2ⁿ·x` (`x ≠ 0`) **satisfies the negation**
   `¬ ReachesFloorInFiniteTime`.
 - `floor_reach_separates_mu_nu` — the capstone: the μ orbit satisfies `ReachesFloorInFiniteTime` while the
-  ν orbit both **converges to the floor** (`Tendsto … (nhds 0)`, imported from TC05's
+  ν orbit both **converges to the floor** (`Tendsto … (nhds 0)`, imported from `ZeroParadox/Valuation/PadicAttractor.lean`'s
   `doubling_orbit_tendsto_zero`) and **satisfies `¬ ReachesFloorInFiniteTime`**. The in-statement
   contrast is therefore finite-time termination vs convergence-without-arrival, not the weaker
   eventually-0 vs never-0. The μ side is routed through `no_infinite_descent`.
@@ -87,7 +87,7 @@ What the Lean proves (load-bearing, in the statements):
 *framework reading* — the file does not build a full dynamical-systems contraction framework, nor does
 it prove that `ReachesFloorInFiniteTime` is the unique formalization of "attractor character." What is
 proved in-statement is the concrete, single-definition separation, with the ν side additionally
-carrying TC05's topological convergence. The claim that this separation *is* the μ/ν cut of Axis I is
+carrying `ZeroParadox/Valuation/PadicAttractor.lean`'s topological convergence. The claim that this separation *is* the μ/ν cut of Axis I is
 the framework reading; the Lean proves the separation under the stated predicate, with the
 well-foundedness obstruction in the proof term of the μ side.
 -/
@@ -99,9 +99,9 @@ open Filter Topology
 
 /-! ## The obstruction-killer — no infinite descent on the well-founded μ floor -/
 
-/-- **The structural obstruction (mirror of TC05's `doubling_norm_lt_one`).** There is no infinite
+/-- **The structural obstruction (mirror of `doubling_norm_lt_one`).** There is no infinite
     strictly-decreasing sequence `ℕ → ℕ`: the well-founded μ floor cannot host the order-theoretic
-    analogue of TC05's infinite shrinking orbit `2ⁿ·x`. This is `not_strictAnti_of_wellFoundedLT`
+    analogue of infinite shrinking orbit `2ⁿ·x`. This is `not_strictAnti_of_wellFoundedLT`
     specialised to ℕ (which is `WellFoundedLT`); it is the load-bearing fact behind the whole
     separation — it is *false* in any non-well-founded ambient (e.g. the 2-adic norms of `2ⁿ·x`). -/
 theorem no_infinite_descent : ∀ f : ℕ → ℕ, ¬ StrictAnti f :=
@@ -137,9 +137,9 @@ theorem descent_with_strict_steps_reaches_floor (g : ℕ → ℕ)
 
 /-! ## The deflation side — descent on the μ floor terminates in finite time -/
 
-/-- **Finite-time termination (mirror of TC05's `doubling_orbit_tendsto_zero`, but in finite steps).**
+/-- **Finite-time termination (mirror of `doubling_orbit_tendsto_zero`, but in finite steps).**
     For the canonical descent map `Nat.pred` (`x ↦ x-1`), the orbit reaches the floor `0` after at
-    most `n` steps and stays: `pred^[k] n = 0` for every `k ≥ n`. Contrast TC05, where the orbit
+    most `n` steps and stays: `pred^[k] n = 0` for every `k ≥ n`. Contrast `ZeroParadox/Valuation/PadicAttractor.lean`, where the orbit
     `2ⁿ·x` converges to `0` only in the limit and (for `x ≠ 0`) never reaches it. -/
 theorem pred_descent_terminates (n : ℕ) : ∀ k, n ≤ k → Nat.pred^[k] n = 0 := by
   intro k hk
@@ -156,7 +156,7 @@ theorem pred_orbit_eventually_constant (n : ℕ) :
 
 /-! ## The contrasting half — the p-adic ν-orbit never reaches its limit -/
 
-/-- **The contrast (load-bearing, in-statement).** For `x ≠ 0`, the TC05 doubling orbit `2ⁿ·x` is
+/-- **The contrast (load-bearing, in-statement).** For `x ≠ 0`, the `ZeroParadox/Valuation/PadicAttractor.lean` doubling orbit `2ⁿ·x` is
     *never* `0`: it converges to the floor only as a topological limit and never reaches it in finite
     time. So the p-adic (#3, ν) orbit is **not** eventually constant — the opposite of the μ floor's
     `Nat.pred` orbit, which terminates. This is the precise behavioural separator across Axis I. -/
@@ -215,15 +215,15 @@ theorem padic_orbit_not_reaches_floor (x : Q₂) (hx : x ≠ 0) :
 
 /-! ## Capstone — the contrast in one statement, under one predicate -/
 
-/-- **TC28 Axis-I separation (one predicate, with the real dynamical contrast in-statement).** Under
+/-- **Axis-I separation (one predicate, with the real dynamical contrast in-statement).** Under
     the single definition `ReachesFloorInFiniteTime`, the μ floor's canonical descent (`Nat.pred^[·] n`)
     **satisfies** it (finite-time termination), while the p-adic ν-orbit (`2ⁿ·x`, `x ≠ 0`) both
-    **converges to the floor** topologically (`Tendsto … (nhds 0)`, TC05's `doubling_orbit_tendsto_zero`)
+    **converges to the floor** topologically (`Tendsto … (nhds 0)` `doubling_orbit_tendsto_zero`)
     **and satisfies the negation** `¬ ReachesFloorInFiniteTime`. So the in-statement contrast is the
     real one — *reaches the floor in finite time* (μ, #1) vs *converges to the floor as a limit it never
     reaches* (ν, #3) — not the weak eventually-0 vs never-0. The μ side is routed through
     `no_infinite_descent` (well-foundedness of ℕ, via `descent_with_strict_steps_reaches_floor`); the ν
-    side's convergence is TC05's contraction and its non-arrival is `padic_orbit_never_reaches_zero`.
+    side's convergence is contraction and its non-arrival is `padic_orbit_never_reaches_zero`.
     The Axis-I cut is not collapsed: recast as the same dynamical question, #1 and #3 answer it
     oppositely. -/
 theorem floor_reach_separates_mu_nu :

@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC09 — Axis III generality: is the #4/#5 cardinality split canonical?
+# Axis III generality: is the #4/#5 cardinality split canonical?
 
 ## Engineer's Take
 
@@ -28,7 +28,7 @@ are **both initial objects** of their respective categories, yet their carriers 
 So initiality (polarity) is not a complete invariant of a bottom; a finer invariant — carrier
 cardinality — separates two same-polarity bottoms.
 
-**The TC09 question (TH9):** is the #4/#5 pair the *canonical* instance of this phenomenon, or is the
+**The question (TH9):** is the #4/#5 pair the *canonical* instance of this phenomenon, or is the
 phenomenon generic — does another natural same-polarity pair, distinguished only by cardinality,
 exist?
 
@@ -83,7 +83,7 @@ noncomputable def module_initial_card1 :
     Limits.IsInitial (ModuleCat.of ℂ PUnit) :=
   (ModuleCat.isZero_of_subsingleton (ModuleCat.of ℂ PUnit)).isInitial
 
-/-- **TC09 GO (load-bearing).** A second same-polarity pair, distinguished only by cardinality,
+/-- **GO (load-bearing).** A second same-polarity pair, distinguished only by cardinality,
     independent of #4/#5: the initial object of `Type` (`PEmpty`, empty) and an initial object of
     `ModuleCat ℂ` (`PUnit`, singleton) are **both initial**, yet their carriers are **not in
     bijection**. So Axis III (a same-polarity pair separated by cardinality alone) is generic — the

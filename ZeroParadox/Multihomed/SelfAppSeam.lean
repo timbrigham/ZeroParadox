@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree — TC15: the selfApp bottom sits at the μ=ν seam, not on either branch
+# the selfApp bottom sits at the μ=ν seam, not on either branch
 
 ## Engineer's Take
 

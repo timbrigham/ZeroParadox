@@ -7,7 +7,7 @@ import Mathlib.SetTheory.Ordinal.Basic
 set_option maxHeartbeats 400000
 
 /-!
-# TC07 — Is the proof-theory bottom canonical across the depth campaign?
+# Is the proof-theory bottom canonical across the depth campaign?
 
 **Node under test:** #1, the proof-theory floor. Three independence/termination results in the campaign
 each "descend": Goodstein (`goodstein_terminates`), Kirby–Paris (`ZeroParadox/Ordinal/KirbyParis.lean`), and

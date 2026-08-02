@@ -11,7 +11,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, cross-root completeness — TC04: #1↔#3 and #5↔#3
+# #1↔#3 and #5↔#3
 
 ## Engineer's Take
 

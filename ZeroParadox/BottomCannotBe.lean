@@ -275,7 +275,7 @@ section CannotBeIndex
 -- (Kleene-quine: a code acts on its own index — a computability phenomenon). The Hilbert bottom carries
 -- the OTHER sub-sense, self-SIMILARITY / diagonal-uniqueness: ⊥ is the UNIQUE finite-dim fixed point of
 -- the biproduct-diagonal `X ↦ X ⊞ X` (`X ≅ X⊞X → IsZero X`). Genuinely non-degenerate (the hypothesis is
--- load-bearing via finrank) — the honest version TC37's `seam_unit_iff_isZero` faked (its converse discards
+-- load-bearing via finrank) — the honest version `seam_unit_iff_isZero` faked (its converse discards
 -- the hypothesis). NARROW-flavored (uniqueness) wearing a defensible self-similarity label; NOT the
 -- Kleene-quine sense (the linear zero object has no self-application). Cold-audited SOLID.
 #check @ZeroParadox.biprod_diagonal_only_zero

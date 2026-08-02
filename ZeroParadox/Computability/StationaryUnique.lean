@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H / TC31: irreducibility forces a unique stationary distribution for node #2
+# irreducibility forces a unique stationary distribution for node #2
 
 ## Engineer's Take
 
@@ -22,13 +22,13 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This is the **constructive complement** to TC22's NO-GO. TC22 proved that a *doubly-stochastic*
+This is the **constructive complement** to `ZeroParadox/Computability/MarkovNuUniversal.lean`'s NO-GO. `ZeroParadox/Computability/MarkovNuUniversal.lean` proved that a *doubly-stochastic*
 kernel can fail uniqueness of the stationary distribution: its `blockKernel` had two absorbing
 classes (`pure 0`, `pure 1`), so the stationary predicate `IsStationaryPMF` was **not** a
 subsingleton, and node #2 (the Markov-dynamical attractor) had no unique stationary distribution under
 doubly-stochasticity (no unique fixed point — what one would *read* as the terminal / final-coalgebra
 (ν) universal property, though no such categorical object is built anywhere in this campaign).
-TC22 flagged that **irreducibility** (a single
+`ZeroParadox/Computability/MarkovNuUniversal.lean` flagged that **irreducibility** (a single
 communicating class) *would* give uniqueness, but irreducibility was not a registered hypothesis of
 the campaign's ergodic machinery.
 
@@ -55,16 +55,16 @@ The capstone `markov_node_irreducible_rescue` packages both halves of the bounda
 1. the same kernel is doubly-stochastic and **not** the identity (it moves mass), yet
 2. its stationary predicate **is** a subsingleton.
 
-Paired with TC22's `doublyStochastic_stationary_not_subsingleton`, this draws the boundary exactly:
+Paired with `doublyStochastic_stationary_not_subsingleton`, this draws the boundary exactly:
 the antichain / non-uniqueness obstruction on #2 is an **irreducibility phenomenon**, not absolute.
-Reducible ⇒ non-unique (TC22); irreducible (cyclic) ⇒ unique (here).
+Reducible ⇒ non-unique (`ZeroParadox/Computability/MarkovNuUniversal.lean`); irreducible (cyclic) ⇒ unique (here).
 
 **Honest scope.** The Lean proves uniqueness *for this one concrete irreducible kernel*, by an
 elementary argument special to the cyclic shift (stationarity forces invariance under a generator of
 the cyclic group, hence constancy). It does **not** prove the general theorem "every irreducible
 finite chain has a unique stationary distribution" — that is the Perron–Frobenius statement the pin
 does not supply. So the result is: a *witnessed* example where irreducibility delivers the unique
-stationary distribution TC22's reducible witness denied. Verdict: **GO** — the rescue is buildable;
+stationary distribution `ZeroParadox/Computability/MarkovNuUniversal.lean`'s reducible witness denied. Verdict: **GO** — the rescue is buildable;
 node #2's stationary fixed point becomes unique once the class is made irreducible. (The categorical
 reading — calling a unique fixed point a terminal / final-coalgebra (ν) universal object — is an
 interpretation only; no category, terminal object, or coalgebra is constructed in this file.)
@@ -80,10 +80,10 @@ variable {n : ℕ}
 
 /-- The **cyclic-shift kernel** on `Fin (n+1)`: `j ↦ pure (j + 1)`. This is a single-cycle
     permutation kernel — every state communicates with every other state by repeated `+1`, so the
-    chain is **irreducible** (one communicating class), in contrast to TC22's reducible `blockKernel`. -/
+    chain is **irreducible** (one communicating class), in contrast to reducible `blockKernel`. -/
 noncomputable def cycKernel : Fin (n + 1) → PMF (Fin (n + 1)) := fun j => PMF.pure (j + 1)
 
-/-- The cyclic kernel **moves mass**: it sends `0` to `pure 1 ≠ pure 0` (for `n ≥ 1`). Like TC22's
+/-- The cyclic kernel **moves mass**: it sends `0` to `pure 1 ≠ pure 0` (for `n ≥ 1`). Like `ZeroParadox/Computability/MarkovNuUniversal.lean`'s
     `blockKernel`, this is not the do-nothing identity. -/
 theorem cycKernel_ne_id {n : ℕ} : (cycKernel (n := n + 1)) 0 ≠ PMF.pure 0 := by
   intro h
@@ -195,7 +195,7 @@ theorem cyc_stationary_const {μ : PMF (Fin (n + 1))}
 
 /-- **GO — the load-bearing theorem.** The stationary set of the *irreducible* cyclic-shift kernel is
     a **subsingleton**: any two stationary distributions are equal. In plain terms: *this one
-    irreducible cyclic kernel has a unique stationary distribution*, in contrast to TC22's *reducible*
+    irreducible cyclic kernel has a unique stationary distribution*, in contrast to `ZeroParadox/Computability/MarkovNuUniversal.lean`'s *reducible*
     `blockKernel`, which has more than one.
 
     Interpretation note (NOT proved here): a unique fixed point can be *read* as a terminal /
@@ -247,11 +247,11 @@ theorem cyc_stationary_subsingleton
 
 /-- **Capstone — the irreducibility rescue.** There is a kernel on `Fin (n+1)` that is
 
-    1. **doubly-stochastic** and **not** the identity (it moves mass — same status as TC22's
+    1. **doubly-stochastic** and **not** the identity (it moves mass — same status as `ZeroParadox/Computability/MarkovNuUniversal.lean`'s
        reducible witness), yet
     2. its stationary predicate **is** a subsingleton (a genuine **unique** fixed point).
 
-    Together with TC22's `doublyStochastic_stationary_not_subsingleton` (a reducible doubly-stochastic
+    Together with `doublyStochastic_stationary_not_subsingleton` (a reducible doubly-stochastic
     kernel whose stationary predicate is *not* a subsingleton), this pins the boundary: the failure of
     *stationary-distribution uniqueness* for node #2 is an **irreducibility phenomenon**, not absolute.
     Reducible ⇒ non-unique; irreducible (cyclic) ⇒ unique.

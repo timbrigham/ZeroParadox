@@ -8,15 +8,8 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC45 — the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+# the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
 
-*(Renumbered 2026-08-02, Tim. This file previously claimed **TC16 / TC13**, both of which are owned by
-other nodes: TC16 is `ZeroParadox/Valuation/NuLeafReconcile.lean` — confirmed from the pre-rename branch,
-where that file's own header and capstone both say TC16 — and TC13 is
-`ZeroParadox/Category/SeamGeneric.lean`. **TC45 is out of sequence deliberately**: it is the only label
-with no existing mention anywhere in the corpus or the notes, and reusing a number that appears in
-historical records would trade one collision for a subtler one. **The number is a label, not a claim;
-nothing mathematical depends on it.**)*
 
 ## Engineer's Take
 
@@ -33,7 +26,7 @@ Node **#2** (the Markov-dynamical stationary attractor, a point of `stdSimplex �
 framework bottom the campaign never gave a Lean witness placing on the μ/ν fork. The table records
 "attractor = ν is heuristic, no Lean witness" (T2, §7.2). T2 only ruled out a *global* homeomorphism
 of the two ν-ambients (the connected-vs-totally-disconnected wall); it never asked whether #2 itself
-is a μ- or ν-object *in its own ambient*. TC05 placed the p-adic floor #3 dynamically, not #2.
+is a μ- or ν-object *in its own ambient*. `ZeroParadox/Valuation/PadicAttractor.lean` placed the p-adic floor #3 dynamically, not #2.
 
 This file probes #2 directly. The pre-registered **NO-GO** was: the stationary point has **no
 order-extremal characterization** in the simplex — it is an antichain element of `stdSimplex`

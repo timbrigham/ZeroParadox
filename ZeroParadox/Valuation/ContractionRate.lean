@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC30 — the contraction-rate dichotomy at the p-adic floor #3
+# the contraction-rate dichotomy at the p-adic floor #3
 
 ## Engineer's Take
 
@@ -20,9 +20,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC05 showed that the p-adic floor #3 (`{0} ⊆ Q₂`) is a *global attractor* of the single
+`ZeroParadox/Valuation/PadicAttractor.lean` showed that the p-adic floor #3 (`{0} ⊆ Q₂`) is a *global attractor* of the single
 doubling map `x ↦ 2·x`: every orbit `2ⁿ·x → 0`. That result used the multiplier `c = 2`.
-TC30's modest contribution is to specialize standard normed-field dynamics to the `ℚ_[2]`
+modest contribution is to specialize standard normed-field dynamics to the `ℚ_[2]`
 floor and read the contraction criterion as the *valuation ideal* (`‖c‖ < 1`, equivalently
 `2 ∣ c`): which scalar multipliers see the snap floor as an attractor, in valuation terms.
 
@@ -78,7 +78,7 @@ open Filter Topology
 theorem norm_lt_one_iff_two_dvd (k : ℕ) : ‖((k : ℕ) : Q₂)‖ < 1 ↔ 2 ∣ k :=
   Padic.norm_natCast_lt_one_iff (p := 2) (n := k)
 
-/-- Witness, ideal regime: `‖2‖ < 1`. The doubling multiplier of TC05 is one element of the
+/-- Witness, ideal regime: `‖2‖ < 1`. The doubling multiplier of `ZeroParadox/Valuation/PadicAttractor.lean` is one element of the
     ideal, not the source of the attractor property. -/
 theorem two_is_contraction : ‖(2 : Q₂)‖ < 1 := doubling_norm_lt_one
 
@@ -155,7 +155,7 @@ theorem unit_orbit_not_tendsto_zero {u : Q₂} (hu : ‖u‖ = 1) {x : Q₂} (hx
   exact hx (norm_eq_zero.mp hlim.symm)
 
 /-- The concrete dichotomy witness: `3` (a unit) has a non-converging nonzero orbit, while `2`
-    (in the ideal) is the TC05 contraction. Stated for the unit half at `x = 1`. -/
+    (in the ideal) is the `ZeroParadox/Valuation/PadicAttractor.lean` contraction. Stated for the unit half at `x = 1`. -/
 theorem three_orbit_not_tendsto_zero :
     ¬ Tendsto (fun n : ℕ => (3 : Q₂) ^ n * 1) atTop (nhds 0) :=
   unit_orbit_not_tendsto_zero three_is_unit (one_ne_zero)
@@ -166,7 +166,7 @@ end ZeroParadox
 
 `Classical.choice` is expected: it enters through Mathlib's analysis/topology library
 (`Padic` norms, `Tendsto`, the specific-limits lemmas) — the same dependency carried by
-ZP-B and by TC05. It is a library dependency, not a new commitment of this construction. -/
+ZP-B and by `ZeroParadox/Valuation/PadicAttractor.lean`. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
 open ZeroParadox

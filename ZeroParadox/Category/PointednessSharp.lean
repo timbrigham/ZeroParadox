@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC14 — the pointedness dichotomy SHARPENED (the gap TC09 left open)
+# the pointedness dichotomy SHARPENED (the gap `ZeroParadox/Category/CardinalitySplit.lean` left open)
 
 ## Engineer's Take
 
@@ -24,7 +24,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 `initial_carrier_empty_or_subsingleton` asserted that across the framework's initial bottoms only
 carrier-cardinalities 0 and 1 arise, governed by a single binary distinction (whether the category
-forces a distinguished point — a zero object). But TC09 only **witnessed the two endpoints**
+forces a distinguished point — a zero object). But `ZeroParadox/Category/CardinalitySplit.lean` only **witnessed the two endpoints**
 (`PEmpty`/`Fin 0` empty, `PUnit`/`StateSpace 0` singleton). It did **not** prove the *closure* claim
 in its own docstring — "no initial object has a carrier of cardinality ≥ 2" — quantified over *all*
 initial objects. That gap is exactly the apparatus-discipline failure mode: a heuristic stated in
@@ -37,13 +37,13 @@ over every initial object of the relevant category — not over a single named w
 
 `pointed_initial_carrier_subsingleton` — **in `ModuleCat ℂ`, EVERY initial object has a subsingleton
 carrier (card ≤ 1).** Quantified over all `Z : ModuleCat ℂ` with `IsInitial Z`. The proof is the
-load-bearing step TC09 skipped: an initial object is iso to the zero object
+load-bearing step `ZeroParadox/Category/CardinalitySplit.lean` skipped: an initial object is iso to the zero object
 (`IsZero.isoIsInitial`), the zero object's carrier is a subsingleton
 (`ModuleCat.subsingleton_of_isZero`), and the carrier subsingleton transfers across the iso
 (`ModuleCat.toLinearEquiv`). So nothing of carrier-cardinality ≥ 2 can be initial here — the upper
 endpoint of the dichotomy is *forced*, not merely sampled.
 
-This is strictly stronger than `fD_zero_isInitial` / TC09's `module_initial_card1`, which only
+This is strictly stronger than `fD_zero_isInitial` / `module_initial_card1`, which only
 exhibit one initial object that happens to be a singleton. Here the bound holds for every initial
 object simultaneously.
 
@@ -58,7 +58,7 @@ none has a point. So the non-pointed endpoint is *also* forced, not sampled.
 `pointedness_dichotomy` bundles the two universals with the structural separator: `Type` has **no**
 zero object while `ModuleCat ℂ` **does** (`HasZeroObject`). The two regimes are therefore separated
 by a real categorical invariant, and within each regime the initial carrier-cardinality is pinned to
-a single value (0 for non-pointed, ≤ 1 for pointed). This upgrades TC09's heuristic from
+a single value (0 for non-pointed, ≤ 1 for pointed). This upgrades `ZeroParadox/Category/CardinalitySplit.lean`'s heuristic from
 "the framework happens to sample only two classes" to "the relevant categories *force* exactly these
 two classes" — Axis III is a clean binary, witnessed.
 
@@ -82,7 +82,7 @@ open scoped ZeroObject
 
 /-- **GO (load-bearing closure).** In `ModuleCat ℂ`, **every** initial object has a subsingleton
     carrier (cardinality ≤ 1). Quantified over all `Z`, not a single witness: this is the closure
-    claim TC09 stated in prose ("no initial object has a carrier of cardinality ≥ 2") but never
+    claim `ZeroParadox/Category/CardinalitySplit.lean` stated in prose ("no initial object has a carrier of cardinality ≥ 2") but never
     proved. Proof chain: initial `Z` ≅ the zero object `0` (`IsZero.isoIsInitial`), the zero object's
     carrier is a subsingleton (`subsingleton_of_isZero`), and that transfers across the ℂ-linear
     equivalence `ModuleCat.toLinearEquiv`. -/
@@ -113,14 +113,14 @@ theorem nonpointed_initial_isEmpty (X : Type u) :
 
 /-! ## The dichotomy is a clean binary, separated by a real categorical invariant -/
 
-/-- **TC14 capstone — the pointedness dichotomy, now witnessed as a binary (not sampled).**
+/-- **capstone — the pointedness dichotomy, now witnessed as a binary (not sampled).**
 
     1. **Pointed regime forced** — every initial object of `ModuleCat ℂ` has card ≤ 1.
     2. **Non-pointed regime forced** — every initial object of `Type` is empty (card 0).
     3. **Real separator** — `Type` has **no** zero object, `ModuleCat ℂ` **has** one.
 
-    Together: the two cardinality classes TC09 sampled are pinned by the pointedness invariant, and
-    no third class (card ≥ 2) is reachable in either category. This sharpens TC09's heuristic into a
+    Together: the two cardinality classes `ZeroParadox/Category/CardinalitySplit.lean` sampled are pinned by the pointedness invariant, and
+    no third class (card ≥ 2) is reachable in either category. This sharpens `ZeroParadox/Category/CardinalitySplit.lean`'s heuristic into a
     proved binary for the two categories the framework's bottoms (#4 empty / #5 singleton)
     instantiate. -/
 theorem pointedness_dichotomy :

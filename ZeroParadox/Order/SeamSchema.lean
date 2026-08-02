@@ -7,7 +7,7 @@ import ZeroParadox.Multihomed.SelfAppSeam
 import ZeroParadox.Computability.SelfApp
 
 /-!
-# ZP-H MC-1 tree test TC42: a shared "seam schema" for the QPF root-seam and the lattice selfApp seam,
+# a shared "seam schema" for the QPF root-seam and the lattice selfApp seam,
 with the cross-setting fence IN the statement.
 
 ## Engineer's Take
@@ -21,9 +21,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC38 fenced the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
+fenced the **root-seam** (the QPF `constPF` seam, `Fix ≃ Cofix`) against the **node-seam** (the
 #5 Hilbert zero object). This file tests a *different* pairing: the root-seam against the
-**lattice / selfApp seam** of TC15 (`{x | selfApp x = x} = {⊥}`, ⊥ both least and greatest fixed
+**lattice / selfApp seam** of `ZeroParadox/Multihomed/SelfAppSeam.lean` (`{x | selfApp x = x} = {⊥}`, ⊥ both least and greatest fixed
 point). The pre-registered question: do these two seams share a common Lean-statable schema, or is any
 "shared schema" merely a prose juxtaposition (a modeling commitment)?
 
@@ -35,11 +35,11 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
 — a bijection between the μ-carrier and the ν-carrier. We then exhibit `SeamSchema` at BOTH nodes:
 
 * **QPF root-seam** (`qpfSeam`): `μ := Fix (constPF A).Obj`, `ν := Cofix (constPF A).Obj`,
-  `cmp := root_seam` (TC26), and we record in-statement that this `cmp` is the *canonical* μ→ν
-  comparison and is bijective (TC38 `canonicalCmp_bijective`, `canonicalCmp_eq_root_seam`). Here μ and
+  `cmp := root_seam` (`ZeroParadox/Category/RootCutDegeneracy.lean`), and we record in-statement that this `cmp` is the *canonical* μ→ν
+  comparison and is bijective (`canonicalCmp_bijective`, `canonicalCmp_eq_root_seam`). Here μ and
   ν are GENUINELY DISTINCT TYPES and the equivalence is a nontrivial construction.
 
-* **Lattice selfApp seam** (`latticeSeam`): the fixed-point set is the singleton `{⊥}` (TC15
+* **Lattice selfApp seam** (`latticeSeam`): the fixed-point set is the singleton `{⊥}` (
   `selfApp_fp_set_eq_singleton_bot`), and ⊥ is both least and greatest fixed point
   (`selfApp_bot_is_both_extremal`). To make this an instance of `SeamSchema` the μ-carrier and the
   ν-carrier must BOTH be taken to be the same object — the fixed-point subtype `{x // selfApp x = x}` —
@@ -101,13 +101,13 @@ structure SeamSchema (μ ν : Type u) where
 
 /-! ## Instance 1: the QPF root-seam (distinct carriers, nontrivial equivalence) -/
 
-/-- The QPF root-seam as a `SeamSchema`: `μ = Fix`, `ν = Cofix`, witness = `root_seam` (TC26). Here the
+/-- The QPF root-seam as a `SeamSchema`: `μ = Fix`, `ν = Cofix`, witness = `root_seam`. Here the
 two carriers are genuinely distinct types. -/
 def qpfSeam (A : Type u) : SeamSchema (Fix (constPF A).Obj) (Cofix (constPF A).Obj) :=
   ⟨root_seam⟩
 
 /-- **The QPF instance's witness is the canonical bijective comparison.** In-statement: the
-`SeamSchema.cmp` of `qpfSeam` is exactly the canonical μ→ν comparison map (`canonicalCmp`, TC38),
+`SeamSchema.cmp` of `qpfSeam` is exactly the canonical μ→ν comparison map (`canonicalCmp`),
 and that map is bijective. So this seam relates distinct carriers by the recursion-theoretic comparison,
 not by an ad-hoc bijection. -/
 theorem qpfSeam_cmp_is_canonical (A : Type u) :
@@ -119,20 +119,20 @@ theorem qpfSeam_cmp_is_canonical (A : Type u) :
 
 variable {L : Type u} [ZPSemilattice L] [AbstractSelfApp L]
 
-/-- The fixed-point subtype `{x // selfApp x = x}` — the carrier of the lattice seam. By TC15 this set
+/-- The fixed-point subtype `{x // selfApp x = x}` — the carrier of the lattice seam. By `ZeroParadox/Multihomed/SelfAppSeam.lean` this set
 is the singleton `{⊥}`, so this subtype has exactly one element. -/
 abbrev FpSub (L : Type u) [ZPSemilattice L] [AbstractSelfApp L] : Type u :=
   {x : L // AbstractSelfApp.selfApp x = x}
 
 /-- The lattice selfApp seam as a `SeamSchema`. The μ-carrier (least f.p.) and the ν-carrier
 (greatest f.p.) are FORCED to be the same object — the fixed-point subtype `FpSub L` — because
-"least = greatest" (TC15 `selfApp_bot_is_both_extremal`) collapses them before the schema applies.
+"least = greatest" (`selfApp_bot_is_both_extremal`) collapses them before the schema applies.
 Hence the seam witness can only be `Equiv.refl`. -/
 def latticeSeam : SeamSchema (FpSub L) (FpSub L) :=
   ⟨Equiv.refl _⟩
 
 /-- **The lattice instance's carrier is the nonempty singleton f.p. set (non-degenerate).**
-In-statement: the fixed-point set is exactly `{⊥}` (TC15), and ⊥ is in it — so `FpSub L` is inhabited.
+In-statement: the fixed-point set is exactly `{⊥}` (`ZeroParadox/Multihomed/SelfAppSeam.lean`), and ⊥ is in it — so `FpSub L` is inhabited.
 The seam is the genuine μ=ν collapse of a *nonempty* fixed-point poset, not the vacuous empty case. -/
 theorem latticeSeam_carrier_nonempty_singleton :
     {x : L | AbstractSelfApp.selfApp x = x} = ({bot} : Set L)
@@ -145,9 +145,9 @@ theorem latticeSeam_carrier_nonempty_singleton :
 are instances of `SeamSchema`, with the discriminators witnessed in-statement:
 
 * QPF: `qpfSeam Unit` exists, and its `cmp` is the canonical bijective comparison
-  (`canonicalCmp`, TC38) between the DISTINCT types `Fix` and `Cofix`;
+  (`canonicalCmp`) between the DISTINCT types `Fix` and `Cofix`;
 * lattice: `latticeSeam` exists over the fixed-point subtype, whose underlying set is the *nonempty*
-  singleton `{⊥}` (TC15) — the non-degenerate seam.
+  singleton `{⊥}` (`ZeroParadox/Multihomed/SelfAppSeam.lean`) — the non-degenerate seam.
 
 The shared *shape* "least-fp carrier ≃ greatest-fp carrier" is realized at both nodes. -/
 theorem both_satisfy_seam_schema :
@@ -171,7 +171,7 @@ theorem seam_schema_is_degenerate_for_lattice :
 
 /-- **The QPF seam relates provably distinct carriers (the contrast that makes the schema loose).**
 In-statement: for the *recursive* functor `idPF_Coalgebra` there is NO equivalence `Fix ≃ Cofix` at all
-(TC26 `idPF_no_seam`). So the existence of `qpfSeam A`'s equivalence is a real fact about the carriers
+(`idPF_no_seam`). So the existence of `qpfSeam A`'s equivalence is a real fact about the carriers
 (it holds for `constPF`, fails for `idPF_Coalgebra`), NOT an automatic `refl` — unlike the lattice side. The
 schema therefore encodes genuine content on the QPF side and vacuous content on the lattice side. -/
 theorem qpf_seam_not_automatic :

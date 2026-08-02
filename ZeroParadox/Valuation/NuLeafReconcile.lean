@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC16 — the within-ν edge reconciles at the LEAF, not the ambient
+# the within-ν edge reconciles at the LEAF, not the ambient
 
 ## Engineer's Take
 
@@ -107,7 +107,7 @@ noncomputable def nu_leaf_reconcile : padicFloor_NuLeafReconcile ≃ₜ simplexP
 noncomputable def nu_leaf_reconcile_generic : padicFloor_NuLeafReconcile ≃ₜ PUnit :=
   Homeomorph.homeomorphOfUnique padicFloor_NuLeafReconcile PUnit
 
-/-- **TC16 capstone (both halves IN one statement).** (a) GO: the ν-bottoms reconcile at the leaf
+/-- **capstone (both halves IN one statement).** (a) GO: the ν-bottoms reconcile at the leaf
     (`Nonempty (padicFloor_NuLeafReconcile ≃ₜ simplexPoint_NuLeafReconcile)`); (b) deflation: the identical construction reconciles
     the p-adic floor with `PUnit`, so the leaf map is the generic subsingleton homeomorphism and
     carries no distinguishing structure. Together: the ν-branch glues, but only vacuously — confirming

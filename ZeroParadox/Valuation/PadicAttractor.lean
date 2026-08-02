@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC05 — the p-adic floor #3 as a dynamical attractor
+# the p-adic floor #3 as a dynamical attractor
 
 ## Engineer's Take
 
@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file tests **TC05**, a candidate recharacterization of the p-adic bottom (#3, the snap floor
+This file tests a candidate recharacterization of the p-adic bottom (#3, the snap floor
 `{0} = ⋂ q2Ball n ⊆ Q₂`). In `ZeroParadox/Valuation/TopFunctor.lean` #3 appears as a **ν-style limit**: the intersection of
 a shrinking inverse system of clopen balls. The claim under test here is that the *same* floor `0` is
 **also** a global dynamical attractor — the orbit of the **doubling map** `x ↦ 2·x` converges to `0`
@@ -57,7 +57,7 @@ What the Lean proves (load-bearing, in the statements):
 **Honest scope (interpretation, NOT proved here).** The "candidate bridge toward #2" is interpretation:
 this file shows #3 is an attractor of a *deterministic ℚ₂-linear* map, whereas #2 is the attractor of a
 *stochastic* map on a simplex. No functor or measure-preserving comparison between the two dynamical
-systems is built — that edge remains OPEN. TC05 establishes only that #3 *carries an attractor
+systems is built — that edge remains OPEN. establishes only that #3 *carries an attractor
 structure*, putting it in the same descriptive vocabulary as #2; it does not connect the two systems.
 -/
 

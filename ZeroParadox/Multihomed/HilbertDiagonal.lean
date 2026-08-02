@@ -23,7 +23,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file proves the **genuine** version of the diagonal-self-reference statement that TC37
+This file proves the **genuine** version of the diagonal-self-reference statement that `ZeroParadox/Category/SeamBiproductUnit.lean`
 (`seam_unit_iff_isZero`) could only state degenerately. The honest categorical "diagonal" on
 `ModuleCat ℂ` is the biproduct-double `X ↦ X ⊞ X` (`⊞ = CategoryTheory.Limits.biprod`). We ask:
 which objects are their own diagonal double, `X ≅ X ⊞ X`?
@@ -40,7 +40,7 @@ linear-equiv invariant, so `finrank X = finrank (X × X) = finrank X + finrank X
 (`Module.finrank_zero_iff`), hence `IsZero X` (`ModuleCat.isZero_of_subsingleton`).
 
 **Honest scope.** This is the GENUINE implication `X ≅ X ⊞ X → IsZero X` for finite-dim `X` —
-the content TC37's `seam_unit_iff_isZero` lacked (its backward direction discards the iso and just
+the content `seam_unit_iff_isZero` lacked (its backward direction discards the iso and just
 re-invokes `hilbert_bottom_isZero`). **FENCE: finite-dimensionality is essential — the statement
 is FALSE for infinite-dim modules** (`ℂ^ℕ ≅ ℂ^ℕ ⊕ ℂ^ℕ`, the **Eilenberg–Mazur swindle**; this is the
 standard reason K-theory restricts to finitely-generated objects). No mathematical novelty is claimed:

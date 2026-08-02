@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC20 — does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
+# does the seam keystone hold AT THE ARROW LEVEL (μ-arrow = ν-arrow)?
 
 ## Engineer's Take
 
@@ -20,7 +20,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC12/TC13 (`hilbert_bottom_isZero`) proved the seam node #5 is a **zero object**
+(`hilbert_bottom_isZero`) proved the seam node #5 is a **zero object**
 (initial ∧ terminal) — an *object-level* coincidence of μ (initial / least-fixed-point / colimit) and
 ν (terminal / greatest-fixed-point / limit). The deeper diagonal-fixed-point reading asks for an
 *arrow-level* coincidence: at the seam the μ-witness arrow and the ν-witness arrow should be **the
@@ -50,7 +50,7 @@ initial object alone or a bare terminal object alone; it is not a property of th
   content. `collapse_fires_off_seam` then witnesses, in one statement about node #4, an initial object
   whose μ-collapse `to = 𝟙` holds while it is NOT a zero object — the genericity made decisive.
 
-The genuine seam content therefore stays at the object level (TC13: #5 is a zero object, #4 is initial
+The genuine seam content therefore stays at the object level (`ZeroParadox/Category/SeamGeneric.lean`: #5 is a zero object, #4 is initial
 ∧ not terminal, #3 is not initial — a real three-way fork separation). The arrow-equality is true but
 generic: it tells you nothing about the seam that it does not also tell you about every initial object
 and every terminal object in isolation. Reported honestly as DECORATIVE rather than dressed up as a new
@@ -59,7 +59,7 @@ keystone result.
 **Honest fence.** The Lean content is: (a) at a zero object the two universal endomorphisms are both
 the identity hence equal (GO, true), and (b) that collapse is generic to initial-alone and
 terminal-alone objects (the deflation, also true). "The seam IS the diagonal fixed point at the arrow
-level" is NOT supported — the arrow level adds nothing past TC13.
+level" is NOT supported — the arrow level adds nothing past `ZeroParadox/Category/SeamGeneric.lean`.
 -/
 
 namespace ZeroParadox
@@ -80,7 +80,7 @@ theorem zero_mu_eq_nu_arrow {Z : C} (hZ : Limits.IsZero Z) :
   rw [hZ.isInitial.to_self, hZ.isTerminal.from_self]
 
 /-- **GO (node #5).** Instantiated at the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`: the
-    μ-arrow and the ν-arrow at the seam are the same arrow. Uses `hilbert_bottom_isZero` (TC13). -/
+    μ-arrow and the ν-arrow at the seam are the same arrow. Uses `hilbert_bottom_isZero`. -/
 theorem seam_mu_eq_nu_arrow :
     (ZeroParadox.hilbert_bottom_isZero).isInitial.to (fD_functor.obj 0)
       = (ZeroParadox.hilbert_bottom_isZero).isTerminal.from (fD_functor.obj 0) :=
@@ -106,7 +106,7 @@ theorem terminal_endo_is_id {T : C} (hT : Limits.IsTerminal T) : hT.from T = �
     independently `𝟙 Z`: the μ-side equals `𝟙 Z` by initiality ALONE (`initial_endo_is_id`, no
     terminality used) and the ν-side equals `𝟙 Z` by terminality ALONE (`terminal_endo_is_id`, no
     initiality used). Since each generic fact is a property of bare initial / bare terminal objects,
-    the seam contributes nothing beyond the object-level TC13: the arrow-level keystone is DECORATIVE.
+    the seam contributes nothing beyond the object-level `ZeroParadox/Category/SeamGeneric.lean`: the arrow-level keystone is DECORATIVE.
 
     (Renamed from `arrow_collapse_is_generic`: the *statement* only asserts the factorization through
     `𝟙 Z`; the genericity claim — that this collapse needs no zero/seam hypothesis — is carried by the

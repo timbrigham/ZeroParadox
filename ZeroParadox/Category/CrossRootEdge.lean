@@ -11,7 +11,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree TC50 — the cross-root edge #4 (Kleisli μ-initial/colimit) ↔ #3 (p-adic ν-limit)
+# the cross-root edge #4 (Kleisli μ-initial/colimit) ↔ #3 (p-adic ν-limit)
 
 ## Engineer's Take
 
@@ -35,8 +35,8 @@ inverse system `fB_functor : ℕᵒᵖ ⥤ TopCat`, witness `floorConeIsLimit`).
   no single universal characterization can serve both bottoms because of a structural in/out-arrow
   asymmetry, not merely "different categories".
 - *NO-GO conjecture:* if the strongest honest statement is just `IsColimit(#4) ∧ IsLimit(#3) ∧
-  different-categories`, that is a co-occurrence of the two pre-existing witnesses (TC24 + TC10)
-  plus a generic ambient mismatch — the same bare-glue non-result TC23 already deflated for
+  different-categories`, that is a co-occurrence of the two pre-existing witnesses (`ZeroParadox/Category/KleisliInitialColimit.lean` + `ZeroParadox/Order/PadicLimitCone.lean`)
+  plus a generic ambient mismatch — the same bare-glue non-result `ZeroParadox/Multihomed/SeamConnectorFail.lean` already deflated for
   #5 ↔ #3 — so verdict NO-GO / OVERCLAIM, no new edge.
 
 **What this file actually proves (load-bearing, in the statements).** The honest finding is the
@@ -59,11 +59,11 @@ ambient mismatch):
   genuine `IsLimit` of #3, recorded together with the arrow asymmetry.
 
 **Honest verdict (recorded here, not hidden in prose).** Even with the arrow asymmetry sharpened
-into a statement, the two witnesses `IsColimit(#4)` and `IsLimit(#3)` are **pre-existing** (TC24,
-TC10), and the asymmetry — a colimit object's empty incoming hom vs a limit object's incoming
+into a statement, the two witnesses `IsColimit(#4)` and `IsLimit(#3)` are **pre-existing** (`ZeroParadox/Category/KleisliInitialColimit.lean`,
+`ZeroParadox/Order/PadicLimitCone.lean`), and the asymmetry — a colimit object's empty incoming hom vs a limit object's incoming
 factoring map — is a *generic* consequence of "one is a colimit, the other is a limit", true of any
 such pair, not a fact discovered about the snap floors. The objects also live in different ambient
-categories with no canonical functor between them, the bare-glue non-result TC23 already flagged.
+categories with no canonical functor between them, the bare-glue non-result `ZeroParadox/Multihomed/SeamConnectorFail.lean` already flagged.
 So this edge is **NO-GO / OVERCLAIM at the new-edge level**: there is no new cross-domain
 identification, only a sharpened *separation*. The framework records that the #4 ↔ #3 cross-root
 obstruction is categorically witnessable **only** as (a) the co-occurrence of the two universal
@@ -82,7 +82,7 @@ open ZeroParadox ZeroParadox
 /-! ## Node #4 — the Kleisli μ-bottom is a colimit / source with empty incoming hom -/
 
 /-- Node #4 (`fC_obj 0 = Fin 0`) is a genuine empty-diagram colimit (= initial object) of
-    `KleisliCat PMF`. This is the TC24 witness, re-exported so the edge is stated against the
+    `KleisliCat PMF`. This is the `ZeroParadox/Category/KleisliInitialColimit.lean` witness, re-exported so the edge is stated against the
     colimit form directly. -/
 noncomputable def node4_isColimit :
     IsColimit (asEmptyCocone (fC_obj 0)) :=
@@ -98,7 +98,7 @@ theorem node4_no_incoming {n : ℕ} (hn : 0 < n) :
 /-! ## Node #3 — the p-adic ν-bottom is a limit / target that receives incoming arrows -/
 
 /-- Node #3 (`floorPt = {0} ⊆ Q₂`) is a genuine `IsLimit` cone over the contravariant inverse
-    system `fB_functor : ℕᵒᵖ ⥤ TopCat`. This is the TC10 witness, re-exported so the edge is stated
+    system `fB_functor : ℕᵒᵖ ⥤ TopCat`. This is the `ZeroParadox/Order/PadicLimitCone.lean` witness, re-exported so the edge is stated
     against the limit form directly. -/
 noncomputable def node3_isLimit : IsLimit floorCone :=
   floorConeIsLimit
@@ -130,8 +130,8 @@ theorem node4_node3_arrow_asymmetry :
     node3_isLimit.lift floorCone = 𝟙 floorCone.pt :=
   ⟨fun hn => node4_no_incoming hn, node3_receives_cone⟩
 
-/-- **The co-occurrence bundle (the full TC50 verdict object).** The genuine `IsColimit` of node #4
-    (μ, initial, TC24) and the genuine `IsLimit` of node #3 (ν, inverse-limit, TC10), recorded
+/-- **The co-occurrence bundle (the full verdict object).** The genuine `IsColimit` of node #4
+    (μ, initial, `ZeroParadox/Category/KleisliInitialColimit.lean`) and the genuine `IsLimit` of node #3 (ν, inverse-limit, `ZeroParadox/Order/PadicLimitCone.lean`), recorded
     together with the in/out arrow asymmetry. This is *everything* the edge witnesses categorically.
 
     **Verdict: NO-GO / OVERCLAIM at the new-edge level.** Both witnesses are pre-existing; the
@@ -152,7 +152,7 @@ end ZeroParadox
 
 `Classical.choice` is expected: it enters through Mathlib's `TopCat` / limits / `KleisliCat` / `PMF`
 / p-adic libraries, the same dependencies carried by `ZeroParadox/Valuation/TopFunctor.lean`, `ZeroParadox/Multihomed/InfoFunctor.lean`, and the
-TC10 / TC24 witnesses. It is a library dependency, not a new commitment of this construction. -/
+`ZeroParadox/Order/PadicLimitCone.lean` and `ZeroParadox/Category/KleisliInitialColimit.lean` witnesses. It is a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
 open ZeroParadox

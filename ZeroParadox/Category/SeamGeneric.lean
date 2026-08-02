@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree — TC13: the seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
+# the seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
 
 ## Engineer's Take
 

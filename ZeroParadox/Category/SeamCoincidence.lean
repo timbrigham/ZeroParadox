@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, keystone TC12 — the seam IS the categorical μ=ν coincidence
+# the seam IS the categorical μ=ν coincidence
 
 ## Engineer's Take
 

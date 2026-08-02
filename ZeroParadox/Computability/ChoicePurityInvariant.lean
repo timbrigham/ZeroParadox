@@ -4,10 +4,10 @@ import Mathlib.Data.W.Basic
 import ZeroParadox.Settheory.Coalgebra
 
 /-!
-# ZP-H MC-1 tree test TC48: is choice-purity an IN-STATEMENT μ/ν separating invariant?
+# is choice-purity an IN-STATEMENT μ/ν separating invariant?
 
 This module probes Axis V (choice-purity) at the root of the QPF fork. Every prior purity footnote
-(`ZeroParadox/Settheory/Coalgebra.lean`, TC26) records, as a `#print axioms` **comment**, that the μ side
+(`ZeroParadox/Settheory/Coalgebra.lean`) records, as a `#print axioms` **comment**, that the μ side
 (`fix_isEmpty`, the initial algebra / well-founded closure) is choice-free `[propext, Quot.sound]`
 while the ν side (`cofix_nonempty`, the final coalgebra / non-well-founded closure) carries
 `Classical.choice`. The question here: can that split be lifted into a **theorem-level, in-statement

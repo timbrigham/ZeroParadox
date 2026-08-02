@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC41 — Axis IV: convergence-rate class as a cross-root invariant
+# Axis IV: convergence-rate class as a cross-root invariant
 
 ## Engineer's Take
 
@@ -20,7 +20,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC33/TC34 established that the p-adic ν-floor (#3, geometric orbit `2⁻ⁿ`) and the Markov
+`ZeroParadox/Valuation/NuRateEdge.lean` and `ZeroParadox/Valuation/RateTransport.lean` established that the p-adic ν-floor (#3, geometric orbit `2⁻ⁿ`) and the Markov
 attractor (#2, absorbing) are *rate*-obstructed. This file probes a finer question: among
 sequences that all reach the floor, is **convergence-rate class** (geometric vs linear) a
 separating invariant that cuts *across* the well-founded/non-well-founded root (Axis I)?
@@ -164,7 +164,7 @@ theorem halving_not_matched_below (a₀ : ℕ) :
   rw [hrhs] at this
   linarith
 
-/-- **TC41 capstone (Axis IV, witnessed not narrated).** The three rate facts, bundled:
+/-- **capstone (Axis IV, witnessed not narrated).** The three rate facts, bundled:
     (a) linear descent overtakes any constant multiple of the geometric orbit — no rate-preserving
     map linear→geometric (the NO-GO wall); (b) binary halving is dominated by the geometric orbit
     up to constant `a₀` (the one-sided GO); (c) binary halving has *no* lower rate-match with the
