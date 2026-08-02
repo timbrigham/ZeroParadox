@@ -153,9 +153,11 @@ recognized **effective-topos / Turing-category** setting (Lawvere 1969; Hyland 1
 topos"; Cockett–Hofstra 2008, "Introduction to Turing categories"; van Oosten). Located and cited here,
 NOT claimed — the framework joins that program. -/
 
-/-- **Axis-2 genuine floor.** Every *computable* self-map on codes has an eval-fixed point — Kleene's
-    Rogers' fixed-point theorem (`computability_face_fixedPoint` = Mathlib `Nat.Partrec.Code.fixed_point`; Mathlib reserves `Kleene's second recursion theorem` for `fixed_point₂`).
-    The fine end of axis 2. -/
+/-- **Axis-2 genuine floor.** Every *computable* self-map on codes has an eval-fixed point —
+    **Rogers' fixed-point theorem** (`computability_face_fixedPoint` = Mathlib
+    `Nat.Partrec.Code.fixed_point`). Mathlib reserves the name *Kleene's second recursion theorem*
+    for `fixed_point₂`; the two are inter-derivable, and `ZeroParadox/Category/Lawvere.lean:116,121`
+    words it the same way. The fine end of axis 2. -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ∃ c, Nat.Partrec.Code.eval (g c) = Nat.Partrec.Code.eval c :=
   computability_face_fixedPoint hg

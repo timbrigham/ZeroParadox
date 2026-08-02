@@ -255,14 +255,16 @@ theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
 The ultrametric property (T1) is the metric expression of non-Archimedean structure.
 C3 (irreversibility) is the positive complement to ZP-F's f_snap_impossible:
 
-- In Archimedean fields (ZP-F): halving is always available, no minimal positive
-  element exists — the snap is **impossible** (`f_snap_impossible`,
-  `axb1_fails_in_ordered_field`).
+- In **any ordered field** (ZP-F), Archimedean or not: halving is always available, so no
+  minimal positive element exists — the snap is **impossible** (`f_snap_impossible`,
+  `axb1_fails_in_ordered_field`). Neither theorem has an Archimedean hypothesis; see the
+  classification note below.
 - In Q₂ (this file): the ultrametric creates a genuine topological gap at zero
   (T2, T3, C3) — the snap is **not blocked**, which is a strictly weaker statement.
 
 **⚠ CORRECTED 2026-07-31. This line read "the snap is forced" and that is FALSE**, as
-`ZeroParadox/Reals/OrderedField.lean:192-199` states directly: *"ZP-B does NOT force the snap,
+`ZeroParadox/Reals/OrderedField.lean` (§ "Classification Note", the "ZP-B does NOT force the snap"
+paragraph) states directly: *"ZP-B does NOT force the snap,
 and cannot."* What this file proves is topological — the gap at 0 is clopen (`t3_isolation`)
 and the return across it admits no continuous path (`c3_irreversible`). **Neither yields a
 first step, and no metric result could:** the 2-adic norm values accumulate at 0
@@ -292,9 +294,10 @@ non-Archimedean field extending ℚ need not be any ℚ_p. The correct statement
 at `ZeroParadox/Valuation/Ostrowski.lean` the whole time.)*
 
 ZP-B covers the non-Archimedean case (p = 2, forced by AX-B1 and minimality).
-ZP-F covers the Archimedean case. **The classification is a statement about where the snap is
-RULED OUT**, not where it is supplied: ZP-F rules it out on the Archimedean side, and ZP-B
-removes the topological obstruction on the other. Non-Archimedean structure is therefore
+ZP-F covers the ordered-field case. **The classification is a statement about where the snap is
+RULED OUT**, not where it is supplied: **ZP-F rules it out in every ordered field** — which is
+what it actually proves, and is wider than the Archimedean completion — and ZP-B removes the
+topological obstruction in ℚ₂. Ultrametric structure is therefore
 necessary and **not** sufficient — that the snap actually occurs is carried by AX-B1 together
 with the framework's commitments, never by C3 or T5 alone. (An earlier revision of this
 paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
@@ -307,12 +310,21 @@ no closest nonzero element, so it does not yield the step.)
 proved by **halving**, via `f_snap_blocked`. So what it gives by contraposition is *a first step exists
 ⟹ the carrier is not an ordered field at all*.
 
-That is a **different** shape from "⟹ non-Archimedean", and the two are **incomparable** — neither
-implies the other. ℝ(t) with a compatible order is non-Archimedean and still an ordered field (so it is
-covered by `f_snap_impossible` but not by an Archimedean hypothesis); ℂ is not orderable at all. Do not
-call either one stronger.
+That is a **different** shape from "⟹ non-Archimedean", and **under the valuation-theoretic reading of
+"non-Archimedean" — carrying an ultrametric absolute value, the sense used throughout ZP-B — the two are
+incomparable**, neither implying the other:
+* ℝ(t) with the leading-coefficient order is a **non-Archimedean ordered field**, so
+  `f_snap_impossible` covers it while an Archimedean hypothesis would not;
+* ℂ carries an ultrametric-free absolute value and **is not orderable at all**, so it falls under
+  "not an ordered field" while not being non-Archimedean in the valuation sense.
 
-*(Two corrections, both 2026-08-01, both caught by gates rather than by me. (i) This paragraph once
+**The reading is load-bearing and is pinned deliberately.** Under the *plain* reading of
+"non-Archimedean" as bare `¬Archimedean`, "not an ordered field" would be strictly **stronger** and ℂ
+would separate nothing (the separating witness there is ℤ, not a field at all). State which reading is
+meant, or the comparison is not well-posed. *(Pinned 2026-08-01 after a prior-art gate showed the
+verdict was reading-dependent — in a paragraph whose own correction (iii) is about an ordering error.)*
+
+*(Three corrections, all 2026-08-01, all caught by gates rather than by me. (i) This paragraph once
 cited `f_snap_impossible` as holding "on the Archimedean side", mis-scoping a theorem that covers every
 ordered field. (ii) The fix for (i) then attributed the wrong proof route — "density
 (`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy`)" — which is the route of

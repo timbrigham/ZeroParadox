@@ -13,6 +13,14 @@ set_option maxHeartbeats 400000
 /-!
 # ZP-H tree, TC29 — the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to TC19's #3/#2)
 
+> **⚠ READ FIRST — every "TC19" in this file is a CONTESTED label.** `ZeroParadox/MANIFEST.md`
+> contradicts itself about which node TC19 names, so treat all 14 occurrences below as referring to
+> *"the prior node covering the #3/#2 ν-leaves"* and **not** as a verified pointer. Details in
+> § "THE 'TC19' LABEL IS CONTESTED" below. The #3/#2 mathematics is real and unaffected; only the
+> node NUMBER is unreliable. *(Flagged 2026-08-01. The caveat sits here, at the top, because a gate
+> found the first version buried mid-file while the label went on being used as reliable eleven more
+> times — including in this title and in theorem docstrings.)*
+
 ## Engineer's Take
 
 This file is one of a series of iterative attempts on this branch to build a map of how the various
@@ -144,13 +152,13 @@ instance hom_padic_hilbert_subsingleton : Subsingleton C(padicFloor_ThreeCarrier
 
 /-- The canonical homeomorphism between two `Unique` spaces (`homeomorphOfUnique`): "any two
     one-point spaces are homeomorphic". Cardinality-driven, not a structural identification.
-    This is the #3 ≃ₜ #2 leaf reconciliation TC19 already established. -/
+    This is the #3 ≃ₜ #2 leaf reconciliation the prior node already established (labelled TC19 — see the contested-label caveat in the header). -/
 noncomputable def nu_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf simplexPoint_ThreeCarrierLeaf
 
 /-- **The TC29-specific edge: #3 ≃ₜ #5.** The canonical homeomorphism between the p-adic floor and the
     Hilbert seam carrier `StateSpace 0` — again `homeomorphOfUnique` (both are `Unique`). This is the
-    leaf reconciliation TC19 does NOT cover: it adds the #5 seam node to the ν-leaf glue set. Generic
+    leaf reconciliation the prior node does NOT cover (labelled TC19 — contested, see header): it adds the #5 seam node to the ν-leaf glue set. Generic
     (cardinality-driven), per the genericity witnesses below. -/
 noncomputable def seam_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf hilbertCarrier

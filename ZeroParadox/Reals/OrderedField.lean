@@ -212,9 +212,11 @@ So the classification is a statement about where the snap is RULED OUT. Ostrowsk
 the Archimedean completions of ℚ from the non-Archimedean ones; **ZP-F rules the snap out in every
 ordered field** — which is what this file actually proves, and is wider than the Archimedean
 completion — and ZP-B removes the topological obstruction in ℚ₂. *(Corrected 2026-08-01: this read
-"ZP-F rules the snap out on the Archimedean side", the same phrase struck in
-`ZeroParadox/Valuation/Padic.lean`; it understates the theorem, which needs no Archimedean
-hypothesis.)* That the snap
+"ZP-F rules the snap out on the Archimedean side", which understates a theorem needing no Archimedean
+hypothesis. The identical phrasing in `ZeroParadox/Valuation/Padic.lean` was struck in the same arc —
+but only on the second attempt: the first pass corrected this file while asserting the sibling had
+already been fixed, when it had not. **Do not restate another file's state as fact in a correction
+note; grep the claim there instead.** An adversary gate caught it.)* That the snap
 actually occurs there is carried by AX-B1 together with the framework's commitments, never by
 C3 or T5 alone.
 
