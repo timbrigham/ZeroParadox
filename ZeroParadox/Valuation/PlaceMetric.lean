@@ -38,8 +38,8 @@ oppositely at the two place-types, which is the framework's 0/∞ duality made c
   in the **archimedean** (ℝ/ℂ) metric (cite the mean-ergodic theorem). So #2 is an archimedean-metric
   contraction limit, #3 a non-archimedean one: ⊥ is a *place-relative* limit in both.
 
-**Honest scope.** `node3_contracts_2adic` and `markov_attractor_archimedean` are re-exports (,
-mean-ergodic) — included so both bottoms' dynamics sit in one file. The genuine new content is
+**Honest scope.** `node3_contracts_2adic` and `markov_attractor_archimedean` are re-exports (the 2-adic contraction and the
+mean-ergodic archimedean attractor) — included so both bottoms' dynamics sit in one file. The genuine new content is
 `doubling_expands_archimedean` + `doubling_place_dichotomy`: the place-dependence of the same map's
 dynamics. Still within the number-theoretic bottoms (the ℝ/ℚ₂ places); does not touch the categorical
 bottoms (walled).

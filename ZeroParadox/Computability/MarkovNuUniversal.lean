@@ -25,7 +25,7 @@ stationary distribution in the probability simplex) in the bottom-diagram μ/ν 
 
 **The pre-registered question.** The order ambient blocks #2 from any universal property: the simplex
 is a coordinate-order antichain (`simplex_antichain`), so the stationary
-point is neither order-least (μ) nor order-greatest (ν). asked whether *changing the ambient*
+point is neither order-least (μ) nor order-greatest (ν). This file asks whether *changing the ambient*
 from the order to the **dynamics** rescues a universal property: the stationary distribution is a
 *fixed point* of the Kleisli transfer action `μ ↦ μ.bind f`, and a **unique** fixed point of an
 endomorphism is a terminal-flavoured (ν / final-coalgebra) universal object. The GO conjecture was

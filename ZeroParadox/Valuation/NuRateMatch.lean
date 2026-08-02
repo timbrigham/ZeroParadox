@@ -57,7 +57,7 @@ each exactly `C·(1/2)ⁿ`, dominated by one envelope `→ 0`. The shared rate c
 in-statement. What is interpretation, NOT Lean: that #2 and #3 are "the same ν-attractor" — they are
 not (one lives in a connected simplex `stdSimplex ℝ (Fin 2)`, the other in the totally-disconnected
 normed field `Q₂`; `t5_totallyDisconnected`). No category, inverse limit, final coalgebra, or
-cross-ambient map is built. is an envelope/rate test on the #2↔#3 ν-edge; the edge stays OPEN at
+cross-ambient map is built. This file is an envelope/rate test on the #2↔#3 ν-edge; the edge stays OPEN at
 the orbit level — the rate match is the COMPLEMENT to `ZeroParadox/Valuation/NuRateEdge.lean`, not a closure of the wall.
 -/
 

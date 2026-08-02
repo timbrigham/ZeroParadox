@@ -57,7 +57,7 @@ decisive and they are stated in Lean:
    and `Cofix` is inhabited, so **no** function `Fix → Cofix` is surjective. The root-seam is governed
    by *absence of a recursive position* in the functor.
 
-2. `node_seam_arrow_collapse_is_generic` — re-exporting : the node-#5 "seam" arrow coincidence
+2. `node_seam_arrow_collapse_is_generic` — re-exporting `ZeroParadox/Category/SeamArrowLevel.lean`: the node-#5 "seam" arrow coincidence
    `IsInitial.to = IsTerminal.from` is **generic** to any initial-alone / terminal-alone object and
    fires off the seam (witnessed at node #4, which is initial, not a zero object, yet has `to = 𝟙`).
    The node-seam is governed by *being a zero object*, and even then the arrow-equality adds nothing.

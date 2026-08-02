@@ -24,7 +24,7 @@ is the only zero object among the named
 categorical bottoms; the seam file (`ZeroParadox/Category/TreeSeam.lean`) proved it *straddles* — it is initial ∧
 terminal in its own category `ModuleCat ℂ`. The tree's structural claim is stronger: the seam should
 **connect** the μ-subtree and the ν-subtree, i.e. admit a canonical morphism FROM every μ-side bottom
-and a canonical morphism TO every ν-side bottom inside a single ambient category. races the
+and a canonical morphism TO every ν-side bottom inside a single ambient category. This file races the
 two readings.
 
 **GO reading (provable, but generic).** Within `ModuleCat ℂ`, the zero object `Z_SeamBridge = fD_functor.obj 0`

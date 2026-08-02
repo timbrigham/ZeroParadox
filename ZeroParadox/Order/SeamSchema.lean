@@ -39,8 +39,8 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
   comparison and is bijective (`canonicalCmp_bijective`, `canonicalCmp_eq_root_seam`). Here μ and
   ν are GENUINELY DISTINCT TYPES and the equivalence is a nontrivial construction.
 
-* **Lattice selfApp seam** (`latticeSeam`): the fixed-point set is the singleton `{⊥}` (
-  `selfApp_fp_set_eq_singleton_bot`), and ⊥ is both least and greatest fixed point
+* **Lattice selfApp seam** (`latticeSeam`): the fixed-point set is the singleton `{⊥}`
+  (`selfApp_fp_set_eq_singleton_bot`), and ⊥ is both least and greatest fixed point
   (`selfApp_bot_is_both_extremal`). To make this an instance of `SeamSchema` the μ-carrier and the
   ν-carrier must BOTH be taken to be the same object — the fixed-point subtype `{x // selfApp x = x}` —
   and the seam witness is `Equiv.refl`. There is no pair of distinct carriers to relate: "least = greatest"

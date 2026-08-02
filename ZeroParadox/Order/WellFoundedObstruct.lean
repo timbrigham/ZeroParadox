@@ -101,7 +101,7 @@ open Filter Topology
 
 /-- **The structural obstruction (mirror of `doubling_norm_lt_one`).** There is no infinite
     strictly-decreasing sequence `ℕ → ℕ`: the well-founded μ floor cannot host the order-theoretic
-    analogue of infinite shrinking orbit `2ⁿ·x`. This is `not_strictAnti_of_wellFoundedLT`
+    analogue of the infinite shrinking p-adic orbit `2ⁿ·x`. This is `not_strictAnti_of_wellFoundedLT`
     specialised to ℕ (which is `WellFoundedLT`); it is the load-bearing fact behind the whole
     separation — it is *false* in any non-well-founded ambient (e.g. the 2-adic norms of `2ⁿ·x`). -/
 theorem no_infinite_descent : ∀ f : ℕ → ℕ, ¬ StrictAnti f :=

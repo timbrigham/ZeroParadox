@@ -50,7 +50,7 @@ GO for a different reason: its legs (`fC_floor_transport` / `fD_floor_transport`
 floor's descent morphism onto the categorical bottom's initiality morphism**, and those equations are
 *in* `t1_mu_cluster_glue`'s statement. This file's apex legs transport **nothing** — they are isos of bare
 points with no universal role. The two spans therefore sit at *different* reconciliation strengths:
-T1's carries a universal role; is the trivial floor of the strength scale. So a singleton-apex
+T1's carries a universal role; this file's is the trivial floor of the strength scale. So a singleton-apex
 span existing does **not** show the cross-root cut is a method artifact, because it does not match
 T1's role-preserving span.
 

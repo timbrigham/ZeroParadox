@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 `ZeroParadox/Valuation/PadicAttractor.lean` showed that the p-adic floor #3 (`{0} ⊆ Q₂`) is a *global attractor* of the single
 doubling map `x ↦ 2·x`: every orbit `2ⁿ·x → 0`. That result used the multiplier `c = 2`.
-modest contribution is to specialize standard normed-field dynamics to the `ℚ_[2]`
+This file's modest contribution is to specialize standard normed-field dynamics to the `ℚ_[2]`
 floor and read the contraction criterion as the *valuation ideal* (`‖c‖ < 1`, equivalently
 `2 ∣ c`): which scalar multipliers see the snap floor as an attractor, in valuation terms.
 
