@@ -154,11 +154,11 @@ theorem pred_orbit_eventually_constant (n : ℕ) :
   refine ⟨n, fun k hk => ?_⟩
   rw [pred_descent_terminates n k hk, pred_descent_terminates n n le_rfl]
 
-/-! ## The contrasting half — the p-adic ν-orbit never reaches its limit -/
+/-! ## The contrasting half — the 2-adic ν-orbit never reaches its limit -/
 
 /-- **The contrast (load-bearing, in-statement).** For `x ≠ 0`, the `ZeroParadox/Valuation/PadicAttractor.lean` doubling orbit `2ⁿ·x` is
     *never* `0`: it converges to the floor only as a topological limit and never reaches it in finite
-    time. So the p-adic (#3, ν) orbit is **not** eventually constant — the opposite of the μ floor's
+    time. So the 2-adic (#3, ν) orbit is **not** eventually constant — the opposite of the μ floor's
     `Nat.pred` orbit, which terminates. This is the precise behavioural separator across Axis I. -/
 theorem padic_orbit_never_reaches_zero (x : Q₂) (hx : x ≠ 0) :
     ∀ n : ℕ, (2 : Q₂) ^ n * x ≠ 0 := by
@@ -204,7 +204,7 @@ theorem pred_orbit_reaches_floor (n : ℕ) :
   refine ⟨N, fun k hk => ?_⟩
   exact pred_descent_terminates n k (le_trans hnN hk)
 
-/-- The p-adic ν-orbit `n ↦ 2ⁿ·x` (`x ≠ 0`) **satisfies the negation** of the *same* predicate:
+/-- The 2-adic ν-orbit `n ↦ 2ⁿ·x` (`x ≠ 0`) **satisfies the negation** of the *same* predicate:
     `¬ ReachesFloorInFiniteTime`. It is never `0` (`padic_orbit_never_reaches_zero`), so there is no
     `N` past which it equals `0`. Under one definition, the ν orbit lands on the opposite side from the
     μ orbit. -/
@@ -217,7 +217,7 @@ theorem padic_orbit_not_reaches_floor (x : Q₂) (hx : x ≠ 0) :
 
 /-- **Axis-I separation (one predicate, with the real dynamical contrast in-statement).** Under
     the single definition `ReachesFloorInFiniteTime`, the μ floor's canonical descent (`Nat.pred^[·] n`)
-    **satisfies** it (finite-time termination), while the p-adic ν-orbit (`2ⁿ·x`, `x ≠ 0`) both
+    **satisfies** it (finite-time termination), while the 2-adic ν-orbit (`2ⁿ·x`, `x ≠ 0`) both
     **converges to the floor** topologically (`Tendsto … (nhds 0)` `doubling_orbit_tendsto_zero`)
     **and satisfies the negation** `¬ ReachesFloorInFiniteTime`. So the in-statement contrast is the
     real one — *reaches the floor in finite time* (μ, #1) vs *converges to the floor as a limit it never

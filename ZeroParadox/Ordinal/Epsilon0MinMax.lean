@@ -132,7 +132,7 @@ end ZeroParadox
 Both results are corollaries of Mathlib's `Ordinal` fixed-point theory (`nfp`, `epsilon`), which is
 classically built, so `Classical.choice` is expected here. **Status: UNCLASSIFIED** — calling it
 "representational, not intrinsic" (as an earlier version of this note did) is an *eliminability* claim,
-and no choice-free re-proof of these results exists. Note also that the choice is NOT in the `Ordinal`
+and no choice-free re-proof of these results was located as of 2026-08-02. Note also that the choice is NOT in the `Ordinal`
 type, which measures `[propext, Quot.sound]`; it enters through the order instance and the operations.
 ZP-N's choice-free snap-from-below on `ONote` is suggestive for these results without being a re-proof of
 them (cf. `ZeroParadox/Ordinal/ConstructiveOrdinals.lean`). Recorded honestly below. -/

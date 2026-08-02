@@ -179,8 +179,7 @@ the diagonal point. That much is the theorem below.
 
 **Block conclusion (2026-06-25) — a reasoned judgement, NOT a theorem, and there is no witness for
 it.** The only data common to both is "a self-map plus two elements" with no shared non-trivial
-axiom, so a single non-vacuous lightweight typeclass over both forks appears not to exist; none
-was located as of 2026-08-02. This is a
+axiom, so no single non-vacuous lightweight typeclass over both forks was located as of 2026-08-02. This is a
 universal negative over all possible typeclasses; nothing in Lean states it, and
 `fixed_pole_forces_collapse` does **not** — it proves the narrow implication in its own signature.
 *(The label was dropped when this § was promoted on 2026-08-02, and `Wall.lean`'s NO-GO table

@@ -26,7 +26,7 @@ is no choice in the type. And the conclusion overreaches its evidence by one ste
 choice-free (`ZeroParadox/Ordinal/ConstructiveOrdinals.lean`) is a fact about the *ascent*, while ε₀ is
 past what the notation system can name (`tower_cofinal`,
 `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`). Note the weaker verb: the ε₀ results' status is
-**unclassified**, not refuted — no choice-free re-proof exists either way.
+**unclassified**, not refuted — no choice-free re-proof was located either way as of 2026-08-02.
 
 Worse, the claim was **not measurable by the instrument used to support it.** `Classical.choice` sits in
 the `Ordinal.partialOrder` *instance term*, so every statement mentioning that order inherits it however

@@ -33,9 +33,10 @@ machine-checked impossibility rather than a failed attempt.
   is disclosed as choice-carrying. Nothing here transports a result across the two carriers.
 * **It is not a proof that ε₀ requires choice.** The obstruction proved below is about *notation
   systems of this shape* — Cantor normal form, whose terms name exactly the ordinals below ε₀. It says
-  nothing about notation systems that extend past ε₀ (Veblen / Bachmann-Howard style), which are not in
-  Mathlib. Whether some richer constructive substrate supports a snap nucleus is open, and untouched in
-this corpus as of 2026-08-02.
+  nothing about notation systems that extend past ε₀ (Veblen / Bachmann-Howard style), none of which
+  is in this Mathlib pin as of 2026-08-02 (the pin's `Veblen.lean` is semantic, not a notation system
+  — see the scope note below). Whether some richer constructive substrate supports a snap nucleus is
+  open, and untouched in this corpus as of 2026-08-02.
 * **The impossibility is not "no nucleus exists on `ONote`."** Nuclei on `SynONote` exist in
   abundance — `id` is one. What is proved impossible is the *snap property*: that a nucleus's closed
   points be ε-numbers.
@@ -73,13 +74,18 @@ Both halves are measured here, and they split:
   `mathlib_ONote_order_not_antisymm` measures `[propext, Classical.choice, Quot.sound]` because it is a
   statement *about* Mathlib's `repr`-based order, not part of the constructive development.
   **This does NOT classify `snapNucleus`'s own footprint as accidental** — that would be
-  an eliminability claim, and no re-proof of `snapNucleus` exists. Its status is **UNCLASSIFIED**
+  an eliminability claim, and no re-proof of `snapNucleus` was located as of 2026-08-02. Its status is **UNCLASSIFIED**
   (`ZeroParadox/Ordinal/SnapNucleus.lean` records the same).
 * **The counterpart route via this carrier is blocked — for a different reason than choice.** What
   blocks it is **expressive reach**: *this* carrier cannot name the object the closure produces.
   **Scope, narrowly:** the result is about `ONote`-shaped notation systems, not about constructive
   mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here —
-  it is open, untouched here, and none is in this Mathlib pin (checked 2026-08-02). So this is **not** a proof that the snap nucleus is
+  it is open and untouched here. **Say which sense, because the pin does ship Veblen:**
+  `Mathlib/SetTheory/Ordinal/Veblen.lean` defines `veblen`, `ε_` and `Γ_`, but *semantically* — they
+  are `noncomputable` functions on `Ordinal`, not a computable **notation system** of the
+  `ONote`/`NONote` kind this file's argument is about, and `Mathlib`'s own `Notation.lean` scopes
+  those to "below `ε₀`". **No notation system past ε₀ is in this Mathlib pin as of 2026-08-02**;
+  Bachmann-Howard is absent in either sense. So this is **not** a proof that the snap nucleus is
   constructively impossible, and **not** a claim that ε₀ requires choice.
 
 These are compatible and should not be conflated. "The proof needs no choice" and "the carrier cannot

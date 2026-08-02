@@ -10,7 +10,7 @@ root of the tree**. `ZeroParadox/Settheory/Coalgebra.lean` proved the fork *stri
 (child type `PUnit`, a recursive position): the initial algebra `QPF.Fix idPF_Coalgebra.Obj` is empty and the
 final coalgebra `QPF.Cofix idPF_Coalgebra.Obj` is inhabited, so the two fixed points cannot agree.
 
-Here we show the complementary case. Take the **leaf-free constant polynomial functor**
+Here we show the complementary case. Take the **all-leaf constant polynomial functor**
 `constPF A := ⟨A, fun _ => PEmpty⟩` — head type `A`, **no recursive position** (child type empty).
 Then both fixed points collapse:
 
@@ -65,7 +65,7 @@ set_option maxHeartbeats 400000
 
 universe u
 
-/-- The leaf-free **constant** polynomial functor: head type `A`, **no recursive position**
+/-- The all-leaf **constant** polynomial functor: head type `A`, **no recursive position**
 (child family `fun _ => PEmpty`). Its action is `(constPF A).Obj X ≃ A` for every `X`. -/
 def constPF (A : Type u) : PFunctor.{u, u} := ⟨A, fun _ => PEmpty⟩
 
@@ -94,7 +94,7 @@ def objEquiv (X : Type u) : (constPF A).Obj X ≃ A where
 
 /-! ### μ side: `Fix (constPF A).Obj ≃ A` -/
 
-/-- `Fix ≃ A`: the initial algebra of the leaf-free constant functor collapses to `A`. -/
+/-- `Fix ≃ A`: the initial algebra of the all-leaf constant functor collapses to `A`. -/
 def fixEquiv : Fix (constPF A).Obj ≃ A where
   toFun x := (Fix.dest x).1
   invFun a := Fix.mk ⟨a, fun e => e.elim⟩
@@ -124,7 +124,7 @@ theorem cofixMk_head (a : A) : (Cofix.dest (cofixMk a)).1 = a := by
   rw [cofixMk, Cofix.dest_corec]
   rfl
 
-/-- `Cofix ≃ A`: the final coalgebra of the leaf-free constant functor collapses to `A`.
+/-- `Cofix ≃ A`: the final coalgebra of the all-leaf constant functor collapses to `A`.
 The right inverse `cofixMk (dest x).1 = x` is proved by bisimulation. -/
 def cofixEquiv : Cofix (constPF A).Obj ≃ A where
   toFun x := (Cofix.dest x).1
@@ -157,7 +157,7 @@ def cofixEquiv : Cofix (constPF A).Obj ≃ A where
 
 /-! ### The root seam and the dichotomy -/
 
-/-- **Root-level seam.** For the leaf-free constant functor the least and greatest fixed points are
+/-- **Root-level seam.** For the all-leaf constant functor the least and greatest fixed points are
 equivalent: `Fix ≃ Cofix`. The seam recurs at the root of the tree. -/
 def root_seam : Fix (constPF A).Obj ≃ Cofix (constPF A).Obj :=
   fixEquiv.trans cofixEquiv.symm
@@ -173,7 +173,7 @@ theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix Zer
 /-- **The root-cut degeneracy dichotomy.** The μ/ν root cut is strict exactly when the functor has a
 recursive position and collapses to a seam exactly when it has none:
 
-* leaf-free **constant** functor `constPF A` (child type `PEmpty`, no recursive position):
+* all-leaf **constant** functor `constPF A` (child type `PEmpty`, no recursive position):
   `Fix ≃ Cofix` (a seam) — first component;
 * one-shape **identity** functor `idPF_Coalgebra` (child type `PUnit`, one recursive position):
   `IsEmpty (Fix ≃ Cofix)` (strict, no seam) — second component. -/

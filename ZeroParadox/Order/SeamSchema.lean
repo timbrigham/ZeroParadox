@@ -47,14 +47,16 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
   `ZeroParadox/Multihomed/SelfAppSeam.lean`, a conjunction of the two bounds).
 
   *Reading:* **INVERSION** — order-duality exchanges the *least* and *greatest* characterizations
-  while fixing ⊥ itself. Not witnessed here; no Lean statement in this corpus asserts it.
-  **Both KINDs belong to this object, and either alone mischaracterises it** — the same shape as
+  while fixing ⊥ itself. **Not witnessed for `selfApp`**: `lfp_dual_eq_gfp` needs `CompleteLattice`
+  and an `OrderHom`, and `selfApp` is neither. The general exchange IS proved elsewhere —
+  `ZeroParadox/Settheory/ForkFrameChange.lean` — it simply does not instantiate here.
+  **Both KINDs plausibly belong to this object, and either alone would mischaracterise it** — the same shape as
   `catseam_is_frameflip`, where being self-dual is precisely what makes two labels necessary.
   *(Corrected 2026-08-02: this carried "Not an INVERSION — nothing here for an involution to swap",
   which is a denial the convention has no slot for, and is very likely false, since order-duality is
   exactly such an exchanging map.)*
 
-  To make this an instance of `SeamSchema` the μ-carrier and the
+  To make the lattice selfApp seam an instance of `SeamSchema` the μ-carrier and the
   ν-carrier must BOTH be taken to be the same object — the fixed-point subtype `{x // selfApp x = x}` —
   and the seam witness is `Equiv.refl`. There is no pair of distinct carriers to relate: "least = greatest"
   collapses them to one type before the schema is even applied.

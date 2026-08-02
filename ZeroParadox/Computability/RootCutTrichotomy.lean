@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 Earlier tree tests (`ZeroParadox/Category/RootCutDegeneracy.lean` and `ZeroParadox/Category/RootCutBinary.lean`) separated polynomial-functor bottoms into a **dichotomy** by whether
-the functor has a recursive position: a leaf-free functor with no recursive position is a *seam*
+the functor has a recursive position: an all-leaf functor with no recursive position is a *seam*
 (`Fix ≃ Cofix`), one with a recursive position but no leaf is *strict* (`Fix` empty, `Cofix`
 inhabited). **Neither of those tests varied the leaf independently** — the head set was
 all-or-nothing on recursive positions: `constPF A = ⟨A, fun _ => PEmpty⟩` is **all-leaf** with no

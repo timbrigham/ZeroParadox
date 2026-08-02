@@ -19,7 +19,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZeroParadox/Category/RootCutDegeneracy.lean` proved that for the leaf-free **constant** polynomial functor `constPF A` (child type `PEmpty`,
+`ZeroParadox/Category/RootCutDegeneracy.lean` proved that for the all-leaf **constant** polynomial functor `constPF A` (child type `PEmpty`,
 **no recursive position**) the least and greatest fixed points are equivalent:
 `root_seam : QPF.Fix (constPF A).Obj ≃ QPF.Cofix (constPF A).Obj`. That theorem exhibits *some*
 equivalence (it factors through `A` on both sides). It does **not** identify the canonical
@@ -30,7 +30,7 @@ This file closes that gap and then fences the keystone honestly.
 
 **GO (the genuinely new edge).** For any QPF `F`, the canonical comparison `Fix F → Cofix F` is the
 unique initial-algebra homomorphism into `Cofix F` regarded as an `F`-algebra via the inverse of
-`Cofix.dest`. For `constPF A` we build this inverse (`cofixMk`, the leaf-free constructor of `ZeroParadox/Category/RootCutDegeneracy.lean`) and
+`Cofix.dest`. For `constPF A` we build this inverse (`cofixMk`, the all-leaf constructor of `ZeroParadox/Category/RootCutDegeneracy.lean`) and
 define
 
   `canonicalCmp : Fix (constPF A).Obj → Cofix (constPF A).Obj := Fix.rec (fun y => cofixMk y.1)`
@@ -85,9 +85,9 @@ variable {A : Type u}
 
 /-! ## The canonical μ→ν comparison map for `constPF A` -/
 
-/-- The canonical comparison `Fix → Cofix` for the leaf-free constant functor, defined by recursion on
+/-- The canonical comparison `Fix → Cofix` for the all-leaf constant functor, defined by recursion on
 the initial algebra into `Cofix` as an `F`-algebra. The algebra structure on `Cofix (constPF A).Obj`
-is `fun y => cofixMk y.1` — `cofixMk` is the leaf-free constructor, the inverse of
+is `fun y => cofixMk y.1` — `cofixMk` is the all-leaf constructor, the inverse of
 `Cofix.dest` for this functor. This is the genuine recursion homomorphism, not an ad-hoc bijection. -/
 def canonicalCmp : Fix (constPF A).Obj → Cofix (constPF A).Obj :=
   Fix.rec (fun (y : (constPF A).Obj (Cofix (constPF A).Obj)) => cofixMk y.1)
@@ -107,7 +107,7 @@ theorem objMap_fst {X Y : Type u} (f : X → Y) (z : (constPF A).Obj X) :
 
 /-- Pointwise normal form of the canonical comparison: `canonicalCmp x = cofixMk (Fix.dest x).1`.
 Proved by `Fix.ind_rec`: the head component is preserved by the functor map (`constPF` has no children
-to recurse into), so the recursion collapses to "read the head, build the leaf-free node". -/
+to recurse into), so the recursion collapses to "read the head, build the all-leaf node". -/
 theorem canonicalCmp_apply (x : Fix (constPF A).Obj) :
     canonicalCmp x = cofixMk ((Fix.dest x).1) := by
   refine Fix.ind_rec canonicalCmp (fun x => cofixMk ((Fix.dest x).1)) ?_ x
@@ -128,7 +128,7 @@ theorem canonicalCmp_eq_root_seam :
 claim).** Any function `h : Fix → Cofix` satisfying the same recursion (homomorphism) law that
 `canonicalCmp` satisfies — `h (Fix.mk x) = cofixMk ((h <$> x).1)`, i.e. `h` is an `F`-algebra
 homomorphism into `Cofix` regarded as an algebra via `fun y => cofixMk y.1` — is equal to
-`canonicalCmp`. This is `Mathlib`'s `Fix.rec_unique` specialized to the leaf-free algebra, and it is
+`canonicalCmp`. This is `Mathlib`'s `Fix.rec_unique` specialized to the all-leaf algebra, and it is
 what makes `canonicalCmp` *the* comparison map, not merely *a* function with the homomorphism law. -/
 theorem canonicalCmp_unique (h : Fix (constPF A).Obj → Cofix (constPF A).Obj)
     (hyp : ∀ x : (constPF A).Obj (Fix (constPF A).Obj), h (Fix.mk x) = cofixMk ((h <$> x).1)) :
