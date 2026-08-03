@@ -1,6 +1,10 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.7 | August 2026
+Version 1.8 | August 2026
+v1.8: swept the sibling the v1.7 fix left standing - the next rendered paragraph still said the
+set-quotient and Worrell presentations REQUIRE choice, which is the modality v1.7 retired one
+sentence earlier. Veltri's own words are "requires the presence of the axiom of choice in the
+proof of finality" - about his proof, not a necessity result.
 v1.7: LLPO equivalence given its hypothesis (Veltri's Cor. 8 gives injectivity => LLPO outright;
 Thm 9 gives the converse only ASSUMING countable choice), and the v1.6 changelog's own modality
 brought in line with the corrected prose.
@@ -33,7 +37,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -295,8 +299,8 @@ def build():
             'genuine necessity he proves is of LLPO, a logic taboo, not of choice. He cites '
             'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
             'Choice genuinely enters only for the non-polynomial finite-powerset functor, where the '
-            'literature pins each presentation: the set-quotient requires the full axiom of choice '
-            'for finality, while Worrell\'s (&#969;+&#969;)-limit requires countable choice together '
+            'literature pins each presentation: the set-quotient\'s finality proof assumes the full '
+            'axiom of choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under countable choice together '
             'with the lesser limited principle of omniscience (LLPO). Injectivity of the canonical '
             'algebra implies LLPO outright, and is equivalent to it under countable choice '
             '(Veltri, FSCD 2021).',

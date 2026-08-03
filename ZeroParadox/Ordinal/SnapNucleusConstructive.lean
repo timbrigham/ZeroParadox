@@ -45,16 +45,26 @@ machine-checked impossibility rather than a failed attempt.
 ## Prior art on the operator itself
 
 **de Jong, Kraus, Nordvall Forsberg and Xu, "Constructive Ordinal Exponentiation"**
-(arXiv:2501.14542) is the closest specialist result to the argument below, and it is about the
-**exact operator the ε₀ tower iterates**. Their **Proposition 9**: an exponentiation operation
-satisfying the natural specification *"can be shown to exist if and only if the law of excluded
-middle holds"* — a taboo EQUIVALENCE, not merely a footprint measurement. Their Thms 13/24 then
-give constructive exponentiation under the weaker hypotheses `α ≥ 1` or a trichotomous least
-element. **It does not bear on the obstruction below**, which is about a notation system's
-expressive reach rather than about choice, and their development is on `Cnf`/`Brw` in HoTT/Agda,
-so it is not a re-proof of anything on Mathlib's `Ordinal`. Cited because the framework should
-not look unaware of a taboo result on its own operator. *(Their **Lemma 54** is separately cited
-in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`.)*
+(arXiv:2501.14542) is the nearest specialist work on ordinal exponentiation, and the honest
+statement of its bearing here is that **its taboo does NOT reach `α ↦ ω^α`** — which is worth
+recording precisely because the opposite is the tempting reading.
+
+Their **Proposition 9**: an exponentiation operation satisfying the natural specification *"can be
+shown to exist if and only if the law of excluded middle holds"* — a genuine taboo EQUIVALENCE, not
+a footprint measurement. **But that is exponentiation in FULL generality, base `0` included.** Their
+**Theorem 13** gives the construction whenever the base has a trichotomous least element, and
+**Theorem 24** likewise under `α ≥ 1`. **`ω` satisfies both**, so the ω-tower's operator sits on the
+*constructive* side of their own line. The taboo is about the unrestricted operation; our operator is
+one of the cases they construct.
+
+**It therefore does not bear on the obstruction below**, and for two independent reasons: the
+obstruction is about a notation system's expressive reach rather than about choice, and their carrier
+is the HoTT `Ord` — sets with a transitive, extensional, wellfounded order — together with a concrete
+construction by decreasing lists, in Agda. It is not a re-proof of anything on Mathlib's `Ordinal`.
+*(Their **Lemma 54** is separately cited in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`.
+⚠ Do NOT describe this paper's carrier as `Cnf`/`Brw`: those names belong to the authors' *earlier*
+arXiv:2104.02549, which this paper cites as previous work it compares itself against. That
+misattribution stood here on 2026-08-02 and was caught by two gates before it reached the remote.)*
 
 ## The obstruction, stated
 
