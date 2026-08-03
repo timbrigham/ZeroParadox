@@ -83,9 +83,12 @@ Both halves are measured here, and they split:
   it is open and untouched here. **Say which sense, because the pin does ship Veblen:**
   `Mathlib/SetTheory/Ordinal/Veblen.lean` defines `veblen`, `ε_` and `Γ_`, but *semantically* — they
   are `noncomputable` functions on `Ordinal`, not a computable **notation system** of the
-  `ONote`/`NONote` kind this file's argument is about, and `Mathlib`'s own `Notation.lean` scopes
-  those to "below `ε₀`". **No notation system past ε₀ is in this Mathlib pin as of 2026-08-02**;
-  Bachmann-Howard is absent in either sense. So this is **not** a proof that the snap nucleus is
+  `ONote`/`NONote` kind this file's argument is about. **The ε₀ ceiling is a fact about the NOTATION
+  SYSTEMS, not about those Veblen functions**: `Mathlib`'s `Notation.lean` scopes `ONote`/`NONote` to
+  "below `ε₀`", while the Veblen functions reach far past it — the same pin proves `ε₀ < Γ_ o` for
+  every `o` (`epsilon_zero_lt_gamma`). Read the ceiling as applying to `veblen`/`ε_`/`Γ_` and it is
+  flatly false; it applies to `ONote`/`NONote`. **No notation system past ε₀ is in this Mathlib pin as
+  of 2026-08-02**; Bachmann-Howard is absent in either sense. So this is **not** a proof that the snap nucleus is
   constructively impossible, and **not** a claim that ε₀ requires choice.
 
 These are compatible and should not be conflated. "The proof needs no choice" and "the carrier cannot
