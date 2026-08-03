@@ -1,12 +1,19 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.11 | August 2026
-v1.11: retrospective gate round on already-published text. The v1.10 hedge was PREPENDED and left
-the original clause standing, so the remark box read "In the cases the literature pins ... where the
-literature pins each presentation" - one clause doubled. Rewritten once. Also retired the last
-"genuinely enters" framing (remark-box heading and body): choice appearing in every known
-presentation of the finite-powerset case is a fact about those constructions, not a necessity, and
-Veltri's own preferred coinductive construction needs neither choice nor LLPO.
+Version 1.12 | August 2026
+v1.12: the v1.11 fix relocated its error for the THIRD time in this one sentence. v1.9 said choice
+enters "only for" the finite-powerset functor (a universal); v1.10 PREPENDED a hedge and left the
+clause standing (a doubling); v1.11 removed the doubling and the hedge together, restoring the
+universal as "are all of" - contradicted two paragraphs up, where the same box concedes that
+Mathlib's presentation of the POLYNOMIAL functor idPF_Coalgebra carries Classical.choice. The
+universal is now deleted rather than re-hedged. Also restored LLPO to the Worrell clause: Veltri's
+Conclusions and abstract both give construction (iv) as countable choice AND LLPO, and v1.11 had
+dropped it, leaving this document disagreeing with CLAIMS.md, which was right.
+v1.11: the v1.10 hedge was PREPENDED and left the original clause standing, so the remark box read
+"In the cases the literature pins ... where the literature pins each presentation" - one clause
+doubled. Rewritten once. Also retired the "genuinely enters" framing (remark-box heading and body):
+choice in the pinned finite-powerset presentations is a fact about those constructions, not a
+necessity, and Veltri's own preferred coinductive construction needs neither choice nor LLPO.
 v1.10: the v1.9 abstract fix RELOCATED its error instead of removing it. Making the theorem
 statement true, it added "and the self-referential operators this framework studies are of that
 kind" - asserting applicability the corpus explicitly denies (17 CompleteLattice mentions, ZERO
@@ -58,7 +65,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.11'
+VERSION = '1.12'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -322,12 +329,13 @@ def build():
             '<i>assuming</i> choice principles rather than shown to need them, and the one '
             'genuine necessity he proves is of LLPO, a logic taboo, not of choice. He cites '
             'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
-            'The presentations that do use choice are all of the non-polynomial finite-powerset '
-            'functor, and the literature pins each one: the set-quotient\'s finality proof assumes '
-            'the full axiom of choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under '
-            'countable choice. That is a fact about those constructions rather than a necessity '
-            'result. Injectivity of the canonical algebra implies LLPO outright, and is equivalent '
-            'to it under countable choice (Veltri, FSCD 2021).',
+            'In the finite-powerset case &#8212; the non-polynomial one &#8212; the literature pins '
+            'each presentation: the set-quotient\'s finality proof assumes the full axiom of '
+            'choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under countable choice '
+            'together with the lesser limited principle of omniscience (LLPO). That is a fact about '
+            'those constructions rather than a necessity result. Injectivity of the canonical '
+            'algebra implies LLPO outright, and is equivalent to it under countable choice '
+            '(Veltri, FSCD 2021).',
         ]
     ))
     E.append(sp(6))
@@ -353,7 +361,7 @@ def build():
     E.append(body(
         'The tempting claim is that the contact points of all the instances &#8212; the Quine '
         'atom, the 2-adic 0, the Kleene quine, the self-referential element of the final '
-            'coalgebra &#8212; are faces '
+        'coalgebra &#8212; are faces '
         'of one object, the diagonal fixed point. ZP-P states this as a conjecture and fences it '
         'precisely. The fences are not hedging; they mark a genuine boundary, and per-instance '
         'forks remain full theorems on either side of them.'))

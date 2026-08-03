@@ -45,9 +45,9 @@ machine-checked impossibility rather than a failed attempt.
 ## Prior art on the operator itself
 
 **de Jong, Kraus, Nordvall Forsberg and Xu, "Constructive Ordinal Exponentiation"**
-(arXiv:2501.14542) is the nearest specialist work on ordinal exponentiation, and the honest
-statement of its bearing here is that **its taboo does NOT reach `α ↦ ω^α`** — which is worth
-recording precisely because the opposite is the tempting reading.
+(arXiv:2501.14542) is the nearest specialist work on ordinal exponentiation. Its bearing here is a
+**carrier** distinction. Stating it as "their taboo does not reach our operator" would be false:
+their § 7 collects several taboos that land squarely on `α ↦ α^β`, as recorded below.
 
 Their **Proposition 9**: an exponentiation operation satisfying the natural specification *"can be
 shown to exist if and only if the law of excluded middle holds"* — a genuine taboo EQUIVALENCE, not
@@ -56,18 +56,35 @@ buys the construction is *not* nonzero-ness: Proposition 9's own counterexample 
 proposition `P`, which the authors note is obviously nonzero. What the base must have is a **least
 element**. Their **Theorem 13** gives the abstract (suprema) construction under `α ≥ 1` — which they
 gloss as α having a least element — and **Theorem 24** the concrete decreasing-lists construction
-whenever the base has a **trichotomous** least element. **`ω` satisfies both**, so the ω-tower's
-operator sits on the *constructive* side of their own line. The taboo is about the unrestricted
-operation; our operator is one of the cases they construct.
+whenever the base has a **trichotomous** least element. **`ω` satisfies both**, so *that particular*
+taboo is about the unrestricted operation and `ω^·` is one of the cases they construct.
 
-**It therefore does not bear on the obstruction below**, and for two independent reasons: the
-obstruction is about a notation system's expressive reach rather than about choice, and their carrier
-is the HoTT `Ord` — sets with a transitive, extensional, wellfounded order — together with a concrete
-construction by decreasing lists, in Agda. It is not a re-proof of anything on Mathlib's `Ordinal`.
+**But their § 7 "Constructive Taboos" is not exhausted by Proposition 9, and some of it does concern
+the fixed-base exponential.** **Proposition 52**: exponentiation is monotone in the base iff LEM,
+and LEM is already implied by weaker statements *"even when α and β are each assumed to have a
+trichotomous least element"* — so a trichotomous least element is not a blanket constructivity
+certificate. **Proposition 55 (iii)/(iv)**: `∀ β, β ≤ 2^β` and `∀ β, ∀ α > 1, β ≤ α^β` are each
+**equivalent to LEM** — and (iv) at `α = ω` is a statement about this operator. **Proposition 60
+(iii)** likewise: a greatest `γ` with `α^γ ≤ β` (for `α > 1`, `β ≥ 1`) is equivalent to LEM.
+
+**What actually keeps all of it off the obstruction below is the CARRIER, not the operator.** Their
+ordinals are the HoTT `Ord` — sets with a transitive, extensional, wellfounded order — quantified
+over *arbitrary* such ordinals, with a concrete construction by decreasing lists, in Agda. The
+obstruction below is about `ONote`, a notation system with decidable order, and is about that
+system's expressive reach rather than about excluded middle. A statement quantified over all HoTT
+ordinals does not transfer to a decidable notation system, and none of this is a re-proof of anything
+on Mathlib's `Ordinal`.
+
+**Adjacent and unexamined — flagged, not claimed.** Their **Theorem 58** gives, for an endofunction
+`t : Ord → Ord` preserving suprema up to a binary join, a *greatest* `γ ≤ δ` with `t γ ≤ δ`, and
+lists `α^(−)` (with `δ₀ = 1`, for `α ≥ 1`) among its instances. A greatest-below operator built from
+a suprema-preserving endofunction is the shape of the nucleus material in this file, so it is worth a
+prior-art read before anything here is strengthened. Nobody has done that read; this is a pointer.
 *(Their **Lemma 54** is separately cited in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`.
 ⚠ Do NOT describe this paper's carrier as `Cnf`/`Brw`: those names belong to the authors' *earlier*
 arXiv:2104.02549, which this paper cites as previous work it compares itself against. Corrected
-2026-08-02; the two theorem numbers above were additionally transposed until 2026-08-03.)*
+2026-08-02; the theorem numbers above were transposed until 2026-08-03, and until 2026-08-03 this
+block asserted the paper's taboos did not reach this operator, which § 7 refutes.)*
 
 ## The obstruction, stated
 

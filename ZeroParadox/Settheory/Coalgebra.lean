@@ -96,12 +96,12 @@ choice entering exactly on the non-well-founded, self-referential side.
 *Editorial addendum (Claude):* that choice on the ν side is inherited from Mathlib's M-type machinery,
 not a necessity — for a polynomial functor like `idPF_Coalgebra` the final coalgebra is constructible choice-free
 in principle (Ahrens–Capriotti–Spadotti — their construction needs only function extensionality,
-which Lean has; only their uniqueness half uses univalence). The presentations that do use choice are
-all of the non-polynomial finite-powerset functor, and there it is pinned per presentation: full AC for
-the set-quotient, countable choice for Worrell's (ω+ω)-limit — a fact about those constructions, not a
-necessity result, and Veltri's own preferred coinductive construction needs neither. The one necessity
-he does prove is of LLPO, not of choice: injectivity of the canonical algebra implies LLPO outright,
-and is equivalent to it under countable choice (Veltri, FSCD 2021).
+which Lean has; only their uniqueness half uses univalence). In the finite-powerset case — the
+non-polynomial one — the literature pins each presentation: full AC for the set-quotient, countable
+choice together with LLPO for Worrell's (ω+ω)-limit. That is a fact about those constructions rather
+than a necessity result, and Veltri's own preferred coinductive construction needs neither. The one
+necessity he does prove is of LLPO, not of choice: injectivity of the canonical algebra implies LLPO
+outright, and is equivalent to it under countable choice (Veltri, FSCD 2021).
 -/
 
 section PurityCheck
@@ -117,9 +117,9 @@ section PurityCheck
 -- citation is **Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)**,
 -- which ACS themselves point at (§1.1) and generalize "to the whole of HoTT". **The full
 -- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.lean` —
--- read it there, not here.** The presentations that do use choice are all of the non-polynomial
--- finite-powerset functor — pinned per presentation: full AC for the set-quotient, countable choice
--- for Worrell's limit — which is a fact about those constructions, not a necessity. The necessity
+-- read it there, not here.** In the finite-powerset case — the non-polynomial one — the literature
+-- pins each presentation: full AC for the set-quotient, countable choice together with LLPO for
+-- Worrell's limit. That is a fact about those constructions, not a necessity. The necessity
 -- Veltri proves is of LLPO: injectivity of `alg_Vω` implies LLPO outright and is equivalent to it
 -- under countable choice. The fork spine
 -- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See `ZeroParadox/AxiomProfile.lean`.
