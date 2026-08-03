@@ -1,6 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.9 | August 2026
+Version 1.10 | August 2026
+v1.10: the v1.9 abstract fix RELOCATED its error instead of removing it. Making the theorem
+statement true, it added "and the self-referential operators this framework studies are of that
+kind" - asserting applicability the corpus explicitly denies (17 CompleteLattice mentions, ZERO
+instantiations; selfApp is not an OrderHom; ZPSemilattice is a bare join-semilattice) and that
+this document's own Section III calls open. Clause removed and replaced by an explicit non-claim.
+Also: selfApp_pinnable located honestly (experimental bridge, not ZP-J), and a universal "only"
+softened to what Veltri licenses.
 v1.9: adversary review of the rendered document, pre-publication. Three substantive fixes.
 (1) The abstract stated Knaster-Tarski WITHOUT monotonicity, which makes it false - the swap on
 the two-element lattice is a self-map with no fixed point. Section I had it right; only the
@@ -45,7 +52,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.9'
+VERSION = '1.10'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -76,8 +83,7 @@ def build():
 
     E.append(body(
         'A <b>monotone</b> self-map of a complete lattice has a least fixed point and a '
-        'greatest fixed point (Knaster&#8211;Tarski) &#8212; monotonicity is required, and the '
-        'self-referential operators this framework studies are of that kind. ZP-P records a single elementary fact and '
+        'greatest fixed point (Knaster&#8211;Tarski); monotonicity is required. Whether the framework&#8217;s own self-referential operators instantiate that schema is <i>not</i> claimed here &#8212; see the fences in Section III. ZP-P records a single elementary fact and '
         'develops its consequences across the framework: these two fixed points coincide &#8212; '
         'the fork <i>collapses</i> to one point &#8212; exactly when the operator has a unique '
         'fixed point. Read intuitively, the least fixed point is the inductive (well-founded) '
@@ -307,7 +313,8 @@ def build():
             '<i>assuming</i> choice principles rather than shown to need them, and the one '
             'genuine necessity he proves is of LLPO, a logic taboo, not of choice. He cites '
             'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
-            'Choice genuinely enters only for the non-polynomial finite-powerset functor, where the '
+            'In the cases the literature pins, choice enters for the non-polynomial finite-powerset '
+            'functor, where the '
             'literature pins each presentation: the set-quotient\'s finality proof assumes the full '
             'axiom of choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under countable choice together '
             'with the lesser limited principle of omniscience (LLPO). Injectivity of the canonical '
@@ -322,7 +329,7 @@ def build():
         '(Foundation vs AFA) has its Lean witness in ZP-J: quine_atom_unique proves that any two '
         'Quine atoms are equal &#8212; a uniqueness statement about self-MEMBERSHIP. That the '
         'bottom is one of them is a separate result (bot_is_quine_atom), and self-APPLICATION is '
-        'a third (selfApp_pinnable). The computation fork '
+        'a third (selfApp_pinnable, in the experimental Lawvere bridge rather than ZP-J proper). The computation fork '
         '(total vs partial) has its Lean witness in ZP-K: the Kleene quine. Each is the contact '
         'point of its own fork.'))
     E.append(sp(6))
