@@ -98,10 +98,11 @@ not a necessity — for a polynomial functor like `idPF_Coalgebra` the final coa
 in principle (Ahrens–Capriotti–Spadotti — their construction needs only function extensionality,
 which Lean has; only their uniqueness half uses univalence). In the finite-powerset case — the
 non-polynomial one — the literature pins each presentation: full AC for the set-quotient, countable
-choice together with LLPO for Worrell's (ω+ω)-limit. That is a fact about those constructions rather
-than a necessity result, and Veltri's own preferred coinductive construction needs neither. The one
-necessity he does prove is of LLPO, not of choice: injectivity of the canonical algebra implies LLPO
-outright, and is equivalent to it under countable choice (Veltri, FSCD 2021).
+choice together with LLPO for Worrell's (ω+ω)-limit. **The CHOICE half is a fact about those
+constructions rather than a necessity result** — Veltri's own preferred coinductive construction
+needs neither. The LLPO half is different: that one he does prove necessary, injectivity of the
+canonical algebra implying LLPO outright and being equivalent to it under countable choice (Veltri,
+FSCD 2021). So the necessity in that paper is of a logic taboo, not of choice.
 -/
 
 section PurityCheck
@@ -119,9 +120,10 @@ section PurityCheck
 -- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.lean` —
 -- read it there, not here.** In the finite-powerset case — the non-polynomial one — the literature
 -- pins each presentation: full AC for the set-quotient, countable choice together with LLPO for
--- Worrell's limit. That is a fact about those constructions, not a necessity. The necessity
--- Veltri proves is of LLPO: injectivity of `alg_Vω` implies LLPO outright and is equivalent to it
--- under countable choice. The fork spine
+-- Worrell's limit. The CHOICE half is a fact about those constructions, not a necessity (his own
+-- preferred coinductive construction needs neither). The LLPO half he does prove necessary:
+-- injectivity of `alg_Vω` implies LLPO outright and is equivalent to it under countable choice.
+-- The fork spine
 -- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See `ZeroParadox/AxiomProfile.lean`.
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty

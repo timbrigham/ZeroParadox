@@ -1,6 +1,12 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.12 | August 2026
+Version 1.13 | August 2026
+v1.13: gate debt cleared in one batch rather than carried. The "not a necessity result" gloss was
+unscoped - it covered the LLPO half too, and LLPO is the one thing Veltri DOES prove necessary
+(p. 22:3 is an impossibility). Scoped to the choice half. Also added his choice-free construction
+(ii) to the remark box: the Lean file carried that counterexample and the PDF did not, which is
+exactly why the "all of" universal regenerated three times here - the box had no visible instance
+refuting it.
 v1.12: the v1.11 fix relocated its error for the THIRD time in this one sentence. v1.9 said choice
 enters "only for" the finite-powerset functor (a universal); v1.10 PREPENDED a hedge and left the
 clause standing (a doubling); v1.11 removed the doubling and the hedge together, restoring the
@@ -65,7 +71,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.12'
+VERSION = '1.13'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -332,10 +338,12 @@ def build():
             'In the finite-powerset case &#8212; the non-polynomial one &#8212; the literature pins '
             'each presentation: the set-quotient\'s finality proof assumes the full axiom of '
             'choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under countable choice '
-            'together with the lesser limited principle of omniscience (LLPO). That is a fact about '
-            'those constructions rather than a necessity result. Injectivity of the canonical '
-            'algebra implies LLPO outright, and is equivalent to it under countable choice '
-            '(Veltri, FSCD 2021).',
+            'together with the lesser limited principle of omniscience (LLPO). The <i>choice</i> '
+            'half is a fact about those constructions rather than a necessity result &#8212; '
+            'Veltri\'s own preferred presentation, the coinductive type, needs neither choice nor '
+            'LLPO. The LLPO half is different: that one he does prove necessary, injectivity of the '
+            'canonical algebra implying LLPO outright and being equivalent to it under countable '
+            'choice (Veltri, FSCD 2021).',
         ]
     ))
     E.append(sp(6))

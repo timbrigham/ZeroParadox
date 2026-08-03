@@ -47,7 +47,8 @@ machine-checked impossibility rather than a failed attempt.
 **de Jong, Kraus, Nordvall Forsberg and Xu, "Constructive Ordinal Exponentiation"**
 (arXiv:2501.14542) is the nearest specialist work on ordinal exponentiation. Its bearing here is a
 **carrier** distinction. Stating it as "their taboo does not reach our operator" would be false:
-their § 7 collects several taboos that land squarely on `α ↦ α^β`, as recorded below.
+their § 7 collects several taboos about ordinal exponentiation, including the **fixed-base** map
+`β ↦ α^β` that `ω^·` is an instance of, as recorded below.
 
 Their **Proposition 9**: an exponentiation operation satisfying the natural specification *"can be
 shown to exist if and only if the law of excluded middle holds"* — a genuine taboo EQUIVALENCE, not
@@ -65,26 +66,32 @@ and LEM is already implied by weaker statements *"even when α and β are each a
 trichotomous least element"* — so a trichotomous least element is not a blanket constructivity
 certificate. **Proposition 55 (iii)/(iv)**: `∀ β, β ≤ 2^β` and `∀ β, ∀ α > 1, β ≤ α^β` are each
 **equivalent to LEM** — and (iv) at `α = ω` is a statement about this operator. **Proposition 60
-(iii)** likewise: a greatest `γ` with `α^γ ≤ β` (for `α > 1`, `β ≥ 1`) is equivalent to LEM.
+(iii)** likewise: that for every `α > 1` and `β ≥ 1` there is a `γ ≤ β` greatest with `α^γ ≤ β` is
+equivalent to LEM — the `γ ≤ β` clause is what separates it from the constructive Proposition 59 (iii).
+**Note what is and is not proved**: each is LEM-equivalent *as a quantified statement*, (iii) at base
+`2`; the paper never separately shows the base-`ω` instance implies LEM.
 
 **What actually keeps all of it off the obstruction below is the CARRIER, not the operator.** Their
 ordinals are the HoTT `Ord` — sets with a transitive, extensional, wellfounded order — quantified
 over *arbitrary* such ordinals, with a concrete construction by decreasing lists, in Agda. The
-obstruction below is about `ONote`, a notation system with decidable order, and is about that
-system's expressive reach rather than about excluded middle. A statement quantified over all HoTT
-ordinals does not transfer to a decidable notation system, and none of this is a re-proof of anything
-on Mathlib's `Ordinal`.
+obstruction below is about `ONote`, and is about that system's expressive reach rather than about
+excluded middle. **The load-bearing property is that `ONote` is a concrete inductive type**: every
+§ 7 LEM-derivation builds an ordinal from an arbitrary proposition (`3 + P`, `P + 1`, `1 + P`), and
+no `ONote` inhabits one. So a statement quantified over all HoTT ordinals does not transfer, and none
+of this is a re-proof of anything on Mathlib's `Ordinal`.
 
 **Adjacent and unexamined — flagged, not claimed.** Their **Theorem 58** gives, for an endofunction
-`t : Ord → Ord` preserving suprema up to a binary join, a *greatest* `γ ≤ δ` with `t γ ≤ δ`, and
-lists `α^(−)` (with `δ₀ = 1`, for `α ≥ 1`) among its instances. A greatest-below operator built from
-a suprema-preserving endofunction is the shape of the nucleus material in this file, so it is worth a
-prior-art read before anything here is strengthened. Nobody has done that read; this is a pointer.
+`t : Ord → Ord` preserving suprema up to a binary join with some `δ₀`, and any `δ ≥ δ₀`, a *greatest*
+`γ ≤ δ` with `t γ ≤ δ`; it lists `α^(−)` (with `δ₀ = 1`, for `α ≥ 1`) among its instances. That is a
+greatest-**below** operator, so it is the **order dual** of the nucleus material in this file
+(`snapNucleus` is `nfp`, a least fixed point **above**), which is exactly why it is worth a prior-art
+read before anything here is strengthened. No such read is on record as of 2026-08-03; this is a
+pointer, not a result.
 *(Their **Lemma 54** is separately cited in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`.
 ⚠ Do NOT describe this paper's carrier as `Cnf`/`Brw`: those names belong to the authors' *earlier*
 arXiv:2104.02549, which this paper cites as previous work it compares itself against. Corrected
 2026-08-02; the theorem numbers above were transposed until 2026-08-03, and until 2026-08-03 this
-block asserted the paper's taboos did not reach this operator, which § 7 refutes.)*
+block asserted the paper's taboos did not reach this operator, which § 7 does not support.)*
 
 ## The obstruction, stated
 
