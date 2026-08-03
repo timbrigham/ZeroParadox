@@ -99,9 +99,9 @@ in principle (Ahrens–Capriotti–Spadotti — their construction needs only fu
 which Lean has; only their uniqueness half uses univalence). In the finite-powerset case — the
 non-polynomial one — the literature pins each presentation: full AC for the set-quotient, countable
 choice together with LLPO for Worrell's (ω+ω)-limit. **The CHOICE half is a fact about those
-constructions rather than a necessity result** — Veltri's own preferred coinductive construction
-(his Theorem 2) needs neither choice nor LLPO. The LLPO half is different: that one he does prove
-necessary, injectivity of the
+constructions rather than a necessity result** — two of his presentations are choice-free outright:
+the setoid one (his Theorem 1, final in `SetoidRel`) and the coinductive type he prefers (his
+Theorem 2). The LLPO half is different: that one he does prove necessary, injectivity of the
 canonical algebra implying LLPO outright and being equivalent to it under countable choice (Veltri,
 FSCD 2021). So the necessity in that paper is of a logic taboo, not of choice.
 -/
@@ -121,10 +121,10 @@ section PurityCheck
 -- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.lean` —
 -- read it there, not here.** In the finite-powerset case — the non-polynomial one — the literature
 -- pins each presentation: full AC for the set-quotient, countable choice together with LLPO for
--- Worrell's limit. The CHOICE half is a fact about those constructions, not a necessity (his own
--- preferred coinductive construction needs neither). The LLPO half he does prove necessary:
--- injectivity of `alg_Vω` implies LLPO outright and is equivalent to it under countable choice.
--- The fork spine
+-- Worrell's limit. The CHOICE half is a fact about those constructions, not a necessity: two of
+-- Veltri's presentations are choice-free outright, the setoid one (his Thm 1) and the coinductive
+-- type he prefers (his Thm 2). The LLPO half he does prove necessary: injectivity of `alg_Vω`
+-- implies LLPO outright and is equivalent to it under countable choice. The fork spine
 -- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See `ZeroParadox/AxiomProfile.lean`.
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty

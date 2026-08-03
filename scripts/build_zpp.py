@@ -1,6 +1,14 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.14 | August 2026
+Version 1.15 | August 2026
+v1.15: BEDROCK - the v1.14 fix replaced a false UNIVERSAL with a false UNIQUENESS. "not all of them
+use it, and the exception is the one he prefers" - Veltri has TWO choice-free finality results, not
+one: Theorem 1 (the setoid presentation, final in SetoidRel, proved by anaTree with no classical
+hypothesis) as well as Theorem 2 (the coinductive type). His stated reason for preferring (ii) over
+(i) is ergonomic - it "does not force the user to employ setoids instead of types" - which is exactly
+what "the exception" erased. FIFTH consecutive version in which this one sentence has been wrong;
+the quantifier is now deleted rather than re-hedged, and both theorems are named. Note the truth was
+STRONGER than the claim, so the fix cost nothing.
 v1.14: BEDROCK - the v1.13 remark box carried a false universal about Veltri. Bullet 2 said "his
 finality results are obtained assuming choice principles", and bullet 3 (added by v1.13) named the
 construction that refutes it: his preferred coinductive type, Theorem 2, needs neither choice nor
@@ -77,7 +85,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -339,7 +347,8 @@ def build():
             'his subject is the finite-powerset functor, which is not polynomial, and there the '
             'choice-free route is the one that is hard. Where his finality proofs <i>do</i> use '
             'choice they are obtained <i>assuming</i> it rather than shown to need it &#8212; but '
-            'not all of them use it, and the exception is the one he prefers (below). He cites '
+            'not all of them use it: his setoid presentation (his Theorem 1, final in SetoidRel) '
+            'and the coinductive type he prefers (his Theorem 2) are both choice-free. He cites '
             'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
             'In the finite-powerset case &#8212; the non-polynomial one &#8212; the literature pins '
             'each presentation: the set-quotient\'s finality proof assumes the full axiom of '

@@ -65,23 +65,27 @@ the fixed-base exponential.** **Proposition 52**: exponentiation is monotone in 
 and LEM is already implied by weaker statements *"even when α and β are each assumed to have a
 trichotomous least element"* — so a trichotomous least element is not a blanket constructivity
 certificate. **Proposition 55 (iii)/(iv)**: `∀ β, β ≤ 2^β` and `∀ β, ∀ α > 1, β ≤ α^β` are each
-**equivalent to LEM** — and (iv) at `α = ω` is a statement about this operator. **Proposition 60
-(iii)** likewise: that for every `α > 1` and `β ≥ 1` there is a `γ ≤ β` greatest with `α^γ ≤ β` is
-equivalent to LEM. **What separates it from the CONSTRUCTIVE Proposition 59 (iii) is the SCOPE OF
-MAXIMALITY, not the bound** — both carry `γ ≤ β`. Proposition 59 gives a greatest `γ` satisfying the
-*conjunction* (`γ ≤ β ∧ α^γ ≤ β`); Proposition 60 demands a `γ ≤ β` that is greatest with `α^γ ≤ β`
-*outright*. The paper says as much at its Theorem 58 discussion, where Enderton's classical schema
-drops the bound entirely: *"excluded middle is equivalent to the existence of `γ` such that `γ ≤ δ`
-and `γ` is the greatest ordinal such that `t γ ≤ δ`"*.
-**Note what is and is not proved**: each is LEM-equivalent *as a quantified statement*, (iii) at base
-`2`; the paper never separately shows the base-`ω` instance implies LEM.
+**equivalent to LEM** — and (iv) at `α = ω` is a statement about this operator.
+**Note what Proposition 55 (iii)/(iv) do and do not prove**: each is LEM-equivalent *as a quantified
+statement*, (iii) at base `2`; the paper never separately shows the base-`ω` instance implies LEM.
+
+**A second, sharper LEM equivalence sits in their § 8 (*Approximating Subtraction, Division and
+Logarithm Operations*), not in the taboo section.** **Proposition 60 (iii)**: that for every `α > 1`
+and `β ≥ 1` there is a `γ ≤ β` greatest with `α^γ ≤ β` is equivalent to LEM. **What separates it from
+the CONSTRUCTIVE Proposition 59 (iii) is the SCOPE OF MAXIMALITY, not the bound** — both carry
+`γ ≤ β`. Proposition 59 gives a greatest `γ` satisfying the *conjunction* (`γ ≤ β ∧ α^γ ≤ β`);
+Proposition 60 demands a `γ ≤ β` that is greatest with `α^γ ≤ β` *outright*. The paper says as much
+at its Theorem 58 discussion, where Enderton's classical schema drops the bound entirely: *"excluded
+middle is equivalent to the existence of `γ` such that `γ ≤ δ` and `γ` is the greatest ordinal such
+that `t γ ≤ δ`"*.
 
 **What actually keeps all of it off the obstruction below is the CARRIER, not the operator.** Their
 ordinals are the HoTT `Ord` — sets with a transitive, extensional, wellfounded order — quantified
 over *arbitrary* such ordinals, with a concrete construction by decreasing lists, in Agda. The
 obstruction below is about `ONote`, and is about that system's expressive reach rather than about
 excluded middle. **The load-bearing property is that `ONote` is a concrete inductive type**: every
-§ 7 LEM-derivation builds an ordinal from an arbitrary proposition (`3 + P`, `P + 1`, `1 + P`), and
+LEM-derivation above — § 7's and § 8's alike — builds an ordinal from an arbitrary proposition
+(`3 + P`, `P + 1`, `1 + P`), and
 no `ONote` denotes one — its constructors are `zero` and `oadd : ONote → ℕ+ → ONote → ONote`, none of
 which takes a proposition. So a statement quantified over all HoTT ordinals does not transfer, and
 none of this is a re-proof of anything on Mathlib's `Ordinal`.
