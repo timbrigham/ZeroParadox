@@ -61,8 +61,11 @@ content over `fix_isEmpty`:
     its construction is closer to applicable here than a univalence label suggests, and only its
     uniqueness half genuinely needs the stronger axiom.
   * **Veltri, FSCD 2021** — cite for **contrast only**. His subject is the **finite powerset** functor,
-    which is *not* polynomial, and his headline results run the other way (certain constructions
-    *require* AC). He is apt as background — he treats the polynomial case explicitly as contrast, his
+    which is *not* polynomial, and his headline results run the other way — certain constructions
+    there are obtained ASSUMING choice principles rather than shown to need them, and his own
+    preferred coinductive construction needs neither choice nor LLPO. The one genuine necessity
+    he proves is of LLPO, a logic taboo, not of choice. He is apt as background — he treats the
+    polynomial case explicitly as contrast, his
     `Tree` is the final `List`-coalgebra, and he himself hands the polynomial fact to Ahrens et al.
 
 The bundle `root_purity_split` packages both honest halves: the μ-witness is propositionally derivable

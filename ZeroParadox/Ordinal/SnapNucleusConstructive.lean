@@ -25,7 +25,8 @@ machine-checked impossibility rather than a failed attempt.
   enters through the order instance and the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`,
   `Ordinal.omega0`, `Ordinal.epsilon`). The claim was reasoning from a quotient construction instead of
   measuring it, and the "cannot be" conclusion drawn from it does not stand. Whether `snapNucleus` is
-  re-provable choice-free is **open and untried**; its footprint is UNCLASSIFIED.
+  re-provable choice-free is **open, and untried in this corpus as of 2026-08-02**; its footprint
+  is UNCLASSIFIED.
 * **This is a different declaration on a different carrier.** Everything here lives on `ONote` (raw
   Cantor-normal-form syntax) and on `SynONote`, the type synonym below carrying the comparator-derived
   order. `ONote` is not `Ordinal` and `SynONote` is not `Ordinal`. Exactly one theorem below mentions

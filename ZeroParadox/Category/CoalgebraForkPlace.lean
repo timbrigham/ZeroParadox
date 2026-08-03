@@ -169,9 +169,9 @@ section PurityCheck
 -- polynomial functor the final coalgebra is constructible choice-free; Ahrens–Capriotti–Spadotti,
 -- TLCA 2015, arXiv:1504.02949 -- their construction needs only function extensionality, which
 -- Lean has; only their uniqueness half uses univalence. Veltri, FSCD 2021 is CONTRAST, not
--- support: for the non-polynomial finite-powerset functor his results run the other way,
--- certain constructions there are obtained ASSUMING choice principles rather than shown to
--- need them; his own preferred coinductive construction needs neither choice nor LLPO). So the
+-- support: for the non-polynomial finite-powerset functor his results run the other way —
+-- certain constructions there obtained ASSUMING choice principles rather than shown to need
+-- them, and his own preferred coinductive construction needing neither choice nor LLPO). So the
 -- placement (μ choice-free / ν choice-carrying) is also visible in the axiom profile, not just the
 -- mediator direction.
 #print axioms fix_isFixedPoint

@@ -101,7 +101,7 @@ which is classically built.
 not intrinsic to the snap." That is retracted — it is an eliminability claim with no re-proof behind it.
 What ZP-N actually re-proved choice-free is the ordinal *ascent* on `ONote` (`exp_lt_term`,
 `omegaPow_no_fixedpoint`, `tower_strictMono`), which is suggestive for the nucleus and is not the nucleus.
-`snapNucleus` itself had not been re-proved choice-free as of 2026-08-02.
+`snapNucleus` itself has not been re-proved choice-free as of 2026-08-02.
 
 **Where the choice actually is (measured 2026-07-19; an earlier version of this note asserted the wrong
 mechanism).** It is **NOT** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext,

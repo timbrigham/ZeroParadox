@@ -39,9 +39,9 @@ M-type / corecursion machinery. That choice is a library artifact, not a necessi
 functor the final coalgebra is constructible choice-free (Ahrens et al. — their construction needs
 only function extensionality, which Lean has; only their uniqueness half uses univalence, see
 `ZeroParadox/Computability/ChoicePurityInvariant.lean`. Veltri is CONTRAST, not support: for the
-non-polynomial finite-powerset functor his results run the other way, certain constructions
-obtained ASSUMING choice principles rather than shown to need them; his own
-preferred coinductive construction needs neither choice nor LLPO). See PurityCheck.
+non-polynomial finite-powerset functor his results run the other way — certain constructions
+there obtained ASSUMING choice principles rather than shown to need them, and his own preferred
+coinductive construction needing neither choice nor LLPO). See PurityCheck.
 -/
 
 namespace ZeroParadox

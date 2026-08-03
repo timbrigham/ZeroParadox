@@ -50,8 +50,9 @@ greatest-fixed-point carrier are connected by a canonical iso/equality." We capt
   while fixing ⊥ itself. **Not witnessed for `selfApp`**: `lfp_dual_eq_gfp` needs `CompleteLattice`
   and an `OrderHom`, and `selfApp` is neither. The general exchange IS proved elsewhere —
   `ZeroParadox/Settheory/ForkFrameChange.lean` — it simply does not instantiate here.
-  **Both KINDs plausibly belong to this object, and either alone would mischaracterise it** — the same shape as
-  `catseam_is_frameflip`, where being self-dual is precisely what makes two labels necessary.
+  **Both KINDs plausibly belong to this object, and either alone would mischaracterise it** — the
+  same SHAPE as `catseam_is_frameflip`, where being self-dual is what makes two labels necessary.
+  **The STATUS differs**: there both KINDs are *proved*; here only the COINCIDENCE is.
   *(Corrected 2026-08-02: this carried "Not an INVERSION — nothing here for an involution to swap",
   which is a denial the convention has no slot for, and is very likely false, since order-duality is
   exactly such an exchanging map.)*

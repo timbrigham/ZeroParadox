@@ -291,7 +291,7 @@ proved about where choice does work. -/
 -- `HeytingAlgebra` extends `OrderBot`, so ⊥ is required before negation exists at all. Same seed,
 -- opposite footprints, and opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ (⊥ is always regular),
 -- `snapNucleus` provably moves it (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
--- had **not been re-proved choice-free as of 2026-08-02**, so do not call it merely representational. What ZP-N
+-- has **not been re-proved choice-free as of 2026-08-02**, so do not call it merely representational. What ZP-N
 -- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
 -- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
 -- UNCLASSIFIED — the honest tier. NOT because "choice is in the `Ordinal` type": that claim was
