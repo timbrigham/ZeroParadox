@@ -179,14 +179,15 @@ the diagonal point. That much is the theorem below.
 
 **Block conclusion (2026-06-25) — a reasoned judgement, NOT a theorem, and there is no witness for
 it.** The only data common to both is "a self-map plus two elements" with no shared non-trivial
-axiom, so no single non-vacuous lightweight typeclass over both forks was located as of 2026-08-02. This is a
-universal negative over all possible typeclasses; nothing in Lean states it, and
-`fixed_pole_forces_collapse` does **not** — it proves the narrow implication in its own signature.
-*(The label was dropped when this § was promoted on 2026-08-02, and `Wall.lean`'s NO-GO table
-consequently carried the universal negative as an axiom-free machine-checked witness. Restored, and
-the table row corrected, by the adversary gate the same day.)* Unifying them would need the
-categorical machinery (both are ℤ/2ℤ actions, but `op` acts on the CATEGORY, dualizing μ↔ν, while
-inversion acts on the ELEMENT set, swapping 0↔∞); that stays the horizon.
+axiom, so no single non-vacuous lightweight typeclass over both forks was located as of
+2026-08-02. **The underlying judgement is a universal negative** — it quantifies over all possible
+typeclasses — which is why it is bounded to a dated search above rather than asserted. Nothing in
+Lean states it, and `fixed_pole_forces_collapse` does **not**: it proves the narrow implication in
+its own signature. *(This § once carried the claim unlabelled, and `ZeroParadox/Settheory/Wall.lean`'s
+NO-GO table consequently cited it as an axiom-free machine-checked witness. Label restored and the
+table row corrected 2026-08-02.)* Unifying the two forks would need the categorical machinery (both
+are ℤ/2ℤ actions, but `op` acts on the CATEGORY, dualizing μ↔ν, while inversion acts on the ELEMENT
+set, swapping 0↔∞); that stays the horizon.
 
 **Prior art — Carlström 2001 § 4 is closer than this § originally said, and proves MORE.** The
 header already cites Carlström for the wheel axioms; the specific result is **Prop. 4.4**
@@ -202,13 +203,16 @@ degenerates.** So this is not a weaker form of one implication; it is a differen
 statement off a shared hypothesis. Do not present the collapse as a framework finding.
 
 His remark that *"0 can't be inverted unless 0 ∈ S, but if that is the case … S⊙A is trivial"*
-(PDF p. 6, printed p. 4) motivates `wheelFrac_fork_open`'s `0 ∉ S` hypothesis. **Two cautions on that
+(PDF p. 6, printed p. 4) motivates `wheelFrac_fork_open`'s `0 ∉ S` hypothesis. **Two cautions
+on that
 quotation**, both corrected 2026-08-02: it is stated there of the *ordinary* ring of fractions
 `A×S/≈_S`, with the corresponding **wheel** statement a separate sentence on printed p. 5; and
-Carlström writes the wheel of fractions **`S⊙A`**, not `A⊙S`. The substance — `0 ∈ S` trivializes, so
+Carlström writes the wheel of fractions **`S⊙A`**, not `A⊙S`. The substance — `0 ∈ S`
+trivializes, so
 exclude it — is his and is correctly transcribed; the placement and the notation were not.
 
-**Standard names for what is written by hand here** (Trigger 0 — adopt the framing, keep the handle).
+**Standard names for what is written by hand here** (Trigger 0 — adopt the framing, keep the
+handle).
 `Collapsed F` is equivalent to `Function.IsFixedPt F.dual F.pole₀` (defined at
 `Mathlib/Logic/Function/Defs.lean`) — **equivalent via `swap` and `eq_comm`, not definitionally
 equal**, so do not write "is". Note also that `pole₁` is **redundant data**, pinned by `swap` to
@@ -219,18 +223,22 @@ to.
 and is retracted.** `eq_iff` reads `f x = y ↔ x = f y`, which instantiates to
 `dual pole₀ = pole₁ ↔ pole₀ = dual pole₁` — a different statement. The actual proof is
 `rw [F.swap]; exact eq_comm`, and **involutivity is never used**: delete `dual_invol` from the
-hypothesis and it still compiles. The theorem's own docstring below already said this correctly, four
+hypothesis and it still compiles. The theorem's own docstring below already said this correctly,
+four
 lines from the false claim — the sibling-failure pattern, where an appended correction leaves the
 wrong sentence standing nearby.
 
 In the wider literature the fixed point of an involution is **the center** (a *centered* Kleene
-algebra), and the standard fix for the monotone/involutive clash is an order-**reversing** involution
+algebra), and the standard fix for the monotone/involutive clash is an order-**reversing**
+involution
 (De Morgan negation, orthocomplementation) — a sharper diagnosis than "no shared axiom", and the
 direction to look if this is ever revisited. **Attribution, stated honestly:** this lineage is taken
 from San Martín, *Kleene algebras with implication* (slides, UNLP/CONICET, September 2016,
 slide 2), which is the source actually read; **the deck** credits
-Kalman 1958 (slide 3) and Cignoli 1986 (slide 5), **neither of which has been opened here**. Cite San Martín for the
-lineage, or read the originals before citing them directly. Searched 2026-08-02: no prior art located
+Kalman 1958 (slide 3) and Cignoli 1986 (slide 5), **neither of which has been opened here**.
+Cite San Martín for the
+lineage, or read the originals before citing them directly. Searched 2026-08-02: no prior art
+located
 for the bare `InvolutiveFork` abstraction standing alone, nor for the μ/ν-versus-2-cycle contrast.
 
 **Unstated adjacency — this abstraction already has at least four instances in-corpus, none wired
@@ -245,7 +253,8 @@ pointer exercise, not new declarations. -/
     ⚠ **Name collision — "fork" now carries three unrelated senses.** Mathlib's
     `CategoryTheory.Limits.Fork` is an equalizer diagram; the framework's own μ/ν *fixed-point* fork
     (`ZeroParadox/Settheory/FixedPointFork.lean`) is a third. Nothing here is an instance of either.
-    The full name `InvolutiveFork` is load-bearing — do not shorten it to `Fork` at any use site, and
+    The full name `InvolutiveFork` is load-bearing — do not shorten it to `Fork` at any use
+    site, and
     read "the categorical machinery" in the § above as *categorical* in the loose sense, not as a
     reference to `Limits.Fork`. -/
 structure InvolutiveFork (α : Type*) where
