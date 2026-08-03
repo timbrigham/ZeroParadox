@@ -1,6 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.17 | August 2026
+Version 1.18 | August 2026
+v1.18: the v1.17 clarification was PREPENDED and the original attribution left standing, so the
+remark box read 'inherited from Mathlib's M-TYPE MACHINERY ... not the M-TYPE underneath' - one
+sentence contradicting itself. That is the same prepended-hedge shape as v1.10, and the seventh
+time this document has produced it. Rewritten once, attribution first: the choice comes from the
+QPF quotient layer, QPF.Cofix carries it in the type, PFunctor.M is axiom-free. Also README's
+Choice-Free Core row said v1.3 while register.md and the PDF said v1.5 - a public index naming a
+superseded version of the document the previous commit had just corrected.
 v1.17: MEASURED, replacing an inference. Two rendered sites said the nu-side Classical.choice is
 'a library artifact, not a necessity' / 'not forced by the mathematics', pointing at ACS. True in
 spirit, unmeasured as stated. Measured 2026-08-03: QPF.Cofix carries Classical.choice IN THE TYPE,
@@ -102,7 +109,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -356,9 +363,10 @@ def build():
     E.append(remark_box(
         'Remark: where choice appears in the &#956;/&#957; fork',
         [
-            'The Classical.choice in cofix_nonempty is inherited from Mathlib\'s M-type machinery, '
-            'not forced by the mathematics &#8212; measured: the choice is in the QPF quotient layer, not '
-            'the M-type underneath. For a polynomial functor the final coalgebra is '
+            'The Classical.choice in cofix_nonempty comes from Mathlib\'s QPF <i>quotient</i> '
+            'layer &#8212; not from the M-type underneath, and not from the mathematics. Measured: '
+            'QPF.Cofix carries the axiom in the type, while PFunctor.M is axiom-free. '
+            'For a polynomial functor the final coalgebra is '
             'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015, who '
             'construct it as an &#969;-limit). Their ambient setting is intensional type theory '
             'with univalence, but the <i>construction</i> itself uses only function '
