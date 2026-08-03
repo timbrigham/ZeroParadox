@@ -1,6 +1,12 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.13 | August 2026
+Version 1.14 | August 2026
+v1.14: BEDROCK - the v1.13 remark box carried a false universal about Veltri. Bullet 2 said "his
+finality results are obtained assuming choice principles", and bullet 3 (added by v1.13) named the
+construction that refutes it: his preferred coinductive type, Theorem 2, needs neither choice nor
+LLPO. The v1.13 fix added the counterexample and left the universal it contradicts standing one
+bullet above - the same half-sweep shape as v1.10's doubling. Bullet 2 now scoped to the proofs that
+do use choice. Also removed the LLPO-necessity clause from bullet 2, which bullet 3 already states.
 v1.13: gate debt cleared in one batch rather than carried. The "not a necessity result" gloss was
 unscoped - it covered the LLPO half too, and LLPO is the one thing Veltri DOES prove necessary
 (p. 22:3 is an impossibility). Scoped to the choice half. Also added his choice-free construction
@@ -71,7 +77,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -331,9 +337,9 @@ def build():
             'extensionality &#8212; univalence enters only for their uniqueness result.',
             'Veltri (FSCD 2021) points the other way and is cited here for contrast, not support: '
             'his subject is the finite-powerset functor, which is not polynomial, and there the '
-            'choice-free route is the one that is hard &#8212; his finality results are obtained '
-            '<i>assuming</i> choice principles rather than shown to need them, and the one '
-            'genuine necessity he proves is of LLPO, a logic taboo, not of choice. He cites '
+            'choice-free route is the one that is hard. Where his finality proofs <i>do</i> use '
+            'choice they are obtained <i>assuming</i> it rather than shown to need it &#8212; but '
+            'not all of them use it, and the exception is the one he prefers (below). He cites '
             'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
             'In the finite-powerset case &#8212; the non-polynomial one &#8212; the literature pins '
             'each presentation: the set-quotient\'s finality proof assumes the full axiom of '
