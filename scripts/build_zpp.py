@@ -1,11 +1,15 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.6 | August 2026
+Version 1.7 | August 2026
+v1.7: LLPO equivalence given its hypothesis (Veltri's Cor. 8 gives injectivity => LLPO outright;
+Thm 9 gives the converse only ASSUMING countable choice), and the v1.6 changelog's own modality
+brought in line with the corrected prose.
 v1.6: CORRECTED a misattribution in rendered prose. The choice-free constructibility of the final
 coalgebra FOR A POLYNOMIAL FUNCTOR was credited to Veltri (FSCD 2021) in the Lean-witness table and
 co-credited to him in the remark box. That is the wrong direction: Veltri's subject is the
 finite-powerset functor, which is NOT polynomial, and his results are that certain constructions
-there REQUIRE choice - he hands the polynomial case to Ahrens-Capriotti-Spadotti himself. The
+there are obtained ASSUMING choice principles rather than shown to need them - he hands the
+polynomial case to Ahrens-Capriotti-Spadotti himself. The
 polynomial claim is now attributed to ACS (TLCA 2015) and Veltri is explicitly marked as contrast.
 His LLPO claim, which IS his and IS about finite-powerset, is unchanged.
 v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
@@ -29,7 +33,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.6'
+VERSION = '1.7'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -293,8 +297,9 @@ def build():
             'Choice genuinely enters only for the non-polynomial finite-powerset functor, where the '
             'literature pins each presentation: the set-quotient requires the full axiom of choice '
             'for finality, while Worrell\'s (&#969;+&#969;)-limit requires countable choice together '
-            'with the lesser limited principle of omniscience (LLPO) &#8212; indeed injectivity of '
-            'the canonical algebra is equivalent to LLPO (Veltri, FSCD 2021).',
+            'with the lesser limited principle of omniscience (LLPO). Injectivity of the canonical '
+            'algebra implies LLPO outright, and is equivalent to it under countable choice '
+            '(Veltri, FSCD 2021).',
         ]
     ))
     E.append(sp(6))

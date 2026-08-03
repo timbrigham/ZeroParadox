@@ -85,7 +85,7 @@ to it.** Three reasons, in order of importance.
 **A count mostly measures Mathlib, not this framework.** Most choice footprints traced so far come from a
 Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
-tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean:70`'s bare `classical` in
+tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean`'s bare `classical` in
 `fixedPointFree_of_nontrivial` is the framework's own, and § IV shows it is ESSENTIAL** — the cost is in
 stating the swap over types **whose equality is not decidable** (the swap is `if x = b₀ then b₁ else b₀`;
 decidable equality is exactly what the § IV escape restores), which is the framework's chosen

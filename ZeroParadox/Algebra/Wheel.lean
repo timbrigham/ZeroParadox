@@ -435,7 +435,7 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     **And the porthole condition is NOT discharged by adopting the standard structure.** `map_zero'`
     is a structure *field* (reached via `Valuation` → `MonoidWithZeroHom` → `ZeroHom`; `AddValuation.map_zero`
     is its projection at `Mathlib/RingTheory/Valuation/Basic.lean:1150` — **not** `:1105`, which is the
-    assignment inside `AddValuation.of`), and `ZeroParadox/Valuation/FloorWitness.lean:31`'s `addVal_bot`
+    assignment inside `AddValuation.of`), and `ZeroParadox/Valuation/FloorWitness.lean`'s `addVal_bot`
     is literally the projection `v.map_zero`. Adoption **relocates** the assumption; it does not
     derive it. (Corrected 2026-08-01: an earlier revision of this block said the condition becomes a
     theorem, and said the class omits one axiom. Both were wrong, and the definition itself is what

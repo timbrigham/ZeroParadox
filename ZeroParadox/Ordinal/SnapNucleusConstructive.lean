@@ -42,6 +42,20 @@ machine-checked impossibility rather than a failed attempt.
   abundance — `id` is one. What is proved impossible is the *snap property*: that a nucleus's closed
   points be ε-numbers.
 
+## Prior art on the operator itself
+
+**de Jong, Kraus, Nordvall Forsberg and Xu, "Constructive Ordinal Exponentiation"**
+(arXiv:2501.14542) is the closest specialist result to the argument below, and it is about the
+**exact operator the ε₀ tower iterates**. Their **Proposition 9**: an exponentiation operation
+satisfying the natural specification *"can be shown to exist if and only if the law of excluded
+middle holds"* — a taboo EQUIVALENCE, not merely a footprint measurement. Their Thms 13/24 then
+give constructive exponentiation under the weaker hypotheses `α ≥ 1` or a trichotomous least
+element. **It does not bear on the obstruction below**, which is about a notation system's
+expressive reach rather than about choice, and their development is on `Cnf`/`Brw` in HoTT/Agda,
+so it is not a re-proof of anything on Mathlib's `Ordinal`. Cited because the framework should
+not look unaware of a taboo result on its own operator. *(Their **Lemma 54** is separately cited
+in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`.)*
+
 ## The obstruction, stated
 
 ZP-N's `omegaPow_no_fixedpoint` proves that **no `ONote` is a fixed point of `α ↦ ω^α`**. A `Nucleus` is
@@ -89,7 +103,11 @@ Both halves are measured here, and they split:
   "below `ε₀`", while the Veblen functions reach far past it — the same pin proves `ε₀ < Γ_ o` for
   every `o` (`epsilon_zero_lt_gamma`). Read the ceiling as applying to `veblen`/`ε_`/`Γ_` and it is
   flatly false; it applies to `ONote`/`NONote`. **No notation system past ε₀ is in this Mathlib pin as
-  of 2026-08-02**; Bachmann-Howard is absent in either sense. So this is **not** a proof that the snap nucleus is
+  of 2026-08-02**; Bachmann-Howard is absent in either sense. *(One caveat, because a reader
+  grepping `notation` in `Veblen.lean` lands on it first: its docstring says composing
+  `invVeblen₁` with `Ordinal.CNF` "yields a predicative ordinal notation up to `Γ₀`". That is a
+  RECIPE, not a shipped system — and `invVeblen₁` is itself noncomputable, defined via `sInf`. The
+  claim above is about what the pin CONTAINS, and stands.)* So this is **not** a proof that the snap nucleus is
   constructively impossible, and **not** a claim that ε₀ requires choice.
 
 These are compatible and should not be conflated. "The proof needs no choice" and "the carrier cannot

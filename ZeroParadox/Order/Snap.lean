@@ -166,8 +166,8 @@ theorem tsnap_holds_but_nothing_moves :
       down-set is the singleton `{⊥}`: there is nothing below it to subtract.
     * `x := ⊥` — `le ⊥ y` holds for every `y` (`bot_le`), so for any `y ≠ ⊥` the instance is
       **live**, and says no join from `y` returns to the bottom. This is the framework's headline
-      reading, indexed at `ZeroParadox/Order/SnapCannotBe.lean:32` as *"no join from ε₀ returns to
-      ⊥"* and mirrored topologically by `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean:239`).
+      reading, indexed at `ZeroParadox/Order/SnapCannotBe.lean` as *"no join from ε₀ returns to
+      ⊥"* and mirrored topologically by `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean`).
 
     `Reading:` R1 has two faces here — its *subtraction* face is empty at ⊥ and acquires content at
     the first element with a proper part, while its *no-return* face is exactly the snap's

@@ -66,7 +66,7 @@ implication is false without it.** Elementary and not novel — `ZeroParadox/Ord
 overstates ⊥'s role.
 
 **Fence 2 — `α ↦ ω^α` does not fix ⊥.** Provable here: `ω ^ (0 : Ordinal) = 1 ≠ 0`, which is the
-argument already inside `epsilon0_ne_zero`. Contrast `ZeroParadox/Computability/SelfApp.lean:73`,
+argument already inside `epsilon0_ne_zero`. Contrast `ZeroParadox/Computability/SelfApp.lean`,
 where `fixed_bot : selfApp bot = bot` is a **class field** — an assumption, the shape CLAUDE.md's
 commitments-in-hypotheses rule warns about. `Reading:` the snap is the action of an operator that
 moves ⊥ rather than one that fixes it.
