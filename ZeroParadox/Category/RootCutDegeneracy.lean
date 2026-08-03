@@ -192,8 +192,12 @@ section PurityCheck
 --   root_cut_dichotomy   : [propext, Classical.choice, Quot.sound]
 -- The same μ-choice-free / ν-choice split as ZeroParadox/Settheory/Coalgebra.lean: the seam's ν half carries the M-type
 -- choice artifact inherited from Mathlib (Cofix.corec / Cofix.bisim). The μ half (fixEquiv) is
--- choice-free, exactly as in the strict case. The choice on the ν side is a library artifact, not a
--- necessity (polynomial-functor final coalgebra is constructible choice-free in principle).
+-- choice-free, exactly as in the strict case. The choice on the ν side is a QUOTIENT-LAYER artifact,
+-- measured 2026-08-03: `QPF.Cofix` carries it in the TYPE, so no proof of a Cofix-mentioning
+-- statement is clean, while `PFunctor.M` is axiom-free and `strict_cofix_nonempty` proves the same
+-- ν-inhabitation over it with no axioms. Escaping it means changing the carrier, not cleaning the
+-- proof. (A polynomial-functor final coalgebra is constructible choice-free; ACS build it as an
+-- ω-limit with no quotient layer.)
 #print axioms objEquiv
 #print axioms fixEquiv
 #print axioms cofixEquiv

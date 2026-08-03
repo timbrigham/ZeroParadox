@@ -406,6 +406,44 @@ problem sentence"*).
 **Record what the MEASUREMENT showed, not that you re-worded something.** A changelog entry saying
 "clarified" after a revalidation round is the failure repeating.
 
+### The sweep this produced, and what it found on the first run (2026-08-03)
+
+`python .claude-local/check_modal.py` (WARN at commit) / `--block` (pre-push § 3b-c). Baselined like
+`check_pov.py`: fires on NEW sites only. It flags modal vocabulary not accompanied by a measurement, a
+reduction, an explicit non-claim, or a **named exhibited witness**.
+
+**Yield, first run: 31 sites → 3 real defect clusters.**
+- **A FALSE UNIVERSAL NEGATIVE LIVE IN A PUBLISHED PDF.** `ZP_Choice_Free_Core_Addendum` § III said
+  *"The framework has no proven-necessity case anywhere."* Two taboo reductions exist
+  (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`) and **neither was named anywhere in that
+  document**. The 2026-08-01 sweep that recorded both universal negatives as removed had grepped
+  `.lean` and **missed a Python build script** — so the claim survived in rendered public prose.
+  **Grep the CLAIM across every surface that renders, not just the sources.**
+- **The `Cofix` cluster, 9 sites including `CLAIMS.md`.** Restated from inference to measurement.
+- **Six sites were already honest** — retractions, `UNCLASSIFIED` tiers, explicit "does not show"
+  fences. `SnapNucleus.lean` had measured this correctly in July, including that `Ordinal` the *type*
+  is choice-free while `Ordinal.instLinearOrder` is not. **Read hits, do not count them.**
+
+**⚠ The detector had the defect it was built to catch, and an injection probe found it.** The first
+version listed `#print axioms` as *evidence* — so a modal claim sitting next to a `PurityCheck` block
+was silently suppressed, which is exactly where these claims live. A footprint measurement is the one
+thing that **cannot** establish a modal claim. Removing it surfaced two more real sites immediately.
+**VERIFY THE DETECTOR BEFORE BELIEVING A ZERO** — plant a known-bad line, confirm the checker fires,
+then remove it.
+
+**The measured facts worth not re-deriving:**
+```
+QPF.Cofix   (the TYPE)       [propext, Classical.choice, Quot.sound]   -- no proof of a
+PFunctor.M                   no axioms                                 -- Cofix-mentioning
+strict_cofix_nonempty        no axioms                                 -- statement is clean
+Ordinal     (the TYPE)       [propext, Quot.sound]                     -- choice-FREE
+Ordinal.instLinearOrder      [propext, Classical.choice, Quot.sound]   -- the instance hazard
+Ordinal.nfp / .epsilon       [propext, Classical.choice, Quot.sound]
+padicValNat                  [propext, Classical.choice, Quot.sound]
+```
+So the ν-side choice **is** a QPF *quotient-layer* artifact — now a measurement rather than a reading
+— and escaping it means **changing the carrier, not cleaning the proof**.
+
 ## Review-Loop Cap — Severity-Tiered, Hard Rule
 
 **The gates will always find something. Stopping is a decision about SEVERITY, not a wait for silence.**

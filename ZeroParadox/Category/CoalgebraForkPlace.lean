@@ -165,7 +165,10 @@ section PurityCheck
 --   cofix_corec_commutes (ν, corecursor square)    : [propext, Classical.choice, Quot.sound]  choice-carrying
 --   fork_places_on_root  / coalgebra_fork_strict_on_idPF : inherit Classical.choice from the ν leg.
 -- The μ side is choice-free; choice enters exactly on the ν (Cofix) side, via Mathlib's M-type
--- machinery (Cofix.dest_corec / cofix_nonempty) — a library artifact, not a necessity (for a
+-- machinery (Cofix.dest_corec / cofix_nonempty) — a QUOTIENT-LAYER artifact, measured 2026-08-03:
+-- `QPF.Cofix` carries the choice in the TYPE (so no proof of a Cofix-mentioning statement is clean),
+-- while `PFunctor.M` is axiom-free and `strict_cofix_nonempty` proves the same ν-inhabitation over it
+-- with no axioms. Escaping it means changing the carrier, not cleaning the proof. (For a
 -- polynomial functor the final coalgebra is constructible choice-free; Ahrens–Capriotti–Spadotti,
 -- TLCA 2015, arXiv:1504.02949 -- their construction needs only function extensionality, which
 -- Lean has; only their uniqueness half uses univalence. Veltri, FSCD 2021 is CONTRAST, not

@@ -1,6 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.16 | August 2026
+Version 1.17 | August 2026
+v1.17: MEASURED, replacing an inference. Two rendered sites said the nu-side Classical.choice is
+'a library artifact, not a necessity' / 'not forced by the mathematics', pointing at ACS. True in
+spirit, unmeasured as stated. Measured 2026-08-03: QPF.Cofix carries Classical.choice IN THE TYPE,
+so no proof of any Cofix-mentioning statement is choice-free - it is not removable by rewriting.
+What makes it an artifact is the pair: PFunctor.M is axiom-free and strict_cofix_nonempty proves
+the same nu-inhabitation over it with NO axioms. So the choice belongs to the QPF quotient layer,
+and escaping it means changing the carrier. Found by the new modal-claim sweep (check_modal.py).
 v1.16: THE SENTENCE IS DELETED (Tim). Two bullets of the remark box characterised the choice
 modality of Veltri's finite-powerset presentations. That material was wrong in SIX consecutive
 versions - v1.9 a universal, v1.10 a doubling, v1.11 the universal restored, v1.13/v1.14 a false
@@ -95,7 +102,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.16'
+VERSION = '1.17'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -337,8 +344,10 @@ def build():
             '(greatest fixed point, &#957;) is inhabited. (Mathlib QPF.Fix / QPF.Cofix.)',
             'Split footprint: fix_isEmpty (&#956; empty) is choice-free [propext, Quot.sound]; '
             'cofix_nonempty (&#957; inhabited) carries Classical.choice from the M-type / '
-            'corecursion machinery &#8212; a library artifact, not a necessity: for a polynomial '
-            'functor the final coalgebra is constructible choice-free '
+            'corecursion machinery &#8212; a QUOTIENT-LAYER artifact: QPF.Cofix carries the '
+            'choice in the TYPE, while PFunctor.M is axiom-free and strict_cofix_nonempty proves the '
+            'same inhabitation over it with no axioms. For a polynomial functor the final coalgebra '
+            'is constructible choice-free '
             '(Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015). ✓',
         ]
     ))
@@ -348,7 +357,8 @@ def build():
         'Remark: where choice appears in the &#956;/&#957; fork',
         [
             'The Classical.choice in cofix_nonempty is inherited from Mathlib\'s M-type machinery, '
-            'not forced by the mathematics: for a polynomial functor the final coalgebra is '
+            'not forced by the mathematics &#8212; measured: the choice is in the QPF quotient layer, not '
+            'the M-type underneath. For a polynomial functor the final coalgebra is '
             'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015, who '
             'construct it as an &#969;-limit). Their ambient setting is intensional type theory '
             'with univalence, but the <i>construction</i> itself uses only function '

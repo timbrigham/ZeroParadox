@@ -35,8 +35,12 @@ commitment, not a theorem (ZP-P hard fence).
 
 PROVED. Two theorems, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty) is choice-free
 `[propext, Quot.sound]`; `cofix_nonempty` (ν inhabited) carries `Classical.choice` from Mathlib's
-M-type / corecursion machinery. That choice is a library artifact, not a necessity: for a polynomial
-functor the final coalgebra is constructible choice-free (Ahrens et al. — their construction needs
+M-type / corecursion machinery. **That choice sits in `QPF.Cofix` itself** (measured 2026-08-03: the
+type reports `[propext, Classical.choice, Quot.sound]`), so it is not removable by any proof of this
+statement — but it IS attributable to the QPF quotient layer rather than to the mathematics, because
+`PFunctor.M` is axiom-free and `strict_cofix_nonempty` proves the same inhabitation over it with no
+axioms. Ahrens et al. agree from the other side: for a polynomial
+functor the final coalgebra is constructible choice-free (their construction needs
 only function extensionality, which Lean has; only their uniqueness half uses univalence, see
 `ZeroParadox/Computability/ChoicePurityInvariant.lean`. Veltri is CONTRAST, not support: for the
 non-polynomial finite-powerset functor his results run the other way — certain constructions
@@ -93,10 +97,17 @@ Here the dataset is the leaf-free polynomial functor `idPF_Coalgebra`: its W-typ
 choice-free, while its M-type (`QPF.Cofix`, ν) is inhabited and carries choice inherited from Mathlib, with
 choice entering exactly on the non-well-founded, self-referential side.
 
-*Editorial addendum (Claude):* that choice on the ν side is inherited from Mathlib's M-type machinery,
-not a necessity — for a polynomial functor like `idPF_Coalgebra` the final coalgebra is constructible choice-free
-in principle (Ahrens–Capriotti–Spadotti — their construction needs only function extensionality,
-which Lean has; only their uniqueness half uses univalence). In the finite-powerset case — the
+*Editorial addendum (Claude), restated from measurement 2026-08-03 — the earlier wording said the
+choice was "not a necessity" and "removable in principle", which was an inference nobody had checked.*
+**Measured:** `QPF.Cofix` carries `Classical.choice` **in the type**, so no proof of any statement
+mentioning it can be choice-free — the footprint here is not removable by rewriting this proof.
+**Also measured:** `PFunctor.M` is axiom-free, and `strict_cofix_nonempty`
+(`ZeroParadox/Computability/RootCutTrichotomy.lean`) proves the same ν-inhabitation over that M-type
+with **no axioms at all**. So the choice is attributable to Mathlib's QPF **quotient layer** rather
+than to the mathematics — which is now a measurement, not a reading — and escaping it means changing
+the carrier, not cleaning the argument. That is also why Ahrens–Capriotti–Spadotti come out
+choice-free: they build the final coalgebra as an ω-limit with no quotient layer (their construction
+needs only function extensionality, which Lean has; only their uniqueness half uses univalence). In the finite-powerset case — the
 non-polynomial one — Veltri (FSCD 2021) pins each presentation: full AC for the set-quotient,
 countable choice together with LLPO for Worrell's (ω+ω)-limit. **The CHOICE half is a fact about
 those constructions rather than a necessity result** — two of Veltri's presentations are choice-free
@@ -112,8 +123,11 @@ section PurityCheck
 --   cofix_nonempty (ν is inhabited) : [propext, Classical.choice, Quot.sound]  — choice-carrying
 --   categorical_fork_strict         : inherits Classical.choice from cofix_nonempty
 -- The well-founded (inductive) side is constructive; the non-well-founded (coinductive) side carries
--- Classical.choice — but as a Mathlib artifact, NOT a necessity: for a polynomial functor like idPF_Coalgebra the
--- final coalgebra (M-type) is constructible choice-free in principle (Ahrens–Capriotti–Spadotti,
+-- Classical.choice — but as a QUOTIENT-LAYER artifact, measured 2026-08-03: `QPF.Cofix` carries it in
+-- the TYPE, so no proof of a Cofix-mentioning statement is clean, while `PFunctor.M` is axiom-free and
+-- `strict_cofix_nonempty` proves the same ν-inhabitation over it with no axioms at all. Escaping the
+-- footprint means changing the carrier, not cleaning the proof. For a polynomial functor like
+-- idPF_Coalgebra the final coalgebra is constructible choice-free (Ahrens–Capriotti–Spadotti,
 -- TLCA 2015, who build it as an ω-limit; the construction needs only funext, univalence entering
 -- only at their uniqueness result; Lean has funext). For Lean's Axiom-K setting the closer
 -- citation is **Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)**,

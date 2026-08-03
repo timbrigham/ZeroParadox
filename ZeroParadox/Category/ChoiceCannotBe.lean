@@ -275,9 +275,13 @@ proved about where choice does work. -/
 -- reading as "the framework is choice-free". It is not, and this entry is the counterweight.
 -- Statement: `Nonempty (Cofix idPF_Coalgebra.Obj)` — the ν side is inhabited. Footprint measured
 -- `[propext, Classical.choice, Quot.sound]`.
--- Reading: the framework reads this footprint as a library artifact of Mathlib's QPF `Cofix`
--- (M-type) construction rather than as a necessity — its home file argues the point from
--- Ahrens-Capriotti-Spadotti, that polynomial final coalgebras are choice-free in principle.
+-- Statement: MEASURED 2026-08-03 — `QPF.Cofix` carries `Classical.choice` IN THE TYPE, so no proof
+-- of any `Cofix`-mentioning statement is choice-free; while `PFunctor.M` is axiom-free and
+-- `strict_cofix_nonempty` proves the same ν-inhabitation over it with NO axioms.
+-- Reading: the framework therefore attributes this footprint to Mathlib's QPF *quotient layer*
+-- rather than to the mathematics — escaping it means changing the carrier, not cleaning the proof.
+-- (An earlier gloss called it "removable in principle". That was an unmeasured inference and is
+-- retracted; the measurement above is what supports the artifact reading.)
 -- (Setting: ACS's construction needs only function extensionality, which Lean has; only its
 -- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
 -- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,

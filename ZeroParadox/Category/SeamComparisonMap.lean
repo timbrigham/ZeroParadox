@@ -208,8 +208,10 @@ section PurityCheck
 -- the expected library-choice footprint. The `Classical.choice` enters through `ZeroParadox/Category/RootCutDegeneracy.lean`'s ν-side
 -- (`cofixMk` / `root_seam`, the Mathlib M-type corecursion artifact) and the categorical seam
 -- (`hilbert_bottom_isZero` / `ModuleCat ℂ`). It is a library dependency, not a new commitment of
--- this construction; the μ side of the comparison (`Fix.rec`) is choice-free in principle, as in
--- `fixEquiv`.
+-- this construction; the μ side of the comparison (`Fix.rec`) is choice-free as measured in
+-- `fixEquiv`. ("In principle" was the earlier wording and is retracted: on the ν side the choice
+-- sits in `QPF.Cofix` itself, so no proof of a Cofix-mentioning statement can be clean — see
+-- `ZeroParadox/Settheory/Coalgebra.lean` for the measurement and the quotient-layer reading.)
 #print axioms canonicalCmp_hom
 #print axioms canonicalCmp_unique
 #print axioms canonicalCmp_eq_root_seam

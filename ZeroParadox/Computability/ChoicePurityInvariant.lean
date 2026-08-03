@@ -33,9 +33,14 @@ content over `fix_isEmpty`:
 * **ν side — choice cannot be made load-bearing.** The strongest honest in-statement claim is
   `Nonempty (Cofix idPF_Coalgebra.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),
   whose footprint carries `Classical.choice` from Mathlib's M-type / `Cofix.corec`. We do **not**
-  claim ν *requires* choice: for a polynomial functor the final coalgebra is constructible choice-free
-  in principle. The `Classical.choice` is a Mathlib artifact, recorded in the PurityCheck comment, not
-  asserted as a theorem.
+  claim ν *requires* choice — but be precise about what is measured (2026-08-03). `QPF.Cofix` carries
+  `Classical.choice` **in the type**, so this footprint is **not removable by rewriting the proof**;
+  an earlier version of this line said "constructible choice-free in principle", which was an
+  unmeasured inference. What makes it an *artifact* is the pair: `PFunctor.M` is **axiom-free**, and
+  `strict_cofix_nonempty` (`ZeroParadox/Computability/RootCutTrichotomy.lean`) proves the same
+  ν-inhabitation over that M-type with **no axioms at all**. So the choice belongs to the QPF
+  *quotient layer*, and escaping it means changing the carrier rather than cleaning the argument.
+  Recorded in the PurityCheck comment, not asserted as a theorem.
 
   **Prior art, and READ THE SETTING — each of these three lives in a different type theory, and the
   differences are the whole point of the block.**
@@ -127,8 +132,10 @@ theorem fix_isEmpty_constructive : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj) 
 
 /-- **ν is inhabited**, re-exported from `ZeroParadox.cofix_nonempty`. The witness is the concrete
 corecursion term (the self-unfolding node). Its footprint carries `Classical.choice` from Mathlib's
-M-type machinery — recorded in PurityCheck, NOT asserted as a necessity (polynomial final coalgebras
-are choice-free in principle: Ahrens–Capriotti–Spadotti; see the header for why Veltri is background, not support). -/
+M-type machinery — recorded in PurityCheck, NOT asserted as a necessity. Measured 2026-08-03:
+`QPF.Cofix` carries the choice in the TYPE, so no proof of this statement is clean; `PFunctor.M` is
+axiom-free and `strict_cofix_nonempty` witnesses the same inhabitation there with no axioms, which is
+what makes the footprint a quotient-layer artifact (see the header for why Veltri is background, not support).-/
 theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 
@@ -160,7 +167,9 @@ section PurityCheck
 --   new term, not a re-export.
 --   The ν side CANNOT be upgraded: Lean has no object-level proposition asserting "this term uses
 --   Classical.choice", and the strongest honest statement (`cofix_nonempty'`) is exactly Mathlib's
---   corecursion inhabitant, whose choice is a library artifact, not a necessity (Ahrens-Capriotti-Spadotti).
+--   corecursion inhabitant. That choice is a quotient-layer artifact, MEASURED: `QPF.Cofix` carries
+--   it in the type (so no proof of a Cofix-mentioning statement is clean) while `PFunctor.M` is
+--   axiom-free and `strict_cofix_nonempty` proves the same inhabitation over it with no axioms.
 --   So the SPLIT itself is not a single theorem-level invariant: half of it (μ choice-freeness) is now
 --   witnessed constructively in-statement, but the other half (ν "needs" choice) remains a measured
 --   #print-axioms comment. The fork's purity asymmetry is therefore HALF-WITNESSED, HALF-COMMENT —
