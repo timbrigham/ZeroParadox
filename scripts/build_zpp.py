@@ -1,6 +1,14 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.8 | August 2026
+Version 1.9 | August 2026
+v1.9: adversary review of the rendered document, pre-publication. Three substantive fixes.
+(1) The abstract stated Knaster-Tarski WITHOUT monotonicity, which makes it false - the swap on
+the two-element lattice is a self-map with no fixed point. Section I had it right; only the
+abstract was loose. (2) The Tier-3 roster named 'the categorical initial object' as a contact
+point, but Section II PROVES that object empty and locates the Quine-atom analog in the FINAL
+coalgebra; the roster was v1.0 text never swept when the categorical instance landed in v1.1.
+(3) quine_atom_unique was cited for two things it does not state - it mentions no bottom and is
+about self-membership, not self-application.
 v1.8: swept the sibling the v1.7 fix left standing - the next rendered paragraph still said the
 set-quotient and Worrell presentations REQUIRE choice, which is the modality v1.7 retired one
 sentence earlier. Veltri's own words are "requires the presence of the axiom of choice in the
@@ -37,7 +45,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -67,8 +75,9 @@ def build():
     ]
 
     E.append(body(
-        'A self-referential operator over a complete lattice has a least fixed point and a '
-        'greatest fixed point (Knaster&#8211;Tarski). ZP-P records a single elementary fact and '
+        'A <b>monotone</b> self-map of a complete lattice has a least fixed point and a '
+        'greatest fixed point (Knaster&#8211;Tarski) &#8212; monotonicity is required, and the '
+        'self-referential operators this framework studies are of that kind. ZP-P records a single elementary fact and '
         'develops its consequences across the framework: these two fixed points coincide &#8212; '
         'the fork <i>collapses</i> to one point &#8212; exactly when the operator has a unique '
         'fixed point. Read intuitively, the least fixed point is the inductive (well-founded) '
@@ -310,8 +319,10 @@ def build():
 
     E.append(body(
         'The remaining two instances are referenced, not re-proved here. The set-theory fork '
-        '(Foundation vs AFA) has its Lean witness in ZP-J: the Quine atom &#8869; = {&#8869;} is '
-        'the unique self-application fixed point (quine_atom_unique). The computation fork '
+        '(Foundation vs AFA) has its Lean witness in ZP-J: quine_atom_unique proves that any two '
+        'Quine atoms are equal &#8212; a uniqueness statement about self-MEMBERSHIP. That the '
+        'bottom is one of them is a separate result (bot_is_quine_atom), and self-APPLICATION is '
+        'a third (selfApp_pinnable). The computation fork '
         '(total vs partial) has its Lean witness in ZP-K: the Kleene quine. Each is the contact '
         'point of its own fork.'))
     E.append(sp(6))
@@ -326,7 +337,8 @@ def build():
 
     E.append(body(
         'The tempting claim is that the contact points of all the instances &#8212; the Quine '
-        'atom, the 2-adic 0, the Kleene quine, the categorical initial object &#8212; are faces '
+        'atom, the 2-adic 0, the Kleene quine, the self-referential element of the final '
+            'coalgebra &#8212; are faces '
         'of one object, the diagonal fixed point. ZP-P states this as a conjecture and fences it '
         'precisely. The fences are not hedging; they mark a genuine boundary, and per-instance '
         'forks remain full theorems on either side of them.'))
@@ -336,7 +348,7 @@ def build():
         [
             'The claim "the contact points are one object" is not a theorem and cannot become '
             'one. Identity requires a shared type: the 2-adic 0, the Quine atom (a set), the '
-            'Kleene quine (a code), and a categorical initial object (an object up to '
+            'Kleene quine (a code), and an element of a final coalgebra (an object up to '
             'isomorphism) are terms of different types in different categories. The proposition '
             '"x = y" across them is not false &#8212; it is not well-formed. So this is a type '
             'boundary, not a missing proof. What is claimed formally is only that each framework '
