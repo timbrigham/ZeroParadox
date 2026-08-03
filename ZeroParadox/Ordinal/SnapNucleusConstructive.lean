@@ -51,11 +51,14 @@ recording precisely because the opposite is the tempting reading.
 
 Their **Proposition 9**: an exponentiation operation satisfying the natural specification *"can be
 shown to exist if and only if the law of excluded middle holds"* — a genuine taboo EQUIVALENCE, not
-a footprint measurement. **But that is exponentiation in FULL generality, base `0` included.** Their
-**Theorem 13** gives the construction whenever the base has a trichotomous least element, and
-**Theorem 24** likewise under `α ≥ 1`. **`ω` satisfies both**, so the ω-tower's operator sits on the
-*constructive* side of their own line. The taboo is about the unrestricted operation; our operator is
-one of the cases they construct.
+a footprint measurement. **But that is exponentiation in FULL generality**, and the restriction that
+buys the construction is *not* nonzero-ness: Proposition 9's own counterexample base is `P + 1` for a
+proposition `P`, which the authors note is obviously nonzero. What the base must have is a **least
+element**. Their **Theorem 13** gives the abstract (suprema) construction under `α ≥ 1` — which they
+gloss as α having a least element — and **Theorem 24** the concrete decreasing-lists construction
+whenever the base has a **trichotomous** least element. **`ω` satisfies both**, so the ω-tower's
+operator sits on the *constructive* side of their own line. The taboo is about the unrestricted
+operation; our operator is one of the cases they construct.
 
 **It therefore does not bear on the obstruction below**, and for two independent reasons: the
 obstruction is about a notation system's expressive reach rather than about choice, and their carrier
@@ -63,8 +66,8 @@ is the HoTT `Ord` — sets with a transitive, extensional, wellfounded order —
 construction by decreasing lists, in Agda. It is not a re-proof of anything on Mathlib's `Ordinal`.
 *(Their **Lemma 54** is separately cited in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`.
 ⚠ Do NOT describe this paper's carrier as `Cnf`/`Brw`: those names belong to the authors' *earlier*
-arXiv:2104.02549, which this paper cites as previous work it compares itself against. That
-misattribution stood here on 2026-08-02 and was caught by two gates before it reached the remote.)*
+arXiv:2104.02549, which this paper cites as previous work it compares itself against. Corrected
+2026-08-02; the two theorem numbers above were additionally transposed until 2026-08-03.)*
 
 ## The obstruction, stated
 

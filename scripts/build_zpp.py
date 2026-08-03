@@ -1,6 +1,12 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.10 | August 2026
+Version 1.11 | August 2026
+v1.11: retrospective gate round on already-published text. The v1.10 hedge was PREPENDED and left
+the original clause standing, so the remark box read "In the cases the literature pins ... where the
+literature pins each presentation" - one clause doubled. Rewritten once. Also retired the last
+"genuinely enters" framing (remark-box heading and body): choice appearing in every known
+presentation of the finite-powerset case is a fact about those constructions, not a necessity, and
+Veltri's own preferred coinductive construction needs neither choice nor LLPO.
 v1.10: the v1.9 abstract fix RELOCATED its error instead of removing it. Making the theorem
 statement true, it added "and the self-referential operators this framework studies are of that
 kind" - asserting applicability the corpus explicitly denies (17 CompleteLattice mentions, ZERO
@@ -52,7 +58,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.10'
+VERSION = '1.11'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -83,7 +89,10 @@ def build():
 
     E.append(body(
         'A <b>monotone</b> self-map of a complete lattice has a least fixed point and a '
-        'greatest fixed point (Knaster&#8211;Tarski); monotonicity is required. Whether the framework&#8217;s own self-referential operators instantiate that schema is <i>not</i> claimed here &#8212; see the fences in Section III. ZP-P records a single elementary fact and '
+        'greatest fixed point (Knaster&#8211;Tarski); monotonicity is required. Whether the '
+        'framework&#8217;s own self-referential operators instantiate that schema is <i>not</i> '
+        'claimed here &#8212; see the fences in Section III. ZP-P records a single elementary '
+        'fact and '
         'develops its consequences across the framework: these two fixed points coincide &#8212; '
         'the fork <i>collapses</i> to one point &#8212; exactly when the operator has a unique '
         'fixed point. Read intuitively, the least fixed point is the inductive (well-founded) '
@@ -299,7 +308,7 @@ def build():
     E.append(sp(6))
 
     E.append(remark_box(
-        'Remark: where choice genuinely enters the &#956;/&#957; fork',
+        'Remark: where choice appears in the &#956;/&#957; fork',
         [
             'The Classical.choice in cofix_nonempty is inherited from Mathlib\'s M-type machinery, '
             'not forced by the mathematics: for a polynomial functor the final coalgebra is '
@@ -313,13 +322,12 @@ def build():
             '<i>assuming</i> choice principles rather than shown to need them, and the one '
             'genuine necessity he proves is of LLPO, a logic taboo, not of choice. He cites '
             'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
-            'In the cases the literature pins, choice enters for the non-polynomial finite-powerset '
-            'functor, where the '
-            'literature pins each presentation: the set-quotient\'s finality proof assumes the full '
-            'axiom of choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under countable choice together '
-            'with the lesser limited principle of omniscience (LLPO). Injectivity of the canonical '
-            'algebra implies LLPO outright, and is equivalent to it under countable choice '
-            '(Veltri, FSCD 2021).',
+            'The presentations that do use choice are all of the non-polynomial finite-powerset '
+            'functor, and the literature pins each one: the set-quotient\'s finality proof assumes '
+            'the full axiom of choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under '
+            'countable choice. That is a fact about those constructions rather than a necessity '
+            'result. Injectivity of the canonical algebra implies LLPO outright, and is equivalent '
+            'to it under countable choice (Veltri, FSCD 2021).',
         ]
     ))
     E.append(sp(6))
