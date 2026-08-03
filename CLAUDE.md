@@ -357,6 +357,55 @@ a floor to locate, a reversal to characterize, a 0↔∞ swap — say so explici
 Tim's read rather than guessing; and when his input on such a point proves load-bearing, name what it
 changed instead of presenting the result as self-derived.
 
+## Prose that resists correction is a CLAIM defect. Revalidate, don't redraft. Hard Rule.
+
+**If a sentence has to be fixed three times, the sentence is not the problem.** Stop editing it and go
+measure the claim underneath. This is gate-enforced: `gate_round.py` prints a MANDATORY CLAIM
+REVALIDATION protocol at **round 3**, or as soon as the **same `--target` has been re-fixed 3 times**.
+
+**Why (measured 2026-08-03, Tim's call).** One remark-box sentence in ZP-P was wrong in **six
+consecutive versions** — v1.9 a universal, v1.10 a doubling, v1.11 the universal restored, v1.13/v1.14
+a false universal, v1.15 a false uniqueness. Four gate rounds ran over it. **Every round passed the
+citations, because the citations were always correct.** The defect was one level down: the claim the
+sentence existed to support — that Mathlib's `Classical.choice` in `cofix_nonempty` is *"an artifact,
+not a necessity"* — had never been measured by anyone. **One probe settled it in a minute:**
+
+```
+QPF.Cofix         (the TYPE) : [propext, Classical.choice, Quot.sound]
+PFunctor.M.corec             : does not depend on any axioms
+```
+
+`QPF.Cofix` carries choice **in the type**, so *no proof of any statement mentioning it can be
+choice-free* — "removable in principle" was not merely unproved, it was unprovable as stated. The
+honest, measurable version nobody had written: the choice comes from Mathlib's **QPF quotient layer**,
+not the mathematics; the M-type underneath is axiom-free and the corpus already witnesses the same
+inhabitation there (`strict_cofix_nonempty`). That is also *why* ACS is choice-free — an ω-limit with
+no quotient layer.
+
+**The generalizable lesson: the gates check WORDING against SOURCES. They cannot see an unmeasured
+claim, and they will keep passing one forever.** Six rounds of prose editing could never have found
+this. A one-minute probe did.
+
+**⚠ MODAL CLAIMS ARE THE HIGH-RISK CLASS — and this corpus is full of them.** *"not a necessity"*,
+*"an artifact"*, *"in principle"*, *"could be removed"*, *"eliminable"*, *"inherited from Mathlib"* are
+claims about what **cannot be proved**, and a footprint measurement can never establish one:
+- **ACCIDENTAL** is proved only by **EXHIBITING** the clean proof.
+- **ESSENTIAL** is proved only by a **REDUCTION** to a taboo.
+- **`#print axioms` follows the STATEMENT, not the proof.** A *type* can carry an axiom — then no
+  proof is clean, and every "removable" claim about it is false. **Measure the type, not just the
+  theorem.**
+
+**The protocol, when the tripwire fires:** name the claim in one line without its framing → ask what
+would settle it and whether anyone did that → probe it in the scratchpad (`lake env lean` on a
+standalone file needs no repo write) → then either restate to exactly what was measured, or restate as
+an explicit conjecture, **or delete the sentence**. **Deleting is legitimate and often correct**: if an
+accurate statement already lives in a checkable file, published prose does not need to relitigate it —
+that is how the ZP-P case was finally closed (v1.16, Tim: *"if the Lean is accurate, just delete the
+problem sentence"*).
+
+**Record what the MEASUREMENT showed, not that you re-worded something.** A changelog entry saying
+"clarified" after a revalidation round is the failure repeating.
+
 ## Review-Loop Cap — Severity-Tiered, Hard Rule
 
 **The gates will always find something. Stopping is a decision about SEVERITY, not a wait for silence.**
@@ -399,9 +448,14 @@ fix is structural: the reviewer stands outside the loop, so give it the number a
 
 **The CALLER bumps, exactly once, before spawning the round:**
 ```
-python .claude-local/gate_round.py bump      # caller only, once per ROUND (not per gate)
-python .claude-local/gate_round.py show      # reviewers and anyone else: read-only
+python .claude-local/gate_round.py bump --target <what-is-being-re-fixed>   # caller, once per ROUND
+python .claude-local/gate_round.py show                                     # reviewers: read-only
 ```
+**Always pass `--target`.** Use a stable slug for the thing being corrected, not the round's topic —
+`zpp-remark-veltri-modality`, not `round-3`. It is what makes the revalidation tripwire fire on the
+real signal (*the same sentence re-fixed*) rather than on round count alone. A target re-fixed three
+times prints the MANDATORY CLAIM REVALIDATION protocol; see the § above, and **follow it before
+drafting another fix**.
 `reset` at the start of a new arc or after a clean push. State lives in `.claude-local/gate_round.json`,
 so it survives compaction.
 
@@ -420,6 +474,16 @@ bedrock defect is still live. If several gates run in one round, they all share 
 > another round.
 > If N is past the ordinary cap, you must actively choose between FAIL-BEDROCK and STOP-ORDINARY — a bare
 > "FAIL" is not a valid verdict, because it hands the stopping decision back to the party inside the loop.
+>
+> **If N ≥ 3, or if this text is a passage you are being asked to re-check for the third time: do NOT
+> report a wording fix.** Report the CLAIM the passage exists to support, whether anything actually
+> establishes it, and what measurement would settle it. Watch specifically for modal claims —
+> "not a necessity", "an artifact", "in principle", "removable", "eliminable" — which no footprint
+> measurement can establish (accidental needs an EXHIBITED clean proof; essential needs a REDUCTION;
+> `#print axioms` follows the STATEMENT, so a TYPE carrying an axiom makes "removable" false for every
+> possible proof). **A verdict that only re-words a passage that has already been re-worded twice is
+> not a useful verdict.** Recommending DELETION is in scope and is often the right answer when an
+> accurate statement already lives in a checkable file.
 
 **Two measured reasons the loop cannot converge, which the cap exists to bound:**
 1. **Fixes introduce errors.** Every fix is new prose carrying new claims. Two of round 3's eight
