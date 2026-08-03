@@ -97,13 +97,13 @@ choice entering exactly on the non-well-founded, self-referential side.
 not a necessity — for a polynomial functor like `idPF_Coalgebra` the final coalgebra is constructible choice-free
 in principle (Ahrens–Capriotti–Spadotti — their construction needs only function extensionality,
 which Lean has; only their uniqueness half uses univalence). In the finite-powerset case — the
-non-polynomial one — the literature pins each presentation: full AC for the set-quotient, countable
-choice together with LLPO for Worrell's (ω+ω)-limit. **The CHOICE half is a fact about those
-constructions rather than a necessity result** — two of his presentations are choice-free outright:
-the setoid one (his Theorem 1, final in `SetoidRel`) and the coinductive type he prefers (his
-Theorem 2). The LLPO half is different: that one he does prove necessary, injectivity of the
-canonical algebra implying LLPO outright and being equivalent to it under countable choice (Veltri,
-FSCD 2021). So the necessity in that paper is of a logic taboo, not of choice.
+non-polynomial one — Veltri (FSCD 2021) pins each presentation: full AC for the set-quotient,
+countable choice together with LLPO for Worrell's (ω+ω)-limit. **The CHOICE half is a fact about
+those constructions rather than a necessity result** — two of Veltri's presentations are choice-free
+outright: the setoid one (his Theorem 1, final in `SetoidRel`) and the coinductive type he prefers
+(his Theorem 2). The LLPO half is different: that one he does prove necessary, injectivity of the
+canonical algebra implying LLPO outright and being equivalent to it under countable choice. So the
+necessity in that paper is of a logic taboo, not of choice.
 -/
 
 section PurityCheck

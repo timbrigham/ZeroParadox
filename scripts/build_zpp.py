@@ -1,6 +1,16 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.15 | August 2026
+Version 1.16 | August 2026
+v1.16: THE SENTENCE IS DELETED (Tim). Two bullets of the remark box characterised the choice
+modality of Veltri's finite-powerset presentations. That material was wrong in SIX consecutive
+versions - v1.9 a universal, v1.10 a doubling, v1.11 the universal restored, v1.13/v1.14 a false
+universal, v1.15 a false uniqueness - and each fix was locally reasonable and seeded the next. It was
+never load-bearing for ZP-P: this document's claim is that the Classical.choice in cofix_nonempty is
+a Mathlib artifact for a POLYNOMIAL functor, which bullet 1 states and ACS supports. The
+finite-powerset material is now one sentence saying it is a different case, out of scope here, and
+recorded in Coalgebra.lean - which the gates have verified against the source. Prose that cannot be
+kept correct across six attempts should not be in a published PDF when an accurate statement of it
+already exists in a checkable file.
 v1.15: BEDROCK - the v1.14 fix replaced a false UNIVERSAL with a false UNIQUENESS. "not all of them
 use it, and the exception is the one he prefers" - Veltri has TWO choice-free finality results, not
 one: Theorem 1 (the setoid presentation, final in SetoidRel, proved by anaTree with no classical
@@ -85,7 +95,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.15'
+VERSION = '1.16'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -343,22 +353,10 @@ def build():
             'construct it as an &#969;-limit). Their ambient setting is intensional type theory '
             'with univalence, but the <i>construction</i> itself uses only function '
             'extensionality &#8212; univalence enters only for their uniqueness result.',
-            'Veltri (FSCD 2021) points the other way and is cited here for contrast, not support: '
-            'his subject is the finite-powerset functor, which is not polynomial, and there the '
-            'choice-free route is the one that is hard. Where his finality proofs <i>do</i> use '
-            'choice they are obtained <i>assuming</i> it rather than shown to need it &#8212; but '
-            'not all of them use it: his setoid presentation (his Theorem 1, final in SetoidRel) '
-            'and the coinductive type he prefers (his Theorem 2) are both choice-free. He cites '
-            'Ahrens&#8211;Capriotti&#8211;Spadotti for the polynomial case himself.',
-            'In the finite-powerset case &#8212; the non-polynomial one &#8212; the literature pins '
-            'each presentation: the set-quotient\'s finality proof assumes the full axiom of '
-            'choice, while Worrell\'s (&#969;+&#969;)-limit is carried out under countable choice '
-            'together with the lesser limited principle of omniscience (LLPO). The <i>choice</i> '
-            'half is a fact about those constructions rather than a necessity result &#8212; '
-            'Veltri\'s own preferred presentation, the coinductive type, needs neither choice nor '
-            'LLPO. The LLPO half is different: that one he does prove necessary, injectivity of the '
-            'canonical algebra implying LLPO outright and being equivalent to it under countable '
-            'choice (Veltri, FSCD 2021).',
+            'The <b>finite-powerset</b> functor is a different case &#8212; it is not polynomial, '
+            'and the argument above does not cover it. It is also not this document\'s subject. '
+            'The per-presentation detail there, with citations, is recorded in the Lean source '
+            '(Coalgebra.lean) and is deliberately not restated here.',
         ]
     ))
     E.append(sp(6))
