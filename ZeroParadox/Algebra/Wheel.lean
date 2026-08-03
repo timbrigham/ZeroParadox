@@ -75,8 +75,9 @@ construction it points to is proved in `ZeroParadox/Algebra/WheelFrac.lean` — 
 the wheel of fractions `⊙_S A = (A × A)/≡_S` is a `Wheel` for any commutative ring `A` and
 multiplicative submonoid `S` (sorry-free, `Classical.choice`-free, `[propext, Quot.sound]`).
 §VII defines WheelValuationStructure — the typeclass identifying the bridge: a commutative
-ring + multiplicative valuation with val(0) = ⊤, with the porthole (⊥ = {⊥} structurally
-requires val(⊥) = ∞) pinning the special element. The construction closes the construction
+ring + multiplicative valuation with val(0) = ⊤, with the porthole (the ZF+AFA Quine atom
+`⊥ = {⊥}` **motivating** val(⊥) = ∞ — see § VIII; nothing in the Lean derives it) pinning
+the special element. The construction closes the construction
 gap; §VI closes the identification gap. The universality result previously scoped as Tier 3
 (a substantial, non-near-term target) is now formalized.
 See notes/wheel_conjecture_proof_gap_2026-05-31.md for the original three-tier diagnosis.
@@ -570,8 +571,11 @@ This is the core of the conjecture, concretely formalized.
 ZP — it is **motivated** by the self-referential structure ⊥ = {⊥} (the Quine atom, in the ZF+AFA
 metatheory). *(Not "forced": nothing in the Lean derives `wvs_val 0 = ⊤` from anything — it is an
 assumed class field, as § VII says and as the ZP-J addendum quoted there states. Corrected
-2026-08-02; the scope note at the head of this file says every `⊥ = {⊥}` here is metatheoretic, and
-"forced" was the one occurrence that made it a carrier-level claim.)*
+2026-08-02; the scope note at the head of this file says every `⊥ = {⊥}` here is metatheoretic. That
+correction recorded "forced" as **the one** carrier-level occurrence, which was itself wrong: § VII's
+overview said the equation "structurally requires" val(⊥) = ∞ — the same modality, left standing by
+the same pass. Corrected 2026-08-03. All nine occurrences re-read individually that day; the other
+seven are metatheory-scoped or hedged as conjectural and are correct as written.)*
 The ring's zero is simultaneously the lattice floor *and* the point where the
 valuation hits infinity. This structural motivation identifies *which* element
 plays the porthole role (wzero), but it does not construct the binary operation

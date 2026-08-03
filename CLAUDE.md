@@ -1072,8 +1072,17 @@ When assigning a label, ask: "Is this result the central claim of its section, o
   - **Why it was missed, and it is a measurement error worth copying the lesson from.** The rollout
     note below says *"Lean is clean (CC-2 is never a Lean identifier — 0 occurrences)"*. True of the
     **label** and false of the **claim**: `ZeroParadox/Algebra/Wheel.lean` asserts the bare equation
-    **ten times** (`:26, :38, :44, :68, :158, :190, :322, :390, :440, :525`). **Grep the CLAIM, not the
-    name** — the same rule this file states for kill-propagation, missed here at the measurement step.
+    many times. **Grep the CLAIM, not the name** — the same rule this file states for
+    kill-propagation, missed here at the measurement step. **No count and no line numbers are
+    recorded here on purpose**: the figure once said "ten times" with ten line numbers, and both went
+    stale as the file was edited. Measure it.
+  - **⚠ AND THE ROLLOUT IS NOT A SWEEP — most occurrences are CORRECT.** All were re-read
+    individually 2026-08-03: the governing scope note, the correction record, and every site that is
+    explicitly ZF+AFA-scoped or hedged as a conjectured counterpart is **right as written**, because
+    `⊥ = {⊥}` is a true theorem of a real set theory. Only a **carrier-level consequence** claim is a
+    defect. Two have been found and fixed, both the same modality (`forced`, then `structurally
+    requires`), and the second was left standing by the pass that fixed the first — which had
+    recorded itself as fixing "the one" occurrence.
   - **Provenance, because it is easy to misremember (it was, this session):** the 2026-07-14 ratification
     retired **MC-1**'s identity and cites CC-2 only as the precedent for *keeping a label*. **CC-2's own
     identity was never reviewed.** And the two defects are NOT the same: MC-1's was **ill-typed**
