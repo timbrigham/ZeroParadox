@@ -290,6 +290,35 @@ witnesses" is licensed; "the bottom is a Turing machine" is a cross-carrier iden
 boundary as everywhere else. The `QuineHost` precedent is the model: never "we commit to AFA", always "here
 are the requirements, and AFA is a witness meeting them."
 
+### And the pointer must not become a COPY. Never enumerate in prose what the artifact defines.
+
+**A pointer that re-lists its target's contents is a second copy of the definition, and a second copy
+drifts.** This is the general form of a rule this file already states three times for three specific
+figures — the choice-footprint count ("NO COUNT — measure on demand, never record one"), the
+`papers/` file count, and the `LEAN_CUSTOM_REGISTRY` tally. It is one rule, so state it once:
+
+**Do not write into prose any count, tally, field list, instance list, or "these are the N conditions"
+enumeration of something a Lean file, a directory, or a data store already defines.** Point at it, name
+the one or two members that are load-bearing for what you are saying, and let the reader open it.
+
+**Measured 2026-08-04 — the same defect twice in two rounds, one level apart, in the same paragraph.**
+A pointer block added to `ZeroParadox/Valuation/PoleCornersBridge.lean` said `InfinitudeFloor` had
+**four** realizations (there are five — `boundaryFloor` was missed) and, after that was fixed, said the
+class had **two** conditions and that this "is the whole requirement" (it has three, and the dropped
+`cx_floor_eq_iSup` is the load-bearing one, the field the headline theorem rewrites with first). Both
+are the same error: **a completeness claim about an artifact's contents, asserted in prose that cannot
+check itself** — in a file whose entire job was to POINT AT that artifact.
+
+**Why enumeration specifically, and not just counts.** A count at least looks like a figure and invites
+the "measure it" reflex. A field list reads as *description* and invites nothing, which makes it the
+more dangerous of the two. Both are completeness claims; neither is checkable from where it is written.
+
+**What IS legitimate to write down:** a **dated survey result** — "realizations located as of
+&lt;date&gt;: …" — because that is a measurement, not a re-copy, and the date says so. Same for
+"none located as of &lt;date&gt;" over "none exists" (§ the choice index's universal-negative rule).
+The distinguishing question: *would this sentence be wrong if someone added a field tomorrow, with
+nothing mechanical noticing?* If yes, it is an enumeration — replace it with a pointer or a date.
+
 ## Determinism is the SINGLE recurring cost — name it, don't rediscover it
 
 **Every "the bottom cannot move" result in this corpus is powered by SINGLE-VALUEDNESS, not by
