@@ -36,10 +36,13 @@ content over `fix_isEmpty`:
   claim ν *requires* choice — but be precise about what is measured (2026-08-03). `QPF.Cofix` carries
   `Classical.choice` **in the type**, so this footprint is **not removable by rewriting the proof**;
   an earlier version of this line said "constructible choice-free in principle", which was an
-  unmeasured inference. What makes it an *artifact* is the pair: `PFunctor.M` is **axiom-free**, and
-  `strict_cofix_nonempty` (`ZeroParadox/Computability/RootCutTrichotomy.lean`) proves the same
-  ν-inhabitation over that M-type with **no axioms at all**. So the choice belongs to the QPF
-  *quotient layer*, and escaping it means changing the carrier rather than cleaning the argument.
+  unmeasured inference. What makes it an *artifact* is the pair: `PFunctor.M`'s FORMER and
+  constructors are axiom-free while its DESTRUCTOR (`M.children`/`M.dest`) is **not** — that is where
+  the axiom originates — and `strict_cofix_nonempty`
+  (`ZeroParadox/Computability/RootCutTrichotomy.lean`) proves the same ν-inhabitation **over that
+  M-type** with **no axioms at all**, by only building and never destructing. So the choice belongs
+  to the QPF *quotient layer*, and escaping it means changing the carrier rather than cleaning the
+  argument.
   Recorded in the PurityCheck comment, not asserted as a theorem.
 
   **Prior art, and READ THE SETTING — each of these three lives in a different type theory, and the
@@ -173,7 +176,8 @@ section PurityCheck
 --   corecursion inhabitant. That choice is a quotient-layer artifact, MEASURED: `QPF.Cofix` carries
 --   it in the type (so no proof of a Cofix-mentioning statement is clean), inheriting it from
 --   `PFunctor.M`'s DESTRUCTOR (`M.children`/`M.dest`) — the former and constructors are axiom-free —
---   while `strict_cofix_nonempty` proves the same inhabitation with no axioms, by only building.
+--   while `strict_cofix_nonempty` proves the same inhabitation over the M-type with no axioms,
+--   by only building.
 --   So the SPLIT itself is not a single theorem-level invariant: half of it (μ choice-freeness) is now
 --   witnessed constructively in-statement, but the other half (ν "needs" choice) remains a measured
 --   #print-axioms comment. The fork's purity asymmetry is therefore HALF-WITNESSED, HALF-COMMENT —

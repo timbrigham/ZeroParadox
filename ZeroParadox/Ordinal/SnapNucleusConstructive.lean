@@ -60,8 +60,8 @@ gloss as α having a least element — and **Theorem 24** the concrete decreasin
 whenever the base has a **trichotomous** least element. **`ω` satisfies both**, so *that particular*
 taboo is about the unrestricted operation and `ω^·` is one of the cases they construct.
 
-**But their § 7 "Constructive Taboos" is not exhausted by Proposition 9, and some of it does concern
-the fixed-base exponential.** **Proposition 52**: exponentiation is monotone in the base iff LEM,
+**But the taboos do not stop at Proposition 9 (which is in their § 2), and their § 7 "Constructive
+Taboos" holds several that do concern the fixed-base exponential.** **Proposition 52**: exponentiation is monotone in the base iff LEM,
 and LEM is already implied by weaker statements *"even when α and β are each assumed to have a
 trichotomous least element"* — so a trichotomous least element is not a blanket constructivity
 certificate. **Proposition 55 (iii)/(iv)**: `∀ β, β ≤ 2^β` and `∀ β, ∀ α > 1, β ≤ α^β` are each

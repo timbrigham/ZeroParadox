@@ -1,10 +1,20 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.21 | August 2026
+Version 1.22 | August 2026
+v1.22: the v1.21 CLASS sweep missed a member, and said it had not. (1) It claimed to have reached
+every site; ChoicePurityInvariant.lean wrote the phrase as `is **axiom-free**` - markdown bold
+INSIDE the phrase - so the literal pattern did not match, in a file that same commit edited twice.
+Fixed, and the v1.21 claim corrected to 'the live sites' since it was false as written. GREP
+LOOSELY: markup inside a phrase defeats a literal pattern, and that is the third time it has bitten
+this session. (2) The sweep also DELETED a load-bearing carrier phrase: strict_cofix_nonempty is
+over the M-TYPE, not over Cofix, so 'proves the same inhabitation' had cofix_nonempty as its
+nearest antecedent and read as contradicting its own preceding clause. 'over the M-type' restored
+at every site including the rendered p.4 box. (3) Proposition 9 is in the paper's section 2, which
+one sentence still contradicted 25 lines above the fix. All three caught by gate round 1.
 v1.21: swept the CLASS the v1.20 fix left behind, plus the widow. (1) The discredited WARRANT
 'PFunctor.M is axiom-free' survived at 13 live sites after v1.20 removed the false CONCLUSION it
 supported - one Lean file carried the precise account and the loose one 55 lines apart. It is true
-of the TYPE FORMER and silent about the ELIMINATORS, so every site now states former /
+of the TYPE FORMER and silent about the ELIMINATORS, so the live sites now state former /
 constructors / destructor separately. (2) The Theorem Summary table orphaned cofix_nonempty alone
 on p.6 under a repeated header - reported by three consecutive gate rounds and survived three
 rebuilds. Now starts on its own page: nudging spacing only changes which row is orphaned.
@@ -131,7 +141,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.21'
+VERSION = '1.22'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -377,7 +387,7 @@ def build():
             'choice in the TYPE. The M-type FORMER and constructors are axiom-free, its '
             'DESTRUCTOR (M.children / M.dest) is not &#8212; that is where the axiom '
             'originates &#8212; and strict_cofix_nonempty proves the same inhabitation with '
-            'no axioms by only building. For a polynomial functor the final coalgebra '
+            'no axioms over that M-type, by only building. For a polynomial functor the final coalgebra '
             'is constructible choice-free '
             '(Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015). ✓',
         ]
