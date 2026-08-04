@@ -165,24 +165,40 @@ theorem floor_not_wellFounded_via_descent : ¬ WellFounded (floorRel (L := L)) :
     own open question**, which is whether the *floor* hosts a non-degenerate descent; that remains
     open. What it settles is only that non-constancy as such is not what costs.
 
-    **TWO INDEPENDENT SOURCES OF CHOICE, and they must not be conflated** — correcting an earlier
-    version of this note (2026-08-03, Tim) which collapsed them into one and named the wrong witness:
+    **TWO SOURCES OF CHOICE, and they must not be conflated. The table below has been wrong twice;
+    every row is now measured** — the first version collapsed the two into one, the second labelled
+    `M.children` a *selection* when its dependency path is
+    `M.children → Approx.head_succ' → Classical.byContradiction → Classical.propDecidable`, i.e. the
+    same library-decidability node the towers reach. Its index `i` is an **explicit argument**, so
+    nothing is extracted there:
 
     | case | successor nameable? | carrier clean? | cost | source |
     |---|---|---|---|---|
     | `f n = -n` on `ℤ` under `<` | yes | yes | **free** | — |
-    | `towerOrd k` (`Ordinal/B6_CanonicalCNF.lean`) | yes | no | choice | **carrier** |
-    | `ordinal_wf_padic_descent_clash` | yes | no | choice | **carrier** |
-    | `PFunctor.M.children` | **no — must be extracted** | — | choice | **selection** |
+    | `towerOrd k` (`ZeroParadox/Ordinal/B6_CanonicalCNF.lean`) | yes | no | choice | **library** |
+    | `ordinal_wf_padic_descent_clash` | yes | no | choice | **library** |
+    | `PFunctor.M.children` | yes — `i` is an explicit argument | no | choice | **library** |
+    | `not_acc_iff_exists_descending_chain.mp` | **no — the successor is only known to EXIST** | — | choice | **SELECTION** |
 
     So naming the successor is *necessary but not sufficient*: this corpus names its successors
     explicitly everywhere (`towerOrd k` → `towerOrd (k+1)`; `ordinalSuccession.seq k = Ordinal.epsilon k`
     in `ZeroParadox/Multihomed/SeparatedSuccession.lean`) and those still carry choice — **from the
-    carrier, not from any selection**. ⚠ For `ordinal_wf_padic_descent_clash`
-    (`ZeroParadox/Multihomed/CrossRootCompleteness.lean`) the carrier is `Ordinal` and `ℝ`, **not the
-    p-adics** — its statement is `WellFounded (· < ·) ∧ StrictAnti (fun n : ℕ => (2:ℝ)^(-(n:ℤ)))`,
-    p-adic in name only, and `Ordinal.lt_wf` alone supplies the choice. An earlier version of this
-    note cited `padicValNat`, which does not occur in that theorem's transitive closure at all.
+    library, not from any selection**. Rows 2-4 all reach `Classical.choice` through the *same* node,
+    `Classical.propDecidable`, which is why they are one source and not three.
+
+    **The one genuine SELECTION is the biconditional's own `mp`, and it is already cited above.**
+    `not_acc_iff_exists_descending_chain.mp` (`Mathlib/Order/WellFounded.lean:36-38`) builds its chain
+    by `Nat.rec` over `{a // ¬ Acc r a}` using `(exists_not_acc_lt_of_not_acc a.2).choose_spec` — at
+    each step a smaller inaccessible element is known only to **exist**, and one must be picked. Its
+    `mpr` (`:39-40`) is `acc.rec` and needs nothing. That contrast — same theorem, one direction
+    selecting and one not — is the cleanest exhibit of the distinction this section draws.
+
+    ⚠ For `ordinal_wf_padic_descent_clash` (`ZeroParadox/Multihomed/CrossRootCompleteness.lean`) the
+    carrier is `Ordinal` and `ℝ`, **not the p-adics** — its statement is
+    `WellFounded (· < ·) ∧ StrictAnti (fun n : ℕ => (2:ℝ)^(-(n:ℤ)))`, p-adic in name only. Both
+    conjuncts contribute: `Ordinal.lt_wf` carries choice, and so does the `ℝ` side by itself. An
+    earlier version of this note cited `padicValNat`, which does not occur in that theorem's
+    transitive closure at all.
 
     `Reading:` (framework interpretation, not a theorem) — the cost is not in *having* infinitely many
     distinct bottoms. Where a successor can be written down on a clean carrier, the infinitude is
