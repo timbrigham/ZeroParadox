@@ -129,32 +129,67 @@ theorem floor_not_wellFounded_via_descent : ¬ WellFounded (floorRel (L := L)) :
   rw [wellFounded_iff_isEmpty_descending_chain, not_isEmpty_iff]
   exact ⟨⟨floorDescent, fun _ => AbstractSelfApp.fixed_bot⟩⟩
 
-/-! ### § I-c. The descent route, choice-free — and the cost is in EXTRACTION, not in the infinitude
+/-! ### § I-c. The descent route, choice-free — and TWO separate sources of `Classical.choice`
 
-    **No novelty is claimed.** Mathlib already has this content, as *biconditionals*:
+    **No novelty is claimed for the mathematics; the delta is generality and purity.**
+
+    *Prior art, one-directional forms included.* Mathlib has the equivalences as *biconditionals* —
     `not_acc_iff_exists_descending_chain` (`Order/WellFounded.lean:34`),
-    `acc_iff_isEmpty_descending_chain` (`:42`), `wellFounded_iff_isEmpty_descending_chain` (`:51`).
-    The delta here is **purity packaging only**: their `mp` direction builds the chain by `Nat.rec`
-    over a subtype, so *citing the biconditional at all* puts `Classical.choice` in the footprint —
-    `#print axioms` follows the STATEMENT, and you pay for the direction you did not take. That is
-    why `floor_not_wellFounded_via_descent` above measures `[propext, Classical.choice, Quot.sound]`
-    while everything else in this file is axiom-free. Same verdict, same reason, as the `CovBy` and
-    `bot_not_acc` precedents: **keep the hand proof, cite the standard name.**
+    `acc_iff_isEmpty_descending_chain` (`:42`), `wellFounded_iff_isEmpty_descending_chain` (`:51`) —
+    **and it also has one-directional forms**: `RelEmbedding.natGT` (`Order/OrderIsoNat.lean:47`)
+    takes the same hypothesis, with `RelEmbedding.not_acc` (`:64`) and
+    `RelEmbedding.not_wellFounded` (`:76`) the closest named prior art. Two deltas remain, and the
+    second is the substantive one:
+    * *Purity.* Those forms all measure `[propext, Classical.choice, Quot.sound]`. The biconditional's
+      `mp` builds the chain by `Nat.rec` over `{a // ¬ Acc r a}` with `.choose_spec` (`:36-38`), and
+      a biconditional is **one constant whose proof term carries both directions** — so citing it at
+      all pays for the direction you did not take. (Not "`#print axioms` follows the statement"; that
+      rule is real but it is not the mechanism here.)
+    * *Generality.* `RelEmbedding.not_acc` / `not_wellFounded` sit under `[IsStrictOrder α r]`, which
+      **`floorRel` provably fails** — `floorRel bot bot` holds by `fixed_bot`, so the relation is not
+      irreflexive. The lemmas below carry no order hypothesis at all, which is exactly what the floor
+      needs. Same verdict as the `CovBy` and `bot_not_acc` precedents: **keep the hand proof, cite
+      the standard name.**
 
-    **The measurement that motivated this (2026-08-03), and it settles an open question in § I-b.**
-    That paragraph fenced the constant witness: *"a genuine non-constant descent is strictly more."*
-    It is strictly more — and it is **still free**. Measured on an explicit non-constant chain
-    (`f n = -n` on `ℤ` under `<`, every value distinct): the chain, its strict decrease, its
-    injectivity and the resulting `¬ WellFounded` are all `[propext, Quot.sound]`, **no choice**.
-    Contrast `ordinal_wf_padic_descent_clash` (`Multihomed/CrossRootCompleteness.lean`), which does
-    carry choice — but its carrier does too (`padicValNat` is choice-carrying), so that footprint is
-    **carrier inheritance, not the price of the descent**.
+    *Live adjacency in this corpus.* `real_carrier_not_wellFounded`
+    (`ZeroParadox/Multihomed/TreeObstructions.lean`) already builds the non-constant descent
+    `fun n : ℕ => -(n : ℝ)` — the ℝ twin of the ℤ chain measured below. It can now be re-proved by
+    `not_wf_of_descent`.
+
+    **The measurement (2026-08-03).** § I-b fences the constant witness: *"a genuine non-constant
+    descent is strictly more."* It is strictly more — **and it is still free.** On an explicit
+    non-constant chain (`f n = -n` on `ℤ` under `<`, every value distinct), the chain, its strict
+    decrease, its injectivity and the resulting `¬ WellFounded` are all `[propext, Quot.sound]`, no
+    choice. (Injectivity is choice-free via `omega`; the `neg_inj`/`Int.natCast_inj` route picks up
+    choice through instance resolution — the instance hazard, again.) **This does NOT settle § I-b's
+    own open question**, which is whether the *floor* hosts a non-degenerate descent; that remains
+    open. What it settles is only that non-constancy as such is not what costs.
+
+    **TWO INDEPENDENT SOURCES OF CHOICE, and they must not be conflated** — correcting an earlier
+    version of this note (2026-08-03, Tim) which collapsed them into one and named the wrong witness:
+
+    | case | successor nameable? | carrier clean? | cost | source |
+    |---|---|---|---|---|
+    | `f n = -n` on `ℤ` under `<` | yes | yes | **free** | — |
+    | `towerOrd k` (`Ordinal/B6_CanonicalCNF.lean`) | yes | no | choice | **carrier** |
+    | `ordinal_wf_padic_descent_clash` | yes | no | choice | **carrier** |
+    | `PFunctor.M.children` | **no — must be extracted** | — | choice | **selection** |
+
+    So naming the successor is *necessary but not sufficient*: this corpus names its successors
+    explicitly everywhere (`towerOrd k` → `towerOrd (k+1)`; `ordinalSuccession.seq k = Ordinal.epsilon k`
+    in `ZeroParadox/Multihomed/SeparatedSuccession.lean`) and those still carry choice — **from the
+    carrier, not from any selection**. ⚠ For `ordinal_wf_padic_descent_clash`
+    (`ZeroParadox/Multihomed/CrossRootCompleteness.lean`) the carrier is `Ordinal` and `ℝ`, **not the
+    p-adics** — its statement is `WellFounded (· < ·) ∧ StrictAnti (fun n : ℕ => (2:ℝ)^(-(n:ℤ)))`,
+    p-adic in name only, and `Ordinal.lt_wf` alone supplies the choice. An earlier version of this
+    note cited `padicValNat`, which does not occur in that theorem's transitive closure at all.
 
     `Reading:` (framework interpretation, not a theorem) — the cost is not in *having* infinitely many
-    distinct bottoms. It is in being unable to *name* which one comes next. Write the successor down
-    and the infinitude is free; know only that it exists and you must select, which is what the axiom
-    licenses. So the framework's axiom-freedom is **not** an artifact of modelling ⊥ as a single
-    point: it survives a model with infinitely many distinct descending bottoms. -/
+    distinct bottoms. Where a successor can be written down on a clean carrier, the infinitude is
+    free; where it can only be *extracted* from an existence proof, the selection is unavoidable and
+    that is what the axiom licenses. On this reading the framework's ordinal and analytic footprints
+    are carrier inheritance — the position `CLAIMS.md` has always taken about the realization
+    layers — rather than a price paid for the bottom being many. -/
 
 /-- **Generic, axiom-free: no member of an explicit descending chain is accessible.**
     `Statement:` given any `f : ℕ → α` descending under `r` at every step, no `f n` is `Acc r`.
@@ -176,11 +211,15 @@ theorem not_wf_of_descent {α : Type*} {r : α → α → Prop} (f : ℕ → α)
     (hf : ∀ n, r (f (n + 1)) (f n)) : ¬ WellFounded r := fun hwf =>
   not_acc_of_descent f hf (f 0) (hwf.apply (f 0)) 0 rfl
 
-/-- **§ I's conclusion by the descent route, now CHOICE-FREE.** Same statement as
-    `floor_not_wellFounded_via_descent`, same witness, but routed through `not_wf_of_descent` instead
-    of the biconditional — so the descending-chain reading of the floor is available without paying
-    for the direction not taken. Kept alongside the choice-carrying version, which is retained
-    because its *citation* of the standard characterization is the content there. -/
+/-- **§ I's conclusion by the descent route, now CHOICE-FREE.**
+    `Statement:` `¬ WellFounded floorRel` — the same statement as `floor_not_wellFounded_via_descent`
+    and the same witness (`floorDescent`), but routed through `not_wf_of_descent` instead of the
+    biconditional, so the descending-chain reading of the floor is available without paying for the
+    direction not taken. Measured axiom-free, against that one's
+    `[propext, Classical.choice, Quot.sound]`.
+    `Reading:` the pair is kept deliberately — the choice-carrying version is retained because its
+    *citation* of the standard characterization is its content, and the two side by side are the
+    cleanest exhibit that the footprint here is a property of the ROUTE, not of the statement. -/
 theorem floor_not_wellFounded_via_descent' : ¬ WellFounded (floorRel (L := L)) :=
   not_wf_of_descent floorDescent (fun _ => AbstractSelfApp.fixed_bot)
 
