@@ -88,12 +88,14 @@ only.** The corners live in `Pole`/`Sphere` and the complexities in `ℕ∞`; no
 cross-type `=`, exactly as `cnf_bridge_type_boundary` fences the tower.
 
 **⚠ SCOPE — what the class actually requires, stated from its fields rather than inferred.**
-`InfinitudeFloor` asks for a `floor`, a complexity `cx : α → ℕ∞`, a `member : ℕ → α`, and **three**
-conditions: `member_ne_floor`, the **chain condition** `cx_member_strictMono` (the members'
-complexities climb strictly), and the **identity** `cx_floor_eq_iSup : cx floor = ⨆ n, cx (member n)`.
-**The class imposes no valuation axioms**, so "a carrier needs a valuation" is NOT a consequence of
-it — but a climbing chain is not the whole requirement either, and the third field is the one the
-headline theorem rewrites with first.
+**Read `class InfinitudeFloor` in `ZeroParadox/Valuation/InfinitudeFloor.lean` for its fields — this
+block deliberately does not re-list them** (see the correction note at the end of this section for
+why). Two facts about it are load-bearing here and were measured:
+* **It imposes no valuation axioms.** So "a carrier needs a valuation to have a second pole" is NOT a
+  consequence of the class, and the table below is a survey of what happens to exist, not a derivation.
+* **`cx_floor_eq_iSup : cx floor = ⨆ n, cx (member n)` is a required field, not a consequence of the
+  others.** It is what the headline theorem rewrites with first, and it is the non-obvious thing a new
+  realization must discharge — a climbing complexity chain alone constrains `cx floor` not at all.
 
 Realizations located 2026-08-04 (**five**, and the count is a measurement at a date, not a census):
 
@@ -116,13 +118,18 @@ counterexample to stating it as one.
 floor, or the Markov attractor as of 2026-08-04** — a measurement, deliberately not the stronger
 claim that none *can* be. Nothing in the class forbids one — a candidate needs a complexity map with a
 strictly climbing member chain **and** must discharge `cx_floor_eq_iSup`; whether a categorical bottom
-admits that is **open and untried here**. *(Two rounds of corrections, 2026-08-04. Round 1: this block
-asserted four realizations, called them all valuation-carrying, and stated the negative structurally
-("none of which carries a complexity map") — the fifth realization was missed, row 5 is `id`, and the
-class requires no valuation axioms. Round 2: the fix then listed only **two** of the class's three
-conditions, dropping `cx_floor_eq_iSup` — the same undercount one level down, on the fields instead of
-the realizations — which made both the headline theorem and the sufficiency claim above read stronger
-than they are.)*
+admits that is **open and untried here**.
+
+*(**Correction note, and the reason this block no longer enumerates anything.** Two review rounds on
+2026-08-04 found the same defect twice, one level apart. Round 1: the block said there were **four**
+realizations — there are five. Round 2: the fix then said the class had **two** conditions and that
+this "is the whole requirement" — it has three, and the dropped one, `cx_floor_eq_iSup`, is precisely
+the load-bearing one. Both are the same error: **a completeness claim about a Lean object's contents,
+asserted in prose that cannot check itself.** A docstring that re-lists a class's fields is a second
+copy of the definition, and a second copy drifts — here, twice in two rounds, in a file whose entire
+job is to POINT AT that definition. So the enumerations are gone and the pointer stands. The table
+below is kept because a survey of *located realizations* is a measurement result, not a re-copy of a
+definition — and it is dated for exactly that reason.)*
 
 ## Structure
 - § I   `poleToSphere` — the pole embedding into the 2-adic Riemann sphere.
@@ -131,11 +138,10 @@ than they are.)*
 - § IV  `irreversible_direction_is_the_snap` — the one-way direction, co-witnessed with `t_snap_irreversible`.
 
 *(The overview above previously said "the genuine Lean content is `swap_is_rInv`" full stop, and
-§ III / § IV were unlisted. The file carries **seven** declarations: the `def poleToSphere` (§ I) and
-six theorems — `swap_is_rInv`, `corners_are_the_swapped_poles`, `point_and_field_at_the_poles`,
-`irreversible_direction_is_the_snap`, and the two `@[simp]` `rfl`-lemmas `poleToSphere_zero` /
-`poleToSphere_infty`. The § list above names four of the seven by section; `corners_are_the_swapped_poles`
-and the two `rfl`-lemmas are unsectioned. Corrected 2026-08-04.)*
+§ III / § IV were unlisted. Corrected 2026-08-04. The § list names one declaration per section and is
+not a census — `corners_are_the_swapped_poles` and the two `@[simp]` `rfl`-lemmas are unsectioned.
+Scroll the file for the full list; a count kept in prose is the drift hazard described in the
+correction note above.)*
 -/
 
 namespace ZeroParadox
