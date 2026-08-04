@@ -78,9 +78,15 @@ not prose — it is a class with theorems, in `ZeroParadox/Valuation/InfinitudeF
   missing. Complexity-ascent: `towerCx_zero : towerCx (0 : ℤ_[2]) = ⊤` and
   `towerCx_member (n) : towerCx (cnfToZp2 (towerNONote (n+1))) = ((n+1 : ℕ) : ℕ∞)`
   (`ZeroParadox/Valuation/TowerHeightFloor.lean`). Element-descent: `tower_converges_to_zero`
-  (`ZeroParadox/Ordinal/Gentzen.lean:308`), cited in § III below. So the zero corner
-  (`seed_maps_to_bot_both`) and the infinity corner (`towerCx_zero`) are witnessed on the *same*
-  `cnfToZp2 ∘ towerNONote` this file discusses throughout (in prose — `cnfToZp2` is not imported here).
+  (`ZeroParadox/Ordinal/Gentzen.lean:308`), cited in § III below. ⚠ Cite the right witness for the
+  infinity corner: `towerCx_zero` alone says only `towerCx (0 : ℤ_[2]) = ⊤`, with no `cnfToZp2` and no
+  `towerNONote` in its statement. What ties the top to *this tower* is `towerInfinitudeFloor`'s
+  `cx_floor_eq_iSup` field — which shows `towerCx 0 = ⨆ n, towerCx (cnfToZp2 (towerNONote (n+1)))` —
+  and `tower_height_floor_reconciliation`, whose first conjunct is that floor complexity for that
+  instance. So the zero corner (`seed_maps_to_bot_both`, whose conjunct is literally
+  `cnfToZp2 (towerNONote 0) = 0`) and the infinity corner (`tower_height_floor_reconciliation`) are
+  witnessed on the *same* `cnfToZp2 ∘ towerNONote` this file discusses throughout (in prose —
+  `cnfToZp2` is not imported here).
 
 `Reading:` with both corners measured, `cornerId` — the "concurrent" corner — stops being a phrase:
 one index, an element-descent and a complexity-ascent, each reaching its own pole. **Co-witnessed
@@ -101,7 +107,7 @@ Realizations located 2026-08-04 (**five**, and the count is a measurement at a d
 
 | carrier | `cx` is | where |
 |---|---|---|
-| `Q₂` | the 2-adic valuation | `InfinitudeFloor.lean` `q2InfinitudeFloor` |
+| `Q₂` | `cxQ2` = `if x = 0 then ⊤ else x.valuation.toNat` — the 2-adic valuation clamped by `.toNat` (negative valuations map to `0`) and extended by `⊤` at the floor | `InfinitudeFloor.lean` `q2InfinitudeFloor` |
 | `ℤ_[2]` | `towerCx` = `if x = 0 then ⊤ else x.valuation` — the 2-adic valuation extended by `⊤` at the floor | `TowerHeightFloor.lean` `towerInfinitudeFloor` (`@[reducible] def`, deliberately not a global instance) |
 | `PowerSeries R` | `PowerSeries.order`, the order of vanishing — a valuation when `R` is a domain, and the instance assumes only `[CommRing R] [Nontrivial R]` | `InfinitudeFloor.lean` `powerSeriesInfinitudeFloor` |
 | `End` | `localCx v`, per node | `LocalFloor.lean` `boundaryFloor` — a **`List (Fin 2)`-indexed family** (one witness per tree node, a `def` not a global instance) |
@@ -138,10 +144,10 @@ definition — and it is dated for exactly that reason.)*
 - § IV  `irreversible_direction_is_the_snap` — the one-way direction, co-witnessed with `t_snap_irreversible`.
 
 *(The overview above previously said "the genuine Lean content is `swap_is_rInv`" full stop, and
-§ III / § IV were unlisted. Corrected 2026-08-04. The § list names one declaration per section and is
-not a census — `corners_are_the_swapped_poles` and the two `@[simp]` `rfl`-lemmas are unsectioned.
-Scroll the file for the full list; a count kept in prose is the drift hazard described in the
-correction note above.)*
+§ III / § IV were unlisted. Corrected 2026-08-04. The § list names the headline declaration of each
+section and is not a census — every declaration sits inside a section, but `corners_are_the_swapped_poles`
+and the two `@[simp]` `rfl`-lemmas are not named above. Scroll the file for the full list; a count kept
+in prose is the drift hazard described in the correction note above.)*
 -/
 
 namespace ZeroParadox
