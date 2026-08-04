@@ -151,8 +151,11 @@ section PurityCheck
    `categorical_fork_strict` inherits ν's choice. So choice is the discriminator between the two ends of
    the fork at this abstract polynomial-functor level. (Contrast M1: at the concrete Mathlib-category
    realization the analogous split is invisible — every functor is uniformly choice-carrying because the
-   library proves it with choice. The ν choice here is likewise a Mathlib M-type artifact, not a
-   necessity — Ahrens–Capriotti–Spadotti, TLCA 2015 — so the discriminator is real but its structural
+   library proves it with choice. The ν choice here is likewise a QUOTIENT-LAYER artifact rather than
+   a necessity, measured 2026-08-03: `QPF.Cofix` carries the axiom in the type — so no proof of a
+   `Cofix`-mentioning statement is clean — while `PFunctor.M` is axiom-free and `strict_cofix_nonempty`
+   proves the same ν-inhabitation over it with no axioms. Ahrens–Capriotti–Spadotti, TLCA 2015, agree
+   from the other side. So the discriminator is real but its structural
    status is fenced. **Do NOT cite Veltri here**: his subject is the finite-powerset functor, which is
    not polynomial, and he cites ACS for the polynomial case himself. He is apt only for the
    finite-powerset claims above.) -/

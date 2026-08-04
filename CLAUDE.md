@@ -424,12 +424,25 @@ reduction, an explicit non-claim, or a **named exhibited witness**.
   fences. `SnapNucleus.lean` had measured this correctly in July, including that `Ordinal` the *type*
   is choice-free while `Ordinal.instLinearOrder` is not. **Read hits, do not count them.**
 
-**⚠ The detector had the defect it was built to catch, and an injection probe found it.** The first
-version listed `#print axioms` as *evidence* — so a modal claim sitting next to a `PurityCheck` block
-was silently suppressed, which is exactly where these claims live. A footprint measurement is the one
-thing that **cannot** establish a modal claim. Removing it surfaced two more real sites immediately.
-**VERIFY THE DETECTOR BEFORE BELIEVING A ZERO** — plant a known-bad line, confirm the checker fires,
-then remove it.
+**⚠ THE DETECTOR SHIPPED WITH THREE FALSE-NEGATIVE PATHS, AND EVERY ONE WAS FOUND BY A PROBE RATHER
+THAN BY READING THE CODE.** All three would have made a clean `0` meaningless:
+1. **`#print axioms` listed as *evidence*** — so a claim beside a `PurityCheck` block was suppressed,
+   which is exactly where these claims live. A footprint is the one thing that **cannot** establish a
+   modal claim. Removing it surfaced two real sites at once.
+2. **One wide evidence window** — a live claim passed because the word *"measured"* sat six lines away
+   describing a **different** measurement. **Proximity is not aboutness.** Fixed with two tiers: weak
+   tokens (`measur`, a named witness) must be in the *same sentence*; structural markers
+   (`retracted`, `UNCLASSIFIED`, `NOT claimed`) may sit wider.
+3. **Literal spaces in the pattern** — so any claim *wrapped across a line* was invisible, and Lean
+   docstrings wrap constantly. Two fixes were needed: `\s+` between words, **and** blanking the
+   `--` / `//` / quote-join separators that sit in the gap (to spaces of **equal length**, so line
+   numbers stay exact). The first fix alone still missed a wrapped Lean comment — measured by probe.
+
+**VERIFY THE DETECTOR BEFORE BELIEVING A ZERO.** Plant a known-bad line *in the shape you actually
+expect* — wrapped, comment-prefixed, near a purity block — confirm it fires, then remove it. A probe
+in the wrong shape passes and teaches you nothing: the wrapped probe was written flat first and gave
+a false all-clear. Keep a reproduction script in the scratchpad with **both** must-fire and
+must-suppress controls; a checker that fires on everything is as useless as one that fires on nothing.
 
 **The measured facts worth not re-deriving:**
 ```

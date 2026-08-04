@@ -224,7 +224,9 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- general form of "choice enters precisely where the diagonal fixed point is asserted inhabited."
 -- Inhabiting a non-well-founded (greatest) fixed point can be entirely choice-free. FENCE: the
 -- refutation is functor-specific, not universal — the QPF `Cofix` route in `ZeroParadox/Computability/ChoicePurityInvariant.lean`
--- (`cofix_nonempty'`) DOES carry `Classical.choice`, as a Mathlib M-type artifact. So: the general claim
+-- (`cofix_nonempty'`) DOES carry `Classical.choice` — as a QUOTIENT-LAYER artifact, not an M-type one:
+-- measured 2026-08-03, `QPF.Cofix` carries the axiom in the type while `PFunctor.M` is axiom-free, and
+-- the two `#check`s directly below are exactly the axiom-free M-type witnesses. So: the general claim
 -- is false; the per-functor question stays open case by case.
 #check @ZeroParadox.strict_cofix_nonempty
 #check @ZeroParadox.mixed_cofix_nonempty

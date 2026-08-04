@@ -1,6 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.18 | August 2026
+Version 1.19 | August 2026
+v1.19: the v1.18 fix swept ONE of the sentence's sites. Two more rendered: p.4's result box and
+p.6's Axiom Purity box both still attributed the choice to 'the M-type / corecursion machinery',
+so the published document said 'not from the M-type underneath' on p.4 and 'from the M-type ...'
+on p.6 - self-contradicting across two pages. Both now say QPF corecursion / quotient layer,
+which is what the measurement supports (QPF.Cofix carries the axiom in the type; PFunctor.M is
+axiom-free). Caught by gate round 2, which correctly ruled it ordinary: QPF.Cofix IS the quotient
+of PFunctor.M, so the loose name was imprecise rather than false, and no conclusion rested on it.
 v1.18: the v1.17 clarification was PREPENDED and the original attribution left standing, so the
 remark box read 'inherited from Mathlib's M-TYPE MACHINERY ... not the M-TYPE underneath' - one
 sentence contradicting itself. That is the same prepended-hedge shape as v1.10, and the seventh
@@ -109,7 +116,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.18'
+VERSION = '1.19'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -350,7 +357,7 @@ def build():
             'The initial algebra (least fixed point, &#956;) is empty; the final coalgebra '
             '(greatest fixed point, &#957;) is inhabited. (Mathlib QPF.Fix / QPF.Cofix.)',
             'Split footprint: fix_isEmpty (&#956; empty) is choice-free [propext, Quot.sound]; '
-            'cofix_nonempty (&#957; inhabited) carries Classical.choice from the M-type / '
+            'cofix_nonempty (&#957; inhabited) carries Classical.choice from the QPF '
             'corecursion machinery &#8212; a QUOTIENT-LAYER artifact: QPF.Cofix carries the '
             'choice in the TYPE, while PFunctor.M is axiom-free and strict_cofix_nonempty proves the '
             'same inhabitation over it with no axioms. For a polynomial functor the final coalgebra '
@@ -474,7 +481,7 @@ def build():
             'theory (Ostrowski).',
             'Categorical instance (Coalgebra.lean): split &#8212; fix_isEmpty (&#956; empty) '
             'is choice-free [propext, Quot.sound]; cofix_nonempty (&#957; inhabited) carries '
-            'Classical.choice from the M-type / corecursion machinery.',
+            'Classical.choice from the QPF corecursion machinery (the quotient layer).',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
             'pattern. Zero sorry. Verified: lake build, August 2026.',
         ]
