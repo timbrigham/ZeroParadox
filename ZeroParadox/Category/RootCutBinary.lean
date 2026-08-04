@@ -143,8 +143,9 @@ section PurityCheck
 -- The arity-two μ side is choice-free exactly as the arity-one (idPF_Coalgebra) μ side: doubling the recursive
 -- positions changes neither the emptiness nor its axiom footprint. The ν choice is the Mathlib
 -- corecursion artifact — specifically a QUOTIENT-LAYER one, measured 2026-08-03: `QPF.Cofix` carries
--- the choice in the TYPE (no proof of a Cofix-mentioning statement is clean) while `PFunctor.M` is
--- axiom-free and `strict_cofix_nonempty` proves the same inhabitation over it with no axioms
+-- the choice in the TYPE (no proof of a Cofix-mentioning statement is clean) while `PFunctor.M`'s
+-- FORMER and constructors are axiom-free (its DESTRUCTOR, `M.children`/`M.dest`, is NOT — that is
+-- where the axiom originates) and `strict_cofix_nonempty` proves the same inhabitation with no axioms
 -- (polynomial-functor final coalgebra is constructible
 -- choice-free; Ahrens–Capriotti–Spadotti, TLCA 2015, arXiv:1504.02949 — their
 -- construction needs only function extensionality, which Lean has; only their

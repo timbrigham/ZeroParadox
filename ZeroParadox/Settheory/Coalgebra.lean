@@ -38,7 +38,8 @@ PROVED. Two theorems, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty
 M-type / corecursion machinery. **That choice sits in `QPF.Cofix` itself** (measured 2026-08-03: the
 type reports `[propext, Classical.choice, Quot.sound]`), so it is not removable by any proof of this
 statement — but it IS attributable to the QPF quotient layer rather than to the mathematics, because
-`PFunctor.M` is axiom-free and `strict_cofix_nonempty` proves the same inhabitation over it with no
+`PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not) and
+`strict_cofix_nonempty` proves the same inhabitation over it with no
 axioms. Ahrens et al. agree from the other side: for a polynomial
 functor the final coalgebra is constructible choice-free (their construction needs
 only function extensionality, which Lean has; only their uniqueness half uses univalence, see
@@ -101,7 +102,8 @@ choice entering exactly on the non-well-founded, self-referential side.
 choice was "not a necessity" and "removable in principle", which was an inference nobody had checked.*
 **Measured:** `QPF.Cofix` carries `Classical.choice` **in the type**, so no proof of any statement
 mentioning it can be choice-free — the footprint here is not removable by rewriting this proof.
-**Also measured:** `PFunctor.M` is axiom-free, and `strict_cofix_nonempty`
+**Also measured:** `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not),
+and `strict_cofix_nonempty`
 (`ZeroParadox/Computability/RootCutTrichotomy.lean`) proves the same ν-inhabitation over that M-type
 with **no axioms at all**. So the choice is attributable to Mathlib's QPF **quotient layer** rather
 than to the mathematics — which is now a measurement, not a reading — and escaping it means changing
@@ -124,7 +126,8 @@ section PurityCheck
 --   categorical_fork_strict         : inherits Classical.choice from cofix_nonempty
 -- The well-founded (inductive) side is constructive; the non-well-founded (coinductive) side carries
 -- Classical.choice — but as a QUOTIENT-LAYER artifact, measured 2026-08-03: `QPF.Cofix` carries it in
--- the TYPE, so no proof of a Cofix-mentioning statement is clean, while `PFunctor.M` is axiom-free and
+-- the TYPE, so no proof of a Cofix-mentioning statement is clean, while `PFunctor.M`'s former and
+-- constructors are axiom-free (its DESTRUCTOR is not) and
 -- `strict_cofix_nonempty` proves the same ν-inhabitation over it with no axioms at all. Escaping the
 -- footprint means changing the carrier, not cleaning the proof. For a polynomial functor like
 -- idPF_Coalgebra the final coalgebra is constructible choice-free (Ahrens–Capriotti–Spadotti,
@@ -153,7 +156,8 @@ section PurityCheck
    realization the analogous split is invisible — every functor is uniformly choice-carrying because the
    library proves it with choice. The ν choice here is likewise a QUOTIENT-LAYER artifact rather than
    a necessity, measured 2026-08-03: `QPF.Cofix` carries the axiom in the type — so no proof of a
-   `Cofix`-mentioning statement is clean — while `PFunctor.M` is axiom-free and `strict_cofix_nonempty`
+   `Cofix`-mentioning statement is clean — while `PFunctor.M`'s former and constructors are
+   axiom-free (its DESTRUCTOR is not) and `strict_cofix_nonempty`
    proves the same ν-inhabitation over it with no axioms. Ahrens–Capriotti–Spadotti, TLCA 2015, agree
    from the other side. So the discriminator is real but its structural
    status is fenced. **Do NOT cite Veltri here**: his subject is the finite-powerset functor, which is

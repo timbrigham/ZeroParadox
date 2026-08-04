@@ -225,7 +225,8 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- Inhabiting a non-well-founded (greatest) fixed point can be entirely choice-free. FENCE: the
 -- refutation is functor-specific, not universal — the QPF `Cofix` route in `ZeroParadox/Computability/ChoicePurityInvariant.lean`
 -- (`cofix_nonempty'`) DOES carry `Classical.choice`. Located exactly, measured 2026-08-03: the M-type
--- FORMER and its constructors are axiom-free (`PFunctor.M`, `M.mk`, `M.corec`), its DESTRUCTOR is not
+-- FORMER and its constructors are axiom-free (`PFunctor.M`, `M.mk`, `M.corec`), its DESTRUCTOR is
+-- not
 -- (`M.children`, `M.dest` carry `[propext, Classical.choice, Quot.sound]`), and `QPF.Cofix` inherits
 -- from the destructor through `Mcongr`/`IsPrecongr`. The two `#check`s below are axiom-free because
 -- they only BUILD and never destruct. So: the general claim
@@ -282,7 +283,8 @@ proved about where choice does work. -/
 -- Measurement (2026-08-03, about the AMBIENT TYPES rather than about this declaration — hence no
 -- Statement:/Reading: label, which belong to claims about the checked decl): `QPF.Cofix` carries
 -- `Classical.choice` IN THE TYPE, so no proof of any `Cofix`-mentioning statement is choice-free;
--- while `PFunctor.M` is axiom-free and `strict_cofix_nonempty` proves the same ν-inhabitation over
+-- while `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not) and
+-- `strict_cofix_nonempty` proves the same ν-inhabitation over
 -- it with NO axioms.
 -- Reading: the framework therefore attributes this footprint to Mathlib's QPF *quotient layer*
 -- rather than to the mathematics — escaping it means changing the carrier, not cleaning the proof.

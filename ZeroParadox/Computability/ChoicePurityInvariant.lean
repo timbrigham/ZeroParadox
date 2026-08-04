@@ -133,9 +133,12 @@ theorem fix_isEmpty_constructive : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj) 
 /-- **ν is inhabited**, re-exported from `ZeroParadox.cofix_nonempty`. The witness is the concrete
 corecursion term (the self-unfolding node). Its footprint carries `Classical.choice` from Mathlib's
 M-type machinery — recorded in PurityCheck, NOT asserted as a necessity. Measured 2026-08-03:
-`QPF.Cofix` carries the choice in the TYPE, so no proof of this statement is clean; `PFunctor.M` is
-axiom-free and `strict_cofix_nonempty` witnesses the same inhabitation there with no axioms, which is
-what makes the footprint a quotient-layer artifact (see the header for why Veltri is background, not support).-/
+`QPF.Cofix` carries the choice in the TYPE, so no proof of this statement is clean. `PFunctor.M`'s
+FORMER and constructors are axiom-free while its DESTRUCTOR (`M.children`/`M.dest`) is NOT — that is
+where the axiom originates, and `Cofix` inherits it through the congruence it quotients by. What makes
+the footprint a *quotient-layer* artifact is that `strict_cofix_nonempty` witnesses the same
+inhabitation with no axioms, by only BUILDING and never destructing (see the header for why Veltri is
+background, not support).-/
 theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 
@@ -168,8 +171,9 @@ section PurityCheck
 --   The ν side CANNOT be upgraded: Lean has no object-level proposition asserting "this term uses
 --   Classical.choice", and the strongest honest statement (`cofix_nonempty'`) is exactly Mathlib's
 --   corecursion inhabitant. That choice is a quotient-layer artifact, MEASURED: `QPF.Cofix` carries
---   it in the type (so no proof of a Cofix-mentioning statement is clean) while `PFunctor.M` is
---   axiom-free and `strict_cofix_nonempty` proves the same inhabitation over it with no axioms.
+--   it in the type (so no proof of a Cofix-mentioning statement is clean), inheriting it from
+--   `PFunctor.M`'s DESTRUCTOR (`M.children`/`M.dest`) — the former and constructors are axiom-free —
+--   while `strict_cofix_nonempty` proves the same inhabitation with no axioms, by only building.
 --   So the SPLIT itself is not a single theorem-level invariant: half of it (μ choice-freeness) is now
 --   witnessed constructively in-statement, but the other half (ν "needs" choice) remains a measured
 --   #print-axioms comment. The fork's purity asymmetry is therefore HALF-WITNESSED, HALF-COMMENT —

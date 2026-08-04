@@ -69,8 +69,9 @@ certificate. **Proposition 55 (iii)/(iv)**: `∀ β, β ≤ 2^β` and `∀ β, �
 **Note what Proposition 55 (iii)/(iv) do and do not prove**: each is LEM-equivalent *as a quantified
 statement*, (iii) at base `2`; the paper never separately shows the base-`ω` instance implies LEM.
 
-**A second, sharper LEM equivalence sits in their § 8 (*Approximating Subtraction, Division and
-Logarithm Operations*), not in the taboo section.** **Proposition 60 (iii)**: that for every `α > 1`
+**A further LEM equivalence sits in their § 8 (*Approximating Subtraction, Division and Logarithm
+Operations*), not in the taboo section.** (Not "sharper" — all of these are mutually equivalent, being
+equivalences with LEM.) **Proposition 60 (iii)**: that for every `α > 1`
 and `β ≥ 1` there is a `γ ≤ β` greatest with `α^γ ≤ β` is equivalent to LEM. **What separates it from
 the CONSTRUCTIVE Proposition 59 (iii) is the SCOPE OF MAXIMALITY, not the bound** — both carry
 `γ ≤ β`. Proposition 59 gives a greatest `γ` satisfying the *conjunction* (`γ ≤ β ∧ α^γ ≤ β`);
@@ -84,7 +85,8 @@ ordinals are the HoTT `Ord` — sets with a transitive, extensional, wellfounded
 over *arbitrary* such ordinals, with a concrete construction by decreasing lists, in Agda. The
 obstruction below is about `ONote`, and is about that system's expressive reach rather than about
 excluded middle. **The load-bearing property is that `ONote` is a concrete inductive type**: every
-LEM-derivation above — § 7's and § 8's alike — builds an ordinal from an arbitrary proposition
+LEM-derivation above — § 2's Proposition 9, § 7's and § 8's alike — builds an ordinal from an
+arbitrary proposition
 (`3 + P`, `P + 1`, `1 + P`), and
 no `ONote` denotes one — its constructors are `zero` and `oadd : ONote → ℕ+ → ONote → ONote`, none of
 which takes a proposition. So a statement quantified over all HoTT ordinals does not transfer, and
