@@ -378,9 +378,10 @@ PFunctor.M.corec             : does not depend on any axioms
 `QPF.Cofix` carries choice **in the type**, so *no proof of any statement mentioning it can be
 choice-free* — "removable in principle" was not merely unproved, it was unprovable as stated. The
 honest, measurable version nobody had written: the choice comes from Mathlib's **QPF quotient layer**,
-not the mathematics; the M-type underneath is axiom-free and the corpus already witnesses the same
-inhabitation there (`strict_cofix_nonempty`). That is also *why* ACS is choice-free — an ω-limit with
-no quotient layer.
+not from the mathematics, and the corpus already witnesses the same inhabitation choice-free
+(`strict_cofix_nonempty`). ⚠ **Do NOT sharpen that into "the M-type underneath is axiom-free"** — the
+former and constructors are, the **destructor is not**, and that sharpening is the bedrock defect
+recorded below. That ACS is choice-free is a separate fact: an ω-limit with no quotient layer.
 
 **The generalizable lesson: the gates check WORDING against SOURCES. They cannot see an unmeasured
 claim, and they will keep passing one forever.** Six rounds of prose editing could never have found
@@ -444,18 +445,33 @@ in the wrong shape passes and teaches you nothing: the wrapped probe was written
 a false all-clear. Keep a reproduction script in the scratchpad with **both** must-fire and
 must-suppress controls; a checker that fires on everything is as useless as one that fires on nothing.
 
-**The measured facts worth not re-deriving:**
+**The measured facts worth not re-deriving** (⚠ the first version of this block listed only
+`PFunctor.M no axioms` and that half-truth immediately re-seeded a bedrock defect — see below):
 ```
-QPF.Cofix   (the TYPE)       [propext, Classical.choice, Quot.sound]   -- no proof of a
-PFunctor.M                   no axioms                                 -- Cofix-mentioning
-strict_cofix_nonempty        no axioms                                 -- statement is clean
-Ordinal     (the TYPE)       [propext, Quot.sound]                     -- choice-FREE
-Ordinal.instLinearOrder      [propext, Classical.choice, Quot.sound]   -- the instance hazard
-Ordinal.nfp / .epsilon       [propext, Classical.choice, Quot.sound]
-padicValNat                  [propext, Classical.choice, Quot.sound]
+PFunctor.M       (TYPE former) no axioms       ]  the M-type's FORMER and
+PFunctor.M.mk                  no axioms       ]  CONSTRUCTORS are clean
+PFunctor.M.corec               no axioms       ]
+PFunctor.M.children  [propext, Classical.choice, Quot.sound]  <-- THE ORIGIN (destructor)
+PFunctor.M.dest      [propext, Classical.choice, Quot.sound]
+QPF.Cofix  (TYPE)    [propext, Classical.choice, Quot.sound]  <-- inherits via Mcongr/IsPrecongr
+strict_cofix_nonempty          no axioms       -- clean because it only BUILDS, never destructs
+Ordinal    (TYPE)              [propext, Quot.sound]                    -- choice-FREE
+Ordinal.instLinearOrder        [propext, Classical.choice, Quot.sound]  -- the instance hazard
+Ordinal.nfp / .epsilon         [propext, Classical.choice, Quot.sound]
+padicValNat                    [propext, Classical.choice, Quot.sound]
 ```
-So the ν-side choice **is** a QPF *quotient-layer* artifact — now a measurement rather than a reading
-— and escaping it means **changing the carrier, not cleaning the proof**.
+**Read that table as a whole or not at all.** *"`PFunctor.M` is axiom-free"* is true of the **type
+former** and says nothing about its **eliminators** — and citing it to conclude *"the choice is not
+from the M-type underneath"* is a **witness-vs-statement defect**, which is exactly what shipped to a
+published PDF on 2026-08-03 under the word *"Measured"* and was caught by the gate measuring it.
+**The choice DOES come from the M-type — from its destructor.**
+
+**The accurate account is stronger than the false one it replaced:** choice enters at
+`M.children`/`M.dest`; `Cofix` inherits it in the type through the congruence it quotients by; and
+`strict_cofix_nonempty` is axiom-free **because it only builds and never destructs**. So the escape is
+not "use `M` instead of `Cofix`" generically — it is *build without destructing*. Attributing the
+footprint to the **QPF quotient layer** is defensible and is the claim to keep; *"not from the
+M-type"* is false and must not be re-introduced.
 
 ## Review-Loop Cap — Severity-Tiered, Hard Rule
 

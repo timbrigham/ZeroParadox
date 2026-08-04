@@ -1,6 +1,14 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.19 | August 2026
+Version 1.20 | August 2026
+v1.20: BEDROCK - the v1.19 sweep fixed the contradiction and swept to a FALSE statement. It said
+the choice is 'not from the M-type underneath', warranted by 'PFunctor.M is axiom-free'. That is a
+witness-vs-statement defect: PFunctor.M is the TYPE FORMER, and its purity says nothing about its
+eliminators. Measured this round: PFunctor.M / .mk / .corec are axiom-free, but M.children and
+M.dest carry [propext, Classical.choice, Quot.sound], and QPF.Cofix inherits from them via
+Mcongr/IsPrecongr. So the choice DOES come from the M-type - from its destructor. The true account
+is stronger and is now what the box says: strict_cofix_nonempty is axiom-free because it only
+BUILDS (M.corec) and never DESTRUCTS. Caught by the gate, which measured it rather than reading it.
 v1.19: the v1.18 fix swept ONE of the sentence's sites. Two more rendered: p.4's result box and
 p.6's Axiom Purity box both still attributed the choice to 'the M-type / corecursion machinery',
 so the published document said 'not from the M-type underneath' on p.4 and 'from the M-type ...'
@@ -116,7 +124,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.19'
+VERSION = '1.20'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -370,9 +378,12 @@ def build():
     E.append(remark_box(
         'Remark: where choice appears in the &#956;/&#957; fork',
         [
-            'The Classical.choice in cofix_nonempty comes from Mathlib\'s QPF <i>quotient</i> '
-            'layer &#8212; not from the M-type underneath, and not from the mathematics. Measured: '
-            'QPF.Cofix carries the axiom in the type, while PFunctor.M is axiom-free. '
+            'The Classical.choice in cofix_nonempty is a library dependency, not a fact about '
+            'the mathematics, and it is worth locating exactly. Measured: the M-type former '
+            'and its constructors are axiom-free (PFunctor.M, M.mk, M.corec), while its <i>destructor</i> '
+            'carries the axiom (M.children, M.dest) &#8212; and QPF.Cofix inherits it in the '
+            'type through the congruence it quotients by. That is why strict_cofix_nonempty '
+            'is axiom-free: it only <i>builds</i>, and never destructs. '
             'For a polynomial functor the final coalgebra is '
             'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015, who '
             'construct it as an &#969;-limit). Their ambient setting is intensional type theory '
