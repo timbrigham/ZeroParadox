@@ -48,9 +48,56 @@ image under the inversion; **concurrent** is the pole `0 = ∞ = ⊥` where asce
 itself. No cross-type `ε₀ = 0` is asserted anywhere — the corners and the tower are connected by MAPS
 (`poleToSphere`, `rInv`, `cnfToZp2`), never by `=`.
 
+**The INFINITY corner is measured elsewhere, and this file did not say so** (pointer added 2026-08-04;
+`InfinitudeFloor` had **zero** mentions here despite both files working the same tower). The corner is
+not prose — it is a class with theorems, in `ZeroParadox/Valuation/InfinitudeFloor.lean`:
+
+* `InfinitudeFloor α` bundles a `floor : α` with a **complexity** `cx : α → ℕ∞` and a member sequence.
+* `infinitude_forces_infinite_complexity : I.cx I.floor = ⊤` — **the top is ATTAINED, and it is
+  attained AT THE FLOOR.** That is the `0 = ∞` pole identity as a measured statement rather than a
+  slogan: the point of infinite complexity *is* the bottom.
+* `infinite_complexity_is_infinitude_of_zeros : I.cx I.floor = ⨆ n, I.cx (I.member n)` — the floor's
+  complexity is the supremum of its members'.
+* `pole_inversion` — the members descend to the floor **as elements** while their complexity ascends
+  to `⊤`. One sequence, two readings; this is the DRIFT kind, and it is the same order-reversal that
+  § II's `swap_is_rInv` exhibits at the abstract level.
+* The concrete instance on **this file's own tower** is
+  `ZeroParadox/Valuation/TowerHeightFloor.lean` — `towerCx_zero : towerCx (0 : ℤ_[2]) = ⊤` and
+  `towerCx_member (n) : towerCx (cnfToZp2 (towerNONote (n+1))) = ((n+1 : ℕ) : ℕ∞)`. So the zero corner
+  (`seed_maps_to_bot_both`) and the infinity corner (`towerCx_zero`) are witnessed on the *same*
+  `cnfToZp2 ∘ towerNONote` this file already uses seven times.
+
+`Reading:` with both corners measured, `cornerId` — the "concurrent" corner — stops being a phrase:
+one index, an element-descent and a complexity-ascent, each reaching its own pole. **Co-witnessed
+only.** The corners live in `Pole`/`Sphere` and the complexities in `ℕ∞`; nothing here asserts a
+cross-type `=`, exactly as `cnf_bridge_type_boundary` fences the tower.
+
+**⚠ SCOPE — the four corners are NOT available at every framework bottom, and the reason is
+structural.** `InfinitudeFloor` requires `cx : α → ℕ∞`, so a carrier needs a **valuation** to have a
+second pole at all. Measured 2026-08-04, four realizations exist and **every one of them is
+valuation-carrying**:
+
+| carrier | `cx` is | where |
+|---|---|---|
+| `Q₂` | the 2-adic valuation | `InfinitudeFloor.lean` `q2InfinitudeFloor` |
+| `ℤ_[2]` | `towerCx`, the tower height | `TowerHeightFloor.lean` `towerInfinitudeFloor` (a `@[reducible] def`, deliberately not a global instance) |
+| `ℕ∞` | itself | `InfinitudeFloor.lean` (two anonymous instances) |
+| `PowerSeries R` | `PowerSeries.order` | `InfinitudeFloor.lean` `powerSeriesInfinitudeFloor` |
+
+And **not** on the Kleisli initial object, the Hilbert zero object, the ordinal floor, or the Markov
+attractor — none of which carries a complexity map. So "four corners" is a **valuation-carrier**
+structure, not a framework-wide one; do not assume a corner diagram at a categorical bottom. That the
+power-series witness uses `order` — which *is* the valuation on `R⟦X⟧` — is the sharpest evidence that
+the requirement is a valuation and not merely a convenience.
+
 ## Structure
 - § I   `poleToSphere` — the pole embedding into the 2-adic Riemann sphere.
 - § II  `swap_is_rInv` — the inversion corner is `rInv` (the genuine bridge content).
+- § III `point_and_field_at_the_poles` — the point/field inversion at the two poles.
+- § IV  `irreversible_direction_is_the_snap` — the one-way direction, co-witnessed with `t_snap_irreversible`.
+
+*(The overview above previously said "the genuine Lean content is `swap_is_rInv`" full stop; there are
+four theorems in this file, and § III / § IV were unlisted. Corrected 2026-08-04.)*
 -/
 
 namespace ZeroParadox
