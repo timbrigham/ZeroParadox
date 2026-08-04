@@ -58,37 +58,56 @@ not prose — it is a class with theorems, in `ZeroParadox/Valuation/InfinitudeF
   slogan: the point of infinite complexity *is* the bottom.
 * `infinite_complexity_is_infinitude_of_zeros : I.cx I.floor = ⨆ n, I.cx (I.member n)` — the floor's
   complexity is the supremum of its members'.
-* `pole_inversion` — the members descend to the floor **as elements** while their complexity ascends
-  to `⊤`. One sequence, two readings; this is the DRIFT kind, and it is the same order-reversal that
-  § II's `swap_is_rInv` exhibits at the abstract level.
-* The concrete instance on **this file's own tower** is
-  `ZeroParadox/Valuation/TowerHeightFloor.lean` — `towerCx_zero : towerCx (0 : ℤ_[2]) = ⊤` and
+* `pole_inversion` — members descend to the floor **as elements** while their complexity ascends to
+  `⊤`; the **DRIFT** kind (two measures running opposite along one sequence). ⚠ It needs the
+  *extending* class `InfinitudeFloorInversion` plus a topology, and its "members descend" half is a
+  **class field** (`member_tendsto_floor`), an assumption rather than a consequence. Instances exist
+  on `ℕ∞` (the toy) and `Q₂` only — **there is none on `ℤ_[2]`**, so `pole_inversion` is *not*
+  available on this file's own tower. It is a *shape* alongside § II's `swap_is_rInv` (an INVERSION),
+  not the same claim: DRIFT and INVERSION are distinct POV kinds and no theorem identifies them.
+* What IS available on this file's own tower, in `ZeroParadox/Valuation/TowerHeightFloor.lean`:
+  `towerCx_zero : towerCx (0 : ℤ_[2]) = ⊤` and
   `towerCx_member (n) : towerCx (cnfToZp2 (towerNONote (n+1))) = ((n+1 : ℕ) : ℕ∞)`. So the zero corner
   (`seed_maps_to_bot_both`) and the infinity corner (`towerCx_zero`) are witnessed on the *same*
-  `cnfToZp2 ∘ towerNONote` this file already uses seven times.
+  `cnfToZp2 ∘ towerNONote` this file discusses throughout (in prose — `cnfToZp2` is not imported here).
 
 `Reading:` with both corners measured, `cornerId` — the "concurrent" corner — stops being a phrase:
 one index, an element-descent and a complexity-ascent, each reaching its own pole. **Co-witnessed
 only.** The corners live in `Pole`/`Sphere` and the complexities in `ℕ∞`; nothing here asserts a
-cross-type `=`, exactly as `cnf_bridge_type_boundary` fences the tower.
+cross-type `=`, exactly as `cnf_bridge_type_boundary` fences the tower. Note the direction of
+`infinitude_forces_infinite_complexity`: it says the floor HAS complexity `⊤`. It does **not** say
+`⊤` is attained only at the floor — the abstract class gives no such uniqueness.
 
-**⚠ SCOPE — the four corners are NOT available at every framework bottom, and the reason is
-structural.** `InfinitudeFloor` requires `cx : α → ℕ∞`, so a carrier needs a **valuation** to have a
-second pole at all. Measured 2026-08-04, four realizations exist and **every one of them is
-valuation-carrying**:
+**⚠ SCOPE — what the class actually requires, stated from its fields rather than inferred.**
+`InfinitudeFloor` asks for a `floor`, a complexity `cx : α → ℕ∞`, a `member : ℕ → α`, and the two
+conditions `member_ne_floor` and **`cx_member_strictMono`**. That last one is a **CHAIN condition** —
+the members' complexities climb strictly — and it is the whole requirement. **The class imposes no
+valuation axioms whatsoever**, so "a carrier needs a valuation" is NOT a consequence of the class.
+
+Realizations located 2026-08-04 (**five**, and the count is a measurement at a date, not a census):
 
 | carrier | `cx` is | where |
 |---|---|---|
 | `Q₂` | the 2-adic valuation | `InfinitudeFloor.lean` `q2InfinitudeFloor` |
-| `ℤ_[2]` | `towerCx`, the tower height | `TowerHeightFloor.lean` `towerInfinitudeFloor` (a `@[reducible] def`, deliberately not a global instance) |
-| `ℕ∞` | itself | `InfinitudeFloor.lean` (two anonymous instances) |
+| `ℤ_[2]` | `towerCx`, the tower height | `TowerHeightFloor.lean` `towerInfinitudeFloor` (`@[reducible] def`, deliberately not a global instance) |
 | `PowerSeries R` | `PowerSeries.order` | `InfinitudeFloor.lean` `powerSeriesInfinitudeFloor` |
+| `End` | `localCx v`, per node | `LocalFloor.lean` `boundaryFloor` — a **`List (Fin 2)`-indexed family** (one witness per tree node, a `def` not a global instance) |
+| `ℕ∞` | `id` | `InfinitudeFloor.lean` — the file's own docstring calls this a **"Toy witness … Degenerate"**, included only to show the requirements are inhabitable |
 
-And **not** on the Kleisli initial object, the Hilbert zero object, the ordinal floor, or the Markov
-attractor — none of which carries a complexity map. So "four corners" is a **valuation-carrier**
-structure, not a framework-wide one; do not assume a corner diagram at a categorical bottom. That the
-power-series witness uses `order` — which *is* the valuation on `R⟦X⟧` — is the sharpest evidence that
-the requirement is a valuation and not merely a convenience.
+`Reading:` (framework interpretation, **conjectural**, not a theorem) — four of the five carry a
+genuine valuation, and the degenerate fifth is labelled as such by its author, which *suggests* a
+valuation is what supplies a climbing complexity chain in practice. **That is a pattern across five
+witnesses, not a structural necessity**, and `cx = id` is the standing counterexample to stating it
+as one.
+
+**⚠ NO REALIZATION HAS BEEN GIVEN at the Kleisli initial object, the Hilbert zero object, the ordinal
+floor, or the Markov attractor as of 2026-08-04** — a measurement, deliberately not the stronger
+claim that none *can* be. Nothing in the class forbids one: any complexity map with a strictly
+climbing member chain would do, and whether a categorical bottom admits one is **open and untried
+here**. *(An earlier version of this block asserted four realizations, called them all
+valuation-carrying, and stated the negative structurally — "none of which carries a complexity map".
+All three were wrong: the fifth realization was missed, row 5 is `id`, and the class requires a chain
+rather than a valuation. Corrected 2026-08-04.)*
 
 ## Structure
 - § I   `poleToSphere` — the pole embedding into the 2-adic Riemann sphere.
@@ -96,8 +115,9 @@ the requirement is a valuation and not merely a convenience.
 - § III `point_and_field_at_the_poles` — the point/field inversion at the two poles.
 - § IV  `irreversible_direction_is_the_snap` — the one-way direction, co-witnessed with `t_snap_irreversible`.
 
-*(The overview above previously said "the genuine Lean content is `swap_is_rInv`" full stop; there are
-four theorems in this file, and § III / § IV were unlisted. Corrected 2026-08-04.)*
+*(The overview above previously said "the genuine Lean content is `swap_is_rInv`" full stop; the file
+carries one `def` and six theorems — the four listed above plus the two `@[simp]` `rfl`-lemmas
+`poleToSphere_zero` / `poleToSphere_infty` — and § III / § IV were unlisted. Corrected 2026-08-04.)*
 -/
 
 namespace ZeroParadox
