@@ -62,7 +62,7 @@ taboo is about the unrestricted operation and `ω^·` is one of the cases they c
 
 **But the taboos do not stop at Proposition 9 (which is in their § 2), and their § 7 "Constructive
 Taboos" holds several that do concern the fixed-base exponential.**
-**Proposition 52**: exponentiation is monotonein the base iff LEM,
+**Proposition 52**: exponentiation is monotone in the base iff LEM,
 and LEM is already implied by weaker statements *"even when α and β are each assumed to have a
 trichotomous least element"* — so a trichotomous least element is not a blanket constructivity
 certificate. **Proposition 55 (iii)/(iv)**: `∀ β, β ≤ 2^β` and `∀ β, ∀ α > 1, β ≤ α^β` are each
@@ -87,10 +87,8 @@ over *arbitrary* such ordinals, with a concrete construction by decreasing lists
 obstruction below is about `ONote`, and is about that system's expressive reach rather than about
 excluded middle. **The load-bearing property is that `ONote` is a concrete inductive type**: every
 LEM-derivation above — § 2's Proposition 9, § 7's and § 8's alike — builds an ordinal from an
-arbitrary proposition
-(`3 + P`, `P + 1`, `1 + P`), and
-no `ONote` denotes one — its constructors are `zero` and `oadd : ONote → ℕ+ → ONote → ONote`, none of
-which takes a proposition. So a statement quantified over all HoTT ordinals does not transfer, and
+arbitrary proposition (`3 + P`, `P + 1`, `1 + P`), and no `ONote` denotes one — its constructors are
+`zero` and `oadd : ONote → ℕ+ → ONote → ONote`, neither of which takes a proposition. So a statement quantified over all HoTT ordinals does not transfer, and
 none of this is a re-proof of anything on Mathlib's `Ordinal`.
 
 **Adjacent and unexamined — flagged, not claimed.** Their **Theorem 58** gives, for an endofunction
