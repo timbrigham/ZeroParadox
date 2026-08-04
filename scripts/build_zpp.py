@@ -1,6 +1,13 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.22 | August 2026
+Version 1.23 | August 2026
+v1.23: two defects in ONE rendered p.4 sentence, both from the v1.22 fix. (1) The carrier phrase
+went in at the wrong POSITION here while all eight Lean sites got the clean order, so the
+publication site read 'no axioms over that M-type' - nearest-head parsing gives the meaningless
+'no axioms over that M-type'. (2) The dangling pronoun was reported as fixed in v1.22 and was NOT
+touched: 'The M-type FORMER and constructors are axiom-free, ITS DESTRUCTOR ...'. Both corrected;
+the checkable sites and the published one now read the same way. Note the shape: the sites a gate
+can grep got the good wording and the one that renders got the degraded one.
 v1.22: the v1.21 CLASS sweep missed a member, and said it had not. (1) It claimed to have reached
 every site; ChoicePurityInvariant.lean wrote the phrase as `is **axiom-free**` - markdown bold
 INSIDE the phrase - so the literal pattern did not match, in a file that same commit edited twice.
@@ -141,7 +148,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.22'
+VERSION = '1.23'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -384,10 +391,11 @@ def build():
             'Split footprint: fix_isEmpty (&#956; empty) is choice-free [propext, Quot.sound]; '
             'cofix_nonempty (&#957; inhabited) carries Classical.choice from the QPF '
             'corecursion machinery &#8212; a QUOTIENT-LAYER artifact: QPF.Cofix carries the '
-            'choice in the TYPE. The M-type FORMER and constructors are axiom-free, its '
-            'DESTRUCTOR (M.children / M.dest) is not &#8212; that is where the axiom '
-            'originates &#8212; and strict_cofix_nonempty proves the same inhabitation with '
-            'no axioms over that M-type, by only building. For a polynomial functor the final coalgebra '
+            'choice in the TYPE. The M-type FORMER and constructors are axiom-free while the '
+            'M-type DESTRUCTOR (M.children / M.dest) is not &#8212; that is where the axiom '
+            'originates &#8212; and strict_cofix_nonempty proves the same inhabitation over '
+            'the M-type with no axioms, by only building. For a polynomial functor the final '
+            'coalgebra '
             'is constructible choice-free '
             '(Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015). ✓',
         ]

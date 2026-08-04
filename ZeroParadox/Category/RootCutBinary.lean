@@ -145,7 +145,8 @@ section PurityCheck
 -- corecursion artifact — specifically a QUOTIENT-LAYER one, measured 2026-08-03: `QPF.Cofix` carries
 -- the choice in the TYPE (no proof of a Cofix-mentioning statement is clean) while `PFunctor.M`'s
 -- FORMER and constructors are axiom-free (its DESTRUCTOR, `M.children`/`M.dest`, is NOT — that is
--- where the axiom originates) and `strict_cofix_nonempty` proves the same inhabitation over the M-type with no axioms
+-- where the axiom originates) and `strict_cofix_nonempty` proves the same inhabitation over the
+-- M-type with no axioms
 -- (polynomial-functor final coalgebra is constructible
 -- choice-free; Ahrens–Capriotti–Spadotti, TLCA 2015, arXiv:1504.02949 — their
 -- construction needs only function extensionality, which Lean has; only their
