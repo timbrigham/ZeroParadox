@@ -141,7 +141,7 @@ FORMER and constructors are axiom-free while its DESTRUCTOR (`M.children`/`M.des
 where the axiom originates, and `Cofix` inherits it through the congruence it quotients by. What makes
 the footprint a *quotient-layer* artifact is that `strict_cofix_nonempty` witnesses the same
 inhabitation with no axioms, by only BUILDING and never destructing (see the header for why Veltri is
-background, not support).-/
+background, not support). -/
 theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 

@@ -129,6 +129,61 @@ theorem floor_not_wellFounded_via_descent : ¬ WellFounded (floorRel (L := L)) :
   rw [wellFounded_iff_isEmpty_descending_chain, not_isEmpty_iff]
   exact ⟨⟨floorDescent, fun _ => AbstractSelfApp.fixed_bot⟩⟩
 
+/-! ### § I-c. The descent route, choice-free — and the cost is in EXTRACTION, not in the infinitude
+
+    **No novelty is claimed.** Mathlib already has this content, as *biconditionals*:
+    `not_acc_iff_exists_descending_chain` (`Order/WellFounded.lean:34`),
+    `acc_iff_isEmpty_descending_chain` (`:42`), `wellFounded_iff_isEmpty_descending_chain` (`:51`).
+    The delta here is **purity packaging only**: their `mp` direction builds the chain by `Nat.rec`
+    over a subtype, so *citing the biconditional at all* puts `Classical.choice` in the footprint —
+    `#print axioms` follows the STATEMENT, and you pay for the direction you did not take. That is
+    why `floor_not_wellFounded_via_descent` above measures `[propext, Classical.choice, Quot.sound]`
+    while everything else in this file is axiom-free. Same verdict, same reason, as the `CovBy` and
+    `bot_not_acc` precedents: **keep the hand proof, cite the standard name.**
+
+    **The measurement that motivated this (2026-08-03), and it settles an open question in § I-b.**
+    That paragraph fenced the constant witness: *"a genuine non-constant descent is strictly more."*
+    It is strictly more — and it is **still free**. Measured on an explicit non-constant chain
+    (`f n = -n` on `ℤ` under `<`, every value distinct): the chain, its strict decrease, its
+    injectivity and the resulting `¬ WellFounded` are all `[propext, Quot.sound]`, **no choice**.
+    Contrast `ordinal_wf_padic_descent_clash` (`Multihomed/CrossRootCompleteness.lean`), which does
+    carry choice — but its carrier does too (`padicValNat` is choice-carrying), so that footprint is
+    **carrier inheritance, not the price of the descent**.
+
+    `Reading:` (framework interpretation, not a theorem) — the cost is not in *having* infinitely many
+    distinct bottoms. It is in being unable to *name* which one comes next. Write the successor down
+    and the infinitude is free; know only that it exists and you must select, which is what the axiom
+    licenses. So the framework's axiom-freedom is **not** an artifact of modelling ⊥ as a single
+    point: it survives a model with infinitely many distinct descending bottoms. -/
+
+/-- **Generic, axiom-free: no member of an explicit descending chain is accessible.**
+    `Statement:` given any `f : ℕ → α` descending under `r` at every step, no `f n` is `Acc r`.
+    The one-directional, choice-free half of Mathlib's `not_acc_iff_exists_descending_chain`. -/
+theorem not_acc_of_descent {α : Type*} {r : α → α → Prop} (f : ℕ → α)
+    (hf : ∀ n, r (f (n + 1)) (f n)) : ∀ x, Acc r x → ∀ n, x ≠ f n := by
+  intro x hx
+  induction hx with
+  | intro y _ ih =>
+    intro n hn
+    subst hn
+    exact ih (f (n + 1)) (hf n) (n + 1) rfl
+
+/-- **Generic, axiom-free: an explicit descending chain refutes well-foundedness.**
+    `Statement:` any explicitly given `f : ℕ → α` descending under `r` witnesses `¬ WellFounded r`.
+    The choice-free half of `wellFounded_iff_isEmpty_descending_chain`; use this rather than the
+    biconditional wherever the chain is written down, and the footprint stays clean. -/
+theorem not_wf_of_descent {α : Type*} {r : α → α → Prop} (f : ℕ → α)
+    (hf : ∀ n, r (f (n + 1)) (f n)) : ¬ WellFounded r := fun hwf =>
+  not_acc_of_descent f hf (f 0) (hwf.apply (f 0)) 0 rfl
+
+/-- **§ I's conclusion by the descent route, now CHOICE-FREE.** Same statement as
+    `floor_not_wellFounded_via_descent`, same witness, but routed through `not_wf_of_descent` instead
+    of the biconditional — so the descending-chain reading of the floor is available without paying
+    for the direction not taken. Kept alongside the choice-carrying version, which is retained
+    because its *citation* of the standard characterization is the content there. -/
+theorem floor_not_wellFounded_via_descent' : ¬ WellFounded (floorRel (L := L)) :=
+  not_wf_of_descent floorDescent (fun _ => AbstractSelfApp.fixed_bot)
+
 /-! ## § II. The ascent is well-founded (the ε₀ tower)
 
     The ordinal order is well-founded (ordinals are well-ordered); ε₀ and the snap ascent live inside it.
@@ -271,6 +326,10 @@ open ZeroParadox
 #print axioms floor_descent_from_bot
 #print axioms bot_not_acc
 #print axioms floor_not_wellFounded_via_descent
+-- § I-c: the same route WITHOUT the biconditional's inherited choice. Expected axiom-free.
+#print axioms not_acc_of_descent
+#print axioms not_wf_of_descent
+#print axioms floor_not_wellFounded_via_descent'
 #print axioms ascent_wellFounded
 #print axioms ascent_no_oscillation
 #print axioms floor_has_cycle

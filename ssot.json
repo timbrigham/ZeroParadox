@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1549,
+        "declarations": 1552,
         "files": 136
       },
       "entries": [
@@ -20269,6 +20269,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "588747a8-edf4-4d6c-9fa0-ed36e061de58",
+          "new": {
+            "file": "ZeroParadox/Multihomed/Boundary.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.floor_not_wellFounded_via_descent'",
+            "short": "floor_not_wellFounded_via_descent'"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Boundary.lean § I-c: choice-free direction of Mathlib's descending-chain biconditionals, plus the floor result re-routed through it. Answers the open non-constant-descent question: the infinitude is free; only extraction costs.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5898bf2f-bb52-4b12-9032-7c52bc19c998",
           "new": {
@@ -29970,6 +30008,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "86ffe717-515c-4344-a05b-9581462f853a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/Boundary.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_acc_of_descent",
+            "short": "not_acc_of_descent"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Boundary.lean § I-c: choice-free direction of Mathlib's descending-chain biconditionals, plus the floor result re-routed through it. Answers the open non-constant-descent question: the infinitude is free; only extraction costs.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "871e6611-4c6b-447f-99c2-b84bc91cb36b",
           "new": {
             "file": "ZeroParadox/Category/ExcludedMiddleBridge.lean",
@@ -39316,6 +39392,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b3f20e6a-a5ee-43c6-9c63-359296779c70",
+          "new": {
+            "file": "ZeroParadox/Multihomed/Boundary.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.not_wf_of_descent",
+            "short": "not_wf_of_descent"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Boundary.lean § I-c: choice-free direction of Mathlib's descending-chain biconditionals, plus the floor result re-routed through it. Answers the open non-constant-descent question: the infinitude is free; only extraction costs.",
           "verify": {
             "axioms": null,
             "sorry_free": true
