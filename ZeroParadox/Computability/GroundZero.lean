@@ -241,21 +241,19 @@ point of the next-time operator is everything). `stepCoalg` above already reads 
 
 **⚠ PRIOR ART — AMM DO THIS CASE THEMSELVES. The delta here is the FORMALIZATION, not the
 specialization.** An earlier draft credited only their Ex 4.5(1) (powerset/graph) and called § V "the
-deterministic specialization of that". That understated them. Verified at source:
-* **Ex 4.14(2), p. 18** — *"For `F X = X + 1` coalgebras are sets `A` equipped with a partial function
-  `α : A → A`, and the canonical graph is the graph of `α`."* (AMM write a plain arrow and carry
-  "partial" in the words; quoted as printed.) Such a partial function **is** `σ → Option σ`, and the
-  graph of `α` **is** `stepRel`. AMM's own instance there — `ℕ` with `n ↦ n − 1` for `n > 0` — is
-  precisely § V's setting.
-* **Cor 4.13, p. 18** — for an intersection-preserving set functor, a coalgebra is *"well-founded iff
-  its canonical graph is well-founded."* That is the general theorem `isWellFoundedCoalg_stepCoalg_iff`
-  instantiates.
-* **Ex 4.5(5), p. 16** — AMM's `A*` is *"the subset of all states"* from which every path reaches `0`
-  in finitely many steps; they show *"`⃝ⁿ(⊥_A)` consists of precisely those states from which every
-  path reaches 0 in at most `n` steps"*, hence *"`A* = ⋁_{n∈ℕ} ⃝ⁿ(⊥_A)`"* — the least fixed point —
-  and *"it follows that `(A, α)` is well-founded iff `A = A*`."* ⚠ **The "at most `n`" phrase describes
-  the `n`-th approximant, NOT the least fixed point**; the lfp is their join of those. That join is
-  `wfPart_stepCoalg`'s content. (AMM state this for `F X = K × X^Σ` on `Vec_K`; the shape is the same.)
+deterministic specialization of that". That understated them. **Read the paper, not a copy of it** —
+`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`, at these locators:
+
+| AMM | what is there | what it covers here |
+|---|---|---|
+| **Ex 4.14(2), p. 18** | `F X = X + 1` coalgebras as partial functions, with the canonical graph the graph of `α`; worked instance `ℕ`, `n ↦ n − 1` | § V's exact setting — such a partial function is `σ → Option σ`, its graph is `stepRel` |
+| **Cor 4.13, p. 18** | well-founded iff the canonical graph is, for intersection-preserving set functors | the general theorem `isWellFoundedCoalg_stepCoalg_iff` instantiates |
+| **Ex 4.5(5), p. 16** | the `⃝`-approximants, their join `A*`, and well-founded iff `A = A*` (stated there for `F X = K × X^Σ` on `Vec_K`) | `wfPart_stepCoalg`'s content — ⚠ note AMM's "reaches 0 in at most `n` steps" describes the **`n`-th approximant**, and the least fixed point is their **join** of those |
+
+*(Locators, not block quotes, deliberately. Three consecutive gate rounds corrected transcription
+errors in a quoted version of this — a wrong page, a quote attached to the approximant rather than the
+lfp, an altered arrow glyph. A quotation is a second copy of the source and it drifts; see `CLAUDE.md`
+§ "the pointer must not become a COPY". The claim underneath was verified at source and never moved.)*
 
 **So the honest delta:** a Lean formalization of the above on Mathlib's `StateTransition`-shaped
 carrier, tying it to `Acc`/`WellFounded`. `ZeroParadox/Computability/Occurrence.lean` records that
