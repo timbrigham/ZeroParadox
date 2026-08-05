@@ -1,5 +1,6 @@
 import ZeroParadox.Computability.Occurrence
 import ZeroParadox.Computability.NatListRegime
+import ZeroParadox.Category.WellFoundedCoalgebra
 
 /-!
 # Ground zero — the bottom as a behaviour, not a configuration
@@ -231,13 +232,149 @@ theorem forcing_needs_the_binary_split :
     (∃ (g : Unit → TriStep Unit) (s : Unit), ¬ TriHalted g s ∧ ¬ TriStepping g s) :=
   ⟨fun _ f s => no_unstarted_state f s, tri_unstarted_state_exists⟩
 
+/-! ## § V. The well-founded coalgebra IS the halting condition
+
+**What this section adds.** `ZeroParadox/Category/WellFoundedCoalgebra.lean` gives an *intrinsic*
+well-foundedness test for polynomial-functor coalgebras (Adámek-Milius-Moss Def 4.3: the only fixed
+point of the next-time operator is everything). `stepCoalg` above already reads a step function as a
+`1 + X`-coalgebra. Applying one to the other turns out to give **exactly halting**, and nothing in the
+corpus had made that connection.
+
+**PRIOR ART — the general fact is theirs, the instance is what is added.** AMM Ex 4.5(1): a coalgebra
+for the powerset functor, read as a graph, *"is well-founded iff it has no infinite directed path."*
+§ V is the **deterministic** specialization of that, on the carrier Mathlib calls `StateTransition` —
+which `ZeroParadox/Computability/Occurrence.lean` records is the exact type of `Turing.TM0/TM1/TM2.step`,
+so these results reach every Mathlib Turing machine by instantiation.
+
+**⚠ Adjacency is not identity.** "Turing machines are witnesses" is licensed; *"the bottom is a Turing
+machine"* is a cross-carrier identity and stays a type boundary. And **determinism remains the
+recurring cost** — `σ → Option σ` is a *function*, so `deterministic_has_no_fanout` applies and
+halted / self-looping share a **fate**; the trichotomy is three-valued only relationally. -/
+
+/-- The step relation: `a` is the successor of `b`. A descending chain **is** the machine's forward
+run, so `WellFounded (stepRel f)` says every run terminates. -/
+def stepRel : σ → σ → Prop := fun a b => f b = some a
+
+/-- **`Statement:` the next-time operator on a step function is "every successor lies in `S`".**
+
+Note what the `none` branch shows: a **halted state has `PEmpty` children, so it lies in `nextTime … S`
+vacuously, for every `S`.** Halting is the *leaf* — a base case of the shape, not a rule added to the
+dynamics. -/
+theorem nextTime_stepCoalg (S : Set σ) :
+    nextTime (P := natPF_NatListRegime) (stepCoalg f) S
+      = {s | ∀ s', f s = some s' → s' ∈ S} := by
+  ext s
+  show (∀ b, (stepCoalg f s).2 b ∈ S) ↔ _
+  cases hs : f s with
+  | none =>
+      have hc : stepCoalg f s = ⟨false, fun e => e.elim⟩ := by unfold stepCoalg; rw [hs]
+      rw [hc]
+      simp only [Set.mem_setOf_eq, hs]
+      exact ⟨fun _ s' h => by simp at h, fun _ (b : PEmpty) => b.elim⟩
+  | some s' =>
+      have hc : stepCoalg f s = ⟨true, fun _ => s'⟩ := by unfold stepCoalg; rw [hs]
+      rw [hc]
+      simp only [Set.mem_setOf_eq, hs, Option.some.injEq]
+      exact ⟨fun h t ht => ht ▸ h PUnit.unit, fun h (_ : PUnit) => h s' rfl⟩
+
+/-- **`Statement:` the accessible set is a fixed point of next time.** Accessibility says exactly
+"every successor is accessible", which is exactly membership in `nextTime` of the accessible set. -/
+theorem acc_set_is_fixed :
+    nextTime (P := natPF_NatListRegime) (stepCoalg f) {s | Acc (stepRel f) s}
+      = {s | Acc (stepRel f) s} := by
+  rw [nextTime_stepCoalg]
+  ext s
+  simp only [Set.mem_setOf_eq]
+  exact ⟨fun h => Acc.intro s (fun y hy => h y hy), fun h s' hs' => h.inv hs'⟩
+
+/-- **`Statement:` THE COMPUTABILITY FACE — a step function's coalgebra is well-founded in AMM's
+sense EXACTLY WHEN the machine halts from every state.**
+
+Left to right: the accessible set is a fixed point, so well-foundedness forces it to be everything.
+Right to left: well-founded induction carries membership of any fixed point up from the leaves.
+
+**No halting predicate had to be invented** — halting *is* accessibility of `stepRel`, so this is
+stated in Mathlib's standard vocabulary. -/
+theorem isWellFoundedCoalg_stepCoalg_iff :
+    IsWellFoundedCoalg (P := natPF_NatListRegime) (stepCoalg f) ↔ WellFounded (stepRel f) := by
+  constructor
+  · intro hwf
+    have h := hwf _ (acc_set_is_fixed f)
+    refine ⟨fun s => ?_⟩
+    have : s ∈ {s | Acc (stepRel f) s} := by rw [h]; exact Set.mem_univ s
+    exact this
+  · intro hwfr S hS
+    ext s
+    simp only [Set.mem_univ, iff_true]
+    induction s using hwfr.induction with
+    | _ s ih =>
+        have : s ∈ nextTime (P := natPF_NatListRegime) (stepCoalg f) S := by
+          rw [nextTime_stepCoalg]
+          exact fun s' hs' => ih s' hs'
+        rwa [hS] at this
+
+/-- **`Statement:` THE INFORMATION FACE — `wfPart` IS THE HALTING SET.** The least fixed point of the
+next-time operator on a step function is exactly the set of states from which the machine terminates.
+
+`Reading:` its **complement is the divergent set** — the states from which the machine runs forever.
+That is the INFINITE pole of `CLAUDE.md`'s Two-Pole rule, obtained as a **construction** (a least fixed
+point) rather than as a description. ⚠ The complement itself is not characterized here; naming it is
+next work, not a result of this theorem. -/
+theorem wfPart_stepCoalg :
+    wfPart (P := natPF_NatListRegime) (stepCoalg f) = {s | Acc (stepRel f) s} := by
+  apply le_antisymm
+  · exact OrderHom.lfp_le _ (le_of_eq (acc_set_is_fixed f))
+  · intro s hs
+    induction hs with
+    | intro x _ ih =>
+        have hstep : x ∈ nextTime (P := natPF_NatListRegime) (stepCoalg f)
+            (wfPart (P := natPF_NatListRegime) (stepCoalg f)) := by
+          rw [nextTime_stepCoalg]
+          exact fun s' hs' => ih s' hs'
+        have hfix := OrderHom.map_lfp (nextTimeHom (P := natPF_NatListRegime) (stepCoalg f))
+        show x ∈ wfPart (P := natPF_NatListRegime) (stepCoalg f)
+        rw [wfPart, ← hfix]
+        exact hstep
+
+/-- **`Statement:` a machine that never halts is not well-founded.** With no leaf anywhere, `∅` is a
+proper fixed point: every state has a successor, so "all successors lie in `∅`" fails everywhere, and
+`∅ ≠ univ` because the state space is inhabited. The concrete counterpart of
+`idPF_M_not_wellFounded`. -/
+theorem never_halts_not_wellFounded (hne : ∀ s, f s ≠ none) [Nonempty σ] :
+    ¬ IsWellFoundedCoalg (P := natPF_NatListRegime) (stepCoalg f) := by
+  intro hwf
+  have hfix : nextTime (P := natPF_NatListRegime) (stepCoalg f) ∅ = ∅ := by
+    rw [nextTime_stepCoalg]
+    ext s
+    simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, not_forall]
+    obtain ⟨s', hs'⟩ := Option.ne_none_iff_exists'.mp (hne s)
+    exact ⟨s', hs', fun h => h⟩
+  have huniv := hwf ∅ hfix
+  obtain ⟨x⟩ := ‹Nonempty σ›
+  have hx : x ∈ (∅ : Set σ) := by rw [huniv]; exact Set.mem_univ x
+  exact hx
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
 § I is axiom-free. § II and § III inherit `[propext, Classical.choice, Quot.sound]` from
 Mathlib's QPF/`Cofix` machinery (bisimulation and the quotient construction), not from anything
-the framework does. Measured, not quoted. -/
+the framework does. Measured, not quoted.
+
+**§ V, measured 2026-08-05 — and the headline is CHOICE-FREE:**
+```
+nextTime_stepCoalg                [propext, Quot.sound]
+acc_set_is_fixed                  [propext, Quot.sound]
+isWellFoundedCoalg_stepCoalg_iff  [propext, Quot.sound]   <- well-founded ⟺ halts: NO CHOICE
+wfPart_stepCoalg                  [propext, Classical.choice, Quot.sound]
+never_halts_not_wellFounded       [propext, Classical.choice, Quot.sound]
+```
+The two choice-carrying rows do **not** get it from the mathematics: `wfPart` mentions `nextTimeHom`,
+hence `Monotone` on `Set σ`, hence `Set.instBooleanAlgebra` — the documented instance hazard, measured
+in `ZeroParadox/Category/WellFoundedCoalgebra.lean`'s purity block, where `OrderHom.lfp` itself is
+choice-free. `never_halts_not_wellFounded` uses classical `not_forall`. ⚠ **Nothing is claimed
+removable** — that is a modal claim needing an exhibited clean proof or a reduction. -/
 
 section PurityCheck
 #print axioms ZeroParadox.head_is_leaf_or_step
@@ -248,4 +385,9 @@ section PurityCheck
 #print axioms ZeroParadox.loop_unfolds_to_infinity
 #print axioms ZeroParadox.tri_unstarted_state_exists
 #print axioms ZeroParadox.forcing_needs_the_binary_split
+#print axioms ZeroParadox.nextTime_stepCoalg
+#print axioms ZeroParadox.acc_set_is_fixed
+#print axioms ZeroParadox.isWellFoundedCoalg_stepCoalg_iff
+#print axioms ZeroParadox.wfPart_stepCoalg
+#print axioms ZeroParadox.never_halts_not_wellFounded
 end PurityCheck
