@@ -243,15 +243,19 @@ point of the next-time operator is everything). `stepCoalg` above already reads 
 specialization.** An earlier draft credited only their Ex 4.5(1) (powerset/graph) and called § V "the
 deterministic specialization of that". That understated them. Verified at source:
 * **Ex 4.14(2), p. 18** — *"For `F X = X + 1` coalgebras are sets `A` equipped with a partial function
-  `α : A ⇀ A`, and the canonical graph is the graph of `α`."* A partial function `A ⇀ A` **is**
-  `σ → Option σ`, and the graph of `α` **is** `stepRel`. This is precisely § V's setting.
+  `α : A → A`, and the canonical graph is the graph of `α`."* (AMM write a plain arrow and carry
+  "partial" in the words; quoted as printed.) Such a partial function **is** `σ → Option σ`, and the
+  graph of `α` **is** `stepRel`. AMM's own instance there — `ℕ` with `n ↦ n − 1` for `n > 0` — is
+  precisely § V's setting.
 * **Cor 4.13, p. 18** — for an intersection-preserving set functor, a coalgebra is *"well-founded iff
   its canonical graph is well-founded."* That is the general theorem `isWellFoundedCoalg_stepCoalg_iff`
   instantiates.
-* **Ex 4.5(5), p. 15** — the least fixed point of `⃝` consists of *"precisely those states from which
-  every path reaches 0 in at most `n` steps"*, and the coalgebra *"is well-founded iff `A = A*`."*
-  That is `wfPart_stepCoalg`'s content (AMM state it there for `F X = K × X^Σ` on `Vec_K`; the shape is
-  the same).
+* **Ex 4.5(5), p. 16** — AMM's `A*` is *"the subset of all states"* from which every path reaches `0`
+  in finitely many steps; they show *"`⃝ⁿ(⊥_A)` consists of precisely those states from which every
+  path reaches 0 in at most `n` steps"*, hence *"`A* = ⋁_{n∈ℕ} ⃝ⁿ(⊥_A)`"* — the least fixed point —
+  and *"it follows that `(A, α)` is well-founded iff `A = A*`."* ⚠ **The "at most `n`" phrase describes
+  the `n`-th approximant, NOT the least fixed point**; the lfp is their join of those. That join is
+  `wfPart_stepCoalg`'s content. (AMM state this for `F X = K × X^Σ` on `Vec_K`; the shape is the same.)
 
 **So the honest delta:** a Lean formalization of the above on Mathlib's `StateTransition`-shaped
 carrier, tying it to `Acc`/`WellFounded`. `ZeroParadox/Computability/Occurrence.lean` records that
@@ -275,8 +279,10 @@ of `b`. A descending `stepRel`-chain is therefore the machine's **forward** run,
 
 ⚠ **This is the CONVERSE of the relation Mathlib and this directory use.** Mathlib's `StateTransition`
 and `ZeroParadox/Computability/Occurrence.lean` both orient it as `fun a b => b ∈ f a` — source first.
-The two are **not interchangeable**: well-foundedness of the converse is a statement about *backward*
-chains. Nothing below depends on conflating them, but do not read across without transposing.
+The two are **not interchangeable**: `stepRel`-well-foundedness is about the machine's *forward* runs,
+whereas well-foundedness of the **Mathlib-oriented** relation is about *backward* chains — a different
+statement. Nothing in § V mixes them (§ V uses only `stepRel`), but do not read across without
+transposing.
 
 **Prior art for the object:** AMM Ex 4.14(2) calls this the **canonical graph** of the coalgebra — for
 `F X = X + 1` it is "the graph of `α`" for the partial function `α`. -/
@@ -349,8 +355,9 @@ theorem isWellFoundedCoalg_stepCoalg_iff :
 /-- **`Statement:` THE INFORMATION FACE — `wfPart` IS THE HALTING SET.** The least fixed point of the
 next-time operator on a step function is exactly the set of states from which the machine terminates.
 
-`Reading:` **CARRIER kind**, conjectural — its **complement is the divergent set**, the states from
-which the machine runs forever.
+`Reading:` **COINCIDENCE kind**, conjectural — one object, two poles read simultaneously: `wfPart` is
+the halting set and its **complement is the divergent set**, the states from which the machine runs
+forever.
 That is the INFINITE pole of `CLAUDE.md`'s Two-Pole rule, obtained as a **construction** (a least fixed
 point) rather than as a description. ⚠ The complement itself is not characterized here; naming it is
 next work, not a result of this theorem. -/
