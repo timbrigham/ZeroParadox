@@ -222,17 +222,31 @@ carrier is initial/final. On initiality, `QPF.Fix.rec_unique` is the Mathlib rou
 `ZeroParadox/Category/CoalgebraForkPlace.lean` explicitly does **not** prove it (it states existence +
 commutation only, and repeats that fence throughout).
 
-**Prior art for the general shape — and THE SETTING, stated because the claim is meaningless without
-it.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is the initial algebra."* Both
-`W.dest` and `M.dest` are fixed points, so that theorem is the general statement this result has the
-**shape** of.
+**Prior art for the general shape.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is
+the initial algebra."* This file's fork has the **shape** of that statement.
 
-**And the instance-of claim is ALMOST earned — three of the four hypotheses are verified here, and the
-fourth is one clause short.** Thm 7.6 holds in *"a
-complete and well-powered category with smooth monomorphisms"* for *"F preserving monomorphisms."* The
-setting here is **`Type u`**, Lean's category of types — the type-theoretic analogue of **Set** (AMM's
-Ex 2.15(1) grants Set universally smooth monomorphisms), and not literally Set, which is why each
-hypothesis was checked rather than inherited:
+⚠ **NO instance-of claim is made — and the blocker is NOT a missing hypothesis.** Three review rounds
+were spent counting which of Thm 7.6's four *ambient* hypotheses `Type u` satisfies (one, then two,
+then three). **That was measuring the wrong gap.** Thm 7.6 is a statement about **fixed points** and
+**initial algebras**; connecting this file's results to its *subject* takes two bridges, and neither is
+a hypothesis of the theorem:
+
+1. **The predicate is not transported. STILL OPEN.** `IsWellFoundedCoalg` is stated over `Set X` with
+   `nextTime`; AMM Def 4.3 is stated over `Sub(A)` in a **category**. The key ingredient exists in the
+   pin — `Types.subobjectEquivSet (α : Type u) : Subobject α ≃o Set α`
+   (`Mathlib/CategoryTheory/Subobject/Types.lean`) — so this is **bounded work, not research**: define
+   `⃝` over `Subobject X`, and show it matches `nextTime` across that order isomorphism. The step
+   carrying the real content is how `ofTypeFunctor P.Obj` acts on subobjects.
+2. **"Fixed point" in AMM's sense — CLOSED.** AMM mean the structure map is **invertible**. Now
+   witnessed: `wtypeFixedPoint` and `mtypeFixedPoint` in § V.
+
+**Until bridge 1 is written, no count of ambient hypotheses can earn an instance-of claim** — which is
+why the counting kept recurring and why it is no longer the headline. The ambient hypotheses are
+recorded below anyway: measuring them was worth doing, the results are reusable, and they are simply
+**not the blocker**. Thm 7.6 holds in *"a complete and well-powered category with smooth
+monomorphisms"* for *"F preserving monomorphisms."* The setting here is **`Type u`**, Lean's category of
+types — the type-theoretic analogue of **Set** (AMM's Ex 2.15(1) grants Set universally smooth
+monomorphisms), and not literally Set, which is why each was checked rather than inherited:
 
 | hypothesis | status | where |
 |---|---|---|
@@ -335,6 +349,25 @@ instance preservesMonomorphisms_ofTypeFunctor {P : PFunctor.{u, u}} :
   subst hg
   rfl
 
+/-- **BRIDGE 2 — `W.dest` is a FIXED POINT in AMM's sense.** AMM's *fixed point* (Thm 7.6) means the
+structure map is **invertible**, not merely that some map exists. Mathlib supplies both round trips
+(`W.mk_dest`, `W.dest_mk`), so the destructor is an equivalence. Stated because the overview's appeal to
+Thm 7.6 rests on it and previously cited nothing. -/
+def wtypeFixedPoint {P : PFunctor.{u, u}} : W P ≃ P.Obj (W P) where
+  toFun := W.dest
+  invFun := W.mk
+  left_inv := W.mk_dest
+  right_inv := W.dest_mk
+
+/-- **BRIDGE 2, ν side — `M.dest` is a fixed point in the same sense.** Same two round trips
+(`M.mk_dest`, `M.dest_mk`). With `wtypeFixedPoint` this puts both carriers under Thm 7.6's *subject*.
+**The remaining gap is bridge 1**, the predicate transport — see the ⚠ in the module overview. -/
+noncomputable def mtypeFixedPoint {P : PFunctor.{u, u}} : M P ≃ P.Obj (M P) where
+  toFun := M.dest
+  invFun := M.mk
+  left_inv := M.mk_dest
+  right_inv := M.dest_mk
+
 /-- **Smooth monomorphisms, clause (c)** — AMM Def 2.14(1)'s third clause: *"for every cone of C formed
 by monomorphisms, the factorizing morphism from `colim C` is monic."*
 
@@ -386,7 +419,11 @@ idPF_M_not_wellFounded              [propext, Classical.choice, Quot.sound]
 fork_is_intrinsic                   [propext, Classical.choice, Quot.sound]
 preservesMonomorphisms_ofTypeFunctor   [propext, Quot.sound]                 <- hypothesis 4, CHOICE-FREE
 smooth_monos_factorizing            [propext, Classical.choice, Quot.sound]  -- via the colimit API
+wtypeFixedPoint                     no axioms                                <- bridge 2, μ side: FREE
+mtypeFixedPoint                     [propext, Classical.choice, Quot.sound]  -- via M.dest, the origin
 ```
+**The μ/ν purity split holds at the bridge too:** `W`'s fixed-point property costs nothing, `M`'s costs
+choice — the same shape as `fix_isEmpty` vs `cofix_nonempty`, and for the same reason (destructing `M`).
 
 **Two origins, measured separately.** (Where each footprint *enters* is measured below. ⚠ No claim is
 made that either is avoidable — origin 1 enters precisely *because* this file states `Monotone` on
@@ -431,5 +468,7 @@ open ZeroParadox
 #print axioms natPF_wtype_wellFounded_and_inhabited
 #print axioms preservesMonomorphisms_ofTypeFunctor
 #print axioms smooth_monos_factorizing
+#print axioms wtypeFixedPoint
+#print axioms mtypeFixedPoint
 
 end PurityCheck
