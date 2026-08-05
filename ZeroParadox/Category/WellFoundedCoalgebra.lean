@@ -227,7 +227,8 @@ it.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is the in
 `W.dest` and `M.dest` are fixed points, so that theorem is the general statement this result has the
 **shape** of.
 
-**And the instance-of claim is now EARNED — all four hypotheses are verified.** Thm 7.6 holds in *"a
+**And the instance-of claim is ALMOST earned — three of the four hypotheses are verified here, and the
+fourth is one clause short.** Thm 7.6 holds in *"a
 complete and well-powered category with smooth monomorphisms"* for *"F preserving monomorphisms."* The
 setting here is **`Type u`**, Lean's category of types — the type-theoretic analogue of **Set** (AMM's
 Ex 2.15(1) grants Set universally smooth monomorphisms), and not literally Set, which is why each
@@ -244,9 +245,12 @@ hypothesis was checked rather than inherited:
 *"its colimit cocone is formed by monomorphisms"* — a statement about the legs `c.ι.app j`. An earlier
 version of this table cited `Types.instIsStableUnderFilteredColimitsMonomorphismsType` for it; **that
 instance states a different proposition** (given a natural transformation with monic components between
-two diagrams, the induced map *between the two colimit vertices* is monic), and it cannot be
-instantiated to give clause (b), because the constant diagram at `X.obj j` admits no natural map into
-`X`. Clause (b) *is* true of `Type u` — the route is `IsStableUnderTransfiniteComposition` plus
+two diagrams, the induced map *between the two colimit vertices* is monic). Def 2.14(1) quantifies over
+**λ-chains of monomorphisms**, and clause (b)'s subject is the cocone **legs** — a different
+proposition, so the obvious instantiation (second diagram constant at `X.obj j`) does not deliver it:
+such a natural transformation is a cone over `X` with that vertex, and need not exist. Clause (b) *is*
+true of `Type u` — the route is `IsStableUnderTransfiniteComposition` (which **does** synthesize in the
+pin) plus
 cofinality of the tail `[j, λ)` — but **neither step is in this file, so the row is not fully
 witnessed.** Next-touch work; do not restore the old citation.
 
@@ -295,12 +299,15 @@ theorem natPF_wtype_wellFounded_and_inhabited :
 monomorphisms"* for *"F preserving monomorphisms."* Earlier versions of this file recorded first one,
 then two, of those four as available and withheld any instance-of claim. **Both counts were wrong, and
 each was an unverified negative rather than a wrong theorem** — see `CLAUDE.md` § *"NOT IN THE LIBRARY"
-IS A CLAIM*. All four hold. Two are Mathlib instances; the other two are proved below.
+IS A CLAIM*. **Three of the four are now discharged**: two are Mathlib instances, and the two theorems
+below supply `F`-preservation and clause (c) of smoothness. **Clause (b) of smoothness is still open
+here** — true of `Type u`, but witnessed by nothing in this file (see the ⚠ in the overview).
 
 ⚠ **Verifying the hypotheses is NOT proving the theorem.** AMM Thm 7.6 is **not formalized here** and
 Mathlib has no well-founded-coalgebra machinery. What § V establishes is that this setting **satisfies
 the theorem's assumptions**, so its conclusion applies *by citation*. That is the honest upgrade from
-"shares the shape" — an earned instance-of, not a Lean derivation of Thm 7.6. -/
+"shares the shape" — but it is **not yet a completed instance-of** while clause (b) is unwitnessed, and
+it would never be a Lean derivation of Thm 7.6 in any case. -/
 
 open CategoryTheory CategoryTheory.Limits MorphismProperty
 
@@ -334,9 +341,16 @@ by monomorphisms, the factorizing morphism from `colim C` is monic."*
 **This is not absent from the pin; it is assembled from it.** `IsStableUnderColimitsOfShape.condition`
 already has exactly this shape, and the missing step is to take the second diagram to be the
 **constant** functor at `D` — whose colimit is `D` itself precisely because the index is connected
-(`isColimitConstCocone`). Clauses (a) and (b) are Mathlib instances: `Types.hasColimitsOfShape` and
-`Types.instIsStableUnderFilteredColimitsMonomorphismsType`. AMM's trailing *"every morphism from 0 is
-monic"* is immediate in `Type u` — every map out of the empty type is injective.
+(`isColimitConstCocone`). Clause (a) is the Mathlib instance `Types.hasColimitsOfShape`. AMM's trailing
+*"every morphism from 0 is monic"* is immediate in `Type u` — every map out of the empty type is
+injective.
+
+⚠ **Clause (b) is NOT discharged here, and must not be cited to
+`Types.instIsStableUnderFilteredColimitsMonomorphismsType`** — that instance concludes the induced map
+*between two colimit vertices* is monic, whereas clause (b) is about the cocone **legs**
+`c.ι.app j : X.obj j ⟶ c.pt`. The two are different propositions. Clause (b) is true of `Type u`; the
+route is `IsStableUnderTransfiniteComposition` (which does synthesize in the pin) plus cofinality of
+the tail, and neither step is written here. See the ⚠ in the module overview.
 
 **A definition can be available without any declaration bearing its name.** Grepping `smooth` in
 `Mathlib/CategoryTheory/` returns nothing; the condition is nonetheless satisfied. -/
