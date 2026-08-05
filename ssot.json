@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1552,
+        "declarations": 1563,
         "files": 136
       },
       "entries": [
@@ -2918,6 +2918,83 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0942c9f8-dc4e-436c-8d57-f4787091c4c3",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wfPart",
+            "short": "wfPart"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "09535661-d89a-4202-af9e-5485f3057a86",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.idPF_M_nextTime_empty",
+            "short": "idPF_M_nextTime_empty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -6610,6 +6687,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "18540d05-460e-49b0-aaf4-75b091762e60",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.idPF_M_not_wellFounded",
+            "short": "idPF_M_not_wellFounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "18c96ac8-938e-4a41-93d0-cfeda64abaed",
           "new": {
             "file": "ZeroParadox/Ordinal/CnfBridge.lean",
@@ -7695,6 +7811,45 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "1e255843-daef-4d64-8217-ecc092efd43e",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nextTime",
+            "short": "nextTime"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -11029,6 +11184,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2dd35a7c-977c-4228-a110-f716047ad03a",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fork_is_intrinsic",
+            "short": "fork_is_intrinsic"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2de4115c-1734-4d79-9a8f-7563afbcdc18",
           "new": {
@@ -13115,6 +13309,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "371cfc08-0ebd-4d17-89be-bd154cd48b91",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nextTimeHom",
+            "short": "nextTimeHom"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18153,6 +18386,45 @@
             ]
           },
           "reason": "The conditional form: IF the bottom is a fixed point AND execution occurs, THEN the dynamics branches at the bottom and cannot be a step function. The positive statement of the NO-GO.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4ebfb804-2282-4498-b2b0-95cc7e1719a3",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nextTime_mono",
+            "short": "nextTime_mono"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24196,6 +24468,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6cad97a1-f225-40a8-afad-3499a90cccaf",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wtype_wellFounded",
+            "short": "wtype_wellFounded"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -34656,6 +34967,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "9bdf74e1-b94f-4fd4-96d9-302961ed17ee",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.idPF_M_nonempty",
+            "short": "idPF_M_nonempty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "9c0c7bd5-bd2a-4146-b734-bbb20fe085a1",
           "new": {
@@ -40017,6 +40367,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b61e7a1b-114f-4c94-9728-66a2218f1e05",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isWellFoundedCoalg_iff_wfPart_univ",
+            "short": "isWellFoundedCoalg_iff_wfPart_univ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b6697cca-4d52-46ab-b6aa-29ae6d0e93cc",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -40596,6 +40985,45 @@
             ]
           },
           "reason": "Boundary.lean SS III-b: oscillation (2-cycle) excluded on the ordinal ascent, present at the floor. Instantiates wf_no_cycle at the two ends of the boundary; no new mathematics, the content is the fence.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b88bc8be-2912-4d47-b395-ad40587509cb",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsWellFoundedCoalg",
+            "short": "IsWellFoundedCoalg"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "New file ZeroParadox/Category/WellFoundedCoalgebra.lean: AMM next-time operator + intrinsic well-foundedness for PFunctor coalgebras",
           "verify": {
             "axioms": null,
             "sorry_free": true
