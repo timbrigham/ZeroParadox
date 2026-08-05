@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1564,
+        "declarations": 1566,
         "files": 136
       },
       "entries": [
@@ -32948,6 +32948,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9305a366-e98c-4a41-9854-f300c000d0fa",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.smooth_monos_factorizing",
+            "short": "smooth_monos_factorizing"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "AMM Thm 7.6 hypotheses 3(c) and 4, verified for Type u with ofTypeFunctor P.Obj",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "930e9819-6df9-4dfa-9bcd-e542f6635781",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -36054,6 +36092,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a03594e2-44f3-4aba-bf47-22e476bd37d1",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.preservesMonomorphisms_ofTypeFunctor",
+            "short": "preservesMonomorphisms_ofTypeFunctor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "AMM Thm 7.6 hypotheses 3(c) and 4, verified for Type u with ofTypeFunctor P.Obj",
           "verify": {
             "axioms": null,
             "sorry_free": true
