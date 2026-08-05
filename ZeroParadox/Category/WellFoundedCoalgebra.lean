@@ -49,7 +49,8 @@ recursion*, a **different document, which does not contain Exercise VI.17**; do 
 there for it.
 
 Source PDF for every quotation below:
-`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`. Quoted verbatim:
+`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`. Their statements —
+the bulleted ones in quote marks are verbatim; Def 4.1 is their notation transcribed:
 
 * **Def 4.1** — every coalgebra `α : A → F A` induces `⃝ : Sub(A) → Sub(A)`, `⃝(s) = α⁻¹(F s)`.
 * **Ex 4.2(1)** — for a graph as a `P`-coalgebra, *"`⃝ S` is the set of vertices all of whose
@@ -195,9 +196,9 @@ theorem idPF_M_not_wellFounded :
 
 ⚠ **The μ half here is VACUOUS, and saying so is the point.** `W idPF_Coalgebra` is **empty** — the
 corpus proves it axiom-free as `w_isEmpty` (`ZeroParadox/Computability/ChoicePurityInvariant.lean`) —
-so this conjunct holds because `∅ = Set.univ` on an empty carrier. (The proof term here is
-`wtype_wellFounded`, which does induct; the point is that **no induction is needed** — `w_isEmpty`
-discharges it directly, as a gate independently verified.) That
+so this conjunct holds because `∅ = Set.univ` on an empty carrier. (The proof term used is
+`wtype_wellFounded`, which inducts. `w_isEmpty` discharges the conjunct directly instead — but it is
+itself `WType.recOn`, so the induction is **relocated, not removed**.) That
 is not a surprise: it is forced by **AMM Ex 4.5(3)**, quoted in this file's overview (`F∅ = ∅` makes the
 empty coalgebra the only well-founded one), and `F∅ = ∅` holds for `idPF_Coalgebra`. **So at THIS
 functor the bundle carries the same content as the corpus's existing `categorical_fork_strict`
@@ -221,21 +222,27 @@ it.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is the in
 complete and well-powered category with smooth monomorphisms"* for *"F preserving monomorphisms."*
 The setting here is **`Type u`** — Lean's category of types, which is the type-theoretic analogue of
 **Set** (AMM's Ex 2.15(1) grants Set universally smooth monomorphisms) and is **not literally Set**.
-Against the pinned Mathlib, exactly **one of the four hypotheses is verifiable** (measured
-2026-08-04):
+Against the pinned Mathlib, **two of the four hypotheses hold outright and two are unestablished
+here** (measured 2026-08-04):
 
 | hypothesis | status in the pin |
 |---|---|
-| complete | **verified** — `Limits.Types.hasLimitsOfSize` synthesizes for `Type u` |
-| well-powered | `WellPowered (Type 0)` does **not** synthesize |
-| smooth monomorphisms | **not a Mathlib concept** — nothing to check against |
-| `F` preserves monomorphisms | does **not** synthesize for `ofTypeFunctor P.Obj` |
+| complete | **HOLDS** — `Limits.Types.hasLimitsOfSize`, in this file's own import set |
+| well-powered | **HOLDS** — `instWellPoweredType` (`Mathlib/CategoryTheory/Subobject/Types.lean`, a module titled *"`Type u` is well-powered"*); needs the explicit universe, `WellPowered.{u} (Type u)` |
+| smooth monomorphisms | **not a Mathlib concept** — the word and AMM's Def 2.14 condition both return nothing in `Mathlib/CategoryTheory/`, so there is nothing to check against |
+| `F` preserves monomorphisms | **unestablished** — `PreservesMonomorphisms (ofTypeFunctor P.Obj)` does not synthesize (the probe is well-formed: `Functor` and `LawfulFunctor` on `P.Obj` both resolve) |
 
-**A failure to synthesize is not a proof of failure** — `Type u` is well-powered mathematically, and
-these are almost certainly all true. What is recorded is that **nobody here has established them**, so
-"a concrete case of Thm 7.6" would be an unearned instance-of claim. Per this corpus's standing rule, a
-shared shape across distinct structures is a type boundary, never a common theorem. Closing this is
-tracked in
+So the honest gap is the **bottom two rows**, and that is enough: "a concrete case of Thm 7.6" would
+still be an unearned instance-of claim. Per this corpus's standing rule, a shared shape across
+distinct structures is a type boundary, never a common theorem.
+
+⚠ **The top two rows are AMM's hypotheses being MET, not merely unrefuted** — say so, and do not
+soften it back. **This table asserted the opposite for well-poweredness and was caught by a gate**: the
+probe `#synth WellPowered (Type 0)` fails, and it fails because `WellPowered` carries an **explicit
+universe parameter** (and was not even imported in the probe file), *not* because the instance is
+absent. A malformed probe was read as a fact about Mathlib — and it contradicted this project's own
+note, cited two paragraphs down, which already said `Type u` is complete and well-powered. **Verify the
+probe before believing a negative.** Closing the remaining gap is tracked in
 `.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`. -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
