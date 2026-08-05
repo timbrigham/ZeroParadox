@@ -69,10 +69,14 @@ the bulleted ones in quote marks are verbatim; Def 4.1 is their notation transcr
 **SCOPE — deliberately the `Type`-level shadow, NOT the categorical theorem.** AMM work in a complete,
 well-powered category with smooth monomorphisms, over `Sub(A)`. Here `Sub(A)` is `Set X`, the functor
 is a `PFunctor`, and `⃝` is the concrete `{x | ∀ b, (α x).2 b ∈ S}`. **Nothing here formalizes AMM's
-Thm 7.6, their coreflection, or recursive coalgebras**, and no claim is made that the framework's
-categories satisfy their hypotheses — see
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md` for what is and
-is not established there.
+Thm 7.6, their coreflection, or recursive coalgebras.**
+
+⚠ **But the hypotheses ARE now checked for THIS setting — see § V, and read that table for which.**
+This paragraph previously also said *"no claim is made that the framework's categories satisfy their
+hypotheses"*, which § V made false and which sat here contradicting it. **Scope the two apart:** § V
+covers `Type u` with `ofTypeFunctor P.Obj` only, and **says nothing about the MC-1 carriers**
+(`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`) — those remain unchecked, and that is what
+`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md` tracks.
 
 **What this file adds over restating the definitions:** the two `Statement:` results in § III/§ IV
 place the corpus's own W- and M-types on the fork **intrinsically**, so the μ/ν split stops depending
@@ -233,13 +237,26 @@ hypothesis was checked rather than inherited:
 |---|---|---|
 | complete | **HOLDS** | `Limits.Types.hasLimitsOfSize` |
 | well-powered | **HOLDS** | `instWellPoweredType`, `Mathlib/CategoryTheory/Subobject/Types.lean` |
-| smooth monomorphisms | **HOLDS** | (a) `Types.hasColimitsOfShape`, (b) `Types.instIsStableUnderFilteredColimitsMonomorphismsType`, (c) `smooth_monos_factorizing` in § V |
+| smooth monomorphisms | **(a) and (c) witnessed here; (b) true of `Type u` but NOT witnessed here — see ⚠ below** | (a) `Types.hasColimitsOfShape`; (c) `smooth_monos_factorizing` in § V |
 | `F` preserves monomorphisms | **HOLDS** | `preservesMonomorphisms_ofTypeFunctor` in § V |
 
-⚠ **Verified hypotheses are not a formalized theorem.** AMM Thm 7.6 is **not** proved in Lean here, and
-Mathlib has no well-founded-coalgebra machinery to prove it with. Its conclusion applies to this setting
-**by citation**, because its assumptions are discharged — that is what "instance of" means here, and it
-is strictly weaker than a Lean derivation. Do not upgrade this to "we proved Thm 7.6."
+⚠ **CLAUSE (b) IS THE HOLE, and it is recorded rather than papered over.** Def 2.14(1)'s clause (b) is
+*"its colimit cocone is formed by monomorphisms"* — a statement about the legs `c.ι.app j`. An earlier
+version of this table cited `Types.instIsStableUnderFilteredColimitsMonomorphismsType` for it; **that
+instance states a different proposition** (given a natural transformation with monic components between
+two diagrams, the induced map *between the two colimit vertices* is monic), and it cannot be
+instantiated to give clause (b), because the constant diagram at `X.obj j` admits no natural map into
+`X`. Clause (b) *is* true of `Type u` — the route is `IsStableUnderTransfiniteComposition` plus
+cofinality of the tail `[j, λ)` — but **neither step is in this file, so the row is not fully
+witnessed.** Next-touch work; do not restore the old citation.
+
+⚠ **Verified hypotheses are not a formalized theorem, and what the citation buys is narrow.** AMM
+Thm 7.6 is **not** proved in Lean here, and Mathlib has no well-founded-coalgebra machinery to prove it
+with. What Thm 7.6 would deliver, given its hypotheses, is that a well-founded fixed point **is the
+initial algebra** — i.e. it *concludes* initiality rather than assuming it, which is why the
+`fork_is_intrinsic` fence above ("not proved: that either carrier is initial/final") is consistent with
+citing it. That conclusion is available **by citation only**, and only once clause (b) is closed. Do
+not upgrade this to "we proved Thm 7.6," and do not read the fence as denying what Thm 7.6 offers.
 
 ⚠ **THIS TABLE WAS WRONG TWICE, IN THE SAME DIRECTION, AND THAT IS THE LESSON.** It first recorded
 *one* of four, then *two*; the true count is four. **Not one of those errors was a wrong theorem — each
