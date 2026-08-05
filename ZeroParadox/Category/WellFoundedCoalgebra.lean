@@ -5,6 +5,11 @@ import ZeroParadox.Settheory.Coalgebra
 import ZeroParadox.Computability.NatListRegime
 import Mathlib.Data.PFunctor.Univariate.M
 import Mathlib.Order.FixedPoints
+import Mathlib.CategoryTheory.Types.Basic
+import Mathlib.CategoryTheory.Types.Monomorphisms
+import Mathlib.CategoryTheory.Functor.EpiMono
+import Mathlib.CategoryTheory.Limits.Connected
+import Mathlib.CategoryTheory.MorphismProperty.TransfiniteComposition
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -218,32 +223,32 @@ it.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is the in
 `W.dest` and `M.dest` are fixed points, so that theorem is the general statement this result has the
 **shape** of.
 
-⚠ **It is NOT claimed to be an instance of it, and the reason is measured.** Thm 7.6 holds in *"a
-complete and well-powered category with smooth monomorphisms"* for *"F preserving monomorphisms."*
-The setting here is **`Type u`** — Lean's category of types, which is the type-theoretic analogue of
-**Set** (AMM's Ex 2.15(1) grants Set universally smooth monomorphisms) and is **not literally Set**.
-Against the pinned Mathlib, **two of the four hypotheses hold outright and two are unestablished
-here** (measured 2026-08-04):
+**And the instance-of claim is now EARNED — all four hypotheses are verified.** Thm 7.6 holds in *"a
+complete and well-powered category with smooth monomorphisms"* for *"F preserving monomorphisms."* The
+setting here is **`Type u`**, Lean's category of types — the type-theoretic analogue of **Set** (AMM's
+Ex 2.15(1) grants Set universally smooth monomorphisms), and not literally Set, which is why each
+hypothesis was checked rather than inherited:
 
-| hypothesis | status in the pin |
-|---|---|
-| complete | **HOLDS** — `Limits.Types.hasLimitsOfSize`, in this file's own import set |
-| well-powered | **HOLDS** — `instWellPoweredType` (`Mathlib/CategoryTheory/Subobject/Types.lean`, a module titled *"`Type u` is well-powered"*); needs the explicit universe, `WellPowered.{u} (Type u)` |
-| smooth monomorphisms | **not a Mathlib concept** — the word and AMM's Def 2.14 condition both return nothing in `Mathlib/CategoryTheory/`, so there is nothing to check against |
-| `F` preserves monomorphisms | **unestablished** — `PreservesMonomorphisms (ofTypeFunctor P.Obj)` does not synthesize (the probe is well-formed: `Functor` and `LawfulFunctor` on `P.Obj` both resolve) |
+| hypothesis | status | where |
+|---|---|---|
+| complete | **HOLDS** | `Limits.Types.hasLimitsOfSize` |
+| well-powered | **HOLDS** | `instWellPoweredType`, `Mathlib/CategoryTheory/Subobject/Types.lean` |
+| smooth monomorphisms | **HOLDS** | (a) `Types.hasColimitsOfShape`, (b) `Types.instIsStableUnderFilteredColimitsMonomorphismsType`, (c) `smooth_monos_factorizing` in § V |
+| `F` preserves monomorphisms | **HOLDS** | `preservesMonomorphisms_ofTypeFunctor` in § V |
 
-So the honest gap is the **bottom two rows**, and that is enough: "a concrete case of Thm 7.6" would
-still be an unearned instance-of claim. Per this corpus's standing rule, a shared shape across
-distinct structures is a type boundary, never a common theorem.
+⚠ **Verified hypotheses are not a formalized theorem.** AMM Thm 7.6 is **not** proved in Lean here, and
+Mathlib has no well-founded-coalgebra machinery to prove it with. Its conclusion applies to this setting
+**by citation**, because its assumptions are discharged — that is what "instance of" means here, and it
+is strictly weaker than a Lean derivation. Do not upgrade this to "we proved Thm 7.6."
 
-⚠ **The top two rows are AMM's hypotheses being MET, not merely unrefuted** — say so, and do not
-soften it back. **This table asserted the opposite for well-poweredness and was caught by a gate**: the
-probe `#synth WellPowered (Type 0)` fails, and it fails because `WellPowered` carries an **explicit
-universe parameter** (and was not even imported in the probe file), *not* because the instance is
-absent. A malformed probe was read as a fact about Mathlib — and it contradicted this project's own
-note, cited two paragraphs down, which already said `Type u` is complete and well-powered. **Verify the
-probe before believing a negative.** Closing the remaining gap is tracked in
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`. -/
+⚠ **THIS TABLE WAS WRONG TWICE, IN THE SAME DIRECTION, AND THAT IS THE LESSON.** It first recorded
+*one* of four, then *two*; the true count is four. **Not one of those errors was a wrong theorem — each
+was an unverified negative**: `WellPowered (Type 0)` fails on an unimported name and an unresolved
+universe parameter; `PreservesMonomorphisms` "does not synthesize" is true of the *instance database*
+and false of the *fact*; and smooth monomorphisms is **assembled from** pieces in the pin though no
+declaration bears the name. A failed `#synth` is evidence about the probe. See `CLAUDE.md`
+§ *"NOT IN THE LIBRARY" IS A CLAIM*, and
+`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md` § 4b. -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
       ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest :=
@@ -267,6 +272,70 @@ theorem natPF_wtype_wellFounded_and_inhabited :
       Nonempty (W natPF_NatListRegime) :=
   ⟨wtype_wellFounded, ⟨W.mk ⟨false, fun e => e.elim⟩⟩⟩
 
+/-! ### § V. AMM Thm 7.6's hypotheses, VERIFIED for this setting
+
+**What this section is for.** Thm 7.6 holds in *"a complete and well-powered category with smooth
+monomorphisms"* for *"F preserving monomorphisms."* Earlier versions of this file recorded first one,
+then two, of those four as available and withheld any instance-of claim. **Both counts were wrong, and
+each was an unverified negative rather than a wrong theorem** — see `CLAUDE.md` § *"NOT IN THE LIBRARY"
+IS A CLAIM*. All four hold. Two are Mathlib instances; the other two are proved below.
+
+⚠ **Verifying the hypotheses is NOT proving the theorem.** AMM Thm 7.6 is **not formalized here** and
+Mathlib has no well-founded-coalgebra machinery. What § V establishes is that this setting **satisfies
+the theorem's assumptions**, so its conclusion applies *by citation*. That is the honest upgrade from
+"shares the shape" — an earned instance-of, not a Lean derivation of Thm 7.6. -/
+
+open CategoryTheory CategoryTheory.Limits MorphismProperty
+
+/-- **Hypothesis 4 — `F` preserves monomorphisms.** For a polynomial functor, the action on maps is
+post-composition on the child-indexed family, and post-composing with an injection is injective.
+`Reading:` none — this is a plain structural fact.
+
+⚠ **No such instance is registered in the pin** (`PreservesMonomorphisms (ofTypeFunctor P.Obj)` does not
+synthesize), which is a true statement about the *instance database* and was twice mistaken here for a
+statement about the *fact*. The fact is a dozen lines. -/
+instance preservesMonomorphisms_ofTypeFunctor {P : PFunctor.{u, u}} :
+    (ofTypeFunctor P.Obj).PreservesMonomorphisms := by
+  constructor
+  intro X Y f hf
+  rw [CategoryTheory.mono_iff_injective] at hf ⊢
+  rintro ⟨a, g⟩ ⟨a', g'⟩ h
+  simp only [ofTypeFunctor_map] at h
+  have h' : (⟨a, (f : X → Y) ∘ g⟩ : P.Obj Y) = ⟨a', (f : X → Y) ∘ g'⟩ := h
+  simp only [Sigma.mk.injEq] at h'
+  obtain ⟨rfl, h2⟩ := h'
+  simp only [heq_eq_eq] at h2
+  have hg : g = g' := by
+    funext b
+    exact hf (congrFun h2 b)
+  subst hg
+  rfl
+
+/-- **Smooth monomorphisms, clause (c)** — AMM Def 2.14(1)'s third clause: *"for every cone of C formed
+by monomorphisms, the factorizing morphism from `colim C` is monic."*
+
+**This is not absent from the pin; it is assembled from it.** `IsStableUnderColimitsOfShape.condition`
+already has exactly this shape, and the missing step is to take the second diagram to be the
+**constant** functor at `D` — whose colimit is `D` itself precisely because the index is connected
+(`isColimitConstCocone`). Clauses (a) and (b) are Mathlib instances: `Types.hasColimitsOfShape` and
+`Types.instIsStableUnderFilteredColimitsMonomorphismsType`. AMM's trailing *"every morphism from 0 is
+monic"* is immediate in `Type u` — every map out of the empty type is injective.
+
+**A definition can be available without any declaration bearing its name.** Grepping `smooth` in
+`Mathlib/CategoryTheory/` returns nothing; the condition is nonetheless satisfied. -/
+theorem smooth_monos_factorizing {J : Type u} [SmallCategory J] [IsFiltered J] [IsConnected J]
+    (X : J ⥤ Type u) (c : Cocone X) (hc : IsColimit c) (D : Type u)
+    (f : X ⟶ (Functor.const J).obj D) (hf : ∀ j, Mono (f.app j))
+    (φ : c.pt ⟶ D) (hφ : ∀ j, c.ι.app j ≫ φ = f.app j) :
+    Mono φ := by
+  have hstable : (monomorphisms (Type u)).IsStableUnderColimitsOfShape J := inferInstance
+  have hfun : (monomorphisms (Type u)).functorCategory J f := fun j => hf j
+  have := hstable.condition X ((Functor.const J).obj D) c (constCocone J D) hc
+    (isColimitConstCocone J D) f hfun φ ?_
+  · exact this
+  · intro j
+    simpa [constCocone] using hφ j
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
@@ -284,6 +353,8 @@ nextTime_mono / wfPart / _iff_      [propext, Classical.choice, Quot.sound]
 idPF_M_nextTime_empty               [propext, Classical.choice, Quot.sound]
 idPF_M_not_wellFounded              [propext, Classical.choice, Quot.sound]
 fork_is_intrinsic                   [propext, Classical.choice, Quot.sound]
+preservesMonomorphisms_ofTypeFunctor   [propext, Quot.sound]                 <- hypothesis 4, CHOICE-FREE
+smooth_monos_factorizing            [propext, Classical.choice, Quot.sound]  -- via the colimit API
 ```
 
 **Two origins, measured separately.** (Where each footprint *enters* is measured below. ⚠ No claim is
@@ -327,5 +398,7 @@ open ZeroParadox
 #print axioms idPF_M_not_wellFounded
 #print axioms fork_is_intrinsic
 #print axioms natPF_wtype_wellFounded_and_inhabited
+#print axioms preservesMonomorphisms_ofTypeFunctor
+#print axioms smooth_monos_factorizing
 
 end PurityCheck
