@@ -39,13 +39,17 @@ on an arbitrary coalgebra without knowing how it was made.
 
 **PRIOR ART — this is a FORMALIZATION OF PUBLISHED DEFINITIONS, not a new notion.** The operator and
 the well-foundedness criterion are Adámek-Milius-Moss 2020 (arXiv:1910.09401v2), *On Well-Founded and
-Recursive Coalgebras*, § 4, who credit the characterization to **Taylor**, citing it as their ref [28]
-Exercise VI.17 — that is **Taylor, *Practical Foundations of Mathematics* (CUP 1999), which this
-project does NOT hold locally**; the Taylor PDF in `.claude-local/papers/` is his *Well founded
-coalgebras and recursion*, a different document, so do not send a reader there for VI.17. And the
-operator itself to **Jacobs** (the 'next time' operator of temporal logic, there for Kripke polynomial
-set functors). Source PDFs: `.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`,
-`.claude-local/papers/taylor_wellfounded_coalgebras_recursion.pdf`. Their statements, quoted:
+Recursive Coalgebras*, § 4. They credit the characterization to **Taylor** and the operator itself to
+**Jacobs** (the 'next time' operator of temporal logic, there for Kripke polynomial set functors).
+
+⚠ **Where to verify the Taylor credit.** AMM cite it as their ref [28, Exercise VI.17], and their [28]
+is **Taylor, *Practical Foundations of Mathematics* (CUP 1999)** — which this project does **not**
+hold. The Taylor PDF that *is* in `.claude-local/papers/` is his *Well founded coalgebras and
+recursion*, a **different document, which does not contain Exercise VI.17**; do not send a reader
+there for it.
+
+Source PDF for every quotation below:
+`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`. Quoted verbatim:
 
 * **Def 4.1** — every coalgebra `α : A → F A` induces `⃝ : Sub(A) → Sub(A)`, `⃝(s) = α⁻¹(F s)`.
 * **Ex 4.2(1)** — for a graph as a `P`-coalgebra, *"`⃝ S` is the set of vertices all of whose
@@ -139,9 +143,9 @@ theorem isWellFoundedCoalg_iff_wfPart_univ {X : Type u} {P : PFunctor.{u, u}}
 canonical coalgebra `W.dest : W P → P.Obj (W P)` is well-founded in AMM's sense: the only set closed
 under "all children lie in it" is everything. **The proof is structural induction on the W-type**, and
 that is the honest content: the induction principle *yields* AMM-well-foundedness here. `Reading:` the
-framework reads the two as one fact in different clothes — **only that direction is proved, and no
-converse is claimed.** Compare AMM Ex 4.5(2) (the initial algebra, as a coalgebra, is well-founded);
-this is the concrete W-type case. -/
+framework reads the two as one fact in different clothes — a **COINCIDENCE** kind, and conjectural:
+**only that direction is proved, and no converse is claimed.** Compare AMM Ex 4.5(2) (the initial
+algebra, as a coalgebra, is well-founded); this is the concrete W-type case. -/
 theorem wtype_wellFounded {P : PFunctor.{u, u}} :
     IsWellFoundedCoalg (P := P) W.dest := by
   intro S hS
@@ -191,7 +195,9 @@ theorem idPF_M_not_wellFounded :
 
 ⚠ **The μ half here is VACUOUS, and saying so is the point.** `W idPF_Coalgebra` is **empty** — the
 corpus proves it axiom-free as `w_isEmpty` (`ZeroParadox/Computability/ChoicePurityInvariant.lean`) —
-so this conjunct holds because `∅ = Set.univ` on an empty carrier, with no induction used at all. That
+so this conjunct holds because `∅ = Set.univ` on an empty carrier. (The proof term here is
+`wtype_wellFounded`, which does induct; the point is that **no induction is needed** — `w_isEmpty`
+discharges it directly, as a gate independently verified.) That
 is not a surprise: it is forced by **AMM Ex 4.5(3)**, quoted in this file's overview (`F∅ = ∅` makes the
 empty coalgebra the only well-founded one), and `F∅ = ∅` holds for `idPF_Coalgebra`. **So at THIS
 functor the bundle carries the same content as the corpus's existing `categorical_fork_strict`
@@ -204,12 +210,33 @@ untouched by this and is where the non-degenerate content lives.
 μ/ν root cut. **NOT proved:** that this property *is* the μ/ν distinction in general, nor that either
 carrier is initial/final. On initiality, `QPF.Fix.rec_unique` is the Mathlib route;
 `ZeroParadox/Category/CoalgebraForkPlace.lean` explicitly does **not** prove it (it states existence +
-commutation only and says so three times).
+commutation only, and repeats that fence throughout).
 
-**Prior art for the general form:** this is a concrete case of **AMM Thm 7.6** (p. 30) — *"the only
-well-founded fixed point is the initial algebra"* — since both `W.dest` and `M.dest` are fixed points
-and `W` is the initial algebra. That theorem is **not formalized here**; it is cited as the general
-statement this instance sits under. -/
+**Prior art for the general shape — and THE SETTING, stated because the claim is meaningless without
+it.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is the initial algebra."* Both
+`W.dest` and `M.dest` are fixed points, so that theorem is the general statement this result has the
+**shape** of.
+
+⚠ **It is NOT claimed to be an instance of it, and the reason is measured.** Thm 7.6 holds in *"a
+complete and well-powered category with smooth monomorphisms"* for *"F preserving monomorphisms."*
+The setting here is **`Type u`** — Lean's category of types, which is the type-theoretic analogue of
+**Set** (AMM's Ex 2.15(1) grants Set universally smooth monomorphisms) and is **not literally Set**.
+Against the pinned Mathlib, exactly **one of the four hypotheses is verifiable** (measured
+2026-08-04):
+
+| hypothesis | status in the pin |
+|---|---|
+| complete | **verified** — `Limits.Types.hasLimitsOfSize` synthesizes for `Type u` |
+| well-powered | `WellPowered (Type 0)` does **not** synthesize |
+| smooth monomorphisms | **not a Mathlib concept** — nothing to check against |
+| `F` preserves monomorphisms | does **not** synthesize for `ofTypeFunctor P.Obj` |
+
+**A failure to synthesize is not a proof of failure** — `Type u` is well-powered mathematically, and
+these are almost certainly all true. What is recorded is that **nobody here has established them**, so
+"a concrete case of Thm 7.6" would be an unearned instance-of claim. Per this corpus's standing rule, a
+shared shape across distinct structures is a type boundary, never a common theorem. Closing this is
+tracked in
+`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`. -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
       ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest :=
@@ -247,7 +274,9 @@ idPF_M_nonempty                     no axioms          -- corecursion INTO M is 
 wtype_wellFounded                   [propext, Quot.sound]                    <- the μ side, CHOICE-FREE
 natPF_wtype_wellFounded_and_inhabited  [propext, Quot.sound]                 <- the non-vacuous μ witness
 nextTime_mono / wfPart / _iff_      [propext, Classical.choice, Quot.sound]
-idPF_M_* / fork_is_intrinsic        [propext, Classical.choice, Quot.sound]
+idPF_M_nextTime_empty               [propext, Classical.choice, Quot.sound]
+idPF_M_not_wellFounded              [propext, Classical.choice, Quot.sound]
+fork_is_intrinsic                   [propext, Classical.choice, Quot.sound]
 ```
 
 **Two origins, measured separately.** (Where each footprint *enters* is measured below. ⚠ No claim is
