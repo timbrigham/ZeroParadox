@@ -246,14 +246,15 @@ deterministic specialization of that". That understated them. **Read the paper, 
 
 | AMM | what is there | what it covers here |
 |---|---|---|
-| **Ex 4.14(2), p. 18** | `F X = X + 1` coalgebras as partial functions, with the canonical graph the graph of `α`; worked instance `ℕ`, `n ↦ n − 1` | § V's exact setting — such a partial function is `σ → Option σ`, its graph is `stepRel` |
+| **Ex 4.14(2), p. 18** | `F X = X + 1` coalgebras as partial functions, with the canonical graph the graph of `α`; worked instance `ℕ` with `n ↦ n − 1` **for `n > 0`** — the qualifier is load-bearing, it is what makes the function *partial* (undefined at `0`, so `0` is the leaf) and hence well-founded | § V's exact setting — such a partial function is `σ → Option σ`, and `stepRel` is its graph **transposed** (see `stepRel`'s docstring below) |
 | **Cor 4.13, p. 18** | well-founded iff the canonical graph is, for intersection-preserving set functors | the general theorem `isWellFoundedCoalg_stepCoalg_iff` instantiates |
 | **Ex 4.5(5), p. 16** | the `⃝`-approximants, their join `A*`, and well-founded iff `A = A*` (stated there for `F X = K × X^Σ` on `Vec_K`) | `wfPart_stepCoalg`'s content — ⚠ note AMM's "reaches 0 in at most `n` steps" describes the **`n`-th approximant**, and the least fixed point is their **join** of those |
 
-*(Locators, not block quotes, deliberately. Three consecutive gate rounds corrected transcription
-errors in a quoted version of this — a wrong page, a quote attached to the approximant rather than the
-lfp, an altered arrow glyph. A quotation is a second copy of the source and it drifts; see `CLAUDE.md`
-§ "the pointer must not become a COPY". The claim underneath was verified at source and never moved.)*
+*(Locators, not block quotes, deliberately. A quoted version of this shipped three transcription
+errors at once — a wrong page, the **approximant's** description attached to the **lfp**, and an
+altered arrow glyph — and a later pass then dropped a load-bearing side condition. A quotation is a
+second copy of the source and it drifts; see `CLAUDE.md` § "the pointer must not become a COPY". The
+claim underneath was verified at source and never moved.)*
 
 **So the honest delta:** a Lean formalization of the above on Mathlib's `StateTransition`-shaped
 carrier, tying it to `Acc`/`WellFounded`. `ZeroParadox/Computability/Occurrence.lean` records that
