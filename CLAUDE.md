@@ -502,6 +502,44 @@ not "use `M` instead of `Cofix`" generically — it is *build without destructin
 footprint to the **QPF quotient layer** is defensible and is the claim to keep; *"not from the
 M-type"* is false and must not be re-introduced.
 
+## "NOT IN THE LIBRARY" IS A CLAIM. Probe it before you believe it. Hard Rule.
+
+**The characteristic error of 2026-08-04 was not a wrong theorem. It was three wrong NEGATIVES**, each
+of the form *"X is not available"*, each recorded as measured, each false:
+
+| the claim | what was actually there |
+|---|---|
+| *"`pole_inversion` is not available on `ℤ_[2]`"* | true of the class instance, **false of the content** — both halves of the drift were already proved (`towerCx_zero`/`towerCx_member`, `tower_converges_to_zero`); only the packaging was missing |
+| *"`WellPowered (Type 0)` does not synthesize"* | `instance : WellPowered.{u} (Type u)` sits in a module **titled** *"`Type u` is well-powered"*; the probe failed on an unimported name and an **unresolved universe parameter** |
+| *"AMM Def 2.14 clause (c) is not a Mathlib concept"* | **derivable in six lines** — `IsStableUnderColimitsOfShape.condition` already has that exact shape; instantiate its second diagram at the constant functor |
+
+**A failed `#synth` is EVIDENCE ABOUT YOUR PROBE, not a fact about the library.** It has at least four
+innocent causes, and all four were hit in one day:
+1. **Not imported.** `unknown identifier` and `failed to synthesize` look alike in a hurried read, and
+   `Mathlib.Tactic` does not reach most of `CategoryTheory`.
+2. **Universe parameters.** `WellPowered (Type 0)` fails; `WellPowered.{u} (Type u)` succeeds. An
+   unresolved metavariable in the goal is the tell — read it.
+3. **A different name.** Grep the CONCEPT, never the name you would have chosen.
+4. **Decomposed into parts.** The thing is not absent, it is *assembled from* pieces that are present —
+   the clause-(c) case, where a three-clause definition had two clauses as instances and the third as a
+   short derivation. **A definition can be available without any declaration bearing its name.**
+
+**The rule.** Before writing *"not in Mathlib"*, *"the corpus does not have"*, *"no instance exists"*, or
+any dated survey negative: **(a)** confirm the name is imported and elaborates at all, **(b)** re-run
+with universes explicit, **(c)** grep the concept in at least two vocabularies, and **(d)** ask whether
+it decomposes. Then write **"not located as of &lt;date&gt;, searched as follows"** — never *"absent"*.
+
+**Why this is its own section and not a footnote.** This file already says
+*"VERIFY THE DETECTOR BEFORE BELIEVING A ZERO"* — but scoped to `check_modal.py`, so it did not fire for
+`#synth`, and the identical failure recurred three times in one day. **The generalization is the point:
+any tool that reports absence needs its absence-reporting verified before the absence is believed.**
+It also compounds: each false negative was written into a docstring as a *measured* fact, which is the
+`CannotBe`-index universal-negative hazard arriving through a new door.
+
+**And the payoff for checking is real, not just defensive.** Correcting the three negatives above turned
+"one of four hypotheses holds" into "three of four", and put an instance-of claim the corpus had twice
+withheld back within reach. **Searching harder gets you MORE** — the same lesson as Trigger 0.
+
 ## Review-Loop Cap — Severity-Tiered, Hard Rule
 
 **The gates will always find something. Stopping is a decision about SEVERITY, not a wait for silence.**
