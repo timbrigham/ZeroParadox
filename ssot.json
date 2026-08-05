@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1563,
+        "declarations": 1564,
         "files": 136
       },
       "entries": [
@@ -19917,6 +19917,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "560c25fd-2124-456d-8526-b6621d77570a",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.natPF_wtype_wellFounded_and_inhabited",
+            "short": "natPF_wtype_wellFounded_and_inhabited"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Gate round 1 fix: non-vacuous mu witness at the leaf-carrying functor natPF_NatListRegime",
           "verify": {
             "axioms": null,
             "sorry_free": true
