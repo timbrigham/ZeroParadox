@@ -225,11 +225,17 @@ commutation only, and repeats that fence throughout).
 **Prior art for the general shape.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is
 the initial algebra."* This file's fork has the **shape** of that statement.
 
-⚠ **NO instance-of claim is made — and the blocker is NOT a missing hypothesis.** Three review rounds
-were spent counting which of Thm 7.6's four *ambient* hypotheses `Type u` satisfies (one, then two,
-then three). **That was measuring the wrong gap.** Thm 7.6 is a statement about **fixed points** and
-**initial algebras**; connecting this file's results to its *subject* takes two bridges, and neither is
-a hypothesis of the theorem:
+⚠ **NO instance-of claim is made. TWO things are open, and only one of them is a hypothesis.** Three
+review rounds were spent counting which of Thm 7.6's four *ambient* hypotheses `Type u` satisfies (one,
+then two, then three) — as though that count were the whole story. It is not: **no count of ambient
+hypotheses alone can earn the claim**, because Thm 7.6 is a statement about **fixed points** and
+**initial algebras**, and connecting this file's results to its *subject* is a separate matter. The two
+open items:
+* **smoothness clause (b)** — an ambient hypothesis, true of `Type u`, unwitnessed here (see the table
+  and § V);
+* **bridge 1 below** — the predicate transport, which is not a hypothesis of the theorem at all.
+
+The bridges to its subject:
 
 1. **The predicate is not transported. STILL OPEN.** `IsWellFoundedCoalg` is stated over `Set X` with
    `nextTime`; AMM Def 4.3 is stated over `Sub(A)` in a **category**. The key ingredient exists in the
@@ -349,10 +355,18 @@ instance preservesMonomorphisms_ofTypeFunctor {P : PFunctor.{u, u}} :
   subst hg
   rfl
 
-/-- **BRIDGE 2 — `W.dest` is a FIXED POINT in AMM's sense.** AMM's *fixed point* (Thm 7.6) means the
-structure map is **invertible**, not merely that some map exists. Mathlib supplies both round trips
-(`W.mk_dest`, `W.dest_mk`), so the destructor is an equivalence. Stated because the overview's appeal to
-Thm 7.6 rests on it and previously cited nothing. -/
+/-- **BRIDGE 2 — `W.dest` is a FIXED POINT in AMM's sense.** AMM's *fixed point* (Thm 7.6, p. 30:
+*"(co)algebras whose structure is invertible"*) means the structure map is **invertible**, not merely
+that some map exists. Mathlib supplies both round trips (`W.mk_dest`, `W.dest_mk`), so the destructor is
+an equivalence. Stated because the overview's appeal to Thm 7.6 rests on it and previously cited
+nothing.
+
+**PRIOR ART, in this corpus:** `fix_isFixedPoint` (`ZeroParadox/Category/CoalgebraForkPlace.lean`) is
+**the same fact one layer up** — `⟨Fix.mk_dest, Fix.dest_mk⟩`, the identical proof shape over the QPF
+carrier. It does not discharge this one, because `QPF.Fix` is the *quotient* of `PFunctor.W` and this
+file's theorems are stated over `W.dest`; but it is the sibling and should be read alongside. (Found by
+a Step-0 grep that should have run **before** this definition was written, not after — the unstated-adjacency
+defect, committed in a file about adjacency.) -/
 def wtypeFixedPoint {P : PFunctor.{u, u}} : W P ≃ P.Obj (W P) where
   toFun := W.dest
   invFun := W.mk
