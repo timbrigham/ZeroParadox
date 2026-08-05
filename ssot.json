@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1574,
+        "declarations": 1593,
         "files": 136
       },
       "entries": [
@@ -4624,6 +4624,45 @@
             ]
           },
           "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0fcc5a8a-14e6-4f68-ba00-881fcc027b3e",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.isWellFoundedCoalgCat_iff",
+            "short": "isWellFoundedCoalgCat_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10639,6 +10678,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2a674d7b-1e20-4aaa-8178-505cd6ce42f2",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_eq_range_arrow",
+            "short": "toSet_eq_range_arrow"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2aaaa0c5-1cec-462f-93c9-edd82e0f6387",
           "new": {
@@ -14868,6 +14945,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "3d1a0ce0-0466-4be1-b68e-af9dfd9a8bb6",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_nextTimeCat",
+            "short": "toSet_nextTimeCat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20011,6 +20127,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "54d0d222-e1c5-4881-b8ff-bf2d3288a987",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_subobjectPost",
+            "short": "toSet_subobjectPost"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "553860ba-b55f-44bc-b8a7-f5b5b970f52c",
           "new": {
@@ -21610,6 +21764,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5c2b96dc-75c5-4a84-b078-35ec5a00b9e8",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.IsWellFoundedCoalgCat",
+            "short": "IsWellFoundedCoalgCat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5c4763c4-73b6-44db-9105-cbf033833547",
           "new": {
@@ -22103,6 +22295,44 @@
             ]
           },
           "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5e427323-e646-4ac5-8e90-3190b24f6f96",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.subobjectPost_mk",
+            "short": "subobjectPost_mk"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23447,6 +23677,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "67b49600-d167-4170-811a-a7a7cb55eac3",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_pullback",
+            "short": "toSet_pullback"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -27565,6 +27833,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "79aa1dae-c552-4c87-89c1-2d7bdc4f9ee7",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_eq_univ_iff",
+            "short": "toSet_eq_univ_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "7a00ea15-231e-43ca-8593-7c3b3fe8fd44",
           "new": {
@@ -28109,6 +28415,44 @@
             ]
           },
           "reason": "The mu/nu branch unification via the diagonal-fixed-point discriminator (Tim's diagram-branch unification)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "7c203d82-8a27-4d49-a6d8-960aec2bc447",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.subobjectPost",
+            "short": "subobjectPost"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30063,6 +30407,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "84bcfc87-eeac-4650-a22f-f4d228539569",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_surjective",
+            "short": "toSet_surjective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36411,6 +36793,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a0a6050a-4939-452e-af0b-17359780ed17",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.le_of_toSet_le",
+            "short": "le_of_toSet_le"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a0c1e305-5ccd-42ff-ab9a-a740b4ce8179",
           "new": {
@@ -38341,6 +38761,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ac206067-a8c5-454b-86f8-27ff68581087",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet",
+            "short": "toSet"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ac361c80-28b9-43f7-941e-3fb2a64a1980",
           "new": {
             "file": "ZeroParadox/Computability/ComputableCrossing.lean",
@@ -39005,6 +39463,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ae91ff69-16fa-4cac-82d1-1944723154ab",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ofTypeFunctor_pfunctor_map",
+            "short": "ofTypeFunctor_pfunctor_map"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "af0c3599-5019-4454-8c76-4c6a2f241932",
           "new": {
             "file": "ZeroParadox/Valuation/PadicTree.lean",
@@ -39177,6 +39673,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "af7ed513-b629-4fae-9d2e-2917bb88b5ba",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_mk",
+            "short": "toSet_mk"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39619,6 +40153,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b1f650fc-ae13-48cd-95f6-5294a8f43725",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nextTimeCat",
+            "short": "nextTimeCat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48160,6 +48732,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d8396a7f-1253-46c5-af4a-8c738e995869",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mem_range_pfunctor_map",
+            "short": "mem_range_pfunctor_map"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d873f899-be7c-43df-8773-3f0f477181bc",
           "new": {
             "file": "ZeroParadox/Valuation/PadicStillPoint.lean",
@@ -49245,6 +49856,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "dc79db7c-06eb-40b3-bffb-837ceb3b32be",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.monoOverPost",
+            "short": "monoOverPost"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -55138,6 +55787,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "f5f33c5b-f4f6-4c8d-a259-0005cb14f207",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.range_eq_of_monoOver_iso",
+            "short": "range_eq_of_monoOver_iso"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "f5f5c145-0a57-497f-b849-732f541f780d",
           "new": {
@@ -56213,6 +56900,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f9f9d31c-13be-449e-be71-ba110078ecea",
+          "new": {
+            "file": "ZeroParadox/Category/NextTimeCategorical.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.toSet_injective",
+            "short": "toSet_injective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Bridge 1: AMM Def 4.1/4.3 categorically, plus the transport to the concrete Set-based predicate",
           "verify": {
             "axioms": null,
             "sorry_free": true
