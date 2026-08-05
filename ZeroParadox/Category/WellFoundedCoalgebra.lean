@@ -13,7 +13,18 @@ set_option maxHeartbeats 400000
 
 ## Engineer's Take
 
-TODO (Tim): <your take, in your own voice.>
+While working through the span question with my AI assistant, we ran into this. I do not recognize the
+nomenclature here and I recognize the concept. That is the short version of why this got built.
+
+When the category list came back, three of the four lines sounded really damn familiar. That is what
+made me want to keep pulling on it.
+
+The question I was actually asking is whether this is one of those meta level cases where these are the
+requirements we need to meet, and the commonly named version of the requirements that need to be met
+already has a name somewhere. It turned out that it does.
+
+A build is fine here assuming step zero has been properly taken. I defer to my AI assistant regarding
+the specifics of how the internals work.
 
 ---
 
