@@ -237,22 +237,49 @@ theorem forcing_needs_the_binary_split :
 **What this section adds.** `ZeroParadox/Category/WellFoundedCoalgebra.lean` gives an *intrinsic*
 well-foundedness test for polynomial-functor coalgebras (Adámek-Milius-Moss Def 4.3: the only fixed
 point of the next-time operator is everything). `stepCoalg` above already reads a step function as a
-`1 + X`-coalgebra. Applying one to the other turns out to give **exactly halting**, and nothing in the
-corpus had made that connection.
+`1 + X`-coalgebra. Applying one to the other gives **exactly halting**.
 
-**PRIOR ART — the general fact is theirs, the instance is what is added.** AMM Ex 4.5(1): a coalgebra
-for the powerset functor, read as a graph, *"is well-founded iff it has no infinite directed path."*
-§ V is the **deterministic** specialization of that, on the carrier Mathlib calls `StateTransition` —
-which `ZeroParadox/Computability/Occurrence.lean` records is the exact type of `Turing.TM0/TM1/TM2.step`,
-so these results reach every Mathlib Turing machine by instantiation.
+**⚠ PRIOR ART — AMM DO THIS CASE THEMSELVES. The delta here is the FORMALIZATION, not the
+specialization.** An earlier draft credited only their Ex 4.5(1) (powerset/graph) and called § V "the
+deterministic specialization of that". That understated them. Verified at source:
+* **Ex 4.14(2), p. 18** — *"For `F X = X + 1` coalgebras are sets `A` equipped with a partial function
+  `α : A ⇀ A`, and the canonical graph is the graph of `α`."* A partial function `A ⇀ A` **is**
+  `σ → Option σ`, and the graph of `α` **is** `stepRel`. This is precisely § V's setting.
+* **Cor 4.13, p. 18** — for an intersection-preserving set functor, a coalgebra is *"well-founded iff
+  its canonical graph is well-founded."* That is the general theorem `isWellFoundedCoalg_stepCoalg_iff`
+  instantiates.
+* **Ex 4.5(5), p. 15** — the least fixed point of `⃝` consists of *"precisely those states from which
+  every path reaches 0 in at most `n` steps"*, and the coalgebra *"is well-founded iff `A = A*`."*
+  That is `wfPart_stepCoalg`'s content (AMM state it there for `F X = K × X^Σ` on `Vec_K`; the shape is
+  the same).
+
+**So the honest delta:** a Lean formalization of the above on Mathlib's `StateTransition`-shaped
+carrier, tying it to `Acc`/`WellFounded`. `ZeroParadox/Computability/Occurrence.lean` records that
+`σ → Option σ` is that carrier and the exact type of `Turing.TM0/TM1/TM2.step`, so these reach Mathlib
+Turing machines by instantiation — ⚠ **modulo universes**: § V is `Type 0`-bound via `PFunctor.{0,0}`
+while Mathlib's `Turing` machines are `Type*`.
+
+**⚠ And narrow the novelty claim about this corpus.** `Occurrence.lean` (which § V imports) already
+links step-relation well-foundedness to the live/dead divide in `live_step_not_wellFounded` /
+`inversion_is_the_wf_divide`, already citing Taylor and AMM. What was **not** connected is the
+*intrinsic* test (`IsWellFoundedCoalg`, next-time fixed points) to halting.
 
 **⚠ Adjacency is not identity.** "Turing machines are witnesses" is licensed; *"the bottom is a Turing
 machine"* is a cross-carrier identity and stays a type boundary. And **determinism remains the
 recurring cost** — `σ → Option σ` is a *function*, so `deterministic_has_no_fanout` applies and
 halted / self-looping share a **fate**; the trichotomy is three-valued only relationally. -/
 
-/-- The step relation: `a` is the successor of `b`. A descending chain **is** the machine's forward
-run, so `WellFounded (stepRel f)` says every run terminates. -/
+/-- The step relation, **written backwards on purpose**: `stepRel f a b` means `a` is the *successor*
+of `b`. A descending `stepRel`-chain is therefore the machine's **forward** run, which is what makes
+`WellFounded (stepRel f)` say "every run terminates".
+
+⚠ **This is the CONVERSE of the relation Mathlib and this directory use.** Mathlib's `StateTransition`
+and `ZeroParadox/Computability/Occurrence.lean` both orient it as `fun a b => b ∈ f a` — source first.
+The two are **not interchangeable**: well-foundedness of the converse is a statement about *backward*
+chains. Nothing below depends on conflating them, but do not read across without transposing.
+
+**Prior art for the object:** AMM Ex 4.14(2) calls this the **canonical graph** of the coalgebra — for
+`F X = X + 1` it is "the graph of `α`" for the partial function `α`. -/
 def stepRel : σ → σ → Prop := fun a b => f b = some a
 
 /-- **`Statement:` the next-time operator on a step function is "every successor lies in `S`".**
@@ -294,7 +321,13 @@ Left to right: the accessible set is a fixed point, so well-foundedness forces i
 Right to left: well-founded induction carries membership of any fixed point up from the leaves.
 
 **No halting predicate had to be invented** — halting *is* accessibility of `stepRel`, so this is
-stated in Mathlib's standard vocabulary. -/
+stated in Mathlib's standard vocabulary.
+
+⚠ **That makes THREE halting notions now reachable from this file, and no bridge between them.**
+`Acc (stepRel f)` here; `Occurs` / `occurs_iff_halts` (Kleene codes) in the imported
+`ZeroParadox/Computability/Occurrence.lean`; and Mathlib's own `(StateTransition.eval f s).Dom`, at
+**this section's exact carrier** — which `Occurrence.lean` § 0 already warns to check before
+hand-rolling anything. Relating them is a **pointer**, not a new declaration, and is next-touch work. -/
 theorem isWellFoundedCoalg_stepCoalg_iff :
     IsWellFoundedCoalg (P := natPF_NatListRegime) (stepCoalg f) ↔ WellFounded (stepRel f) := by
   constructor
@@ -316,7 +349,8 @@ theorem isWellFoundedCoalg_stepCoalg_iff :
 /-- **`Statement:` THE INFORMATION FACE — `wfPart` IS THE HALTING SET.** The least fixed point of the
 next-time operator on a step function is exactly the set of states from which the machine terminates.
 
-`Reading:` its **complement is the divergent set** — the states from which the machine runs forever.
+`Reading:` **CARRIER kind**, conjectural — its **complement is the divergent set**, the states from
+which the machine runs forever.
 That is the INFINITE pole of `CLAUDE.md`'s Two-Pole rule, obtained as a **construction** (a least fixed
 point) rather than as a description. ⚠ The complement itself is not characterized here; naming it is
 next work, not a result of this theorem. -/
