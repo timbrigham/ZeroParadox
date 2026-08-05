@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1566,
+        "declarations": 1568,
         "files": 136
       },
       "entries": [
@@ -5867,6 +5867,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "14e37f7a-fca4-487e-ad86-7d4429e31cc2",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.wtypeFixedPoint",
+            "short": "wtypeFixedPoint"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Bridge 2: W.dest and M.dest are fixed points in AMM's sense (structure map invertible)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -43422,6 +43461,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c4305a4d-787a-4f68-a350-7d183027fa09",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mtypeFixedPoint",
+            "short": "mtypeFixedPoint"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category",
+              "computability"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Bridge 2: W.dest and M.dest are fixed points in AMM's sense (structure map invertible)",
           "verify": {
             "axioms": null,
             "sorry_free": true
