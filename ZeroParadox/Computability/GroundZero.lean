@@ -246,15 +246,16 @@ deterministic specialization of that". That understated them. **Read the paper, 
 
 | AMM | what is there | what it covers here |
 |---|---|---|
-| **Ex 4.14(2), p. 18** | `F X = X + 1` coalgebras as partial functions, with the canonical graph the graph of `α`; worked instance `ℕ` with `n ↦ n − 1` **for `n > 0`** — the qualifier is load-bearing, it is what makes the function *partial* (undefined at `0`, so `0` is the leaf) and hence well-founded | § V's exact setting — such a partial function is `σ → Option σ`, and `stepRel` is its graph **transposed** (see `stepRel`'s docstring below) |
+| **Ex 4.14(2), p. 18** | `F X = X + 1` coalgebras as partial functions, with the canonical graph the graph of `α`; worked instance `ℕ` with `n ↦ n − 1` **for `n > 0`** — the qualifier is load-bearing: it is what makes the function *partial* (undefined at `0`, so `0` is a leaf). ⚠ Partiality is what makes this instance well-founded, **not** a general implication — a partial function can still loop elsewhere | § V's exact setting — such a partial function is `σ → Option σ`, and `stepRel` is its graph **transposed** (see `stepRel`'s docstring below) |
 | **Cor 4.13, p. 18** | well-founded iff the canonical graph is, for intersection-preserving set functors | the general theorem `isWellFoundedCoalg_stepCoalg_iff` instantiates |
 | **Ex 4.5(5), p. 16** | the `⃝`-approximants, their join `A*`, and well-founded iff `A = A*` (stated there for `F X = K × X^Σ` on `Vec_K`) | `wfPart_stepCoalg`'s content — ⚠ note AMM's "reaches 0 in at most `n` steps" describes the **`n`-th approximant**, and the least fixed point is their **join** of those |
 
 *(Locators, not block quotes, deliberately. A quoted version of this shipped three transcription
 errors at once — a wrong page, the **approximant's** description attached to the **lfp**, and an
 altered arrow glyph — and a later pass then dropped a load-bearing side condition. A quotation is a
-second copy of the source and it drifts; see `CLAUDE.md` § "the pointer must not become a COPY". The
-claim underneath was verified at source and never moved.)*
+second copy of the source and it drifts; see `CLAUDE.md` § "the pointer must not become a COPY".
+**The prior-art credit itself — that AMM cover this case and the delta here is the formalization —
+was verified at source and never moved;** only the transcriptions of it did.)*
 
 **So the honest delta:** a Lean formalization of the above on Mathlib's `StateTransition`-shaped
 carrier, tying it to `Acc`/`WellFounded`. `ZeroParadox/Computability/Occurrence.lean` records that
@@ -283,8 +284,11 @@ whereas well-foundedness of the **Mathlib-oriented** relation is about *backward
 statement. Nothing in § V mixes them (§ V uses only `stepRel`), but do not read across without
 transposing.
 
-**Prior art for the object:** AMM Ex 4.14(2) calls this the **canonical graph** of the coalgebra — for
-`F X = X + 1` it is "the graph of `α`" for the partial function `α`. -/
+**Prior art for the object — and note the orientation there too.** AMM Ex 4.14(2) calls the
+**canonical graph** of an `F X = X + 1` coalgebra "the graph of `α`", whose edges run `(a, α(a))` —
+i.e. `fun a b => f a = some b`, source first. **`stepRel` is that graph TRANSPOSED**, for the reason in
+the first paragraph: it is the orientation under which "descending" means "running forward". Their
+results about the canonical graph therefore transfer to `stepRel` only with the transpose applied. -/
 def stepRel : σ → σ → Prop := fun a b => f b = some a
 
 /-- **`Statement:` the next-time operator on a step function is "every successor lies in `S`".**
