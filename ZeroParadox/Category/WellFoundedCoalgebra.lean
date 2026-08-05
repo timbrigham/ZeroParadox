@@ -80,7 +80,8 @@ def nextTime {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X) (S : Set X)
 children all land in it. (AMM note `⃝` is monotone; it is what lets Knaster-Tarski apply.) -/
 theorem nextTime_mono {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X) :
     Monotone (nextTime α) := by
-  sorry
+  intro S T hST x hx b
+  exact hST (hx b)
 
 /-- `nextTime` bundled as an order homomorphism on the complete lattice `Set X`, so Mathlib's
 fixed-point API applies. -/
@@ -107,7 +108,13 @@ def wfPart {X : Type u} {P : PFunctor.{u, u}} (α : X → P.Obj X) : Set X :=
 fixed; ⟹ `lfp` is itself a fixed point, so it must be `univ`.) -/
 theorem isWellFoundedCoalg_iff_wfPart_univ {X : Type u} {P : PFunctor.{u, u}}
     (α : X → P.Obj X) : IsWellFoundedCoalg α ↔ wfPart α = Set.univ := by
-  sorry
+  constructor
+  · intro hwf
+    exact hwf _ (OrderHom.map_lfp (nextTimeHom α))
+  · intro hlfp S hS
+    have hle : wfPart α ≤ S := OrderHom.lfp_le _ (le_of_eq hS)
+    rw [hlfp] at hle
+    exact Set.eq_univ_of_univ_subset hle
 
 /-! ### § III. The μ side — the W-type is well-founded INTRINSICALLY -/
 
@@ -119,22 +126,32 @@ restated as a fixed-point property. Compare AMM Ex 4.5(2) (the initial algebra, 
 well-founded); this is the concrete W-type case. -/
 theorem wtype_wellFounded {P : PFunctor.{u, u}} :
     IsWellFoundedCoalg (P := P) W.dest := by
-  sorry
+  intro S hS
+  ext x
+  simp only [Set.mem_univ, iff_true]
+  induction x with
+  | mk a f ih =>
+      have hmem : (WType.mk a f) ∈ nextTime (P := P) W.dest S := fun b => ih b
+      rw [hS] at hmem
+      exact hmem
 
 /-! ### § IV. The ν side — the leaf-free M-type FAILS the test -/
 
 /-- The leaf-free M-type is inhabited: corecursion builds the infinite unary tree. (The corpus's
 `cofix_nonempty` is the `QPF.Cofix` counterpart; this is the `PFunctor.M` one, stated here because
 § IV's separation needs an inhabitant.) -/
-theorem idPF_M_nonempty : Nonempty (M idPF_Coalgebra) := by
-  sorry
+theorem idPF_M_nonempty : Nonempty (M idPF_Coalgebra) :=
+  ⟨M.corec (fun _ : Unit => (⟨(), fun _ => ()⟩ : idPF_Coalgebra.Obj Unit)) ()⟩
 
 /-- `∅` is a fixed point of the next time operator on the leaf-free M-type. Every node of
 `idPF_Coalgebra = ⟨PUnit, fun _ => PUnit⟩` has a child, so "all children lie in `∅`" is unsatisfiable
 — `nextTime` sends `∅` to `∅`. **This is the whole obstruction**: a proper fixed point exists. -/
 theorem idPF_M_nextTime_empty :
     nextTime (P := idPF_Coalgebra) M.dest ∅ = ∅ := by
-  sorry
+  ext x
+  simp only [Set.mem_empty_iff_false, iff_false]
+  intro hx
+  exact hx PUnit.unit
 
 /-- **`Statement:` the M-type FAILS the intrinsic test.** `∅` is a fixed point of next time and the
 carrier is inhabited, so `∅ ≠ Set.univ` and well-foundedness fails. **This is an instance of AMM
@@ -142,7 +159,11 @@ Ex 4.5(3)** (`F∅ = ∅` forces the only well-founded coalgebra to be the empty
 theirs; what is added is the concrete witness on the corpus's own leaf-free functor. -/
 theorem idPF_M_not_wellFounded :
     ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest := by
-  sorry
+  intro hwf
+  obtain ⟨m⟩ := idPF_M_nonempty
+  have huniv : (∅ : Set (M idPF_Coalgebra)) = Set.univ := hwf ∅ idPF_M_nextTime_empty
+  have : m ∈ (∅ : Set (M idPF_Coalgebra)) := by rw [huniv]; exact Set.mem_univ m
+  exact this
 
 /-- **The fork, intrinsically.** Same functor, two carriers: the W-type passes AMM's test and the
 M-type fails it. `Reading:` the framework reads this as the μ/ν root cut — but note what is and is not
@@ -151,17 +172,49 @@ that this property *is* the μ/ν distinction in general, or that either carrier
 is `CoalgebraForkPlace.lean`'s scope, and `QPF.Fix.rec_unique` is where the uniqueness half lives). -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
-      ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest := by
-  sorry
+      ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest :=
+  ⟨wtype_wellFounded, idPF_M_not_wellFounded⟩
 
 end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-Measured, not predicted — `#print axioms` follows the STATEMENT, so the `M` results are expected to
-carry choice via `M.dest` (see the measured table in `CLAUDE.md`: `PFunctor.M.dest` is
-`[propext, Classical.choice, Quot.sound]`) while the `W` side should be clean. Read the output; do not
-assume it. -/
+**Measured 2026-08-04, not inferred.** `#print axioms` follows the STATEMENT, so read the split by
+what each statement mentions:
+
+```
+nextTime                            no axioms          -- the operator itself
+IsWellFoundedCoalg                  no axioms          -- set EQUALITY only, no order structure
+idPF_M_nonempty                     no axioms          -- corecursion INTO M is free
+wtype_wellFounded                   [propext, Quot.sound]                    <- the μ side, CHOICE-FREE
+nextTime_mono / wfPart / _iff_      [propext, Classical.choice, Quot.sound]
+idPF_M_* / fork_is_intrinsic        [propext, Classical.choice, Quot.sound]
+```
+
+**Two origins, measured separately — neither is this file's mathematics.**
+
+1. **The `Set` lattice instance** (the instance hazard `CLAUDE.md` documents). Measured:
+   `Set.instBooleanAlgebra` is `[propext, Classical.choice, Quot.sound]`, inheriting from
+   `Prop.instBooleanAlgebra` (same footprint) whose sibling `Prop.instHeytingAlgebra` is `[propext]`.
+   **Knaster-Tarski itself is choice-free** — `OrderHom.lfp`, `OrderHom.map_lfp` and `OrderHom.lfp_le`
+   all measure `[propext, Quot.sound]`. So the fixed-point machinery costs nothing; mentioning
+   `Monotone` on `Set X` is what costs.
+2. **`M.dest`**, the documented origin on the M side (`CLAUDE.md`'s measured table).
+
+**Why `wtype_wellFounded` escapes both:** `IsWellFoundedCoalg` is stated with set *equality*
+(`nextTime α S = S → S = Set.univ`) and mentions no order instance, and the W side never destructs an
+M-type. So the μ-side result is choice-free while its ν-side counterpart is not — matching
+`Settheory/Coalgebra.lean`, where `fix_isEmpty` is `[propext, Quot.sound]` and `cofix_nonempty`
+carries choice.
+
+⚠ **NOT CLAIMED: that any of this is removable.** That is a modal claim, and per `CLAUDE.md` it needs
+an *exhibited* clean proof (accidental) or a *reduction* to a taboo (essential); a footprint
+measurement can establish neither. What is claimed is only what was measured above.
+
+**One measured aside worth recording:** `idPF_M_nonempty` is **axiom-free**, where the corpus's
+`cofix_nonempty` (`Settheory/Coalgebra.lean:147`) carries choice for the same functor. The difference
+is the carrier, not the argument — `PFunctor.M` with `M.corec` versus `QPF.Cofix` and its quotient
+layer. This is the "build without destructing" pattern already recorded for `strict_cofix_nonempty`. -/
 
 section PurityCheck
 open ZeroParadox
