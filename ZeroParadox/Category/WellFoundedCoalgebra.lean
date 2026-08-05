@@ -2,6 +2,7 @@
 -- polynomial-functor coalgebras. Curated/load-bearing results are indexed in
 -- ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Settheory.Coalgebra
+import ZeroParadox.Computability.NatListRegime
 import Mathlib.Data.PFunctor.Univariate.M
 import Mathlib.Order.FixedPoints
 import Mathlib.Tactic
@@ -38,7 +39,10 @@ on an arbitrary coalgebra without knowing how it was made.
 
 **PRIOR ART — this is a FORMALIZATION OF PUBLISHED DEFINITIONS, not a new notion.** The operator and
 the well-foundedness criterion are Adámek-Milius-Moss 2020 (arXiv:1910.09401v2), *On Well-Founded and
-Recursive Coalgebras*, § 4, who credit the characterization to **Taylor** [28, Exercise VI.17] and the
+Recursive Coalgebras*, § 4, who credit the characterization to **Taylor**, citing it as their ref [28]
+Exercise VI.17 — that is **Taylor, *Practical Foundations of Mathematics* (CUP 1999), which this
+project does NOT hold locally**; the Taylor PDF in `.claude-local/papers/` is his *Well founded
+coalgebras and recursion*, a different document, so do not send a reader there for VI.17. And the
 operator itself to **Jacobs** (the 'next time' operator of temporal logic, there for Kripke polynomial
 set functors). Source PDFs: `.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`,
 `.claude-local/papers/taylor_wellfounded_coalgebras_recursion.pdf`. Their statements, quoted:
@@ -69,7 +73,9 @@ on how the objects were built. § IV is an instance of AMM Ex 4.5(3) and is cred
 - § I   `nextTime`, its monotonicity, and the bundled `OrderHom`.
 - § II  `IsWellFoundedCoalg`, the well-founded part as `lfp`, and their equivalence.
 - § III The μ side: the W-type is well-founded (intrinsically).
-- § IV  The ν side: the leaf-free M-type is NOT (intrinsically), via `∅` as a proper fixed point.
+- § IV  The ν side: the leaf-free M-type is NOT (intrinsically), via `∅` as a proper fixed point;
+        then the fork bundle — **whose μ half is vacuous at that functor, disclosed in place** — and a
+        non-vacuous μ witness at the leaf-carrying `1 + X`.
 -/
 
 namespace ZeroParadox
@@ -131,10 +137,11 @@ theorem isWellFoundedCoalg_iff_wfPart_univ {X : Type u} {P : PFunctor.{u, u}}
 
 /-- **`Statement:` the W-type passes the intrinsic test.** For any polynomial functor `P`, the
 canonical coalgebra `W.dest : W P → P.Obj (W P)` is well-founded in AMM's sense: the only set closed
-under "all children lie in it" is everything. **The proof is structural induction on the W-type** —
-which is the honest content: well-foundedness of `W` *is* the availability of that induction,
-restated as a fixed-point property. Compare AMM Ex 4.5(2) (the initial algebra, as a coalgebra, is
-well-founded); this is the concrete W-type case. -/
+under "all children lie in it" is everything. **The proof is structural induction on the W-type**, and
+that is the honest content: the induction principle *yields* AMM-well-foundedness here. `Reading:` the
+framework reads the two as one fact in different clothes — **only that direction is proved, and no
+converse is claimed.** Compare AMM Ex 4.5(2) (the initial algebra, as a coalgebra, is well-founded);
+this is the concrete W-type case. -/
 theorem wtype_wellFounded {P : PFunctor.{u, u}} :
     IsWellFoundedCoalg (P := P) W.dest := by
   intro S hS
@@ -156,7 +163,9 @@ theorem idPF_M_nonempty : Nonempty (M idPF_Coalgebra) :=
 
 /-- `∅` is a fixed point of the next time operator on the leaf-free M-type. Every node of
 `idPF_Coalgebra = ⟨PUnit, fun _ => PUnit⟩` has a child, so "all children lie in `∅`" is unsatisfiable
-— `nextTime` sends `∅` to `∅`. **This is the whole obstruction**: a proper fixed point exists. -/
+— `nextTime` sends `∅` to `∅`. ⚠ This proves only that `∅` is **a** fixed point; that it is a
+**proper** one needs the carrier to be inhabited, which is `idPF_M_nonempty`, and the two are combined
+in `idPF_M_not_wellFounded` below. -/
 theorem idPF_M_nextTime_empty :
     nextTime (P := idPF_Coalgebra) M.dest ∅ = ∅ := by
   ext x
@@ -176,15 +185,53 @@ theorem idPF_M_not_wellFounded :
   have : m ∈ (∅ : Set (M idPF_Coalgebra)) := by rw [huniv]; exact Set.mem_univ m
   exact this
 
-/-- **The fork, intrinsically.** Same functor, two carriers: the W-type passes AMM's test and the
-M-type fails it. `Reading:` the framework reads this as the μ/ν root cut — but note what is and is not
-proved. **`Statement:`** the two carriers differ on a property of the coalgebra alone. **NOT proved:**
-that this property *is* the μ/ν distinction in general, or that either carrier is initial/final (that
-is `CoalgebraForkPlace.lean`'s scope, and `QPF.Fix.rec_unique` is where the uniqueness half lives). -/
+/-- **The fork at the leaf-free functor — and it is DEGENERATE on the μ side. Read the fence.**
+
+`Statement:` the two carriers differ on a property of the coalgebra alone.
+
+⚠ **The μ half here is VACUOUS, and saying so is the point.** `W idPF_Coalgebra` is **empty** — the
+corpus proves it axiom-free as `w_isEmpty` (`ZeroParadox/Computability/ChoicePurityInvariant.lean`) —
+so this conjunct holds because `∅ = Set.univ` on an empty carrier, with no induction used at all. That
+is not a surprise: it is forced by **AMM Ex 4.5(3)**, quoted in this file's overview (`F∅ = ∅` makes the
+empty coalgebra the only well-founded one), and `F∅ = ∅` holds for `idPF_Coalgebra`. **So at THIS
+functor the bundle carries the same content as the corpus's existing `categorical_fork_strict`
+(`ZeroParadox/Settheory/Coalgebra.lean`), and emptiness is a fact about how the carrier was built —
+exactly what an "intrinsic" test was supposed to stop depending on.** For a non-vacuous μ witness see
+`natPF_wtype_wellFounded_and_inhabited` below; the general `wtype_wellFounded` (arbitrary `P`) is
+untouched by this and is where the non-degenerate content lives.
+
+`Reading:` **CARRIER kind**, conjectural — the framework reads the two carriers' disagreement as the
+μ/ν root cut. **NOT proved:** that this property *is* the μ/ν distinction in general, nor that either
+carrier is initial/final. On initiality, `QPF.Fix.rec_unique` is the Mathlib route;
+`ZeroParadox/Category/CoalgebraForkPlace.lean` explicitly does **not** prove it (it states existence +
+commutation only and says so three times).
+
+**Prior art for the general form:** this is a concrete case of **AMM Thm 7.6** (p. 30) — *"the only
+well-founded fixed point is the initial algebra"* — since both `W.dest` and `M.dest` are fixed points
+and `W` is the initial algebra. That theorem is **not formalized here**; it is cited as the general
+statement this instance sits under. -/
 theorem fork_is_intrinsic :
     IsWellFoundedCoalg (P := idPF_Coalgebra) W.dest ∧
       ¬ IsWellFoundedCoalg (P := idPF_Coalgebra) M.dest :=
   ⟨wtype_wellFounded, idPF_M_not_wellFounded⟩
+
+/-- **`Statement:` a NON-VACUOUS μ witness.** At the leaf-carrying functor
+`natPF_NatListRegime = ⟨Bool, fun b => cond b PUnit PEmpty⟩` (the polynomial functor `1 + X`), the
+W-type is **inhabited** — the `b = false` head is a leaf, so `W.mk ⟨false, PEmpty.elim⟩` is a tree —
+**and** it passes AMM's test. So here well-foundedness is not the empty-carrier artifact it is at
+`idPF_Coalgebra`: the test is passed by a carrier that actually has elements, and the proof is the
+structural induction of `wtype_wellFounded`.
+
+**Open, and deliberately not attempted:** the matching non-vacuous ν half. At this functor `∅` is
+*not* a fixed point of `nextTime` (the leaf node has no children, so it lies in `nextTime … ∅`
+vacuously), so the `idPF_Coalgebra` argument does not transfer. The natural witness is the
+"eventually reaches a leaf" subset, which excludes `natInfinity`
+(`ZeroParadox/Computability/NatListRegime.lean`) — establishing it is a fixed point needs
+M-bisimulation, and that file's `EventuallyLeaf` is stated over `QPF.Cofix`, a different carrier. -/
+theorem natPF_wtype_wellFounded_and_inhabited :
+    IsWellFoundedCoalg (P := natPF_NatListRegime) W.dest ∧
+      Nonempty (W natPF_NatListRegime) :=
+  ⟨wtype_wellFounded, ⟨W.mk ⟨false, fun e => e.elim⟩⟩⟩
 
 end ZeroParadox
 
@@ -198,11 +245,14 @@ nextTime                            no axioms          -- the operator itself
 IsWellFoundedCoalg                  no axioms          -- set EQUALITY only, no order structure
 idPF_M_nonempty                     no axioms          -- corecursion INTO M is free
 wtype_wellFounded                   [propext, Quot.sound]                    <- the μ side, CHOICE-FREE
+natPF_wtype_wellFounded_and_inhabited  [propext, Quot.sound]                 <- the non-vacuous μ witness
 nextTime_mono / wfPart / _iff_      [propext, Classical.choice, Quot.sound]
 idPF_M_* / fork_is_intrinsic        [propext, Classical.choice, Quot.sound]
 ```
 
-**Two origins, measured separately — neither is this file's mathematics.**
+**Two origins, measured separately.** (Where each footprint *enters* is measured below. ⚠ No claim is
+made that either is avoidable — origin 1 enters precisely *because* this file states `Monotone` on
+`Set X`, which is this file's own choice of formulation.)
 
 1. **The `Set` lattice instance** (the instance hazard `CLAUDE.md` documents). Measured:
    `Set.instBooleanAlgebra` is `[propext, Classical.choice, Quot.sound]`, inheriting from
@@ -215,7 +265,7 @@ idPF_M_* / fork_is_intrinsic        [propext, Classical.choice, Quot.sound]
 **Why `wtype_wellFounded` escapes both:** `IsWellFoundedCoalg` is stated with set *equality*
 (`nextTime α S = S → S = Set.univ`) and mentions no order instance, and the W side never destructs an
 M-type. So the μ-side result is choice-free while its ν-side counterpart is not — matching
-`Settheory/Coalgebra.lean`, where `fix_isEmpty` is `[propext, Quot.sound]` and `cofix_nonempty`
+`ZeroParadox/Settheory/Coalgebra.lean`, where `fix_isEmpty` is `[propext, Quot.sound]` and `cofix_nonempty`
 carries choice.
 
 ⚠ **NOT CLAIMED: that any of this is removable.** That is a modal claim, and per `CLAUDE.md` it needs
@@ -223,7 +273,7 @@ an *exhibited* clean proof (accidental) or a *reduction* to a taboo (essential);
 measurement can establish neither. What is claimed is only what was measured above.
 
 **One measured aside worth recording:** `idPF_M_nonempty` is **axiom-free**, where the corpus's
-`cofix_nonempty` (`Settheory/Coalgebra.lean:147`) carries choice for the same functor. The difference
+`cofix_nonempty` (`ZeroParadox/Settheory/Coalgebra.lean`) carries choice for the same functor. The difference
 is the carrier, not the argument — `PFunctor.M` with `M.corec` versus `QPF.Cofix` and its quotient
 layer. This is the "build without destructing" pattern already recorded for `strict_cofix_nonempty`. -/
 
@@ -240,5 +290,6 @@ open ZeroParadox
 #print axioms idPF_M_nextTime_empty
 #print axioms idPF_M_not_wellFounded
 #print axioms fork_is_intrinsic
+#print axioms natPF_wtype_wellFounded_and_inhabited
 
 end PurityCheck
