@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1607,
+        "declarations": 1609,
         "files": 136
       },
       "entries": [
@@ -36910,6 +36910,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a003cf91-a9c4-4ba9-8a3b-020829c62b87",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.injective_forces_confined_support_subsingleton",
+            "short": "injective_forces_confined_support_subsingleton"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Round-3 claim revalidation: injectivity collapses any fiber-confined PMF support to one point.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a01e520f-c8f6-4c2d-9ae9-bd03f13df24b",
           "new": {
@@ -39243,6 +39279,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ac95f0b2-a52f-46aa-b99f-6571d6429185",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.confined_non_pure_refutes_injective",
+            "short": "confined_non_pure_refutes_injective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Round-3 claim revalidation: a spread fiber-confined distribution refutes injectivity — the collision is necessary, not decorative.",
           "verify": {
             "axioms": null,
             "sorry_free": true

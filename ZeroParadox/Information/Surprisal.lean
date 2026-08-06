@@ -329,6 +329,37 @@ theorem pmf_subsingleton_isPure {α : Type*} [Subsingleton α] (p : PMF α) (a :
   rw [Subsingleton.elim b a, hpa]
   simp [PMF.pure_apply]
 
+/-! ### The converse — the collision is NECESSARY, not decorative
+
+**Why these exist (round-3 claim revalidation, 2026-08-05).** The `Reading:` above had been re-worded
+three times without anyone asking whether the claim underneath was *true*: does a non-injective
+representation actually **buy** anything, or would the distribution exist anyway? A wording gate can
+never answer that. These two theorems answer it, and they are stated over an arbitrary `f` because the
+fact has nothing to do with ordinals.
+
+`Statement:` under an **injective** map, a distribution confined to one fiber has at most one point in
+its support — so it cannot be spread. Therefore a spread confined distribution **refutes** injectivity
+outright. The collision is not a convenient source of two points; it is the *only* source. -/
+
+/-- **`Statement:` injectivity collapses any confined support to a single point.** -/
+theorem injective_forces_confined_support_subsingleton
+    {α β : Type*} (f : α → β) (hf : Function.Injective f)
+    (p : PMF α) (o : β) (hconf : ∀ x ∈ p.support, f x = o) :
+    ∀ x ∈ p.support, ∀ y ∈ p.support, x = y :=
+  fun x hx y hy => hf ((hconf x hx).trans (hconf y hy).symm)
+
+/-- **`Statement:` and so a spread confined distribution refutes injectivity.** The contrapositive,
+stated separately because it is the direction the framework actually uses: exhibiting a non-degenerate
+distribution over one denotation *is* exhibiting a failure of faithfulness. -/
+theorem confined_non_pure_refutes_injective
+    {α β : Type*} (f : α → β) (p : PMF α) (o : β)
+    (hconf : ∀ x ∈ p.support, f x = o)
+    (hx : ∃ x ∈ p.support, ∃ y ∈ p.support, x ≠ y) :
+    ¬ Function.Injective f := by
+  obtain ⟨x, hxs, y, hys, hne⟩ := hx
+  intro hf
+  exact hne (injective_forces_confined_support_subsingleton f hf p o hconf x hxs y hys)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -356,5 +387,7 @@ open ZeroParadox
 #print axioms nontrivial_admits_non_pure_pmf
 #print axioms not_pure_of_two_support
 #print axioms pmf_subsingleton_isPure
+#print axioms injective_forces_confined_support_subsingleton
+#print axioms confined_non_pure_refutes_injective
 
 end PurityCheck

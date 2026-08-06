@@ -367,6 +367,13 @@ stronger fact: a spread distribution **confined to a single denotation**. Any tw
 give a non-degenerate distribution; only a *collision* gives one whose entire support denotes one
 ordinal.
 
+**AND THE COLLISION IS NECESSARY — measured, not assumed.**
+`confined_non_pure_refutes_injective` (`ZeroParadox/Information/Surprisal.lean`) proves the converse:
+under an *injective* map a confined distribution collapses to one support point, so a spread one
+refutes injectivity outright. The non-faithfulness is therefore not a convenient source of two points
+— it is the only source. This was measured at round-3 revalidation, after the sentence had been
+re-worded three times without anyone asking whether the claim underneath was true.
+
 **STANDARD NAME — this is structural (un)identifiability.** A parameter is *structurally identifiable*
 when it can be determined from the model's outputs; unidentifiable when distinct parameters are
 indistinguishable to the observation. Here `e0Repr` is the observation and its fiber is the
