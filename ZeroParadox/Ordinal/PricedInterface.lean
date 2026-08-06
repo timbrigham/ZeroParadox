@@ -141,7 +141,8 @@ The carrier is an `abbrev`. The order, the decidability instances, and the latti
 inherited from Mathlib's `WithTop` instances applied to an order built in a sibling file — this file
 proves none of that and should get no credit for it. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
 
-Two things here are not free. `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
+Three things here are not free (`onote_repr_eq_zero_iff` below is the third, and it is cheaper than
+the two named next — see its own prior-art note). `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
 short structural induction, but it does need the right closure facts about ε₀ (additive and
 multiplicative principality, both obtained from `ω ^ ε₀ = ε₀`), and it is stated for **all** of `ONote`,
 including non-normal forms, where Mathlib's own machinery does not directly apply.
@@ -468,42 +469,74 @@ theorem e0Repr_not_injective_via_confinement : ¬ Function.Injective e0Repr := b
   · rw [Set.mem_singleton_iff] at hz'
     rw [hz', ← hxy]
 
+/-- **`Statement:` COINCIDENCE kind — one distribution, spread in the source and a POINT MASS in the
+target, both at once.** This is the composite the KIND tag needs: `confined_map_eq_pure` alone carries
+**no spread hypothesis** (it holds at `p = PMF.pure x`, where nothing coincides), so the tag is only
+earned once the two halves are conjoined on a single `p`.
+
+**Origin (Tim, 2026-08-06):** *"this zero and infinity boundary likely is going to run multiple
+directions concurrently."* This is that, on one object. ⚠ The **necessity** half — *"I think it has
+to"* — is NOT proved and is not claimed; see
+`.claude-local/notes/future-research/concurrent_poles_2026-08-06.md`. -/
+theorem repr_spread_source_certain_target :
+    ∃ (o : Ordinal) (p : PMF E0Note), (∀ a, p ≠ PMF.pure a) ∧ p.map e0Repr = PMF.pure o := by
+  obtain ⟨o, p, hnp, hconf⟩ := exists_fiber_supported_non_pure_pmf
+  exact ⟨o, p, hnp, confined_map_eq_pure e0Repr p o hconf⟩
+
 /-! ### Where the ambiguity ISN'T — both poles are faithful
 
 **Origin (Tim, 2026-08-06): "almost like the roles of zero and infinity are reversed."** Chasing that
-gave a result neither of us predicted: the representation map is injective **at both ends** and
-ambiguous only in between.
+produced a result, and the result **did not match the prediction** — which is why it is worth stating.
 
-**The polarity contrast, which is what his reading names.** Put these beside complexity, which the
-corpus already pins in the other direction: `infinitude_forces_infinite_complexity`
-(`ZeroParadox/Valuation/InfinitudeFloor.lean`) puts complexity at the top of its range **at the
-floor**, while `member_cx_lt_top` keeps every member finite. So at the bottom, complexity is maximal
-and representational ambiguity is minimal — **the same point is extremal in both measures, in
-opposite directions.**
+**What holds.** The representation map has a singleton fiber at *each* end and is genuinely ambiguous
+in between: `e0Repr_fiber_at_bot_singleton` below at the bottom, the pre-existing
+`e0Repr_eq_epsilon0_iff` (§ above, same file) at the top, and `repr_collision` between them.
 
-`Reading:` **DRIFT kind** (conjectural) — two measures running opposite along one structure, the same
-shape as `pole_inversion` (`ZeroParadox/Valuation/InfinitudeFloor.lean`) but a **different pair**. It
-is a shared shape, never an instance-of relation.
+⚠ **ONLY THE BOTTOM HALF IS NEW, and a first draft of this block claimed both.** The top half was
+already proved 200 lines above — its docstring says *"the fibre of the map over ε₀ is exactly `{⊤}`"*
+in those words. A duplicate `e0Repr_fiber_at_top_singleton` was written here and **deleted**; the
+Trigger-0 step that would have caught it is *grep your own corpus*, and it was not run against this
+file. Do not re-add it.
 
-⚠ **THREE FENCES, because two of these results are easy to oversell.**
-1. **No monotonicity is proved.** What is established is the two endpoint values plus one positive
-   instance in between (`repr_collision`, at `ω`). *"Ambiguity grows as you ascend"* is **not** proved
-   and should not be written; fibers are not monotone in the ordinal.
-2. **The top result is partly structural.** `⊤` is *adjoined*, so there is exactly one of it by
-   construction; that half leans on the construction as much as on `repr_lt_epsilon0`. The bottom
-   result is the earned one — it needs a positivity argument and holds **without** normal form, so
-   uniqueness at zero is not bought by restricting the syntax (contrast `ONote.repr_inj`, which needs
-   `NF` on both arguments).
-3. **This closes a door.** Because the fiber at the bottom is a single point, the statistics of the
+⚠ **THE "POLARITY REVERSAL" READING IS NOT WITNESSED HERE, and an earlier draft asserted it as a DRIFT
+against complexity. That was wrong twice over.**
+1. **Cross-carrier.** The complexity results (`infinitude_forces_infinite_complexity`,
+   `member_cx_lt_top`, `ZeroParadox/Valuation/InfinitudeFloor.lean`) are stated over
+   `[InfinitudeFloor α]`. **`E0Note` carries no such instance, and this file does not import that
+   module** — the two citations were not even in scope where they were written. "The same point is
+   extremal in both measures" named a point of one type and a point of another: the MC-1
+   cross-category identity, retired as ill-typed.
+2. **And the measure has no direction to reverse.** Ambiguity here is minimal at **both** ends. A DRIFT
+   needs two measures running *opposite along* a structure; a quantity that is symmetric at the two
+   poles cannot run opposite to anything.
+
+`Reading:` **COINCIDENCE kind** (conjectural) — what the symmetry actually resembles is the
+framework's own pole identity, where the two ends behave alike under one measurement. **Shared shape,
+never an instance-of relation.**
+
+⚠ **Two fences.**
+1. **No monotonicity is proved**, and none is claimed: two endpoint values plus one positive instance
+   between them (`repr_collision`, whose witness is exhibited at
+   `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` — the existential statement itself names no
+   value, so do not attribute one to it).
+2. **This closes a door.** Because the fiber at the bottom is a single point, the statistics of the
    section above lives **strictly between** the poles and cannot be seeded at the bottom by this
    route. -/
 
 /-- **`Statement:` zero is uniquely denoted, and NO normal-form hypothesis is needed.** Structural:
 `repr (oadd e n a) = ω ^ repr e * n + repr a` with `n ≥ 1`, so it is strictly positive.
 
-**Prior art:** Mathlib's `ONote.repr_inj` (`Mathlib/SetTheory/Ordinal/Notation.lean`) gives injectivity
-but requires `NF` on both arguments; no `repr = 0` characterization was located in the pin as of
-`9dffe26`. This is the one point where faithfulness is free. -/
+**Prior art — and the positivity argument is MATHLIB'S, not this file's.** `ONote.oadd_pos (e n a) :
+0 < oadd e n a` together with `ONote.lt_def : x < y ↔ repr x < repr y`
+(`Mathlib/SetTheory/Ordinal/Notation.lean`) *is* `0 < repr (oadd e n a)`, so this derives from the
+library in a few lines. Corpus citations of `oadd_pos` before this one: **none**. The hand proof is
+kept (identical footprint measured, so no purity reason to swap) and the standard lemma is cited —
+the `CovBy` pattern. ⚠ An earlier draft called this result "the earned one" on the strength of *"it
+needs a positivity argument"*; the argument is Mathlib's and was uncited.
+
+`ONote.repr_inj` gives injectivity but requires `NF` on **both** arguments; no `repr = 0`
+characterization was located in the pin as of `9dffe26` (`exact?` closes neither the iff nor the bare
+positivity form). This is the one point where faithfulness is free. -/
 theorem onote_repr_eq_zero_iff (x : ONote) : x.repr = 0 ↔ x = 0 := by
   constructor
   · intro h
@@ -538,23 +571,6 @@ theorem e0Repr_fiber_at_bot_singleton :
       have := (onote_repr_eq_zero_iff (ofSyn y)).mp hx
       rw [← this]; rfl
   · rintro rfl; rfl
-
-/-- **`Statement:` the fiber over the TOP is a singleton too.** Every notation denotes strictly below
-it (`repr_lt_epsilon0`), so only the adjoined point lands there. See fence 2 above: this half is
-partly by construction. -/
-theorem e0Repr_fiber_at_top_singleton :
-    {x : E0Note | e0Repr x = Ordinal.epsilon 0} = {(⊤ : E0Note)} := by
-  ext x
-  constructor
-  · intro hx
-    induction x using WithTop.recTopCoe with
-    | top => rfl
-    | coe y =>
-      exfalso
-      have hx' : (ofSyn y).repr = Ordinal.epsilon 0 := hx
-      exact absurd hx' (ne_of_lt (repr_lt_epsilon0 (ofSyn y)))
-  · rintro rfl
-    exact e0Repr_top
 
 end ZeroParadox
 
@@ -595,9 +611,9 @@ open ZeroParadox
 #print axioms repr_collision
 #print axioms exists_fiber_supported_non_pure_pmf
 #print axioms e0Repr_not_injective_via_confinement
+#print axioms repr_spread_source_certain_target
 #print axioms onote_repr_eq_zero_iff
 #print axioms e0Repr_fiber_at_bot_singleton
-#print axioms e0Repr_fiber_at_top_singleton
 
 -- The ε₀-producing operations themselves, measured here because this file already imports Veblen.
 -- ZP-N's prose names these (with `typein` and `omega0`, printed in

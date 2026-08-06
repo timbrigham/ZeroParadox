@@ -391,9 +391,14 @@ that on this object both readings do hold at once. Whether a boundary of this ki
 direction only is an open no-go, recorded in
 `.claude-local/notes/future-research/concurrent_poles_2026-08-06.md`.
 
-**Prior art:** Mathlib's `PMF.map_const : p.map (Function.const α b) = pure b`
-(`Mathlib/Probability/Distributions/Uniform.lean`'s neighbour module,
-`Mathlib/Probability/ProbabilityMassFunction/Constructions.lean`) is the **globally constant** case.
+**Prior art.** Mathlib's `PMF.map_const : p.map (Function.const α b) = pure b`
+(`Mathlib/Probability/ProbabilityMassFunction/Constructions.lean`) is the **globally constant** case.
+One level up, the measure-theoretic form already has the almost-everywhere framing:
+`MeasureTheory.Measure.map_congr` (`Mathlib/MeasureTheory/Measure/Map.lean`) and
+`MeasureTheory.Measure.map_const` (`Mathlib/MeasureTheory/Measure/Dirac.lean`). **The honest delta for
+keeping a PMF-level proof:** this statement needs no `MeasurableSpace` and no measurability of `f`,
+where routing through `PMF.toMeasure_map` would require `Measurable f`. The in-field name for the
+conclusion is a **degenerate distribution / Dirac point mass**, which the docstring already uses.
 The generalization here is to constant **on the support**, which is the case that arises: a
 representation map is nowhere near globally constant, it is constant exactly along one fiber. The
 conclusion shape (`= pure`, not merely a support equality) is taken from Mathlib's version rather than
@@ -402,9 +407,12 @@ settled for at support level. -/
 /-- **`Statement:` a distribution confined to one fiber pushes forward to a POINT MASS.** Not a
 support computation — a full `PMF` equality.
 
-`Statement:` **COINCIDENCE kind** — one distribution `p`, two measurements, both live at once:
-positive uncertainty in the source (when `p` is spread) and *exactly zero* in the target. The
-witnesses sit on the same object, not on two related objects. -/
+⚠ **NO KIND is tagged on this theorem, deliberately.** It carries **no spread hypothesis** — it holds
+at `p = PMF.pure x`, where both readings are certain and nothing coincides — so a COINCIDENCE tag
+here would be vacuous over part of its own range, and an earlier draft wrongly asserted one under a
+`Statement:` label. The COINCIDENCE is real but belongs to the **composite**, where the spread half is
+conjoined on a single `p`: `repr_spread_source_certain_target`
+(`ZeroParadox/Ordinal/PricedInterface.lean`). -/
 theorem confined_map_eq_pure {α β : Type*} (f : α → β) (p : PMF α) (o : β)
     (hconf : ∀ x ∈ p.support, f x = o) : p.map f = PMF.pure o := by
   ext b

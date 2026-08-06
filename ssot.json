@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1614,
+        "declarations": 1615,
         "files": 136
       },
       "entries": [
@@ -25073,12 +25073,11 @@
           },
           "ontology": {
             "domain": [
-              "ordinal",
-              "information"
+              "ordinal"
             ],
             "object": [],
             "role": [
-              "core"
+              "scaffolding"
             ]
           },
           "reason": "The representation fiber over the top value is also a singleton, so faithfulness holds at both poles and ambiguity lives strictly between them.",
@@ -41261,6 +41260,43 @@
             ]
           },
           "reason": "Boundary.lean § I-c: choice-free direction of Mathlib's descending-chain biconditionals, plus the floor result re-routed through it. Answers the open non-constant-descent question: the infinitude is free; only extraction costs.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b41f664a-ea09-4d22-aae4-8e5ca84d1644",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.repr_spread_source_certain_target",
+            "short": "repr_spread_source_certain_target"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The COINCIDENCE composite: one distribution spread in the source and a point mass in the target, both at once. confined_map_eq_pure alone carries no spread hypothesis, so the KIND tag is only earned on this conjunction.",
           "verify": {
             "axioms": null,
             "sorry_free": true
