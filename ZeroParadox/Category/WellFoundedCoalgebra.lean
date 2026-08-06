@@ -238,13 +238,28 @@ formalize it with. What is now available is its **conclusion, by citation**, for
 its assumptions are discharged and its subject is connected. That is what "instance of" means here and
 it is strictly weaker than a Lean derivation. **Do not write "we proved Thm 7.6."**
 
-⚠ **Two further fences on the ambient table.** (1) The three smoothness clauses are proved as separate
-statements over filtered (and for (c), connected) index categories; AMM quantify over **λ-chains**,
-which are filtered and connected, so the coverage holds — **but AMM's Def 2.14 itself is not
-formalized**, and no declaration here asserts "`Type u` has smooth monomorphisms" as a single
-proposition. (2) The whole table is about **`Type u` with `ofTypeFunctor P.Obj`** and says nothing
+⚠ **Two further fences on the ambient table.**
+
+**(1) How the separately-indexed clauses cover AMM's λ-chains — including λ = 0, which is the case that
+needs saying.** Clause (a) is the Mathlib instance `Types.hasColimitsOfShape`; clauses (b) and (c) are
+proved here over `IsFilteredOrEmpty` and over filtered-and-connected index categories respectively. For
+**λ > 0** a λ-chain is filtered and connected, so all three apply directly. For **λ = 0** — which AMM
+§ 2.5 explicitly includes — the empty category is **neither** filtered nor connected, and the coverage
+is instead: (a) still applies; **(b) is vacuous**, an empty cocone having no legs; and (c)'s λ = 0
+instance **is** AMM's trailing *"every morphism from 0 is monic"*, which is why they write "In
+particular" — immediate in `Type u`, since every map out of the empty type is injective. ⚠ So the
+`IsFilteredOrEmpty` weakening on (b) buys applicability where there is **no content**; do not read it
+as covering more mathematics than the `IsFiltered` version did.
+
+⚠ **But AMM's Def 2.14 itself is NOT formalized**, and no declaration here asserts "`Type u` has smooth
+monomorphisms" as a single proposition — the paragraph above is the argument that the pieces suffice,
+written in prose and checkable by reading, not a theorem.
+
+**(2)** The whole table is about **`Type u` with `ofTypeFunctor P.Obj`** and says nothing
 about the MC-1 carriers (`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`), which remain unchecked — see
-`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`.
+`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`. Both smoothness
+theorems also take `{J : Type u}`, so they reach λ-chains for `Type u`-small λ; AMM quantify over every
+ordinal.
 
 *(Earlier rounds counted the ambient hypotheses — one, then two, then three, now four — as though the
 count were the whole story. It never was: Thm 7.6 is about fixed points and initial algebras, so
@@ -300,8 +315,11 @@ initial algebra** — i.e. it *concludes* initiality rather than assuming it, wh
 citing it. That conclusion is available **by citation only**. Do not upgrade this to "we proved
 Thm 7.6," and do not read the fence as denying what Thm 7.6 offers.
 
-⚠ **THIS TABLE WAS WRONG THREE TIMES, ALWAYS IN THE SAME DIRECTION, AND THAT IS THE LESSON.** It
-recorded *one* of four, then *two*, then *three*; the true count is four. **Not one of those errors was a wrong theorem — each
+⚠ **THIS TABLE WAS WRONG FOUR TIMES, AND THAT IS THE LESSON.** Measured from this file's own history:
+*one* (`477e2f9`) → *two* (`1d9683f`) → **_four_, wrongly** (`c2b3e95`) → *three* (`8648d90`) → four,
+correctly (`00f6c67`). ⚠ **The direction was NOT always the same** — an earlier version of this line
+claimed it was. The `c2b3e95` state **over**counted, on the strength of a mis-citation for clause (b),
+and was corrected back down; that one was an unverified **positive**, the mirror of the rest. **Not one of those errors was a wrong theorem — each
 was an unverified negative**: `WellPowered (Type 0)` fails on an unimported name and an unresolved
 universe parameter; `PreservesMonomorphisms` "does not synthesize" is true of the *instance database*
 and false of the *fact*; and smooth monomorphisms is **assembled from** pieces in the pin though no
@@ -334,10 +352,10 @@ theorem natPF_wtype_wellFounded_and_inhabited :
 /-! ### § V. AMM Thm 7.6's hypotheses, VERIFIED for this setting
 
 **What this section is for.** Thm 7.6 holds in *"a complete and well-powered category with smooth
-monomorphisms"* for *"F preserving monomorphisms."* Earlier versions of this file recorded first one,
-then two, of those four as available and withheld any instance-of claim. **Both counts were wrong, and
-each was an unverified negative rather than a wrong theorem** — see `CLAUDE.md` § *"NOT IN THE LIBRARY"
-IS A CLAIM*. **All four are now discharged**: complete and well-powered are Mathlib instances, and the
+monomorphisms"* for *"F preserving monomorphisms."* Earlier versions of this file recorded that count
+wrong **four times, in both directions** — see the ⚠ block in the overview for the measured sequence
+and the commits. Most were unverified **negatives** (`CLAUDE.md` § *"NOT IN THE LIBRARY" IS A CLAIM*);
+one was an unverified positive. **All four are now discharged**: complete and well-powered are Mathlib instances, and the
 three theorems below supply `F`-preservation plus smoothness clauses (b) and (c) — clause (a) being
 `Types.hasColimitsOfShape`, and AMM's trailing *"every morphism from 0 is monic"* immediate in `Type u`.
 
@@ -415,10 +433,12 @@ The proof is `Types.FilteredColimit.isColimit_eq_iff'`: two elements of the same
 colimit exactly when some transition map identifies them, and injective transitions push that back.
 
 **PRIOR ART, and it must be cited rather than worked around.** `IsColimit.mono_ι_app_of_isFiltered`
-(`Mathlib/CategoryTheory/Abelian/GrothendieckAxioms/Colim.lean`) **is this statement**, and more
-general. ⚠ It does **not** fire here — it needs `colim.PreservesMonomorphisms`, which does not
-synthesize for `Type u` — so the hand proof below is kept and the library name is cited, exactly the
-`CovBy` precedent recorded in `CLAUDE.md`.
+(`Mathlib/CategoryTheory/Abelian/GrothendieckAxioms/Colim.lean`) **is this statement**, over an
+arbitrary ambient category rather than `Type u`. ⚠ **It is not uniformly more general**: it requires
+`[IsFiltered J]` on the *index*, where the version below needs only `IsFilteredOrEmpty`, so it does not
+reach the λ = 0 case noted below. And it does **not fire here** — it needs
+`colim.PreservesMonomorphisms`, which does not synthesize for `Type u`. Hence the hand proof is kept
+and the library name cited, exactly the `CovBy` precedent recorded in `CLAUDE.md`.
 
 ⚠ **This clause was mis-cited twice before it was proved.** An earlier version pointed at
 `Types.instIsStableUnderFilteredColimitsMonomorphismsType`, which states a **different** proposition —
