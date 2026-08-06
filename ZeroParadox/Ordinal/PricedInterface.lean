@@ -141,8 +141,9 @@ The carrier is an `abbrev`. The order, the decidability instances, and the latti
 inherited from Mathlib's `WithTop` instances applied to an order built in a sibling file — this file
 proves none of that and should get no credit for it. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
 
-Three things here are not free (`onote_repr_eq_zero_iff` below is the third, and it is cheaper than
-the two named next — see its own prior-art note). `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
+Not everything here is free, and the two substantial cases are these. (No count is given: an
+earlier draft's went stale the moment a declaration was added, which is the enumeration hazard this
+project has named.) `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
 short structural induction, but it does need the right closure facts about ε₀ (additive and
 multiplicative principality, both obtained from `ω ^ ε₀ = ε₀`), and it is stated for **all** of `ONote`,
 including non-normal forms, where Mathlib's own machinery does not directly apply.
@@ -492,6 +493,12 @@ produced a result, and the result **did not match the prediction** — which is 
 in between: `e0Repr_fiber_at_bot_singleton` below at the bottom, the pre-existing
 `e0Repr_eq_epsilon0_iff` (§ above, same file) at the top, and `repr_collision` between them.
 
+⚠ **The two ends are NOT equally earned, and the fence saying so was briefly lost.** The top half is
+half **stipulated**: `⊤` is *adjoined*, so there is exactly one of it by construction, and
+`repr_lt_epsilon0` only has to rule out the coefficients. The bottom half is not stipulated — it needs
+a positivity argument over all of `ONote` and holds with no normal-form hypothesis. Any reading below
+rests on the bottom half; do not let the symmetry of the statement suggest symmetry of content.
+
 ⚠ **ONLY THE BOTTOM HALF IS NEW, and a first draft of this block claimed both.** The top half was
 already proved 200 lines above — its docstring says *"the fibre of the map over ε₀ is exactly `{⊤}`"*
 in those words. A duplicate `e0Repr_fiber_at_top_singleton` was written here and **deleted**; the
@@ -510,9 +517,16 @@ against complexity. That was wrong twice over.**
    needs two measures running *opposite along* a structure; a quantity that is symmetric at the two
    poles cannot run opposite to anything.
 
-`Reading:` **COINCIDENCE kind** (conjectural) — what the symmetry actually resembles is the
-framework's own pole identity, where the two ends behave alike under one measurement. **Shared shape,
-never an instance-of relation.**
+`Reading:` **INVARIANT kind** (conjectural) — fiber cardinality is **one quantity measured at two
+points of one carrier**, and it takes the same value at both, so exchanging the poles gains nothing.
+That is the INVARIANT row, not COINCIDENCE (which needs two readings of one object) and not DRIFT
+(which needs a direction).
+
+⚠ **An earlier draft tagged this COINCIDENCE and borrowed the "shared shape, never an instance-of
+relation" fence from § *What is NOT proved here* above. That fence belongs to a different
+comparison** — `e0Repr` against the identifiability literature, which genuinely is two structures
+sharing a shape and is correctly tagged with no KIND at all. This claim is not of that form: nothing
+here compares two structures.
 
 ⚠ **Two fences.**
 1. **No monotonicity is proved**, and none is claimed: two endpoint values plus one positive instance
