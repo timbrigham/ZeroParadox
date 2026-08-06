@@ -54,6 +54,11 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
   declaration on this side carries `Classical.choice`.
 * **The map — `Classical.choice`, uniformly.** Every declaration whose statement mentions `Ordinal`
   reports `[propext, Classical.choice, Quot.sound]`, with no exceptions and no gradation.
+* **⚠ The two PMF declarations at the end of the block are NOT evidence about the crossing.**
+  `repr_collision` and `exists_fiber_supported_non_pure_pmf` print the same footprint, but so does
+  `not_pure_of_two_support` — a pure-PMF lemma with no `Ordinal` in its statement at all. Their choice
+  is **inherited from Mathlib's PMF layer** and they would carry it with or without the crossing. They
+  are printed here because this is where they are proved, not because they price anything.
 
 **The `Quot.sound` on part of the constructive side was not predicted, and is reported rather than
 explained away.** It arrives through Mathlib's `WithTop` order lemmas, not through anything about
@@ -416,9 +421,11 @@ end ZeroParadox
 
 The two sides of the interface, measured. Observed: the carrier side is choice-free, ranging from no
 axioms at all up to `[propext, Quot.sound]`; the map side is uniformly
-`[propext, Classical.choice, Quot.sound]`. The header's "measured price of the crossing" section
-reports the per-declaration numbers. If this block ever prints something different, the header is wrong
-and must be corrected to match the instrument — the instrument is the deliverable. -/
+`[propext, Classical.choice, Quot.sound]`. **The per-declaration numbers live HERE and nowhere else** —
+the header states only the shape, deliberately, because an enumeration duplicated into prose is what
+went stale once already. If this block ever prints something outside the shape the header describes,
+the header is wrong and must be corrected to match the instrument — the instrument is the
+deliverable. -/
 
 section PurityCheck
 open ZeroParadox

@@ -85,7 +85,7 @@ noncomputable def hilbertSuccession (n : ℕ) (S : ℕ → Fin n) (hS : ∀ k, S
   seq := fun k => transitionOp n (S k)
   separated := fun k => t5_strict_orthogonal n S k (hS k)
 
-/-! ### Faithfulness of the enumeration — a CARRIER split
+/-! ### Faithfulness of the enumeration — an IMPLEMENTATION split
 
 **Origin (Tim, 2026-08-05): "succession is a state of representation."** Step 0 measured the
 structural fact that motivates it: `SeparatedSuccession` carries an ℕ-indexed `seq` and a *relation*
@@ -99,8 +99,9 @@ answer that question **oppositely**.
 ⚠ **This is an IMPLEMENTATION split, NOT a carrier split — and an earlier draft mislabelled it
 `Reading: CARRIER kind`, with the ℚ₂/ℝ analogy attached.** That was wrong twice over. `StateSpace n` is
 `EuclideanSpace ℂ (Fin n)`, which is **infinite**; what is finite is the **label set** `Fin n`. A gate
-built the counterexample: a `SeparatedSuccession` on the *same* carrier with the *same* orthogonality
-relation whose `seq` **is** injective. So faithfulness is not impossible on the Hilbert carrier — it is
+built the counterexample (independently rebuilt and compiled at round 2): for `n ≥ 2`, a
+`SeparatedSuccession` on the *same* carrier with the *same* orthogonality relation whose `seq` **is**
+injective. So faithfulness is not impossible on the Hilbert carrier — it is
 lost by *this labelling scheme*. The ℚ₂/ℝ analogy is inapt precisely because there the snap genuinely
 **cannot** exist in ℝ.
 
@@ -110,7 +111,7 @@ faithfulness either way.** -/
 
 /-- **`Statement:` the ordinal chart is a FAITHFUL enumeration** — distinct indices name distinct
 instances. Immediate from `succession_strictMono`; the phrase *"never returns to a rung it has already
-occupied"* is **`succession_lt_succ`'s** docstring two declarations further down
+occupied"* is **`succession_lt_succ`'s** docstring three declarations further down
 (`ZeroParadox/Ordinal/SnapSuccession.lean`), not that one's. This states it as injectivity of `seq`.
 
 **Prior art:** `Ordinal.epsilon` is `abbrev epsilon := veblen 1`, so Mathlib gives both

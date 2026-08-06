@@ -164,9 +164,10 @@ theorem member_cx_lt_top {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
     exact absurd hstep (not_lt.mpr le_top)
   · exact h
 
-/-- **`Statement:` no member shares the floor's complexity.** The measurement-level form of
-`member_ne_floor`: members differ from the floor not merely as elements, but in **how far out they
-sit**. -/
+/-- **`Statement:` no member shares the floor's complexity.** The measurement-level **strengthening**
+of `member_ne_floor`: members differ from the floor not merely as elements, but in **how far out they
+sit**. ⚠ It neither uses nor follows from `member_ne_floor` — it is proved from `cx_member_strictMono`
+and `infinitude_forces_infinite_complexity`, and it *implies* that lemma rather than restating it. -/
 theorem member_cx_ne_floor_cx {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
     I.cx (I.member n) ≠ I.cx I.floor := by
   rw [infinitude_forces_infinite_complexity α]
@@ -190,7 +191,8 @@ the floor and its members, `cx x = ⊤` holds exactly at the floor.
 
 ⚠ **Scoped to the family on purpose.** The class says nothing about arbitrary elements of `α`, so this
 is **not** a uniqueness claim about the carrier — `infinitude_forces_infinite_complexity` gives no such
-thing, and `WellFoundedCoalgebra.lean` records the same fence. -/
+thing, and `ZeroParadox/Category/WellFoundedCoalgebra.lean` records the same **shape** of fence (there
+it scopes `Type u` against the MC-1 carriers — related in shape, not the same fence). -/
 theorem floor_unique_at_top {α : Type*} [I : InfinitudeFloor α] (x : α)
     (hx : x = I.floor ∨ ∃ n, x = I.member n) :
     I.cx x = ⊤ ↔ x = I.floor := by

@@ -264,11 +264,20 @@ mass and both memberships still hold. So existence of a distribution needs nothi
 exactly what upgrades it to **non-degenerate** — see the corollary.
 
 **Prior art.** In this file, `not_pure_of_two_support` (above) already proves two support points imply
-non-pureness; what was missing **in this corpus** is the *construction* that supplies its hypotheses.
-⚠ **Not missing from Mathlib** — `PMF.uniformOfFinset` with `PMF.support_uniformOfFinset` gives support
-**exactly** `{x, y}`, which is stronger than the `⊆` proved here. It is cited rather than swapped in:
-that route needs a heavier import and there is no purity gain (both carry `Classical.choice`,
-measured). -/
+non-pureness; **no construction supplying its hypotheses was located in this corpus as of `d6a1ece`**
+(the nearest are `ZeroParadox/Valuation/BottomInvariant.lean:214` and
+`ZeroParadox/Reals/MarkovSpectralGap.lean:96`, both of which build a specific two-point distribution
+for their own purpose rather than the general constructor). Stated as a dated search result, not as a
+universal negative.
+⚠ **Not missing from Mathlib** — `PMF.uniformOfFinset` with `PMF.support_uniformOfFinset`
+(`Mathlib/Probability/Distributions/Uniform.lean`) constructs the same thing directly. It is cited
+rather than swapped in: that route needs a heavier import and there is no purity gain (both carry
+`Classical.choice`, measured).
+
+⚠ **It is NOT stronger than what is proved here, and a first draft of this paragraph said it was.** The
+three conjuncts below give `p.support = {x, y}` **exactly** — the two memberships supply `⊇` and the
+third supplies `⊆` — so the `⊆` form understates this theorem rather than being understated by
+Mathlib's. -/
 theorem exists_spread_pmf {α : Type*} (x y : α) :
     ∃ p : PMF α, x ∈ p.support ∧ y ∈ p.support ∧ p.support ⊆ {x, y} := by
   have hle : (1/2 : NNReal) ≤ 1 := by norm_num
@@ -288,8 +297,17 @@ theorem exists_spread_pmf {α : Type*} (x y : α) :
 constructor plus this file's own `not_pure_of_two_support` — the two halves finally meet.
 
 `Reading:` (Tim, 2026-08-05, conjectural) the framework reads this as where **statistics can enter**: a
-non-injective *representation* has a fiber with two distinct points, and a two-point fiber is exactly
-what lifts `pmf_subsingleton_isPure`'s obstruction. ⚠ **A distribution over REPRESENTATIONS, never over
+non-injective *representation* has a fiber with two distinct points, and a distribution can live
+entirely inside that fiber.
+
+⚠ **State the fiber's role correctly; an earlier draft did not, and the correction was applied to the
+sibling site in `ZeroParadox/Ordinal/PricedInterface.lean` before it was applied here.** It is NOT that
+a two-point fiber "lifts `pmf_subsingleton_isPure`'s obstruction" — the carriers in question are
+already non-subsingleton, so that obstruction was never binding, and the declaration below does not go
+through it (it uses `not_pure_of_two_support`). What a *collision* supplies, beyond what any two
+distinct points supply, is **confinement to a single denotation**: a spread distribution all of whose
+support has one image. The standard name for that indistinguishability is **structural
+unidentifiability** (`CLAIMS.md`). ⚠ **A distribution over REPRESENTATIONS, never over
 histories** — nothing here posits that anything moved, and the no-traversal commitment is untouched.
 Witnesses for the fiber: `e0Repr_not_injective` (`ZeroParadox/Ordinal/PricedInterface.lean`, with
 `1 + ω` vs `ω`) and `hilbert_seq_collision`
