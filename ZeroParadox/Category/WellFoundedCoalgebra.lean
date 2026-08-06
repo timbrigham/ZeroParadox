@@ -225,15 +225,15 @@ commutation only, and repeats that fence throughout).
 **Prior art for the general shape.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is
 the initial algebra."* This file's fork has the **shape** of that statement.
 
-⚠ **NO instance-of claim is made. TWO things are open, and only one of them is a hypothesis.** Three
-review rounds were spent counting which of Thm 7.6's four *ambient* hypotheses `Type u` satisfies (one,
-then two, then three) — as though that count were the whole story. It is not: **no count of ambient
-hypotheses alone can earn the claim**, because Thm 7.6 is a statement about **fixed points** and
-**initial algebras**, and connecting this file's results to its *subject* is a separate matter. The two
-open items:
-* **smoothness clause (b)** — an ambient hypothesis, true of `Type u`, unwitnessed here (see the table
-  and § V);
-* **bridge 1 below** — the predicate transport, which is not a hypothesis of the theorem at all.
+⚠ **NO instance-of claim is made. ONE thing is open, and it is an ambient hypothesis: smoothness
+clause (b)** — true of `Type u`, witnessed by nothing in this file (see the table and § V).
+
+Earlier review rounds spent themselves counting how many of Thm 7.6's four *ambient* hypotheses
+`Type u` satisfies (one, then two, then three) — as though that count were the whole story. **It was
+not**, and that is worth keeping even now the other half has closed: Thm 7.6 is a statement about
+**fixed points** and **initial algebras**, so connecting this file's results to its *subject* was always
+a separate matter from the hypotheses. Both bridges to the subject are now built (below), which is
+exactly why clause (b) is the sole remaining item rather than one of two.
 
 The bridges to its subject:
 

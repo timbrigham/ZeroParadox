@@ -45,12 +45,18 @@ COPY"). Source: `.claude-local/papers/adamek_milius_moss_wellfounded_recursive_c
 | **Def 4.3, p. 15** | well-founded = `id_A` is the only fixed point of `⃝` | `IsWellFoundedCoalgCat` |
 | **Def 4.7, p. 16** | the canonical graph (cited for orientation, not used here) | — |
 
-**⚠ AMM ARE NOT THE ORIGIN — the credit chain continues past them.** They credit Def 4.1 to their own
-*Fixed points of functors* (JLAMP 95, 2018) as `[5, Def 8.9]`, the next-time operator itself to
-**Jacobs** `[17]`, and Def 4.3 to **Taylor** `[28, Exercise VI.17]`. The full chain, with the caveat
-that `[28]` is *Practical Foundations of Mathematics* (CUP 1999) and is **not** the Taylor PDF held in
-`.claude-local/papers/`, is written out in `ZeroParadox/Computability/GroundZero.lean` § V — read it
-there rather than re-transcribing it here.
+**⚠ AMM ARE NOT THE ORIGIN — the credit chain continues past them.** Def 4.1's own header reads
+`Definition 4.1 [5, Def. 8.9]`, crediting their *Fixed points of functors* (JLAMP 95, 2018); the
+next-time operator itself they credit to **Jacobs** `[17]`; and Def 4.3 they give *"as characterized by
+Taylor [28, Exercise VI.17]"*.
+
+⚠ **`[28]` is Taylor's *Practical Foundations of Mathematics* (CUP 1999), which this project does NOT
+hold** — the Taylor PDF in `.claude-local/papers/` is his *Well founded coalgebras and recursion*, a
+different document with no Exercise VI.17. The same caveat is stated at
+`ZeroParadox/Category/WellFoundedCoalgebra.lean`'s overview. *(An earlier draft deferred to
+`ZeroParadox/Computability/GroundZero.lean` § V for this chain; that section does not carry it —
+`check_paths.py` passed because the file resolves, and nothing checks that a named section holds the
+claimed content.)*
 
 **The delta is the formalization and the bridge.** AMM's definitions are theirs; what is added is that
 they are now Lean objects, that `nextTimeCat` is stated at **full generality** (any category with
@@ -278,8 +284,9 @@ choice-carrying no matter how it is proved.** Per `CLAUDE.md` § *Revalidate, do
 carrying an axiom makes "removable" false for every possible proof. This is a fact about Mathlib's
 subobject machinery, not about anything here.
 
-**⚠ BUT `Subobject`-freedom is NECESSARY, NOT SUFFICIENT — and the two declarations here that avoid
-`Subobject` are the control pair proving it:**
+**⚠ BUT `Subobject`-freedom is NECESSARY, NOT SUFFICIENT — and this control pair proves it** (two of
+the four declarations here whose statements avoid the subobject machinery entirely; the other two,
+`monoOverPost` and `range_eq_of_monoOver_iso`, mention `MonoOver` and carry choice from it):
 ```
 ofTypeFunctor_pfunctor_map   [propext, Quot.sound]        -- no Subobject, and clean
 mem_range_pfunctor_map       [Classical.choice, Quot.sound] -- no Subobject, and NOT clean
