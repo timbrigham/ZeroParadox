@@ -378,6 +378,50 @@ theorem confined_non_pure_refutes_injective
   intro hf
   exact hne (injective_forces_confined_support_subsingleton f hf p o hconf x hxs y hys)
 
+/-! ### The two readings run CONCURRENTLY — spread in the source, certain in the target
+
+**Origin (Tim, 2026-08-06).** On being shown that a fiber-confined distribution is the *reverse*
+arrow of the representation map, his reaction was that the zero/infinity boundary *"likely is going to
+run multiple directions concurrently, frankly I think it has to."* That is this project's own Two-Pole
+rule (`CLAUDE.md`: run both readings of the bottom concurrently, never one), and on this object it is
+checkable rather than a framing. The theorem below is what that reaction predicted.
+
+⚠ **The necessity half — *"it has to"* — is NOT proved here and is not claimed.** What is proved is
+that on this object both readings do hold at once. Whether a boundary of this kind *cannot* run one
+direction only is an open no-go, recorded in
+`.claude-local/notes/future-research/concurrent_poles_2026-08-06.md`.
+
+**Prior art:** Mathlib's `PMF.map_const : p.map (Function.const α b) = pure b`
+(`Mathlib/Probability/Distributions/Uniform.lean`'s neighbour module,
+`Mathlib/Probability/ProbabilityMassFunction/Constructions.lean`) is the **globally constant** case.
+The generalization here is to constant **on the support**, which is the case that arises: a
+representation map is nowhere near globally constant, it is constant exactly along one fiber. The
+conclusion shape (`= pure`, not merely a support equality) is taken from Mathlib's version rather than
+settled for at support level. -/
+
+/-- **`Statement:` a distribution confined to one fiber pushes forward to a POINT MASS.** Not a
+support computation — a full `PMF` equality.
+
+`Statement:` **COINCIDENCE kind** — one distribution `p`, two measurements, both live at once:
+positive uncertainty in the source (when `p` is spread) and *exactly zero* in the target. The
+witnesses sit on the same object, not on two related objects. -/
+theorem confined_map_eq_pure {α β : Type*} (f : α → β) (p : PMF α) (o : β)
+    (hconf : ∀ x ∈ p.support, f x = o) : p.map f = PMF.pure o := by
+  ext b
+  rw [PMF.map_apply, PMF.pure_apply]
+  by_cases hb : b = o
+  · subst hb
+    rw [if_pos rfl, ← p.tsum_coe]
+    refine tsum_congr fun a => ?_
+    by_cases ha : p a = 0
+    · simp [ha]
+    · rw [if_pos (hconf a ha).symm]
+  · rw [if_neg hb]
+    refine (tsum_congr fun a => ?_).trans tsum_zero
+    by_cases ha : p a = 0
+    · simp [ha]
+    · rw [if_neg]; intro h; exact hb (h.trans (hconf a ha))
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -407,5 +451,6 @@ open ZeroParadox
 #print axioms pmf_subsingleton_isPure
 #print axioms injective_forces_confined_support_subsingleton
 #print axioms confined_non_pure_refutes_injective
+#print axioms confined_map_eq_pure
 
 end PurityCheck

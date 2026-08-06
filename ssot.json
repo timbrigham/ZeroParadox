@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1610,
+        "declarations": 1614,
         "files": 136
       },
       "entries": [
@@ -651,6 +651,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0043513c-785d-4ee5-8312-65bda69ced4f",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_fiber_at_bot_singleton",
+            "short": "e0Repr_fiber_at_bot_singleton"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The representation fiber over the bottom is a singleton: zero representational ambiguity at the floor, opposite polarity to complexity which is maximal there.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -3249,6 +3286,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0a76fda9-4a42-4607-be1c-fbebcb82e7a1",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.onote_repr_eq_zero_iff",
+            "short": "onote_repr_eq_zero_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Zero is uniquely denoted in ordinal notations, without any normal-form hypothesis. Not located in the pin; ONote.repr_inj requires NF on both arguments.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -24982,6 +25055,43 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "6c03f486-a36e-47ef-b8d7-8bd058624dfa",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_fiber_at_top_singleton",
+            "short": "e0Repr_fiber_at_top_singleton"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The representation fiber over the top value is also a singleton, so faithfulness holds at both poles and ambiguity lives strictly between them.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6c364375-7f6c-49a0-ac35-9df42f349de3",
           "new": {
@@ -34496,6 +34606,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "95f8f463-4fcb-409e-bad4-5dae72783b37",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.confined_map_eq_pure",
+            "short": "confined_map_eq_pure"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Tim's concurrency reading, proved: a fiber-confined distribution pushes forward to a point mass. Positive uncertainty in the source and exactly zero in the target, on one object.",
           "verify": {
             "axioms": null,
             "sorry_free": true

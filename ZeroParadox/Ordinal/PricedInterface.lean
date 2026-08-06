@@ -468,6 +468,94 @@ theorem e0Repr_not_injective_via_confinement : ¬ Function.Injective e0Repr := b
   · rw [Set.mem_singleton_iff] at hz'
     rw [hz', ← hxy]
 
+/-! ### Where the ambiguity ISN'T — both poles are faithful
+
+**Origin (Tim, 2026-08-06): "almost like the roles of zero and infinity are reversed."** Chasing that
+gave a result neither of us predicted: the representation map is injective **at both ends** and
+ambiguous only in between.
+
+**The polarity contrast, which is what his reading names.** Put these beside complexity, which the
+corpus already pins in the other direction: `infinitude_forces_infinite_complexity`
+(`ZeroParadox/Valuation/InfinitudeFloor.lean`) puts complexity at the top of its range **at the
+floor**, while `member_cx_lt_top` keeps every member finite. So at the bottom, complexity is maximal
+and representational ambiguity is minimal — **the same point is extremal in both measures, in
+opposite directions.**
+
+`Reading:` **DRIFT kind** (conjectural) — two measures running opposite along one structure, the same
+shape as `pole_inversion` (`ZeroParadox/Valuation/InfinitudeFloor.lean`) but a **different pair**. It
+is a shared shape, never an instance-of relation.
+
+⚠ **THREE FENCES, because two of these results are easy to oversell.**
+1. **No monotonicity is proved.** What is established is the two endpoint values plus one positive
+   instance in between (`repr_collision`, at `ω`). *"Ambiguity grows as you ascend"* is **not** proved
+   and should not be written; fibers are not monotone in the ordinal.
+2. **The top result is partly structural.** `⊤` is *adjoined*, so there is exactly one of it by
+   construction; that half leans on the construction as much as on `repr_lt_epsilon0`. The bottom
+   result is the earned one — it needs a positivity argument and holds **without** normal form, so
+   uniqueness at zero is not bought by restricting the syntax (contrast `ONote.repr_inj`, which needs
+   `NF` on both arguments).
+3. **This closes a door.** Because the fiber at the bottom is a single point, the statistics of the
+   section above lives **strictly between** the poles and cannot be seeded at the bottom by this
+   route. -/
+
+/-- **`Statement:` zero is uniquely denoted, and NO normal-form hypothesis is needed.** Structural:
+`repr (oadd e n a) = ω ^ repr e * n + repr a` with `n ≥ 1`, so it is strictly positive.
+
+**Prior art:** Mathlib's `ONote.repr_inj` (`Mathlib/SetTheory/Ordinal/Notation.lean`) gives injectivity
+but requires `NF` on both arguments; no `repr = 0` characterization was located in the pin as of
+`9dffe26`. This is the one point where faithfulness is free. -/
+theorem onote_repr_eq_zero_iff (x : ONote) : x.repr = 0 ↔ x = 0 := by
+  constructor
+  · intro h
+    cases x with
+    | zero => rfl
+    | oadd e n a =>
+      exfalso
+      rw [ONote.repr] at h
+      have hmul := Ordinal.left_eq_zero_of_add_eq_zero h
+      rcases mul_eq_zero.mp hmul with hz | hz
+      · exact absurd hz (Ordinal.opow_pos _ Ordinal.omega0_pos).ne'
+      · have : (n : ℕ) = 0 := by exact_mod_cast hz
+        exact absurd this n.pos.ne'
+  · rintro rfl; rfl
+
+/-- **`Statement:` the fiber over the BOTTOM is a singleton.** Zero representational ambiguity at the
+floor. The adjoined top is excluded because it denotes the top value, which is
+strictly positive — by Mathlib's own `Ordinal.epsilon_pos` (`Mathlib/SetTheory/Ordinal/Veblen.lean`),
+adopted rather than routing through the corpus's `epsilon0_ne_zero` canary, which would have cost an
+import for a fact the library already states. -/
+theorem e0Repr_fiber_at_bot_singleton :
+    {x : E0Note | e0Repr x = 0} = {e0Coe 0} := by
+  ext x
+  constructor
+  · intro hx
+    induction x using WithTop.recTopCoe with
+    | top => exact absurd hx (Ordinal.epsilon_pos 0).ne'
+    | coe y =>
+      simp only [Set.mem_setOf_eq, e0Repr] at hx
+      simp only [Set.mem_singleton_iff, e0Coe]
+      congr 1
+      have := (onote_repr_eq_zero_iff (ofSyn y)).mp hx
+      rw [← this]; rfl
+  · rintro rfl; rfl
+
+/-- **`Statement:` the fiber over the TOP is a singleton too.** Every notation denotes strictly below
+it (`repr_lt_epsilon0`), so only the adjoined point lands there. See fence 2 above: this half is
+partly by construction. -/
+theorem e0Repr_fiber_at_top_singleton :
+    {x : E0Note | e0Repr x = Ordinal.epsilon 0} = {(⊤ : E0Note)} := by
+  ext x
+  constructor
+  · intro hx
+    induction x using WithTop.recTopCoe with
+    | top => rfl
+    | coe y =>
+      exfalso
+      have hx' : (ofSyn y).repr = Ordinal.epsilon 0 := hx
+      exact absurd hx' (ne_of_lt (repr_lt_epsilon0 (ofSyn y)))
+  · rintro rfl
+    exact e0Repr_top
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check — this block IS the deliverable
@@ -507,6 +595,9 @@ open ZeroParadox
 #print axioms repr_collision
 #print axioms exists_fiber_supported_non_pure_pmf
 #print axioms e0Repr_not_injective_via_confinement
+#print axioms onote_repr_eq_zero_iff
+#print axioms e0Repr_fiber_at_bot_singleton
+#print axioms e0Repr_fiber_at_top_singleton
 
 -- The ε₀-producing operations themselves, measured here because this file already imports Veblen.
 -- ZP-N's prose names these (with `typein` and `omega0`, printed in
