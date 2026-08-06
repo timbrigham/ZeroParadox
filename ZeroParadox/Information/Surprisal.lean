@@ -254,8 +254,9 @@ theorem not_pure_of_two_support {α : Type*} {p : PMF α} {x y : α}
   exact hxy (hx.trans hy.symm)
 
 /-- **THE CONSTRUCTOR — what supplies `not_pure_of_two_support`'s hypotheses.** For *any* two points
-of *any* type there is a distribution whose support contains both: a fair Bernoulli pushed forward
-along `fun b => if b then x else y`.
+of *any* type there is a distribution whose support contains both **and nothing else**: a fair
+Bernoulli pushed forward along `fun b => if b then x else y`. The support bound is what lets such a
+distribution be confined to a single fiber of some other map.
 
 ⚠ **Distinctness is deliberately NOT assumed here, and the linter is what caught it.** A first draft
 took `x ≠ y`; the hypothesis went unused, because when `x = y` the construction is simply the point
@@ -265,13 +266,19 @@ exactly what upgrades it to **non-degenerate** — see the corollary.
 **Prior art, in this file:** `not_pure_of_two_support` (above) already proves two support points imply
 non-pureness. What was missing corpus-wide is the *construction*; that implication had no supplier. -/
 theorem exists_spread_pmf {α : Type*} (x y : α) :
-    ∃ p : PMF α, x ∈ p.support ∧ y ∈ p.support := by
+    ∃ p : PMF α, x ∈ p.support ∧ y ∈ p.support ∧ p.support ⊆ {x, y} := by
   have hle : (1/2 : NNReal) ≤ 1 := by norm_num
-  refine ⟨(PMF.bernoulli (1/2) hle).map (fun b => if b then x else y), ?_, ?_⟩
+  refine ⟨(PMF.bernoulli (1/2) hle).map (fun b => if b then x else y), ?_, ?_, ?_⟩
   · rw [PMF.mem_support_map_iff]
     exact ⟨true, by rw [PMF.mem_support_bernoulli_iff]; norm_num, rfl⟩
   · rw [PMF.mem_support_map_iff]
     exact ⟨false, by rw [PMF.mem_support_bernoulli_iff]; norm_num, rfl⟩
+  · intro z hz
+    rw [PMF.mem_support_map_iff] at hz
+    obtain ⟨b, _, rfl⟩ := hz
+    cases b
+    · exact Set.mem_insert_of_mem _ rfl
+    · exact Set.mem_insert _ _
 
 /-- **`Statement:` two DISTINCT points admit a non-degenerate distribution.** Immediate from the
 constructor plus this file's own `not_pure_of_two_support` — the two halves finally meet.
@@ -285,7 +292,7 @@ Witnesses for the fiber: `e0Repr_not_injective` (`ZeroParadox/Ordinal/PricedInte
 (`ZeroParadox/Multihomed/SeparatedSuccession.lean`). -/
 theorem nontrivial_admits_non_pure_pmf {α : Type*} {x y : α} (hne : x ≠ y) :
     ∃ p : PMF α, ∀ a, p ≠ PMF.pure a := by
-  obtain ⟨p, hx, hy⟩ := exists_spread_pmf x y
+  obtain ⟨p, hx, hy, _⟩ := exists_spread_pmf x y
   exact ⟨p, not_pure_of_two_support hx hy hne⟩
 
 /-- THE FORCING (full converse): on a one-outcome space every distribution is the point mass — you cannot

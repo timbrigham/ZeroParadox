@@ -1,4 +1,5 @@
 import ZeroParadox.Ordinal.SnapNucleusConstructive
+import ZeroParadox.Information.Surprisal
 import Mathlib.SetTheory.Ordinal.Veblen
 
 set_option maxHeartbeats 1000000
@@ -344,11 +345,55 @@ same one used by `mathlib_ONote_order_not_antisymm` in
 `ZeroParadox/Ordinal/SnapNucleusConstructive.lean`).
 
 Restricting to `NF` notations is the standard repair and is **not** performed here; `NF` is defined
-through `repr` and would import the choice-carrying side into the constructive development. -/
+through `repr` and would import the choice-carrying side into the constructive development.
+
+⚠ **AND THE SAME FACT READS THE OTHER WAY — added 2026-08-05 (Tim).** A failure of faithfulness is an
+availability of **uncertainty**. The fiber this non-injectivity creates — two notations, one denotation —
+is a two-point set on which a genuinely non-degenerate distribution lives (`repr_collision`,
+`exists_fiber_supported_non_pure_pmf` below). So the defect fenced above is *also* what supplies the
+≥2-outcome condition that `ZeroParadox/Information/Surprisal.lean`'s `pmf_subsingleton_isPure` shows is
+required before any distribution can be non-degenerate.
+
+`Reading:` (conjectural) the framework reads this as where statistics enters, under Tim's framing that
+**succession is a state of representation**: what is uncertain is *which representation*, never *what
+happened*. ⚠ **Nothing here posits that anything moved** — the no-traversal commitment is untouched, and
+the distribution below is over notations, not over histories. Long form:
+`.claude-local/notes/future-research/offset_from_the_origin_2026-08-05.md`. -/
 theorem e0Repr_not_injective : ¬ Function.Injective e0Repr := by
   intro hinj
   obtain ⟨x, y, hne, hrepr⟩ := mathlib_ONote_order_not_antisymm
   exact hne (congrArg ofSyn (WithTop.coe_injective (hinj (a₁ := e0Coe x) (a₂ := e0Coe y) hrepr)))
+
+
+/-- **`Statement:` the fiber, exhibited.** Two distinct notations with one denotation — the unfolding of
+`e0Repr_not_injective`, with `1 + ω` and `ω` as the underlying witness. -/
+theorem repr_collision : ∃ x y : E0Note, x ≠ y ∧ e0Repr x = e0Repr y := by
+  have h := e0Repr_not_injective
+  rw [Function.not_injective_iff] at h
+  obtain ⟨x, y, heq, hne⟩ := h
+  exact ⟨x, y, hne, heq⟩
+
+/-- **`Statement:` a non-degenerate distribution confined to a SINGLE fiber.** There is an ordinal `o`
+and a distribution on notations which is **not** a point mass, yet **every** notation in its support
+denotes `o`. Uncertainty about the representation; none whatsoever about the object.
+
+Assembled from three existing pieces and one new one: `repr_collision` (the fiber), `exists_spread_pmf`
+and `not_pure_of_two_support` (both `ZeroParadox/Information/Surprisal.lean` — the latter already
+existed and is cited rather than re-proved).
+
+⚠ **Do not read this as a distribution over pasts.** The support is a set of *notations*; the theorem
+says they are indistinguishable by `e0Repr`, not that one preceded another. -/
+theorem exists_fiber_supported_non_pure_pmf :
+    ∃ (o : Ordinal) (p : PMF E0Note),
+      (∀ a, p ≠ PMF.pure a) ∧ ∀ x ∈ p.support, e0Repr x = o := by
+  obtain ⟨x, y, hne, hxy⟩ := repr_collision
+  obtain ⟨p, hx, hy, hsub⟩ := exists_spread_pmf x y
+  refine ⟨e0Repr x, p, not_pure_of_two_support hx hy hne, ?_⟩
+  intro z hz
+  rcases hsub hz with rfl | hz'
+  · rfl
+  · rw [Set.mem_singleton_iff] at hz'
+    rw [hz', ← hxy]
 
 end ZeroParadox
 
@@ -384,6 +429,8 @@ open ZeroParadox
 #print axioms e0Repr_le_epsilon0
 #print axioms e0Repr_eq_epsilon0_iff
 #print axioms e0Repr_not_injective
+#print axioms repr_collision
+#print axioms exists_fiber_supported_non_pure_pmf
 
 -- The ε₀-producing operations themselves, measured here because this file already imports Veblen.
 -- ZP-N's prose names these (with `typein` and `omega0`, printed in
