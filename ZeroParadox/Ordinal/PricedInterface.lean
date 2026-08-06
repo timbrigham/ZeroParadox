@@ -141,9 +141,7 @@ The carrier is an `abbrev`. The order, the decidability instances, and the latti
 inherited from Mathlib's `WithTop` instances applied to an order built in a sibling file — this file
 proves none of that and should get no credit for it. `e0OmegaPow_top` is `rfl`. `e0Repr_top` is `rfl`.
 
-Not everything here is free, and the two substantial cases are these. (No count is given: an
-earlier draft's went stale the moment a declaration was added, which is the enumeration hazard this
-project has named.) `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
+Not everything here is free. `repr_lt_epsilon0` — every raw notation denotes strictly below ε₀ — is a
 short structural induction, but it does need the right closure facts about ε₀ (additive and
 multiplicative principality, both obtained from `ω ^ ε₀ = ε₀`), and it is stated for **all** of `ONote`,
 including non-normal forms, where Mathlib's own machinery does not directly apply.
@@ -493,11 +491,11 @@ produced a result, and the result **did not match the prediction** — which is 
 in between: `e0Repr_fiber_at_bot_singleton` below at the bottom, the pre-existing
 `e0Repr_eq_epsilon0_iff` (§ above, same file) at the top, and `repr_collision` between them.
 
-⚠ **The two ends are NOT equally earned, and the fence saying so was briefly lost.** The top half is
-half **stipulated**: `⊤` is *adjoined*, so there is exactly one of it by construction, and
-`repr_lt_epsilon0` only has to rule out the coefficients. The bottom half is not stipulated — it needs
-a positivity argument over all of `ONote` and holds with no normal-form hypothesis. Any reading below
-rests on the bottom half; do not let the symmetry of the statement suggest symmetry of content.
+⚠ **At the top, EXISTENCE is stipulated**: `⊤` is *adjoined*, so `e0Repr_top` is `rfl` and there is
+exactly one of it by construction. Nothing at the bottom is adjoined. **No comparative is drawn
+between the two uniqueness proofs** — an earlier draft called the bottom "the earned one" on the
+strength of a positivity argument that is Mathlib's, and restoring that framing after it had been
+retracted in this same file is the error this note now exists to prevent.
 
 ⚠ **ONLY THE BOTTOM HALF IS NEW, and a first draft of this block claimed both.** The top half was
 already proved 200 lines above — its docstring says *"the fibre of the map over ε₀ is exactly `{⊤}`"*
@@ -525,8 +523,9 @@ That is the INVARIANT row, not COINCIDENCE (which needs two readings of one obje
 ⚠ **An earlier draft tagged this COINCIDENCE and borrowed the "shared shape, never an instance-of
 relation" fence from § *What is NOT proved here* above. That fence belongs to a different
 comparison** — `e0Repr` against the identifiability literature, which genuinely is two structures
-sharing a shape and is correctly tagged with no KIND at all. This claim is not of that form: nothing
-here compares two structures.
+sharing a shape and is correctly tagged with no KIND at all. The INVARIANT claim is not of that
+form — it is one quantity at two points of one carrier. (The **retracted** DRIFT paragraph above did
+compare two carriers, which is precisely why it failed.)
 
 ⚠ **Two fences.**
 1. **No monotonicity is proved**, and none is claimed: two endpoint values plus one positive instance
