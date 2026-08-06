@@ -263,8 +263,12 @@ took `x ≠ y`; the hypothesis went unused, because when `x = y` the constructio
 mass and both memberships still hold. So existence of a distribution needs nothing, and distinctness is
 exactly what upgrades it to **non-degenerate** — see the corollary.
 
-**Prior art, in this file:** `not_pure_of_two_support` (above) already proves two support points imply
-non-pureness. What was missing corpus-wide is the *construction*; that implication had no supplier. -/
+**Prior art.** In this file, `not_pure_of_two_support` (above) already proves two support points imply
+non-pureness; what was missing **in this corpus** is the *construction* that supplies its hypotheses.
+⚠ **Not missing from Mathlib** — `PMF.uniformOfFinset` with `PMF.support_uniformOfFinset` gives support
+**exactly** `{x, y}`, which is stronger than the `⊆` proved here. It is cited rather than swapped in:
+that route needs a heavier import and there is no purity gain (both carry `Classical.choice`,
+measured). -/
 theorem exists_spread_pmf {α : Type*} (x y : α) :
     ∃ p : PMF α, x ∈ p.support ∧ y ∈ p.support ∧ p.support ⊆ {x, y} := by
   have hle : (1/2 : NNReal) ≤ 1 := by norm_num

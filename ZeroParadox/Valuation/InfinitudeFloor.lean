@@ -175,10 +175,12 @@ theorem member_cx_ne_floor_cx {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
 /-- **`Statement:` the offset is recoverable WITHIN the carrier** — distinct indices give distinct
 members, because the complexities strictly climb.
 
-`Reading:` contrast this with **transport**, where absolute position is provably unrecoverable
-(`e0Repr_not_injective`) and only the **order** on the index crosses
-(`tower_repr_orderEmbedding`, `ZeroParadox/Ordinal/CnfBridge.lean`). Inside one carrier the position is
-determined; between carriers only the relative structure survives. -/
+`Reading:` (conjectural, and **narrower than a first draft claimed**) contrast this with the
+**notation** map `e0Repr`, where distinct representations provably collapse (`e0Repr_not_injective`) —
+there position is not recoverable. ⚠ **Do not generalize that to "transport" as such**: the very
+citation offered alongside it, `tower_repr_orderEmbedding` (`ZeroParadox/Ordinal/CnfBridge.lean`),
+shows the index's **order** crossing intact on that map, and `seed_maps_to_bot_both` pins index 0 on
+both sides. So recoverability varies **by map**, not by "inside vs between carriers". -/
 theorem member_injective {α : Type*} [I : InfinitudeFloor α] :
     Function.Injective (I.member) := fun _ _ hab =>
   I.cx_member_strictMono.injective (congrArg I.cx hab)

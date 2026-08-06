@@ -94,14 +94,30 @@ between consecutive terms, and **no transition function** — nothing maps insta
 no step map) but whether the **enumeration** is: does an index name a unique instance?
 
 ⚠ **The framing is Tim's and is not a Lean proposition.** What follows is: the two implementations
-answer that question **oppositely**, and one of them cannot answer it any other way.
+answer that question **oppositely**.
 
-`Reading:` **CARRIER kind** — the truth value depends which chart you are in, the same shape as the
-snap being available in `ℚ₂` and impossible in `ℝ`. `Statement:` the two theorems below. -/
+⚠ **This is an IMPLEMENTATION split, NOT a carrier split — and an earlier draft mislabelled it
+`Reading: CARRIER kind`, with the ℚ₂/ℝ analogy attached.** That was wrong twice over. `StateSpace n` is
+`EuclideanSpace ℂ (Fin n)`, which is **infinite**; what is finite is the **label set** `Fin n`. A gate
+built the counterexample: a `SeparatedSuccession` on the *same* carrier with the *same* orthogonality
+relation whose `seq` **is** injective. So faithfulness is not impossible on the Hilbert carrier — it is
+lost by *this labelling scheme*. The ℚ₂/ℝ analogy is inapt precisely because there the snap genuinely
+**cannot** exist in ℝ.
+
+**No POV KIND is claimed here**, because none of the five fits "depends on the implementation". What is
+claimed is the two `Statement:`s below and the observation that **the structure does not force
+faithfulness either way.** -/
 
 /-- **`Statement:` the ordinal chart is a FAITHFUL enumeration** — distinct indices name distinct
-instances. Immediate from `succession_strictMono`, whose own docstring already says the succession
-*"never returns to a rung it has already occupied"*; this states it as injectivity of `seq`. -/
+instances. Immediate from `succession_strictMono`; the phrase *"never returns to a rung it has already
+occupied"* is **`succession_lt_succ`'s** docstring two declarations further down
+(`ZeroParadox/Ordinal/SnapSuccession.lean`), not that one's. This states it as injectivity of `seq`.
+
+**Prior art:** `Ordinal.epsilon` is `abbrev epsilon := veblen 1`, so Mathlib gives both
+`Ordinal.veblen_injective 1` and `Ordinal.veblen_right_strictMono 1` directly
+(`Mathlib/SetTheory/Ordinal/Veblen.lean`). The delta here is only the `ℕ → Ordinal` cast; the corpus
+route via `succession_strictMono` is kept for locality, and the library names are cited rather than
+worked around. -/
 theorem ordinal_seq_injective : Function.Injective ordinalSuccession.seq := by
   intro a b hab
   have h : Ordinal.epsilon (a : Ordinal.{0}) = Ordinal.epsilon (b : Ordinal.{0}) := hab
@@ -109,11 +125,15 @@ theorem ordinal_seq_injective : Function.Injective ordinalSuccession.seq := by
 
 /-- **`Statement:` the Hilbert chart's labels CANNOT be faithful.** Labels are drawn from `Fin n`, a
 finite type, while the index set is `ℕ`: pigeonhole forbids injectivity outright, for **any** choice of
-`S`. This is not a defect of a particular labelling — the chart has run out of room. -/
+`S`. This is not a defect of a particular labelling — the label set has run out of room.
+
+⚠ **This declaration IS Mathlib's `not_injective_infinite_finite` applied to `S`** — nothing is added
+but the instantiation and the name. Kept for readability beside its siblings; do not cite it as new. -/
 theorem hilbert_labels_not_injective (n : ℕ) (S : ℕ → Fin n) : ¬ Function.Injective S :=
   not_injective_infinite_finite S
 
-/-- **`Statement:` and the collision is EXHIBITED** — two distinct indices whose labels agree. -/
+/-- **`Statement:` and the collision is EXHIBITED** — two distinct indices whose labels agree.
+⚠ Likewise **literally `Finite.exists_ne_map_eq_of_infinite S`**; an instantiation, not a new result. -/
 theorem hilbert_label_collision (n : ℕ) (S : ℕ → Fin n) :
     ∃ a b : ℕ, a ≠ b ∧ S a = S b :=
   Finite.exists_ne_map_eq_of_infinite S

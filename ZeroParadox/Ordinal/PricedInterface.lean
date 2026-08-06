@@ -44,13 +44,16 @@ does crossing cost*.
 Measured by `#print axioms` (the purity check at the bottom of this file is the instrument; these are
 the numbers it reported, not the numbers that were hoped for):
 
-* **Constructive side — choice-free, but not uniformly `[propext]`.**
-  `E0Note` and `e0Coe` report **no axioms at all**. `e0DecidableEq`, `e0OmegaPow`, `e0OmegaPow_top`,
-  `e0OmegaPow_coe` and `e0OmegaPow_fixedpoint_iff` report `[propext]`. `e0DecidableLE`,
-  `e0DecidableLT`, `e0Coe_lt_top` and `e0_le_top` report `[propext, Quot.sound]`.
-* **The map — `Classical.choice`.** `repr_lt_epsilon0`, `e0Repr`, `e0Repr_top`, `e0Repr_coe`,
-  `e0Repr_le_epsilon0`, `e0Repr_eq_epsilon0_iff` and `e0Repr_not_injective` all report
-  `[propext, Classical.choice, Quot.sound]`.
+⚠ **The per-declaration numbers are NOT reproduced here.** An earlier draft listed every name against
+its footprint; the list then went stale the moment two declarations were added, which is this project's
+most reliably recurring defect. **The block at the bottom of this file is the register — read it, do
+not copy it.** What is stated here is only the shape it prints, which is the finding:
+
+* **Constructive side — choice-free, and not uniformly `[propext]`.** Footprints range from **no axioms
+  at all** (the carrier and its coercion) up through `[propext]` to `[propext, Quot.sound]`. No
+  declaration on this side carries `Classical.choice`.
+* **The map — `Classical.choice`, uniformly.** Every declaration whose statement mentions `Ordinal`
+  reports `[propext, Classical.choice, Quot.sound]`, with no exceptions and no gradation.
 
 **The `Quot.sound` on part of the constructive side was not predicted, and is reported rather than
 explained away.** It arrives through Mathlib's `WithTop` order lemmas, not through anything about
@@ -349,10 +352,22 @@ through `repr` and would import the choice-carrying side into the constructive d
 
 ⚠ **AND THE SAME FACT READS THE OTHER WAY — added 2026-08-05 (Tim).** A failure of faithfulness is an
 availability of **uncertainty**. The fiber this non-injectivity creates — two notations, one denotation —
-is a two-point set on which a genuinely non-degenerate distribution lives (`repr_collision`,
-`exists_fiber_supported_non_pure_pmf` below). So the defect fenced above is *also* what supplies the
-≥2-outcome condition that `ZeroParadox/Information/Surprisal.lean`'s `pmf_subsingleton_isPure` shows is
-required before any distribution can be non-degenerate.
+carries a genuinely non-degenerate distribution (`repr_collision`,
+`exists_fiber_supported_non_pure_pmf` below).
+
+⚠ **State the fiber's role correctly; a first draft did not.** It is NOT that the fiber "lifts
+`pmf_subsingleton_isPure`'s obstruction" — `E0Note` is already non-subsingleton (`⊤` and `e0Coe 0`
+differ), so that obstruction was **never binding here**. What the collision supplies is the strictly
+stronger fact: a spread distribution **confined to a single denotation**. Any two distinct notations
+give a non-degenerate distribution; only a *collision* gives one whose entire support denotes one
+ordinal.
+
+**STANDARD NAME — this is structural (un)identifiability.** A parameter is *structurally identifiable*
+when it can be determined from the model's outputs; unidentifiable when distinct parameters are
+indistinguishable to the observation. Here `e0Repr` is the observation and its fiber is the
+indistinguishable class. Sources already in `.claude-local/papers/` (Villaverde 2016; Castro & de Boer
+2020), and **`CLAIMS.md` already uses the term** — it had simply never reached the Lean, which is the
+adjacency this block closes.
 
 `Reading:` (conjectural) the framework reads this as where statistics enters, under Tim's framing that
 **succession is a state of representation**: what is uncertain is *which representation*, never *what
@@ -377,9 +392,9 @@ theorem repr_collision : ∃ x y : E0Note, x ≠ y ∧ e0Repr x = e0Repr y := by
 and a distribution on notations which is **not** a point mass, yet **every** notation in its support
 denotes `o`. Uncertainty about the representation; none whatsoever about the object.
 
-Assembled from three existing pieces and one new one: `repr_collision` (the fiber), `exists_spread_pmf`
-and `not_pure_of_two_support` (both `ZeroParadox/Information/Surprisal.lean` — the latter already
-existed and is cited rather than re-proved).
+Assembled from `repr_collision` (the fiber, new here), `exists_spread_pmf` (new, in
+`ZeroParadox/Information/Surprisal.lean`), and `not_pure_of_two_support` (**pre-existing** in that same
+file, cited rather than re-proved).
 
 ⚠ **Do not read this as a distribution over pasts.** The support is a set of *notations*; the theorem
 says they are indistinguishable by `e0Repr`, not that one preceded another. -/
