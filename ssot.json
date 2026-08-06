@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1593,
+        "declarations": 1594,
         "files": 136
       },
       "entries": [
@@ -9609,6 +9609,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "25d4b4fa-bbe2-446e-9668-41dc102366cc",
+          "new": {
+            "file": "ZeroParadox/Category/WellFoundedCoalgebra.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.mono_colimit_ι_of_mono",
+            "short": "mono_colimit_ι_of_mono"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "AMM Def 2.14(1) clause (b): the colimit cocone of a chain of monos has monic legs",
           "verify": {
             "axioms": null,
             "sorry_free": true
