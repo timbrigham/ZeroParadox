@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1615,
+        "declarations": 1619,
         "files": 136
       },
       "entries": [
@@ -20930,6 +20930,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5813c0a4-8a45-4fe6-be8b-b186d69a826a",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.survival_pos",
+            "short": "survival_pos"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "NO-GO: at every finite stage, not-having-crossed retains positive probability. No finite number of trials makes the crossing certain.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5835632b-3dd1-41fc-910d-a3c60a00c1e4",
           "new": {
@@ -24710,6 +24746,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "6aa7e4b8-a3e1-4c15-9ee0-68d56312a900",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.survival_eq_pow",
+            "short": "survival_eq_pow"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "The survival recurrence for repeated crossings closes to a power. Independence is an explicit hypothesis, not a definition.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42920,6 +42992,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "ba064780-72c9-48d8-a0b3-17112540d193",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.crossing_certain_only_in_limit",
+            "short": "crossing_certain_only_in_limit"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The payload: crossing probability tends to one and is strictly below one at every finite stage, both conjuncts in one statement. Repetition upgrades l_inf's bridge to a limiting statement without discharging it.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "ba09e683-a946-406c-99f5-2882186ae512",
           "new": {
@@ -49438,6 +49546,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "d7c2d19a-5d8d-41c5-a25c-6c94d84ae2cd",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.survival_tendsto_zero",
+            "short": "survival_tendsto_zero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "The survival probability vanishes in the limit; the limit itself is Mathlib's tendsto_pow_atTop_nhds_zero_of_lt_one, cited not re-proved.",
           "verify": {
             "axioms": null,
             "sorry_free": true

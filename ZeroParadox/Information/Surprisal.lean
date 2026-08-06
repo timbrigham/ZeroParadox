@@ -3,6 +3,7 @@ import Mathlib.Probability.ProbabilityMassFunction.Constructions
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Real.Archimedean
+import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic
 
 /-!
@@ -430,6 +431,81 @@ theorem confined_map_eq_pure {α β : Type*} (f : α → β) (p : PMF α) (o : �
     · simp [ha]
     · rw [if_neg]; intro h; exact hb (h.trans (hconf a ha))
 
+/-! ### § The repeated crossing — what a probabilistic account of DA-1 would and would not buy
+
+**Origin (Tim, 2026-08-06):** *"one pull. one chance to cross the snap. one action taken which may or
+may not work. and a fixed cost every time it fires."* The slot-machine reading: if the crossing is a
+trial with positive probability, then unboundedly many trials make it eventually certain.
+
+**This section prices that argument, and the answer is that it does NOT close `l_inf`'s gap.** It
+converts *possible* into *probability tending to one*, which is strictly more than the framework has
+— and at **every finite stage the crossing remains uncertain**. So the ontological bridge that
+`l_inf`'s docstring names as a design principle rather than a consequence is not discharged by
+repetition; it is relocated into a limit.
+
+**⚠ THE INDEPENDENCE IS A COMMITMENT AND IT IS VISIBLE IN THE HYPOTHESES.** `hstep` says each trial
+multiplies the survival probability by the same `1 - p`; that is what independence-with-fixed-`p`
+buys, and it is **assumed here, never derived**. No product measure is constructed and no trial
+sequence is built — `q` is any real sequence satisfying the recurrence. Per this project's standing
+rule, a commitment goes in a hypothesis so the signature cannot be misread.
+
+**⚠ AND NOTHING HERE SAYS THE CROSSING HAS A PROBABILITY.** That `p` exists at all is the open
+question this section does not touch; possibility is not a measure. What is priced is only the
+consequence *if* such a `p` exists.
+
+**The shape worth recording, stated as a shape and never as an instance-of relation:** *converging is
+not arriving* now appears in a fourth place. The doubling attractor converges to the floor with no
+finite iterate at the floor; the odometer's orbit is dense but hits a target exactly only under an
+arithmetic condition; `snap_arc_z2_loop` reapproaches zero with the finite stages *"never even
+reach[ing] 0"*; and here the crossing probability tends to one and equals it at no finite stage.
+**Four distinct carriers, no common theorem** — and no POV KIND is claimed, because none of the five
+describes a recurring obstruction.
+
+**Prior art.** The limit is Mathlib's `tendsto_pow_atTop_nhds_zero_of_lt_one`
+(`Mathlib/Analysis/SpecificLimits/Basic.lean`), cited rather than re-proved; only the attachment is
+new. The nearest corpus work is `ZeroParadox/Order/MarkovContractionDual.lean`, which is a different
+statement — geometric convergence of a Markov *law* to its stationary distribution, at rate
+`|1-2a|ᵏ` — not a survival probability across repeated trials. -/
+
+/-- **`Statement:` the survival recurrence closes to a power.** `q n` is the probability of NOT having
+crossed after `n` trials. -/
+theorem survival_eq_pow {p : ℝ} (q : ℕ → ℝ)
+    (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) (n : ℕ) :
+    q n = (1 - p) ^ n := by
+  induction n with
+  | zero => simpa using hq0
+  | succ n ih => rw [hstep n, ih]; ring
+
+/-- **`Statement:` at EVERY finite stage, not-having-crossed retains positive probability.** This is
+the no-go half: no finite number of trials makes the crossing certain. -/
+theorem survival_pos {p : ℝ} (hp1 : p < 1) (q : ℕ → ℝ)
+    (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) (n : ℕ) :
+    0 < q n := by
+  rw [survival_eq_pow q hq0 hstep n]
+  exact pow_pos (by linarith) n
+
+/-- **`Statement:` and in the limit the survival probability vanishes.** -/
+theorem survival_tendsto_zero {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1) (q : ℕ → ℝ)
+    (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) :
+    Filter.Tendsto q Filter.atTop (nhds 0) := by
+  have hq : q = fun n => (1 - p) ^ n := funext (survival_eq_pow q hq0 hstep)
+  rw [hq]
+  exact tendsto_pow_atTop_nhds_zero_of_lt_one (by linarith) (by linarith)
+
+/-- **`Statement:` CERTAIN ONLY IN THE LIMIT.** The probability of having crossed by stage `n` tends
+to `1` and is **strictly below `1` at every finite `n`** — both conjuncts, in one statement, so the
+second cannot be dropped when the first is quoted.
+
+`Reading:` (Tim, 2026-08-06, conjectural) this is the slot machine priced. Unbounded repetition buys
+measure one *in the limit* and never certainty at any stage that is actually reached — so it upgrades
+`l_inf`'s bridge from a commitment to a limiting statement without discharging it. -/
+theorem crossing_certain_only_in_limit {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (q : ℕ → ℝ)
+    (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) :
+    (∀ n, 1 - q n < 1) ∧ Filter.Tendsto (fun n => 1 - q n) Filter.atTop (nhds 1) := by
+  refine ⟨fun n => by linarith [survival_pos hp1 q hq0 hstep n], ?_⟩
+  have h := survival_tendsto_zero hp0 (le_of_lt hp1) q hq0 hstep
+  simpa using (tendsto_const_nhds (x := (1:ℝ)) (f := Filter.atTop)).sub h
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -460,5 +536,9 @@ open ZeroParadox
 #print axioms injective_forces_confined_support_subsingleton
 #print axioms confined_non_pure_refutes_injective
 #print axioms confined_map_eq_pure
+#print axioms survival_eq_pow
+#print axioms survival_pos
+#print axioms survival_tendsto_zero
+#print axioms crossing_certain_only_in_limit
 
 end PurityCheck
