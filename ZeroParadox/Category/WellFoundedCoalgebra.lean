@@ -225,15 +225,29 @@ commutation only, and repeats that fence throughout).
 **Prior art for the general shape.** **AMM Thm 7.6** (p. 30) says *"the only well-founded fixed point is
 the initial algebra."* This file's fork has the **shape** of that statement.
 
-⚠ **NO instance-of claim is made. ONE thing is open, and it is an ambient hypothesis: smoothness
-clause (b)** — true of `Type u`, witnessed by nothing in this file (see the table and § V).
+**Every hypothesis of Thm 7.6 is now verified for this setting, and both bridges to its subject are
+built.** Ambient hypotheses: see the table below, all four. Subject: `wtypeFixedPoint` /
+`mtypeFixedPoint` (§ V) put both carriers among its *fixed points*, and
+`ZeroParadox/Category/NextTimeCategorical.lean`'s `isWellFoundedCoalgCat_iff` transports the predicate.
 
-Earlier review rounds spent themselves counting how many of Thm 7.6's four *ambient* hypotheses
-`Type u` satisfies (one, then two, then three) — as though that count were the whole story. **It was
-not**, and that is worth keeping even now the other half has closed: Thm 7.6 is a statement about
-**fixed points** and **initial algebras**, so connecting this file's results to its *subject* was always
-a separate matter from the hypotheses. Both bridges to the subject are now built (below), which is
-exactly why clause (b) is the sole remaining item rather than one of two.
+⚠ **AND THAT IS STILL NOT A PROOF OF Thm 7.6, so read what it does license carefully.** Thm 7.6 is
+**not formalized** anywhere in this corpus, and Mathlib has no well-founded-coalgebra machinery to
+formalize it with. What is now available is its **conclusion, by citation**, for this setting — because
+its assumptions are discharged and its subject is connected. That is what "instance of" means here and
+it is strictly weaker than a Lean derivation. **Do not write "we proved Thm 7.6."**
+
+⚠ **Two further fences on the ambient table.** (1) The three smoothness clauses are proved as separate
+statements over filtered (and for (c), connected) index categories; AMM quantify over **λ-chains**,
+which are filtered and connected, so the coverage holds — **but AMM's Def 2.14 itself is not
+formalized**, and no declaration here asserts "`Type u` has smooth monomorphisms" as a single
+proposition. (2) The whole table is about **`Type u` with `ofTypeFunctor P.Obj`** and says nothing
+about the MC-1 carriers (`TopCat`, `ModuleCat ℂ`, `KleisliCat PMF`), which remain unchecked — see
+`.claude-local/notes/future-research/amm_coreflection_requirements_gap_2026-08-04.md`.
+
+*(Earlier rounds counted the ambient hypotheses — one, then two, then three, now four — as though the
+count were the whole story. It never was: Thm 7.6 is about fixed points and initial algebras, so
+connecting to its **subject** was always a separate axis from its **hypotheses**. Both axes are now
+closed; the record is kept because the counting recurred four times.)*
 
 The bridges to its subject:
 
@@ -262,7 +276,7 @@ monomorphisms), and not literally Set, which is why each was checked rather than
 |---|---|---|
 | complete | **HOLDS** | `Limits.Types.hasLimitsOfSize` |
 | well-powered | **HOLDS** | `instWellPoweredType`, `Mathlib/CategoryTheory/Subobject/Types.lean` |
-| smooth monomorphisms | **(a) and (c) witnessed here; (b) true of `Type u` but NOT witnessed here — see ⚠ below** | (a) `Types.hasColimitsOfShape`; (c) `smooth_monos_factorizing` in § V |
+| smooth monomorphisms | **all three clauses witnessed** | (a) `Types.hasColimitsOfShape`; (b) `mono_colimit_ι_of_mono` in § V; (c) `smooth_monos_factorizing` in § V. AMM's trailing *"every morphism from 0 is monic"* is immediate — every map out of the empty type is injective |
 | `F` preserves monomorphisms | **HOLDS** | `preservesMonomorphisms_ofTypeFunctor` in § V |
 
 ⚠ **CLAUSE (b) IS THE HOLE, and it is recorded rather than papered over.** Def 2.14(1)'s clause (b) is
@@ -388,6 +402,25 @@ noncomputable def mtypeFixedPoint {P : PFunctor.{u, u}} : M P ≃ P.Obj (M P) wh
   left_inv := M.mk_dest
   right_inv := M.dest_mk
 
+/-- **Smooth monomorphisms, clause (b)** — AMM Def 2.14(1)'s second clause: the colimit cocone of a
+chain of monomorphisms *"is formed by monomorphisms"*, i.e. its **legs** are monic.
+
+The proof is `Types.FilteredColimit.isColimit_eq_iff'`: two elements of the same stage collide in the
+colimit exactly when some transition map identifies them, and injective transitions push that back.
+
+⚠ **This clause was mis-cited twice before it was proved.** An earlier version pointed at
+`Types.instIsStableUnderFilteredColimitsMonomorphismsType`, which states a **different** proposition —
+the induced map between two colimit *vertices* is monic, not that the legs are. A second attempt named
+`IsStableUnderTransfiniteComposition` plus cofinality of the tail; that route is real but longer than
+this one. **The legs and the vertex map are not the same statement**; keep them apart. -/
+theorem mono_colimit_ι_of_mono {J : Type u} [SmallCategory J] [IsFiltered J]
+    (F : J ⥤ Type u) (hF : ∀ {i j : J} (f : i ⟶ j), Mono (F.map f))
+    {t : Cocone F} (ht : IsColimit t) (i : J) : Mono (t.ι.app i) := by
+  rw [mono_iff_injective]
+  intro x y h
+  obtain ⟨j, f, hf⟩ := Types.FilteredColimit.isColimit_eq_iff' ht x y |>.mp h
+  exact (mono_iff_injective (F.map f)).mp (hF f) hf
+
 /-- **Smooth monomorphisms, clause (c)** — AMM Def 2.14(1)'s third clause: *"for every cone of C formed
 by monomorphisms, the factorizing morphism from `colim C` is monic."*
 
@@ -438,6 +471,7 @@ idPF_M_nextTime_empty               [propext, Classical.choice, Quot.sound]
 idPF_M_not_wellFounded              [propext, Classical.choice, Quot.sound]
 fork_is_intrinsic                   [propext, Classical.choice, Quot.sound]
 preservesMonomorphisms_ofTypeFunctor   [propext, Quot.sound]                 <- hypothesis 4, CHOICE-FREE
+mono_colimit_ι_of_mono              [propext, Classical.choice, Quot.sound]  -- via the colimit API
 smooth_monos_factorizing            [propext, Classical.choice, Quot.sound]  -- via the colimit API
 wtypeFixedPoint                     no axioms                                <- bridge 2, μ side: FREE
 mtypeFixedPoint                     [propext, Classical.choice, Quot.sound]  -- via M.dest, the origin
@@ -487,6 +521,7 @@ open ZeroParadox
 #print axioms fork_is_intrinsic
 #print axioms natPF_wtype_wellFounded_and_inhabited
 #print axioms preservesMonomorphisms_ofTypeFunctor
+#print axioms mono_colimit_ι_of_mono
 #print axioms smooth_monos_factorizing
 #print axioms wtypeFixedPoint
 #print axioms mtypeFixedPoint
