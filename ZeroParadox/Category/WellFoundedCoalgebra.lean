@@ -90,6 +90,8 @@ on how the objects were built. § IV is an instance of AMM Ex 4.5(3) and is cred
 - § IV  The ν side: the leaf-free M-type is NOT (intrinsically), via `∅` as a proper fixed point;
         then the fork bundle — **whose μ half is vacuous at that functor, disclosed in place** — and a
         non-vacuous μ witness at the leaf-carrying `1 + X`.
+- § V   AMM Thm 7.6's ambient hypotheses, verified for this setting: `F`-preservation and smoothness
+        clauses (b) and (c); plus `wtypeFixedPoint` / `mtypeFixedPoint`, the bridges to its subject.
 -/
 
 namespace ZeroParadox
@@ -263,9 +265,9 @@ The bridges to its subject:
 2. **"Fixed point" in AMM's sense — CLOSED.** AMM mean the structure map is **invertible**. Now
    witnessed: `wtypeFixedPoint` and `mtypeFixedPoint` in § V.
 
-**So smoothness clause (b) below is now the ONLY item standing between this file and an instance-of
-claim** — the counting recurred because it was never the whole story, and the other half is now closed.
-The ambient hypotheses are
+**Both axes are now closed** — the ambient hypotheses (all four, table below) and the subject (both
+bridges). The counting recurred for four rounds because it was never the whole story; the subject was
+always the other half. The ambient hypotheses are
 recorded below anyway: measuring them was worth doing, the results are reusable, and they are simply
 **not the blocker**. Thm 7.6 holds in *"a complete and well-powered category with smooth
 monomorphisms"* for *"F preserving monomorphisms."* The setting here is **`Type u`**, Lean's category of
@@ -279,29 +281,27 @@ monomorphisms), and not literally Set, which is why each was checked rather than
 | smooth monomorphisms | **all three clauses witnessed** | (a) `Types.hasColimitsOfShape`; (b) `mono_colimit_ι_of_mono` in § V; (c) `smooth_monos_factorizing` in § V. AMM's trailing *"every morphism from 0 is monic"* is immediate — every map out of the empty type is injective |
 | `F` preserves monomorphisms | **HOLDS** | `preservesMonomorphisms_ofTypeFunctor` in § V |
 
-⚠ **CLAUSE (b) IS THE HOLE, and it is recorded rather than papered over.** Def 2.14(1)'s clause (b) is
-*"its colimit cocone is formed by monomorphisms"* — a statement about the legs `c.ι.app j`. An earlier
-version of this table cited `Types.instIsStableUnderFilteredColimitsMonomorphismsType` for it; **that
-instance states a different proposition** (given a natural transformation with monic components between
-two diagrams, the induced map *between the two colimit vertices* is monic). Def 2.14(1) quantifies over
-**λ-chains of monomorphisms**, and clause (b)'s subject is the cocone **legs** — a different
-proposition, so the obvious instantiation (second diagram constant at `X.obj j`) does not deliver it:
-such a natural transformation is a cone over `X` with that vertex, and need not exist. Clause (b) *is*
-true of `Type u` — the route is `IsStableUnderTransfiniteComposition` (which **does** synthesize in the
-pin) plus
-cofinality of the tail `[j, λ)` — but **neither step is in this file, so the row is not fully
-witnessed.** Next-touch work; do not restore the old citation.
+⚠ **CLAUSE (b) WAS THE LAST HOLE AND IS NOW CLOSED** (`mono_colimit_ι_of_mono`, § V) — the record of
+how it was got wrong is kept because it was got wrong twice. Def 2.14(1)'s clause (b) is *"its colimit
+cocone is formed by monomorphisms"*, a statement about the **legs** `c.ι.app j`. An earlier version of
+this table cited `Types.instIsStableUnderFilteredColimitsMonomorphismsType` for it; **that instance
+states a different proposition** — given a natural transformation with monic components between two
+diagrams, the induced map *between the two colimit vertices* is monic. **The legs and the vertex map
+are not the same statement**, and the obvious instantiation (second diagram constant at `X.obj j`) does
+not bridge them: such a transformation is a cone over `X` with that vertex, and need not exist. A
+second attempt named `IsStableUnderTransfiniteComposition` plus cofinality of the tail `[j, λ)` — a
+real route, and longer than the one actually used. **Do not restore either citation.**
 
 ⚠ **Verified hypotheses are not a formalized theorem, and what the citation buys is narrow.** AMM
 Thm 7.6 is **not** proved in Lean here, and Mathlib has no well-founded-coalgebra machinery to prove it
 with. What Thm 7.6 would deliver, given its hypotheses, is that a well-founded fixed point **is the
 initial algebra** — i.e. it *concludes* initiality rather than assuming it, which is why the
 `fork_is_intrinsic` fence above ("not proved: that either carrier is initial/final") is consistent with
-citing it. That conclusion is available **by citation only**, and only once clause (b) is closed. Do
-not upgrade this to "we proved Thm 7.6," and do not read the fence as denying what Thm 7.6 offers.
+citing it. That conclusion is available **by citation only**. Do not upgrade this to "we proved
+Thm 7.6," and do not read the fence as denying what Thm 7.6 offers.
 
-⚠ **THIS TABLE WAS WRONG TWICE, IN THE SAME DIRECTION, AND THAT IS THE LESSON.** It first recorded
-*one* of four, then *two*; the true count is four. **Not one of those errors was a wrong theorem — each
+⚠ **THIS TABLE WAS WRONG THREE TIMES, ALWAYS IN THE SAME DIRECTION, AND THAT IS THE LESSON.** It
+recorded *one* of four, then *two*, then *three*; the true count is four. **Not one of those errors was a wrong theorem — each
 was an unverified negative**: `WellPowered (Type 0)` fails on an unimported name and an unresolved
 universe parameter; `PreservesMonomorphisms` "does not synthesize" is true of the *instance database*
 and false of the *fact*; and smooth monomorphisms is **assembled from** pieces in the pin though no
@@ -337,15 +337,20 @@ theorem natPF_wtype_wellFounded_and_inhabited :
 monomorphisms"* for *"F preserving monomorphisms."* Earlier versions of this file recorded first one,
 then two, of those four as available and withheld any instance-of claim. **Both counts were wrong, and
 each was an unverified negative rather than a wrong theorem** — see `CLAUDE.md` § *"NOT IN THE LIBRARY"
-IS A CLAIM*. **Three of the four are now discharged**: two are Mathlib instances, and the two theorems
-below supply `F`-preservation and clause (c) of smoothness. **Clause (b) of smoothness is still open
-here** — true of `Type u`, but witnessed by nothing in this file (see the ⚠ in the overview).
+IS A CLAIM*. **All four are now discharged**: complete and well-powered are Mathlib instances, and the
+three theorems below supply `F`-preservation plus smoothness clauses (b) and (c) — clause (a) being
+`Types.hasColimitsOfShape`, and AMM's trailing *"every morphism from 0 is monic"* immediate in `Type u`.
 
 ⚠ **Verifying the hypotheses is NOT proving the theorem.** AMM Thm 7.6 is **not formalized here** and
 Mathlib has no well-founded-coalgebra machinery. What § V establishes is that this setting **satisfies
-the theorem's assumptions**, so its conclusion applies *by citation*. That is the honest upgrade from
-"shares the shape" — but it is **not yet a completed instance-of** while clause (b) is unwitnessed, and
-it would never be a Lean derivation of Thm 7.6 in any case. -/
+the theorem's assumptions**, so its conclusion applies *by citation* — never as a Lean derivation.
+
+⚠ **And satisfying the hypotheses is not, by itself, the whole instance-of claim either.** Thm 7.6 is
+about **fixed points** and **initial algebras**; connecting to that *subject* is a separate axis, closed
+by `wtypeFixedPoint` / `mtypeFixedPoint` below and by `isWellFoundedCoalgCat_iff` in
+`ZeroParadox/Category/NextTimeCategorical.lean`. **Both axes closed is what earns the citation.** ⚠ Note
+also that AMM's **Def 2.14 itself is not formalized** — its three clauses are proved as separate
+statements, and no declaration here asserts "`Type u` has smooth monomorphisms" as one proposition. -/
 
 open CategoryTheory CategoryTheory.Limits MorphismProperty
 
@@ -394,8 +399,9 @@ def wtypeFixedPoint {P : PFunctor.{u, u}} : W P ≃ P.Obj (W P) where
 /-- **BRIDGE 2, ν side — `M.dest` is a fixed point in the same sense.** Same two round trips
 (`M.mk_dest`, `M.dest_mk`). With `wtypeFixedPoint` this puts both carriers under Thm 7.6's *subject*.
 **Bridge 1, the predicate transport, is also CLOSED** (2026-08-05,
-`ZeroParadox/Category/NextTimeCategorical.lean`); what remains is smoothness clause (b) — see the ⚠ in
-the module overview. -/
+`ZeroParadox/Category/NextTimeCategorical.lean`). With smoothness clause (b) closed below, **both axes
+are now shut** — see the ⚠ blocks in the module overview and § V for what that does and does not
+license. -/
 noncomputable def mtypeFixedPoint {P : PFunctor.{u, u}} : M P ≃ P.Obj (M P) where
   toFun := M.dest
   invFun := M.mk
@@ -408,12 +414,23 @@ chain of monomorphisms *"is formed by monomorphisms"*, i.e. its **legs** are mon
 The proof is `Types.FilteredColimit.isColimit_eq_iff'`: two elements of the same stage collide in the
 colimit exactly when some transition map identifies them, and injective transitions push that back.
 
+**PRIOR ART, and it must be cited rather than worked around.** `IsColimit.mono_ι_app_of_isFiltered`
+(`Mathlib/CategoryTheory/Abelian/GrothendieckAxioms/Colim.lean`) **is this statement**, and more
+general. ⚠ It does **not** fire here — it needs `colim.PreservesMonomorphisms`, which does not
+synthesize for `Type u` — so the hand proof below is kept and the library name is cited, exactly the
+`CovBy` precedent recorded in `CLAUDE.md`.
+
 ⚠ **This clause was mis-cited twice before it was proved.** An earlier version pointed at
 `Types.instIsStableUnderFilteredColimitsMonomorphismsType`, which states a **different** proposition —
 the induced map between two colimit *vertices* is monic, not that the legs are. A second attempt named
 `IsStableUnderTransfiniteComposition` plus cofinality of the tail; that route is real but longer than
-this one. **The legs and the vertex map are not the same statement**; keep them apart. -/
-theorem mono_colimit_ι_of_mono {J : Type u} [SmallCategory J] [IsFiltered J]
+this one. **The legs and the vertex map are not the same statement**; keep them apart.
+
+**Hypothesis note:** `IsFilteredOrEmpty` rather than `IsFiltered`, deliberately. AMM's λ-chains
+*"include the initial object 0 (the case λ = 0)"* (§ 2.5), and the empty category is **not** filtered —
+so the stronger hypothesis would leave their λ = 0 case uncovered. `isColimit_eq_iff'` needs only the
+weaker one. -/
+theorem mono_colimit_ι_of_mono {J : Type u} [SmallCategory J] [IsFilteredOrEmpty J]
     (F : J ⥤ Type u) (hF : ∀ {i j : J} (f : i ⟶ j), Mono (F.map f))
     {t : Cocone F} (ht : IsColimit t) (i : J) : Mono (t.ι.app i) := by
   rw [mono_iff_injective]
@@ -431,12 +448,10 @@ already has exactly this shape, and the missing step is to take the second diagr
 *"every morphism from 0 is monic"* is immediate in `Type u` — every map out of the empty type is
 injective.
 
-⚠ **Clause (b) is NOT discharged here, and must not be cited to
-`Types.instIsStableUnderFilteredColimitsMonomorphismsType`** — that instance concludes the induced map
-*between two colimit vertices* is monic, whereas clause (b) is about the cocone **legs**
-`c.ι.app j : X.obj j ⟶ c.pt`. The two are different propositions. Clause (b) is true of `Type u`; the
-route is `IsStableUnderTransfiniteComposition` (which does synthesize in the pin) plus cofinality of
-the tail, and neither step is written here. See the ⚠ in the module overview.
+⚠ **Clause (b) is `mono_colimit_ι_of_mono` above — and must NOT be cited to
+`Types.instIsStableUnderFilteredColimitsMonomorphismsType`**, which concludes the induced map *between
+two colimit vertices* is monic, whereas clause (b) is about the cocone **legs**
+`c.ι.app j : X.obj j ⟶ c.pt`. Those are different propositions; keep them apart.
 
 **A definition can be available without any declaration bearing its name.** Grepping `smooth` in
 `Mathlib/CategoryTheory/` returns nothing; the condition is nonetheless satisfied. -/
