@@ -52,6 +52,7 @@ the 0 = ∞ inversion.
 - § I   The requirements typeclass `InfinitudeFloor`.
 - § II  Two support lemmas about `ℕ∞`.
 - § III The identity (well-typed) and its consequence (the infinitude forces infinite complexity).
+- § III-b The OFFSET structure: members sit at finite distance, the floor alone at ⊤ (Tim, 2026-08-05).
 - § IV  A toy witness (`ℕ∞`, inhabitability).
 - § V   The power-series witness (`R⟦X⟧`, order at the floor).
 - § VI  The inversion extension (both poles, concurrently and one after the other).
@@ -121,6 +122,83 @@ theorem infinitude_forces_infinite_complexity (α : Type*) [I : InfinitudeFloor 
     I.cx I.floor = ⊤ := by
   rw [I.cx_floor_eq_iSup]
   exact iSup_strictMono_top I.cx_member_strictMono
+
+end ZeroParadox
+
+/-! ### § III-b. The OFFSET structure — the floor is the only point at infinite distance
+
+**Origin (Tim, 2026-08-05).** Asked whether an instance translated into `n+1` can carry a step offset
+that is *"not readily apparent on instantiation"*, and then identified the transport thread as **the
+substrate** of two surface phenomena: the approximation index `⃝ⁿ(⊥)` and the tower's `+1`. The results
+below are the measurement-level content of that reading, inside this class.
+
+**The substrate, already proved elsewhere and stated here as the reason:** `ZeroParadox/Order/Snap.lean`
+records that *"⊥'s down-set is the singleton `{⊥}`: there is nothing below it to subtract… Directionality
+needs two comparable points; at ⊥ alone `le` is reflexive only."* **An offset is a difference, a
+difference needs two points, and the bottom has none available** — so nothing sits at distance zero from
+it but itself, and every index is a distance *from* it.
+
+**Why the tower's `+1` is FORCED, not conventional:** `member_ne_floor` forbids the floor from being a
+member of its own infinitude, so an enumeration seeded at the floor must begin at the successor. That is
+exactly `towerInfinitudeFloor`'s `member n = cnfToZp2 (towerNONote (n + 1))`
+(`ZeroParadox/Valuation/TowerHeightFloor.lean`).
+
+⚠ **`Reading:` that the approximation index, the `+1`, and the transport asymmetry are ONE phenomenon
+is the framework's interpretation** — a shared shape across distinct structures, which by this corpus's
+standing rule is a **type boundary, never a common theorem**. The theorems below are about this class
+only. Long form: `.claude-local/notes/future-research/offset_from_the_origin_2026-08-05.md`. -/
+
+namespace ZeroParadox
+
+
+/-- **`Statement:` every member sits at FINITE complexity.** A strictly increasing `ℕ∞`-valued sequence
+cannot take the value `⊤`: a term equal to `⊤` would need a successor strictly above it. Note this is
+**not** assumed — the class asks only that the complexities climb. -/
+theorem member_cx_lt_top {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
+    I.cx (I.member n) < ⊤ := by
+  rcases eq_or_lt_of_le (le_top : I.cx (I.member n) ≤ ⊤) with h | h
+  · exfalso
+    have hstep : I.cx (I.member n) < I.cx (I.member (n + 1)) :=
+      I.cx_member_strictMono (Nat.lt_succ_self n)
+    rw [h] at hstep
+    exact absurd hstep (not_lt.mpr le_top)
+  · exact h
+
+/-- **`Statement:` no member shares the floor's complexity.** The measurement-level form of
+`member_ne_floor`: members differ from the floor not merely as elements, but in **how far out they
+sit**. -/
+theorem member_cx_ne_floor_cx {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
+    I.cx (I.member n) ≠ I.cx I.floor := by
+  rw [infinitude_forces_infinite_complexity α]
+  exact ne_of_lt (member_cx_lt_top n)
+
+/-- **`Statement:` the offset is recoverable WITHIN the carrier** — distinct indices give distinct
+members, because the complexities strictly climb.
+
+`Reading:` contrast this with **transport**, where absolute position is provably unrecoverable
+(`e0Repr_not_injective`) and only the **order** on the index crosses
+(`tower_repr_orderEmbedding`, `ZeroParadox/Ordinal/CnfBridge.lean`). Inside one carrier the position is
+determined; between carriers only the relative structure survives. -/
+theorem member_injective {α : Type*} [I : InfinitudeFloor α] :
+    Function.Injective (I.member) := fun _ _ hab =>
+  I.cx_member_strictMono.injective (congrArg I.cx hab)
+
+/-- **`Statement:` the floor is the UNIQUE point of the family at infinite distance.** Restricted to
+the floor and its members, `cx x = ⊤` holds exactly at the floor.
+
+⚠ **Scoped to the family on purpose.** The class says nothing about arbitrary elements of `α`, so this
+is **not** a uniqueness claim about the carrier — `infinitude_forces_infinite_complexity` gives no such
+thing, and `WellFoundedCoalgebra.lean` records the same fence. -/
+theorem floor_unique_at_top {α : Type*} [I : InfinitudeFloor α] (x : α)
+    (hx : x = I.floor ∨ ∃ n, x = I.member n) :
+    I.cx x = ⊤ ↔ x = I.floor := by
+  constructor
+  · intro htop
+    rcases hx with rfl | ⟨n, rfl⟩
+    · rfl
+    · exact absurd htop (ne_of_lt (member_cx_lt_top n))
+  · rintro rfl
+    exact infinitude_forces_infinite_complexity α
 
 end ZeroParadox
 
@@ -286,6 +364,10 @@ open ZeroParadox
 
 #print axioms infinite_complexity_is_infinitude_of_zeros
 #print axioms infinitude_forces_infinite_complexity
+#print axioms member_cx_lt_top
+#print axioms member_cx_ne_floor_cx
+#print axioms member_injective
+#print axioms floor_unique_at_top
 #print axioms pole_inversion
 #print axioms two_pow_valuation
 
