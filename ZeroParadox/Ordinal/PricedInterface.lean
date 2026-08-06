@@ -377,9 +377,8 @@ ordinal.
 **AND THE COLLISION IS NECESSARY — measured, not assumed.**
 `confined_non_pure_refutes_injective` (`ZeroParadox/Information/Surprisal.lean`) proves the converse:
 under an *injective* map a confined distribution collapses to one support point, so a spread one
-refutes injectivity outright. The non-faithfulness is therefore not a convenient source of two points
-— it is the only source. This was measured at round-3 revalidation, after the sentence had been
-re-worded three times without anyone asking whether the claim underneath was true.
+refutes injectivity outright. Measured at round-3 revalidation, after the sentence had been re-worded
+three times without anyone asking whether the claim underneath was true.
 
 **The IN-FIELD name is already in this file, 250 lines above: `ONote.repr_inj`.** Mathlib's
 `ONote.repr_inj` (`Mathlib/SetTheory/Ordinal/Notation.lean`) requires `NF` on both arguments, and this
@@ -393,9 +392,10 @@ over-reach**) the framework reads the fiber as an instance of the **shape** that
 "structural identifiability" for this.** Both sources on disk (Villaverde 2016; Castro & de Boer 2020,
 `.claude-local/papers/`) scope that term to **parametrized dynamic models**, where "structural"
 contrasts with *practical* identifiability limited by data. `e0Repr` has no data, no dynamics and no
-such contrast, so the modifier does no work here. And `CLAIMS.md`'s use of the term is about **ε₀'s
-dimensional magnitude** under Buckingham π — a different object, so "it had never reached the Lean"
-claims a continuity that is not there.
+such contrast, so the modifier does no work here. And `CLAIMS.md`'s use of the term is about **ZP-B's
+real-valued threshold** under Buckingham π — a different object, and that row's own 2026-07-30 scope
+correction states the term does *not* apply to ε₀ — so "it had never reached the Lean" claims a
+continuity that is not there.
 
 **NO POV KIND is claimed here, and that is deliberate** — none of the five (COINCIDENCE / INVERSION /
 DRIFT / CARRIER / INVARIANT) describes "two structures share a shape". What is asserted is only the
@@ -445,7 +445,7 @@ theorem exists_fiber_supported_non_pure_pmf :
     rw [hz', ← hxy]
 
 /-- **`Statement:` the round trip closes.** `e0Repr_not_injective` — the fence this section is built on
-— is **re-derived** from the statistical side: take the collision, spread a distribution across it,
+— is **round-tripped** through the statistical side: take the collision, spread a distribution across it,
 observe that the distribution is confined to one denotation, and `confined_non_pure_refutes_injective`
 returns the non-injectivity.
 
@@ -453,8 +453,11 @@ returns the non-injectivity.
 an unapplied theorem is one whose non-vacuity nobody has exercised. This composition exercises it: the
 implication runs both ways, so the identification of "failure of faithfulness" with "room for a
 confined distribution" is not an interpretation laid over the theorems — it is a round trip through
-them. ⚠ It re-proves a fact this file already has; that is the point, and it is not offered as new
-mathematics. -/
+them. ⚠ **This consumes its own conclusion and is not an independent second proof** — `repr_collision` is
+itself derived from `e0Repr_not_injective`. What it establishes is exactly that the converse's
+hypotheses are **satisfiable at a concrete `f`**, and nothing further about `e0Repr`. Recorded as
+next-touch debt: an `example` would exercise that identically without minting a second citable
+`theorem` whose statement duplicates one already in this file. -/
 theorem e0Repr_not_injective_via_confinement : ¬ Function.Injective e0Repr := by
   obtain ⟨x, y, hne, hxy⟩ := repr_collision
   obtain ⟨p, hx, hy, hsub⟩ := exists_spread_pmf x y

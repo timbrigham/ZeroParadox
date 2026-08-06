@@ -98,7 +98,8 @@ answer that question **oppositely**.
 
 ⚠ **This is an IMPLEMENTATION split, NOT a carrier split — and an earlier draft mislabelled it
 `Reading: CARRIER kind`, with the ℚ₂/ℝ analogy attached.** That was wrong twice over. `StateSpace n` is
-`EuclideanSpace ℂ (Fin n)`, which is **infinite**; what is finite is the **label set** `Fin n`. A gate
+`EuclideanSpace ℂ (Fin n)`, which for `n ≥ 1` is **infinite**; what is finite is the **label set**
+`Fin n`. A gate
 built the counterexample (independently rebuilt and compiled at round 2): for `n ≥ 2`, a
 `SeparatedSuccession` on the *same* carrier with the *same* orthogonality relation whose `seq` **is**
 injective. So faithfulness is not impossible on the Hilbert carrier — it is

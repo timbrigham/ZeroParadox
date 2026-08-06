@@ -306,8 +306,7 @@ a two-point fiber "lifts `pmf_subsingleton_isPure`'s obstruction" — the carrie
 already non-subsingleton, so that obstruction was never binding, and the declaration below does not go
 through it (it uses `not_pure_of_two_support`). What a *collision* supplies, beyond what any two
 distinct points supply, is **confinement to a single denotation**: a spread distribution all of whose
-support has one image. The standard name for that indistinguishability is **structural
-unidentifiability** (`CLAIMS.md`). ⚠ **A distribution over REPRESENTATIONS, never over
+support has one image. ⚠ **A distribution over REPRESENTATIONS, never over
 histories** — nothing here posits that anything moved, and the no-traversal commitment is untouched.
 Witnesses for the fiber: `e0Repr_not_injective` (`ZeroParadox/Ordinal/PricedInterface.lean`, with
 `1 + ω` vs `ω`) and `hilbert_seq_collision`
@@ -348,7 +347,7 @@ hypothesis is doing all the work and must not be dropped when the sentence is qu
 
 **Prior art — both of these are elementary and neither is new.** `injective_forces_confined_support_subsingleton`
 is Mathlib's `Set.Subsingleton.preimage` (`Mathlib/Data/Set/Image.lean`) composed with a singleton; the
-proof body here is the same term. It is not swapped in because the statement mentions `PMF`, and
+proof body here is the same argument (composed with `Set.Subsingleton.anti`). It is not swapped in because the statement mentions `PMF`, and
 `#print axioms` follows the STATEMENT — both routes measure `[propext, Classical.choice, Quot.sound]`,
 so there is no purity gain, and the hand proof reads locally. Same verdict as the `CovBy` precedent:
 keep the hand proof, cite the standard name.
