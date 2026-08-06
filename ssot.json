@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1594,
+        "declarations": 1607,
         "files": 136
       },
       "entries": [
@@ -8401,6 +8401,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "203b5615-3277-4070-8aa9-ec3fb440f8ff",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nontrivial_admits_non_pure_pmf",
+            "short": "nontrivial_admits_non_pure_pmf"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23726,6 +23764,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "678aaaea-635e-42d9-9958-f733f8015171",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbert_label_collision",
+            "short": "hilbert_label_collision"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "67b49600-d167-4170-811a-a7a7cb55eac3",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -27215,6 +27291,45 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "76ecf733-3932-4f15-aaca-6289698b7ba0",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_fiber_supported_non_pure_pmf",
+            "short": "exists_fiber_supported_non_pure_pmf"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "76f7f776-5833-4f09-87a0-c93a3301ea11",
           "new": {
@@ -27563,6 +27678,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "77ecb3d3-1733-4e03-a797-68be7660a301",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.member_cx_lt_top",
+            "short": "member_cx_lt_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -30057,6 +30211,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "82614457-0f9e-49f8-a6a5-b1ec46d37d83",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbert_seq_collision",
+            "short": "hilbert_seq_collision"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "828e71a0-9952-4a48-932e-1ea5e5c7cd78",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -30819,6 +31011,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "8660820c-fe2b-4ac9-aad2-5beb2245a757",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.member_injective",
+            "short": "member_injective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37308,6 +37538,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "a3cf8298-de64-4d91-b6c5-217ed8661617",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbert_seq_not_injective",
+            "short": "hilbert_seq_not_injective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "a3e6feba-72ac-47d3-9bef-2af647fa408c",
           "new": {
             "file": "ZeroParadox/Valuation/PricedPadicInterface.lean",
@@ -40165,6 +40433,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "b1e76cb0-3929-49de-93f9-840bd0832253",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.hilbert_labels_not_injective",
+            "short": "hilbert_labels_not_injective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "state"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "b1f5e14b-edc0-4f4c-ab19-7c8a77abc191",
           "new": {
@@ -40950,6 +41256,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b4e645b1-7c33-4640-a4a2-20c8049431db",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.member_cx_ne_floor_cx",
+            "short": "member_cx_ne_floor_cx"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -42347,6 +42692,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "ba160d3e-82a8-4106-83e7-afb6ed5a9bba",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.exists_spread_pmf",
+            "short": "exists_spread_pmf"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -48630,6 +49013,45 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d76ddf4c-d072-490f-93bf-4ff94dc78c29",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.ordinal_seq_injective",
+            "short": "ordinal_seq_injective"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d78b78e6-7ec2-4235-bc80-3abb4538afb7",
           "new": {
             "file": "ZeroParadox/Ordinal/SyntacticCollapse.lean",
@@ -49749,6 +50171,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "db54910b-9983-4c54-8a5c-068c9cb84168",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.repr_collision",
+            "short": "repr_collision"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57633,6 +58093,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fb6839b0-3065-48ba-9d34-8d605d0355ae",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.floor_unique_at_top",
+            "short": "floor_unique_at_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Succession-as-representation arc: the offset structure, the carrier split, the fiber, and the fiber-supported distribution",
           "verify": {
             "axioms": null,
             "sorry_free": true
