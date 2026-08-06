@@ -237,17 +237,21 @@ open items:
 
 The bridges to its subject:
 
-1. **The predicate is not transported. STILL OPEN.** `IsWellFoundedCoalg` is stated over `Set X` with
-   `nextTime`; AMM Def 4.3 is stated over `Sub(A)` in a **category**. The key ingredient exists in the
-   pin — `Types.subobjectEquivSet (α : Type u) : Subobject α ≃o Set α`
-   (`Mathlib/CategoryTheory/Subobject/Types.lean`) — so this is **bounded work, not research**: define
-   `⃝` over `Subobject X`, and show it matches `nextTime` across that order isomorphism. The step
-   carrying the real content is how `ofTypeFunctor P.Obj` acts on subobjects.
+1. **The predicate transport — CLOSED 2026-08-05.** `IsWellFoundedCoalg` is stated over `Set X` with
+   `nextTime`; AMM Def 4.3 is stated over `Sub(A)` in a **category**. Both are now built and proved
+   equivalent in `ZeroParadox/Category/NextTimeCategorical.lean` (`isWellFoundedCoalgCat_iff`).
+   ⚠ **This paragraph previously prescribed going through `Types.subobjectEquivSet` and called that
+   "bounded work, not research". THAT ROUTE DOES NOT WORK** — that iso is built from
+   `Equivalence.thinSkeletonOrderIso`, which selects quotient representatives, so it is
+   `noncomputable` and nothing reduces through it; Mathlib supplies no computation lemmas for it. The
+   route that works descends with `Quotient.lift` instead, taking well-definedness from `Set X` being a
+   partial order. **Do not re-attempt the `subobjectEquivSet` route** — see that file's technique note.
 2. **"Fixed point" in AMM's sense — CLOSED.** AMM mean the structure map is **invertible**. Now
    witnessed: `wtypeFixedPoint` and `mtypeFixedPoint` in § V.
 
-**Until bridge 1 is written, no count of ambient hypotheses can earn an instance-of claim** — which is
-why the counting kept recurring and why it is no longer the headline. The ambient hypotheses are
+**So smoothness clause (b) below is now the ONLY item standing between this file and an instance-of
+claim** — the counting recurred because it was never the whole story, and the other half is now closed.
+The ambient hypotheses are
 recorded below anyway: measuring them was worth doing, the results are reusable, and they are simply
 **not the blocker**. Thm 7.6 holds in *"a complete and well-powered category with smooth
 monomorphisms"* for *"F preserving monomorphisms."* The setting here is **`Type u`**, Lean's category of
@@ -375,7 +379,9 @@ def wtypeFixedPoint {P : PFunctor.{u, u}} : W P ≃ P.Obj (W P) where
 
 /-- **BRIDGE 2, ν side — `M.dest` is a fixed point in the same sense.** Same two round trips
 (`M.mk_dest`, `M.dest_mk`). With `wtypeFixedPoint` this puts both carriers under Thm 7.6's *subject*.
-**The remaining gap is bridge 1**, the predicate transport — see the ⚠ in the module overview. -/
+**Bridge 1, the predicate transport, is also CLOSED** (2026-08-05,
+`ZeroParadox/Category/NextTimeCategorical.lean`); what remains is smoothness clause (b) — see the ⚠ in
+the module overview. -/
 noncomputable def mtypeFixedPoint {P : PFunctor.{u, u}} : M P ≃ P.Obj (M P) where
   toFun := M.dest
   invFun := M.mk

@@ -45,6 +45,13 @@ COPY"). Source: `.claude-local/papers/adamek_milius_moss_wellfounded_recursive_c
 | **Def 4.3, p. 15** | well-founded = `id_A` is the only fixed point of `⃝` | `IsWellFoundedCoalgCat` |
 | **Def 4.7, p. 16** | the canonical graph (cited for orientation, not used here) | — |
 
+**⚠ AMM ARE NOT THE ORIGIN — the credit chain continues past them.** They credit Def 4.1 to their own
+*Fixed points of functors* (JLAMP 95, 2018) as `[5, Def 8.9]`, the next-time operator itself to
+**Jacobs** `[17]`, and Def 4.3 to **Taylor** `[28, Exercise VI.17]`. The full chain, with the caveat
+that `[28]` is *Practical Foundations of Mathematics* (CUP 1999) and is **not** the Taylor PDF held in
+`.claude-local/papers/`, is written out in `ZeroParadox/Computability/GroundZero.lean` § V — read it
+there rather than re-transcribing it here.
+
 **The delta is the formalization and the bridge.** AMM's definitions are theirs; what is added is that
 they are now Lean objects, that `nextTimeCat` is stated at **full generality** (any category with
 pullbacks, any mono-preserving endofunctor), and that `isWellFoundedCoalgCat_iff` proves the categorical
@@ -84,15 +91,24 @@ universe v u
 section General
 variable {C : Type u} [Category.{v} C] (F : C ⥤ C) [F.PreservesMonomorphisms]
 
-/-- **A mono-preserving functor acts on `MonoOver`.** Built in Mathlib's own idiom — `Over.post`
-composed through `MonoOver.lift` — exactly the shape of Mathlib's `MonoOver.map`. -/
+/-- **A mono-preserving functor acts on `MonoOver`.**
+
+**Closest prior art — Mathlib has this for EQUIVALENCES.** `MonoOver.congr (e : C ≌ D) : MonoOver X ≌
+MonoOver (e.functor.obj X)` (`Mathlib/CategoryTheory/Subobject/MonoOver.lean`) has functor field
+literally `lift (Over.post e.functor)` — the same construction, character for character. **The delta is
+the hypothesis:** an equivalence preserves monomorphisms automatically, so `congr` never needs to
+assume it; this asks only `[F.PreservesMonomorphisms]` and gives a functor rather than an equivalence. -/
 def monoOverPost (X : C) : MonoOver X ⥤ MonoOver (F.obj X) :=
   MonoOver.lift (Over.post F) (fun f => by
     have : Mono f.arrow := f.mono
     exact F.map_mono f.arrow)
 
-/-- **Hence on `Subobject`.** ⚠ Mathlib has no such construction: `Subobject.map` is along a **mono**,
-`Subobject.pullback` is along a morphism contravariantly, and neither is a functor's action. -/
+/-- **Hence on `Subobject`.** ⚠ Not located in Mathlib as of 2026-08-05. All **three** of its
+`Subobject X ⥤ Subobject Y` functors are along a *morphism*, not a functor: `Subobject.map` (along a
+**mono**), `Subobject.pullback` (contravariantly along any morphism), and `Subobject.«exists»` (the
+direct image, needing `HasImages`). Structural corroboration rather than a bare grep:
+**`PreservesMonomorphisms` appears nowhere in `Mathlib/CategoryTheory/Subobject/`** — the subobject
+development never takes that hypothesis at all. -/
 def subobjectPost (X : C) : Subobject X ⥤ Subobject (F.obj X) :=
   Subobject.lower (monoOverPost F X)
 
@@ -160,7 +176,7 @@ theorem toSet_subobjectPost (F : Type u ⥤ Type u) [F.PreservesMonomorphisms] (
   rw [subobjectPost_mk, toSet_mk]
 
 /-- `Statement:` the image of a polynomial functor's action is exactly "**every child lands in the
-image**". ⚠ Injectivity of `i` is **not** needed — the linter confirmed it unused. -/
+image**". ⚠ Injectivity of `i` is **not** needed — read the signature: there is no such hypothesis. -/
 theorem mem_range_pfunctor_map {P : PFunctor.{u, u}} {A : Type u} (i : A → X) (z : P.Obj X) :
     z ∈ Set.range (P.map i) ↔ ∀ b, z.2 b ∈ Set.range i := by
   obtain ⟨a, g⟩ := z
@@ -219,8 +235,12 @@ theorem toSet_nextTimeCat (P : PFunctor.{u, u}) (α : X ⟶ (ofTypeFunctor P.Obj
   simp only [Set.mem_preimage, nextTime, Set.mem_setOf_eq, toSet_eq_range_arrow]
   exact mem_range_pfunctor_map _ _
 
-/-- **`Statement:` BRIDGE 1 — the concrete predicate IS AMM Def 4.3.** For a polynomial functor on
-`Type u`, `IsWellFoundedCoalg` and the categorical `IsWellFoundedCoalgCat` are equivalent.
+/-- **`Statement:` BRIDGE 1.** For a polynomial functor on `Type u`, `IsWellFoundedCoalg` and the
+categorical `IsWellFoundedCoalgCat` are **equivalent** — that, and only that, is what the theorem says.
+
+`Reading:` the framework reads this as "the concrete predicate **is** AMM Def 4.3". That step is a
+judgement about whether `IsWellFoundedCoalgCat` transcribes their Def 4.3 faithfully, which no Lean
+statement can carry; the locator table in the overview is the evidence for it.
 
 **What this does and does not license.** It closes the *predicate transport*, so results stated with
 `IsWellFoundedCoalg` are results about AMM's notion. It does **not** formalize AMM Thm 7.6, and does
@@ -258,15 +278,29 @@ choice-carrying no matter how it is proved.** Per `CLAUDE.md` § *Revalidate, do
 carrying an axiom makes "removable" false for every possible proof. This is a fact about Mathlib's
 subobject machinery, not about anything here.
 
-**Two proofs do additionally make genuine selections** — `mem_range_pfunctor_map`'s reverse direction
-picks a preimage per child, and `le_of_toSet_le` picks a factoring witness per element. Both are real
-`.choose` uses on existence statements. ⚠ **But do not present those as the source of the footprint** —
-the type already settled it, and the one declaration here whose statement avoids `Subobject`
-(`ofTypeFunctor_pfunctor_map`) measures `[propext, Quot.sound]`, which is the control showing the
-difference.
+**⚠ BUT `Subobject`-freedom is NECESSARY, NOT SUFFICIENT — and the two declarations here that avoid
+`Subobject` are the control pair proving it:**
+```
+ofTypeFunctor_pfunctor_map   [propext, Quot.sound]        -- no Subobject, and clean
+mem_range_pfunctor_map       [Classical.choice, Quot.sound] -- no Subobject, and NOT clean
+```
+`mem_range_pfunctor_map`'s reverse direction picks a preimage per child with `.choose`, and **that is
+genuinely where its choice comes from** — measured: the forward direction alone, same statement
+ingredients, is **axiom-free**, and `PFunctor.map` / `Set.range` are axiom-free. So `.choose` is an
+**independent** source, not a shadow of the type.
+
+`le_of_toSet_le` also selects (a factoring witness per element), but its statement mentions `Subobject`,
+so the type has already settled its footprint and the selection is not separately visible there.
+
+⚠ **An earlier version of this block asserted the opposite** — that `ofTypeFunctor_pfunctor_map` was
+"the one" `Subobject`-free declaration and that the `.choose` uses should not be read as the source.
+Both were wrong, and `mem_range_pfunctor_map` sits three lines away as the counterexample. It is the
+2026-08-03 `PFunctor.M` defect class: a correct type-level measurement carrying a causal conclusion it
+cannot support. **Caught by two independent gates, 2026-08-05.**
 
 ⚠ **Nothing is claimed removable.** That is a modal claim needing an exhibited clean proof or a
-reduction, and for anything mentioning `Subobject` it is in fact **false**, by the type. -/
+reduction. For anything mentioning `Subobject` it is in fact **false**, by the type; for
+`mem_range_pfunctor_map` no such claim is made either way. -/
 
 section PurityCheck
 open ZeroParadox
