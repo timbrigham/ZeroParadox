@@ -42997,8 +42997,8 @@
           "new": {
             "file": "ZeroParadox/Information/Surprisal.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.crossing_certain_only_in_limit",
-            "short": "crossing_certain_only_in_limit"
+            "qualified": "ZeroParadox.crossing_prob_lt_one_tendsto_one",
+            "short": "crossing_prob_lt_one_tendsto_one"
           },
           "old": {
             "file": null,
@@ -43017,7 +43017,7 @@
               "core"
             ]
           },
-          "reason": "The payload: crossing probability tends to one and is strictly below one at every finite stage, both conjuncts in one statement. Repetition upgrades l_inf's bridge to a limiting statement without discharging it.",
+          "reason": "Corrected before ever reaching HEAD under the old name. crossing_certain_only_in_limit editorialized a reading refuted by Borel-Cantelli II (measure_limsup_eq_one): almost every realization crosses at a FINITE trial. The statement was always accurate; only the name asserted the stronger false claim.",
           "verify": {
             "axioms": null,
             "sorry_free": true

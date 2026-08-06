@@ -431,41 +431,63 @@ theorem confined_map_eq_pure {α β : Type*} (f : α → β) (p : PMF α) (o : �
     · simp [ha]
     · rw [if_neg]; intro h; exact hb (h.trans (hconf a ha))
 
-/-! ### § The repeated crossing — what a probabilistic account of DA-1 would and would not buy
+/-! ### § The repeated crossing — what repetition does and does not buy
 
 **Origin (Tim, 2026-08-06):** *"one pull. one chance to cross the snap. one action taken which may or
 may not work. and a fixed cost every time it fires."* The slot-machine reading: if the crossing is a
-trial with positive probability, then unboundedly many trials make it eventually certain.
+trial with positive probability, unboundedly many trials make it eventually certain.
 
-**This section prices that argument, and the answer is that it does NOT close `l_inf`'s gap.** It
-converts *possible* into *probability tending to one*, which is strictly more than the framework has
-— and at **every finite stage the crossing remains uncertain**. So the ontological bridge that
-`l_inf`'s docstring names as a design principle rather than a consequence is not discharged by
-repetition; it is relocated into a limit.
+**⚠ THAT READING IS CORRECT, AND A FIRST DRAFT OF THIS SECTION SAID OTHERWISE.** The draft concluded
+that repetition gives *"certainty only in the limit, never at a stage you reach"*. **Refuted by the
+standard account, which is in the pinned Mathlib:** `ProbabilityTheory.measure_limsup_eq_one`
+(`Mathlib/Probability/BorelCantelli.lean`) — the second Borel-Cantelli lemma — gives, for independent
+events whose probabilities sum to infinity (true for any fixed `p > 0`), that `limsup` has measure
+**one**. So almost every realization crosses at a **finite** trial. The slot machine pays.
+
+**What the theorems below actually add is strictly weaker, and worth stating in its own right: no
+FIXED DEADLINE is certain.** For each `n`, the probability of not yet having crossed is positive, so
+no stage can be named in advance by which the crossing is guaranteed. *"There is almost surely some
+finite crossing time"* and *"there is a finite time by which crossing is certain"* are different
+claims; the first is true and is Borel-Cantelli's, the second is false and is what `survival_pos`
+denies. **Do not restate the second as the first.**
+
+**⚠ THE FENCE THAT ACTUALLY CARRIES THE SECTION IS THE OTHER ONE: nothing here says the crossing HAS a
+probability.** That a `p` exists at all is untouched, and possibility is not a measure. So this section
+does not discharge the gap `l_inf`'s docstring names — the step from unbounded surprisal to *forced
+execution* being a design principle rather than a consequence — but the reason is the missing `p`, not
+any failure of repetition.
 
 **⚠ THE INDEPENDENCE IS A COMMITMENT AND IT IS VISIBLE IN THE HYPOTHESES.** `hstep` says each trial
 multiplies the survival probability by the same `1 - p`; that is what independence-with-fixed-`p`
-buys, and it is **assumed here, never derived**. No product measure is constructed and no trial
-sequence is built — `q` is any real sequence satisfying the recurrence. Per this project's standing
-rule, a commitment goes in a hypothesis so the signature cannot be misread.
+buys, and it is **assumed here, never derived**. No product measure and no trial sequence is
+constructed — `q` is any real sequence satisfying the recurrence, and `iIndepFun` / `limsup` / `∀ᵐ`
+appear nowhere in this corpus as of `0fe165f`. Per this project's standing rule a commitment goes in a
+hypothesis so the signature cannot be misread.
 
-**⚠ AND NOTHING HERE SAYS THE CROSSING HAS A PROBABILITY.** That `p` exists at all is the open
-question this section does not touch; possibility is not a measure. What is priced is only the
-consequence *if* such a `p` exists.
+**Prior art, and the corpus under-searched itself twice before this was written.**
+* Mathlib already has the object: `ProbabilityTheory.geometricPMFReal p n = (1 - p) ^ n * p`
+  (`Mathlib/Probability/Distributions/Geometric.lean`), of which `q n = (1 - p) ^ n` is the standard
+  **survival function** — the in-field name, which a first draft did not use. `geometricPMFReal_pos`
+  carries the same hypotheses as `survival_pos`.
+* The limit is Mathlib's `tendsto_pow_atTop_nhds_zero_of_lt_one`, cited not re-proved. ⚠ The nearest
+  corpus work is `ZeroParadox/Valuation/ContractionRate.lean`, which uses the **biconditional**
+  `tendsto_pow_atTop_nhds_zero_iff_norm_lt_one` — stronger than the implication used here, and the
+  same Trigger-0 pattern as the `CovBy` case. `ZeroParadox/Order/MarkovContractionDual.lean` is a
+  *different* statement (geometric convergence of a Markov law to stationary), not a survival function.
 
-**The shape worth recording, stated as a shape and never as an instance-of relation:** *converging is
-not arriving* now appears in a fourth place. The doubling attractor converges to the floor with no
-finite iterate at the floor; the odometer's orbit is dense but hits a target exactly only under an
-arithmetic condition; `snap_arc_z2_loop` reapproaches zero with the finite stages *"never even
-reach[ing] 0"*; and here the crossing probability tends to one and equals it at no finite stage.
-**Four distinct carriers, no common theorem** — and no POV KIND is claimed, because none of the five
-describes a recurring obstruction.
+**On the two-sided form (Tim, 2026-08-06):** *"asymptotic from one side and a fixed value from the
+other, forced together into a single point by a squeezing."*
 
-**Prior art.** The limit is Mathlib's `tendsto_pow_atTop_nhds_zero_of_lt_one`
-(`Mathlib/Analysis/SpecificLimits/Basic.lean`), cited rather than re-proved; only the attachment is
-new. The nearest corpus work is `ZeroParadox/Order/MarkovContractionDual.lean`, which is a different
-statement — geometric convergence of a Markov *law* to its stationary distribution, at rate
-`|1-2a|ᵏ` — not a survival probability across repeated trials. -/
+`Statement:` **COINCIDENCE kind** — `epsilon0_min_eq_max` (`ZeroParadox/Ordinal/Epsilon0MinMax.lean`)
+proves ε₀ is the tower supremum **and** the least fixed point: one object, two extremal
+characterisations, both at once. Approached from below, pinned exactly from the other side.
+
+`Reading:` **COINCIDENCE kind** (conjectural) — the framework reads the present result as sharing that
+same shape: the limit value exact, no stage attaining it, both true of one object. **Shared shape only; these live on different carriers and no
+instance-of relation is claimed.** ⚠ The methodological point is the load-bearing one: a first draft
+here reported only the asymptotic half and drew a conclusion the exact half refutes, which is exactly
+the collapse `CLAUDE.md` names as bedrock — min≡max is direction-specific and must never be flattened
+to one face. -/
 
 /-- **`Statement:` the survival recurrence closes to a power.** `q n` is the probability of NOT having
 crossed after `n` trials. -/
@@ -492,14 +514,14 @@ theorem survival_tendsto_zero {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1) (q : ℕ �
   rw [hq]
   exact tendsto_pow_atTop_nhds_zero_of_lt_one (by linarith) (by linarith)
 
-/-- **`Statement:` CERTAIN ONLY IN THE LIMIT.** The probability of having crossed by stage `n` tends
-to `1` and is **strictly below `1` at every finite `n`** — both conjuncts, in one statement, so the
-second cannot be dropped when the first is quoted.
+/-- **`Statement:` the crossing probability is below `1` at every stage and tends to `1`.** Both
+conjuncts in one statement, so the second cannot be dropped when the first is quoted.
 
-`Reading:` (Tim, 2026-08-06, conjectural) this is the slot machine priced. Unbounded repetition buys
-measure one *in the limit* and never certainty at any stage that is actually reached — so it upgrades
-`l_inf`'s bridge from a commitment to a limiting statement without discharging it. -/
-theorem crossing_certain_only_in_limit {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (q : ℕ → ℝ)
+⚠ **This does NOT say the crossing fails to occur at a finite stage.** Under independence the second
+Borel-Cantelli lemma gives an almost-surely finite crossing time (§ above). What is denied here is a
+**fixed deadline**: no `n` can be named in advance by which the crossing is certain. An earlier name
+for this theorem asserted the stronger, false reading. -/
+theorem crossing_prob_lt_one_tendsto_one {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (q : ℕ → ℝ)
     (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) :
     (∀ n, 1 - q n < 1) ∧ Filter.Tendsto (fun n => 1 - q n) Filter.atTop (nhds 1) := by
   refine ⟨fun n => by linarith [survival_pos hp1 q hq0 hstep n], ?_⟩
@@ -539,6 +561,6 @@ open ZeroParadox
 #print axioms survival_eq_pow
 #print axioms survival_pos
 #print axioms survival_tendsto_zero
-#print axioms crossing_certain_only_in_limit
+#print axioms crossing_prob_lt_one_tendsto_one
 
 end PurityCheck
