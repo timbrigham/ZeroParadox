@@ -166,8 +166,9 @@ theorem member_cx_lt_top {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
 
 /-- **`Statement:` no member shares the floor's complexity.** The measurement-level **strengthening**
 of `member_ne_floor`: members differ from the floor not merely as elements, but in **how far out they
-sit**. ⚠ It neither uses nor follows from `member_ne_floor` — it is proved from `cx_member_strictMono`
-and `infinitude_forces_infinite_complexity`, and it *implies* that lemma rather than restating it. -/
+sit**. ⚠ It neither uses nor follows from `member_ne_floor` — it is proved from
+`infinitude_forces_infinite_complexity` and `member_cx_lt_top` (which is where `cx_member_strictMono`
+enters, one step further back), and it *implies* that lemma rather than restating it. -/
 theorem member_cx_ne_floor_cx {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
     I.cx (I.member n) ≠ I.cx I.floor := by
   rw [infinitude_forces_infinite_complexity α]

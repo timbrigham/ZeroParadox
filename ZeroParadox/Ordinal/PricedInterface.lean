@@ -52,13 +52,20 @@ not copy it.** What is stated here is only the shape it prints, which is the fin
 * **Constructive side — choice-free, and not uniformly `[propext]`.** Footprints range from **no axioms
   at all** (the carrier and its coercion) up through `[propext]` to `[propext, Quot.sound]`. No
   declaration on this side carries `Classical.choice`.
-* **The map — `Classical.choice`, uniformly.** Every declaration whose statement mentions `Ordinal`
-  reports `[propext, Classical.choice, Quot.sound]`, with no exceptions and no gradation.
-* **⚠ The two PMF declarations at the end of the block are NOT evidence about the crossing.**
-  `repr_collision` and `exists_fiber_supported_non_pure_pmf` print the same footprint, but so does
-  `not_pure_of_two_support` — a pure-PMF lemma with no `Ordinal` in its statement at all. Their choice
-  is **inherited from Mathlib's PMF layer** and they would carry it with or without the crossing. They
-  are printed here because this is where they are proved, not because they price anything.
+* **The map — `Classical.choice`, uniformly.** Every declaration **in the block below** whose statement
+  mentions `Ordinal` reports `[propext, Classical.choice, Quot.sound]`, with no exceptions and no
+  gradation among them. ⚠ **Scoped to this block on purpose, and an earlier draft was not.** It is not
+  a fact about `Ordinal`-mentioning statements in general: `order_footprint_eq : ∀ (a : Ordinal), a = a`
+  measures `[propext, Quot.sound]`, and this file cites that very theorem 20 lines above. Mentioning
+  `Ordinal` is not what costs choice; reaching its **order instance** is.
+* **⚠ `exists_fiber_supported_non_pure_pmf` is not evidence about the crossing.** It prints the same
+  footprint, but so does `not_pure_of_two_support` — a PMF lemma with no `Ordinal` in its statement at
+  all. **Measured**, and that measurement is the exhibited witness the claim needs: its choice is
+  inherited from Mathlib's PMF layer and would be there with or without the crossing. It is printed here because this is where it is proved.
+  ⚠ **This does NOT extend to `repr_collision`, and a first draft of this bullet swept it in by calling
+  both "the two PMF declarations".** `repr_collision` contains no `PMF` in its statement or its proof —
+  it is `e0Repr_not_injective` plus `Function.not_injective_iff`. It is a **crossing** declaration, it
+  belongs exactly where the block files it, and it prices the crossing like every other one.
 
 **The `Quot.sound` on part of the constructive side was not predicted, and is reported rather than
 explained away.** It arrives through Mathlib's `WithTop` order lemmas, not through anything about
@@ -374,12 +381,27 @@ refutes injectivity outright. The non-faithfulness is therefore not a convenient
 — it is the only source. This was measured at round-3 revalidation, after the sentence had been
 re-worded three times without anyone asking whether the claim underneath was true.
 
-**STANDARD NAME — this is structural (un)identifiability.** A parameter is *structurally identifiable*
-when it can be determined from the model's outputs; unidentifiable when distinct parameters are
-indistinguishable to the observation. Here `e0Repr` is the observation and its fiber is the
-indistinguishable class. Sources already in `.claude-local/papers/` (Villaverde 2016; Castro & de Boer
-2020), and **`CLAIMS.md` already uses the term** — it had simply never reached the Lean, which is the
-adjacency this block closes.
+**The IN-FIELD name is already in this file, 250 lines above: `ONote.repr_inj`.** Mathlib's
+`ONote.repr_inj` (`Mathlib/SetTheory/Ordinal/Notation.lean`) requires `NF` on both arguments, and this
+file's § *What is NOT proved here* already says *"restricting to normal forms is the standard fix."*
+That is **stronger** than naming the defect: it characterizes exactly when injectivity is **restored**,
+and the `1 + ω` vs `ω` witness is precisely a non-normal-form term. Use it first.
+
+`Reading:` (conjectural, and **an earlier draft asserted this as a flat identification, which was an
+over-reach**) the framework reads the fiber as an instance of the **shape** that statistics calls
+*identifiability* — the parameter-to-observable map failing to be injective. ⚠ **Do not write
+"structural identifiability" for this.** Both sources on disk (Villaverde 2016; Castro & de Boer 2020,
+`.claude-local/papers/`) scope that term to **parametrized dynamic models**, where "structural"
+contrasts with *practical* identifiability limited by data. `e0Repr` has no data, no dynamics and no
+such contrast, so the modifier does no work here. And `CLAIMS.md`'s use of the term is about **ε₀'s
+dimensional magnitude** under Buckingham π — a different object, so "it had never reached the Lean"
+claims a continuity that is not there.
+
+**NO POV KIND is claimed here, and that is deliberate** — none of the five (COINCIDENCE / INVERSION /
+DRIFT / CARRIER / INVARIANT) describes "two structures share a shape". What is asserted is only the
+**shape**, never an instance-of relation, which is the same fence this project keeps for the min≡max
+family (whose own coincidences are separately labelled where they live). Citing that fence here is a
+pointer to the precedent, not a POV claim about `e0Repr`.
 
 `Reading:` (conjectural) the framework reads this as where statistics enters, under Tim's framing that
 **succession is a state of representation**: what is uncertain is *which representation*, never *what
@@ -416,6 +438,27 @@ theorem exists_fiber_supported_non_pure_pmf :
   obtain ⟨x, y, hne, hxy⟩ := repr_collision
   obtain ⟨p, hx, hy, hsub⟩ := exists_spread_pmf x y
   refine ⟨e0Repr x, p, not_pure_of_two_support hx hy hne, ?_⟩
+  intro z hz
+  rcases hsub hz with rfl | hz'
+  · rfl
+  · rw [Set.mem_singleton_iff] at hz'
+    rw [hz', ← hxy]
+
+/-- **`Statement:` the round trip closes.** `e0Repr_not_injective` — the fence this section is built on
+— is **re-derived** from the statistical side: take the collision, spread a distribution across it,
+observe that the distribution is confined to one denotation, and `confined_non_pure_refutes_injective`
+returns the non-injectivity.
+
+**Why this exists (round-4 gate finding).** The necessity theorems were stated and never *applied*, and
+an unapplied theorem is one whose non-vacuity nobody has exercised. This composition exercises it: the
+implication runs both ways, so the identification of "failure of faithfulness" with "room for a
+confined distribution" is not an interpretation laid over the theorems — it is a round trip through
+them. ⚠ It re-proves a fact this file already has; that is the point, and it is not offered as new
+mathematics. -/
+theorem e0Repr_not_injective_via_confinement : ¬ Function.Injective e0Repr := by
+  obtain ⟨x, y, hne, hxy⟩ := repr_collision
+  obtain ⟨p, hx, hy, hsub⟩ := exists_spread_pmf x y
+  refine confined_non_pure_refutes_injective e0Repr p (e0Repr x) ?_ ⟨x, hx, y, hy, hne⟩
   intro z hz
   rcases hsub hz with rfl | hz'
   · rfl
@@ -460,6 +503,7 @@ open ZeroParadox
 #print axioms e0Repr_not_injective
 #print axioms repr_collision
 #print axioms exists_fiber_supported_non_pure_pmf
+#print axioms e0Repr_not_injective_via_confinement
 
 -- The ε₀-producing operations themselves, measured here because this file already imports Veblen.
 -- ZP-N's prose names these (with `typein` and `omega0`, printed in

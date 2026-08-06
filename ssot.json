@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1609,
+        "declarations": 1610,
         "files": 136
       },
       "entries": [
@@ -45770,6 +45770,43 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c822bc19-a5f4-4cdb-aa46-ad539a2c3d12",
+          "new": {
+            "file": "ZeroParadox/Ordinal/PricedInterface.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.e0Repr_not_injective_via_confinement",
+            "short": "e0Repr_not_injective_via_confinement"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "Round-4 gate finding O-4: the necessity theorems were never applied. This composition re-derives e0Repr_not_injective from the statistical side, exercising non-vacuity mechanically.",
           "verify": {
             "axioms": null,
             "sorry_free": true

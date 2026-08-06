@@ -339,7 +339,26 @@ fact has nothing to do with ordinals.
 
 `Statement:` under an **injective** map, a distribution confined to one fiber has at most one point in
 its support — so it cannot be spread. Therefore a spread confined distribution **refutes** injectivity
-outright. The collision is not a convenient source of two points; it is the *only* source. -/
+outright.
+
+⚠ **Scope the conclusion precisely.** A collision is **not** the only source of a spread distribution —
+`exists_spread_pmf` above builds one from *any* two points, no collision required. What a collision is
+the only source of is a spread distribution **confined to a single denotation**. The confinement
+hypothesis is doing all the work and must not be dropped when the sentence is quoted.
+
+**Prior art — both of these are elementary and neither is new.** `injective_forces_confined_support_subsingleton`
+is Mathlib's `Set.Subsingleton.preimage` (`Mathlib/Data/Set/Image.lean`) composed with a singleton; the
+proof body here is the same term. It is not swapped in because the statement mentions `PMF`, and
+`#print axioms` follows the STATEMENT — both routes measure `[propext, Classical.choice, Quot.sound]`,
+so there is no purity gain, and the hand proof reads locally. Same verdict as the `CovBy` precedent:
+keep the hand proof, cite the standard name.
+
+**And the object itself has a standard name the corpus had never used:** `Setoid.ker f` is the
+"same image" equivalence — what these docstrings call *the fiber* — and
+`Setoid.injective_iff_ker_bot : Injective f ↔ Setoid.ker f = ⊥` (`Mathlib/Data/Setoid/Basic.lean`) is a
+**biconditional** of which `confined_non_pure_refutes_injective` is one direction under an added
+distinctness hypothesis. Grep of the corpus for `Setoid.ker` as of `f28c8d1`: **0 hits**. Recorded as
+the stronger library form, in the shape of the `denselyOrdered_iff_forall_not_covBy` miss. -/
 
 /-- **`Statement:` injectivity collapses any confined support to a single point.** -/
 theorem injective_forces_confined_support_subsingleton
