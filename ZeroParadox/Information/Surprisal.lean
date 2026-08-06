@@ -253,6 +253,41 @@ theorem not_pure_of_two_support {α : Type*} {p : PMF α} {x y : α}
   rw [hpa, PMF.support_pure, Set.mem_singleton_iff] at hx hy
   exact hxy (hx.trans hy.symm)
 
+/-- **THE CONSTRUCTOR — what supplies `not_pure_of_two_support`'s hypotheses.** For *any* two points
+of *any* type there is a distribution whose support contains both: a fair Bernoulli pushed forward
+along `fun b => if b then x else y`.
+
+⚠ **Distinctness is deliberately NOT assumed here, and the linter is what caught it.** A first draft
+took `x ≠ y`; the hypothesis went unused, because when `x = y` the construction is simply the point
+mass and both memberships still hold. So existence of a distribution needs nothing, and distinctness is
+exactly what upgrades it to **non-degenerate** — see the corollary.
+
+**Prior art, in this file:** `not_pure_of_two_support` (above) already proves two support points imply
+non-pureness. What was missing corpus-wide is the *construction*; that implication had no supplier. -/
+theorem exists_spread_pmf {α : Type*} (x y : α) :
+    ∃ p : PMF α, x ∈ p.support ∧ y ∈ p.support := by
+  have hle : (1/2 : NNReal) ≤ 1 := by norm_num
+  refine ⟨(PMF.bernoulli (1/2) hle).map (fun b => if b then x else y), ?_, ?_⟩
+  · rw [PMF.mem_support_map_iff]
+    exact ⟨true, by rw [PMF.mem_support_bernoulli_iff]; norm_num, rfl⟩
+  · rw [PMF.mem_support_map_iff]
+    exact ⟨false, by rw [PMF.mem_support_bernoulli_iff]; norm_num, rfl⟩
+
+/-- **`Statement:` two DISTINCT points admit a non-degenerate distribution.** Immediate from the
+constructor plus this file's own `not_pure_of_two_support` — the two halves finally meet.
+
+`Reading:` (Tim, 2026-08-05, conjectural) the framework reads this as where **statistics can enter**: a
+non-injective *representation* has a fiber with two distinct points, and a two-point fiber is exactly
+what lifts `pmf_subsingleton_isPure`'s obstruction. ⚠ **A distribution over REPRESENTATIONS, never over
+histories** — nothing here posits that anything moved, and the no-traversal commitment is untouched.
+Witnesses for the fiber: `e0Repr_not_injective` (`ZeroParadox/Ordinal/PricedInterface.lean`, with
+`1 + ω` vs `ω`) and `hilbert_seq_collision`
+(`ZeroParadox/Multihomed/SeparatedSuccession.lean`). -/
+theorem nontrivial_admits_non_pure_pmf {α : Type*} {x y : α} (hne : x ≠ y) :
+    ∃ p : PMF α, ∀ a, p ≠ PMF.pure a := by
+  obtain ⟨p, hx, hy⟩ := exists_spread_pmf x y
+  exact ⟨p, not_pure_of_two_support hx hy hne⟩
+
 /-- THE FORCING (full converse): on a one-outcome space every distribution is the point mass — you cannot
     have a non-degenerate distribution with fewer than two outcomes. So a non-degenerate state forces ≥2
     outcomes; binary is the minimal. -/
@@ -288,6 +323,8 @@ open ZeroParadox
 #print axioms binaryState_card_two
 #print axioms distP_support_singleton
 #print axioms distQ_support_singleton
+#print axioms exists_spread_pmf
+#print axioms nontrivial_admits_non_pure_pmf
 #print axioms not_pure_of_two_support
 #print axioms pmf_subsingleton_isPure
 

@@ -85,6 +85,60 @@ noncomputable def hilbertSuccession (n : ℕ) (S : ℕ → Fin n) (hS : ∀ k, S
   seq := fun k => transitionOp n (S k)
   separated := fun k => t5_strict_orthogonal n S k (hS k)
 
+/-! ### Faithfulness of the enumeration — a CARRIER split
+
+**Origin (Tim, 2026-08-05): "succession is a state of representation."** Step 0 measured the
+structural fact that motivates it: `SeparatedSuccession` carries an ℕ-indexed `seq` and a *relation*
+between consecutive terms, and **no transition function** — nothing maps instance `n` to instance
+`n+1`. So the well-posed question about a succession is not whether the step map is injective (there is
+no step map) but whether the **enumeration** is: does an index name a unique instance?
+
+⚠ **The framing is Tim's and is not a Lean proposition.** What follows is: the two implementations
+answer that question **oppositely**, and one of them cannot answer it any other way.
+
+`Reading:` **CARRIER kind** — the truth value depends which chart you are in, the same shape as the
+snap being available in `ℚ₂` and impossible in `ℝ`. `Statement:` the two theorems below. -/
+
+/-- **`Statement:` the ordinal chart is a FAITHFUL enumeration** — distinct indices name distinct
+instances. Immediate from `succession_strictMono`, whose own docstring already says the succession
+*"never returns to a rung it has already occupied"*; this states it as injectivity of `seq`. -/
+theorem ordinal_seq_injective : Function.Injective ordinalSuccession.seq := by
+  intro a b hab
+  have h : Ordinal.epsilon (a : Ordinal.{0}) = Ordinal.epsilon (b : Ordinal.{0}) := hab
+  exact_mod_cast succession_strictMono.injective h
+
+/-- **`Statement:` the Hilbert chart's labels CANNOT be faithful.** Labels are drawn from `Fin n`, a
+finite type, while the index set is `ℕ`: pigeonhole forbids injectivity outright, for **any** choice of
+`S`. This is not a defect of a particular labelling — the chart has run out of room. -/
+theorem hilbert_labels_not_injective (n : ℕ) (S : ℕ → Fin n) : ¬ Function.Injective S :=
+  not_injective_infinite_finite S
+
+/-- **`Statement:` and the collision is EXHIBITED** — two distinct indices whose labels agree. -/
+theorem hilbert_label_collision (n : ℕ) (S : ℕ → Fin n) :
+    ∃ a b : ℕ, a ≠ b ∧ S a = S b :=
+  Finite.exists_ne_map_eq_of_infinite S
+
+/-- **`Statement:` the collision reaches the INSTANCES, not just the labels.** Since
+`seq k = transitionOp n (S k)`, a label collision is an instance collision: **two distinct positions in
+the succession name the same instance.** That pair is the fiber — the thing an index fails to
+determine. -/
+theorem hilbert_seq_collision (n : ℕ) (S : ℕ → Fin n) (hS : ∀ k, S k ≠ S (k + 1)) :
+    ∃ a b : ℕ, a ≠ b ∧ (hilbertSuccession n S hS).seq a = (hilbertSuccession n S hS).seq b := by
+  obtain ⟨a, b, hne, heq⟩ := Finite.exists_ne_map_eq_of_infinite S
+  exact ⟨a, b, hne, by simp only [hilbertSuccession]; rw [heq]⟩
+
+/-- **`Statement:` so the Hilbert enumeration is not injective** — stated as the negation so it sits
+beside `ordinal_seq_injective` and the split is readable at a glance.
+
+⚠ **`separated` does NOT give injectivity, and that is the point.** It constrains only *consecutive*
+terms, so `seq 0 = seq 5` is entirely permitted; the ordinal chart avoids it by strict monotonicity,
+which is a stronger property than the structure requires. -/
+theorem hilbert_seq_not_injective (n : ℕ) (S : ℕ → Fin n) (hS : ∀ k, S k ≠ S (k + 1)) :
+    ¬ Function.Injective (hilbertSuccession n S hS).seq := by
+  intro hinj
+  obtain ⟨a, b, hne, heq⟩ := hilbert_seq_collision n S hS
+  exact hne (hinj heq)
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
@@ -93,4 +147,9 @@ section PurityCheck
 open ZeroParadox
 #print axioms ordinalSuccession
 #print axioms hilbertSuccession
+#print axioms ordinal_seq_injective
+#print axioms hilbert_labels_not_injective
+#print axioms hilbert_label_collision
+#print axioms hilbert_seq_collision
+#print axioms hilbert_seq_not_injective
 end PurityCheck
