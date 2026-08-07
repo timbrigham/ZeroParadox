@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1645,
+        "declarations": 1648,
         "files": 136
       },
       "entries": [
@@ -17180,6 +17180,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "46536875-484a-4c15-a7e8-145d0c2348bb",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_infinitudeFloor_on_punit",
+            "short": "no_infinitudeFloor_on_punit"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Round-2 gate fix: the class forces Infinite alpha; no-go stated as a theorem",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4666de9f-b4dc-4b47-a5db-756877ad5589",
           "new": {
@@ -30905,6 +30943,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "8230da74-81b4-458e-93f2-c600ab7d6b05",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.infinitudeFloor_forces_infinite",
+            "short": "infinitudeFloor_forces_infinite"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Round-2 gate fix: the class forces Infinite alpha; no-go stated as a theorem",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "8235f009-a062-44b7-8353-e7e48b3a87bd",
           "new": {
@@ -39163,6 +39239,45 @@
             ]
           },
           "reason": "2026-07-26 ZP-K occurrence arc: NO-GO gauges (SelfApp, Snap) + new Occurrence.lean (machine model, trap, trilemma, inversion, occurrence-is-halting). ComputationCannotBe.lean is #check-only, 0 decls.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "a9032c83-45a5-4909-9ce5-3428dcb5c656",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bookkeeping_nonempty",
+            "short": "bookkeeping_nonempty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Round-2 gate fix: the class forces Infinite alpha; no-go stated as a theorem",
           "verify": {
             "axioms": null,
             "sorry_free": true
