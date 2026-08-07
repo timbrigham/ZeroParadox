@@ -135,8 +135,9 @@ required, because the trajectory is **given** rather than stepped.
 
 ⚠ **Nothing here contradicts § III, and the two are NOT the same question.** `machine_snap_impossible`
 is about a single-valued step and stays true as stated. The ν orbit is provably never *at* the floor
-(`padic_orbit_not_reaches_floor`), so it formalizes **approach to** a floor — not **departure from**
-one, which is what § III's snap question asks. **Neither line derives motion:** the step side derives
+(`padic_orbit_never_reaches_zero`; the capstone bundles the weaker `¬ ReachesFloorInFiniteTime` form
+as `padic_orbit_not_reaches_floor`), so it formalizes **approach to** a floor — not **departure
+from** one, which is what § III's snap question asks. **Neither line derives motion:** the step side derives
 an obstruction, the asymptotic side takes the orbit as given. (Note also that § III's carrier claim is
 about § III itself — § VI's `nondeterministic_escapes_the_trap` is deliberately stated over a
 *relation*.)
@@ -145,8 +146,10 @@ about § III itself — § VI's `nondeterministic_escapes_the_trap` is deliberat
 draft of this block claimed otherwise on a MEASUREMENT THAT WAS WRONG WHEN TAKEN.** That draft
 surveyed `Tendsto … atTop (nhds _)` and concluded unscoped that only complexity ever ascends. In a
 normed field an ascending *element* is written `atTop atTop`, which that pattern cannot see — so the
-survey was structurally blind to divergence, and three independent gate agents caught it. The
-counterexamples sit one import away: `ZeroParadox/Valuation/PlaceMetric.lean` pairs
+survey was structurally blind to divergence, and three independent gate agents caught it. (That
+accounts for the first two counterexamples below; the third is `atTop (𝓝 ∞)` on a
+one-point compactification and *would* have matched the pattern — it was simply read as the sole
+exception rather than as one of several.) The counterexamples sit one import away: `ZeroParadox/Valuation/PlaceMetric.lean` pairs
 `node3_contracts_2adic` (a re-export of `doubling_orbit_tendsto_zero`) with `doubling_expands_archimedean`
 (`Tendsto … atTop atTop`) as `doubling_place_dichotomy` — **the same rational orbit contracting in the
 2-adic place and diverging in the real one.** Also `inv_tower_norm_tendsto_atTop`
@@ -160,8 +163,10 @@ and chart inversions of orbits that converge elsewhere. **That the snap fires is
 consequence**, which the framework already states honestly at `l_inf`'s docstring
 (`ZeroParadox/Information/Surprisal.lean`). Nothing in this pointer changes that.
 
-`Statement:` **INVERSION** — `rInv` exchanges the floor `0` with `∞`, and the **same** tower encodings
-that converge to the floor in the encoding chart tend to `∞` through it; one sequence, two charts.
+`Statement:` **INVERSION** — the bundled form is `snap_is_frameflip`
+(`ZeroParadox/Multihomed/SnapFrameChange.lean`), which conjoins both limits with `rInv_swaps`'
+exchange of the floor `0` and `∞`: one sequence, two charts. Taken alone,
+`snap_frameflip_tower_tendsto_infty` is the single `Tendsto` conjunct and contains no exchange.
 `Reading:` **INVERSION** (conjectural) — that the *snap* is an instance of that exchange is ZP-Q's
 conjecture, fenced as such in its own file: no snap transition appears in the statement, and the
 tower-rank encoding is a **constructed** witness with valuation growth built into the rank.
@@ -169,14 +174,17 @@ tower-rank encoding is a **constructed** witness with valuation growth built int
 **PRIOR ART — both sides of this belong to established programs, and the framework joins them.**
 The ν mode is textbook **non-archimedean dynamics**: Benedetto, *Non-Archimedean Dynamics in Dimension
 One* (Arizona Winter School lecture notes, 2010), **Definition 4.1 p. 28** classifies a periodic point
-with multiplier `λ` as *attracting* when `|λ| < 1`, and **Proposition 4.3(a) p. 29** gives exactly the
-orbit convergence, its proof running `|φⁿ(z)| = |λ|ⁿ·|z| → 0` — which is `doubling_orbit_tendsto_zero`'s
-argument, since `|2|₂ = 1/2 < 1`. The combination of a step relation with a metric limit **over one
-carrier** is **infinitary rewriting**: Kahrs, *Infinitary Rewriting: Foundations Revisited*, RTA 2010
-(LIPIcs vol. 6, pp. 161-176), whose introduction (p. 1) states that infinitary rewriting *"deals with
-infinite terms, which are defined through the metric completion of finite terms through some metric"*
-and that the resulting term set *"can also be seen as a final co-algebra"*. Read from source; both are
-filed in the project's paper library.
+with multiplier `λ` as *attracting* when `|λ| < 1`, and **Proposition 4.3(a) p. 29** gives orbit
+convergence on a neighbourhood of such a point, its proof running `|φⁿ(z)| = |λ|ⁿ·|z| → 0` — which is
+`doubling_orbit_tendsto_zero`'s **argument**, since `|2|₂ = 1/2 < 1`. ⚠ The *statements* are not
+identical: Benedetto's is a local basin result over a complete algebraically closed `ℂ_K`, ours is
+global over `ℚ₂`. What is shared is the argument, and the branch. The combination of a step relation
+with a metric limit **over one carrier** is **infinitary rewriting**: Kahrs, *Infinitary Rewriting:
+Foundations Revisited*, RTA 2010 (LIPIcs vol. 6, pp. 161-176; quoted below from the introduction,
+§ 1, cited by section because the filed copy is the author's preprint with its own pagination) —
+infinitary rewriting *"deals with infinite terms, which are defined through the metric completion of
+finite terms through some metric"*, and the resulting term set *"can also be seen as a final
+co-algebra"*. Both sources read from source and filed in the project's paper library.
 
 **So do NOT build a bridge declaration — but for the right reason.** An earlier draft called it a
 **type boundary**; that is too strong, and Kahrs is the counterexample: infinitary rewriting combines
@@ -348,7 +356,7 @@ theorem the_live_bottom_is_coherent (s : σ) (hfix : f s = some s) :
     object.
 
     This is the computability face's version of the framework's pole coincidence. The
-    valuation face's is `pole_inversion` (`Valuation/InfinitudeFloor.lean`): one sequence
+    valuation face's is `pole_inversion` (`ZeroParadox/Valuation/InfinitudeFloor.lean`): one sequence
     converging to the floor while its complexity ascends to `⊤`.
 
     **Note what this does NOT contradict.** Halted and looping are exclusive *within the step

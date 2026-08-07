@@ -59,23 +59,19 @@ the framework reading, not a Lean claim.
 What the Lean proves (load-bearing, in the statements):
 
 - `no_infinite_descent` — `∀ f : ℕ → ℕ, ¬ StrictAnti f`: there is no infinite strictly-decreasing
-  orbit on the μ floor (`not_strictAnti_of_wellFoundedLT` at ℕ). The obstruction-killer, mirror of
-  `doubling_norm_lt_one`.
-- `descent_with_strict_steps_reaches_floor` — **the load-bearing bridge that puts well-foundedness in
-  the proof term.** Any orbit `g : ℕ → ℕ` that strictly decreases at every nonzero step
-  (`∀ k, g k ≠ 0 → g (k+1) < g k`) reaches the floor: `∃ N, g N = 0`. Proved *through*
-  `no_infinite_descent` — if `g` never hit `0` it would be `StrictAnti`, the forbidden infinite
-  descent. This is why the μ side is forced by well-foundedness rather than by arithmetic alone.
+  orbit on the μ floor (`not_strictAnti_of_wellFoundedLT` at ℕ). ⚠ **It is proved and kept as the
+  GENERAL statement of the obstruction, and it has ZERO call sites — nothing below uses it.** So the
+  mirror with `doubling_norm_lt_one` is **asymmetric**: that one is genuinely load-bearing.
+- `descent_with_strict_steps_reaches_floor` — **the load-bearing bridge.** Any orbit `g : ℕ → ℕ` that
+  strictly decreases at every nonzero step (`∀ k, g k ≠ 0 → g (k+1) < g k`) reaches the floor:
+  `∃ N, g N = 0`. **Proved by induction on the bound `g 0`** — the hypothesis already carries the step
+  budget, so no general well-foundedness lemma is imported; its own docstring records the measured
+  purity consequence. Well-foundedness of ℕ is still what closes it, in the form of the induction
+  principle rather than an imported lemma.
 - `pred_descent_terminates` — for the canonical descent map `Nat.pred` (`x ↦ x-1`), the orbit
   `pred^[k] n` equals `0` for **every** `k ≥ n`: it reaches the floor and stays.
 - `pred_orbit_reaches_floor` — the μ floor's `Nat.pred` orbit **satisfies** `ReachesFloorInFiniteTime`,
-  proved via `descent_with_strict_steps_reaches_floor` (i.e. via well-foundedness) plus the
-  stays-at-floor fact. ⚠ **`no_infinite_descent` is NOT in that proof term, and this line said the
-  opposite until 2026-08-07.** It has **zero call sites anywhere in the corpus**;
-  `descent_with_strict_steps_reaches_floor` is a plain induction on the bound `g 0`, which `:113`
-  below states explicitly and deliberately. The lemma is proved and `#print axioms`-ed here as the
-  *conceptual* statement of well-foundedness; the routing claim was false. Contrast
-  `doubling_norm_lt_one`, which genuinely IS load-bearing — the mirror is asymmetric.
+  proved via `descent_with_strict_steps_reaches_floor` plus the stays-at-floor fact.
 - `padic_orbit_never_reaches_zero` — for `x ≠ 0` the doubling orbit `2ⁿ·x` is **never** `0`.
 - `ReachesFloorInFiniteTime` — **a single formal predicate** on a generic orbit `orbit : ℕ → α` into
   a type with a `Zero`: `∃ N, ∀ k ≥ N, orbit k = 0`. The one definition both ambients are compared
@@ -86,8 +82,8 @@ What the Lean proves (load-bearing, in the statements):
   ν orbit both **converges to the floor** (`Tendsto … (nhds 0)`, imported from `ZeroParadox/Valuation/PadicAttractor.lean`'s
   `doubling_orbit_tendsto_zero`) and **satisfies `¬ ReachesFloorInFiniteTime`**. The in-statement
   contrast is therefore finite-time termination vs convergence-without-arrival, not the weaker
-  eventually-0 vs never-0. ⚠ The μ side is **not** routed through `no_infinite_descent` — see the
-  correction at `:73`; it is a direct induction on `g 0`.
+  eventually-0 vs never-0. The μ side is closed by `descent_with_strict_steps_reaches_floor`,
+  a direct induction on the bound.
 
 **Honest scope (interpretation, NOT proved here).** "Attractor" and "contraction" remain the
 *framework reading* — the file does not build a full dynamical-systems contraction framework, nor does
@@ -105,11 +101,16 @@ open Filter Topology
 
 /-! ## The obstruction-killer — no infinite descent on the well-founded μ floor -/
 
-/-- **The structural obstruction (mirror of `doubling_norm_lt_one`).** There is no infinite
-    strictly-decreasing sequence `ℕ → ℕ`: the well-founded μ floor cannot host the order-theoretic
-    analogue of the infinite shrinking 2-adic orbit `2ⁿ·x`. This is `not_strictAnti_of_wellFoundedLT`
-    specialised to ℕ (which is `WellFoundedLT`); it is the load-bearing fact behind the whole
-    separation — it is *false* in any non-well-founded ambient (e.g. the 2-adic norms of `2ⁿ·x`). -/
+/-- **The structural obstruction, stated in general. ⚠ ZERO call sites — nothing below uses it.**
+    There is no infinite strictly-decreasing sequence `ℕ → ℕ`: the well-founded μ floor cannot host
+    the order-theoretic analogue of the infinite shrinking 2-adic orbit `2ⁿ·x`. This is
+    `not_strictAnti_of_wellFoundedLT` specialised to ℕ (which is `WellFoundedLT`), and it is *false*
+    in any non-well-founded ambient (e.g. the 2-adic norms of `2ⁿ·x`).
+
+    It states the obstruction the μ side rests on **conceptually**;
+    `descent_with_strict_steps_reaches_floor` below proves its own case by induction on the bound and
+    does **not** call this. An earlier overview said it did — corrected 2026-08-07. Contrast
+    `doubling_norm_lt_one`, which genuinely IS invoked downstream: the mirror is asymmetric. -/
 theorem no_infinite_descent : ∀ f : ℕ → ℕ, ¬ StrictAnti f :=
   fun f => not_strictAnti_of_wellFoundedLT f
 
@@ -196,8 +197,8 @@ theorem pred_orbit_strict_steps (n : ℕ) :
 
 /-- The μ floor's canonical descent orbit `k ↦ Nat.pred^[k] n` **satisfies**
     `ReachesFloorInFiniteTime`. The existence of a step reaching the floor is obtained from
-    `descent_with_strict_steps_reaches_floor` (which is proved by induction on `g 0`, **not** through
-    `no_infinite_descent` — see `:73`; the orbit cannot
+    `descent_with_strict_steps_reaches_floor` (proved by induction on the bound, **not** through
+    `no_infinite_descent`, which has no call sites — see that lemma's own docstring; the orbit cannot
     strictly decrease forever), and once the floor is reached the orbit stays (`pred_descent_terminates`
     monotonicity). So well-foundedness is genuinely in this proof term. -/
 theorem pred_orbit_reaches_floor (n : ℕ) :
@@ -230,7 +231,7 @@ theorem padic_orbit_not_reaches_floor (x : Q₂) (hx : x ≠ 0) :
     real one — *reaches the floor in finite time* (μ, #1) vs *converges to the floor as a limit it never
     reaches* (ν, #3) — not the weak eventually-0 vs never-0. The μ side is routed through
     `descent_with_strict_steps_reaches_floor` (induction on the bound, **not** via
-    `no_infinite_descent` — see `:73`); the ν
+    `no_infinite_descent`); the ν
     side's convergence is contraction and its non-arrival is `padic_orbit_never_reaches_zero`.
     The Axis-I cut is not collapsed: recast as the same dynamical question, #1 and #3 answer it
     oppositely. -/
@@ -248,15 +249,17 @@ theorem floor_reach_separates_mu_nu :
 **Pointer, not a result.** The capstone above carries **two** modes: the μ side is a step map
 (`Nat.pred^[k]`) reaching the floor in finite time, and only the **ν** side is asymptotic — a chosen
 orbit and a limit, with no first step. A related question (*can the structureless referent ⊥ move?*)
-is formalized over a **step** relation at
-`ZeroParadox/Computability/Occurrence.lean` § III and § VI, over `f : σ → Option σ`, where
-`machine_snap_impossible` and `deterministic_has_no_fanout` derive an **obstruction**: a single-valued
-step admits at most one successor, so nothing is both its own fixed point and departed from.
+is formalized over a single-valued **step function** at
+`ZeroParadox/Computability/Occurrence.lean` § III, over `f : σ → Option σ`, where
+`machine_snap_impossible` and `deterministic_has_no_fanout` derive an **obstruction**: such a step
+admits at most one successor, so nothing is both its own fixed point and departed from. (§ VI of that
+file deliberately restates the escape over a *relation*, where the obstruction lifts.)
 
 **The two files never referenced each other until 2026-08-07**, and the honest comparison is short:
 `machine_snap_impossible` stays true as stated (it is about a single-valued step), while the ν mode
 here exhibits floor-directed motion that never needs a first step. **They are not the same question** —
-the ν orbit is provably never *at* the floor (`padic_orbit_not_reaches_floor`), so it is about
+the ν orbit is provably never *at* the floor (`padic_orbit_never_reaches_zero`; the capstone's
+`padic_orbit_not_reaches_floor` is the weaker `¬ ReachesFloorInFiniteTime` form), so it is about
 **approach to** a floor, where the snap question is about **departure from** one. **Neither derives
 motion**: the step side derives the obstruction, this side takes the orbit as given. Both modes here
 run inward. See `ZeroParadox/Computability/Occurrence.lean` § 0 Consequence 3 for the full relation
