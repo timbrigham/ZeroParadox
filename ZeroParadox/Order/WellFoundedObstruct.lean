@@ -235,6 +235,22 @@ theorem floor_reach_separates_mu_nu :
     ⟨pred_orbit_reaches_floor,
       doubling_orbit_tendsto_zero x, padic_orbit_not_reaches_floor x hx⟩
 
+/-! ### Where the SAME question is asked in the other formalization
+
+**Pointer, not a result.** The capstone above formalizes floor-directed motion **asymptotically** — a
+chosen orbit and a limit, with no step relation and no first step. The corpus asks the same informal
+question (*can the bottom move?*) in a **step** formalization at
+`ZeroParadox/Computability/Occurrence.lean` § III and § VI, over `f : σ → Option σ`, where
+`machine_snap_impossible` and `deterministic_has_no_fanout` derive an **obstruction**: a single-valued
+step admits at most one successor, so nothing is both its own fixed point and departed from.
+
+**The two never referenced each other until 2026-08-07**, and the honest comparison is short:
+`machine_snap_impossible` stays true as stated (it is about a single-valued step), while the ν mode
+here exhibits floor-directed motion that never needs a first step. **Neither derives motion** — the
+step side derives the obstruction, this side takes the orbit as given. See
+`ZeroParadox/Computability/Occurrence.lean` § 0 Consequence 3 for the full statement of the relation,
+and note that both modes here run **inward**: they approach the floor, and nothing here departs it. -/
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check
