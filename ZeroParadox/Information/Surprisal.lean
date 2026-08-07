@@ -607,16 +607,17 @@ characterization, and that the characterization is theirs. **The converse direct
 *Real Analysis in Reverse*, Amer. Math. Monthly **120** (2013), p. 13 — read at source:** *"Note that
 the Ratio Test implies that 1/2 + 1/4 + 1/8 + … converges, implying that R is Archimedean (the
 sequence of partial sums 1/2, 3/4, 7/8, … isn't even a Cauchy sequence if there exists an ε > 0 that
-is less than 1/n for all n)."* That is convergence-implies-Archimedean at `r = 1/2`, with its proof
-— but via the **Ratio Test**, at a single ratio, and **not** stated as an equivalence. The
-biconditional is Kantrowitz-Neumann's.
+is less than 1/n for all n)."* That is convergence-implies-Archimedean at `r = 1/2`, with its
+proof — the Ratio Test supplying only the convergence *premise*, the implication itself proved by the
+ratio-free parenthetical. ⚠ It is **not** stated as an equivalence (Propp's equivalences run Ratio
+Test ⟺ *completeness*), so the biconditional remains Kantrowitz-Neumann's. Note the single ratio is
+the **stronger** form, not a weaker one: Propp reaches Archimedean from `r = 1/2` alone, where the
+converse below consumes its hypothesis at arbitrary `p`.
 
-⚠ **This sentence was wrong twice and the second error was worse.** A draft first said the direction
-"also appears" in Propp (correct); a later pass replaced that with "supplies a **witness**, not the
-statement … contains no geometric series test", which is **false at the source** — the passage above
-is the statement, with proof. The negative had been reached by grepping for *"geometric series"*,
-which occurs **zero** times because Propp writes the series in symbols and never names it. Grep the
-CLAIM, not the name. **Honest delta: a Lean 4 formalization of a known 2015
+⚠ **Do not "correct" this to say Propp has no geometric series test.** A pass once did, on the
+strength of grepping *"geometric series"* — which occurs **zero** times in that paper because Propp
+writes the series in symbols and never names it. The failure shape was a **universal negative**
+reached from a name search. Grep the CLAIM, not the name. **Honest delta: a Lean 4 formalization of a known 2015
 characterization, whose forward half is discharged by Mathlib** (`exists_pow_lt_of_lt_one`); the
 converse is not in the pin (Mathlib's `archimedean_iff_*` family is nat/int/rat unboundedness only).
 
