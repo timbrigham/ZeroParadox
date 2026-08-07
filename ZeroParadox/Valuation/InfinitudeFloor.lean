@@ -400,15 +400,20 @@ plus the standing rule that constructions over it carry that predicate as a hypo
 `InfinitudeFloor` has no analogue. The older sibling is `trivialSelfApp`
 (`ZeroParadox/Computability/SelfApp.lean`), which `Wheel.lean` names as what its own gauge mirrors.
 
-**Prior art — the shape is standard and the framework joins it rather than inventing it.** In
-universal algebra the remedy for a class with trivial models is an **inequation**: Burris &
-Sankappanavar, *A Course in Universal Algebra*, records that a trivial algebra satisfies any
-quasi-identity (p. 250) and cannot satisfy a negated atomic formula (p. 251) — which is *why* a
-non-degeneracy condition has to be stated as an inequality, the shape `WVSNondegenerate`, `0 ≠ 1` and
-Mathlib's `Nontrivial` all take. The library idiom to reach for is `Nontrivial` /
-`Valuation.IsNontrivial`, the latter already named in `Wheel.lean`. ⚠ Honest delta, and **not** an
-instance-of relation: `InfinitudeFloor` degenerates in its **chosen data**, not in its **carrier**.
-Shared shape, nothing more.
+**Prior art — the shape is standard and the framework joins it rather than inventing it.** Degenerate
+models of an axiom set, and non-degeneracy stated as an **inequation**, are ordinary universal
+algebra: Burris & Sankappanavar, *A Course in Universal Algebra*, defines an algebra as *"trivial if
+|A| = 1"* (§ II.1, read from source). That inequational shape is what `WVSNondegenerate`, `0 ≠ 1` and
+Mathlib's **`Nontrivial`** all take, and `Nontrivial` / `Valuation.IsNontrivial` — the latter already
+named in `Wheel.lean` — are the library idioms to reach for if a predicate is ever added here.
+
+⚠ **Citation scope, deliberately narrow.** A review pass reported two further passages of that book
+(on quasi-identities and on negated atomic formulas) as supplying the *reason* the remedy must be an
+inequality. **Those were not reproducible from the filed copy's text layer, so they are not asserted
+here** — the extraction is lossy, which is evidence about the extraction and not about the book. Only
+the definition above is claimed. ⚠ And this is **not** an instance-of relation either way:
+`InfinitudeFloor` degenerates in its **chosen data**, not in its **carrier**. Shared shape, nothing
+more.
 
 ⚠ **The degeneracy is NOT confined to `InfinitudeFloor`, and an earlier draft asserted a fence here
 that does not exist.** That draft claimed the members' convergence to the floor "could not even be
