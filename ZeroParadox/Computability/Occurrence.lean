@@ -186,8 +186,10 @@ def LoopsInPlace (s : σ) : Prop := f s = some s
     not observables. That is why § III's NO-GO is powered by
     determinism rather than by the self-loop (§ VI states it: *"the obstruction of § III is the absence
     of fan-out, not the presence of a fixed point"*), and why the trichotomy is genuinely three-valued
-    **only** in the non-deterministic setting — make the step single-valued and the third case is a
-    relabelled trap. -/
+    **only** in the non-deterministic setting — make the step single-valued and the **self-loop** is
+    a relabelled trap. ⚠ **Not the third case** — § VI-c's `carry` is in the third case at every
+    state, under a function, with an infinite reachable set. Cases 1 and 2 share a fate under a
+    function; case 3 does not. -/
 theorem machine_trichotomy (s : σ) :
     f s = none ∨ LoopsInPlace f s ∨ ∃ s', f s = some s' ∧ s' ≠ s := by
   unfold LoopsInPlace
@@ -560,9 +562,10 @@ quotient, not a paradox about self-reference.
 
 **⚠ And this is a NO-GO, not a route to the snap.** Stuttering forever is not departure **in § V's
 observable sense** — the observable is constant on the entire reachable set (`stutter_obs_const`).
-⚠ **Say which sense, because the corpus carries two.** Under DP-2's state-based reading, where
-instantiation moves the machine *regardless of the value returned*, `carry` is departing at every
-step. The two readings disagree about `carry`, and that disagreement is the content, not a defect. What it removes is an
+⚠ **Say which sense, because the corpus carries two.** Under the state-based reading — `da1_minimal_path`
+(`ZeroParadox/Order/Snap.lean`), where instantiation moves the machine *regardless of the value
+returned*, and which fences that it "does not carry that the step is taken" — `carry` is departing at
+every step. The two readings disagree about `carry`, and that disagreement is the content, not a defect. What it removes is an
 argument, not an obstacle — the inference *"deterministic, therefore trapped at a fixed point,
 therefore stationary"* is invalid, because the middle step can fail while the conclusion still holds
 for a different reason.
@@ -571,12 +574,14 @@ for a different reason.
 no observable effect is a *stutter step*; the induced equivalence is *stutter equivalence*. Mathlib's
 own Turing development uses the word for exactly this (`Mathlib/Computability/TuringMachine/PostTuringMachine.lean`:
 *"a one step stutter before actually halting"*, read at source). ⚠ **Everything beyond that Mathlib quote is cited for EXISTENCE
-only — no other source here was read.** The notion is standard in model checking and in Lamport's
-TLA; *stutter equivalence* is commonly attributed to Browne, Clarke & Grumberg, TCS **59** (1988),
+only — no other source here was read.** The notion is standard in model checking; *stutter equivalence*
+is commonly attributed to Browne, Clarke & Grumberg, TCS **59** (1988),
 and stuttering-insensitivity of specifications to Lamport (IFIP 1983), with a textbook treatment in
 Baier & Katoen, *Principles of Model Checking* (already cited at § 0 of this file for the trap
-state). **None of those is in `.claude-local/papers/` and no claim is made about what any of them
-says.** ⚠ A draft of this paragraph asserted that stuttering-invariance is *an axiom* of TLA. That
+state). **None of the three was located in `.claude-local/papers/` as of 2026-08-06, and this
+paragraph makes no claim about what any of them says.** ⚠ Baier & Katoen is the exception worth
+naming: § 0 of this file *does* assert its content (p. 157, the trap state), recorded there as
+checked against an extracted source. Unfiled is not unread. ⚠ A draft of this paragraph asserted that stuttering-invariance is *an axiom* of TLA. That
 was written without reading Lamport, and axiom-versus-theorem is the one status distinction this
 project polices hardest (AX-1 → T-SNAP). The claim is withdrawn, not restated. Nothing in this section is claimed as new
 mathematics: the content is that the corpus's own trichotomy does not separate these cases.
