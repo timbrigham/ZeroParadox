@@ -175,8 +175,15 @@ def LoopsInPlace (s : σ) : Prop := f s = some s
     self-loop retain the possibility of moving — `nondeterministic_escapes_the_trap` exhibits a
     relation where `s` loops **and** reaches something else.
 
-    So "could this still move?" is a **modal** question, and this framework encodes that modality as
-    the **function-vs-relation choice**, nothing else. That is why § III's NO-GO is powered by
+    So "could this still move?" is a **modal** question, and within this trichotomy the framework
+    encodes that modality as the **function-vs-relation choice**.
+
+    ⚠ **But "nothing else" would be too strong, and an earlier version of this line said it.** § VI-c
+    exhibits a deterministic escape: a function with **no fixed point anywhere** whose observable
+    projection never changes (`carry`). `LoopsInPlace` demands the state return to *itself*; add any
+    accumulating component and there is no fixed point, so § III's results do not apply. Such a state
+    is in the THIRD case at every step and still shows nothing forever. The trichotomy sorts states,
+    not observables. That is why § III's NO-GO is powered by
     determinism rather than by the self-loop (§ VI states it: *"the obstruction of § III is the absence
     of fan-out, not the presence of a fixed point"*), and why the trichotomy is genuinely three-valued
     **only** in the non-deterministic setting — make the step single-valued and the third case is a
@@ -522,6 +529,98 @@ Items 1 and 2 are requirements on the carrier; 3 and 4 hold regardless. None of 
 that execution occurs — that remains the framework's commitment, and `l_inf`'s docstring is
 the honest statement of where the argument for it stops. -/
 
+/-! ## § VI-c. STUTTERING — a deterministic escape the function-vs-relation framing misses
+
+**Origin (Tim, 2026-08-06):** *"how the heck is it supposed to be deterministic if we can have
+values passed from one instance to the next with temporal offsets? any program's internal state
+changes with the addition of a variable."*
+
+**The objection is correct and it corrects this file.** § II's docstring says *"could this still
+move?" is a modal question, and this framework encodes that modality as the function-vs-relation
+choice, nothing else.* **That is too strong.** There is a third option, and it needs no
+non-determinism: a **function with no fixed point anywhere** whose **observable projection never
+changes**.
+
+`LoopsInPlace s := f s = some s` demands the state return to *itself*. Add any accumulating
+component — a counter, a step index, Tim's temporal offset — and there is no fixed point at all, so
+`loop_is_a_trap` and `machine_snap_impossible` **do not apply**. `carry` below witnesses it: at every
+state it is in the trichotomy's **third** case (stepping onward to something genuinely different),
+never halts, and yet shows the same thing forever.
+
+**Why this matters for occurrence.** § V defines `Occurs` as *"some step at which the observable
+state changes"* and proves it is halting. This section separates the two ideas that were running
+together: **the state moving** and **the observable changing**. A configuration can move forever and
+show nothing. So the occurrence question is not *"how does anything escape a fixed point"* — there
+need be no fixed point — but *"does the projection ever change"*, which is a question about a
+quotient, not a paradox about self-reference.
+
+**⚠ And this is a NO-GO, not a route to the snap.** Stuttering forever is still not departure: the
+observable is constant on the entire reachable set (`stutter_obs_const`). What it removes is an
+argument, not an obstacle — the inference *"deterministic, therefore trapped at a fixed point,
+therefore stationary"* is invalid, because the middle step can fail while the conclusion still holds
+for a different reason.
+
+**Prior art — this is STUTTERING, and the standard name was already one citation away.** A step with
+no observable effect is a *stutter step*; the induced equivalence is *stutter equivalence*. Mathlib's
+own Turing development uses the word for exactly this (`Mathlib/Computability/TuringMachine/PostTuringMachine.lean`:
+*"a one step stutter before actually halting"*, read at source). The notion is standard in model
+checking and in Lamport's TLA, where stuttering-invariance is an axiom of the logic. ⚠ Baier &
+Katoen, *Principles of Model Checking* — already cited at § 0 of this file for the trap state — is
+where stutter equivalence is developed, but **that book is not in `.claude-local/papers/` and its
+content is not asserted here**; only the name is taken. Nothing in this section is claimed as new
+mathematics: the content is that the corpus's own trichotomy does not separate these cases.
+-/
+
+/-- **`Statement:` every step leaves the observable unchanged.** The stutter condition, as an
+explicit hypothesis rather than a property baked into a carrier. -/
+def Stutters {σ α : Type*} (f : σ → Option σ) (obs : σ → α) : Prop :=
+  ∀ s s', f s = some s' → obs s' = obs s
+
+/-- **`Statement:` a stuttering machine's observable is constant on its whole reachable set.** -/
+theorem stutter_obs_const {σ α : Type*} (f : σ → Option σ) (obs : σ → α)
+    (h : Stutters f obs) {s t : σ} (hr : StateTransition.Reaches f s t) : obs t = obs s := by
+  induction hr with
+  | refl => rfl
+  | tail _ hstep ih => rw [h _ _ hstep]; exact ih
+
+/-- The witness: a deterministic step carrying an accumulating index. -/
+def carry : Bool × ℕ → Option (Bool × ℕ) := fun p => some (p.1, p.2 + 1)
+
+/-- **`Statement:` it has NO self-loop at any state** — so `loop_is_a_trap` and
+`machine_snap_impossible`, which both require `f s = some s`, do not apply to it. -/
+theorem carry_no_selfloop (p : Bool × ℕ) : ¬ LoopsInPlace carry p := by
+  intro h
+  have h2 := congrArg Prod.snd (Option.some_injective _ h)
+  simp at h2
+
+/-- **`Statement:` and it never halts.** -/
+theorem carry_never_halts (p : Bool × ℕ) : carry p ≠ Option.none := by
+  simp only [carry]; exact Option.some_ne_none _
+
+/-- **`Statement:` every one of its steps is a stutter.** -/
+theorem carry_stutters : Stutters carry Prod.fst := by
+  intro s s' h
+  simp only [carry, Option.some.injEq] at h
+  rw [← h]
+
+/-- **`Statement:` the fourth case, in one statement.** At every state `carry` is in the
+trichotomy's THIRD case — stepping onward to something genuinely different — and yet nothing
+reachable from it ever shows anything new. Deterministic, never halting, no fixed point, observably
+stationary.
+
+`Reading:` (Tim, 2026-08-06, conjectural) the framework reads this as the honest shape of a
+divergent bottom: not a machine trapped at a fixed point, but one whose state advances forever while
+what it presents does not. Whether the bottom's *own* observable ever changes is untouched by this
+and remains the open commitment (`l_inf`). -/
+theorem carry_steps_onward_forever_yet_shows_nothing (p : Bool × ℕ) :
+    (∃ q, carry p = some q ∧ q ≠ p)
+      ∧ (∀ t, StateTransition.Reaches carry p t → t.1 = p.1) := by
+  refine ⟨⟨(p.1, p.2 + 1), rfl, ?_⟩,
+    fun t hr => stutter_obs_const carry Prod.fst carry_stutters hr⟩
+  intro h
+  have h2 := congrArg Prod.snd h
+  simp at h2
+
 /-! ## § VII. The capstone — the whole computational shape in one statement
 
 Mirrors `Miniature.lean`'s `shape`. Five faces of the computational bottom, bundled so the
@@ -580,6 +679,11 @@ open ZeroParadox
 #print axioms nondeterministic_escapes_the_trap
 #print axioms execution_requires_branching
 #print axioms execution_requires_nondeterminism
+#print axioms stutter_obs_const
+#print axioms carry_no_selfloop
+#print axioms carry_never_halts
+#print axioms carry_stutters
+#print axioms carry_steps_onward_forever_yet_shows_nothing
 #print axioms occurrence_shape
 #print axioms occurs_iff_halts
 #print axioms occurrence_undecidable

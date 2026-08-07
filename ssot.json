@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1625,
+        "declarations": 1632,
         "files": 136
       },
       "entries": [
@@ -2215,6 +2215,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "05e86070-d572-4cbb-b608-7b89ae0eaada",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.carry",
+            "short": "carry"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "The witness: a deterministic step carrying an accumulating index, with no fixed point anywhere.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -9447,6 +9483,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "24705f06-c8c9-4210-b2dc-d16ea7225f33",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.carry_no_selfloop",
+            "short": "carry_no_selfloop"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "The stuttering witness family: no self-loop anywhere, never halts, every step a stutter, and the capstone showing a state can be in the trichotomy's third case forever while its observable never changes. Corrects the file's own claim that the modality is encoded solely as the function-vs-relation choice.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "24a7b238-3b56-4c03-ac76-02ff6712d81c",
           "new": {
             "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
@@ -13212,6 +13284,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "34e697f3-f100-4ca5-829d-1d821219f7e5",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.carry_stutters",
+            "short": "carry_stutters"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "The stuttering witness family: no self-loop anywhere, never halts, every step a stutter, and the capstone showing a state can be in the trichotomy's third case forever while its observable never changes. Corrects the file's own claim that the modality is encoded solely as the function-vs-relation choice.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -18051,6 +18159,42 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "4b5bfdd3-e774-4fce-8b0f-aeb69b28c59a",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.carry_steps_onward_forever_yet_shows_nothing",
+            "short": "carry_steps_onward_forever_yet_shows_nothing"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The stuttering witness family: no self-loop anywhere, never halts, every step a stutter, and the capstone showing a state can be in the trichotomy's third case forever while its observable never changes. Corrects the file's own claim that the modality is encoded solely as the function-vs-relation choice.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "E2-tower-floor"
             ]
@@ -20302,6 +20446,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "547ec6b8-461d-4297-aa9e-78a4ca8c5856",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.Stutters",
+            "short": "Stutters"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "schema"
+            ]
+          },
+          "reason": "The stutter condition as an explicit predicate: every step leaves the observable projection unchanged. Standard name from model checking / TLA.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37093,6 +37273,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "9f205585-93f5-4227-8749-4d447087e8a0",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.carry_never_halts",
+            "short": "carry_never_halts"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "The stuttering witness family: no self-loop anywhere, never halts, every step a stutter, and the capstone showing a state can be in the trichotomy's third case forever while its observable never changes. Corrects the file's own claim that the modality is encoded solely as the function-vs-relation choice.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "9f577710-217f-4469-8a00-8f80669b2211",
           "new": {
             "file": "ZeroParadox/Ordinal/PricedInterface.lean",
@@ -53404,6 +53620,42 @@
             ]
           },
           "reason": "New experimental probe MetaFork.lean — meta-level of the instance-vs-requirements fork (conjecture step c, iterations 1-5)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e5687da4-7de4-4abf-bc9f-7d3be41d64ae",
+          "new": {
+            "file": "ZeroParadox/Computability/Occurrence.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.stutter_obs_const",
+            "short": "stutter_obs_const"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "computability"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "A stuttering machine's observable is constant on its whole reachable set. Axiom-free. The general form behind Tim's objection that accumulating state escapes the self-loop trap.",
           "verify": {
             "axioms": null,
             "sorry_free": true
