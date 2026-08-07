@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1623,
+        "declarations": 1625,
         "files": 136
       },
       "entries": [
@@ -47744,6 +47744,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ceb620a6-bf75-4115-9d63-a5eeb643b95e",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nothing_between_is_a_step",
+            "short": "nothing_between_is_a_step"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "No ordinal strictly below epsilon-zero is fixed by the tower operator. The checkable half of Tim's phrase: epsilon-zero is the minimum distinct STEP (stable landing) above bottom, the intermediate ordinals being stages of the ascent rather than landings.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "cebc2abc-c4cf-4c35-8c0d-c66c550773dc",
           "new": {
             "file": "ZeroParadox/Computability/ComputableCrossing.lean",
@@ -56854,6 +56892,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f5c7052e-1530-4671-9c3f-522781badad9",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bot_is_not_a_step",
+            "short": "bot_is_not_a_step"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "The bottom is not a fixed point of the tower operator either, so epsilon-zero is the first landing rather than merely the least among several below it.",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -571,15 +571,39 @@ wanted.
 ℚ_p-valued probability (survey: `.claude-local/papers/dragovich_padic_physics_2009_0904.4205.pdf`
 § 10, "Q_p-valued Probability") replaces the **topology** of frequency stabilisation, not the
 **order**. `ℚ_[p]` is not an ordered field and its absolute value is real-valued with an Archimedean
-value group, so "infinitely slim but non-zero" is not expressible there at all. Entry points if it is
-ever pursued: `MeasureTheory.AddContent` (arbitrary `AddCommMonoid`) and
+value group, so "infinitely slim but non-zero" is not expressible there at all. The corpus's home for the Ostrowski sense of
+"Archimedean" is `ZeroParadox/Valuation/SnapDichotomy.lean`. Entry points if this route is ever
+pursued: `MeasureTheory.AddContent` (arbitrary `AddCommMonoid`) and
 `MeasureTheory.VectorMeasure`; `PMF` / `Measure` / `Kernel` are hard-wired to `ℝ≥0∞`.
 
-**Prior art.** Bernoulli's inequality is Mathlib's `one_add_mul_le_pow`
+**Prior art — ⚠ THE BICONDITIONAL IS PUBLISHED AND THIS IS A FORMALIZATION, NOT A NEW RESULT.**
+Kantrowitz & Neumann, *"Another face of the Archimedean property"*, The College Mathematics Journal
+**46** (2015), no. 2, 139–141, establish the equivalence of the **geometric series test** and the
+Archimedean property for ordered fields — `archimedean_iff_survival_eventually_lt` in different
+dress.
+
+⚠ **That capsule is paywalled and its BODY was not read; the bibliographic data is confirmed twice
+over, the content once and indirectly.** Confirmed at source: the reference lists of two other
+Kantrowitz-Neumann papers held in `.claude-local/papers/` — *Completeness of Ordered Fields and a
+Trio of Classical Series Tests* (Abstr. Appl. Anal. 2016, art. 6023273) and *Normed Algebras and the
+Geometric Series Test* (Surveys in Math. and its Appl. **12** (2017), 203-217, ref. [10]) — agree on
+title, venue, volume 46, year 2015, pages 139-141, MR3361762. For the **content**, the only source
+read is the 2016 paper's own description: *"An elementary example from the Classroom Capsule [6]
+exposes the equivalence of the geometric series test and the Archimedean property."* That the
+geometric-series form and the `(1-p)^n < e` form are interchangeable is an **inference from that
+sentence, not a quotation**, and it should not be sharpened without obtaining the capsule. The converse direction also appears in Propp, *Real Analysis in
+Reverse*, Amer. Math. Monthly **120** (2013). **Honest delta: a Lean 4 formalization of a known 2015
+characterization, whose forward half is discharged by Mathlib** (`exists_pow_lt_of_lt_one`); the
+converse is not in the pin (Mathlib's `archimedean_iff_*` family is nat/int/rat unboundedness only).
+
+Bernoulli's inequality is Mathlib's `one_add_mul_le_pow`
 (`Mathlib/Algebra/Order/Ring/Pow.lean`), cited not re-proved; `1 - (1-p)^n ≤ n·p` is the **union
 bound** (Boole). The ordered-infinitesimal reading of probability is Benci–Horsten–Wenmackers,
-*Non-Archimedean Probability*, Milan J. Math. 81 (2013) — where only `∅` gets probability zero — and
-Nelson, *Radically Elementary Probability Theory* (1987). Non-vacuity of the infinitesimal hypothesis
+*Non-Archimedean Probability*, Milan J. Math. 81 (2013) — where only `∅` gets probability zero — (read at source: Prop. 2(ii), p. 9, from axioms (NAP0)–(NAP3) alone). ⚠ **Nelson,
+*Radically Elementary Probability Theory* (1987), is a DIFFERENT shape and an earlier draft filed it
+under the same heading.** Nelson's probabilities are **real-valued on finite spaces**; the
+infinitesimals are external IST ones **on ℝ**, and negligibility means *infinitesimal* probability
+rather than zero. It is not an ordered-non-Archimedean-valued probability. Non-vacuity of the infinitesimal hypothesis
 is by **citation, not import**: `Hyperreal.epsilon_pos` and `Hyperreal.archimedeanClassMk_epsilon_pos`.
 ⚠ `Hyperreal`'s classical NSA layer (`Infinitesimal`, `IsSt`, `st`) is deprecated since 2026-01-05 in
 favour of `ArchimedeanClass`; design against the latter. -/
@@ -602,13 +626,17 @@ theorem crossing_le_nsmul {F : Type*} [CommRing F] [LinearOrder F] [IsStrictOrde
 /-- **`Statement:` an INFINITESIMAL crossing probability never accumulates.** If no finite multiple of
 `p` reaches `1`, then no finite multiple of the accumulated crossing probability does either — at
 every standard `n`. The infinitesimality is an explicit **hypothesis** (`hinf`), visible on the
-signature, never bundled into a definition or a class field. -/
+signature, never bundled into a definition or a class field.
+
+⚠ No `p ≤ 1` hypothesis: it follows from `hinf 1`, and an earlier draft carried it unearned — the
+same defect this file flags one docstring above. -/
 theorem crossing_stays_infinitesimal {F : Type*} [CommRing F] [LinearOrder F]
-    [IsStrictOrderedRing F] {p : F} (hp1 : p ≤ 1)
+    [IsStrictOrderedRing F] {p : F}
     (hinf : ∀ k : ℕ, k • p < 1)
     (q : ℕ → F) (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) (n : ℕ) :
     ∀ m : ℕ, m • (1 - q n) < 1 := by
   intro m
+  have hp1 : p ≤ 1 := by have h := hinf 1; simp at h; linarith
   have h1 : 1 - q n ≤ n • p := crossing_le_nsmul hp1 q hq0 hstep n
   have hk := hinf (m * n)
   simp only [nsmul_eq_mul, Nat.cast_mul] at *
@@ -617,10 +645,16 @@ theorem crossing_stays_infinitesimal {F : Type*} [CommRing F] [LinearOrder F]
     _ = (m : F) * (n : F) * p := by ring
     _ < 1 := hk
 
-/-- **`Statement:` the hypothesis used above IS Mathlib's notion of infinitesimal.** Not an invented
-predicate: `∀ k, k • |p| < 1` is `0 < ArchimedeanClass.mk p`
-(`Mathlib/Algebra/Order/Archimedean/Class.lean`, via `mk_one`). Stated as a theorem rather than
-asserted in prose, so that a wrong identification would fail to elaborate. -/
+/-- **`Statement:` Mathlib's notion of infinitesimal, in elementary form.** `∀ k, k • |p| < 1` is
+`0 < ArchimedeanClass.mk p` — `ArchimedeanClass.mk_lt_mk`
+(`Mathlib/Algebra/Order/Archimedean/Class.lean`) with `mk_one`
+(`Mathlib/Algebra/Order/Ring/Archimedean.lean`). Stated as a theorem rather than asserted in prose,
+so that a wrong identification would fail to elaborate.
+
+⚠ **This is about `|p|`; `crossing_stays_infinitesimal` above takes the UNSIGNED `∀ k, k • p < 1`, so
+the two coincide only for `0 ≤ p`.** An earlier draft of this docstring called them the same
+hypothesis. They are not: at `p = -5` in ℝ the unsigned form holds while `0 < ArchimedeanClass.mk p`
+fails. Supply `0 ≤ p` when moving between them. -/
 theorem infinitesimal_iff_archimedeanClass_pos {F : Type*} [CommRing F] [LinearOrder F]
     [IsStrictOrderedRing F] {p : F} :
     (∀ k : ℕ, k • |p| < 1) ↔ 0 < ArchimedeanClass.mk p := by

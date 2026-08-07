@@ -11,30 +11,23 @@ line said "the snap ceiling"): positionally ε₀ is the FIRST — `Ordinal.epsi
 epsilon enumeration, Veblen coordinates (1,0), the **least fixed point** of `α ↦ ω^α` — and that
 is exactly what `epsilon0_least_fixedpoint` below proves.
 
-⚠ **"First"/"minimum" here means LEAST AMONG THE FIXED POINTS of `α ↦ ω^α`, never order-adjacent
-to ⊥.** The corpus's own `epsilonZero_tower_lt` (`ZeroParadox/Ordinal/Gentzen.lean`) exhibits
-infinitely many ordinals strictly between ⊥ and ε₀, so no adjacency claim is available on this
-carrier; applied to `Ordinal`, `HasFirstStep` is witnessed by `1` (`0 ⋖ 1`), not by ε₀.
-An earlier revision of this line read "the minimum step next to the pole" and credited this theorem
-with proving it. It proves `IsLeast {o | ω^o = o} ε₀` — minimality **within the fixed-point set**,
-which is a set this framework defines. Nothing here is about steps or adjacency.
- Its magnitude as a tower supremum is large; its position is
-first. Both faces are live (`epsilon0_min_eq_max`), and collapsing to the magnitude face is the recorded
-error this line used to commit. Being a position, it carries no units. Falsifiable prediction: ε₀ is not just *a* fixed point of `α ↦ ω^α` but the **least** one —
-the snap is located at the *minimal* ordinal closed under exponentiation, not at some larger Veblen point.
-Would FAIL if some `o < ε₀` satisfied `ω^o = o` (then the snap closure wouldn't be minimal).
+⚠ **"Minimum step" means a STABLE LANDING — a fixed point of `α ↦ ω^α` — and in that sense ε₀
+IS the minimum distinct step above ⊥.** `nothing_between_is_a_step` below makes it checkable: **no**
+ordinal strictly under ε₀ is fixed by the operator, and `bot_is_not_a_step` says ⊥ is not one either.
+The ordinals in between — `ω`, `ω^ω`, … — are **stages of the ascent, not landings**: the operator
+fixes none of them, so nothing stops there. That is also why `snapNucleus ⊥ = ε₀`
+(`ZeroParadox/Ordinal/SnapNucleus.lean`) reaches it in one application — a closure operator's image
+*is* its fixed points, so the first landing is the least one.
 
-**Result: CONFIRMED.** `epsilon0_is_fixedpoint` (`ω ^ ε₀ = ε₀`) and `epsilon0_least_fixedpoint` (any
-`o` with `ω^o = o` has `ε₀ ≤ o`) together pin ε₀ as the least fixed point. So the snap closure is minimal —
-the framework's "snap at the minimum fixed-point closure" (Veblen-angle) as a two-line theorem. Both reuse
-Mathlib (`omega0_opow_epsilon`, `epsilon_zero_le_of_omega0_opow_le`), cited not reproved.
+⚠ **What is NOT claimed is ORDER-adjacency** (`⊥ ⋖ ε₀`), and `epsilon0_least_fixedpoint` must not be
+cited as if it proved a covering relation. Ordinals sit strictly between (`epsilonZero_tower_lt` with
+`fundamentalSeq_strictMono`, `ZeroParadox/Ordinal/Gentzen.lean`); applied to `Ordinal`,
+`HasFirstStep` is witnessed by `1`. Both readings are true and they are about **different orders**:
+least in the FIXED-POINT order, not least in the ordinal order.
 
-## Engineer's Take
-
-This file is one of a series of iterative attempts on this branch to build a map of how the various
-bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
-verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
-defer to my AI assistant regarding the specifics of how the internals work.
+⚠ **And `epsilon0_least_fixedpoint` alone is only the lower-bound half.** `IsLeast {o | ω^o = o} ε₀`
+needs membership too (`epsilon0_is_fixedpoint`); the bundled form is `epsilon0_min_eq_max`
+(`ZeroParadox/Ordinal/Epsilon0MinMax.lean`). Cite that when the full `IsLeast` is wanted.
 -/
 
 namespace ZeroParadox
@@ -51,9 +44,21 @@ theorem epsilon0_is_fixedpoint : ω ^ ε₀ = ε₀ :=
 theorem epsilon0_least_fixedpoint (o : Ordinal) (h : ω ^ o = o) : ε₀ ≤ o :=
   epsilon_zero_le_of_omega0_opow_le (le_of_eq h)
 
+/-- **`Statement:` nothing strictly below ε₀ is a landing.** No ordinal under ε₀ is fixed by
+`α ↦ ω^α`, so the intermediate ordinals are stages of the ascent rather than steps. This is the
+checkable half of "ε₀ is the minimum distinct step above ⊥". -/
+theorem nothing_between_is_a_step (o : Ordinal) (hlt : o < Ordinal.epsilon 0) :
+    Ordinal.omega0 ^ o ≠ o :=
+  fun h => absurd (epsilon0_least_fixedpoint o h) (not_le.mpr hlt)
+
+/-- **`Statement:` and ⊥ is not a landing either**, so ε₀ is the first. -/
+theorem bot_is_not_a_step : Ordinal.omega0 ^ (0 : Ordinal) ≠ (0 : Ordinal) := by simp
+
 /-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
     (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
     guard beneath every ε₀ characterization. -/
+
+
 theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
   intro h
   have hf := epsilon0_is_fixedpoint
