@@ -603,8 +603,12 @@ file's is the **sequence** form (`rⁿ → 0`, with `r = 1 - p`). In an ordered 
 by the geometric partial-sum identity — the partial sums are exactly `(1 - rⁿ)/(1 - r)` — which is
 field algebra rather than analysis. ⚠ **That link is NOT formalized here and is not claimed as
 proved**; what is claimed is that the two are the series and sequence versions of one
-characterization, and that the characterization is theirs. The converse direction also appears in Propp, *Real Analysis in
-Reverse*, Amer. Math. Monthly **120** (2013). **Honest delta: a Lean 4 formalization of a known 2015
+characterization, and that the characterization is theirs. ⚠ Propp, *Real Analysis in
+Reverse*, Amer. Math. Monthly **120** (2013), supplies a **witness, not the statement**, and an
+earlier draft here said it "also appears" there. It does not: that paper contains no geometric series
+test and no characterization of the Archimedean property by one. What it has (pp. 7-8) is the
+*example* that `1, 1/2, 1/4, …` fails to converge to `0` in two non-Archimedean ordered fields — the
+contrapositive's witness. **Honest delta: a Lean 4 formalization of a known 2015
 characterization, whose forward half is discharged by Mathlib** (`exists_pow_lt_of_lt_one`); the
 converse is not in the pin (Mathlib's `archimedean_iff_*` family is nat/int/rat unboundedness only).
 

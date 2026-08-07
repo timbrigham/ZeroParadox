@@ -28,6 +28,13 @@ least in the FIXED-POINT order, not least in the ordinal order.
 ⚠ **And `epsilon0_least_fixedpoint` alone is only the lower-bound half.** `IsLeast {o | ω^o = o} ε₀`
 needs membership too (`epsilon0_is_fixedpoint`); the bundled form is `epsilon0_min_eq_max`
 (`ZeroParadox/Ordinal/Epsilon0MinMax.lean`). Cite that when the full `IsLeast` is wanted.
+
+## Engineer's Take
+
+This file is one of a series of iterative attempts on this branch to build a map of how the various
+bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
+verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
+defer to my AI assistant regarding the specifics of how the internals work.
 -/
 
 namespace ZeroParadox
@@ -57,8 +64,6 @@ theorem bot_is_not_a_step : Ordinal.omega0 ^ (0 : Ordinal) ≠ (0 : Ordinal) := 
 /-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
     (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
     guard beneath every ε₀ characterization. -/
-
-
 theorem epsilon0_ne_zero : ε₀ ≠ 0 := by
   intro h
   have hf := epsilon0_is_fixedpoint
@@ -89,6 +94,8 @@ section PurityCheck
 open ZeroParadox
 #print axioms epsilon0_is_fixedpoint
 #print axioms epsilon0_least_fixedpoint
+#print axioms nothing_between_is_a_step
+#print axioms bot_is_not_a_step
 #print axioms epsilon0_ne_zero
 #print axioms epsilon0_ne_bot
 #print axioms epsilon0_eq_veblen_one_zero
