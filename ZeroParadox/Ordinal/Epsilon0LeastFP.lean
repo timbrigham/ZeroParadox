@@ -29,6 +29,11 @@ least in the FIXED-POINT order, not least in the ordinal order.
 needs membership too (`epsilon0_is_fixedpoint`); the bundled form is `epsilon0_min_eq_max`
 (`ZeroParadox/Ordinal/Epsilon0MinMax.lean`). Cite that when the full `IsLeast` is wanted.
 
+**Result: CONFIRMED.** `epsilon0_is_fixedpoint` (`ω ^ ε₀ = ε₀`) and `epsilon0_least_fixedpoint` (any
+`o` with `ω^o = o` has `ε₀ ≤ o`) together pin ε₀ as the least fixed point. So the snap closure is minimal —
+the framework's "snap at the minimum fixed-point closure" (Veblen-angle) as a two-line theorem. Both reuse
+Mathlib (`omega0_opow_epsilon`, `epsilon_zero_le_of_omega0_opow_le`), cited not reproved.
+
 ## Engineer's Take
 
 This file is one of a series of iterative attempts on this branch to build a map of how the various
