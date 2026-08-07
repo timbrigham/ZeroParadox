@@ -33,29 +33,54 @@ with probability one, hence at some finite stage.
 
 **⚠ WHAT THIS DOES NOT ESTABLISH — four fences, all load-bearing.**
 
-1. **Nothing here says the framework's bottom IS this space.** Exhibiting a model meeting the
-   hypotheses is not showing an object satisfies them; that step is precisely the ontological
-   commitment `l_inf`'s docstring names, and a realizability result cannot discharge it without
-   circularity. This is the requirements/instance distinction, not a technicality.
+1. **Nothing here says the structureless referent ⊥ IS this space.** Exhibiting a model that meets
+   the hypotheses is not showing that **⊥** is such a model; that step is precisely the commitment
+   `l_inf`'s docstring names as a design principle rather than a consequence, and a realizability
+   result cannot discharge it without circularity. This is the requirements/instance distinction,
+   not a technicality.
 2. **Measure one is not necessity.** Borel-Cantelli concludes *almost surely* — outside a null set.
    The framework commits that the snap fires, full stop. So this upgrades that commitment from
    *possible* to *measure-one on its own premise*, which is strictly stronger than the former and
    strictly weaker than the latter.
-3. **`p` is CONSTANT here, and that is a real assumption, not bookkeeping.** A per-stage probability
-   that *shrinks* fast enough has a convergent sum, and the **first** Borel-Cantelli lemma then
-   gives almost surely only finitely many firings. So a positive chance at every stage is not
-   sufficient; a positive *constant* chance is what the argument consumes.
+3. **What the argument consumes is DIVERGENCE of `∑ pₙ`, not constancy.** A per-stage probability
+   that shrinks fast enough — `pₙ = 2⁻ⁿ` — has a convergent sum, and the **first** Borel-Cantelli
+   lemma then gives almost surely only finitely many firings; so a positive chance at every stage is
+   genuinely not sufficient. ⚠ **But constancy is this file's ROUTE to divergence, never a
+   requirement of the mathematics**, and an earlier draft of this fence said otherwise.
+   `measure_limsup_eq_one` consumes measurability, `iIndepSet` and `∑' n, μ (s n) = ∞` — constancy
+   appears nowhere — and `Measure.infinitePi` takes an arbitrary family, so `pₙ = 1/(n+1)` is
+   non-constant, positive at every stage, divergent, and yields `crossing_almost_surely` verbatim.
+   That matters here: a *shrinking* `p` is the natural reading of unbounded surprisal, and under the
+   honest boundary a shrinking `p` can still work.
 4. **The carrier here is `ℝ≥0∞`, not any framework carrier.** `Measure` and `PMF` are hard-wired to
-   it. That is not an obstruction — real-valued probability on framework objects already exists in
-   the corpus (`fC_functor : ℕ ⥤ KleisliCat PMF`, `ZeroParadox/Multihomed/InfoFunctor.lean`) — but
-   nothing here crosses a type boundary, and no framework object appears in any statement below.
+   it (`PMF α := { f : α → ℝ≥0∞ // HasSum f 1 }`). That is not an obstruction — probability on
+   framework objects already exists in the corpus, in **this same carrier**
+   (`fC_functor : ℕ ⥤ KleisliCat PMF`, `ZeroParadox/Multihomed/InfoFunctor.lean`), so there is no
+   mismatch to explain away. ⚠ An earlier draft called that functor "real-valued", contradicting the
+   preceding sentence three lines up. Nothing here crosses a type boundary, and no framework object
+   appears in any statement below.
 
-**Prior art.** Every ingredient is Mathlib's and is cited rather than rebuilt:
+**Prior art. ⚠ THE ASSEMBLY ITSELF IS ALREADY PACKAGED IN MATHLIB, and an earlier draft of this
+paragraph claimed it as the contribution.** `ProbabilityTheory.exists_iid` /
+`exists_hasLaw_indepFun` (`Mathlib/Probability/HasLawExists.lean`) is proved by exactly this
+construction — `use Π i, (𝓧 i), .pi, infinitePi μ, fun i ↦ Function.eval i` — and its
+module is one import step away. At `ι = ℕ`, `𝓧 = Bool`, `μ = bernoulli p`, its three
+conjuncts **are** § I and § II. `ProbabilityTheory.setBernoulli`
+(`Mathlib/Probability/Distributions/SetBernoulli.lean`) is the same `infinitePi`-of-Bernoullis object
+on `Set ι`, though it supplies neither coordinate independence nor a marginal.
+
+**What survives as this file's own content is two things, and only two:** `fires_iIndepSet`, the
+`iIndepFun`-to-`iIndepSet` bridge — **searched, not located in the pin**, which carries only the
+opposite direction `iIndepSet.iIndepFun_indicator` — and § III, the Borel-Cantelli application, which
+Mathlib applies to no Bernoulli or i.i.d. product. `trials` is built rather than taken from
+`exists_iid` because that result is existential while `crossing_almost_surely` needs a named measure;
+that is packaging, not novelty.
+
+Every ingredient is Mathlib's and is cited rather than rebuilt:
 `Measure.infinitePi` (`Mathlib/Probability/ProductMeasure.lean`), `iIndepFun_infinitePi`
 (`Mathlib/Probability/Independence/InfinitePi.lean`), `PMF.bernoulli`, and
 `ProbabilityTheory.measure_limsup_eq_one` — the second Borel-Cantelli lemma
-(`Mathlib/Probability/BorelCantelli.lean`). The only content added here is the **assembly**: that
-these compose into a trial space whose events are independent with the right marginals. The
+(`Mathlib/Probability/BorelCantelli.lean`). ⚠ The assembly is **not** the contribution — see above. The
 companion fact that the argument works in exactly the Archimedean ordered fields is
 `archimedean_iff_survival_eventually_lt` (`ZeroParadox/Information/Surprisal.lean`), itself a
 formalization of a published characterization.
@@ -132,8 +157,12 @@ theorem trials_tsum_top (p : NNReal) (hp : p ≤ 1) (hp0 : 0 < p) :
   exact ENNReal.tsum_const_eq_top_of_ne_zero (by exact_mod_cast hp0.ne')
 
 /-- **`Statement:` THE PAYOFF — the crossing fires infinitely often with probability one.** Given a
-constant positive per-stage probability, `limsup` of the firing events has measure `1`; since
-firing infinitely often entails firing at some finite stage, the crossing almost surely occurs.
+constant positive per-stage probability, `limsup` of the firing events has measure `1` — the
+`limsup` being the set of realizations that fire infinitely often.
+
+⚠ **The further step "hence at some finite stage" is NOT part of this declaration.** Trivially true,
+but no finite stage appears in the statement, and an earlier draft carried that clause inside this
+`Statement:` gloss.
 
 `Reading:` (conjectural) the framework reads this as the precise content of the commitment that the
 snap fires: *if* the crossing carries a constant positive probability and the trials are

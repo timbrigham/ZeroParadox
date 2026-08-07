@@ -461,8 +461,12 @@ any failure of repetition.
 **⚠ THE INDEPENDENCE IS A COMMITMENT AND IT IS VISIBLE IN THE HYPOTHESES.** `hstep` says each trial
 multiplies the survival probability by the same `1 - p`; that is what independence-with-fixed-`p`
 buys, and it is **assumed here, never derived**. No product measure and no trial sequence is
-constructed — `q` is any real sequence satisfying the recurrence, and `iIndepFun` / `limsup` / `∀ᵐ`
-appear nowhere in this corpus as of `0fe165f`. Per this project's standing rule a commitment goes in a
+constructed here — `q` is any real sequence satisfying the recurrence.
+⚠ **That is a statement about THIS file only.** `ZeroParadox/Information/CrossingTrials.lean`
+(added later) does build the product measure and the trial sequence, and proves
+`crossing_almost_surely`: given a constant positive per-stage probability with independent trials,
+the crossing fires with probability one. It is a **consistency** result — it does not supply the
+probability, which is the open question this section names. Per this project's standing rule a commitment goes in a
 hypothesis so the signature cannot be misread.
 
 **Prior art, and the corpus under-searched itself twice before this was written.**
