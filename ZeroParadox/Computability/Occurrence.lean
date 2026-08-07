@@ -179,7 +179,7 @@ def LoopsInPlace (s : σ) : Prop := f s = some s
     encodes that modality as the **function-vs-relation choice**.
 
     ⚠ **But "nothing else" would be too strong, and an earlier version of this line said it.** § VI-c
-    exhibits a deterministic escape: a function with **no fixed point anywhere** whose observable
+    exhibits a deterministic case: a function with **no fixed point anywhere** whose observable
     projection never changes (`carry`). `LoopsInPlace` demands the state return to *itself*; add any
     accumulating component and there is no fixed point, so § III's results do not apply. Such a state
     is in the THIRD case at every step and still shows nothing forever. The trichotomy sorts states,
@@ -529,7 +529,7 @@ Items 1 and 2 are requirements on the carrier; 3 and 4 hold regardless. None of 
 that execution occurs — that remains the framework's commitment, and `l_inf`'s docstring is
 the honest statement of where the argument for it stops. -/
 
-/-! ## § VI-c. STUTTERING — a deterministic escape the function-vs-relation framing misses
+/-! ## § VI-c. STUTTERING — a deterministic case the function-vs-relation framing misses
 
 **Origin (Tim, 2026-08-06):** *"how the heck is it supposed to be deterministic if we can have
 values passed from one instance to the next with temporal offsets? any program's internal state
@@ -549,13 +549,20 @@ never halts, and yet shows the same thing forever.
 
 **Why this matters for occurrence.** § V defines `Occurs` as *"some step at which the observable
 state changes"* and proves it is halting. This section separates the two ideas that were running
-together: **the state moving** and **the observable changing**. A configuration can move forever and
+together: **the state moving** and **the observable changing**. ⚠ **The corpus already makes that
+separation and this section did not cite it:** DP-2 (`dp2_execution_distinguishability`,
+`ZeroParadox/Order/Snap.lean`) proves the pre- and post-instantiation configurations are
+value-*equal* and state-*distinct*. This is not a duplicate — DP-2 is one step on a two-phase type,
+§ VI-c is unbounded forward motion — but the pointer belongs here. A configuration can move forever and
 show nothing. So the occurrence question is not *"how does anything escape a fixed point"* — there
 need be no fixed point — but *"does the projection ever change"*, which is a question about a
 quotient, not a paradox about self-reference.
 
-**⚠ And this is a NO-GO, not a route to the snap.** Stuttering forever is still not departure: the
-observable is constant on the entire reachable set (`stutter_obs_const`). What it removes is an
+**⚠ And this is a NO-GO, not a route to the snap.** Stuttering forever is not departure **in § V's
+observable sense** — the observable is constant on the entire reachable set (`stutter_obs_const`).
+⚠ **Say which sense, because the corpus carries two.** Under DP-2's state-based reading, where
+instantiation moves the machine *regardless of the value returned*, `carry` is departing at every
+step. The two readings disagree about `carry`, and that disagreement is the content, not a defect. What it removes is an
 argument, not an obstacle — the inference *"deterministic, therefore trapped at a fixed point,
 therefore stationary"* is invalid, because the middle step can fail while the conclusion still holds
 for a different reason.
@@ -563,11 +570,15 @@ for a different reason.
 **Prior art — this is STUTTERING, and the standard name was already one citation away.** A step with
 no observable effect is a *stutter step*; the induced equivalence is *stutter equivalence*. Mathlib's
 own Turing development uses the word for exactly this (`Mathlib/Computability/TuringMachine/PostTuringMachine.lean`:
-*"a one step stutter before actually halting"*, read at source). The notion is standard in model
-checking and in Lamport's TLA, where stuttering-invariance is an axiom of the logic. ⚠ Baier &
-Katoen, *Principles of Model Checking* — already cited at § 0 of this file for the trap state — is
-where stutter equivalence is developed, but **that book is not in `.claude-local/papers/` and its
-content is not asserted here**; only the name is taken. Nothing in this section is claimed as new
+*"a one step stutter before actually halting"*, read at source). ⚠ **Everything beyond that Mathlib quote is cited for EXISTENCE
+only — no other source here was read.** The notion is standard in model checking and in Lamport's
+TLA; *stutter equivalence* is commonly attributed to Browne, Clarke & Grumberg, TCS **59** (1988),
+and stuttering-insensitivity of specifications to Lamport (IFIP 1983), with a textbook treatment in
+Baier & Katoen, *Principles of Model Checking* (already cited at § 0 of this file for the trap
+state). **None of those is in `.claude-local/papers/` and no claim is made about what any of them
+says.** ⚠ A draft of this paragraph asserted that stuttering-invariance is *an axiom* of TLA. That
+was written without reading Lamport, and axiom-versus-theorem is the one status distinction this
+project polices hardest (AX-1 → T-SNAP). The claim is withdrawn, not restated. Nothing in this section is claimed as new
 mathematics: the content is that the corpus's own trichotomy does not separate these cases.
 -/
 
@@ -603,7 +614,7 @@ theorem carry_stutters : Stutters carry Prod.fst := by
   simp only [carry, Option.some.injEq] at h
   rw [← h]
 
-/-- **`Statement:` the fourth case, in one statement.** At every state `carry` is in the
+/-- **`Statement:` stepping onward forever, showing nothing.** At every state `carry` is in the
 trichotomy's THIRD case — stepping onward to something genuinely different — and yet nothing
 reachable from it ever shows anything new. Deterministic, never halting, no fixed point, observably
 stationary.
