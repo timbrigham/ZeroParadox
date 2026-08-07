@@ -111,47 +111,79 @@ adjacent, not the lemma § VI applies. Several results in this file are already 
 duplicate Lean-core or Mathlib lemmas (see the header's prior-art block); that gate looked at `Option` and
 `PartrecCode`, **not** at `StateTransition`'s own API. Assume more overlap is there.
 
-**Consequence 3 — the obstruction results here are FORMALIZATION-RELATIVE, and the corpus already
-carries the other formalization.** Everything in § III and § VI is stated over a single-valued
-*step*: from `s`, is there a successor, and is it different from `s`? That question requires a first
-step. The corpus **also** formalizes floor-directed motion **asymptotically** — no step relation, no
-first step — in three places this file has never referenced:
+**Consequence 3 — floor-directed motion is ALSO formalized ASYMPTOTICALLY, elsewhere in this
+corpus.** § III's obstruction is stated over a single-valued *step*: from `s`, is there a successor,
+and is it different from `s`? The corpus also formalizes motion toward a floor with a **limit** rather
+than a successor — and until 2026-08-07 the two lines of work did not point at each other:
 
-* `ZeroParadox/Order/WellFoundedObstruct.lean` — `floor_reach_separates_mu_nu`, which puts both modes
-  under **one** predicate `ReachesFloorInFiniteTime`: the μ descent (`Nat.pred^[k]`) *reaches* the
-  floor in finite time, while the ν orbit (`2ⁿ·x` on `Q₂`, `x ≠ 0`) *converges to the floor as a limit
-  it never reaches* — `doubling_orbit_tendsto_zero`
-  (`ZeroParadox/Valuation/PadicAttractor.lean`) together with `padic_orbit_not_reaches_floor`.
+* `ZeroParadox/Order/WellFoundedObstruct.lean` — `floor_reach_separates_mu_nu` puts **both** modes
+  under one predicate `ReachesFloorInFiniteTime`: the **μ** descent (`Nat.pred^[k]`) *reaches* the
+  floor in finite time, while the **ν** orbit (`2ⁿ·x` on `Q₂`, `x ≠ 0`) *converges to the floor as a
+  limit it never reaches* — `doubling_orbit_tendsto_zero`
+  (`ZeroParadox/Valuation/PadicAttractor.lean`) with `padic_orbit_not_reaches_floor`.
 * `ZeroParadox/Valuation/BottomInvariant.lean` § IV — `omegaLim`, Mathlib's `omegaLimit`
   (`Mathlib/Dynamics/OmegaLimit.lean`) specialized to the ℕ-orbit, with `SameShapeFromAnywhere`.
-* `ZeroParadox/Valuation/InfinitudeFloor.lean` — the `member` / `cx` apparatus, whose
-  `member_tendsto_floor` is the approach as given data.
+* `ZeroParadox/Valuation/InfinitudeFloor.lean` — the `member` / `cx` apparatus. The approach itself
+  is `member_tendsto_floor`, a field of the **`InfinitudeFloorInversion`** extension (not of
+  `InfinitudeFloor`). ⚠ This file already cited that file for `pole_inversion` before the pointer was
+  written; only the two above were genuinely unreferenced.
 
-⚠ **State the relation precisely; none of this contradicts anything here.**
-`machine_snap_impossible` is about a single-valued step and remains true as stated. What the ν mode
-supplies is a **different formalization of the same informal question**, in which no first step is
-ever required — `floor_reach_separates_mu_nu` is the exhibited witness. **Neither formalization
-derives motion:** the step side derives an *obstruction*; the asymptotic side takes the trajectory as
-**given** (a class field, or a chosen map). That is a relocation of the assumption, not a resolution,
-and it is why § VI's non-determinism escape is not the only one worth recording.
+⚠ **Only the ν mode drops the first-step question — the μ mode does not.** `Nat.pred^[k]` is a step
+map and § III applies to it unchanged; `WellFoundedObstruct.lean`'s own overview says the μ side is
+*"not approached as a limit"*. What ν supplies is floor-directed motion in which no first step is
+required, because the trajectory is **given** rather than stepped.
 
-⚠ **And every one of them runs INWARD.** Surveyed across `ZeroParadox/**/*.lean` on 2026-08-07:
-each `Tendsto … atTop (nhds _)` converges to a floor, to `0`, or to an invariant law; the only thing
-that ascends is *complexity*, never the element. The one outward motion is
-`snap_frameflip_tower_tendsto_infty` (`ZeroParadox/Multihomed/SnapFrameChange.lean`).
+⚠ **Nothing here contradicts § III, and the two are NOT the same question.** `machine_snap_impossible`
+is about a single-valued step and stays true as stated. The ν orbit is provably never *at* the floor
+(`padic_orbit_not_reaches_floor`), so it formalizes **approach to** a floor — not **departure from**
+one, which is what § III's snap question asks. **Neither line derives motion:** the step side derives
+an obstruction, the asymptotic side takes the orbit as given. (Note also that § III's carrier claim is
+about § III itself — § VI's `nondeterministic_escapes_the_trap` is deliberately stated over a
+*relation*.)
+
+⚠ **DO NOT read any of this as "the corpus has no outward motion" — it has several, and an earlier
+draft of this block claimed otherwise on a MEASUREMENT THAT WAS WRONG WHEN TAKEN.** That draft
+surveyed `Tendsto … atTop (nhds _)` and concluded unscoped that only complexity ever ascends. In a
+normed field an ascending *element* is written `atTop atTop`, which that pattern cannot see — so the
+survey was structurally blind to divergence, and three independent gate agents caught it. The
+counterexamples sit one import away: `ZeroParadox/Valuation/PlaceMetric.lean` pairs
+`node3_contracts_2adic` (a re-export of `doubling_orbit_tendsto_zero`) with `doubling_expands_archimedean`
+(`Tendsto … atTop atTop`) as `doubling_place_dichotomy` — **the same rational orbit contracting in the
+2-adic place and diverging in the real one.** Also `inv_tower_norm_tendsto_atTop`
+(`ZeroParadox/Valuation/InvTowerNorm.lean`) and `snap_frameflip_tower_tendsto_infty`
+(`ZeroParadox/Multihomed/SnapFrameChange.lean`). `Reading:` **INVERSION** for all three (conjectural
+as a family): each ascent is the far side of a descent under a change of place or chart, never an
+independent departure. The `Statement:` form for the third is given just below.
+
+**What survives, and it needs no survey:** none of those is ⊥ departing — they are norm divergences
+and chart inversions of orbits that converge elsewhere. **That the snap fires is a commitment, not a
+consequence**, which the framework already states honestly at `l_inf`'s docstring
+(`ZeroParadox/Information/Surprisal.lean`). Nothing in this pointer changes that.
+
 `Statement:` **INVERSION** — `rInv` exchanges the floor `0` with `∞`, and the **same** tower encodings
 that converge to the floor in the encoding chart tend to `∞` through it; one sequence, two charts.
 `Reading:` **INVERSION** (conjectural) — that the *snap* is an instance of that exchange is ZP-Q's
-conjecture and is fenced as such in its own file: no snap transition appears in the statement, and the
+conjecture, fenced as such in its own file: no snap transition appears in the statement, and the
 tower-rank encoding is a **constructed** witness with valuation growth built into the rank.
-**So nothing in the corpus exhibits the bottom departing** — the one ascent is an inversion of a
-descent, not a second trajectory. Dated survey, not a universal negative — re-measure
-before relying on it.
 
-**Do NOT build a bridge declaration.** The two formalizations live over different carriers (`σ → Option σ`
-with no topology here; a topological space there), so a common theorem would be a type boundary, and an
-elementary instantiation is the Trigger-0 failure this file's own § 0 exists to prevent. The deliverable
-was this pointer. -/
+**PRIOR ART — both sides of this belong to established programs, and the framework joins them.**
+The ν mode is textbook **non-archimedean dynamics**: Benedetto, *Non-Archimedean Dynamics in Dimension
+One* (Arizona Winter School lecture notes, 2010), **Definition 4.1 p. 28** classifies a periodic point
+with multiplier `λ` as *attracting* when `|λ| < 1`, and **Proposition 4.3(a) p. 29** gives exactly the
+orbit convergence, its proof running `|φⁿ(z)| = |λ|ⁿ·|z| → 0` — which is `doubling_orbit_tendsto_zero`'s
+argument, since `|2|₂ = 1/2 < 1`. The combination of a step relation with a metric limit **over one
+carrier** is **infinitary rewriting**: Kahrs, *Infinitary Rewriting: Foundations Revisited*, RTA 2010
+(LIPIcs vol. 6, pp. 161-176), whose introduction (p. 1) states that infinitary rewriting *"deals with
+infinite terms, which are defined through the metric completion of finite terms through some metric"*
+and that the resulting term set *"can also be seen as a final co-algebra"*. Read from source; both are
+filed in the project's paper library.
+
+**So do NOT build a bridge declaration — but for the right reason.** An earlier draft called it a
+**type boundary**; that is too strong, and Kahrs is the counterexample: infinitary rewriting combines
+exactly these two ingredients over a single carrier. The honest statement is that **this file
+deliberately leaves `σ` untopologized**, so the two live over different carriers *here* — a scope
+choice, not an impossibility. Adding an elementary instantiation would still be the Trigger-0 failure
+§ 0 exists to prevent. The deliverable was this pointer. -/
 
 /-! ## § I. A machine is never "not yet started" -/
 
