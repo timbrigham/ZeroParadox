@@ -582,16 +582,28 @@ Kantrowitz & Neumann, *"Another face of the Archimedean property"*, The College 
 Archimedean property for ordered fields — `archimedean_iff_survival_eventually_lt` in different
 dress.
 
-⚠ **That capsule is paywalled and its BODY was not read; the bibliographic data is confirmed twice
-over, the content once and indirectly.** Confirmed at source: the reference lists of two other
-Kantrowitz-Neumann papers held in `.claude-local/papers/` — *Completeness of Ordered Fields and a
-Trio of Classical Series Tests* (Abstr. Appl. Anal. 2016, art. 6023273) and *Normed Algebras and the
-Geometric Series Test* (Surveys in Math. and its Appl. **12** (2017), 203-217, ref. [10]) — agree on
-title, venue, volume 46, year 2015, pages 139-141, MR3361762. For the **content**, the only source
-read is the 2016 paper's own description: *"An elementary example from the Classroom Capsule [6]
-exposes the equivalence of the geometric series test and the Archimedean property."* That the
-geometric-series form and the `(1-p)^n < e` form are interchangeable is an **inference from that
-sentence, not a quotation**, and it should not be sharpened without obtaining the capsule. The converse direction also appears in Propp, *Real Analysis in
+⚠ **The capsule is paywalled and its body was not read. Its CONTENT is nonetheless sourced — from
+the open-access 2016 sibling, read in full**, which both states the result and *uses it as a cited
+fact inside a proof*:
+* *"An elementary example from the Classroom Capsule [6] exposes the equivalence of the geometric
+  series test and the Archimedean property."*
+* *"Because F is Archimedean, we know from [6] that the geometric series ∑(1/2)ⁿ converges in F."*
+* and the scope: *"While the geometric series test is certainly not, on its own, strong enough to
+  guarantee completeness …"*
+
+So the capsule's content is **the geometric series test holds in an ordered field iff that field is
+Archimedean.** Bibliographic data is confirmed twice over — the reference lists of *Completeness of
+Ordered Fields and a Trio of Classical Series Tests* (Abstr. Appl. Anal. 2016, art. 6023273) and
+*Normed Algebras and the Geometric Series Test* (Surveys in Math. and its Appl. **12** (2017),
+203-217, ref. [10]), both in `.claude-local/papers/`, agree on volume 46, 2015, pp. 139-141,
+MR3361762.
+
+**The delta, stated exactly.** Theirs is the **series** form (∑ rⁿ converges for `0 < r < 1`); this
+file's is the **sequence** form (`rⁿ → 0`, with `r = 1 - p`). In an ordered field the two are linked
+by the geometric partial-sum identity — the partial sums are exactly `(1 - rⁿ)/(1 - r)` — which is
+field algebra rather than analysis. ⚠ **That link is NOT formalized here and is not claimed as
+proved**; what is claimed is that the two are the series and sequence versions of one
+characterization, and that the characterization is theirs. The converse direction also appears in Propp, *Real Analysis in
 Reverse*, Amer. Math. Monthly **120** (2013). **Honest delta: a Lean 4 formalization of a known 2015
 characterization, whose forward half is discharged by Mathlib** (`exists_pow_lt_of_lt_one`); the
 converse is not in the pin (Mathlib's `archimedean_iff_*` family is nat/int/rat unboundedness only).
