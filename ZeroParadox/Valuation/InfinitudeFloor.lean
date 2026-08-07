@@ -123,6 +123,72 @@ theorem infinitude_forces_infinite_complexity (α : Type*) [I : InfinitudeFloor 
   rw [I.cx_floor_eq_iSup]
   exact iSup_strictMono_top I.cx_member_strictMono
 
+/-! ### § VIII. NO-GO — the class is DEGENERATELY INHABITED, so membership alone carries no content
+
+**What this section establishes, and what it does NOT.** § I's `InfinitudeFloor` is a *requirements*
+class, and § IV/§ V/§ VII exhibit witnesses of increasing substance. This section asks the question
+those sections do not: **is the class satisfiable by a carrier with NO structure at all?** It is. So
+`[InfinitudeFloor α]` on its own says nothing about `α`, and every theorem quantified over the class
+— `infinitude_forces_infinite_complexity`, `member_cx_lt_top`, `floor_unique_at_top` — holds of a pure
+bookkeeping type as well as of `ℚ₂`.
+
+⚠ **This does NOT weaken the witnesses.** `q2InfinitudeFloor` (§ VII) remains substantive: there `cx`
+is the 2-adic valuation and `floor` is the framework's actual bottom, neither of which is chosen to
+make the fields hold. What the gauge shows is that **the substance lives in the WITNESS, never in the
+class membership** — which § IV's own header already says in prose (*"Substance is in the WITNESS"*)
+and which is now a theorem rather than a remark.
+
+**Precedent, and this is the same move.** `ZeroParadox/Algebra/Wheel.lean` § VII-b found
+`WheelValuationStructure` degenerately inhabited (a constant-`⊤` valuation satisfies every field on any
+carrier) and responded with an explicit `WVSNondegenerate` predicate, with the standing rule that any
+construction over that class must carry it as a hypothesis. **`InfinitudeFloor` has no such predicate.**
+Anything built over this class in future should either carry one or state that it does not need one.
+
+**Why the degeneracy is not surprising once seen:** every field constrains `cx` only along a chosen
+sequence and at a chosen point. Nothing ties `cx` to any structure `α` may have — in the witness below
+all three fields are discharged from **hand-chosen data**, never from a property of the carrier.
+
+⚠ **The general form is NOT proved here and is not claimed.** *"Any carrier admitting an injection
+`ℕ ↪ α` together with a point off its range can be equipped"* would require `cx` to be defined on all
+of `α`, which needs decidable equality or choice, and no such theorem is built. **One contentless
+witness is enough for the NO-GO** — it shows class membership alone is not informative — and that is
+all that is established below. -/
+
+/-- The bookkeeping carrier: `ℕ` with one extra point adjoined. No order, valuation, topology or
+algebra on it is used or needed — every `InfinitudeFloor` field below is discharged from data written
+down by hand, which is exactly what makes the resulting instance contentless. -/
+abbrev BookkeepingCarrier : Type := ℕ ⊕ Unit
+
+/-- **`Statement:` NO-GO — the requirements class is satisfied by a structureless carrier.**
+
+Deliberately a `def` and **not** an `instance`: registering it globally would put a junk
+`InfinitudeFloor` into instance search on a type that has no business carrying one, and the instance
+hazard is a recorded defect class in this project. Downstream uses pass it explicitly. -/
+@[reducible] def bookkeepingInfinitudeFloor : InfinitudeFloor BookkeepingCarrier where
+  floor := Sum.inr ()
+  cx := Sum.elim (fun n => (n : ℕ∞)) (fun _ => ⊤)
+  member := Sum.inl
+  member_ne_floor := fun _ => Sum.inl_ne_inr
+  cx_member_strictMono := by intro a b h; dsimp only [Sum.elim_inl]; exact_mod_cast h
+  cx_floor_eq_iSup := iSup_coe_top.symm
+
+/-- **`Statement:` the payload — § III's headline theorem holds of the bookkeeping carrier.**
+
+`infinitude_forces_infinite_complexity` is the file's central consequence. Instantiated here it says
+that a two-constructor bookkeeping type has a floor of infinite complexity — true, and empty. That is
+the honest measure of what the class alone delivers. -/
+theorem bookkeeping_forces_infinite_complexity :
+    bookkeepingInfinitudeFloor.cx bookkeepingInfinitudeFloor.floor = ⊤ :=
+  infinitude_forces_infinite_complexity (I := bookkeepingInfinitudeFloor) BookkeepingCarrier
+
+/-- **`Statement:` and the floor is not forced to be a limit of anything.** In the substantive
+witnesses the members *converge* to the floor (`InfinitudeFloorInversion`, § VI); here there is no
+topology in which that could even be stated, yet every `InfinitudeFloor` field is satisfied. So the
+approach-to-the-floor reading belongs to `InfinitudeFloorInversion`, never to `InfinitudeFloor`. -/
+theorem bookkeeping_members_ne_floor (n : ℕ) :
+    bookkeepingInfinitudeFloor.member n ≠ bookkeepingInfinitudeFloor.floor :=
+  bookkeepingInfinitudeFloor.member_ne_floor n
+
 end ZeroParadox
 
 /-! ### § III-b. The OFFSET structure — the floor is the only point at infinite distance
@@ -381,5 +447,8 @@ open ZeroParadox
 #print axioms floor_unique_at_top
 #print axioms pole_inversion
 #print axioms two_pow_valuation
+#print axioms bookkeepingInfinitudeFloor
+#print axioms bookkeeping_forces_infinite_complexity
+#print axioms bookkeeping_members_ne_floor
 
 end PurityCheck

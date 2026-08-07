@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1641,
+        "declarations": 1645,
         "files": 136
       },
       "entries": [
@@ -11489,6 +11489,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "2d82c6a8-c7f3-4d1a-81c5-c4ddc293c1f5",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bookkeeping_members_ne_floor",
+            "short": "bookkeeping_members_ne_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "NO-GO gauge: InfinitudeFloor is degenerately inhabited by a bookkeeping carrier",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "2d9cbd93-77ca-4099-96e0-970f4e998e8d",
           "new": {
@@ -17026,6 +17064,45 @@
         {
           "claims": {
             "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "45a122fe-1aa0-4945-866e-e48bb06de857",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bookkeeping_forces_infinite_complexity",
+            "short": "bookkeeping_forces_infinite_complexity"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "NO-GO gauge: InfinitudeFloor is degenerately inhabited by a bookkeeping carrier",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
             "witness_of": [
               "E4-info-floor"
             ]
@@ -22273,6 +22350,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "5ba17bf9-4c99-413e-b5a9-d2cef4aa7177",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.BookkeepingCarrier",
+            "short": "BookkeepingCarrier"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "NO-GO gauge: InfinitudeFloor is degenerately inhabited by a bookkeeping carrier",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "5bbeaacc-f7c4-40b5-950b-c75f2fedc5e0",
           "new": {
@@ -22658,6 +22773,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "5d89bb72-a631-419c-a83a-863a144d908b",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bookkeepingInfinitudeFloor",
+            "short": "bookkeepingInfinitudeFloor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order",
+              "information"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "NO-GO gauge: InfinitudeFloor is degenerately inhabited by a bookkeeping carrier",
           "verify": {
             "axioms": null,
             "sorry_free": true
