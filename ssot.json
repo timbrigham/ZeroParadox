@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1619,
+        "declarations": 1623,
         "files": 136
       },
       "entries": [
@@ -14161,6 +14161,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "393574e9-759d-478c-a996-16f0c8e126a9",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.archimedean_iff_survival_eventually_lt",
+            "short": "archimedean_iff_survival_eventually_lt"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "The headline: an ordered field is Archimedean iff the repeated-trials argument holds in it. Makes the carrier-dependence a biconditional on the typeclass rather than a reading.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "39468fa7-6bab-4623-a291-7423f7525afc",
           "new": {
@@ -23435,6 +23471,42 @@
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
           "verify": {
             "axioms": "propext",
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "640b9ef1-4939-4cd8-af29-f5401b21231e",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.infinitesimal_iff_archimedeanClass_pos",
+            "short": "infinitesimal_iff_archimedeanClass_pos"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "The infinitesimality hypothesis used above IS Mathlib's ArchimedeanClass notion, stated as a theorem so a wrong identification would fail to elaborate.",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -39397,6 +39469,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "ac59982c-fc5c-41ad-aa00-89449842a0a0",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.crossing_stays_infinitesimal",
+            "short": "crossing_stays_infinitesimal"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "NO-GO: an infinitesimal crossing probability never accumulates at any standard n. Infinitesimality is an explicit hypothesis, not a class field.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "ac6d8445-ecdc-4c41-b896-144b7f79d5d2",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -42872,6 +42980,42 @@
             ]
           },
           "reason": "New file QuineHost.lean — the Quine-Host requirements typeclass (AFA-requirements reframe, honesty thread)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "b90d10d4-8af7-419d-b1d1-ccd78f61978f",
+          "new": {
+            "file": "ZeroParadox/Information/Surprisal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.crossing_le_nsmul",
+            "short": "crossing_le_nsmul"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "The union bound for repeated crossings, from Mathlib's Bernoulli inequality. Stated over an arbitrary ordered ring.",
           "verify": {
             "axioms": null,
             "sorry_free": true

@@ -35,8 +35,8 @@ proposition is not well-formed.
 3. **The 2-adic realization is a loop through ⊥** (`tower_image_loops_to_seed`): under `cnfToZp2`
    the seed's image *and* the tower's norm-limit are both the *value* 0. So the ordinal ascent
    ⊥ → ε₀ realizes, through the map, as a `ℤ_[2]` path that departs 0 and whose norm returns to 0.
-   This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (adjacent, never the same), and
-   the finite stages are all ≠ 0 (next to the floor, never it); the returned-to ⊥ is a new instance.
+   This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (never the same; **not** order-adjacent — see
+   `epsilonZero_tower_lt`), and the finite stages are all ≠ 0 (next to the floor, never it); the returned-to ⊥ is a new instance.
 
 4. **The construction-level correspondence** (`mu_construction_correspondence`): ONE sequence
    `towerNONote : ℕ → NONote` (the μ-ascent seeded at the NONote bottom) has TWO type-specific
@@ -105,9 +105,9 @@ theorem seed_maps_to_bot_both :
 
 /-- **Loop through ⊥.** Under `cnfToZp2` the seed's image and the tower's norm-limit are both the
     *value* 0 in `ℤ_[2]`. So the ordinal ascent ⊥ → ε₀ realizes as a `ℤ_[2]` path departing 0 and
-    whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (ε₀ is the first
-    step off ⊥ — always adjacent, never the same), and the finite stages are all ≠ 0 (next to the
-    floor, never it). `ε₀ = 0` stays ill-typed (`cnf_bridge_type_boundary`). -/
+    whose norm returns to 0. This is a value coincidence at 0, NOT an identity: ⊥ is never ε₀ (ε₀ is the least fixed
+    point of `α ↦ ω^α`, never the same as ⊥ — and **not** order-adjacent to it, see
+    `epsilonZero_tower_lt`), and the finite stages are all ≠ 0 (next to the floor, never it). `ε₀ = 0` stays ill-typed (`cnf_bridge_type_boundary`). -/
 theorem tower_image_loops_to_seed :
     cnfToZp2 (towerNONote 0) = 0 ∧
     Filter.Tendsto (fun n => cnfToZp2 (towerNONote n)) Filter.atTop
@@ -164,7 +164,8 @@ theorem cnf_bridge_type_boundary :
        (`tower_converges_to_zero`).
 
     The loop closes because the tower's 2-adic **norm** reapproaches 0, landing back on the floor — NOT
-    because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the first step off ⊥), always adjacent, never identical, and
+    because ⊥ and ε₀ are one point: **⊥ is never ε₀** (ε₀ is the least fixed point of `α ↦ ω^α`), never identical — and **not** order-adjacent, see
+    `epsilonZero_tower_lt` — and
     the finite stages never even reach 0 (always next to, never the same). Honest fence: this is the
     `ℤ_[2]` realization *via the map*, NOT a proof of `ε₀ = 0`, which stays ill-typed
     (`cnf_bridge_type_boundary`, MC-1 / ZP-P). -/

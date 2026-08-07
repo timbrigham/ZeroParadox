@@ -4,6 +4,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Real.Archimedean
 import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Algebra.Order.Ring.Archimedean
 import Mathlib.Tactic
 
 /-!
@@ -467,8 +468,10 @@ hypothesis so the signature cannot be misread.
 **Prior art, and the corpus under-searched itself twice before this was written.**
 * Mathlib already has the object: `ProbabilityTheory.geometricPMFReal p n = (1 - p) ^ n * p`
   (`Mathlib/Probability/Distributions/Geometric.lean`), of which `q n = (1 - p) ^ n` is the standard
-  **survival function** — the in-field name, which a first draft did not use. `geometricPMFReal_pos`
-  carries the same hypotheses as `survival_pos`.
+  **survival function** — the in-field name, which a first draft did not use. ⚠ `geometricPMFReal_pos` does **not** carry the same
+  hypotheses as `survival_pos`: Mathlib's takes `0 < p` **and** `p < 1`, ours takes only
+  `p < 1`, because `(1-p)^n` needs no positivity where `(1-p)^n * p` does. Ours is the
+  weaker-hypothesis one.
 * The limit is Mathlib's `tendsto_pow_atTop_nhds_zero_of_lt_one`, cited not re-proved. ⚠ The nearest
   corpus work is `ZeroParadox/Valuation/ContractionRate.lean`, which uses the **biconditional**
   `tendsto_pow_atTop_nhds_zero_iff_norm_lt_one` — stronger than the implication used here, and the
@@ -490,8 +493,9 @@ the collapse `CLAUDE.md` names as bedrock — min≡max is direction-specific an
 to one face. -/
 
 /-- **`Statement:` the survival recurrence closes to a power.** `q n` is the probability of NOT having
-crossed after `n` trials. -/
-theorem survival_eq_pow {p : ℝ} (q : ℕ → ℝ)
+crossed after `n` trials. Stated over an arbitrary `CommRing` because the argument is pure
+algebra — the ordered and topological hypotheses below are what actually cost something. -/
+theorem survival_eq_pow {F : Type*} [CommRing F] {p : F} (q : ℕ → F)
     (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) (n : ℕ) :
     q n = (1 - p) ^ n := by
   induction n with
@@ -528,7 +532,144 @@ theorem crossing_prob_lt_one_tendsto_one {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (
   have h := survival_tendsto_zero hp0 (le_of_lt hp1) q hq0 hstep
   simpa using (tendsto_const_nhds (x := (1:ℝ)) (f := Filter.atTop)).sub h
 
+/-! ### § The Archimedean fence — repetition works in exactly the Archimedean carriers
+
+**Origin (Tim, 2026-08-06):** asked what an *"infinitely slim but non-zero"* crossing probability
+would do. In ℝ there is no such number — for any `p > 0` there is `p/2` — so the question is really
+about which carrier the argument lives in.
+
+`Statement:` **CARRIER kind** — `archimedean_iff_survival_eventually_lt` below proves the
+carrier-dependence outright: the repeated-trials argument holds in an ordered field **if and only if
+that field is Archimedean**. Not a reading about ℝ; a biconditional on the typeclass.
+
+**What that buys.** An infinitesimal crossing probability never accumulates
+(`crossing_stays_infinitesimal`): at every standard `n` the accumulated crossing probability is still
+infinitesimal, so no number of pulls makes headway. The slot machine does not merely become unlikely
+— its engine is gone.
+
+⚠ **FENCE 1 — `n` ranges over STANDARD `ℕ`.** The result says nothing about infinite hypernatural
+indices; this is an **external** statement and the internal one is different and unproved. This is
+the likeliest way to misquote the theorem.
+
+⚠ **FENCE 2 — the Archimedean property is NOT the only obstruction, and stating it alone would
+mislead.** `PMF` and `MeasureTheory.Measure` are `ℝ≥0∞`-valued, so
+`ProbabilityTheory.measure_limsup_eq_one` (second Borel-Cantelli) does not even typecheck over a
+non-Archimedean `F`. Two independent blockers, not one.
+
+⚠ **FENCE 3 — THIS DOES NOT CONTRADICT `ZeroParadox/Reals/OrderedField.lean`; the two claims are
+about different objects.** That file states in bold — after a five-round bedrock correction — that
+the **snap**'s impossibility in an ordered field is due to **density, NOT** the Archimedean property
+(ℝ(t) is a non-Archimedean ordered field where the snap still fails, and `f_snap_impossible` carries
+no Archimedean hypothesis). Both are true: the *snap* is blocked in **every** ordered field; the
+*repeated-trials argument* works in **exactly** the Archimedean ones.
+
+⚠ **FENCE 4 — infinitesimality does not imply non-zero.** `ArchimedeanClass.mk 0 = ⊤ > 0`, and
+`∀ k, k • p < 1` holds at `p = 0`, so `0 < p` remains a separate necessary hypothesis wherever it is
+wanted.
+
+⚠ **FENCE 5 — the p-adic route is a DIFFERENT non-Archimedean-ness and is not this one.** Khrennikov's
+ℚ_p-valued probability (survey: `.claude-local/papers/dragovich_padic_physics_2009_0904.4205.pdf`
+§ 10, "Q_p-valued Probability") replaces the **topology** of frequency stabilisation, not the
+**order**. `ℚ_[p]` is not an ordered field and its absolute value is real-valued with an Archimedean
+value group, so "infinitely slim but non-zero" is not expressible there at all. Entry points if it is
+ever pursued: `MeasureTheory.AddContent` (arbitrary `AddCommMonoid`) and
+`MeasureTheory.VectorMeasure`; `PMF` / `Measure` / `Kernel` are hard-wired to `ℝ≥0∞`.
+
+**Prior art.** Bernoulli's inequality is Mathlib's `one_add_mul_le_pow`
+(`Mathlib/Algebra/Order/Ring/Pow.lean`), cited not re-proved; `1 - (1-p)^n ≤ n·p` is the **union
+bound** (Boole). The ordered-infinitesimal reading of probability is Benci–Horsten–Wenmackers,
+*Non-Archimedean Probability*, Milan J. Math. 81 (2013) — where only `∅` gets probability zero — and
+Nelson, *Radically Elementary Probability Theory* (1987). Non-vacuity of the infinitesimal hypothesis
+is by **citation, not import**: `Hyperreal.epsilon_pos` and `Hyperreal.archimedeanClassMk_epsilon_pos`.
+⚠ `Hyperreal`'s classical NSA layer (`Infinitesimal`, `IsSt`, `st`) is deprecated since 2026-01-05 in
+favour of `ArchimedeanClass`; design against the latter. -/
+
+/-- **`Statement:` the union bound.** After `n` trials the accumulated crossing probability is at most
+`n • p`. Bernoulli's inequality in survival dress.
+
+⚠ No `0 ≤ p` hypothesis: Bernoulli needs only `-2 ≤ -p`, and an unearned hypothesis is a defect this
+file has already been caught on once (see `exists_spread_pmf` above). -/
+theorem crossing_le_nsmul {F : Type*} [CommRing F] [LinearOrder F] [IsStrictOrderedRing F]
+    {p : F} (hp1 : p ≤ 1) (q : ℕ → F)
+    (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) (n : ℕ) :
+    1 - q n ≤ n • p := by
+  rw [survival_eq_pow q hq0 hstep n, nsmul_eq_mul]
+  have hb := one_add_mul_le_pow (a := -p) (by linarith) n
+  have hre : (1 : F) + -p = 1 - p := by ring
+  rw [hre] at hb
+  linarith
+
+/-- **`Statement:` an INFINITESIMAL crossing probability never accumulates.** If no finite multiple of
+`p` reaches `1`, then no finite multiple of the accumulated crossing probability does either — at
+every standard `n`. The infinitesimality is an explicit **hypothesis** (`hinf`), visible on the
+signature, never bundled into a definition or a class field. -/
+theorem crossing_stays_infinitesimal {F : Type*} [CommRing F] [LinearOrder F]
+    [IsStrictOrderedRing F] {p : F} (hp1 : p ≤ 1)
+    (hinf : ∀ k : ℕ, k • p < 1)
+    (q : ℕ → F) (hq0 : q 0 = 1) (hstep : ∀ n, q (n + 1) = (1 - p) * q n) (n : ℕ) :
+    ∀ m : ℕ, m • (1 - q n) < 1 := by
+  intro m
+  have h1 : 1 - q n ≤ n • p := crossing_le_nsmul hp1 q hq0 hstep n
+  have hk := hinf (m * n)
+  simp only [nsmul_eq_mul, Nat.cast_mul] at *
+  have hm : (0 : F) ≤ (m : F) := Nat.cast_nonneg m
+  calc (m : F) * (1 - q n) ≤ (m : F) * ((n : F) * p) := mul_le_mul_of_nonneg_left h1 hm
+    _ = (m : F) * (n : F) * p := by ring
+    _ < 1 := hk
+
+/-- **`Statement:` the hypothesis used above IS Mathlib's notion of infinitesimal.** Not an invented
+predicate: `∀ k, k • |p| < 1` is `0 < ArchimedeanClass.mk p`
+(`Mathlib/Algebra/Order/Archimedean/Class.lean`, via `mk_one`). Stated as a theorem rather than
+asserted in prose, so that a wrong identification would fail to elaborate. -/
+theorem infinitesimal_iff_archimedeanClass_pos {F : Type*} [CommRing F] [LinearOrder F]
+    [IsStrictOrderedRing F] {p : F} :
+    (∀ k : ℕ, k • |p| < 1) ↔ 0 < ArchimedeanClass.mk p := by
+  rw [← ArchimedeanClass.mk_one, ArchimedeanClass.mk_lt_mk]
+  simp
+
+/-- **`Statement:` THE REPEATED-TRIALS ARGUMENT IS THE ARCHIMEDEAN PROPERTY.** An ordered field is
+Archimedean **if and only if** every crossing probability strictly between `0` and `1` eventually
+drives the survival probability below any positive bound. The dependency is not described here — it
+is the biconditional.
+
+⚠ Stated in the order-theoretic `∀ e > 0, ∃ N, ∀ n ≥ N` form rather than with `Filter.Tendsto`
+deliberately: a bare ordered field carries no topology, so no `Tendsto` statement is available at
+this generality. This is the honest analogue, not an oversight.
+
+`Reading:` (conjectural) the framework reads this as why an infinitely-slim-but-non-zero crossing
+chance cannot be rescued by repetition — the engine that converts a positive chance into eventual
+certainty is exactly the property such a chance denies. -/
+theorem archimedean_iff_survival_eventually_lt {F : Type*} [Field F] [LinearOrder F]
+    [IsStrictOrderedRing F] :
+    Archimedean F ↔
+      ∀ p : F, 0 < p → p < 1 → ∀ e : F, 0 < e → ∃ N : ℕ, ∀ n ≥ N, (1 - p) ^ n < e := by
+  constructor
+  · intro _ p hp0 hp1 e he
+    obtain ⟨N, hN⟩ := exists_pow_lt_of_lt_one he (show (1:F) - p < 1 by linarith)
+    exact ⟨N, fun n hn => lt_of_le_of_lt
+      (pow_le_pow_of_le_one (by linarith) (by linarith) hn) hN⟩
+  · intro H
+    rw [archimedean_iff_nat_lt]
+    intro x
+    rcases le_or_gt x 1 with hx | hx
+    · exact ⟨2, by push_cast; linarith⟩
+    · have hx0 : (0:F) < x := lt_trans zero_lt_one hx
+      set p : F := x⁻¹ with hp
+      have hp0 : 0 < p := inv_pos.mpr hx0
+      have hp1 : p < 1 := by rw [hp]; exact inv_lt_one_of_one_lt₀ hx
+      obtain ⟨N, hN⟩ := H p hp0 hp1 (1/2) (by norm_num)
+      have hpow := hN N le_rfl
+      have hb := one_add_mul_le_pow (a := -p) (by linarith) N
+      have hre : (1 : F) + -p = 1 - p := by ring
+      rw [hre] at hb
+      have hhalf : (1:F)/2 < (N : F) * p := by nlinarith
+      refine ⟨2 * N, ?_⟩
+      rw [hp, ← div_eq_mul_inv, lt_div_iff₀ hx0] at hhalf
+      push_cast
+      linarith
+
 end ZeroParadox
+
 
 /-! ## Axiom Purity Check -/
 
@@ -562,5 +703,9 @@ open ZeroParadox
 #print axioms survival_pos
 #print axioms survival_tendsto_zero
 #print axioms crossing_prob_lt_one_tendsto_one
+#print axioms crossing_le_nsmul
+#print axioms crossing_stays_infinitesimal
+#print axioms infinitesimal_iff_archimedeanClass_pos
+#print axioms archimedean_iff_survival_eventually_lt
 
 end PurityCheck

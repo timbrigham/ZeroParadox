@@ -32,6 +32,12 @@ It is *simultaneously* the least fixed point (min) and the supremum of the ascen
 (`epsilon0_min_eq_max`); which face is in play is direction- and instance-specific — the two are never
 to be collapsed into one. In the framework's Riemann-sphere reading it is the minimum step directly
 next to the pole 0 = ∞ (Veblen coordinates (1, 0); the reciprocal 1/∞), *adjacent to it, never it*.
+⚠ **"First"/"minimum" here means LEAST AMONG THE FIXED POINTS of `α ↦ ω^α`, never order-adjacent
+to ⊥.** The corpus's own `epsilonZero_tower_lt` (`ZeroParadox/Ordinal/Gentzen.lean`) exhibits
+infinitely many ordinals strictly between ⊥ and ε₀, so no adjacency claim is available on this
+carrier; applied to `Ordinal`, `HasFirstStep` is witnessed by `1` (`0 ⋖ 1`), not by ε₀. The *never
+it* half IS backed — `epsilon0_ne_zero`,
+`epsilon0_ne_bot`; only the adjacency half is a reading, and it is labelled as one above.
 
 **The bedrock invariant, stated first because every past error violated it: ε₀ ≠ 0. It cannot be.**
 ε₀ is a fixed point (`ω^ε₀ = ε₀`); were it 0 that would say `1 = 0`. Since `⊥ = 0`, also `ε₀ ≠ ⊥`:

@@ -8,8 +8,17 @@ set_option maxHeartbeats 400000
 Experiment G1 (T6 compute-the-invariant), independent of the MC-1 arc. ε₀ is where the ω-tower closes —
 its **minimal** closure. **Do not call it a "ceiling" or "a large ordinal"** (an earlier revision of this
 line said "the snap ceiling"): positionally ε₀ is the FIRST — `Ordinal.epsilon 0`, index zero in the
-epsilon enumeration, Veblen coordinates (1,0), the minimum step next to the pole — and that is exactly what
-`epsilon0_least_fixedpoint` below proves. Its magnitude as a tower supremum is large; its position is
+epsilon enumeration, Veblen coordinates (1,0), the **least fixed point** of `α ↦ ω^α` — and that
+is exactly what `epsilon0_least_fixedpoint` below proves.
+
+⚠ **"First"/"minimum" here means LEAST AMONG THE FIXED POINTS of `α ↦ ω^α`, never order-adjacent
+to ⊥.** The corpus's own `epsilonZero_tower_lt` (`ZeroParadox/Ordinal/Gentzen.lean`) exhibits
+infinitely many ordinals strictly between ⊥ and ε₀, so no adjacency claim is available on this
+carrier; applied to `Ordinal`, `HasFirstStep` is witnessed by `1` (`0 ⋖ 1`), not by ε₀.
+An earlier revision of this line read "the minimum step next to the pole" and credited this theorem
+with proving it. It proves `IsLeast {o | ω^o = o} ε₀` — minimality **within the fixed-point set**,
+which is a set this framework defines. Nothing here is about steps or adjacency.
+ Its magnitude as a tower supremum is large; its position is
 first. Both faces are live (`epsilon0_min_eq_max`), and collapsing to the magnitude face is the recorded
 error this line used to commit. Being a position, it carries no units. Falsifiable prediction: ε₀ is not just *a* fixed point of `α ↦ ω^α` but the **least** one —
 the snap is located at the *minimal* ordinal closed under exponentiation, not at some larger Veblen point.

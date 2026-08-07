@@ -283,8 +283,14 @@ class InfinitudeFloorInversion (α : Type*) [TopologicalSpace α] extends Infini
 
 /-- **All four in one shape.** Along the infinitude the element descends to the 0-pole (`member → floor`)
 while the complexity ascends to the ∞-pole (`cx∘member → ⊤`) — both poles, concurrently at the floor
-(`cx floor = ⊤`) and one after the other along the chain (the `z ↦ 1/z` chart flip). One typeclass holds the
-zero pole, the infinity pole, their coincidence, and their inversion. -/
+(`cx floor = ⊤`) and one after the other along the chain (the `z ↦ 1/z` chart flip). One **typeclass**
+holds the zero pole, the infinity pole, their coincidence, and their inversion.
+
+⚠ **This THEOREM holds only the DRIFT.** Its conclusion is the two `Tendsto` conjuncts and contains
+no `cx floor = ⊤`; the coincidence is carried by the *class*, and its witness is the separate
+declaration `infinitude_forces_infinite_complexity`. Do not cite this theorem for the coincidence.
+(`CLAUDE.md` named it the coincidence witness until 2026-08-06, contradicting its own KIND table,
+which had it under DRIFT all along. The table was right.) -/
 theorem pole_inversion (α : Type*) [TopologicalSpace α] [I : InfinitudeFloorInversion α] :
     Tendsto I.member atTop (nhds I.floor) ∧
       Tendsto (fun n => I.cx (I.member n)) atTop (nhds (⊤ : ℕ∞)) := by

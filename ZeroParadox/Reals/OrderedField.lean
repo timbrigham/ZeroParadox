@@ -197,6 +197,18 @@ in any ordered field halving is available, so between 0 and any positive x there
 something smaller — there is no "first step" from zero. Neither theorem below has an
 Archimedean hypothesis, and none is needed.
 
+⚠ **A DIFFERENT result DOES turn on the Archimedean property, and the two must not be conflated.**
+`archimedean_iff_survival_eventually_lt` (`ZeroParadox/Information/Surprisal.lean`) proves that the
+**repeated-trials / eventual-certainty** argument holds in an ordered field *if and only if* that
+field is Archimedean. That is a claim about a **probability accumulating over trials**, not about the
+order admitting a first step. Both are true and they are about different objects:
+
+* the **snap** is blocked in **every** ordered field, Archimedean or not — density does it
+  (`f_snap_impossible` below; ℝ(t) is a non-Archimedean ordered field where the snap still fails);
+* the **repeated-trials argument** works in **exactly** the Archimedean ordered fields.
+
+Do not read the second as reinstating the claim this note struck.
+
 *(Corrected 2026-08-01. This section was headed "Archimedean Fields and the Snap" and said
 "the underlying reason is the Archimedean property". That is false: a non-Archimedean ordered
 field such as ℝ(t) is still **dense**, so the snap is blocked there too. Being Archimedean is
