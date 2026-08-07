@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1632,
+        "declarations": 1641,
         "files": 136
       },
       "entries": [
@@ -7173,6 +7173,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "19b4ab9a-48ff-46ba-868a-4660ed029290",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_iIndepSet",
+            "short": "fires_iIndepSet"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "bridge"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "19b824cc-91eb-40d2-b52f-d9c9ed0e6c8a",
           "new": {
@@ -13114,6 +13150,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "33c48785-29ae-47cb-a68c-fa9aaf77b8c3",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_comap",
+            "short": "fires_comap"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "33f49f22-d134-46ab-a3a4-8f090fc64ffb",
           "new": {
             "file": "ZeroParadox/Computability/ComputableCrossing.lean",
@@ -15783,6 +15855,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "40cf6a6a-1f74-4d32-ad36-c40fb8859da4",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_fires",
+            "short": "trials_fires"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20592,6 +20700,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "55df1a63-6129-4019-9535-e35fb614a61e",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires_measurable",
+            "short": "fires_measurable"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -35451,6 +35595,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "980f1d4f-7268-47b7-b544-018111165031",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials",
+            "short": "trials"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "981181f3-1c92-4b84-aa54-dd63850d7f6e",
           "new": {
@@ -36791,6 +36971,42 @@
             "role": []
           },
           "reason": "SnapNucleusConstructive: machine-checked IMPOSSIBILITY - no idempotent endomap of ONote has epsilon-number closed points; obstruction is expressive reach (the carrier cannot name the closure), NOT choice",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "9d10da8d-ffbf-44a5-ad96-aa8f31065c18",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.fires",
+            "short": "fires"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -45123,6 +45339,42 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "c315b152-8557-4074-9170-399ff676202d",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.crossing_almost_surely",
+            "short": "crossing_almost_surely"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "c3276ea4-a4cc-4990-a0f4-fe457b83975e",
           "new": {
             "file": "ZeroParadox/Settheory/QuineHost.lean",
@@ -46568,6 +46820,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c9067bb0-f1b0-4065-9a87-88310889c751",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trials_tsum_top",
+            "short": "trials_tsum_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -59077,6 +59365,42 @@
             ]
           },
           "reason": "New experimental probe RequirementsGap.lean — instance-vs-requirements gap as a fork instance (object-level of Tim's conjecture)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fbecaedb-6ceb-46d4-8eb5-08f4360e1747",
+          "new": {
+            "file": "ZeroParadox/Information/CrossingTrials.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.coords_iIndep",
+            "short": "coords_iIndep"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "information"
+            ],
+            "object": [],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "New file: the Bernoulli trial space assembled from Mathlib's infinitePi, iIndepFun_infinitePi and second Borel-Cantelli. A consistency result — if the crossing carries a constant positive probability with independent trials, it fires almost surely. Explicitly NOT a necessity result and not an instance-of claim about the framework's bottom.",
           "verify": {
             "axioms": null,
             "sorry_free": true
