@@ -373,12 +373,18 @@ noncomputable instance : InfinitudeFloorInversion Q₂ :=
 /-! ### § VIII. NO-GO — what the requirements class does and does not pin down
 
 **The sharp form, and it is a CHARACTERISATION rather than a bare negative.** `[InfinitudeFloor α]`
-does constrain `α`: `member_injective` (§ III) supplies `ℕ ↪ α`, so **the class forces `α` to be
+does constrain `α`: `member_injective` (§ III-b) supplies `ℕ ↪ α`, so **the class forces `α` to be
 INFINITE** and no finite type can carry it. What it does **not** do is constrain `α` any further — the
 fields are satisfiable on a carrier whose only relevant property is that infinitude, with every field
 discharged from hand-written data. The honest statement is therefore:
 
-> **the class implies exactly that `α` is infinite, and adds no discriminating power beyond that.**
+> **`Nonempty (InfinitudeFloor α) ↔ Infinite α`** — the class pins down infinitude and nothing else.
+
+That biconditional is `infinitudeFloor_nonempty_iff_infinite` below, so "nothing else" is proved
+rather than inferred from one witness. ⚠ An earlier draft asserted the "exactly / nothing beyond"
+reading while offering only a single hand-built carrier for the converse, and in the same edit deleted
+the fence that had said the general form was not proved. Both gates caught it; the answer was to prove
+it.
 
 ⚠ **An earlier draft said `[InfinitudeFloor α]` "says nothing about `α`" and that membership "carries
 no content". BOTH ARE FALSE**, refuted by `member_injective` in this same file, and caught by two
@@ -390,8 +396,9 @@ legitimate results — the retired form was reproduced here while citing the cor
 is canonically equivalent to `ℕ∞` (`Equiv.optionEquivSumPUnit`, since `ℕ∞ = WithTop ℕ = Option ℕ`), and
 the `cx` below is that equivalence's inverse — § IV's `cx = id` in other clothing. **The delta of this
 section is the STATEMENT of the no-go, not the carrier.** § IV already calls its own witness
-degenerate. What is new, and true as measured: **no corpus file states the no-go for
-`InfinitudeFloor`, and the class has no non-degeneracy predicate.**
+degenerate. What is new, and true as measured **on 2026-08-07, across the eight other files using the class**:
+**no corpus file states the no-go for `InfinitudeFloor`, and the class has no non-degeneracy
+predicate.**
 
 **Precedent.** `ZeroParadox/Algebra/Wheel.lean` § VII-b found `WheelValuationStructure` degenerately
 inhabited — a constant-`⊤` valuation satisfies every field on any **commutative ring** (that class
@@ -402,18 +409,26 @@ plus the standing rule that constructions over it carry that predicate as a hypo
 
 **Prior art — the shape is standard and the framework joins it rather than inventing it.** Degenerate
 models of an axiom set, and non-degeneracy stated as an **inequation**, are ordinary universal
-algebra: Burris & Sankappanavar, *A Course in Universal Algebra*, defines an algebra as *"trivial if
-|A| = 1"* (§ II.1, read from source). That inequational shape is what `WVSNondegenerate`, `0 ≠ 1` and
-Mathlib's **`Nontrivial`** all take, and `Nontrivial` / `Valuation.IsNontrivial` — the latter already
-named in `Wheel.lean` — are the library idioms to reach for if a predicate is ever added here.
+algebra. Burris & Sankappanavar, *A Course in Universal Algebra* (all three read from the filed copy):
+an algebra is *"trivial if |A| = 1"* (§ II.1, p. 26); *"as trivial algebras satisfy any
+quasi-identity"* (p. 250); and — the load-bearing one — *"As a trivial algebra cannot satisfy a
+negated atomic formula, exactly one of Ψ₁, …, Ψₖ is atomic"* (p. 251). **That last is WHY a
+non-degeneracy condition has to be stated as an inequality**: a trivial model satisfies every positive
+axiom, so only a negated atom excludes it. It is the shape `WVSNondegenerate`, `0 ≠ 1` and Mathlib's
+**`Nontrivial`** all take; `Nontrivial` / `Valuation.IsNontrivial` (the latter already named in
+`Wheel.lean`) are the idioms to reach for if a predicate is ever added here.
 
-⚠ **Citation scope, deliberately narrow.** A review pass reported two further passages of that book
-(on quasi-identities and on negated atomic formulas) as supplying the *reason* the remedy must be an
-inequality. **Those were not reproducible from the filed copy's text layer, so they are not asserted
-here** — the extraction is lossy, which is evidence about the extraction and not about the book. Only
-the definition above is claimed. ⚠ And this is **not** an instance-of relation either way:
-`InfinitudeFloor` degenerates in its **chosen data**, not in its **carrier**. Shared shape, nothing
-more.
+⚠ **A prior draft of this paragraph asserted those two passages were "not reproducible from the filed
+copy's text layer" and cited only the definition.** That was false, and it was a **truncated search
+recorded as an absence** — the sentences wrap across lines and a tight pattern with a result limit
+missed them, while the book's own index reads *"Quasi-identity 250"*. Two gates re-extracted them
+independently; both have since been re-verified here. **This is `CLAUDE.md` § *NOT IN THE LIBRARY IS
+A CLAIM* failing in the direction it warns about, inside a docstring, one edit after the rule was
+invoked.** Recorded rather than quietly repaired, because the narrowed citation had also stopped
+supporting the sentence it anchors.
+
+⚠ This is **not** an instance-of relation either way: `InfinitudeFloor` degenerates in its **chosen
+data**, not in its **carrier**. Shared shape, nothing more.
 
 ⚠ **The degeneracy is NOT confined to `InfinitudeFloor`, and an earlier draft asserted a fence here
 that does not exist.** That draft claimed the members' convergence to the floor "could not even be
@@ -422,15 +437,16 @@ gate probe during review reported a full `InfinitudeFloorInversion` witness on t
 indiscrete topology, with § VI's `pole_inversion` going through. **That extension is NOT built here** —
 it is recorded so no reader infers a protection that was never established. -/
 
-/-- **`Statement:` the class DOES constrain its carrier — it forces infinitude.** Immediate from
-`member_injective`, and the reason the "says nothing about `α`" reading is false. -/
+/-- **`Statement:` the class DOES constrain its carrier — it forces infinitude.** `member_injective`
+(§ III-b) gives `ℕ ↪ α`; the conclusion is Mathlib's `Infinite.of_injective` applied to it. This is
+the reason the "says nothing about `α`" reading is false. -/
 theorem infinitudeFloor_forces_infinite {α : Type*} [I : InfinitudeFloor α] : Infinite α :=
   Infinite.of_injective I.member member_injective
 
-/-- **`Statement:` so no finite type carries the class** — the sharpest positive consequence of
-membership, and the exact limit of what membership delivers. -/
-theorem no_infinitudeFloor_on_punit : IsEmpty (InfinitudeFloor PUnit) :=
-  ⟨fun I => by haveI := @infinitudeFloor_forces_infinite PUnit I; exact not_finite PUnit⟩
+/-- **`Statement:` so NO FINITE TYPE carries the class** — stated for every finite carrier, not just
+`PUnit`. An earlier version proved only the `PUnit` case while its gloss claimed the general one. -/
+theorem no_infinitudeFloor_of_finite (α : Type*) [Finite α] : IsEmpty (InfinitudeFloor α) :=
+  ⟨fun I => by haveI := @infinitudeFloor_forces_infinite α I; exact not_finite α⟩
 
 /-- The bookkeeping carrier: `ℕ` with one extra point adjoined. ⚠ Canonically equivalent to `ℕ∞` — see
 the section header; it is § IV's witness transported, chosen because every `InfinitudeFloor` field
@@ -452,6 +468,47 @@ Deliberately a `def` and **not** an `instance`: registering it globally would pu
 /-- **`Statement:` the no-go, as a theorem rather than a definition.** -/
 theorem bookkeeping_nonempty : Nonempty (InfinitudeFloor BookkeepingCarrier) :=
   ⟨bookkeepingInfinitudeFloor⟩
+
+/-- **The converse construction:** every infinite carrier admits an `InfinitudeFloor`. The floor is
+`e 0` and the members are `e (n+1)` for an embedding `e : ℕ ↪ α`; `cx` sends the floor to `⊤` and each
+other point to its index. Noncomputable and classical — `cx` must be defined on ALL of `α`, which is
+exactly the obstruction an earlier draft named when it declined to claim this. -/
+@[reducible] noncomputable def infinitudeFloorOfInfinite (α : Type*) [Infinite α] :
+    InfinitudeFloor α :=
+  letI := Classical.decEq α
+  let e := Infinite.natEmbedding α
+  have hinv : ∀ k : ℕ, Function.invFun e (e k) = k := Function.leftInverse_invFun e.injective
+  have hne : ∀ k : ℕ, e (k + 1) ≠ e 0 := fun k h => by have := e.injective h; omega
+  { floor := e 0
+    cx := fun x => if x = e 0 then ⊤ else ((Function.invFun e x : ℕ) : ℕ∞)
+    member := fun n => e (n + 1)
+    member_ne_floor := fun n h => by have := e.injective h; omega
+    cx_member_strictMono := by
+      intro a b hab
+      dsimp only
+      rw [if_neg (hne a), if_neg (hne b), hinv, hinv]
+      exact_mod_cast Nat.succ_lt_succ hab
+    cx_floor_eq_iSup := by
+      have hstep : ∀ n : ℕ,
+          (if e (n + 1) = e 0 then (⊤ : ℕ∞) else ((Function.invFun e (e (n + 1)) : ℕ) : ℕ∞))
+            = ((n + 1 : ℕ) : ℕ∞) := fun n => by rw [if_neg (hne n), hinv]
+      have key : ⨆ n : ℕ, ((n + 1 : ℕ) : ℕ∞) = ⊤ := by
+        rw [iSup_eq_top]
+        intro b hb
+        lift b to ℕ using hb.ne
+        exact ⟨b, by exact_mod_cast Nat.lt_succ_self b⟩
+      rw [if_pos rfl, iSup_congr hstep, key] }
+
+/-- **`Statement:` THE CHARACTERISATION — the class pins down infinitude and nothing else.**
+
+Forward: `infinitudeFloor_forces_infinite`. Converse: `infinitudeFloorOfInfinite`. Together they say
+`[InfinitudeFloor α]` is exactly as informative as `Infinite α` — which is what makes the hand-built
+witness below a fair gauge rather than a curiosity, and what a non-degeneracy predicate would have to
+strengthen. -/
+theorem infinitudeFloor_nonempty_iff_infinite (α : Type*) :
+    Nonempty (InfinitudeFloor α) ↔ Infinite α :=
+  ⟨fun ⟨I⟩ => @infinitudeFloor_forces_infinite α I,
+   fun h => ⟨@infinitudeFloorOfInfinite α h⟩⟩
 
 /-- **`Statement:` § III's headline theorem holds of the bookkeeping carrier.** Instantiated here it
 says a two-constructor bookkeeping type has a floor of infinite complexity — true, and empty of the
@@ -481,7 +538,9 @@ open ZeroParadox
 #print axioms pole_inversion
 #print axioms two_pow_valuation
 #print axioms infinitudeFloor_forces_infinite
-#print axioms no_infinitudeFloor_on_punit
+#print axioms no_infinitudeFloor_of_finite
+#print axioms infinitudeFloorOfInfinite
+#print axioms infinitudeFloor_nonempty_iff_infinite
 #print axioms bookkeepingInfinitudeFloor
 #print axioms bookkeeping_nonempty
 #print axioms bookkeeping_forces_infinite_complexity
