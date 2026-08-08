@@ -135,19 +135,35 @@ out.append(f"**Declarations recording an axiom footprint in this build:** {total
 out.append("")
 out.append("| footprint | count | means |")
 out.append("|---|---:|---|")
-GLOSS = {
-    "propext": "propositional extensionality only; choice-free",
-    "Quot.sound": "quotient soundness only; choice-free",
-    "propext, Quot.sound": "extensionality and quotients; choice-free",
-    "propext, Classical.choice, Quot.sound": "the ordinary Mathlib footprint, including choice",
-    "Classical.choice": "classical choice alone",
-    "sorryAx": "⚠ NOT PROVED — `sorry` stands in for the proof",
-    "propext, sorryAx, Quot.sound": "⚠ NOT PROVED — `sorry` stands in for the proof",
-}
+def gloss(footprint: str) -> str:
+    """Derive the gloss from the atoms present.
+
+    Deliberately NOT a lookup table. A table over combinations is hand-maintained data
+    that silently degrades to "see the run log" on the combination nobody listed - and
+    measured 2026-08-08, the CI log and a full local build do not even contain the same
+    set (`Classical.choice, Quot.sound` occurs locally and not in CI). Deriving it means
+    a new combination is described correctly the first time it appears.
+    """
+    atoms = {a.strip() for a in footprint.split(",")}
+    if "sorryAx" in atoms:
+        return "⚠ NOT PROVED — `sorry` stands in for the proof"
+    parts = []
+    if "propext" in atoms:
+        parts.append("propositional extensionality")
+    if "Quot.sound" in atoms:
+        parts.append("quotient soundness")
+    if "Classical.choice" in atoms:
+        parts.append("classical choice")
+    extra = sorted(atoms - {"propext", "Quot.sound", "Classical.choice"})
+    parts.extend(f"`{a}`" for a in extra)
+    tail = "" if "Classical.choice" in atoms else "; choice-free"
+    return (", ".join(parts) if parts else "none") + tail
+
+
 if axfree:
-    out.append(f"| *(none)* | {len(axfree)} | depends on no axiom beyond Lean's core logic |")
+    out.append(f"| *(none)* | {len(axfree)} | no axiom at all; choice-free |")
 for fp, n in by_footprint.most_common():
-    out.append(f"| `{fp}` | {n} | {GLOSS.get(fp, 'see the run log above')} |")
+    out.append(f"| `{fp}` | {n} | {gloss(fp)} |")
 out.append("")
 
 out.append(f"<details><summary>The {len(choice_free)} declarations that avoid "
