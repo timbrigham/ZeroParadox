@@ -265,6 +265,19 @@ design habit, not five incidents** — writing a class without asking what it EX
 | `SeparatedSuccession` | `Unit` + the always-true relation discharges every field (2026-08-07) |
 | `KleeneStructure` | bundles a `Code` (data) with the assertion that it names ⊥ (commitment) |
 
+**⚠ THIS IS NOT A NEW RULE — IT IS TIM'S OWN 2026-06-29 NO-GO GAUGES, FINALLY ENFORCED AND FINALLY
+POINTED AT THE RIGHT OBJECT.** `.claude-local/notes/nogo_gauges_2026-06-29.md` already specifies
+**gauge 1, the decorative check** (*"delete all framework vocabulary; if nothing specific is lost, the
+entry is a label. REJECT"*), **gauge 4, the vacuity check** (*"if every confirmed edge is tier-1
+generic, the dictionary is true-but-empty"*), and **discipline (b): NAME the obstruction in advance —
+"if you can't say what would break it, you don't understand the claim."** That is *name a non-member*,
+written 40 days before this section.
+
+**Why it never fired:** the gauges were scoped to **dictionary transport edges**, nobody pointed them
+at **requirements classes**, and they lived in a memory body plus a note rather than here — exactly the
+failure this file names in its own words, *memory is for context, not enforcement*. Fifty files carry
+NO-GO text, so it was applied wherever someone remembered. Eighteen classes were never asked.
+
 **The check is mechanical and cheap: BUILD THE TRIVIAL WITNESS, or prove you cannot.** Both answers are
 worth having — a failed attempt is evidence the class has teeth. Do it **before** citing membership as
 meaningful, because a vacuous class makes every downstream *"X carries this, therefore…"* empty.
