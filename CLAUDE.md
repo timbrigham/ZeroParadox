@@ -336,6 +336,19 @@ its carrier.**
   The extreme is `ChoiceCannotBe.lean`: **302 prose lines, five blocks, zero docstrings** — and two
   false universal negatives lived in exactly that prose until 2026-08-01.
 
+**⚠ THIRD-PARTY BACKPORTS ARE EXEMPT STRUCTURALLY, NOT BASELINED** (Tim, 2026-08-08: *"the vendored
+bucket we shouldn't touch at all, that's a backport from an official source"*). A baseline entry
+means *fix later*; this means **never**. Editing an Apache-2.0 backport's prose also destroys the
+diff against upstream, which is the reason for vendoring it. `check_prose.py` skips any file under
+`Vendored/` or carrying a provenance header (`VENDORED FROM`, `Apache-2.0`, `Upstream:`) and **names
+the exempt files in its output**, so the exemption is visible rather than silent. Currently
+`ZeroParadox/Vendored/NaturalOps.lean` (verbatim, Mathlib v4.28.0) and
+`ZeroParadox/Ordinal/NaturalOpsPow.lean` (a port of Hernández's Combinatorial Games file) — verified
+to match those two files and no others. This removed **140 sites, 119 of them undocumented
+declarations we did not author**. ⚠ `check_pov` / `check_modal` / `check_classes` have no vendored
+handling; nothing in them fires on those files today, so this is latent, not live — fix it there if
+it ever does.
+
 **AND AN INDEX LINE MUST JUSTIFY ITSELF** (Tim, same day): *"every one of those CannotBe line items
 should be distinguishable from the others, and the statement for why the CannotBe is applicable
 should be directly tied to the specific lines."* A `#check` index is nothing **but** line items, so
@@ -353,8 +366,8 @@ push (`pre-push` § 3b-e). Five rules: a module-doc block over **10 lines** (jus
 file headers); a docstring longer than its declaration; a declaration with **no** docstring
 (`private` and `example` exempt); a `#check` with **no gloss**; and a gloss carrying **no
 `Statement:`/`Reading:` label**. Corpus at adoption — blocks 98, over-long docstrings 381,
-undocumented declarations 255, bare `#check`s 63, unlabelled glosses 140.
-**Baselined at 903 sites — fires on NEW and EDITED prose only.**
+undocumented declarations 119, bare `#check`s 63, unlabelled glosses 140 — 797 after the vendored
+exemption. **Baselined at 778 sites — fires on NEW and EDITED prose only.**
 Blocks are keyed by a **content hash**, so editing a grandfathered block re-fires it: the
 baseline-shrinking rule enforced rather than remembered. **Detector verified with six controls**
 (must-fire on an oversized block, an oversized docstring, an undocumented declaration, a bare
