@@ -40,17 +40,20 @@ import ZeroParadox.Ordinal.ProofFloorCanonical
 import ZeroParadox.Valuation.RiemannSphere
 import ZeroParadox.Multihomed.HilbertDiagonal
 import ZeroParadox.Reals.MarkovSpectralGap
+import ZeroParadox.Category.Node4Generation
+import ZeroParadox.Multihomed.TwoFacesBot
 import Mathlib.Order.FixedPoints
+import Mathlib.SetTheory.Ordinal.FixedPoint
 
 /-!
 # Index of declarations characterizing ⊥
 
-`#check`-only: nothing new is proved here, and the list is curated, not exhaustive. Each line names
-one existing declaration and says what it establishes; the imports force every indexed name to
-compile, so no line can point at a dead one. `Statement:` restates what a declaration proves;
-`Reading:` is interpretation, not a claim about the theorem. Sections run: what ⊥ cannot be, what it
-must be, how it is approached and departed. Schema and sweep:
-`.claude-local/notes/bottom_object_harvest_catalog_2026-06-30.md`.
+Curated, not exhaustive. Each line names one existing declaration and says what it establishes; the
+imports force every indexed name to compile, so no line can point at a dead one. `Statement:`
+restates what a declaration proves; `Reading:` is interpretation, not a claim about the theorem. A
+`Reading:` asserting strength, scope or genericity carries an `example` that fails to compile if the
+reading is wrong — those examples are the only things proved here. Sections run: what ⊥ cannot be,
+what it must be, how it is approached and departed.
 
 ## Engineer's Take
 
@@ -90,13 +93,20 @@ section CannotBeIndex
 #check @ZeroParadox.faithful_iff_descending
 
 -- Statement: the equivalences `{x // selfApp x = x} ≃ PUnit` form a subsingleton.
--- Reading: POSITIVE and indexed as support, not as an exclusion — it says the two faces coincide as
--- a bare point, which is what the interpretation-layer exclusion rests on.
+-- Reading: GENERIC — indexed to fence a misreading, not to carry one. `Subsingleton (α ≃ PUnit)`
+-- holds of every type, so this says nothing about ⊥ on its own; the source calls it "the generic
+-- singleton iso". The `example` below is the refutation of any stronger reading.
 #check @ZeroParadox.faces_iso_unique
+example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
+-- Statement: the self-referential face is equivalent to `PUnit` — the two faces coincide as objects.
+-- Reading: THIS is the declaration carrying the coincidence, and the coincidence is real at ⊥. Its
+-- content comes from the assumed class fields `unique_fp` / `fixed_bot`, not from the theorem above.
+#check @ZeroParadox.selfApp_face_equiv_punit
 
 /-! ### the Markov interpretation cannot be a single ordered or unique point -/
 
--- Statement: for `2 ≤ n`, some stationary distribution is neither least nor greatest in the simplex.
+-- Statement: for `2 ≤ n` and EVERY chain `f`, some stationary distribution of `f` is neither least
+-- nor greatest in the simplex.
 #check @ZeroParadox.stationary_attractor_no_order_placement
 -- Statement: a doubly-stochastic `Fin 4` chain other than the pure chain exists whose stationary
 -- distribution is not unique.
@@ -159,8 +169,8 @@ section CannotBeIndex
 #check @ZeroParadox.seam_not_mu_colimit_apex
 -- Statement: the QPF seam is the canonical bijection, no `Fix ≃ Cofix` exists for the recursive
 -- `idPF`, the lattice seam is the identity equivalence, and the `selfApp` fixed points are `{bot}`.
--- Reading: this records that no cross-setting map was EXHIBITED. It is not a proof of impossibility
--- (`IsEmpty` of the map type); an open "none given", not a no-go. See register D8.
+-- Reading: this records that no cross-setting map was EXHIBITED — an open "none given", not a no-go.
+-- The `IsEmpty` conjunct above is about `Fix ≃ Cofix`, not about any cross-setting map type.
 #check @ZeroParadox.no_cross_setting_map
 -- Statement: `(1 : ℕ) ⟶ (0 : ℕ)` is empty.
 #check @ZeroParadox.isEmpty_hom_one_to_zero
@@ -177,9 +187,12 @@ section CannotBeIndex
 -- assumed of the action, not derived.
 -- Reading: the framework calls this coincidence of input and output "concurrency".
 #check @ZeroParadox.AbstractSelfApp.unique_fp
--- Statement: `bot` is a fixed point of `selfApp`, and is both below and above every fixed point.
+-- Statement: `bot` is a fixed point of `selfApp`, AND is both below and above every fixed point.
+-- Reading: both bounds are one-step consequences of the class field `unique_fp` above, which is
+-- ASSUMED of the action rather than derived. The fence there governs this line too.
 #check @ZeroParadox.selfApp_fixed_point_is_seam
--- Statement: every `selfApp` fixed point is both `≥ bot` and `≤ bot` — least and greatest at once.
+-- Statement: the same two bounds WITHOUT the existence conjunct — every `selfApp` fixed point is
+-- both `≥ bot` and `≤ bot`.
 #check @ZeroParadox.selfApp_bot_is_both_extremal
 -- Statement: `¬(p ↔ ¬p)` — logical negation has no fixed point.
 -- Reading: the contrast that makes the coincidence above meaningful; this is the fixed-point-free
@@ -189,11 +202,13 @@ section CannotBeIndex
 
 /-! ### POSITIVE — narrow uniqueness and infinite width, which coincide only at ⊥ -/
 
--- Statement: in ℚ₂, `q2SelfMem x` forces `x = 0` — one uniquely pinned point. [NARROW]
+-- Statement: in ℚ₂, `q2SelfMem x` forces `x = 0` — at most one such point. [NARROW]
 #check @ZeroParadox.q2_unique_fp
+-- Statement: and `0` is one — `q2SelfMem 0`. Existence is this declaration, not the one above.
+#check @ZeroParadox.q2_zero_is_fixed
 -- Statement: the intersection of the nested balls is exactly `{0}`. [NARROW]
 #check @ZeroParadox.fB_bottom_is_limit
--- Statement: the partial sums exceed every bound `M`. [WIDE, infinite measure]
+-- Statement: the partial circulation exceeds every bound `M`. [WIDE, infinite measure]
 #check @ZeroParadox.t2_diverges
 -- Statement: the same divergence in the `BottomMeasure` framing; this is `l_inf`. [WIDE, measure]
 #check @ZeroParadox.info_bottom_diverges
@@ -209,6 +224,8 @@ section CannotBeIndex
 -- Statement: the initial object maps to every object by exactly one morphism. [NARROW]
 #check @ZeroParadox.t2_universal_constituent
 -- Statement: in any additively-valued ring, `v 0 = ⊤`. [WIDE, measure; subsumes the p-adic case]
+-- Reading: CITED, not ZP-proved — the proof body is `v.map_zero`, i.e. Mathlib's
+-- `AddValuation.map_zero`. Indexed for the ⊥-reading of `⊤`, not as a result of this framework.
 #check @ZeroParadox.addVal_bot
 -- Statement: the ε₀-tower encodings converge to 0 in ℤ_[2]. [WIDE, reach]
 #check @ZeroParadox.tower_converges_to_zero
@@ -234,11 +251,14 @@ section CannotBeIndex
 -- Reading: the seam is self-dual under `op`, the fixed centre of the inversion.
 #check @CategoryTheory.Limits.hasZeroObject_op
 -- Reading: PRIOR-ART RECORD, do NOT rebuild. The abstract "order-reversal swaps ⊥ and ⊤" is already
--- Mathlib's (`compl_bot`/`compl_top`, `OrderIso.compl`, `setOfMinimalIsoSetOfMaximal`). The three
--- inversions share no single buildable type, so their "unification" is a schema, not a theorem.
--- See `.claude-local/notes/inv_cop_prior_art_2026-06-30.md`.
+-- Mathlib's (`compl_bot`/`compl_top`, `OrderIso.compl`, `OrderIso.setOfMinimalIsoSetOfMaximal`).
+-- The three inversions share no single buildable type, so their "unification" is a schema, not a
+-- theorem.
 
-/-! ### SELF-REFERENCE — the diagonal fixed point -/
+/-! ### SELF-REFERENCE — the diagonal fixed point
+
+The cross-field routing, and its Lawvere / Yanofsky attribution, live in
+`ZeroParadox/DiagonalFixedPoint.lean`. This section indexes only the ⊥-facing declarations. -/
 
 -- Statement: under `[KleeneStructure]`, any Quine atom `q` satisfies `q = bot`. The statement has no
 -- Kleene clause; the quine-atom property is a hypothesis, and what the class supplies is
@@ -271,15 +291,22 @@ section CannotBeIndex
 -- Statement: `ω^b = b → epsilonZero ≤ b` — ε₀ is below every fixed point of `ω^·`.
 #check @ZeroParadox.epsilonZero_le_fixedPoint
 -- Statement: Mathlib's Kleene fixed-point theorem: for ωScott-continuous `f`, `lfp f = ⨆ₙ fⁿ(⊥)`.
--- Reading: CITED prior art for generation, do NOT rebuild. `ε₀ = nfp (ω^·) 0` is the ordinal
--- instance of generating a least fixed point from the floor by iteration.
+-- Reading: CITED prior art for generation, do NOT rebuild. ⚠ `Ordinal` is NOT an instance of it —
+-- the theorem needs `[CompleteLattice α]` and a monotone `f : α →o α`, neither of which `Ordinal`
+-- carries. A shared SHAPE across structures, never an instance-of relation.
 #check @fixedPoints.lfp_eq_sSup_iterate
+-- Statement: the ordinal form that does hold — `⨆ n, f^[n] a = nfp f a`.
+#check @Ordinal.iSup_iterate_eq_nfp
+-- Statement: and ε₀ as that supremum — `epsilonZero = ⨆ n, fundamentalSeq n`.
+#check @ZeroParadox.epsilonZero_eq_iSup
 -- Reading: generation pairs with the μ side (build up from ⊥) and its dual is reach on the ν side
 -- (flow down to ⊥). So generation being absent on the ν-bottoms is the μ/ν fork, not a gap — they
 -- carry reach instead.
--- Statement: one instance is built choice-free — `node4_generates_nat` measures `[propext,
--- Quot.sound]`. Adámek's initial-algebra colimit is not located in Mathlib as of 2026-08-08
--- (Lambek's lemma is, as `Endofunctor.Algebra.Initial.str_isIso`).
+-- Statement: a concrete generation instance; its axiom footprint is measured in its own file's
+-- purity block and emitted by the build.
+#check @ZeroParadox.node4_generates_nat
+-- Reading: Adámek's initial-algebra colimit is not located in Mathlib as of 2026-08-08; what is
+-- there is Lambek's lemma, as `Endofunctor.Algebra.Initial.str_isIso`.
 
 /-! ### DYNAMICS — how ⊥ is approached and departed -/
 

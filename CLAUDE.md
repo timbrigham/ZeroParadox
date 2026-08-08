@@ -425,6 +425,11 @@ a second period), and *"definitionally `t3_unreachability`"* (`example : @t4 = @
 the obstruction in advance*) pointed at readings for the first time.** It also lands on the right
 side of the prose rule for free: an `example` counts as **code**, not comment.
 
+⚠ **Placement: put the `example` AFTER the `#check` it qualifies, never between the gloss and the
+`#check`.** `check_prose.py` looks immediately above a `#check` for its gloss, so an interposed
+`example` reads as a missing gloss and fires. Measured 2026-08-08 on the first application of this
+rule. Write "the `example` below" in the gloss.
+
 ## The recurring defect is UNSTATED ADJACENCY — the fix is a pointer, not a theorem
 
 **This corpus's characteristic failure is not wrong theorems. It is true theorems whose reach nobody
