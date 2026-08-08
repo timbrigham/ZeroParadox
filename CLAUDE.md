@@ -559,23 +559,33 @@ with universes explicit, **(c)** **run THREE phrasings, and make one of them the
 and **(d)** ask whether it decomposes. Then write **"not located as of &lt;date&gt;, searched as
 follows"** — never *"absent"*.
 
-### (c) in full — THREE PHRASINGS, ONE OF THEM THE INVERSE. Tim's rule, 2026-08-07, and it is measured.
+### (c) in full — THREE PHRASINGS, AND THEY MUST VARY ALONG AXES, NOT BE SYNONYMS. Tim's rule, 2026-08-07, measured three times the same day.
 
 Step (c) used to read *"grep the concept in at least two vocabularies"*. That is the right principle and
-it kept failing, because it says nothing about **which** vocabularies. The operational form:
+it kept failing, because it says nothing about **which** vocabularies — and three synonyms of one
+formulation are one search run three times. **Vary along the three axes below. Each has its own measured
+false negative from a single session.**
 
-1. **The direct phrasing** — the words you would use.
-2. **The concept phrasing** — the words the *domain* would use, not the ones you would have chosen.
-3. **The INVERSE phrasing** — how the corpus would say it if it *disagreed* with you, or stated the
-   same fact from the other side. **This is the one that pays, and it is the one nobody runs.**
-
-**Measured against the two most expensive false negatives of 2026-08-07, both of which shipped into
-docstrings as fact before a gate caught them:**
-
-| the claim | phrasing (1), what was run | the INVERSE, what should have been run |
+| axis | run BOTH ends | the failure it prevents |
 |---|---|---|
-| *"the corpus never measured seed-independence"* | `seed-independent` → **0 hits** | `"a seed, not"` → lands directly on `Epsilon0MinMax.lean` § I-b, which states the theorem, the proof route, and the verdict *"Elementary and not novel"* |
-| *"every `Tendsto` in the corpus runs inward"* | `atTop (nhds _)` → 13 files, all convergent | `atTop atTop` → the divergences, immediately, in files the survey never saw |
+| **1. POLARITY** | the claim / **its inverse** — how the corpus would say it if it *disagreed* with you | you find only the half stated your way |
+| **2. PART OF SPEECH** | the **noun** (the object) / the **verb** (the operation that produces it) | you search for the *thing* and miss the *step that makes it* |
+| **3. VOCABULARY** | your words / the **domain's** words | you find only what you would have named it |
+
+**Measured, all on 2026-08-07, all having already shipped into docstrings as fact before a gate or Tim
+caught them:**
+
+| axis | the claim | what was run | what should have been run |
+|---|---|---|---|
+| POLARITY | *"the corpus never measured seed-independence"* | `seed-independent` → **0 hits** | `"a seed, not"` → lands directly on `Epsilon0MinMax.lean` § I-b, which states the theorem, the proof route, and the verdict *"Elementary and not novel"* |
+| POLARITY | *"every `Tendsto` in the corpus runs inward"* | `atTop (nhds _)` → 13 files, all convergent | `atTop atTop` → the divergences, immediately, in files the survey never saw |
+| **PART OF SPEECH** | *"the succession of bottoms is not formalized"* | the NOUN — `family of bottom`, `botSeq`, `ℕ → .*Bot` → nothing | the VERB — `next bottom`, `re-seed`, `succ` → **`succession_succ`**, the n → n+1 re-seeding theorem, which had been there all along |
+
+**⚠ The part-of-speech axis is the newest and was the most expensive**, because it produced a *published
+note* asserting a formalization did not exist. Tim: *"you need to look closer at n and n+1 logic. we very
+likely already have this belt."* **A corpus names an operation and a thing differently, and formal corpora
+overwhelmingly declare the OPERATION** — `succession_succ`, `snapNucleus`, `nfp` — while prose about them
+uses the noun. **If you are asking whether a structure exists, search for the step that builds it.**
 
 **Why the inverse specifically.** A corpus records a fact in whichever polarity its author found natural,
 and that is frequently the opposite of yours. *"Seed-independent"* and *"⊥ is **a** seed, not a
@@ -588,6 +598,12 @@ sites"*. **A single-polarity grep is a detector with a blind half**, and this fi
 distinguished one"` also returned `Computability/Kleene.lean`'s *"computational quine, not a
 distinguished one"* — the same sentence shape used for a different object. Finding the idiom is how you
 find the other places the claim is made.
+
+**The generalization, now that there are three axes:** a search is a **projection**, and a projection
+loses whatever is orthogonal to it. Polarity, part of speech and vocabulary are the three projections
+this corpus has actually been caught by; there is no reason to think they are the only three.
+**When an absence matters, ask what dimension your query collapsed** — and note that this is the
+Two-Pole Test again (§ above), which is itself a rule about never looking from only one end.
 
 **Why this is its own section and not a footnote.** This file already says
 *"VERIFY THE DETECTOR BEFORE BELIEVING A ZERO"* — but scoped to `check_modal.py`, so it did not fire for
