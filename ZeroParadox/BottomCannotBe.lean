@@ -44,16 +44,19 @@ import ZeroParadox.Category.Node4Generation
 import ZeroParadox.Multihomed.TwoFacesBot
 import Mathlib.Order.FixedPoints
 import Mathlib.SetTheory.Ordinal.FixedPoint
+import Mathlib.CategoryTheory.Endofunctor.Algebra
+import Mathlib.Order.Minimal
+import Mathlib.Order.Hom.Set
 
 /-!
 # Index of declarations characterizing ⊥
 
-Curated, not exhaustive. Each line names one existing declaration and says what it establishes; the
-imports force every indexed name to compile, so no line can point at a dead one. `Statement:`
-restates what a declaration proves; `Reading:` is interpretation, not a claim about the theorem. A
-`Reading:` asserting strength, scope or genericity carries an `example` that fails to compile if the
-reading is wrong — those examples are the only things proved here. Sections run: what ⊥ cannot be,
-what it must be, how it is approached and departed.
+Curated, not exhaustive. Each line names one existing declaration and says what it establishes; every
+name is `#check`ed, so no line can point at a dead one. `Statement:` restates what a declaration
+proves; `Reading:` is interpretation, not a claim about the theorem. Where a `Reading:` asserts
+strength, scope or genericity it should carry an `example` that fails to compile if the reading is
+wrong; such `example`s are the only things proved here, and not every such `Reading:` has one yet.
+Sections run: what ⊥ cannot be, what it must be, how it is approached and departed.
 
 ## Engineer's Take
 
@@ -98,9 +101,10 @@ section CannotBeIndex
 -- singleton iso". The `example` below is the refutation of any stronger reading.
 #check @ZeroParadox.faces_iso_unique
 example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
--- Statement: the self-referential face is equivalent to `PUnit` — the two faces coincide as objects.
--- Reading: THIS is the declaration carrying the coincidence, and the coincidence is real at ⊥. Its
--- content comes from the assumed class fields `unique_fp` / `fixed_bot`, not from the theorem above.
+-- Statement: an equivalence `{x // selfApp x = x} ≃ PUnit`.
+-- Reading: THIS is the declaration carrying the coincidence of the two faces as objects, and that
+-- coincidence is real at ⊥. Its content comes from the assumed class fields `unique_fp` /
+-- `fixed_bot`, not from the theorem above.
 #check @ZeroParadox.selfApp_face_equiv_punit
 
 /-! ### the Markov interpretation cannot be a single ordered or unique point -/
@@ -156,8 +160,8 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
 -- Statement: the swap chain's orbit from `e0vec` converges to no limit.
 #check @ZeroParadox.swap_orbit_not_convergent
--- Statement: for `x ≠ 0` and balanced `v₀`, the p-adic orbit stays norm-positive and the Markov
--- orbit stays balanced.
+-- Statement: for `x ≠ 0` and balanced `v₀`, the p-adic orbit stays norm-positive and the
+-- `step (1/4)` orbit stays balanced — that one chain, not Markov orbits generally.
 #check @ZeroParadox.padic_markov_no_orbit_correspondence
 
 /-! ### the seam and floor cannot be transported or cross-connected -/
@@ -175,6 +179,8 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: `(1 : ℕ) ⟶ (0 : ℕ)` is empty.
 #check @ZeroParadox.isEmpty_hom_one_to_zero
 -- Statement: in a `ZPCategory`, an object not isomorphic to the initial admits no map into it.
+-- Reading: the proof body is `ZPC.ax_g2` — this IS the class field AX-G2, a named structural
+-- commitment, not a consequence derived from one. Same fence as `unique_fp` below.
 #check @ZeroParadox.t3_unreachability
 -- Statement: rose trees over a partially-well-ordered preorder are partially well ordered.
 -- Reading: a SCOPE FENCE, marking where the "canonical floor 0" claim does not apply — Kruskal's
@@ -210,7 +216,8 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 #check @ZeroParadox.fB_bottom_is_limit
 -- Statement: the partial circulation exceeds every bound `M`. [WIDE, infinite measure]
 #check @ZeroParadox.t2_diverges
--- Statement: the same divergence in the `BottomMeasure` framing; this is `l_inf`. [WIDE, measure]
+-- Statement: surprisal exceeds every bound `M` — the same shape over a different function; this
+-- declaration is literally `l_inf`. [WIDE, measure]
 #check @ZeroParadox.info_bottom_diverges
 -- Statement: for `‖c‖ < 1`, every orbit `cⁿ * x` converges to 0. [WIDE, infinite reach]
 #check @ZeroParadox.contraction_orbit_tendsto_zero
@@ -251,9 +258,16 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Reading: the seam is self-dual under `op`, the fixed centre of the inversion.
 #check @CategoryTheory.Limits.hasZeroObject_op
 -- Reading: PRIOR-ART RECORD, do NOT rebuild. The abstract "order-reversal swaps ⊥ and ⊤" is already
--- Mathlib's (`compl_bot`/`compl_top`, `OrderIso.compl`, `OrderIso.setOfMinimalIsoSetOfMaximal`).
--- The three inversions share no single buildable type, so their "unification" is a schema, not a
--- theorem.
+-- Mathlib's, indexed below. The three inversions share no single buildable type, so their
+-- "unification" is a schema, not a theorem.
+-- Statement: complementation sends ⊥ to ⊤.
+#check @compl_bot
+-- Statement: and ⊤ to ⊥.
+#check @compl_top
+-- Statement: complementation is an order isomorphism onto the dual.
+#check @OrderIso.compl
+-- Statement: an order isomorphism carries the minimals of one set onto the maximals of the other.
+#check @OrderIso.setOfMinimalIsoSetOfMaximal
 
 /-! ### SELF-REFERENCE — the diagonal fixed point
 
@@ -287,26 +301,34 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 
 -- Statement: `epsilonZero = nfp (ω^·) 0` — ε₀ is the first step from 0 under `ω^·`, the least
 -- ordinal above 0 closed under it.
+-- Reading: CITED, not ZP-proved — a one-line wrapper on Mathlib's `Ordinal.epsilon_zero_eq_nfp`
+-- (`SetTheory/Ordinal/Veblen.lean`). The same holds of the two lines below.
 #check @ZeroParadox.epsilonZero_eq_nfp
--- Statement: `ω^b = b → epsilonZero ≤ b` — ε₀ is below every fixed point of `ω^·`.
+-- Statement: `ω^b = b → epsilonZero ≤ b` — ε₀ is below every fixed point of `ω^·`. Wraps Mathlib's
+-- `Ordinal.epsilon_zero_le_of_omega0_opow_le`.
 #check @ZeroParadox.epsilonZero_le_fixedPoint
 -- Statement: Mathlib's Kleene fixed-point theorem: for ωScott-continuous `f`, `lfp f = ⨆ₙ fⁿ(⊥)`.
 -- Reading: CITED prior art for generation, do NOT rebuild. ⚠ `Ordinal` is NOT an instance of it —
--- the theorem needs `[CompleteLattice α]` and a monotone `f : α →o α`, neither of which `Ordinal`
--- carries. A shared SHAPE across structures, never an instance-of relation.
+-- the theorem needs `[CompleteLattice α]`, and `Ordinal` carries only
+-- `ConditionallyCompleteLinearOrderBot`. A shared SHAPE across structures, never an instance-of
+-- relation. (Monotonicity is NOT the obstruction: `Ordinal →o Ordinal` is inhabited, below.)
 #check @fixedPoints.lfp_eq_sSup_iterate
+example : Ordinal.{0} →o Ordinal.{0} := OrderHom.id
 -- Statement: the ordinal form that does hold — `⨆ n, f^[n] a = nfp f a`.
 #check @Ordinal.iSup_iterate_eq_nfp
--- Statement: and ε₀ as that supremum — `epsilonZero = ⨆ n, fundamentalSeq n`.
+-- Statement: and ε₀ as that supremum — `epsilonZero = ⨆ n, fundamentalSeq n`, whose proof is one
+-- `exact` over the line above.
 #check @ZeroParadox.epsilonZero_eq_iSup
 -- Reading: generation pairs with the μ side (build up from ⊥) and its dual is reach on the ν side
 -- (flow down to ⊥). So generation being absent on the ν-bottoms is the μ/ν fork, not a gap — they
 -- carry reach instead.
--- Statement: a concrete generation instance; its axiom footprint is measured in its own file's
--- purity block and emitted by the build.
+-- Statement: given a compatible family `f : (n : ℕ) → Fin n → P`, there is a UNIQUE `g : ℕ → P`
+-- agreeing with every stage — the universal property making ℕ the colimit of the `Fin`-chain.
 #check @ZeroParadox.node4_generates_nat
 -- Reading: Adámek's initial-algebra colimit is not located in Mathlib as of 2026-08-08; what is
--- there is Lambek's lemma, as `Endofunctor.Algebra.Initial.str_isIso`.
+-- there is Lambek's lemma, indexed below.
+-- Statement: the structure map of an initial algebra is an isomorphism (Lambek).
+#check @CategoryTheory.Endofunctor.Algebra.Initial.str_isIso
 
 /-! ### DYNAMICS — how ⊥ is approached and departed -/
 
@@ -316,7 +338,7 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 #check @ZeroParadox.t_snap_derived
 -- Statement: for `x ≼ y` with `x ≠ y`, no join returns `y` to `x`.
 -- Reading: a GENERIC semilattice no-return lemma. It mentions neither ⊥ nor the snap; the snap
--- instantiates it. The arrow-of-time reading is the application, not the statement.
+-- instantiates it. The irreversibility reading is the application, not the statement.
 #check @ZeroParadox.t_snap_irreversible
 -- Statement: for `0 < n`, `fC_functor.obj n ⟶ fC_functor.obj 0` is empty.
 #check @ZeroParadox.fC_no_return
@@ -326,8 +348,9 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 #check @ZeroParadox.doubling_orbit_tendsto_zero
 -- Statement: for `X` not isomorphic to the initial, and given `⊥ ⟶ X`, the hom `X ⟶ ⊥` is still
 -- empty.
--- Reading: definitionally `t3_unreachability` — the same no-incoming fact under the irreversibility
--- reading rather than the unreachability one. Not new content.
+-- Reading: a one-line consequence of `t3_unreachability` — the same no-incoming fact under the
+-- irreversibility reading rather than the unreachability one. Not new content. ⚠ NOT definitionally
+-- equal: `t4` carries an extra unused `⊥ ⟶ X` binder, so `@t4 = @t3 := rfl` does not typecheck.
 #check @ZeroParadox.t4_chains_forward_only
 -- Statement: the relaxation operator of `fullMix` is not injective.
 -- Reading: information is lost, so the relaxation cannot be reversed. ⚠ FENCE: mixing-specific, NOT
