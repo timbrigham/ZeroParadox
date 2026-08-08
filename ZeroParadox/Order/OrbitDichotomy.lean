@@ -34,7 +34,16 @@ namespace ZeroParadox
 /-- **The orbit dichotomy (the trunk).** Let `s` be injective with `p` its only periodic point
 (`s p = p`, and no `x ≠ p` returns to itself under iteration). Then any `s`-invariant set `S` is a
 subsingleton or infinite — never a finite set of size ≥ 2. The finite middle is excluded because a
-witness `x ≠ p` in `S` drags its whole (infinite) forward orbit into `S`. -/
+witness `x ≠ p` in `S` drags its whole (infinite) forward orbit into `S`.
+
+**The scale branch this file's header calls "checkable" is now checked**, at
+ZeroParadox/Valuation/ScaleBridge.lean § VI: `valBridge_forces_infinite` runs the same argument for
+the framework's scale map and concludes that a `ValBridge` carrier holding any point besides `bot` is
+infinite. ⚠ It is **not** an instance of this theorem, and the reason is the `hs` hypothesis here:
+`ValBridge` does not supply `Function.Injective s`, and cannot be made to — `L = {bot} ⊎ (ℕ × Bool)`
+with `val (n, b) = n` and `scale (n, b) = (n+1, false)` satisfies all four of its axioms while
+collapsing `(0, true)` with `(0, false)`. There the valuation supplies injectivity **along an orbit**
+directly, which is all the argument consumes. Same trunk, weaker hypothesis on that axis. -/
 theorem orbit_dichotomy {X : Type*} (s : X → X) (hs : Function.Injective s) (p : X) (_hp : s p = p)
     (hper : ∀ (x : X) (n : ℕ), 0 < n → s^[n] x = x → x = p)
     {S : Set X} (hSinv : ∀ x ∈ S, s x ∈ S) :

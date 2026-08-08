@@ -180,6 +180,42 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
     `valBridge_forces_infinite` is that obstruction at every finite carrier rather than at two,
     stated for `ValBridge` so the ring track (ℤ_[2]) is covered as well.
 
+    ### Prior art — the general form is ZeroParadox/Order/OrbitDichotomy.lean, and the delta is real
+
+    `orbit_dichotomy` there is the corpus's trunk for this shape: a set closed under an operation
+    whose only periodic point is one distinguished `p` is a subsingleton or infinite, with no finite
+    middle. That file's header names **the framework's scale map as the checkable branch** of exactly
+    this argument, so this section is that branch being checked. Cite it, not this, for the general
+    pattern.
+
+    **The delta, and it is not a formality.** `orbit_dichotomy` assumes `Function.Injective s`.
+    `ValBridge` does **not** supply it, and cannot be made to: take `L = {bot} ⊎ (ℕ × Bool)` with
+    `val (n, b) = n` and `scale (n, b) = (n+1, false)`. All four axioms hold and `scale` collapses
+    `(0, true)` with `(0, false)`. What `val_scale` buys is injectivity **along an orbit** — which is
+    all the argument needs — without global injectivity of `scale`. So the hypotheses here are
+    genuinely weaker on that axis, while the conclusion is about the whole carrier rather than an
+    invariant subset.
+
+    ### Prior art — outside the corpus
+
+    The owning branch is valuation theory, and its standard statements all use multiplicative
+    structure this class deliberately drops. The strongest is **F.-V. Kuhlmann, *Valuation Theory*,
+    Ch. 4, Corollary 4.13**: *"The only fields which do not admit non-trivial places are precisely
+    the algebraic extensions of finite fields."* The credit points outward: `ValBridge` has no ring
+    structure at all — a set, a point, a self-map and an `ℕ∞`-valued function — so this section's
+    version is **more general and correspondingly more elementary**, not a strengthening of theirs.
+
+    The degenerate half is the universal-algebra commonplace that
+    ZeroParadox/Valuation/InfinitudeFloor.lean already cites for the same purpose: **Burris &
+    Sankappanavar, *A Course in Universal Algebra* (1981), Theorem 2.25 and its proof** — *"trivial
+    algebras satisfy any quasi-identity."* That is why `trivialValBridge` exists at all, and why a
+    non-degeneracy condition has to be an inequation (`Nontrivial`), never a further equation.
+
+    **Standard names for the three ingredients**, none of which this corpus had used: `(L, scale)` is
+    a **mono-unary algebra** (a **unar**); the pair `val bot = ⊤` with `val x = ⊤ → x = bot` is a
+    **separated (Hausdorff) filtration**; and the conclusion's mechanism, exhibiting `ℕ ↪ L`, is
+    **Dedekind-infinite**.
+
     `Reading:` **COINCIDENCE** — the characterisation has the same shape as
     `infinitudeFloor_nonempty_iff_infinite` (ZeroParadox/Valuation/InfinitudeFloor.lean), which
     pins that class to exactly `Infinite`; the valuation climbing without bound along the orbit and
@@ -221,11 +257,7 @@ theorem orbit_ne_bot_and_val_free (x : L) (hx : x ≠ ValBridge.bot) (k : ℕ) :
 /-- **The gauge.** A `ValBridge` carrier holding any point other than `bot` is infinite: the scale
     orbit of that point embeds ℕ. -/
 theorem valBridge_forces_infinite [Nontrivial L] : Infinite L := by
-  obtain ⟨x, hx⟩ : ∃ x : L, x ≠ ValBridge.bot := by
-    obtain ⟨a, b, hab⟩ := exists_pair_ne L
-    rcases eq_or_ne a ValBridge.bot with ha | ha
-    · exact ⟨b, fun hb => hab (ha.trans hb.symm)⟩
-    · exact ⟨a, ha⟩
+  obtain ⟨x, hx⟩ := exists_ne (ValBridge.bot : L)
   have hfin : ValBridge.val x ≠ ⊤ := val_finite_free x hx
   refine Infinite.of_injective (fun k : ℕ => ValBridge.scale^[k] x) ?_
   intro j k hjk
