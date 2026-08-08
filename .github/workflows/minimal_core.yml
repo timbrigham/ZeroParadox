@@ -19,6 +19,8 @@ on:
       - main
     paths:
       - 'ZeroParadox/Miniature.lean'
+      - 'scripts/minimal_core_report.py'
+      - '.github/workflows/minimal_core.yml'
 
 permissions:
   contents: read

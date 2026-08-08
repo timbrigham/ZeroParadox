@@ -8,6 +8,9 @@ on:
       - '**/*.lean'
       - 'lake-manifest.json'
       - 'lean-toolchain'
+      # Without these the workflow never re-runs when the thing it publishes changes.
+      - 'scripts/corpus_verification_report.py'
+      - '.github/workflows/lean_action_ci.yml'
   pull_request:
     branches:
       - main
@@ -15,6 +18,9 @@ on:
       - '**/*.lean'
       - 'lake-manifest.json'
       - 'lean-toolchain'
+      # Without these the workflow never re-runs when the thing it publishes changes.
+      - 'scripts/corpus_verification_report.py'
+      - '.github/workflows/lean_action_ci.yml'
   workflow_dispatch:
 
 # Note: a docgen-action deploy job was removed from this workflow (April 2026).

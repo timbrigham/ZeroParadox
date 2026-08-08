@@ -68,9 +68,19 @@ print(f"[report] {len(log)} chars, {log.count(chr(10))} lines", file=sys.stderr)
 # (measured 2026-08-08 - a fully warm build still produced 1270 footprint lines across
 # 216 modules marked `Replayed`). So an empty table means something went wrong, never
 # that the cache was warm.
-axfree = re.findall(r"'([^']+)' does not depend on any axioms", log)
-axdep = [(n, ", ".join(a.strip() for a in ax.split(",")))
-         for n, ax in re.findall(r"'([^']+)' depends on axioms: \[([^\]]*)\]", log)]
+# ⚠ `.+` NOT `[^']+`. A Lean name may END IN A PRIME, and `[^']+` cannot span it, so
+# `floor_not_wellFounded_via_descent'` and friends were silently dropped - and since a
+# dropped line is a dropped footprint, a dropped `sorryAx` went with it. `.+` is greedy
+# and line-bounded, anchored by the trailing literal; measured, it captures 1270 of
+# 1270 occurrences with zero over-capture.
+#
+# DEDUPLICATE BY NAME so the headline, the table and the <details> list share one unit.
+# Occurrence-counting the total while name-counting the choice-free set made the report
+# contradict its own arithmetic four lines apart.
+axfree = sorted(set(re.findall(r"'(.+)' does not depend on any axioms", log)))
+axdep = sorted({n: ", ".join(a.strip() for a in ax.split(","))
+                for n, ax in
+                re.findall(r"'(.+)' depends on axioms: \[([^\]]*)\]", log)}.items())
 total = len(axfree) + len(axdep)
 no_evidence = total == 0
 
@@ -80,7 +90,10 @@ no_evidence = total == 0
 # that has no `#print axioms` beside it.
 sorried = sorted({n for n, ax in axdep if "sorryAx" in ax})
 SORRY_WARNING = "declaration uses `sorry`"          # backticks, measured against the pin
-has_sorry_warning = SORRY_WARNING in log
+# The raw-substring belt matters independently of the parse: if a footprint line is ever
+# missed for any reason, this still catches the `sorryAx` in it. `sorryAx` never occurs
+# in ordinary log furniture, unlike the bare word "sorry" (`nanoda-allow-sorry`).
+has_sorry_warning = (SORRY_WARNING in log) or ("sorryAx" in log)
 
 ok = (build_rc == 0) and not sorried and not has_sorry_warning and not no_evidence
 print(f"[report] rc={build_rc} sorried={len(sorried)} warn={has_sorry_warning} "
@@ -128,10 +141,14 @@ if no_evidence:
     print("[report] no footprints - failing closed", file=sys.stderr)
     sys.exit(0 if ok else 1)
 
+if not ok:
+    out.append("⚠ The inventory below is from an **incomplete or failed run** and is "
+               "partial. It is published for diagnosis, not as a credential.")
+    out.append("")
 out.append(f"**Declarations recording an axiom footprint in this build:** {total}, "
-           f"of which **{len(choice_free)} do not use `Classical.choice`**. This counts "
-           "every declaration the build asked about, including library declarations the "
-           "corpus checks alongside its own.")
+           f"of which **{len(choice_free)} do not use `Classical.choice`**. Counted by "
+           "distinct name, and including library declarations the corpus checks "
+           "alongside its own.")
 out.append("")
 out.append("| footprint | count | means |")
 out.append("|---|---:|---|")
@@ -144,7 +161,9 @@ def gloss(footprint: str) -> str:
     set (`Classical.choice, Quot.sound` occurs locally and not in CI). Deriving it means
     a new combination is described correctly the first time it appears.
     """
-    atoms = {a.strip() for a in footprint.split(",")}
+    atoms = {a.strip() for a in footprint.split(",") if a.strip()}
+    if not atoms:
+        return "no axiom recorded"
     if "sorryAx" in atoms:
         return "⚠ NOT PROVED — `sorry` stands in for the proof"
     parts = []

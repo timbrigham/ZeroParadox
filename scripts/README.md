@@ -19,6 +19,18 @@ If you are primarily interested in the mathematical content, the PDF documents t
 
 ## Contents
 
+### CI verification reports
+
+Unlike everything else in this folder, these two are **primary and executed** — GitHub
+Actions runs them on every build and publishes their output to the run summary, so they
+are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the
+build's own exit code and reports what the machine actually checked.
+
+| File | Purpose |
+|------|---------|
+| [corpus_verification_report.py](corpus_verification_report.py) | Whole-corpus report: build status and the axiom footprint of every declaration recorded in the run. Exits non-zero if the build failed, anything depends on `sorryAx`, or the log carries no evidence at all |
+| [minimal_core_report.py](minimal_core_report.py) | The same for `ZeroParadox/Miniature.lean` alone, written for both a layman and a specialist — the "prove it yourself" gate |
+
 ### Shared utilities
 
 | File | Purpose |

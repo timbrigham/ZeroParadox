@@ -53,8 +53,11 @@ def short(name: str) -> str:
 
 
 # Scan for evidence BEFORE deciding the verdict - the verdict depends on it.
-axfree = [short(m) for m in re.findall(r"'([^']+)' does not depend on any axioms", log)]
-axdep = [(short(n), ax) for n, ax in re.findall(r"'([^']+)' depends on axioms: (\[[^]]*\])", log)]
+# ⚠ `.+` NOT `[^']+`. A Lean name may end in a prime, which `[^']+` cannot span, so
+# primed declarations were dropped from the listing. Greedy and line-bounded, anchored
+# by the trailing literal.
+axfree = [short(m) for m in re.findall(r"'(.+)' does not depend on any axioms", log)]
+axdep = [(short(n), ax) for n, ax in re.findall(r"'(.+)' depends on axioms: (\[[^]]*\])", log)]
 no_evidence = not axfree and not axdep
 
 # The backticked warning is measured against the pin - do not retype it from memory.
@@ -81,10 +84,13 @@ if ok:
     # Kept inside the ok branch: printing a list of what was checked under a FAILED
     # headline asserts the opposite of the verdict above it.
     out.append(
+        # NOT "the self-referential bottom": this file proves bare fixed-point existence
+        # and says so of itself twice. The self-referential witness lives in
+        # Settheory/SetTheoryAFA.lean, which this workflow does not elaborate.
         "**What was checked:** the engine (self-reference, when it closes, forces a fixed "
-        "point) · the wall (where it can't close) · the floor (where it closes: the "
-        "self-referential bottom) · the snap (the one-way jump to a limit that is also the "
-        "least fixed point) · the fan-out (the branching field).")
+        "point) · the wall (where it can't close) · the floor (where it closes: a fixed "
+        "point) · the snap (the one-way jump to a limit that is also the least fixed "
+        "point) · the fan-out (the branching field).")
 elif no_evidence and lean_rc == 0 and not has_sorry:
     out.append(
         "**Nothing was verified here.** Lean reported no failure, and it also reported no "
