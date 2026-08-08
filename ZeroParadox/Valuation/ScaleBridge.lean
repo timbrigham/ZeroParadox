@@ -23,8 +23,12 @@ plain field rather than a ZPSemilattice bottom — and builds a formal ℤ_[2]
 instance using the theorems already proved in ZeroParadox/Valuation/Scale.lean.
 
 If the instance builds and the AFA content chain follows, the formal bridge is
-complete: ℤ_[2] provably carries AFA content as a theorem of ZFC, not an
-import from Aczel.
+complete: ℤ_[2] carries the LATTICE SHADOW of AFA content as a theorem of ZFC, rather
+than as an import from Aczel. ⚠ Read that with the fence
+ZeroParadox/Computability/SelfApp.lean applies to the same gloss: what is proved here is that the
+scale map has `bot` as its unique fixed point (`z2_selfMem_singleton`), which is the one-relation
+shadow of the Quine atom — NOT literal set-membership `⊥ ∈ ⊥`, which is a statement of the ZF+AFA
+metatheory and is not expressible on this carrier.
 
 ## The chain
 
@@ -80,7 +84,8 @@ theorem scale_unique_fp_free (x : L) (hfp : ValBridge.scale x = x) : x = ValBrid
   by_contra hne
   exact scale_ne_fixed_free x hne hfp
 
-/-- {x | scale x = x} = {bot} — the AFA uniqueness content, DC-free. -/
+/-- {x | scale x = x} = {bot} — the lattice shadow of AFA uniqueness. Its measured footprint is in
+    the purity block below; no purity claim is made here. -/
 theorem selfMem_eq_singleton_free :
     {x : L | ValBridge.scale x = x} = ({ValBridge.bot} : Set L) := by
   ext x
@@ -94,7 +99,7 @@ theorem selfMem_eq_singleton_free :
     This is the formal instance that ZeroParadox/Valuation/Scale.lean could not build because
     ℤ_[2] is not a ZPSemilattice — showing the ZPSemilattice constraint
     was an encoding artefact, not a mathematical requirement. -/
--- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: ℤ_[2] is a ring — it cannot be a ZPSemilattice instance and could not satisfy ValuationStructure. ValBridge's bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in ZeroParadox/Valuation/Scale.lean §V (q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale).
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] cannot be a ValuationStructure instance, which requires one. (Being a ring is not itself the obstruction: nothing in ZPSemilattice's axioms mentions a ring operation, and ZPSemilattice ℕ exists.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to theorems proved in ZeroParadox/Valuation/Scale.lean §V (q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale).
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)
@@ -166,7 +171,7 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
     So the non-members are the **finite carriers with two or more points**, plus `Empty` — which is
     a subsingleton but not a member, since `bot : L` is a field requiring inhabitation. Write it as
     *the inhabited subsingletons and the infinite carriers*, never "the subsingletons".
-    `valBridge_bool_isEmpty` records the smallest non-member.
+    `valBridge_bool_isEmpty` records the smallest **inhabited** non-member; `Empty` is smaller still.
 
     ⚠ **`[ValBridge L]` therefore constrains cardinality and nothing else.** It does not
     distinguish `instZ2ValBridge` from arbitrary bookkeeping: the construction in
@@ -177,8 +182,9 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
     **The two-element case was already recorded in this corpus, and this section is its general
     form.** ZeroParadox/Settheory/OntBridge.lean notes that `OntologicalStates` cannot satisfy
     `val_scale` because "a finite two-element type has no room for val to strictly increase".
-    `valBridge_forces_infinite` is that obstruction at every finite carrier rather than at two,
-    stated for `ValBridge` so the ring track (ℤ_[2]) is covered as well.
+    `valBridge_forces_infinite` is that obstruction at every finite carrier **with two or more
+    points** rather than at exactly two, stated for `ValBridge` so the ring track (ℤ_[2]) is covered
+    as well.
 
     ### Prior art — the general form is ZeroParadox/Order/OrbitDichotomy.lean, and the delta is real
 
@@ -201,20 +207,41 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
     The owning branch is valuation theory, and its standard statements all use multiplicative
     structure this class deliberately drops. The strongest is **F.-V. Kuhlmann, *Valuation Theory*,
     Ch. 4, Corollary 4.13**: *"The only fields which do not admit non-trivial places are precisely
-    the algebraic extensions of finite fields."* The credit points outward: `ValBridge` has no ring
-    structure at all — a set, a point, a self-map and an `ℕ∞`-valued function — so this section's
-    version is **more general and correspondingly more elementary**, not a strengthening of theirs.
+    the algebraic extensions of finite fields."*
 
-    The degenerate half is the universal-algebra commonplace that
-    ZeroParadox/Valuation/InfinitudeFloor.lean already cites for the same purpose: **Burris &
-    Sankappanavar, *A Course in Universal Algebra* (1981), Theorem 2.25 and its proof** — *"trivial
-    algebras satisfy any quasi-identity."* That is why `trivialValBridge` exists at all, and why a
-    non-degeneracy condition has to be an inequation (`Nontrivial`), never a further equation.
+    ⚠ **State the relation as SETTING, not as strength — the two results are incomparable.** This
+    section's setting is more general: `ValBridge` has no ring structure at all, just a set, a point,
+    a self-map and an `ℕ∞`-valued function. The *results* neither contain the other, and the witness
+    is `F̄_p`, the algebraic closure of a finite field — **infinite**, so this section says nothing
+    about it, while Kuhlmann's corollary rules out a non-trivial place on it. Nothing here is a
+    strengthening of anything there; the credit points outward.
+
+    The degenerate half has its citation **already written, one file away**: see the prior-art
+    paragraph of ZeroParadox/Valuation/InfinitudeFloor.lean, which reads three passages of Burris &
+    Sankappanavar, *A Course in Universal Algebra* (1981) from the filed copy and correctly names the
+    **load-bearing** one — *"As a trivial algebra cannot satisfy a negated atomic formula, exactly one
+    of Ψ₁, …, Ψₖ is atomic"* — as why a non-degeneracy condition must be stated as an **inequation**
+    (`Nontrivial`) and never as a further equation. Read it there rather than re-copying it here.
+
+    ⚠ **The neighbouring passage does not reach this class, so do not cite it here.** *"Trivial
+    algebras satisfy any quasi-identity"* is about quasi-identities, and `val_scale` is not one: its
+    antecedent `x ≠ bot` is a **negated** atom, where a quasi-identity admits only positive ones. The
+    reason `trivialValBridge` survives is simpler and needs no universal algebra — that guard is
+    vacuous on a subsingleton. What the Burris material supplies is the **shape** of the fix, not the
+    fact.
 
     **Standard names for the three ingredients**, none of which this corpus had used: `(L, scale)` is
-    a **mono-unary algebra** (a **unar**); the pair `val bot = ⊤` with `val x = ⊤ → x = bot` is a
-    **separated (Hausdorff) filtration**; and the conclusion's mechanism, exhibiting `ℕ ↪ L`, is
-    **Dedekind-infinite**.
+    a **mono-unary algebra** (a **unar**); the pair `val bot = ⊤` with `val x = ⊤ → x = bot` is
+    **separatedness (Hausdorff) in its order-function form** — ⚠ not a filtration itself, since a
+    filtration is a descending chain of additive subgroups and this carrier has no addition; and the
+    conclusion's mechanism, exhibiting `ℕ ↪ L`, is **Dedekind-infinite**.
+
+    ⚠ **Where the choice comes in, measured rather than inferred.** `valBridge_nonempty_iff` and
+    `nonempty_valBridge_of_infinite` both measure `[propext, Classical.choice, Quot.sound]` in the
+    purity block below, and the route is `Infinite.natEmbedding`, which supplies the ℕ-embedding the
+    converse construction needs. The forcing half (`valBridge_forces_infinite`) produces such an
+    embedding outright, so the classical content sits in reading `Infinite` as *Dedekind*-infinite on
+    the converse side. No claim is made here about whether a choice-free restatement exists.
 
     `Reading:` **COINCIDENCE** — the characterisation has the same shape as
     `infinitudeFloor_nonempty_iff_infinite` (ZeroParadox/Valuation/InfinitudeFloor.lean), which

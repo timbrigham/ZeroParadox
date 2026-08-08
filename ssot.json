@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1663,
+        "declarations": 1665,
         "files": 136
       },
       "entries": [
@@ -6718,6 +6718,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "16f57fa0-a9bd-4bfe-8aac-ce72b24b2f64",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trivialZPSemilattice",
+            "short": "trivialZPSemilattice"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "order"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Round-3 gate fix: degenerate witnesses establishing that the NO-GO gauge's bound is sharp for ValuationStructure, not only for ValBridge",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -36585,6 +36623,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "99782a7c-3224-40ea-8645-545bc60185fc",
+          "new": {
+            "file": "ZeroParadox/Valuation/Scale.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trivialValuationStructure",
+            "short": "trivialValuationStructure"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Round-3 gate fix: degenerate witnesses establishing that the NO-GO gauge's bound is sharp for ValuationStructure, not only for ValBridge",
           "verify": {
             "axioms": null,
             "sorry_free": true
