@@ -743,6 +743,24 @@ QPF.Cofix  (TYPE)    [propext, Classical.choice, Quot.sound]  <-- inherits via M
 strict_cofix_nonempty          no axioms       -- clean because it only BUILDS, never destructs
 Ordinal    (TYPE)              [propext, Quot.sound]                    -- choice-FREE
 Ordinal.instLinearOrder        [propext, Classical.choice, Quot.sound]  -- the instance hazard
+
+-- THE TWO LAYERS ARE CLEANLY SEPARATED. Measured 2026-08-08 after Tim asked whether
+-- collapsing the hand-built ZPCategory instances would cost choice-freedom.
+CategoryTheory.Category        no axioms                                -- clean base
+CategoryTheory.Limits.IsLimit  [propext, Classical.choice, Quot.sound]  <-- the TYPE
+  -- `IsInitial` is defined over `IsLimit`, and `ZPCategory.zpIsInitial` IS an
+  -- `IsInitial`. So NO ZPCategory instance can ever be choice-free - not a defect and
+  -- not removable by better proving, the same shape as `QPF.Cofix` above.
+natZPCategory / nnrealZPCategory / forkZPCategory
+                               [propext, Classical.choice, Quot.sound]  -- ALL of them
+Preorder.smallCategory         no axioms  -- the Mathlib instance a generalization uses
+
+ZPSemilattice        (CLASS)   no axioms  ]  the choice-free CORE, untouched by any
+t_snap_derived                 no axioms  ]  of the above. Different class, different
+t_snap_irreversible            no axioms  ]  base. `ZPCategory` is NOT `ZPSemilattice`,
+da2_bottom_characterization    no axioms  ]  and the framework's own scoping - "the
+ZPSemilattice.bot_le           no axioms  ]  framework is not choice-free; the CORE
+ZPSemilattice.cc1              no axioms  ]  is" - is exactly right.
 Ordinal.nfp / .epsilon         [propext, Classical.choice, Quot.sound]
 padicValNat                    [propext, Classical.choice, Quot.sound]
 ```
