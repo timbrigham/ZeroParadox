@@ -526,8 +526,39 @@ innocent causes, and all four were hit in one day:
 
 **The rule.** Before writing *"not in Mathlib"*, *"the corpus does not have"*, *"no instance exists"*, or
 any dated survey negative: **(a)** confirm the name is imported and elaborates at all, **(b)** re-run
-with universes explicit, **(c)** grep the concept in at least two vocabularies, and **(d)** ask whether
-it decomposes. Then write **"not located as of &lt;date&gt;, searched as follows"** — never *"absent"*.
+with universes explicit, **(c)** **run THREE phrasings, and make one of them the INVERSE** (see below),
+and **(d)** ask whether it decomposes. Then write **"not located as of &lt;date&gt;, searched as
+follows"** — never *"absent"*.
+
+### (c) in full — THREE PHRASINGS, ONE OF THEM THE INVERSE. Tim's rule, 2026-08-07, and it is measured.
+
+Step (c) used to read *"grep the concept in at least two vocabularies"*. That is the right principle and
+it kept failing, because it says nothing about **which** vocabularies. The operational form:
+
+1. **The direct phrasing** — the words you would use.
+2. **The concept phrasing** — the words the *domain* would use, not the ones you would have chosen.
+3. **The INVERSE phrasing** — how the corpus would say it if it *disagreed* with you, or stated the
+   same fact from the other side. **This is the one that pays, and it is the one nobody runs.**
+
+**Measured against the two most expensive false negatives of 2026-08-07, both of which shipped into
+docstrings as fact before a gate caught them:**
+
+| the claim | phrasing (1), what was run | the INVERSE, what should have been run |
+|---|---|---|
+| *"the corpus never measured seed-independence"* | `seed-independent` → **0 hits** | `"a seed, not"` → lands directly on `Epsilon0MinMax.lean` § I-b, which states the theorem, the proof route, and the verdict *"Elementary and not novel"* |
+| *"every `Tendsto` in the corpus runs inward"* | `atTop (nhds _)` → 13 files, all convergent | `atTop atTop` → the divergences, immediately, in files the survey never saw |
+
+**Why the inverse specifically.** A corpus records a fact in whichever polarity its author found natural,
+and that is frequently the opposite of yours. *"Seed-independent"* and *"⊥ is **a** seed, not a
+distinguished one"* are the same fact; only one of them is greppable from the other. Likewise
+*"converges"* / *"diverges"*, *"is available"* / *"cannot be stated"*, *"is used"* / *"has no call
+sites"*. **A single-polarity grep is a detector with a blind half**, and this file's own
+*"VERIFY THE DETECTOR BEFORE BELIEVING A ZERO"* applies to it.
+
+**A bonus worth expecting:** the inverse grep surfaces the corpus's *idioms*. `"a seed, not a
+distinguished one"` also returned `Computability/Kleene.lean`'s *"computational quine, not a
+distinguished one"* — the same sentence shape used for a different object. Finding the idiom is how you
+find the other places the claim is made.
 
 **Why this is its own section and not a footnote.** This file already says
 *"VERIFY THE DETECTOR BEFORE BELIEVING A ZERO"* — but scoped to `check_modal.py`, so it did not fire for
