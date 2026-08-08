@@ -716,6 +716,21 @@ in the wrong shape passes and teaches you nothing: the wrapped probe was written
 a false all-clear. Keep a reproduction script in the scratchpad with **both** must-fire and
 must-suppress controls; a checker that fires on everything is as useless as one that fires on nothing.
 
+⚠ **AND BEFORE BELIEVING A NON-ZERO. A false POSITIVE is the more expensive error, because it
+manufactures work that looks urgent.** Measured 2026-08-08: a survey of prose axiom-footprint claims
+reported **6 mismatches against measured truth**, and that figure was relayed as fact before the hits
+were read. Read individually, **all six were the detector's** — it attributed each bracketed axiom
+list to the nearest backticked identifier, and in flowing prose the bracket normally belongs to the
+*previous* clause. Three cited the bare type `Ordinal` (genuinely `[propext, Quot.sound]`) inside
+sentences about declarations that inherit choice *through* it; two had the name opening the next
+sentence; one was a cross-reference sitting above the declaration the claim was actually about.
+**True corpus mismatches: zero.**
+- **The rule: READ EVERY HIT BEFORE REPORTING A COUNT.** This file already says *"Read hits, do not
+  count them"* for `check_modal`. It generalizes to every survey, and to positives as much as zeros.
+- **Attribution-by-proximity is the specific trap.** Prose is not a table. If a detector must guess
+  which declaration a sentence is *about*, its output is a **reading list, not a finding list** —
+  label it that way, and resolve each entry at the artifact before it becomes a number.
+
 **The measured facts worth not re-deriving** (⚠ the first version of this block listed only
 `PFunctor.M no axioms` and that half-truth immediately re-seeded a bedrock defect — see below):
 ```
