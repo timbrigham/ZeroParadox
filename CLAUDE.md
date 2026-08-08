@@ -1023,6 +1023,17 @@ is how you find the shape and searching returns noise. Build, then search before
 trigger is nameability, not a stopwatch — a rule of "never build first" would be wrong and would
 stop real work.
 
+⚠ **"Then search before promoting" is the half that gets skipped — measured 2026-08-08.** A
+requirements-class degeneracy audit (a survey, correctly un-searchable in advance) produced a
+**theorem**: the valuation axioms force an infinite carrier. The corpus grep run before the audit
+covered the **class names** (`ValBridge`, `ValuationStructure`) and never the **claim** —
+*one or infinitely many*, *no finite middle*, *orbit*, *periodic point*. `Order/OrbitDichotomy.lean`
+already proved that shape and its own header **named the framework's scale map as the checkable
+branch of it**; cross-references between the files, both directions, were zero. **When a survey turns
+into a theorem, the prior-art clock restarts — the search that justified the investigation does not
+cover the mathematics that came out of it.** (The delta was real, so the fix was a pointer, not a
+revert: the trunk assumes `Function.Injective s`, which the class does not supply.)
+
 **Standard framing, once found, is ADOPTED — not noted and worked around** (Tim, 2026-07-27:
 *"anytime that we have official framing we need to make use of it"*). Keep the framework's own
 label as the handle where one exists (the CC-2 / AX-B1 pattern: `HasFirstStep` stayed a name and
