@@ -719,10 +719,23 @@ gate-findings archive once it is closed. Both are read when choosing work; a doc
 doing mathematics. **The defects that recurred despite earlier fixes did not recur because a docstring
 lacked a retraction — they recurred because the ledger was not consulted.**
 
-⚠ **This does NOT license silent repair of a live error.** Fixing a false claim still means the false
-claim is gone and the true one stated — that is the whole job. What it forbids is **keeping a narrative
-of the repair** in a tracked file. And it does not touch the dated-survey convention (*"none located as
-of &lt;date&gt;"*), which records a **measurement**, not a prior state.
+**YES, THIS MEANS FIX IT SILENTLY — in the file.** (Tim asked directly; an earlier version of this
+paragraph said the opposite two sentences after saying this, which is the rule about error-narratives
+containing an error-narrative contradiction.) **Delete the false claim, state the true one, and let the
+COMMIT MESSAGE be the narrative.** That is its job, it is versioned, and it is where a reader looking
+for history will actually go.
+
+**The record is never lost, because it lives in three places that are not the docstring:** the commit
+message, `.claude-local/DEFECTS.md` while the defect is open, and the session itself. **The only thing
+being removed is a fourth copy — the one that cannot be checked, drifts, and accumulates.**
+
+⚠ **The narrow thing that is NOT permitted:** letting a fix be invisible **everywhere**. Do not skip
+the ledger on an open defect, do not bury a substantive correction under a vague commit subject, and do
+not decline to surface it — cross-arc patterns are caught by the human, repeatedly and by measurement,
+and he cannot catch what he is not told. **Silent in the artifact, recorded in the process.**
+
+⚠ And this does not touch the dated-survey convention (*"none located as of &lt;date&gt;"*), which
+records a **measurement**, not a prior state.
 
 ### The cap is enforced by the REVIEWER, not by the caller — pass it the round number
 
