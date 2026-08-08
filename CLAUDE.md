@@ -252,6 +252,41 @@ cannot self-detect vocabulary drift, so discipline-level rules fail here by cons
 deliberate. The checker allowlists them, and anything that starts crying wolf must be narrowed, not
 tolerated — a muted gate is worse than none.
 
+## A requirements class is only informative if something FAILS to be a member. Gate-enforced.
+
+**Five of seventeen classes in this corpus are degenerate or bundle a commitment as data. That is one
+design habit, not five incidents** — writing a class without asking what it EXCLUDES:
+
+| class | verdict |
+|---|---|
+| `WheelValuationStructure` | constant-`⊤` valuation satisfies every field on any commutative ring → `WVSNondegenerate` added |
+| `AbstractSelfApp` | `trivialSelfApp` inhabits it, so *"L carries it, therefore…"* is vacuous |
+| `InfinitudeFloor` | characterised 2026-08-07 as **exactly** `Infinite α` — nothing more |
+| `SeparatedSuccession` | `Unit` + the always-true relation discharges every field (2026-08-07) |
+| `KleeneStructure` | bundles a `Code` (data) with the assertion that it names ⊥ (commitment) |
+
+**The check is mechanical and cheap: BUILD THE TRIVIAL WITNESS, or prove you cannot.** Both answers are
+worth having — a failed attempt is evidence the class has teeth. Do it **before** citing membership as
+meaningful, because a vacuous class makes every downstream *"X carries this, therefore…"* empty.
+
+**⚠ The failure is invisible from inside.** Every one of the five was found by someone building a
+witness, never by reading the class. `SeparatedSuccession`'s `separated` field even carries the comment
+*"the succession never repeats"* while admitting a **constant** sequence — the comment asserts what the
+field does not enforce.
+
+**Enforcement (2026-08-07, Tim's call — mechanical because this is the FIFTH convention of this shape
+and the earlier four all leak).** `python .claude-local/check_classes.py` WARNS at commit;
+`--block` ENFORCES at push. It cannot decide degeneracy (that needs a witness); it enforces that the
+question was **asked** — a `NO-GO` section, a `Nondegenerate` predicate, or a named trivial witness in
+the declaring file. Same design as `check_pov.py`: enforce that a convention was followed, never that a
+claim is true. **Baselined at 18 grandfathered sites; blocks on NEW classes only.** Shrink the baseline
+as files are touched; `SeparatedSuccession` is first to remove (tracked as `SEP-1`).
+
+**Detector verified before use**, per this file's own rule: it fires on `SeparatedSuccession` (the
+known-degenerate case, found by hand the same day) and suppresses `InfinitudeFloor`,
+`WheelValuationStructure` and `AbstractSelfApp` (where the question was asked). A checker with only a
+must-fire control is half-tested.
+
 ## The recurring defect is UNSTATED ADJACENCY — the fix is a pointer, not a theorem
 
 **This corpus's characteristic failure is not wrong theorems. It is true theorems whose reach nobody
