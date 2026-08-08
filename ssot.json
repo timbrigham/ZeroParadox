@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1652,
+        "declarations": 1660,
         "files": 136
       },
       "entries": [
@@ -3579,6 +3579,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "0abe14a0-3939-4520-8f1c-9f83cca860eb",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.valBridge_forces_infinite",
+            "short": "valBridge_forces_infinite"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10935,6 +10973,44 @@
           "reason": "ontology-revamp: new HEAD declaration",
           "verify": {
             "axioms": [],
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "29c5abd2-d841-4ec1-98d5-6bacd930da19",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.trivialValBridge",
+            "short": "trivialValBridge"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
+          "verify": {
+            "axioms": null,
             "sorry_free": true
           }
         },
@@ -18793,6 +18869,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "4ca67619-abd3-4b0b-a469-d5b2bfc90dc3",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.valuationStructure_forces_infinite",
+            "short": "valuationStructure_forces_infinite"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "4cba5a94-0be2-4fd9-828f-6672f93b4cc8",
           "new": {
@@ -24393,6 +24507,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "657cf8c3-d69c-4443-a834-267701ba3563",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_valBridge_of_finite",
+            "short": "no_valBridge_of_finite"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "6618472d-4e44-455f-bda2-bf117bb9387f",
           "new": {
@@ -24529,6 +24681,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "66a36bf7-8fde-4017-a0ca-51a226c3bab9",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.scale_ne_bot_free",
+            "short": "scale_ne_bot_free"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -40539,6 +40729,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "acab3872-e307-4747-8730-a49eedab7583",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.valBridge_bool_isEmpty",
+            "short": "valBridge_bool_isEmpty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "acb783f8-7385-4ed0-a908-db5c0d95ddd5",
           "new": {
@@ -45178,6 +45406,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "c0005973-6838-49c7-afef-cc0f2d3c5d3c",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.valBridge_nonempty_infinitudeFloor",
+            "short": "valBridge_nonempty_infinitudeFloor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57389,6 +57655,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f454e0d5-9f93-4891-a0ad-3cd8fa6f35b1",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.orbit_ne_bot_and_val_free",
+            "short": "orbit_ne_bot_and_val_free"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
           "verify": {
             "axioms": null,
             "sorry_free": true

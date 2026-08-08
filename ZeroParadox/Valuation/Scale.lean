@@ -73,6 +73,15 @@ class ValuationStructure (L : Type*) [ZPSemilattice L] where
   val_unique : ∀ x : L, val x = ⊤ → x = bot
   val_scale  : ∀ x : L, x ≠ bot → val (scale x) = val x + 1
 
+/-! ### NO-GO gauge for this class — recorded in the sibling file
+
+    What FAILS to be a `ValuationStructure`: every carrier with a point other than `bot` is forced
+    INFINITE, so the finite members are exactly the subsingletons and `Bool` admits none. The gauge
+    is proved once for `ValBridge` and inherited here through the `toValBridge` instance —
+    `valuationStructure_forces_infinite`, with the degenerate one-point witness `trivialValBridge`
+    showing the bound is sharp. Full statement and proof:
+    ZeroParadox/Valuation/ScaleBridge.lean § VI. -/
+
 /-! ## § II. Derived Theorems from ValuationStructure -/
 
 variable {L : Type*} [ZPSemilattice L] [ValuationStructure L]
