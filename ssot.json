@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1660,
+        "declarations": 1663,
         "files": 136
       },
       "entries": [
@@ -5104,6 +5104,38 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "10964a75-a91d-43f0-af78-242d67e4ea8a",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.valBridge_nonempty_iff",
+            "short": "valBridge_nonempty_iff"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "Round-2 gate fixes: the converse is now proved, so the class is characterised exactly",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -10128,6 +10160,38 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "26676e31-8977-4c5d-b459-14b9b0952d29",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nonempty_valBridge_of_infinite",
+            "short": "nonempty_valBridge_of_infinite"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "Round-2 gate fixes: the converse is now proved, so the class is characterised exactly",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -41912,6 +41976,38 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "b1e0b02f-2996-4e2f-949e-81935f681f98",
+          "new": {
+            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nonempty_valBridge_of_inhabited_subsingleton",
+            "short": "nonempty_valBridge_of_inhabited_subsingleton"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [],
+            "object": [],
+            "role": []
+          },
+          "reason": "Round-2 gate fixes: the converse is now proved, so the class is characterised exactly",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "b1e76cb0-3929-49de-93f9-840bd0832253",
           "new": {
             "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
@@ -45421,8 +45517,8 @@
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.valBridge_nonempty_infinitudeFloor",
-            "short": "valBridge_nonempty_infinitudeFloor"
+            "qualified": "ZeroParadox.valBridge_nonempty_iff",
+            "short": "valBridge_nonempty_iff"
           },
           "old": {
             "file": null,
@@ -45443,7 +45539,7 @@
               "face"
             ]
           },
-          "reason": "ScaleBridge.lean § VI — NO-GO gauge for ValBridge/ValuationStructure (failure-condition backfill)",
+          "reason": "Slot reused: valBridge_nonempty_infinitudeFloor was removed in round-2 gate fixes and replaced by the characterisation theorem in the same section.",
           "verify": {
             "axioms": null,
             "sorry_free": true

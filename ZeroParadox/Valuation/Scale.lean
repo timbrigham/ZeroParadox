@@ -76,10 +76,17 @@ class ValuationStructure (L : Type*) [ZPSemilattice L] where
 /-! ### NO-GO gauge for this class — recorded in the sibling file
 
     What FAILS to be a `ValuationStructure`: every carrier with a point other than `bot` is forced
-    INFINITE, so the finite members are exactly the subsingletons and `Bool` admits none. The gauge
-    is proved once for `ValBridge` and inherited here through the `toValBridge` instance —
-    `valuationStructure_forces_infinite`, with the degenerate one-point witness `trivialValBridge`
-    showing the bound is sharp. Full statement and proof:
+    INFINITE, so no finite carrier with two or more points admits one. The gauge is proved once for
+    `ValBridge` and reaches this class through the `toValBridge` instance of
+    ZeroParadox/Valuation/ScaleBridge.lean § V — `valuationStructure_forces_infinite`.
+
+    ⚠ **Only the FORCING half transfers.** `toValBridge` runs `ValuationStructure ⇒ ValBridge`, so
+    it carries obstructions INTO this class and cannot carry membership witnesses back:
+    `trivialValBridge` inhabits `ValBridge Unit`, not `ValuationStructure Unit`, and no such witness
+    is constructible at HEAD, where every registered `ZPSemilattice` instance is on `ℕ`, `ℕ∞`,
+    `End`, `MachinePhase` or `OntologicalStates` — none on `Unit` or `Bool`. Whether the bound is
+    sharp FOR THIS CLASS is therefore open, and the sibling's characterisation
+    (`valBridge_nonempty_iff`) is a statement about `ValBridge` alone. Full statement and proof:
     ZeroParadox/Valuation/ScaleBridge.lean § VI. -/
 
 /-! ## § II. Derived Theorems from ValuationStructure -/

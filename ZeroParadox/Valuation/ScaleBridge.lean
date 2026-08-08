@@ -1,5 +1,4 @@
 import ZeroParadox.Valuation.Scale
-import ZeroParadox.Valuation.InfinitudeFloor
 import Mathlib.Tactic
 
 /-!
@@ -153,28 +152,43 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
     A requirements class carries information only where something fails to be a member, so this
     section records the failure condition instead of leaving it to be rediscovered at a use site.
 
-    **The answer is sharp in both directions.** The one-point carrier satisfies all four axioms
-    (`trivialValBridge`), because `val_scale` is guarded by `x ≠ bot` and is therefore vacuous
-    there. Every other carrier is forced INFINITE (`valBridge_forces_infinite`): from any `x ≠ bot`
-    the scale orbit `scale^[k] x` never reaches `bot` and its valuation climbs by exactly one per
-    step, so `k ↦ scale^[k] x` is injective. The finite `ValBridge` carriers are therefore exactly
-    the subsingletons, and `Bool` — the smallest carrier with a bottom and one other point — admits
-    none at all (`valBridge_bool_isEmpty`).
+    **The membership question is settled exactly** (`valBridge_nonempty_iff`):
 
-    So the class is not vacuous: `[ValBridge L]` in a hypothesis genuinely excludes carriers, and
-    `instZ2ValBridge` above is a non-degenerate witness on an infinite carrier. What is NOT proved
-    here is the converse — whether every infinite carrier admits a `ValBridge` is left open.
+      `Nonempty (ValBridge α) ↔ Infinite α ∨ (Nonempty α ∧ Subsingleton α)`
 
-    `Statement:` **COINCIDENCE** — `valBridge_nonempty_infinitudeFloor` records that a nontrivial
-    `ValBridge` carrier meets `InfinitudeFloor` (ZeroParadox/Valuation/InfinitudeFloor.lean), whose
-    field `cx_floor_eq_iSup` states that the floor's complexity is the supremum of the members'.
-    The two classes constrain the carrier's cardinality identically on this side, by
-    `infinitudeFloor_nonempty_iff_infinite`.
-    `Reading:` the valuation climbing without bound along the orbit, and the floor carrying the
-    value ⊤, are the framework's zero and infinity poles read on one carrier. The theorem below
-    establishes the membership only; it asserts no identity between the two classes, and the
-    canonical witness (taking `member` to be the scale orbit itself, rather than the arbitrary
-    embedding `infinitudeFloor_nonempty_iff_infinite` supplies) is not built. -/
+    The forcing half is `valBridge_forces_infinite`: from any `x ≠ bot` the scale orbit
+    `scale^[k] x` never reaches `bot` and its valuation climbs by exactly one per step, so
+    `k ↦ scale^[k] x` is injective. The one-point carrier is a member because `val_scale` is guarded
+    by `x ≠ bot` and is vacuous there (`trivialValBridge`). Both converse directions are built:
+    `nonempty_valBridge_of_infinite` places the orbit along an ℕ-embedding, and
+    `nonempty_valBridge_of_inhabited_subsingleton` is the degenerate case.
+
+    So the non-members are the **finite carriers with two or more points**, plus `Empty` — which is
+    a subsingleton but not a member, since `bot : L` is a field requiring inhabitation. Write it as
+    *the inhabited subsingletons and the infinite carriers*, never "the subsingletons".
+    `valBridge_bool_isEmpty` records the smallest non-member.
+
+    ⚠ **`[ValBridge L]` therefore constrains cardinality and nothing else.** It does not
+    distinguish `instZ2ValBridge` from arbitrary bookkeeping: the construction in
+    `nonempty_valBridge_of_infinite` equips *any* infinite carrier, so the substance of the ℤ_[2]
+    instance lives in its chosen `scale` and `val` (multiplication by 2 and the 2-adic valuation),
+    never in class membership. Do not cite membership as evidence that a witness is non-degenerate.
+
+    **The two-element case was already recorded in this corpus, and this section is its general
+    form.** ZeroParadox/Settheory/OntBridge.lean notes that `OntologicalStates` cannot satisfy
+    `val_scale` because "a finite two-element type has no room for val to strictly increase".
+    `valBridge_forces_infinite` is that obstruction at every finite carrier rather than at two,
+    stated for `ValBridge` so the ring track (ℤ_[2]) is covered as well.
+
+    `Reading:` **COINCIDENCE** — the characterisation has the same shape as
+    `infinitudeFloor_nonempty_iff_infinite` (ZeroParadox/Valuation/InfinitudeFloor.lean), which
+    pins that class to exactly `Infinite`; the valuation climbing without bound along the orbit and
+    the floor carrying the value ⊤ read as the framework's zero and infinity poles on one carrier.
+    **This is a reading and carries no declaration and no import here.** A membership transfer
+    would be witnessed by an arbitrary ℕ-embedding whose `floor` and `cx` are unrelated to `bot`
+    and `val`, so it would not witness the coincidence it names; the canonical witness — `member`
+    the scale orbit itself, `cx` the valuation — is what would, and is not built. That file is also
+    branch scaffolding by its own header, a second reason this one does not import it. -/
 
 /-- The scale of a non-bottom point is never the bottom: it would force `val x = ⊤`, and
     `val_unique` then puts `x` at the bottom. -/
@@ -221,7 +235,8 @@ theorem valBridge_forces_infinite [Nontrivial L] : Infinite L := by
   rw [hjk, hk] at hj
   exact Nat.cast_injective (WithTop.add_left_cancel hfin hj.symm)
 
-/-- Contrapositive of the gauge: a finite carrier with more than one point admits no `ValBridge`. -/
+/-- The gauge as an emptiness statement: a finite carrier with more than one point admits no
+    `ValBridge`, since membership would make it infinite. -/
 theorem no_valBridge_of_finite (N : Type*) [Finite N] [Nontrivial N] : IsEmpty (ValBridge N) :=
   ⟨fun I => by
     haveI := I
@@ -249,13 +264,67 @@ theorem valuationStructure_forces_infinite (M : Type*) [ZeroParadox.ZPSemilattic
     [ValuationStructure M] [Nontrivial M] : Infinite M :=
   valBridge_forces_infinite
 
-/-- A nontrivial `ValBridge` carrier meets `InfinitudeFloor`
-    (ZeroParadox/Valuation/InfinitudeFloor.lean): both classes pin the carrier to `Infinite` on
-    this side, so membership transfers through
-    `infinitudeFloor_nonempty_iff_infinite`. -/
-theorem valBridge_nonempty_infinitudeFloor (N : Type*) [ValBridge N] [Nontrivial N] :
-    Nonempty (InfinitudeFloor N) :=
-  (infinitudeFloor_nonempty_iff_infinite N).mpr valBridge_forces_infinite
+/-- The converse on the infinite side: **every** infinite carrier admits a `ValBridge`. Place the
+    orbit along an ℕ-embedding `e`, take `e 0` as the bottom, give `e (n+1)` valuation `n`, and send
+    every other point to valuation `0`; `scale` then steps one rung up the embedding. -/
+theorem nonempty_valBridge_of_infinite (α : Type*) [Infinite α] : Nonempty (ValBridge α) := by
+  classical
+  set e : ℕ ↪ α := Infinite.natEmbedding α with he
+  set k : α → ℕ := fun x => if h : ∃ n, e (n + 1) = x then h.choose else 0 with hk
+  have hke : ∀ m : ℕ, k (e (m + 1)) = m := by
+    intro m
+    have h : ∃ n, e (n + 1) = e (m + 1) := ⟨m, rfl⟩
+    simp only [hk, dif_pos h]
+    have := e.injective h.choose_spec
+    omega
+  have hne : ∀ m : ℕ, e (m + 1) ≠ e 0 := by
+    intro m hcon
+    have := e.injective hcon
+    omega
+  exact ⟨{ bot := e 0
+           scale := fun x => if x = e 0 then e 0 else e (k x + 2)
+           val := fun x => if x = e 0 then ⊤ else (k x : ℕ∞)
+           scale_bot := by simp
+           val_bot := by simp
+           val_unique := by
+             intro x hx
+             by_contra hcon
+             rw [if_neg hcon] at hx
+             exact (ENat.coe_ne_top _) hx
+           val_scale := by
+             intro x hx
+             have hs : (if x = e 0 then e 0 else e (k x + 2)) = e ((k x + 1) + 1) := by
+               rw [if_neg hx]
+             rw [hs, if_neg (hne _), hke, if_neg hx]
+             push_cast
+             ring }⟩
+
+/-- The converse on the degenerate side, stated for a general carrier rather than for `Unit`. -/
+theorem nonempty_valBridge_of_inhabited_subsingleton (α : Type*) [Nonempty α] [Subsingleton α] :
+    Nonempty (ValBridge α) :=
+  ⟨{ bot := Classical.arbitrary α
+     scale := id
+     val := fun _ => ⊤
+     scale_bot := rfl
+     val_bot := rfl
+     val_unique := fun x _ => Subsingleton.elim x _
+     val_scale := fun x hx => absurd (Subsingleton.elim x _) hx }⟩
+
+/-- **The characterisation.** `ValBridge` constrains the carrier's cardinality and nothing else:
+    the members are exactly the infinite carriers and the inhabited subsingletons. -/
+theorem valBridge_nonempty_iff (α : Type*) :
+    Nonempty (ValBridge α) ↔ (Infinite α ∨ (Nonempty α ∧ Subsingleton α)) := by
+  constructor
+  · rintro ⟨I⟩
+    haveI := I
+    haveI : Nonempty α := ⟨ValBridge.bot⟩
+    by_cases hs : Subsingleton α
+    · exact Or.inr ⟨inferInstance, hs⟩
+    · haveI : Nontrivial α := not_subsingleton_iff_nontrivial.mp hs
+      exact Or.inl valBridge_forces_infinite
+  · rintro (hi | ⟨hn, hs⟩)
+    · haveI := hi; exact nonempty_valBridge_of_infinite α
+    · haveI := hn; haveI := hs; exact nonempty_valBridge_of_inhabited_subsingleton α
 
 end ZeroParadox
 
@@ -280,6 +349,8 @@ open ZeroParadox
 #print axioms valBridge_bool_isEmpty
 #print axioms trivialValBridge
 #print axioms valuationStructure_forces_infinite
-#print axioms valBridge_nonempty_infinitudeFloor
+#print axioms nonempty_valBridge_of_infinite
+#print axioms nonempty_valBridge_of_inhabited_subsingleton
+#print axioms valBridge_nonempty_iff
 
 end PurityCheck
