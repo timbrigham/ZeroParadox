@@ -362,12 +362,30 @@ they cannot overclaim, essentially absent.
 
 **ENFORCEMENT — mechanical, because this is the SIXTH convention of this shape and the previous
 five all leaked.** `python .claude-local/check_prose.py` WARNS at commit; `--block` ENFORCES at
-push (`pre-push` § 3b-e). Five rules: a module-doc block over **10 lines** (just above the p90 for
-file headers); a docstring longer than its declaration; a declaration with **no** docstring
-(`private` and `example` exempt); a `#check` with **no gloss**; and a gloss carrying **no
-`Statement:`/`Reading:` label**. Corpus at adoption — blocks 98, over-long docstrings 381,
-undocumented declarations 119, bare `#check`s 63, unlabelled glosses 140 — 797 after the vendored
-exemption. **Baselined at 778 sites — fires on NEW and EDITED prose only.**
+push (`pre-push` § 3b-e). **FOUR rules** (a fifth was retired 2026-08-08, below): a module-doc
+block over **10 lines** (just above the p90 for file headers); a docstring longer than its
+declaration; a `#check` with **no gloss**; and a gloss carrying **no `Statement:`/`Reading:`
+label**. **Fires on NEW and EDITED prose only.**
+
+⚠ **RETIRED — "a declaration with no docstring".** It was the only rule here that **demanded**
+prose rather than capping it, and authoring is where this corpus's defects come from: measured
+across one arc, roughly **one hand-written gloss in seven was false, while deletions produced
+none**. What it demanded is also redundant now — the public CI run summary publishes every
+declaration's axiom footprint and the build emits its elaborated signature, both regenerated per
+run and neither hand-maintained, so a docstring restating a signature is a second copy that can
+drift while the artifact cannot. Retiring it removed **119 sites by amending a rule rather than by
+writing anything**, which is the only category of burndown with a zero error rate. **An
+interpretive docstring is still welcome everywhere — it is simply no longer mandatory**, and the
+caps on over-long ones are untouched.
+- **The `bare` rule was deliberately NOT retired with it.** 17 of the 27 open bare-`#check` sites
+  are inside `CannotBe` indexes, which are reader maps for people who do not read Lean signatures;
+  a bare index line tells them nothing. Those stay real debt.
+- **The baseline was PRUNED, not regenerated.** `--baseline` rebuilds from whatever violates today
+  and can grandfather a site nobody has read, which would falsify the baseline's own premise that
+  each entry was verified by reading it. Removing a subset cannot add anything: 881 → 775 keys,
+  strict-subset assertion enforced in the pruning script. **Verified end-to-end**: a newly added
+  undocumented declaration no longer blocks (exit 0) and a newly added bare `#check` still does
+  (exit 1), with the working tree restored clean.
 Blocks are keyed by a **content hash**, so editing a grandfathered block re-fires it: the
 baseline-shrinking rule enforced rather than remembered. **Detector verified with six controls**
 (must-fire on an oversized block, an oversized docstring, an undocumented declaration, a bare
