@@ -418,8 +418,15 @@ it. Three lines refute it — `example (α : Type) : Subsingleton (α ≃ PUnit)
 elaborates, so the theorem holds of `Bool` and says nothing about ⊥. **That reading had been
 certified accurate by an editorial gate one round earlier.** A prose round could not catch it; an
 `example` makes it unwriteable. Same shape for *"the finiteness hypothesis is load-bearing"* (exhibit
-the counterexample without it), *"not* the *period, merely* a *period"* (exhibit a constant code with
-a second period), and *"definitionally `t3_unreachability`"* (`example : @t4 = @t3 := rfl`).
+the counterexample without it) and *"not* the *period, merely* a *period"* (exhibit a constant code
+with a second period).
+
+**⚠ And the probe settles it EITHER WAY — a failing `example` is a finding, not a dead end.** For
+*"definitionally `t3_unreachability`"* the natural probe is `example : @t4 = @t3 := rfl`; **measured
+2026-08-08, it does NOT typecheck** — `t4_chains_forward_only` carries an extra unused binder, so the
+two statements are not the same type and the word *"definitionally"* was wrong. The one-line-
+consequence form does elaborate. **That is the rule working**, and it is why you run the probe
+instead of picking the phrasing that sounds safest.
 
 **This is the NO-GO gauge (`.claude-local/notes/nogo_gauges_2026-06-29.md`, discipline (b) — *name
 the obstruction in advance*) pointed at readings for the first time.** It also lands on the right
