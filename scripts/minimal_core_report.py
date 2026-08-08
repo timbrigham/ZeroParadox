@@ -17,18 +17,33 @@ try:
 except Exception:
     pass
 
-if len(sys.argv) < 2:
-    sys.stderr.write("usage: minimal_core_report.py <lean-elaboration-log>\n")
+if len(sys.argv) < 3:
+    sys.stderr.write(
+        "usage: minimal_core_report.py <lean-elaboration-log> <lean-exit-code>\n"
+        "the exit code is REQUIRED - deciding success from log text fails open\n")
     sys.exit(2)
 
 log = open(sys.argv[1], encoding="utf-8", errors="replace").read()
+try:
+    lean_rc = int(sys.argv[2])
+except ValueError:
+    sys.stderr.write(f"lean-exit-code must be an integer, got {sys.argv[2]!r}\n")
+    sys.exit(2)
 
-# NOT a substring test for "sorry". 21 corpus files carry the word in prose, in lines
-# like "all axiom proofs sorry-free", so a substring test fails a file for announcing
-# that it is clean. Lean's actual warning uses BACKTICKS - measured against the pinned
-# toolchain 2026-08-08; do not retype it from memory.
+# THE EXIT STATUS IS THE AUTHORITY. This used to be `"error:" not in log`, which fails
+# OPEN: Lean tags some diagnostics `error(lean.unknownIdentifier):`, which does not
+# contain `error:`; a killed process writes no `error:` at all; and an empty log
+# trivially contains none. All three published "verified" and exited 0. Measured
+# 2026-08-08. Text is supporting evidence, never the verdict.
+#
+# For `sorry`, check BOTH forms. `sorryAx` in an axiom footprint is what the kernel
+# records and survives reformatting; the warning (BACKTICKED - measured against the
+# pin, do not retype from memory) catches a sorry in a declaration with no
+# `#print axioms` beside it. A plain substring test for "sorry" is wrong in the other
+# direction: it also matches `nanoda-allow-sorry` and similar log furniture.
 SORRY_WARNING = "declaration uses `sorry`"
-ok = ("error:" not in log) and (SORRY_WARNING not in log)
+has_sorry = (SORRY_WARNING in log) or ("sorryAx" in log)
+ok = (lean_rc == 0) and not has_sorry
 
 
 def short(name: str) -> str:

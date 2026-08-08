@@ -32,10 +32,16 @@ jobs:
       - uses: leanprover/lean-action@v1
       - name: Re-elaborate the Minimal Core and write the report
         run: |
-          # No pipefail on the elaboration: a failure must still reach the report.
+          # No pipefail on the elaboration: a failure must still REACH the report.
+          # PIPESTATUS[0] carries Lean's real exit status past the tee - the report takes
+          # it as the verdict, because deciding success from log text fails open (Lean
+          # tags some diagnostics `error(lean.xxx):`, which contains no `error:`).
           lake env lean ZeroParadox/Miniature.lean 2>&1 | tee mc.log
+          LEAN_RC=${PIPESTATUS[0]}
+          echo "lake env lean exited ${LEAN_RC}"
           # pipefail IS required here. Without it the step inherits tee's exit status,
           # so the report's exit 1 was silently green and the "doubles as a CI gate"
           # property did not hold as wired.
           set -o pipefail
-          python3 scripts/minimal_core_report.py mc.log | tee -a "$GITHUB_STEP_SUMMARY"
+          python3 scripts/minimal_core_report.py mc.log "${LEAN_RC}" \
+            | tee -a "$GITHUB_STEP_SUMMARY"

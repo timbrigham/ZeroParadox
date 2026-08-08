@@ -41,10 +41,15 @@ jobs:
           build: false
       - name: Build, and publish what the machine actually checked
         run: |
-          # Deliberately NO pipefail here: a failing build must still reach the report,
-          # which turns "error:" into a VERIFICATION FAILED summary and exits 1 below.
+          # No pipefail on the build: a failing build must still REACH the report, so it
+          # is published as VERIFICATION FAILED rather than aborting the step silently.
+          # PIPESTATUS[0] carries lake's real exit status past the tee - the report
+          # takes it as the verdict, because deciding success from log text fails open.
           lake build 2>&1 | tee build.log
-          # pipefail IS required here - without it the step inherits tee's exit status
-          # and a failing report is silently green.
+          BUILD_RC=${PIPESTATUS[0]}
+          echo "lake build exited ${BUILD_RC}"
+          # pipefail IS required here: without it the step inherits tee's status and a
+          # failing report is silently green.
           set -o pipefail
-          python3 scripts/corpus_verification_report.py build.log | tee -a "$GITHUB_STEP_SUMMARY"
+          python3 scripts/corpus_verification_report.py build.log "${BUILD_RC}" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
