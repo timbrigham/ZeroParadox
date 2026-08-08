@@ -160,7 +160,8 @@ in its own subtree. ⚠ **That scoping is load-bearing and an earlier draft drop
 GLOBAL valuation `endVal`, `botEnd` **is** distinguished: `botEnd_val_top : endVal botEnd = ⊤`
 (`ZeroParadox/Valuation/PadicTree.lean`), while a floor below a prefix **containing a nonzero digit**
 has finite `endVal`. ⚠ An earlier draft said *"a nonempty prefix"*, which is false: an all-zero prefix
-gives `localBotEnd v = botEnd` definitionally, so `endVal` is `⊤` there too.
+gives `localBotEnd v = botEnd` (propositionally — even the `v = []` case is `boundaryFloor_nil_floor`,
+proved by `funext`, not `rfl`), so `endVal` is `⊤` there too.
 The non-distinction is a statement about the local measures, never about the carrier.
 
 **A comparable shape holds in the ordinal carrier by a different mechanism** —

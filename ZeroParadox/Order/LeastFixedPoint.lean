@@ -134,9 +134,13 @@ work"* above ε₀, and *"the answer is not the seed"* (it **is**, at every ε-n
 not novel"*; the declarations only make it checkable. **And the corpus's own seed-parametric general
 statement is one section up:** § III's `isLeastFixedPointFrom_nfp` — with
 `IsLeastFixedPointFrom.unique` the ε₀ result is its instantiation, needing no separate proof idea.
-The classical form is Veblen 1908 — **Corollary 1** is the seed-ranged statement itself and
-**Corollary 4** names the ω-power case (*"the first derived function of ωˣ is the function ε"*), with
-the underlying properties credited by Veblen to Cantor; Mathlib carries the same shape for `+` and `*`
+The classical form is Veblen 1908 — **Corollary 1 clause (A)** (*"`f'(1)` is the least upper bound of
+`f(1), f[f(1)], ⋯`"*, and Veblen indexes from 1) is the bottom-seed case, **Corollary 1 clause (B)**
+the between-consecutive-rungs case, and **Corollary 4** names the ω-power instance (*"the first derived
+function of ωˣ is the function ε"*); the underlying properties are credited by Veblen to Cantor.
+⚠ See `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` for the full quotation — an earlier draft here called
+Corollary 1 *"the seed-ranged statement itself"*, which quotes only clause (B).
+Mathlib carries the same shape for `+` and `*`
 (`Ordinal.nfp_add_eq_mul_omega0`, `Ordinal.nfp_mul_eq_opow_omega0`), the seed-ranged ω-power entry
 being the one not located in the pin.
 
