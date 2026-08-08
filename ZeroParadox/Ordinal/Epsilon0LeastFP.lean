@@ -66,35 +66,57 @@ theorem nothing_between_is_a_step (o : Ordinal) (hlt : o < Ordinal.epsilon 0) :
 /-- **`Statement:` and ⊥ is not a landing either**, so ε₀ is the first. -/
 theorem bot_is_not_a_step : Ordinal.omega0 ^ (0 : Ordinal) ≠ (0 : Ordinal) := by simp
 
-/-! ### The rungs are the structure — the seed does no work
+/-! ### The rungs are the structure — the seed is not load-bearing
 
-`nothing_between_is_a_step` says **no point below ε₀ is a landing**. The two theorems below say the
-complementary thing: **every point below ε₀ reaches the SAME landing.** Together they give the shape
-of the interval — undifferentiated by the operator, collapsing onto its ceiling.
+`nothing_between_is_a_step` says **no point strictly below ε₀ is a landing**. The theorems below say
+the complementary thing: **every point at or below ε₀ reaches the SAME landing.**
 
-**Why this is worth stating.** `ε₀ = nfp (ω^·) ⊥` (`epsilon0_eq_nfp_bot`) is read across the corpus as
+**Provenance — this is NOT a new observation, and an earlier revision of this block said it was.**
+`ZeroParadox/Ordinal/Epsilon0MinMax.lean` § I-b (*"Two fences on the '⊥ the seed' reading"*,
+**Tim, 2026-07-31**) already states the implication `a ≤ nfp F 0 → nfp F a = nfp F 0`, names the exact
+proof route used below, fences **normality** as load-bearing (*"the displayed implication is false
+without it"*), and draws the same conclusion — *"⊥ is **a** seed, not a distinguished one"* — under its
+own verdict, ***"Elementary and not novel."*** ⚠ That earlier revision claimed the corpus *"never
+measured it"*; **false**, and refuted both by § I-b and by `epsilon0_ne_bot`'s docstring **in this
+file**, which already cites § I-b. Three independent gates caught it. **What is new below is only that
+the prose becomes a checkable declaration.**
+
+**Prior art.** The general form is the classical **fixed-point lemma for normal functions** (Veblen,
+1908): iterating a normal `F` from `α` reaches the least fixed point `≥ α`. Mathlib carries this exact
+statement shape twice, in the very file these proofs draw their lemmas from —
+`Ordinal.nfp_add_eq_mul_omega0` and `Ordinal.nfp_mul_eq_opow_omega0`
+(`Mathlib/SetTheory/Ordinal/FixedPoint.lean`), same naming idiom and same `le_antisymm` + `nfp_le_fp`
+route. **The ω-exponentiation entry of that family is not located in the pin** (searched 2026-08-07),
+so what follows is that family's ω-power analogue, not something the framework invented.
+
+**Why state it here at all.** `ε₀ = nfp (ω^·) ⊥` (`epsilon0_eq_nfp_bot`) is read across the corpus as
 *the snap seeded at the bottom*, and `ZeroParadox/Order/LeastFixedPoint.lean` § IV calls it *"genuine
-ascent μ (seed ⊥ ≠ closure ε₀)"*. That ascent is genuine. **But ⊥ is not a distinguished seed** —
-seeding at `1`, at `ω`, at `ω^ω` gives exactly the same ε₀. Measured 2026-08-07; the corpus had noted
-the tension (`nfp` is seed-parametric via `isLeastFixedPointFrom_nfp`) and never measured it.
+ascent μ (seed ⊥ ≠ closure ε₀)"*. **That ascent is genuine.** What the declarations below add is that
+**within `[0, ε₀]` the seed carries no information**: seeding at `1`, at `ω`, at `ω^ω` gives the same
+ε₀. ⚠ **Scope it — at or below ε₀ ONLY.** Above ε₀ the seed does all the work; `nfp (ω^·) ε₁ = ε₁`.
+⚠ **And normality is essential**, per § I-b's fence: the implication fails for a non-normal operator.
 
-`Reading:` (conjectural) this is **"iterative bottoms"** — the ratified name for the rungs of the snap
-succession, *a bottom relative to its iteration, never ⊥ itself*. Under that reading ⊥ is **rung zero**
-rather than a privileged origin, and the same shape is a theorem in a different carrier:
-`every_node_is_a_floor` (`ZeroParadox/Valuation/LocalFloor.lean`) proves every node of the binary tree
-roots a floor of infinite complexity, with the global floor merely the empty-prefix case.
+`Reading:` **INVARIANT** (conjectural) — the framework reads this as the ratified **"iterative
+bottoms"** picture: the rungs of the succession are bottoms *relative to their iteration*, **never ⊥
+itself**, and ⊥ sits at the base of the interval without being distinguished within it. The same
+**shape** is a theorem in another carrier, `every_node_is_a_floor`
+(`ZeroParadox/Valuation/LocalFloor.lean`).
 
-⚠ **SHAPE, never instance-of.** The two live over different carriers by different mechanisms —
-`LocalFloor`'s runs on self-similarity (`shiftEnd` / `prependEnd`), this one on there being no fixed
-point below ε₀. `ℕ → Fin 2` is not `Ordinal`; a common theorem across them would be the type boundary
-this corpus refuses everywhere else. ⚠ **And `ε₀ ≠ ⊥` is untouched bedrock** (`epsilon0_ne_bot`): the
-rungs are *not* ⊥, which is exactly why they need a role name rather than an identity.
-⚠ **Do NOT write "local bottom"** for this — that phrase is taken for the per-domain MC-1 family
-(`ZeroParadox/Category/GlobalZero.lean`). The ratified term is **iterative bottom**. -/
+⚠ **SHAPE, never instance-of.** Different carriers, different mechanisms — self-similarity there, the
+absence of fixed points strictly below ε₀ here — and the two theorems conclude **different
+propositions**. `ℕ → Fin 2` is not `Ordinal`; only the moral is shared.
+⚠ **`ε₀ ≠ ⊥` is untouched bedrock** (`epsilon0_ne_bot`), and the ratified vocabulary exists precisely
+because the rungs are **not** ⊥. **Nothing here identifies any rung with ⊥.**
+⚠ **"Iterative bottom" is the ratified term for the ITERATION sense.** Do not substitute "local
+bottom" *there* — that phrase is taken for the per-domain MC-1 family
+(`ZeroParadox/Category/GlobalZero.lean`). (`ZeroParadox/Valuation/LocalFloor.lean` uses it for a
+third, subtree-local sense; that is that file's own usage and not what the iteration rule governs.) -/
 
 /-- **`Statement:` every seed at or below ε₀ reaches ε₀.** The least fixed point *from* `a` is ε₀ for
-every `a ≤ ε₀`, so the seed carries no information: `≤` because ε₀ is itself a fixed point at or above
-`a`, and `≥` because ε₀ is the least fixed point outright (`epsilon0_least_fixedpoint`). -/
+every `a ≤ ε₀`, so within that range the seed carries no information: `≤` because ε₀ is itself a
+fixed point at or above `a` (`epsilon0_is_fixedpoint` with `Ordinal.nfp_le_fp`), and `≥` because ε₀ is
+the least fixed point outright (`epsilon0_least_fixedpoint` applied to `Ordinal.nfp_fp`). ⚠ Normality
+of `α ↦ ω^α` is load-bearing, and `nothing_between_is_a_step` is **not** used. -/
 theorem nfp_seed_independent_below_epsilon0 (a : Ordinal) (ha : a ≤ ε₀) :
     Ordinal.nfp (fun α => ω ^ α) a = ε₀ := by
   have hnorm := Ordinal.isNormal_opow Ordinal.one_lt_omega0
