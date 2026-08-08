@@ -22,7 +22,13 @@ if len(sys.argv) < 2:
     sys.exit(2)
 
 log = open(sys.argv[1], encoding="utf-8", errors="replace").read()
-ok = ("error:" not in log) and ("sorry" not in log.lower())
+
+# NOT a substring test for "sorry". 21 corpus files carry the word in prose, in lines
+# like "all axiom proofs sorry-free", so a substring test fails a file for announcing
+# that it is clean. Lean's actual warning uses BACKTICKS - measured against the pinned
+# toolchain 2026-08-08; do not retype it from memory.
+SORRY_WARNING = "declaration uses `sorry`"
+ok = ("error:" not in log) and (SORRY_WARNING not in log)
 
 
 def short(name: str) -> str:

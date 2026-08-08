@@ -33,4 +33,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # build: false - lean-action still does toolchain setup and the Mathlib cache, but
+      # we run `lake build` ourselves so its output can be captured. The corpus already
+      # emits ~1200 `#print axioms` results on every build; they were being discarded.
       - uses: leanprover/lean-action@v1
+        with:
+          build: false
+      - name: Build, and publish what the machine actually checked
+        run: |
+          # Deliberately NO pipefail here: a failing build must still reach the report,
+          # which turns "error:" into a VERIFICATION FAILED summary and exits 1 below.
+          lake build 2>&1 | tee build.log
+          # pipefail IS required here - without it the step inherits tee's exit status
+          # and a failing report is silently green.
+          set -o pipefail
+          python3 scripts/corpus_verification_report.py build.log | tee -a "$GITHUB_STEP_SUMMARY"

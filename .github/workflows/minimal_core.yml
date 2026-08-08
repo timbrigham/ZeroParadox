@@ -32,5 +32,10 @@ jobs:
       - uses: leanprover/lean-action@v1
       - name: Re-elaborate the Minimal Core and write the report
         run: |
+          # No pipefail on the elaboration: a failure must still reach the report.
           lake env lean ZeroParadox/Miniature.lean 2>&1 | tee mc.log
+          # pipefail IS required here. Without it the step inherits tee's exit status,
+          # so the report's exit 1 was silently green and the "doubles as a CI gate"
+          # property did not hold as wired.
+          set -o pipefail
           python3 scripts/minimal_core_report.py mc.log | tee -a "$GITHUB_STEP_SUMMARY"
