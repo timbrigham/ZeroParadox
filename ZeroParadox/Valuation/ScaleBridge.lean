@@ -168,90 +168,53 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
     `nonempty_valBridge_of_infinite` places the orbit along an ℕ-embedding, and
     `nonempty_valBridge_of_inhabited_subsingleton` is the degenerate case.
 
-    So the non-members are the **finite carriers with two or more points**, plus `Empty` — which is
-    a subsingleton but not a member, since `bot : L` is a field requiring inhabitation. Write it as
-    *the inhabited subsingletons and the infinite carriers*, never "the subsingletons".
-    `valBridge_bool_isEmpty` records the smallest **inhabited** non-member; `Empty` is smaller still.
+    So the non-members are the finite carriers with two or more points, and also `Empty` — a
+    subsingleton, but `bot : L` is a field, so a carrier is always inhabited. `valBridge_bool_isEmpty`
+    records the smallest inhabited non-member.
 
-    ⚠ **`[ValBridge L]` therefore constrains cardinality and nothing else.** It does not
-    distinguish `instZ2ValBridge` from arbitrary bookkeeping: the construction in
-    `nonempty_valBridge_of_infinite` equips *any* infinite carrier, so the substance of the ℤ_[2]
-    instance lives in its chosen `scale` and `val` (multiplication by 2 and the 2-adic valuation),
-    never in class membership. Do not cite membership as evidence that a witness is non-degenerate.
+    ⚠ **`[ValBridge L]` therefore constrains cardinality and nothing else.** It does not distinguish
+    `instZ2ValBridge` from arbitrary bookkeeping, because `nonempty_valBridge_of_infinite` equips
+    *any* infinite carrier. The substance of the ℤ_[2] instance is in its chosen `scale` and `val`,
+    never in membership — do not cite membership as evidence that a witness is non-degenerate.
 
-    **The two-element case was already recorded in this corpus, and this section is its general
-    form.** ZeroParadox/Settheory/OntBridge.lean notes that `OntologicalStates` cannot satisfy
-    `val_scale` because "a finite two-element type has no room for val to strictly increase".
-    `valBridge_forces_infinite` is that obstruction at every finite carrier **with two or more
-    points** rather than at exactly two, stated for `ValBridge` so the ring track (ℤ_[2]) is covered
-    as well.
+    ### Prior art
 
-    ### Prior art — the general form is ZeroParadox/Order/OrbitDichotomy.lean, and the delta is real
+    **In this corpus, and it is the general form:** `orbit_dichotomy`
+    (ZeroParadox/Order/OrbitDichotomy.lean), whose file header already names the framework's scale
+    map as the checkable branch of exactly this argument. Cite that for the general pattern.
+    ⚠ **`valBridge_forces_infinite` is NOT an instance of it.** That theorem assumes
+    `Function.Injective s`; `ValBridge` does not supply it — take `L = {bot} ⊎ (ℕ × Bool)` with
+    `val (n, b) = n` and `scale (n, b) = (n+1, false)`, which satisfies all four axioms and collapses
+    `(0, true)` with `(0, false)`. `val_scale` buys injectivity *along an orbit*, which is all the
+    argument consumes.
 
-    `orbit_dichotomy` there is the corpus's trunk for this shape: a set closed under an operation
-    whose only periodic point is one distinguished `p` is a subsingleton or infinite, with no finite
-    middle. That file's header names **the framework's scale map as the checkable branch** of exactly
-    this argument, so this section is that branch being checked. Cite it, not this, for the general
-    pattern.
+    The two-element case is older still: ZeroParadox/Settheory/OntBridge.lean records that
+    `OntologicalStates` cannot satisfy `val_scale`, "a finite two-element type has no room for val to
+    strictly increase".
 
-    **The delta, and it is not a formality.** `orbit_dichotomy` assumes `Function.Injective s`.
-    `ValBridge` does **not** supply it, and cannot be made to: take `L = {bot} ⊎ (ℕ × Bool)` with
-    `val (n, b) = n` and `scale (n, b) = (n+1, false)`. All four axioms hold and `scale` collapses
-    `(0, true)` with `(0, false)`. What `val_scale` buys is injectivity **along an orbit** — which is
-    all the argument needs — without global injectivity of `scale`. So the hypotheses here are
-    genuinely weaker on that axis, while the conclusion is about the whole carrier rather than an
-    invariant subset.
+    **Outside the corpus**, the owning branch is valuation theory, whose statements use multiplicative
+    structure this class drops — **F.-V. Kuhlmann, *Valuation Theory*, Ch. 4, Corollary 4.13**: *"The
+    only fields which do not admit non-trivial places are precisely the algebraic extensions of finite
+    fields."* ⚠ The *setting* here is more general; the *results* are incomparable, since `F̄_p` is
+    infinite and this section says nothing about it. Credit points outward.
 
-    ### Prior art — outside the corpus
+    For the degenerate half, read the prior-art paragraph of
+    ZeroParadox/Valuation/InfinitudeFloor.lean, which cites Burris & Sankappanavar on why a
+    non-degeneracy condition must be an inequation rather than a further equation. ⚠ Its neighbouring
+    "trivial algebras satisfy any quasi-identity" does **not** apply here: `val_scale`'s antecedent
+    `x ≠ bot` is a negated atom, and a quasi-identity admits only positive ones.
 
-    The owning branch is valuation theory, and its standard statements all use multiplicative
-    structure this class deliberately drops. The strongest is **F.-V. Kuhlmann, *Valuation Theory*,
-    Ch. 4, Corollary 4.13**: *"The only fields which do not admit non-trivial places are precisely
-    the algebraic extensions of finite fields."*
-
-    ⚠ **State the relation as SETTING, not as strength — the two results are incomparable.** This
-    section's setting is more general: `ValBridge` has no ring structure at all, just a set, a point,
-    a self-map and an `ℕ∞`-valued function. The *results* neither contain the other, and the witness
-    is `F̄_p`, the algebraic closure of a finite field — **infinite**, so this section says nothing
-    about it, while Kuhlmann's corollary rules out a non-trivial place on it. Nothing here is a
-    strengthening of anything there; the credit points outward.
-
-    The degenerate half has its citation **already written, one file away**: see the prior-art
-    paragraph of ZeroParadox/Valuation/InfinitudeFloor.lean, which reads three passages of Burris &
-    Sankappanavar, *A Course in Universal Algebra* (1981) from the filed copy and correctly names the
-    **load-bearing** one — *"As a trivial algebra cannot satisfy a negated atomic formula, exactly one
-    of Ψ₁, …, Ψₖ is atomic"* — as why a non-degeneracy condition must be stated as an **inequation**
-    (`Nontrivial`) and never as a further equation. Read it there rather than re-copying it here.
-
-    ⚠ **The neighbouring passage does not reach this class, so do not cite it here.** *"Trivial
-    algebras satisfy any quasi-identity"* is about quasi-identities, and `val_scale` is not one: its
-    antecedent `x ≠ bot` is a **negated** atom, where a quasi-identity admits only positive ones. The
-    reason `trivialValBridge` survives is simpler and needs no universal algebra — that guard is
-    vacuous on a subsingleton. What the Burris material supplies is the **shape** of the fix, not the
-    fact.
-
-    **Standard names for the three ingredients**, none of which this corpus had used: `(L, scale)` is
-    a **mono-unary algebra** (a **unar**); the pair `val bot = ⊤` with `val x = ⊤ → x = bot` is
-    **separatedness (Hausdorff) in its order-function form** — ⚠ not a filtration itself, since a
-    filtration is a descending chain of additive subgroups and this carrier has no addition; and the
-    conclusion's mechanism, exhibiting `ℕ ↪ L`, is **Dedekind-infinite**.
-
-    ⚠ **Where the choice comes in, measured rather than inferred.** `valBridge_nonempty_iff` and
-    `nonempty_valBridge_of_infinite` both measure `[propext, Classical.choice, Quot.sound]` in the
-    purity block below, and the route is `Infinite.natEmbedding`, which supplies the ℕ-embedding the
-    converse construction needs. The forcing half (`valBridge_forces_infinite`) produces such an
-    embedding outright, so the classical content sits in reading `Infinite` as *Dedekind*-infinite on
-    the converse side. No claim is made here about whether a choice-free restatement exists.
+    Standard names, for searching: `(L, scale)` is a **mono-unary algebra** (a **unar**), and the
+    mechanism exhibiting `ℕ ↪ L` is **Dedekind-infinite**.
 
     `Reading:` **COINCIDENCE** — the characterisation has the same shape as
-    `infinitudeFloor_nonempty_iff_infinite` (ZeroParadox/Valuation/InfinitudeFloor.lean), which
-    pins that class to exactly `Infinite`; the valuation climbing without bound along the orbit and
-    the floor carrying the value ⊤ read as the framework's zero and infinity poles on one carrier.
-    **This is a reading and carries no declaration and no import here.** A membership transfer
-    would be witnessed by an arbitrary ℕ-embedding whose `floor` and `cx` are unrelated to `bot`
-    and `val`, so it would not witness the coincidence it names; the canonical witness — `member`
-    the scale orbit itself, `cx` the valuation — is what would, and is not built. That file is also
-    branch scaffolding by its own header, a second reason this one does not import it. -/
+    `infinitudeFloor_nonempty_iff_infinite` (ZeroParadox/Valuation/InfinitudeFloor.lean), which pins
+    that class to exactly `Infinite`; the valuation climbing without bound along the orbit and the
+    floor carrying the value ⊤ read as the framework's zero and infinity poles on one carrier. **A
+    reading, carrying no declaration and no import here.** The membership transfer would be witnessed
+    by an arbitrary ℕ-embedding whose `floor` and `cx` are unrelated to `bot` and `val`, so it would
+    not witness the coincidence it names; the canonical witness — `member` the scale orbit, `cx` the
+    valuation — would, and is not built. -/
 
 /-- The scale of a non-bottom point is never the bottom: it would force `val x = ⊤`, and
     `val_unique` then puts `x` at the bottom. -/
