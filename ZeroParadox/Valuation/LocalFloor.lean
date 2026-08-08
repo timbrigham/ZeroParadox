@@ -156,12 +156,11 @@ def (a witness) per node, not a global instance. -/
 bottoms"** picture made concrete: each node roots a floor *relative to its own subtree*, and
 `boundaryFloor_nil_floor` below says the global floor `botEnd` is merely the empty-prefix case, so
 **under the per-node measures `localCx v`, no node floor is distinguished** — each has complexity `⊤`
-in its own subtree. ⚠ **That scoping is load-bearing and an earlier draft dropped it.** Under the
-GLOBAL valuation `endVal`, `botEnd` **is** distinguished: `botEnd_val_top : endVal botEnd = ⊤`
+in its own subtree. ⚠ **The scoping is load-bearing.** Under the GLOBAL valuation `endVal`, `botEnd`
+**is** distinguished: `botEnd_val_top : endVal botEnd = ⊤`
 (`ZeroParadox/Valuation/PadicTree.lean`), while a floor below a prefix **containing a nonzero digit**
-has finite `endVal`. ⚠ An earlier draft said *"a nonempty prefix"*, which is false: an all-zero prefix
-gives `localBotEnd v = botEnd` (propositionally — even the `v = []` case is `boundaryFloor_nil_floor`,
-proved by `funext`, not `rfl`), so `endVal` is `⊤` there too.
+has finite `endVal`. ⚠ **A nonempty prefix is not enough** — an all-zero prefix gives
+`localBotEnd v = botEnd`, so `endVal` is `⊤` there too. The discriminator is a **nonzero digit**.
 The non-distinction is a statement about the local measures, never about the carrier.
 
 **A comparable shape holds in the ordinal carrier by a different mechanism** —

@@ -126,21 +126,23 @@ privileged starting point: `nfp_seed_independent_below_epsilon0`
 (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) proves `∀ a ≤ ε₀, nfp (ω^·) a = ε₀`, with
 `nfp_seed_one_eq_seed_bot` as the concrete witness. ⚠ **Scope: at or below ε₀ only.** The general fact is
 that `nfp (ω^·) a` is the **least ε-number `≥ a`** — e.g. `nfp (ω^·) (succ ε₀) = ε₁` (Mathlib
-`epsilon_succ_eq_nfp`). Two earlier glosses here were false and are withdrawn: *"the seed does all the
-work"* above ε₀, and *"the answer is not the seed"* (it **is**, at every ε-number). ⚠ **Normality is load-bearing.**
+`epsilon_succ_eq_nfp`). ⚠ Above ε₀ the answer **is** the seed at every ε-number, so no fixed point can distinguish
+*least-ε-number-≥-`a`* from the false *"the seed does all the work"*; use a non-fixed point such as
+`succ ε₀`. ⚠ **Normality is load-bearing.**
 
 **Provenance:** stated in prose, with this conclusion and this proof route, at
 `ZeroParadox/Ordinal/Epsilon0MinMax.lean` § I-b (**Tim, 2026-07-31**), which calls it *"elementary and
-not novel"*; the declarations only make it checkable. **And the corpus's own seed-parametric general
+not novel"*; the declarations only make it checkable. ⚠ The routes differ in detail — see that file's
+own note. **And the corpus's own seed-parametric general
 statement is one section up:** § III's `isLeastFixedPointFrom_nfp` — with
 `IsLeastFixedPointFrom.unique` the ε₀ result is its instantiation, needing no separate proof idea.
 The classical form is Veblen 1908 — **Corollary 1 clause (A)** (*"`f'(1)` is the least upper bound of
-`f(1), f[f(1)], ⋯`"*, and Veblen indexes from 1) is the bottom-seed case, **Corollary 1 clause (B)**
+`f(1), f[f(1)], ⋯`"*) is the **seed-`1`** case — Veblen indexes from 1, so seed `0` lies outside his
+range and Mathlib's `epsilon_zero_eq_nfp` is its home — **Corollary 1 clause (B)**
 the between-consecutive-rungs case, and **Corollary 4** names the ω-power instance (*"the first derived
 function of ωˣ is the function ε"*); the underlying properties are credited by Veblen to Cantor.
-⚠ See `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` for the full quotation — an earlier draft here called
-Corollary 1 *"the seed-ranged statement itself"*, which quotes only clause (B).
-Mathlib carries the same shape for `+` and `*`
+See `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` for the full quotation of Corollary 1 and the residual
+delta against it. Mathlib carries the same shape for `+` and `*`
 (`Ordinal.nfp_add_eq_mul_omega0`, `Ordinal.nfp_mul_eq_opow_omega0`), the seed-ranged ω-power entry
 being the one not located in the pin.
 
@@ -227,10 +229,11 @@ end ZeroParadox
 The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at
 all); the Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`.
 The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) inherit
-`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory. **Status: UNCLASSIFIED** —
-"representational, not intrinsic" was asserted here in an earlier version and is retracted: that is an
-eliminability claim and no choice-free re-proof of these faces was located as of 2026-08-02. The choice is not in the `Ordinal`
-type (`[propext, Quot.sound]`) but in the order instance and the operations. ZP-N's choice-free
+`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory. **Status: UNCLASSIFIED.**
+⚠ **Do NOT call it "representational, not intrinsic"** — that is an **eliminability claim**, which no
+footprint measurement can establish, and **no choice-free re-proof of these faces was located as of
+2026-08-02**. The choice is not in the `Ordinal` type (`[propext, Quot.sound]`) but in the order
+instance and the operations. ZP-N's choice-free
 snap-from-below is suggestive, not a re-proof. The Kleene face inherits
 `[propext, Classical.choice, Quot.sound]` from the `Code`/`Partrec` machinery. Recorded honestly. -/
 
