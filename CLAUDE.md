@@ -336,16 +336,34 @@ its carrier.**
   The extreme is `ChoiceCannotBe.lean`: **302 prose lines, five blocks, zero docstrings** — and two
   false universal negatives lived in exactly that prose until 2026-08-01.
 
+**AND AN INDEX LINE MUST JUSTIFY ITSELF** (Tim, same day): *"every one of those CannotBe line items
+should be distinguishable from the others, and the statement for why the CannotBe is applicable
+should be directly tied to the specific lines."* A `#check` index is nothing **but** line items, so
+a justification sitting in the header leaves every line uncheckable and no two items
+distinguishable. **Measured across the six index files:** 47 of 204 `#check`s carry **no gloss at
+all** — `BottomCannotBe.lean` is 36 of 72 — while `ChoiceCannotBe.lean` carries **203 header lines
+against 31 checks**, which is what "built after the fact" looks like. ⚠ **And the
+`Statement:`/`Reading:` convention is applied to 13 of 151 glosses** — zero in four of the six
+files. The mechanism meant to stop glosses overclaiming is, in the indexes whose premise is that
+they cannot overclaim, essentially absent.
+
 **ENFORCEMENT — mechanical, because this is the SIXTH convention of this shape and the previous
 five all leaked.** `python .claude-local/check_prose.py` WARNS at commit; `--block` ENFORCES at
-push (`pre-push` § 3b-e). Three rules: a module-doc block over **10 lines** (just above the p90 for
-file headers), a docstring longer than its declaration, and a declaration with **no** docstring
-(`private` and `example` exempt). **Baselined at 700 sites — fires on NEW and EDITED prose only.**
+push (`pre-push` § 3b-e). Five rules: a module-doc block over **10 lines** (just above the p90 for
+file headers); a docstring longer than its declaration; a declaration with **no** docstring
+(`private` and `example` exempt); a `#check` with **no gloss**; and a gloss carrying **no
+`Statement:`/`Reading:` label**. Corpus at adoption — blocks 98, over-long docstrings 381,
+undocumented declarations 255, bare `#check`s 63, unlabelled glosses 140.
+**Baselined at 903 sites — fires on NEW and EDITED prose only.**
 Blocks are keyed by a **content hash**, so editing a grandfathered block re-fires it: the
-baseline-shrinking rule enforced rather than remembered. **Detector verified with four controls**
-(must-fire on an oversized block, an oversized docstring and an undocumented declaration;
-must-suppress on the Take, documented/attributed declarations, `private` and `example`), plus an
-end-to-end control that `--block` exits 1 on a new site and 0 once baselined.
+baseline-shrinking rule enforced rather than remembered. **Detector verified with six controls**
+(must-fire on an oversized block, an oversized docstring, an undocumented declaration, a bare
+`#check` and an unlabelled gloss; must-suppress on the Take, documented/attributed declarations,
+`private`, `example`, and both label forms in same-line, line-above and bolded shapes), plus an
+end-to-end control that `--block` exits 1 on a new site and 0 once baselined. ⚠ **The first
+baseline silently under-covered by six sites** because a truncated key could end in whitespace,
+which `.strip()` destroyed on read-back — a clean-looking zero that was wrong, and the reason the
+end-to-end control exists.
 
 ⚠ **The failure mode to watch is mine, not the tool's.** Every gate round of that arc, I answered a
 finding by *adding a paragraph*, and each new paragraph carried a new claim. **When a section will
