@@ -66,6 +66,49 @@ theorem nothing_between_is_a_step (o : Ordinal) (hlt : o < Ordinal.epsilon 0) :
 /-- **`Statement:` and ⊥ is not a landing either**, so ε₀ is the first. -/
 theorem bot_is_not_a_step : Ordinal.omega0 ^ (0 : Ordinal) ≠ (0 : Ordinal) := by simp
 
+/-! ### The rungs are the structure — the seed does no work
+
+`nothing_between_is_a_step` says **no point below ε₀ is a landing**. The two theorems below say the
+complementary thing: **every point below ε₀ reaches the SAME landing.** Together they give the shape
+of the interval — undifferentiated by the operator, collapsing onto its ceiling.
+
+**Why this is worth stating.** `ε₀ = nfp (ω^·) ⊥` (`epsilon0_eq_nfp_bot`) is read across the corpus as
+*the snap seeded at the bottom*, and `ZeroParadox/Order/LeastFixedPoint.lean` § IV calls it *"genuine
+ascent μ (seed ⊥ ≠ closure ε₀)"*. That ascent is genuine. **But ⊥ is not a distinguished seed** —
+seeding at `1`, at `ω`, at `ω^ω` gives exactly the same ε₀. Measured 2026-08-07; the corpus had noted
+the tension (`nfp` is seed-parametric via `isLeastFixedPointFrom_nfp`) and never measured it.
+
+`Reading:` (conjectural) this is **"iterative bottoms"** — the ratified name for the rungs of the snap
+succession, *a bottom relative to its iteration, never ⊥ itself*. Under that reading ⊥ is **rung zero**
+rather than a privileged origin, and the same shape is a theorem in a different carrier:
+`every_node_is_a_floor` (`ZeroParadox/Valuation/LocalFloor.lean`) proves every node of the binary tree
+roots a floor of infinite complexity, with the global floor merely the empty-prefix case.
+
+⚠ **SHAPE, never instance-of.** The two live over different carriers by different mechanisms —
+`LocalFloor`'s runs on self-similarity (`shiftEnd` / `prependEnd`), this one on there being no fixed
+point below ε₀. `ℕ → Fin 2` is not `Ordinal`; a common theorem across them would be the type boundary
+this corpus refuses everywhere else. ⚠ **And `ε₀ ≠ ⊥` is untouched bedrock** (`epsilon0_ne_bot`): the
+rungs are *not* ⊥, which is exactly why they need a role name rather than an identity.
+⚠ **Do NOT write "local bottom"** for this — that phrase is taken for the per-domain MC-1 family
+(`ZeroParadox/Category/GlobalZero.lean`). The ratified term is **iterative bottom**. -/
+
+/-- **`Statement:` every seed at or below ε₀ reaches ε₀.** The least fixed point *from* `a` is ε₀ for
+every `a ≤ ε₀`, so the seed carries no information: `≤` because ε₀ is itself a fixed point at or above
+`a`, and `≥` because ε₀ is the least fixed point outright (`epsilon0_least_fixedpoint`). -/
+theorem nfp_seed_independent_below_epsilon0 (a : Ordinal) (ha : a ≤ ε₀) :
+    Ordinal.nfp (fun α => ω ^ α) a = ε₀ := by
+  have hnorm := Ordinal.isNormal_opow Ordinal.one_lt_omega0
+  refine le_antisymm ?_ ?_
+  · exact Ordinal.nfp_le_fp hnorm.strictMono.monotone ha (le_of_eq epsilon0_is_fixedpoint)
+  · exact epsilon0_least_fixedpoint _ (Ordinal.nfp_fp hnorm a)
+
+/-- **`Statement:` concretely — seeding at `1` is seeding at `⊥`.** The witness that makes the
+seed-independence visible without a quantifier. -/
+theorem nfp_seed_one_eq_seed_bot :
+    Ordinal.nfp (fun α => ω ^ α) 1 = Ordinal.nfp (fun α => ω ^ α) (⊥ : Ordinal) := by
+  rw [nfp_seed_independent_below_epsilon0 1 (Order.one_le_iff_ne_zero.mpr (Ordinal.epsilon_pos 0).ne'),
+      nfp_seed_independent_below_epsilon0 ⊥ bot_le]
+
 /-- **Invariant — ε₀ ≠ 0.** ε₀ can never be zero, in any reading. It is a fixed point of `α ↦ ω^α`
     (`epsilon0_is_fixedpoint`); were it 0, that would say `ω^0 = 0`, i.e. `1 = 0`. This is the bedrock
     guard beneath every ε₀ characterization. -/
@@ -101,6 +144,8 @@ open ZeroParadox
 #print axioms epsilon0_least_fixedpoint
 #print axioms nothing_between_is_a_step
 #print axioms bot_is_not_a_step
+#print axioms nfp_seed_independent_below_epsilon0
+#print axioms nfp_seed_one_eq_seed_bot
 #print axioms epsilon0_ne_zero
 #print axioms epsilon0_ne_bot
 #print axioms epsilon0_eq_veblen_one_zero

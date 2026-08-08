@@ -118,7 +118,26 @@ theorem isLeastFixedPointFrom_nfp {f : Ordinal → Ordinal} (H : Order.IsNormal 
   fixed := Ordinal.nfp_fp H a
   least := fun _b hb hab => Ordinal.nfp_le_fp H.strictMono.monotone hab (le_of_eq hb)
 
-/-! ## § IV. The ε₀ face — genuine ascent μ (seed ⊥ ≠ closure ε₀) -/
+/-! ## § IV. The ε₀ face — genuine ascent μ (seed ⊥ ≠ closure ε₀)
+
+⚠ **THE ASCENT IS GENUINE; THE SEED IS NOT DISTINGUISHED.** *"Seed ⊥ ≠ closure ε₀"* is true and is
+what separates this face from § V's degenerate one. It does **not** mean ⊥ is a privileged starting
+point. **Measured 2026-08-07:** `nfp_seed_independent_below_epsilon0`
+(`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) proves `∀ a ≤ ε₀, nfp (ω^·) a = ε₀`, with
+`nfp_seed_one_eq_seed_bot` as the concrete witness that seeding at `1` is seeding at `⊥`. Every point
+below ε₀ reaches the same closure, because none of them is a fixed point
+(`nothing_between_is_a_step`).
+
+**So read the seed as a ROLE, not an origin.** `Reading:` (conjectural) this is the ratified
+**"iterative bottoms"** picture — the rungs of the succession are bottoms *relative to their
+iteration*, never ⊥ itself — under which ⊥ is **rung zero**. The same shape is a theorem in another
+carrier: `every_node_is_a_floor` (`ZeroParadox/Valuation/LocalFloor.lean`).
+
+⚠ **SHAPE, never instance-of** — different carriers, different mechanisms (self-similarity there, the
+absence of fixed points below ε₀ here). ⚠ `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`); the rungs
+are *not* ⊥, which is why they take a role name and not an identity. ⚠ Do **not** write "local
+bottom" — that is taken for the per-domain MC-1 family
+(`ZeroParadox/Category/GlobalZero.lean`). -/
 
 /-- **ε₀ face.** ε₀ is the least fixed point of `α ↦ ω^α` from the ordinal bottom ⊥. The seed ⊥ and
     the closure ε₀ are distinct — this is the genuine ascent μ. Reuses `epsilonZero_fixedPoint`

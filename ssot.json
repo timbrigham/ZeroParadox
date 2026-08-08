@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1650,
+        "declarations": 1652,
         "files": 136
       },
       "entries": [
@@ -2442,6 +2442,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "06c269b0-69af-406b-a8b3-dae9fa3fb0da",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nfp_seed_one_eq_seed_bot",
+            "short": "nfp_seed_one_eq_seed_bot"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "infra"
+            ]
+          },
+          "reason": "Seed-independence measured: every seed at or below epsilon-0 reaches it; iterative bottoms in the ordinal carrier",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -21843,6 +21881,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "59276a24-a932-4fa5-898a-e7243f2c7bfc",
+          "new": {
+            "file": "ZeroParadox/Ordinal/Epsilon0LeastFP.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.nfp_seed_independent_below_epsilon0",
+            "short": "nfp_seed_independent_below_epsilon0"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal"
+            ],
+            "object": [
+              "ceiling"
+            ],
+            "role": [
+              "core"
+            ]
+          },
+          "reason": "Seed-independence measured: every seed at or below epsilon-0 reaches it; iterative bottoms in the ordinal carrier",
           "verify": {
             "axioms": null,
             "sorry_free": true

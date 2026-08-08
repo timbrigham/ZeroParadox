@@ -150,7 +150,18 @@ def (a witness) per node, not a global instance. -/
 /-! ### § V. The capstone: every node roots a floor of infinite complexity. -/
 
 /-- **Every node is a floor of infinite complexity.** For all `v`, the constructed floor's complexity is
-`⊤`: the same floor structure recurs literally at every node of the generic tree. -/
+`⊤`: the same floor structure recurs literally at every node of the generic tree.
+
+`Reading:` (conjectural) this is the ratified **"iterative bottoms"** picture made concrete — each node
+roots a bottom *relative to its own subtree*, and `boundaryFloor_nil_floor` below says the global floor
+is merely the empty-prefix case. **⊥ is one rung among many, not a privileged origin.**
+
+**The same shape holds in the ordinal carrier, by a different mechanism** — measured 2026-08-07:
+`nfp_seed_independent_below_epsilon0` (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) proves every seed at
+or below ε₀ reaches ε₀, so no seed is distinguished there either. ⚠ **SHAPE, never instance-of:** this
+theorem runs on **self-similarity** (`shiftEnd` / `prependEnd` shift-invariance), that one on **there
+being no fixed point of `ω^·` below ε₀**. Same conclusion, unrelated reasons; `ℕ → Fin 2` is not
+`Ordinal`, and a common theorem across the two would be a type boundary. -/
 theorem every_node_is_a_floor (v : List (Fin 2)) :
     (boundaryFloor v).cx (boundaryFloor v).floor = ⊤ :=
   infinitude_forces_infinite_complexity End (I := boundaryFloor v)
