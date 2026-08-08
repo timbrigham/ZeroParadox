@@ -300,6 +300,58 @@ known-degenerate case, found by hand the same day) and suppresses `InfinitudeFlo
 `WheelValuationStructure` and `AbstractSelfApp` (where the question was asked). A checker with only a
 must-fire control is half-tested.
 
+## Short header, statement per declaration. Prose never exceeds code. Gate-enforced.
+
+**Tim, 2026-08-08, and it is a software-engineering norm, not a preference:**
+
+> *"I'm not a big fan of having just a giant header block full of prose. Usually it's a short
+> summary of what the file is supposed to be doing as a whole, no more than a few sentences, and
+> only once you actually get into the individual lines, do you have a statement of what that exact
+> line is supposed to be doing. Apart from the Engineer's Take, I don't think there should be more
+> prose than code as a general rule, counted by line numbers."*
+
+**THE SHAPE:**
+1. **File header** — a few sentences on what the file does. **Not** an essay.
+2. **Every declaration** — a docstring saying what **that declaration** does, no longer than the
+   declaration itself.
+3. **Long-form reasoning** — a note in `.claude-local/notes/`, with a pointer. Not the source file.
+4. **The Engineer's Take is exempt.** It is Tim's voice and the only corpus written in the register
+   a question arrives in — `where.py` reports Takes for exactly that reason.
+
+**WHY IT IS A CORRECTNESS RULE AND NOT TIDINESS. Code is kernel-checked; prose is unchecked by
+construction.** The prose:code ratio is the ratio of verified asset to unverified liability.
+Measured across three gate rounds on 2026-08-08: **~12 findings, every one in prose, none in a
+theorem statement** — and an 82-line cut then passed all three gates with nothing load-bearing lost,
+one deletion being an outright *improvement* because the paragraph asserted a distinction the
+artifact could not support. **The corpus's characteristic defect class is prose, and prose volume is
+its carrier.**
+
+**MEASURED, so the rule is calibrated and not guessed** (2026-08-08, whole corpus):
+- prose **15,629** lines vs code **14,795** excluding Takes — ratio **1.06**, with **129 of 218
+  files** already over.
+- **The design is already the norm**: file-header blocks run **p50 = 1 line, p75 = 3, p90 = 7**;
+  section blocks **p50 = 1, p75 = 6, p90 = 14**; and **85% of declarations already have a
+  docstring**. This is **outlier control, not a migration** — the tail runs 121, 115, 100, 83 lines.
+- **41% of all prose sits in detached header blocks** rather than attached to what it describes.
+  The extreme is `ChoiceCannotBe.lean`: **302 prose lines, five blocks, zero docstrings** — and two
+  false universal negatives lived in exactly that prose until 2026-08-01.
+
+**ENFORCEMENT — mechanical, because this is the SIXTH convention of this shape and the previous
+five all leaked.** `python .claude-local/check_prose.py` WARNS at commit; `--block` ENFORCES at
+push (`pre-push` § 3b-e). Three rules: a module-doc block over **10 lines** (just above the p90 for
+file headers), a docstring longer than its declaration, and a declaration with **no** docstring
+(`private` and `example` exempt). **Baselined at 700 sites — fires on NEW and EDITED prose only.**
+Blocks are keyed by a **content hash**, so editing a grandfathered block re-fires it: the
+baseline-shrinking rule enforced rather than remembered. **Detector verified with four controls**
+(must-fire on an oversized block, an oversized docstring and an undocumented declaration;
+must-suppress on the Take, documented/attributed declarations, `private` and `example`), plus an
+end-to-end control that `--block` exits 1 on a new site and 0 once baselined.
+
+⚠ **The failure mode to watch is mine, not the tool's.** Every gate round of that arc, I answered a
+finding by *adding a paragraph*, and each new paragraph carried a new claim. **When a section will
+not stabilise, cut the essay around the theorem — do not extend it.** That is the § *Prose that
+resists correction* protocol arriving at file scale.
+
 ## The recurring defect is UNSTATED ADJACENCY — the fix is a pointer, not a theorem
 
 **This corpus's characteristic failure is not wrong theorems. It is true theorems whose reach nobody
