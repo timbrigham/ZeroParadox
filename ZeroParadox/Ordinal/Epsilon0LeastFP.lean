@@ -73,8 +73,9 @@ the complementary thing: **every point at or below ε₀ reaches the SAME landin
 
 **Provenance — this is NOT a new observation, and an earlier revision of this block said it was.**
 `ZeroParadox/Ordinal/Epsilon0MinMax.lean` § I-b (*"Two fences on the '⊥ the seed' reading"*,
-**Tim, 2026-07-31**) already states the implication `a ≤ nfp F 0 → nfp F a = nfp F 0`, names the exact
-proof route used below, fences **normality** as load-bearing (*"the displayed implication is false
+**Tim, 2026-07-31**) already states the implication `a ≤ nfp F 0 → nfp F a = nfp F 0`, describes the
+same route (two `nfp_le_fp` applications with `nfp_fp`; the proof below uses one plus
+`epsilon0_least_fixedpoint`), fences **normality** as load-bearing (*"the displayed implication is false
 without it"*), and draws the same conclusion — *"⊥ is **a** seed, not a distinguished one"* — under its
 own verdict, ***"Elementary and not novel."*** ⚠ That earlier revision claimed the corpus *"never
 measured it"*; **false**, and refuted both by § I-b and by `epsilon0_ne_bot`'s docstring **in this
@@ -85,25 +86,28 @@ the prose becomes a checkable declaration.**
 increasing functions of finite and transfinite ordinals*, Trans. Amer. Math. Soc. 9 (1908) — read from
 source, filed in the project's paper library:
 
-* **Corollary 1** is the seed-ranged result itself: *"if `f'(x) < a < f'(x+1)`, then `f'(x+1)` is the
-  least upper bound of `f(a), f[f(a)], …`"* — iterate a normal function from **any** seed strictly
-  between two consecutive derived values and you reach **the next one**. That is exactly "each interval
-  collapses onto its upper endpoint", in 1908.
-* **Corollary 4** gives the ω-power instance by name: *"The first derived function of ωˣ is the function
-  ε"*. So `nfp (ω^·)` **is** the ε-enumeration, and the theorem below is that pairing restated.
+* **Corollary 1**: *"if `f'(x) < a < f'(x+1)`, then `f'(x+1)` is the least upper bound of
+  `f(a), f[f(a)], …`"* — iterating a normal function from a seed strictly **between two consecutive
+  derived values** reaches the next one. ⚠ **That range is ABOVE the first fixed point and therefore
+  does NOT cover `[0, ε₀]`**, which is what the declaration below states; an earlier draft claimed it
+  did. The shape is the same; the range is not.
+* **Corollary 4**: *"The first derived function of ωˣ is the function ε"*.
+  ⚠ **Veblen's "derived function" is Mathlib's `deriv`, NOT `nfp`** — they are different objects, and
+  an earlier draft wrote *"`nfp (ω^·)` **is** the ε-enumeration"*, which is **false**:
+  `nfp (ω^·) 1 = ε₀` while `Ordinal.epsilon 1 = ε₁`. The corpus's own bridge between them is
+  `epsilon_eq_deriv`.
 
-Veblen credits the underlying properties outward to **Cantor** (his footnotes cite Cantor pp. 226 and
-237, Theorem B). ⚠ A review pass reported a more specific Cantor locus (*Beiträge* § 20, Thms G/H,
-p. 245); **that was not reproducible from the filed copy and is not asserted here** — cite Veblen's own
-footnotes or read Cantor directly.
+Veblen credits these outward to **Cantor**, *Beiträge zur Begründung der transfiniten Mengenlehre*,
+Math. Ann. 49 (1897) — his footnotes on the corollary page read *"Cantor, loc. cit., § 20."* and
+*"Cantor, theorems G and H, p. 245."*
 
-Mathlib carries the same statement shape twice — `Ordinal.nfp_add_eq_mul_omega0` and
-`Ordinal.nfp_mul_eq_opow_omega0` (`Mathlib/SetTheory/Ordinal/FixedPoint.lean`), same naming idiom and
-same `le_antisymm` + `nfp_le_fp` route. ⚠ **What is absent from the pin is the SEED-RANGED ω-power
-entry** (searched 2026-08-07): `Ordinal.epsilon_zero_eq_nfp` (seed `0`) and `epsilon_succ_eq_nfp`
-(successor seeds) both exist. **So what the declaration below closes is a FORMALIZATION gap in Mathlib,
-not a mathematical one.** The mathematics is Veblen's; the framework invented none of it, and the
-honest delta is one Lean declaration.
+⚠ **An earlier draft of this line declared that locus "not reproducible from the filed copy" and
+withdrew it. That was FALSE and the retraction is itself retracted.** Both footnotes are present; the
+OCR renders `§` as a backslash and the dagger markers as `t`/`I`, and **the search that "failed" was
+truncated to its first three results**. Three gates caught it. **This is the same defect the
+neighbouring `InfinitudeFloor.lean` docstring already records against a different source — a truncated
+search recorded as an absence — recurring one file away, and written into a docstring in the same
+session that added the rule against it.**
 
 Mathlib carries the same statement shape twice — `Ordinal.nfp_add_eq_mul_omega0` and
 `Ordinal.nfp_mul_eq_opow_omega0` (`Mathlib/SetTheory/Ordinal/FixedPoint.lean`), same naming idiom and
@@ -112,9 +116,8 @@ entry** (searched 2026-08-07): `Ordinal.epsilon_zero_eq_nfp` (seed `0`) and `eps
 (successor seeds) both exist. **So the gap being filled is a FORMALIZATION gap in Mathlib, not a
 mathematical one** — the mathematics is Veblen's, and the framework invented none of it.
 
-⚠ Two scope corrections to an earlier draft: it said § I-b names *"the exact proof route"* (§ I-b
-describes two `nfp_le_fp` applications; the proof below uses one plus `epsilon0_least_fixedpoint`), and
-*"the very file these proofs draw their lemmas from"* (`FixedPoint.lean` supplies `nfp_le_fp` and
+⚠ Scope correction to an earlier draft, which said *"the very file these proofs draw their lemmas
+from"* (`FixedPoint.lean` supplies `nfp_le_fp` and
 `nfp_fp`; `isNormal_opow` is in `Exponential.lean`, the ε₀ lemmas in `Veblen.lean`).
 
 **Why state it here at all.** `ε₀ = nfp (ω^·) ⊥` (`epsilon0_eq_nfp_bot`) is read across the corpus as
@@ -125,10 +128,13 @@ ascent μ (seed ⊥ ≠ closure ε₀)"*. **That ascent is genuine.** What the d
 
 ⚠ **An earlier draft said "above ε₀ the seed does all the work", which is FALSE**, and illustrated it
 with `nfp (ω^·) ε₁ = ε₁` — the one family that hides the error, since ε₁ is itself a fixed point and
-`nfp` returns any fixed point unchanged. **The general fact is that `nfp (ω^·) a` is the least
-ε-number `≥ a`.** Below ε₀ that is constantly ε₀; above it the answer *varies with* the seed but is
-not the seed — Mathlib's `epsilon_succ_eq_nfp` gives `nfp (ω^·) (succ ε₀) = ε₁`, **strictly above the
-seed**. So the rungs partition: each interval `(ε_o, ε_(o+1)]` collapses onto its upper endpoint.
+`nfp` returns any fixed point unchanged. **The general fact is that `nfp (ω^·) a` is the least ε-number `≥ a`**, and that statement is complete
+on its own. Below ε₀ it is constantly ε₀; `epsilon_succ_eq_nfp` gives `nfp (ω^·) (succ ε₀) = ε₁`.
+
+⚠ Two glosses bolted onto that statement in an earlier draft were **false** and are withdrawn:
+*"above ε₀ the answer is not the seed"* (it **is** the seed at every ε-number — `nfp (ω^·) ε₁ = ε₁`),
+and *"the rungs partition"* (the intervals `(ε_o, ε_(o+1)]` miss every **limit**-index ε-number, e.g.
+`ε_ω`). **Neither gloss is needed; the least-ε-number-≥-`a` form already says everything true here.**
 ⚠ **And normality is essential**, per § I-b's fence: the implication fails for a non-normal operator.
 
 `Reading:` **INVARIANT** (conjectural) — the framework reads this as the ratified **"iterative

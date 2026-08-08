@@ -124,10 +124,10 @@ theorem isLeastFixedPointFrom_nfp {f : Ordinal → Ordinal} (H : Order.IsNormal 
 is true and is what separates this face from § V's degenerate one. It does **not** mean ⊥ is a
 privileged starting point: `nfp_seed_independent_below_epsilon0`
 (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) proves `∀ a ≤ ε₀, nfp (ω^·) a = ε₀`, with
-`nfp_seed_one_eq_seed_bot` as the concrete witness. ⚠ **Scope: at or below ε₀ only.** Above ε₀ the
-answer *varies with* the seed but is **not** the seed — `nfp (ω^·) a` is the least ε-number `≥ a`, so
-e.g. `nfp (ω^·) (succ ε₀) = ε₁` (Mathlib `epsilon_succ_eq_nfp`), strictly above it. An earlier draft
-said "the seed does all the work" there; that is false. ⚠ **Normality is load-bearing.**
+`nfp_seed_one_eq_seed_bot` as the concrete witness. ⚠ **Scope: at or below ε₀ only.** The general fact is
+that `nfp (ω^·) a` is the **least ε-number `≥ a`** — e.g. `nfp (ω^·) (succ ε₀) = ε₁` (Mathlib
+`epsilon_succ_eq_nfp`). Two earlier glosses here were false and are withdrawn: *"the seed does all the
+work"* above ε₀, and *"the answer is not the seed"* (it **is**, at every ε-number). ⚠ **Normality is load-bearing.**
 
 **Provenance:** stated in prose, with this conclusion and this proof route, at
 `ZeroParadox/Ordinal/Epsilon0MinMax.lean` § I-b (**Tim, 2026-07-31**), which calls it *"elementary and
