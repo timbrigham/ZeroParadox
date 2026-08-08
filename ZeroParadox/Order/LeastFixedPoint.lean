@@ -124,14 +124,21 @@ theorem isLeastFixedPointFrom_nfp {f : Ordinal → Ordinal} (H : Order.IsNormal 
 is true and is what separates this face from § V's degenerate one. It does **not** mean ⊥ is a
 privileged starting point: `nfp_seed_independent_below_epsilon0`
 (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) proves `∀ a ≤ ε₀, nfp (ω^·) a = ε₀`, with
-`nfp_seed_one_eq_seed_bot` as the concrete witness. ⚠ **Scope: at or below ε₀ only** — above it the
-seed does all the work — and **normality is load-bearing**.
+`nfp_seed_one_eq_seed_bot` as the concrete witness. ⚠ **Scope: at or below ε₀ only.** Above ε₀ the
+answer *varies with* the seed but is **not** the seed — `nfp (ω^·) a` is the least ε-number `≥ a`, so
+e.g. `nfp (ω^·) (succ ε₀) = ε₁` (Mathlib `epsilon_succ_eq_nfp`), strictly above it. An earlier draft
+said "the seed does all the work" there; that is false. ⚠ **Normality is load-bearing.**
 
-**Provenance:** stated in prose, with this proof route and this conclusion, at
+**Provenance:** stated in prose, with this conclusion and this proof route, at
 `ZeroParadox/Ordinal/Epsilon0MinMax.lean` § I-b (**Tim, 2026-07-31**), which calls it *"elementary and
-not novel"*; the declarations only make it checkable. The classical general form is the fixed-point
-lemma for normal functions (Veblen, 1908), and Mathlib carries the same statement shape for `+` and
-`*` (`Ordinal.nfp_add_eq_mul_omega0`, `Ordinal.nfp_mul_eq_opow_omega0`).
+not novel"*; the declarations only make it checkable. **And the corpus's own seed-parametric general
+statement is one section up:** § III's `isLeastFixedPointFrom_nfp` — with
+`IsLeastFixedPointFrom.unique` the ε₀ result is its instantiation, needing no separate proof idea.
+The classical form is Veblen 1908 — **Corollary 1** is the seed-ranged statement itself and
+**Corollary 4** names the ω-power case (*"the first derived function of ωˣ is the function ε"*), with
+the underlying properties credited by Veblen to Cantor; Mathlib carries the same shape for `+` and `*`
+(`Ordinal.nfp_add_eq_mul_omega0`, `Ordinal.nfp_mul_eq_opow_omega0`), the seed-ranged ω-power entry
+being the one not located in the pin.
 
 `Reading:` **INVARIANT** (conjectural) — read the seed as a **role**, not an origin: the ratified
 *"iterative bottoms"* picture, in which the rungs are bottoms relative to their iteration and **never
@@ -140,8 +147,10 @@ lemma for normal functions (Veblen, 1908), and Mathlib carries the same statemen
 
 ⚠ **SHAPE, never instance-of** — different carriers, different mechanisms, and different conclusions.
 ⚠ `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`); nothing here identifies a rung with ⊥. ⚠ The
-ratified term for the iteration sense is **iterative bottom**; "local bottom" is taken for the
-per-domain MC-1 family (`ZeroParadox/Category/GlobalZero.lean`). -/
+ratified term for the iteration sense is **iterative bottom**; do not substitute "local bottom"
+*there* — that phrase is taken for the per-domain MC-1 family
+(`ZeroParadox/Category/GlobalZero.lean`). (`ZeroParadox/Valuation/LocalFloor.lean` uses it for a
+third, subtree-local sense; that is that file's own usage and not what the iteration rule governs.) -/
 
 /-- **ε₀ face.** ε₀ is the least fixed point of `α ↦ ω^α` from the ordinal bottom ⊥. The seed ⊥ and
     the closure ε₀ are distinct — this is the genuine ascent μ. Reuses `epsilonZero_fixedPoint`

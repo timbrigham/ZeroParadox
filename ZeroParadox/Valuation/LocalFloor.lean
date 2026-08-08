@@ -155,7 +155,11 @@ def (a witness) per node, not a global instance. -/
 `Reading:` **INVARIANT** (conjectural) — the framework reads this as the ratified **"iterative
 bottoms"** picture made concrete: each node roots a floor *relative to its own subtree*, and
 `boundaryFloor_nil_floor` below says the global floor `botEnd` is merely the empty-prefix case, so
-**`botEnd` is not distinguished among the node floors of this carrier.**
+**under the per-node measures `localCx v`, no node floor is distinguished** — each has complexity `⊤`
+in its own subtree. ⚠ **That scoping is load-bearing and an earlier draft dropped it.** Under the
+GLOBAL valuation `endVal`, `botEnd` **is** distinguished: `botEnd_val_top : endVal botEnd = ⊤`
+(`ZeroParadox/Valuation/PadicTree.lean`), while a floor below a nonempty prefix has finite `endVal`.
+The non-distinction is a statement about the local measures, never about the carrier.
 
 **A comparable shape holds in the ordinal carrier by a different mechanism** —
 `nfp_seed_independent_below_epsilon0` (`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) proves every seed at
