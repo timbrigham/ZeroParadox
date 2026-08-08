@@ -374,6 +374,35 @@ already running.** The occurrence problem is an artifact of implementing one pol
 assumption to work, **first check whether only one pole has been built.** A missing pole shows up as a
 bridge you cannot formalize.
 
+### The test applies to METHOD, not only to objects (Tim, 2026-08-07)
+
+**A search that implements one polarity is a half-built detector, for exactly the reason a face that
+implements one pole is half-built.** Tim, on being shown that four of five false negatives in one
+session were one grep away in the opposite polarity: *"that polarity is the nature of the project — I
+feel like every instance we can have will have that structure."* He is right, and **Q2 above is already
+that question**, asked of a construction rather than of a search: *what does the one-way arrow look like
+run backwards?*
+
+**So run the test on the METHOD:**
+- **Q1-M — what would this claim look like stated from the other side?** *"Seed-independent"* and
+  *"⊥ is **a** seed, not a distinguished one"* are one fact. *"Converges"* and *"diverges"*. *"Is
+  used"* and *"has no call sites"*. **Search both, or you have searched half.**
+- **Q2-M — if the corpus disagreed with me, what words would it use?** That phrasing is where a
+  contradicting result is sitting, and it is the phrasing you will never reach from your own.
+
+**Measured, same day:** `seed-independent` → 0 hits; the inverse `"a seed, not"` → the section that
+already proved it, by Tim, eight days earlier. `atTop (nhds _)` → 13 convergent files; the inverse
+`atTop atTop` → the divergences, in files the survey never saw. Both had already shipped into docstrings
+as measured fact. See § *NOT IN THE LIBRARY IS A CLAIM* step (c) for the operational form.
+
+**⚠ Where it STOPS, and the framework already names the exception.** *"Every instance"* is the right
+instinct and needs one qualifier the corpus itself supplies: the fifth POV KIND, **INVARIANT** — *"the
+quantity does not transform; flipping the chart gains nothing."* That is the ratified slot for polarity
+**not** applying. Four of the five KINDs are two-sided (COINCIDENCE, INVERSION, DRIFT, CARRIER); the
+fifth is the null case. **So: expect polarity, and when flipping genuinely gains nothing, say INVARIANT
+rather than forcing a second pole.** A rule that fires everywhere is the cry-wolf shape this file
+elsewhere says to narrow rather than tolerate.
+
 **Why this is here and not only in memory.** It *was* only in memory
 (`feedback_two_part_lens_call_out`), where the body does not load — only the one-line index entry does,
 competing with ~100 others. It did not fire for months. Per this file's own rule: *memory is for context,
