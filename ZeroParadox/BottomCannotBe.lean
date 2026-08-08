@@ -43,13 +43,14 @@ import ZeroParadox.Reals.MarkovSpectralGap
 import Mathlib.Order.FixedPoints
 
 /-!
-# Index of proved results characterizing ⊥
+# Index of declarations characterizing ⊥
 
-`#check`-only: no declarations, nothing new proved. Each line names one existing result and says
-what it establishes; the imports force every indexed theorem to compile, so no line can point at a
-dead name. `Statement:` restates what a declaration proves; `Reading:` is interpretation and is not
-a claim about the theorem. Sections run: what ⊥ cannot be, what it must be, how it is approached and
-departed. Schema and corpus sweep: `.claude-local/notes/bottom_object_harvest_catalog_2026-06-30.md`.
+`#check`-only: nothing new is proved here, and the list is curated, not exhaustive. Each line names
+one existing declaration and says what it establishes; the imports force every indexed name to
+compile, so no line can point at a dead one. `Statement:` restates what a declaration proves;
+`Reading:` is interpretation, not a claim about the theorem. Sections run: what ⊥ cannot be, what it
+must be, how it is approached and departed. Schema and sweep:
+`.claude-local/notes/bottom_object_harvest_catalog_2026-06-30.md`.
 
 ## Engineer's Take
 
@@ -78,7 +79,7 @@ section CannotBeIndex
 #check @ZeroParadox.split_kleisli_vs_padic
 -- Statement: `Cofix → Fix` is empty for the identity polynomial functor.
 #check @ZeroParadox.root_cut_no_map_nu_to_mu
--- Statement: that emptiness, plus `Fix → Cofix` being a subsingleton — asymmetric in both directions.
+-- Statement: that emptiness, plus any two maps `Fix → Cofix` being equal.
 #check @ZeroParadox.root_cut_strict_asymmetric
 
 /-! ### ⊥ cannot be reached by a structure-preserving (descending/ν) comparison -/
@@ -95,20 +96,22 @@ section CannotBeIndex
 
 /-! ### the Markov interpretation cannot be a single ordered or unique point -/
 
--- Statement: some stationary distribution is neither least nor greatest in the simplex.
+-- Statement: for `2 ≤ n`, some stationary distribution is neither least nor greatest in the simplex.
 #check @ZeroParadox.stationary_attractor_no_order_placement
--- Statement: a doubly-stochastic `Fin 4` chain exists whose stationary distribution is not unique.
+-- Statement: a doubly-stochastic `Fin 4` chain other than the pure chain exists whose stationary
+-- distribution is not unique.
 #check @ZeroParadox.markov_node_no_universal_property
--- Statement: so stationarity under doubly-stochastic chains is not subsingleton-valued in general.
+-- Statement: so stationarity under doubly-stochastic `Fin 4` chains is not subsingleton-valued.
 #check @ZeroParadox.doublyStochastic_stationary_not_subsingleton
 
 /-! ### the p-adic floor cannot be reached from within, nor matched to the Markov rate -/
 
 -- Statement: for `x ≠ 0` in ℚ₂, `2ⁿ * x ≠ 0` at every finite `n` — the orbit never lands on 0.
 #check @ZeroParadox.padic_orbit_never_reaches_zero
--- Statement: no reindexing `φ : ℕ → ℕ` matches the p-adic rate to the Markov rate at every step.
+-- Statement: for `x ≠ 0`, no reindexing `φ : ℕ → ℕ` matches the p-adic rate to the Markov rate at
+-- every step.
 #check @ZeroParadox.no_rate_conjugacy
--- Statement: indeed no single pair of indices makes the two rates agree.
+-- Statement: for `x ≠ 0`, indeed no single pair of indices makes the two rates agree.
 #check @ZeroParadox.no_rate_orderIso
 
 /-! ### categorical floor and seam exclusions -/
@@ -143,16 +146,19 @@ section CannotBeIndex
 #check @ZeroParadox.unit_orbit_not_tendsto_zero
 -- Statement: the swap chain's orbit from `e0vec` converges to no limit.
 #check @ZeroParadox.swap_orbit_not_convergent
--- Statement: the p-adic orbit stays norm-positive while the Markov orbit stays balanced — no match.
+-- Statement: for `x ≠ 0` and balanced `v₀`, the p-adic orbit stays norm-positive and the Markov
+-- orbit stays balanced.
 #check @ZeroParadox.padic_markov_no_orbit_correspondence
 
 /-! ### the seam and floor cannot be transported or cross-connected -/
 
 -- Statement: the Hilbert floor is a zero object while the p-adic floor admits no initial structure.
 #check @ZeroParadox.seam_role_not_transported
--- Statement: no binary cofan with apex `fD_functor.obj 0` is a colimit.
+-- Statement: no binary cofan of `fD_functor.obj 1` with itself has `fD_functor.obj 0` as a colimit
+-- apex.
 #check @ZeroParadox.seam_not_mu_colimit_apex
--- Statement: the QPF seam is a canonical bijection, and the recursive `idPF` `Fix` is empty.
+-- Statement: the QPF seam is the canonical bijection, no `Fix ≃ Cofix` exists for the recursive
+-- `idPF`, the lattice seam is the identity equivalence, and the `selfApp` fixed points are `{bot}`.
 -- Reading: this records that no cross-setting map was EXHIBITED. It is not a proof of impossibility
 -- (`IsEmpty` of the map type); an open "none given", not a no-go. See register D8.
 #check @ZeroParadox.no_cross_setting_map
@@ -160,15 +166,15 @@ section CannotBeIndex
 #check @ZeroParadox.isEmpty_hom_one_to_zero
 -- Statement: in a `ZPCategory`, an object not isomorphic to the initial admits no map into it.
 #check @ZeroParadox.t3_unreachability
--- Statement: rose trees over a partially-well-ordered relation are partially well ordered.
+-- Statement: rose trees over a partially-well-ordered preorder are partially well ordered.
 -- Reading: a SCOPE FENCE, marking where the "canonical floor 0" claim does not apply — Kruskal's
 -- theorem gives a well-quasi-order, not a descent to a bottom.
 #check @ZeroParadox.kruskal_is_wqo_not_descent
 
 /-! ### POSITIVE — ⊥ as the fixed point where operation and result coincide -/
 
--- Statement: a FIELD of the `AbstractSelfApp` class asserting a unique fixed point — assumed of the
--- action, not derived.
+-- Statement: a FIELD of the `AbstractSelfApp` class — every `selfApp` fixed point equals `bot`,
+-- assumed of the action, not derived.
 -- Reading: the framework calls this coincidence of input and output "concurrency".
 #check @ZeroParadox.AbstractSelfApp.unique_fp
 -- Statement: `bot` is a fixed point of `selfApp`, and is both below and above every fixed point.
@@ -204,7 +210,7 @@ section CannotBeIndex
 #check @ZeroParadox.t2_universal_constituent
 -- Statement: in any additively-valued ring, `v 0 = ⊤`. [WIDE, measure; subsumes the p-adic case]
 #check @ZeroParadox.addVal_bot
--- Statement: the ε₀-tower encodings converge to 0 in ℚ₂. [WIDE, reach]
+-- Statement: the ε₀-tower encodings converge to 0 in ℤ_[2]. [WIDE, reach]
 #check @ZeroParadox.tower_converges_to_zero
 
 /-! ### INVERSION — the symmetry linking the narrow and wide poles -/
@@ -213,7 +219,7 @@ section CannotBeIndex
 -- Reading: the inversion symmetry of the tower. ⚠ It is ℤ-valued and carries NO literal 0=∞
 -- content — 0 is the excluded centre, and the source file disclaims that reading.
 #check @ZeroParadox.inversion_reverses_filtration
--- Statement: one orbit `2ⁿx` converges to 0 in ℚ₂ AND diverges to ∞ in ℝ.
+-- Statement: for rational `x ≠ 0`, the one orbit `2ⁿx` converges to 0 in ℚ₂ AND diverges to ∞ in ℝ.
 -- Reading: this is where the literal 0=∞ content lives — one orbit, two place-views.
 #check @ZeroParadox.doubling_place_dichotomy
 -- Statement: `rInvHomeo` sends `0` to `∞` and `∞` to `0` on `OnePoint ℚ₂`.
@@ -235,13 +241,15 @@ section CannotBeIndex
 /-! ### SELF-REFERENCE — the diagonal fixed point -/
 
 -- Statement: under `[KleeneStructure]`, any Quine atom `q` satisfies `q = bot`. The statement has no
--- Kleene clause; the quine-atom property is class-supplied, like `unique_fp`.
+-- Kleene clause; the quine-atom property is a hypothesis, and what the class supplies is
+-- `bot_self_mem`.
 -- Reading: the self-EXECUTING reading is the framework's, carried by the class commitment rather
 -- than by this theorem. See ZP-K § II and § III.
 #check @ZeroParadox.kleene_quine_is_bot
 -- Statement: some code `c` is a computational quine.
 #check @ZeroParadox.computational_quine_exists
--- Statement: `eval c n = eval c (encode c + n)` — the Gödel number is *a* period of the evaluation.
+-- Statement: for a computational quine `c`, `eval c n = eval c (encode c + n)` — the Gödel number is
+-- *a* period of the evaluation.
 -- Reading: ⚠ not *the* period. It is not shown least, and a constant code is periodic with every
 -- period, so this does not tie index to function. A periodicity fact, not a diagonal identity.
 #check @ZeroParadox.quine_period_is_goedel
@@ -255,24 +263,29 @@ section CannotBeIndex
 -- Statement: the seam satisfies `seam ≅ seam ⊞ seam` and is a zero object.
 #check @ZeroParadox.seam_is_diagonal_fixpoint
 
-/-! ### GENERATION — the floor generates the ceiling -/
+/-! ### GENERATION — the floor generates its first step -/
 
--- Statement: `epsilonZero = nfp (ω^·) 0` — ε₀ is the closure of 0 under `ω^·`.
+-- Statement: `epsilonZero = nfp (ω^·) 0` — ε₀ is the first step from 0 under `ω^·`, the least
+-- ordinal above 0 closed under it.
 #check @ZeroParadox.epsilonZero_eq_nfp
--- Statement: `ω^b = b → epsilonZero ≤ b` — ε₀ is the least such fixed point.
+-- Statement: `ω^b = b → epsilonZero ≤ b` — ε₀ is below every fixed point of `ω^·`.
 #check @ZeroParadox.epsilonZero_le_fixedPoint
--- Statement: Mathlib's Kleene fixed-point theorem, `lfp f = ⨆ₙ fⁿ(⊥)`.
+-- Statement: Mathlib's Kleene fixed-point theorem: for ωScott-continuous `f`, `lfp f = ⨆ₙ fⁿ(⊥)`.
 -- Reading: CITED prior art for generation, do NOT rebuild. `ε₀ = nfp (ω^·) 0` is the ordinal
 -- instance of generating a least fixed point from the floor by iteration.
 #check @fixedPoints.lfp_eq_sSup_iterate
 -- Reading: generation pairs with the μ side (build up from ⊥) and its dual is reach on the ν side
 -- (flow down to ⊥). So generation being absent on the ν-bottoms is the μ/ν fork, not a gap — they
--- carry reach instead. One instance is built choice-free (`node4_generates_nat`); Adámek's general
--- initial-algebra colimit is not cheaply available in Mathlib and remains open.
+-- carry reach instead.
+-- Statement: one instance is built choice-free — `node4_generates_nat` measures `[propext,
+-- Quot.sound]`. Adámek's initial-algebra colimit is not located in Mathlib as of 2026-08-08
+-- (Lambek's lemma is, as `Endofunctor.Algebra.Initial.str_isIso`).
 
 /-! ### DYNAMICS — how ⊥ is approached and departed -/
 
--- Statement: `c₀ ≠ c₁` and `join c₀ c₁ = c₁` — the state advance off the floor.
+-- Statement: `c₀ ≠ c₁`, `c₁ ≠ c₀`, and `join c₀ c₁ = c₁`.
+-- Reading: the state advance off the floor. The statement constrains the SHAPE of a transition, not
+-- that one occurs.
 #check @ZeroParadox.t_snap_derived
 -- Statement: for `x ≼ y` with `x ≠ y`, no join returns `y` to `x`.
 -- Reading: a GENERIC semilattice no-return lemma. It mentions neither ⊥ nor the snap; the snap
@@ -284,7 +297,8 @@ section CannotBeIndex
 #check @ZeroParadox.pred_orbit_reaches_floor
 -- Statement: the doubling orbit converges to 0 in the 2-adic metric. [ν]
 #check @ZeroParadox.doubling_orbit_tendsto_zero
--- Statement: given `⊥ ⟶ X`, the hom `X ⟶ ⊥` is still empty.
+-- Statement: for `X` not isomorphic to the initial, and given `⊥ ⟶ X`, the hom `X ⟶ ⊥` is still
+-- empty.
 -- Reading: definitionally `t3_unreachability` — the same no-incoming fact under the irreversibility
 -- reading rather than the unreachability one. Not new content.
 #check @ZeroParadox.t4_chains_forward_only
