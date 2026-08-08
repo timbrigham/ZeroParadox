@@ -29,7 +29,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # build: false keeps this job self-contained, as the header claims. Without it
+      # lean-action builds the whole corpus first, so an unrelated breakage elsewhere
+      # kills the job before the Minimal Core is ever elaborated.
       - uses: leanprover/lean-action@v1
+        with:
+          build: false
       - name: Re-elaborate the Minimal Core and write the report
         run: |
           # No pipefail on the elaboration: a failure must still REACH the report.
