@@ -21,6 +21,27 @@ for every added declaration, an `ssot.json` row for every added declaration, all
 Those are the four things this project forgets most; each was forgotten again on 2026-08-09 with all
 four rules known and written down.
 
+**⭐ AND THEY ARE NOW ENFORCED BY HOOKS, NOT ONLY BY THIS COMMAND (Tim, 2026-08-09).** `precommit` is
+a manual command, so until this change three of the four obligations could be skipped simply by not
+running it. The enforcement map now:
+- **The four checkers BLOCK AT COMMIT** (`pre-commit` runs each with `--block`; it previously ran
+  them and then `exit 0`'d unconditionally). This does **not** reopen the 2026-07-30 warn-only
+  decision: that argument protects **build state**, because stub-first commits `sorry`-stubbed files
+  deliberately — and none of the four checkers looks at `sorry`, the build, or completeness. They are
+  baselined, sit at zero new, and **already blocked at push**, so nothing newly unpushable becomes
+  uncommittable; the identical failure just arrives earlier, where the fix is cheap.
+- **Purity and SSOT BLOCK AT PUSH** (`pre-push` § 3b-f, via `batch.py decls --block`). Before this
+  they were the only two obligations with **no automatic enforcement anywhere**.
+- **`lake build` deliberately gates NEITHER**, because that is the one genuinely in tension with
+  stub-first. CI at the PR to `main` remains its backstop.
+
+⚠ **The purity/SSOT check is driven by an ON-DISK BASELINE (`.claude-local/decl_baseline.txt`), never
+by git** — see the hashing rule below. It used to compute "added" against `HEAD`, which is meaningful
+only *before* the commit; run afterwards it returned nothing and both checks passed vacuously. A
+**stale baseline is safe**: it can only make more declarations look new, so the check gets stricter,
+never blind. Re-seed with `python .claude-local/batch.py decls --baseline`. Vendored backports are
+exempt structurally, as in `check_prose.py`.
+
 **Use `/batch <bucket>` for anything MULTI-SITE** — a debaselining bucket, a defect-class sweep, a
 file-sized burn-down. It adds stage ordering (`ledger` → `screen` → `probe` → `judge`), a frozen
 filter snapshot, and a recorded note per stage. **A single targeted fix with a named defect id does
