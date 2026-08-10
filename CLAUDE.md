@@ -35,6 +35,23 @@ running it. The enforcement map now:
 - **`lake build` deliberately gates NEITHER**, because that is the one genuinely in tension with
   stub-first. CI at the PR to `main` remains its backstop.
 
+**⭐⭐ THE HOOKS ARE NOW THREE-LINE SHIMS. ALL pipeline logic is `.claude-local/hooks.py` (Tim,
+2026-08-10: *"the shell variants are legacy and should be retired... just the python version should
+remain"*).** There were **two partial implementations** — a ~300-line shell hook and `batch.py` —
+and they measurably disagreed three ways (what counts as reviewable; whether signals are required
+when nothing reviewable changed; whether a gate-exempt file can stale a signal) while checking
+**disjoint** things (the `/rely` routing only in `batch.py`, the four checkers and path resolver only
+in the hook). Neither was the pipeline. Shell and Python cannot share a module, so the shell went.
+**Edit `hooks.py`; the shim must never grow.**
+- ⚠ **This is also how `REL-1` got fixed, and the ordering was load-bearing.** The hook knows the
+  refs being pushed; `batch.py` alone did not, so it computed "what changed" from the working tree
+  and went **vacuous the moment a commit landed**. `hooks.py` parses stdin and passes the ranges in.
+  Measured on `7d25a46..e15b222`: the working tree reports **0 reviewable, trigger 5 not firing**;
+  the same range reports **22 reviewable, 346 insertions, trigger 5 FIRES**. Delegating *before*
+  fixing this would have replaced a correct computation with a vacuous one.
+- **`batch.py prepush` and the hook now run the same code**, the hook passing `--ranges` and a manual
+  run reading the working tree. One definition, two entry points.
+
 ⚠ **The purity/SSOT check is driven by an ON-DISK BASELINE (`.claude-local/decl_baseline.txt`), never
 by git** — see the hashing rule below. It used to compute "added" against `HEAD`, which is meaningful
 only *before* the commit; run afterwards it returned nothing and both checks passed vacuously. A
