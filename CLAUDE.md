@@ -632,6 +632,24 @@ informative if something FAILS*: ask what the `example` EXCLUDES.** If it would 
 subject swapped for an arbitrary carrier, it witnesses nothing. Here the honest witness is the
 ω-tower map itself, `⟨fun a => ω ^ a, fun _ _ h => opow_le_opow_right omega0_pos h⟩`.
 
+**⚠ THAT WARNING HAS A NULL CASE, and reading it absolutely gets the answer backwards.** Ask what
+the `example` excludes **relative to the claim it witnesses**, not in the abstract. When the claim
+IS a universal — *"every inhabited carrier can be equipped"*, *"nothing here excludes anything"* —
+a **generic** witness is the exact refutation and a specific one would be weaker. Worked example,
+K1 (2026-08-10): the corpus said non-members of `ZPSemilattice` *"abound"*; the witness that settles
+it is `example (L : Type) [Nonempty L] : Nonempty (ZPSemilattice L)`, which is maximally generic on
+purpose, paired with `example : IsEmpty (ZPSemilattice Empty)` to pin inhabitation as the sole
+obstruction. **Genericity is a defect when it is accidental and the content when it is the claim.**
+This is the same shape as INVARIANT being the ratified null case of the Two-Pole Test — a rule that
+fires everywhere is the cry-wolf shape this file says to narrow rather than tolerate.
+
+**PREFER AN ANONYMOUS `example` OVER A NAMED `def`/`theorem` FOR A WITNESS — measured 2026-08-10,
+it declares nothing.** `batch.py decls_in` returns `[]` for the two examples above and `['realOne']`
+for a `theorem` beside them, so a witness in `example` form owes **no `#print axioms` entry and no
+`ssot.json` row**, while a named one owes both plus an SJV sync. Name it only when something else
+must cite it. Nothing is lost: the kernel checks an `example` exactly as hard, which is the entire
+point of tier 1.
+
 ## The recurring defect is UNSTATED ADJACENCY — the fix is a pointer, not a theorem
 
 **This corpus's characteristic failure is not wrong theorems. It is true theorems whose reach nobody
