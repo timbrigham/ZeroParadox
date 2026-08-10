@@ -75,8 +75,6 @@ class InfinitudeFloor (α : Type*) where
   cx : α → ℕ∞
   /-- the infinitude of zeros: distinct nulls indexed by ℕ. -/
   member : ℕ → α
-  /-- each member is distinct from the floor (a "new" null, never the floor itself). -/
-  member_ne_floor : ∀ n, member n ≠ floor
   /-- the members' complexities climb strictly (so they are pairwise distinct and unbounded in ℕ∞). -/
   cx_member_strictMono : StrictMono (fun n => cx (member n))
   /-- **the identity**: the floor's complexity is the supremum of the infinitude's. -/
@@ -129,26 +127,14 @@ end ZeroParadox
 
 /-! ### § III-b. The OFFSET structure — the floor is the only point at infinite distance
 
-**Origin (Tim, 2026-08-05).** Asked whether an instance translated into `n+1` can carry a step offset
-that is *"not readily apparent on instantiation"*, and then identified the transport thread as **the
-substrate** of two surface phenomena: the approximation index `⃝ⁿ(⊥)` and the tower's `+1`. The results
-below are the measurement-level content of that reading, inside this class.
-
-**The substrate, already proved elsewhere and stated here as the reason:** `ZeroParadox/Order/Snap.lean`
-records that *"⊥'s down-set is the singleton `{⊥}`: there is nothing below it to subtract… Directionality
-needs two comparable points; at ⊥ alone `le` is reflexive only."* **An offset is a difference, a
-difference needs two points, and the bottom has none available** — so nothing sits at distance zero from
-it but itself, and every index is a distance *from* it.
-
-**Why the tower's `+1` is FORCED, not conventional:** `member_ne_floor` forbids the floor from being a
-member of its own infinitude, so an enumeration seeded at the floor must begin at the successor. That is
-exactly `towerInfinitudeFloor`'s `member n = cnfToZp2 (towerNONote (n + 1))`
-(`ZeroParadox/Valuation/TowerHeightFloor.lean`).
-
+**Why the tower's `+1` is FORCED, not conventional** (Tim's question, 2026-08-05): no member can be
+the floor (`member_ne_floor` below — a member there would sit at `⊤` with nothing able to climb past
+it), so an enumeration seeded at the floor begins at the successor, exactly `towerInfinitudeFloor`'s
+`member n = cnfToZp2 (towerNONote (n + 1))`. ⊥ admits no offset because its down-set is `{⊥}`
+(`Order/Snap.lean`) and a difference needs two points.
 ⚠ **`Reading:` that the approximation index, the `+1`, and the transport asymmetry are ONE phenomenon
-is the framework's interpretation** — a shared shape across distinct structures, which by this corpus's
-standing rule is a **type boundary, never a common theorem**. The theorems below are about this class
-only. Long form: `.claude-local/notes/future-research/offset_from_the_origin_2026-08-05.md`. -/
+is the framework's interpretation** — a shared shape across distinct structures, hence a **type
+boundary, never a common theorem**. -/
 
 namespace ZeroParadox
 
@@ -166,15 +152,20 @@ theorem member_cx_lt_top {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
     exact absurd hstep (not_lt.mpr le_top)
   · exact h
 
-/-- **`Statement:` no member shares the floor's complexity.** The measurement-level **strengthening**
-of `member_ne_floor`: members differ from the floor not merely as elements, but in **how far out they
-sit**. ⚠ It neither uses nor follows from `member_ne_floor` — it is proved from
+/-- **`Statement:` no member shares the floor's complexity.** The measurement-level statement:
+members differ from the floor not merely as elements, but in **how far out they sit**. Proved from
 `infinitude_forces_infinite_complexity` and `member_cx_lt_top` (which is where `cx_member_strictMono`
-enters, one step further back), and it *implies* that lemma rather than restating it. -/
+enters, one step further back). -/
 theorem member_cx_ne_floor_cx {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
     I.cx (I.member n) ≠ I.cx I.floor := by
   rw [infinitude_forces_infinite_complexity α]
   exact ne_of_lt (member_cx_lt_top n)
+
+/-- **`Statement:` no member IS the floor** — a "new" null, never the floor itself. Immediate from
+`member_cx_ne_floor_cx`: equal elements would have equal complexity. -/
+theorem member_ne_floor {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
+    I.member n ≠ I.floor :=
+  fun h => member_cx_ne_floor_cx n (congrArg I.cx h)
 
 /-- **`Statement:` the offset is recoverable WITHIN the carrier** — distinct indices give distinct
 members, because the complexities strictly climb.
@@ -221,7 +212,6 @@ instance : InfinitudeFloor ℕ∞ where
   floor := ⊤
   cx := id
   member := fun n => (n : ℕ∞)
-  member_ne_floor := fun n => by simp
   cx_member_strictMono := by intro a b h; simp only [id_eq]; exact_mod_cast h
   cx_floor_eq_iSup := by simp only [id_eq]; exact iSup_coe_top.symm
 
@@ -244,11 +234,6 @@ noncomputable instance powerSeriesInfinitudeFloor {R : Type*} [CommRing R] [Nont
   floor := 0
   cx := PowerSeries.order
   member := fun n => X ^ (n + 1)
-  member_ne_floor := fun n => by
-    intro hc
-    have h1 : (X ^ (n + 1) : PowerSeries R).order = ⊤ := by rw [hc]; exact order_zero
-    rw [order_X_pow] at h1
-    exact (ENat.coe_ne_top (n + 1)) h1
   cx_member_strictMono := by
     intro a b h
     simp only [order_X_pow]
@@ -345,7 +330,6 @@ noncomputable instance q2InfinitudeFloor : InfinitudeFloor Q₂ where
   floor := 0
   cx := cxQ2
   member := fun n => (2 : Q₂) ^ (n + 1)
-  member_ne_floor := fun n => pow_ne_zero (n + 1) two_ne_zero
   cx_member_strictMono := by
     intro a b h
     show cxQ2 ((2 : Q₂) ^ (a + 1)) < cxQ2 ((2 : Q₂) ^ (b + 1))
@@ -461,7 +445,6 @@ Deliberately a `def` and **not** an `instance`: registering it globally would pu
   floor := Sum.inr ()
   cx := Sum.elim (fun n => (n : ℕ∞)) (fun _ => ⊤)
   member := Sum.inl
-  member_ne_floor := fun _ => Sum.inl_ne_inr
   cx_member_strictMono := by intro a b h; dsimp only [Sum.elim_inl]; exact_mod_cast h
   cx_floor_eq_iSup := iSup_coe_top.symm
 
@@ -482,7 +465,6 @@ exactly the obstruction an earlier draft named when it declined to claim this. -
   { floor := e 0
     cx := fun x => if x = e 0 then ⊤ else ((Function.invFun e x : ℕ) : ℕ∞)
     member := fun n => e (n + 1)
-    member_ne_floor := fun n h => by have := e.injective h; omega
     cx_member_strictMono := by
       intro a b hab
       dsimp only
@@ -517,12 +499,12 @@ theorem bookkeeping_forces_infinite_complexity :
     bookkeepingInfinitudeFloor.cx bookkeepingInfinitudeFloor.floor = ⊤ :=
   infinitude_forces_infinite_complexity (I := bookkeepingInfinitudeFloor) BookkeepingCarrier
 
-/-- **`Statement:` the members are distinct from the floor here.** A field projection, recorded only
-because it is the field a reader most expects to fail on a hand-built witness. ⚠ It says nothing
-about limits or convergence; an earlier gloss on this declaration claimed it did. -/
+/-- **`Statement:` the members are distinct from the floor here.** A readability specialization of
+`member_ne_floor`, which holds of EVERY `InfinitudeFloor` — so it witnesses nothing specific to this
+hand-built one. ⚠ It says nothing about limits or convergence. -/
 theorem bookkeeping_members_ne_floor (n : ℕ) :
     bookkeepingInfinitudeFloor.member n ≠ bookkeepingInfinitudeFloor.floor :=
-  bookkeepingInfinitudeFloor.member_ne_floor n
+  member_ne_floor (I := bookkeepingInfinitudeFloor) n
 
 end ZeroParadox
 
@@ -533,6 +515,7 @@ open ZeroParadox
 #print axioms infinitude_forces_infinite_complexity
 #print axioms member_cx_lt_top
 #print axioms member_cx_ne_floor_cx
+#print axioms member_ne_floor
 #print axioms member_injective
 #print axioms floor_unique_at_top
 #print axioms pole_inversion

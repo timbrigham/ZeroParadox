@@ -22,30 +22,11 @@ that is fine. The movement of the thought process itself was what I needed.
 
 ## Formal Overview (AI-assisted)
 
-`PadicTree.adj_prefix_iff` proves the tree is self-similar (every vertex roots an exact copy), so *by
-inference* every node has a local floor that behaves like the global one. Tim's directive: the tree is the
-**generic object**, so make it **literal — no inferences**. This file constructs, for **every** node
-`v : List (Fin 2)`, a genuine `InfinitudeFloor End`:
-
-* `boundaryFloor v : InfinitudeFloor End` — floor `= localBotEnd v` (v's digits, then all zeros: the local
-  bottom of the subtree below `v`), members `= localMember v n` (v's digits, then a single `1` at relative
-  depth `n`: the climbing local nulls), complexity `= localCx v` (the boundary valuation measured **below**
-  `v`, i.e. `endVal` of the tail after `v`).
-
-Every field is discharged by construction: `member_ne_floor` (a member differs from the floor at position
-`|v|+n`), `cx_member_strictMono` (`localCx v (localMember v n) = n`, climbing), and `cx_floor_eq_iSup` (the
-local floor has infinite complexity `⊤`, driven by the members climbing — `localCx v (localBotEnd v) = ⊤`).
-
-`every_node_is_a_floor` is the capstone: for **all** `v`, the constructed floor's complexity is `⊤` — every
-node literally roots a floor of infinite complexity, the same structure at every level. The global boundary
-floor is the special case `v = []` (`boundaryFloor_nil_floor`). This is the self-similarity made a
-construction rather than a corollary of `adj_prefix_iff`.
-
-**Honest scope.** These are genuine per-node `InfinitudeFloor` **defs** (witnesses), parametrized by `v`, not
-competing global `instance`s on `End`. The local floors are all of one *kind* and behave identically; that
-they are pairwise distinct where the prefixes differ is not asserted here (role-sameness is the claim, not a
-single identity — the family/instance reading).
--/
+Constructs `boundaryFloor v : InfinitudeFloor End` for **every** node `v`, making the tree's
+self-similarity a construction rather than a corollary of `PadicTree.adj_prefix_iff`. Capstone:
+`every_node_is_a_floor`; the global floor is the case `v = []` (`boundaryFloor_nil_floor`).
+**Honest scope:** per-node **defs**, not global `instance`s, and pairwise distinctness is **not**
+asserted — role-sameness is the claim, never one identity. -/
 
 namespace ZeroParadox
 
@@ -122,19 +103,6 @@ def (a witness) per node, not a global instance. -/
   floor := localBotEnd v
   cx := localCx v
   member := localMember v
-  member_ne_floor := by
-    intro n hcontra
-    have hc := congrFun hcontra (v.length + n)
-    have h1 : localMember v n (v.length + n) = 1 := by
-      simp only [localMember, prependEnd]
-      rw [if_neg (by omega : ¬ v.length + n < v.length), Nat.add_sub_cancel_left]
-      simp
-    have h0 : localBotEnd v (v.length + n) = 0 := by
-      simp only [localBotEnd, prependEnd]
-      rw [if_neg (by omega : ¬ v.length + n < v.length)]
-      simp [botEnd]
-    rw [h1, h0] at hc
-    exact absurd hc (by decide)
   cx_member_strictMono := by
     intro a b hab
     show localCx v (localMember v a) < localCx v (localMember v b)

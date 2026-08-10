@@ -205,10 +205,15 @@ example : @ZeroParadox.t3_unreachability = @ZeroParadox.ZPCategory.ax_g2 := rfl
 -- both `≥ bot` and `≤ bot`.
 #check @ZeroParadox.selfApp_bot_is_both_extremal
 -- Statement: `¬(p ↔ ¬p)` — logical negation has no fixed point.
--- Reading: CITED, not ZP-proved — this is verbatim Lean core's `iff_not_self`. The contrast that
--- makes the coincidence above meaningful; the fixed-point-free map at the diagonal (Lawvere).
+-- Reading: RE-PROVED here, not imported — `Settheory/Wall.lean` gives a three-line term proof. The
+-- standard name is Lean core's `iff_not_self`, and the two are the SAME type despite the differing
+-- binder display; the `example` below settles that. Cite the core lemma and read this one as a
+-- local restatement, not a distinct result.
+-- The contrast that makes the coincidence above meaningful; the fixed-point-free map (Lawvere).
 -- ⚠ Do NOT read it as "involutions have no fixed point" — the `example` below is one that does.
 #check @ZeroParadox.negation_no_fixedpoint
+-- Binder annotation is not part of a type, so the re-proof and the core lemma are one statement.
+example : @ZeroParadox.negation_no_fixedpoint = @iff_not_self := rfl
 example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 
 /-! ### POSITIVE — narrow uniqueness and infinite width, which coincide only at ⊥ -/
@@ -293,8 +298,17 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 #check @ZeroParadox.both_fixed_points_exist
 -- Statement: a finite-dimensional `X : ModuleCat ℂ` with `X ≅ X ⊞ X` is the zero object.
 -- Reading: the OTHER sub-sense of self — self-similarity under the biproduct diagonal, as opposed to
--- the Kleene sense of a code applied to its own index. The finiteness hypothesis is load-bearing.
+-- the Kleene sense of a code applied to its own index.
 #check @ZeroParadox.biprod_diagonal_only_zero
+-- Statement: the free ℂ-module on ℕ is self-similar under that diagonal — `X ≅ X ⊞ X` — because
+-- ℵ₀ + ℵ₀ = ℵ₀. Standard name: the Eilenberg–Mazur swindle.
+#check @ZeroParadox.freeNat_biprod_self
+-- Statement: and it is not finite over ℂ, so it sits outside the theorem above. The exclusion is
+-- proved, not asserted in a docstring.
+#check @ZeroParadox.freeNat_not_finite
+-- Statement: and it is NOT the zero object. So the finiteness hypothesis carries the theorem rather
+-- than decorating it — the counterexample is exhibited, not asserted.
+#check @ZeroParadox.freeNat_not_isZero
 -- Statement: the seam satisfies `seam ≅ seam ⊞ seam` and is a zero object.
 #check @ZeroParadox.seam_is_diagonal_fixpoint
 
@@ -314,7 +328,8 @@ The cross-field routing, and its Lawvere / Yanofsky attribution, live in
 -- structures, never an instance-of relation. (Monotonicity is NOT the obstruction: `Ordinal →o
 -- Ordinal` is inhabited, below.)
 #check @fixedPoints.lfp_eq_sSup_iterate
-example : Ordinal.{0} →o Ordinal.{0} := OrderHom.id
+noncomputable example : Ordinal.{0} →o Ordinal.{0} :=
+  ⟨fun a => Ordinal.omega0 ^ a, fun _ _ h => Ordinal.opow_le_opow_right Ordinal.omega0_pos h⟩
 -- Statement: the ordinal form that does hold — `⨆ n, f^[n] a = nfp f a`.
 #check @Ordinal.iSup_iterate_eq_nfp
 -- Statement: and ε₀ as that supremum — `epsilonZero = ⨆ n, fundamentalSeq n`.

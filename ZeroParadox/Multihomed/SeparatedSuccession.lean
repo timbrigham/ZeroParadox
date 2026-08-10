@@ -62,8 +62,40 @@ structure SeparatedSuccession where
   sep : carrier → carrier → Prop
   /-- The succession of instances, indexed by ℕ. -/
   seq : ℕ → carrier
-  /-- Consecutive instances are always separated — the succession never repeats. -/
+  /-- Consecutive instances are always separated. -/
   separated : ∀ k, sep (seq k) (seq (k + 1))
+  /-- **No instance is separated from ITSELF.** Without it the structure is exactly `Nonempty`:
+      `sep := fun _ _ => True` with a constant `seq` discharges `separated`.
+
+      ⚠ What it buys is `seq_ne_succ` — CONSECUTIVE distinctness, and **nothing more**. It does not
+      give injectivity of `seq`, and a real implementation repeats: `hilbert_seq_collision` below
+      exhibits `a ≠ b` with `seq a = seq b`.
+
+      ⚠ Scoped to the SUCCESSION, not to the whole carrier. SEP-1 proposed full irreflexivity of
+      `sep` and that is **false for the Hilbert chart**: `sep` there is orthogonality, and the zero
+      vector is orthogonal to itself. The succession's terms are basis vectors, which are not. -/
+  sep_irrefl_on_seq : ∀ k, ¬ sep (seq k) (seq k)
+
+/-- **`Statement:` CONSECUTIVE instances are distinct** — a repeat at `k, k+1` would separate an
+    instance from itself. ⚠ NOT "never repeats": injectivity of `seq` is false here, and
+    `hilbert_seq_collision` exhibits `a ≠ b` with `seq a = seq b`. -/
+theorem SeparatedSuccession.seq_ne_succ (T : SeparatedSuccession) (k : ℕ) :
+    T.seq k ≠ T.seq (k + 1) := by
+  intro h
+  have hsep := T.separated k
+  rw [← h] at hsep
+  exact T.sep_irrefl_on_seq k hsep
+
+/-! ### NO-GO gauge — and the question has to be posed correctly for this one.
+
+**`SeparatedSuccession` takes NO PARAMETER** — `carrier` is a field — so *"what carrier fails?"* is
+malformed: none can, and `carrier := ℕ, sep := (· ≠ ·), seq := id` inhabits it. The answerable
+question is what a FIELD VALUE must satisfy, and without `sep_irrefl_on_seq` the answer is nothing:
+`sep := fun _ _ => True` with a constant `seq` discharges every other field, making the structure
+exactly `Nonempty` (SEP-1/MH-1). **That field excludes the constant value**, and `seq_ne_succ` is what
+it buys — consecutive distinctness, not injectivity (Mathlib's `ne_of_irrefl` is the same step for a
+globally irreflexive relation). ⚠ FULL irreflexivity of `sep` would not work: orthogonality is
+reflexive at the zero vector, which is why the field is scoped to `seq`. -/
 
 /-- **Implementation 1 — the ordinal chart.** The ε-numbers `ε_ k`, separated by strict order. The
     `separated` law is tonight's `succession_lt_succ`. -/
@@ -74,6 +106,7 @@ noncomputable def ordinalSuccession : SeparatedSuccession.{1} where
   separated := fun k => by
     have h := succession_lt_succ (k : Ordinal.{0})
     simpa [Nat.cast_succ, Order.succ_eq_add_one] using h
+  sep_irrefl_on_seq := fun _ => lt_irrefl _
 
 /-- **Implementation 2 — the Hilbert chart.** The state vectors `T(Sₖ)`, separated by orthogonality
     (`⟨·,·⟩ = 0`). The `separated` law is ZP-D's `t5_strict_orthogonal`, given a genuine-transition
@@ -84,6 +117,9 @@ noncomputable def hilbertSuccession (n : ℕ) (S : ℕ → Fin n) (hS : ∀ k, S
   sep := fun x y => @inner ℂ (StateSpace n) _ x y = 0
   seq := fun k => transitionOp n (S k)
   separated := fun k => t5_strict_orthogonal n S k (hS k)
+  -- A basis vector is not orthogonal to itself: `⟪e i, e i⟫ = 1 ≠ 0`.
+  sep_irrefl_on_seq := fun k => by
+    simp [transitionOp, basisVec]
 
 /-! ### Faithfulness of the enumeration — an IMPLEMENTATION split
 
@@ -169,6 +205,7 @@ section PurityCheck
 open ZeroParadox
 #print axioms ordinalSuccession
 #print axioms hilbertSuccession
+#print axioms SeparatedSuccession.seq_ne_succ
 #print axioms ordinal_seq_injective
 #print axioms hilbert_labels_not_injective
 #print axioms hilbert_label_collision

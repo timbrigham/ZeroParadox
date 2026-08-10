@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1665,
+        "declarations": 1676,
         "files": 136
       },
       "entries": [
@@ -5369,6 +5369,42 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "11cc214e-619a-44cf-a3d7-79b07a81f388",
+          "new": {
+            "file": "ZeroParadox/Category/Category.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_zpcat_int",
+            "short": "no_zpcat_int"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gate round 1 fixes: rename never_repeats to seq_ne_succ (F1 bedrock), land no_zpcat_top/no_zpcat_int (F2 bedrock) and freeNat_not_finite (F8).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "11e15a4a-c459-4f93-9302-9cb3718ffe94",
           "new": {
@@ -8520,6 +8556,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "1fdb3138-d61d-45aa-9cff-837a5524dd24",
+          "new": {
+            "file": "ZeroParadox/Multihomed/HilbertDiagonal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.freeNat_biprod_self",
+            "short": "freeNat_biprod_self"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "§ I-b, 2026-08-09: freeNat is self-similar under the biproduct diagonal, X iso X biprod X, without being the zero object.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "1fe2ebad-08a8-4907-93de-8167bef928b5",
           "new": {
@@ -10892,6 +10966,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "293d02df-3be2-437b-9454-a6fe13db295c",
+          "new": {
+            "file": "ZeroParadox/Valuation/ValuationAFA.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bottomValuation_unit_empty",
+            "short": "bottomValuation_unit_empty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gate round 1: NO-GO gauge non-members converted from prose examples to checked theorems (F5, F10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20313,6 +20425,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5188ad3d-923a-40d1-98d2-79427f8371ab",
+          "new": {
+            "file": "ZeroParadox/Multihomed/HilbertDiagonal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.freeNat_selfSum",
+            "short": "freeNat_selfSum"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "§ I-b, 2026-08-09: aleph-null plus aleph-null equals aleph-null as a C-linear equivalence, the engine of the BCB-19 counterexample.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5193d730-278a-4287-8a50-55e7932d7b62",
           "new": {
             "file": "ZeroParadox/Settheory/LawvereBridge.lean",
@@ -21472,6 +21622,44 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "573f4e47-a451-4208-80b7-1c3e3a3fa5a1",
+          "new": {
+            "file": "ZeroParadox/Multihomed/HilbertDiagonal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.freeNat_not_isZero",
+            "short": "freeNat_not_isZero"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "§ I-b, 2026-08-09: freeNat is not the zero object, completing the BCB-19 counterexample - biprod_diagonal_only_zero genuinely fails without its finiteness hypothesis.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -39080,6 +39268,44 @@
             "citations": [],
             "witness_of": []
           },
+          "disposition": "new",
+          "id": "a408d9da-b8ec-4a47-8468-99d99f04a09a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/HilbertDiagonal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.freeNat",
+            "short": "freeNat"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "§ I-b, added 2026-08-09: the free ℂ-module on ℕ, the infinite-dimensional carrier witnessing that biprod_diagonal_only_zero's finiteness hypothesis is load-bearing. Converts a prose strength claim (BCB-19) into a checked counterexample.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
           "disposition": "renamed",
           "id": "a427150d-b277-4968-b71b-54102335dd33",
           "new": {
@@ -50160,6 +50386,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "d3204c3d-0cd0-40f2-bf57-6dbd6c83f2e8",
+          "new": {
+            "file": "ZeroParadox/Multihomed/HilbertDiagonal.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.freeNat_not_finite",
+            "short": "freeNat_not_finite"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gate round 1 fixes: rename never_repeats to seq_ne_succ (F1 bedrock), land no_zpcat_top/no_zpcat_int (F2 bedrock) and freeNat_not_finite (F8).",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "d33b7de4-e2f3-4e8f-99d6-0a8be2753217",
           "new": {
             "file": "ZeroParadox/Computability/Occurrence.lean",
@@ -51894,6 +52158,42 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "da279e79-c0b6-4b4d-830d-a2936849d384",
+          "new": {
+            "file": "ZeroParadox/Category/Category.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.no_zpcat_top",
+            "short": "no_zpcat_top"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "category"
+            ],
+            "object": [],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gate round 1 fixes: rename never_repeats to seq_ne_succ (F1 bedrock), land no_zpcat_top/no_zpcat_int (F2 bedrock) and freeNat_not_finite (F8).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -53820,6 +54120,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "e2874043-f438-491d-85c0-0a104ed53687",
+          "new": {
+            "file": "ZeroParadox/Valuation/BottomInvariant.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.bottomInvariantKernel_fin_zero_empty",
+            "short": "bottomInvariantKernel_fin_zero_empty"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "no-go"
+            ]
+          },
+          "reason": "Gate round 1: NO-GO gauge non-members converted from prose examples to checked theorems (F5, F10).",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -57355,6 +57693,45 @@
             ]
           },
           "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "f1f875c0-004b-44b6-9395-93a56ddcd02a",
+          "new": {
+            "file": "ZeroParadox/Multihomed/SeparatedSuccession.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.SeparatedSuccession.seq_ne_succ",
+            "short": "seq_ne_succ"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "ordinal",
+              "state"
+            ],
+            "object": [
+              "snap"
+            ],
+            "role": [
+              "go"
+            ]
+          },
+          "reason": "Renamed: the theorem proves consecutive distinctness, not injectivity of seq. The old name asserted 'never repeats', which hilbert_seq_collision in the same file refutes.",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -61024,6 +61401,44 @@
             ]
           },
           "reason": "ontology-revamp: new HEAD declaration",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "fecca967-8bac-49bb-9a97-2a1f0f312967",
+          "new": {
+            "file": "ZeroParadox/Valuation/InfinitudeFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.member_ne_floor",
+            "short": "member_ne_floor"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Was a class FIELD of InfinitudeFloor until 2026-08-09; removed as redundant (derivable from cx_member_strictMono + cx_floor_eq_iSup via member_cx_ne_floor_cx) and re-added as a theorem, deleting 8 hand proofs across 3 files. Footprint [propext, Classical.choice, Quot.sound].",
           "verify": {
             "axioms": null,
             "sorry_free": true

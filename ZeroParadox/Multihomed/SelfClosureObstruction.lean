@@ -50,6 +50,16 @@ structure SelfClosureObstruction where
   closable : Prop
   no_closure : ¬ closable
 
+/-! ### NO-GO gauge — what fails to be a `SelfClosureObstruction`?
+
+**Measured 2026-08-09: nothing does.** `closable := False`, `no_closure := id` discharges the
+structure for any `shape`, so *"there is an obstruction here"* is inhabited without exhibiting any
+obstruction. The structure is a **record of a proof**, not a requirements class: its content is
+entirely in *which* `Prop` a given value puts in `closable`.
+
+**So membership is never the claim — the field is.** Cite `obstruction_negation` and its siblings for
+their specific `closable`; never *"X is a `SelfClosureObstruction`, therefore X cannot close."* -/
+
 /-- Shape 1a (Cantor/diagonal, `Prop` level — the ENGINE): no proposition is equivalent to its own
     negation. Empty by `negation_no_fixedpoint`. -/
 def obstruction_negation : SelfClosureObstruction where

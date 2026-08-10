@@ -348,6 +348,15 @@ section Q₂BallFunctor
 
 open ZeroParadox ZeroParadox CategoryTheory CategoryTheory.Limits
 
+/-! ### NO-GO gauge — `Q₂BallDepth`, `InfoDepth`, `HilbDimDepth` are NEWTYPES, not requirements
+classes. Each wraps a single `val : ℕ` with no laws, existing only to give `ℕ` a distinct `Category`
+instance without colliding with `NatSLat`'s. **The degeneracy question does not apply**: there is
+nothing to fail, because there is nothing required. Membership is never cited as evidence for
+anything here — the content is entirely in the `Category` / `ZPCategory` instances built on top.
+
+Flagged by `check_classes.py` because it keys on the `structure` keyword and cannot tell a newtype
+from a requirements class. That is the right conservative default; this note is the answer. -/
+
 /-- Q₂BallDepth: depth index for the clopen ball hierarchy in Q₂.
     A distinct type (not ℕ) so its Category and ZPCategory instances
     do not conflict with NatSLat's Category ℕ instance. -/

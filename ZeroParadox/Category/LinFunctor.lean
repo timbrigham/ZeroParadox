@@ -39,6 +39,11 @@ namespace ZeroParadox
 
 open CategoryTheory
 
+/-! ### NO-GO gauge — `FinStoch` is a NEWTYPE, not a requirements class. It wraps `n : ℕ` with no
+laws, so nothing can fail to be one and membership asserts nothing; the content is in the `Category`
+instance below (Kleisli composition of stochastic kernels). Flagged because `check_classes.py` keys
+on the `structure` keyword and cannot distinguish a newtype from a requirements class. -/
+
 /-- Objects of the finite-stochastic category: `⟨n⟩` stands for `Fin n`. -/
 structure FinStoch where
   n : ℕ

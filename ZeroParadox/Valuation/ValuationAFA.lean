@@ -39,6 +39,23 @@ class BottomValuation (L : Type*) [ZPSemilattice L] (Γ : Type*) [Top Γ] where
   /-- The bottom is the ONLY point of ⊤ valuation. -/
   v_top_unique : ∀ x : L, v x = ⊤ → x = bot
 
+/-! ### NO-GO gauge — what fails to be a `BottomValuation`?
+
+**A subsingleton passes for free** — on `Unit` with `v := const ⊤` every `x` IS `bot`, so
+`v_top_unique` is `rfl`. (`Unit` carries `ZPSemilattice` via `trivialZPSemilattice`,
+`ZeroParadox/Valuation/Scale.lean` — a `@[reducible] def`, so a witness needs a local instance.)
+
+**But `v_top_unique` has teeth on any carrier with two points**: it excludes the constant-⊤
+valuation, the degeneracy `WheelValuationStructure` had to patch with `WVSNondegenerate`.
+⚠ The non-member is a carrier PAIR `(L, Γ)`, not a valuation — see `bottomValuation_unit_empty`.
+A valuation sending a second element to `⊤` is a failing field value, which licenses nothing. -/
+
+/-- **`Statement:` the non-member — `Γ := Unit` over any `L` with a point other than `bot`.** With
+    `⊤` the only value, `v_top_unique` forces that point to be `bot`. -/
+theorem bottomValuation_unit_empty (L : Type*) [ZPSemilattice L] (a : L)
+    (ha : a ≠ ZPSemilattice.bot) : IsEmpty (BottomValuation L Unit) :=
+  ⟨fun B => ha (B.v_top_unique a (Subsingleton.elim _ _))⟩
+
 /-- **The anchor (P10): AFA self-containment DERIVED from a bottom-valuation.** Defining
     `selfMem x := v x = ⊤` satisfies the `AFAStructure` axioms — `bot_self_mem` is `v_bot`,
     `quine_unique` is `v_top_unique`. So the lattice form of ⊥ = {⊥} is a consequence of the valuation
@@ -72,4 +89,5 @@ open ZeroParadox
 #print axioms BottomValuation.toAFA
 #print axioms valuation_forces_selfMem
 #print axioms valuation_bot_is_quine
+#print axioms bottomValuation_unit_empty
 end PurityCheck

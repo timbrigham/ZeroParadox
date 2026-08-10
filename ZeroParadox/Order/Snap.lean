@@ -274,6 +274,11 @@ Given DP-2, DA-1 (instantiation = execution) is Lean-formalizable at the minimal
 level: the act of instantiating ⊥ moves the machine from c₀ to c₁, regardless of what
 value the operation returns. The "return to null" is a new null — not a return to c₀. -/
 
+/-! ### NO-GO gauge — `TrackedOutput` is a RECORD, not a requirements class. Two `MachinePhase`
+fields and no laws, so any pair inhabits it and nothing can fail to be one. Its content is the
+*separation* it enforces at use sites — output value distinct from machine state — not membership.
+Flagged because `check_classes.py` keys on the `structure` keyword. -/
+
 /-- A machine output tagged with the state that produced it.
     Separates the output value (what the machine returns) from the machine state
     (where the machine is). This structure is the formal content of DP-2. -/

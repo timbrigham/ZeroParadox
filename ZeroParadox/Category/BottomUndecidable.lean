@@ -171,6 +171,16 @@ structure SelfContained (C : Type) where
   /-- It is the only one. -/
   unique : ∀ x, app x = x → x = bot
 
+/-! ### NO-GO gauge — what fails to be `SelfContained`?
+
+**Measured 2026-08-09: any subsingleton passes for free.** `C := Unit`, `app := id` — the fixed point
+exists and is unique because there is nothing else available to be. So `unique` has no content on a
+one-element carrier and membership alone establishes nothing.
+
+**Where the class DOES bite is a carrier with two or more points**, since `unique` then genuinely
+forbids a second fixed point. State the carrier when citing it; *"C is `SelfContained`"* is only
+informative once `C` is known to be non-trivial. -/
+
 /-- **The taboo carrier is itself self-containing.** The constant-to-bottom self-map — the
 `ZeroParadox/Settheory/OntBridge.lean` "constant-to-null" pattern — makes `gb0 p` the unique fixed
 point of `Glue p`. So a self-containing carrier can have the undecidable equality of § II:

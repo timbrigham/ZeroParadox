@@ -72,9 +72,21 @@ open MeasureTheory
 
 /-! ## § I — The abstraction -/
 
+/-! ### NO-GO gauge for the three structures in this file — verdict at each declaration.
+
+On a NONEMPTY carrier each is inhabited by the identity dynamics (measured 2026-08-09: `f := id`;
+`κ := PMF.pure`; `κ := Kernel.id`). ⚠ **All three exclude the EMPTY carrier** by one argument — each
+carries a probability measure or a `PMF`, and neither exists on `Fin 0`. So nonemptiness of `X` IS a
+requirement all three impose, and it is generic rather than distinguishing.
+
+**Beyond that they are BUNDLES of a dynamical system.** The content is in *which* `f` or `κ` a value
+supplies (`odometerIMK`, `attractorIMK`, `markovIMK`). Cite the witness. -/
+
 /-- **A bottom with an invariant measure.** A self-map `f` of a measurable space together with an
     invariant Borel probability measure `μ` (`MeasurePreserving f μ μ`). The candidate universal
-    shape: where a Lawvere fixed *point* is blocked, this weaker invariant may still exist. -/
+    shape: where a Lawvere fixed *point* is blocked, this weaker invariant may still exist.
+    NO-GO: `BottomInvariantMeasure` is inhabited on any nonempty `X` by `f := id`, and empty on
+    `Fin 0` (no probability measure there) — a generic obstruction, not a distinguishing one. -/
 structure BottomInvariantMeasure (X : Type*) [MeasurableSpace X] where
   /-- the dynamics -/
   f : X → X
@@ -194,9 +206,10 @@ theorem attractor_sameShape : SameShapeFromAnywhere (fun x : Q₂ => 2 * x) := b
 /-- **A bottom with an invariant DISTRIBUTION** — the stochastic sibling of `BottomInvariantMeasure`.
     A Markov kernel `κ : X → PMF X` on a finite state space together with a *stationary* distribution
     `μ` (`μ.bind κ = μ`: one Markov step leaves `μ` invariant). This reaches the framework's stochastic
-    bottom — a NON-p-adic domain. (It is a parallel structure to `BottomInvariantMeasure`: `PMF` is
-    Mathlib's finite-probability framework, `Measure` the continuous one. A single structure over
-    Mathlib's general `MeasureTheory.Kernel` subsumes both — realized in § VI, `InvariantMarkovKernel`.) -/
+    bottom — a NON-p-adic domain. (Parallel to `BottomInvariantMeasure`: `PMF` is Mathlib's
+    finite-probability framework, `Measure` the continuous one; § VI's `InvariantMarkovKernel`
+    subsumes both.) NO-GO: `BottomInvariantKernel` is inhabited on any nonempty `X` by
+    `κ := PMF.pure`, and empty on `Fin 0` (`bottomInvariantKernel_fin_zero_empty`) — generic. -/
 structure BottomInvariantKernel (X : Type*) [Fintype X] where
   /-- the Markov kernel -/
   κ : X → PMF X
@@ -220,6 +233,11 @@ noncomputable def markovBIK : BottomInvariantKernel (Fin 2) where
 theorem markov_sameShape (μ : PMF (Fin 2)) : μ.bind fullMix = PMF.uniformOfFintype (Fin 2) := by
   unfold fullMix; exact PMF.bind_const _ _
 
+/-- **`Statement:` `Fin 0` carries no `BottomInvariantKernel`** — no `PMF` on the empty type. The
+    proved instance of the generic obstruction; the other two fail the same way. -/
+theorem bottomInvariantKernel_fin_zero_empty : IsEmpty (BottomInvariantKernel (Fin 0)) :=
+  ⟨fun B => by have h := B.μ.tsum_coe; simp at h⟩
+
 /-! ## § VI — The unification: one structure over Mathlib's general `Kernel` -/
 
 open ProbabilityTheory
@@ -229,7 +247,9 @@ open ProbabilityTheory
     `μ.bind κ = μ`). This is Mathlib's general kernel framework, so it subsumes BOTH earlier structures
     at once: a *deterministic* self-map is the Dirac kernel `Kernel.deterministic f`, and a finite
     *Markov* kernel is a genuine `Kernel`. All three faces below — the two continuous p-adic dynamics
-    and the finite stochastic one — are now instances of this *one* structure. -/
+    and the finite stochastic one — are now instances of this *one* structure.
+    NO-GO: `InvariantMarkovKernel` is inhabited on any nonempty `X` by `κ := Kernel.id`, and empty on
+    `Fin 0` (no probability measure there) — generic, not distinguishing. -/
 structure InvariantMarkovKernel (X : Type*) [MeasurableSpace X] where
   /-- the Markov kernel (transition dynamics) -/
   κ : Kernel X X
@@ -617,6 +637,7 @@ open ZeroParadox
 #print axioms attractor_sameShape
 #print axioms markovBIK
 #print axioms markov_sameShape
+#print axioms bottomInvariantKernel_fin_zero_empty
 #print axioms odometerIMK
 #print axioms attractorIMK
 #print axioms markovIMK

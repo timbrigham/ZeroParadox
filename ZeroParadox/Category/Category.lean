@@ -1,6 +1,8 @@
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Limits.Shapes.Terminal
 import Mathlib.CategoryTheory.Iso
+import Mathlib.CategoryTheory.Category.Preorder
+import Mathlib.CategoryTheory.Limits.Preorder
 import Mathlib.Tactic
 
 /-!
@@ -39,6 +41,17 @@ open CategoryTheory CategoryTheory.Limits
 /-! ## I. ZPCategory — AX-G1 + AX-G2 -/
 
 -- [ZP-CUSTOM] extends: Mathlib CategoryTheory.Limits.IsInitial | reason: Mathlib has IsInitial and IsTerminal as separate structures; it has no typeclass bundling them together with AX-G2 (source asymmetry: hom(X,0) = ∅ for non-isomorphic X). ZPCategory bundles both ZP-G axioms so they can be assumed uniformly across all ZP-G theorems without threading separate hypotheses.
+/-! ### NO-GO gauges for this file's two classes.
+
+**`ZPCategory` HAS TEETH, non-members PROVED** in § I-b, both off Mathlib: `no_zpcat_top` (every
+`Preorder` with an `OrderTop`, at `Unit`, `Bool`, `Fin 3`, `Finset (Fin 4)`) and `no_zpcat_int` (`ℤ`,
+for want of a bottom). ⚠ Those pin "no top" and "a bottom exists", **not** `NoMaxOrder` — a poset with
+two incomparable maximal elements has no top and is not `NoMaxOrder`, and nothing here excludes it.
+
+**`ZPSurprisal` is DEGENERATE.** Measured 2026-08-09: `surp := fun _ => 0` discharges `surp_id` by
+`rfl`, so a category in which nothing is surprising satisfies the class. Cite a specific `surp` and
+its properties, never `[ZPSurprisal C]`. -/
+
 /-- ZPCategory bundles the two ZP-G foundational axioms onto a given category.
     AX-G1: there is an initial object 0; there is no terminal object.
     AX-G2: hom(X, 0) = ∅ for any X not isomorphic to 0 (source asymmetry). This is the standard
@@ -51,6 +64,30 @@ class ZPCategory (C : Type*) [Category C] where
   zpIsInitial : IsInitial zpInitial
   ax_g1_no_terminal : ∀ t : C, IsEmpty (IsTerminal t)
   ax_g2 : ∀ (X : C), IsEmpty (X ≅ zpInitial) → IsEmpty (X ⟶ zpInitial)
+
+/-! ## I-b. Non-members of `ZPCategory`, proved
+
+A preorder is a category (`Preorder.smallCategory`), so these are ordinary carriers, and each
+obstruction is one Mathlib lemma: `isTerminalTop` and `IsInitial.orderBot`, both from
+`Mathlib/CategoryTheory/Limits/Preorder.lean`. They are what the NO-GO gauge above cites. -/
+
+/-- **`Statement:` no `Preorder` with a top element carries a `ZPCategory`** — `isTerminalTop` makes
+    `⊤` terminal, and AX-G1 forbids a terminal object. -/
+theorem no_zpcat_top (α : Type*) [Preorder α] [OrderTop α] : IsEmpty (ZPCategory α) :=
+  ⟨fun Z => (Z.ax_g1_no_terminal (⊤ : α)).elim isTerminalTop⟩
+
+/-- **`Statement:` `ℤ` carries no `ZPCategory`** — `IsInitial.orderBot` turns the initial object into
+    a least integer, and `⊥ - 1` is smaller. Independent of `no_zpcat_top`: `ℤ` has no top either. -/
+theorem no_zpcat_int : IsEmpty (ZPCategory ℤ) :=
+  ⟨fun Z => by
+    haveI : OrderBot ℤ := IsInitial.orderBot Z.zpIsInitial
+    exact absurd (bot_le : (⊥ : ℤ) ≤ ⊥ - 1) (by omega)⟩
+
+-- Statement: four finite instantiations of `no_zpcat_top` — each has a top, so each is a non-member.
+example : IsEmpty (ZPCategory Unit)             := no_zpcat_top Unit
+example : IsEmpty (ZPCategory Bool)             := no_zpcat_top Bool
+example : IsEmpty (ZPCategory (Fin 3))          := no_zpcat_top (Fin 3)
+example : IsEmpty (ZPCategory (Finset (Fin 4))) := no_zpcat_top (Finset (Fin 4))
 
 /-! ## II. ZPSurprisal — I-KC Import (D7') -/
 
@@ -199,6 +236,8 @@ open ZeroParadox CategoryTheory
 #print axioms t6c_surprisal_sum_nonneg
 #print axioms t6_informational_singularity
 #print axioms t7_categorical_zero_paradox
+#print axioms no_zpcat_top
+#print axioms no_zpcat_int
 
 end PurityCheck
 

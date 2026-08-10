@@ -92,7 +92,6 @@ whose floor is ⊥ = 0 with infinite complexity. A def (an exhibited witness), n
   floor := 0
   cx := towerCx
   member := fun n => cnfToZp2 (towerNONote (n + 1))
-  member_ne_floor := fun n => (snap_arc_z2_loop.2.1) (n + 1) (by omega)
   cx_member_strictMono := by
     have h : (fun n => towerCx (cnfToZp2 (towerNONote (n + 1)))) = (fun n => ((n + 1 : ℕ) : ℕ∞)) :=
       funext towerCx_member

@@ -4,6 +4,65 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Gate exemption — this file and operational meta.** `CLAUDE.md` itself (and other internal operating-instruction / meta files, as opposed to the mathematical publication content) is **exempt from the Editorial Review Gate and the Adversary Review Gate** below. The review gates are scoped to externally-facing publication prose — formal documents, companions, README.md/GUIDE.md, build-script prose. `CLAUDE.md` is the operating manual, not publication content, so it needs **version control only**: commit and push normally, and use `git push --no-verify` if the pre-push hook blocks on a stale review signal for a `CLAUDE.md`-only change.
 
+## ⭐⭐ `batch.py precommit` BEFORE EVERY COMMIT. `/batch` for any multi-site work. Not optional.
+
+**The orchestrator is the default entry point, not a special mode.** `.claude-local/batch.py` owns
+sequencing and mechanical preconditions; an agent owns judgement. It decides nothing — it refuses to
+let a commit or push happen while a decidable obligation is unmet.
+
+```
+python .claude-local/batch.py precommit    # BEFORE EVERY COMMIT. Works with or without a batch.
+python .claude-local/batch.py prepush      # before any push: which reviews are required, and are
+                                           # the signals FRESH (hash + coverage, not existence)
+```
+
+**`precommit` runs the UNIVERSAL obligations on every commit** — build green, a `#print axioms` entry
+for every added declaration, an `ssot.json` row for every added declaration, all checkers at zero new.
+Those are the four things this project forgets most; each was forgotten again on 2026-08-09 with all
+four rules known and written down.
+
+**Use `/batch <bucket>` for anything MULTI-SITE** — a debaselining bucket, a defect-class sweep, a
+file-sized burn-down. It adds stage ordering (`ledger` → `screen` → `probe` → `judge`), a frozen
+filter snapshot, and a recorded note per stage. **A single targeted fix with a named defect id does
+not need a batch**; `precommit` alone covers it.
+
+**Why stages exist at all: `ledger` and `screen` are the two that got skipped.** Consulting
+`DEFECTS.md` first is a discipline that failed three times in one session — three "findings"
+duplicated rows already in the ledger. A step that is not a stage is a step that can be forgotten.
+
+⚠ **If a stage BLOCKS, fix the cause.** Do not delete `batch_state.json`, do not `--no-verify`, do
+not push a subset to dodge a signal. A block is the control working, and this project has two
+recorded bypass incidents that both began by treating one as an obstacle.
+
+⚠ **Filters are frozen at `batch start`.** Editing a checker mid-batch means the work was done
+against a moving target; the batch is invalid and must restart. Route filter defects to `DEFECTS.md`
+and fix them in their own batch. (Violated by the author of the rule on the day it was written —
+see `PRC-1`.)
+
+## ⭐ The defect register — `.claude-local/DEFECT_CLASSES.md`. Consult it by DEFAULT.
+
+**One row per defect CLASS, each with its DETECTOR.** `DEFECTS.md` is open instances; the register is
+kinds, and the detector column is the part that transfers to a question nobody has asked yet.
+
+**Three triggers, and they are obligations, not suggestions:**
+1. **Writing a gate brief or spawning any reviewing agent** — name the **LAYER** attacked, the
+   **STATE** tested, and the **DETECTOR by id**. *"Check the glosses"* is not a detector; *"DC-1: read
+   the elaborated `#check`"* is. A gate that does not name its layer re-attacks the one the last gate
+   already cleared.
+2. **Something looks wrong and you are choosing how to check it** — find the class first. The register
+   is indexed by what you have in hand (a suspicious sentence), not by what you are asking.
+3. **A defect recurs** — add or amend a row, in the same change. A one-off is an instance and belongs
+   in `DEFECTS.md`; the *second* occurrence is a class.
+
+**The one-line summary of everything measured so far: PREFER A DETECTOR WHOSE VERB IS *RUN* OVER ONE
+WHOSE VERB IS *READ*.** Across ~20 agent runs, every BEDROCK finding came from an agent **executing**
+something and every ORDINARY finding from an agent **reading** something, with no exceptions.
+
+⚠ **Six of seventeen rows have a mechanical checker; eleven do not.** Those eleven rely on someone
+remembering, which this file elsewhere records as failing by construction. That is visible debt, not a
+solved problem — and this register is the **seventh** convention of this shape, the previous six having
+all leaked.
+
 ## Core Objects — Read the Lean First (Hard Rule)
 
 The framework has three core objects, each pinned by an authoritative Lean characterization. **Before writing ANY prose, figure, docstring, companion text, or claim about ⊥ (the bottom), the snap (⊥ → ε₀), or ε₀ — first READ that object's Lean source and ground every statement in a named theorem there.** Do NOT reconstruct these objects from working memory, from prose notes, or from this summary; the Lean is the ground truth. State the theorem, not a gloss. If this summary and the Lean ever appear to disagree, **the Lean wins — stop and ask Tim.**
@@ -22,6 +81,18 @@ The `CannotBe` indexes are `#check`-only — they create no declarations, so a l
   elaborating `example` (a wrong gloss then fails to compile); prose is acceptable where an `example`
   would be unwieldy, but it must be checkable by reading the statement.
 - **`Reading:`** — the framework's interpretation, explicitly NOT a claim about what the theorem says.
+
+**`Idiom:` (Tim, 2026-08-09) is NOT a third gloss label — the two-label rule above is untouched.** It
+is for **running prose that NAMES a phenomenon** rather than describing any declaration: *"the 0=∞
+inversion"*, *"the 0=∞ antipodality"*, *"the pole"*. A gloss says what a theorem proves or how the
+framework reads it; an idiom is **vocabulary**, and neither existing label fits a handle. **The test
+before applying it: does the sentence USE the equation, or does it NAME something?** *"the 0 = ∞
+pole"* names. *"0 = ∞ under `rInv`"* asserts, and stays a defect no matter how it is labelled.
+
+⚠ **It is a SUPPRESSION MECHANISM.** It sits in the source where a reader sees it, never in a
+baseline file, and `check_poles.py` reports how many sites carry it on every run — so rubber-stamping
+shows up as a rising number instead of going quiet. **Apply it only after verifying the site**; a
+label applied in bulk is worth less than no label, because it launders the unread ones.
 
 This is as much for a human reader as for a checker: the label tells you at a glance whether you are looking at mathematics or at interpretation. **The rule generalizes beyond the indexes** — the same defect class (prose asserting conjuncts the cited statement lacks) was found this session in ordinary docstrings, in `CLAIMS.md` rows, and in this file itself.
 

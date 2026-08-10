@@ -30,6 +30,17 @@ Self-contained within semilattice theory; no topology or probability imported.
 
 namespace ZeroParadox
 
+/-! ### NO-GO gauge — `Unit` is a `ZPSemilattice`, and that is NOT a degeneracy finding.
+The one-element model discharges A1–A4 by `rfl`; it is in the corpus as `trivialZPSemilattice`
+(`ZeroParadox/Valuation/Scale.lean`), a `@[reducible] def` needing `attribute [local instance]`. **Every
+algebraic theory has a trivial model**, so a one-element witness says nothing about this class in
+particular — the informative question for an algebraic signature is whether NON-members exist, and
+they abound: any carrier whose join fails idempotence, commutativity, associativity, or lacks an
+identity. Contrast the classes elsewhere in this corpus that had **no** non-member at all.
+
+The class carries OPERATIONS, and the theorems consume their laws rather than membership, so
+*"L carries `ZPSemilattice`, therefore …"* is never the shape of an argument here. -/
+
 /-- The ZP-A algebraic structure: a join-semilattice with bottom.
     Corresponds to Axiom Block A (A1–A4) in ZP-A §1.1. -/
 -- [ZP-CUSTOM] replaces: Mathlib SemilatticeSup + OrderBot | reason: Mathlib's semilattice hierarchy ties ⊔ to its order typeclass infrastructure (LE, Preorder) via hundreds of instances; importing it contaminates #print axioms with unrelated classical dependencies. ZPSemilattice states A1–A4 axiomatically from scratch so every theorem's axiom footprint is auditable.
