@@ -35,6 +35,27 @@ running it. The enforcement map now:
 - **`lake build` deliberately gates NEITHER**, because that is the one genuinely in tension with
   stub-first. CI at the PR to `main` remains its backstop.
 
+**⭐⭐ THE PIPELINE ANNOUNCES ITSELF, AT EVERY ENTRY POINT, BY DEFAULT (Tim, 2026-08-10: *"update the
+process so that when we run the pipeline in the future this is the default behavior"*).** Before any
+check runs, `hooks.py pre_commit`, `hooks.py pre_push`, `batch.py precommit` and `batch.py prepush`
+each print a manifest: **what is about to run, in what order, which checks BLOCK and which only warn,
+what scope they apply to, what is exempt, and what is deliberately NOT run.** `prepush` additionally
+names each required review — its purpose, what triggers it, its signal file, and **the recorded
+verdict line from that signal** — so *"cleared"* is never read as *"clean"*; all three signals today
+say STOP-ORDINARY, i.e. cleared **with findings outstanding**. One formatter,
+`.claude-local/report.py`, so the four cannot drift into describing themselves differently.
+- **This is not cosmetic; it is how three defects this month stayed invisible.** `check_modal
+  --block` had never blocked a push and the output looked identical either way (`HK-1`);
+  `check_poles` sat in the checker list gating nothing while `precommit` printed `suite ok`
+  (`REL-3`); and three checkers silently skipped a file they judged vendored, which is how a
+  self-exemption hole went unnoticed (`RLY2-1`). **A gate that does not declare its own scope and
+  enforcement mode cannot be audited by reading its output.**
+- ⚠ **Two output bugs found while building it, both of which would have shipped looking correct.**
+  Python's stdout is block-buffered while child processes write straight to the terminal fd, so the
+  manifest printed *after* everything it announced, and section headers landed under the wrong
+  sections. Fixed with `line_buffering=True` alongside `encoding="utf-8"` (the Windows console
+  otherwise mangles an em-dash). Both live in `report.py`, so every entry point inherits them.
+
 **⭐⭐ THE HOOKS ARE NOW THREE-LINE SHIMS. ALL pipeline logic is `.claude-local/hooks.py` (Tim,
 2026-08-10: *"the shell variants are legacy and should be retired... just the python version should
 remain"*).** There were **two partial implementations** — a ~300-line shell hook and `batch.py` —
@@ -1242,6 +1263,28 @@ into the brief explicitly — the same way the encoding and glob warnings are al
 - **Reviews are READ-ONLY on the working tree.** A gate reads, measures, and reports; it does not modify
   repo files. The only writes a gate may make are its signal file and its findings note under
   `.claude-local/notes/`.
+- ⚠⚠ **AN AGENT THAT EXERCISES THE HOOKS MUST NEVER `git reset --hard`, `git checkout -- .`,
+  `git clean`, OR `git stash` THE SHARED TREE — IT WILL DESTROY THE CALLER'S UNCOMMITTED WORK AND
+  REPORT SUCCESS.** Measured 2026-08-10: a `/rely` run was told to exercise the commit and push
+  gates and to leave the repository exactly as it found it. It made probe commits and reset
+  **`--hard`** to the base three times. That is a *correct* reading of the instruction, and it
+  **silently deleted an uncommitted `CLAUDE.md` edit** the caller was holding; the agent then
+  verified *"tracked tree clean, HEAD unchanged"*, which was true — and was the destruction. It had
+  even NOTICED the concurrency, reporting that two files *"were being edited by their author during
+  the trial"*, and hard-reset anyway. **"Restore the tree" and "preserve the tree" are different
+  instructions, and only the caller knows which is meant.**
+  - **Rule for the BRIEF:** an agent needing to create commits works in a dedicated worktree —
+    `git worktree add --detach <scratchpad-path> <ref>` — never in the shared checkout. It gets a
+    private HEAD and index, so nothing it does can reach the caller's tree; cleanup is
+    `git worktree remove --force` plus `git worktree prune`. The `CAL-2` pipeline replay used
+    exactly this and left the main tree untouched.
+  - **Rule for the CALLER:** commit or stash your own work **before** spawning any agent licensed to
+    touch git state, and treat the tree as unstable until it returns. This file already warns that
+    background agents run concurrently so the tree is not a stable snapshot; this is that hazard
+    with a **destructive** edge rather than the merely additive one of the `git add -A` incident.
+  - ⚠ **`.claude-local/` survived only because it is gitignored — do not read that as safety.** A
+    `git clean -xfd` would have taken the whole private working folder, which has no remote and is
+    backed up by hand.
 - **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
   restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
   **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
