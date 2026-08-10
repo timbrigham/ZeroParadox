@@ -439,9 +439,20 @@ the exempt files in its output**, so the exemption is visible rather than silent
 `ZeroParadox/Vendored/NaturalOps.lean` (verbatim, Mathlib v4.28.0) and
 `ZeroParadox/Ordinal/NaturalOpsPow.lean` (a port of Hernández's Combinatorial Games file) — verified
 to match those two files and no others. This removed **140 sites, 119 of them undocumented
-declarations we did not author**. ⚠ `check_pov` / `check_modal` / `check_classes` have no vendored
-handling; nothing in them fires on those files today, so this is latent, not live — fix it there if
-it ever does.
+declarations we did not author**.
+
+⚠ **The exemption has exactly ONE definition — `.claude-local/vendored.py`. Import it; never restate
+it** (Tim, 2026-08-09: *"the vendor files should be exempt extremely. we already did it elsewhere"*).
+It lived in `check_prose.py`, was re-implemented from memory in `batch.py`, and **the copy was
+already wrong three ways after a single day**: `Apache-2\.0` missed the space form, an unanchored
+`Upstream:` matched prose *about* upstream, and it scanned 4000 characters where the original scanned
+30 lines. A duplicated exemption drifts, and a drifting one is worse than none — it exempts files
+nobody meant to exempt. **All five checkers plus `batch.py decls` now import it**, which also closes
+the hole this line used to record: `check_pov` / `check_modal` / `check_classes` previously had no
+vendored handling at all. **Verified with matched pairs** — the same violations planted in a vendored
+file report 0 from every checker, and fire from every checker in a non-vendored one. ⚠ The scan is
+deliberately limited to the file HEAD; a whole-file search would exempt anything merely *mentioning*
+Apache-2.0.
 
 **AND AN INDEX LINE MUST JUSTIFY ITSELF** (Tim, same day): *"every one of those CannotBe line items
 should be distinguishable from the others, and the statement for why the CannotBe is applicable
