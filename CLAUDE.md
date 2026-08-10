@@ -432,6 +432,30 @@ known-degenerate case, found by hand the same day) and suppresses `InfinitudeFlo
 `WheelValuationStructure` and `AbstractSelfApp` (where the question was asked). A checker with only a
 must-fire control is half-tested.
 
+## A guard protects a PROPERTY, not a hole. Enumerate every ROUTE — in `guards.py`. Gate-enforced.
+
+**Fixing one route to a property and calling it closed is this project's most repeated defect, and
+until 2026-08-10 nothing but memory stood against it.** Measured: *"a file cannot exempt itself from
+the gating checkers"* was fixed **four** times — content marker → nested `Vendored/` path → the
+`vendored_files.txt` allowlist → the four `*_baseline.txt` switches — and *"the bedrock cap cannot be
+walked"* **three** times, each fix correct and each leaving another door open. The routes live in
+different files, so *"enumerate them"* was a memory exercise performed by whoever had just forgotten
+one. (Tim: *"I'm getting a little tired of that behavior."*)
+
+**THE RULE — when you close a hole, name the PROPERTY, then add EVERY route to
+`.claude-local/guards.py`.** Not a comment, not a note. The registry is the deliverable; the fix is
+half of it. `python .claude-local/guards.py --list` prints the surface; it BLOCKS in `pre-push`,
+ahead of the checkers it protects, because a green checker whose exemption surface has a new hole is
+a **false zero**, and this file already records that a false zero costs more than a red one.
+
+- **List permitted routes too**, with a `visible` predicate. Vendoring must keep working; the
+  requirement on a legitimate exemption is not that it fails but that **it cannot happen quietly**.
+- **Include the enumerator.** `guards.py` is in `CHECKERS`, because deleting a route from the
+  registry would otherwise re-open it *and* remove the only thing that would say so — the **fifth**
+  instance of the property, found while wiring the fix for the first four.
+- **It found two live routes on its first run**, one of them (`P5-3`) already sitting open in the
+  ledger. That is the argument for the mechanism over the discipline, in one measurement.
+
 ## Short header, statement per declaration. Prose never exceeds code. Gate-enforced.
 
 **Tim, 2026-08-08, and it is a software-engineering norm, not a preference:**
