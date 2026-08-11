@@ -456,6 +456,45 @@ a **false zero**, and this file already records that a false zero costs more tha
 - **It found two live routes on its first run**, one of them (`P5-3`) already sitting open in the
   ledger. That is the argument for the mechanism over the discipline, in one measurement.
 
+## Every brief carries the CONTROL OBJECTS and "name your first unjustified step". Hard Rule.
+
+**Adopted 2026-08-11 from the zeta-zeros paper** (`.claude-local/papers/claude_zeta_zeros_two_thirds_2026.pdf`,
+§C.6 *Parallelism with controls*). Its twenty-three concurrent agents each received the **same control
+objects** — Davenport-Heilbronn functions, Epstein zeta functions, planted-zero Beurling systems:
+objects satisfying the same inputs **for which the conclusion is FALSE** — plus one standing
+instruction, *name the first step that is not justified*. Reported outcome: *"Most lines died against
+their controls. The one that survived did so precisely because the controls under-certified."*
+
+**ZP already owns its controls and has never issued them as a standing set** — they get run when
+someone remembers, which is exactly how five of seventeen requirements classes went degenerate
+unnoticed. The § above enforces that the degeneracy question was *asked*; this makes the answer
+*available* to whoever is asking.
+
+**Put these in every brief that BUILDS or REVIEWS a class, a claim, or a construction.** Located and
+verified at their definition sites 2026-08-11 — a dated survey, not a completeness claim:
+
+| control | where | kills |
+|---|---|---|
+| `Unit` / `PUnit` | — | any algebraic signature; every theory has a one-element model |
+| `Empty` | — | anything with a `bot : L` field — but see the trap below |
+| `Bool`, `Fin 3`, `ℕ → ℕ` | — | "the class bites at two or more points" |
+| `trivialZPSemilattice` | `Valuation/Scale.lean:99` | `ZPSemilattice` membership as an argument |
+| `trivialSelfApp` | `Computability/SelfApp.lean:177` | *"L carries `AbstractSelfApp`, therefore…"* |
+| `trivialValBridge` | `Valuation/ScaleBridge.lean:274` | `ValBridge` membership |
+| `trivialValuationStructure` | `Valuation/Scale.lean:111` | `ValuationStructure` membership |
+| the constant map `_ ↦ ⊥`, the always-true relation, a constant sequence | — | self-application, `SeparatedSuccession`, periodicity |
+| **ℝ** — `f_snap_impossible`, `Computability/ComputationCannotBe.lean:152` | | any claim that the snap is available in a general ordered carrier |
+
+⚠ **`Empty` is a two-sided trap.** *"The finite carriers are exactly the subsingletons"* shipped as a
+bedrock defect because the true statement needed **inhabited** subsingletons. And K1 is the same trap
+inverted — `Order/Lattice.lean` claimed non-members *"abound"* when **every inhabited carrier admits a
+`ZPSemilattice`** and `Empty` is the only obstruction. Run it, and read which way it points.
+
+⚠ **VERIFY A CONTROL EXISTS BEFORE NAMING IT.** Writing this table, one name recalled from a ledger
+row (`scTriv`) **did not resolve anywhere in the corpus**. A brief citing a control that does not
+exist is worse than a brief with no controls: the agent reports it could not build the witness, and
+that reads as evidence the class has teeth.
+
 ## Short header, statement per declaration. Prose never exceeds code. Gate-enforced.
 
 **Tim, 2026-08-08, and it is a software-engineering norm, not a preference:**
