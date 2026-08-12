@@ -233,10 +233,21 @@ noncomputable def markovBIK : BottomInvariantKernel (Fin 2) where
 theorem markov_sameShape (μ : PMF (Fin 2)) : μ.bind fullMix = PMF.uniformOfFintype (Fin 2) := by
   unfold fullMix; exact PMF.bind_const _ _
 
-/-- **`Statement:` `Fin 0` carries no `BottomInvariantKernel`** — no `PMF` on the empty type. The
-    proved instance of the generic obstruction; the other two fail the same way. -/
+/-- **`Statement:` `Fin 0` carries no `BottomInvariantKernel`** — no `PMF` on the empty type. One of
+    three instances of the same obstruction; the sibling two are the `example`s below. -/
 theorem bottomInvariantKernel_fin_zero_empty : IsEmpty (BottomInvariantKernel (Fin 0)) :=
   ⟨fun B => by have h := B.μ.tsum_coe; simp at h⟩
+
+-- Statement: the measure-theoretic sibling fails the same way, exhibited rather than asserted. It
+-- demands a PROBABILITY measure, total mass 1, while the empty carrier's only measure gives 0.
+-- Anonymous: nothing cites it, so it adds no declaration, no purity entry and no ssot row.
+-- (The third face, `InvariantMarkovKernel`, is defined in § VI; its witness sits there.)
+example : IsEmpty (BottomInvariantMeasure Empty) := by
+  constructor
+  rintro ⟨_f, μ, hp, _⟩
+  have h1 : μ Set.univ = 1 := hp.measure_univ
+  rw [Set.univ_eq_empty_iff.mpr inferInstance, measure_empty] at h1
+  exact zero_ne_one h1
 
 /-! ## § VI — The unification: one structure over Mathlib's general `Kernel` -/
 
@@ -261,6 +272,16 @@ structure InvariantMarkovKernel (X : Type*) [MeasurableSpace X] where
   isProb : IsProbabilityMeasure μ
   /-- the law is invariant: one step leaves it unchanged -/
   invariant : Kernel.Invariant κ μ
+
+-- Statement: the third face fails on the empty carrier for the same reason as the other two — a
+-- probability measure has total mass 1 and the empty carrier admits none. Completes the trio the
+-- § V gloss used to assert. Anonymous, so it adds no declaration.
+example : IsEmpty (InvariantMarkovKernel Empty) := by
+  constructor
+  rintro ⟨_κ, _mk, μ, hp, _⟩
+  have h1 : μ Set.univ = 1 := hp.measure_univ
+  rw [Set.univ_eq_empty_iff.mpr inferInstance, measure_empty] at h1
+  exact zero_ne_one h1
 
 private theorem measurable_odometer_map : Measurable ((1 : ℤ_[p]) + ·) := by fun_prop
 
