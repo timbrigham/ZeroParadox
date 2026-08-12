@@ -59,7 +59,7 @@ neither adds a declaration to the corpus. -/
 
 -- Statement: every INHABITED carrier can be equipped — well-order it, join := `max`, ⊥ := the least
 -- element. So there is no carrier that "fails a law": the laws come with the operations.
-example (L : Type) [Nonempty L] : Nonempty (ZPSemilattice L) := by
+example (L : Type*) [Nonempty L] : Nonempty (ZPSemilattice L) := by
   classical
   letI : LinearOrder L := IsWellOrder.linearOrder (WellOrderingRel (α := L))
   letI : WellFoundedLT L := ⟨(IsWellFounded.wf : WellFounded (WellOrderingRel (α := L)))⟩

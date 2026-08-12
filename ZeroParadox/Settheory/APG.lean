@@ -466,16 +466,16 @@ theorem acyclic_induction_step
 
     Requires [Fintype V] to bound the reachable set cardinality. -/
 
-/-! ### PRIOR ART — `decoration_unique` is the UNIQUENESS half of a RECURSIVE COALGEBRA.
+/-! ### PRIOR ART — the uniqueness clause of a RECURSIVE COALGEBRA, for ONE algebra.
 
-A coalgebra is **recursive** when every algebra admits a *unique* coalgebra-to-algebra morphism
-(Adámek-Milius-Moss 2020 Def 3.2 p. 11, crediting Osius and Taylor;
-`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`). `IsDecoration` is
-that commuting square for a quiver's powerset coalgebra; existence is not proved here.
-`ZeroParadox/Category/WellFoundedCoalgebra.lean` carries that literature's well-foundedness side.
-**The delta:** the standard route to such uniqueness is well-foundedness (Taylor's General Recursion
-Theorem, AMM Thm 7.2 p. 27), and it is not available here — these quivers may carry cycles. It closes
-instead because the target sends every cyclic vertex to ⊥ (`cyclic_decoration_eq_bot`). -/
+A coalgebra is **recursive** when *every* algebra admits a unique coalgebra-to-algebra morphism
+(Adámek-Milius-Moss 2020, arXiv:1910.09401, Def 3.2 p. 11, crediting Osius and Taylor).
+`decoration_unique` gives that clause for `DecorationUniverse.collect` alone, never for every
+algebra as recursiveness demands, and existence not at all; the well-foundedness side is in
+`ZeroParadox/Category/WellFoundedCoalgebra.lean`. **The delta:** the standard route to such
+uniqueness is well-foundedness (Taylor's General Recursion Theorem, AMM Thm 7.2 p. 27), and it is
+not available here — these quivers may carry cycles. It closes instead because every decoration
+into the target is forced to send each cyclic vertex to ⊥ (`cyclic_decoration_eq_bot`). -/
 
 -- `[Fintype V]` is not used in the *type* but is essential to the *proof*: it bounds the
 -- reachable-set cardinality so the strict-subset descent (`Set.ncard_lt_ncard`) terminates.

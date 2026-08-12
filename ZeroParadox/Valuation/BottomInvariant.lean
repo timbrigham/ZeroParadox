@@ -76,8 +76,8 @@ open MeasureTheory
 
 On a NONEMPTY carrier each is inhabited by the identity dynamics (measured 2026-08-09: `f := id`;
 `κ := PMF.pure`; `κ := Kernel.id`). ⚠ **All three exclude the EMPTY carrier** by one argument — each
-carries a probability measure or a `PMF`, and neither exists there. Each exclusion is exhibited at its
-own declaration rather than asserted here. So nonemptiness of `X` IS a requirement all three impose,
+carries a probability measure or a `PMF`, and neither exists there. Each exclusion is exhibited by a
+witness in §§ V–VI rather than asserted here. So nonemptiness of `X` IS a requirement all three impose,
 and it is generic rather than distinguishing.
 
 **Beyond that they are BUNDLES of a dynamical system.** The content is in *which* `f` or `κ` a value
@@ -275,8 +275,8 @@ structure InvariantMarkovKernel (X : Type*) [MeasurableSpace X] where
   invariant : Kernel.Invariant κ μ
 
 -- Statement: the third face fails on the empty carrier for the same reason as the other two — a
--- probability measure has total mass 1 and the empty carrier admits none. Completes the trio the
--- § V gloss used to assert. Anonymous, so it adds no declaration.
+-- probability measure has total mass 1 and the empty carrier admits none. Completes the trio.
+-- Anonymous, so it adds no declaration.
 example : IsEmpty (InvariantMarkovKernel Empty) := by
   constructor
   rintro ⟨_κ, _mk, μ, hp, _⟩

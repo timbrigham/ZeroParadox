@@ -151,10 +151,11 @@ theorem isWellFoundedCoalg_iff_wfPart_univ {X : Type u} {P : PFunctor.{u, u}}
 
 /-! ### The corpus's other contact with this literature — the RECURSIVE side, not formalized here.
 
-AMM's companion notion is **recursive**: every algebra admits a *unique* coalgebra-to-algebra
-morphism (Def 3.2 p. 11). `ZeroParadox/Settheory/APG.lean`'s `decoration_unique` proves exactly that
-uniqueness clause for a finite quiver — and NOT via the well-foundedness above, since those quivers
-may carry cycles. It closes because its target sends every cyclic vertex to ⊥. -/
+AMM's companion notion is **recursive**: *every* algebra admits a unique coalgebra-to-algebra
+morphism (Def 3.2 p. 11). `ZeroParadox/Settheory/APG.lean`'s `decoration_unique` proves that
+uniqueness clause for one algebra only — `DecorationUniverse.collect` — and NOT via the
+well-foundedness above, since those quivers may carry cycles. It closes because every decoration
+into its target is forced to send each cyclic vertex to ⊥. -/
 
 /-! ### § III. The μ side — the W-type is well-founded INTRINSICALLY -/
 
