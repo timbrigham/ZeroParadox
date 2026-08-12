@@ -469,7 +469,7 @@ theorem acyclic_induction_step
 /-! ### PRIOR ART — the uniqueness clause of a RECURSIVE COALGEBRA, for ONE SHAPE of algebra.
 
 A coalgebra is **recursive** when *every* algebra admits a unique coalgebra-to-algebra morphism
-(Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Def 3.2 p. 11 — Osius's definition, Taylor's name).
+(Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Def 3.2 p. 11, crediting Osius for the definition).
 `decoration_unique` gives that clause for algebras of the `DecorationUniverse.collect` shape, not
 for every algebra, and existence not at all. `ZeroParadox/Category/WellFoundedCoalgebra.lean` has
 the well-foundedness side. **The delta:** the standard route to such uniqueness is well-foundedness
