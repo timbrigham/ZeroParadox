@@ -82,10 +82,10 @@ open ZeroParadox ZeroParadox ZeroParadox ZPSemilattice
 
 /-! ### NO-GO gauge — a one-node self-loop is an `APG`, and the class still has teeth.
 Measured 2026-08-09 by building it: on `Unit` with `Quiver := fun _ _ => Unit`, `accessible` is the
-empty path, so membership is vacuous **on a subsingleton**.
-
-**But non-members are easy and plentiful**: any quiver carrying a vertex not reachable from the root
-fails `accessible`. Cite the accessibility, not the membership.
+empty path, so membership is vacuous **on a subsingleton**. A non-member is now PROVED rather than
+asserted — the `example` below the structure. ⚠ "A vertex unreachable from the root" presupposes a
+root the type does not fix: `root` is a FIELD, so the honest statement is that **no choice of root
+works**. Cite the accessibility, not the membership.
 
 ⚠ **Accessibility buys representation, not decorability.** Aczel (1988) decorates plain *graphs* —
 Mostowski *"every well-founded graph …"* (p. 4), AFA *"every graph …"* (p. 6), neither asking for it.
@@ -99,6 +99,20 @@ structure APG (V : Type*) [Quiver V] where
   root : V
   /-- Every vertex is reachable from the root via directed paths. -/
   accessible : ∀ v : V, Nonempty (Quiver.Path root v)
+
+-- Statement: the class has a genuine non-member. On `Bool` with NO edges, every path is `nil`, so no
+-- choice of root reaches the other vertex and the structure is uninhabited. Anonymous, so it adds no
+-- declaration; being about the CARRIER is the point, since `root` is a field and not fixed by `V`.
+example : IsEmpty (@APG Bool ⟨fun _ _ => Empty⟩) := by
+  constructor
+  rintro ⟨r, acc⟩
+  obtain ⟨p⟩ := acc (!r)
+  have hnil : ∀ {a b : Bool} (_ : @Quiver.Path Bool ⟨fun _ _ => Empty⟩ a b), a = b := by
+    intro a b p
+    induction p with
+    | nil => rfl
+    | cons _ e _ => exact e.elim
+  exact Bool.not_ne_self r (hnil p).symm
 
 section APGBasics
 

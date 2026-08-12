@@ -171,15 +171,20 @@ structure SelfContained (C : Type) where
   /-- It is the only one. -/
   unique : ∀ x, app x = x → x = bot
 
-/-! ### NO-GO gauge — what fails to be `SelfContained`?
+/-! ### NO-GO gauge — what fails to be `SelfContained`? Only the EMPTY carrier.
+**Measured: any subsingleton passes for free** (`C := Unit`, `app := id`), **and so does every larger
+one** — the `example` below. The constant-to-bottom map makes its target the unique fixed point on any
+inhabited `C`, since `app x = x` then reads `bot = x`; `unique` is discharged by the choice of `app`,
+not by the carrier, so size buys nothing. It is the construction `selfContained_glue` uses below, and
+§ III's own header already says it works on `Glue p` and `Bool` alike. So *"C is `SelfContained`"* is
+never informative alone: cite the `app` you mean. -/
 
-**Measured 2026-08-09: any subsingleton passes for free.** `C := Unit`, `app := id` — the fixed point
-exists and is unique because there is nothing else available to be. So `unique` has no content on a
-one-element carrier and membership alone establishes nothing.
-
-**Where the class DOES bite is a carrier with two or more points**, since `unique` then genuinely
-forbids a second fixed point. State the carrier when citing it; *"C is `SelfContained`"* is only
-informative once `C` is known to be non-trivial. -/
+-- Statement: EVERY inhabited carrier is `SelfContained`, at any cardinality — so membership excludes
+-- nothing but emptiness. Generic on purpose: the claim it refutes ("the class bites at two or more
+-- points") is a universal. Anonymous, so it adds no declaration.
+example (C : Type) [Nonempty C] : Nonempty (SelfContained C) :=
+  let c := Classical.arbitrary C
+  ⟨{ app := fun _ => c, bot := c, fixed := rfl, unique := fun _ hx => hx.symm }⟩
 
 /-- **The taboo carrier is itself self-containing.** The constant-to-bottom self-map — the
 `ZeroParadox/Settheory/OntBridge.lean` "constant-to-null" pattern — makes `gb0 p` the unique fixed
