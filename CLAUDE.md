@@ -2058,6 +2058,38 @@ This log is the authoritative record of what has been reviewed and why. Future s
 
 **Standing rule:** A scan pass is not complete until all reviewed items have a decision recorded. "PENDING" is a valid decision for items deferred to a future session.
 
+## NARRATE THE MATH — in an engineer's register, every report. (Tim, 2026-08-12.)
+
+> *"for future iterations I want you to narrate the math for me. and do it in terms fitting to an
+> engineer that's not a mathematician by trade."*
+
+**Every report touching mathematical content carries a plain-language pass on the MATHEMATICS, beside
+the process summary — not instead of it, and not only when asked.** Long verification arcs drift into
+reporting gate verdicts, defect ids, signal freshness and exit codes. That is scaffolding. *"The
+prior-art gate verified AMM Thm 7.2 p. 27"* says a check passed; it does not say what the theorem
+**states** or why its direction was load-bearing.
+
+**Tim is this project's mathematician of record by decision, not by training. He cannot review what is
+never explained, and his review is the control that has repeatedly caught what the gates did not.**
+
+- **Use systems and programming analogies** — recursion and termination, type signatures,
+  preconditions, interface vs implementation, invariants, null vs empty, cycles in a graph. Name the
+  object before using its symbol.
+- **Spell glyphs out in words at least once per paragraph** (bottom, epsilon-zero, infinity) — the
+  standing mobile-readability rule.
+- **Standard mathematical term first, ZP shorthand after.** Narration is never licence to lead with
+  framework vocabulary; the § on language ordering still governs.
+- **State which direction an implication runs, and why that matters.** The 2026-08-12 arc turned
+  entirely on sufficiency versus necessity in a cited theorem, and *"the biconditional overstates the
+  source"* is precisely the phrasing that hides the point from anyone not already holding it.
+- **Do not soften the claim.** Precision is the deliverable; only the register changes. If a
+  distinction is load-bearing, explain it rather than dropping it.
+
+⚠ **This governs REPORTS TO Tim, not the corpus.** It is not licence to add prose to `.lean` files —
+the prose cap, the `Statement:`/`Reading:` labels and *"anything convertible to Lean MUST be
+converted"* are untouched. If narration reveals that a claim is only expressible in prose, that is a
+finding about the claim, not a reason to write an essay into the source.
+
 ## Communication Quality Feedback
 
 During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1/CC-2 (both now derived via ZP-J, not freestanding commitments).
