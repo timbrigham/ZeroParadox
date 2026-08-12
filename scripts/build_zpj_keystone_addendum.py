@@ -1,8 +1,9 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.4 | August 2026
+Version 1.5 | August 2026
+v1.5: THE v1.4 FIX WAS PARTIAL, AND THAT MADE THINGS WORSE. v1.4 corrected the two sites carrying the literal strings "modeling commitment" and "offered", and missed a THIRD stating the same claim in different words - Section II's closing sentence, "The one-object identification remains the MC-1 commitment." The result was a document saying the identity was retired on page 1 and live on page 2. Before v1.4 it was uniformly stale, i.e. self-consistent; a partial fix to a self-consistent error manufactures a self-contradiction, which is worse than not fixing it. The cause was grepping the three forbidden PHRASES rather than the CLAIM. Section II now states what MC-1 does carry: family membership proved per domain, with the choice of criteria the design commitment. Found independently by both gates at FAIL-BEDROCK. A FOURTH site then turned up - one neither gate flagged - found only by sweeping the rendered text for the CLAIM (any sentence pairing an identity notion with a live-status verb) rather than for the phrases: Section III called MC-1 an "existing identification", and its "bottom/epsilon-zero identification" wording could be read as equating the two endpoints, which epsilon0_ne_bot forbids. Now stated as a role assignment, with the endpoints' distinctness named. Also: the endnote's Lean sources upgraded to full repository paths.
 v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The smooth-mono and subobject-classifier conditions are the CATEGORY's; preserving inverse images and carrying a pre-fixed point are the ENDOFUNCTOR's; and the routes are not exhaustive. Cor 8.2 lists five equivalent conditions, including the initial-algebra leg, under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
-v1.4: MC-1 framing brought to the ratified form. Two rendered sites called the cross-category identity a live "modeling commitment" and said it was "offered" - the identity was RETIRED AS ILL-TYPED (an equation across distinct categories is not a well-formed proposition), and CLAIMS.md already says so, so the PDF disagreed with the ledger. Now: family membership proved per domain, criteria a design principle, identity retired, members provably distinct. R2-4 (Taylor cited page-precisely with no year or venue) is NOT fixed here: the on-disk copy carries neither, and inventing them is worse than the gap. It stays open pending a verified bibliographic record.
+v1.4: MC-1 framing brought to the ratified form. THREE rendered sites carried the retired identity; v1.4 fixed two of them and v1.5 the third. They called the cross-category identity a live "modeling commitment" and said it was "offered" - the identity was RETIRED AS ILL-TYPED (an equation across distinct categories is not a well-formed proposition), and CLAIMS.md already says so, so the PDF disagreed with the ledger. Now: family membership proved per domain, criteria a design principle, identity retired, members provably distinct. R2-4 (Taylor cited page-precisely with no year or venue) is NOT fixed here: the on-disk copy carries neither, and inventing them is worse than the gap. It stays open pending a verified bibliographic record.
 v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: Honest-scope precision — the single-carrier "snap is one crossing" carries no NEW commitment; it rests on the framework's existing ⊥/ε₀ identification (MC-1 / OQ-E2), endpoints proved (floor non-wf via real ⊥, axiom-free).
 v1.0: Initial release. A thin addendum recording two machine-checked investigations into the
@@ -18,7 +19,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -161,7 +162,8 @@ def build():
         '<b>The verdict, plainly:</b> the test is category-relative. In Set no face is a '
         'Lawvere instance; in the effective (computability) category the recursion theorem is '
         'a genuine one. The keystone therefore unifies a <i>shape</i> (the diagonal), not a '
-        'single mechanism. The one-object identification remains the MC-1 commitment.'))
+        'single mechanism. What MC-1 carries is family membership, proved per domain, with the '
+        'choice of criteria the design commitment.'))
     E.append(sp(6))
 
     # ── Section III: The well-foundedness boundary ─────────────────────────────
@@ -225,9 +227,11 @@ def build():
             '(floor_not_wellFounded is axiom-free; the rest carry Classical.choice from '
             'Mathlib\'s ordinal and QPF machinery).',
             'No new commitment: that the snap <i>is</i> this crossing is a faithful model whose '
-            'content is the two proven endpoints plus an identification &#8212; and that identification '
-            'is the framework&#8217;s <i>existing</i> &#8869;/&#949;<sub>0</sub> identification (MC-1, and '
-            'the &#949;<sub>0</sub> identity already open under OQ-E2), not a fresh one. The floor endpoint '
+            'content is the two proven endpoints, plus the reading of those endpoints as ZP\'s own '
+            '&#8869; and &#949;<sub>0</sub> respectively &#8212; a role assignment the framework '
+            'already carries (MC-1 family membership; the &#949;<sub>0</sub> type bridge open under '
+            'OQ-E2), not a fresh one. The two endpoints stay distinct: '
+            '&#949;<sub>0</sub> &#8800; &#8869; (epsilon0_ne_bot). The floor endpoint '
             'is tied to the real &#8869; of ZP (floor_not_wellFounded, axiom-free); the single-carrier '
             'Phase is the illustrative toy model, where non-well-foundedness localizes at the floor by '
             'construction.',
@@ -272,8 +276,9 @@ def build():
         'established the porthole (v<sub>2</sub>(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
         'addendum records two machine-checked probes into the keystone\'s structure &#8212; the '
         'Lawvere face-split and the well-foundedness boundary &#8212; each fenced as to exactly '
-        'what it proves. Lean sources: Lawvere.lean, Boundary.lean, '
-        'BoundaryBridge.lean, all sorry-free in Lean 4 as of June 2026.',
+        'what it proves. Lean sources: ZeroParadox/Category/Lawvere.lean, '
+        'ZeroParadox/Multihomed/Boundary.lean, ZeroParadox/Multihomed/BoundaryBridge.lean, '
+        'all sorry-free in Lean 4 as of June 2026.',
         S['endnote']))
 
     print(f'[build_zpj_keystone_addendum] Assembling document ({len(E)} elements)...')
