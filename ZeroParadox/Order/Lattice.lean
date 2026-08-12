@@ -30,16 +30,13 @@ Self-contained within semilattice theory; no topology or probability imported.
 
 namespace ZeroParadox
 
-/-! ### NO-GO gauge — `Unit` is a `ZPSemilattice`, and that is NOT a degeneracy finding.
-The one-element model discharges A1–A4 by `rfl`; it is in the corpus as `trivialZPSemilattice`
-(`ZeroParadox/Valuation/Scale.lean`), a `@[reducible] def` needing `attribute [local instance]`. **Every
-algebraic theory has a trivial model**, so a one-element witness says nothing about this class in
-particular — the informative question for an algebraic signature is whether NON-members exist, and
-they abound: any carrier whose join fails idempotence, commutativity, associativity, or lacks an
-identity. Contrast the classes elsewhere in this corpus that had **no** non-member at all.
-
-The class carries OPERATIONS, and the theorems consume their laws rather than membership, so
-*"L carries `ZPSemilattice`, therefore …"* is never the shape of an argument here. -/
+/-! ### NO-GO gauge — for an OPERATIONAL class, "who fails?" is the wrong question.
+`ZPSemilattice` supplies its own operations, so membership is structure to be EQUIPPED, not a property
+a carrier has or lacks: every inhabited carrier can be given one, and inhabitation is the sole
+obstruction — the two `example`s below the class. So "lacks an identity" describes a chosen operation,
+never a carrier, and a one-element witness (`trivialZPSemilattice`, `ZeroParadox/Valuation/Scale.lean`)
+says nothing in particular. The theorems consume the LAWS, not membership, so *"L carries
+`ZPSemilattice`, therefore…"* is never an argument here; contrast the classes whose fields are PROPS. -/
 
 /-- The ZP-A algebraic structure: a join-semilattice with bottom.
     Corresponds to Axiom Block A (A1–A4) in ZP-A §1.1. -/
@@ -55,6 +52,26 @@ class ZPSemilattice (L : Type*) where
   join_idem  : ∀ x : L, join x x = x
   -- A4: Additive identity (⊥ contributes nothing to a join)
   bot_join   : ∀ x : L, join bot x = x
+
+/-! The gauge above, as two witnesses rather than a sentence. Generic ON PURPOSE: the claim each
+refutes is a universal, so a specific carrier would be strictly weaker. Both are anonymous, so
+neither adds a declaration to the corpus. -/
+
+-- Statement: every INHABITED carrier can be equipped — well-order it, join := `max`, ⊥ := the least
+-- element. So there is no carrier that "fails a law": the laws come with the operations.
+example (L : Type) [Nonempty L] : Nonempty (ZPSemilattice L) := by
+  classical
+  letI : LinearOrder L := IsWellOrder.linearOrder (WellOrderingRel (α := L))
+  letI : WellFoundedLT L := ⟨(IsWellFounded.wf : WellFounded (WellOrderingRel (α := L)))⟩
+  letI : OrderBot L := WellFoundedLT.toOrderBot L
+  exact ⟨{ join := max, bot := ⊥
+         , join_assoc := fun x y z => max_assoc x y z
+         , join_comm := fun x y => max_comm x y
+         , join_idem := fun x => max_self x
+         , bot_join := fun _ => max_eq_right bot_le }⟩
+
+-- Statement: inhabitation is the ONLY obstruction — the `bot` field demands a point.
+example : IsEmpty (ZPSemilattice Empty) := ⟨fun s => s.bot.elim⟩
 
 namespace ZPSemilattice
 
