@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.2 | July 2026
+Version 1.3 | August 2026
+v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem" and needs the functor to preserve inverse images plus either a subobject classifier (Thm 8.6) or universally smooth monos and a pre-fixed point (Thm 8.1), with Cor 8.2 giving the equivalence including the initial-algebra leg. Taylor's necessity result is now scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is cited at Thm 36, p. 16. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
 v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: Honest-scope precision — the single-carrier "snap is one crossing" carries no NEW commitment; it rests on the framework's existing ⊥/ε₀ identification (MC-1 / OQ-E2), endpoints proved (floor non-wf via real ⊥, axiom-free).
 v1.0: Initial release. A thin addendum recording two machine-checked investigations into the
@@ -15,7 +16,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -168,12 +169,18 @@ def build():
         'encoded as a powerset coalgebra; <b>well-founded</b> means no infinite descending '
         'chain &#8212; no cycle. The Quine atom &#8869; = {&#8869;} is exactly the minimal '
         '<i>non</i>-well-founded coalgebra: the self-loop &#8869; &#8712; &#8869;, the back '
-        'edge. <b>Taylor</b> (Well-founded coalgebras and recursion) proved that well-founded '
-        '&#8658; recursive, and (Prop 111) that well-foundedness is <i>necessary</i> for '
-        'recursion: one cannot recurse through &#8869;. <b>Ad&#225;mek&#8211;Milius&#8211;Moss</b> '
-        '(On Well-Founded and Recursive Coalgebras, 2020, arXiv:1910.09401) give the modern '
-        'characterizations (well-founded &#8660; recursive &#8660; a morphism to the initial '
-        'algebra).'))
+        'edge. <b>Taylor</b> (Well-founded coalgebras and recursion) proves well-founded '
+        '&#8658; recursive as his Recursion Theorem (Thm 36, p. 16), and states the converse '
+        '<i>in a topos</i> &#8212; there well-foundedness is <i>necessary</i> for recursion '
+        '(Prop 111, p. 6). <b>Ad&#225;mek&#8211;Milius&#8211;Moss</b> (On Well-Founded and '
+        'Recursive Coalgebras, 2020, arXiv:1910.09401v2) prove the forward direction as the '
+        '<b>General Recursion Theorem</b> (Thm 7.2, p. 27) and the converse only under further '
+        'hypotheses &#8212; the functor must preserve inverse images, plus either a subobject '
+        'classifier (Thm 8.6) or universally smooth monomorphisms and a pre-fixed point '
+        '(Thm 8.1). Under those, well-founded &#8660; recursive &#8660; a morphism to the '
+        'initial algebra (Cor 8.2). Reading the necessity direction as <i>one cannot recurse '
+        'through</i> &#8869; is this framework\'s gloss, not Taylor\'s: Prop 111 names no '
+        'bottom element.'))
     E.append(body(
         'In that language the binary snap &#8869; &#8594; &#949;<sub>0</sub> is a crossing of '
         'the well-foundedness boundary: from the non-well-founded floor (&#8869;, the '
@@ -228,20 +235,23 @@ def build():
     E.append(body(
         'The <b>full</b> Taylor coalgebraic statement &#8212; &#8869; as a non-well-founded '
         '<i>coalgebra</i> in the broken-pullback sense, with the General Recursion Theorem '
-        '(well-founded &#8660; recursive) &#8212; is deliberately <i>not</i> formalized here. '
-        'Mathlib currently lacks the required machinery: the next-time operator on subobject '
-        'lattices, Pataraia\'s fixed-point theorem, and the recursion theorem for well-founded '
-        'coalgebras. The depth result is therefore cited (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss), '
-        'not re-proved. What is given here is the relation-level boundary and the QPF bridge: a '
-        'best effort that names its own boundary.'))
+        '<i>and its converse</i> &#8212; is deliberately <i>not</i> formalized here. Searched '
+        'as of August 2026, the pinned Mathlib carries neither Pataraia\'s fixed-point theorem '
+        'nor a recursion theorem for well-founded coalgebras; the <b>next-time operator</b> on '
+        'subobject lattices is no longer missing, having since been built in this project '
+        '(Category/NextTimeCategorical.lean), though it is not upstreamed. The depth result is '
+        'therefore cited (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss), not re-proved. What is '
+        'given here is the relation-level boundary and the QPF bridge: a best effort that names '
+        'its own boundary.'))
     E.append(remark_box(
         'Open contribution point',
         [
-            'Formalizing the missing machinery &#8212; the next-time operator, Pataraia\'s '
-            'fixed-point theorem, and the General Recursion Theorem &#8212; would upgrade this '
-            'best-effort bridge to the full coalgebraic statement, and would be a reusable Lean '
-            'contribution independent of the Zero Paradox. Contributions are welcome, to this '
-            'project and to Mathlib as a whole; the precise missing pieces are named above.',
+            'Formalizing the machinery still missing &#8212; Pataraia\'s fixed-point theorem '
+            'and the General Recursion Theorem &#8212; would upgrade this best-effort bridge to '
+            'the full coalgebraic statement, and would be a reusable Lean contribution '
+            'independent of the Zero Paradox. Upstreaming the next-time operator, already built '
+            'here, is a third. Contributions are welcome, to this project and to Mathlib as a '
+            'whole; the precise missing pieces are named above.',
         ]
     ))
     E.append(sp(6))
