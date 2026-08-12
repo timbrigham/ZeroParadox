@@ -1,7 +1,8 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.3 | August 2026
-v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The category/functor split and the non-exhaustiveness both matter: an earlier draft of this same entry attributed the category's properties to the functor and wrote "either/or" as though two routes were all of them. Cor 8.2 gives the three-way equivalence including the initial-algebra leg under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source, and the page for Thm 36 was corrected from 16 to 15 after two reviewers and the author each re-read it.
+Version 1.4 | August 2026
+v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The smooth-mono and subobject-classifier conditions are the CATEGORY's; preserving inverse images and carrying a pre-fixed point are the ENDOFUNCTOR's; and the routes are not exhaustive. Cor 8.2 lists five equivalent conditions, including the initial-algebra leg, under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
+v1.4: MC-1 framing brought to the ratified form. Two rendered sites called the cross-category identity a live "modeling commitment" and said it was "offered" - the identity was RETIRED AS ILL-TYPED (an equation across distinct categories is not a well-formed proposition), and CLAIMS.md already says so, so the PDF disagreed with the ledger. Now: family membership proved per domain, criteria a design principle, identity retired, members provably distinct. R2-4 (Taylor cited page-precisely with no year or venue) is NOT fixed here: the on-disk copy carries neither, and inventing them is worse than the gap. It stays open pending a verified bibliographic record.
 v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: Honest-scope precision — the single-carrier "snap is one crossing" carries no NEW commitment; it rests on the framework's existing ⊥/ε₀ identification (MC-1 / OQ-E2), endpoints proved (floor non-wf via real ⊥, axiom-free).
 v1.0: Initial release. A thin addendum recording two machine-checked investigations into the
@@ -9,14 +10,15 @@ v1.0: Initial release. A thin addendum recording two machine-checked investigati
       in Set no face is a Lawvere instance (Cantor), the computability face is genuine; and
       (2) the well-foundedness boundary (ZPJ_Boundary.lean, ZPJ_BoundaryBridge.lean) — the snap
       as a ν→μ crossing, relation-level + QPF bridge (best-effort; full Taylor coalgebraic = open).
-      Honest fences carried throughout: probe/best-effort, modeling commitment, open Rung-C.
+      Honest fences carried throughout: probe/best-effort, MC-1 family membership (identity
+      retired as ill-typed), open Rung-C.
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.4'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -65,8 +67,11 @@ def build():
         'The keystone of the Zero Paradox is that &#8869; is the same self-referential '
         '(diagonal) fixed point in every framework: the Quine atom &#8869; = {&#8869;} in set '
         'theory, the Kleene quine in computation, the point v<sub>2</sub>(0) = &#8734; in '
-        'valuation, and the initial object in category theory. That these faces are <i>one '
-        'object</i> is a modeling commitment (MC-1), not a theorem. This addendum is a thin, '
+        'valuation, and the initial object in category theory. Their shared membership in that '
+        'family (MC-1) is proved per domain; the choice of criteria is a design principle; and '
+        'the claim that the faces are <i>numerically one object</i> is <b>retired as '
+        'ill-typed</b> &#8212; an equation across distinct categories is not a well-formed '
+        'proposition, and the members are provably distinct. This addendum is a thin, '
         'honest record of two machine-checked investigations into the structure of that '
         'keystone &#8212; both probe-level, both fenced as to exactly what they prove.'))
     E.append(body(
@@ -100,9 +105,11 @@ def build():
             'v<sub>2</sub>(0) = &#8734;, &#949;<sub>0</sub>, the wheel of fractions &#8212; '
             'each with a machine-checked axiom footprint; and the <i>location</i> claim, that '
             'the fixed point sits at the floor &#8869; (the G&#246;del inversion), a framing.',
-            'Does not add: the unification itself (Lawvere/Yanofsky), nor a proof that the four '
-            'faces are numerically one object &#8212; that is the MC-1 commitment, offered to '
-            'these communities, not imposed on them.',
+            'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
+            'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b>, '
+            'since an equation across distinct categories is not a well-formed proposition. What '
+            'MC-1 carries is family membership, proved per domain, with the members provably '
+            'distinct.',
         ]
     ))
     E.append(sp(6))
