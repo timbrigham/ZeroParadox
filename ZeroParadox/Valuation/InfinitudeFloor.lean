@@ -131,7 +131,7 @@ end ZeroParadox
 the floor (`member_ne_floor` below — a member there would sit at `⊤` with nothing able to climb past
 it), so an enumeration seeded at the floor begins at the successor, exactly `towerInfinitudeFloor`'s
 `member n = cnfToZp2 (towerNONote (n + 1))`. ⊥ admits no offset because its down-set is `{⊥}`
-(`Order/Snap.lean`) and a difference needs two points.
+(`ZeroParadox/Order/Snap.lean`) and a difference needs two points.
 ⚠ **`Reading:` that the approximation index, the `+1`, and the transport asymmetry are ONE phenomenon
 is the framework's interpretation** — a shared shape across distinct structures, hence a **type
 boundary, never a common theorem**. -/

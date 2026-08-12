@@ -149,6 +149,13 @@ theorem isWellFoundedCoalg_iff_wfPart_univ {X : Type u} {P : PFunctor.{u, u}}
     rw [hlfp] at hle
     exact Set.eq_univ_of_univ_subset hle
 
+/-! ### The corpus's other contact with this literature — the RECURSIVE side, not formalized here.
+
+AMM's companion notion is **recursive**: every algebra admits a *unique* coalgebra-to-algebra
+morphism (Def 3.2 p. 11). `ZeroParadox/Settheory/APG.lean`'s `decoration_unique` proves exactly that
+uniqueness clause for a finite quiver — and NOT via the well-foundedness above, since those quivers
+may carry cycles. It closes because its target sends every cyclic vertex to ⊥. -/
+
 /-! ### § III. The μ side — the W-type is well-founded INTRINSICALLY -/
 
 /-- **`Statement:` the W-type passes the intrinsic test.** For any polynomial functor `P`, the

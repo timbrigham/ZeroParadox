@@ -76,8 +76,9 @@ open MeasureTheory
 
 On a NONEMPTY carrier each is inhabited by the identity dynamics (measured 2026-08-09: `f := id`;
 `κ := PMF.pure`; `κ := Kernel.id`). ⚠ **All three exclude the EMPTY carrier** by one argument — each
-carries a probability measure or a `PMF`, and neither exists on `Fin 0`. So nonemptiness of `X` IS a
-requirement all three impose, and it is generic rather than distinguishing.
+carries a probability measure or a `PMF`, and neither exists there. Each exclusion is exhibited at its
+own declaration rather than asserted here. So nonemptiness of `X` IS a requirement all three impose,
+and it is generic rather than distinguishing.
 
 **Beyond that they are BUNDLES of a dynamical system.** The content is in *which* `f` or `κ` a value
 supplies (`odometerIMK`, `attractorIMK`, `markovIMK`). Cite the witness. -/

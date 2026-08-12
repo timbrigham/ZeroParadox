@@ -95,7 +95,9 @@ Root and accessibility make the graph an **apg**, a picture of a unique set unde
     from which every vertex is reachable via directed paths. -/
 -- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Quiver.Basic | reason: Mathlib's Quiver is a bare directed graph (objects + edges) with no distinguished root or accessibility requirement. APG adds root : V and the accessibility proof (every vertex reachable from root), matching Aczel's definition of Accessible Pointed Graph (1988 p. 4). ⚠ These fields are NOT load-bearing for anything proved in this file, and no claim of necessity should be made for them in either direction: decoration_unique binds the structure as `_G` and never uses it, so what is actually proved holds for EVERY finite quiver, accessible or not — structurally Aczel's own AFA generality (p. 6). No APG value is constructed anywhere in the corpus as of 2026-08-09.
 structure APG (V : Type*) [Quiver V] where
-  /-- Distinguished root vertex. -/
+  /-- Distinguished vertex. ⚠ Aczel's term for it is the **point**; he introduces *root* only for the
+      special case where every path from it is unique, i.e. a tree (1988 p. 4). The field name is
+      this file's, not his. -/
   root : V
   /-- Every vertex is reachable from the root via directed paths. -/
   accessible : ∀ v : V, Nonempty (Quiver.Path root v)
@@ -463,6 +465,17 @@ theorem acyclic_induction_step
       so IH gives d₁ w = d₂ w for all apg_children, and acyclic_induction_step closes the goal.
 
     Requires [Fintype V] to bound the reachable set cardinality. -/
+
+/-! ### PRIOR ART — `decoration_unique` is the UNIQUENESS half of a RECURSIVE COALGEBRA.
+
+A coalgebra is **recursive** when every algebra admits a *unique* coalgebra-to-algebra morphism
+(Adámek-Milius-Moss 2020 Def 3.2 p. 11, crediting Osius and Taylor;
+`.claude-local/papers/adamek_milius_moss_wellfounded_recursive_coalgebras.pdf`). `IsDecoration` is
+that commuting square for a quiver's powerset coalgebra; existence is not proved here.
+`ZeroParadox/Category/WellFoundedCoalgebra.lean` carries that literature's well-foundedness side.
+**The delta:** the standard route to such uniqueness is well-foundedness (Taylor's General Recursion
+Theorem, AMM Thm 7.2 p. 27), and it is not available here — these quivers may carry cycles. It closes
+instead because the target sends every cyclic vertex to ⊥ (`cyclic_decoration_eq_bot`). -/
 
 -- `[Fintype V]` is not used in the *type* but is essential to the *proof*: it bounds the
 -- reachable-set cardinality so the strict-subset descent (`Set.ncard_lt_ncard`) terminates.

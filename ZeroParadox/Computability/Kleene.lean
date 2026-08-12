@@ -182,7 +182,8 @@ theorem computational_quine_exists : ∃ c : Code, IsComputationalQuine c :=
 
 `CLAUDE.md` names it the worked example: the class carries a `Code` (data) together with the assertion
 that the code *names* ⊥ (a commitment the framework could be wrong about). Bundling the second into
-brackets is what let `da1_closed_concrete` read as establishing self-execution for months.
+brackets is what makes `da1_closed_concrete` — which proves `IsQuineAtom (bot : MachinePhase)` and
+nothing computational — read as establishing self-execution.
 
 **The repair is a companion theorem carrying the commitment as an explicit hypothesis**, not a refactor
 — see `CLAUDE.md` § *Commitments Go In HYPOTHESES*, where this class is the first named candidate.

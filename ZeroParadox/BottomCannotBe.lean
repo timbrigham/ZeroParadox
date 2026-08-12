@@ -205,12 +205,13 @@ example : @ZeroParadox.t3_unreachability = @ZeroParadox.ZPCategory.ax_g2 := rfl
 -- both `≥ bot` and `≤ bot`.
 #check @ZeroParadox.selfApp_bot_is_both_extremal
 -- Statement: `¬(p ↔ ¬p)` — logical negation has no fixed point.
--- Reading: RE-PROVED here, not imported — `Settheory/Wall.lean` gives a three-line term proof. The
--- standard name is Lean core's `iff_not_self`, and the two are the SAME type despite the differing
--- binder display; the `example` below settles that. Cite the core lemma and read this one as a
--- local restatement, not a distinct result.
+-- Reading: RE-PROVED here, not imported — `ZeroParadox/Settheory/Wall.lean` gives a three-line term
+-- proof. The standard name is Lean core's `iff_not_self`, and the two are the SAME type despite the
+-- differing binder display; the equality `example` below settles that. Cite the core lemma and read
+-- this one as a local restatement, not a distinct result.
 -- The contrast that makes the coincidence above meaningful; the fixed-point-free map (Lawvere).
--- ⚠ Do NOT read it as "involutions have no fixed point" — the `example` below is one that does.
+-- ⚠ Do NOT read it as "involutions have no fixed point" — the negation-on-ℤ `example` below is
+-- one that does.
 #check @ZeroParadox.negation_no_fixedpoint
 -- Binder annotation is not part of a type, so the re-proof and the core lemma are one statement.
 example : @ZeroParadox.negation_no_fixedpoint = @iff_not_self := rfl

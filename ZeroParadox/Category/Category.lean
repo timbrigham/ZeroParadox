@@ -45,8 +45,8 @@ open CategoryTheory CategoryTheory.Limits
 
 **`ZPCategory` HAS TEETH, non-members PROVED** in § I-b, both off Mathlib: `no_zpcat_top` (every
 `Preorder` with an `OrderTop`, at `Unit`, `Bool`, `Fin 3`, `Finset (Fin 4)`) and `no_zpcat_int` (`ℤ`,
-for want of a bottom). ⚠ Those pin "no top" and "a bottom exists", **not** `NoMaxOrder` — a poset with
-two incomparable maximal elements has no top and is not `NoMaxOrder`, and nothing here excludes it.
+for want of a least element — an initial object in a `Preorder` is exactly that). ⚠ They pin "no top"
+and "a least element exists", **not** `NoMaxOrder` — two incomparable maxima have no top and a max.
 
 **`ZPSurprisal` is DEGENERATE.** Measured 2026-08-09: `surp := fun _ => 0` discharges `surp_id` by
 `rfl`, so a category in which nothing is surprising satisfies the class. Cite a specific `surp` and

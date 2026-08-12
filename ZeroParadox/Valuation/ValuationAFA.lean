@@ -45,10 +45,9 @@ class BottomValuation (L : Type*) [ZPSemilattice L] (Γ : Type*) [Top Γ] where
 `v_top_unique` is `rfl`. (`Unit` carries `ZPSemilattice` via `trivialZPSemilattice`,
 `ZeroParadox/Valuation/Scale.lean` — a `@[reducible] def`, so a witness needs a local instance.)
 
-**But `v_top_unique` has teeth on any carrier with two points**: it excludes the constant-⊤
-valuation, the degeneracy `WheelValuationStructure` had to patch with `WVSNondegenerate`.
-⚠ The non-member is a carrier PAIR `(L, Γ)`, not a valuation — see `bottomValuation_unit_empty`.
-A valuation sending a second element to `⊤` is a failing field value, which licenses nothing. -/
+**The non-member is a carrier PAIR `(L, Γ)`, not a valuation** — a valuation sending a second
+element to `⊤` is a failing field value, which licenses nothing. The witness is `Γ := Unit` over
+any `L` with a point other than `bot`: `bottomValuation_unit_empty` below. -/
 
 /-- **`Statement:` the non-member — `Γ := Unit` over any `L` with a point other than `bot`.** With
     `⊤` the only value, `v_top_unique` forces that point to be `bot`. -/

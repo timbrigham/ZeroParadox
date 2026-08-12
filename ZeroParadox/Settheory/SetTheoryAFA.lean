@@ -96,9 +96,9 @@ class AFAStructure (L : Type*) [ZPSemilattice L] where
 
 /-! ### NO-GO gauge — nothing fails, and that is EXPECTED (Tim, 2026-08-09).
 
-Measured by building it: `selfMem x := x = bot` discharges both fields on *any* `[ZPSemilattice L]`
-(`bot_self_mem` is `rfl`) — what `SelfApp.lean`'s `toAFAStructure` already does generically. `⊥ = {⊥}`
-is a cross-type `=`, so the class encodes the **role**: the QuineHost pattern (`QuineHost.lean`).
+Measured by building it: `selfMem x := x = bot` discharges both fields on *any* `[ZPSemilattice L]`,
+as `ZeroParadox/Computability/SelfApp.lean`'s `toAFAStructure` does generically. `⊥ = {⊥}` is a
+cross-type `=`, so the class encodes the **role**: the `ZeroParadox/Settheory/QuineHost.lean` pattern.
 
 **Two readings it must not license.** `[AFAStructure L]` imports no anti-foundation content, so
 *"L carries it, therefore ⊥ is a Quine atom"* is circular; and universal inhabitation is no evidence
