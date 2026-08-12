@@ -1,7 +1,7 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
 Version 1.3 | August 2026
-v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem" and needs the functor to preserve inverse images plus either a subobject classifier (Thm 8.6) or universally smooth monos and a pre-fixed point (Thm 8.1), with Cor 8.2 giving the equivalence including the initial-algebra leg. Taylor's necessity result is now scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is cited at Thm 36, p. 16. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
+v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The category/functor split and the non-exhaustiveness both matter: an earlier draft of this same entry attributed the category's properties to the functor and wrote "either/or" as though two routes were all of them. Cor 8.2 gives the three-way equivalence including the initial-algebra leg under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source, and the page for Thm 36 was corrected from 16 to 15 after two reviewers and the author each re-read it.
 v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: Honest-scope precision — the single-carrier "snap is one crossing" carries no NEW commitment; it rests on the framework's existing ⊥/ε₀ identification (MC-1 / OQ-E2), endpoints proved (floor non-wf via real ⊥, axiom-free).
 v1.0: Initial release. A thin addendum recording two machine-checked investigations into the
@@ -170,15 +170,18 @@ def build():
         'chain &#8212; no cycle. The Quine atom &#8869; = {&#8869;} is exactly the minimal '
         '<i>non</i>-well-founded coalgebra: the self-loop &#8869; &#8712; &#8869;, the back '
         'edge. <b>Taylor</b> (Well-founded coalgebras and recursion) proves well-founded '
-        '&#8658; recursive as his Recursion Theorem (Thm 36, p. 16), and states the converse '
+        '&#8658; recursive as his Recursion Theorem (Thm 36, p. 15), and states the converse '
         '<i>in a topos</i> &#8212; there well-foundedness is <i>necessary</i> for recursion '
         '(Prop 111, p. 6). <b>Ad&#225;mek&#8211;Milius&#8211;Moss</b> (On Well-Founded and '
         'Recursive Coalgebras, 2020, arXiv:1910.09401v2) prove the forward direction as the '
-        '<b>General Recursion Theorem</b> (Thm 7.2, p. 27) and the converse only under further '
-        'hypotheses &#8212; the functor must preserve inverse images, plus either a subobject '
-        'classifier (Thm 8.6) or universally smooth monomorphisms and a pre-fixed point '
-        '(Thm 8.1). Under those, well-founded &#8660; recursive &#8660; a morphism to the '
-        'initial algebra (Cor 8.2). Reading the necessity direction as <i>one cannot recurse '
+        '<b>General Recursion Theorem</b> (Thm 7.2, p. 27). Their converse (&#167;&#160;8) always '
+        'asks the <i>endofunctor</i> to preserve inverse images, and then takes one of several '
+        'routes: the <i>category</i> may have universally smooth monomorphisms with the functor '
+        'carrying a pre-fixed point (Thm 8.1), or the category may have a subobject classifier '
+        '(Thm 8.6, which is Taylor\'s); a third covers functors on vector spaces, which have '
+        'neither (Thm 8.12). Under Thm 8.1\'s assumptions the characterizations coincide &#8212; '
+        'well-founded &#8660; recursive &#8660; a morphism to the initial algebra (Cor 8.2). '
+        'Reading the necessity direction as <i>one cannot recurse '
         'through</i> &#8869; is this framework\'s gloss, not Taylor\'s: Prop 111 names no '
         'bottom element.'))
     E.append(body(
@@ -239,7 +242,8 @@ def build():
         'as of August 2026, the pinned Mathlib carries neither Pataraia\'s fixed-point theorem '
         'nor a recursion theorem for well-founded coalgebras; the <b>next-time operator</b> on '
         'subobject lattices is no longer missing, having since been built in this project '
-        '(Category/NextTimeCategorical.lean), though it is not upstreamed. The depth result is '
+        '(ZeroParadox/Category/NextTimeCategorical.lean), though it is not upstreamed. The '
+        'depth result is '
         'therefore cited (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss), not re-proved. What is '
         'given here is the relation-level boundary and the QPF bridge: a best effort that names '
         'its own boundary.'))
