@@ -466,16 +466,16 @@ theorem acyclic_induction_step
 
     Requires [Fintype V] to bound the reachable set cardinality. -/
 
-/-! ### PRIOR ART — the uniqueness clause of a RECURSIVE COALGEBRA, for ONE algebra.
+/-! ### PRIOR ART — the uniqueness clause of a RECURSIVE COALGEBRA, for ONE SHAPE of algebra.
 
 A coalgebra is **recursive** when *every* algebra admits a unique coalgebra-to-algebra morphism
-(Adámek-Milius-Moss 2020, arXiv:1910.09401, Def 3.2 p. 11, crediting Osius and Taylor).
-`decoration_unique` gives that clause for `DecorationUniverse.collect` alone, never for every
-algebra as recursiveness demands, and existence not at all; the well-foundedness side is in
-`ZeroParadox/Category/WellFoundedCoalgebra.lean`. **The delta:** the standard route to such
-uniqueness is well-foundedness (Taylor's General Recursion Theorem, AMM Thm 7.2 p. 27), and it is
-not available here — these quivers may carry cycles. It closes instead because every decoration
-into the target is forced to send each cyclic vertex to ⊥ (`cyclic_decoration_eq_bot`). -/
+(Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Def 3.2 p. 11 — Osius's definition, Taylor's name).
+`decoration_unique` gives that clause for algebras of the `DecorationUniverse.collect` shape, not
+for every algebra, and existence not at all. `ZeroParadox/Category/WellFoundedCoalgebra.lean` has
+the well-foundedness side. **The delta:** the standard route to such uniqueness is well-foundedness
+(Taylor's General Recursion Theorem, AMM Thm 7.2 p. 27), unavailable here since these quivers may
+carry cycles. It closes on two branches instead — cyclic vertices to ⊥ (`cyclic_decoration_eq_bot`),
+acyclic ones by strict-subset descent on the reachable set, which is what `[Fintype V]` is for. -/
 
 -- `[Fintype V]` is not used in the *type* but is essential to the *proof*: it bounds the
 -- reachable-set cardinality so the strict-subset descent (`Set.ncard_lt_ncard`) terminates.

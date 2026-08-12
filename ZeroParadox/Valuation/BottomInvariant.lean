@@ -87,7 +87,8 @@ supplies (`odometerIMK`, `attractorIMK`, `markovIMK`). Cite the witness. -/
     invariant Borel probability measure `μ` (`MeasurePreserving f μ μ`). The candidate universal
     shape: where a Lawvere fixed *point* is blocked, this weaker invariant may still exist.
     NO-GO: `BottomInvariantMeasure` is inhabited on any nonempty `X` by `f := id`, and empty on
-    `Fin 0` (no probability measure there) — a generic obstruction, not a distinguishing one. -/
+    `Empty` (no probability measure there; witness in § V) — a generic obstruction, not a
+    distinguishing one. -/
 structure BottomInvariantMeasure (X : Type*) [MeasurableSpace X] where
   /-- the dynamics -/
   f : X → X

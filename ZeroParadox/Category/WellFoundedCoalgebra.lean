@@ -153,9 +153,10 @@ theorem isWellFoundedCoalg_iff_wfPart_univ {X : Type u} {P : PFunctor.{u, u}}
 
 AMM's companion notion is **recursive**: *every* algebra admits a unique coalgebra-to-algebra
 morphism (Def 3.2 p. 11). `ZeroParadox/Settheory/APG.lean`'s `decoration_unique` proves that
-uniqueness clause for one algebra only — `DecorationUniverse.collect` — and NOT via the
-well-foundedness above, since those quivers may carry cycles. It closes because every decoration
-into its target is forced to send each cyclic vertex to ⊥. -/
+uniqueness clause for algebras of the `DecorationUniverse.collect` shape only, and NOT via the
+well-foundedness above, since those quivers may carry cycles. It closes on two branches — every
+decoration into its target is forced to send each cyclic vertex to ⊥, and the acyclic ones close by
+strict-subset descent on the reachable set. -/
 
 /-! ### § III. The μ side — the W-type is well-founded INTRINSICALLY -/
 

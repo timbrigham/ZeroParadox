@@ -47,7 +47,8 @@ class BottomValuation (L : Type*) [ZPSemilattice L] (Γ : Type*) [Top Γ] where
 
 **The non-member is a carrier PAIR `(L, Γ)`, not a valuation** — a valuation sending a second
 element to `⊤` is a failing field value, which licenses nothing. The witness is `Γ := Unit` over
-any `L` with a point other than `bot`: `bottomValuation_unit_empty` below. -/
+any `L` with a point other than `bot`: `bottomValuation_unit_empty` below. The sibling answer where a
+class IS degenerate is an explicit predicate — `WVSNondegenerate`, `ZeroParadox/Algebra/Wheel.lean`. -/
 
 /-- **`Statement:` the non-member — `Γ := Unit` over any `L` with a point other than `bot`.** With
     `⊤` the only value, `v_top_unique` forces that point to be `bot`. -/

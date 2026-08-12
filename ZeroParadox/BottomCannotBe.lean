@@ -215,6 +215,9 @@ example : @ZeroParadox.t3_unreachability = @ZeroParadox.ZPCategory.ax_g2 := rfl
 #check @ZeroParadox.negation_no_fixedpoint
 -- Binder annotation is not part of a type, so the re-proof and the core lemma are one statement.
 example : @ZeroParadox.negation_no_fixedpoint = @iff_not_self := rfl
+-- Negation on ℤ carries BOTH conjuncts the ⚠ above needs: it is an involution, and it has a fixed
+-- point. Exhibited rather than asserted, so neither half rests on the comment.
+example (x : ℤ) : (fun y : ℤ => -y) ((fun y : ℤ => -y) x) = x := neg_neg x
 example : (fun x : ℤ => -x) (0 : ℤ) = 0 := rfl
 
 /-! ### POSITIVE — narrow uniqueness and infinite width, which coincide only at ⊥ -/

@@ -172,9 +172,9 @@ structure SelfContained (C : Type) where
   unique : ∀ x, app x = x → x = bot
 
 /-! ### NO-GO gauge — what fails to be `SelfContained`? Only the EMPTY carrier.
-**Measured: any subsingleton passes for free** (`C := Unit`, `app := id`), **and so does every larger
-one** — the inhabited-carrier `example` below, with the empty one exhibited beside it. The
-constant-to-bottom map makes its target the unique fixed point on any inhabited `C`, since
+**Measured: any INHABITED subsingleton passes for free** (`C := Unit`, `app := id`), **and so does
+every larger one** — the inhabited-carrier `example` below, with the empty one exhibited beside it.
+The constant-to-bottom map makes its target the unique fixed point on any inhabited `C`, since
 `app x = x` then reads `bot = x`; `unique` is discharged by the choice of `app`, not by the carrier,
 so size buys nothing. It is the construction `selfContained_glue` uses below. So
 *"C is `SelfContained`"* is never informative alone: cite the `app` you mean. -/
