@@ -90,29 +90,28 @@ theorem padic_simplex_not_homeomorphic :
   rw [hcomp, Set.mem_singleton_iff] at h1
   exact one_ne_zero h1
 
--- Statement: GENERICITY WITNESS for the theorem above, which its docstring calls "the generic
--- connected-vs-totally-disconnected wall". The same proof closes with BOTH ambients universally
+-- Statement: GENERICITY WITNESS for the theorem above, whose docstring calls it "the generic
+-- connected-vs-totally-disconnected wall". The same argument closes with BOTH ambients universally
 -- quantified, so nothing 2-adic and nothing simplicial survives into it: the wall is about the two
--- topological classes, never about these two carriers. Anonymous, so it declares nothing.
+-- topological classes, never about these two carriers. The obstruction is a CARDINALITY floor, which
+-- is why Mathlib states it as `Subsingleton` — connected-and-totally-disconnected forces AT MOST ONE
+-- point, and `Nontrivial` forbids that. Anonymous, so it declares nothing.
 example (X Y : Type) [TopologicalSpace X] [TopologicalSpace Y]
     [ConnectedSpace X] [TotallyDisconnectedSpace Y] [Nontrivial Y] :
     IsEmpty (X ≃ₜ Y) := by
   refine ⟨fun e => ?_⟩
   haveI : ConnectedSpace Y := e.connectedSpace_iff.mp inferInstance
-  obtain ⟨a, b, hab⟩ := exists_pair_ne Y
-  have hcomp : connectedComponent a = {a} :=
-    totallyDisconnectedSpace_iff_connectedComponent_singleton.mp inferInstance a
-  have hsub : (Set.univ : Set Y) ⊆ connectedComponent a :=
-    isPreconnected_univ.subset_connectedComponent (Set.mem_univ a)
-  have hb : b ∈ connectedComponent a := hsub (Set.mem_univ b)
-  rw [hcomp, Set.mem_singleton_iff] at hb
-  exact hab hb.symm
+  exact not_subsingleton Y subsingleton_of_preconnected_totallyDisconnected
 
--- Statement: the `Nontrivial Y` above is load-bearing, not decoration — `Unit` is BOTH connected and
--- totally disconnected and is homeomorphic to itself, so dropping it makes the witness FALSE rather
--- than weaker. This is the control the genericity witness needs: a generic statement that excludes
--- nothing witnesses nothing.
-example : Nonempty (Unit ≃ₜ Unit) := ⟨Homeomorph.refl Unit⟩
+-- Statement: `Nontrivial` is load-bearing — dropping it makes the universal above FALSE, not weaker,
+-- and `Unit` is the refutation because it is connected AND totally disconnected at once. Stated as a
+-- refutation rather than as `Nonempty (Unit ≃ₜ Unit)`, which would witness nothing: `Homeomorph.refl`
+-- inhabits `Z ≃ₜ Z` for EVERY `Z`. Instantiating the universal at `Unit` forces both instances to be
+-- synthesized, so the kernel checks those two conjuncts instead of leaving them as prose.
+example : ¬ (∀ (X Y : Type) [TopologicalSpace X] [TopologicalSpace Y]
+    [ConnectedSpace X] [TotallyDisconnectedSpace Y], IsEmpty (X ≃ₜ Y)) := by
+  intro h
+  exact (h Unit Unit).false (Homeomorph.refl Unit)
 
 end ZeroParadox
 
