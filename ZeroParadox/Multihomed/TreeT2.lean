@@ -90,6 +90,30 @@ theorem padic_simplex_not_homeomorphic :
   rw [hcomp, Set.mem_singleton_iff] at h1
   exact one_ne_zero h1
 
+-- Statement: GENERICITY WITNESS for the theorem above, which its docstring calls "the generic
+-- connected-vs-totally-disconnected wall". The same proof closes with BOTH ambients universally
+-- quantified, so nothing 2-adic and nothing simplicial survives into it: the wall is about the two
+-- topological classes, never about these two carriers. Anonymous, so it declares nothing.
+example (X Y : Type) [TopologicalSpace X] [TopologicalSpace Y]
+    [ConnectedSpace X] [TotallyDisconnectedSpace Y] [Nontrivial Y] :
+    IsEmpty (X ≃ₜ Y) := by
+  refine ⟨fun e => ?_⟩
+  haveI : ConnectedSpace Y := e.connectedSpace_iff.mp inferInstance
+  obtain ⟨a, b, hab⟩ := exists_pair_ne Y
+  have hcomp : connectedComponent a = {a} :=
+    totallyDisconnectedSpace_iff_connectedComponent_singleton.mp inferInstance a
+  have hsub : (Set.univ : Set Y) ⊆ connectedComponent a :=
+    isPreconnected_univ.subset_connectedComponent (Set.mem_univ a)
+  have hb : b ∈ connectedComponent a := hsub (Set.mem_univ b)
+  rw [hcomp, Set.mem_singleton_iff] at hb
+  exact hab hb.symm
+
+-- Statement: the `Nontrivial Y` above is load-bearing, not decoration — `Unit` is BOTH connected and
+-- totally disconnected and is homeomorphic to itself, so dropping it makes the witness FALSE rather
+-- than weaker. This is the control the genericity witness needs: a generic statement that excludes
+-- nothing witnesses nothing.
+example : Nonempty (Unit ≃ₜ Unit) := ⟨Homeomorph.refl Unit⟩
+
 end ZeroParadox
 
 /-! ## Axiom Purity Check -/
