@@ -19,7 +19,7 @@ it does NOT claim the walls are one object — that would be the very cross-fram
 blocks (MC-1). Shapes 1 and 2 are the walls of ⊥'s two faces (fixed point + limit); shape 3 is the
 wall of the seam.
 
-Note: `.claude-local/notes/shape_of_the_walls_2026-07-14.md`. EXPERIMENTAL; physics-silent.
+EXPERIMENTAL; physics-silent.
 -/
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Reals.OrderedField

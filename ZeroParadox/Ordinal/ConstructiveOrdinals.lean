@@ -93,8 +93,7 @@ theorem tower_strictMono (n : ℕ) :
 section PurityCheck
 -- The payoff: these must be CHOICE-FREE (no Classical.choice) — the snap-from-below proved
 -- syntactically on ONote, never touching repr/Ordinal. Contrast ZP-L's ε₀ results, all of which
--- carry Classical.choice (inherited from Mathlib's Ordinal). See
--- .claude-local/notes/choice_probe_ordinal_2026-06-15.md.
+-- carry Classical.choice (inherited from Mathlib's Ordinal).
 #print axioms exp_lt_term
 #print axioms omegaPow_no_fixedpoint
 #print axioms tower_strictMono

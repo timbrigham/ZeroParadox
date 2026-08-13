@@ -475,8 +475,7 @@ earned once the two halves are conjoined on a single `p`.
 
 **Origin (Tim, 2026-08-06):** *"this zero and infinity boundary likely is going to run multiple
 directions concurrently."* This is that, on one object. ⚠ The **necessity** half — *"I think it has
-to"* — is NOT proved and is not claimed; see
-`.claude-local/notes/future-research/concurrent_poles_2026-08-06.md`. -/
+to"* — is NOT proved and is not claimed. -/
 theorem repr_spread_source_certain_target :
     ∃ (o : Ordinal) (p : PMF E0Note), (∀ a, p ≠ PMF.pure a) ∧ p.map e0Repr = PMF.pure o := by
   obtain ⟨o, p, hnp, hconf⟩ := exists_fiber_supported_non_pure_pmf
