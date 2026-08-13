@@ -80,15 +80,8 @@ theorem padic_simplex_not_homeomorphic :
         (convex_stdSimplex ℝ (Fin 2)).isPreconnected⟩
   -- transport connectedness across the homeomorphism to Q₂
   haveI hQconn : ConnectedSpace Q₂ := e.connectedSpace_iff.mp hSconn
-  -- but Q₂ is totally disconnected: every connected component is a singleton
-  have hcomp : connectedComponent (0 : Q₂) = {0} :=
-    totallyDisconnectedSpace_iff_connectedComponent_singleton.mp inferInstance 0
-  -- connectedness forces all of Q₂ into the component of 0, so 1 = 0
-  have hsub : (Set.univ : Set Q₂) ⊆ connectedComponent (0 : Q₂) :=
-    isPreconnected_univ.subset_connectedComponent (Set.mem_univ 0)
-  have h1 : (1 : Q₂) ∈ connectedComponent (0 : Q₂) := hsub (Set.mem_univ 1)
-  rw [hcomp, Set.mem_singleton_iff] at h1
-  exact one_ne_zero h1
+  -- connected AND totally disconnected forces AT MOST ONE point; Q₂ has at least two
+  exact not_subsingleton Q₂ subsingleton_of_preconnected_totallyDisconnected
 
 -- Statement: GENERICITY WITNESS for the theorem above, whose docstring calls it "the generic
 -- connected-vs-totally-disconnected wall". The same argument closes with BOTH ambients universally
