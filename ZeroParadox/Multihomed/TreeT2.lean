@@ -31,7 +31,14 @@ open ZeroParadox
 open scoped Topology
 
 /-- **T2 partial obstruction (coarse).** No homeomorphism between the connected simplex
-    `stdSimplex ℝ (Fin 2)` (Markov ν-ambient) and the totally-disconnected `Q₂` (p-adic ν-ambient). -/
+    `stdSimplex ℝ (Fin 2)` (Markov ν-ambient) and the totally-disconnected `Q₂` (p-adic ν-ambient).
+
+    **Scope — in the docstring so it travels with the declaration.** This rules out a homeomorphism
+    of the two AMBIENTS and nothing more. It says nothing about the two bottoms: the p-adic floor is
+    the single point `{0}`, while a Markov stationary distribution need **not** be unique —
+    `markov_node_no_universal_property` exhibits a doubly-stochastic kernel, not the identity, whose
+    stationary set is not a subsingleton. So a local or non-homeomorphic reconciliation is untouched
+    and **T2 stays OPEN**. -/
 theorem padic_simplex_not_homeomorphic :
     IsEmpty (↥(stdSimplex ℝ (Fin 2)) ≃ₜ Q₂) := by
   refine ⟨fun e => ?_⟩
@@ -42,19 +49,18 @@ theorem padic_simplex_not_homeomorphic :
         (convex_stdSimplex ℝ (Fin 2)).isPreconnected⟩
   -- transport connectedness across the homeomorphism to Q₂
   haveI hQconn : ConnectedSpace Q₂ := e.connectedSpace_iff.mp hSconn
-  -- Statement: the obstruction is a CARDINALITY floor, not a topological fact about Q₂. Mathlib's
+  -- Statement: the contradiction is a CARDINALITY clash, reached through the topology. Mathlib's
   -- lemma concludes `Subsingleton` — preconnected AND totally disconnected admits AT MOST ONE point
-  -- — and `Nontrivial Q₂` says at least two. Nothing below the two classes is consumed.
+  -- — while `Nontrivial Q₂` says at least two. THREE instances are consumed, not two:
+  -- `PreconnectedSpace` (via `ConnectedSpace`), `TotallyDisconnectedSpace`, and `Nontrivial`; the
+  -- `example`s below refute the universal with each one dropped.
   exact not_subsingleton Q₂ subsingleton_of_preconnected_totallyDisconnected
 
--- Reading: the theorem rules out a GLOBAL homeomorphism of the two AMBIENTS, and nothing more. It
--- does NOT show the two bottoms fail to glue: both are singletons (`{0}` and one stationary
--- distribution), so comparing the bottoms is trivially available, and a LOCAL comparison
--- (neighbourhoods of the bottoms) or any non-homeomorphic reconciliation is untouched here.
--- T2 is therefore OPEN. Unlike T1 — the μ edge, which glues via real functors — ν has only this
--- coarse wall, so the tree's symmetric prediction is neither confirmed nor falsified. An asymmetry
--- is SUGGESTED, not proven; the sharper test is a local-near-⊥ or inverse-limit-vs-attractor
--- comparison, never a global ambient homeomorphism.
+-- Reading: T1 — the μ edge — glues via real functors while ν has only this coarse wall, so an
+-- asymmetry is SUGGESTED, not proven, and the tree's symmetric prediction is neither confirmed nor
+-- falsified. The sharper test is a local-near-⊥ or inverse-limit-vs-attractor comparison;
+-- `ZeroParadox/Valuation/NuLeafReconcile.lean` has already run it at the leaf
+-- (`nu_leaf_glue_subsingleton`) and deflates its own result as generic.
 
 -- Reading: #2 and #3 may be ν in DIFFERENT SENSES — #2 a dynamical attractor, #3 a categorical
 -- limit — which would explain a genuine ν-asymmetry. Open direction, not a result.
@@ -62,8 +68,10 @@ theorem padic_simplex_not_homeomorphic :
 -- Statement: GENERICITY WITNESS for the theorem above. The same argument closes with BOTH ambients
 -- universally quantified, so nothing 2-adic and nothing simplicial survives into it: the wall is
 -- about the two topological classes, never about these two carriers. Anonymous, so it declares
--- nothing. ⚠ This is NOT the archimedean/non-archimedean distinction — ℚ under the ordinary
--- absolute value is archimedean AND totally disconnected, so the two come apart.
+-- nothing. ⚠ The two classes are not EQUIVALENT to the archimedean/non-archimedean split — ℚ under
+-- the ordinary absolute value is archimedean AND totally disconnected — but the implication runs one
+-- way: non-archimedean FORCES totally disconnected (`IsUltrametricDist X → TotallyDisconnectedSpace
+-- X`, which is how `Q₂` gets the instance), and that is where half this wall comes from.
 example (X Y : Type) [TopologicalSpace X] [TopologicalSpace Y]
     [ConnectedSpace X] [TotallyDisconnectedSpace Y] [Nontrivial Y] :
     IsEmpty (X ≃ₜ Y) := by
