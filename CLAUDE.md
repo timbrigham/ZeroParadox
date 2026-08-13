@@ -1446,6 +1446,21 @@ described longhand ("critical slowing down").
    `enat_fp_iff`, `State/ReversibleSpectrum.lean` already had `Reversible` (a third definition of
    detailed balance was written anyway). Not literature. A grep.
 2. **Grep the pinned Mathlib** for the concept, not just the name you would have chosen.
+   ⚠⚠ **AND IF THE CLAIM IS A LEAN STATEMENT, RUN `exact?` — IT BEATS GREP AND IT IS THE ONLY STEP
+   HERE WHOSE VERB IS *RUN*.** Grep searches **names**; `exact?` searches **statement shape**, so it
+   finds the lemma even when the library's chosen name is one you would never have guessed — which is
+   exactly the case where grepping "the concept" fails. Same authority argument as *"grep is not the
+   authority; `#check` is"* under § *NOT IN THE LIBRARY IS A CLAIM*, and it also reaches the
+   attribute-generated siblings (`@[to_dual]`, `@[simps]`) that have **no source line to grep**.
+   **Measured 2026-08-12:** a ten-line hand proof was written for the generic
+   connected-vs-totally-disconnected wall, having run steps 1 and 2 that same session on a neighbouring
+   thread. **`subsingleton_of_preconnected_totallyDisconnected` was already in Mathlib**, found by an
+   adversary gate with `exact?` and not by any grep. Adopting it cut the proof body from seven lines to
+   one **and corrected the mathematics**: the library states the result as `Subsingleton α`, so the
+   obstruction is a **cardinality floor** (connected + totally disconnected forces *at most one point*;
+   `Nontrivial` forbids it), not the topology fact the hand proof's route through `connectedComponent`
+   implied. **The standard framing was not merely shorter — it was the honest statement of what the
+   theorem obstructs.** Purity was checked before swapping, per the `CovBy` precedent: no regression.
 3. **One literature search** if the object has a name (Glauber dynamics, coalgebra, covering
    relation). `.claude-local/papers/` FIRST — it is the downloaded-source library.
 
