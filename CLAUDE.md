@@ -1046,6 +1046,23 @@ false negative from a single session.**
 | **1. POLARITY** | the claim / **its inverse** — how the corpus would say it if it *disagreed* with you | you find only the half stated your way |
 | **2. PART OF SPEECH** | the **noun** (the object) / the **verb** (the operation that produces it) | you search for the *thing* and miss the *step that makes it* |
 | **3. VOCABULARY** | your words / the **domain's** words | you find only what you would have named it |
+| **4. DISPLAY** ⚠ | the full matched line / **what you actually printed** | the query was right, the match was there, and you **truncated it off the screen** |
+
+⚠⚠ **AXIS 4 IS NOT ABOUT THE QUERY, WHICH IS WHY THE OTHER THREE CANNOT CATCH IT.** Axes 1-3 all
+assume the failure is in what you *asked*. Here the query was correct, the pattern **did** include the
+term, the file **was** in the result set — and the term sat past the character limit of the formatting
+applied to the output. **Absence was read off a line that contained the thing.**
+**Measured 2026-08-12**, and it produced a note, a handoff entry and a spoken claim all asserting a
+gap that did not exist: a search for `Γ₀|Feferman|Schütte` matched `Ordinal/Epsilon0CannotBe.lean:79`,
+whose gloss ends *"coords (1,0), the minimum closure, **below Γ₀**"* — at roughly character 110 of a
+line printed to 90. `Ordinal/Epsilon0LeastFP.lean:191` states the entire Veblen ladder up to Γ₀ and
+`SnapNucleusConstructive.lean` references `epsilon_zero_lt_gamma`. **The corpus was ahead of the
+search, and the deliverable dissolved.**
+**THE RULE: never conclude absence from truncated output.** Re-run untruncated — or print
+`file:line` only and open the hits — **before writing any negative.** This is § *NOT IN THE LIBRARY IS
+A CLAIM* applied to your own terminal: **a formatting choice is a filter, and an unexamined filter is
+a blind half.** ⚠ It compounds with `head_limit`/`-First N` caps, which drop whole *rows* the same way
+this dropped whole *columns*.
 
 **Measured, all on 2026-08-07, all having already shipped into docstrings as fact before a gate or Tim
 caught them:**
