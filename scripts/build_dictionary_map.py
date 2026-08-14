@@ -26,25 +26,32 @@ OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at rep
 # --- Resolver: name -> (path, KIND), both scanned from the actual Lean source ---
 # The KIND is DERIVED, never asserted.  A witness is not always a theorem: a property a structure
 # is DEFINED BY is carried by a class field, which the class ASSUMES and each instance discharges.
-# That used to be invisible - the legend said "witness theorem", the one field-witness was
-# hand-linked through an override table, and its kind survived only as a Python comment - so a
-# reader checking the witness against the legend found a mismatch that was not actually an error.
-# Now the scanner reports the KEYWORD it found and the page prints exactly that.
+# The scanner reports the KEYWORD it found and the page prints exactly that.
 # ⚠ The keyword is a SYNTACTIC proxy. Do not infer the type's universe from it anywhere in this
 # file: `def` and `instance` inhabit `Prop` as freely as `Type`. See `witness_note`.
+# ⚠ ONE name pattern, consumed by EVERY scanner below. A pattern narrower than the language
+# TRUNCATES, and a truncated key names a declaration that does not exist - which then resolves on
+# a SINGLE hit, where the multi-hit guard cannot fire.
+# It states NO alphabet: a declaration name runs until a character that cannot be inside one.
+# Enumerating the allowed characters was wrong twice - first omitting `.`, then omitting the
+# letterlike symbols Mathlib uses in real names (`splits_ℚ_ℂ`, `ε_up_ℤ`). Measured over the 7933
+# pinned Mathlib files: the enumerated class left 431 truncations, this leaves 0.
+# ⚠ It is a single CONSTANT rather than a comment telling three regexes to agree. The comment
+# that said so was deleted as narrative, and the two patterns then diverged in the same commit.
+_LEAN_ID = r"[^\s(){}\[\]:,]+"
 _DECL = re.compile(
     r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
-    r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([A-Za-z_][A-Za-z0-9_'.]*)")
-# ⚠ The name pattern must ALLOW DOTS, matching `_scan_external`. Forbidding them truncated
-# `def Ordinal.toNatOrdinal` to a phantom `Ordinal` in a vendored file, which then outranked
-# Mathlib's real `Ordinal` on a single hit - no ambiguity, so the multi-hit guard never fired.
-# That guard closes ONE ROUTE (two candidates); this closes the other (one WRONG candidate).
+    r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+(" + _LEAN_ID + ")")
+# ⚠ The PROPERTY is "no index key names a declaration that does not exist". Do not read any
+# comment here as an inventory of its routes, and do not let one assert the property is closed:
+# a comment cannot be audited, and four routes to this property were each closed in a separate
+# change whose comment implied the property was shut.
 # A field inside a `class`/`structure ... where` body: indented `name :` (never `:=`, which is a
 # value, and never a tactic line, which is excluded by requiring the block context).
 _FIELD = re.compile(r"^[ \t]{1,6}([A-Za-z][A-Za-z0-9_']*)\s*:(?!=)")
 _BLOCK_OPEN = re.compile(
     r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
-    r"(?:class|structure)\s+([A-Za-z0-9_']+)")
+    r"(?:class|structure)\s+(" + _LEAN_ID + ")")
 
 def type_head(rest):
     """The head symbol of a declaration's TYPE, from the text following its name.
@@ -164,7 +171,7 @@ def _scan_external(name):
         _EXT_CACHE = {}
         rx = re.compile(
             r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
-            r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([A-Za-z_][A-Za-z0-9_'.]*)", re.M)
+            r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+(" + _LEAN_ID + ")", re.M)
         for dp, _, files in os.walk(_MATHLIB):
             for fn in files:
                 if not fn.endswith(".lean"):
@@ -267,7 +274,7 @@ def is_proof(name):
     """Did the KERNEL CHECK A PROOF OF A PROPOSITION for this witness?
 
     This is the semantic question the glyph is about, and the declaration keyword is only a proxy
-    for it — a proxy that was wrong twice, in both directions, before this was measured:
+    for it, so the type is measured rather than inferred:
       * `theorem`/`lemma` — always a proof; Lean enforces it.
       * `def`/`abbrev`/`instance` — a proof **iff its type is Prop-valued**. `hasZeroObject_op` is
         an `instance` of `class HasZeroObject : Prop`, so it IS a proof (verified: a `theorem`
@@ -308,9 +315,8 @@ def is_proof(name):
 
 def link_witness(name):
     _CITED.add(name)
-    # ⚠ Through `_entry`, never `INDEX.get(name)`. The index is keyed FULLY QUALIFIED, so a bare
-    # cited name misses it entirely - which silently unlinked every local witness and dumped them
-    # all into UNRESOLVED. `_entry` does the suffix resolution and the ambiguity check.
+    # ⚠ Through `_entry`, never `INDEX.get(name)`: the index is keyed FULLY QUALIFIED, so a bare
+    # cited name misses it. `_entry` does the suffix resolution and the ambiguity check.
     e = _entry(name)
     if e and e[0].endswith(".lean"):
         return f"[`{name}`]({e[0]})"
@@ -327,11 +333,10 @@ def witness_note(name):
     "constructed data / Lean does not admit `theorem` for it" is FALSE of them in general.
     Measured 2026-08-13: `class HasZeroObject : Prop` (Mathlib `ZeroObjects.lean:174`), so
     `hasZeroObject_op` is an `instance` that IS a proof of a proposition - and Mathlib declares
-    `theorem hasZeroObject_unop` eight lines below it. The same over-generalization was killed one
-    category narrower a round earlier, for class fields: `unique_fp` is `Prop`-valued and
-    `q2_unique_fp` (`Computability/SelfApp.lean:143`) proves exactly it.
-    **Both times the defect was inferring a semantic fact from a syntactic one.** Say what was
-    read; let the legend give the usual reason, fenced as usual rather than universal.
+    `theorem hasZeroObject_unop` eight lines below it.
+    The same holds of a class field: `unique_fp` is `Prop`-valued and `q2_unique_fp`
+    (`Computability/SelfApp.lean:143`) proves exactly it.
+    **Never infer a semantic fact from a syntactic one.** Say what was read.
     The class-field note is the one interpretive line kept, because it holds structurally whatever
     the universe: a field is a precondition, and the kernel checks each instance supplies it."""
     k = witness_kind(name)
@@ -466,12 +471,9 @@ def leading_witness(txt):
     name = m.group(1)
     if witness_kind(name) is not None:
         return name
-    # FAIL CLOSED on the MAP path too. This used to return None here and fall through to `✓` —
-    # the strongest mark, on no evidence — without ever reaching UNRESOLVED.
-    # ⚠ The `_decl_shaped` guard that used to sit here left the hole HALF open: it rejects
-    # all-lowercase names, so `Bogus_zzz` was caught and plain `bogus` still rendered `✓`. A
-    # claim-bearing cell's leading token IS its witness whatever it looks like, so register it
-    # unconditionally. (`∅` cells never reach here - they carry a reason, not a witness.)
+    # FAIL CLOSED on the MAP path. A claim-bearing cell's leading token IS its witness whatever
+    # it looks like, so register it unconditionally - do NOT gate on name shape, which leaves the
+    # hole open for lowercase names. (`∅` cells never reach here: they carry a reason.)
     UNRESOLVED.append(name)
     return None
 
@@ -500,7 +502,7 @@ def cell_mark(w, key=None):
             # ⚠ THE PROPERTY, not one route to it. `leading_witness` registers an unresolved NAME,
             # but a claim-bearing cell whose text does not begin with an identifier at all yielded
             # no name, so nothing was registered and `✓` — the strongest mark — was emitted with
-            # nothing read. Third route to the same hole; the first two are recorded there.
+            # nothing read.
             UNRESOLVED.append(f"<no leading identifier: {txt[:40]!r}>")
         if name and not is_proof(name):
             return "≝" + ("*" if st == "cond" else "")
@@ -557,9 +559,8 @@ def render_cell_details():
                 txt = parts[1] if len(parts) > 1 else ""
             else:
                 st, txt = classify(v)
-                # ONE source of truth for the glyph. This used to recompute `GLYPH[st]` here, so the
-                # map said ≝ and this block said ✓ for the same cell - the page refuting itself on
-                # every cell the kind-derivation touched. Both gates found it independently.
+                # ONE source of truth for the glyph: `cell_mark`. Recomputing it here makes the
+                # map and this block disagree on the same cell.
                 g = cell_mark(v, k)
                 # A `∅` cell carries a REASON, not a witness - never annotate a kind there.
                 if st != "na":
@@ -739,9 +740,8 @@ def main():
         cell_details=render_cell_details(),
         diagonal_family=render_diagonal_family(),
     )
-    # ⚠ CHECK BEFORE WRITING. The guard used to sit after `f.write(page)`, so a page whose marks
-    # could not be justified was written to disk and only then did the process exit 1 — the exit
-    # code failed closed while the artifact failed open, which is the worse half.
+    # ⚠ CHECK BEFORE WRITING. A guard after `f.write(page)` fails closed on the exit code and
+    # OPEN on the artifact, which is the worse half.
     if UNRESOLVED or UNRESOLVED_HEADS:
         if UNRESOLVED:
             print("UNRESOLVED witnesses - kind not derivable: " + ", ".join(sorted(set(UNRESOLVED))))
@@ -775,11 +775,9 @@ def main():
               + ", ".join(f"{n} [{witness_kind(n)}]" for n in nonthm))
     else:
         print("all cited witnesses are theorems/lemmas")
-    # ⚠ Says only that every cited witness RESOLVED. It must not claim how each mark was reached:
+    # ⚠ Says only that every cited witness RESOLVED. It must NOT claim how each mark was reached:
     # the stated type is consulted for a minority of witnesses (a `theorem` short-circuits on the
-    # keyword, a class field short-circuits before the type is read). Round 3 deleted that claim
-    # from the page and it reappeared HERE, in the same commit - fix-the-site-not-the-class, and
-    # this line ships in the public `scripts/` mirror.
+    # keyword, a class field short-circuits before the type is read).
     print("all cited witnesses resolved against the Lean source")
 
 if __name__ == "__main__":
