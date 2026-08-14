@@ -23,52 +23,248 @@ from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH, dyn_glyph
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at repo root (relative links resolve from here)
 
-# --- Resolver: name -> "ZeroParadox/rel/path.lean" by scanning the actual Lean source ---
+# --- Resolver: name -> (path, KIND), both scanned from the actual Lean source ---
+# The KIND is DERIVED, never asserted.  A witness is not always a theorem: a property a structure
+# is DEFINED BY is carried by a class field, which the class ASSUMES and each instance discharges.
+# That used to be invisible - the legend said "witness theorem", the one field-witness was
+# hand-linked through an override table, and its kind survived only as a Python comment - so a
+# reader checking the witness against the legend found a mismatch that was not actually an error.
+# Now the scanner reports the KEYWORD it found and the page prints exactly that.
+# ⚠ The keyword is a SYNTACTIC proxy. Do not infer the type's universe from it anywhere in this
+# file: `def` and `instance` inhabit `Prop` as freely as `Type`. See `witness_note`.
 _DECL = re.compile(
     r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
-    r"(?:theorem|lemma|def|abbrev|instance|structure)\s+([A-Za-z0-9_']+)")
+    r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([A-Za-z0-9_']+)")
+# A field inside a `class`/`structure ... where` body: indented `name :` (never `:=`, which is a
+# value, and never a tactic line, which is excluded by requiring the block context).
+_FIELD = re.compile(r"^[ \t]{1,6}([A-Za-z][A-Za-z0-9_']*)\s*:(?!=)")
+_BLOCK_OPEN = re.compile(
+    r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
+    r"(?:class|structure)\s+([A-Za-z0-9_']+)")
+
+def type_head(rest):
+    """The head symbol of a declaration's TYPE, from the text following its name.
+
+    Finds the first `:` at bracket depth 0 (so binders `{X : C}` / `(h : P)` / `[Inst]` are
+    skipped) and returns the first identifier after it. Returns None when the declaration gives
+    no explicit type (e.g. `abbrev IsInitial (X : C) := …`), which is itself informative: a
+    declaration with no stated type is not a stated proposition."""
+    depth = 0
+    for i, ch in enumerate(rest):
+        if ch in "([{":
+            depth += 1
+        elif ch in ")]}":
+            depth -= 1
+        elif ch == ":" and depth == 0:
+            if rest[i + 1:i + 2] == "=":        # `:=`, the value, not a type ascription
+                return None
+            m = re.match(r"\s*([A-Za-z_][A-Za-z0-9_'.]*)", rest[i + 1:])
+            return m.group(1) if m else None
+    return None
 
 def scan_declarations():
+    """name -> (repo-relative path, kind, type head).  Kind is a Lean keyword or 'class field of X'."""
     index = {}
     for dp, _, files in os.walk(os.path.join(REPO_ROOT, "ZeroParadox")):
         for fn in files:
-            if fn.endswith(".lean"):
-                full = os.path.join(dp, fn)
-                rel = os.path.relpath(full, REPO_ROOT).replace(os.sep, "/")
-                try:
-                    with open(full, encoding="utf-8") as f:
-                        for line in f:
-                            m = _DECL.match(line)
-                            if m:
-                                index.setdefault(m.group(1), rel)
-                except Exception:
-                    pass
+            if not fn.endswith(".lean"):
+                continue
+            full = os.path.join(dp, fn)
+            rel = os.path.relpath(full, REPO_ROOT).replace(os.sep, "/")
+            owner = None                      # the class/structure whose body we are inside
+            try:
+                with open(full, encoding="utf-8") as f:
+                    for line in f:
+                        m = _DECL.match(line)
+                        if m:
+                            index.setdefault(m.group(2),
+                                             (rel, m.group(1), type_head(line[m.end():])))
+                            b = _BLOCK_OPEN.match(line)
+                            owner = b.group(1) if (b and line.rstrip().endswith("where")) else None
+                            continue
+                        if owner:
+                            if line.strip() and not line[:1].isspace():
+                                owner = None          # dedent ends the body
+                            else:
+                                fm = _FIELD.match(line)
+                                if fm:
+                                    index.setdefault(fm.group(1),
+                                                     (rel, f"class field of {owner}",
+                                                      type_head(line[fm.end() - 1:])))
+            except Exception:
+                pass
     return index
 
 INDEX = scan_declarations()
 UNRESOLVED = []
-OVERRIDDEN = []
+_CITED = set()          # every witness name this build actually rendered
 
-# Manual overrides for witnesses that are NOT top-level declarations (so the scanner cannot
-# find them) but DO live in a known local file - e.g. class fields. Kept explicit and reported
-# so a hand-resolved link is never silently indistinguishable from a scanned one.
-FIELD_OVERRIDE = {
-    "unique_fp": "ZeroParadox/Computability/SelfApp.lean",  # class field AbstractSelfApp.unique_fp (SelfApp:69)
-}
+# Kinds that are ordinary proved results; anything else is called out on the page.
+_PROVED = {"theorem", "lemma"}
+
+_MATHLIB = os.path.join(REPO_ROOT, ".lake", "packages", "mathlib", "Mathlib")
+_EXT_CACHE = None
+
+def _scan_external(name):
+    """Resolve a witness declared OUTSIDE ZeroParadox (i.e. in the pinned Mathlib).
+
+    Needed because the kind claim must hold for EVERY cited witness. Without this an external
+    name resolved to nothing and fell through to the strongest mark - a gate that fails OPEN,
+    which is worse than no gate. Scanned lazily and cached: only names the local index missed."""
+    # ⚠ Match the FULL name as written, never the tail after the last dot. Matching the tail
+    # resolved `IsInitial.op` off `MulOpposite.op` in `Algebra/Opposites.lean` — 39 declarations
+    # in the pin share the base name `op`, so the correct answer arrived by filesystem walk order
+    # rather than by derivation, and `Nonsense.op` resolved to `def`. Requiring the full name
+    # fails CLOSED on anything declared inside a `namespace` block instead of guessing.
+    global _EXT_CACHE
+    if _EXT_CACHE is None:                 # built once, lazily, on the first external lookup
+        _EXT_CACHE = {}
+        rx = re.compile(
+            r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
+            r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([A-Za-z_][A-Za-z0-9_'.]*)", re.M)
+        for dp, _, files in os.walk(_MATHLIB):
+            for fn in files:
+                if not fn.endswith(".lean"):
+                    continue
+                try:
+                    with open(os.path.join(dp, fn), encoding="utf-8") as f:
+                        for line in f:
+                            m = rx.match(line)
+                            if m:
+                                _EXT_CACHE.setdefault(
+                                    m.group(2), ("Mathlib", m.group(1), type_head(line[m.end():])))
+                except Exception:
+                    pass
+    return _EXT_CACHE.get(name)
+
+def _entry(name):
+    return INDEX.get(name) or _scan_external(name)
+
+UNRESOLVED_HEADS = []
+HEAD_BY_SUFFIX = []
+
+def _resolve_head(thead):
+    """Resolve a TYPE HEAD, allowing a leading namespace to be stripped.
+
+    ⚠ This is NOT the bare tail-match forbidden for witness names. There, `IsInitial.op` matching
+    any declaration called `op` is wrong - 39 in the pin share that base. Here the dotted form is
+    a namespace-qualified USE of a type (`Limits.IsInitial`) whose declaration site writes the
+    short name, so stripping leading components is the correct lookup. Suffix resolutions are
+    reported at build time so the weaker step is never silent."""
+    e = _entry(thead)
+    if e:
+        return e
+    parts = thead.split(".")
+    for i in range(1, len(parts)):
+        e = _entry(".".join(parts[i:]))
+        if e:
+            HEAD_BY_SUFFIX.append((thead, ".".join(parts[i:])))
+            return e
+    return None
+
+def witness_kind(name):
+    e = _entry(name)
+    return e[1] if e else None
+
+def is_proof(name):
+    """Did the KERNEL CHECK A PROOF OF A PROPOSITION for this witness?
+
+    This is the semantic question the glyph is about, and the declaration keyword is only a proxy
+    for it — a proxy that was wrong twice, in both directions, before this was measured:
+      * `theorem`/`lemma` — always a proof; Lean enforces it.
+      * `def`/`abbrev`/`instance` — a proof **iff its type is Prop-valued**. `hasZeroObject_op` is
+        an `instance` of `class HasZeroObject : Prop`, so it IS a proof (verified: a `theorem`
+        form of it elaborates). `fC_zero_isInitial` is a `def` of `IsInitial`, which unfolds to
+        `IsColimit` — a structure whose first field is the mediating morphism `desc`, so it
+        CARRIES the route and is data; Lean refuses `theorem` for it.
+      * a class field — NOT a proof here whatever its type: the class ASSUMES it and each
+        instance discharges it separately.
+    Decided by one level of indirection: take the witness's type head, then ask whether THAT is
+    itself declared `: Prop`."""
+    e = _entry(name)
+    if e is None:
+        return False
+    _, kind, thead = e
+    if kind in _PROVED:
+        return True
+    if kind.startswith("class field") or kind in ("class", "structure"):
+        return False
+    if thead is None:
+        return False
+    # ⚠ INVERTED IN AN EARLIER ROUND. A witness whose own stated type IS `Prop` is a PREDICATE
+    # DEFINITION (`def IsQuineAtom … : Prop := …`) - nothing was asserted, let alone proved. A
+    # witness that ASSERTS something has type `P` where `P : Prop`, which is the indirection
+    # below. Measured with this function: the old branch scored `IsQuineAtom`, `q2SelfMem`,
+    # `selfMemDerived` and Mathlib's `Monotone` as assertions and would have given them the
+    # strongest mark. Latent only because no live cell leads with a predicate definition.
+    if thead == "Prop":
+        return False
+    t = _resolve_head(thead)
+    if t is None:
+        # Cannot determine what the type is, so cannot claim either mark. Recorded, and the build
+        # refuses to write rather than defaulting - defaulting would silently mark an ASSERTED
+        # result as constructed, which is the direction that misleads.
+        UNRESOLVED_HEADS.append(thead)
+        return False
+    return t[2] == "Prop"
 
 def link_witness(name):
-    path = INDEX.get(name)
-    if path:
-        return f"[`{name}`]({path})"
-    path = FIELD_OVERRIDE.get(name)
-    if path:
-        OVERRIDDEN.append(name)
-        return f"[`{name}`]({path})"
+    _CITED.add(name)
+    e = INDEX.get(name)
+    if e:
+        return f"[`{name}`]({e[0]})"
     UNRESOLVED.append(name)
-    return f"`{name}`"  # not a local declaration (Mathlib, a class field, etc.) - shown, not linked
+    return f"`{name}`"  # not a local declaration (e.g. Mathlib) - shown, not linked
+
+def witness_note(name):
+    """Rendered kind marker, DERIVED from the source. Empty for a plain theorem/lemma.
+
+    ⚠⚠ THE NOTE STATES ONLY THE DECLARATION KEYWORD. It must NOT infer the type's universe.
+    The keyword is a PROXY: `def` and `instance` inhabit `Prop` as freely as `Type`, so
+    "constructed data / Lean does not admit `theorem` for it" is FALSE of them in general.
+    Measured 2026-08-13: `class HasZeroObject : Prop` (Mathlib `ZeroObjects.lean:174`), so
+    `hasZeroObject_op` is an `instance` that IS a proof of a proposition - and Mathlib declares
+    `theorem hasZeroObject_unop` eight lines below it. The same over-generalization was killed one
+    category narrower a round earlier, for class fields: `unique_fp` is `Prop`-valued and
+    `q2_unique_fp` (`Computability/SelfApp.lean:143`) proves exactly it.
+    **Both times the defect was inferring a semantic fact from a syntactic one.** Say what was
+    read; let the legend give the usual reason, fenced as usual rather than universal.
+    The class-field note is the one interpretive line kept, because it holds structurally whatever
+    the universe: a field is a precondition, and the kernel checks each instance supplies it."""
+    k = witness_kind(name)
+    if k is None:
+        return " *(kind not derived - see the build warning)*"
+    # Each branch states the DERIVED FACT first and any reading second, so the sentence is about
+    # THIS witness and asserts no rule over the others. Six gate rounds put every prose-layer
+    # bedrock finding in a universal; a per-cell sentence has no universal to be wrong about.
+    if k in _PROVED or is_proof(name):
+        return "" if k in _PROVED else f" *(an `{k}`, and its type is a proposition - so a proof)*"
+    if k.startswith("class field"):
+        return f" *({k} - assumed by the class, discharged by each instance)*"
+    if k in ("class", "structure"):
+        return f" *(a `{k}` - the requirements bundle itself)*"
+    # ⚠ NEVER "not a proof", and no reading appended either. "it hands over the object itself" was
+    # false of `IsLimit`, whose value is `{ lift, fac := _proof_3, uniq := _proof_4 }` - it carries
+    # proofs alongside the map. State the derived fact and stop.
+    return f" *(a `{k}`, and its type is not a proposition)*"
+
+def annotate_witness(txt):
+    """Append the derived kind to a cell whose text OPENS with its witness name.
+
+    Scoped deliberately: a name appearing mid-sentence is a mention, and a `∅` cell's text is a
+    reason rather than a witness. Only the leading token of a claim-bearing cell is a citation."""
+    m = re.match(r"([A-Za-z][A-Za-z0-9_.']*)", txt or "")
+    if not m:
+        return txt
+    name = m.group(1)
+    if witness_kind(name) is None:      # not `name in INDEX` - external witnesses resolve too
+        return txt
+    note = witness_note(name)
+    return txt[:m.end()] + note + txt[m.end():] if note else txt
 
 def render_witnesses(names):
-    return ", ".join(link_witness(n) for n in names) if names else "*meta (no Lean witness)*"
+    # A plain theorem/lemma renders bare; anything else is marked, and the mark is DERIVED.
+    return ", ".join(link_witness(n) + witness_note(n) for n in names) if names else "*meta (no Lean witness)*"
 
 # --- Reading key 1: slot codes ---
 SLOT_GLOSS = {
@@ -140,7 +336,12 @@ POSITIVE = [
     ("measure", "noun", "a quantity that becomes infinite exactly at ⊥", ["t2_diverges", "addVal_bot"]),
     ("inversion", "verb", "the 0 = ∞ pole: the map z↦1/z swaps 0 and infinity",
      ["rInv_swaps", "inversion_reverses_filtration"]),
-    ("concurrency", "hinge", "the fixed point where least and greatest coincide (operation = result)",
+    # `Statement:` COINCIDENCE - `selfApp_bot_is_both_extremal` proves ⊥ is simultaneously the
+    # LEAST and the GREATEST fixed point of `selfApp`, i.e. both readings of one object at once
+    # (the μ=ν seam). Tag emitted from here because the page is generated: hand-patching the
+    # rendered line would be overwritten on the next build.
+    ("concurrency", "hinge",
+     "the fixed point where least and greatest coincide (operation = result) - `Statement:` COINCIDENCE",
      ["unique_fp", "selfApp_bot_is_both_extremal"]),
     ("self-reference", "hinge", "the self-reproducing / self-containing fixed point (Quine / Kleene)",
      ["kleene_quine_is_bot", "quine_period_is_goedel"]),
@@ -150,12 +351,57 @@ POSITIVE = [
      ["contraction_orbit_tendsto_zero", "t_snap_derived", "c3_irreversible", "fC_no_return"]),
 ]
 
+def leading_witness(txt):
+    """The name a cell OPENS with, if its kind resolves - the cell's actual citation.
+
+    ⚠ Gate on `witness_kind`, NOT on `name in INDEX`. Gating on the local index made every
+    EXTERNAL (Mathlib) witness invisible here, so it fell through to the strongest mark: two live
+    cells rendered `✓` while citing a Mathlib `def` and `instance`. Fail-open, found by the gates."""
+    m = re.match(r"([A-Za-z][A-Za-z0-9_.']*)", txt or "")
+    if not m:
+        return None
+    name = m.group(1)
+    if witness_kind(name) is not None:
+        return name
+    # FAIL CLOSED on the MAP path too. This used to return None here and fall through to `✓` —
+    # the strongest mark, on no evidence — without ever reaching UNRESOLVED.
+    # ⚠ The `_decl_shaped` guard that used to sit here left the hole HALF open: it rejects
+    # all-lowercase names, so `Bogus_zzz` was caught and plain `bogus` still rendered `✓`. A
+    # claim-bearing cell's leading token IS its witness whatever it looks like, so register it
+    # unconditionally. (`∅` cells never reach here - they carry a reason, not a witness.)
+    UNRESOLVED.append(name)
+    return None
+
 def cell_mark(w, key=None):
     # DYN is the directional dynamics column: ↓ inbound · ↑ outbound · ↕ seam (both); trailing * = conditional/inherited.
-    # Every other column is 5-state: ✓ established · ✓* conditional · ✗ refuted · ∅ n/a-structural · ? open.
+    # Every other column: ✓ proved · ≝ definitional · ✗ refuted · ∅ n/a-structural · ? open; trailing * = conditional.
+    #
+    # ⭐ ✓ vs ≝ is DERIVED, never hand-set, and it is a distinction of ENCODING - NOT of status.
+    # ⚠⚠ BOTH MARKS ARE ESTABLISHED RESULTS. `≝` must never be read, or worded, as "unproved" or
+    # "not a proof". `IsInitial X` lives in `Type` because an initiality witness must physically
+    # CARRY the mediating morphism, so `def` is FORCED BY THE SIGNATURE - it is not a gap. Restate
+    # the same content so the type lands in `Prop` and `theorem` returns immediately; measured, it
+    # elaborates: `theorem _ [HasInitial C] : Nonempty (IsInitial (⊥_ C)) := ⟨theInitial⟩`.
+    # The honest distinction is Tim's: does the witness HAND YOU THE CONSTRUCTION, or ASSERT a
+    # proposition? A `def` producing an `IsInitial` gives you the route itself; an `instance` of
+    # `class HasZeroObject : Prop` asserts one exists.
+    # ⚠ build_bottom_matrix.cell() does NOT make this split - it cannot, it never scans the Lean
+    # source. Its printer is dev-side only; BOTTOMELEMENT.md is the rendered artifact.
     if key == "DYN":
         return dyn_glyph(w)
-    return GLYPH[classify(w)[0]]
+    st = classify(w)[0]
+    if st in ("go", "cond"):
+        txt = classify(w)[1]
+        name = leading_witness(txt)
+        if name is None and txt.strip():
+            # ⚠ THE PROPERTY, not one route to it. `leading_witness` registers an unresolved NAME,
+            # but a claim-bearing cell whose text does not begin with an identifier at all yielded
+            # no name, so nothing was registered and `✓` — the strongest mark — was emitted with
+            # nothing read. Third route to the same hole; the first two are recorded there.
+            UNRESOLVED.append(f"<no leading identifier: {txt[:40]!r}>")
+        if name and not is_proof(name):
+            return "≝" + ("*" if st == "cond" else "")
+    return GLYPH[st]
 
 def render_table(rows, headers):
     out = ["| " + " | ".join(headers) + " |", "|" + "---|" * len(headers)]
@@ -188,8 +434,8 @@ def link_in_text(text):
     """Auto-link any decl-shaped token that resolves against the Lean source; leave prose untouched."""
     def repl(m):
         name = m.group(0)
-        if _decl_shaped(name) and (name in INDEX or name in FIELD_OVERRIDE):
-            return link_witness(name)
+        if _decl_shaped(name) and name in INDEX:
+            return link_witness(name)      # a MENTION in prose - no kind note; see annotate_witness
         return name
     return _TOKEN.sub(repl, text or "")
 
@@ -208,7 +454,13 @@ def render_cell_details():
                 txt = parts[1] if len(parts) > 1 else ""
             else:
                 st, txt = classify(v)
-                g = GLYPH[st]
+                # ONE source of truth for the glyph. This used to recompute `GLYPH[st]` here, so the
+                # map said ≝ and this block said ✓ for the same cell - the page refuting itself on
+                # every cell the kind-derivation touched. Both gates found it independently.
+                g = cell_mark(v, k)
+                # A `∅` cell carries a REASON, not a witness - never annotate a kind there.
+                if st != "na":
+                    txt = annotate_witness(txt)
             body = f" - {link_in_text(txt)}" if txt else ""
             out.append(f"- `{k}` {g}{body}")
         out.append("")
@@ -225,7 +477,7 @@ ROSETTA_WITNESSES = [
 ]
 def render_rosetta():
     for w in ROSETTA_WITNESSES:
-        if w not in INDEX and w not in FIELD_OVERRIDE:
+        if witness_kind(w) is None:
             UNRESOLVED.append(w)
     body = """## The short version: concepts that should not coincide, but do
 
@@ -334,17 +586,17 @@ not.*
 
 ## Map - slot × construction
 
-Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` **Lean-verified** - a machine-checked proof, with the witness theorem linked in *Why each cell* below ·
-`✗` refuted (a proved obstruction, also Lean-checked) · `∅` not-applicable by structure (a category
-error - e.g. asking a ν-limit for a μ-generation property - not a gap). A trailing `*` on any mark (`✓*`, `↑*`, `↓*`) means conditional - established via a bridge or inherited from a sibling layer. The last column,
+Where each characterization stands. Most columns are a **claim with a status**, not a checkbox: `✓` the witness states a proposition and the kernel checked it · `≝` **the cell's own sentence in *Why each cell* below says what the witness is** ·
+`✗` refuted (a proved obstruction) · `∅` not-applicable by structure (a category
+error - e.g. asking a ν-limit for a μ-generation property - not a gap). A trailing `*` (`✓*`, `≝*`, `↑*`, `↓*`) means conditional - established via a bridge or inherited from a sibling layer, a separate axis from `✓`/`≝`. The last column,
 **dynamics**, is DIRECTIONAL instead: `↓` inbound (converges *to* ⊥ - a sink), `↑` outbound (departs *from* ⊥
-irreversibly - a source), `↕` both (a seam). (Witnessing theorems, with links to the Lean source, are in the
+irreversibly - a source), `↕` both (a seam). (Witnesses, with links to the Lean source, are in the
 dictionary above.)
 
 {map}
 
 The informative content is in the non-`✓` cells, and splitting them is the point: a `∅`
-is a settled structural fact (a category error, not a gap), a `✗` is news (a proved obstruction), and a `✓*` holds only via a bridge. Two things worth reading off the table:
+is a settled structural fact (a category error, not a gap), a `✗` is news (a proved obstruction), a `✓*` holds only via a bridge, and a `≝` sends you to that cell's sentence. Two things worth reading off the table:
 (1) **generation** (GEN) is the μ / build-up-from-the-floor side, so the ν-bottoms (p-adic, Markov, the TopCat
 point-limit) read `∅` there - a ν-object has no μ-property - and the self-coincident fixed points (Kleene,
 selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the floor generates a *distinct* ceiling.
@@ -384,17 +636,45 @@ def main():
         cell_details=render_cell_details(),
         diagonal_family=render_diagonal_family(),
     )
-    with open(OUT, "w", encoding="utf-8") as f:
+    # ⚠ CHECK BEFORE WRITING. The guard used to sit after `f.write(page)`, so a page whose marks
+    # could not be justified was written to disk and only then did the process exit 1 — the exit
+    # code failed closed while the artifact failed open, which is the worse half.
+    if UNRESOLVED or UNRESOLVED_HEADS:
+        if UNRESOLVED:
+            print("UNRESOLVED witnesses - kind not derivable: " + ", ".join(sorted(set(UNRESOLVED))))
+        if UNRESOLVED_HEADS:
+            print("UNRESOLVED type heads - cannot tell asserted from constructed: "
+                  + ", ".join(sorted(set(UNRESOLVED_HEADS))))
+        print("REFUSING TO WRITE " + OUT)
+        sys.exit(1)
+    if HEAD_BY_SUFFIX:
+        print("type heads resolved by stripping a namespace (weaker step, reported not silent): "
+              + ", ".join(f"{a}->{b}" for a, b in sorted(set(HEAD_BY_SUFFIX))))
+    # newline="\n": Python's Windows default translates to CRLF, but `.gitattributes` declares
+    # `* text=auto eol=lf`, so the committed and freshly-checked-out file is LF. The review-signal
+    # scheme hashes the file ON DISK, so a CRLF working copy hashes differently from the same
+    # content after a clean checkout and every signal would go stale. Measured: 291 CRLF / 0 LF
+    # generated against 0 CRLF / 291 LF committed.
+    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(page)
     print(f"wrote {OUT}")
     print(f"{len(INDEX)} declarations indexed · {len(APOPHATIC)} apophatic · {len(POSITIVE)} positive · "
           f"{len(CONSTRUCTION_GLOSS)} constructions · {len(CELLS)}x{len(SLOTS)} map")
-    if OVERRIDDEN:
-        print("OVERRIDDEN witnesses (linked via FIELD_OVERRIDE, not top-level decls): " + ", ".join(sorted(set(OVERRIDDEN))))
-    if UNRESOLVED:
-        print("UNRESOLVED witnesses (shown un-linked - check external/field/typo): " + ", ".join(sorted(set(UNRESOLVED))))
+    nonthm = sorted(n for n in _CITED if not is_proof(n))
+    if nonthm:
+        # ⚠ Do NOT claim these all render a kind note on the page. `link_in_text` deliberately
+        # suppresses the note where a name is MENTIONED rather than cited as a witness, so most
+        # of this list renders bare. Report what was found, not what the page does with it.
+        print("Cited witnesses that are not theorems/lemmas: "
+              + ", ".join(f"{n} [{witness_kind(n)}]" for n in nonthm))
     else:
-        print("all witnesses resolved (scanned or overridden)")
+        print("all cited witnesses are theorems/lemmas")
+    # ⚠ Says only that every cited witness RESOLVED. It must not claim how each mark was reached:
+    # the stated type is consulted for a minority of witnesses (a `theorem` short-circuits on the
+    # keyword, a class field short-circuits before the type is read). Round 3 deleted that claim
+    # from the page and it reappeared HERE, in the same commit - fix-the-site-not-the-class, and
+    # this line ships in the public `scripts/` mirror.
+    print("all cited witnesses resolved against the Lean source")
 
 if __name__ == "__main__":
     main()
