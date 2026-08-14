@@ -34,7 +34,11 @@ OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at rep
 # file: `def` and `instance` inhabit `Prop` as freely as `Type`. See `witness_note`.
 _DECL = re.compile(
     r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
-    r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([A-Za-z0-9_']+)")
+    r"(theorem|lemma|def|abbrev|instance|structure|class|inductive)\s+([A-Za-z_][A-Za-z0-9_'.]*)")
+# ⚠ The name pattern must ALLOW DOTS, matching `_scan_external`. Forbidding them truncated
+# `def Ordinal.toNatOrdinal` to a phantom `Ordinal` in a vendored file, which then outranked
+# Mathlib's real `Ordinal` on a single hit - no ambiguity, so the multi-hit guard never fired.
+# That guard closes ONE ROUTE (two candidates); this closes the other (one WRONG candidate).
 # A field inside a `class`/`structure ... where` body: indented `name :` (never `:=`, which is a
 # value, and never a tactic line, which is excluded by requiring the block context).
 _FIELD = re.compile(r"^[ \t]{1,6}([A-Za-z][A-Za-z0-9_']*)\s*:(?!=)")
@@ -62,8 +66,37 @@ def type_head(rest):
             return m.group(1) if m else None
     return None
 
+_COMMENT_OPEN = re.compile(r"/-")
+_COMMENT_CLOSE = re.compile(r"-/")
+_NS_OPEN = re.compile(r"^\s*namespace\s+([A-Za-z_][A-Za-z0-9_'.]*)")
+_NS_END = re.compile(r"^\s*end\s+([A-Za-z_][A-Za-z0-9_'.]*)\s*$")
+
+def _ns_track(line, stack):
+    """Maintain the enclosing `namespace` stack so a declaration can be FULLY QUALIFIED.
+
+    Without this the index keys on the bare declared name, and two unrelated declarations sharing
+    one name are indistinguishable - which is exactly the `IsInitial` collision (category theory
+    vs set theory) and the `IsZero` mis-resolution. `section Foo` is deliberately NOT tracked:
+    a named section scopes but does not prefix, so only `namespace` contributes to the name."""
+    m = _NS_OPEN.match(line)
+    if m:
+        stack.extend(m.group(1).split("."))
+        return stack
+    m = _NS_END.match(line)
+    if m:
+        parts = m.group(1).split(".")
+        if stack[-len(parts):] == parts:      # matches a namespace; a section `end` will not
+            del stack[-len(parts):]
+    return stack
+
 def scan_declarations():
-    """name -> (repo-relative path, kind, type head).  Kind is a Lean keyword or 'class field of X'."""
+    """name -> LIST of (repo-relative path, kind, type head). A list, not a single entry, so a
+    name declared in two places can be reported AMBIGUOUS instead of resolved by walk order.
+
+    ⚠ Block comments are skipped. Without that, a Mathlib docstring line reading e.g.
+    "… def the thing …" registers a declaration named `the`, and this pollutes the index with
+    `the`, `a`, `of`, `this`, `that`, `it`, `and`, `we`. That is a fail-WRONG route, not a
+    fail-open one, so the unresolved-witness guard structurally cannot see it."""
     index = {}
     for dp, _, files in os.walk(os.path.join(REPO_ROOT, "ZeroParadox")):
         for fn in files:
@@ -72,13 +105,22 @@ def scan_declarations():
             full = os.path.join(dp, fn)
             rel = os.path.relpath(full, REPO_ROOT).replace(os.sep, "/")
             owner = None                      # the class/structure whose body we are inside
+            depth = 0                         # block-comment nesting
+            ns = []                           # enclosing namespace stack
             try:
                 with open(full, encoding="utf-8") as f:
                     for line in f:
+                        opens, closes = len(_COMMENT_OPEN.findall(line)), len(_COMMENT_CLOSE.findall(line))
+                        was_in = depth > 0
+                        depth = max(0, depth + opens - closes)
+                        if was_in or opens:
+                            continue          # any line inside or opening a block comment
+                        _ns_track(line, ns)
                         m = _DECL.match(line)
                         if m:
-                            index.setdefault(m.group(2),
-                                             (rel, m.group(1), type_head(line[m.end():])))
+                            fq = ".".join(ns + [m.group(2)])
+                            index.setdefault(fq, []).append(
+                                (rel, m.group(1), type_head(line[m.end():]), fq))
                             b = _BLOCK_OPEN.match(line)
                             owner = b.group(1) if (b and line.rstrip().endswith("where")) else None
                             continue
@@ -88,9 +130,10 @@ def scan_declarations():
                             else:
                                 fm = _FIELD.match(line)
                                 if fm:
-                                    index.setdefault(fm.group(1),
-                                                     (rel, f"class field of {owner}",
-                                                      type_head(line[fm.end() - 1:])))
+                                    ffq = ".".join(ns + [fm.group(1)])
+                                    index.setdefault(ffq, []).append(
+                                        (rel, f"class field of {owner}",
+                                         type_head(line[fm.end() - 1:]), ffq))
             except Exception:
                 pass
     return index
@@ -127,23 +170,67 @@ def _scan_external(name):
                 if not fn.endswith(".lean"):
                     continue
                 try:
+                    depth = 0; ns = []
                     with open(os.path.join(dp, fn), encoding="utf-8") as f:
                         for line in f:
+                            opens = len(_COMMENT_OPEN.findall(line))
+                            closes = len(_COMMENT_CLOSE.findall(line))
+                            was_in = depth > 0
+                            depth = max(0, depth + opens - closes)
+                            if was_in or opens:
+                                continue
+                            _ns_track(line, ns)
                             m = rx.match(line)
                             if m:
-                                _EXT_CACHE.setdefault(
-                                    m.group(2), ("Mathlib", m.group(1), type_head(line[m.end():])))
+                                efq = ".".join(ns + [m.group(2)])
+                                _EXT_CACHE.setdefault(efq, []).append(
+                                    ("Mathlib", m.group(1), type_head(line[m.end():]), efq))
                 except Exception:
                     pass
     return _EXT_CACHE.get(name)
 
+AMBIGUOUS = []
+
 def _entry(name):
-    return INDEX.get(name) or _scan_external(name)
+    """The unique declaration for `name`, or None when there is not exactly one.
+
+    ⚠ FAIL CLOSED ON A MULTI-HIT. The witness-name half of this resolver was hardened after
+    `IsInitial.op` matched `MulOpposite.op`, whose own comment records that the right answer had
+    arrived "by filesystem walk order rather than by derivation" - and the same reasoning was not
+    carried here. Measured: `IsInitial` has TWO declaration sites in the pin and the second
+    (`SetTheory/Cardinal/Aleph.lean`) is `Prop`-valued, so a different walk order would have
+    rendered a `≝` cell as `✓` with a provably false sentence beside it; and `IsZero` already
+    resolved to a Lie-theory `def` rather than the category-theory `structure … : Prop`, harmless
+    only because the witness citing it short-circuits first. **A wrong resolution is worse than no
+    resolution**: unresolved refuses to write, wrong ships a confident false sentence."""
+    hits = INDEX.get(name) or _scan_external(name)
+    if not hits:
+        # Cited names are written short (`fC_zero_isInitial`, `Limits.IsInitial`) while the index
+        # is keyed fully-qualified. Accept a SUFFIX match only when exactly one declaration in
+        # either tree ends that way; two candidates means the short name does not identify a
+        # declaration, and guessing is what produced the `IsZero` mis-resolution.
+        suf = "." + name
+        cands = [(k, v) for k, v in INDEX.items() if k == name or k.endswith(suf)]
+        if not cands:
+            _scan_external(name)
+            cands = [(k, v) for k, v in (_EXT_CACHE or {}).items()
+                     if k == name or k.endswith(suf)]
+        flat = [(k, e) for k, vs in cands for e in vs]
+        if not flat:
+            return None
+        if len({k for k, _ in flat}) > 1:
+            AMBIGUOUS.append((name, sorted({k for k, _ in flat})[:4]))
+            return None
+        hits = [e for _, e in flat]
+    if len(hits) > 1:
+        AMBIGUOUS.append((name, [h[0] for h in hits]))
+        return None
+    return hits[0]
 
 UNRESOLVED_HEADS = []
 HEAD_BY_SUFFIX = []
 
-def _resolve_head(thead):
+def _resolve_head(thead, ctx=None):
     """Resolve a TYPE HEAD, allowing a leading namespace to be stripped.
 
     ⚠ This is NOT the bare tail-match forbidden for witness names. There, `IsInitial.op` matching
@@ -151,6 +238,16 @@ def _resolve_head(thead):
     a namespace-qualified USE of a type (`Limits.IsInitial`) whose declaration site writes the
     short name, so stripping leading components is the correct lookup. Suffix resolutions are
     reported at build time so the weaker step is never silent."""
+    # Resolve IN CONTEXT first: a type head is written relative to the enclosing namespace, so
+    # `IsTerminal` inside `CategoryTheory.Limits` means `CategoryTheory.Limits.IsTerminal`, not the
+    # unrelated `…Diagram.IsTerminal`. Without this the bare name is genuinely ambiguous and the
+    # build correctly refuses - which is right, and unhelpful. This is what Lean itself does.
+    if ctx:
+        ns = ctx.split(".")[:-1]
+        for i in range(len(ns), -1, -1):
+            hits = INDEX.get(".".join(ns[:i] + [thead])) or (_EXT_CACHE or {}).get(".".join(ns[:i] + [thead]))
+            if hits and len(hits) == 1:
+                return hits[0]
     e = _entry(thead)
     if e:
         return e
@@ -184,7 +281,8 @@ def is_proof(name):
     e = _entry(name)
     if e is None:
         return False
-    _, kind, thead = e
+    _, kind, thead = e[0], e[1], e[2]
+    ctx = e[3] if len(e) > 3 else None
     if kind in _PROVED:
         return True
     if kind.startswith("class field") or kind in ("class", "structure"):
@@ -199,7 +297,7 @@ def is_proof(name):
     # strongest mark. Latent only because no live cell leads with a predicate definition.
     if thead == "Prop":
         return False
-    t = _resolve_head(thead)
+    t = _resolve_head(thead, ctx)
     if t is None:
         # Cannot determine what the type is, so cannot claim either mark. Recorded, and the build
         # refuses to write rather than defaulting - defaulting would silently mark an ASSERTED
@@ -210,9 +308,14 @@ def is_proof(name):
 
 def link_witness(name):
     _CITED.add(name)
-    e = INDEX.get(name)
-    if e:
+    # ⚠ Through `_entry`, never `INDEX.get(name)`. The index is keyed FULLY QUALIFIED, so a bare
+    # cited name misses it entirely - which silently unlinked every local witness and dumped them
+    # all into UNRESOLVED. `_entry` does the suffix resolution and the ambiguity check.
+    e = _entry(name)
+    if e and e[0].endswith(".lean"):
         return f"[`{name}`]({e[0]})"
+    if e:
+        return f"`{name}`"          # external (Mathlib): resolved for its KIND, but not linkable
     UNRESOLVED.append(name)
     return f"`{name}`"  # not a local declaration (e.g. Mathlib) - shown, not linked
 
@@ -434,7 +537,7 @@ def link_in_text(text):
     """Auto-link any decl-shaped token that resolves against the Lean source; leave prose untouched."""
     def repl(m):
         name = m.group(0)
-        if _decl_shaped(name) and name in INDEX:
+        if _decl_shaped(name) and _entry(name) is not None:
             return link_witness(name)      # a MENTION in prose - no kind note; see annotate_witness
         return name
     return _TOKEN.sub(repl, text or "")
@@ -485,11 +588,11 @@ One self-referential structure - a thing that is its own fixed point - keeps tur
 
 **Proved, with one commitment - the same element.** In any Kleene-structured ZP lattice, the *Quine atom* (a set that is its own only member, set theory / AFA), the *order-bottom* ⊥, and the *algebraic join-identity* are proved to be the **same element** - the three-name core, **axiom-free** (t_exec). The fourth name, the *Kleene fixed point* (a program that reproduces itself, computability), is *joined* to the other three by an explicit structural commitment: the KleeneStructure typeclass names the computational fixed point as the same role - the motivating commitment, not a derived theorem. So the set that is its own only member is identified with the program that prints itself by that commitment, not proved equal. The computational witness rests on Mathlib's recursion theorem, which carries `Classical.choice`; the three-name core needs none.
 
-**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ (addVal_bot); unbounded surprisal, the state with no finite description (t2_diverges); the categorical bottom of each real Mathlib category, an inverse limit or initial object (mc1_correspondence); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski (completions_exhaustive, real_not_equiv_padic). They share a SHAPE (`Statement:` COINCIDENCE, per field's own witness above) - one object carrying both extremal characterisations at once - and a shared shape across distinct structures is a type boundary, never a common theorem. (The order-theoretic form of that shape is `fork_collapse_iff`, choice-free, but none of these satisfies its hypotheses of a complete lattice and a monotone map, so none is an instance of it.) ε₀ is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle).
+**Proved - each field's own floor.** 0 in the 2-adics, where v₂(0) = ∞ (addVal_bot); unbounded surprisal, the state with no finite description (t2_diverges); the categorical bottom of each real Mathlib category, an inverse limit or initial object (fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence); and the case where the coincidence *fails*, ℝ vs ℚ₂ by Ostrowski (completions_exhaustive, real_not_equiv_padic). They share a SHAPE (`Statement:` COINCIDENCE, per field's own witness above) - one object carrying both extremal characterisations at once - and a shared shape across distinct structures is a type boundary, never a common theorem. (The order-theoretic form of that shape is fork_collapse_iff, choice-free, but none of these satisfies its hypotheses of a complete lattice and a monotone map, so none is an instance of it.) ε₀ is co-witnessed with the 2-adic limit and the machine snap (zpm_triangle).
 
 **Mostly proved - a narrow residue argued.** The framework's set-theoretic *commitment* is not *AFA specifically* but a fragment it assumes of its host theory: a unique Quine atom ⊥ = {⊥}. That fragment is a checkable object, the QuineHost typeclass. Foundation-freeness is *forced* by the Quine atom (quineHost_not_wellFounded, axiom-free - a self-loop cannot live in a well-founded world); ordinary set theory (Foundation) is excluded in-kernel about the real theory (zfSet_no_quine_bottom - no set is self-membered under Foundation); Boffa's axiom is set aside because it admits a proper class of Quine atoms rather than one (Boffa 1968), a gap a toy model makes concrete (boffa_fails_unique) rather than an in-kernel fact about Boffa's axiom; and AFA is exhibited as the example meeting all three (afaStructure_isQuineHost). What remains argued is only that a Quine atom and its uniqueness are the right two requirements - a Forced Metatheoretic Commitment with a named falsifier, stronger than a free choice and weaker than a theorem. The set-membership face ⊥ ∈ ⊥ stays metatheoretic; the structural fixed point is machine-checked and axiom-free (t_exec).
 
-**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under rInv in ℚ₂)."""
+**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is the per-domain witnesses fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under rInv in ℚ₂)."""
     return link_in_text(body)
 
 # --- The diagonal family: the self-reference arguments as one fixed point (ZP-R) ---
@@ -590,8 +693,8 @@ Where each characterization stands. Most columns are a **claim with a status**, 
 `✗` refuted (a proved obstruction) · `∅` not-applicable by structure (a category
 error - e.g. asking a ν-limit for a μ-generation property - not a gap). A trailing `*` (`✓*`, `≝*`, `↑*`, `↓*`) means conditional - established via a bridge or inherited from a sibling layer, a separate axis from `✓`/`≝`. The last column,
 **dynamics**, is DIRECTIONAL instead: `↓` inbound (converges *to* ⊥ - a sink), `↑` outbound (departs *from* ⊥
-irreversibly - a source), `↕` both (a seam). (Witnesses, with links to the Lean source, are in the
-dictionary above.)
+irreversibly - a source), `↕` both (a seam). (The dictionary above links the witnesses it cites; each
+map cell's own witness, or the reason it has none, is in *Why each cell* below.)
 
 {map}
 
@@ -604,7 +707,7 @@ selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the flo
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
 0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
 
-**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`) and the structural non-applicabilities (`∅`), not the
+**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`), the structural non-applicabilities (`∅`), and the `≝` cells, whose witness is named in its own sentence - not the
 filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
 **[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
 
@@ -647,6 +750,9 @@ def main():
                   + ", ".join(sorted(set(UNRESOLVED_HEADS))))
         print("REFUSING TO WRITE " + OUT)
         sys.exit(1)
+    if AMBIGUOUS:
+        print("AMBIGUOUS names refused (more than one declaration site, so not resolved): "
+              + ", ".join(f"{n}" for n, _ in sorted(set((a, tuple(b)) for a, b in AMBIGUOUS))))
     if HEAD_BY_SUFFIX:
         print("type heads resolved by stripping a namespace (weaker step, reported not silent): "
               + ", ".join(f"{a}->{b}" for a, b in sorted(set(HEAD_BY_SUFFIX))))
@@ -658,7 +764,7 @@ def main():
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(page)
     print(f"wrote {OUT}")
-    print(f"{len(INDEX)} declarations indexed · {len(APOPHATIC)} apophatic · {len(POSITIVE)} positive · "
+    print(f"{sum(len(v) for v in INDEX.values())} declarations indexed · {len(APOPHATIC)} apophatic · {len(POSITIVE)} positive · "
           f"{len(CONSTRUCTION_GLOSS)} constructions · {len(CELLS)}x{len(SLOTS)} map")
     nonthm = sorted(n for n in _CITED if not is_proof(n))
     if nonthm:
