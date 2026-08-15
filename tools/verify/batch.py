@@ -676,7 +676,19 @@ def check_trigger5(ranges=None):
 # `.lock`, and matched `claude.md` at ANY depth rather than only the root. All four were
 # regressions found by `/rely` on 2026-08-10. **Widening an exclusion list is how coverage dies
 # quietly: nothing fails, a file simply stops being looked at.**
-DATA_EXT = (".pdf", ".png", ".jpg", ".jpeg", ".ico", ".olean")
+DATA_EXT = (".pdf", ".png", ".jpg", ".jpeg", ".ico", ".olean",
+            # ⚠ FONTS ADDED 2026-08-15, and this is the one direction the warning above does NOT
+            # cover. That warning is about WIDENING an exclusion so text quietly stops being
+            # reviewed. This is a genuinely NEW binary type entering the repo: the 13 TTFs were
+            # published with the build scripts, and `reviewable_changed()` counted every one as
+            # prose — so a push would have demanded that an editorial reviewer read, and hash into
+            # its signal, thirteen binary font files.
+            #
+            # Not a judgement call, and not decided here: `.gitattributes` already classifies
+            # `*.ttf`/`*.otf`/`*.woff`/`*.woff2` as `binary`, precisely so git never touches their
+            # bytes. This list now agrees with that independent authority instead of contradicting
+            # it. A font carries no prose; there is nothing for a prose gate to review.
+            ".ttf", ".otf", ".woff", ".woff2")
 
 # Excluded by exact repo-relative path, never by basename at any depth. CLAUDE.md is the operating
 # manual and its own header exempts it from the editorial and adversary gates; the other two are
