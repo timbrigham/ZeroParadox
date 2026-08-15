@@ -86,13 +86,13 @@ def link_in_text(text):
 # The snap is fundamentally a VERB - the action off the floor - so most faces are verbs; the endpoints
 # (what departs, what is reached) are the nouns.
 IS_FACES = [
-    ("theorem", "the *forced* transition off ⊥ into the minimum non-⊥ state: the join c₀ ∨ c₁ = c₁ is a valid transition, and c₀, c₁ are provably distinct in both directions. AX-1 (the Binary Snap) is no longer an axiom, it is derived",
+    ("theorem", "the *derived* (not assumed) transition off ⊥ into the minimum non-⊥ state - derived, which is a claim about its provenance and not that it is taken: the join c₀ ∨ c₁ = c₁ is a valid transition, and c₀, c₁ are provably distinct in both directions. AX-1 (the Binary Snap) is no longer an axiom, it is derived",
      ["t_snap_derived"]),
     ("verb", "*one-way*: the departure from ⊥ does not reverse. No join can return to a strictly lower state (algebraic form), and the 2-adic and Kleisli faces prove the same irreversibility topologically and categorically",
      ["t_snap_irreversible", "c3_irreversible", "fC_no_return"]),
-    ("verb", "a *change of frame*, valuation face (probe): the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
+    ("verb", "a chart-reading of the LIMIT - `Statement:` INVERSION, `Reading:` INVERSION and conjectural, since no snap transition appears in the statement - valuation face: the same ω-tower's encodings descend to the 2-adic floor 0 = ⊥ (the ascent to ε₀ resolving onto a new bottom ⊥ₙ₊₁) and, through the Riemann-sphere inversion that swaps 0 ↔ ∞, rise to ∞. The inversion is the passage between the two charts",
      ["snap_is_frameflip", "snap_frameflip_tower_tendsto_infty"]),
-    ("verb", "a *change of frame*, category face (probe): the categorical seam realizes the same frame-flip as an op-self-dual zero object of the module category ModuleCat ℂ - initial and terminal at once, with the op-duality frame-change swapping the two",
+    ("verb", "a chart-reading of the SEAM (the seam is what the frame-flip FIXES, not a flip, and no snap appears), category face: the categorical seam is an op-self-dual zero object of the module category ModuleCat ℂ - initial and terminal at once, with the op-duality frame-change swapping the two",
      ["catseam_is_frameflip"]),
     ("verb", "a *change of frame*, order-theoretic universal (choice-free): order-duality swaps the fork's two closures (least fixed point ↔ greatest fixed point), and the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point. This is the standard lfp/gfp duality, bundled - the domain-independent shape the valuation and category faces realize concretely",
      ["fork_is_frameflip", "fork_collapse_iff"]),
@@ -102,7 +102,7 @@ IS_FACES = [
      ["exp_lt_term", "omegaPow_no_fixedpoint", "tower_strictMono"]),
     ("noun", "the first step reached, *co-witnessed*: ε₀ stands with the 2-adic limit and the machine snap in one triangle",
      ["zpm_triangle"]),
-    ("noun", "*what departs*: the floor the snap leaves - the three-name identity (Quine atom = order-bottom ⊥ = join-identity, axiom-free), extended to the Kleene self-reproducing fixed point",
+    ("noun", "*what departs*: the floor the snap leaves - the three-name identity (Quine atom = order-bottom ⊥ = join-identity, axiom-free); the Kleene fixed point is joined to it by a class field, not by this theorem",
      ["t_exec", "t_comp", "kleene_quine_is_bot"]),
 ]
 
@@ -116,30 +116,36 @@ IS_NOT = [
      []),
     ("*dependent on a snap-specific axiom*. T-SNAP is derived from the bottom axiom A4 (the join identity ∀ x, ⊥ ∨ x = x) and the framework's computational commitments. No snap axiom appears anywhere in the development",
      ["t_snap_derived"]),
-    ("*proved to be a choice-free minimal first step*. The from-below snap on ordinal notations is choice-free, but ε₀ as the least fixed point via the syntax-to-semantics bridge (`tower_NF`) inherits `Classical.choice`. Whether the minimality is choice-free at the notation level is open",
-     []),
+    ("*proved to be a choice-free minimal first step*. ε₀ is the least fixed point of ω^· - that minimality is proved classically. What remains open is only its *choice-free* form at the ordinal-notation level: the from-below ascent on notations is choice-free, but ε₀-as-least-fixed-point currently routes through the syntax-to-semantics bridge (`tower_NF`), which inherits `Classical.choice`",
+     ["epsilonZero_eq_nfp"]),
 ]
 
 # --- The Boundary Map: the same results re-cut by FIELD.  (field, verdict, mechanism-or-wall, [witnesses]) ---
-# Per-field verdict on the snap: mandatory (and by what native mechanism) or walled (and against what obstruction).
-# The word "forcing" is deliberately avoided (it reads as Cohen forcing to a set theorist); the snap is "mandatory".
+# Per-field verdict on the snap: AVAILABLE (and by what native mechanism) or WALLED (and against what obstruction).
+# The word "forcing" is deliberately avoided (it reads as Cohen forcing to a set theorist).
+# CORRECTED 2026-07-31: the verdict used to be "Mandatory", which asserts OCCURRENCE - and no face
+# establishes that. Occurrence is a commitment everywhere (Order/Snap.lean's tsnap_holds_but_nothing_moves
+# proves T-SNAP holds in a model where nothing moves; Information/Surprisal.lean's l_inf docstring is the
+# designated honest stopping point). The valuation and ordinal rows in particular asserted exactly what
+# Valuation/Padic.lean and Ordinal/Gentzen.lean retracted the same day. What differs per field is whether
+# the snap is available or blocked, and only the reals are blocked - provably.
 BOUNDARY_MAP = [
-    ("computability", "**Mandatory**",
-     "a genuine self-reference fixed point - a machine run on its own code, whose halting is undecidable, so ⊥ cannot describe its own escape",
+    ("computability", "**Available**",
+     "a genuine self-reference fixed point - a machine run on its own code, whose halting is undecidable, so no finite description settles what it does",
      ["self_halting_undecidable", "computability_face_fixedPoint"]),
-    ("valuation (p-adic)", "**Mandatory**",
+    ("valuation (p-adic)", "**Available**",
      "the ultrametric sends the floor to v(0) = ⊤, and the doubling dynamics contracts every starting law onto that floor",
      ["addVal_bot", "attracting_attractor"]),
-    ("proof theory (ordinals)", "**Mandatory, and minimal**",
+    ("proof theory (ordinals)", "**Available, and minimal**",
      "ε₀ is the proof-theoretic ordinal of PA; the ω-tower climbs from below choice-free, ε₀ is the least fixed point of α ↦ ω^α, and the tower is cofinal in it (the from-below climb is choice-free; the least-fixed-point and cofinality facts use classical logic)",
      ["tower_strictMono", "epsilonZero_eq_nfp", "epsilonZero_le_fixedPoint", "fundamentalSeq_cofinal"]),
-    ("information", "**Mandatory**",
-     "surprisal is unbounded at the floor - the bottom carries no finite description to stay at",
+    ("information", "**Available**",
+     "surprisal is unbounded at the floor - the bottom has no finite description, so nothing external holds it in place",
      ["info_bottom_diverges"]),
-    ("category", "**Mandatory, one-way**",
+    ("category", "**Available, one-way**",
      "the initial object has a unique morphism out to every object and none back; ⊥ is a pure source, not a round trip",
      ["t2_universal_constituent", "t4_chains_forward_only"]),
-    ("order / set theory", "**Mandatory** (choice-free spine)",
+    ("order / set theory", "**Available** (choice-free spine)",
      "the fork collapses to the diagonal fixed point exactly when the map has a unique fixed point, and the self-containing ⊥ = {⊥} realizes it. The field snaps form one family (MC-1); the reading that they are numerically one object is retired as ill-typed, the members provably distinct",
      ["fork_collapse_iff", "selfMem_eq_singleton_bot"]),
     ("real numbers", "**Walled - the snap fails**",
@@ -150,11 +156,13 @@ BOUNDARY_MAP = [
 def render_boundary_map():
     intro = """## The boundary map
 
-The dictionary above sorts the snap by *aspect* - what it is, what it does. This section re-cuts the same results by *field*. Walk into any one of the framework's domains and ask a single question: **is the departure from ⊥ mandatory here, or is it walled?** Every cell has a verdict; nothing is left merely posited.
+The dictionary above sorts the snap by *aspect* - what it is, what it does. This section re-cuts the same results by *field*. Walk into any one of the framework's domains and ask a single question: **is the departure from ⊥ available here, or is it walled?** Every cell has a verdict; nothing is left merely posited.
 
-The pattern is worth stating plainly. The self-referential *shape* - the diagonal fixed point - recurs across every face, but the faces are not one object across them - they are one **family** (MC-1): the numerical identity is retired as ill-typed and the members are provably distinct. What is mandatory across almost every field is the *snap itself*, and each field compels it by its own native mechanism. One field is the telling exception: in the real numbers the snap provably fails, and the failure is a theorem.
+**Available does not mean it happens.** No field in this table establishes that the snap *occurs* - that is a framework commitment, not a theorem, and tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. What each row records is that the field's own structure supplies the ingredients and raises no obstruction. One row is different in kind: in the reals the snap is provably blocked.
 
-**Two notions, kept apart.** There is a narrower, stronger one - a genuine Lawvere fixed point, self-application with no escape - and it is walled across almost every field: Cantor forbids the Set-level witness for any nontrivial total type (nontrivial_lattice_no_witness, q2_no_witness), so only the computability face carries a genuine one (computability_face_fixedPoint, in the effective category). The snap is mandatory far more widely than that fixed point is genuine. "The Lawvere fixed point is genuine in only one field" (read off the Lawvere register) and "the snap is mandatory across almost every field" (read off the table below) are both true - they measure different things. One shared technique; a different procedure in each field."""
+The pattern is worth stating plainly. The self-referential *shape* - the diagonal fixed point - recurs across every face, but the faces are not one object across them - they are one **family** (MC-1): the numerical identity is retired as ill-typed and the members are provably distinct. What is available across almost every field is the *snap itself*, each by its own native mechanism. One field is the telling exception: in the real numbers the snap provably fails, and the failure is a theorem. Every row here cites machine-checked results; what singles out the reals is that theirs records an *obstruction* where the others record a *mechanism*.
+
+**Two notions, kept apart.** There is a narrower, stronger one - a genuine Lawvere fixed point, self-application with no escape - and it is walled across almost every field: Cantor forbids the Set-level witness for any nontrivial total type (nontrivial_lattice_no_witness, q2_no_witness), so only the computability face carries a genuine one (computability_face_fixedPoint, in the effective category). The snap is available far more widely than that fixed point is genuine. "The Lawvere fixed point is genuine in only one field" (read off the Lawvere register) and "the snap is available across almost every field" (read off the table below) are both true - they measure different things. One shared technique; a different procedure in each field."""
     table = render_table(
         [[field, verdict, mech, render_witnesses(ws)] for (field, verdict, mech, ws) in BOUNDARY_MAP],
         ["field", "the snap here is...", "by what mechanism, or against what wall", "witness (links to Lean source)"])
@@ -164,9 +172,9 @@ The pattern is worth stating plainly. The self-referential *shape* - the diagona
 def render_rosetta():
     body = """## The short version: the snap, tiered by confidence
 
-The snap is the framework's one theorem - the forced, one-way departure from ⊥ into the first structured state ε₀ - and its central *action*. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
+The snap is the framework's one theorem - the one-way departure from ⊥ into the first structured state ε₀ - and its central *action*. Everything provable is checkable: clone the repo and run `#print axioms <name>`.
 
-**Proved - the snap is forced, and adds no axiom.** T-SNAP (t_snap_derived): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. The Binary Snap that earlier layers posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
+**Proved - the snap is DERIVED rather than assumed, and adds no axiom.** T-SNAP (t_snap_derived): the transition ⊥ → ε₀ (the minimum non-⊥ state) is a derived consequence of the bottom axiom A4 and the framework's computational commitments, not an assumption. **"Derived" is a claim about where the transition comes from, not that it is taken:** T-SNAP constrains the SHAPE of the transition and the same file's tsnap_holds_but_nothing_moves proves it holds where nothing moves. Occurrence is a commitment. The Binary Snap that earlier layers posited as AX-1 is a theorem; no snap-specific axiom appears anywhere.
 
 **Proved - the snap is one-way.** It does not reverse: no join returns to a strictly lower state (t_snap_irreversible, algebraic), and the same irreversibility is proved topologically in the 2-adics (c3_irreversible) and categorically in the probability functor (fC_no_return). ⊥ is a source, not a round trip.
 
@@ -176,9 +184,9 @@ The snap is the framework's one theorem - the forced, one-way departure from ⊥
 
 **Proved - a wall: the snap is not one mechanism across categories.** The per-domain frame-flips share a shape, not a single categorical map. In Set (all endofunctions) no nontrivial total type carries a Lawvere fixed-point witness - Cantor forbids it - so the lattice and 2-adic faces are provably not Set-level Lawvere instances (nontrivial_lattice_no_witness, q2_no_witness); their ⊥ is a proved fixed point of its own self-map (q2_unique_fp, selfApp_fp_set_eq_singleton), carrying the diagonal shape but not a genuine Set-level Lawvere instance. The computability face, by contrast, IS a genuine recursion fixed point (computability_face_fixedPoint, Kleene / Rogers) - but it lives in the effective category, where the fixed-point-free diagonal is not computable. Heterogeneous categories, heterogeneous verdicts: what unifies them is the diagonal shape, not one mechanism. The universality that holds is order-theoretic (the fork), not categorical - a proved obstruction.
 
-**The family (proved), the identity (retired), minimality (open).** The domain snaps form one **family** (MC-1): per-domain membership is proved, the reading that they are *numerically one* transition is retired as ill-typed (a type boundary, not a theorem), and the members are provably distinct. Separately, whether ε₀-as-least-fixed-point is choice-free at the notation level is open: the syntax-to-semantics bridge tower_NF inherits `Classical.choice`.
+**The family (proved), the identity (retired), choice-free minimality (open).** The domain snaps form one **family** (MC-1): per-domain membership is proved, the reading that they are *numerically one* transition is retired as ill-typed (a type boundary, not a theorem), and the members are provably distinct. Separately, ε₀-as-least-fixed-point is proved classically; whether it can be shown choice-free at the notation level is open: the syntax-to-semantics bridge tower_NF inherits `Classical.choice`.
 
-**A note on the frame-change faces.** snap_is_frameflip, catseam_is_frameflip, and fork_is_frameflip are experimental probes in the bottom-diagram mapping campaign, not a finalized layer. The theorems build and are checkable, and they compose known results (no novelty is claimed); the abstract cross-domain statement "the snap ⊥ → ε₀ IS the change of point of view" remains a conjecture. The formal write-up is [ZP-Q The Frame-Change](ZP-Q_The_Frame_Change.pdf)."""
+**A note on the frame-change faces.** snap_is_frameflip, catseam_is_frameflip, and fork_is_frameflip are proved theorems that compose known results (no novelty is claimed); the per-domain frame-flips and the order-theoretic universal hold. What remains a conjecture is only the abstract cross-domain statement "the snap ⊥ → ε₀ IS the change of point of view" - that the faces are literally one change of frame (a type boundary). The formal write-up is the finalized document [ZP-Q The Frame-Change](ZP-Q_The_Frame_Change.pdf) (see register.md for the current version). Note the scope: the DOCUMENT is finalized; the three Lean files above are still marked experimental probes in their own headers, and `SnapFrameChange.lean` carries the cross-domain claim as an explicit open conjecture. "Finalized" refers to the write-up, not to the Lean support."""
     return link_in_text(body)
 
 PAGE = """# The Binary Snap (⊥ → ε₀) - Dictionary and Map
@@ -193,9 +201,9 @@ For the framework's *object*, the bottom element ⊥, see its companion referenc
 
 ## What this is
 
-This is a **reference** for the framework's central transition, the **snap** - the forced move off the bottom element ⊥ into the first structured state, ε₀. It is the companion to [The Bottom Element](BOTTOMELEMENT.md): that page maps the *object* ⊥ (the noun); this page maps the *transition* off it (the verb). Where the bottom dictionary is mostly nouns, this one is mostly verbs - the snap is an action.
+This is a **reference** for the framework's central transition, the **snap** - the one-way move off the bottom element ⊥ into the first structured state, ε₀. It is the companion to [The Bottom Element](BOTTOMELEMENT.md): that page maps the *object* ⊥ (the noun); this page maps the *transition* off it (the verb). Where the bottom dictionary is mostly nouns, this one is mostly verbs - the snap is an action.
 
-It is a **beginning, not a resolution.** What is *proved* is that the snap is forced, one-way, takes its first step from below, realizes a frame-change in each domain, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the first step's minimality. The frame-change faces are experimental probes; the abstract "the snap IS the change of frame" is a conjecture, written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
+It is a **beginning, not a resolution.** What is *proved* is that the snap is derived rather than assumed, one-way, takes its first step from below, and that the domain snaps form one **family** (MC-1, membership proved per domain); what is *retired* is the reading that they are numerically one object (ill-typed - the members are provably distinct); and what stays *open* is the choice-freeness of the first step's minimality. The frame-change faces are proved theorems that compose known results, so no new theorem is claimed there; what stays a conjecture is only the abstract cross-domain reading - that they are literally one change of frame (a type boundary) - written up in [ZP-Q](ZP-Q_The_Frame_Change.pdf).
 
 > **See it - [The Snap Loop](snap-loop.html).** The snap-arc ⊥ → ε₀ as one interactive 2-adic loop: a single discrete step of ε₀ away from bottom, then a return to bottom (a new successor null). Floor and ceiling are both ⊥; ε₀ is the first step from bottom, opening the gap between them - never a bottom and never 0. It maps the trajectory as a whole, not the route between - that runs through internal state with no external description. Hover any point for the checkable Lean witness.
 
@@ -209,7 +217,7 @@ It is a **beginning, not a resolution.** What is *proved* is that the snap is fo
 
 ### The snap is (positive handles, with witnesses)
 
-The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it joins) or what the snap *does* (**verb** - the action itself). Most are verbs; that is the point. *The frame-change rows marked "(probe)" and the order-theoretic universal are experimental - the theorems are checkable, the abstract cross-domain reading is a conjecture.*
+The handles sort by **aspect**: what the snap *is* (**noun** - the endpoints it joins) or what the snap *does* (**verb** - the action itself). Most are verbs; that is the point. *(The frame-change is the POLE EXCHANGE - the bottom read as both 0 and infinity. Whether the snap is an instance of that exchange is ZP-Q's open conjecture, not a settled identification either way; see ZP-Q and the declaration docstrings.)* *The per-domain frame-flips and the order-theoretic universal are proved theorems, written up in ZP-Q (The Frame-Change); they compose known results, so no new theorem is claimed. Only the abstract cross-domain reading - that these are literally one change of frame - is a conjecture (a type boundary).*
 
 {is_faces}
 

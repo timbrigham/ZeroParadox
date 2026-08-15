@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC05 — the p-adic floor #3 as a dynamical attractor
+# The p-adic floor #3 as a dynamical attractor
 
 ## Engineer's Take
 
@@ -21,8 +21,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file tests **TC05**, a candidate recharacterization of the p-adic bottom (#3, the snap floor
-`{0} = ⋂ q2Ball n ⊆ Q₂`). In `ZPH_TopFunctor` #3 appears as a **ν-style limit**: the intersection of
+This file tests a candidate recharacterization of the p-adic bottom (#3, the snap floor
+`{0} = ⋂ q2Ball n ⊆ Q₂`). In `ZeroParadox/Valuation/TopFunctor.lean` #3 appears as a **ν-style limit**: the intersection of
 a shrinking inverse system of clopen balls. The claim under test here is that the *same* floor `0` is
 **also** a global dynamical attractor — the orbit of the **doubling map** `x ↦ 2·x` converges to `0`
 from *every* starting point in `Q₂`. If true, this is a candidate bridge toward #2 (the
@@ -57,7 +57,7 @@ What the Lean proves (load-bearing, in the statements):
 **Honest scope (interpretation, NOT proved here).** The "candidate bridge toward #2" is interpretation:
 this file shows #3 is an attractor of a *deterministic ℚ₂-linear* map, whereas #2 is the attractor of a
 *stochastic* map on a simplex. No functor or measure-preserving comparison between the two dynamical
-systems is built — that edge remains OPEN. TC05 establishes only that #3 *carries an attractor
+systems is built — that edge remains OPEN. This file establishes only that #3 *carries an attractor
 structure*, putting it in the same descriptive vocabulary as #2; it does not connect the two systems.
 -/
 
@@ -96,7 +96,7 @@ theorem doubling_orbit_tendsto_zero (x : Q₂) :
 /-- The attractor is genuinely a fixed point of the doubling map: `2 · 0 = 0`. -/
 theorem doubling_zero_isFixed : (2 : Q₂) * 0 = 0 := mul_zero 2
 
-/-- The `ZPH_TopFunctor` ν-limit floor as a bare set equation, re-exported for convenience:
+/-- The `ZeroParadox/Valuation/TopFunctor.lean` ν-limit floor as a bare set equation, re-exported for convenience:
     `⋂ n, q2Ball n = {0}`. This is purely about the inverse-limit floor — it carries **no**
     dynamical content (it is just `fB_bottom_is_limit`). The dynamics/ν-limit *bridge* is the next
     theorem, `orbit_tendsto_into_topfloor`, where the orbit and the floor appear in one statement. -/
@@ -106,7 +106,7 @@ theorem topfloor_singleton :
 
 /-- **The bridge — dynamics meet the ν-limit floor (witnessed in-statement).** For every starting
     point `x`, the doubling orbit `2ⁿ · x` converges to the *unique point* `p` of the
-    `ZPH_TopFunctor` inverse-limit floor `⋂ n, q2Ball n`. Both the orbit (left) and the ν-limit floor
+    `ZeroParadox/Valuation/TopFunctor.lean` inverse-limit floor `⋂ n, q2Ball n`. Both the orbit (left) and the ν-limit floor
     (the hypothesis pinning `p`) appear in the statement, so the identification "#3-as-attractor =
     #3-as-ν-limit" is proved, not narrated: the dynamical limit of every orbit is exactly the point
     cut out by the shrinking-ball inverse system. -/

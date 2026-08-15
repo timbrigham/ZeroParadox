@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree TC25 — the seam diagram-level coincidence (lim = colim at the zero object)
+# The seam diagram-level coincidence (lim = colim at the zero object)
 
 ## Engineer's Take
 
@@ -22,7 +22,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC12/TC13 (`ZPH_MC1_TreeSeam.hilbert_bottom_isZero`) established the **object-level** seam: node #5,
+(`hilbert_bottom_isZero`) established the **object-level** seam: node #5,
 the Hilbert bottom `fD_functor.obj 0 = StateSpace 0`, is a *zero object* of `ModuleCat ℂ` — initial
 (μ) AND terminal (ν). This file asks whether that point-coincidence lifts to a **diagram-level**
 coincidence: do a limit and a colimit land on the same object at the seam?

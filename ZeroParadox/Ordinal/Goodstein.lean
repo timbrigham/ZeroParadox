@@ -11,7 +11,7 @@ The full Goodstein process: write `n` in **hereditary** base `b` (every exponent
 hereditary base `b`, recursively), bump the base `b → b+1` everywhere, subtract 1; iterate. Goodstein's
 theorem: this always reaches 0 — a statement independent of PA (Kirby–Paris 1982).
 
-The proof is the signature ordinal-descent argument, now at full ε₀ strength (`ZPP_WeakGoodstein` is the
+The proof is the signature ordinal-descent argument, now at full ε₀ strength (`ZeroParadox/Ordinal/WeakGoodstein.lean` is the
 ω²-strength stepping stone). The hereditary base-`b` representation, evaluated with `ω` substituted for
 `b` at every level, is the Cantor normal form of an ordinal: `heval b n`. Bumping the base does not
 change this ordinal (`ω` is substituted regardless of the base — `heval_bump`); subtracting 1 strictly

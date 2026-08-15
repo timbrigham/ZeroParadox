@@ -190,8 +190,25 @@ from 0 by a discrete gap — the topological identity of the Snap. -/
 theorem t3_isolation (r : ℝ) (hr : r ≠ 0) : IsClopen (Metric.closedBall (0 : Q₂) r) :=
   t2_closedBall_isClopen 0 r hr
 
-/-- D5: The Minimum Viable Deviation ε₀ = 2^k where k is the maximum 2-adic valuation
-    accessible in the instantiation. Structural role is universal; value is contingent. -/
+/-- D5: The Minimum Viable Deviation, written `2 ^ k` for an integer EXPONENT `k`.
+
+    **Corrected 2026-07-28.** The previous docstring said "`k` is the maximum 2-adic valuation
+    accessible", which contradicts this file's own ball convention `B(0, 2⁻ⁿ)`: a *maximum*
+    valuation gives a *minimum* scale, so the exponent is `k = -v` where `v` is that valuation.
+    `k` is the exponent, `v` is the valuation, and they differ by sign. No semantic change —
+    the definition is unaltered, and `k : ℤ` was always free to be negative.
+
+    Structural role universal; value contingent — contingent on the **chosen exponent `k`**, i.e.
+    on which valuation is taken to be the finest accessible one. That is a normalisation choice,
+    **not** a physical measurement and **not** a dimension: ε₀ is a *position* (`Ordinal.epsilon 0`,
+    Veblen (1,0), the least fixed point of `α ↦ ω^α` — **not** an order-adjacent step above ⊥;
+    see `epsilonZero_tower_lt`) and a position carries no units, exactly
+    as ⊥ carries none. (Corrected 2026-07-29: an earlier revision said "it is dimensionful, so it
+    depends on a choice of units", which imported a magnitude reading of ε₀ and contradicted the
+    same box's own no-physical-claims disclaimer.)
+
+    **Note this definition is inert**: nothing in the development depends on it. It records the
+    framework's parameterization of the snap threshold, not a load-bearing construction. -/
 noncomputable def eps0 (k : ℤ) : ℝ := 2 ^ k
 
 /-! ## Theorem T5 — Q₂ is Totally Disconnected
@@ -239,24 +256,116 @@ theorem c3_irreversible (x : Q₂) (hx : x ≠ 0) :
 The ultrametric property (T1) is the metric expression of non-Archimedean structure.
 C3 (irreversibility) is the positive complement to ZP-F's f_snap_impossible:
 
-- In Archimedean fields (ZP-F): halving is always available, no minimal positive
-  element exists — the snap is impossible.
+- In **any ordered field** (ZP-F), Archimedean or not: halving is always available, so no
+  minimal positive element exists — the snap is **impossible** (`f_snap_impossible`,
+  `axb1_fails_in_ordered_field`). Neither theorem has an Archimedean hypothesis; see the
+  ZP-B / ZP-F classification paragraph further down this docstring.
 - In Q₂ (this file): the ultrametric creates a genuine topological gap at zero
-  (T2, T3, C3) — the snap is forced.
+  (T2, T3, C3) — the snap is **not blocked**, which is a strictly weaker statement.
+
+**⚠ CORRECTED 2026-07-31. This line read "the snap is forced" and that is FALSE**, as
+`ZeroParadox/Reals/OrderedField.lean` (§ "Classification Note", the "ZP-B does NOT force the snap"
+paragraph) states directly: *"ZP-B does NOT force the snap,
+and cannot."* What this file proves is topological — the gap at 0 is clopen (`t3_isolation`)
+and the return across it admits no continuous path (`c3_irreversible`). **Neither yields a
+first step, and no metric result could:** the 2-adic norm values accumulate at 0
+(‖2ⁿ‖₂ = 2⁻ⁿ), so ℚ₂ has no closest non-zero element either. **The first step is AX-B1**, a
+modelling commitment, not a consequence of the 2-adic structure. Two files gave opposite
+answers here for months; `OrderedField.lean` is the one that reasoned it through.
 
 **ZP-B / ZP-F Classification (Ostrowski's theorem):**
 
-Ostrowski's theorem states that every complete valued field extending ℚ is either
-Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p).
+Ostrowski's theorem is about **absolute values on ℚ, classified up to equivalence**: every
+**nontrivial** absolute value on ℚ is equivalent to either a p-adic absolute value or to the standard
+Archimedean (Euclidean) one (`Mathlib/NumberTheory/Ostrowski.lean`,
+`Rat.AbsoluteValue.equiv_real_or_padic`). The framework's own instance is
+`ZeroParadox/Valuation/Ostrowski.lean`'s `completions_exhaustive` — cite that rather than restating
+the theorem.
+
+*(Nontriviality is load-bearing and is stated here deliberately. Mathlib's module **docstring** elides
+it, but the declaration takes `hf_nontriv : f.IsNontrivial` and `completions_exhaustive` carries it as
+`(hf : f.IsNontrivial)`. Quoting the docstring verbatim would reproduce the elision. Corrected 2026-08-01.)*
+
+*(Corrected 2026-08-01. This paragraph previously read: "every complete valued field extending ℚ is
+either Archimedean (isomorphic to ℝ) or non-Archimedean (isomorphic to ℚ_p for some prime p)." That is
+a **different theorem** — about complete fields rather than about ℚ — and it is **false in both
+halves** as written: the complete Archimedean case gives **ℝ or ℂ**, not ℝ alone, and a complete
+non-Archimedean field extending ℚ need not be any ℚ_p. The correct statement was already in the corpus
+at `ZeroParadox/Valuation/Ostrowski.lean` the whole time.)*
+
 ZP-B covers the non-Archimedean case (p = 2, forced by AX-B1 and minimality).
-ZP-F covers the Archimedean case. Together the classification is complete:
-the snap is possible if and only if the field is non-Archimedean.
+ZP-F covers the ordered-field case. **The classification is a statement about where the snap is
+RULED OUT**, not where it is supplied: **ZP-F rules it out in every ordered field** — which is
+what it actually proves, and is wider than the Archimedean completion — and ZP-B removes the
+topological obstruction in ℚ₂. Ultrametric structure is therefore **not sufficient** — that the snap
+actually occurs is carried by AX-B1 together
+with the framework's commitments, never by C3 or T5 alone. **Necessity is NOT asserted here**: the
+contraposition below gives *a first step exists ⟹ not an ordered field*, which is incomparable with
+*⟹ ultrametric* **over valued fields, reading "ultrametric" as the distinguished absolute value —
+the pin stated in full below, and load-bearing: under a bare-field existential reading the comparison
+collapses, since every field carries the trivial ultrametric**. Necessity would hold only after restricting to completions of ℚ, where Ostrowski
+leaves nothing else — a restriction this paragraph does not make. *(Corrected 2026-08-02: this read
+"necessary and not sufficient". The word "necessary" asserted `snap ⟹ ultrametric`, the exact
+implication called incomparable thirteen lines below in this same docstring. It survived because the
+fix that introduced it changed the ADJECTIVE — "non-Archimedean" → "ultrametric" — and left the claim
+wrapped around it standing.)* (An earlier revision of this
+paragraph asserted the biconditional "possible if and only if non-Archimedean". The direction that
+fails is **non-Archimedean ⟹ a first step exists**: ℚ₂ removes the density obstruction but supplies
+no closest nonzero element, so it does not yield the step.)
+
+**What the converse actually is — and it is not about Archimedean-ness.** `f_snap_impossible`
+(`ZeroParadox/Reals/OrderedField.lean` — a declaration name is self-locating, so **no line number**;
+this citation carried one until 2026-08-02, when an insertion in that file moved the theorem and left
+the number pointing into an unrelated proof body. **No replacement figure is given here on purpose —
+a line number in a docstring is invalidated by any edit to the file it names, including edits to the
+docstring itself.**) is stated over an
+**arbitrary ordered field**
+(`[Field F] [LinearOrder F] [IsStrictOrderedRing F]`) and carries **no Archimedean hypothesis**. It is
+proved by **halving**, via `f_snap_blocked`. So what it gives by contraposition is *a first step exists
+⟹ the carrier is not an ordered field at all*.
+
+That is a **different** shape from "⟹ non-Archimedean". **Quantified over VALUED FIELDS — a field
+together with a distinguished absolute value — and reading "non-Archimedean" as *that distinguished
+absolute value is ultrametric*, the two are incomparable**, neither implying the other:
+* ℝ(t) with the t-adic absolute value and the leading-coefficient order is a non-Archimedean **ordered**
+  field, so `f_snap_impossible` covers it: non-Archimedean without being "not an ordered field";
+* ℂ with its standard absolute value **is not orderable at all** (no compatible linear order) while that
+  absolute value is **Archimedean**: "not an ordered field" without being non-Archimedean.
+
+**⚠ THE DOMAIN MUST BE VALUED FIELDS, AND THE READING MUST BE THE DISTINGUISHED ABSOLUTE VALUE.
+Corrected 2026-08-02 — the previous version pinned the one combination that makes the verdict FALSE.**
+It quantified over *bare fields* and read "non-Archimedean" existentially ("the field carries an
+ultrametric absolute value"). But **every field carries the trivial absolute value, and the trivial
+absolute value is an ultrametric** — so under that reading the predicate holds of every field, "not an
+ordered field ⟹ non-Archimedean" is trivially true, and the two are **not** incomparable at all. The
+previous version even stated the refuting fact, in the ℂ bullet, and did not carry it back to the pin;
+its ℂ argument silently switched from the existential predicate to a claim about the *standard*
+absolute value, which is a predicate on a valued field, not on a bare field. Under the corrected pin
+both witnesses are genuine and the ℤ example is unnecessary: ℤ is not a field, so the domain excludes
+it without further argument. **This paragraph has now been corrected four times; the failure each time
+was a wrong reason under a defensible conclusion.**
+
+*(Superseded block removed 2026-08-02: a "BOTH the domain and the reading are load-bearing" passage
+sat here restating the domain as bare **fields** and using **ℤ** as a witness. It contradicted the
+correction immediately above and was itself the third revision of the same sentence — a separator is
+exactly what refutes strictness, so "strictly stronger, witnessed by ℤ" could never have held. Deleted
+rather than annotated.)*
+
+*(Three corrections, all 2026-08-01, all caught by gates rather than by me. (i) This paragraph once
+cited `f_snap_impossible` as holding "on the Archimedean side", mis-scoping a theorem that covers every
+ordered field. (ii) The fix for (i) then attributed the wrong proof route — "density
+(`LinearOrderedSemiField.toDenselyOrdered`, then `not_covBy`)" — which is the route of
+`axb1_fails_in_ordered_field` four lines further down, whose own docstring says it is proved through
+Mathlib **rather than** through `f_snap_impossible`. A wrong reason under a true conclusion breaks
+nothing downstream, which is exactly why it needed a gate to find. (iii) The same fix then called the
+converse a "stronger shape", re-committing the ordering error this very push corrects in
+`ZeroParadox/Algebra/Wheel.lean`.)*
 
 The ultrametric is not a technical convenience — it is the structural fact that
 the Archimedean property would erase. C3's irreversibility is Ostrowski's
 non-Archimedean case made topologically explicit.
 
-See: ZPF.lean (f_snap_impossible) for the Archimedean side. -/
+See `ZeroParadox/Reals/OrderedField.lean` (`f_snap_impossible`) for the ordered-field side. -/
 
 end ZeroParadox
 

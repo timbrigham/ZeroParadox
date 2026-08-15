@@ -8,6 +8,9 @@ on:
       - '**/*.lean'
       - 'lake-manifest.json'
       - 'lean-toolchain'
+      # Without these the workflow never re-runs when the thing it publishes changes.
+      - 'scripts/corpus_verification_report.py'
+      - '.github/workflows/lean_action_ci.yml'
   pull_request:
     branches:
       - main
@@ -15,6 +18,9 @@ on:
       - '**/*.lean'
       - 'lake-manifest.json'
       - 'lean-toolchain'
+      # Without these the workflow never re-runs when the thing it publishes changes.
+      - 'scripts/corpus_verification_report.py'
+      - '.github/workflows/lean_action_ci.yml'
   workflow_dispatch:
 
 # Note: a docgen-action deploy job was removed from this workflow (April 2026).
@@ -33,4 +39,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # build: false - lean-action still does toolchain setup and the Mathlib cache, but
+      # we run `lake build` ourselves so its output can be captured. The corpus already
+      # emits ~1200 `#print axioms` results on every build; they were being discarded.
       - uses: leanprover/lean-action@v1
+        with:
+          build: false
+      - name: Build, and publish what the machine actually checked
+        run: |
+          # No pipefail on the build: a failing build must still REACH the report, so it
+          # is published as VERIFICATION FAILED rather than aborting the step silently.
+          # PIPESTATUS[0] carries lake's real exit status past the tee - the report
+          # takes it as the verdict, because deciding success from log text fails open.
+          lake build 2>&1 | tee build.log
+          BUILD_RC=${PIPESTATUS[0]}
+          echo "lake build exited ${BUILD_RC}"
+          # pipefail IS required here: without it the step inherits tee's status and a
+          # failing report is silently green.
+          set -o pipefail
+          python3 scripts/corpus_verification_report.py build.log "${BUILD_RC}" \
+            | tee -a "$GITHUB_STEP_SUMMARY"

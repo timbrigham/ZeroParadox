@@ -100,7 +100,7 @@ theorem nontrivial_lattice_no_witness {L : Type*} [ZPSemilattice L] (a : L) (ha 
 
 /-! ## § IV. The 2-adic face — same failure as the lattice (Cantor)
 
-    The 2-adic fixed point (0 = unique fixed point of x ↦ 2x in ℚ₂, ZP-B / `ZPJ_SelfApp.q2_unique_fp`)
+    The 2-adic fixed point (0 = unique fixed point of x ↦ 2x in ℚ₂, ZP-B / `q2_unique_fp`)
     is also a posited fixed point of one specific self-map. ℚ₂ is a nontrivial total type, so the same
     Cantor obstruction applies: no Lawvere witness. -/
 

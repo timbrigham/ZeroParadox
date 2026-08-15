@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC43 — Axis III over the proof-theory floor #1 (the hom-set carrier convention)
+# Axis III over the proof-theory floor #1 (the hom-set carrier convention)
 
 ## Engineer's Take
 
@@ -21,10 +21,10 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZPH_MC1_TC14.pointedness_dichotomy` proved the Axis-III (carrier-cardinality) dichotomy as a forced
+`pointedness_dichotomy` proved the Axis-III (carrier-cardinality) dichotomy as a forced
 binary for the two categories whose initial bottoms the framework instantiates with a **Type-valued
 carrier**: `Type` (#4-style, `Fin 0` empty, card 0) and `ModuleCat ℂ` (#5-style, `StateSpace 0`
-singleton, card ≤ 1). TC43 asks whether the **proof-theory floor #1** — `0 : ℕ` as the initial object
+singleton, card ≤ 1). This file asks whether the **proof-theory floor #1** — `0 : ℕ` as the initial object
 of the `ℕ` **preorder category** (`nat_floor_isInitial`, the base of the Goodstein/KP/Kruskal descent)
 — extends that ledger or breaks it.
 
@@ -60,7 +60,8 @@ it separates #5 from #4, and adds **no new cardinality value** (the {0,1} dichot
 
 `nat_floor_initial_singleton_homs` bundles both halves: (NO-GO) the floor is thin, so it has no
 Type-forgetful carrier; (GO) its hom-set carrier is a singleton, card-equal to a point and
-card-distinct from `Fin 0`. The delta over TC14: TC14 covered the two Type-forgetful endpoints; TC43
+card-distinct from `Fin 0`. The delta over `ZeroParadox/Category/PointednessSharp.lean`: that file
+covered the two Type-forgetful endpoints; this file
 adds #1 to the ledger and shows it does *not* break the {0,1} dichotomy — but only once the carrier
 notion is corrected from "forgetful set" to "hom-set", which is the price #1's thinness exacts.
 
@@ -115,7 +116,7 @@ theorem floor_homset_not_equiv_fin0 (n : ℕ) :
 
 /-! ## Capstone: #1 added to the Axis-III ledger, dichotomy unbroken -/
 
-/-- **TC43 capstone — Axis III over the proof-theory floor #1, both halves in-statement.**
+/-- **capstone — Axis III over the proof-theory floor #1, both halves in-statement.**
 
     1. **NO-GO** — `∀ x y, Subsingleton (x ⟶ y)`: the floor's category is thin, so #1 has no
        Type-forgetful carrier (the cardinality axis is *not* a tree-wide invariant; it is confined to
@@ -127,7 +128,7 @@ theorem floor_homset_not_equiv_fin0 (n : ℕ) :
 
     Together: once the carrier notion is corrected to "hom-set" (the price of #1's thinness), #1 joins
     the Axis-III ledger at the existing pointed endpoint and introduces **no new cardinality value** —
-    the {0,1} pointedness dichotomy of TC14 survives the addition of the proof-theory floor. The floor
+    the {0,1} pointedness dichotomy of `ZeroParadox/Category/PointednessSharp.lean` survives the addition of the proof-theory floor. The floor
     `0 : ℕ` is the genuine initial object of its category (`nat_floor_isInitial`), so this is the
     Axis-III reading of a real μ-bottom, not a contrived element. -/
 theorem nat_floor_initial_singleton_homs :

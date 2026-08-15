@@ -1,4 +1,4 @@
--- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the ORDER-THEORETIC universal form of "the snap is the change of frame" — over any complete lattice, the frame-change (order-duality) swaps the fork's two closures (lfp ↔ gfp), and the fork collapses to the diagonal fixed point exactly when the two coincide (fork_collapse_iff). The domain-independent snap_is_frameflip; choice-free. The CATEGORICAL universal is a proven wall (category-relative, Cantor — see Category/Lawvere.lean); this is the order-level universal that does hold. Curated results indexed in ZeroParadox/MANIFEST.md.
+-- EXPERIMENTAL (bottom-diagram probe, not a finalized layer): the ORDER-THEORETIC universal form of the POLE EXCHANGE (the snap-as-instance reading is ZP-Q's conjecture, not established here) — over any complete lattice, the frame-change (order-duality) swaps the fork's two closures (lfp ↔ gfp), and the fork collapses to the diagonal fixed point exactly when the two coincide (fork_collapse_iff). The domain-independent snap_is_frameflip; choice-free. The CATEGORICAL universal is a proven wall (category-relative, Cantor — see Category/Lawvere.lean); this is the order-level universal that does hold. Curated results indexed in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Settheory.FixedPointFork
 import Mathlib.Tactic
 
@@ -32,7 +32,9 @@ the diagonal fixed point.
 
 `fork_is_frameflip` bundles both faces: the duality-swap (P2) with `fork_collapse_iff` (P1). This is the
 order-theoretic universal `snap_is_frameflip` — the domain-independent shape that the valuation
-(`snap_is_frameflip`) and category (`catseam_is_frameflip`) instances realize concretely.
+(`snap_is_frameflip`) and category (`catseam_is_frameflip`) faces SHARE. Not "instances": neither
+satisfies `fork_collapse_iff`'s hypotheses (complete lattice, monotone map) — see the declaration
+docstring below, which states this in full.
 
 **Fences.** This is the **order-theoretic** universal (Knaster–Tarski world), choice-free. It is NOT the
 categorical Lawvere universal, which is a proven **wall**: `Category/Lawvere.lean` shows the Lawvere
@@ -67,7 +69,42 @@ theorem gfp_dual_eq_lfp : (OrderHom.dual f).gfp = f.lfp := rfl
     frame-change swaps the fork's two closures `lfp ↔ gfp`, and (iii) the fork collapses to a single
     contact point iff the self-map has a unique fixed point (the diagonal fixed point) — `fork_collapse_iff`.
     The domain-independent shape realized concretely by the valuation (`snap_is_frameflip`) and category
-    (`catseam_is_frameflip`) frame-flips. Choice-free. -/
+    (`catseam_is_frameflip`) frame-flips. Choice-free.
+
+    **Scope note (2026-07-30).** Of the three `*_is_frameflip` handles this is the only one whose name
+    matches its statement: duality genuinely does exchange the fork's two ends. The other two overclaim and
+    carry corrections in their own docstrings — `snap_is_frameflip` proves the tower limit's two
+    chart-readings (**no snap appears in it**), and `catseam_is_frameflip` proves the seam is a **fixed
+    point** of the flip, not a flip. **What all three establish is the exchange of the two poles and the
+    point where they coincide. That the snap IS an instance of that exchange is ZP-Q's conjecture, not
+    established by these theorems.** The snap is one covering step
+    off the zero face (`bot ⋖ a`, AX-B1), a separate object and a commitment. The cross-domain claim that
+    the snap *is* the frame change remains this layer's open conjecture, as its file header states.
+
+    **⚠ CORRECTED TWICE, 2026-07-30 (adversary gate, bedrock). Read the whole of this before citing
+    any "min≡max family".** An earlier revision called `epsilon0_min_eq_max` an instance of
+    `fork_collapse_iff`; a second revision fixed that but then called `selfApp_bot_is_both_extremal` and the
+    categorical zero object instances instead. **BOTH claims are false, for the same reason: nothing here
+    satisfies `fork_collapse_iff`'s hypotheses.** It requires `[CompleteLattice α]` and a *monotone*
+    `f : α →o α` (`Settheory/FixedPointFork.lean`). Measured against that:
+    * `epsilon0_min_eq_max` — `α ↦ ω^α` on `Ordinal` has a **proper class** of fixed points (`ε₁, ε₂, …`
+      all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so the uniqueness side of (iii)
+      fails. The case is in fact stronger than that and the earlier wording under-stated it: `Ordinal`
+      carries no `CompleteLattice` instance in the pin, so `lfp` and `gfp` are not defined there at all
+      and `lfp ≠ gfp` is not even a well-formed proposition. The hypotheses fail before the conclusion
+      can be stated.
+    * `selfApp_bot_is_both_extremal` — `ZPSemilattice` is a **bare join-semilattice**, not a complete
+      lattice, and `AbstractSelfApp.selfApp : L → L` is **not an `OrderHom`**.
+    * `catseam_is_frameflip` — lives in `ModuleCat ℂ`, a **category**, not a lattice at all.
+
+    **So there is no common instance and no "four witnesses of one phenomenon".** What these share is a
+    SHAPE — one object carrying both extremal characterizations at once — and per this project's standing
+    rule a shared shape across distinct structures is a **type boundary**, never a common theorem. State
+    the shape; do not state an instance-of relation. Each fact stands on its own carrier:
+    ε₀ is least-fixed-point **and** tower-supremum (the Kleene shape); ⊥ is least **and** greatest fixed
+    point of `selfApp`; the seam is initial **and** terminal. `fork_collapse_iff` is a *fourth*, separate
+    fact about complete lattices — the general condition under which a fork collapses — and is **not** the
+    genus of the other three. -/
 theorem fork_is_frameflip :
     (OrderHom.dual f).lfp = f.gfp
       ∧ (OrderHom.dual f).gfp = f.lfp

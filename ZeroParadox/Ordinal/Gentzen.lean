@@ -26,7 +26,7 @@ ZPL has four components:
     appears at the non-constructive diagonal step in each of the four ZP layers
     listed in §I. Not a Lean proposition — evidenced by #print axioms.
 
-(2) Roger Fixed-Point Stability — for any computable f, some code is behaviorally
+(2) Rogers' Fixed-Point Stability — for any computable f, some code is behaviorally
     fixed by f (eval (f c) = eval c).
     In Lean scope. Follows from ZPK's roger_fixed_point_exists.
 
@@ -89,20 +89,26 @@ section AxiomFootprintEvidence
 
 end AxiomFootprintEvidence
 
-/-! ## § II. Roger Fixed-Point Stability
+/-! ## § II. Rogers' Fixed-Point Stability
 
 Any computable transformation of a Code has a behavioral fixed point — a code c
-such that eval (f c) = eval c. This is Roger's fixed-point theorem (Kleene's
-second recursion theorem): the fixed-point structure is stable under any
-computable transformation.
+such that eval (f c) = eval c. This is **Rogers' fixed-point theorem**: the fixed-point structure is
+stable under any computable transformation. *(Corrected 2026-08-02: this read "Rogers' fixed-point
+theorem (Kleene's second recursion theorem)", equating the two. Mathlib splits them — `fixed_point` is
+Roger's fixed point theorem, `fixed_point₂` is Kleene's second recursion theorem
+(`Mathlib/Computability/PartrecCode.lean`, the module index and the docstrings on `fixed_point` and
+`fixed_point₂`) — and the
+declaration below wraps the `fixed_point` route. They are inter-derivable, so this was naming rather
+than falsehood.)*
 
 Note on scope: the ZPL architecture initially proposed that eval (f botCode) =
 eval botCode for ALL computable f. This overclaims — botCode is one specific
 Classical.choose witness and carries no special stability under arbitrary f.
 The existential version is the correct formalization. -/
 
-/-- Roger's fixed-point theorem (Kleene's second recursion theorem): for any
-    computable transformation f, some code is behaviorally fixed by f.
+/-- Rogers' fixed-point theorem (Mathlib `Nat.Partrec.Code.fixed_point`; **not** Kleene's second
+    recursion theorem, which Mathlib names `fixed_point₂`): for any computable transformation f,
+    some code is behaviorally fixed by f.
     Proved as a wrapper around ZPK's roger_fixed_point_exists. -/
 theorem roger_fixed_point_stability (f : Code → Code) (hf : Computable f) :
     ∃ c : Code, eval (f c) = eval c :=
@@ -418,7 +424,7 @@ theorem snap_threshold_is_epsilon_zero
 /-! ## § VI. Kleene-Ordinal Fixed-Point Bridge
 
 The ordinal fixed-point structure (ε₀ = nfp (ω^·) 0, ω^ε₀ = ε₀) and the computational
-fixed-point structure (Kleene's recursion theorem, roger_fixed_point_stability) both require
+fixed-point structure (Rogers' fixed-point theorem, roger_fixed_point_stability) both require
 Classical.choice at their non-constructive step — parallel structure, not a proved isomorphism.
 This is the content of §I Axiom Footprint Convergence.
 
@@ -426,14 +432,24 @@ The hypothesis
   hfp : ∀ α, ω^α = α → φ α = c₁
 encodes that ordinal fixed points of ω^· (the ordinal analogues of Kleene fixed points)
 map to the snap state c₁. Under this hypothesis, combined with monotonicity (hmono) and
-tower alignment (h0), the snap is forced to occur at ε₀ as the minimal threshold:
+tower alignment (h0), φ is forced to take the value c₁ at ε₀ and at no smaller ordinal — a statement
+about WHERE the value changes, not that anything occurs:
   - every ordinal below ε₀ maps to c₀ (snap_threshold_is_epsilon_zero)
   - ε₀ maps to c₁ (epsilonZero_fixedPoint + hfp)
   - ε₀ is the minimal ordinal assigned c₁ (from the two above)
 
-The computational side — that the snap MUST occur — is proved in ZPE (T-SNAP). The bridge
-here is structural: IF maps aligned with the fixed-point structure snap at fixed points,
-THEN ε₀ is the minimal snap threshold (no snap before ε₀, and φ ε₀ = c₁). -/
+**⚠ CORRECTED 2026-07-31. This paragraph read "The computational side — that the snap MUST
+occur — is proved in ZPE (T-SNAP)", and that is FALSE.** T-SNAP constrains the *shape* of a
+transition, never that one occurs: `ZeroParadox/Order/Snap.lean` says so in its own NO-GO gauge (the "T-SNAP constrains the SHAPE of a transition, not that one occurs" block) and
+makes it checkable with `tsnap_holds_but_nothing_moves`, a machine-checked model in which
+T-SNAP holds and **nothing moves** (`stuckPhase := id`). `t_snap_derived` is `⟨l_run, tq_ih,
+rfl⟩`, where `l_run` is `by decide` — it proves the two phases are distinct and that the join
+absorbs. Occurrence is a **commitment**; `Information/Surprisal.lean`'s `l_inf` docstring is
+the framework's designated honest statement of where the argument for it stops.
+
+So nothing below is unconditional. The bridge here is structural, and note that `hfp` **is**
+the snap rather than a route to it: IF maps aligned with the fixed-point structure snap at
+fixed points, THEN ε₀ is the minimal snap threshold (no snap before ε₀, and φ ε₀ = c₁). -/
 
 /-- ε₀ is the minimal snap threshold: for any map φ : Ordinal → MachinePhase satisfying
     (a) hmono: φ is order-non-decreasing (join (φ α) (φ β) = φ β for α ≤ β),
@@ -606,7 +622,8 @@ open ZeroParadox
 --      every ordinal below ε₀ also maps to c₀ (lower bound on snap threshold)
 #print axioms snap_threshold_is_epsilon_zero
 -- § VI: proved — ε₀ is the minimal snap threshold for any monotone, tower-aligned,
---      fixed-point-respecting map (snap is forced at ε₀, not before)
+--      fixed-point-respecting map (the threshold is ε₀, not before - a bound on where, not an
+--      assertion that a transition occurs)
 #print axioms snap_exactly_at_epsilon_zero
 -- § VI: proved — canonical witness map exhibiting the bridge properties
 #print axioms kleene_ordinal_snap_bridge

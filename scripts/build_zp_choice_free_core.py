@@ -1,6 +1,18 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.3 | July 2026
+Version 1.5 | August 2026
+v1.5: BEDROCK - Section III asserted THE FRAMEWORK HAS NO PROVEN-NECESSITY CASE ANYWHERE, a universal
+negative that is FALSE and was live in the published PDF. Two taboo reductions exist and are named in
+CLAUDE.md: em_of_wellOrder_comparable (comparability of well-orders implies excluded middle; prior art
+Kraus-Nordvall Forsberg-Xu arXiv:2104.02549 Thm 38(d)) and wem_of_fixedPointFree (the general
+fixed-point-free principle implies WEAK excluded middle, on the keystone). Neither was named anywhere
+in this document (0 rendered hits for either, 0 for taboo). A 2026-08-01 sweep recorded both universal
+negatives as removed from the corpus - it grepped .lean and missed this Python build script, so the
+claim survived in RENDERED PUBLIC PROSE. Found 2026-08-03 by the new modal-claim sweep. Section III now
+states the reduction/measurement distinction and names both cases. Also: the type-vs-proof point added
+(an axiom in a TYPE cannot be removed by any proof; removability there means changing the statement).
+Docstring header said 1.3 while VERSION said 1.4 - corrected.
+v1.4: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
 v1.3: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardization).
 v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
@@ -18,7 +30,7 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.3'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -64,7 +76,8 @@ def build():
     print('[build_zp_choice_free_core] Building preamble...')
     E.append(body(
         'Build the file ZeroParadox/AxiomProfile.lean and read the Lean kernel\'s output. It reports '
-        'that the central theorem of this framework &#8212; the Binary Snap, T-SNAP, the forced '
+        'that the central theorem of this framework &#8212; the Binary Snap, T-SNAP, whose SHAPE is '
+        'derived while its occurrence stays a framework commitment, the '
         'transition &#8869; &#8594; &#949;<sub>0</sub> &#8212; depends on <b>no axioms at all</b>: not '
         'the Axiom of Choice, not even propositional extensionality. The lattice algebra (ZP-A) and '
         'the Quine-atom self-reference that is the framework\'s keystone (ZP-J) are likewise '
@@ -152,9 +165,24 @@ def build():
     ]
     E.append(body(
         '`#print axioms` proves <i>dependence</i> &#8212; that the proof as written uses an axiom. It '
-        'does not prove <i>necessity</i> &#8212; that no choice-free proof exists. The framework has '
-        'no proven-necessity case anywhere: it has never shown, by a reversal, that any result '
-        '<i>requires</i> choice. So the analytic-layer dependence may be removable.'))
+        'does not prove <i>necessity</i> &#8212; that no choice-free proof exists. Necessity has to be '
+        'shown a different way, by a <i>reduction</i>: derive a recognised constructive taboo from the '
+        'principle itself.'))
+    E.append(body(
+        '<b>Two such reductions do exist here, and they bound what this document claims.</b> '
+        '`em_of_wellOrder_comparable` derives excluded middle from comparability of well-orders '
+        '(prior art: Kraus, Nordvall Forsberg and Xu, arXiv:2104.02549, Thm 38(d)), and '
+        '`wem_of_fixedPointFree` derives <i>weak</i> excluded middle from the general fixed-point-free '
+        'principle &#8212; the latter sitting on the keystone rather than on an imported order '
+        'instance. Each is a statement about the <b>principle</b>: re-proving it constructively would '
+        'decide a taboo, so no choice-free re-proof exists. Neither is an independence result, and '
+        'neither is established by a footprint measurement &#8212; which is precisely why the '
+        'accidental side needs a measurement and the essential side needs a reduction.'))
+    E.append(body(
+        'So the analytic-layer dependence may be removable, and that is a different question from '
+        'the two cases above. It is also not settled by measuring a proof: where an axiom sits in a '
+        '<i>type</i> rather than a proof, no proof of any statement mentioning that type can be clean, '
+        'and removability there means changing the statement, not cleaning the argument.'))
     E.append(body(
         'One layer has been classified directly. In the "choice-probe" experiment, the '
         '`Classical.choice` in the 2-adic tree construction (PadicTree) decomposed into three '

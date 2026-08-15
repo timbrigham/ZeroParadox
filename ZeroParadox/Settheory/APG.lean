@@ -70,7 +70,7 @@ See: .claude-local/notes/afa_apg_zfset_correction_2026-05-27.md
 
 ## Dependencies
 
-- ZPJ_Scale.lean: ValuationStructure, val_scale, scale_unique_fp, val_finite_of_ne_bot
+- ZeroParadox/Valuation/Scale.lean: ValuationStructure, val_scale, scale_unique_fp, val_finite_of_ne_bot
 - Mathlib.Combinatorics.Quiver.Path: directed graph paths
 -/
 
@@ -80,14 +80,41 @@ open ZeroParadox ZeroParadox ZeroParadox ZPSemilattice
 
 /-! ## § I. APG Definition -/
 
+/-! ### NO-GO gauge — a one-node self-loop is an `APG`, and the class still has teeth.
+Measured 2026-08-09 by building it: on `Unit` with `Quiver := fun _ _ => Unit`, `accessible` is the
+empty path, so membership is vacuous **on a subsingleton**. A non-member is now PROVED rather than
+asserted — the `example` below the structure. ⚠ "A vertex unreachable from the root" presupposes a
+root the type does not fix: `root` is a FIELD, so the honest statement is that **no choice of root
+works**. Cite the accessibility, not the membership.
+
+⚠ **Accessibility buys representation, not decorability.** Aczel (1988) decorates plain *graphs* —
+Mostowski *"every well-founded graph …"* (p. 4), AFA *"every graph …"* (p. 6), neither asking for it.
+Root and accessibility make the graph an **apg**, a picture of a unique set under AFA (p. 6). -/
+
 /-- An Accessible Pointed Graph: a Quiver with a distinguished root vertex
     from which every vertex is reachable via directed paths. -/
--- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Quiver.Basic | reason: Mathlib's Quiver is a bare directed graph (objects + edges) with no distinguished root or accessibility requirement. APG adds root : V and the accessibility proof (every vertex reachable from root), matching Aczel's definition of Accessible Pointed Graph. These two fields are not optional — they are what AFA's decoration theorem requires.
+-- [ZP-CUSTOM] extends: Mathlib.Combinatorics.Quiver.Basic | reason: Mathlib's Quiver is a bare directed graph (objects + edges) with no distinguished root or accessibility requirement. APG adds root : V and the accessibility proof (every vertex reachable from root), matching Aczel's definition of Accessible Pointed Graph (1988 p. 4). ⚠ These fields are NOT load-bearing for anything proved in this file, and no claim of necessity should be made for them in either direction: decoration_unique binds the structure as `_G` and never uses it, so what is actually proved holds for EVERY finite quiver, accessible or not — structurally Aczel's own AFA generality (p. 6). No APG value is constructed anywhere in the corpus as of 2026-08-09.
 structure APG (V : Type*) [Quiver V] where
-  /-- Distinguished root vertex. -/
+  /-- Distinguished vertex. ⚠ Aczel's term for it is the **point**; he introduces *root* only for the
+      special case where every path from it is unique, i.e. a tree (1988 p. 4). The field name is
+      this file's, not his. -/
   root : V
   /-- Every vertex is reachable from the root via directed paths. -/
   accessible : ∀ v : V, Nonempty (Quiver.Path root v)
+
+-- Statement: the class has a genuine non-member. On `Bool` with NO edges, every path is `nil`, so no
+-- choice of root reaches the other vertex and the structure is uninhabited. Anonymous, so it adds no
+-- declaration; being about the CARRIER is the point, since `root` is a field and not fixed by `V`.
+example : IsEmpty (@APG Bool ⟨fun _ _ => Empty⟩) := by
+  constructor
+  rintro ⟨r, acc⟩
+  obtain ⟨p⟩ := acc (!r)
+  have hnil : ∀ {a b : Bool} (_ : @Quiver.Path Bool ⟨fun _ _ => Empty⟩ a b), a = b := by
+    intro a b p
+    induction p with
+    | nil => rfl
+    | cons _ e _ => exact e.elim
+  exact Bool.not_ne_self r (hnil p).symm
 
 section APGBasics
 
@@ -133,11 +160,12 @@ end APGBasics
     - collect_singleton: collect {x} = scale x (links collect to the valuation structure)
 
     ZFSet is NOT a valid instance: Foundation forbids x ∈ x, which any cyclic APG requires.
-    OntologicalStates (ZPJ_OntBridge) has AbstractSelfApp but not ValuationStructure —
+    OntologicalStates (ZeroParadox/Settheory/OntBridge.lean) has AbstractSelfApp but not ValuationStructure —
     decoration of cyclic APGs specifically requires val_scale for the k>1 argument. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Mathlib's ZFSet (the only set-theory formalization) uses Foundation — x ∈ x is forbidden, making it invalid as a decoration target for any APG with a self-loop. DecorationUniverse is an abstract type with ValuationStructure + a collect operation and two axioms (collect_singleton, collect_val_ge), providing the minimum structure needed for AFA decoration uniqueness without importing any set-theoretic axiom.
 class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] where
-  /-- Assembles a parent's value from the set of its children's values. -/
+  /-- A map `Set U → U`. ⚠ The two axioms below pin only the SINGLETON case and a lower bound; they
+      do not require it to assemble a parent's value from its children's. -/
   collect : Set U → U
   /-- On a singleton input, collect = scale (the one-step operation from ValuationStructure). -/
   collect_singleton : ∀ x : U, collect {x} = ValuationStructure.scale x
@@ -146,6 +174,17 @@ class DecorationUniverse (U : Type*) [ZPSemilattice U] [ValuationStructure U] wh
       Independent axiom: not derivable from collect_singleton alone. -/
   collect_val_ge : ∀ (S : Set U) (x : U), x ∈ S →
       ValuationStructure.val (collect S) ≥ ValuationStructure.val x + 1
+
+/-! ### NO-GO gauge — `DecorationUniverse` is inhabited over EVERY `ValuationStructure` carrier.
+
+Witness built and elaborated 2026-08-08, **classically** (the `dite` needs `Decidable (∃ x, S = {x})`):
+`collect S := if h : ∃ x, S = {x} then scale h.choose else bot`, so the class constrains nothing
+beyond the `ValuationStructure` it already assumes.
+**Only the non-singleton half is free**, where `val bot` is top and dominates the bound. The singleton
+branch of `collect_val_ge` needs `val_scale` (plus `scale_bot` when `x = bot`), and
+`collect_singleton` needs `Set.singleton_eq_singleton_iff`.
+**Not a carrier-level defect** — every use site takes it as a hypothesis carrying data. It does mean
+`[DecorationUniverse U]` alone licenses no conclusion. -/
 
 /-! ## § III. val_iterate — The Key Lemma
 
@@ -426,6 +465,17 @@ theorem acyclic_induction_step
       so IH gives d₁ w = d₂ w for all apg_children, and acyclic_induction_step closes the goal.
 
     Requires [Fintype V] to bound the reachable set cardinality. -/
+
+/-! ### PRIOR ART — the uniqueness clause of a RECURSIVE COALGEBRA, for ONE SHAPE of algebra.
+
+A coalgebra is **recursive** when *every* algebra admits a unique coalgebra-to-algebra morphism
+(Adámek-Milius-Moss 2020, arXiv:1910.09401v2, Def 3.2 p. 11, crediting Osius for the definition).
+`decoration_unique` gives that clause for algebras of the `DecorationUniverse.collect` shape, not
+for every algebra, and existence not at all. `ZeroParadox/Category/WellFoundedCoalgebra.lean` has
+the well-foundedness side. **The delta:** the standard route to such uniqueness is well-foundedness
+(Taylor's General Recursion Theorem, AMM Thm 7.2 p. 27), unavailable here since these quivers may
+carry cycles. It closes on two branches instead — cyclic vertices to ⊥ (`cyclic_decoration_eq_bot`),
+acyclic ones by strict-subset descent on the reachable set, which is what `[Fintype V]` is for. -/
 
 -- `[Fintype V]` is not used in the *type* but is essential to the *proof*: it bounds the
 -- reachable-set cardinality so the strict-subset descent (`Set.ncard_lt_ncard`) terminates.

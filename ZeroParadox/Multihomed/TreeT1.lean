@@ -44,12 +44,12 @@ cut would be wrong.
   (bundled in `t1_mu_cluster_glue`), not merely three objects that independently happen to be initial.
 - `linObj_iso_hilbert` — a **direct #4↔#5 edge for the whole tower**: the linearization of the info
   object `Fin n →₀ ℂ` is ℂ-linearly isomorphic to the Hilbert object `StateSpace n`, for *every* `n`
-  (not just the bottom). This genuinely extends `ZPH_MC1.lin_carries_bottom`, which only handled the
+  (not just the bottom). This genuinely extends `lin_carries_bottom`, which only handled the
   bottom via the vacuous "any two initial objects are iso".
 
 **Honest scope.** The #4↔#5 connection is realized object-wise (a per-`n` module iso) and via the
 common apex #1; a single *functor* `KleisliCat PMF ⥤ ModuleCat ℂ` is not built here (it is genuinely
-obstructed on infinite types — `ZPH_MC1_Linearize` — clean only on the finite snap tower). So T1 is GO
+obstructed on infinite types — `ZeroParadox/Category/Linearize.lean` — clean only on the finite snap tower). So T1 is GO
 at the level of "connected by real bottom-preserving maps", which is exactly the tree's sibling
 prediction; it is not the stronger claim of a single unifying functor.
 -/

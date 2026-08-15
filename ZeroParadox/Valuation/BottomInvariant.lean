@@ -72,9 +72,23 @@ open MeasureTheory
 
 /-! ## § I — The abstraction -/
 
+/-! ### NO-GO gauge for the three structures in this file — verdict at each declaration.
+
+On a NONEMPTY carrier each is inhabited by the identity dynamics (measured 2026-08-09: `f := id`;
+`κ := PMF.pure`; `κ := Kernel.id`). ⚠ **All three exclude the EMPTY carrier** by one argument — each
+carries a probability measure or a `PMF`, and neither exists there. Each exclusion is exhibited by a
+witness in §§ V–VI rather than asserted here. So nonemptiness of `X` IS a requirement all three impose,
+and it is generic rather than distinguishing.
+
+**Beyond that they are BUNDLES of a dynamical system.** The content is in *which* `f` or `κ` a value
+supplies (`odometerIMK`, `attractorIMK`, `markovIMK`). Cite the witness. -/
+
 /-- **A bottom with an invariant measure.** A self-map `f` of a measurable space together with an
     invariant Borel probability measure `μ` (`MeasurePreserving f μ μ`). The candidate universal
-    shape: where a Lawvere fixed *point* is blocked, this weaker invariant may still exist. -/
+    shape: where a Lawvere fixed *point* is blocked, this weaker invariant may still exist.
+    NO-GO: `BottomInvariantMeasure` is inhabited on any nonempty `X` by `f := id`, and empty on
+    `Empty` (no probability measure there; witness in § V) — a generic obstruction, not a
+    distinguishing one. -/
 structure BottomInvariantMeasure (X : Type*) [MeasurableSpace X] where
   /-- the dynamics -/
   f : X → X
@@ -194,9 +208,10 @@ theorem attractor_sameShape : SameShapeFromAnywhere (fun x : Q₂ => 2 * x) := b
 /-- **A bottom with an invariant DISTRIBUTION** — the stochastic sibling of `BottomInvariantMeasure`.
     A Markov kernel `κ : X → PMF X` on a finite state space together with a *stationary* distribution
     `μ` (`μ.bind κ = μ`: one Markov step leaves `μ` invariant). This reaches the framework's stochastic
-    bottom — a NON-p-adic domain. (It is a parallel structure to `BottomInvariantMeasure`: `PMF` is
-    Mathlib's finite-probability framework, `Measure` the continuous one. A single structure over
-    Mathlib's general `MeasureTheory.Kernel` subsumes both — realized in § VI, `InvariantMarkovKernel`.) -/
+    bottom — a NON-p-adic domain. (Parallel to `BottomInvariantMeasure`: `PMF` is Mathlib's
+    finite-probability framework, `Measure` the continuous one; § VI's `InvariantMarkovKernel`
+    subsumes both.) NO-GO: `BottomInvariantKernel` is inhabited on any nonempty `X` by
+    `κ := PMF.pure`, and empty on `Fin 0` (`bottomInvariantKernel_fin_zero_empty`) — generic. -/
 structure BottomInvariantKernel (X : Type*) [Fintype X] where
   /-- the Markov kernel -/
   κ : X → PMF X
@@ -220,6 +235,22 @@ noncomputable def markovBIK : BottomInvariantKernel (Fin 2) where
 theorem markov_sameShape (μ : PMF (Fin 2)) : μ.bind fullMix = PMF.uniformOfFintype (Fin 2) := by
   unfold fullMix; exact PMF.bind_const _ _
 
+/-- **`Statement:` `Fin 0` carries no `BottomInvariantKernel`** — no `PMF` on the empty type. One of
+    three instances of the same obstruction; the sibling two are the `example`s below. -/
+theorem bottomInvariantKernel_fin_zero_empty : IsEmpty (BottomInvariantKernel (Fin 0)) :=
+  ⟨fun B => by have h := B.μ.tsum_coe; simp at h⟩
+
+-- Statement: the measure-theoretic sibling fails the same way, exhibited rather than asserted. It
+-- demands a PROBABILITY measure, total mass 1, while the empty carrier's only measure gives 0.
+-- Anonymous: nothing cites it, so it adds no declaration, no purity entry and no ssot row.
+-- (The third face, `InvariantMarkovKernel`, is defined in § VI; its witness sits there.)
+example : IsEmpty (BottomInvariantMeasure Empty) := by
+  constructor
+  rintro ⟨_f, μ, hp, _⟩
+  have h1 : μ Set.univ = 1 := hp.measure_univ
+  rw [Set.univ_eq_empty_iff.mpr inferInstance, measure_empty] at h1
+  exact zero_ne_one h1
+
 /-! ## § VI — The unification: one structure over Mathlib's general `Kernel` -/
 
 open ProbabilityTheory
@@ -229,7 +260,9 @@ open ProbabilityTheory
     `μ.bind κ = μ`). This is Mathlib's general kernel framework, so it subsumes BOTH earlier structures
     at once: a *deterministic* self-map is the Dirac kernel `Kernel.deterministic f`, and a finite
     *Markov* kernel is a genuine `Kernel`. All three faces below — the two continuous p-adic dynamics
-    and the finite stochastic one — are now instances of this *one* structure. -/
+    and the finite stochastic one — are now instances of this *one* structure.
+    NO-GO: `InvariantMarkovKernel` is inhabited on any nonempty `X` by `κ := Kernel.id`, and empty on
+    `Fin 0` (no probability measure there) — generic, not distinguishing. -/
 structure InvariantMarkovKernel (X : Type*) [MeasurableSpace X] where
   /-- the Markov kernel (transition dynamics) -/
   κ : Kernel X X
@@ -241,6 +274,16 @@ structure InvariantMarkovKernel (X : Type*) [MeasurableSpace X] where
   isProb : IsProbabilityMeasure μ
   /-- the law is invariant: one step leaves it unchanged -/
   invariant : Kernel.Invariant κ μ
+
+-- Statement: the third face fails on the empty carrier for the same reason as the other two — a
+-- probability measure has total mass 1 and the empty carrier admits none. Completes the trio.
+-- Anonymous, so it adds no declaration.
+example : IsEmpty (InvariantMarkovKernel Empty) := by
+  constructor
+  rintro ⟨_κ, _mk, μ, hp, _⟩
+  have h1 : μ Set.univ = 1 := hp.measure_univ
+  rw [Set.univ_eq_empty_iff.mpr inferInstance, measure_empty] at h1
+  exact zero_ne_one h1
 
 private theorem measurable_odometer_map : Measurable ((1 : ℤ_[p]) + ·) := by fun_prop
 
@@ -519,9 +562,97 @@ theorem no_mp_attractor_to_markov :
 
 end ZeroParadox
 
+/-! ## § VII — The BOTH-AT-ONCE regime: a unit multiplier carries both characters
+
+**Nothing here is new mathematics.** That multiplication by a unit fixes the origin and preserves norms is
+elementary; the content is the **identification**, and it closes a gap this file's own § I leaves open.
+
+§ II and § III exhibit the *spread* invariant (odometer, Haar) and the *concentrated* invariant (doubling
+map, `δ₀`) — **on two different maps**. So the file shows the two characters are compatible with one
+*structure*, never that one *dynamic* carries both. This section supplies a dynamic that does, and it is
+already in the corpus: multiplication by a 2-adic **unit** (`Valuation/ContractionRate.lean`,
+`unit_orbit_norm_const`, witnessed by `three_is_unit : ‖(3 : Q₂)‖ = 1`).
+
+**The three regimes, decided by the valuation of the multiplier:**
+| multiplier | orbit behaviour | invariant character |
+|---|---|---|
+| ideal, `‖c‖ < 1` (e.g. `×2` — the framework's own `selfApp` on `ℚ₂`, `q2_unique_fp`) | contracts to `0` | **concentrated only** |
+| **unit, `‖u‖ = 1` (e.g. `×3`)** | norm constant on every orbit | **BOTH** |
+| odometer `x ↦ 1 + x` | no fixed point, orbits dense | **spread only** |
+
+**Why the unit row carries both.** It **fixes the floor** (`unitMul_fixes_floor`), so `δ₀` is invariant —
+the concentrated character, proved below. And it **preserves every sphere** (`unitMul_norm_const`), so it is
+a norm-preserving additive bijection of `ℤ_p` and therefore preserves the Haar probability measure — the
+spread character.
+
+**⚠ HONEST FENCE — the Haar half is NOT formalized here.** That an automorphism of a compact group
+preserves its Haar probability measure is standard, but this file does not prove it for `unitMul`; only the
+`δ₀` half is machine-checked below. Do not cite this section for the Haar claim.
+
+**The standard result IS available in the pin, and this fence should be closable rather than merely
+declared** (prior-art gate, 2026-07-30): `mulEquivHaarChar_eq_one_of_compactSpace`
+(`Mathlib/MeasureTheory/Measure/Haar/MulEquivHaarChar.lean:136`,
+`[CompactSpace G] (φ : G ≃ₜ* G) : mulEquivHaarChar φ = 1`), whose additive alias
+`addEquivAddHaarChar_eq_one_of_compactSpace` is the one that applies here — `ℤ_p` is a compact additive
+topological group and `unitMul u` is a topological additive automorphism for `u` a unit. So the gap is a
+*build*, not an absence. Stated as adjacency, not as a claim: nothing below is proved from it.
+
+**And note what sphere-preservation costs:** the spheres are invariant sets of intermediate measure, so
+`unitMul` is **not ergodic** for Haar — it admits *many* invariant measures. That is the failure of unique
+ergodicity, which § I flags as the strong statement it cannot prove (Mathlib has no unique-ergodicity API).
+This section only *locates* a dynamic where the failure is visible; it proves neither the failure nor the
+uniqueness. Reading: `.claude-local/notes/paradox_as_simultaneous_inversion_2026-07-30.md`. -/
+
+section BothAtOnce
+variable {p : ℕ} [Fact p.Prime]
+
+/-- Multiplication by a `p`-adic unit **fixes the floor**, so the concentrated invariant `δ₀` is available
+    to it. (True of any multiplier; stated here because it is one half of the both-at-once claim.) -/
+theorem unitMul_fixes_floor (u : ℤ_[p]) : u * 0 = 0 := mul_zero u
+
+/-- Multiplication by a **unit preserves every sphere**: the norm is unchanged. This is
+    `ContractionRate.unit_orbit_norm_const` at one step, on `ℤ_[p]`. It is what makes the map
+    Haar-preserving (not formalized here) and simultaneously **non-ergodic** — each sphere is an
+    invariant set. -/
+theorem unitMul_norm_const {u : ℤ_[p]} (hu : ‖u‖ = 1) (x : ℤ_[p]) : ‖u * x‖ = ‖x‖ := by
+  rw [norm_mul, hu, one_mul]
+
+/-- **The concentrated character, machine-checked.** Multiplication by `u` preserves the Dirac mass at the
+    floor, because it fixes the floor. Together with `unitMul_norm_const` (the spread character's
+    precondition) this is the both-at-once regime — one dynamic, two invariant characters.
+
+    Prior art (cited, not reproved): the pushforward step is discharged by `simp`, which has BOTH
+    Dirac pushforward lemmas registered — `MeasureTheory.Measure.map_dirac'`
+    (`Mathlib/MeasureTheory/Measure/Dirac.lean:86`, `@[simp]`, takes `(hf : Measurable f)`) and the
+    instance-based sibling `Measure.map_dirac` (`:224`, `@[simp]`, `[MeasurableSingletonClass _]`,
+    no measurability hypothesis). Either closes it, because `unitMul` FIXES the point, so the
+    pushforward returns the same Dirac.
+
+    **⚠ This proof previously read `simpa using Measure.map_dirac hm 0`, and that term was
+    ill-typed** — `map_dirac` takes one explicit argument, not two. It was silently discarded
+    because `simpa`'s `simp` closed the goal unaided; the build's standing
+    `try 'simp' instead of 'simpa'` warning was the only trace. Caught 2026-07-30 by the prior-art
+    gate running the term through `lake env lean` instead of reading it — a probe beat a read. The
+    proof is now plainly `simp`, so the docstring and the tactic agree. Note that `hm` is still
+    needed: it is the first component of the `MeasurePreserving` structure.
+
+    The same argument appears at `attractorBIM.preserving` above. This file's other `map_dirac'`
+    uses rewrite in a hypothesis at `:473` and `:507`, and in the goal at `:448`. -/
+theorem unitMul_preserving_dirac (u : ℤ_[p]) :
+    MeasureTheory.MeasurePreserving (fun x : ℤ_[p] => u * x)
+      (MeasureTheory.Measure.dirac 0) (MeasureTheory.Measure.dirac 0) := by
+  have hm : Measurable (fun x : ℤ_[p] => u * x) := by fun_prop
+  refine ⟨hm, ?_⟩
+  simp
+
+end BothAtOnce
+
 /-! ## Axiom Purity Check -/
 section PurityCheck
 open ZeroParadox
+#print axioms unitMul_fixes_floor
+#print axioms unitMul_norm_const
+#print axioms unitMul_preserving_dirac
 #print axioms odometer_not_attracting
 #print axioms odometerBIM
 #print axioms attractorBIM
@@ -529,6 +660,7 @@ open ZeroParadox
 #print axioms attractor_sameShape
 #print axioms markovBIK
 #print axioms markov_sameShape
+#print axioms bottomInvariantKernel_fin_zero_empty
 #print axioms odometerIMK
 #print axioms attractorIMK
 #print axioms markovIMK

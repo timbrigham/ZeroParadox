@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC35 — root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
+# Root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
 
 ## Engineer's Take
 

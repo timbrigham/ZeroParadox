@@ -3,14 +3,14 @@ import Mathlib.Data.QPF.Univariate.Basic
 import ZeroParadox.Settheory.Coalgebra
 
 /-!
-# ZP-H MC-1 tree test TC26: the root-cut degeneracy dichotomy
+# The root-cut degeneracy dichotomy
 
-This module sharpens the strict μ/ν fork of `ZPP_Coalgebra.lean` (TC21) into a **dichotomy at the
-root of the tree**. TC21 proved the fork *strict* on the leaf-free one-child functor `idPF_Coalgebra`
+This module sharpens the strict μ/ν fork of `ZeroParadox/Settheory/Coalgebra.lean` into a **dichotomy at the
+root of the tree**. `ZeroParadox/Settheory/Coalgebra.lean` proved the fork *strict* on the leaf-free one-child functor `idPF_Coalgebra`
 (child type `PUnit`, a recursive position): the initial algebra `QPF.Fix idPF_Coalgebra.Obj` is empty and the
 final coalgebra `QPF.Cofix idPF_Coalgebra.Obj` is inhabited, so the two fixed points cannot agree.
 
-Here we show the complementary case. Take the **leaf-free constant polynomial functor**
+Here we show the complementary case. Take the **all-leaf constant polynomial functor**
 `constPF A := ⟨A, fun _ => PEmpty⟩` — head type `A`, **no recursive position** (child type empty).
 Then both fixed points collapse:
 
@@ -20,6 +20,15 @@ Then both fixed points collapse:
 and therefore the least and greatest fixed points are equivalent — a **root-level seam**:
 
 - `root_seam : QPF.Fix (constPF A).Obj ≃ QPF.Cofix (constPF A).Obj`.
+
+**Prior art / adjacency (added 2026-07-30, prior-art gate).** `cofixEquiv` is the `B = 0` case of a
+published formula: Rutten, *Universal coalgebra*, TCS 249 (2000), **Example 10.2(5), p. 44** — for
+`F(S) = A × S^B`, i.e. the polynomial functor `⟨A, fun _ => B⟩`, the final system is `A^{B*}`. With
+`B = PEmpty`, `B*` is a single point and `A^1 = A`, which is exactly what `cofixEquiv` says. Two
+further instances are proved in `ZeroParadox/Computability/OutputSeparates.lean` (`A = 1, B = 2`
+gives a subsingleton; `A = 2, B = 1` gives the `Bool`-streams), and together the three show the
+**head type**, not the arity, is what decides whether the final coalgebra is a single point. Cited,
+not reproved; no novelty is claimed for any of them.
 
 The dichotomy theorem `root_cut_dichotomy` records both halves with the discriminating structural
 feature stated in the type: the constant functor (no recursive position) gives `Fix ≃ Cofix`, while
@@ -56,7 +65,7 @@ set_option maxHeartbeats 400000
 
 universe u
 
-/-- The leaf-free **constant** polynomial functor: head type `A`, **no recursive position**
+/-- The all-leaf **constant** polynomial functor: head type `A`, **no recursive position**
 (child family `fun _ => PEmpty`). Its action is `(constPF A).Obj X ≃ A` for every `X`. -/
 def constPF (A : Type u) : PFunctor.{u, u} := ⟨A, fun _ => PEmpty⟩
 
@@ -85,7 +94,7 @@ def objEquiv (X : Type u) : (constPF A).Obj X ≃ A where
 
 /-! ### μ side: `Fix (constPF A).Obj ≃ A` -/
 
-/-- `Fix ≃ A`: the initial algebra of the leaf-free constant functor collapses to `A`. -/
+/-- `Fix ≃ A`: the initial algebra of the all-leaf constant functor collapses to `A`. -/
 def fixEquiv : Fix (constPF A).Obj ≃ A where
   toFun x := (Fix.dest x).1
   invFun a := Fix.mk ⟨a, fun e => e.elim⟩
@@ -115,7 +124,7 @@ theorem cofixMk_head (a : A) : (Cofix.dest (cofixMk a)).1 = a := by
   rw [cofixMk, Cofix.dest_corec]
   rfl
 
-/-- `Cofix ≃ A`: the final coalgebra of the leaf-free constant functor collapses to `A`.
+/-- `Cofix ≃ A`: the final coalgebra of the all-leaf constant functor collapses to `A`.
 The right inverse `cofixMk (dest x).1 = x` is proved by bisimulation. -/
 def cofixEquiv : Cofix (constPF A).Obj ≃ A where
   toFun x := (Cofix.dest x).1
@@ -148,7 +157,7 @@ def cofixEquiv : Cofix (constPF A).Obj ≃ A where
 
 /-! ### The root seam and the dichotomy -/
 
-/-- **Root-level seam.** For the leaf-free constant functor the least and greatest fixed points are
+/-- **Root-level seam.** For the all-leaf constant functor the least and greatest fixed points are
 equivalent: `Fix ≃ Cofix`. The seam recurs at the root of the tree. -/
 def root_seam : Fix (constPF A).Obj ≃ Cofix (constPF A).Obj :=
   fixEquiv.trans cofixEquiv.symm
@@ -164,7 +173,7 @@ theorem idPF_no_seam : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj ≃ Cofix Zer
 /-- **The root-cut degeneracy dichotomy.** The μ/ν root cut is strict exactly when the functor has a
 recursive position and collapses to a seam exactly when it has none:
 
-* leaf-free **constant** functor `constPF A` (child type `PEmpty`, no recursive position):
+* all-leaf **constant** functor `constPF A` (child type `PEmpty`, no recursive position):
   `Fix ≃ Cofix` (a seam) — first component;
 * one-shape **identity** functor `idPF_Coalgebra` (child type `PUnit`, one recursive position):
   `IsEmpty (Fix ≃ Cofix)` (strict, no seam) — second component. -/
@@ -181,10 +190,15 @@ section PurityCheck
 --   root_seam            : [propext, Classical.choice, Quot.sound]     — inherits ν's choice
 --   idPF_no_seam         : [propext, Classical.choice, Quot.sound]     — inherits via cofix_nonempty
 --   root_cut_dichotomy   : [propext, Classical.choice, Quot.sound]
--- The same μ-choice-free / ν-choice split as ZPP_Coalgebra: the seam's ν half carries the M-type
+-- The same μ-choice-free / ν-choice split as ZeroParadox/Settheory/Coalgebra.lean: the seam's ν half carries the M-type
 -- choice artifact inherited from Mathlib (Cofix.corec / Cofix.bisim). The μ half (fixEquiv) is
--- choice-free, exactly as in the strict case. The choice on the ν side is a library artifact, not a
--- necessity (polynomial-functor final coalgebra is constructible choice-free in principle).
+-- choice-free, exactly as in the strict case. The choice on the ν side is a QUOTIENT-LAYER artifact,
+-- measured 2026-08-03: `QPF.Cofix` carries it in the TYPE, so no proof of a Cofix-mentioning
+-- statement is clean, while `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR
+-- is not) and `strict_cofix_nonempty` proves the same
+-- ν-inhabitation over it with no axioms. Escaping it means changing the carrier, not cleaning the
+-- proof. (A polynomial-functor final coalgebra is constructible choice-free; ACS build it as an
+-- ω-limit with no quotient layer.)
 #print axioms objEquiv
 #print axioms fixEquiv
 #print axioms cofixEquiv

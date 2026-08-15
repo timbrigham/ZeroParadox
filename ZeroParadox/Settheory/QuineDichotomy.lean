@@ -15,7 +15,7 @@ self-membering set the kernel won't allow.
 
 ## Overview
 
-The set-theory FACE of the same μ/ν bottom-fork that `ZPF_SnapDichotomy` is the number-system face of.
+The set-theory FACE of the same μ/ν bottom-fork that `ZeroParadox/Valuation/SnapDichotomy.lean` is the number-system face of.
 Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
 
 - **Existence fork (ν admits / μ forbids):** the self-referential object exists on the non-well-founded
@@ -24,7 +24,7 @@ Assembled from pieces already proved across the ZPJ family + ZP-P's coalgebra:
 - **Uniqueness + identity:** wherever the self-referential fixed point lives, it is unique and IS the
   bottom. (`ZeroParadox.selfMem_eq_singleton_bot`: the self-members are exactly `{⊥}`.)
 - **Cantor obstruction (no literal):** a nontrivial lattice face admits no Lawvere witness, so the literal
-  self-singleton (which would need `T ≃ Set T`) cannot be built. (`ZPJ_Lawvere.nontrivial_lattice_no_witness`.)
+  self-singleton (which would need `T ≃ Set T`) cannot be built. (`nontrivial_lattice_no_witness`.)
 
 ## FENCE (crucial — unlike the snap dichotomy)
 The snap's classifier (Ostrowski) is a theorem INSIDE one foundation, so "snap ⟺ non-Archimedean" is fully
@@ -41,7 +41,7 @@ claim that AFA is machine-checked.
 - no literal (Cantor)   → `ZeroParadox.nontrivial_lattice_no_witness`  (`HasLawvereWitness`)
 
 STATUS: PROVED, sorry-free. Pure assembly of ZP-P coalgebra (`categorical_fork_strict`) +
-ZPJ_SelfApp (`selfMem_eq_singleton_bot`) + ZPJ_Lawvere (`nontrivial_lattice_no_witness`).
+ZeroParadox/Computability/SelfApp.lean (`selfMem_eq_singleton_bot`) + ZeroParadox/Category/Lawvere.lean (`nontrivial_lattice_no_witness`).
 -/
 
 set_option maxHeartbeats 400000

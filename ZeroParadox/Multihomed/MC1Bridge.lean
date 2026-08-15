@@ -40,7 +40,7 @@ Here the snap floor is realized inside the genuine Mathlib categories:
   (`fC_zero_isInitial`), and there is **no** stochastic map back into it (`fC_no_return`) — AX-G2
   realized as a theorem, the snap's irreversibility.
 
-(`F_A` — the join-semilattice ℕ with 0 initial — is already in `ZPH.lean`; it is omitted here only
+(`F_A` — the join-semilattice ℕ with 0 initial — is already in `ZeroParadox/Multihomed/CategoricalBridge.lean`; it is omitted here only
 to keep ℕ's category instance unambiguous, not for any mathematical reason.)
 
 **Prior art / positioning.** None of the categorical structure here is new. `KleisliCat PMF` is the
@@ -64,6 +64,17 @@ categorical bottom of its own real category and they agree on the snap.
 namespace ZeroParadox
 
 open CategoryTheory ZeroParadox ZeroParadox ZeroParadox ZeroParadox
+
+/-! ### NO-GO gauge — `MC1Correspondence` is a BUNDLED WITNESS, not a requirements class.
+It takes no parameter, so no carrier can fail to be a member — that follows from the missing
+parameter, not from Prop-ness: two of its four fields are `IsInitial` **data**, which is why
+`MC1Correspondence : Type 1` and `mc1_correspondence` is a `def`, the one inhabitant.
+
+⚠ **The reading it must not license.** Bundling the three bottoms into one term does **not** make
+them one object — that cross-category identity is **retired as ill-typed** (`x = y` across distinct
+categories is not a well-formed proposition), and the members are provably distinct. What the bundle
+establishes is the **correspondence** half: each domain bottom is the categorical bottom of its own
+real Mathlib category. Cite the fields, never the bundle's existence. -/
 
 /-- The MC-1 correspondence over the real domain categories: the snap floor is the categorical
     bottom (initial object / inverse limit) of each domain's genuine Mathlib category, and the

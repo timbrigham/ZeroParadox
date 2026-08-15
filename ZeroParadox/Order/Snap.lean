@@ -23,18 +23,21 @@ DA-1 is addressed in ZPJ and ZPK. DA-2 is addressed in ZPI.
 
 Cross-framework synthesis of ZP-A through ZP-D. Provides three formal inserts:
 
-- DA-1 (Instantiation as Execution): Paths 1 and 3 are now in Lean scope via ZP-K.
-  ZPK.machinePhaseKleene gives MachinePhase a KleeneStructure instance; ZPK.da1_closed_concrete
-  proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing and
-  self-executing, not a static description. Path 2 (informational bridge, L-INF) remains
-  outside Lean scope. See § I-DA1 for the full argument and ZP-K for the formal closure.
+- DA-1 (Instantiation as Execution): Paths 1 and 3 are in Lean scope via ZP-K.
+  machinePhaseKleene gives MachinePhase a KleeneStructure instance; da1_closed_concrete
+  proves IsQuineAtom (bot : MachinePhase) — the initial state is self-containing, and it is
+  the only such state. The further reading "self-executing, not a static description" is
+  DA-1's claim, carried by the KleeneStructure commitment rather than by that theorem
+  (which mentions no Code and no execution). Path 2 (informational bridge, L-INF) remains
+  outside Lean scope. See § I-DA1 for the full argument and ZP-K for what is and is not proved.
 - DA-2 (Instantiation Succession): algebraic characterisation of the ⊥ role across instantiations
 - DA-3 (Perspective-Relative Cardinality): DA-3-D1 as a definition; DA-3-C1 is a
   candidate claim and is not formalised here
 
 Key result: T-SNAP — the Binary Snap ⊥ → ε₀ is a derived theorem, not an axiom.
-AX-1 is retired. The cross-framework link is established by giving ZPC.MachinePhase
-a ZPSemilattice instance, making T-SNAP a direct consequence of ZPA.bot_join.
+AX-1 is retired. The cross-framework link is established by giving `MachinePhase`
+(`ZeroParadox/Information/Surprisal.lean`) a `ZPSemilattice` instance, making T-SNAP a direct
+consequence of the semilattice bottom law `bot_join` (`ZeroParadox/Order/Lattice.lean`).
 -/
 
 namespace ZeroParadox
@@ -69,30 +72,43 @@ DA-1 states: a machine configuration at the incompressibility threshold P₀ is 
 live execution event, not a static description.
 
 Three paths support this (ZP-E v3.6 framing):
-  Path 1 — Structural (ZP-J T-EXEC + ZP-K): nothing external to ⊥ can execute ⊥;
-    ⊥ must execute itself → ⊥ = {⊥} is forced. ZPK.machinePhaseAFA gives MachinePhase
-    an AFAStructure instance encoding this. ZPK.da1_closed_concrete : IsQuineAtom bot.
-    IN LEAN SCOPE via ZP-K.
+  Path 1 — Structural (ZP-J T-EXEC + ZP-K): the argument is that nothing external to ⊥
+    can execute ⊥, so ⊥ must execute itself, forcing ⊥ = {⊥}. machinePhaseAFA gives
+    MachinePhase an AFAStructure instance encoding the conclusion as class fields, and
+    da1_closed_concrete : IsQuineAtom (bot : MachinePhase) is the Lean witness.
+    PARTLY IN LEAN SCOPE: the witness is real, and the premise "nothing external can
+    execute ⊥" is the framework's requirement, not a theorem.
   Path 2 — Informational (ZP-C L-INF): surprisal at ⊥ is unbounded → no finite
     interpreter can hold ⊥ → static-description state eliminated.
     OUTSIDE LEAN SCOPE: "unbounded surprisal → necessarily executing" is an ontological
     bridge claim not derivable in type theory.
-  Path 3 — Computational (ZP-K Kleene): no shorter program is prior to ⊥ →
-    ⊥ is its own program. ZPK.machinePhaseKleene gives MachinePhase a KleeneStructure
-    instance with botCode witnessing the Kleene fixed point.
-    IN LEAN SCOPE via ZP-K.
+  Path 3 — Computational (ZP-K Kleene): the argument is that no shorter program is prior
+    to ⊥, so ⊥ is its own program. machinePhaseKleene gives MachinePhase a
+    KleeneStructure instance whose botCode field names a code satisfying
+    IsComputationalQuine.
+    A COMMITMENT, NOT A SECOND PROOF: botCode is Classical.choose of an arbitrary such
+    code, and IsComputationalQuine is a periodicity condition that constant codes also
+    satisfy. See ZP-K § II and § VI.
 
-DA-1 Lean scope status (updated ZP-K, April 2026):
-  Paths 1 and 3: formally closed — ZPK.da1_closed_concrete : IsQuineAtom (bot : MachinePhase).
+DA-1 Lean scope status:
+  Path 1: witnessed by da1_closed_concrete : IsQuineAtom (bot : MachinePhase) —
+    which proves ⊥ is the unique self-containing state and mentions no Code and no
+    execution. The executional reading rests on the KleeneStructure commitment.
+  Path 3: carried by the KleeneStructure requirement, not by an independent theorem.
+    da1_paths_unified holds both witnesses together as a conjunction; a conjunction
+    of witnesses is not a proof that the two paths are one fact.
   Path 2: outside Lean scope — informational bridge remains an ontological commitment.
-  T-SNAP derivation: complete independently via l_run, tq_ih, bot_join (see t_snap_derived).
+  T-SNAP derivation: complete independently via l_run, tq_ih, bot_join (see t_snap_derived)
+    — and note T-SNAP does not depend on any of the above.
 
-Prior "Outside Lean Scope" designation is superseded. ZP-K is the formal closure. -/
+So DA-1 is closed given its commitments, not closed outright; ZP-K supplies the
+witnesses and names the commitment, and ZP-K § III states exactly which parts are
+proved. -/
 
 /-! ## II. T-SNAP — Binary Snap Causality (AX-1 Retired)
 
 Status: DERIVED — cross-framework.
-Dependencies: ZPC.l_run, ZPC.tq_ih, ZPA A4 (bot_join), ZPB C3 (cited below). -/
+Dependencies: l_run, tq_ih, ZPA A4 (bot_join), ZPB C3 (cited below). -/
 
 /-- T-SNAP (algebraic core): In any ZPSemilattice, ⊥ joined with ε₀ gives ε₀.
     The Binary Snap ⊥ → ε₀ is modelled as the join ⊥ ∨ ε₀ = ε₀.
@@ -114,9 +130,53 @@ theorem t_snap_derived :
     c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁ :=
   ⟨l_run, tq_ih, rfl⟩
 
+/-! ### NO-GO gauge — T-SNAP constrains the SHAPE of a transition, not that one occurs
+
+A permanent guard, added 2026-07-26. `t_snap_derived` is `⟨l_run, tq_ih, rfl⟩`, where `l_run`
+is `by decide`: it proves the two phases are distinct and that the join absorbs. Neither
+asserts that the machine ever moves. The counter-model below makes that checkable rather than
+arguable — T-SNAP is *true* in a dynamics where nothing ever happens.
+
+Occurrence is supplied elsewhere and is a **commitment**: `l_inf`'s docstring states plainly
+that the step from unbounded surprisal to forced execution is an ontological bridge, not a
+mathematical consequence. See `ZeroParadox/Computability/Occurrence.lean` for where that
+question goes in the computational face. -/
+
+/-- A dynamics on machine phases under which nothing ever changes. -/
+def stuckPhase : MachinePhase → MachinePhase := id
+
+/-- **The gauge.** T-SNAP holds while nothing moves: the phases are distinct, the join
+    absorbs, and every state is a fixed point of the dynamics. So T-SNAP cannot be cited as
+    showing the snap *occurs*. -/
+theorem tsnap_holds_but_nothing_moves :
+    (c₀ ≠ c₁ ∧ c₁ ≠ c₀ ∧ join c₀ c₁ = c₁) ∧ (∀ p : MachinePhase, stuckPhase p = p) :=
+  ⟨t_snap_derived, fun _ => rfl⟩
+
 /-- T-SNAP (irreversibility): Algebraic form of ZP-A R1 (no subtraction operator).
     If x ≼ y and x ≠ y, no join from y can return to x.
-    Complements ZPB.c3_irreversible (topological irreversibility in Q₂). -/
+    Complements c3_irreversible (topological irreversibility in Q₂).
+
+    **Scope — which slot ⊥ occupies changes the answer (Tim, 2026-07-31).** The statement is
+    parametric in `x y`, holding at every comparable pair, and
+    `ZeroParadox/Valuation/IrreversibilityProbe.lean` (§ "Order face — forced in every model")
+    grades it accordingly: *"just
+    antisymmetry — it holds in every model, so it is forced by the order axioms, not independent."*
+    ⊥ can occupy either slot, and the two instances behave oppositely:
+    * `y := ⊥` — `le x ⊥` and `x ≠ ⊥` cannot both hold, so this instance is **vacuous**. ⊥'s
+      down-set is the singleton `{⊥}`: there is nothing below it to subtract.
+    * `x := ⊥` — `le ⊥ y` holds for every `y` (`bot_le`), so for any `y ≠ ⊥` the instance is
+      **live**, and says no join from `y` returns to the bottom. This is the framework's headline
+      reading, indexed at `ZeroParadox/Order/SnapCannotBe.lean` as *"no join from ε₀ returns to
+      ⊥"* and mirrored topologically by `c3_irreversible` (`ZeroParadox/Valuation/Padic.lean`).
+
+    `Reading:` R1 has two faces here — its *subtraction* face is empty at ⊥ and acquires content at
+    the first element with a proper part, while its *no-return* face is exactly the snap's
+    irreversibility. Directionality needs two comparable points; at ⊥ alone `le` is reflexive only,
+    so there is no strict pair. In a carrier that has one, `⊥ ⋖ a` (`HasFirstStep`,
+    `ZeroParadox/Reals/OrderedField.lean`) is that first inhabitant — note the carrier switch:
+    `ZPSemilattice`'s `le` is a def with no `LT` instance, so `⋖` is not available here and the
+    comparison is an analogy, not an instantiation.
+    Long form: `.claude-local/notes/no_subtraction_is_vacuous_at_bottom_2026-07-31.md`. -/
 theorem t_snap_irreversible {L : Type*} [ZPSemilattice L] {x y : L}
     (hle : le x y) (hne : x ≠ y) :
     ¬∃ z : L, join y z = x := by
@@ -214,6 +274,11 @@ Given DP-2, DA-1 (instantiation = execution) is Lean-formalizable at the minimal
 level: the act of instantiating ⊥ moves the machine from c₀ to c₁, regardless of what
 value the operation returns. The "return to null" is a new null — not a return to c₀. -/
 
+/-! ### NO-GO gauge — `TrackedOutput` is a RECORD, not a requirements class. Two `MachinePhase`
+fields and no laws, so any pair inhabits it and nothing can fail to be one. Its content is the
+*separation* it enforces at use sites — output value distinct from machine state — not membership.
+Flagged because `check_classes.py` keys on the `structure` keyword. -/
+
 /-- A machine output tagged with the state that produced it.
     Separates the output value (what the machine returns) from the machine state
     (where the machine is). This structure is the formal content of DP-2. -/
@@ -242,8 +307,11 @@ theorem dp2_execution_distinguishability :
     even when the operation returns ⊥ as its output value.
     The "return to null" is postInstantiation — a new null, not preInstantiation.
     Given DP-2, this is DA-1 at the formally minimal level: instantiation is execution.
-    One step from c₀ to c₁ is structurally unavoidable; the output value is irrelevant
-    to whether execution occurred. -/
+    What the statement carries is that the two configurations are DISTINCT while sharing an
+    output value — the output is irrelevant to whether execution occurred. **It does not carry
+    that the step is taken.** An earlier revision read "structurally unavoidable", which
+    contradicts this file's own NO-GO gauge above (`tsnap_holds_but_nothing_moves`): occurrence
+    is a commitment, and `l_inf`'s docstring is where the argument for it stops. -/
 theorem da1_minimal_path :
     let before := preInstantiation
     let after  := postInstantiation

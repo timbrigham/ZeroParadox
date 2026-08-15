@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC39 — the dual contraction dichotomy on the Markov ν-side (#2)
+# The dual contraction dichotomy on the Markov ν-side (#2)
 
 ## Engineer's Take
 
@@ -20,7 +20,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC30 gave a sharp *valuation* contraction criterion for node #3 (the p-adic floor): the doubling-type
+`ZeroParadox/Valuation/ContractionRate.lean` gave a sharp *valuation* contraction criterion for node #3 (the p-adic floor): the doubling-type
 map `x ↦ c·x` makes `{0} ⊆ Q₂` a global attractor **iff** `‖c‖₂ < 1`, and fails (norm is preserved)
 at the boundary `‖c‖₂ = 1`. This file builds the **Markov analog** for node #2 (the stationary
 attractor in the probability simplex): a sharp *spectral* dichotomy governed by the subdominant
@@ -38,17 +38,17 @@ mass `v 0 + v 1` is preserved. So the orbit is pinned by `imb (P_aᵏ v₀) = (1
 The convergence is at the explicit geometric **rate** `|1-2a|ᵏ`, witnessed in-statement by
 `markov_imbalance_pow` (`imb (P_aᵏ v₀) = (1-2a)ᵏ · imb v₀`) together with
 `tendsto_pow_atTop_nhds_zero_of_abs_lt_one` on the gap. This exhibits #2 as a genuine geometric
-ν-attractor with an explicit contraction rate — structurally matching TC30's p-adic `c`-contraction.
+ν-attractor with an explicit contraction rate — structurally matching `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic `c`-contraction.
 
 **NO-GO half (spectral boundary `|λ₂| = 1`).** `swap_orbit_not_convergent` — the cyclic-shift /
 permutation kernel `S v = ![v 1, v 0]` (the `a = 1` boundary of the family; `λ₂ = -1`, `|λ₂| = 1`)
 started at `v₀ = ![1, 0]` produces the **periodic** orbit `![1,0], ![0,1], ![1,0], …` which does **not**
 converge: its coordinate-0 sequence is `1, 0, 1, 0, …`, whose even/odd subsequences have distinct
-limits. So #2 is **not** a single attractor at the spectral boundary — exactly dual to TC30's
+limits. So #2 is **not** a single attractor at the spectral boundary — exactly dual to `ZeroParadox/Valuation/ContractionRate.lean`'s
 `‖c‖₂ = 1 ⇒ non-attractor` for #3.
 
 **Dichotomy capstone.** `markov_contraction_dichotomy` packages both halves with the spectral reading
-`|λ₂| < 1 ⇒ attractor`, `|λ₂| = 1 ⇒ non-attractor`, mirroring TC30's valuation dichotomy.
+`|λ₂| < 1 ⇒ attractor`, `|λ₂| = 1 ⇒ non-attractor`, mirroring `ZeroParadox/Valuation/ContractionRate.lean`'s valuation dichotomy.
 
 **Honest scope.** The convergence theorem and the rate are genuine, in-statement, for the concrete
 symmetric `Fin 2` family (the eigenline reduction `imb (P_a v) = (1-2a)·imb v` does the work). It is a
@@ -122,7 +122,7 @@ theorem coord_from_imb {v : Fin 2 → ℝ} {s : ℝ} (hs : v 0 + v 1 = s) :
     start `v₀` on the probability line `v₀ 0 + v₀ 1 = 1`, the iteration `P_aᵏ v₀` converges to the
     uniform stationary vector `unif = ![1/2,1/2]`. The convergence is at the explicit geometric rate
     `|1 - 2a|ᵏ` (carried by `markov_imbalance_pow` + `tendsto_pow…of_abs_lt_one` on the gap), so #2 is
-    a genuine geometric ν-attractor, structurally matching TC30's p-adic `c`-contraction. -/
+    a genuine geometric ν-attractor, structurally matching `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic `c`-contraction. -/
 theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     {v₀ : Fin 2 → ℝ} (hv : v₀ 0 + v₀ 1 = 1) :
     Tendsto (fun k => (step a)^[k] v₀) atTop (nhds unif) := by
@@ -187,7 +187,7 @@ theorem swap_orbit_coord0 (k : ℕ) :
 /-- **NO-GO — non-convergence at the spectral boundary.** The swap orbit started at `![1,0]` does NOT
     converge: its coordinate-0 sequence is `1, 0, 1, 0, …`, whose even-indexed subsequence is constant
     `1` and odd-indexed is constant `0`. A convergent limit would force `1 = 0`. So #2 is not a single
-    attractor when `|λ₂| = 1` — exactly dual to TC30's `‖c‖₂ = 1 ⇒ non-attractor` for #3. -/
+    attractor when `|λ₂| = 1` — exactly dual to `ZeroParadox/Valuation/ContractionRate.lean`'s `‖c‖₂ = 1 ⇒ non-attractor` for #3. -/
 theorem swap_orbit_not_convergent :
     ¬ ∃ w : Fin 2 → ℝ, Tendsto (fun k => swap^[k] e0vec) atTop (nhds w) := by
   rintro ⟨w, hw⟩
@@ -227,8 +227,8 @@ theorem swap_orbit_not_convergent :
 /-- **The sharp contraction dichotomy for node #2 (spectral).** Both halves, with the spectral
     reading: spectral gap `|λ₂| < 1` (here `0 < a < 1`) ⇒ geometric attractor at the uniform vector;
     spectral boundary `|λ₂| = 1` (the swap kernel) ⇒ no single attractor (periodic orbit). This
-    mirrors TC30's valuation dichotomy for #3 (`‖c‖₂ < 1` attractor / `‖c‖₂ = 1` non-attractor) in a
-    second ambient — the within-ν rate structure TC31/TC33 left unbuilt. -/
+    mirrors `ZeroParadox/Valuation/ContractionRate.lean`'s valuation dichotomy for #3 (`‖c‖₂ < 1` attractor / `‖c‖₂ = 1` non-attractor) in a
+    second ambient — the within-ν rate structure `ZeroParadox/Computability/StationaryUnique.lean` and `ZeroParadox/Valuation/NuRateEdge.lean` left unbuilt. -/
 theorem markov_contraction_dichotomy :
     (∀ (a : ℝ), 0 < a → a < 1 → ∀ (v₀ : Fin 2 → ℝ), v₀ 0 + v₀ 1 = 1 →
         Tendsto (fun k => (step a)^[k] v₀) atTop (nhds unif)) ∧

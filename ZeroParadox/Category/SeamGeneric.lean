@@ -6,7 +6,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree — TC13: the seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
+# The seam as a GENERIC theorem (the μ=ν coincidence is a real categorical fact)
 
 ## Engineer's Take
 
@@ -20,7 +20,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 The seam node #5 (`fD_functor.obj 0 = StateSpace 0`) was previously characterised in
-`ZPH_MC1_TreeSeam` as a zero object whose reading as "the μ=ν coincidence point / the diagonal
+`ZeroParadox/Category/TreeSeam.lean` as a zero object whose reading as "the μ=ν coincidence point / the diagonal
 fixed point" was **explicitly fenced as framework interpretation, not a Lean claim**. This module
 removes that fence for the structural half of the claim by upgrading it to a *generic* categorical
 theorem.

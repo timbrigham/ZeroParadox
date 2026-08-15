@@ -5,7 +5,7 @@ import ZeroParadox.Settheory.Coalgebra
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC06 — the ZP-P W/M coalgebra fork places on the μ/ν root
+# The ZP-P W/M coalgebra fork places on the μ/ν root
 
 ## Engineer's Take
 
@@ -20,7 +20,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 This file is one go/no-go cycle of the bottom-diagram tree campaign
 (`thread_obstruction_table_2026-06-29.md`). The node under test is the **ZP-P coalgebra fork**
-(`ZPP_Coalgebra.lean`): the W-type `QPF.Fix F` and the M-type `QPF.Cofix F`. The pre-registered
+(`ZeroParadox/Settheory/Coalgebra.lean`): the W-type `QPF.Fix F` and the M-type `QPF.Cofix F`. The pre-registered
 **CLAIM** is that this fork *places consistently on the μ/ν root* — the W-type sits on the
 **μ-side** (the least-fixed-point / inductive / well-founded carrier, with a recursor *out of* it)
 and the M-type on the **ν-side** (the greatest-fixed-point / coinductive / non-well-founded carrier,
@@ -35,7 +35,7 @@ deliberately *not* invoked here). So the theorem names below say `rec_commutes` 
 not `initial_algebra` / `final_coalgebra`: an object can carry a commuting recursor without being
 initial. The load-bearing, witnessed content is the *direction* the two mediators run.
 
-**Why this is not a pure restatement of `ZPP_Coalgebra`.** That file proves, for the leaf-free
+**Why this is not a pure restatement of `ZeroParadox/Settheory/Coalgebra.lean`.** That file proves, for the leaf-free
 functor `idPF_Coalgebra`, that `Fix idPF_Coalgebra.Obj` is *empty* and `Cofix idPF_Coalgebra.Obj` is *inhabited*. Empty/inhabited
 is a cardinality fact about one functor; it does not, by itself, exhibit the *recursor/corecursor
 directions*. The two commuting squares witnessed here hold for an *arbitrary* QPF `F`:
@@ -60,7 +60,7 @@ opposition is the witnessed content of the μ/ν root cut.
 
 `fork_places_on_root` bundles the two commuting squares as the single placement statement.
 `coalgebra_fork_strict_on_idPF` then specializes back to the leaf-free `idPF_Coalgebra` and bundles the
-placement-direction facts *with* `ZPP_Coalgebra`'s strict empty/inhabited fork, so the GO verdict
+placement-direction facts *with* `ZeroParadox/Settheory/Coalgebra.lean`'s strict empty/inhabited fork, so the GO verdict
 records both that the carriers carry opposite-direction mediators *and* that on `idPF_Coalgebra` the sides are
 genuinely separated (μ empty, ν inhabited).
 
@@ -76,7 +76,7 @@ prove the *uniqueness* halves, so it does not establish that `Fix F` is the *ini
 `Cofix F` the *final* F-coalgebra (Mathlib has `Fix.rec_unique` and `Cofix.bisim` for that; they are
 not used here). The three universal-property-flavoured facts (`fix_isFixedPoint`, `fix_rec_commutes`,
 `cofix_corec_commutes`) are *generic* QPF facts — true of every QPF, re-exported from Mathlib — not
-ZP-specific content; the only ZP-specific non-trivial content is `ZPP_Coalgebra`'s strict
+ZP-specific content; the only ZP-specific non-trivial content is `ZeroParadox/Settheory/Coalgebra.lean`'s strict
 empty/inhabited fork on `idPF_Coalgebra`, bundled in at the end. Naming this the "μ/ν root" of the framework's
 bottom diagram, and identifying it with the diagonal fixed point of the other layers, is the
 cross-instance modeling commitment (ZP-P hard fence), not a theorem.
@@ -135,7 +135,7 @@ theorem fork_places_on_root :
   ⟨fun g x => fix_rec_commutes g x, fun g x => cofix_corec_commutes g x⟩
 
 /-- **GO, the strict instance.** Specialize the placement to the leaf-free functor `idPF_Coalgebra` and bundle
-    it with `ZPP_Coalgebra`'s strict empty/inhabited fork. The W-type sits on the μ-side (recursor
+    it with `ZeroParadox/Settheory/Coalgebra.lean`'s strict empty/inhabited fork. The W-type sits on the μ-side (recursor
     out of `Fix`) *and* is empty; the M-type sits on the ν-side (corecursor into `Cofix`) *and* is
     inhabited. So on `idPF_Coalgebra` the two sides of the root are both *directionally* distinct (opposite
     mediator directions) and *cardinally* separated (μ empty, ν inhabited). The two commuting-square
@@ -159,15 +159,23 @@ theorem coalgebra_fork_strict_on_idPF :
 
 section PurityCheck
 -- Measured footprint (lake build, 2026-06-29) — the split is the same μ/ν discriminator as
--- ZPP_Coalgebra, and it tracks the placement:
+-- ZeroParadox/Settheory/Coalgebra.lean, and it tracks the placement:
 --   fix_isFixedPoint     (μ, round-trips)          : [propext, Quot.sound]                    CHOICE-FREE
 --   fix_rec_commutes     (μ, recursor square)      : [propext, Quot.sound]                    CHOICE-FREE
 --   cofix_corec_commutes (ν, corecursor square)    : [propext, Classical.choice, Quot.sound]  choice-carrying
 --   fork_places_on_root  / coalgebra_fork_strict_on_idPF : inherit Classical.choice from the ν leg.
 -- The μ side is choice-free; choice enters exactly on the ν (Cofix) side, via Mathlib's M-type
--- machinery (Cofix.dest_corec / cofix_nonempty) — a library artifact, not a necessity (for a
+-- machinery (Cofix.dest_corec / cofix_nonempty) — a QUOTIENT-LAYER artifact, measured 2026-08-03:
+-- `QPF.Cofix` carries the choice in the TYPE (so no proof of a Cofix-mentioning statement is clean),
+-- while `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not) and
+-- `strict_cofix_nonempty` proves the same ν-inhabitation over it
+-- with no axioms. Escaping it means changing the carrier, not cleaning the proof. (For a
 -- polynomial functor the final coalgebra is constructible choice-free; Ahrens–Capriotti–Spadotti,
--- TLCA 2015, arXiv:1504.02949; Veltri, FSCD 2021 for the finite-powerset case). So the
+-- TLCA 2015, arXiv:1504.02949 -- their construction needs only function extensionality, which
+-- Lean has; only their uniqueness half uses univalence. Veltri, FSCD 2021 is CONTRAST, not
+-- support: for the non-polynomial finite-powerset functor his results run the other way —
+-- certain constructions there are obtained ASSUMING choice principles rather than shown to need
+-- them, and his own preferred coinductive construction needs neither choice nor LLPO). So the
 -- placement (μ choice-free / ν choice-carrying) is also visible in the axiom profile, not just the
 -- mediator direction.
 #print axioms fix_isFixedPoint

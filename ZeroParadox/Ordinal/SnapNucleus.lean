@@ -18,7 +18,8 @@ ordinals are a **linear order** (a chain), automatically **meet-preserving** (a 
 sends `min` to `min`). All three nucleus conditions hold, so `snapNucleus : Nucleus Ordinal` is a genuine
 nucleus, and it sends the ordinal bottom ⊥ to ε₀ (`epsilon0_eq_nfp_bot`). So the framework's own snap is a
 concrete instance of the difference-generator: **⊥ the seed, the snap the modality, ε₀ the fixed point it
-generates.** This realizes, on the framework's own objects, what Tim's Engineer's Take on
+generates.** (⊥ is the *least* seed, not a distinguished one — every seed at or below the closure reaches
+the same closure; see `Epsilon0MinMax.lean` § I-b. The modality carries the content, not the seed.) This realizes, on the framework's own objects, what Tim's Engineer's Take on
 `Epsilon0LeastFP.lean` already stated in words — "how bottom moves from a noun (the floor) to a verb (an
 action)": the nucleus *is* that verb; ⊥ the noun it acts on; ε₀ what it produces.
 
@@ -74,7 +75,8 @@ noncomputable def snapNucleus : Nucleus Ordinal where
     snapNucleus a = Ordinal.nfp (fun α => Ordinal.omega0 ^ α) a := rfl
 
 /-- **The difference generates ε₀ from the bottom.** The snap-nucleus sends the ordinal bottom ⊥ to ε₀
-    (`epsilon0_eq_nfp_bot`): ⊥ the seed, ε₀ the fixed point the modality generates. -/
+    (`epsilon0_eq_nfp_bot`): ⊥ the seed, ε₀ the fixed point the modality generates. ⊥ is the least
+    seed rather than a distinguished one (`Epsilon0MinMax.lean` § I-b). -/
 theorem snapNucleus_bot : snapNucleus (⊥ : Ordinal) = epsilonZero :=
   epsilon0_eq_nfp_bot.symm
 
@@ -99,7 +101,7 @@ which is classically built.
 not intrinsic to the snap." That is retracted — it is an eliminability claim with no re-proof behind it.
 What ZP-N actually re-proved choice-free is the ordinal *ascent* on `ONote` (`exp_lt_term`,
 `omegaPow_no_fixedpoint`, `tower_strictMono`), which is suggestive for the nucleus and is not the nucleus.
-`snapNucleus` itself has never been re-proved choice-free.
+`snapNucleus` itself has not been re-proved choice-free as of 2026-08-02.
 
 **Where the choice actually is (measured 2026-07-19; an earlier version of this note asserted the wrong
 mechanism).** It is **NOT** in the `Ordinal` type — `#print axioms Ordinal` reports `[propext,

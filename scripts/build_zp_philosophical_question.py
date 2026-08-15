@@ -1,5 +1,7 @@
 """
-Build: The Philosophical Question That Started This (v1.13)
+Build: The Philosophical Question That Started This (v1.14)
+v1.15: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. 'You cannot avoid it' asserted occurrence; the surrounding passage's derivability claim (the snap was an axiom, now a theorem) is correct and is kept.
+v1.14: rendered layer COUNT eliminated (project-wide counter removal) - "Thirteen formal layers"/"Thirteen layers" de-counted; stale "ZP-A through ZP-M" range dropped from the body and the endnote.
 v1.13: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
 v1.11: fix() guard added via Paragraph override — snap line and all raw Paragraph calls
        now pass through unicode-to-entity conversion (Watch-3 resolved).
@@ -39,7 +41,7 @@ April 2026.
 import os
 from zp_utils import *
 
-VERSION = '1.13'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 # ── fix() guard: ensures all Paragraph text goes through Unicode-to-entity conversion ──
@@ -217,19 +219,23 @@ def build():
     E.append(body(
         'Theorem T-SNAP — verified sorry-free in Lean 4, at github.com/timbrigham/ZeroParadox '
         '— establishes that the first state-transition from a null state to a non-null state '
-        'is a structural consequence of the join-semilattice axioms (specifically, of the bottom element axiom ∀ x, ⊥ ∨ x = x), not an assumption. '
-        'The proof is machine-checked; it requires no special snap axiom.'))
+        'has its SHAPE fixed by the join-semilattice axioms (specifically, by the bottom element axiom ∀ x, ⊥ ∨ x = x) rather than by assumption. '
+        'The proof is machine-checked; it requires no special snap axiom. '
+        'What it does not establish is that the transition is taken: a join-semilattice in which T-SNAP holds and '
+        'nothing whatever moves is exhibited in the Lean source (tsnap_holds_but_nothing_moves). That the snap '
+        'occurs is a commitment of this framework, not one of its theorems.'))
     E.append(body(
         'Leibniz asked: <i>why is there something rather than nothing?</i> '
         'The standard response — in philosophy and in physics — is that this question '
         'has no formal answer. Existence must be assumed somewhere. T-SNAP bears directly '
         'on that assumption: if the null state (⊥, the bottom of a join-semilattice) is '
         'taken as the mathematical formalization of "nothing," then the Binary Snap '
-        '(⊥ → ε₀, the first transition from nothing to something) is structurally '
-        'compelled given the framework\'s minimal axiomatic commitments — '
-        'not assumed, not answered, but derived from those commitments.'))
+        '(⊥ → ε₀, the first transition from nothing to something) has its SHAPE fixed by '
+        'the framework\'s minimal axiomatic commitments — where it goes and that it does '
+        'not reverse are derived rather than assumed. That the transition is taken at all '
+        'is a further commitment, and the framework makes it rather than proving it.'))
     E.append(body(
-        'Thirteen formal layers later — ZP-A through ZP-M — the picture is more nuanced '
+        'Many formal layers later, the picture is more nuanced '
         'than "yes, fully proved" or "no, still assumed." What the framework found is a '
         'third possibility: the question itself, applied with sufficient precision, '
         'dissolves. This document is about that dissolution — and about the precise '
@@ -264,8 +270,9 @@ def build():
         'declared true in order to get going. A theorem is something proved from '
         'other things. The Binary Snap used to be an axiom in this framework: '
         'the snap was assumed to occur. The Zero Paradox derives it as a theorem: '
-        'given the other structure of the state space, the snap is forced. '
-        'You do not choose it. You cannot avoid it.'))
+        'given the other structure of the state space, the snap’s shape is forced — where it goes, and '
+        'that it does not come back. You do not choose those. What is still assumed rather than proved is '
+        'that the step is taken at all.'))
     E.append(body(
         '<b>DA-1</b> is the argument that gives T-SNAP its philosophical weight. '
         'As a pure mathematical statement, T-SNAP says: the null state combined '
@@ -301,7 +308,7 @@ def build():
         'The theorem needed category theory to show it wasn\'t an artifact of one '
         'particular mathematical language. And the whole structure needed a closure '
         'result to show it wasn\'t just a description of emergence but a complete cycle. '
-        'Thirteen layers, added one at a time, each forced by what the layer before it '
+        'The layers, added one at a time, each forced by what the layer before it '
         'could not yet say.'))
     E.append(body(
         'Two features of the construction matter for what follows. First, '
@@ -334,7 +341,7 @@ def build():
         'not merely an emergence theorem.'))
     E.append(body(
         'The topological and algebraic cores of these results are verified in Lean 4. '
-        'T-SNAP is derived. The Binary Snap is not assumed.'))
+        'T-SNAP is derived: the Binary Snap\'s shape is not assumed. Its occurrence still is.'))
     E.append(hr())
 
     # ── Section 2 ──────────────────────────────────────────────────────────────
@@ -431,7 +438,7 @@ def build():
         'has a ⊥ — an empty proof, a null type, a bottom element. That structure is '
         'not passive. It generates. The Gödelian undecidable sentence is not unreachable '
         'truth above the system. It is structurally parallel to the ε₀ of that system\'s '
-        'null state — generated by the same mechanism that forces every Binary Snap, '
+        '⊥ — generated by the same mechanism the framework reads behind every Binary Snap, '
         'though the formal embedding of that correspondence is not yet complete. '
         'Incompleteness is not '
         'the limit of formal systems. It is where the Snap lives inside every one of '
@@ -461,15 +468,17 @@ def build():
         'informality objection. It does not happen to the null state.',
 
         'WHAT SNAPS',
-        'The null state ⊥. Binary. Instantaneous. Irreversible. '
+        'The bottom element ⊥. Binary. Instantaneous. Irreversible. '
         'The transition ⊥ → ε₀ is not a process, not a gradual emergence, '
         'not a dissolving. It is a snap. The Binary Snap is the antipode of '
         'dissolution. Where dissolution shows a question was malformed, '
-        'the Snap shows a transition was forced. '
+        'the Snap shows a transition with a forced SHAPE — where it goes, and that '
+        'it does not come back. '
         'T-SNAP: ⊥ ∨ ε₀ = ε₀. '
         'No subtraction (R1). No continuous return (C3). No categorical reversal (AX-G2). '
-        'The Snap is the structure of the transition. It does not dissolve. '
-        'It fires.'
+        'Those fix what the transition is, not that it is taken: that it is taken '
+        'remains this framework\'s commitment. The Snap is the structure of the '
+        'transition. It does not dissolve.'
     ))
     E.append(sp(8))
 
@@ -477,7 +486,7 @@ def build():
         'Dissolving applies to the informality objection against DA-1. '
         'Snapping applies to the null-to-first-state transition. '
         'These operate at different levels and must never be conflated. '
-        'The philosophical gap dissolves. The Binary Snap fires.',
+        'The philosophical gap dissolves, and the framework commits to the Binary Snap firing.',
         bg=GOLD_LITE, border=GOLD))
     E.append(hr())
 
@@ -497,10 +506,12 @@ def build():
         'cannot even be nothing, because "being nothing" is itself a property, and '
         'pure absence has none. The moment you characterize it, you give it structure; '
         'the moment it has structure, it has a bottom element; and a bottom element is ⊥. '
-        'So the void and the null state are the same object. ⊥ = {⊥} — the null '
-        'state contains itself — means no prior state was ever needed to generate it. '
-        'It always already generated itself. The saying had it exactly backwards: '
-        'nothing, precisely because it is nothing, has no choice but to become something.'))
+        'So the void and ⊥ are the same object. ⊥ = {⊥} — ⊥ contains itself — means no '
+        'prior state was ever needed to generate it. It always already generated itself. '
+        'The framework reads the saying as exactly backwards: that nothing, precisely '
+        'because it is nothing, has no choice but to become something. That reading is '
+        'the argument this section makes, and it is the framework\'s commitment; it is '
+        'not carried by any theorem above, and the previous section says why.'))
     E.append(body(
         'Whether this closes the final gap depends on what you, as an individual, think a gap requires. '
         'It does not satisfy in the way a Lean proof satisfies. But it may be the '
@@ -558,7 +569,8 @@ def build():
     E.append(Paragraph(
         '⊥ → ε₀', S['snap']))
     E.append(Paragraph(
-        'The Snap is not a starting assumption. It is what the structure demands.',
+        'The Snap\'s shape is not a starting assumption; it is what the structure fixes. '
+        'That the Snap is taken remains the framework\'s commitment.',
         S['subtitle']))
 
     E += [
@@ -567,7 +579,7 @@ def build():
             '<i>End of document  |  The Philosophical Question That Started This  |  '
             'Zero Paradox Project  |  ' + version_date() + '  |  '
             'Not a formal result — a philosophical essay. '
-            'The formal mathematics lives in the committed PDFs, ZP-A through ZP-M.</i>',
+            'The formal mathematics lives in the committed PDFs.</i>',
             S['endnote']),
     ]
 

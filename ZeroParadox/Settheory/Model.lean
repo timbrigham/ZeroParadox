@@ -13,6 +13,11 @@ that has that behaviour. The concrete carrier is ℕ∞ = WithTop ℕ — the ex
 scale is just add-one. ⊤ + 1 = ⊤ in WithTop ℕ, so ⊤ is the unique fixed point.
 Everything else is provable by arithmetic.
 
+*(Editor's note, outside the Take: the Take above says "ZPJ_Scale", a pre-reorg module name that
+resolves to nothing at HEAD — it is now `ZeroParadox/Valuation/Scale.lean`. **The Take is Tim's voice
+and is left exactly as written**; a mechanical path sweep rewrote it on 2026-08-02 and was reverted.
+Only Tim edits a Take, so the pointer lives here instead.)*
+
 ## The model
 
 ℕ∞ with join = min and bot = ⊤ satisfies ZPSemilattice:
@@ -33,7 +38,7 @@ So ⊤ is the ZP-bottom (valuation ∞, unique fixed point), and 0 is the ZP-max
 
 ## The indexed-family picture
 
-The abstract gap in ZPJ_Scale asked for an infinite domain where scale can increase
+The abstract gap in ZeroParadox/Valuation/Scale.lean asked for an infinite domain where scale can increase
 valuation without bound. ℕ∞ resolves this: each n : ℕ is a level with val n = n,
 scale shifts n to n + 1, and ⊤ is the limit point that all sequences converge to.
 The "indexed family (L₀, L₁, L₂, ...)" is just this structure with each Lₙ = {n, ⊤}.
@@ -44,10 +49,10 @@ The full derivation chain now has a concrete model:
 
   (ℕ∞, min, ⊤) : ZPSemilattice
     + ValuationStructure (scale = +1, val = id)
-    → AbstractSelfApp (via ZPJ_Scale.toAbstractSelfApp)
+    → AbstractSelfApp (via toAbstractSelfApp)
     → AFA content: natInf_selfMem_singleton = {⊤}
 
-All results are sorry-free and derived from ℕ∞ arithmetic + ZPJ_Scale theorems.
+All results are sorry-free and derived from ℕ∞ arithmetic + ZeroParadox/Valuation/Scale.lean theorems.
 -/
 
 namespace ZeroParadox

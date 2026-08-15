@@ -11,7 +11,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, cross-root completeness — TC04: #1↔#3 and #5↔#3
+# Cross-root completeness: the #1↔#3 and #5↔#3 edges
 
 ## Engineer's Take
 
@@ -51,7 +51,7 @@ clash as E4, instantiated for #3:
 
 The Hilbert seam `#5 = StateSpace 0` is a **zero object** of `ModuleCat ℂ` — in particular it is
 **initial**. The p-adic floor `{0} ⊆ Q₂` is a **limit / terminal-flavoured** object and is provably
-**not initial** in `TopCat` (`ZPH_MC1_TreeObstructions.padic_bottom_not_initial`). The separator is the
+**not initial** in `TopCat` (`padic_bottom_not_initial`). The separator is the
 categorical-polarity clash:
 
 - `seam_initial_padic_not_initial` — `#5` is initial in `ModuleCat ℂ` **and** `#3`'s one-point space is *not*

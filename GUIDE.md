@@ -22,7 +22,7 @@ The Zero Paradox proves that a minimum non-bottom element is structurally forced
 
 Each layer of the proof is internally closed before any cross-framework claim is made.
 
-No snap-specific axioms appear anywhere in the framework. The Binary Snap - the forced transition from the bottom element ⊥ to the minimum non-bottom state - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
+No snap-specific axioms appear anywhere in the framework. The Binary Snap - the transition from the bottom element ⊥ to the minimum non-bottom state, whose shape is derived rather than assumed - is a theorem proved in ZP-E from A4 - the standard bottom-element axiom (∀ x, ⊥ ∨ x = x) - together with the framework's computational commitments. A4 is a standard axiom of join-semilattice theory.
 
 ---
 
@@ -86,7 +86,7 @@ One companion per formal document. Plain language, diagrams, real-world examples
 | [ZP-I Illustrated Companion](ZP-I_Illustrated_Companion.pdf) | ZP-I | 2-adic depth diagram, three closed doors + Cauchy passage, complete cycle diagram |
 | [ZP-J Illustrated Companion](ZP-J_Illustrated_Companion.pdf) | ZP-J + ZP-J AFA Addendum | Quine atom diagram (⊥ = {⊥}), directed-graph (APG) view of the Quine atom (self-loop), three-way equivalence table, CC-1/CC-2 as derived propositions, abstraction chain (ValuationStructure → AFAStructure), APG decoration uniqueness |
 | [ZP-J Wheel Illustrated Companion](ZP-J_Wheel_Illustrated_Companion.pdf) | ZP-J Wheel Addendum | Wheel vs meadow diagram (∞ ≠ ⊥), division by zero made total, ∞ = /0 and ⊥ = 0·/0, the wheel of fractions construction, wheel/meadow distinction, porthole connection |
-| [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Four-way equivalence diagram, computational Quine, execution argument Lean verification |
+| [ZP-K Illustrated Companion](ZP-K_Illustrated_Companion.pdf) | ZP-K | Three-way equivalence diagram, computational Quine, execution argument Lean verification |
 | [ZP-L Illustrated Companion](ZP-L_Illustrated_Companion.pdf) | ZP-L | Ordinal tower with ε₀ snap threshold, dual convergence diagram |
 | [ZP-M Illustrated Companion](ZP-M_Illustrated_Companion.pdf) | ZP-M | Kleene-Ordinal-2-adic triangle, diagonalization schema |
 

@@ -11,7 +11,23 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC29 — the THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to TC19's #3/#2)
+# The THREE-carrier ν/seam leaf set is one-point (adds #5 Hilbert to `ZeroParadox/Valuation/NuLeafReconcile.lean`'s #3/#2)
+
+> **The prior node is `ZeroParadox/Valuation/NuLeafReconcile.lean`** — the one covering the #3/#2
+> ν-leaves, whose capstone at HEAD is `nu_leaf_glue_subsingleton` and proves exactly the pair
+> described below, `↥({0} : Set Q₂)` and `↥(stdSimplex ℝ (Fin 1))`.
+> `ZeroParadox/Multihomed/WallSpanRobust.lean` is a **different** node — span-robustness of the
+> well-founded cross-root wall, #1 vs #2.
+>
+> *(Kept because the failure mode is instructive, and it outlived the label scheme that caused it.
+> This file's citation was once repointed to `WallSpanRobust.lean` on the authority of a label
+> mapping. **That repoint was wrong** — it produced a citation that RESOLVED while describing content
+> its target does not contain, which is strictly harder to notice than a dead link. **A resolving
+> citation is not a verified one.** The evidence that settles such a question is the declaration, and
+> `nu_leaf_glue_subsingleton` is in `NuLeafReconcile.lean` and nowhere else. Corrected 2026-08-02:
+> this note previously named the capstone `tc16_nu_leaf_glue_but_generic`, a **pre-rename branch name
+> that is not at HEAD**, in the present tense — a dead citation offered as the verification method, in
+> the note about verification methods.)*
 
 ## Engineer's Take
 
@@ -24,19 +40,29 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-**Honest verdict: DECORATIVE (generic one-point case throughout).** Like TC19, this file proves
+**Honest verdict: DECORATIVE (generic one-point case throughout).** Like `ZeroParadox/Valuation/NuLeafReconcile.lean`, this file proves
 nothing structural about the p-adic, simplex, or Hilbert objects: every result is a consequence of the
-single fact that the carriers are *one-point spaces*. It is **not** a strengthening of TC19's claim
+single fact that the carriers are *one-point spaces*. It is **not** a strengthening of `ZeroParadox/Valuation/NuLeafReconcile.lean`'s claim
 about the #3/#2 leaves.
 
-**Why TC29 is a separate node and not pure duplication of TC19.** TC19 (`ZPH_MC1_TC19.lean`) covers
-exactly the two ν-bottom leaves #3 (p-adic floor `↥({0} : Set Q₂)`) and #2 (`Fin 1` stationary point
-`↥(stdSimplex ℝ (Fin 1))`). TC29 **adds the #5 Hilbert seam carrier** `StateSpace 0 =
+**Why this is a separate node and not pure duplication of `ZeroParadox/Valuation/NuLeafReconcile.lean`.** The prior node covers exactly the two
+ν-bottom leaves #3 (p-adic floor `↥({0} : Set Q₂)`) and #2 (`Fin 1` stationary point
+`↥(stdSimplex ℝ (Fin 1))`).
+
+**The prior node is `ZeroParadox/Valuation/NuLeafReconcile.lean`** — see the label note in
+the header. Its two carriers are exactly the pair named above, and its capstone at HEAD is
+`nu_leaf_glue_subsingleton` — the #3/#2 leaf reconciliation together with its own genericity deflation.
+*(The pre-rename branch called that capstone `tc16_nu_leaf_glue_but_generic`; that name is **not at
+HEAD**.)*
+The neighbouring within-ν edges, `ZeroParadox/Valuation/NuRateEdge.lean` and
+`ZeroParadox/Valuation/NuRateMatch.lean`, sharpen the same pair at the orbit-rate level.
+
+**This file adds the #5 Hilbert seam carrier** `StateSpace 0 =
 EuclideanSpace ℂ (Fin 0)` to the leaf-reconciliation set and witnesses the three-way reconciliation
 **in the capstone statement** (`nu_leaf_glue_three`). The #5 carrier is load-bearing in that statement
-— it is not a conjunction of facts TC19 already proves. So TC29's tree contribution is the *edge to the
+— it is not a conjunction of facts `ZeroParadox/Valuation/NuLeafReconcile.lean` already proves. So this file's tree contribution is the *edge to the
 #5 seam node*: the Hilbert bottom's carrier reconciles with the other two ν-leaves at the point. The
-honest verdict is that this edge, like TC19's, is the **generic subsingleton** one — it carries no
+honest verdict is that this edge, like `ZeroParadox/Valuation/NuLeafReconcile.lean`'s, is the **generic subsingleton** one — it carries no
 Hilbert/p-adic/simplex content — and the file says so in-statement (see the `≃ₜ PUnit` genericity
 witnesses).
 
@@ -58,7 +84,7 @@ Everything else follows from that alone:
   the trivial one-point space `PUnit`. So each leaf reconciliation distinguishes the carriers from
   nothing — it is vacuous as an invariant.
 - `nu_leaf_glue_three` (capstone) — the load-bearing claim. It conjoins (a) the three-way leaf homeo
-  span `#3 ≃ₜ #2` and `#3 ≃ₜ #5` (this is what is NEW vs TC19: #5 is in the statement), with (b) the
+  span `#3 ≃ₜ #2` and `#3 ≃ₜ #5` (this is what is NEW vs `ZeroParadox/Valuation/NuLeafReconcile.lean`: #5 is in the statement), with (b) the
   genericity witness `#5 ≃ₜ PUnit`. The conjunction says: the Hilbert seam carrier joins the ν-leaf
   glue, but only by the generic subsingleton map. The #5 carrier is load-bearing; the deflation is
   in-statement.
@@ -68,10 +94,10 @@ that #3's floor remembers a valuation/embedding invariant the bare leaves lack �
 this level, because the valuation structure lives on the **ambient** `Q₂`, and the one-point subspace
 `{0}` forgets it (`padic_is_punit`). This file cannot speak to the real asymmetry. The load-bearing μ/ν
 asymmetry (the connected-vs-totally-disconnected wall) is an **ambient** phenomenon and remains **OPEN
-in `ZPH_MC1_TreeT2`** — it is neither proved nor probed here.
+in `ZeroParadox/Multihomed/TreeT2.lean`** — it is neither proved nor probed here.
 
 **What is Lean vs interpretation.** Lean proves exactly: three carriers are `Unique`; the #5 Hilbert
-carrier reconciles with #3/#2 at the point (the new content over TC19); hom-sets between them are
+carrier reconciles with #3/#2 at the point (the new content over `ZeroParadox/Valuation/NuLeafReconcile.lean`); hom-sets between them are
 `Subsingleton`; each carrier is homeomorphic to `PUnit` (genericity). Any reading of this as "the seam
 leaf glue is canonically forced" is just the restatement that one-point spaces have unique maps — it is
 not framework-specific evidence. The single non-vacuous claim in this corner of the tree (the ambient
@@ -131,20 +157,22 @@ instance hom_padic_hilbert_subsingleton : Subsingleton C(padicFloor_ThreeCarrier
 
 /-- The canonical homeomorphism between two `Unique` spaces (`homeomorphOfUnique`): "any two
     one-point spaces are homeomorphic". Cardinality-driven, not a structural identification.
-    This is the #3 ≃ₜ #2 leaf reconciliation TC19 already established. -/
+    This is the #3 ≃ₜ #2 leaf reconciliation the prior node already established
+    (`ZeroParadox/Valuation/NuLeafReconcile.lean`, edge ). -/
 noncomputable def nu_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf simplexPoint_ThreeCarrierLeaf
 
-/-- **The TC29-specific edge: #3 ≃ₜ #5.** The canonical homeomorphism between the p-adic floor and the
+/-- **The -specific edge: #3 ≃ₜ #5.** The canonical homeomorphism between the p-adic floor and the
     Hilbert seam carrier `StateSpace 0` — again `homeomorphOfUnique` (both are `Unique`). This is the
-    leaf reconciliation TC19 does NOT cover: it adds the #5 seam node to the ν-leaf glue set. Generic
+    leaf reconciliation the prior node (`ZeroParadox/Valuation/NuLeafReconcile.lean`) does NOT
+    cover: it adds the #5 seam node to the ν-leaf glue set. Generic
     (cardinality-driven), per the genericity witnesses below. -/
 noncomputable def seam_leaf_homeo : padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf hilbertCarrier
 
 /-- `padicFloor_ThreeCarrierLeaf ≃ₜ PUnit`, again `homeomorphOfUnique`. Genericity witness for #3: the valuation/
     embedding invariant lives on the ambient `Q₂`, and the one-point subspace `{0}` forgets it, so the
-    floor-as-space is a bare point. The real asymmetry is ambient and stays OPEN in `ZPH_MC1_TreeT2`. -/
+    floor-as-space is a bare point. The real asymmetry is ambient and stays OPEN in `ZeroParadox/Multihomed/TreeT2.lean`. -/
 noncomputable def padic_is_punit : padicFloor_ThreeCarrierLeaf ≃ₜ PUnit :=
   Homeomorph.homeomorphOfUnique padicFloor_ThreeCarrierLeaf PUnit
 
@@ -157,10 +185,10 @@ noncomputable def padic_is_punit : padicFloor_ThreeCarrierLeaf ≃ₜ PUnit :=
 noncomputable def hilbert_is_punit : hilbertCarrier ≃ₜ PUnit :=
   Homeomorph.homeomorphOfUnique hilbertCarrier PUnit
 
-/-- **TC29 capstone — the three-carrier ν/seam leaf glue, with #5 Hilbert load-bearing in-statement.**
-    The NEW content over TC19: the statement names the #5 Hilbert seam carrier, not only #3/#2.
+/-- **capstone — the three-carrier ν/seam leaf glue, with #5 Hilbert load-bearing in-statement.**
+    The NEW content over `ZeroParadox/Valuation/NuLeafReconcile.lean`: the statement names the #5 Hilbert seam carrier, not only #3/#2.
     Conjoins (a) the three-way leaf homeo span `padicFloor_ThreeCarrierLeaf ≃ₜ simplexPoint_ThreeCarrierLeaf` (= #3 ≃ₜ #2) and
-    `padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier` (= #3 ≃ₜ #5, the TC29-specific edge), with (b) the genericity
+    `padicFloor_ThreeCarrierLeaf ≃ₜ hilbertCarrier` (= #3 ≃ₜ #5, the -specific edge), with (b) the genericity
     deflation `hilbertCarrier ≃ₜ PUnit`. Reading: the Hilbert seam carrier joins the ν-leaf glue, but
     only by the generic subsingleton map — so this edge carries no Hilbert content beyond cardinality,
     exactly as the one-point case forces. Honest verdict: DECORATIVE, edge-to-#5 added, deflation

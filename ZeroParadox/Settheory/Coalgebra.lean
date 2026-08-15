@@ -35,9 +35,18 @@ commitment, not a theorem (ZP-P hard fence).
 
 PROVED. Two theorems, no `sorry`. Split axiom footprint: `fix_isEmpty` (μ empty) is choice-free
 `[propext, Quot.sound]`; `cofix_nonempty` (ν inhabited) carries `Classical.choice` from Mathlib's
-M-type / corecursion machinery. That choice is a library artifact, not a necessity: for a polynomial
-functor the final coalgebra is constructible choice-free (Ahrens et al.; Veltri, FSCD 2021). See
-PurityCheck.
+M-type / corecursion machinery. **That choice sits in `QPF.Cofix` itself** (measured 2026-08-03: the
+type reports `[propext, Classical.choice, Quot.sound]`), so it is not removable by any proof of this
+statement — but it IS attributable to the QPF quotient layer rather than to the mathematics, because
+`PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not) and
+`strict_cofix_nonempty` proves the same inhabitation over it with no
+axioms. Ahrens et al. agree from the other side: for a polynomial
+functor the final coalgebra is constructible choice-free (their construction needs
+only function extensionality, which Lean has; only their uniqueness half uses univalence, see
+`ZeroParadox/Computability/ChoicePurityInvariant.lean`. Veltri is CONTRAST, not support: for the
+non-polynomial finite-powerset functor his results run the other way — certain constructions
+there are obtained ASSUMING choice principles rather than shown to need them, and his own
+preferred coinductive construction needs neither choice nor LLPO). See PurityCheck.
 -/
 
 namespace ZeroParadox
@@ -89,12 +98,25 @@ Here the dataset is the leaf-free polynomial functor `idPF_Coalgebra`: its W-typ
 choice-free, while its M-type (`QPF.Cofix`, ν) is inhabited and carries choice inherited from Mathlib, with
 choice entering exactly on the non-well-founded, self-referential side.
 
-*Editorial addendum (Claude):* that choice on the ν side is inherited from Mathlib's M-type machinery,
-not a necessity — for a polynomial functor like `idPF_Coalgebra` the final coalgebra is constructible choice-free
-in principle (Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021, the coinductive construction). Choice
-genuinely enters the μ/ν story only for the non-polynomial finite-powerset functor, where it is pinned
-per presentation: full AC for the set-quotient, countable choice + LLPO (⟺ injectivity of the canonical
-algebra) for Worrell's (ω+ω)-limit (Veltri, FSCD 2021).
+*Editorial addendum (Claude), restated from measurement 2026-08-03 — the earlier wording said the
+choice was "not a necessity" and "removable in principle", which was an inference nobody had checked.*
+**Measured:** `QPF.Cofix` carries `Classical.choice` **in the type**, so no proof of any statement
+mentioning it can be choice-free — the footprint here is not removable by rewriting this proof.
+**Also measured:** `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not),
+and `strict_cofix_nonempty`
+(`ZeroParadox/Computability/RootCutTrichotomy.lean`) proves the same ν-inhabitation over that M-type
+with **no axioms at all**. So the choice is attributable to Mathlib's QPF **quotient layer** rather
+than to the mathematics — which is now a measurement, not a reading — and escaping it means changing
+the carrier, not cleaning the argument. That is also why Ahrens–Capriotti–Spadotti come out
+choice-free: they build the final coalgebra as an ω-limit with no quotient layer (their construction
+needs only function extensionality, which Lean has; only their uniqueness half uses univalence). In the finite-powerset case — the
+non-polynomial one — Veltri (FSCD 2021) pins each presentation: full AC for the set-quotient,
+countable choice together with LLPO for Worrell's (ω+ω)-limit. **The CHOICE half is a fact about
+those constructions rather than a necessity result** — two of Veltri's presentations are choice-free
+outright: the setoid one (his Theorem 1, final in `SetoidRel`) and the coinductive type he prefers
+(his Theorem 2). The LLPO half is different: that one he does prove necessary, injectivity of the
+canonical algebra implying LLPO outright and being equivalent to it under countable choice. So the
+necessity in that paper is of a logic taboo, not of choice.
 -/
 
 section PurityCheck
@@ -103,12 +125,24 @@ section PurityCheck
 --   cofix_nonempty (ν is inhabited) : [propext, Classical.choice, Quot.sound]  — choice-carrying
 --   categorical_fork_strict         : inherits Classical.choice from cofix_nonempty
 -- The well-founded (inductive) side is constructive; the non-well-founded (coinductive) side carries
--- Classical.choice — but as a Mathlib artifact, NOT a necessity: for a polynomial functor like idPF_Coalgebra the
--- final coalgebra (M-type) is constructible choice-free in principle (Ahrens–Capriotti–Spadotti;
--- Veltri, FSCD 2021, the coinductive construction). Choice genuinely enters the μ/ν story only for the
--- non-polynomial finite-powerset functor — pinned per presentation: full AC for the set-quotient,
--- countable choice + LLPO (⟺ injectivity of alg_Vω) for Worrell's limit (Veltri). The fork spine
--- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See AxiomProfile.lean.
+-- Classical.choice — but as a QUOTIENT-LAYER artifact, measured 2026-08-03: `QPF.Cofix` carries it in
+-- the TYPE, so no proof of a Cofix-mentioning statement is clean, while `PFunctor.M`'s former and
+-- constructors are axiom-free (its DESTRUCTOR is not) and
+-- `strict_cofix_nonempty` proves the same ν-inhabitation over it with no axioms at all. Escaping the
+-- footprint means changing the carrier, not cleaning the proof. For a polynomial functor like
+-- idPF_Coalgebra the final coalgebra is constructible choice-free (Ahrens–Capriotti–Spadotti,
+-- TLCA 2015, who build it as an ω-limit; the construction needs only funext, univalence entering
+-- only at their uniqueness result; Lean has funext). For Lean's Axiom-K setting the closer
+-- citation is **Altenkirch–Ghani–Hancock–McBride–Morris, *Indexed Containers* (JFP 25, 2015)**,
+-- which ACS themselves point at (§1.1) and generalize "to the whole of HoTT". **The full
+-- three-way setting comparison is in `ZeroParadox/Computability/ChoicePurityInvariant.lean` —
+-- read it there, not here.** In the finite-powerset case — the non-polynomial one — the literature
+-- pins each presentation: full AC for the set-quotient, countable choice together with LLPO for
+-- Worrell's limit. The CHOICE half is a fact about those constructions, not a necessity: two of
+-- Veltri's presentations are choice-free outright, the setoid one (his Thm 1) and the coinductive
+-- type he prefers (his Thm 2). The LLPO half he does prove necessary: injectivity of `alg_Vω`
+-- implies LLPO outright and is equivalent to it under countable choice. The fork spine
+-- (`ZeroParadox.fork_collapse_iff`) is fully choice-free. See `ZeroParadox/AxiomProfile.lean`.
 #print axioms fix_isEmpty
 #print axioms cofix_nonempty
 #print axioms categorical_fork_strict
@@ -120,8 +154,15 @@ section PurityCheck
    `categorical_fork_strict` inherits ν's choice. So choice is the discriminator between the two ends of
    the fork at this abstract polynomial-functor level. (Contrast M1: at the concrete Mathlib-category
    realization the analogous split is invisible — every functor is uniformly choice-carrying because the
-   library proves it with choice. The ν choice here is likewise a Mathlib M-type artifact, not a
-   necessity — Veltri, FSCD 2021 — so the discriminator is real but its structural status is fenced.) -/
+   library proves it with choice. The ν choice here is likewise a QUOTIENT-LAYER artifact rather than
+   a necessity, measured 2026-08-03: `QPF.Cofix` carries the axiom in the type — so no proof of a
+   `Cofix`-mentioning statement is clean — while `PFunctor.M`'s former and constructors are
+   axiom-free (its DESTRUCTOR is not) and `strict_cofix_nonempty`
+   proves the same ν-inhabitation over it with no axioms. Ahrens–Capriotti–Spadotti, TLCA 2015, agree
+   from the other side. So the discriminator is real but its structural
+   status is fenced. **Do NOT cite Veltri here**: his subject is the finite-powerset functor, which is
+   not polynomial, and he cites ACS for the polynomial case himself. He is apt only for the
+   finite-powerset claims above.) -/
 end PurityCheck
 
 end ZeroParadox

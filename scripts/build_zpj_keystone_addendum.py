@@ -1,6 +1,9 @@
 """
 Zero Paradox — ZP-J Keystone Addendum: The Diagonal Fixed Point, the Lawvere Face-Split, and the Well-Foundedness Boundary
-Version 1.2 | July 2026
+Version 1.5 | August 2026
+v1.5: THE v1.4 FIX WAS PARTIAL, AND THAT MADE THINGS WORSE. v1.4 corrected the two sites carrying the literal strings "modeling commitment" and "offered", and missed a THIRD stating the same claim in different words - Section II's closing sentence, "The one-object identification remains the MC-1 commitment." The result was a document saying the identity was retired on page 1 and live on page 2. Before v1.4 it was uniformly stale, i.e. self-consistent; a partial fix to a self-consistent error manufactures a self-contradiction, which is worse than not fixing it. The cause was grepping the three forbidden PHRASES rather than the CLAIM. Section II now states what MC-1 does carry: family membership proved per domain, with the choice of criteria the design commitment. Found independently by both gates at FAIL-BEDROCK. A FOURTH site then turned up - one neither gate flagged - found only by sweeping the rendered text for the CLAIM (any sentence pairing an identity notion with a live-status verb) rather than for the phrases: Section III called MC-1 an "existing identification", and its "bottom/epsilon-zero identification" wording could be read as equating the two endpoints, which epsilon0_ne_bot forbids. Now stated as a role assignment, with the endpoints' distinctness named. Also: the endnote's Lean sources upgraded to full repository paths.
+v1.3: CITATION SCOPE. Section III called the biconditional "the General Recursion Theorem". AMM's Thm 7.2 (p. 27) is the FORWARD direction only; their section 8 is titled "The Converse of the General Recursion Theorem". That converse always asks the ENDOFUNCTOR to preserve inverse images and then takes one of several routes - the CATEGORY having universally smooth monos with the functor carrying a pre-fixed point (Thm 8.1), or the category having a subobject classifier (Thm 8.6, Taylor's), or a third route for functors on vector spaces which have neither (Thm 8.12). The smooth-mono and subobject-classifier conditions are the CATEGORY's; preserving inverse images and carrying a pre-fixed point are the ENDOFUNCTOR's; and the routes are not exhaustive. Cor 8.2 lists five equivalent conditions, including the initial-algebra leg, under Thm 8.1's assumptions specifically. Taylor's necessity result is scoped as he scopes it - IN A TOPOS (Prop 111, p. 6), which he states rather than proves - and his forward half is Thm 36, p. 15. The "one cannot recurse through the bottom" reading is marked as this framework's gloss: Prop 111 names no bottom element. Also: the next-time operator is no longer listed as missing machinery, having been built in ZeroParadox/Category/NextTimeCategorical.lean; the remaining Mathlib absences are dated rather than asserted. All locators read from source.
+v1.4: MC-1 framing brought to the ratified form. THREE rendered sites carried the retired identity; v1.4 fixed two of them and v1.5 the third. They called the cross-category identity a live "modeling commitment" and said it was "offered" - the identity was RETIRED AS ILL-TYPED (an equation across distinct categories is not a well-formed proposition), and CLAIMS.md already says so, so the PDF disagreed with the ledger. Now: family membership proved per domain, criteria a design principle, identity retired, members provably distinct. R2-4 (Taylor cited page-precisely with no year or venue) is NOT fixed here: the on-disk copy carries neither, and inventing them is worse than the gap. It stays open pending a verified bibliographic record.
 v1.2: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.1: Honest-scope precision — the single-carrier "snap is one crossing" carries no NEW commitment; it rests on the framework's existing ⊥/ε₀ identification (MC-1 / OQ-E2), endpoints proved (floor non-wf via real ⊥, axiom-free).
 v1.0: Initial release. A thin addendum recording two machine-checked investigations into the
@@ -8,14 +11,15 @@ v1.0: Initial release. A thin addendum recording two machine-checked investigati
       in Set no face is a Lawvere instance (Cantor), the computability face is genuine; and
       (2) the well-foundedness boundary (ZPJ_Boundary.lean, ZPJ_BoundaryBridge.lean) — the snap
       as a ν→μ crossing, relation-level + QPF bridge (best-effort; full Taylor coalgebraic = open).
-      Honest fences carried throughout: probe/best-effort, modeling commitment, open Rung-C.
+      Honest fences carried throughout: probe/best-effort, MC-1 family membership (identity
+      retired as ill-typed), open Rung-C.
 Reads after ZP-J Self-Reference.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.5'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -64,8 +68,11 @@ def build():
         'The keystone of the Zero Paradox is that &#8869; is the same self-referential '
         '(diagonal) fixed point in every framework: the Quine atom &#8869; = {&#8869;} in set '
         'theory, the Kleene quine in computation, the point v<sub>2</sub>(0) = &#8734; in '
-        'valuation, and the initial object in category theory. That these faces are <i>one '
-        'object</i> is a modeling commitment (MC-1), not a theorem. This addendum is a thin, '
+        'valuation, and the initial object in category theory. Their shared membership in that '
+        'family (MC-1) is proved per domain; the choice of criteria is a design principle; and '
+        'the claim that the faces are <i>numerically one object</i> is <b>retired as '
+        'ill-typed</b> &#8212; an equation across distinct categories is not a well-formed '
+        'proposition, and the members are provably distinct. This addendum is a thin, '
         'honest record of two machine-checked investigations into the structure of that '
         'keystone &#8212; both probe-level, both fenced as to exactly what they prove.'))
     E.append(body(
@@ -99,9 +106,11 @@ def build():
             'v<sub>2</sub>(0) = &#8734;, &#949;<sub>0</sub>, the wheel of fractions &#8212; '
             'each with a machine-checked axiom footprint; and the <i>location</i> claim, that '
             'the fixed point sits at the floor &#8869; (the G&#246;del inversion), a framing.',
-            'Does not add: the unification itself (Lawvere/Yanofsky), nor a proof that the four '
-            'faces are numerically one object &#8212; that is the MC-1 commitment, offered to '
-            'these communities, not imposed on them.',
+            'Does not add: the unification itself (Lawvere/Yanofsky), nor any identification of '
+            'the four faces as one object &#8212; that identity is <b>retired as ill-typed</b>, '
+            'since an equation across distinct categories is not a well-formed proposition. What '
+            'MC-1 carries is family membership, proved per domain, with the members provably '
+            'distinct.',
         ]
     ))
     E.append(sp(6))
@@ -153,7 +162,8 @@ def build():
         '<b>The verdict, plainly:</b> the test is category-relative. In Set no face is a '
         'Lawvere instance; in the effective (computability) category the recursion theorem is '
         'a genuine one. The keystone therefore unifies a <i>shape</i> (the diagonal), not a '
-        'single mechanism. The one-object identification remains the MC-1 commitment.'))
+        'single mechanism. What MC-1 carries is family membership, proved per domain, with the '
+        'choice of criteria the design commitment.'))
     E.append(sp(6))
 
     # ── Section III: The well-foundedness boundary ─────────────────────────────
@@ -168,12 +178,21 @@ def build():
         'encoded as a powerset coalgebra; <b>well-founded</b> means no infinite descending '
         'chain &#8212; no cycle. The Quine atom &#8869; = {&#8869;} is exactly the minimal '
         '<i>non</i>-well-founded coalgebra: the self-loop &#8869; &#8712; &#8869;, the back '
-        'edge. <b>Taylor</b> (Well-founded coalgebras and recursion) proved that well-founded '
-        '&#8658; recursive, and (Prop 111) that well-foundedness is <i>necessary</i> for '
-        'recursion: one cannot recurse through &#8869;. <b>Ad&#225;mek&#8211;Milius&#8211;Moss</b> '
-        '(On Well-Founded and Recursive Coalgebras, 2020, arXiv:1910.09401) give the modern '
-        'characterizations (well-founded &#8660; recursive &#8660; a morphism to the initial '
-        'algebra).'))
+        'edge. <b>Taylor</b> (Well-founded coalgebras and recursion) proves well-founded '
+        '&#8658; recursive as his Recursion Theorem (Thm 36, p. 15), and states the converse '
+        '<i>in a topos</i> &#8212; there well-foundedness is <i>necessary</i> for recursion '
+        '(Prop 111, p. 6). <b>Ad&#225;mek&#8211;Milius&#8211;Moss</b> (On Well-Founded and '
+        'Recursive Coalgebras, 2020, arXiv:1910.09401v2) prove the forward direction as the '
+        '<b>General Recursion Theorem</b> (Thm 7.2, p. 27). Their converse (&#167;&#160;8) always '
+        'asks the <i>endofunctor</i> to preserve inverse images, and then takes one of several '
+        'routes: the <i>category</i> may have universally smooth monomorphisms with the functor '
+        'carrying a pre-fixed point (Thm 8.1), or the category may have a subobject classifier '
+        '(Thm 8.6, which is Taylor\'s); a third covers functors on vector spaces, which have '
+        'neither (Thm 8.12). Under Thm 8.1\'s assumptions the characterizations coincide &#8212; '
+        'well-founded &#8660; recursive &#8660; a morphism to the initial algebra (Cor 8.2). '
+        'Reading the necessity direction as <i>one cannot recurse '
+        'through</i> &#8869; is this framework\'s gloss, not Taylor\'s: Prop 111 names no '
+        'bottom element.'))
     E.append(body(
         'In that language the binary snap &#8869; &#8594; &#949;<sub>0</sub> is a crossing of '
         'the well-foundedness boundary: from the non-well-founded floor (&#8869;, the '
@@ -208,9 +227,11 @@ def build():
             '(floor_not_wellFounded is axiom-free; the rest carry Classical.choice from '
             'Mathlib\'s ordinal and QPF machinery).',
             'No new commitment: that the snap <i>is</i> this crossing is a faithful model whose '
-            'content is the two proven endpoints plus an identification &#8212; and that identification '
-            'is the framework&#8217;s <i>existing</i> &#8869;/&#949;<sub>0</sub> identification (MC-1, and '
-            'the &#949;<sub>0</sub> identity already open under OQ-E2), not a fresh one. The floor endpoint '
+            'content is the two proven endpoints, plus the reading of those endpoints as ZP\'s own '
+            '&#8869; and &#949;<sub>0</sub> respectively &#8212; a role assignment the framework '
+            'already carries (MC-1 family membership; the &#949;<sub>0</sub> type bridge open under '
+            'OQ-E2), not a fresh one. The two endpoints stay distinct: '
+            '&#949;<sub>0</sub> &#8800; &#8869; (epsilon0_ne_bot). The floor endpoint '
             'is tied to the real &#8869; of ZP (floor_not_wellFounded, axiom-free); the single-carrier '
             'Phase is the illustrative toy model, where non-well-foundedness localizes at the floor by '
             'construction.',
@@ -228,20 +249,24 @@ def build():
     E.append(body(
         'The <b>full</b> Taylor coalgebraic statement &#8212; &#8869; as a non-well-founded '
         '<i>coalgebra</i> in the broken-pullback sense, with the General Recursion Theorem '
-        '(well-founded &#8660; recursive) &#8212; is deliberately <i>not</i> formalized here. '
-        'Mathlib currently lacks the required machinery: the next-time operator on subobject '
-        'lattices, Pataraia\'s fixed-point theorem, and the recursion theorem for well-founded '
-        'coalgebras. The depth result is therefore cited (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss), '
-        'not re-proved. What is given here is the relation-level boundary and the QPF bridge: a '
-        'best effort that names its own boundary.'))
+        '<i>and its converse</i> &#8212; is deliberately <i>not</i> formalized here. Searched '
+        'as of August 2026, the pinned Mathlib carries neither Pataraia\'s fixed-point theorem '
+        'nor a recursion theorem for well-founded coalgebras; the <b>next-time operator</b> on '
+        'subobject lattices is no longer missing, having since been built in this project '
+        '(ZeroParadox/Category/NextTimeCategorical.lean), though it is not upstreamed. The '
+        'depth result is '
+        'therefore cited (Taylor; Ad&#225;mek&#8211;Milius&#8211;Moss), not re-proved. What is '
+        'given here is the relation-level boundary and the QPF bridge: a best effort that names '
+        'its own boundary.'))
     E.append(remark_box(
         'Open contribution point',
         [
-            'Formalizing the missing machinery &#8212; the next-time operator, Pataraia\'s '
-            'fixed-point theorem, and the General Recursion Theorem &#8212; would upgrade this '
-            'best-effort bridge to the full coalgebraic statement, and would be a reusable Lean '
-            'contribution independent of the Zero Paradox. Contributions are welcome, to this '
-            'project and to Mathlib as a whole; the precise missing pieces are named above.',
+            'Formalizing the machinery still missing &#8212; Pataraia\'s fixed-point theorem '
+            'and the General Recursion Theorem &#8212; would upgrade this best-effort bridge to '
+            'the full coalgebraic statement, and would be a reusable Lean contribution '
+            'independent of the Zero Paradox. Upstreaming the next-time operator, already built '
+            'here, is a third. Contributions are welcome, to this project and to Mathlib as a '
+            'whole; the precise missing pieces are named above.',
         ]
     ))
     E.append(sp(6))
@@ -251,8 +276,9 @@ def build():
         'established the porthole (v<sub>2</sub>(&#8869;) = &#8734;, &#8869; = {&#8869;}); this '
         'addendum records two machine-checked probes into the keystone\'s structure &#8212; the '
         'Lawvere face-split and the well-foundedness boundary &#8212; each fenced as to exactly '
-        'what it proves. Lean sources: Lawvere.lean, Boundary.lean, '
-        'BoundaryBridge.lean, all sorry-free in Lean 4 as of June 2026.',
+        'what it proves. Lean sources: ZeroParadox/Category/Lawvere.lean, '
+        'ZeroParadox/Multihomed/Boundary.lean, ZeroParadox/Multihomed/BoundaryBridge.lean, '
+        'all sorry-free in Lean 4 as of June 2026.',
         S['endnote']))
 
     print(f'[build_zpj_keystone_addendum] Assembling document ({len(E)} elements)...')

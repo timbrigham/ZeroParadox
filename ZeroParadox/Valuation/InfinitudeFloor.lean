@@ -52,10 +52,13 @@ the 0 = ∞ inversion.
 - § I   The requirements typeclass `InfinitudeFloor`.
 - § II  Two support lemmas about `ℕ∞`.
 - § III The identity (well-typed) and its consequence (the infinitude forces infinite complexity).
+- § III-b The OFFSET structure: members sit at finite distance, the floor alone at ⊤ (Tim, 2026-08-05).
 - § IV  A toy witness (`ℕ∞`, inhabitability).
 - § V   The power-series witness (`R⟦X⟧`, order at the floor).
 - § VI  The inversion extension (both poles, concurrently and one after the other).
 - § VII The genuine 2-adic witness (`ℚ₂`).
+- § VIII NO-GO gauge: the class forces `Infinite α` and nothing more; a hand-built witness
+  shows the substance lives in the chosen witnesses, not in class membership.
 -/
 
 namespace ZeroParadox
@@ -72,8 +75,6 @@ class InfinitudeFloor (α : Type*) where
   cx : α → ℕ∞
   /-- the infinitude of zeros: distinct nulls indexed by ℕ. -/
   member : ℕ → α
-  /-- each member is distinct from the floor (a "new" null, never the floor itself). -/
-  member_ne_floor : ∀ n, member n ≠ floor
   /-- the members' complexities climb strictly (so they are pairwise distinct and unbounded in ℕ∞). -/
   cx_member_strictMono : StrictMono (fun n => cx (member n))
   /-- **the identity**: the floor's complexity is the supremum of the infinitude's. -/
@@ -124,6 +125,81 @@ theorem infinitude_forces_infinite_complexity (α : Type*) [I : InfinitudeFloor 
 
 end ZeroParadox
 
+/-! ### § III-b. The OFFSET structure — the floor is the only point at infinite distance
+
+**Why the tower's `+1` is FORCED, not conventional** (Tim's question, 2026-08-05): no member can be
+the floor (`member_ne_floor` below — a member there would sit at `⊤` with nothing able to climb past
+it), so an enumeration seeded at the floor begins at the successor, exactly `towerInfinitudeFloor`'s
+`member n = cnfToZp2 (towerNONote (n + 1))`. ⊥ admits no offset because its down-set is `{⊥}`
+(`ZeroParadox/Order/Snap.lean`) and a difference needs two points.
+⚠ **`Reading:` that the approximation index, the `+1`, and the transport asymmetry are ONE phenomenon
+is the framework's interpretation** — a shared shape across distinct structures, hence a **type
+boundary, never a common theorem**. -/
+
+namespace ZeroParadox
+
+
+/-- **`Statement:` every member sits at FINITE complexity.** A strictly increasing `ℕ∞`-valued sequence
+cannot take the value `⊤`: a term equal to `⊤` would need a successor strictly above it. Note this is
+**not** assumed — the class asks only that the complexities climb. -/
+theorem member_cx_lt_top {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
+    I.cx (I.member n) < ⊤ := by
+  rcases eq_or_lt_of_le (le_top : I.cx (I.member n) ≤ ⊤) with h | h
+  · exfalso
+    have hstep : I.cx (I.member n) < I.cx (I.member (n + 1)) :=
+      I.cx_member_strictMono (Nat.lt_succ_self n)
+    rw [h] at hstep
+    exact absurd hstep (not_lt.mpr le_top)
+  · exact h
+
+/-- **`Statement:` no member shares the floor's complexity.** The measurement-level statement:
+members differ from the floor not merely as elements, but in **how far out they sit**. Proved from
+`infinitude_forces_infinite_complexity` and `member_cx_lt_top` (which is where `cx_member_strictMono`
+enters, one step further back). -/
+theorem member_cx_ne_floor_cx {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
+    I.cx (I.member n) ≠ I.cx I.floor := by
+  rw [infinitude_forces_infinite_complexity α]
+  exact ne_of_lt (member_cx_lt_top n)
+
+/-- **`Statement:` no member IS the floor** — a "new" null, never the floor itself. Immediate from
+`member_cx_ne_floor_cx`: equal elements would have equal complexity. -/
+theorem member_ne_floor {α : Type*} [I : InfinitudeFloor α] (n : ℕ) :
+    I.member n ≠ I.floor :=
+  fun h => member_cx_ne_floor_cx n (congrArg I.cx h)
+
+/-- **`Statement:` the offset is recoverable WITHIN the carrier** — distinct indices give distinct
+members, because the complexities strictly climb.
+
+`Reading:` (conjectural, and **narrower than a first draft claimed**) contrast this with the
+**notation** map `e0Repr`, where distinct representations provably collapse (`e0Repr_not_injective`) —
+there position is not recoverable. ⚠ **Do not generalize that to "transport" as such**: the very
+citation offered alongside it, `tower_repr_orderEmbedding` (`ZeroParadox/Ordinal/CnfBridge.lean`),
+shows the index's **order** crossing intact on that map, and `seed_maps_to_bot_both` pins index 0 on
+both sides. So recoverability varies **by map**, not by "inside vs between carriers". -/
+theorem member_injective {α : Type*} [I : InfinitudeFloor α] :
+    Function.Injective (I.member) := fun _ _ hab =>
+  I.cx_member_strictMono.injective (congrArg I.cx hab)
+
+/-- **`Statement:` the floor is the UNIQUE point of the family at infinite distance.** Restricted to
+the floor and its members, `cx x = ⊤` holds exactly at the floor.
+
+⚠ **Scoped to the family on purpose.** The class says nothing about arbitrary elements of `α`, so this
+is **not** a uniqueness claim about the carrier — `infinitude_forces_infinite_complexity` gives no such
+thing, and `ZeroParadox/Category/WellFoundedCoalgebra.lean` records the same **shape** of fence (there
+it scopes `Type u` against the MC-1 carriers — related in shape, not the same fence). -/
+theorem floor_unique_at_top {α : Type*} [I : InfinitudeFloor α] (x : α)
+    (hx : x = I.floor ∨ ∃ n, x = I.member n) :
+    I.cx x = ⊤ ↔ x = I.floor := by
+  constructor
+  · intro htop
+    rcases hx with rfl | ⟨n, rfl⟩
+    · rfl
+    · exact absurd htop (ne_of_lt (member_cx_lt_top n))
+  · rintro rfl
+    exact infinitude_forces_infinite_complexity α
+
+end ZeroParadox
+
 /-! ### § IV. Toy witness (inhabitability) — the ℤ₂ witness follows -/
 
 namespace ZeroParadox
@@ -136,7 +212,6 @@ instance : InfinitudeFloor ℕ∞ where
   floor := ⊤
   cx := id
   member := fun n => (n : ℕ∞)
-  member_ne_floor := fun n => by simp
   cx_member_strictMono := by intro a b h; simp only [id_eq]; exact_mod_cast h
   cx_floor_eq_iSup := by simp only [id_eq]; exact iSup_coe_top.symm
 
@@ -159,11 +234,6 @@ noncomputable instance powerSeriesInfinitudeFloor {R : Type*} [CommRing R] [Nont
   floor := 0
   cx := PowerSeries.order
   member := fun n => X ^ (n + 1)
-  member_ne_floor := fun n => by
-    intro hc
-    have h1 : (X ^ (n + 1) : PowerSeries R).order = ⊤ := by rw [hc]; exact order_zero
-    rw [order_X_pow] at h1
-    exact (ENat.coe_ne_top (n + 1)) h1
   cx_member_strictMono := by
     intro a b h
     simp only [order_X_pow]
@@ -200,8 +270,14 @@ class InfinitudeFloorInversion (α : Type*) [TopologicalSpace α] extends Infini
 
 /-- **All four in one shape.** Along the infinitude the element descends to the 0-pole (`member → floor`)
 while the complexity ascends to the ∞-pole (`cx∘member → ⊤`) — both poles, concurrently at the floor
-(`cx floor = ⊤`) and one after the other along the chain (the `z ↦ 1/z` chart flip). One typeclass holds the
-zero pole, the infinity pole, their coincidence, and their inversion. -/
+(`cx floor = ⊤`) and one after the other along the chain (the `z ↦ 1/z` chart flip). One **typeclass**
+holds the zero pole, the infinity pole, their coincidence, and their inversion.
+
+⚠ **This THEOREM holds only the DRIFT.** Its conclusion is the two `Tendsto` conjuncts and contains
+no `cx floor = ⊤`; the coincidence is carried by the *class*, and its witness is the separate
+declaration `infinitude_forces_infinite_complexity`. Do not cite this theorem for the coincidence.
+(`CLAUDE.md` named it the coincidence witness until 2026-08-06, contradicting its own KIND table,
+which had it under DRIFT all along. The table was right.) -/
 theorem pole_inversion (α : Type*) [TopologicalSpace α] [I : InfinitudeFloorInversion α] :
     Tendsto I.member atTop (nhds I.floor) ∧
       Tendsto (fun n => I.cx (I.member n)) atTop (nhds (⊤ : ℕ∞)) := by
@@ -254,7 +330,6 @@ noncomputable instance q2InfinitudeFloor : InfinitudeFloor Q₂ where
   floor := 0
   cx := cxQ2
   member := fun n => (2 : Q₂) ^ (n + 1)
-  member_ne_floor := fun n => pow_ne_zero (n + 1) two_ne_zero
   cx_member_strictMono := by
     intro a b h
     show cxQ2 ((2 : Q₂) ^ (a + 1)) < cxQ2 ((2 : Q₂) ^ (b + 1))
@@ -279,6 +354,158 @@ noncomputable instance : InfinitudeFloorInversion Q₂ :=
         (pure_orbit_tendsto_zero_iff_norm_lt_one 2).mpr two_is_contraction
       exact hbase.comp (tendsto_add_atTop_nat 1) }
 
+/-! ### § VIII. NO-GO — what the requirements class does and does not pin down
+
+**The sharp form, and it is a CHARACTERISATION rather than a bare negative.** `[InfinitudeFloor α]`
+does constrain `α`: `member_injective` (§ III-b) supplies `ℕ ↪ α`, so **the class forces `α` to be
+INFINITE** and no finite type can carry it. What it does **not** do is constrain `α` any further — the
+fields are satisfiable on a carrier whose only relevant property is that infinitude, with every field
+discharged from hand-written data. The honest statement is therefore:
+
+> **`Nonempty (InfinitudeFloor α) ↔ Infinite α`** — the class pins down infinitude and nothing else.
+
+That biconditional is `infinitudeFloor_nonempty_iff_infinite` below, so "nothing else" is proved
+rather than inferred from one witness. ⚠ An earlier draft asserted the "exactly / nothing beyond"
+reading while offering only a single hand-built carrier for the converse, and in the same edit deleted
+the fence that had said the general form was not proved. Both gates caught it; the answer was to prove
+it.
+
+⚠ **An earlier draft said `[InfinitudeFloor α]` "says nothing about `α`" and that membership "carries
+no content". BOTH ARE FALSE**, refuted by `member_injective` in this same file, and caught by two
+independent gate probes. The precedent cited below (`ZeroParadox/Algebra/Wheel.lean` § VII-b) carries a
+dated correction retiring exactly that sentence shape, on the ground that it tells a reader to discard
+legitimate results — the retired form was reproduced here while citing the corrected file.
+
+⚠ **The witness below is § IV's toy TRANSPORTED, not a new carrier.** `BookkeepingCarrier = ℕ ⊕ Unit`
+is canonically equivalent to `ℕ∞` (`Equiv.optionEquivSumPUnit`, since `ℕ∞ = WithTop ℕ = Option ℕ`), and
+the `cx` below is that equivalence's inverse — § IV's `cx = id` in other clothing. **The delta of this
+section is the STATEMENT of the no-go, not the carrier.** § IV already calls its own witness
+degenerate. What is new, and true as measured **on 2026-08-07, across the eight other files using the class**:
+**no corpus file states the no-go for `InfinitudeFloor`, and the class has no non-degeneracy
+predicate.**
+
+**Precedent.** `ZeroParadox/Algebra/Wheel.lean` § VII-b found `WheelValuationStructure` degenerately
+inhabited — a constant-`⊤` valuation satisfies every field on any **commutative ring** (that class
+extends `CommRing`; not "any carrier") — and answered with an explicit `WVSNondegenerate` predicate
+plus the standing rule that constructions over it carry that predicate as a hypothesis.
+`InfinitudeFloor` has no analogue. The older sibling is `trivialSelfApp`
+(`ZeroParadox/Computability/SelfApp.lean`), which `Wheel.lean` names as what its own gauge mirrors.
+
+**Prior art — the shape is standard and the framework joins it rather than inventing it.** Degenerate
+models of an axiom set, and non-degeneracy stated as an **inequation**, are ordinary universal
+algebra. Burris & Sankappanavar, *A Course in Universal Algebra* (all three read from the filed copy):
+an algebra is *"trivial if |A| = 1"* (§ II.1, p. 26); *"as trivial algebras satisfy any
+quasi-identity"* (p. 250); and — the load-bearing one — *"As a trivial algebra cannot satisfy a
+negated atomic formula, exactly one of Ψ₁, …, Ψₖ is atomic"* (p. 251). **That last is WHY a
+non-degeneracy condition has to be stated as an inequality**: a trivial model satisfies every positive
+axiom, so only a negated atom excludes it. It is the shape `WVSNondegenerate`, `0 ≠ 1` and Mathlib's
+**`Nontrivial`** all take; `Nontrivial` / `Valuation.IsNontrivial` (the latter already named in
+`Wheel.lean`) are the idioms to reach for if a predicate is ever added here.
+
+⚠ **A prior draft of this paragraph asserted those two passages were "not reproducible from the filed
+copy's text layer" and cited only the definition.** That was false, and it was a **truncated search
+recorded as an absence** — the sentences wrap across lines and a tight pattern with a result limit
+missed them, while the book's own index reads *"Quasi-identity 250"*. Two gates re-extracted them
+independently; both have since been re-verified here. **This is `CLAUDE.md` § *NOT IN THE LIBRARY IS
+A CLAIM* failing in the direction it warns about, inside a docstring, one edit after the rule was
+invoked.** Recorded rather than quietly repaired, because the narrowed citation had also stopped
+supporting the sentence it anchors.
+
+⚠ This is **not** an instance-of relation either way: `InfinitudeFloor` degenerates in its **chosen
+data**, not in its **carrier**. Shared shape, nothing more.
+
+⚠ **The degeneracy is NOT confined to `InfinitudeFloor`, and an earlier draft asserted a fence here
+that does not exist.** That draft claimed the members' convergence to the floor "could not even be
+stated" on this carrier. `TopologicalSpace (ℕ ⊕ Unit)` synthesizes, so it is perfectly statable; and a
+gate probe during review reported a full `InfinitudeFloorInversion` witness on this carrier under the
+indiscrete topology, with § VI's `pole_inversion` going through. **That extension is NOT built here** —
+it is recorded so no reader infers a protection that was never established. -/
+
+/-- **`Statement:` the class DOES constrain its carrier — it forces infinitude.** `member_injective`
+(§ III-b) gives `ℕ ↪ α`; the conclusion is Mathlib's `Infinite.of_injective` applied to it. This is
+the reason the "says nothing about `α`" reading is false. -/
+theorem infinitudeFloor_forces_infinite {α : Type*} [I : InfinitudeFloor α] : Infinite α :=
+  Infinite.of_injective I.member member_injective
+
+/-- **`Statement:` so NO FINITE TYPE carries the class** — stated for every finite carrier, not just
+`PUnit`. An earlier version proved only the `PUnit` case while its gloss claimed the general one. -/
+theorem no_infinitudeFloor_of_finite (α : Type*) [Finite α] : IsEmpty (InfinitudeFloor α) :=
+  ⟨fun I => by haveI := @infinitudeFloor_forces_infinite α I; exact not_finite α⟩
+
+/-- The bookkeeping carrier: `ℕ` with one extra point adjoined. ⚠ Canonically equivalent to `ℕ∞` — see
+the section header; it is § IV's witness transported, chosen because every `InfinitudeFloor` field
+below is then discharged from data written down by hand. -/
+abbrev BookkeepingCarrier : Type := ℕ ⊕ Unit
+
+/-- **`Statement:` the requirements class is satisfied with all fields hand-supplied.**
+
+Deliberately a `def` and **not** an `instance`: registering it globally would put a junk
+`InfinitudeFloor` into instance search, and the instance hazard is a recorded defect class here. -/
+@[reducible] def bookkeepingInfinitudeFloor : InfinitudeFloor BookkeepingCarrier where
+  floor := Sum.inr ()
+  cx := Sum.elim (fun n => (n : ℕ∞)) (fun _ => ⊤)
+  member := Sum.inl
+  cx_member_strictMono := by intro a b h; dsimp only [Sum.elim_inl]; exact_mod_cast h
+  cx_floor_eq_iSup := iSup_coe_top.symm
+
+/-- **`Statement:` the no-go, as a theorem rather than a definition.** -/
+theorem bookkeeping_nonempty : Nonempty (InfinitudeFloor BookkeepingCarrier) :=
+  ⟨bookkeepingInfinitudeFloor⟩
+
+/-- **The converse construction:** every infinite carrier admits an `InfinitudeFloor`. The floor is
+`e 0` and the members are `e (n+1)` for an embedding `e : ℕ ↪ α`; `cx` sends the floor to `⊤` and each
+other point to its index. Noncomputable and classical — `cx` must be defined on ALL of `α`, which is
+exactly the obstruction an earlier draft named when it declined to claim this. -/
+@[reducible] noncomputable def infinitudeFloorOfInfinite (α : Type*) [Infinite α] :
+    InfinitudeFloor α :=
+  letI := Classical.decEq α
+  let e := Infinite.natEmbedding α
+  have hinv : ∀ k : ℕ, Function.invFun e (e k) = k := Function.leftInverse_invFun e.injective
+  have hne : ∀ k : ℕ, e (k + 1) ≠ e 0 := fun k h => by have := e.injective h; omega
+  { floor := e 0
+    cx := fun x => if x = e 0 then ⊤ else ((Function.invFun e x : ℕ) : ℕ∞)
+    member := fun n => e (n + 1)
+    cx_member_strictMono := by
+      intro a b hab
+      dsimp only
+      rw [if_neg (hne a), if_neg (hne b), hinv, hinv]
+      exact_mod_cast Nat.succ_lt_succ hab
+    cx_floor_eq_iSup := by
+      have hstep : ∀ n : ℕ,
+          (if e (n + 1) = e 0 then (⊤ : ℕ∞) else ((Function.invFun e (e (n + 1)) : ℕ) : ℕ∞))
+            = ((n + 1 : ℕ) : ℕ∞) := fun n => by rw [if_neg (hne n), hinv]
+      have key : ⨆ n : ℕ, ((n + 1 : ℕ) : ℕ∞) = ⊤ := by
+        rw [iSup_eq_top]
+        intro b hb
+        lift b to ℕ using hb.ne
+        exact ⟨b, by exact_mod_cast Nat.lt_succ_self b⟩
+      rw [if_pos rfl, iSup_congr hstep, key] }
+
+/-- **`Statement:` THE CHARACTERISATION — the class pins down infinitude and nothing else.**
+
+Forward: `infinitudeFloor_forces_infinite`. Converse: `infinitudeFloorOfInfinite`. Together they say
+`[InfinitudeFloor α]` is exactly as informative as `Infinite α` — which is what makes the hand-built
+witness below a fair gauge rather than a curiosity, and what a non-degeneracy predicate would have to
+strengthen. -/
+theorem infinitudeFloor_nonempty_iff_infinite (α : Type*) :
+    Nonempty (InfinitudeFloor α) ↔ Infinite α :=
+  ⟨fun ⟨I⟩ => @infinitudeFloor_forces_infinite α I,
+   fun h => ⟨@infinitudeFloorOfInfinite α h⟩⟩
+
+/-- **`Statement:` § III's headline theorem holds of the bookkeeping carrier.** Instantiated here it
+says a two-constructor bookkeeping type has a floor of infinite complexity — true, and empty of the
+content the substantive witnesses carry. That contrast is the whole point of the gauge. -/
+theorem bookkeeping_forces_infinite_complexity :
+    bookkeepingInfinitudeFloor.cx bookkeepingInfinitudeFloor.floor = ⊤ :=
+  infinitude_forces_infinite_complexity (I := bookkeepingInfinitudeFloor) BookkeepingCarrier
+
+/-- **`Statement:` the members are distinct from the floor here.** A readability specialization of
+`member_ne_floor`, which holds of EVERY `InfinitudeFloor` — so it witnesses nothing specific to this
+hand-built one. ⚠ It says nothing about limits or convergence. -/
+theorem bookkeeping_members_ne_floor (n : ℕ) :
+    bookkeepingInfinitudeFloor.member n ≠ bookkeepingInfinitudeFloor.floor :=
+  member_ne_floor (I := bookkeepingInfinitudeFloor) n
+
 end ZeroParadox
 
 section PurityCheck
@@ -286,7 +513,20 @@ open ZeroParadox
 
 #print axioms infinite_complexity_is_infinitude_of_zeros
 #print axioms infinitude_forces_infinite_complexity
+#print axioms member_cx_lt_top
+#print axioms member_cx_ne_floor_cx
+#print axioms member_ne_floor
+#print axioms member_injective
+#print axioms floor_unique_at_top
 #print axioms pole_inversion
 #print axioms two_pow_valuation
+#print axioms infinitudeFloor_forces_infinite
+#print axioms no_infinitudeFloor_of_finite
+#print axioms infinitudeFloorOfInfinite
+#print axioms infinitudeFloor_nonempty_iff_infinite
+#print axioms bookkeepingInfinitudeFloor
+#print axioms bookkeeping_nonempty
+#print axioms bookkeeping_forces_infinite_complexity
+#print axioms bookkeeping_members_ne_floor
 
 end PurityCheck

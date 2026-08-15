@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
 Version 1.17 | June 2026
+v1.18: FORCING OVERCLAIM RETRACTED (Remark R-FORCING). F_B was said to "force an irreversible jump at 0"; Valuation/Padic.lean retracts exactly that - the 2-adic topology proves irreversibility and a clopen gap, never a first step, and no metric result could. The closing "structurally forced across all four" now reads as the SHAPE being constrained; occurrence stays a framework commitment.
 v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4),
 no longer a freestanding modelling commitment.
@@ -29,7 +30,7 @@ v1.0: Initial release.
 import os
 from zp_utils import *
 
-VERSION = '1.17'
+VERSION = '1.18'
 FIRST_RELEASED = 'April 2026'
 
 
@@ -379,14 +380,17 @@ def build():
         [
             'The four functors (F<sub>A</sub>, F<sub>B</sub>, F<sub>C</sub>, F<sub>D</sub>) established in '
             'Sections III-V do not merely translate the Binary Snap into categorical language. Each functor '
-            'independently grounds the snap in its own domain: F<sub>A</sub> shows the lattice join forces '
-            '&#949;<sub>0</sub> above &#8869;; F<sub>B</sub> shows the 2-adic topology forces an irreversible '
-            'jump at 0; F<sub>C</sub> shows the information-theoretic transition costs exactly 1 bit; '
+            'independently grounds the snap in its own domain: F<sub>A</sub> shows the lattice join places '
+            '&#949;<sub>0</sub> above &#8869;; F<sub>B</sub> shows the 2-adic topology makes any departure '
+            'from 0 irreversible (it does not supply the departure &#8212; ZP-B cannot force the snap, and '
+            'the first step is AX-B1); F<sub>C</sub> shows the information-theoretic transition costs exactly 1 bit; '
             'F<sub>D</sub> shows the Hilbert space snap is an orthogonal shift.',
             'That the same structural singularity appears across four independently grounded domain categories '
             '— each confirmed sorry-free in Lean 4 (fb_snap_q2_grounded, fc_snap_info_grounded, '
-            'fd_snap_hilb_grounded) — is not re-description. It is the theorem: the phenomenon is '
-            'structurally forced across all four canonical mathematical languages for state description.',
+            'fd_snap_hilb_grounded) — is not re-description. It is the theorem: the phenomenon\'s '
+            '<i>shape</i> is structurally constrained across all four canonical mathematical languages for '
+            'state description. That the transition is taken remains a framework commitment, not a '
+            'consequence of any of the four.',
         ]
     ))
 

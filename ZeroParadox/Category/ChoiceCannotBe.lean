@@ -8,6 +8,8 @@ import ZeroParadox.Ordinal.SyntacticCollapse
 import ZeroParadox.Computability.RootCutTrichotomy
 import ZeroParadox.Computability.ChoicePurityInvariant
 import ZeroParadox.Settheory.Wall
+import ZeroParadox.Ordinal.OrdinalChoiceEssential
+import ZeroParadox.Category.LawvereTaboo
 
 /-!
 # Machine-checked characterization index of the framework's relationship to `Classical.choice`
@@ -16,8 +18,10 @@ A fourth index, **not a fourth framework object** — alongside `ZeroParadox/Bot
 `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` and `ZeroParadox/Order/SnapCannotBe.lean`. A `#check`-only
 index: it states no new results and reproduces no logic. Every line `#check`s an already-proven
 declaration in its home file, and the `import`s force those files to compile, so the index cannot point
-at a dead or renamed result. A `#check`-only index creates no declarations and therefore *structurally
-cannot overclaim*.
+at a dead or renamed result. A `#check`-only index creates no declarations, so **the `#check` LINES**
+cannot overclaim. **The prose around them absolutely can, and in this file it did** — § IV records a
+universal negative that stood here while two counterexamples sat in the corpus. Read every claim below
+that is not a `#check` as ordinary unverified prose.
 
 ## Engineer's Take
 
@@ -66,11 +70,11 @@ which is why Diaconescu gets an equivalence and we do not. **That reconciliation
 small finding; the equivalence is his.** Every evocative reading in the framework's prose — "choice is which way you view the
 self-dual split", "reading the pole as the floor is an act of choice" — is a **model** of the
 choice-versus-no-choice distinction, never the axiom itself. Where such a reading has been made precise
-(`Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
+(`ZeroParadox/Valuation/PoleChartSelection.lean`), the honest result was that the built object **refutes** the naive
 form: selection there is free, and the non-constructivity in the conditional model is *inserted by
 stipulation* at `poleAdmissible`, not discovered in the pole. Two files carry a written correction of
-record on exactly this error — `Category/DoubleNegationNucleus.lean` (once titled "choice as a
-difference-generator"; it is the *excluded-middle* modality) and `Category/ExcludedMiddleBridge.lean`
+record on exactly this error — `ZeroParadox/Category/DoubleNegationNucleus.lean` (once titled "choice as a
+difference-generator"; it is the *excluded-middle* modality) and `ZeroParadox/Category/ExcludedMiddleBridge.lean`
 (once stated unscoped, as though excluded middle made every Heyting algebra Boolean).
 
 ### No count is recorded here, deliberately
@@ -78,17 +82,24 @@ difference-generator"; it is the *excluded-middle* modality) and `Category/Exclu
 **This file states no figure for how many declarations carry `Classical.choice`, and none should be added
 to it.** Three reasons, in order of importance.
 
-**A count measures Mathlib, not this framework.** Every choice footprint anyone has actually traced has
-come from a Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
+**A count mostly measures Mathlib, not this framework.** Most choice footprints traced so far come from a
+Mathlib construction — the `Ordinal` type, `NONote.repr`, the recursion-theorem proof,
 `compl_sup_distrib`, arbitrary-type decidability, a `ℚ` division-ring instance, in one case a single
-tactic call. None has come from the framework's own mathematics. A corpus-wide total therefore reports how
-classically Mathlib happens to be built, and reports it in a way that reads as a property of this project.
+tactic call. **Not all: `ZeroParadox/Category/Lawvere.lean`'s bare `classical` in
+`fixedPointFree_of_nontrivial` is the framework's own, and § IV shows it is ESSENTIAL** — the cost is in
+stating the swap over types **whose equality is not decidable** (the swap is `if x = b₀ then b₁ else b₀`;
+decidable equality is exactly what the § IV escape restores), which is the framework's chosen
+generality, not Mathlib's. So a corpus-wide
+total still mixes the two sources and still reads as a property of this project, which is reason enough
+not to record one; but it is not true that the framework contributes none.
 
 **It invites precisely the wrong conclusion.** A large choice-carrying fraction reads as "most of this
 framework is non-constructive." The load-bearing fact is the opposite and much narrower: **T-SNAP, the
-core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`), and every footprint
-examined beyond it has been *accidental*, meaning a choice-free re-proof exists. Two such re-proofs have
-been carried out (§ I). No essential case has ever been found.
+core, is axiom-free** (`t_snap_derived` — no axioms at all, not even `propext`). Beyond it the picture
+is mixed and the categories are what matter, not a total: some footprints are *accidental* (a choice-free
+re-proof exists — two carried out, § I), two are **ESSENTIAL** (§ IV), and others are **UNCLASSIFIED**,
+meaning nobody has tried. A count collapses those three into one number and loses the only distinction
+that carries information.
 
 **And in practice the number will not stay right.** It has been wrong three times. The first version was
 quoted rather than measured and was off by more than an order of magnitude. The replacement was measured
@@ -97,8 +108,19 @@ down; a claim-review referee caught it. The figure that then sat in the project'
 stale again by the following review, for the same reason. All three are one error — citing a figure that
 is not being regenerated at the moment of use — and a docstring cannot regenerate anything.
 
-What is true, and is what this file asserts instead: **the framework is not choice-free, the core is, and
-every examined footprint has been removable.** That statement does not go stale.
+What is true, and is what this file asserts instead: **the framework is not choice-free; the core is
+(`t_snap_derived`, no axioms at all); examined footprints fall into three classes — accidental,
+essential, unclassified — and § I and § IV name the cases in the first two.** No fraction is given, for
+the reason stated above.
+
+**⚠ THE STANDING LESSON, and it is why this paragraph was rewritten.** This sentence used to read
+*"every examined footprint has been removable — that statement does not go stale."* It was falsified
+the next day (§ IV's two cases, committed 2026-07-20), had been copied into `CLAUDE.md` as the
+recommended safe formulation, and was contradicted by `RELEASES.md` for ten days with nothing to
+reconcile them. **A universal negative is the most dangerous sentence shape in a `CannotBe` index:**
+the `#check` lines cannot overclaim, but prose quantified over *the whole framework* is falsified by
+any single future commit and nothing mechanical notices.
+**Write "none located as of <date>", never "none exists."**
 
 **If you want a count, measure it — do not look for one to cite.** Every `ZeroParadox` file carries a
 `PurityCheck` section, so a full build emits one `#print axioms` line per indexed declaration. From the
@@ -127,10 +149,14 @@ per report; the total therefore exceeds the number of distinct declarations. Wha
 fact about the build you just ran, not a fact to carry anywhere.
 
 **The survey is partial, and that is the honest caveat that matters.** Only some footprints have been
-traced to a source and classified; much of the corpus is unexamined. So "every footprint is accidental"
-is a **working hypothesis supported by every case tested and refuted by none**, not a finding about the
-corpus. Do not upgrade it, and — for the same reason no count is recorded above — **do not quantify the
-examined fraction either**; it moves with every commit.
+traced to a source and classified; much of the corpus is unexamined. **The hypothesis that every
+footprint is accidental was held here until 2026-08-01 and is REFUTED** — § IV exhibits two that are
+not. What survives is narrower and is a statement about method, not about the corpus: *where a footprint
+has been examined, it has been **assigned** a class* — accidental, essential, or unclassified. (Not
+"classifiable": with `unclassified` among the buckets, classifiability holds of everything and says
+nothing. Corrected 2026-08-01.) Do not
+upgrade that, and — for the same reason no count is recorded above — **do not quantify the examined
+fraction either**; it moves with every commit.
 
 ### Accidental versus essential
 
@@ -139,8 +165,11 @@ examined fraction either**; it moves with every commit.
   `compl_sup_distrib` reports `Classical.choice`; staying on the meet side drops it to `[propext]`.
   `ZeroParadox/Ordinal/SyntacticCollapse.lean` records another: a single tactic call was the whole footprint.
 * **ESSENTIAL** — the theorem implies excluded middle, or a choice fragment, over an intuitionistic
-  base. **No essential case has been found anywhere in the framework.** That is an absence of evidence
-  from a partial survey, not a theorem.
+  base. **Two are located: § IV.** Detected by *reducing* — deriving a taboo from the principle — which
+  is the mirror image of the accidental test: accidental is shown by re-proving without choice, essential
+  by showing that re-proving without choice would decide a taboo. Note this is a statement about the
+  PRINCIPLE, not about any one proof of it: `#print axioms` reports a proof's footprint and can never
+  witness necessity, which is exactly why the essential side needs a reduction instead of a measurement.
 
 Prior art for the distinction and its methods: constructive reverse mathematics (Ishihara;
 Diener–Ishihara). Cited, not claimed.
@@ -148,9 +177,11 @@ Diener–Ishihara). Cited, not claimed.
 ### What this index does NOT do
 
 It does **not** claim the framework is choice-free — it is not. It does **not** claim any
-footprint is provably removable beyond the specific cases actually re-proved. And it cannot: `#print
-axioms` reports **a proof's** footprint, never **a theorem's** necessity. A choice-carrying proof is
-evidence about how the proof was written, and nothing more.
+footprint is provably removable beyond the specific cases actually re-proved. **On the negative side it
+claims exactly two non-removability results, and neither comes from a measurement** — § IV's cases are
+**reductions**, and that is the only route available: `#print axioms` reports **a proof's** footprint,
+never **a theorem's** necessity. A choice-carrying proof is evidence about how the proof was written,
+and nothing more; to show a principle *needs* choice you must derive a taboo from it.
 -/
 
 section ChoiceCannotBeIndex
@@ -193,7 +224,12 @@ the fully axiom-free footprint; `[propext]` means propositional extensionality o
 -- general form of "choice enters precisely where the diagonal fixed point is asserted inhabited."
 -- Inhabiting a non-well-founded (greatest) fixed point can be entirely choice-free. FENCE: the
 -- refutation is functor-specific, not universal — the QPF `Cofix` route in `ZeroParadox/Computability/ChoicePurityInvariant.lean`
--- (`cofix_nonempty'`) DOES carry `Classical.choice`, as a Mathlib M-type artifact. So: the general claim
+-- (`cofix_nonempty'`) DOES carry `Classical.choice`. Located exactly, measured 2026-08-03: the M-type
+-- FORMER and its constructors are axiom-free (`PFunctor.M`, `M.mk`, `M.corec`), its DESTRUCTOR is
+-- not
+-- (`M.children`, `M.dest` carry `[propext, Classical.choice, Quot.sound]`), and `QPF.Cofix` inherits
+-- from the destructor through `Mcongr`/`IsPrecongr`. The two `#check`s below are axiom-free because
+-- they only BUILD and never destruct. So: the general claim
 -- is false; the per-functor question stays open case by case.
 #check @ZeroParadox.strict_cofix_nonempty
 #check @ZeroParadox.mixed_cofix_nonempty
@@ -241,11 +277,22 @@ Not "what choice is" — that is Lean's, not the framework's. What this corpus h
 proved about where choice does work. -/
 
 -- A CHOICE-CARRYING CASE, indexed on purpose. Everything in § I is a negative result, which risks
--- reading as "the framework is choice-free" — it is not. This is the ν-side inhabitation
--- via Mathlib's QPF `Cofix`, measured `[propext, Classical.choice, Quot.sound]`. Its home file argues
--- the footprint is a library artifact of the M-type construction rather than a necessity, citing
--- Ahrens-Capriotti-Spadotti and Veltri (FSCD 2021) that polynomial final coalgebras are choice-free in
--- principle. Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
+-- reading as "the framework is choice-free". It is not, and this entry is the counterweight.
+-- Statement: `Nonempty (Cofix idPF_Coalgebra.Obj)` — the ν side is inhabited. Footprint measured
+-- `[propext, Classical.choice, Quot.sound]`.
+-- Measurement (2026-08-03, about the AMBIENT TYPES rather than about this declaration — hence no
+-- Statement:/Reading: label, which belong to claims about the checked decl): `QPF.Cofix` carries
+-- `Classical.choice` IN THE TYPE, so no proof of any `Cofix`-mentioning statement is choice-free;
+-- while `PFunctor.M`'s former and constructors are axiom-free (its DESTRUCTOR is not) and
+-- `strict_cofix_nonempty` proves the same ν-inhabitation over
+-- it with NO axioms.
+-- Reading: the framework therefore attributes this footprint to Mathlib's QPF *quotient layer*
+-- rather than to the mathematics — escaping it means changing the carrier, not cleaning the proof.
+-- (An earlier gloss called it "removable in principle". That was an unmeasured inference and is
+-- retracted; the measurement above is what supports the artifact reading.)
+-- (Setting: ACS's construction needs only function extensionality, which Lean has; only its
+-- uniqueness half uses univalence. See ZeroParadox/Computability/ChoicePurityInvariant.lean.)
+-- Contrast `strict_cofix_nonempty` (§ I, NO axioms): same phenomenon, different construction,
 -- opposite footprint. That contrast is the accidental/essential distinction in one pair.
 #check @ZeroParadox.cofix_nonempty'
 
@@ -255,7 +302,7 @@ proved about where choice does work. -/
 -- `HeytingAlgebra` extends `OrderBot`, so ⊥ is required before negation exists at all. Same seed,
 -- opposite footprints, and opposite behaviour AT the seed: `dnegNucleus` fixes ⊥ (⊥ is always regular),
 -- `snapNucleus` provably moves it (`snapNucleus_bot_ne_bot`). On the footprint difference: `snapNucleus`
--- has **never been re-proved choice-free**, so do not call it merely representational. What ZP-N
+-- has **not been re-proved choice-free as of 2026-08-02**, so do not call it merely representational. What ZP-N
 -- re-proved is the ordinal *ascent* (`exp_lt_term`, `omegaPow_no_fixedpoint`, `tower_strictMono` on
 -- `ONote`), which is suggestive for the nucleus and is not the nucleus. Its `Classical.choice` is
 -- UNCLASSIFIED — the honest tier. NOT because "choice is in the `Ordinal` type": that claim was
@@ -308,5 +355,61 @@ proved about where choice does work. -/
 -- explicitly for this reason. Pin the instance, or measure nothing.
 #check @Prop.instHeytingAlgebra
 #check @Prop.instBooleanAlgebra
+
+/-! ## § IV. The ESSENTIAL cases — where the choice is NOT removable
+
+Added 2026-08-01. Both were committed 2026-07-20, one day after this index was last touched, and the
+index went on asserting the opposite until this section landed. They satisfy § "Accidental versus
+essential"'s own definition of ESSENTIAL: each derives a **taboo** — excluded middle, or its weak form —
+from a classical principle the framework uses.
+
+**Read the logical shape before citing either.** The theorems are themselves *choice-free reductions*:
+the classical content sits entirely in the **hypothesis**, which is what makes each an implication rather
+than a restatement. What is established is about the **principle**, not about any particular proof:
+re-proving that principle constructively would decide a taboo, so no choice-free re-proof is available.
+**The premise that step rests on, named rather than left implicit** (this file demands exactly that at
+§ "the equivocation" above, then used it here without naming it — corrected 2026-08-01): *excluded
+middle, and weak excluded middle, are not derivable in Lean's choice-free fragment.* That is standard
+and is **not** proved here — it is a metatheoretic fact about the ambient type theory, not a Lean
+theorem, and it is the only thing licensing "no choice-free re-proof exists" rather than the weaker
+"none is known".
+Neither says the framework's overall use of choice is essential, and neither is an independence result. -/
+
+-- ESSENTIAL CASE 1 — comparability of well-orders implies EXCLUDED MIDDLE. Mathlib's `le_total` on
+-- `Ordinal` has exactly this shape, which is what puts it in the framework's path.
+-- PRIOR ART, not a framework result: Kraus-Nordvall Forsberg-Xu, arXiv:2104.02549, **Theorem 38(d)** —
+-- there in the DATA form (`⊎`) and as a paper proof, not covered by their Agda development. The
+-- framework's contribution is the propositional (`∨`) form, on their witnesses.
+#check @ZeroParadox.em_of_wellOrder_comparable
+
+-- Non-vacuity, the source end of the arrow: Mathlib's `InitialSeg.total` supplies the hypothesis and
+-- spends a literal `Classical.choice` in its final branch. Without this the reduction could be dismissed
+-- as an implication with an unsatisfiable antecedent.
+#check @ZeroParadox.comparable_of_classical
+
+-- ESSENTIAL CASE 2 — the general fixed-point-free principle implies WEAK excluded middle, and this one
+-- sits on the KEYSTONE (the diagonal engine) rather than on an imported order instance. Its hypothesis
+-- is the ∀-closure of `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` at `Type`, so that
+-- theorem's `classical` is essential, not accidental: no rewriting of the proof removes it.
+#check @ZeroParadox.wem_of_fixedPointFree
+
+-- Non-vacuity again: `fixedPointFree_of_nontrivial` supplies the hypothesis, classically by
+-- construction. Contrast `select_of_decidable` (§ III) — where the predicate is decidable the work
+-- disappears; the classical content lives at "undecided", not at "chooses".
+#check @ZeroParadox.fixedPointFree_of_nontrivial
+
+-- AND THE ESCAPE, WHICH IS THE HALF THAT MAKES CASE 2 USEFUL RATHER THAN ALARMING. "Essential" scopes
+-- to the GENERAL principle, quantified over arbitrary `Type`. Restrict the carrier to decidable
+-- equality and the same statement is choice-free — measured `[propext]`, against the general form's
+-- `[propext, Classical.choice, Quot.sound]`. `ZeroParadox/Category/DiagonalWitness.lean`'s `no_witnessRel_top_of_nontrivial`
+-- carries the same audit for the level-set form. **Where a carrier has `DecidableEq`, the essential
+-- form is not needed** — the taboo says the general statement cannot be re-proved constructively, and
+-- the restriction says it does not have to be *there*. Together they localize the classical content
+-- rather than obstruct it: they say where it lives and how far it reaches.
+-- SCOPE: how far the escape reaches is UNSURVEYED. Which carriers in this corpus have `DecidableEq`
+-- was unmeasured as of 2026-08-02, so "the restriction covers what we need" is unverified in general — and a
+-- universal over every carrier would be the sentence shape this file's own § "No count" warns about.
+-- The two `#check`ed declarations are what is established; the reach is not.
+#check @ZeroParadox.fixedPointFree_of_nontrivial_decidable
 
 end ChoiceCannotBeIndex

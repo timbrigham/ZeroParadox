@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree — TC15: the selfApp bottom sits at the μ=ν seam, not on either branch
+# The selfApp bottom sits at the μ=ν seam, not on either branch
 
 ## Engineer's Take
 
@@ -77,7 +77,32 @@ theorem selfApp_bot_is_greatest_fp :
 /-- **The seam, in one statement (pre-registered GO).** ⊥ is simultaneously the least AND the greatest
     fixed point of `selfApp`. The μ-characterization (least f.p.) and the ν-characterization
     (greatest f.p.) coincide at this node — exactly the μ=ν seam condition. So the selfApp /
-    Quine-atom bottom sits at the seam, not on either branch. -/
+    Quine-atom bottom sits at the seam, not on either branch.
+
+    **⚠ CORRECTED TWICE, 2026-07-30 (adversary gate, bedrock). Read the whole of this before citing
+    any "min≡max family".** An earlier revision called `epsilon0_min_eq_max` an instance of
+    `fork_collapse_iff`; a second revision fixed that but then called `selfApp_bot_is_both_extremal` and the
+    categorical zero object instances instead. **BOTH claims are false, for the same reason: nothing here
+    satisfies `fork_collapse_iff`'s hypotheses.** It requires `[CompleteLattice α]` and a *monotone*
+    `f : α →o α` (`Settheory/FixedPointFork.lean`). Measured against that:
+    * `epsilon0_min_eq_max` — `α ↦ ω^α` on `Ordinal` has a **proper class** of fixed points (`ε₁, ε₂, …`
+      all satisfy `ω ^ ε_ o = ε_ o`, Mathlib `omega0_opow_epsilon`), so the uniqueness side of (iii)
+      fails. The case is in fact stronger than that and the earlier wording under-stated it: `Ordinal`
+      carries no `CompleteLattice` instance in the pin, so `lfp` and `gfp` are not defined there at all
+      and `lfp ≠ gfp` is not even a well-formed proposition. The hypotheses fail before the conclusion
+      can be stated.
+    * `selfApp_bot_is_both_extremal` — `ZPSemilattice` is a **bare join-semilattice**, not a complete
+      lattice, and `AbstractSelfApp.selfApp : L → L` is **not an `OrderHom`**.
+    * `catseam_is_frameflip` — lives in `ModuleCat ℂ`, a **category**, not a lattice at all.
+
+    **So there is no common instance and no "four witnesses of one phenomenon".** What these share is a
+    SHAPE — one object carrying both extremal characterizations at once — and per this project's standing
+    rule a shared shape across distinct structures is a **type boundary**, never a common theorem. State
+    the shape; do not state an instance-of relation. Each fact stands on its own carrier:
+    ε₀ is least-fixed-point **and** tower-supremum (the Kleene shape); ⊥ is least **and** greatest fixed
+    point of `selfApp`; the seam is initial **and** terminal. `fork_collapse_iff` is a *fourth*, separate
+    fact about complete lattices — the general condition under which a fork collapses — and is **not** the
+    genus of the other three. -/
 theorem selfApp_bot_is_both_extremal :
     (∀ x : L, AbstractSelfApp.selfApp x = x → le (bot : L) x)
     ∧ (∀ x : L, AbstractSelfApp.selfApp x = x → le x (bot : L)) :=

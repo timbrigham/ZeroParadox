@@ -13,43 +13,20 @@ project as well as Mathlib as a whole.
 
 ---
 
-**Status: PROBE, local branch `keystone-boundary`.** This is the deliberately-scoped "C-QPF" route
-(see `.claude-local/notes/wellfounded_coalgebra_foray_2026-06-23.md`).
-
-## What this states
-The snap ⊥→ε₀ as the crossing of the well-foundedness boundary, witnessed in **two formalized registers**:
-
-* **Relation / carrier level** (`ZPJ_Boundary`): the self-application floor is non-well-founded (the ⊥
-  self-loop, `fixed_bot`); the ordinal ascent is well-founded; on one carrier, the floor is the *sole*
-  non-accessible point and every post-snap state is accessible (`snap_crossing`).
-* **Categorical level** (`ZPP_Coalgebra`, the ZP-P μ/ν fork): for the leaf-free functor `idPF_Coalgebra`, the
-  initial algebra (W-type, μ, the well-founded closure) is **empty** and the final coalgebra (M-type, ν,
-  the non-well-founded closure) is **inhabited** (`categorical_fork_strict`). The self-referential element
-  lives in ν, not μ — the back edge on the non-well-founded side.
-
-`snap_boundary_two_registers` bundles both as the best-effort witness that the snap crosses from the
-non-well-founded side to the well-founded side.
-
-## Scope fence — why this is NOT the full Taylor coalgebraic statement (deliberate, tooling-limited)
-The **full** Rung C would state this in Taylor's sense: ⊥ is a non-well-founded *coalgebra* (broken-pullback
-definition), the ascent is the initial algebra, and the snap is the ν→μ crossing, with the depth result
-**well-founded ⟺ recursive** (Taylor's General Recursion Theorem: well-foundedness is
-*necessary* for recursion — the rigorous "you cannot recurse through ⊥"). We do **not** formalize that here,
-because Mathlib currently lacks the required machinery:
-* the **next-time operator** on subobject lattices (Jacobs) — absent;
-* **Pataraia's fixed-point theorem** — absent (Taylor's recursion proof depends on it);
-* the **General Recursion Theorem** for well-founded coalgebras — absent.
-Building these would be a standalone Lean/Mathlib contribution in its own right. We therefore **cite** the
-depth result rather than re-prove it:
-* Paul Taylor, *Well-founded coalgebras and recursion* (General Recursion Theorem).
-* Adámek–Milius–Moss, *On Well-Founded and Recursive Coalgebras*, 2020 (arXiv:1910.09401)
-  (well-founded ⟺ recursive ⟺ morphism to the initial algebra).
-
-## OPEN CONTRIBUTION POINT
-Formalizing the full Taylor well-founded-coalgebra theory in Lean — the next-time operator, Pataraia's
-fixed-point theorem, and the General Recursion Theorem — would upgrade this best-effort bridge to the full
-Rung C, and would be a reusable contribution independent of the Zero Paradox. Contributions welcome; the
-precise missing pieces are listed above.
+**PROBE.** The snap ⊥→ε₀ as the crossing of the well-foundedness boundary, in two registers —
+`ZeroParadox/Multihomed/Boundary.lean` (`snap_crossing`) and `ZeroParadox/Settheory/Coalgebra.lean`
+(`categorical_fork_strict`) — bundled by `snap_boundary_two_registers` below.
+**NOT the full Taylor statement.** The General Recursion Theorem is the ⇒ direction alone — every
+well-founded coalgebra is recursive (Adámek–Milius–Moss 2020, arXiv:1910.09401v2, Thm 7.2 p. 27). The
+converse is their § 8, needing inverse-image preservation plus either a subobject classifier (Thm 8.6)
+or universally smooth monos and a pre-fixed point (Thm 8.1); the equivalence including the
+initial-algebra leg is Cor 8.2. Taylor states necessity in a topos (Prop 111, p. 6).
+Not located in the pinned Mathlib as of 2026-08-12 (environment sweep over names and types):
+Pataraia's fixed-point theorem — `Mathlib/Order/BourbakiWitt.lean` is adjacent, NOT a substitute —
+and the General Recursion Theorem itself. The **next-time
+operator is no longer open** — `ZeroParadox/Category/NextTimeCategorical.lean` builds it
+(`nextTimeCat`); read it before re-deriving one. Detail, sources and the survey's limits:
+`.claude-local/notes/boundarybridge_scope_2026-08-12.md`.
 -/
 
 namespace ZeroParadox
@@ -62,8 +39,8 @@ set_option maxHeartbeats 400000
     witnessed in two registers: the relation/carrier level (`snap_crossing` — floor the sole
     non-accessible point, every post-snap state accessible) and the categorical μ/ν level
     (`categorical_fork_strict` — initial algebra empty, final coalgebra inhabited; the self-referential
-    element lives in ν, not μ). The well-founded ⟺ recursive *depth* (Taylor/AMM) is cited, not proved
-    here — see the scope fence. -/
+    element lives in ν, not μ). The *depth* results — AMM Thm 7.2's ⇒ and its § 8 converse — are
+    cited, not proved here; see the header for which theorem carries which direction. -/
 theorem snap_boundary_two_registers {L : Type*} [ZPSemilattice L] [AbstractSelfApp L] :
     ((¬ WellFounded (floorRel (L := L)))
         ∧ (¬ Acc phaseRel Phase.floor ∧ ∀ o : Ordinal, Acc phaseRel (Phase.up o)))

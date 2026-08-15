@@ -8,7 +8,8 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC16 / TC13 — the unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+# The unplaced node: does the Markov attractor (#2) admit ANY order-extremal or categorical placement?
+
 
 ## Engineer's Take
 
@@ -25,11 +26,11 @@ Node **#2** (the Markov-dynamical stationary attractor, a point of `stdSimplex �
 framework bottom the campaign never gave a Lean witness placing on the μ/ν fork. The table records
 "attractor = ν is heuristic, no Lean witness" (T2, §7.2). T2 only ruled out a *global* homeomorphism
 of the two ν-ambients (the connected-vs-totally-disconnected wall); it never asked whether #2 itself
-is a μ- or ν-object *in its own ambient*. TC05 placed the p-adic floor #3 dynamically, not #2.
+is a μ- or ν-object *in its own ambient*. `ZeroParadox/Valuation/PadicAttractor.lean` placed the p-adic floor #3 dynamically, not #2.
 
 This file probes #2 directly. The pre-registered **NO-GO** was: the stationary point has **no
 order-extremal characterization** in the simplex — it is an antichain element of `stdSimplex`
-(`simplex_antichain`, ZPH_MC1_TreeObstructions), so it is neither order-least nor order-greatest. The
+(`simplex_antichain`, ZeroParadox/Multihomed/TreeObstructions.lean), so it is neither order-least nor order-greatest. The
 pre-registered **GO** was a genuine categorical ν-witness (an `IsLimit` / terminal characterization of
 the attractor as a cone over the orbit diagram), paralleling `fB_bottom_is_limit` for #3.
 

@@ -4,10 +4,10 @@ import Mathlib.Data.W.Basic
 import ZeroParadox.Settheory.Coalgebra
 
 /-!
-# ZP-H MC-1 tree test TC48: is choice-purity an IN-STATEMENT μ/ν separating invariant?
+# Is choice-purity an IN-STATEMENT μ/ν separating invariant?
 
 This module probes Axis V (choice-purity) at the root of the QPF fork. Every prior purity footnote
-(`ZPP_Coalgebra`, TC26) records, as a `#print axioms` **comment**, that the μ side
+(`ZeroParadox/Settheory/Coalgebra.lean`) records, as a `#print axioms` **comment**, that the μ side
 (`fix_isEmpty`, the initial algebra / well-founded closure) is choice-free `[propext, Quot.sound]`
 while the ν side (`cofix_nonempty`, the final coalgebra / non-well-founded closure) carries
 `Classical.choice`. The question here: can that split be lifted into a **theorem-level, in-statement
@@ -33,9 +33,48 @@ content over `fix_isEmpty`:
 * **ν side — choice cannot be made load-bearing.** The strongest honest in-statement claim is
   `Nonempty (Cofix idPF_Coalgebra.Obj)` with the corecursion term as witness (re-exported as `cofix_nonempty'`),
   whose footprint carries `Classical.choice` from Mathlib's M-type / `Cofix.corec`. We do **not**
-  claim ν *requires* choice: for a polynomial functor the final coalgebra is constructible choice-free
-  in principle (Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021). The `Classical.choice` is a Mathlib
-  artifact, recorded in the PurityCheck comment, not asserted as a theorem.
+  claim ν *requires* choice — but be precise about what is measured (2026-08-03). `QPF.Cofix` carries
+  `Classical.choice` **in the type**, so this footprint is **not removable by rewriting the proof**;
+  an earlier version of this line said "constructible choice-free in principle", which was an
+  unmeasured inference. What makes it an *artifact* is the pair: `PFunctor.M`'s FORMER and
+  constructors are axiom-free while its DESTRUCTOR (`M.children`/`M.dest`) is **not** — that is where
+  the axiom originates — and `strict_cofix_nonempty`
+  (`ZeroParadox/Computability/RootCutTrichotomy.lean`) proves the same ν-inhabitation **over that
+  M-type** with **no axioms at all**, by only building and never destructing. So the choice belongs
+  to the QPF *quotient layer*, and escaping it means changing the carrier rather than cleaning the
+  argument.
+  Recorded in the PurityCheck comment, not asserted as a theorem.
+
+  **Prior art, and READ THE SETTING — each of these three lives in a different type theory, and the
+  differences are the whole point of the block.**
+  * **Altenkirch, Ghani, Hancock, McBride, Morris, *Indexed Containers*** (JFP 25, 2015) — **the
+    Axiom-K citation, and the closest setting to this file.** It says so in its own words: it relies
+    on axiom K, and notes that K together with function extensionality *"corresponds to extensional
+    Type Theory"*. That is the setting the claim here is about, since Lean is an Axiom-K / UIP theory
+    (the corpus says so itself in `ZeroParadox/Category/BottomUndecidable.lean`: "In Lean 4 UIP holds
+    for every type").
+  * **Abbott, Altenkirch, Ghani, "Containers: constructing strictly positive types"**, TCS
+    342(1):3-27, 2005 — the **precursor, in EXTENSIONAL MLTT**, not Axiom-K. Its own text: *"We use
+    here the language of extensional Martin-Löf Type Theory."* Cite it as the origin of the container
+    treatment; do **not** cite it for the Axiom-K setting. *(That attribution was wrong here on
+    2026-08-02 and is corrected — the error the block's own "READ THE SETTING" premise exists to
+    catch, made one reference below the heading.)*
+  * **Ahrens, Capriotti, Spadotti, "Non-wellfounded trees in Homotopy Type Theory"** (TLCA 2015,
+    LIPIcs 38:17-30, arXiv:1504.02949) constructs the final coalgebra of a polynomial functor as an
+    ω-limit in intensional MLTT, and says it *generalizes* the Altenkirch et al. construction *"to the
+    whole of HoTT"*. **Its univalence dependency is narrower than stated here previously**: ACS says
+    *"we make minimal use of univalence itself: Lemma 5 is the only result that uses it directly"* —
+    and Lemma 5 is the **uniqueness** result, not the construction, which needs only function
+    extensionality. Lean has function extensionality. So ACS is **not** simply "one setting removed";
+    its construction is closer to applicable here than a univalence label suggests, and only its
+    uniqueness half genuinely needs the stronger axiom.
+  * **Veltri, FSCD 2021** — cite for **contrast only**. His subject is the **finite powerset** functor,
+    which is *not* polynomial, and his headline results run the other way — certain constructions
+    there are obtained ASSUMING choice principles rather than shown to need them, and his own
+    preferred coinductive construction needs neither choice nor LLPO. The one genuine necessity
+    he proves is of LLPO, a logic taboo, not of choice. He is apt as background — he treats the
+    polynomial case explicitly as contrast, his
+    `Tree` is the final `List`-coalgebra, and he himself hands the polynomial fact to Ahrens et al.
 
 The bundle `root_purity_split` packages both honest halves: the μ-witness is propositionally derivable
 from a purely structural eliminator AND the ν-inhabitant is a concrete corecursion term, in one
@@ -96,8 +135,13 @@ theorem fix_isEmpty_constructive : IsEmpty (Fix ZeroParadox.idPF_Coalgebra.Obj) 
 
 /-- **ν is inhabited**, re-exported from `ZeroParadox.cofix_nonempty`. The witness is the concrete
 corecursion term (the self-unfolding node). Its footprint carries `Classical.choice` from Mathlib's
-M-type machinery — recorded in PurityCheck, NOT asserted as a necessity (polynomial final coalgebras
-are choice-free in principle: Ahrens–Capriotti–Spadotti; Veltri, FSCD 2021). -/
+M-type machinery — recorded in PurityCheck, NOT asserted as a necessity. Measured 2026-08-03:
+`QPF.Cofix` carries the choice in the TYPE, so no proof of this statement is clean. `PFunctor.M`'s
+FORMER and constructors are axiom-free while its DESTRUCTOR (`M.children`/`M.dest`) is NOT — that is
+where the axiom originates, and `Cofix` inherits it through the congruence it quotients by. What makes
+the footprint a *quotient-layer* artifact is that `strict_cofix_nonempty` witnesses the same
+inhabitation with no axioms, by only BUILDING and never destructing (see the header for why Veltri is
+background, not support). -/
 theorem cofix_nonempty' : Nonempty (Cofix ZeroParadox.idPF_Coalgebra.Obj) :=
   ZeroParadox.cofix_nonempty
 
@@ -129,7 +173,11 @@ section PurityCheck
 --   new term, not a re-export.
 --   The ν side CANNOT be upgraded: Lean has no object-level proposition asserting "this term uses
 --   Classical.choice", and the strongest honest statement (`cofix_nonempty'`) is exactly Mathlib's
---   corecursion inhabitant, whose choice is a library artifact, not a necessity (Veltri, FSCD 2021).
+--   corecursion inhabitant. That choice is a quotient-layer artifact, MEASURED: `QPF.Cofix` carries
+--   it in the type (so no proof of a Cofix-mentioning statement is clean), inheriting it from
+--   `PFunctor.M`'s DESTRUCTOR (`M.children`/`M.dest`) — the former and constructors are axiom-free —
+--   while `strict_cofix_nonempty` proves the same inhabitation over the M-type with no axioms,
+--   by only building.
 --   So the SPLIT itself is not a single theorem-level invariant: half of it (μ choice-freeness) is now
 --   witnessed constructively in-statement, but the other half (ν "needs" choice) remains a measured
 --   #print-axioms comment. The fork's purity asymmetry is therefore HALF-WITNESSED, HALF-COMMENT —

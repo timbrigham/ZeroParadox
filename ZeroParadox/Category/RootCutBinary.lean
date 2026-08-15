@@ -4,10 +4,10 @@ import ZeroParadox.Settheory.Coalgebra
 import ZeroParadox.Category.RootCutDegeneracy
 
 /-!
-# ZP-H MC-1 tree test TC32: the root cut is binary in arity, not graded
+# The root cut is binary in arity, not graded
 
-This module sharpens the root-cut dichotomy of `ZPH_MC1_TC26.lean` into a statement about the
-**number** of recursive positions. TC26 established the dichotomy on the two boundary cases:
+This module sharpens the root-cut dichotomy of `ZeroParadox/Category/RootCutDegeneracy.lean` into a statement about the
+**number** of recursive positions. `ZeroParadox/Category/RootCutDegeneracy.lean` established the dichotomy on the two boundary cases:
 
 * `constPF A` — child type `PEmpty`, **zero** recursive positions: `Fix ≃ Cofix` (a seam);
 * `idPF_Coalgebra`      — child type `PUnit`, **one** recursive position: `IsEmpty (Fix ≃ Cofix)` (strict).
@@ -43,7 +43,7 @@ from `PUnit` to `Bool` children: `Fix.ind` reduces emptiness to: for every `x : 
 the children satisfy `False` — which `liftp_iff` unpacks to a child predicate that we evaluate at one
 concrete child (`true : Bool`), contradiction. Doubling the child type changes nothing because the
 argument needs only *one* child to derive the contradiction. The ν-inhabitedness is one corecursion
-from the single head shape, exactly as for `idPF_Coalgebra`. `binPF_no_seam` is the TC26 transport argument:
+from the single head shape, exactly as for `idPF_Coalgebra`. `binPF_no_seam` is the transport argument:
 an equivalence would carry the ν inhabitant into the empty μ.
 
 What is PROVED is exactly the four theorems and the capstone bundle below. The reading of "two
@@ -134,7 +134,7 @@ theorem arity_collapse :
 
 section PurityCheck
 -- Measured footprint (lake build, v4.30.0-rc2) — the same μ-choice-free / ν-choice split as
--- ZPP_Coalgebra and TC26:
+-- ZeroParadox/Settheory/Coalgebra.lean and ZeroParadox/Category/RootCutDegeneracy.lean:
 --   binFix_isEmpty    (μ empty)     : [propext, Quot.sound]                       — CHOICE-FREE
 --   binCofix_nonempty (ν inhabited) : [propext, Classical.choice, Quot.sound]     — Mathlib M-type
 --   binPF_fork_strict               : [propext, Classical.choice, Quot.sound]     — inherits ν
@@ -142,9 +142,18 @@ section PurityCheck
 --   arity_collapse                  : [propext, Classical.choice, Quot.sound]
 -- The arity-two μ side is choice-free exactly as the arity-one (idPF_Coalgebra) μ side: doubling the recursive
 -- positions changes neither the emptiness nor its axiom footprint. The ν choice is the Mathlib
--- corecursion artifact, not a necessity (polynomial-functor final coalgebra is constructible
--- choice-free in principle; Ahrens–Capriotti–Spadotti, TLCA 2015, arXiv:1504.02949; Veltri, FSCD 2021
--- for the finite-powerset case).
+-- corecursion artifact — specifically a QUOTIENT-LAYER one, measured 2026-08-03: `QPF.Cofix` carries
+-- the choice in the TYPE (no proof of a Cofix-mentioning statement is clean) while `PFunctor.M`'s
+-- FORMER and constructors are axiom-free (its DESTRUCTOR, `M.children`/`M.dest`, is NOT — that is
+-- where the axiom originates) and `strict_cofix_nonempty` proves the same inhabitation over the
+-- M-type with no axioms
+-- (polynomial-functor final coalgebra is constructible
+-- choice-free; Ahrens–Capriotti–Spadotti, TLCA 2015, arXiv:1504.02949 — their
+-- construction needs only function extensionality, which Lean has; only their
+-- uniqueness half uses univalence. Veltri, FSCD 2021 is CONTRAST, not support: for the
+-- non-polynomial finite-powerset functor his results run the other way — certain
+-- constructions there are obtained ASSUMING choice principles rather than shown to need them,
+-- and his own preferred coinductive construction needs neither choice nor LLPO).
 #print axioms binFix_isEmpty
 #print axioms binCofix_nonempty
 #print axioms binPF_fork_strict

@@ -22,8 +22,16 @@ self-application `e : α → (α → β)` whose range contains the diagonal `fun
 that "count" in the ambient category. The face table becomes level sets of ONE predicate:
 - **M coarse (all endomaps), β nontrivial** — a fixed-point-free swap is admissible ⇒ no witness. Set
   floor faces are *posited*, wall faces *refuted*.
-- **M fine (computable endomaps)** — the fixed-point-free diagonal is not admissible ⇒ the witness holds
-  ⇒ a genuine diagonal fixed point (Kleene).
+- **M fine (computable endomaps)** — the fixed-point-free diagonal is **not** admissible, which
+  **removes** the § III obstruction. It does not by itself supply the witness: the implication runs one
+  way, and **no `HasWitnessRel` theorem for the computable class is proved in this file.** The genuine
+  diagonal fixed point on this side is **Rogers' fixed-point theorem**, cited rather than derived here
+  (`Nat.Partrec.Code.fixed_point`, aliased below as `computability_face_fixedPoint`; Mathlib reserves
+  *Kleene's second recursion theorem* for `fixed_point₂`). *(Corrected 2026-08-02: this said "Kleene's
+  recursion theorem" — the same-file sibling of the `:157` fix, left standing 123 lines above it in the
+  same commit.)*
+  *(Corrected 2026-08-01: previously written "not admissible ⇒ the witness holds ⇒ a genuine diagonal
+  fixed point", which does not follow — an absent obstruction is not a witness.)*
 
 ## The topology (why "underlying level" makes it obvious)
 
@@ -97,7 +105,17 @@ theorem hasWitnessRel_top_of_surjective {β : Type u} {α : Type u} (f : α → 
 theorem no_witnessRel_top_of_nontrivial {β : Type u} [DecidableEq β] [Nontrivial β] :
     ¬ HasWitnessRel β (fun _ => True) := by
   -- Choice-free: with `DecidableEq β` the swap needs no classical decision (constructive-footprint audit,
-  -- 2026-07-18). The framework's carriers have `DecidableEq`, so this is the base-level, choice-free form.
+  -- 2026-07-18). This is the base-level, choice-free form; the `DecidableEq` restriction is what buys
+  -- the purity. The construction inlined below is the one that
+  -- `ZeroParadox/Category/Lawvere.lean`'s `fixedPointFree_of_nontrivial` produces, and THAT theorem is
+  -- essentially classical — `ZeroParadox/Category/LawvereTaboo.lean`'s `wem_of_fixedPointFree` reduces
+  -- weak excluded middle from it. **That is a fact about that theorem, not about this one:
+  -- essentiality does not transfer, and there is no dependency here — the swap is inlined, and this
+  -- statement measures `[propext]`, which is what proves the independence.**
+  -- (Corrected 2026-08-01, found independently by all three round-4 gates: an earlier revision called
+  -- this "the theorem this MIRRORS (`:96`)". Line 96 mirrors `no_witness_of_nontrivial`, a DIFFERENT
+  -- declaration; the relation to `fixedPointFree_of_nontrivial` is inlining, not mirroring. That
+  -- revision had itself corrected the word "SUPPLIER" while carrying the wrong theorem name along.)
   obtain ⟨b₀, b₁, hne⟩ := exists_pair_ne β
   refine no_witnessRel_of_admissible_fpf (g := fun x => if x = b₀ then b₁ else b₀) trivial (fun x => ?_)
   by_cases hx : x = b₀
@@ -133,14 +151,19 @@ theorem witnessSet_isLowerSet {β : Type u} :
 The `HasWitnessRel` topology above is axis 1: the admissible map-class M *within* a fixed category
 (raw functions, raw equality). The genuine NONTRIVIAL floor lives one axis out — in the **effective
 category**, where "endomap" means computable and "equality" means eval-equality. There the Cantor
-obstruction lifts, and the diagonal genuinely closes: Kleene's second recursion theorem. This is the
+obstruction lifts, and the diagonal genuinely closes: Rogers' fixed-point / Kleene's recursion theorem. This is the
 recognized **effective-topos / Turing-category** setting (Lawvere 1969; Hyland 1982, "The effective
 topos"; Cockett–Hofstra 2008, "Introduction to Turing categories"; van Oosten). Located and cited here,
 NOT claimed — the framework joins that program. -/
 
-/-- **Axis-2 genuine floor.** Every *computable* self-map on codes has an eval-fixed point — Kleene's
-    second recursion theorem (`computability_face_fixedPoint` = Mathlib `Nat.Partrec.Code.fixed_point`).
-    The fine end of axis 2. -/
+/-- **Axis-2 genuine floor.** Every *computable* self-map on codes has an eval-fixed point —
+    **Rogers' fixed-point theorem** (`computability_face_fixedPoint` = Mathlib
+    `Nat.Partrec.Code.fixed_point`). Mathlib reserves the name *Kleene's second recursion theorem*
+    for `fixed_point₂`, and literally derives `fixed_point₂` from `fixed_point`, so the two are
+    inter-derivable. `ZeroParadox/Category/Lawvere.lean` attaches **both** names to `fixed_point` as a
+    slash-alias ("Rogers / Kleene's recursion theorem") rather than making this split — compatible, but
+    not the same convention. The fine end of axis 2.
+    *(Corrected 2026-08-02: this claimed `Lawvere.lean` "words it the same way", which it does not.)* -/
 theorem effective_floor_fixedPoint {g : Nat.Partrec.Code → Nat.Partrec.Code} (hg : Computable g) :
     ∃ c, Nat.Partrec.Code.eval (g c) = Nat.Partrec.Code.eval c :=
   computability_face_fixedPoint hg

@@ -43,7 +43,8 @@ the framework's *one substantive modeling commitment* (a discrete alphabet, and 
 alphabet, over a continuum). The completeness-critic hunt independently re-surfaces exactly this: arity is the
 degree of freedom the structural axes cannot force, so fixing it (to two) is a **commitment, not a theorem** —
 which is precisely AX-B1's status. The `IrreversibilityProbe` cardinality result complements this: two is the
-*value-pole* threshold (self-reference forces the snap); binary *arity* is the separate branching choice.
+*value-pole* threshold (a unique fixed point already costs injectivity there - irreversibility, not
+occurrence); binary *arity* is the separate branching choice.
 
 So the completeness picture: no forced fifth *structural* axis, the four are mutually independent, and the one
 thing left open is the arity — recovered here as AX-B1, a modeling commitment rather than a derived axis. This

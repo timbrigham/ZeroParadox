@@ -30,7 +30,7 @@ notation is a fixed point of `ω^·`).
 
 **It does NOT classify ZP-L's footprint as "representational, not intrinsic"** — an earlier version of
 this paragraph said exactly that, and it is retracted (2026-07-19). That is an *eliminability* claim, and
-no re-proof of those ε₀ results exists; their status is **UNCLASSIFIED**. Two corrections belong with it:
+no re-proof of those ε₀ results was located as of 2026-08-02; their status is **UNCLASSIFIED**. Two corrections belong with it:
 `Ordinal` itself is `[propext, Quot.sound]` — **choice is not in the type**; it enters through
 `Ordinal.instLinearOrder`, `nfp`, `omega0`, `epsilon`. And a choice-free result *about the ascent* is
 suggestive for the ε₀ results without being a re-proof of them.
@@ -93,8 +93,7 @@ theorem tower_strictMono (n : ℕ) :
 section PurityCheck
 -- The payoff: these must be CHOICE-FREE (no Classical.choice) — the snap-from-below proved
 -- syntactically on ONote, never touching repr/Ordinal. Contrast ZP-L's ε₀ results, all of which
--- carry Classical.choice (inherited from Mathlib's Ordinal). See
--- .claude-local/notes/choice_probe_ordinal_2026-06-15.md.
+-- carry Classical.choice (inherited from Mathlib's Ordinal).
 #print axioms exp_lt_term
 #print axioms omegaPow_no_fixedpoint
 #print axioms tower_strictMono

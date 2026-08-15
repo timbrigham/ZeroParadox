@@ -1,6 +1,132 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
-Version 1.5 | July 2026
+Version 1.23 | August 2026
+v1.23: two defects in ONE rendered p.4 sentence, both from the v1.22 fix. (1) The carrier phrase
+went in at the wrong POSITION here while all eight Lean sites got the clean order, so the
+publication site read 'no axioms over that M-type' - nearest-head parsing gives the meaningless
+'no axioms over that M-type'. (2) The dangling pronoun was reported as fixed in v1.22 and was NOT
+touched: 'The M-type FORMER and constructors are axiom-free, ITS DESTRUCTOR ...'. Both corrected;
+the checkable sites and the published one now read the same way. Note the shape: the sites a gate
+can grep got the good wording and the one that renders got the degraded one.
+v1.22: the v1.21 CLASS sweep missed a member, and said it had not. (1) It claimed to have reached
+every site; ChoicePurityInvariant.lean wrote the phrase as `is **axiom-free**` - markdown bold
+INSIDE the phrase - so the literal pattern did not match, in a file that same commit edited twice.
+Fixed, and the v1.21 claim corrected to 'the live sites' since it was false as written. GREP
+LOOSELY: markup inside a phrase defeats a literal pattern, and that is the third time it has bitten
+this session. (2) The sweep also DELETED a load-bearing carrier phrase: strict_cofix_nonempty is
+over the M-TYPE, not over Cofix, so 'proves the same inhabitation' had cofix_nonempty as its
+nearest antecedent and read as contradicting its own preceding clause. 'over the M-type' restored
+at every site including the rendered p.4 box. (3) Proposition 9 is in the paper's section 2, which
+one sentence still contradicted 25 lines above the fix. All three caught by gate round 1.
+v1.21: swept the CLASS the v1.20 fix left behind, plus the widow. (1) The discredited WARRANT
+'PFunctor.M is axiom-free' survived at 13 live sites after v1.20 removed the false CONCLUSION it
+supported - one Lean file carried the precise account and the loose one 55 lines apart. It is true
+of the TYPE FORMER and silent about the ELIMINATORS, so the live sites now state former /
+constructors / destructor separately. (2) The Theorem Summary table orphaned cofix_nonempty alone
+on p.6 under a repeated header - reported by three consecutive gate rounds and survived three
+rebuilds. Now starts on its own page: nudging spacing only changes which row is orphaned.
+v1.20: BEDROCK - the v1.19 sweep fixed the contradiction and swept to a FALSE statement. It said
+the choice is 'not from the M-type underneath', warranted by 'PFunctor.M is axiom-free'. That is a
+witness-vs-statement defect: PFunctor.M is the TYPE FORMER, and its purity says nothing about its
+eliminators. Measured this round: PFunctor.M / .mk / .corec are axiom-free, but M.children and
+M.dest carry [propext, Classical.choice, Quot.sound], and QPF.Cofix inherits from them via
+Mcongr/IsPrecongr. So the choice DOES come from the M-type - from its destructor. The true account
+is stronger and is now what the box says: strict_cofix_nonempty is axiom-free because it only
+BUILDS (M.corec) and never DESTRUCTS. Caught by the gate, which measured it rather than reading it.
+v1.19: the v1.18 fix swept ONE of the sentence's sites. Two more rendered: p.4's result box and
+p.6's Axiom Purity box both still attributed the choice to 'the M-type / corecursion machinery',
+so the published document said 'not from the M-type underneath' on p.4 and 'from the M-type ...'
+on p.6 - self-contradicting across two pages. Both now say QPF corecursion / quotient layer,
+which is what the measurement supports (QPF.Cofix carries the axiom in the type; PFunctor.M is
+axiom-free). Caught by gate round 2, which correctly ruled it ordinary: QPF.Cofix IS the quotient
+of PFunctor.M, so the loose name was imprecise rather than false, and no conclusion rested on it.
+v1.18: the v1.17 clarification was PREPENDED and the original attribution left standing, so the
+remark box read 'inherited from Mathlib's M-TYPE MACHINERY ... not the M-TYPE underneath' - one
+sentence contradicting itself. That is the same prepended-hedge shape as v1.10, and the seventh
+time this document has produced it. Rewritten once, attribution first: the choice comes from the
+QPF quotient layer, QPF.Cofix carries it in the type, PFunctor.M is axiom-free. Also README's
+Choice-Free Core row said v1.3 while register.md and the PDF said v1.5 - a public index naming a
+superseded version of the document the previous commit had just corrected.
+v1.17: MEASURED, replacing an inference. Two rendered sites said the nu-side Classical.choice is
+'a library artifact, not a necessity' / 'not forced by the mathematics', pointing at ACS. True in
+spirit, unmeasured as stated. Measured 2026-08-03: QPF.Cofix carries Classical.choice IN THE TYPE,
+so no proof of any Cofix-mentioning statement is choice-free - it is not removable by rewriting.
+What makes it an artifact is the pair: PFunctor.M is axiom-free and strict_cofix_nonempty proves
+the same nu-inhabitation over it with NO axioms. So the choice belongs to the QPF quotient layer,
+and escaping it means changing the carrier. Found by the new modal-claim sweep (check_modal.py).
+v1.16: THE SENTENCE IS DELETED (Tim). Two bullets of the remark box characterised the choice
+modality of Veltri's finite-powerset presentations. That material was wrong in SIX consecutive
+versions - v1.9 a universal, v1.10 a doubling, v1.11 the universal restored, v1.13/v1.14 a false
+universal, v1.15 a false uniqueness - and each fix was locally reasonable and seeded the next. It was
+never load-bearing for ZP-P: this document's claim is that the Classical.choice in cofix_nonempty is
+a Mathlib artifact for a POLYNOMIAL functor, which bullet 1 states and ACS supports. The
+finite-powerset material is now one sentence saying it is a different case, out of scope here, and
+recorded in Coalgebra.lean - which the gates have verified against the source. Prose that cannot be
+kept correct across six attempts should not be in a published PDF when an accurate statement of it
+already exists in a checkable file.
+v1.15: BEDROCK - the v1.14 fix replaced a false UNIVERSAL with a false UNIQUENESS. "not all of them
+use it, and the exception is the one he prefers" - Veltri has TWO choice-free finality results, not
+one: Theorem 1 (the setoid presentation, final in SetoidRel, proved by anaTree with no classical
+hypothesis) as well as Theorem 2 (the coinductive type). His stated reason for preferring (ii) over
+(i) is ergonomic - it "does not force the user to employ setoids instead of types" - which is exactly
+what "the exception" erased. FIFTH consecutive version in which this one sentence has been wrong;
+the quantifier is now deleted rather than re-hedged, and both theorems are named. Note the truth was
+STRONGER than the claim, so the fix cost nothing.
+v1.14: BEDROCK - the v1.13 remark box carried a false universal about Veltri. Bullet 2 said "his
+finality results are obtained assuming choice principles", and bullet 3 (added by v1.13) named the
+construction that refutes it: his preferred coinductive type, Theorem 2, needs neither choice nor
+LLPO. The v1.13 fix added the counterexample and left the universal it contradicts standing one
+bullet above - the same half-sweep shape as v1.10's doubling. Bullet 2 now scoped to the proofs that
+do use choice. Also removed the LLPO-necessity clause from bullet 2, which bullet 3 already states.
+v1.13: gate debt cleared in one batch rather than carried. The "not a necessity result" gloss was
+unscoped - it covered the LLPO half too, and LLPO is the one thing Veltri DOES prove necessary
+(p. 22:3 is an impossibility). Scoped to the choice half. Also added his choice-free construction
+(ii) to the remark box: the Lean file carried that counterexample and the PDF did not, which is
+exactly why the "all of" universal regenerated three times here - the box had no visible instance
+refuting it.
+v1.12: the v1.11 fix relocated its error for the THIRD time in this one sentence. v1.9 said choice
+enters "only for" the finite-powerset functor (a universal); v1.10 PREPENDED a hedge and left the
+clause standing (a doubling); v1.11 removed the doubling and the hedge together, restoring the
+universal as "are all of" - contradicted two paragraphs up, where the same box concedes that
+Mathlib's presentation of the POLYNOMIAL functor idPF_Coalgebra carries Classical.choice. The
+universal is now deleted rather than re-hedged. Also restored LLPO to the Worrell clause: Veltri's
+Conclusions and abstract both give construction (iv) as countable choice AND LLPO, and v1.11 had
+dropped it, leaving this document disagreeing with CLAIMS.md, which was right.
+v1.11: the v1.10 hedge was PREPENDED and left the original clause standing, so the remark box read
+"In the cases the literature pins ... where the literature pins each presentation" - one clause
+doubled. Rewritten once. Also retired the "genuinely enters" framing (remark-box heading and body):
+choice in the pinned finite-powerset presentations is a fact about those constructions, not a
+necessity, and Veltri's own preferred coinductive construction needs neither choice nor LLPO.
+v1.10: the v1.9 abstract fix RELOCATED its error instead of removing it. Making the theorem
+statement true, it added "and the self-referential operators this framework studies are of that
+kind" - asserting applicability the corpus explicitly denies (17 CompleteLattice mentions, ZERO
+instantiations; selfApp is not an OrderHom; ZPSemilattice is a bare join-semilattice) and that
+this document's own Section III calls open. Clause removed and replaced by an explicit non-claim.
+Also: selfApp_pinnable located honestly (experimental bridge, not ZP-J), and a universal "only"
+softened to what Veltri licenses.
+v1.9: adversary review of the rendered document, pre-publication. Three substantive fixes.
+(1) The abstract stated Knaster-Tarski WITHOUT monotonicity, which makes it false - the swap on
+the two-element lattice is a self-map with no fixed point. Section I had it right; only the
+abstract was loose. (2) The Tier-3 roster named 'the categorical initial object' as a contact
+point, but Section II PROVES that object empty and locates the Quine-atom analog in the FINAL
+coalgebra; the roster was v1.0 text never swept when the categorical instance landed in v1.1.
+(3) quine_atom_unique was cited for two things it does not state - it mentions no bottom and is
+about self-membership, not self-application.
+v1.8: swept the sibling the v1.7 fix left standing - the next rendered paragraph still said the
+set-quotient and Worrell presentations REQUIRE choice, which is the modality v1.7 retired one
+sentence earlier. Veltri's own words are "requires the presence of the axiom of choice in the
+proof of finality" - about his proof, not a necessity result.
+v1.7: LLPO equivalence given its hypothesis (Veltri's Cor. 8 gives injectivity => LLPO outright;
+Thm 9 gives the converse only ASSUMING countable choice), and the v1.6 changelog's own modality
+brought in line with the corrected prose.
+v1.6: CORRECTED a misattribution in rendered prose. The choice-free constructibility of the final
+coalgebra FOR A POLYNOMIAL FUNCTOR was credited to Veltri (FSCD 2021) in the Lean-witness table and
+co-credited to him in the remark box. That is the wrong direction: Veltri's subject is the
+finite-powerset functor, which is NOT polynomial, and his results are that certain constructions
+there are obtained ASSUMING choice principles rather than shown to need them - he hands the
+polynomial case to Ahrens-Capriotti-Spadotti himself. The
+polynomial claim is now attributed to ACS (TLCA 2015) and Veltri is explicitly marked as contrast.
+His LLPO claim, which IS his and IS about finite-powerset, is unchanged.
 v1.5: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.4: rendered Lean-file citations synced to post-reorg basenames (namespace de-scar); docstring changelog above kept as the historical record.
 v1.3: Re-aimed the categorical instance's choice note per the Veltri (FSCD 2021) literature review —
@@ -22,7 +148,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.23'
 FIRST_RELEASED = 'June 2026'
 
 
@@ -52,8 +178,11 @@ def build():
     ]
 
     E.append(body(
-        'A self-referential operator over a complete lattice has a least fixed point and a '
-        'greatest fixed point (Knaster&#8211;Tarski). ZP-P records a single elementary fact and '
+        'A <b>monotone</b> self-map of a complete lattice has a least fixed point and a '
+        'greatest fixed point (Knaster&#8211;Tarski); monotonicity is required. Whether the '
+        'framework&#8217;s own self-referential operators instantiate that schema is <i>not</i> '
+        'claimed here &#8212; see the fences in Section III. ZP-P records a single elementary '
+        'fact and '
         'develops its consequences across the framework: these two fixed points coincide &#8212; '
         'the fork <i>collapses</i> to one point &#8212; exactly when the operator has a unique '
         'fixed point. Read intuitively, the least fixed point is the inductive (well-founded) '
@@ -256,37 +385,51 @@ def build():
     E.append(result_box(
         'Theorem: categorical_fork_strict (Coalgebra.lean)',
         [
-            'IsEmpty (Fix idPF.Obj) &#8743; Nonempty (Cofix idPF.Obj)',
+            'IsEmpty (Fix idPF_Coalgebra.Obj) &#8743; Nonempty (Cofix idPF_Coalgebra.Obj)',
             'The initial algebra (least fixed point, &#956;) is empty; the final coalgebra '
             '(greatest fixed point, &#957;) is inhabited. (Mathlib QPF.Fix / QPF.Cofix.)',
             'Split footprint: fix_isEmpty (&#956; empty) is choice-free [propext, Quot.sound]; '
-            'cofix_nonempty (&#957; inhabited) carries Classical.choice from the M-type / '
-            'corecursion machinery &#8212; a library artifact, not a necessity: for a polynomial '
-            'functor the final coalgebra is constructible choice-free (Veltri, FSCD 2021). ✓',
+            'cofix_nonempty (&#957; inhabited) carries Classical.choice from the QPF '
+            'corecursion machinery &#8212; a QUOTIENT-LAYER artifact: QPF.Cofix carries the '
+            'choice in the TYPE. The M-type FORMER and constructors are axiom-free while the '
+            'M-type DESTRUCTOR (M.children / M.dest) is not &#8212; that is where the axiom '
+            'originates &#8212; and strict_cofix_nonempty proves the same inhabitation over '
+            'the M-type with no axioms, by only building. For a polynomial functor the final '
+            'coalgebra '
+            'is constructible choice-free '
+            '(Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015). ✓',
         ]
     ))
     E.append(sp(6))
 
     E.append(remark_box(
-        'Remark: where choice genuinely enters the &#956;/&#957; fork',
+        'Remark: where choice appears in the &#956;/&#957; fork',
         [
-            'The Classical.choice in cofix_nonempty is inherited from Mathlib\'s M-type machinery, '
-            'not forced by the mathematics: for a polynomial functor the final coalgebra is '
-            'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti; Veltri, FSCD 2021, '
-            'the coinductive construction).',
-            'Choice genuinely enters only for the non-polynomial finite-powerset functor, where the '
-            'literature pins each presentation: the set-quotient requires the full axiom of choice '
-            'for finality, while Worrell\'s (&#969;+&#969;)-limit requires countable choice together '
-            'with the lesser limited principle of omniscience (LLPO) &#8212; indeed injectivity of '
-            'the canonical algebra is equivalent to LLPO (Veltri, FSCD 2021).',
+            'The Classical.choice in cofix_nonempty is a library dependency, not a fact about '
+            'the mathematics, and it is worth locating exactly. Measured: the M-type former '
+            'and its constructors are axiom-free (PFunctor.M, M.mk, M.corec), while its <i>destructor</i> '
+            'carries the axiom (M.children, M.dest) &#8212; and QPF.Cofix inherits it in the '
+            'type through the congruence it quotients by. That is why strict_cofix_nonempty '
+            'is axiom-free: it only <i>builds</i>, and never destructs. '
+            'For a polynomial functor the final coalgebra is '
+            'constructible choice-free (Ahrens&#8211;Capriotti&#8211;Spadotti, TLCA 2015, who '
+            'construct it as an &#969;-limit). Their ambient setting is intensional type theory '
+            'with univalence, but the <i>construction</i> itself uses only function '
+            'extensionality &#8212; univalence enters only for their uniqueness result.',
+            'The <b>finite-powerset</b> functor is a different case &#8212; it is not polynomial, '
+            'and the argument above does not cover it. It is also not this document\'s subject. '
+            'The per-presentation detail there, with citations, is recorded in the Lean source '
+            '(Coalgebra.lean) and is deliberately not restated here.',
         ]
     ))
     E.append(sp(6))
 
     E.append(body(
         'The remaining two instances are referenced, not re-proved here. The set-theory fork '
-        '(Foundation vs AFA) has its Lean witness in ZP-J: the Quine atom &#8869; = {&#8869;} is '
-        'the unique self-application fixed point (quine_atom_unique). The computation fork '
+        '(Foundation vs AFA) has its Lean witness in ZP-J: quine_atom_unique proves that any two '
+        'Quine atoms are equal &#8212; a uniqueness statement about self-MEMBERSHIP. That the '
+        'bottom is one of them is a separate result (bot_is_quine_atom), and self-APPLICATION is '
+        'a third (selfApp_pinnable, in the experimental Lawvere bridge rather than ZP-J proper). The computation fork '
         '(total vs partial) has its Lean witness in ZP-K: the Kleene quine. Each is the contact '
         'point of its own fork.'))
     E.append(sp(6))
@@ -301,7 +444,8 @@ def build():
 
     E.append(body(
         'The tempting claim is that the contact points of all the instances &#8212; the Quine '
-        'atom, the 2-adic 0, the Kleene quine, the categorical initial object &#8212; are faces '
+        'atom, the 2-adic 0, the Kleene quine, the self-referential element of the final '
+        'coalgebra &#8212; are faces '
         'of one object, the diagonal fixed point. ZP-P states this as a conjecture and fences it '
         'precisely. The fences are not hedging; they mark a genuine boundary, and per-instance '
         'forks remain full theorems on either side of them.'))
@@ -311,7 +455,7 @@ def build():
         [
             'The claim "the contact points are one object" is not a theorem and cannot become '
             'one. Identity requires a shared type: the 2-adic 0, the Quine atom (a set), the '
-            'Kleene quine (a code), and a categorical initial object (an object up to '
+            'Kleene quine (a code), and an element of a final coalgebra (an object up to '
             'isomorphism) are terms of different types in different categories. The proposition '
             '"x = y" across them is not false &#8212; it is not well-formed. So this is a type '
             'boundary, not a missing proof. What is claimed formally is only that each framework '
@@ -342,9 +486,12 @@ def build():
     E.append(sp(6))
 
     # ── Theorem Summary ───────────────────────────────────────────────────────────
+    # PageBreak, not a spacer: three gate rounds reported a widow -- the heading and all but the last
+    # data row on p.5, `cofix_nonempty` alone on p.6 under a repeated header. Nudging the spacing
+    # only moves which row is orphaned; starting the section on its own page removes the class.
     print('[build_zpp] Building theorem table...')
     E += [
-        hr(),
+        PageBreak(),
         Paragraph('Theorem Summary', S['h1']),
         hr(),
     ]
@@ -375,9 +522,9 @@ def build():
             'theory (Ostrowski).',
             'Categorical instance (Coalgebra.lean): split &#8212; fix_isEmpty (&#956; empty) '
             'is choice-free [propext, Quot.sound]; cofix_nonempty (&#957; inhabited) carries '
-            'Classical.choice from the M-type / corecursion machinery.',
+            'Classical.choice from the QPF corecursion machinery (the quotient layer).',
             'Core choice-free, realisation choice-carrying &#8212; the framework\'s standing '
-            'pattern. Zero sorry. Verified: lake build, June 2026.',
+            'pattern. Zero sorry. Verified: lake build, August 2026.',
         ]
     ))
     E.append(sp(6))

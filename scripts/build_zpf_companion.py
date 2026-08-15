@@ -1,7 +1,8 @@
 """
 Build ZP-F Illustrated Companion
 Where the Snap Fails: The Real Numbers as Counterexample
-Version 1.13 | May 2026
+Version 1.14 | May 2026
+v1.14: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. Section IV heading 'Finite Precision Forces the Snap' -> 'Makes the Snap Possible': finite precision supplies a smallest representable positive, i.e. availability, not occurrence.
 v1.12: vocab fix: null state → ⊥.
 v1.11: Hash sync — script was modified without full workflow; rebuilt to bring
 hash into alignment with register.md.
@@ -116,7 +117,7 @@ def comparison_table():
         ['Departure from 0 is continuous — always subdivisible',
          'Departure from 0 is a discrete jump in valuation'],
         ['The snap cannot occur — density blocks every candidate first step',
-         'The snap is a theorem — the valuation gap forces it'],
+         'The snap is not blocked — the valuation gap leaves room for a first step (the step itself is AX-B1, a commitment)'],
     ]
     data = [hdr] + [[Paragraph(fix(r[0]), CS['kr_body']),
                      Paragraph(fix(r[1]), CS['kr_body'])] for r in rows]
@@ -139,7 +140,7 @@ def comparison_table():
     return t
 
 
-VERSION = '1.13'
+VERSION = '1.14'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -262,14 +263,15 @@ def build():
     E.append(comparison_table())
     E.append(sp(8))
 
-    # ── IV. Finite Precision Forces the Snap ────────────────────────────────────
-    E.append(Paragraph('IV. Finite Precision Forces the Snap', CS['h1']))
+    # ── IV. Finite Precision Makes the Snap Possible ────────────────────────────────────
+    E.append(Paragraph('IV. Finite Precision Makes the Snap Possible', CS['h1']))
     E.append(cbody(
         'Every computer already knows this. Any number system with a maximum number '
         'of decimal places — any fixed-point arithmetic system, any discretized '
         'simulation — has a smallest representable positive number — call it &#948;. '
-        'Below that, there\'s nowhere to go. The density argument fails at &#948;. The snap '
-        'is forced: there is a genuine first step, and halving it is not possible.'))
+        'Below that, there\'s nowhere to go. The density argument fails at &#948;. The snap becomes '
+        'available: there is a genuine first step, and halving it is not possible. Whether that step '
+        'is taken is a separate question, and the framework commits to it rather than deriving it.'))
     E.append(cbody(
         'The real numbers are the idealization in which this floor is removed — the '
         'limiting case in which precision is unbounded and the minimum disappears. '

@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree — TC27: a genuine CROSS-category arrow from the μ-bottom #4 to the seam #5
+# A genuine CROSS-category arrow from the μ-bottom #4 to the seam #5
 
 ## Engineer's Take
 
@@ -22,9 +22,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-TC18 (the seam file `ZPH_MC1_TreeSeam`) located the μ=ν two-sidedness of node #5 (the Hilbert
+(the seam file `ZeroParadox/Category/TreeSeam.lean`) located the μ=ν two-sidedness of node #5 (the Hilbert
 bottom `fD_functor.obj 0 = StateSpace 0`) *inside* `ModuleCat ℂ`: #5 is a zero object of that one
-category. The deflationary reading of TC18 is that the seam's bridging is intra-category — the two
+category. The deflationary reading of `ZeroParadox/Category/SeamBridge.lean` is that the seam's bridging is intra-category — the two
 universal properties (initial ∧ terminal) collapse only within `ModuleCat ℂ`, and the
 "cross-category two-sided connector" reading stays unbuilt.
 
@@ -46,7 +46,7 @@ is **canonically isomorphic to the seam #5** (zero objects are unique up to a un
 - `freeFin0IsoSeam` — **the cross-category arrow's image lands AT the seam**: there is an
   isomorphism `(ModuleCat.free ℂ).obj (Fin 0) ≅ fD_functor.obj 0` in `ModuleCat ℂ`. The left side is
   the image of #4's bottom under a real functor whose source is `Type` (= the carrier of `KleisliCat
-  PMF`); the right side is the seam #5. This is the cross-category edge TC18's deflation said was
+  PMF`); the right side is the seam #5. This is the cross-category edge `ZeroParadox/Category/SeamBridge.lean`'s deflation said was
   unbuilt.
 - `freeFin0_zero_iso_seam` — bundles both halves with the seam's own two-sidedness: the image is a
   zero object AND the seam is a zero object AND they are isomorphic.
@@ -90,7 +90,7 @@ theorem seam_isZero : Limits.IsZero (fD_functor.obj 0) := by
     exact Fin.elim0 i⟩
   exact ModuleCat.isZero_of_subsingleton (ModuleCat.of ℂ (StateSpace 0))
 
-/-- **TC27 — the cross-category arrow lands at the seam.** The free ℂ-module functor
+/-- **The cross-category arrow lands at the seam.** The free ℂ-module functor
     `ModuleCat.free ℂ : Type ⥤ ModuleCat ℂ` (a real functor between framework categories, the left
     adjoint of `forget`) carries #4's carrier `Fin 0` onto a zero object that is **canonically
     isomorphic** to the seam #5 `fD_functor.obj 0`. The isomorphism is the unique-zero-object iso. -/

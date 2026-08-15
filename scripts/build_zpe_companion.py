@@ -1,6 +1,7 @@
 """
 Build ZP-E Illustrated Companion
-Version 1.11 | May 2026
+Version 1.12 | May 2026
+v1.12: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. The car-crash analogy described 'the forced first transition in any join-semilattice' - refuted by the gauge itself, whose MachinePhase IS a join-semilattice in which nothing moves.
 v1.11: Add Goodstein/proof-theoretic context for ε₀ in Four Descriptions section.
 v1.10: Strip version number from companion footer.
 v1.9: Strip version numbers from DA-1 historical narrative in body prose.
@@ -153,7 +154,7 @@ def axioms_table():
     rows = [
         ['AX-B1',
          'Binary Existence. A state either exists or it does not. No third option. '
-         'Directly verifiable by computation — not a novel commitment.'],
+         'The framework&#8217;s ONE substantive modelling commitment: that the outcome space is DISCRETE rather than a continuum. The two states being distinct is decidable; the choice of a discrete alphabet is not, and the real numbers are where it fails.'],
         ['AX-G1',
          'Initial Object Exists. There is a starting point that reaches everything. '
          'Not a novel commitment — grounded in ⊥ as the bottom element of the ZP-A semilattice.'],
@@ -177,7 +178,7 @@ def axioms_table():
     t = Table(data, colWidths=[TW*0.18, TW*0.82])
     t.setStyle(ts); return t
 
-VERSION = '1.11'
+VERSION = '1.12'
 
 
 def build():
@@ -256,7 +257,9 @@ def build():
     E.append(remember_box(
         'Remember: The car crash illustrates what it means to describe one event in multiple '
         'frameworks. The Zero Paradox is not about car crashes — the car crash is an analogy '
-        'for the forced first transition from &#8869; to &#949;&#8320; in any join-semilattice.'))
+        'for the first transition from &#8869; to &#949;&#8320; — a transition the framework commits to, '
+        'rather than one any join-semilattice compels. A join-semilattice in which T-SNAP holds and '
+        'nothing moves is exhibited in the Lean source.'))
     E.append(sp(6))
 
     # AX-1 → T-SNAP
@@ -268,8 +271,8 @@ def build():
     E.append(cbody(
         'The DA-1 insert changes this. The argument is now complete: reaching P₀ means a '
         'live machine configuration exists (DA-1). Any live configuration passes through c₁ '
-        '(definition). c₁ is non-null (L-RUN). No program avoids this (TQ-IH). A non-null '
-        'state change from ⊥ is the Binary Snap (ZP-A D2). The Snap is derived — not assumed.'))
+        '(definition). c₁ is not ⊥ (L-RUN). No program avoids this (TQ-IH). A state change from '
+        '⊥ to any state other than ⊥ is the Binary Snap (ZP-A D2). The Snap is derived — not assumed.'))
     E.append(cbody(
         'DA-1 is now a Derived Proposition rather than a freestanding Design Principle. '
         'Previously DA-1 was an honest but freestanding commitment: "a configuration at P₀ '

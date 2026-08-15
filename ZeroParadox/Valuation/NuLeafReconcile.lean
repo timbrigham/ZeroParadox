@@ -9,7 +9,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC16 — the within-ν edge reconciles at the LEAF, not the ambient
+# The within-ν edge reconciles at the LEAF, not the ambient
 
 ## Engineer's Take
 
@@ -23,7 +23,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 This file runs the **sharper, pre-registered** test that the T2 cold audit explicitly demanded
-(`ZPH_MC1_TreeT2.lean` scope fence; `thread_obstruction_table_2026-06-29.md`). T2 only refuted a
+(`ZeroParadox/Multihomed/TreeT2.lean` scope fence; `thread_obstruction_table_2026-06-29.md`). T2 only refuted a
 **global ambient homeomorphism** between the Markov ν-system's ambient (`stdSimplex ℝ (Fin 2)`,
 connected) and the p-adic ν-system's ambient (`Q₂`, totally disconnected) — and the audit corrected
 that to OPEN because it is the *generic* connected-vs-totally-disconnected wall, not a statement about
@@ -62,7 +62,7 @@ structurally; ν glues only set-theoretically / topologically at the point. That
 homeomorphism between them exists; the *same* construction homeomorphs the p-adic floor with `PUnit`
 (genericity witness). The reading that this genericity = "ν glues only vacuously while μ glues
 structurally, so the tree's branches are asymmetric" is the framework's interpretation of that Lean
-content (the structural μ-glue lives in `ZPH_MC1_TreeT1`, not re-proved here).
+content (the structural μ-glue lives in `ZeroParadox/Multihomed/TreeT1.lean`, not re-proved here).
 -/
 
 namespace ZeroParadox
@@ -107,7 +107,7 @@ noncomputable def nu_leaf_reconcile : padicFloor_NuLeafReconcile ≃ₜ simplexP
 noncomputable def nu_leaf_reconcile_generic : padicFloor_NuLeafReconcile ≃ₜ PUnit :=
   Homeomorph.homeomorphOfUnique padicFloor_NuLeafReconcile PUnit
 
-/-- **TC16 capstone (both halves IN one statement).** (a) GO: the ν-bottoms reconcile at the leaf
+/-- **capstone (both halves IN one statement).** (a) GO: the ν-bottoms reconcile at the leaf
     (`Nonempty (padicFloor_NuLeafReconcile ≃ₜ simplexPoint_NuLeafReconcile)`); (b) deflation: the identical construction reconciles
     the p-adic floor with `PUnit`, so the leaf map is the generic subsingleton homeomorphism and
     carries no distinguishing structure. Together: the ν-branch glues, but only vacuously — confirming

@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree — TC38: the seam is NOT a colimit (coproduct) apex over the μ-bottoms
+# The seam is NOT a colimit (coproduct) apex over the μ-bottoms
 
 ## Engineer's Take
 
@@ -21,8 +21,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This is the colimit/μ-direction sharpening of the TC18/TC27 "two-sided connector" deflation.
-TC27 built a single cross-category map #4 → #5. A genuine *tree connector* on the μ side would
+This is the colimit/μ-direction sharpening of the `ZeroParadox/Category/SeamBridge.lean` and `ZeroParadox/Category/CrossCategoryArrow.lean` "two-sided connector" deflation.
+`ZeroParadox/Category/CrossCategoryArrow.lean` built a single cross-category map #4 → #5. A genuine *tree connector* on the μ side would
 need more: the seam #5 (`fD_functor.obj 0`, the zero object of `ModuleCat ℂ`) would have to be the
 **colimit** — concretely the coproduct — of the μ-side bottoms, receiving a *universal* cocone FROM
 them. This file pre-registers and confirms that this fails.
@@ -40,7 +40,7 @@ nonzero μ-bottoms.
 **The honest GO companion (`seam_selfcoproduct_collapse`).** The seam's only genuine colimit role is
 the vacuous one: the coproduct of the zero object with itself is again the zero object. We witness
 `IsColimit` of the binary cofan `Z ← Z → Z` with apex `Z = fD.obj 0` (every leg the zero map). This
-is the TC25-flavored collapse `Z ⊔ Z ≅ Z`: a real `IsColimit`, but over a diagram of zero objects,
+is the `ZeroParadox/Category/SeamLimColim.lean`-flavored collapse `Z ⊔ Z ≅ Z`: a real `IsColimit`, but over a diagram of zero objects,
 so it carries no connector content from the μ-side leaves.
 
 **Why this is a NO-GO for the tree hypothesis.** A μ-side colimit connector must be universal *over the
@@ -81,7 +81,7 @@ theorem leaf_not_isZero : ¬ IsZero (fD_functor.obj 1) := by
     simp [hw] at hcoord
   exact hne (Subsingleton.elim _ _)
 
-/-- **TC38 NO-GO (load-bearing).** The seam `fD_functor.obj 0` (zero object) is NOT a colimit apex
+/-- **NO-GO (load-bearing).** The seam `fD_functor.obj 0` (zero object) is NOT a colimit apex
     over the two-object μ-side diagram `{fD_functor.obj 1, fD_functor.obj 1}`: no binary cofan over
     two copies of the nonzero leaf with apex the zero object is an `IsColimit`. The seam cannot be the
     coproduct of (transported) nonzero μ-bottoms. -/
@@ -108,7 +108,7 @@ theorem seam_not_mu_colimit_apex
 /-- **Honest GO companion.** The seam's only genuine colimit role: the coproduct of the zero object
     with itself is the zero object. The all-zero binary cofan over `(Z, Z)` with apex `Z = fD.obj 0`
     IS a colimit. A real `IsColimit`, but over zero objects — carrying no μ-side connector content
-    (the TC25 self-collapse `Z ⊔ Z ≅ Z`). -/
+    (the `ZeroParadox/Category/SeamLimColim.lean` self-collapse `Z ⊔ Z ≅ Z`). -/
 noncomputable def seam_selfcoproduct_collapse :
     IsColimit (BinaryCofan.mk (0 : fD_functor.obj 0 ⟶ fD_functor.obj 0)
                               (0 : fD_functor.obj 0 ⟶ fD_functor.obj 0)) := by
@@ -118,7 +118,7 @@ noncomputable def seam_selfcoproduct_collapse :
   · intro T f g; exact hZ.eq_of_src _ _
   · intro T f g m _ _; exact hZ.eq_of_src _ _
 
-/-- The full TC38 result in one statement: the seam is a zero object, the transported μ-leaf is not,
+/-- The full result in one statement: the seam is a zero object, the transported μ-leaf is not,
     and consequently no zero-apex colimit cofan exists over two nonzero μ-leaves — while the
     self-collapse cofan over the zero object IS a colimit. The pair = "seam is not a μ-side coproduct
     connector, only a trivial self-cocone." -/

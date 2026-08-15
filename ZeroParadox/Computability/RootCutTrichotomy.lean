@@ -7,7 +7,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H: TC47 — the root cut is a TRICHOTOMY (leaf × recursive position)
+# The root cut is a TRICHOTOMY (leaf × recursive position)
 
 ## Engineer's Take
 
@@ -20,11 +20,15 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-Earlier tree tests (TC26/TC32) separated polynomial-functor bottoms into a **dichotomy** by whether
-the functor has a recursive position: a leaf-free functor with no recursive position is a *seam*
+Earlier tree tests (`ZeroParadox/Category/RootCutDegeneracy.lean` and `ZeroParadox/Category/RootCutBinary.lean`) separated polynomial-functor bottoms into a **dichotomy** by whether
+the functor has a recursive position: an all-leaf functor with no recursive position is a *seam*
 (`Fix ≃ Cofix`), one with a recursive position but no leaf is *strict* (`Fix` empty, `Cofix`
-inhabited). Both of those tests used **leaf-free** functors — the head set was all-or-nothing on
-recursive positions.
+inhabited). **Neither of those tests varied the leaf independently** — the head set was
+all-or-nothing on recursive positions: `constPF A = ⟨A, fun _ => PEmpty⟩` is **all-leaf** with no
+recursive position, while `idPF_Coalgebra` and `binPF` are leaf-free with one and two. *(This
+sentence read "Both of those tests used **leaf-free** functors", which is false of `constPF`;
+corrected 2026-08-02. The load-bearing half — all-or-nothing on recursive positions — was accurate
+and is what the argument below uses.)*
 
 This file introduces the **mixed** functor — one node type carrying a leaf (no recursive position)
 and another carrying a recursive position — and shows it realizes a **third** root-cut regime, so the
@@ -52,7 +56,8 @@ The three functors under test, all polynomial (`PFunctor`):
 
 The pair `strict_fix_isEmpty` (no leaf ⇒ `Fix` empty) versus `mixed_fix_nonempty` (add a leaf ⇒
 `Fix` nonempty), at fixed recursive-position presence, is the **leaf doing independent work** —
-exactly what TC26/TC32 could not see. The pair `seam_fix_finite` (no position ⇒ `Fix` finite) versus
+exactly what `ZeroParadox/Category/RootCutDegeneracy.lean` and
+`ZeroParadox/Category/RootCutBinary.lean` could not see. The pair `seam_fix_finite` (no position ⇒ `Fix` finite) versus
 `mixed_fix_infinite` (add a position ⇒ `Fix` infinite), at fixed leaf presence, is the **recursive
 position doing independent work**. Together they witness the three regimes as a genuine trichotomy.
 

@@ -17,7 +17,7 @@ WHY THIS FILE IS VENDORED
   removal, so `Ordinal.nadd` / `NatOrdinal` are not available from Mathlib on our
   toolchain, and the external CGT repo is on an older toolchain (v4.18). Vendoring the
   last-good Mathlib copy and porting it forward is the cleanest way to recover the
-  natural-sum API on our pin. It is required by `ZPP_KirbyParis.lean` (Kirby–Paris
+  natural-sum API on our pin. It is required by `ZeroParadox/Ordinal/KirbyParis.lean` (Kirby–Paris
   hydra termination): the order-independent hydra ordinal is a natural sum of `ω^(child)`.
 
 CHANGES FROM THE UPSTREAM v4.28.0 SOURCE (kept minimal, mechanical, NON-semantic)

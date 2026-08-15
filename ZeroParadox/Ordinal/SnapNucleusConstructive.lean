@@ -25,7 +25,8 @@ machine-checked impossibility rather than a failed attempt.
   enters through the order instance and the operations (`Ordinal.instLinearOrder`, `Ordinal.nfp`,
   `Ordinal.omega0`, `Ordinal.epsilon`). The claim was reasoning from a quotient construction instead of
   measuring it, and the "cannot be" conclusion drawn from it does not stand. Whether `snapNucleus` is
-  re-provable choice-free is **open and untried**; its footprint is UNCLASSIFIED.
+  re-provable choice-free is **open, and untried in this corpus as of 2026-08-02**; its footprint
+  is UNCLASSIFIED.
 * **This is a different declaration on a different carrier.** Everything here lives on `ONote` (raw
   Cantor-normal-form syntax) and on `SynONote`, the type synonym below carrying the comparator-derived
   order. `ONote` is not `Ordinal` and `SynONote` is not `Ordinal`. Exactly one theorem below mentions
@@ -33,11 +34,75 @@ machine-checked impossibility rather than a failed attempt.
   is disclosed as choice-carrying. Nothing here transports a result across the two carriers.
 * **It is not a proof that ε₀ requires choice.** The obstruction proved below is about *notation
   systems of this shape* — Cantor normal form, whose terms name exactly the ordinals below ε₀. It says
-  nothing about notation systems that extend past ε₀ (Veblen / Bachmann-Howard style), which are not in
-  Mathlib. Whether some richer constructive substrate supports a snap nucleus is open and untouched.
+  nothing about notation systems that extend past ε₀ (Veblen / Bachmann-Howard style), none of which
+  is in this Mathlib pin as of 2026-08-02 (the pin's `Veblen.lean` is semantic, not a notation system
+  — see the scope note below). Whether some richer constructive substrate supports a snap nucleus is
+  open, and untouched in this corpus as of 2026-08-02.
 * **The impossibility is not "no nucleus exists on `ONote`."** Nuclei on `SynONote` exist in
   abundance — `id` is one. What is proved impossible is the *snap property*: that a nucleus's closed
   points be ε-numbers.
+
+## Prior art on the operator itself
+
+**de Jong, Kraus, Nordvall Forsberg and Xu, "Constructive Ordinal Exponentiation"**
+(arXiv:2501.14542) is the nearest specialist work on ordinal exponentiation. Its bearing here is a
+**carrier** distinction. Stating it as "their taboo does not reach our operator" would be false:
+their § 7 collects several taboos about ordinal exponentiation, including the **fixed-base** map
+`β ↦ α^β` that `ω^·` is an instance of, as recorded below.
+
+Their **Proposition 9**: an exponentiation operation satisfying the natural specification *"can be
+shown to exist if and only if the law of excluded middle holds"* — a genuine taboo EQUIVALENCE, not
+a footprint measurement. **But that is exponentiation in FULL generality**, and the restriction that
+buys the construction is *not* nonzero-ness: Proposition 9's own counterexample base is `P + 1` for a
+proposition `P`, which the authors note is obviously nonzero. What the base must have is a **least
+element**. Their **Theorem 13** gives the abstract (suprema) construction under `α ≥ 1` — which they
+gloss as α having a least element — and **Theorem 24** the concrete decreasing-lists construction
+whenever the base has a **trichotomous** least element. **`ω` satisfies both**, so *that particular*
+taboo is about the unrestricted operation and `ω^·` is one of the cases they construct.
+
+**But the taboos do not stop at Proposition 9 (which is in their § 2), and their § 7 "Constructive
+Taboos" holds several that do concern the fixed-base exponential.**
+**Proposition 52**: exponentiation is monotone in the base iff LEM,
+and LEM is already implied by weaker statements *"even when α and β are each assumed to have a
+trichotomous least element"* — so a trichotomous least element is not a blanket constructivity
+certificate. **Proposition 55 (iii)/(iv)**: `∀ β, β ≤ 2^β` and `∀ β, ∀ α > 1, β ≤ α^β` are each
+**equivalent to LEM** — and (iv) at `α = ω` is a statement about this operator.
+**Note what Proposition 55 (iii)/(iv) do and do not prove**: each is LEM-equivalent *as a quantified
+statement*, (iii) at base `2`; the paper never separately shows the base-`ω` instance implies LEM.
+
+**A further LEM equivalence sits in their § 8 (*Approximating Subtraction, Division and Logarithm
+Operations*), not in the taboo section.** (Not "sharper" — all of these are mutually equivalent, being
+equivalences with LEM.) **Proposition 60 (iii)**: that for every `α > 1`
+and `β ≥ 1` there is a `γ ≤ β` greatest with `α^γ ≤ β` is equivalent to LEM. **What separates it from
+the CONSTRUCTIVE Proposition 59 (iii) is the SCOPE OF MAXIMALITY, not the bound** — both carry
+`γ ≤ β`. Proposition 59 gives a greatest `γ` satisfying the *conjunction* (`γ ≤ β ∧ α^γ ≤ β`);
+Proposition 60 demands a `γ ≤ β` that is greatest with `α^γ ≤ β` *outright*. The paper says as much
+at its Theorem 58 discussion, where Enderton's classical schema drops the bound entirely: *"excluded
+middle is equivalent to the existence of `γ` such that `γ ≤ δ` and `γ` is the greatest ordinal such
+that `t γ ≤ δ`"*.
+
+**What actually keeps all of it off the obstruction below is the CARRIER, not the operator.** Their
+ordinals are the HoTT `Ord` — sets with a transitive, extensional, wellfounded order — quantified
+over *arbitrary* such ordinals, with a concrete construction by decreasing lists, in Agda. The
+obstruction below is about `ONote`, and is about that system's expressive reach rather than about
+excluded middle. **The load-bearing property is that `ONote` is a concrete inductive type**: every
+LEM-derivation above — § 2's Proposition 9, § 7's and § 8's alike — builds an ordinal from an
+arbitrary proposition (`3 + P`, `P + 1`, `1 + P`), and no `ONote` denotes one — its constructors are
+`zero` and `oadd : ONote → ℕ+ → ONote → ONote`, neither of which takes a proposition. So a statement quantified over all HoTT ordinals does not transfer, and
+none of this is a re-proof of anything on Mathlib's `Ordinal`.
+
+**Adjacent and unexamined — flagged, not claimed.** Their **Theorem 58** gives, for an endofunction
+`t : Ord → Ord` preserving suprema up to a binary join with some `δ₀`, and any `δ ≥ δ₀`, a *greatest*
+`γ ≤ δ` with `t γ ≤ δ`; it lists `α^(−)` (with `δ₀ = 1`, for `α ≥ 1`) among its instances. That is a
+greatest-**below** operator, so it is the **order dual** of the nucleus material in this file
+(`snapNucleus` is `nfp`, a least fixed point **above**), which is exactly why it is worth a prior-art
+read before anything here is strengthened. No such read is on record as of 2026-08-03; this is a
+pointer, not a result.
+*(Their **Lemma 54** is separately cited in `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`.
+⚠ Do NOT describe this paper's carrier as `Cnf`/`Brw`: those names belong to the authors' *earlier*
+arXiv:2104.02549, which this paper cites as previous work it compares itself against. Corrected
+2026-08-02; the theorem numbers above were transposed until 2026-08-03, and until 2026-08-03 this
+block asserted the paper's taboos did not reach this operator, which § 7 does not support.)*
 
 ## The obstruction, stated
 
@@ -72,13 +137,25 @@ Both halves are measured here, and they split:
   `mathlib_ONote_order_not_antisymm` measures `[propext, Classical.choice, Quot.sound]` because it is a
   statement *about* Mathlib's `repr`-based order, not part of the constructive development.
   **This does NOT classify `snapNucleus`'s own footprint as accidental** — that would be
-  an eliminability claim, and no re-proof of `snapNucleus` exists. Its status is **UNCLASSIFIED**
+  an eliminability claim, and no re-proof of `snapNucleus` was located as of 2026-08-02. Its status is **UNCLASSIFIED**
   (`ZeroParadox/Ordinal/SnapNucleus.lean` records the same).
 * **The counterpart route via this carrier is blocked — for a different reason than choice.** What
   blocks it is **expressive reach**: *this* carrier cannot name the object the closure produces.
   **Scope, narrowly:** the result is about `ONote`-shaped notation systems, not about constructive
   mathematics in general. A system extending past ε₀ (Veblen, Bachmann-Howard) is not ruled out here —
-  it is open and untouched, and none is in Mathlib. So this is **not** a proof that the snap nucleus is
+  it is open and untouched here. **Say which sense, because the pin does ship Veblen:**
+  `Mathlib/SetTheory/Ordinal/Veblen.lean` defines `veblen`, `ε_` and `Γ_`, but *semantically* — they
+  are `noncomputable` functions on `Ordinal`, not a computable **notation system** of the
+  `ONote`/`NONote` kind this file's argument is about. **The ε₀ ceiling is a fact about the NOTATION
+  SYSTEMS, not about those Veblen functions**: `Mathlib`'s `Notation.lean` scopes `ONote`/`NONote` to
+  "below `ε₀`", while the Veblen functions reach far past it — the same pin proves `ε₀ < Γ_ o` for
+  every `o` (`epsilon_zero_lt_gamma`). Read the ceiling as applying to `veblen`/`ε_`/`Γ_` and it is
+  flatly false; it applies to `ONote`/`NONote`. **No notation system past ε₀ is in this Mathlib pin as
+  of 2026-08-02**; Bachmann-Howard is absent in either sense. *(One caveat, because a reader
+  grepping `notation` in `Veblen.lean` lands on it first: its docstring says composing
+  `invVeblen₁` with `Ordinal.CNF` "yields a predicative ordinal notation up to `Γ₀`". That is a
+  RECIPE, not a shipped system — and `invVeblen₁` is itself noncomputable, defined via `sInf`. The
+  claim above is about what the pin CONTAINS, and stands.)* So this is **not** a proof that the snap nucleus is
   constructively impossible, and **not** a claim that ε₀ requires choice.
 
 These are compatible and should not be conflated. "The proof needs no choice" and "the carrier cannot
@@ -444,7 +521,7 @@ Contrast the measured `[propext, Classical.choice, Quot.sound]` on `snapNucleus`
 `ZeroParadox/Ordinal/SnapNucleus.lean`. That footprint is **UNCLASSIFIED, not irreducible** — an earlier
 version of this line called it irreducible on the grounds that "choice is in the `Ordinal` type," which is
 FALSE as measured: `Ordinal` is `[propext, Quot.sound]`. Choice enters via `Ordinal.instLinearOrder`,
-`nfp`, `omega0` and `epsilon`. Whether it is removable is open; nobody has tried. -/
+`nfp`, `omega0` and `epsilon`. Whether it is removable is open; not attempted in this corpus as of 2026-08-02. -/
 
 section PurityCheck
 open ZeroParadox

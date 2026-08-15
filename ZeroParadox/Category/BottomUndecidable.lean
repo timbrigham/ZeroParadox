@@ -171,6 +171,25 @@ structure SelfContained (C : Type) where
   /-- It is the only one. -/
   unique : ∀ x, app x = x → x = bot
 
+/-! ### NO-GO gauge — what fails to be `SelfContained`? Only the EMPTY carrier.
+**Measured: any INHABITED subsingleton passes for free** (`C := Unit`, `app := id`), **and so does
+every larger one** — the inhabited-carrier `example` below, with the empty one exhibited beside it.
+The constant-to-bottom map makes its target the unique fixed point on any inhabited `C`, since
+`app x = x` then reads `bot = x`; `unique` is discharged by the choice of `app`, not by the carrier,
+so size buys nothing. It is the construction `selfContained_glue` uses below. So
+*"C is `SelfContained`"* is never informative alone: cite the `app` you mean. -/
+
+-- Statement: EVERY inhabited carrier is `SelfContained`, at any cardinality — so membership excludes
+-- nothing but emptiness. Generic on purpose: the claim it refutes ("the class bites at two or more
+-- points") is a universal. `Nonempty.elim` keeps it choice-free, as § III–IV require. Anonymous, so
+-- it adds no declaration.
+example (C : Type) [h : Nonempty C] : Nonempty (SelfContained C) :=
+  h.elim fun c => ⟨{ app := fun _ => c, bot := c, fixed := rfl, unique := fun _ hx => hx.symm }⟩
+
+-- Statement: and emptiness IS the obstruction — the `bot` field demands a point. The other half of
+-- this gauge's heading, exhibited rather than asserted.
+example : IsEmpty (SelfContained Empty) := ⟨fun S => S.bot.elim⟩
+
 /-- **The taboo carrier is itself self-containing.** The constant-to-bottom self-map — the
 `ZeroParadox/Settheory/OntBridge.lean` "constant-to-null" pattern — makes `gb0 p` the unique fixed
 point of `Glue p`. So a self-containing carrier can have the undecidable equality of § II:

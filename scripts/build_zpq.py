@@ -1,14 +1,20 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.1 | July 2026
+Version 1.7 | July 2026
 
+v1.7: VOCABULARY DECISION, recorded rather than deferred (adversary round-5 verification). The word "instance" was doing two jobs: the technical instance-of-a-theorem relation, and ZP-P's inherited tier-2 word for a per-domain realization. After v1.6 answered the universal question in the negative, the title-block note on page 1 and the endnote on page 7 gave opposite answers about the same two objects purely through that collision. DECISION: "instance" is reserved for the instance-of-a-theorem relation; a per-domain realization is a "realization" or a "face". Five rendered sites changed; no claim changed. Recorded here because the reviewer's warning is the real risk - leaving it undecided is how the underlying claim survived four rounds. The Lawvere-instance uses in Section III are the technical sense and stay.
+v1.6: BEDROCK, the v1.5 fix was UNSWEPT (adversary round 5). v1.5 corrected Section I to say NONE of the min=max facts is an instance of fork_collapse_iff, and left Section III and the endnote byte-identical to v1.1, where Section III answered its own headline question - 'one theorem all the instances are cases of?' - in the AFFIRMATIVE for catseam_is_frameflip, the very object Section I rules out by name, and the endnote called it an 'instance' outright. One PDF asserting and denying the same proposition eight pages apart, in the two places a skimmer lands. Section III now answers in the negative and keeps the true half (the theorem is universal over complete lattices; the faces do not satisfy its hypotheses); the endnote says 'face', not 'instance'. Also: the denial framing ('they were never the same map', 'the snap is a separate object') is replaced by the conjectural form per the new POV KIND/STATUS convention - the identification is held OPEN, not settled either way.
+v1.5: BEDROCK, the v1.4 fix was HALF-APPLIED (adversary round 4). v1.4 struck the eps0 half of the fork_collapse_iff instance claim and LEFT the other half: the rendered text still said selfApp_bot_is_both_extremal and the categorical seam are 'genuine instances'. They are not - fork_collapse_iff needs a complete lattice and a monotone map; ZPSemilattice is a bare join-semilattice whose selfApp is not an OrderHom, and the seam is in ModuleCat. So the repo was shipping a PDF asserting what its own four Lean docstrings call false. NONE of them is an instance; they share a shape, which across distinct structures is a type boundary.
+v1.4: BEDROCK (adversary gate) - the min=max cross-link asserted epsilon0_min_eq_max is an instance of fork_collapse_iff (lfp = gfp). FALSE: that needs a UNIQUE fixed point and the omega-power map has a proper class of them (omega0_opow_epsilon), so nothing collapses at eps0. Its actual content is least-fixed-point = supremum-of-the-tower, the Kleene shape. Corrected here, at four Lean sites, and in CLAUDE.md.
+v1.3: the v1.2 correction completed - the rendered SUBTITLE still read "bottom -> eps0 as a change of point of view", the identification v1.2 struck in the body, so the title page asserted what page two denies. Fix-the-site-not-the-class, caught by the editorial gate. Docstring header version also lagged.
+v1.2: BEDROCK framing correction (Tim, 2026-07-30). The layer identified the SNAP with the frame-change; the Lean does not. Read at source, snap_is_frameflip proves the tower limit's two chart-readings and contains NO snap transition (no c0->c1, no bot-covers-a, no bot->eps0); catseam_is_frameflip proves the seam is a FIXED POINT of the flip (initial AND terminal), not a flip. What the three *_is_frameflip theorems establish is the exchange of the two poles and the point where they coincide. THE FRAME-CHANGE IS THE POLE EXCHANGE - bottom read as both 0 and infinity - and the SNAP is one covering step off the zero face (HasFirstStep, AX-B1, a commitment). Merging them is what made it look paradoxical that a frame-change reverses while the snap does not. Four sites corrected; the declaration handles are retained per the CC-2/MC-1 convention (cross-references stay valid) with the overclaim flagged in each Lean docstring. Also records that fork_collapse_iff (iii) is the general min=max condition, with epsilon0_min_eq_max, selfApp_bot_is_both_extremal and the categorical seam as its instances.
 v1.1: Frame-change prose precision — the tower's ENCODINGS converge to ⊥ (a new bottom) and, via rInv,
 diverge to ∞; ε₀ is never "realised as ⊥/the ceiling" (ε₀ ≠ ⊥). The theorems (snap_is_frameflip) were
 always about the encodings; only the prose gloss is corrected.
 v1.0: Initial release. Synthesis layer, ZP-P's sequel. The snap ⊥ → ε₀ is a change of point of view.
 Three tiers: (§I) the abstract frame-flip schema — over any complete lattice, order-duality swaps the
 fork's two closures (lfp ↔ gfp) and the fork collapses at the diagonal fixed point (fork_is_frameflip,
-ForkFrameChange.lean; choice-free [propext, Quot.sound]). (§II) the instance catalogue — the per-domain
+ForkFrameChange.lean; choice-free [propext, Quot.sound]). (§II) the catalogue of per-domain realizations — the
 frame-flips: valuation (snap_is_frameflip / the Riemann sphere, SnapFrameChange.lean; RiemannSphere.lean),
 category (catseam_is_frameflip, SeamFrameChange.lean), set theory / computability / Hilbert / information
 referenced to their home layers; reals the NO-GO counterexample. (§III) the universal form and its walls —
@@ -20,7 +26,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.7'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -93,11 +99,11 @@ def build():
         sp(12),
         Paragraph('THE ZERO PARADOX', S['title']),
         Paragraph('ZP-Q: The Frame-Change', S['title']),
-        Paragraph('&#8869; &#8594; &#949;<sub>0</sub> as a change of point of view', S['subtitle']),
+        Paragraph('The bottom read as both 0 and &#8734;, and what that does not settle', S['subtitle']),
         Paragraph(version_line(FIRST_RELEASED, VERSION), S['subtitle']),
         Paragraph(
             '<i>Synthesis layer, the sequel to ZP-P. The abstract frame-flip schema is proved '
-            'sorry-free and choice-free in Lean 4 (ForkFrameChange.lean); the per-domain instances '
+            'sorry-free and choice-free in Lean 4 (ForkFrameChange.lean); the per-domain realizations '
             'are witnessed in their home layers (the valuation instance &#8212; the Riemann sphere '
             '&#8212; in SnapFrameChange.lean / RiemannSphere.lean; the categorical instance in '
             'SeamFrameChange.lean). The universal cross-category identity is not a theorem &#8212; it '
@@ -110,15 +116,23 @@ def build():
     ]
 
     E.append(body(
-        'The Zero Paradox proves the snap &#8869; &#8594; &#949;<sub>0</sub> as a theorem; ZP-Q names '
-        'what kind of act the snap is. Across every layer the bottom shows the same two features: it '
+        'The Zero Paradox proves the snap &#8869; &#8594; &#949;<sub>0</sub> as a theorem; ZP-Q is about the '
+        'BOTTOM&#8217;s two-facedness, which is a different object from the snap. Across every layer the '
+        'bottom shows the same two features: it '
         'is a fixed point &#8212; a zero &#8212; that carries an infinitude (v<sub>2</sub>(0) = '
         '&#8734;, unbounded surprisal, the self-referential closure), and every map to it runs one '
         'way and reverses only under an inversion that swaps the two poles. These are not two facts. '
         'They are two faces of one self-dual object, and the inversion is the <i>frame-change</i>. '
+        '<b>The frame-change is that pole exchange &#8212; &#8869; being read as both 0 and &#8734;. Whether '
+        'the snap is an instance of it is the layer&#8217;s open conjecture.</b> The snap is one '
+        'covering step off the zero face '
+        '(&#8869; &#8918; a, HasFirstStep), which is AX-B1, a modelling commitment; the frame-change is an '
+        'involution and is proved. Merging the two is what makes it look paradoxical that a frame-change '
+        'reverses while the snap does not, and that reversibility mismatch is exactly what an '
+        'identification would have to resolve. ZP-Q holds it open rather than settling it either way. '
         'Read from one frame the frame-change is a <i>bridge</i> (it joins the poles continuously); '
         'read from the other it is a <i>fence</i> (a boundary the map cannot cross). ZP-Q records the '
-        'abstract frame-flip schema, its per-domain instances, and the universal form together with '
+        'abstract frame-flip schema, its per-domain realizations, and the universal form together with '
         'the wall that bounds it.'))
     E.append(body(
         'Like ZP-P, this is a synthesis layer, organised in three tiers held to three standards of '
@@ -201,8 +215,16 @@ def build():
             '(ii) gfp (f.dual) = lfp f (the frame-change swaps the charts), together with '
             '(iii) lfp f = gfp f &#8596; &#8707;! x, f x = x (the fork collapses at the diagonal '
             'fixed point &#8212; fork_collapse_iff).',
-            'This is the domain-independent form of &#8220;the snap is the change of frame&#8221;: '
-            'the two charts are swapped by the frame-change, and the bottom is where they meet.',
+            'This is the domain-independent form of the POLE BEHAVIOUR: the two charts are swapped by the '
+            'frame-change, and the bottom is where they meet. Note what (iii) says &#8212; least = greatest '
+            'exactly when the fixed point is unique &#8212; and note the hypotheses: it needs a COMPLETE LATTICE and a '
+            'MONOTONE map. NONE of the framework&#8217;s min&#8801;max facts satisfies those, so none is an instance of it. '
+            'epsilon0_min_eq_max is over the ordinals, where the omega-power map has a proper class of fixed points, so nothing '
+            'collapses; selfApp_bot_is_both_extremal is over a bare join-semilattice whose self-application is not a monotone map; '
+            'the categorical seam lives in a category, not a lattice. What they share is a SHAPE &#8212; one object carrying both '
+            'extremal characterisations at once &#8212; and a shared shape across distinct structures is a type boundary, never a '
+            'common theorem. State the shape, not an instance-of relation. It does NOT assert that the snap is a change of frame; '
+            'that identification remains this layer&#8217;s open conjecture.',
             'Lean purity: [propext, Quot.sound] &#8212; choice-free. ✓',
         ]
     ))
@@ -263,7 +285,7 @@ def build():
     E.append(sp(6))
 
     E.append(body(
-        'The valuation instance is the originating figure of the framework: the p-adic Riemann '
+        'The valuation realization is the originating figure of the framework: the p-adic Riemann '
         'sphere. Under the tower-rank encoding (P8.lean) the &#969;-tower climbing to '
         '&#949;<sub>0</sub> has stage-encodings that converge to the 2-adic floor 0 = &#8869; &#8212; so in '
         'that chart the ascent to &#949;<sub>0</sub> resolves onto a new bottom (the encodings converge '
@@ -292,7 +314,10 @@ def build():
             '(snap_frameflip_tower_tendsto_infty), with rInv the frame-change swapping the poles '
             '(rInv_swaps: 0 &#8596; &#8734;). The encodings converge to &#8869;; &#949;<sub>0</sub> &#8800; &#8869;.',
             'The descent to &#8869; and the ascent to &#8734; are the same tower-encodings under the '
-            'frame-change &#8212; the valuation-frame realisation of the snap as a change of frame.',
+            'frame-change &#8212; the valuation-frame realisation of the BOTTOM&#8217;s two chart-readings. '
+            'Note the scope: no snap transition appears in this statement (no c&#8320; &#8594; c&#8321;, no '
+            '&#8869; &#8918; a). The declaration handle snap_is_frameflip is retained for cross-reference '
+            'but overclaims; the statement is the authority.',
             'Lean purity: [propext, Classical.choice, Quot.sound] &#8212; choice-carrying '
             '(Classical.choice from the Riemann-sphere continuity machinery). ✓',
         ]
@@ -332,7 +357,7 @@ def build():
     E.append(sp(6))
 
     E.append(body(
-        'The remaining instances are referenced, not re-proved here. Set theory: the Quine atom '
+        'The remaining realizations are referenced, not re-proved here. Set theory: the Quine atom '
         '&#8869; = {&#8869;} is the collapse of the Foundation / AFA fork (ZP-J, ZP-P; '
         'fork_collapse_iff, selfMem_eq_singleton_bot). Computability: the bottom is the unique fixed '
         'point of self-application (ZP-K; AbstractSelfApp.unique_fp). State / Hilbert: &#8869; is the '
@@ -363,12 +388,16 @@ def build():
     ]
 
     E.append(body(
-        'Is there a single universal frame-flip &#8212; one theorem all the instances are cases of? '
-        'The question resolves into two halves, and both are proved. At the order-theoretic level the '
-        'universal holds: fork_is_frameflip (Section I) is a single choice-free theorem over any '
-        'complete lattice that every instance realises. At the categorical level the universal is a '
-        'wall. The fences below are not hedging; they mark a genuine boundary, and per-instance '
-        'frame-flips remain full theorems on either side of it.'))
+        'Is there a single universal frame-flip &#8212; one theorem all the faces are cases of? '
+        'No, and the question resolves into two walls of different kinds. At the order-theoretic level a '
+        'single choice-free theorem does exist over any complete lattice &#8212; fork_is_frameflip '
+        '(Section I) &#8212; but as Section I records, none of the framework&#8217;s min&#8801;max faces '
+        'satisfies its hypotheses of a complete lattice and a monotone map, so none of them is an instance '
+        'of it. It is universal over its own domain, not over the faces. At the categorical level the '
+        'universal is a proven wall (below). What the faces share is a SHAPE realized concretely in each '
+        'domain, and the instance table&#8217;s last row &#8212; the reals, NO-GO &#8212; shows the shape '
+        'does not hold everywhere either. The fences are not hedging; they mark a genuine boundary, and '
+        'the per-domain frame-flips remain full theorems on either side of it.'))
 
     E.append(def_box(
         'The wall: the categorical universal is category-relative (Lawvere.lean)',
@@ -465,8 +494,9 @@ def build():
         hr(),
         Paragraph(
             '<i>End of ZP-Q | The Frame-Change | fork_is_frameflip (choice-free order-theoretic '
-            'universal) | the Riemann-sphere valuation instance (snap_is_frameflip) and the '
-            'op-duality categorical instance (catseam_is_frameflip) | the categorical universal is a '
+            'universal) | the Riemann-sphere valuation face (snap_is_frameflip) and the '
+            'op-duality categorical face (catseam_is_frameflip), neither an instance of it | the '
+            'categorical universal is a '
             'proven wall (Cantor; Lawvere.lean) | the fence is the bridge | the bottom is never '
             'positively represented.</i>',
             S['endnote']),

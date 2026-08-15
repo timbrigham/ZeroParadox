@@ -1,5 +1,6 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Multihomed.InfoFunctor
+import ZeroParadox.Order.PadicLimitCone
 import Mathlib.CategoryTheory.Limits.Shapes.Terminal
 import Mathlib.CategoryTheory.PEmpty
 import Mathlib.Tactic
@@ -7,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H TC24: the Kleisli μ-bottom's `IsInitial` is definitionally an empty-colimit witness (a remark)
+# The Kleisli μ-bottom's `IsInitial` is definitionally an empty-colimit witness (a remark)
 
 ## Engineer's Take
 
@@ -28,7 +29,7 @@ cone — leaving the forks asymmetric? **That question is ill-posed in this Math
 `IsInitial X` is *definitionally* `IsColimit (asEmptyCocone X)` (an `abbrev`,
 `Mathlib/CategoryTheory/Limits/Shapes/IsTerminal.lean:59`). There is no such thing as an `IsInitial`
 that is not already an empty-diagram colimit witness — the two are one object. So the answer is forced
-and content-free: the pre-existing `fC_zero_isInitial` from `ZPH_InfoFunctor` already *is* an
+and content-free: the pre-existing `fC_zero_isInitial` from `ZeroParadox/Multihomed/InfoFunctor.lean` already *is* an
 empty-colimit cocone. Nothing in this file is a discovery about the snap floor; it is an unfolding of
 a Mathlib `abbrev` plus two applications of generic category-theory lemmas (true of *any* initial
 object in *any* category), restated with `fC_obj 0` plugged in.
@@ -84,10 +85,21 @@ noncomputable def fC_initial_iso_floor :
 
 end ZeroParadox
 
+/-! ## The ν-side witness exists -/
+
+-- Statement: the ν-floor #3 carries a genuine limit cone, so a second witness DOES exist - which
+-- the header above denies.
+-- Reading: no comparison with the μ-side is made. The two live in different categories, so any
+-- relation between them would be a cross-type claim rather than a theorem.
+#check @ZeroParadox.floorConeIsLimit
+
+-- Statement: the μ-side witness, exhibited beside the ν-side one above.
+#check @ZeroParadox.fC_zero_isInitial
+
 /-! ## Axiom Purity Check
 
 `Classical.choice` is expected: it enters through Mathlib's `PMF` / `KleisliCat` / colimit library,
-exactly as in `ZPH_InfoFunctor`. No new commitment is introduced by this file. -/
+exactly as in `ZeroParadox/Multihomed/InfoFunctor.lean`. No new commitment is introduced by this file. -/
 
 section PurityCheck
 open ZeroParadox

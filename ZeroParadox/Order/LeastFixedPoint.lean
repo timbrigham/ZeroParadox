@@ -35,7 +35,7 @@ holds — for ε₀ via `nfp` — since the supremum lives in a different type f
 - **Self-reference face** (`selfApp_isLeastFixedPointFrom`): ⊥ is the least fixed point of `selfApp`
   from the seed ⊥. Here seed = closure = ⊥: the μ construction collapses onto the seed. This is the
   degenerate/floor μ — the Gödel-inversion content that self-reference sits *at* the floor.
-- **Kleene face** (FENCED — `kleene_fixed_point_from_exists`): Roger's/Kleene's recursion fixed point
+- **Kleene face** (FENCED — `kleene_fixed_point_from_exists`): Rogers'/Kleene's recursion fixed point
   on `Code`. Same *shape* (a self-map has a fixed point), different *setting*: `Code` carries no
   complete-lattice order for `lfp`, its fixed points are NOT unique (`infinite_quine_family`), and
   there is no seed→closure ascent. It cannot form an `IsLeastFixedPointFrom`; recorded as an
@@ -118,7 +118,45 @@ theorem isLeastFixedPointFrom_nfp {f : Ordinal → Ordinal} (H : Order.IsNormal 
   fixed := Ordinal.nfp_fp H a
   least := fun _b hb hab => Ordinal.nfp_le_fp H.strictMono.monotone hab (le_of_eq hb)
 
-/-! ## § IV. The ε₀ face — genuine ascent μ (seed ⊥ ≠ closure ε₀) -/
+/-! ## § IV. The ε₀ face — genuine ascent μ (seed ⊥ ≠ closure ε₀)
+
+⚠ **THE ASCENT IS GENUINE; THE SEED IS NOT DISTINGUISHED WITHIN `[0, ε₀]`.** *"Seed ⊥ ≠ closure ε₀"*
+is true and is what separates this face from § V's degenerate one. It does **not** mean ⊥ is a
+privileged starting point: `nfp_seed_independent_below_epsilon0`
+(`ZeroParadox/Ordinal/Epsilon0LeastFP.lean`) proves `∀ a ≤ ε₀, nfp (ω^·) a = ε₀`, with
+`nfp_seed_one_eq_seed_bot` as the concrete witness. ⚠ **Scope: at or below ε₀ only.** The general fact is
+that `nfp (ω^·) a` is the **least ε-number `≥ a`** — e.g. `nfp (ω^·) (succ ε₀) = ε₁` (Mathlib
+`epsilon_succ_eq_nfp`). ⚠ Above ε₀ the answer **is** the seed at every ε-number, so no fixed point can distinguish
+*least-ε-number-≥-`a`* from the false *"the seed does all the work"*; use a non-fixed point such as
+`succ ε₀`. ⚠ **Normality is load-bearing.**
+
+**Provenance:** stated in prose, with this conclusion and this proof route, at
+`ZeroParadox/Ordinal/Epsilon0MinMax.lean` § I-b (**Tim, 2026-07-31**), which calls it *"elementary and
+not novel"*; the declarations only make it checkable. ⚠ The routes differ in detail — see that file's
+own note. **And the corpus's own seed-parametric general
+statement is one section up:** § III's `isLeastFixedPointFrom_nfp` — with
+`IsLeastFixedPointFrom.unique` the ε₀ result is its instantiation, needing no separate proof idea.
+The classical form is Veblen 1908 — **Corollary 1 clause (A)** (*"`f'(1)` is the least upper bound of
+`f(1), f[f(1)], ⋯`"*) is the **seed-`1`** case — Veblen indexes from 1, so seed `0` lies outside his
+range and Mathlib's `epsilon_zero_eq_nfp` is its home — **Corollary 1 clause (B)**
+the between-consecutive-rungs case, and **Corollary 4** names the ω-power instance (*"the first derived
+function of ωˣ is the function ε"*); the underlying properties are credited by Veblen to Cantor.
+See `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` for the full quotation of Corollary 1 and the residual
+delta against it. Mathlib carries the same shape for `+` and `*`
+(`Ordinal.nfp_add_eq_mul_omega0`, `Ordinal.nfp_mul_eq_opow_omega0`), the seed-ranged ω-power entry
+being the one not located in the pin.
+
+`Reading:` **INVARIANT** (conjectural) — read the seed as a **role**, not an origin: the ratified
+*"iterative bottoms"* picture, in which the rungs are bottoms relative to their iteration and **never
+⊥ itself**. The same **shape** is a theorem in another carrier: `every_node_is_a_floor`
+(`ZeroParadox/Valuation/LocalFloor.lean`).
+
+⚠ **SHAPE, never instance-of** — different carriers, different mechanisms, and different conclusions.
+⚠ `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`); nothing here identifies a rung with ⊥. ⚠ The
+ratified term for the iteration sense is **iterative bottom**; do not substitute "local bottom"
+*there* — that phrase is taken for the per-domain MC-1 family
+(`ZeroParadox/Category/GlobalZero.lean`). (`ZeroParadox/Valuation/LocalFloor.lean` uses it for a
+third, subtree-local sense; that is that file's own usage and not what the iteration rule governs.) -/
 
 /-- **ε₀ face.** ε₀ is the least fixed point of `α ↦ ω^α` from the ordinal bottom ⊥. The seed ⊥ and
     the closure ε₀ are distinct — this is the genuine ascent μ. Reuses `epsilonZero_fixedPoint`
@@ -168,7 +206,7 @@ theorem selfApp_mu_unique {L : Type*} [ZPSemilattice L] [AbstractSelfApp L]
 
 /-! ## § VI. The Kleene face — FENCED (same shape, different setting)
 
-Roger's/Kleene's recursion theorem gives a fixed point of any computable self-map of `Code`. This is
+Rogers'/Kleene's recursion theorem gives a fixed point of any computable self-map of `Code`. This is
 the same μ-*shape* (a self-map has a fixed point) in a different *setting*: `Code` carries no
 complete-lattice order, so there is no `lfp`; its fixed points are NOT unique
 (`infinite_quine_family`); and there is no seed→closure ascent. Hence it does **not** instantiate
@@ -191,10 +229,11 @@ end ZeroParadox
 The schema's `selfApp_*` instances and `IsLeastFixedPointFrom.unique` are axiom-free (no axioms at
 all); the Mathlib-`lfp` grounding `lfp_isLeastFixedPointFrom` is choice-free `[propext, Quot.sound]`.
 The ordinal faces (`isLeastFixedPointFrom_nfp`, `epsilon0_*`) inherit
-`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory. **Status: UNCLASSIFIED** —
-"representational, not intrinsic" was asserted here in an earlier version and is retracted: that is an
-eliminability claim and no choice-free re-proof of these faces exists. The choice is not in the `Ordinal`
-type (`[propext, Quot.sound]`) but in the order instance and the operations. ZP-N's choice-free
+`Classical.choice` from Mathlib's `Ordinal`/`nfp` fixed-point theory. **Status: UNCLASSIFIED.**
+⚠ **Do NOT call it "representational, not intrinsic"** — that is an **eliminability claim**, which no
+footprint measurement can establish, and **no choice-free re-proof of these faces was located as of
+2026-08-02**. The choice is not in the `Ordinal` type (`[propext, Quot.sound]`) but in the order
+instance and the operations. ZP-N's choice-free
 snap-from-below is suggestive, not a re-proof. The Kleene face inherits
 `[propext, Classical.choice, Quot.sound]` from the `Code`/`Partrec` machinery. Recorded honestly. -/
 

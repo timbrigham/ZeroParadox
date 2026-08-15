@@ -19,6 +19,8 @@ on:
       - main
     paths:
       - 'ZeroParadox/Miniature.lean'
+      - 'scripts/minimal_core_report.py'
+      - '.github/workflows/minimal_core.yml'
 
 permissions:
   contents: read
@@ -29,8 +31,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # build: false keeps this job self-contained, as the header claims. Without it
+      # lean-action builds the whole corpus first, so an unrelated breakage elsewhere
+      # kills the job before the Minimal Core is ever elaborated.
       - uses: leanprover/lean-action@v1
+        with:
+          build: false
       - name: Re-elaborate the Minimal Core and write the report
         run: |
+          # No pipefail on the elaboration: a failure must still REACH the report.
+          # PIPESTATUS[0] carries Lean's real exit status past the tee - the report takes
+          # it as the verdict, because deciding success from log text fails open (Lean
+          # tags some diagnostics `error(lean.xxx):`, which contains no `error:`).
           lake env lean ZeroParadox/Miniature.lean 2>&1 | tee mc.log
-          python3 scripts/minimal_core_report.py mc.log | tee -a "$GITHUB_STEP_SUMMARY"
+          LEAN_RC=${PIPESTATUS[0]}
+          echo "lake env lean exited ${LEAN_RC}"
+          # pipefail IS required here. Without it the step inherits tee's exit status,
+          # so the report's exit 1 was silently green and the "doubles as a CI gate"
+          # property did not hold as wired.
+          set -o pipefail
+          python3 scripts/minimal_core_report.py mc.log "${LEAN_RC}" \
+            | tee -a "$GITHUB_STEP_SUMMARY"

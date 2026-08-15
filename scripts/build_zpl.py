@@ -1,6 +1,8 @@
 """
 Zero Paradox — ZP-L: Incomputability Convergence PDF Builder
-Version 1.4 | July 2026
+Version 1.5 | July 2026
+v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
+v1.5: axiom-footprint list label corrected - t_comp described as a four-way equivalence; it proves three, the computational face being an assumption rather than a clause. Footprint figures themselves unchanged (measured, not quoted).
 v1.4: "Rogers' fixed-point theorem" corrected from "Roger's" (Hartley Rogers) — Section II heading and prose.
 v1.3: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.1: Rendered version changelog removed (C1 sweep). Fixed 3 null glyphs — subscript-letter entities
@@ -13,7 +15,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.6'
 FIRST_RELEASED = 'May 2026'
 
 
@@ -96,7 +98,7 @@ def build():
             'path without requiring K to be explicitly computed.',
             'Axiom footprint evidence — the following ZP-K theorems all carry '
             '[propext, Classical.choice, Quot.sound]:',
-            '  t_comp (T-COMP four-way equivalence)',
+            '  t_comp (T-COMP three-way equivalence; the computational face is an assumption, not a clause)',
             '  da1_paths_unified',
             '  isComputationalQuine_undecidable',
             '  infinite_quine_family',
@@ -251,10 +253,10 @@ def build():
             'and by Tarski\'s completeness theorem for the theory of real-closed fields, '
             'every first-order sentence in the language of ordered fields that holds in '
             '&#8477; also holds in No, and vice versa.',
-            'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the forced '
-            'transition from &#8869; to the first non-null ordinal threshold (&#949;&#8320;, '
+            'ZP-F (The Counterexamples) proves that the Binary Snap &#8212; the transition from &#8869; to the first non-null ordinal threshold (&#949;&#8320;, '
             'established in §V&#8211;§VII above) &#8212; cannot occur in any linearly ordered '
-            'field. This result applies directly to No considered as a linearly ordered field.',
+            'field. This result applies directly to No considered as a linearly ordered field. '
+            'Note the scope: what is derived is the transition&#8217;s SHAPE and its impossibility in an ordered field, never that the transition is taken - occurrence is a framework commitment.',
             'The surreals therefore contain &#949;&#8320; as an ordinal while simultaneously '
             'satisfying the density condition that blocks the Binary Snap in their ordered '
             'field structure. Both structures coexist in No: &#949;&#8320; is present as an '

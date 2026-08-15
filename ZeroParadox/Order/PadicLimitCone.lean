@@ -8,7 +8,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H MC-1 TC10: the p-adic floor `{0}` is a genuine categorical limit cone
+# The p-adic floor `{0}` is a genuine categorical limit cone
 
 ## Engineer's Take
 
@@ -21,7 +21,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-`ZPH_TopFunctor.fB_bottom_is_limit` proves the *set* equation `⋂ n, q2Ball n = {0}`: the
+`fB_bottom_is_limit` proves the *set* equation `⋂ n, q2Ball n = {0}`: the
 intersection of the shrinking clopen balls `B(0, 2⁻ⁿ) ⊆ Q₂` is exactly the snap floor `{0}`.
 That is a statement in `Set Q₂`, not in `TopCat`. The campaign question (TH10) was whether the
 node #3 is a *genuine* ν / categorical limit, i.e. whether the snap floor is the **limit object**
@@ -165,7 +165,7 @@ end ZeroParadox
 /-! ## Axiom Purity Check
 
 `Classical.choice` is expected: it enters through Mathlib's `TopCat` / limits / metric library,
-the same dependency carried by `ZPH_TopFunctor` and the ZP-B topology layer. It is a library
+the same dependency carried by `ZeroParadox/Valuation/TopFunctor.lean` and the ZP-B topology layer. It is a library
 dependency, not a new commitment of this construction. -/
 
 section PurityCheck

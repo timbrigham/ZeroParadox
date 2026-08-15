@@ -36,9 +36,16 @@ namespace ZeroParadox
 
 open CategoryTheory Limits ZeroParadox ZeroParadox
 
-/-- A 3-field structure bundling one object from each domain category. Intent: a "section over the discrete
-    domain index" / "the discrete-index Grothendieck object" — but NO Grothendieck construction or fibration
-    is built here; this is just a tuple. -/
+/-! ### NO-GO gauge — nothing fails to be a `GlobalZero`, and that is the point being made.
+It bundles three objects with **no laws relating them**, so any triple inhabits it. `globalZero`'s
+docstring below says so — *"a tuple, not a constructed cross-domain object"*. Membership therefore
+asserts nothing about the three bottoms being one thing, which is exactly the cross-category identity
+`CLAUDE.md` records as **retired as ill-typed**. Cite the tuple; never *"a `GlobalZero` exists,
+therefore the bottoms are one."* -/
+
+/-- A 3-field structure bundling one object from each domain category. Intent: a "section over the
+    discrete domain index" / "the discrete-index Grothendieck object" — but NO Grothendieck
+    construction or fibration is built here; this is just a tuple. -/
 structure GlobalZero where
   /-- Top fiber object. -/
   top : TopCat

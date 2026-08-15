@@ -74,6 +74,17 @@ class ProvabilityLogic (S : Type*) where
   /-- D3:  `⊢ □a → □□a`. -/
   ax_D3 : ∀ a : S, Thm (imp (box a) (box (box a)))
 
+/-! ### NO-GO gauge — what fails to be a `ProvabilityLogic`?
+
+**Measured 2026-08-09 by building it: the INCONSISTENT theory does not fail — it is a member.** Take `S := Unit` with
+`Thm _ := True`. Modus ponens, K, S, necessitation, D2 and D3 all hold trivially, so the class
+admits the theory in which everything is provable.
+
+**That is normal for an axiomatization and it is exactly why membership proves nothing on its own.**
+The axioms constrain the *shape* of a provability predicate, never its consistency — the class has no
+field that could. So results here are conditional on the carrier being a real proof system;
+`[ProvabilityLogic S]` alone licenses no claim about provability in any particular theory. -/
+
 namespace ProvabilityLogic
 
 variable {S : Type*} [ProvabilityLogic S]

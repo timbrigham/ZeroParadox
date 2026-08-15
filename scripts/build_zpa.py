@@ -1,5 +1,6 @@
 """
-Build ZP-A: Lattice Algebra (v1.20)
+Build ZP-A: Lattice Algebra (v1.21)
+v1.21: OQ-A1b minimal-element note corrected (bedrock, cross-document attribution) — struck "that existence is a metric result, established by ZP-B's 2-adic structure". ZP-B proves no such result and cannot: the 2-adic norm values accumulate at 0 (‖2ⁿ‖₂ = 2⁻ⁿ), so ℚ₂ supplies no closest non-zero element, and ZP-B's own eps0 = 2ᵏ is parameterized by a chosen maximum accessible valuation (value contingent by its own definition). The note re-attributed to ZP-B's METRIC what the preceding paragraph already correctly attributes to ZP-B's AXIOM — an axiom-mistaken-for-result, and the two paragraphs contradicted each other. Minimality now rests on AX-B1 (consistent with CLAIMS.md, which classifies it as the framework's one substantive modeling commitment); what ZP-B proves at 0 is stated instead (clopen gap T3, irreversible return C3); and the dense counterexample now points at ZP-F, where it is proved for every ordered field and stated as the direct negation of AX-B1 (axb1_fails_in_ordered_field). No algebraic content changed.
 v1.20: R-AFA false premise corrected (bedrock, same class as ZP-E v3.24) — struck BOTH legs of the Foundation-vs-AFA squeeze: the "well-founded ⊥ would admit an external interpreter" leg (well-founded ⇏ finitely interpretable; ω) and the "bounded ∈-rank contradicts unbounded surprisal" leg (∈-rank and surprisal are orthogonal; ∅ has ∈-rank 0 yet v₂(0)=∞, so both co-inhabit ⊥). Foundation-incompatibility now rests on the self-membership of ⊥={⊥} (Regularity, no_quine_atom); R3 and L-INF demoted to corroboration; forcing stated machine-checked (QuineHost); falsifier narrowed to the requirements-choice; now consistent with the corrected ZP-E R-AFA it references.
 v1.19: rendered Lean citations synced to post-reorg files/namespaces (SSOT-driven); C8 dual-date templating (hardcoded month removed).
 v1.18: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).
@@ -39,7 +40,7 @@ All three DA-1 paths share D7 as background; independence is among their argumen
 import os
 from zp_utils import *
 
-VERSION = '1.20'
+VERSION = '1.21'
 FIRST_RELEASED = 'April 2026'
 
 def build():
@@ -168,7 +169,7 @@ def build():
         'OQ-A1a: Is there algebraic reason to restrict &#945;<sub>n</sub> to join-irreducible elements (not expressible as joins of strictly smaller elements)?',
         'OQ-A1b: Does the open-ended semilattice (without top element &#8868;) permit unbounded ascending chains?',
         'Status: CLOSED within ZP — Both sub-questions resolved by ZP-E Theorem T5 (Iterative Forcing Theorem) via AX-B1 from ZP-B. OQ-A1a: &#945;<sub>n</sub> = &#949;(S<sub>n</sub>), the minimum viable deviation (ZP-specific). OQ-A1b: Within ZP, AX-B1\'s binary constraint bounds ascending chains via T5. Note: in general semilattice theory without AX-B1, unbounded ascending chains are permitted — a bare join-semilattice imposes no bound. The closure here is a consequence of ZP\'s binary existence commitment, not of A1&#8211;A4 alone.',
-        'Note on minimal element above &#8869;: Bounded chains do not in themselves guarantee a minimal element above &#8869;. In a dense structure, for any &#949; > 0, &#949;/2 also exists &#8212; chains may be bounded yet have no first step. The closure of OQ-A1b establishes that ascending chains are bounded within ZP; it does not establish that &#949;&#8320; exists as a specific minimal non-null element. That existence is a metric result, established by ZP-B&#8217;s 2-adic structure, which places 0 at infinite valuation and every non-zero element at finite valuation. The gap between them is not bridgeable by halving. This is outside the scope of A1&#8211;A4.',
+        'Note on minimal element above &#8869;: Bounded chains do not in themselves guarantee a minimal element above &#8869;. In a dense structure, for any &#949; > 0, &#949;/2 also exists &#8212; chains may be bounded yet have no first step. That is not a hypothetical: it is ZP-F, where the halving argument is proved for every field carrying a compatible linear order (f_snap_impossible, ZeroParadox/Reals/OrderedField.lean), and is stated there as the direct negation of AX-B1 (axb1_fails_in_ordered_field). The closure of OQ-A1b establishes that ascending chains are bounded within ZP; it does not establish that &#949;&#8320; exists as a specific minimal non-null element. That existence rests on the same binary existence commitment (AX-B1), not on a further result. ZP-B&#8217;s 2-adic structure places 0 at infinite valuation and every non-zero element at finite valuation; what it proves there is that the gap at 0 is clopen (T3) and the return across it irreversible (C3). The non-zero elements still come arbitrarily close to 0 (&#8214;2&#8319;&#8214;&#8322; = 2&#8315;&#8319;), so there is no closest non-zero element to serve as a first step. This is outside the scope of A1&#8211;A4.',
     ]))
 
     E.append(Paragraph('VII. Boundary Conditions', S['h1']))

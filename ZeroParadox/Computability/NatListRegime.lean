@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC49 — the third root-cut regime: the nat/list functor (leaf + recursive position)
+# The third root-cut regime: the nat/list functor (leaf + recursive position)
 
 ## Engineer's Take
 
@@ -203,7 +203,7 @@ theorem fixToCofix_eventuallyLeaf : ∀ x : Fix natPF_NatListRegime.Obj, Eventua
       exact EventuallyLeaf.step _ (fun i => fixToCofix (f i)) (fixToCofix_dest_mk ⟨true, f⟩)
         (hchild PUnit.unit)
 
-/-- **TC49 load-bearing edge — the canonical comparison is NOT surjective.** `natInfinity` is a
+/-- **load-bearing edge — the canonical comparison is NOT surjective.** `natInfinity` is a
     `Cofix natPF_NatListRegime.Obj` element that is not in the range of `fixToCofix : Fix → Cofix`: every comparison
     image eventually reaches a leaf (`fixToCofix_eventuallyLeaf`), but `natInfinity` never does
     (`natInfinity_not_eventuallyLeaf`). This witnesses the third root-cut regime: `Fix` inhabited

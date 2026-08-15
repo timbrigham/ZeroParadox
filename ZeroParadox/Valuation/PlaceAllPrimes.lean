@@ -27,11 +27,11 @@ over the framework's **own** bottoms, not over ℚ's places with two lit up.
 
 **Genuinely new content.**
 - `qp_floor_is_limit` — **the per-prime floor OBJECT**: for every prime p, `⋂ n, qpBall p n = {0}`.
-  Generalizes `ZPH_TopFunctor.fB_bottom_is_limit` (built only at p = 2) to a constructed floor object at
+  Generalizes `fB_bottom_is_limit` (built only at p = 2) to a constructed floor object at
   *every* finite place. This is what genuinely earns "the framework's finite-floor family for all primes"
   — the floor objects are built, not asserted. (New; the core A5 result.)
 - `padic_contraction_all_primes` — for **every** prime p, multiplication by p contracts to the floor ⊥ at
-  the p-adic place: `pⁿx → 0` in `ℚ_[p]` (because `‖p‖_p < 1`). Generalizes TC05's p = 2 doubling
+  the p-adic place: `pⁿx → 0` in `ℚ_[p]` (because `‖p‖_p < 1`). Generalizes `ZeroParadox/Valuation/PadicAttractor.lean`'s p = 2 doubling
   attractor — the *dynamics* reaching each per-prime floor. (New.)
 - `padic_place_eq_norm_all_primes` — the p-adic place is the `ℚ_[p]`-norm, for every prime p (generalizes
   A1's `node3_place_eq_q2_norm`).
@@ -58,7 +58,7 @@ namespace ZeroParadox
 open Rat.AbsoluteValue Filter Topology
 
 /-- For **every** prime `p`, multiplication by `p` contracts to the floor ⊥ at the p-adic place:
-    `pⁿx → 0` in `ℚ_[p]` (since `‖p‖_p < 1`). Generalizes TC05's p = 2 attractor to all finite places. -/
+    `pⁿx → 0` in `ℚ_[p]` (since `‖p‖_p < 1`). Generalizes `ZeroParadox/Valuation/PadicAttractor.lean`'s p = 2 attractor to all finite places. -/
 theorem padic_contraction_all_primes (p : ℕ) [Fact p.Prime] (x : ℚ_[p]) :
     Tendsto (fun n : ℕ => (p : ℚ_[p]) ^ n * x) atTop (𝓝 0) := by
   rw [tendsto_zero_iff_norm_tendsto_zero]
@@ -80,7 +80,7 @@ noncomputable def qpBall (p : ℕ) [Fact p.Prime] (n : ℕ) : Set ℚ_[p] :=
 
 /-- **The per-prime floor OBJECT** (the genuine all-primes generalization, not just dynamics): for every
     prime `p`, the intersection of the shrinking p-adic balls is exactly the floor `{0}`. Generalizes
-    `ZPH_TopFunctor.fB_bottom_is_limit` (built only at p = 2) to a floor object at *every* finite place —
+    `fB_bottom_is_limit` (built only at p = 2) to a floor object at *every* finite place —
     so the framework's finite-floor family is genuinely constructed for all primes, not asserted. -/
 theorem qp_floor_is_limit (p : ℕ) [hp : Fact p.Prime] :
     (⋂ n, qpBall p n) = {(0 : ℚ_[p])} := by

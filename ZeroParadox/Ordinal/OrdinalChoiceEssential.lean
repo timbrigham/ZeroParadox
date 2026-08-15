@@ -5,9 +5,17 @@ import ZeroParadox.Category.ExcludedMiddleBridge
 /-!
 # Comparability of well-orders is a constructive taboo
 
-Every `Classical.choice` footprint this framework has examined has turned out **accidental** — a
-choice-free re-proof existed, or plausibly could. This file records the one place examined so far
-where that is **not** the case, and fences what it does and does not license.
+**Most** `Classical.choice` footprints this framework has examined have turned out **accidental** — a
+choice-free re-proof existed, or plausibly could. **Some do not.** This file records one of those, and
+fences what it does and does not license.
+
+`ZeroParadox/Category/ChoiceCannotBe.lean` § IV is the index of the essential cases and is the place
+to count them. **No figure is recorded here** — a count kept at the site of one instance goes stale
+silently the moment another is found, which is exactly what happened to the sentence this paragraph
+replaces. *(Corrected 2026-08-01: this header read "**every** footprint … accidental" and "**the one**
+place examined so far" until then. Both were already false — `wem_of_fixedPointFree`
+(`ZeroParadox/Category/LawvereTaboo.lean`) was committed 2026-07-20 and is a second essential case,
+sitting on the diagonal keystone rather than on an imported order instance.)*
 
 The result: **comparability of arbitrary well-orders implies excluded middle**
 (`em_of_wellOrder_comparable`), proved with **no `Classical.choice`**

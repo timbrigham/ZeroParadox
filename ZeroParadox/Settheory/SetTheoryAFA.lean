@@ -94,6 +94,17 @@ class AFAStructure (L : Type*) [ZPSemilattice L] where
       Any ZP-A lattice with AFA grounding must exhibit this property. -/
   bot_self_mem : selfMem bot
 
+/-! ### NO-GO gauge — nothing fails, and that is EXPECTED (Tim, 2026-08-09).
+
+Measured by building it: `selfMem x := x = bot` discharges both fields on *any* `[ZPSemilattice L]`,
+as `ZeroParadox/Computability/SelfApp.lean`'s `toAFAStructure` does generically. `⊥ = {⊥}` is a
+cross-type `=`, so the class encodes the **role**: the `ZeroParadox/Settheory/QuineHost.lean` pattern.
+
+**Two readings it must not license.** `[AFAStructure L]` imports no anti-foundation content, so
+*"L carries it, therefore ⊥ is a Quine atom"* is circular; and universal inhabitation is no evidence
+for a universality claim about AFA, the construction being definitional. ⚠ **There is no
+non-member** — `selfMem := fun _ => False` is a failing field VALUE, not a failing carrier. -/
+
 /-- Q is a Quine atom if it is self-containing and is the unique such element. -/
 -- [ZP-CUSTOM] no Mathlib analog | reason: Lattice-level analog of Aczel's Quine atom (the unique set satisfying x = {x}). No Mathlib definition covers this: it requires AFAStructure context and encodes the conjunction of self-containment + uniqueness as a single predicate.
 def IsQuineAtom {L : Type*} [ZPSemilattice L] [AFAStructure L] (q : L) : Prop :=

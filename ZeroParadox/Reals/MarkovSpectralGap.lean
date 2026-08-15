@@ -38,8 +38,8 @@ Three results:
   provably loses information and cannot be reversed.
 
 **Honest scope / FENCE.** Irreversibility is **not** universal for doubly-stochastic chains. A
-permutation / cyclic chain (`ZPH_MC1_TC31.cycKernel`) has eigenvalues on the unit circle (no gap), is
-injective, and does **not** mix (`ZPH_MC1_TC39.swap_orbit_not_convergent`). The gap — and hence
+permutation / cyclic chain (`cycKernel`) has eigenvalues on the unit circle (no gap), is
+injective, and does **not** mix (`swap_orbit_not_convergent`). The gap — and hence
 irreversibility — requires a genuinely **mixing** chain; `fullMix` is the concrete witness. So this
 fills the #2 DYN cell in the spectral-gap sense, *conditional on mixing*. It is the genuine version,
 not the thin "convergence = irreversible" re-reading.

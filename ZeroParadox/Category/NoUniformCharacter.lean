@@ -38,6 +38,14 @@ namespace ZeroParadox
 open CategoryTheory ZeroParadox ZeroParadox
   ZeroParadox ZeroParadox
 
+/-! ### NO-GO gauge — `NoUniformCharacter` is a BUNDLED PROPOSITION, not a requirements class.
+It is `Prop`-valued
+and takes **no parameter**: every field is a statement about the fixed functors `fC_functor` /
+`fD_functor` and about `q2Ball`. So there is no carrier that could fail to be a member — the only
+question is whether the conjunction is *true*, which is what its proof establishes. The degeneracy
+gauge does not apply; the honest check on a bundle like this is that each conjunct is separately
+cited rather than inferred from membership. -/
+
 /-- The three heterogeneous universal characters of the MC-1 bottoms, bundled: F_C strict-initial,
     F_D non-strict-initial (zero object), F_B an inverse limit (not an initial object). Witness that no
     single universal character is shared — the formal shadow of the Global-Zero unification obstruction. -/

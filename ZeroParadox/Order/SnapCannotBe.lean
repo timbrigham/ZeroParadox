@@ -15,7 +15,9 @@ before writing anything about the snap; the home files are the ground truth.
 
 Bedrock (each a live theorem below): the snap is a **derived** theorem, not an axiom (`t_snap_derived`,
 AX-1 retired); it is **one-way** (`t_snap_irreversible`); and it returns to a **new** ⊥ — a successor
-null, never the same bottom (`c_da2_novelty`, `da1_minimal_path`, `t_iz_limit_is_new_null`).
+null. **The novelty is a commitment, not a theorem**: `t_iz_limit_is_new_null` gives only the role half
+(anything playing the ⊥ role is `bot`), `c_da2_novelty` its contrapositive, and within one lattice `bot`
+is unique — see the § IV glosses.
 
 ## Engineer's Take
 
@@ -40,9 +42,9 @@ section SnapCannotBeIndex
 #check @ZeroParadox.da2_bottom_characterization       -- the ⊥ role: (∀ x, join S x = x) ↔ S = ⊥
 #check @ZeroParadox.da3_accessibleCardinality         -- reachable cardinality is position-relative
 
-/-! ### § IV. The snap returns to a NEW ⊥ (a successor null); its 2-adic realization is a loop -/
-#check @ZeroParadox.c_da2_novelty                     -- an advanced state acts as ⊥ for a distinct successor instantiation
+/-! ### § IV. The snap returns to a ⊥ (read as a successor null — a commitment); its 2-adic realization is a loop -/
+#check @ZeroParadox.c_da2_novelty                     -- contrapositive of the role fact: a non-⊥ state cannot satisfy the join-identity. "Distinct successor instantiation" is the reading, not the statement
 #check @ZeroParadox.snap_arc_z2_loop                  -- the ℤ₂ realization: start 0, depart, reapproach 0
-#check @ZeroParadox.t_iz_limit_is_new_null            -- the limit is its own successor ⊥ (a fresh instance), never the same
+#check @ZeroParadox.t_iz_limit_is_new_null            -- role half only: (∀ x, join terminal x = x) → terminal = bot. Novelty is NOT in this statement; do not cite it as the novelty witness
 
 end SnapCannotBeIndex

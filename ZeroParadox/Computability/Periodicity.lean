@@ -4,8 +4,8 @@ import ZeroParadox.Computability.Kleene
 # ZP-K metric: the selfApply periodicity invariant (P5)
 
 The computational quines of ZP-K (`IsComputationalQuine`, the Kleene fixed points of `selfApply`)
-already satisfy a raw periodicity equation (`ZPK.quine_period_is_goedel`) and form an unbounded
-family (`ZPK.infinite_quine_family`). This file packages those parked facts as the two named
+already satisfy a raw periodicity equation (`quine_period_is_goedel`) and form an unbounded
+family (`infinite_quine_family`). This file packages those parked facts as the two named
 invariants the metric calls for, in standard Mathlib vocabulary:
 
 * `quine_isPeriodic` — `eval c` is `Function.Periodic` with period the code's own Gödel number

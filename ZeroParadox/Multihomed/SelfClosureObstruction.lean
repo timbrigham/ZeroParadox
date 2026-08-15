@@ -19,7 +19,7 @@ it does NOT claim the walls are one object — that would be the very cross-fram
 blocks (MC-1). Shapes 1 and 2 are the walls of ⊥'s two faces (fixed point + limit); shape 3 is the
 wall of the seam.
 
-Note: `.claude-local/notes/shape_of_the_walls_2026-07-14.md`. EXPERIMENTAL; physics-silent.
+EXPERIMENTAL; physics-silent.
 -/
 import ZeroParadox.Settheory.Wall
 import ZeroParadox.Reals.OrderedField
@@ -49,6 +49,16 @@ structure SelfClosureObstruction where
   shape : ClosureShape
   closable : Prop
   no_closure : ¬ closable
+
+/-! ### NO-GO gauge — what fails to be a `SelfClosureObstruction`?
+
+**Measured 2026-08-09: nothing does.** `closable := False`, `no_closure := id` discharges the
+structure for any `shape`, so *"there is an obstruction here"* is inhabited without exhibiting any
+obstruction. The structure is a **record of a proof**, not a requirements class: its content is
+entirely in *which* `Prop` a given value puts in `closable`.
+
+**So membership is never the claim — the field is.** Cite `obstruction_negation` and its siblings for
+their specific `closable`; never *"X is a `SelfClosureObstruction`, therefore X cannot close."* -/
 
 /-- Shape 1a (Cantor/diagonal, `Prop` level — the ENGINE): no proposition is equivalent to its own
     negation. Empty by `negation_no_fixedpoint`. -/

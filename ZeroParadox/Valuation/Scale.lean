@@ -13,7 +13,7 @@ A ZP-J valuation-bridge sub-file. See the Engineer's Take in `ZeroParadox/Setthe
 
 ## The road surface
 
-ZPJ_SelfApp reduced AFAStructure to AbstractSelfApp (two axioms: fixed_bot, unique_fp).
+ZeroParadox/Computability/SelfApp.lean reduced AFAStructure to AbstractSelfApp (two axioms: fixed_bot, unique_fp).
 This file adds the next layer: a ValuationStructure that explains *why* ⊥ is the unique
 fixed point — because scale strictly increases valuation, and ⊥ is the unique element
 with infinite valuation. unique_fp becomes a theorem, not an axiom.
@@ -36,11 +36,11 @@ val strictly increases under scale. Unique fixed point = unique element with val
 
 AFA content is derived from the valuation structure — not imported from Aczel.
 
-## What ZPJ_ScaleBridge resolved
+## What ZeroParadox/Valuation/ScaleBridge.lean resolved
 
 The ZPSemilattice constraint was an encoding artefact: ValuationStructure required
 [ZPSemilattice L] but the join operation ⊔ never appears in any of its four axioms.
-ZPJ_ScaleBridge.lean resolves this by defining ValBridge — the same four axioms
+ZeroParadox/Valuation/ScaleBridge.lean resolves this by defining ValBridge — the same four axioms
 with bot as a plain field — and builds a formal ℤ_[2] instance using the standalone
 theorems in §V below. A toValBridge instance makes any ZPSemilattice+ValuationStructure
 type also a ValBridge instance, unifying both tracks under a common ancestor.
@@ -72,6 +72,51 @@ class ValuationStructure (L : Type*) [ZPSemilattice L] where
   val_bot    : val bot = ⊤
   val_unique : ∀ x : L, val x = ⊤ → x = bot
   val_scale  : ∀ x : L, x ≠ bot → val (scale x) = val x + 1
+
+/-! ### NO-GO gauge for this class — proved in the sibling file, and sharp here too
+
+    What FAILS to be a `ValuationStructure`: every carrier with a point other than `bot` is forced
+    INFINITE, so no finite carrier with two or more points admits one. The gauge is proved once for
+    `ValBridge` and reaches this class through the `toValBridge` instance of
+    ZeroParadox/Valuation/ScaleBridge.lean § V — `valuationStructure_forces_infinite`.
+
+    ⚠ **Only the FORCING half transfers through `toValBridge`**, which runs
+    `ValuationStructure ⇒ ValBridge`: it carries obstructions INTO this class and cannot carry a
+    membership witness back, so `trivialValBridge` inhabits `ValBridge Unit` and says nothing about
+    this class. Sharpness is therefore established HERE, by exhibiting the degenerate carrier
+    directly — `trivialZPSemilattice` and `trivialValuationStructure` below. The one-point carrier
+    satisfies the semilattice equations and all four valuation axioms, the latter because
+    `val_scale`'s `x ≠ bot` guard is vacuous on a subsingleton. **The bound is sharp for this class
+    as well:** `Unit` is a finite member, and every member with a second point is infinite.
+
+    Neither witness is registered as a global instance, so neither can leak into instance resolution
+    elsewhere — the pattern `trivialValBridge` already follows in the sibling file. Full statement
+    and proof of the gauge: ZeroParadox/Valuation/ScaleBridge.lean § VI. -/
+
+section DegenerateWitness
+
+/-- The one-point semilattice. A `def`, not an `instance`. -/
+@[reducible] def trivialZPSemilattice : ZPSemilattice Unit where
+  join := fun _ _ => ()
+  bot := ()
+  join_assoc := fun _ _ _ => rfl
+  join_comm := fun _ _ => rfl
+  join_idem := fun _ => rfl
+  bot_join := fun _ => rfl
+
+attribute [local instance] trivialZPSemilattice
+
+/-- **The degenerate member, which makes the gauge's bound sharp for this class.** `val_scale` is
+    guarded by `x ≠ bot`, and no point of `Unit` clears the guard. -/
+@[reducible] noncomputable def trivialValuationStructure : ValuationStructure Unit where
+  scale := id
+  val := fun _ => ⊤
+  scale_bot := rfl
+  val_bot := rfl
+  val_unique := fun x _ => Subsingleton.elim x _
+  val_scale := fun x hx => absurd (Subsingleton.elim x _) hx
+
+end DegenerateWitness
 
 /-! ## § II. Derived Theorems from ValuationStructure -/
 
@@ -141,9 +186,11 @@ theorem val_selfMem_singleton :
 
 /-! ## § V. The 2-Adic Parallel — ℤ_[2] Satisfies ValuationStructure Conditions
 
-    ℤ_[2] is not a ZPSemilattice (it is a ring, not a join-semilattice), so it cannot
-    be a formal ValuationStructure instance. These standalone theorems show every
-    ValuationStructure axiom holds in ℤ_[2] with scale = ×2 and val = 2-adic valuation.
+    No `ZPSemilattice ℤ_[2]` is defined — its ring structure supplies no natural join with 0 as
+    bottom — so ℤ_[2] cannot be a formal ValuationStructure instance, which requires one. ⚠ Being a
+    ring is not itself the obstruction: no ZPSemilattice axiom mentions a ring operation, and
+    `ZPSemilattice ℕ` exists. These standalone theorems show every ValuationStructure axiom holds in
+    ℤ_[2] with scale = ×2 and val = 2-adic valuation.
 
     ℤ_[2] is used (not ℚ_[2]) because PadicInt.valuation : ℤ_[2] → ℕ is ℕ-valued,
     making q2Val_scale provable. In ℚ_[2], valuation : ℚ_[2] → ℤ can be negative,
@@ -216,5 +263,9 @@ open ZeroParadox
 #print axioms val_selfMem_singleton
 #print axioms q2Val_scale
 #print axioms q2Scale_unique_fp
+
+-- The degenerate witnesses making the NO-GO gauge's bound sharp for this class.
+#print axioms trivialZPSemilattice
+#print axioms trivialValuationStructure
 
 end PurityCheck

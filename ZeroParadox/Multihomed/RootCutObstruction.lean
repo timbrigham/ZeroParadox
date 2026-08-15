@@ -4,7 +4,7 @@ import ZeroParadox.Settheory.Coalgebra
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, TC18 (module TC21) — the ROOT cut is a strict, non-glueable μ/ν obstruction
+# The ROOT cut is a strict, non-glueable μ/ν obstruction
 
 ## Engineer's Take
 
@@ -17,8 +17,8 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This module tests **TC18 — strict-fork canonicity of the root**. The tree hypothesis roots the whole
-bottom-diagram at the μ/ν fork. ZP-P (`ZPP_Coalgebra.lean`) places that fork on the leaf-free identity
+This module tests **strict-fork canonicity of the root**. The tree hypothesis roots the whole
+bottom-diagram at the μ/ν fork. ZP-P (`ZeroParadox/Settheory/Coalgebra.lean`) places that fork on the leaf-free identity
 polynomial functor `idPF_Coalgebra`: its initial algebra (W-type, μ) `Fix idPF_Coalgebra.Obj` is **empty**
 (`fix_isEmpty`) and its final coalgebra (M-type, ν) `Cofix idPF_Coalgebra.Obj` is **inhabited**
 (`cofix_nonempty`). The pre-registered question: is the root cut a *genuine* obstruction — i.e. is
@@ -45,7 +45,7 @@ empty/inhabited cardinality wall — the same `IsEmpty (Nonempty → Empty)` con
 empty-vs-inhabited pair exhibits (and the same Axis-III content as the Kleisli `Fin 0` bottom, #4).
 What is ZP-P-specific is only the *identification* of the two empty/inhabited objects as the μ and ν
 fixed points of one functor (carried by `fix_isEmpty` / `cofix_nonempty`, proved in
-`ZPP_Coalgebra.lean`); that those two objects ARE the well-founded vs non-well-founded fixed points is
+`ZeroParadox/Settheory/Coalgebra.lean`); that those two objects ARE the well-founded vs non-well-founded fixed points is
 the structural claim, and it is borrowed, not re-proved here. So:
 
 - **Proved here (in-statement):** the root cut is a strict, non-invertible map obstruction
@@ -109,7 +109,7 @@ section PurityCheck
 open ZeroParadox
 
 -- Footprint (measured): all four carry [propext, Classical.choice, Quot.sound]. Choice is the
--- Mathlib M-type / `Cofix` artifact (fenced in ZPP_Coalgebra) — it enters through the `Cofix idPF_Coalgebra.Obj`
+-- Mathlib M-type / `Cofix` artifact (fenced in ZeroParadox/Settheory/Coalgebra.lean) — it enters through the `Cofix idPF_Coalgebra.Obj`
 -- type that every statement here mentions, not through any necessity of the obstruction. The
 -- obstruction's mathematical content (empty domain/codomain → asymmetric function-type emptiness) is
 -- itself choice-free; the footprint reflects the ambient M-type machinery, consistent with

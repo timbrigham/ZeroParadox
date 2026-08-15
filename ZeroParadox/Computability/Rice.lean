@@ -22,8 +22,11 @@ recursion theorem. This file does not re-prove it; it **cites** Mathlib and conn
 framework's computability face.
 
 The connection (the genuine content): the framework's computability face is the one place the diagonal
-fixed point is *genuinely produced*, not walled — `computability_face_fixedPoint` (`Category/Lawvere.lean`)
-is Kleene's recursion theorem, giving the Kleene quine (ν-existence). Rice is the **same** recursion-theorem
+fixed point is *genuinely produced*, not walled — `computability_face_fixedPoint`
+(`ZeroParadox/Category/Lawvere.lean`) is **Rogers' fixed-point theorem** (Mathlib
+`Nat.Partrec.Code.fixed_point`; Mathlib reserves *Kleene's second recursion theorem* for
+`fixed_point₂`, which it derives from it), giving the Kleene quine (ν-existence). Rice is the **same**
+recursion-theorem
 fixed point read on the **decidability** axis: the quine *exists*, yet *which* programs have any non-trivial
 semantic property is *undecidable*. That pairing — ∃ but ¬decidable — is exactly the "exists-but-undecidable"
 signature that `Wall.lean`'s failure-mode taxonomy singles out as the computability row (the pivot face).
@@ -91,7 +94,9 @@ theorem quine_exists_yet_rice (C : Set Code)
 
 /-- **Rice on the family's μ/ν fork: the computability face HAS a bottom element.** Unlike the truth /
     comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor: every computable
-    self-map on codes has a fixed point (`computability_face_fixedPoint` — Kleene's recursion theorem),
+    self-map on codes has a fixed point (`computability_face_fixedPoint` — Rogers' fixed-point theorem;
+    while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through
+    Kleene's second recursion theorem, `fixed_point₂`),
     the Kleene quine, a program computing its own code (verb = noun). So on the one-over-infinity-to-bottom
     map, the computability face is the ν side, where self-reference DOES close on a bottom — and Rice
     (above) is the price paid for it: the floor exists, but membership at it is undecidable. -/

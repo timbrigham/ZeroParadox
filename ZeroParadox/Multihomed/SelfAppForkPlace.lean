@@ -50,17 +50,30 @@ Because `selfApp` has a *unique* fixed point (`AbstractSelfApp.unique_fp`), that
   *directions of comparison against an arbitrary fixed point*, not a conjunction of two pre-existing
   witnesses): least ∧ greatest = seam.
 
-So the selfApp fixed point lands at the **same place as the Hilbert zero object #5**: the μ=ν seam.
-This is the order-theoretic shadow of Lambek's lemma / the unique-fixed-point coincidence — when the
-initial algebra and the final coalgebra agree, the fixed point is unique, and a unique fixed point is
-trivially both extremal. The Quine-atom side (`ZPP_Coalgebra.categorical_fork_strict`: μ empty, ν
-inhabited) is the *strict* fork on a leaf-free functor where μ ≠ ν; here, for `selfApp` on the ZP
-lattice, μ = ν *collapses to one point* — the seam — which is exactly the diagonal-fixed-point keystone.
+`Reading:` **COINCIDENCE** — the selfApp fixed point is read as landing at the **same place as the
+Hilbert zero object #5**: the μ=ν seam. The framework reads this as the order-theoretic shadow of
+Lambek's lemma / the unique-fixed-point coincidence — when the initial algebra and the final coalgebra
+agree, the fixed point is unique, and a unique fixed point is trivially both extremal. The Quine-atom
+side (`categorical_fork_strict`: μ empty, ν inhabited) is the *strict* fork on a leaf-free functor
+where μ ≠ ν; here, for `selfApp` on the ZP lattice, μ = ν *collapses to one point* — the seam — which
+the framework reads as the diagonal-fixed-point keystone. **Conjectural: the cross-face identification
+is a type boundary, never a Lean `=`.**
 
 **Honest fence.** The Lean content is exactly: the selfApp fixed-point set is `{bot}`, and `bot` is
-both the least and the greatest fixed point in the ZP-A induced order. "This seam IS the diagonal fixed
-point / the same seam as the Hilbert zero object #5 / Lambek collapse" is the framework's
-interpretation of that pattern, not a Lean claim. In particular the order-theoretic least=greatest here
+both the least and the greatest fixed point in the ZP-A induced order.
+
+`Statement:` **COINCIDENCE** — `selfApp_fixed_point_is_seam` proves least **and** greatest of the *same*
+object `bot`: two directions of comparison against an arbitrary fixed point, in one statement. The μ=ν
+coincidence is in the statement, not assembled from two prior witnesses.
+
+`Reading:` **COINCIDENCE** — "this seam IS the diagonal fixed point / the same seam as the Hilbert zero
+object #5 / a Lambek collapse" is the framework's interpretation of that pattern, not a Lean claim, and
+the cross-face identification stays a type boundary. *(Tagged 2026-08-01. The claim was untagged and
+invisible to `check_pov.py` for as long as the citation carried a dead pre-reorg namespace prefix —
+the checker keys on declaration citations and did not recognise the qualified form. Removing the dead
+prefix exposed it. **A dead citation can hide a claim from a checker that keys on citations.**)*
+
+In particular the order-theoretic least=greatest here
 is NOT the same statement as the categorical initial=terminal of the zero object — they are parallel
 faces of the seam, which is the meaning attached, not a proven identification. The uniqueness is the
 real driver: extremality in both directions is *because* the fixed point is unique, so the seam reading
@@ -96,7 +109,7 @@ theorem selfApp_fp_set_eq_singleton :
 /-- **μ characterization (least fixed point).** `bot` is ≼ every fixed point of `selfApp` in the ZP-A
     induced order. Load-bearing content: the comparison `bot ≼ x` for an *arbitrary* fixed point — this
     is what "least fixed point" means (the μ / initial-algebra side of the fork). Holds because `bot` is
-    the order-bottom (`ZPA.bot_le`); the fixed-point hypothesis is not even needed, which is the point —
+    the order-bottom (`bot_le`); the fixed-point hypothesis is not even needed, which is the point —
     `bot` is below everything, so it is below every fixed point. -/
 theorem bot_is_least_fixed_point (x : L) (_hx : isFixedPt x) : (bot : L) ≼ x :=
   bot_le x
@@ -117,7 +130,7 @@ theorem bot_is_greatest_fixed_point (x : L) (hx : isFixedPt x) : x ≼ (bot : L)
     every fixed point `x` — the μ side) and the **greatest** fixed point (`x ≼ bot` for every fixed
     point `x` — the ν side). The two extremal comparisons against an arbitrary fixed point are both IN
     the statement; their conjunction is precisely the μ=ν coincidence. This places the selfApp fixed
-    point at the same fork position as the Hilbert zero object #5 (`ZPH_MC1_TreeSeam.hilbert_bottom_isZero`),
+    point at the same fork position as the Hilbert zero object #5 (`hilbert_bottom_isZero`),
     the order-theoretic face of the seam. -/
 theorem selfApp_fixed_point_is_seam :
     isFixedPt (bot : L)

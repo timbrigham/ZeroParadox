@@ -23,7 +23,7 @@ place is load-bearing in the **dynamics** — *how each bottom is reached* — a
 oppositely at the two place-types, which is the framework's 0/∞ duality made concrete.
 
 - `node3_contracts_2adic` — #3's floor `0` is reached as the limit of the doubling orbit `x ↦ 2x` in the
-  **non-archimedean** 2-adic metric (cite TC05): `2ⁿx → 0`. Multiplication by 2 is a *contraction* at p=2.
+  **non-archimedean** 2-adic metric (cite `ZeroParadox/Valuation/PadicAttractor.lean`): `2ⁿx → 0`. Multiplication by 2 is a *contraction* at p=2.
 - `doubling_expands_archimedean` — doubling at the **archimedean** place *expands*: `|2ⁿx| → ∞` for
   `x ≠ 0`. (New.)
 - `doubling_place_dichotomy` — the statement: the same **rational orbit** `2ⁿx`, embedded into the two
@@ -38,8 +38,8 @@ oppositely at the two place-types, which is the framework's 0/∞ duality made c
   in the **archimedean** (ℝ/ℂ) metric (cite the mean-ergodic theorem). So #2 is an archimedean-metric
   contraction limit, #3 a non-archimedean one: ⊥ is a *place-relative* limit in both.
 
-**Honest scope.** `node3_contracts_2adic` and `markov_attractor_archimedean` are re-exports (TC05,
-mean-ergodic) — included so both bottoms' dynamics sit in one file. The genuine new content is
+**Honest scope.** `node3_contracts_2adic` and `markov_attractor_archimedean` are re-exports (the 2-adic contraction and the
+mean-ergodic archimedean attractor) — included so both bottoms' dynamics sit in one file. The genuine new content is
 `doubling_expands_archimedean` + `doubling_place_dichotomy`: the place-dependence of the same map's
 dynamics. Still within the number-theoretic bottoms (the ℝ/ℚ₂ places); does not touch the categorical
 bottoms (walled).
@@ -50,7 +50,7 @@ namespace ZeroParadox
 open Filter Topology
 
 /-- #3 reached by contraction in the **non-archimedean** metric: the doubling orbit `2ⁿx → 0` in `Q₂`
-    (cite TC05). Multiplication by 2 contracts to the floor at the 2-adic place. -/
+    (cite `ZeroParadox/Valuation/PadicAttractor.lean`). Multiplication by 2 contracts to the floor at the 2-adic place. -/
 theorem node3_contracts_2adic (x : ℚ_[2]) :
     Tendsto (fun n : ℕ => (2 : ℚ_[2]) ^ n * x) atTop (𝓝 0) :=
   ZeroParadox.doubling_orbit_tendsto_zero x

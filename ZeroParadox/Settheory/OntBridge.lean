@@ -14,6 +14,12 @@ content, and ZPJ_Model gave ℕ∞ as the concrete ValuationStructure instance. 
 requires an infinite domain: the val_scale axiom (val(scale x) = val x + 1) has no room
 to operate in a two-element type.
 
+*(Editor's note, outside the Take: the Take above says "ZPJ_Scale" and "ZPJ_Model", pre-reorg module
+names that resolve to nothing at HEAD — they are now `ZeroParadox/Valuation/Scale.lean` and
+`ZeroParadox/Settheory/Model.lean`. **The Take is Tim's voice and is left exactly as written**; a
+mechanical path sweep rewrote it on 2026-08-02 and was reverted. Only Tim edits a Take, so the pointer
+lives here instead.)*
+
 OntologicalStates — ZPB's {null, exist} — cannot be a ValuationStructure instance for
 exactly this reason. A finite two-element lattice cannot satisfy val_scale. But it can
 be an AbstractSelfApp instance directly. The self-application operation is the

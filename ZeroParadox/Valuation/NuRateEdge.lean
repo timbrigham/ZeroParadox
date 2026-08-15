@@ -5,7 +5,7 @@ import Mathlib.Tactic
 set_option maxHeartbeats 400000
 
 /-!
-# ZP-H tree, edge TC33 — the within-ν edge at the orbit-RATE level (#3 ↔ #2)
+# The within-ν edge at the orbit-RATE level (#3 ↔ #2)
 
 ## Engineer's Take
 
@@ -19,7 +19,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview (AI-assisted)
 
 This file is the **rate-level sharpening** of the OPEN within-ν edge `T2`
-(`ZPH_MC1_TreeT2.lean`). `T2` placed the p-adic floor (#3) and the Markov attractor (#2)
+(`ZeroParadox/Multihomed/TreeT2.lean`). `T2` placed the p-adic floor (#3) and the Markov attractor (#2)
 in the same "attractor" vocabulary and proved only the *coarse* global-ambient wall
 (connected simplex vs totally-disconnected `Q₂`), which the cold audit correctly flagged as
 the **generic** connected/disconnected fact — leaving the genuine ν-edge OPEN.

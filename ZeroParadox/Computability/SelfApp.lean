@@ -28,7 +28,7 @@ Two facts from different ZP layers:
 
 These are the same abstract pattern: the domain's self-application operation has a
 unique fixed point, and that fixed point is the "bottom" of the domain. Neither
-requires DC — uniqueness collapses construction to identification (ZPJ_AczelConn).
+requires DC — uniqueness collapses construction to identification (ZeroParadox/Settheory/AczelConn.lean).
 
 ## What this file does
 
@@ -38,16 +38,16 @@ as theorems rather than class fields — reducing AFAStructure's axiom load to a
 single structural commitment (selfApp + fixed_bot + unique_fp).
 
 The 2-adic parallel is then proved standalone: `singleton_from_unique_witness`
-(already proved in ZPJ_AczelConn) closes the Q₂ case with the same proof term.
+(already proved in ZeroParadox/Settheory/AczelConn.lean) closes the Q₂ case with the same proof term.
 Both domains are formally instances of the same abstract pattern.
 
-## What ZPJ_Scale and ZPJ_ScaleBridge resolved
+## What the Scale files resolved
 
-The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap
-was defined in ZPJ_Scale.lean as ValuationStructure. ZPJ_Scale derives the
-unique-fixed-point chain without AFA import:
+The abstract valuation typeclass described here as the remaining ZPB→ZPJ gap is
+`ValuationStructure`, defined in `ZeroParadox/Valuation/Scale.lean`. That file derives the
+unique-fixed-point chain without an AFA import:
   ValuationStructure → scale_ne_fixed → AbstractSelfApp (unique_fp as theorem)
-ZPJ_ScaleBridge.lean further extends this: ValBridge drops the ZPSemilattice
+`ZeroParadox/Valuation/ScaleBridge.lean` further extends this: ValBridge drops the ZPSemilattice
 constraint entirely, and both ℤ_[2] and ZPSemilattice types become instances
 of a common ancestor. The formal gap described here is closed.
 -/
@@ -152,6 +152,48 @@ theorem q2_selfMem_singleton :
   singleton_from_unique_witness q2SelfMem 0 q2_zero_is_fixed q2_unique_fp
 
 end PadicParallel
+
+/-! ## § V. NO-GO gauge — `AbstractSelfApp` is a STRUCTURE, not a property
+
+A permanent guard against a reading this class invites. `AbstractSelfApp` supplies a *chosen*
+self-application map; carrying one says nothing about the carrier, because **every**
+`ZPSemilattice` carries one. Measured 2026-07-26.
+
+The consequence is not cosmetic: because `toAFAStructure` is an instance, the whole AFA layer
+— `IsQuineAtom`, `bot_is_quine_atom`, `t_exec` — comes free from the degenerate map below.
+So the anti-foundation layer is satisfied by a structure in which nothing refers to anything.
+
+**What this does NOT say.** The framework's real instances (`boundaryDouble` on the tree
+boundary, `x ↦ 2x` on the 2-adics, `x ↦ {x}` in the set face) are genuinely non-constant and
+carry genuine content. The gauge bounds what may be inferred from the *hypothesis*, not what
+those instances establish. -/
+
+section NoGoGauge
+
+variable (L : Type*) [ZPSemilattice L]
+
+/-- The constant-bottom self-application: every element maps to `bot`. -/
+-- [ZP-CUSTOM] no Mathlib analog | reason: a deliberately degenerate `AbstractSelfApp` witness, built to bound what the typeclass hypothesis can be made to yield. Not a modelling instance — a NO-GO gauge.
+@[reducible] def trivialSelfApp : AbstractSelfApp L where
+  selfApp := fun _ => bot
+  fixed_bot := rfl
+  unique_fp := fun _ hx => hx.symm
+
+/-- **The gauge.** Every `ZPSemilattice` carries an `AbstractSelfApp`. Therefore no property
+    of `L` follows from the bare hypothesis `[AbstractSelfApp L]` — any argument of the form
+    "L carries `AbstractSelfApp`, therefore [something about L]" is vacuous. -/
+theorem abstractSelfApp_always_inhabited : Nonempty (AbstractSelfApp L) :=
+  ⟨trivialSelfApp L⟩
+
+/-- Under the degenerate instance, "self-containing" collapses to "is the bottom" — the
+    predicate carries no information beyond naming `bot`. -/
+theorem trivial_selfMem_iff (x : L) :
+    (@AbstractSelfApp.selfApp L _ (trivialSelfApp L) x = x) ↔ x = bot := by
+  constructor
+  · intro h; exact h.symm
+  · intro h; subst h; rfl
+
+end NoGoGauge
 
 end ZeroParadox
 

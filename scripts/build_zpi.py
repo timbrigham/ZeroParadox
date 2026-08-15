@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-I: Inside Zero PDF Builder
-Version 1.14 | July 2026
+Version 1.15 | July 2026
+v1.15: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. Three sites used the word 'necessarily' rather than 'forced', which is why two earlier greps did not reach them.
 v1.14: PURITY CORRECTION (release-prep) — the "axiom-free" label was wrong for the p-adic convergence spine. Verified against #print axioms: t_iz_cauchy, t_iz_valuation_unbounded, t_iz_c3_compatible, t_iz_complete, t_iz_complete_from_axioms, t_iz_h_bound_from_depth_chain, t_iz_norm_tendsto_zero, t_iz_conv_zero all carry [propext, Classical.choice, Quot.sound] — the choice inherited from Mathlib's p-adic analysis, not a framework commitment. Only Step 6 (t_iz_limit_is_new_null) and t_snap_derived are axiom-free; c_t_iz_null_balance is [propext]. Corrected ~15 rendered "axiom-free" claims about the choice-carrying theorems throughout (topological core, Step 1, the proof-obligation and traceability tables, the OQ register, the endnote). Supersedes the v1.2 "proved axiom-free" note.
 v1.13: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.11: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
@@ -30,7 +31,7 @@ v1.0: Initial release — Theorem T-IZ (Inside Zero).
 import os
 from zp_utils import *
 
-VERSION = '1.14'
+VERSION = '1.15'
 FIRST_RELEASED = 'April 2026'
 
 # ZP-I uses justified body text; override the left-aligned zp_utils defaults
@@ -327,6 +328,7 @@ def build():
            'Retained as motivational context connecting the topological and informational layers.'),
         li('Step 3 — P<sub>0</sub> is satisfied at the limit: ZP-C D1 gives K(c<sub>1</sub>|n)/|c<sub>1</sub>| = 1 '
            'at the limit. The configuration is algorithmically incompressible. ZP-C D1 applies.'),
+        li('<b>Occurrence fence.</b> T-SNAP fixes the SHAPE of each step. It does not establish that any step is taken: tsnap_holds_but_nothing_moves exhibits a model in which T-SNAP holds and nothing moves. Throughout this document, "fires" narrates the commitment that instantiation occurs - before this note as well as after it - not a consequence of the theorem.'),
         li('Step 4 — DA-1 fires: A configuration at P<sub>0</sub> is a live execution event — '
            'not a static description. DA-1 (ZP-E) applies, with the same three-path argument as in ZP-E § IV. '
            'The TrackedOutput formal core (DP-2, Snap.lean § VI) establishes the machine-state transition.'),
@@ -562,10 +564,12 @@ def build():
     E.append(Paragraph('III. The Complete Cycle', S['h2']))
     E.append(body(
         'The Zero Paradox now describes a complete cycle. In the original T-SNAP picture, the '
-        'framework had a beginning (T-SNAP: &#8869; &#8594; &#949;<sub>0</sub>, necessarily) but '
+        'framework had a beginning (T-SNAP: &#8869; &#8594; &#949;<sub>0</sub> — shape derived, '
+        'occurrence committed to) but '
         'no clear closing structure. T-IZ provides the closure:'))
     E += [
-        li('T-SNAP: From &#8869;, existence necessarily emerges. The Binary Snap '
+        li('T-SNAP: From &#8869;, existence emerges — the shape of that emergence is derived and its '
+           'occurrence is committed to, not proved. The Binary Snap '
            '&#8869; &#8594; &#949;<sub>0</sub> is irreversible. This is the opening of the branch.'),
         li('T3 (Monotonicity): The state sequence ascends without interruption. Each step '
            'adds informational content irreversibly. The chain climbs.'),
@@ -587,7 +591,7 @@ def build():
         'self-closing by structure.'))
 
     E.append(key_result_box([
-        'T-SNAP: &#8869; &#8594; &#949;<sub>0</sub> necessarily (existence emerges from null).',
+        'T-SNAP: &#8869; &#8594; &#949;<sub>0</sub>, shape derived and occurrence committed (existence emerges from null).',
         'T-IZ: (&#8869;, &#949;<sub>0</sub>, &#949;<sub>1</sub>, ...) &#8594; &#8869;\' (chain generates successor null at &#969;).',
         'Framework closure: the Zero Paradox is a closed system. Strict valuation growth is '
         'Lean-derived from ZP-A R1 + T3 via IsDepthChain (h_strict_from_r1_t3). '

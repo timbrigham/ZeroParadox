@@ -12,8 +12,8 @@ A ZP-J wheel sub-file. See the Engineer's Take in `ZeroParadox/Algebra/Wheel.lea
 ---
 
 Constructs the wheel of fractions of a commutative ring `A` with respect to a multiplicative
-submonoid `S`, with the goal of proving it is a `Wheel` (from `ZPJ_Wheel.lean`). This turns the
-§VIII conjecture of `ZPJ_Wheel.lean` into a theorem.
+submonoid `S`, with the goal of proving it is a `Wheel` (from `ZeroParadox/Algebra/Wheel.lean`). This turns the
+§VIII conjecture of `ZeroParadox/Algebra/Wheel.lean` into a theorem.
 
 Construction (Carlström, source-verified): `⊙_S A = (A × A) / ≡_S`, where
 
@@ -162,11 +162,167 @@ theorem inf_ne_bot (h0 : (0 : A) ∉ S) : wheelInf (W := WheelFrac S) ≠ wheelB
   have hs0 : s = 0 := by simpa using e1
   exact h0 (hs0 ▸ hs)
 
+/-! ## § The involutive fork, and why it does NOT unify with the ordered μ/ν fork
+
+**Promoted to a tracked file 2026-08-02.** These declarations lived only on the local-only branch
+`private/physics-bridge`, while `ZeroParadox/Settheory/Wall.lean`'s NO-GO table cited
+`fixed_pole_forces_collapse` as a witness — a citation no reader of the public repository could check.
+The mathematics is unchanged from the original; only the namespace is (it is flat here).
+
+The two forks are **different species**, and this section is the obstruction that says so:
+* the **ordered** μ/ν fork (`fork_collapse_iff`, `ZeroParadox/Settheory/FixedPointFork.lean`) has poles
+  that are FIXED POINTS of a monotone map;
+* an **involutive** fork has poles forming a 2-CYCLE of an involution — swapped, and *not* fixed when
+  the fork is open.
+Imposing the ordered condition on an involutive fork therefore FORCES collapse: they coincide only at
+the diagonal point. That much is the theorem below.
+
+**Block conclusion (2026-06-25) — a reasoned judgement, NOT a theorem, and there is no witness for
+it.** The only data common to both is "a self-map plus two elements" with no shared non-trivial
+axiom, so no single non-vacuous lightweight typeclass over both forks was located as of
+2026-08-02. **The underlying judgement is a universal negative** — it quantifies over all possible
+typeclasses — which is why it is bounded to a dated search above rather than asserted. Nothing in
+Lean states it, and `fixed_pole_forces_collapse` does **not**: it proves the narrow implication in
+its own signature. *(This § once carried the claim unlabelled, and `ZeroParadox/Settheory/Wall.lean`'s
+NO-GO table consequently cited it as an axiom-free machine-checked witness. Label restored and the
+table row corrected 2026-08-02.)* Unifying the two forks would need the categorical machinery (both
+are ℤ/2ℤ actions, but `op` acts on the CATEGORY, dualizing μ↔ν, while inversion acts on the ELEMENT
+set, swapping 0↔∞); that stays the horizon.
+
+**Prior art — Carlström 2001 § 4 is closer than this § originally said, and proves MORE.** The
+header already cites Carlström for the wheel axioms; the specific result is **Prop. 4.4**
+(`.claude-local/papers/carlstrom_wheels_2001_11.pdf`, p. 27): *"If any two of the elements 0, 1, /0
+and 0/0 are equal in a wheel H, then H is trivial."*
+
+**State the relation precisely — "the case `0 = /0` IS `fixed_pole_forces_collapse`" was too strong,
+and is corrected here.** The two share an **antecedent** and have **different consequents**. At
+`wheelFork` the pole is `pole₁ = winv wzero`, so this theorem's hypothesis and conclusion are the
+same equation up to `Eq.symm` — it says the poles coincide, which at that instance is nearly
+tautological. Carlström takes the same antecedent to a substantive conclusion: **the entire wheel
+degenerates.** So this is not a weaker form of one implication; it is a different, and much smaller,
+statement off a shared hypothesis. Do not present the collapse as a framework finding.
+
+His remark that *"0 can't be inverted unless 0 ∈ S, but if that is the case … S⊙A is trivial"*
+(PDF p. 6, printed p. 4) motivates `wheelFrac_fork_open`'s `0 ∉ S` hypothesis. **Two cautions on that
+quotation**, both corrected 2026-08-02: it is stated there of the *ordinary* ring of fractions
+`A×S/≈_S`, with the corresponding **wheel** statement a separate sentence on printed p. 5; and
+Carlström writes the wheel of fractions **`S⊙A`**, not `A⊙S`. The substance — `0 ∈ S` trivializes, so
+exclude it — is his and is correctly transcribed; the placement and the notation were not.
+
+**Standard names for what is written by hand here** (Trigger 0 — adopt the framing, keep the handle).
+`Collapsed F` is equivalent to `Function.IsFixedPt F.dual F.pole₀` (defined at
+`Mathlib/Logic/Function/Defs.lean`) — **equivalent via `swap` and `eq_comm`, not definitionally
+equal**, so do not write "is". Note also that `pole₁` is **redundant data**, pinned by `swap` to
+`dual pole₀`; it is retained because the two-pole presentation is what the framework's prose refers
+to.
+
+**⚠ `collapsed_iff_fixed` is NOT an instance of `Function.Involutive.eq_iff` — that claim stood here
+and is retracted.** `eq_iff` reads `f x = y ↔ x = f y`, which instantiates to
+`dual pole₀ = pole₁ ↔ pole₀ = dual pole₁` — a different statement. The actual proof is
+`rw [F.swap]; exact eq_comm`, and **involutivity is never used**: delete `dual_invol` from the
+hypothesis and it still compiles. The theorem's own docstring below already said this correctly, four
+lines from the false claim — the sibling-failure pattern, where an appended correction leaves the
+wrong sentence standing nearby.
+
+In the wider literature the fixed point of an involution is **the center** (a *centered* Kleene
+algebra), and the standard fix for the monotone/involutive clash is an order-**reversing** involution
+(De Morgan negation, orthocomplementation) — a sharper diagnosis than "no shared axiom", and the
+direction to look if this is ever revisited. **Attribution, stated honestly:** this lineage is taken
+from San Martín, *Kleene algebras with implication* (slides, UNLP/CONICET, September 2016,
+slide 2), which is the source actually read; **the deck** credits
+Kalman 1958 (slide 3) and Cignoli 1986 (slide 5), **neither of which has been opened here**. Cite San Martín for the
+lineage, or read the originals before citing them directly. Searched 2026-08-02: no prior art located
+for the bare `InvolutiveFork` abstraction standing alone, nor for the μ/ν-versus-2-cycle contrast.
+
+**Unstated adjacency — this abstraction already has at least four instances in-corpus, none wired
+up.** `rInv_involutive` + `rInv_swaps` (`ZeroParadox/Valuation/RiemannSphere.lean`) is the Riemann
+fork the docstring below calls "the motivating instance" and is never actually instantiated; also
+`flipPoles_involutive`, `codeDataSwap_involutive`, and two `swap_involutive`. Wiring them is a
+pointer exercise, not new declarations. -/
+
+/-- An **involutive fork**: an involution `dual` together with two poles it swaps. The wheel / Riemann
+    fork (`z ↦ 1/z` swapping `0 ↔ ∞`) is the motivating instance.
+
+    ⚠ **Name collision — "fork" now carries three unrelated senses.** Mathlib's
+    `CategoryTheory.Limits.Fork` is an equalizer diagram; the framework's own μ/ν *fixed-point* fork
+    (`ZeroParadox/Settheory/FixedPointFork.lean`) is a third. Nothing here is an instance of either.
+    The full name `InvolutiveFork` is load-bearing — do not shorten it to `Fork` at any use site, and
+    read "the categorical machinery" in the § above as *categorical* in the loose sense, not as a
+    reference to `Limits.Fork`. -/
+structure InvolutiveFork (α : Type*) where
+  dual : α → α
+  dual_invol : Function.Involutive dual
+  pole₀ : α
+  pole₁ : α
+  swap : dual pole₀ = pole₁
+
+namespace InvolutiveFork
+
+variable {α : Type*} (F : InvolutiveFork α)
+
+/-- The fork is **collapsed** when its two poles coincide (the diagonal point). -/
+def Collapsed : Prop := F.pole₀ = F.pole₁
+
+/-- **Collapse criterion.** The poles coincide iff `pole₀` is a fixed point of the involution.
+    Parallel to the ordered fork's `fork_collapse_iff` — but honestly shallower: this proof is
+    `eq_comm` after the swap, where the ordered collapse is Knaster–Tarski-deep. -/
+theorem collapsed_iff_fixed : F.Collapsed ↔ F.dual F.pole₀ = F.pole₀ := by
+  unfold Collapsed
+  rw [F.swap]
+  exact eq_comm
+
+end InvolutiveFork
+
+/-- **The wheel is an involutive fork.** `Statement:` **INVERSION** — the involution `winv`
+    (`z ↦ 1/z`) *exchanges* the poles `0` and `∞ = /0` (`wheelInf`), and is an involution. Both halves
+    are in the definition below: `swap := rfl` gives `winv wzero = wheelInf`, and `dual_invol` is
+    `Wheel.winv_winv` (W7). This is the 0↔∞ exchange, not a coincidence of two readings at one
+    object — contrast `epsilon0_min_eq_max`. Reuses the ZP-custom `Wheel` class plus native
+    `Function.Involutive`. -/
+def wheelFork (W : Type*) [Wheel W] : InvolutiveFork W where
+  dual := Wheel.winv
+  dual_invol := Wheel.winv_winv
+  pole₀ := Wheel.wzero
+  pole₁ := wheelInf
+  swap := rfl
+
+/-- In the wheel of fractions the fork poles `0` and `∞` are distinct, given `0 ∉ S` — the same
+    hypothesis as `inf_ne_bot`, but for the `{0, ∞}` involution 2-cycle (`inf_ne_bot` is the
+    *different* `{∞, ⊥}` pair). Choice-free, mirroring `inf_ne_bot`'s proof. -/
+theorem wheelFrac_fork_open (h0 : (0 : A) ∉ S) :
+    (Wheel.wzero : WheelFrac S) ≠ (wheelInf : WheelFrac S) := by
+  intro h
+  obtain ⟨s, hs, s', hs', e1, _⟩ := Quotient.exact h
+  have hs'0 : s' = 0 := by simpa using e1.symm
+  exact h0 (hs'0 ▸ hs')
+
+/-- Restated through the abstraction: the wheel-of-fractions `InvolutiveFork` is NOT collapsed. So
+    `InvolutiveFork` is a non-vacuous abstraction with a concrete, provably-open, choice-free
+    instance — it is not a gauge that everything satisfies. -/
+theorem wheelFork_not_collapsed (h0 : (0 : A) ∉ S) :
+    ¬ (wheelFork (WheelFrac S)).Collapsed :=
+  wheelFrac_fork_open S h0
+
+/-- **The obstruction, Lean-witnessed.** An involutive fork whose pole is a FIXED point of the
+    involution — the ordered-fork condition — is necessarily COLLAPSED. Hence the involutive and
+    ordered forks coincide only at the diagonal point: they are different species. This is the witness
+    `ZeroParadox/Settheory/Wall.lean`'s NO-GO table cites, in the row whose condition-set is *an
+    involutive fork whose pole is fixed by the involution*. **That row previously read "lightweight
+    categorical typeclass / NO NON-VACUOUS UNIFIER" — a universal negative this theorem does not
+    prove**; it was corrected 2026-08-02 to state this signature. -/
+theorem fixed_pole_forces_collapse {α : Type*} (F : InvolutiveFork α)
+    (h : F.dual F.pole₀ = F.pole₀) : F.Collapsed :=
+  F.collapsed_iff_fixed.mpr h
+
 /-! ## Purity check -/
 
 section PurityCheck
 #print axioms instWheel
 #print axioms inf_ne_bot
+#print axioms InvolutiveFork.collapsed_iff_fixed
+#print axioms wheelFrac_fork_open
+#print axioms wheelFork_not_collapsed
+#print axioms fixed_pole_forces_collapse
 end PurityCheck
 
 end ZeroParadox

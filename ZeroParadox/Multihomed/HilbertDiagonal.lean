@@ -23,7 +23,7 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ## Formal Overview (AI-assisted)
 
-This file proves the **genuine** version of the diagonal-self-reference statement that TC37
+This file proves the **genuine** version of the diagonal-self-reference statement that `ZeroParadox/Category/SeamBiproductUnit.lean`
 (`seam_unit_iff_isZero`) could only state degenerately. The honest categorical "diagonal" on
 `ModuleCat ℂ` is the biproduct-double `X ↦ X ⊞ X` (`⊞ = CategoryTheory.Limits.biprod`). We ask:
 which objects are their own diagonal double, `X ≅ X ⊞ X`?
@@ -40,7 +40,7 @@ linear-equiv invariant, so `finrank X = finrank (X × X) = finrank X + finrank X
 (`Module.finrank_zero_iff`), hence `IsZero X` (`ModuleCat.isZero_of_subsingleton`).
 
 **Honest scope.** This is the GENUINE implication `X ≅ X ⊞ X → IsZero X` for finite-dim `X` —
-the content TC37's `seam_unit_iff_isZero` lacked (its backward direction discards the iso and just
+the content `seam_unit_iff_isZero` lacked (its backward direction discards the iso and just
 re-invokes `hilbert_bottom_isZero`). **FENCE: finite-dimensionality is essential — the statement
 is FALSE for infinite-dim modules** (`ℂ^ℕ ≅ ℂ^ℕ ⊕ ℂ^ℕ`, the **Eilenberg–Mazur swindle**; this is the
 standard reason K-theory restricts to finitely-generated objects). No mathematical novelty is claimed:
@@ -91,6 +91,45 @@ theorem biprod_diagonal_only_zero (X : ModuleCat ℂ) [Module.Finite ℂ X]
   haveI : Subsingleton X := Module.finrank_zero_iff.1 hzero
   exact ModuleCat.isZero_of_subsingleton X
 
+/-! ### § I-b  The finiteness hypothesis is LOAD-BEARING — exhibited, not asserted
+
+`biprod_diagonal_only_zero` needs `[Module.Finite ℂ X]`. Dropping it is false: the free ℂ-module on
+`ℕ` satisfies `X ≅ X ⊞ X` and is nonzero, because `ℵ₀ + ℵ₀ = ℵ₀`. A strength claim is checkable, so
+it is checked here rather than asserted.
+**The argument form is the Eilenberg swindle** — a method, not a module, so the name belongs to the
+technique; "Eilenberg–Mazur" is the usual pairing, and the algebraic instance is Eilenberg's. It is
+the standard reason K-theory restricts to finitely-generated objects. ⚠ The header's `ℂ^ℕ` is the
+*product* (rank continuum), the witness below is `ℕ →₀ ℂ`, the *direct sum* (rank ℵ₀) — both satisfy
+the swindle and they are not the same module. -/
+
+/-- The free ℂ-module on `ℕ`. Outside the theorem's hypothesis — see `freeNat_not_finite`. -/
+noncomputable abbrev freeNat : ModuleCat ℂ := ModuleCat.of ℂ (ℕ →₀ ℂ)
+
+/-- `ℵ₀ + ℵ₀ = ℵ₀`, as a ℂ-linear equivalence. -/
+noncomputable def freeNat_selfSum : (ℕ →₀ ℂ) ≃ₗ[ℂ] ((ℕ →₀ ℂ) × (ℕ →₀ ℂ)) :=
+  (Finsupp.domLCongr Equiv.natSumNatEquivNat.symm).trans
+    (Finsupp.sumFinsuppLEquivProdFinsupp ℂ)
+
+/-- **The counterexample.** `freeNat ≅ freeNat ⊞ freeNat`, self-similar under the biproduct
+    diagonal exactly as the theorem's hypothesis describes. -/
+noncomputable def freeNat_biprod_self : freeNat ≅ freeNat ⊞ freeNat :=
+  freeNat_selfSum.toModuleIso.trans (ModuleCat.biprodIsoProd freeNat freeNat).symm
+
+/-- **And it is not the zero object**, so `biprod_diagonal_only_zero` genuinely fails without
+    finiteness — the hypothesis carries the theorem rather than decorating it. -/
+theorem freeNat_not_isZero : ¬ IsZero freeNat := by
+  intro h
+  have hs : Subsingleton (ℕ →₀ ℂ) := ModuleCat.subsingleton_of_isZero h
+  exact absurd (Subsingleton.elim (Finsupp.single 0 (1 : ℂ)) 0)
+    (Finsupp.single_ne_zero.mpr one_ne_zero)
+
+/-- **`Statement:` `freeNat` is not finite over ℂ** — were it, `biprod_diagonal_only_zero` applied
+    to `freeNat_biprod_self` would make it a zero object, which `freeNat_not_isZero` refutes.
+    (Mathlib route, not taken: `rank_finsupp_self'` plus `Module.rank_lt_aleph0`.) -/
+theorem freeNat_not_finite : ¬ Module.Finite ℂ freeNat := by
+  intro h
+  exact freeNat_not_isZero (biprod_diagonal_only_zero freeNat ⟨freeNat_biprod_self⟩)
+
 /-! ### § II  Concrete witness at the Hilbert bottom -/
 
 /-- The Hilbert bottom `seam = fD_functor.obj 0` is finite-dimensional. Its carrier is
@@ -122,5 +161,10 @@ open ZeroParadox
 
 #print axioms biprod_diagonal_only_zero
 #print axioms seam_is_diagonal_fixpoint
+#print axioms freeNat
+#print axioms freeNat_selfSum
+#print axioms freeNat_biprod_self
+#print axioms freeNat_not_isZero
+#print axioms freeNat_not_finite
 
 end PurityCheck
