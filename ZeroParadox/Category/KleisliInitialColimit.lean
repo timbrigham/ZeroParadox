@@ -1,5 +1,6 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-diagram probe campaign, not a finalized layer. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Multihomed.InfoFunctor
+import ZeroParadox.Order.PadicLimitCone
 import Mathlib.CategoryTheory.Limits.Shapes.Terminal
 import Mathlib.CategoryTheory.PEmpty
 import Mathlib.Tactic
@@ -83,6 +84,17 @@ noncomputable def fC_initial_iso_floor :
   Limits.initialIsoIsInitial fC_zero_isInitial
 
 end ZeroParadox
+
+/-! ## The ν-side witness exists -/
+
+-- Statement: the ν-floor #3 carries a genuine limit cone, so a second witness DOES exist - which
+-- the header above denies.
+-- Reading: no comparison with the μ-side is made. The two live in different categories, so any
+-- relation between them would be a cross-type claim rather than a theorem.
+#check @ZeroParadox.floorConeIsLimit
+
+-- Statement: the μ-side witness, exhibited beside the ν-side one above.
+#check @ZeroParadox.fC_zero_isInitial
 
 /-! ## Axiom Purity Check
 

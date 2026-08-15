@@ -97,7 +97,15 @@ noncomputable abbrev Z_seamFC : ModuleCat ℂ := fD_functor.obj 0
     ε₀ is least-fixed-point **and** tower-supremum (the Kleene shape); ⊥ is least **and** greatest fixed
     point of `selfApp`; the seam is initial **and** terminal. `fork_collapse_iff` is a *fourth*, separate
     fact about complete lattices — the general condition under which a fork collapses — and is **not** the
-    genus of the other three. -/
+    genus of the other three.
+
+    **Standard name for this kind of comparison.** The sentences true throughout a class of
+    structures are its theory `Th(K)`, defined for a class of L-structures - i.e. relative to ONE
+    language L, which may itself be many-sorted; `M ≡ N`
+    (*elementarily equivalent*) means `Th(M) = Th(N)` — Pillay, *Model Theory* lecture notes,
+    Def 1.1(vi) and (viii).
+    ⚠ Naming the vocabulary imports nothing: forming a common language for these carriers is a
+    separate step, and nobody has taken it here. -/
 theorem catseam_is_frameflip :
     Nonempty (IsInitial Z_seamFC)
       ∧ Nonempty (IsTerminal Z_seamFC)

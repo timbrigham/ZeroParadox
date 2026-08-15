@@ -29,15 +29,18 @@ OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at rep
 # The scanner reports the KEYWORD it found and the page prints exactly that.
 # ⚠ The keyword is a SYNTACTIC proxy. Do not infer the type's universe from it anywhere in this
 # file: `def` and `instance` inhabit `Prop` as freely as `Type`. See `witness_note`.
-# ⚠ ONE name pattern, consumed by EVERY scanner below. A pattern narrower than the language
-# TRUNCATES, and a truncated key names a declaration that does not exist - which then resolves on
-# a SINGLE hit, where the multi-hit guard cannot fire.
-# It states NO alphabet: a declaration name runs until a character that cannot be inside one.
-# Enumerating the allowed characters was wrong twice - first omitting `.`, then omitting the
-# letterlike symbols Mathlib uses in real names (`splits_ℚ_ℂ`, `ε_up_ℤ`). Measured over the 7933
-# pinned Mathlib files: the enumerated class left 431 truncations, this leaves 0.
-# ⚠ It is a single CONSTANT rather than a comment telling three regexes to agree. The comment
-# that said so was deleted as narrative, and the two patterns then diverged in the same commit.
+# ⚠ ONE name pattern, consumed by the three DECLARATION scanners: `_DECL`, `_scan_external` and
+# `_BLOCK_OPEN`. A single constant, so they cannot drift apart.
+#
+# It states NO alphabet - a declaration name runs until a character that cannot be inside one.
+# A pattern narrower than the language TRUNCATES, and a truncated key names a declaration that does
+# not exist, which then resolves on a SINGLE hit where the multi-hit guard cannot fire. Measured
+# over the 7933 pinned Mathlib files: an enumerated character class leaves 431 such truncations
+# (it must cover at least `.` and the letterlike symbols of `splits_ℚ_ℂ`, `ε_up_ℤ`); this leaves 0.
+#
+# ⚠ Do NOT extend this constant to the patterns that scan PROSE. A declaration name is delimited
+# by Lean syntax; a token in an English sentence is not, so a pattern that stops only at structural
+# characters is right for the first and wrong for the second.
 _LEAN_ID = r"[^\s(){}\[\]:,]+"
 _DECL = re.compile(
     r"^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+|local\s+)*"
@@ -147,7 +150,7 @@ def scan_declarations():
 
 INDEX = scan_declarations()
 UNRESOLVED = []
-_CITED = set()          # every witness name this build actually rendered
+_WITNESSES = set()      # names cited AS A WITNESS: a dictionary row, or a claim-bearing cell
 
 # Kinds that are ordinary proved results; anything else is called out on the page.
 _PROVED = {"theorem", "lemma"}
@@ -314,7 +317,6 @@ def is_proof(name):
     return t[2] == "Prop"
 
 def link_witness(name):
-    _CITED.add(name)
     # ⚠ Through `_entry`, never `INDEX.get(name)`: the index is keyed FULLY QUALIFIED, so a bare
     # cited name misses it. `_entry` does the suffix resolution and the ambiguity check.
     e = _entry(name)
@@ -323,7 +325,7 @@ def link_witness(name):
     if e:
         return f"`{name}`"          # external (Mathlib): resolved for its KIND, but not linkable
     UNRESOLVED.append(name)
-    return f"`{name}`"  # not a local declaration (e.g. Mathlib) - shown, not linked
+    return f"`{name}`"  # unresolved anywhere: shown, not linked, and recorded in UNRESOLVED
 
 def witness_note(name):
     """Rendered kind marker, DERIVED from the source. Empty for a plain theorem/lemma.
@@ -367,10 +369,15 @@ def annotate_witness(txt):
     name = m.group(1)
     if witness_kind(name) is None:      # not `name in INDEX` - external witnesses resolve too
         return txt
+    _WITNESSES.add(name)
     note = witness_note(name)
-    return txt[:m.end()] + note + txt[m.end():] if note else txt
+    # Backtick a name the prose tokenizer will not reach (it forbids dots), so an external witness
+    # renders in code font here exactly as `link_witness` renders one elsewhere.
+    head = f"`{name}`" if ("." in name and not _entry(name)[0].endswith(".lean")) else name
+    return txt[:m.start()] + head + note + txt[m.end():]
 
 def render_witnesses(names):
+    _WITNESSES.update(names)
     # A plain theorem/lemma renders bare; anything else is marked, and the mark is DERIVED.
     return ", ".join(link_witness(n) + witness_note(n) for n in names) if names else "*meta (no Lean witness)*"
 
@@ -498,7 +505,10 @@ def cell_mark(w, key=None):
     if st in ("go", "cond"):
         txt = classify(w)[1]
         name = leading_witness(txt)
-        if name is None and txt.strip():
+        # only when there is genuinely NO identifier to read - `leading_witness` has already
+        # recorded the case where one was read and did not resolve, and reporting both makes the
+        # failure list name the same cell twice under two different causes.
+        if name is None and txt.strip() and not re.match(r"[A-Za-z][A-Za-z0-9_.']*", txt):
             # ⚠ THE PROPERTY, not one route to it. `leading_witness` registers an unresolved NAME,
             # but a claim-bearing cell whose text does not begin with an identifier at all yielded
             # no name, so nothing was registered and `✓` — the strongest mark — was emitted with
@@ -593,7 +603,7 @@ One self-referential structure - a thing that is its own fixed point - keeps tur
 
 **Mostly proved - a narrow residue argued.** The framework's set-theoretic *commitment* is not *AFA specifically* but a fragment it assumes of its host theory: a unique Quine atom ⊥ = {⊥}. That fragment is a checkable object, the QuineHost typeclass. Foundation-freeness is *forced* by the Quine atom (quineHost_not_wellFounded, axiom-free - a self-loop cannot live in a well-founded world); ordinary set theory (Foundation) is excluded in-kernel about the real theory (zfSet_no_quine_bottom - no set is self-membered under Foundation); Boffa's axiom is set aside because it admits a proper class of Quine atoms rather than one (Boffa 1968), a gap a toy model makes concrete (boffa_fails_unique) rather than an in-kernel fact about Boffa's axiom; and AFA is exhibited as the example meeting all three (afaStructure_isQuineHost). What remains argued is only that a Quine atom and its uniqueness are the right two requirements - a Forced Metatheoretic Commitment with a named falsifier, stronger than a free choice and weaker than a theorem. The set-membership face ⊥ ∈ ⊥ stays metatheoretic; the structural fixed point is machine-checked and axiom-free (t_exec).
 
-**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is the per-domain witnesses fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under rInv in ℚ₂)."""
+**The family - MC-1.** MC-1 names not one object but one **family**. Each of these floors is a member: it satisfies the shared criteria mapped in the slots below, with per-domain membership machine-verified where marked (the categorical criterion is carried by the per-domain witnesses fD_zero_isInitial, fC_zero_isInitial and fB_bottom_is_limit, collected in mc1_correspondence). The *choice* of criteria is a design principle; that they characterize the family is an argument. The cross-category numerical identity - that the bottoms are *one and the same object* - is **retired** as ill-typed (`x = y` across distinct categories is not a well-formed proposition), and the members are provably **distinct** (the "walls" below). What survives is the proved leaves and the proved walls; the only oneness is the shared self-referential *shape* - the diagonal fixed point - which lives in the apophatic register, never as a formal identity. Within-frame identities stand (the three-name core above; 0 = ∞ under rInv in ℚ₂)."""
     return link_in_text(body)
 
 # --- The diagonal family: the self-reference arguments as one fixed point (ZP-R) ---
@@ -621,6 +631,7 @@ def render_diagonal_family():
 The classical self-reference arguments are not separate theorems that happen to rhyme; they are one diagonal fixed point seen under different conditions (Lawvere 1969; Yanofsky 2003). The framework maps the full roster against ⊥, organized by the μ/ν fork and built off a single engine - negation_no_fixedpoint / lawvere_fixedpoint, both axiom-free. On the **wall** side (μ) self-reference cannot close: the argument runs as a proof that no reflexive object exists. On the **floor** side (ν) it does close - the fixed point is genuinely produced, and lands at ⊥. Cantor, Russell, Turing, Tarski, Curry, Löb, and Gödel's second incompleteness are all **axiom-free**; only the two computability floor faces (the Kleene quine and Rice's exists-but-undecidable) carry `Classical.choice`, inherited from Mathlib's recursion theory. This roster is ZP-R (the Cross-Category Fixed Point layer and its Diagonal Family Addendum) - a *placement* of ⊥ among recognized results, not a new theorem; the cross-face identity stays a type boundary, the same walls the map above records.
 
 **See it:** the interactive [Diagonal Family](diagonal-family.html) map renders this roster as one engine forking into walls (μ) and floors (ν), each node linking its Lean witness and axiom footprint."""
+    _WITNESSES.update(w for _f, _s, _g, w, _a in DIAGONAL_FAMILY)
     rows = [[face, side, gloss, link_witness(w), ax]
             for (face, side, gloss, w, ax) in DIAGONAL_FAMILY]
     table = render_table(rows, ["face", "side", "what it says", "witness", "axioms"])
@@ -708,7 +719,7 @@ selfApp) carry SELF rather than GEN; GEN's one live cell is ε₀, where the flo
 appears *only* at a seam (μ=ν): the zero-object seam **#5 Hilbert**, and **ε₀**, whose row is itself the snap-arc
 0→ε₀. So ⊥'s dynamics has one direction, fixed by whether ⊥ is a source or a sink.
 
-**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`), the structural non-applicabilities (`∅`), and the `≝` cells, whose witness is named in its own sentence - not the
+**The structural reading is in the non-`✓` cells** - the proved obstructions (`✗`), the structural non-applicabilities (`∅`), the `✓*` cells that are conditional, and the `≝` cells, whose witness is named in its own sentence - not the
 filled count. The full reasoning behind the `GEN` and `dynamics` columns is written up in
 **[Structural Findings](BOTTOMELEMENT_findings.md)**; the reason or witness behind *every* mark is below.
 
@@ -748,6 +759,11 @@ def main():
         if UNRESOLVED_HEADS:
             print("UNRESOLVED type heads - cannot tell asserted from constructed: "
                   + ", ".join(sorted(set(UNRESOLVED_HEADS))))
+        if AMBIGUOUS:
+            # BEFORE the refusal, not after: a name refused for ambiguity resolves to None and so
+            # lands in UNRESOLVED, which means the exit fires in exactly the case this explains.
+            print("  ambiguous (>1 declaration site, so refused): "
+                  + ", ".join(sorted({a for a, _ in AMBIGUOUS})))
         print("REFUSING TO WRITE " + OUT)
         sys.exit(1)
     if AMBIGUOUS:
@@ -766,12 +782,13 @@ def main():
     print(f"wrote {OUT}")
     print(f"{sum(len(v) for v in INDEX.values())} declarations indexed · {len(APOPHATIC)} apophatic · {len(POSITIVE)} positive · "
           f"{len(CONSTRUCTION_GLOSS)} constructions · {len(CELLS)}x{len(SLOTS)} map")
-    nonthm = sorted(n for n in _CITED if not is_proof(n))
+    nonthm = sorted(n for n in _WITNESSES if not is_proof(n))
     if nonthm:
         # ⚠ Do NOT claim these all render a kind note on the page. `link_in_text` deliberately
         # suppresses the note where a name is MENTIONED rather than cited as a witness, so most
         # of this list renders bare. Report what was found, not what the page does with it.
-        print("Cited witnesses that are not theorems/lemmas: "
+        print("Non-theorem witnesses in the dictionary, map cells and diagonal-family table "
+              "(free prose is NOT scanned): "
               + ", ".join(f"{n} [{witness_kind(n)}]" for n in nonthm))
     else:
         print("all cited witnesses are theorems/lemmas")
