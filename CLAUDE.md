@@ -26,8 +26,9 @@ nothing and only made the claims unauditable. A signal recording what this sessi
 per-push state that churns on every commit.
 
 ⚠ **THERE ARE NO MIRRORS ANY MORE, AND RE-CREATING ONE IS A DEFECT.** Three existed and **two had
-silently drifted**: `scripts/` vs `.claude-local/` build scripts (`scan_pdfs.py`, three months),
-and `~/.claude/commands/` vs `.claude-local/commands/` (4 of 8 files). If something must exist in
+silently drifted**: the build scripts, duplicated between `scripts/` and the private folder
+(`scan_pdfs.py`, adrift three months), and the gate definitions, which existed in the user-level
+Claude directory *and* as a private backup copy — 4 of the 8 had diverged. If something must exist in
 two places, that is the signal to change the layout — **not** to add a copy step and a rule asking
 someone to remember it. Every old path now holds a tombstone that **exits 2**, and
 `python tools/verify/check_moved.py --block` fails if anything still points at a relocated path.
