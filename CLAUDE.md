@@ -1930,7 +1930,7 @@ This rule applies to both directions:
 **Standing rule — any script change requires all four steps in the same commit:**
 1. Make the change and bump the internal version number
 2. Rebuild the PDF and archive the old version
-3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('scripts/build_X.py','rb').read()).hexdigest()[:8])"`
+3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('scripts/build_<doc>.py','rb').read()).hexdigest()[:8])"`
 4. Update the hash token in `register.md`
 
 **Session start check:** Run `python tools/verify/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing the full four-step workflow — version bump and PDF rebuild are overdue.

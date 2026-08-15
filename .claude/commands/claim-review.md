@@ -27,7 +27,7 @@ any file under the repository, with exactly two exceptions: your signal file, an
 **NO SCRATCH FILES IN THE REPO.** If you need a probe, a temp script, or a measurement harness, write it
 to the **session scratchpad directory** named in your environment — never under `ZeroParadox/` or
 anywhere else in the working tree — run it there, and delete it when done. Measured 2026-07-19: a review
-agent left `ZeroParadox/ZZTestOrd.lean` in the source tree; the next commit swept it up, and a scratch
+agent left a scratch probe (`ZZTestOrd.lean`, since deleted) in the source tree; the next commit swept it up, and a scratch
 probe is now in the permanent history.
 
 **Do not cite a private path in anything reader-facing.** `.claude-local/` is gitignored and unreachable
