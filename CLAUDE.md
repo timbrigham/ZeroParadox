@@ -155,6 +155,18 @@ half.** § *Review-Loop Cap* says *"grep the corpus for the CLAIM, not the named
 phrasing. **Do both. The identifier sweep is the mechanical one, so it is the one that cannot be talked
 past.**
 
+⚠⚠ **AND A RULE ADDED MID-SESSION DOES NOT REACH AGENTS SPAWNED LATER IN THAT SESSION.** Measured
+2026-08-15, hours after this section was written: a read-only control agent was given the exact task
+that had just failed. It performed the reconnaissance correctly and **reported that the `CLAUDE.md`
+injected into its context did not contain this section** — its snapshot predates the edit. It found
+the rule **by accident**, through an unrelated grep that happened to return a `CLAUDE.md` line. Had
+its search been scoped to `ZeroParadox/` (this project's own stated convention for Lean searches) it
+would never have seen it. **So an edit here binds FRESH sessions, which read this file from disk, and
+silently does not bind the current one's subagents.** Two consequences: **carry a new rule into the
+BRIEF explicitly** for the rest of the session in which it is written — briefs are the only thing a
+spawned agent reliably reads — and **do not treat a same-session agent's compliance as evidence the
+rule works**, because it may never have received it.
+
 ⚠ **This is the EIGHTH convention of this shape and the previous seven leaked**, which is the argument for
 the narrow mechanical half over the broad remembered one. The durable fix is a tool that prints reverse
 references at edit time (`refs.py`, wired into a `PreToolUse` hook and the `precommit` manifest) so it
