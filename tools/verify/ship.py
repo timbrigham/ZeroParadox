@@ -133,7 +133,12 @@ def rely_capped():
     **BLOCKING here means a finding that lets bad work THROUGH** — a fail-open, a gate that can be
     walked past, a signal that can be forged. Everything else (a mislabelled manifest line, a
     discarded return code at a site that fails closed anyway) is ordinary and caps out."""
-    sig = os.path.join(BASE, "rely_cleared.txt")
+    # PRIV, not BASE. A signal is per-push private state and did not move with the tools on
+    # 2026-08-15 — and getting this wrong was silent in the worst way: `rely_capped()` returns
+    # "not capped" for a MISSING file, so reading the wrong directory did not error, it just
+    # answered False forever. Caught only because guards.py plants a must-fire control here and
+    # reported BASELINE BROKEN; without that control the cap would have quietly stopped existing.
+    sig = os.path.join(PRIV, "rely_cleared.txt")
     if not os.path.exists(sig):
         return False, ""
     line1 = io.open(sig, encoding="utf-8-sig", errors="replace").readline()

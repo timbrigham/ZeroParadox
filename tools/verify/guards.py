@@ -83,12 +83,28 @@ def _rewrite(path, produce):
     """(apply, undo) that replaces `path` with produce(original_bytes); None deletes it."""
     orig = io.open(path, "rb").read() if os.path.exists(path) else None
 
+    # ⚠ The parent directory may not exist. A probe writes into `.claude-local/`, which is absent
+    # in any clone that is not Tim's — and a bare FileNotFoundError aborted the whole pre-push run
+    # with a traceback instead of a verdict. Measured 2026-08-15 in a fresh worktree, immediately
+    # after this bundle was published. It failed CLOSED, which is the safe direction, but a crash
+    # is not a verdict: it says nothing about whether the guarded property holds.
+    #
+    # ⚠⚠ AND THE UNDO MUST BE SYMMETRIC. The first fix created the directory and did not remove it,
+    # so the probe left the tree mutated — which this file's own "did the guard clean up after
+    # itself?" check caught on the very next run. That is the control working on its author, and it
+    # is the reason the directory is tracked in a closure rather than created and forgotten.
+    _made_dir = []
+
     def apply():
         new = produce(orig)
         if new is None:
             if os.path.exists(path):
                 os.remove(path)
         else:
+            parent = os.path.dirname(path)
+            if parent and not os.path.isdir(parent):
+                os.makedirs(parent, exist_ok=True)
+                _made_dir.append(parent)
             io.open(path, "wb").write(new)
 
     def undo():
@@ -97,6 +113,12 @@ def _rewrite(path, produce):
                 os.remove(path)
         else:
             io.open(path, "wb").write(orig)
+        while _made_dir:
+            d = _made_dir.pop()
+            try:
+                os.rmdir(d)          # only succeeds if empty — never removes real content
+            except OSError:
+                pass
     return apply, undo
 
 
