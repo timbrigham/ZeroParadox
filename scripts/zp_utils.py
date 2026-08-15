@@ -28,7 +28,36 @@ from reportlab.pdfbase.ttfonts import TTFont
 # ── Paths ─────────────────────────────────────────────────────────────────────
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
-FONT_DIR     = os.path.join(SCRIPT_DIR, 'fonts') + os.sep
+
+
+def _font_dir():
+    """Locate the TTFs, preferring a copy that ships beside these scripts.
+
+    The build scripts stopped being mirrored on 2026-08-15 — `scripts/` is now their only home,
+    rather than a hand-copied transparency copy of `.claude-local/`. Fonts were the one dependency
+    that did not survive the move unchanged: they are 6.3 MB of binaries, and whether they belong
+    in public history is a decision worth taking deliberately rather than as a side effect.
+
+    So the lookup is a chain, not a constant:
+      1. `scripts/fonts/`     — present once the fonts are published; makes these scripts runnable
+                                by anyone who clones the repo, which is the point of publishing them.
+      2. `.claude-local/fonts/` — today's location. Builds keep working with nothing else changed.
+
+    If neither exists, fail LOUDLY here rather than at the first `registerFont`, where the error is
+    a bare IOError naming one .ttf and says nothing about why it is missing."""
+    for cand in (os.path.join(SCRIPT_DIR, 'fonts'),
+                 os.path.join(PROJECT_ROOT, '.claude-local', 'fonts')):
+        if os.path.isdir(cand):
+            return cand + os.sep
+    raise SystemExit(
+        "zp_utils: no font directory found.\n"
+        "  looked in: %s\n             %s\n"
+        "  The PDF builds need the DejaVu + STIX Two TTFs. See scripts/README.md."
+        % (os.path.join(SCRIPT_DIR, 'fonts'),
+           os.path.join(PROJECT_ROOT, '.claude-local', 'fonts')))
+
+
+FONT_DIR = _font_dir()
 
 # ── Font registration ─────────────────────────────────────────────────────────
 # DejaVuSans: sans-serif UI elements (headings, table headers, footers, checkmarks)
@@ -807,7 +836,7 @@ def _palette_gate():
             print(v)
         print()
         print('  Each flagged line must end with:  # ZP-OVERRIDE: <reason here>')
-        print('  See .claude-local/PDF_Rendering_Standards.md §Palette Enforcement.')
+        print('  See scripts/PDF_Rendering_Standards.md §Palette Enforcement.')
         print('!' * 70)
         print()
         raise SystemExit(1)

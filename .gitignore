@@ -1,6 +1,15 @@
 # Claude Code session files and local tooling
 .claude-local/
-.claude/
+# ⚠ `.claude/*` and NOT `.claude/`. With a trailing slash git never descends into the directory, so
+# a later negation cannot re-include anything inside it. The glob form is what makes the exception
+# below actually work.
+.claude/*
+# The review-gate definitions are TRACKED. They used to live only in `~/.claude/commands/` with a
+# hand-copied backup in `.claude-local/commands/` — unversioned, invisible to any reader, and 4 of
+# the 8 had silently drifted apart. Claude Code reads project commands from here, so tracking them
+# means exactly one copy, which is also the copy a reviewer can read. Settings stay ignored: they
+# carry machine-local paths and permissions.
+!.claude/commands/
 
 # Local MCP tooling (standalone repo, not part of the math publication)
 imap-email-mcp/

@@ -1,0 +1,3 @@
+# check_classes.py baseline - requirements classes whose DEGENERACY question
+# was never asked, grandfathered at creation time. SHRINK as files are touched;
+# never grow deliberately. Regenerate with --baseline only after a real audit.

@@ -1,0 +1,377 @@
+"""
+check_release_ready.py - ZP pre-release readiness gate.
+
+Run from the repo ROOT, BEFORE drafting a release body / cutting a tag:
+
+    python check_release_ready.py <tag>      e.g.  v2.7
+
+Exit 0 = all BLOCKING (mechanical) checks pass -> GO, pending the printed
+          judgment checklist (editorial/adversary/etc., which a script cannot decide).
+Exit 1 = one or more blocking checks failed -> NO-GO.
+Exit 2 = usage error.
+
+Design: the deterministic checks are auto-verified and split into
+  [FAIL]  blocking, high-confidence, unambiguous;
+  [WARN]  best-effort / fragile-to-parse / hygiene -> surfaced, not blocking;
+  [INFO]  context.
+The judgment items (gates run, companion sync, version-bump decision, release
+body approved) are PRINTED for the human to confirm - they are not mechanizable.
+
+Spec + rationale: .claude-local/notes/release_readiness_gate_2026-06-24.md
+Reuses check_hashes.py for register parsing + script hashes.
+"""
+
+import json
+import os
+import re
+import subprocess
+import sys
+import glob
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import check_hashes as ch  # noqa: E402  (sha8, parse_register, *_SCRIPTS dicts)
+
+REPO = os.path.dirname(os.path.dirname(HERE))
+SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace('\\', '/')
+
+REGISTER = 'register.md'
+RELEASES = 'RELEASES.md'
+REGISTRY = 'LEAN_CUSTOM_REGISTRY.md'
+ZENODO = '.zenodo.json'
+README = 'README.md'
+GUIDE = 'GUIDE.md'
+LEAN_GLOB = 'ZeroParadox/**/*.lean'
+LOCAL = os.path.join(REPO, '.claude-local')   # signals only; per-push state, still private
+
+fails = []
+warns = []
+
+
+def fail(msg):
+    fails.append(msg)
+
+
+def warn(msg):
+    warns.append(msg)
+
+
+def read(path):
+    with open(path, encoding='utf-8') as f:
+        return f.read()
+
+
+def git(*args):
+    r = subprocess.run(['git', *args], capture_output=True, text=True)
+    return r.stdout
+
+
+def norm_ver(v):
+    return (v or '').strip().lstrip('vV').strip()
+
+
+# --------------------------------------------------------------------------- checks
+
+# Files that legitimately carry NO Engineer's Take (permanent). Basenames.
+# Rationale: the Engineer's Take convention covers ZP-X *framework* layers; vendored/ported
+# infrastructure and dev tooling are not ZP-original content and carry none by design.
+TAKE_EXEMPT = {
+    'Basic.lean',           # removed in v3.0 reorg (kept for back-compat)
+    'NaturalOps.lean',      # verbatim VENDORED from Mathlib (Violeta Hernandez) - not ZP content
+    'NaturalOpsPow.lean',   # PORTS Violeta Hernandez's CGT proof (Apache-2.0) - not ZP-original
+    'ExtractDeps.lean',     # dev tooling (Meta/, "not framework content" per MANIFEST)
+    'Snapshot.lean',        # dev tooling (Meta/, axiom-footprint snapshot generator)
+}
+# Files that OWE a take but are explicitly deferred — backlog, NOT exempt. Tolerated
+# as a non-blocking WARN, never a silent pass. Burn this down; do NOT add new files
+# here — every new ZP-X Lean file must ship a filled take from creation.
+# See .claude-local/notes/deferred_engineers_takes_2026-06-26.md
+DEFERRED_TAKES = {
+    'ZPB_PadicTree.lean',
+    'ZPJ_AczelConn.lean',
+    'ZPJ_Scale.lean',
+    'ZPJ_SelfApp.lean',
+    'ZPJ_WheelFrac.lean',
+}
+
+
+def c_engineers_takes():
+    """Every ZP-X Lean file carries a filled Engineer's Take.
+
+    Fails on a MISSING section, not only an empty or TODO-flagged one. The
+    DEFERRED_TAKES backlog is tolerated as a WARN (owed, not exempt); TAKE_EXEMPT
+    files are skipped. The heading match allows both the '## Engineer's Take'
+    markdown form and the bare 'Engineer's Take:' form (ZPM).
+    """
+    hits = []
+    # heading + body up to the next markdown heading or EOF; '#' is optional so the
+    # bare 'Engineer's Take:' form is recognised too.
+    take_re = r'((?:#+\s*)?Engineer.?s Take[^\n]*)\n(.*?)(?=\n#+\s|\Z)'
+    for path in glob.glob(LEAN_GLOB, recursive=True):
+        norm = path.replace('\\', '/')
+        if '.lake' in norm:
+            continue
+        base = os.path.basename(norm)
+        if base in TAKE_EXEMPT:
+            continue
+        txt = read(path)
+        for pat in ('TODO (Tim)', 'TODO: Engineer'):
+            if pat in txt:
+                hits.append(f'{path}: contains "{pat}"')
+        if not re.search(r'Engineer.?s Take', txt, re.I):
+            # no section at all
+            if base in DEFERRED_TAKES:
+                warn(f"Engineer's Take deferred (owed, not exempt) - {path}")
+            else:
+                hits.append(f'{path}: no "Engineer\'s Take" section')
+            continue
+        for m in re.finditer(take_re, txt, re.S | re.I):
+            body = re.sub(r'(?m)^\s*--.*$', '', m.group(2)).strip()
+            if not body:
+                hits.append(f'{path}: empty "{m.group(1).strip()}" section')
+    if hits:
+        for h in hits:
+            fail(f'Engineer\'s Take unfilled - {h}')
+    return not hits
+
+
+def c_hash_integrity():
+    """register.md formal:/comp: tokens match the build-script hashes (companions+formal)."""
+    registered = ch.parse_register()
+    bad = []
+    for doc in ch.COMP_SCRIPTS:
+        comp = ch.sha8(ch.COMP_SCRIPTS[doc])
+        fkey = f'{doc}-formal'
+        fscript = ch.FORMAL_SCRIPTS.get(fkey, '')
+        formal = ch.sha8(fscript) if fscript else 'MISSING'
+        reg_formal, reg_comp = registered.get(doc, ('?', '?'))
+        if formal != reg_formal:
+            bad.append(f'{doc} formal: register {reg_formal} vs script {formal}')
+        if comp != reg_comp:
+            bad.append(f'{doc} comp: register {reg_comp} vs script {comp}')
+    for b in bad:
+        fail(f'Hash mismatch (version bump/rebuild overdue) - {b}')
+    return not bad
+
+
+def _register_versions():
+    """{ZP-X: (formal_ver, comp_ver)} from register.md columns (first-wins, base layer)."""
+    out = {}
+    for line in read(REGISTER).splitlines():
+        if not line.strip().startswith('|'):
+            continue
+        cols = [c.strip() for c in line.split('|')]
+        if len(cols) < 5:
+            continue
+        m = re.match(r'(ZP-[A-Z])', cols[1])
+        if m and m.group(1) not in out:
+            out[m.group(1)] = (cols[2], cols[4])
+    return out
+
+
+def _script_version(script):
+    path = os.path.join(LOCAL, script)
+    if not os.path.exists(path):
+        return None
+    m = re.search(r"^VERSION\s*=\s*['\"]([^'\"]+)['\"]", read(path), re.M)
+    return m.group(1) if m else None
+
+
+def c_register_vs_script_version():
+    """register version columns match each build script's VERSION (best-effort -> WARN)."""
+    regv = _register_versions()
+    issues = []
+    for doc in ch.FORMAL_SCRIPTS:
+        base = doc.replace('-formal', '')
+        rv = regv.get(base, (None, None))[0]
+        sv = _script_version(ch.FORMAL_SCRIPTS[doc])
+        if rv and sv and norm_ver(rv) != norm_ver(sv):
+            issues.append(f'{base} formal: register "{rv}" vs script "{sv}"')
+    for doc in ch.COMP_SCRIPTS:
+        rv = regv.get(doc, (None, None))[1]
+        sv = _script_version(ch.COMP_SCRIPTS[doc])
+        if rv and sv and norm_ver(rv) != norm_ver(sv):
+            issues.append(f'{doc} comp: register "{rv}" vs script "{sv}"')
+    for i in issues:
+        warn(f'register<->script VERSION - {i} (authoritative check: /editorial-review)')
+    return not issues
+
+
+def c_registry_invariant():
+    """LEAN_CUSTOM_REGISTRY '### ' entry count == [ZP-CUSTOM] tag count in the Lean sources."""
+    entries = len(re.findall(r'(?m)^###\s', read(REGISTRY)))
+    tags = 0
+    for path in glob.glob(LEAN_GLOB, recursive=True):
+        if '.lake' in path.replace('\\', '/'):
+            continue
+        tags += read(path).count('[ZP-CUSTOM]')
+    if entries != tags:
+        fail(f'LEAN_CUSTOM_REGISTRY out of sync: {entries} entries vs {tags} [ZP-CUSTOM] tags')
+    return entries == tags, entries, tags
+
+
+def c_zenodo():
+    """.zenodo.json is valid JSON; surface the layer-count phrase for human check."""
+    try:
+        d = json.loads(read(ZENODO))
+    except Exception as e:
+        fail(f'.zenodo.json invalid JSON: {e}')
+        return False, None
+    desc = d.get('description', '')
+    m = re.search(r'([A-Za-z]+|\d+)\s+formal layers', desc)
+    phrase = m.group(0) if m else '(no "N formal layers" phrase found)'
+    return True, phrase
+
+
+def c_conflict_markers():
+    """No unresolved git conflict markers in tracked files."""
+    out = git('grep', '-lE', r'^(<<<<<<<|>>>>>>>)')
+    files = [f for f in out.splitlines() if f.strip()]
+    if files:
+        for f in files:
+            fail(f'Conflict marker present in {f}')
+    return not files
+
+
+def c_releases_entry(tag):
+    """RELEASES.md contains a '## <tag>' header for the version being cut."""
+    txt = read(RELEASES)
+    if re.search(r'(?m)^##\s+' + re.escape(tag) + r'\b', txt):
+        return True
+    fail(f'RELEASES.md has no "## {tag}" entry')
+    return False
+
+
+def c_doc_links():
+    """Every PDF linked from README/GUIDE exists in the repo; em-dashes flagged."""
+    ok = True
+    for f in (README, GUIDE):
+        if not os.path.exists(f):
+            warn(f'{f} not found')
+            continue
+        txt = read(f)
+        for m in re.finditer(r'\[[^\]]*\]\(([^)]+\.pdf)\)', txt):
+            target = m.group(1).split('#')[0]
+            if target.startswith('http'):
+                continue
+            if not os.path.exists(target):
+                fail(f'{f}: linked PDF missing -> {target}')
+                ok = False
+        if '—' in txt:
+            warn(f'{f}: contains em-dash (U+2014) - use hyphens (editorial enforces)')
+    return ok
+
+
+def c_scripts_mirror():
+    """RETIRED 2026-08-15 — there is no mirror left to check, so the check is a deletion.
+
+    This used to WARN when `scripts/build_X.py` had drifted from its `build_X.py`
+    source. The honest reading of that check is that it existed to police a hazard the LAYOUT
+    created: two live copies with a per-commit hand-copy obligation between them. It also could
+    not do its job — only the private copy was fingerprinted in register.md, so the published copy
+    was outside the integrity check, and `scan_pdfs.py` drifted for three months undetected.
+
+    `scripts/` is now the single home. A stale mirror is not something to warn about; it is
+    something that can no longer exist. Kept as a named no-op so the check list stays legible and
+    nobody re-adds it — deleting the mirror is what closed the class."""
+    return True
+
+
+def c_signals(tag):
+    """Report gate-signal freshness vs HEAD (INFO: post-merge HEAD may differ from reviewed commit)."""
+    head = git('rev-parse', 'HEAD').strip()
+    rows = []
+    for name in ('er', 'ar', 'cr', 'pa'):
+        p = os.path.join(LOCAL, f'{name}_cleared.txt')
+        if not os.path.exists(p):
+            rows.append(f'{name}: (absent)')
+            continue
+        val = read(p).strip()
+        rows.append(f'{name}: {"==HEAD" if val == head else "!=HEAD (" + val[:8] + ")"}')
+    return rows
+
+
+def c_untracked_pdfs():
+    """Untracked PDFs in the repo root (the ZP_Reals_Companion.pdf class) -> WARN."""
+    out = git('status', '--porcelain')
+    pdfs = []
+    for line in out.splitlines():
+        if line.startswith('??'):
+            path = line[3:].strip()
+            if path.lower().endswith('.pdf') and '/' not in path.replace('\\', '/'):
+                pdfs.append(path)
+    for p in pdfs:
+        warn(f'untracked PDF in root: {p} (archive / finish / .gitignore?)')
+    return not pdfs
+
+
+# --------------------------------------------------------------------------- runner
+
+def line(status, name, detail=''):
+    print(f'  [{status:4}] {name}{("  - " + detail) if detail else ""}')
+
+
+def main():
+    args = [a for a in sys.argv[1:]]
+    if not args or args[0].startswith('-'):
+        print('usage: python %s <tag>   (e.g. v2.7)' % SELF)
+        return 2
+    tag = args[0]
+
+    print(f'ZP Release-Readiness Gate - tag {tag}')
+    print('=' * 64)
+    print('MECHANICAL (blocking unless noted):')
+
+    line('PASS' if c_engineers_takes() else 'FAIL', "Engineer's Takes filled")
+    line('PASS' if c_hash_integrity() else 'FAIL', 'Build-script hash integrity (register tokens)')
+    inv_ok, ent, tg = c_registry_invariant()
+    line('PASS' if inv_ok else 'FAIL', 'LEAN_CUSTOM_REGISTRY invariant', f'{ent} entries / {tg} tags')
+    z_ok, z_phrase = c_zenodo()
+    line('PASS' if z_ok else 'FAIL', '.zenodo.json valid JSON', f'description says: {z_phrase}')
+    line('PASS' if c_conflict_markers() else 'FAIL', 'No conflict markers (tracked files)')
+    line('PASS' if c_releases_entry(tag) else 'FAIL', f'RELEASES.md has "## {tag}" entry')
+    line('PASS' if c_doc_links() else 'FAIL', 'README/GUIDE linked PDFs exist')
+
+    print('BEST-EFFORT / HYGIENE (warn-only):')
+    line('PASS' if c_register_vs_script_version() else 'WARN', 'register <-> script VERSION')
+    line('PASS' if c_scripts_mirror() else 'WARN', 'scripts/ mirror current')
+    line('PASS' if c_untracked_pdfs() else 'WARN', 'No untracked root PDFs')
+
+    print('INFO:')
+    for r in c_signals(tag):
+        print(f'    gate signal {r}')
+    print('    (post-merge HEAD legitimately differs from the reviewed PR commit;')
+    print('     signal freshness is context, not a blocker - confirm gates ran on the PR.)')
+
+    if warns:
+        print('-' * 64)
+        print('WARNINGS (review, not blocking):')
+        for w in warns:
+            print(f'  ! {w}')
+
+    print('-' * 64)
+    print('JUDGMENT CHECKLIST (a human must confirm - not mechanizable):')
+    for item in (
+        'Editorial + adversary review ran on all touched prose (this release\'s PR).',
+        'claim-review ran if any claim status changed; prior-art-review if a synthesis layer was created/strengthened.',
+        'Companion synced for every formal doc whose version bumped.',
+        'Major-vs-minor version decision is correct; Lean-only-change release question raised if applicable.',
+        '.zenodo.json description reflects this release (cannot be updated retroactively).',
+        'Release body drafted and Tim approved it BEFORE `gh release create`.',
+        'Post-release: confirm the Zenodo snapshot minted. README badge is the CONCEPT DOI '
+        '(auto-resolves to latest) - NO per-release badge edit needed.',
+    ):
+        print(f'  [ ] {item}')
+
+    print('=' * 64)
+    if fails:
+        print(f'NO-GO - {len(fails)} blocking failure(s):')
+        for f in fails:
+            print(f'  X {f}')
+        return 1
+    print('GO (mechanical checks pass). Now confirm the judgment checklist above before cutting the tag.')
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

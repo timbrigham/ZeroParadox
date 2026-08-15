@@ -40,12 +40,12 @@ The `formal:XXXXXXXX comp:XXXXXXXX` tokens in the Notes column above are SHA-256
 
 **Session start** — run once before touching any build script:
 ```
-python .claude-local/check_hashes.py
+python tools/verify/check_hashes.py
 ```
 A hash `MISMATCH` means a script was modified without a version bump and PDF rebuild. An AR status of `STALE` means the companion script changed since its last adversary review — re-review required before merge.
 
 **Post-fix workflow** — after applying adversary-review fixes, rebuilding the PDF, and updating the hash in register.md, run one command to close the loop:
 ```
-python .claude-local/check_hashes.py --mark-remediated ZP-X
+python tools/verify/check_hashes.py --mark-remediated ZP-X
 ```
 This computes the current comp hash, writes it to `ar_status.json` as remediated, and updates the `Comp AR` column in this file automatically. For fixes identified but not yet applied, use `--mark-reviewed ZP-X` instead (sets Y/N).

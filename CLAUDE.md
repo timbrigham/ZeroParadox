@@ -4,15 +4,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Gate exemption — this file and operational meta.** `CLAUDE.md` itself (and other internal operating-instruction / meta files, as opposed to the mathematical publication content) is **exempt from the Editorial Review Gate and the Adversary Review Gate** below. The review gates are scoped to externally-facing publication prose — formal documents, companions, README.md/GUIDE.md, build-script prose. `CLAUDE.md` is the operating manual, not publication content, so it needs **version control only**: commit and push normally, and use `git push --no-verify` if the pre-push hook blocks on a stale review signal for a `CLAUDE.md`-only change.
 
+**The exemption covers the VERIFICATION TOOLING too (2026-08-15).** `tools/verify/**` is operating
+machinery on the same argument: a checker makes no claim about the mathematics, so there is nothing
+for an editorial or adversary gate to review. ⚠ **It does NOT extend to method PROSE.** Publishing
+`DEFECT_CLASSES.md`, `vocabulary_reference.md` or the gate protocols is externally-facing copy and
+needs both gates plus a preamble — see `VERIFICATION_BUILDOUT.md` Phase 7, which is why those stayed
+private when the code went public.
+
+## ⭐⭐ WHERE THINGS LIVE. Three tiers, and the boundary is PUBLISHABILITY, not convenience. (2026-08-15.)
+
+| tier | what | tracked? |
+|---|---|---|
+| **`tools/verify/`** | every checker, the pipeline (`batch.py`, `hooks.py`, `guards.py`, `report.py`, `vendored.py`), the **baselines**, the hook sources + `install_hooks.py` | **yes — public** |
+| **`scripts/`** | every PDF build script, `zp_utils.py`, `scan_pdfs.py`, `PDF_Rendering_Standards.md` | **yes — public** |
+| **`.claude/commands/`** | the review-gate definitions Claude Code reads | **yes — public** |
+| **`.claude-local/`** | signals (`*_cleared.txt`), `gate.lock`, `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/`, `fonts/` | no — private, own git repo, no remote |
+
+**The line: artifacts of VERIFICATION are public; artifacts of PROCESS-IN-FLIGHT are private.**
+A checker and its baseline are reproducible from the public corpus, so withholding them protected
+nothing and only made the claims unauditable. A signal recording what this session reviewed is
+per-push state that churns on every commit.
+
+⚠ **THERE ARE NO MIRRORS ANY MORE, AND RE-CREATING ONE IS A DEFECT.** Three existed and **two had
+silently drifted**: `scripts/` vs `.claude-local/` build scripts (`scan_pdfs.py`, three months),
+and `~/.claude/commands/` vs `.claude-local/commands/` (4 of 8 files). If something must exist in
+two places, that is the signal to change the layout — **not** to add a copy step and a rule asking
+someone to remember it. Every old path now holds a tombstone that **exits 2**, and
+`python tools/verify/check_moved.py --block` fails if anything still points at a relocated path.
+
+⚠ **A tool NEVER writes its own invocation path down.** Each derives `SELF` from `__file__` and
+prints that, so usage text cannot go stale — a hardcoded `python <dir>/tool.py` in a docstring is a
+COPY of the path and drifts exactly like a mirrored file. Baselines resolve relative to the checker
+for the same reason, so they travel with it. **This file is the one place a literal path is
+correct**, because a human reads it and nothing computes on their behalf.
+
 ## ⭐⭐ `batch.py precommit` BEFORE EVERY COMMIT. `/batch` for any multi-site work. Not optional.
 
-**The orchestrator is the default entry point, not a special mode.** `.claude-local/batch.py` owns
+**The orchestrator is the default entry point, not a special mode.** `tools/verify/batch.py` owns
 sequencing and mechanical preconditions; an agent owns judgement. It decides nothing — it refuses to
 let a commit or push happen while a decidable obligation is unmet.
 
 ```
-python .claude-local/batch.py precommit    # BEFORE EVERY COMMIT. Works with or without a batch.
-python .claude-local/batch.py prepush      # before any push: which reviews are required, and are
+python tools/verify/batch.py precommit    # BEFORE EVERY COMMIT. Works with or without a batch.
+python tools/verify/batch.py prepush      # before any push: which reviews are required, and are
                                            # the signals FRESH (hash + coverage, not existence)
 ```
 
@@ -43,7 +77,7 @@ what scope they apply to, what is exempt, and what is deliberately NOT run.** `p
 names each required review — its purpose, what triggers it, its signal file, and **the recorded
 verdict line from that signal** — so *"cleared"* is never read as *"clean"*; all three signals today
 say STOP-ORDINARY, i.e. cleared **with findings outstanding**. One formatter,
-`.claude-local/report.py`, so the four cannot drift into describing themselves differently.
+`tools/verify/report.py`, so the four cannot drift into describing themselves differently.
 - **This is not cosmetic; it is how three defects this month stayed invisible.** `check_modal
   --block` had never blocked a push and the output looked identical either way (`HK-1`);
   `check_poles` sat in the checker list gating nothing while `precommit` printed `suite ok`
@@ -56,7 +90,7 @@ say STOP-ORDINARY, i.e. cleared **with findings outstanding**. One formatter,
   sections. Fixed with `line_buffering=True` alongside `encoding="utf-8"` (the Windows console
   otherwise mangles an em-dash). Both live in `report.py`, so every entry point inherits them.
 
-**⭐⭐ THE HOOKS ARE NOW THREE-LINE SHIMS. ALL pipeline logic is `.claude-local/hooks.py` (Tim,
+**⭐⭐ THE HOOKS ARE NOW THREE-LINE SHIMS. ALL pipeline logic is `tools/verify/hooks.py` (Tim,
 2026-08-10: *"the shell variants are legacy and should be retired... just the python version should
 remain"*).** There were **two partial implementations** — a ~300-line shell hook and `batch.py` —
 and they measurably disagreed three ways (what counts as reviewable; whether signals are required
@@ -73,11 +107,11 @@ in the hook). Neither was the pipeline. Shell and Python cannot share a module, 
 - **`batch.py prepush` and the hook now run the same code**, the hook passing `--ranges` and a manual
   run reading the working tree. One definition, two entry points.
 
-⚠ **The purity/SSOT check is driven by an ON-DISK BASELINE (`.claude-local/decl_baseline.txt`), never
+⚠ **The purity/SSOT check is driven by an ON-DISK BASELINE (`tools/verify/decl_baseline.txt`), never
 by git** — see the hashing rule below. It used to compute "added" against `HEAD`, which is meaningful
 only *before* the commit; run afterwards it returned nothing and both checks passed vacuously. A
 **stale baseline is safe**: it can only make more declarations look new, so the check gets stricter,
-never blind. Re-seed with `python .claude-local/batch.py decls --baseline`. Vendored backports are
+never blind. Re-seed with `python tools/verify/batch.py decls --baseline`. Vendored backports are
 exempt structurally, as in `check_prose.py`.
 
 **Use `/batch <bucket>` for anything MULTI-SITE** — a debaselining bucket, a defect-class sweep, a
@@ -488,16 +522,17 @@ form itself — detecting only the *absence of the required form* leaves the vio
 all leak.** (`vocabulary_reference.md`: the bare-"bottom" rule, "iterative bottoms", standard-math-first.)
 `feedback_jargon_blindspot` records why: Claude is embedded in the project's language and structurally
 cannot self-detect vocabulary drift, so discipline-level rules fail here by construction.
-- `python .claude-local/check_pov.py` — **WARNS**, wired into `.git/hooks/pre-commit` (staged copy at
-  `.claude-local/proposed_pre_commit_hook.sh`; hooks are not version-controlled, re-install per clone).
+- `python tools/verify/check_pov.py` — **WARNS**, wired into `.git/hooks/pre-commit` (staged copy at
+  `tools/verify/proposed_pre_commit_hook.sh`, now TRACKED; install with `python
+  tools/verify/install_hooks.py`, and `--check` reports whether the gates are actually armed).
   It never blocks a commit — the stub-first protocol commits incomplete work on purpose, and a blocking
   commit gate with false positives trains the `--no-verify` reflex that would cost the push gate too.
-- `python .claude-local/check_pov.py --block` — **BLOCKS**, wired into `pre-push` § 3b. Validated
+- `python tools/verify/check_pov.py --block` — **BLOCKS**, wired into `pre-push` § 3b. Validated
   2026-07-30 end-to-end: injecting a real POV overclaim made `git push --dry-run` exit 1 on the POV
   check; removing it passed.
 - **Baselined.** The corpus already carries **90** untagged sites (measured). Demanding a tag on all of
   them is a migration, not a gate, and a gate that blocks everything on day one gets muted. So
-  `.claude-local/pov_baseline.txt` grandfathers them and the gate blocks on **NEW** sites only —
+  `tools/verify/pov_baseline.txt` grandfathers them and the gate blocks on **NEW** sites only —
   as-touched rollout, same as the file-path and CC-2 conventions. **Shrink the baseline as files are
   touched; never grow it deliberately.**
 
@@ -541,7 +576,7 @@ witness, never by reading the class. `SeparatedSuccession`'s `separated` field e
 field does not enforce.
 
 **Enforcement (2026-08-07, Tim's call — mechanical because this is the FIFTH convention of this shape
-and the earlier four all leak).** `python .claude-local/check_classes.py` WARNS at commit;
+and the earlier four all leak).** `python tools/verify/check_classes.py` WARNS at commit;
 `--block` ENFORCES at push. It cannot decide degeneracy (that needs a witness); it enforces that the
 question was **asked** — a `NO-GO` section, a `Nondegenerate` predicate, or a named trivial witness in
 the declaring file. Same design as `check_pov.py`: enforce that a convention was followed, never that a
@@ -564,8 +599,8 @@ different files, so *"enumerate them"* was a memory exercise performed by whoeve
 one. (Tim: *"I'm getting a little tired of that behavior."*)
 
 **THE RULE — when you close a hole, name the PROPERTY, then add EVERY route to
-`.claude-local/guards.py`.** Not a comment, not a note. The registry is the deliverable; the fix is
-half of it. `python .claude-local/guards.py --list` prints the surface; it BLOCKS in `pre-push`,
+`tools/verify/guards.py`.** Not a comment, not a note. The registry is the deliverable; the fix is
+half of it. `python tools/verify/guards.py --list` prints the surface; it BLOCKS in `pre-push`,
 ahead of the checkers it protects, because a green checker whose exemption surface has a new hole is
 a **false zero**, and this file already records that a false zero costs more than a red one.
 
@@ -663,7 +698,7 @@ the exempt files in its output**, so the exemption is visible rather than silent
 to match those two files and no others. This removed **140 sites, 119 of them undocumented
 declarations we did not author**.
 
-⚠ **The exemption has exactly ONE definition — `.claude-local/vendored.py`. Import it; never restate
+⚠ **The exemption has exactly ONE definition — `tools/verify/vendored.py`. Import it; never restate
 it** (Tim, 2026-08-09: *"the vendor files should be exempt extremely. we already did it elsewhere"*).
 It lived in `check_prose.py`, was re-implemented from memory in `batch.py`, and **the copy was
 already wrong three ways after a single day**: `Apache-2\.0` missed the space form, an unanchored
@@ -688,7 +723,7 @@ files. The mechanism meant to stop glosses overclaiming is, in the indexes whose
 they cannot overclaim, essentially absent.
 
 **ENFORCEMENT — mechanical, because this is the SIXTH convention of this shape and the previous
-five all leaked.** `python .claude-local/check_prose.py` WARNS at commit; `--block` ENFORCES at
+five all leaked.** `python tools/verify/check_prose.py` WARNS at commit; `--block` ENFORCES at
 push (`pre-push` § 3b-e). **FOUR rules** (a fifth was retired 2026-08-08, below): a module-doc
 block over **10 lines** (just above the p90 for file headers); a docstring longer than its
 declaration; a `#check` with **no gloss**; and a gloss carrying **no `Statement:`/`Reading:`
@@ -1058,7 +1093,7 @@ problem sentence"*).
 
 ### The sweep this produced, and what it found on the first run (2026-08-03)
 
-`python .claude-local/check_modal.py` (WARN at commit) / `--block` (pre-push § 3b-c). Baselined like
+`python tools/verify/check_modal.py` (WARN at commit) / `--block` (pre-push § 3b-c). Baselined like
 `check_pov.py`: fires on NEW sites only. It flags modal vocabulary not accompanied by a measurement, a
 reduction, an explicit non-claim, or a **named exhibited witness**.
 
@@ -1357,8 +1392,8 @@ fix is structural: the reviewer stands outside the loop, so give it the number a
 
 **The CALLER bumps, exactly once, before spawning the round:**
 ```
-python .claude-local/gate_round.py bump --target <what-is-being-re-fixed>   # caller, once per ROUND
-python .claude-local/gate_round.py show                                     # reviewers: read-only
+python tools/verify/gate_round.py bump --target <what-is-being-re-fixed>   # caller, once per ROUND
+python tools/verify/gate_round.py show                                     # reviewers: read-only
 ```
 **Always pass `--target`.** Use a stable slug for the thing being corrected, not the round's topic —
 `zpp-remark-veltri-modality`, not `round-3`. It is what makes the revalidation tripwire fire on the
@@ -1423,7 +1458,7 @@ read the hook's output. Nothing else changed.
 
 **Two defences, both now in place:**
 1. **The hook is SIGPIPE-immune.** `trap '' PIPE` on line 2 of `.git/hooks/pre-push` (and the
-   version-controlled copy at `.claude-local/proposed_pre_push_hook.sh`). Verified: the truncated push
+   version-controlled copy at `tools/verify/proposed_pre_push_hook.sh`). Verified: the truncated push
    above now exits 1, and a nothing-to-push still exits 0. **Hooks live in `.git/` and are NOT
    version-controlled — this fix must be re-installed per clone from the staged copy.**
 2. **Do not truncate push output.** Redirect to a file and read that:
@@ -1437,8 +1472,20 @@ a public remote must pass the gate on its own merits, not because a reader close
 
 **Scope of the pipe hazard, measured after the fix:** `head` and `grep -q` (and `grep -m`, `sed q`, any
 consumer that exits before EOF) all sever the pipe early; `tail` does not, because it reads to EOF. With
-`trap '' PIPE` installed the hook survives all of them and still exits 1. **The rule stands anyway** —
-do not rely on the trap being present in a fresh clone, since hooks are not version-controlled.
+SIGPIPE immunity installed, the hook survives all of them and still exits 1. **The rule stands
+anyway** — do not rely on the protection being present, and never truncate push output.
+
+⚠ **Where the immunity actually lives, corrected 2026-08-15.** It is no longer `trap '' PIPE` in a
+shell hook: the shell hooks became three-line shims in August, and the protection moved into
+`tools/verify/hooks.py`, which ignores `SIGPIPE` where the signal exists and handles
+`BrokenPipeError` everywhere. Nothing was lost in that conversion — but a reader looking for `trap`
+in `.git/hooks/pre-push` will not find it, and could reasonably conclude the defence was dropped.
+
+⭐ **And the "fresh clone" half is now fixable rather than merely warned about.** The hook SOURCES
+are tracked at `tools/verify/proposed_pre_*_hook.sh`; `python tools/verify/install_hooks.py`
+installs them and `--check` exits 1 when the gates are not armed. The installed hook still lives in
+`.git/hooks/` and still is not version-controlled — git has no mechanism for that — but the copy
+step no longer depends on someone having been handed the file out of band.
 
 ### And NEVER write a `--no-verify` fallback into a push command. Hard Rule.
 
@@ -1564,7 +1611,7 @@ Same-session self-review does not satisfy this requirement. `/editorial-review` 
 
 The pre-push hook validates `.claude-local/er_cleared.txt` and `.claude-local/ar_cleared.txt` (and `pa_cleared.txt` on a `.lean` trigger) using the **SHA-256-per-file scheme** (2026-07-20): each signal records the content SHA-256 of every file the review certified (line 1 = verdict record; lines 2+ = `<sha256>  <path>`), and it is valid iff (a) every recorded file still hashes to its recorded value and (b) every *reviewable* file in the push is covered by a recorded hash. Reviewable = changed files minus pure data/binary (`ssot.json`, PDFs, images, lockfiles), so a data-only commit no longer stales a review — that was the old HEAD-equality scheme's failure mode. If nothing reviewable changed, no signal is required. `--no-verify` should now be genuinely rare; if a signal is stale it is because a reviewed file actually changed (re-run the review) or a new reviewable file is uncovered.
 
-⚠ **EVERY hash in this scheme is of the FILE ON DISK. Never a git value** (Tim, 2026-08-09). Not `git show "HEAD:<path>"`, not the index, not the blob — `Get-FileHash -Algorithm SHA256 <path>` or `sha256sum <path>`. **Why it is a rule and not a preference:** the four command files used to say *"compute each hash from the committed content … `git show "HEAD:<path>" | sha256sum`"*, and that is one command meaning two different things depending on when it runs. At push time HEAD is the new commit, so it matched and the instruction looked correct for months. But editorial and claim-review are **pre-commit** gates, so there HEAD holds the **OLD** content: the reviewer certifies the pre-edit file, the commit lands, and the hook compares against a hash of content that no longer exists. **Measured 2026-08-09** with both controls — on a clean tree the two forms agree (which is why nothing ever caught it), and on a dirty tree they diverge, with the `git show` form returning the hash of the *unmodified* file. Fixed in `.git/hooks/pre-push` and its staged copy (`file_hash` now hashes the path), and in all four command files. `batch.py check_signals` already hashed the file on disk, so all three components now agree. **CRLF is not a hazard here:** `.gitattributes` declares `* text=auto eol=lf`, which overrides `core.autocrlf`, so working files are LF on every clone. ⚠ Hooks live in `.git/` and are **not** version-controlled — re-install from `.claude-local/proposed_pre_push_hook.sh` per clone or this fix is absent.
+⚠ **EVERY hash in this scheme is of the FILE ON DISK. Never a git value** (Tim, 2026-08-09). Not `git show "HEAD:<path>"`, not the index, not the blob — `Get-FileHash -Algorithm SHA256 <path>` or `sha256sum <path>`. **Why it is a rule and not a preference:** the four command files used to say *"compute each hash from the committed content … `git show "HEAD:<path>" | sha256sum`"*, and that is one command meaning two different things depending on when it runs. At push time HEAD is the new commit, so it matched and the instruction looked correct for months. But editorial and claim-review are **pre-commit** gates, so there HEAD holds the **OLD** content: the reviewer certifies the pre-edit file, the commit lands, and the hook compares against a hash of content that no longer exists. **Measured 2026-08-09** with both controls — on a clean tree the two forms agree (which is why nothing ever caught it), and on a dirty tree they diverge, with the `git show` form returning the hash of the *unmodified* file. Fixed in `.git/hooks/pre-push` and its staged copy (`file_hash` now hashes the path), and in all four command files. `batch.py check_signals` already hashed the file on disk, so all three components now agree. **CRLF is not a hazard here:** `.gitattributes` declares `* text=auto eol=lf`, which overrides `core.autocrlf`, so working files are LF on every clone. ⚠ Hooks live in `.git/` and are **not** version-controlled — re-install from `tools/verify/proposed_pre_push_hook.sh` per clone or this fix is absent.
 
 ## Adversary Review Gate — Hard Rule
 
@@ -1688,7 +1735,7 @@ purity before swapping a proof — adopting `CovBy.unique_right` pushed `firstSt
 **The mechanism (how it runs):**
 - **Step 0 — grep our own corpus first.** Before any web search, `/prior-art-review` greps the repo + `.claude-local` (notes, **`papers/`**, `external/`, outreach) for an existing reference; much of this project's prior-art knowledge already lives there, so this prevents false-positive "gaps" — e.g. the Bruhat-Tits tree is already cited in `PadicTree.lean`, and a web-first sweep "rediscovered" it. **`.claude-local/papers/` is the downloaded-source library and is the FIRST place to look for a book or paper — check it before concluding a source cannot be obtained; and FILE any source you fetch into it (see the rule under Trigger 0 above).** **No file count is recorded — measure it.** This line carried "55 files, of which 43 are PDFs" (itself a 2026-07-30 correction of an earlier "55 PDFs" that miscounted HTML/txt captures), and on 2026-08-02 it went stale by 15 files at once. A figure quoted rather than regenerated is this project's most reliably recurring defect. Measured 2026-07-26: a scout spent a full search declaring Aczel's *Non-Well-Founded Sets* unobtainable (404s, dead mirrors, lending-restricted archive.org) while `.claude-local/papers/aczel_afa_manuscript.pdf` sat on disk — because this line listed `external/` and omitted `papers/`, and the brief inherited the omission. **Carry `papers/` into every scout brief explicitly.** Note also that scanned books here are OCR'd with spurious intra-word spaces ("depend ent choice s"), so **grep loosely** — a miss on a tight pattern is not evidence of absence.
 - The **adversary-review** gate detects synthesis-layer content. If a distinctive cross-field claim lacks a specialist-branch citation (in the content or the CLAIMS Convergence ledger) and there is no `.claude-local/pa_cleared.txt` matching HEAD, it adds a kill-list item — `ar_cleared.txt` is withheld and the pre-push hook blocks. (Detection only; the adversary does not perform the search.)
-- The **pre-push hook also checks `pa_cleared.txt` directly** when the push adds a new `.lean` file or a large net `.lean` addition (trigger 5: a new `.lean` file, or ≥50 net `.lean` lines in the push). This closes the library-duplication leak: a non-synthesis `.lean` re-proof of an existing library lemma (e.g. a `lawvere_fixedpoint` duplicating Mathlib's `Function.exists_fixed_point_of_surjective`) carries no synthesis claim for the adversary to detect, so the hook enforces prior-art directly. Synthesis prose still routes through the adversary path above; `.lean` constructions are now hook-gated independent of it. (Hooks live in `.git/`, not version-controlled — per-clone install; staged at `.claude-local/proposed_pre_push_hook.sh`.)
+- The **pre-push hook also checks `pa_cleared.txt` directly** when the push adds a new `.lean` file or a large net `.lean` addition (trigger 5: a new `.lean` file, or ≥50 net `.lean` lines in the push). This closes the library-duplication leak: a non-synthesis `.lean` re-proof of an existing library lemma (e.g. a `lawvere_fixedpoint` duplicating Mathlib's `Function.exists_fixed_point_of_surjective`) carries no synthesis claim for the adversary to detect, so the hook enforces prior-art directly. Synthesis prose still routes through the adversary path above; `.lean` constructions are now hook-gated independent of it. (Hooks live in `.git/`, not version-controlled — per-clone install; staged at `tools/verify/proposed_pre_push_hook.sh`.)
 - **`/prior-art-review`** is the deep gate it routes to: a fresh-agent literature scout that states each distinctive synthesis claim in the target field's terms, searches for and **reads from source** the specialist branch, and either cites it (with the honest delta, credit pointing outward) or records "searched, none found." For a new or substantially-expanded `.lean` file the scope also includes a **library-duplication check** on the file's central/named results — a re-proof of an existing Mathlib lemma or a re-built known construction must cite the library/source version (bounded to named/central results, not every helper lemma). On PASS it writes `.claude-local/pa_cleared.txt`; the push clears once both adversary and prior-art-review are satisfied.
 - Same-session self-review does not satisfy this. The review must be a separate scout context (spawned Agent with no conversation history).
 
@@ -1703,12 +1750,15 @@ purity before swapping a proof — adopting `CovBy.unique_right` pushed `firstSt
 
 ## Repository Nature
 
-This is a **mathematical publication repository**, not a software project. There is no build system, test suite, or source code. The repository contains:
+This is a **mathematical publication repository** first. It is no longer true that there is "no build system, test suite, or source code" — there is a Lean 4 corpus with CI, and as of 2026-08-15 a tracked verification suite — but the PDFs and the Lean remain the point, and the tooling exists to keep them honest. The repository contains:
 
 - PDF documents (the formal mathematical framework and illustrated companions)
+- The Lean 4 corpus under `ZeroParadox/`, with `MANIFEST.md` as its by-folder index
 - Markdown documentation (README.md, ABOUTME.md, this file)
 - (superseded document versions are preserved in git history and per-release Zenodo snapshots; the `historical/` folder was retired in v3.0)
-- A `scripts/` folder with the PDF build tooling (Claude-generated, public, included for transparency)
+- `scripts/` — the PDF build tooling. Their only home since 2026-08-15, not a transparency mirror
+- `tools/verify/` — the checkers, pipeline and baselines that gate every commit and push
+- `tools/registry/`, `tools/render/` — the declaration extractor and the diagram generators
 
 ## Private Working Folder
 
@@ -1754,9 +1804,9 @@ After release, confirm the Zenodo snapshot minted (query `https://zenodo.org/api
 
 **Release-Readiness Gate — mandatory hard gate before drafting the release body / cutting any tag.** Run from the repo root:
 ```
-python .claude-local/check_release_ready.py <tag>
+python tools/verify/check_release_ready.py <tag>
 ```
-It must **exit 0** before the release body is drafted. The script mechanically verifies the deterministic release preconditions and **exits 1 (NO-GO)** on any blocking failure: Engineer's Takes filled (no `TODO (Tim)` / `TODO: Engineer` / empty take section), build-script hash integrity vs `register.md`, the `LEAN_CUSTOM_REGISTRY` invariant (`### ` entries == `[ZP-CUSTOM]` tags), `.zenodo.json` valid JSON, no conflict markers in tracked files, a `## <tag>` entry present in `RELEASES.md`, and every README/GUIDE-linked PDF exists. It also prints WARN-level hygiene checks (register↔script VERSION, `scripts/` mirror currency, untracked root PDFs) and a **judgment checklist** of the non-mechanizable items (editorial/adversary/claim-review/prior-art ran on the PR; companion sync; major-vs-minor decision; release body approved). It **consolidates** the `.zenodo.json` and Engineer's-Take checks below (kept individually documented for context) and adds the rest. The gate cannot hook `gh release create` (no git event for tag creation), so enforcement is procedural: **the gate must exit 0 AND its judgment checklist must be confirmed before the release body is drafted.** Lives in `.claude-local/` (gitignored, like `check_hashes.py`; `check_*` dev tools are not mirrored to `scripts/`); reuses `check_hashes.py` for register parsing. Spec: `.claude-local/notes/release_readiness_gate_2026-06-24.md`. (Added 2026-06-24 after `LEAN_CUSTOM_REGISTRY` went 18 days stale undetected at the v2.6 threshold — the scattered-checks model let it slip.)
+It must **exit 0** before the release body is drafted. The script mechanically verifies the deterministic release preconditions and **exits 1 (NO-GO)** on any blocking failure: Engineer's Takes filled (no `TODO (Tim)` / `TODO: Engineer` / empty take section), build-script hash integrity vs `register.md`, the `LEAN_CUSTOM_REGISTRY` invariant (`### ` entries == `[ZP-CUSTOM]` tags), `.zenodo.json` valid JSON, no conflict markers in tracked files, a `## <tag>` entry present in `RELEASES.md`, and every README/GUIDE-linked PDF exists. It also prints WARN-level hygiene checks (register↔script VERSION, `scripts/` mirror currency, untracked root PDFs) and a **judgment checklist** of the non-mechanizable items (editorial/adversary/claim-review/prior-art ran on the PR; companion sync; major-vs-minor decision; release body approved). It **consolidates** the `.zenodo.json` and Engineer's-Take checks below (kept individually documented for context) and adds the rest. The gate cannot hook `gh release create` (no git event for tag creation), so enforcement is procedural: **the gate must exit 0 AND its judgment checklist must be confirmed before the release body is drafted.** Lives in `tools/verify/` — **TRACKED, alongside every other checker (2026-08-15).** This reverses the old rule that `check_*` dev tools stay gitignored and unmirrored: they are now tracked *in place*, which is not the same as mirroring them. There is one copy, it is the public one, and a checker edit is an ordinary reviewable diff instead of a change `git diff` could not see. Reuses `check_hashes.py` for register parsing. Spec: `.claude-local/notes/release_readiness_gate_2026-06-24.md`. (Added 2026-06-24 after `LEAN_CUSTOM_REGISTRY` went 18 days stale undetected at the v2.6 threshold — the scattered-checks model let it slip.)
 
 **`.zenodo.json` check — mandatory before every release:** Read `.zenodo.json` and verify the `description` field accurately reflects the current layer count and layer list. Update it in the same PR as `RELEASES.md` if anything is stale. Zenodo reads this file at release creation time; it cannot be updated retroactively via the repo (only via the Zenodo web UI).
 
@@ -1858,16 +1908,16 @@ This rule applies to both directions:
 **Standing rule — any script change requires all four steps in the same commit:**
 1. Make the change and bump the internal version number
 2. Rebuild the PDF and archive the old version
-3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('.claude-local/build_X.py','rb').read()).hexdigest()[:8])"`
+3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('scripts/build_X.py','rb').read()).hexdigest()[:8])"`
 4. Update the hash token in `register.md`
 
-**Session start check:** Run `python .claude-local/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing the full four-step workflow — version bump and PDF rebuild are overdue.
+**Session start check:** Run `python tools/verify/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing the full four-step workflow — version bump and PDF rebuild are overdue.
 
 A hash mismatch is not just a "rebuild needed" signal — it means the version bump step was skipped. Do not rebuild without incrementing the version number.
 
 ## PDF Build Standards
 
-**Before building any PDF in this project** — formal layer, companion, or otherwise — read `.claude-local/PDF_Rendering_Standards.md`. It is the single authoritative source for font stack, glyph rendering, table cell formatting, HTML entities, subscript/superscript rules, and pre-build verification. All rules there apply to every PDF build without exception.
+**Before building any PDF in this project** — formal layer, companion, or otherwise — read `scripts/PDF_Rendering_Standards.md`. It is the single authoritative source for font stack, glyph rendering, table cell formatting, HTML entities, subscript/superscript rules, and pre-build verification. All rules there apply to every PDF build without exception.
 
 ## Companion PDF Diagram Layout Standards
 
@@ -1913,19 +1963,31 @@ The following files exist in the repository but **must not be linked from README
 
 Do not add links to these files in README.md or GUIDE.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in either index.
 
-## scripts/ Folder — Keeping It Current
+## scripts/ is the build scripts' ONLY home. There is no mirror to keep current. (2026-08-15.)
 
-The `scripts/` folder is a public transparency copy of the active build scripts from `.claude-local/`. It must be kept current: whenever a build script in `.claude-local/` produces a newly committed PDF, copy the script to `scripts/` as part of the same commit.
+**This section used to describe a hand-copied mirror and a per-commit obligation to refresh it.
+Both are gone.** `scripts/build_*.py`, `zp_utils.py` and `scan_pdfs.py` are the working copies now;
+the `.claude-local/` originals were deleted. Edit the file in `scripts/` and commit it like any
+other source file.
 
-**Rule:** After committing a new or updated PDF on the `illustrated` branch, copy the corresponding build script:
-```
-Copy-Item .claude-local\build_X.py scripts\build_X.py
-```
-Then stage and include it in the commit (or as a follow-up commit on the same branch).
+⚠ **WHY IT WAS RETIRED, and the failure is the general argument against mirrors.** The rule asked a
+human to remember a copy step on every commit, and `register.md` fingerprinted only the PRIVATE
+copy — so the PUBLISHED script sat outside the integrity check entirely. `scan_pdfs.py` drifted on
+2026-05-20 and nothing noticed for three months. A mirror plus a discipline is strictly worse than
+one file: it adds a way to be wrong and removes the way to detect it. `check_hashes.py` now
+fingerprints `scripts/`, so **what `register.md` attests to is exactly what a reader can download.**
 
-If a script is new (not yet in `scripts/`), add a row for it to `scripts/README.md` at the same time.
+**The four-step rule for changing a build script is unchanged** — edit, bump the internal version,
+rebuild the PDF, update the hash token in `register.md`. Only the copy step is gone.
 
-The `scripts/` folder is intentionally not a runnable package — the README there sets that expectation explicitly. The goal is source visibility, not distribution.
+⚠ **Fonts are the one dependency that did not move.** `zp_utils.py` looks for `scripts/fonts/`
+first and falls back to `.claude-local/fonts/`, so builds work unchanged today — but the 6.3 MB of
+DejaVu + STIX Two TTFs are still private, which means **a public clone cannot actually run these
+scripts.** That is an open decision rather than an oversight: both families are freely
+redistributable (DejaVu; STIX Two under the SIL OFL), and publishing them is a one-time drop into
+`scripts/fonts/` with no code change. Until then `scripts/` is source-visible, not runnable.
+
+If a script is new, add a row for it to `scripts/README.md` in the same commit.
 
 ## Lean↔PDF Consistency — AI-Assisted Workflow
 

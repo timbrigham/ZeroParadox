@@ -10,7 +10,7 @@ original with only the reorg-dead filenames corrected.
 
 So the manifest can no longer drift on a file move/rename/add — rerun it.
 
-Run:  python .claude-local/build_manifest.py   (mirror to scripts/ per the scripts/ sync rule)
+Run:  python scripts/build_manifest.py   (mirror to scripts/ per the scripts/ sync rule)
 Out:  ZeroParadox/MANIFEST.md
 """
 import os, re, sys

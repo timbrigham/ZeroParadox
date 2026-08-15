@@ -11,7 +11,7 @@ Assumes the output .md lives at the REPO ROOT (relative links point into `ZeroPa
 MAP data (CELLS/SLOTS) is imported from build_bottom_matrix.py, an internal companion generator kept in
 the private working folder and not mirrored to scripts/; this file is the one that emits the public page.
 
-Run:  python .claude-local/build_dictionary_map.py   (active copy; also mirrored read-only to scripts/)
+Run:  python scripts/build_dictionary_map.py   (active copy; also mirrored read-only to scripts/)
 Out:  BOTTOMELEMENT.md at the repo root   (Mermaid + relative links render on GitHub)
 """
 import sys, os, re
