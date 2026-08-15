@@ -47,6 +47,19 @@ COPY of the path and drifts exactly like a mirrored file. Baselines resolve rela
 for the same reason, so they travel with it. **This file is the one place a literal path is
 correct**, because a human reads it and nothing computes on their behalf.
 
+⚠⚠ **NEVER PUT A NON-COMMAND `.md` FILE IN `.claude/commands/`.** Claude Code registers **every**
+`.md` in that directory as a slash command, so a `README.md` there silently creates `/readme`. The
+directory is an interface, not a folder — anything explaining it goes here instead. (Tim, 2026-08-15,
+catching exactly that proposal.)
+
+**What a public reader should know about the published gate briefs, since they cannot follow all of
+it:** the 11 files in `.claude/commands/` are the real briefs, run verbatim, and they contain **66
+references into `.claude-local/`** — the notes, the defect ledger, the papers library, the DeepSeek
+screening scripts, and the per-push signal files. Those are deliberately private (see § *Private
+Working Folder*), so a reader can see exactly what each gate is instructed to do and cannot open
+every artifact it names. That is the honest position and it should be stated rather than discovered:
+**the method is public; some of the material it operates on is not.**
+
 ## ⭐⭐ `batch.py precommit` BEFORE EVERY COMMIT. `/batch` for any multi-site work. Not optional.
 
 **The orchestrator is the default entry point, not a special mode.** `tools/verify/batch.py` owns
