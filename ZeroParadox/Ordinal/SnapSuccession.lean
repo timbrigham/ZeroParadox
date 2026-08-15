@@ -68,8 +68,8 @@ open Order Ordinal
 /-! ### § I. The rungs are the closed points of the snap-nucleus -/
 
 /-- **The closed points of the snap-nucleus are exactly the fixed points of the snap-step** (the
-    ε-numbers). A point is settled under `snapNucleus` iff `ω^x = x` — iff it is an ε-number. The generated
-    system's points ARE the ε-hierarchy. -/
+    ε-numbers). A point is settled under `snapNucleus` iff `ω^x = x`. That the enumeration `ε_` *reaches*
+    every such point — range membership, not a restatement of the property — is the `example` below. -/
 theorem snapNucleus_isClosed_iff (x : Ordinal) :
     snapNucleus x = x ↔ Ordinal.omega0 ^ x = x := by
   rw [snapNucleus_apply]
@@ -80,6 +80,12 @@ theorem snapNucleus_isClosed_iff (x : Ordinal) :
     exact hfp
   · intro h
     exact Ordinal.nfp_eq_self h
+
+-- `Statement:` the hierarchy enumerates **exactly** the fixed points of the snap-step — sound and
+-- complete, no rung missed and none spurious (Mathlib `mem_range_deriv`, a biconditional).
+example (a : Ordinal) : a ∈ Set.range Ordinal.epsilon ↔ Ordinal.omega0 ^ a = a := by
+  rw [show Ordinal.epsilon = deriv (fun b => Ordinal.omega0 ^ b) from funext epsilon_eq_deriv]
+  exact mem_range_deriv (isNormal_opow one_lt_omega0)
 
 /-! ### § II. The succession is the ε-hierarchy, strictly climbing -/
 
@@ -120,6 +126,32 @@ theorem succession_succ (o : Ordinal) :
 theorem succession_lt_succ (o : Ordinal) :
     Ordinal.epsilon o < Ordinal.epsilon (Order.succ o) :=
   succession_strictMono (Order.lt_succ o)
+
+-- `Statement:` at a LIMIT the next rung is the supremum of every rung below it, not a function of one
+-- predecessor (Mathlib `deriv_limit`). `succession_succ` covers successors only. The chain is already
+-- infinite without this step (`succession_strictMono`); what it adds are the limit-indexed rungs.
+example (o : Ordinal) (ho : Order.IsSuccLimit o) :
+    Ordinal.epsilon o = ⨆ a : {a // a < o}, Ordinal.epsilon ↑a := by
+  rw [show Ordinal.epsilon = deriv (fun b => Ordinal.omega0 ^ b) from funext epsilon_eq_deriv]
+  exact deriv_limit _ ho
+
+/-! ### § III. The levels — level 0 is the snap-step, and § II's whole chain is level 1 -/
+
+-- `Statement:` level 0 of the Veblen hierarchy IS the snap-step, as functions.
+example : Ordinal.veblen 0 = fun a => Ordinal.omega0 ^ a := veblen_zero
+
+-- `Statement:` § II's whole chain IS level 1 — Mathlib defines `epsilon` as `veblen 1`, so this is `rfl`.
+example : Ordinal.epsilon = Ordinal.veblen 1 := rfl
+
+-- `Statement:` level `o+1` enumerates level `o`'s fixed points — the operation applied to its own output.
+example (o : Ordinal) : Ordinal.veblen (o + 1) = deriv (Ordinal.veblen o) := veblen_add_one o
+
+-- `Statement:` at a LIMIT level there is no "last one" to enumerate — level `o` collects the points
+-- fixed by EVERY lower level. `o ≠ 0` is load-bearing, not decorative: at level 0 the right side is
+-- vacuously true while the left is false (`2` is not a power of ω).
+example (o a : Ordinal) (ho : o ≠ 0) :
+    a ∈ Set.range (Ordinal.veblen o) ↔ ∀ b < o, Ordinal.veblen b a = a :=
+  mem_range_veblen ho
 
 end ZeroParadox
 
