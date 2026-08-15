@@ -131,6 +131,27 @@ conventions that leaked, and every one leaked while being remembered by people w
 
 **THE LIST. Run it in order; stop when a step resolves.**
 
+0. **⭐⭐ RE-READ THIS FILE FROM DISK. YOUR COPY IS A SNAPSHOT AND IT IS PROBABLY STALE.** (Tim,
+   2026-08-15 — a cache invalidation on the one path where the cache is guaranteed to be wrong.)
+   **The `CLAUDE.md` in your context was injected at session start. Any rule written LATER in that
+   session — including the fix for the failure you are recovering from — is absent from it.** Measured
+   the same day: a control agent was handed the exact failing task, and the section that reverses that
+   task **was not in its context**; it found the rule **by accident**, through an unrelated grep that
+   happened to return a `CLAUDE.md` line.
+   - **THE TRIGGER, and it is an action so it cannot be adjudicated away:** you are told you are in a
+     failure condition, or this is a retry, or a gate returned FAIL, or **someone refers to a rule you
+     do not recognise** — that last one is the tell that your copy is stale.
+   - **DO IT CHEAPLY FIRST.** `grep -n "^## " CLAUDE.md` costs ~1k tokens, lists every section title,
+     and a rule added this session shows up immediately as a heading you have never seen. **Read only
+     the sections that scan relevant.** A full re-read is ~55k tokens — check the manifest before
+     loading the payload.
+   - **⚠ THIS APPLIES TO THE MAIN INSTANCE TOO, not only subagents.** If you edited this file earlier
+     in your own session, **your injected copy still does not contain your own edit.** You know it only
+     because you wrote it, which is not the same as having it.
+   - **⚠ CALLER-SIDE COMPLEMENT, and it is not optional:** if you edit this file mid-session, **carry
+     the new rule into every subsequent brief verbatim.** Briefs are the only thing a spawned agent
+     reliably reads, and until it re-reads from disk the brief is the sole delivery path.
+
 1. **CHECK `DEFECTS.md` AND `DEFECT_CLASSES.md` FIRST.** If the class is already there, **a rule
    already exists and did not fire** — which is a different and more useful problem than a novel
    failure. Skipping this step is itself one of the recorded recurrences.
