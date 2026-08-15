@@ -96,7 +96,86 @@ def surfaces():
                 yield p
 
 
+def scan_line(line):
+    """Every rule this line trips, as (matched_text, destination). The whole detector, isolated.
+
+    Pulled out of `main` so `--selftest` can exercise the matcher on planted strings IN MEMORY. A
+    selftest that wrote probe files into the repo would violate the no-scratch-files rule this
+    project enforces on its reviewers, and would be scanned by the other checkers while it sat
+    there."""
+    return [(m.group(0), dest) for pat, dest in RULES for m in [pat.search(line)] if m]
+
+
+def selftest():
+    """MUST-FIRE and MUST-SUPPRESS controls.
+
+    ⚠ Written 2026-08-15, after this checker shipped without them. VERIFICATION_BUILDOUT Phase 1
+    requires both halves on every checker, and a control with only a must-fire half is recorded in
+    CLAUDE.md as having been learned three times. This one did catch a false positive on its first
+    real run - a `build_*` glob flagging the five build scripts that legitimately stayed private -
+    but *caught by accident* is not the standard, and that exact case is now control 5 below."""
+    fire = [
+        ("a relocated checker",      ".claude-local/check_prose.py"),
+        ("a relocated baseline",     "see .claude-local/pov_baseline.txt for the list"),
+        ("a relocated build script", "run python .claude-local/build_zpa.py"),
+        ("a relocated hook source",  ".claude-local/proposed_pre_push_hook.sh"),
+        ("the old commands dir",     "briefs live in .claude-local/commands/"),
+    ]
+    suppress = [
+        # Still private and still correct - these did NOT move.
+        ("a private note",           ".claude-local/notes/foo_2026-08-15.md"),
+        ("the defect ledger",        "ledger it in .claude-local/DEFECTS.md"),
+        ("a signal file",            ".claude-local/pa_cleared.txt is stale"),
+        ("the papers library",       "check .claude-local/papers/ first"),
+        # ⚠ THE REGRESSION CONTROL. A `build_.*\.py` glob reported these as stale on the first run;
+        # they were never mirrored and legitimately remain private. If someone re-globs the rule,
+        # this control fails rather than the repo filling with false findings.
+        ("an unmirrored build script", "python .claude-local/build_padicbridge.py"),
+        ("the new path itself",      "python tools/verify/check_prose.py --block"),
+        ("unrelated prose",          "the bottom is the diagonal fixed point"),
+    ]
+
+    bad = 0
+    print("  MUST FIRE")
+    for label, line in fire:
+        got = scan_line(line)
+        ok = bool(got)
+        if not ok:
+            bad += 1
+        print("    %-28s %s" % (label, "ok" if ok else "*** MISSED ***"))
+    print("  MUST SUPPRESS")
+    for label, line in suppress:
+        got = scan_line(line)
+        ok = not got
+        if not ok:
+            bad += 1
+        print("    %-28s %s%s" % (label, "ok" if ok else "*** FALSE POSITIVE ***",
+                                  "" if ok else "  -> " + got[0][0]))
+
+    # The tombstone skip, exercised on a real file OUTSIDE the repo (no scratch files in-tree).
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        tomb = os.path.join(d, "t.py")
+        io.open(tomb, "w", encoding="utf-8").write('"""RELOCATED 2026-08-15 -> tools/verify/x.py\n"""')
+        plain = os.path.join(d, "p.py")
+        io.open(plain, "w", encoding="utf-8").write("# ordinary file\n")
+        for label, path, want in (("tombstone recognised", tomb, True),
+                                  ("ordinary file is not", plain, False)):
+            ok = is_tombstone(path) is want
+            if not ok:
+                bad += 1
+            print("    %-28s %s" % (label, "ok" if ok else "*** WRONG ***"))
+
+    print("\n  selftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
+    return 1 if bad else 0
+
+
 def main(argv):
+    if "--selftest" in argv:
+        print("=" * 60)
+        print("  relocated-path check - CONTROLS")
+        print("=" * 60)
+        return selftest()
     block = "--block" in argv
     hits = []
     for p in surfaces():
@@ -107,11 +186,8 @@ def main(argv):
         except (OSError, UnicodeDecodeError):
             continue
         for i, line in enumerate(text.split("\n"), 1):
-            for pat, dest in RULES:
-                m = pat.search(line)
-                if m:
-                    hits.append((os.path.relpath(p, REPO).replace("\\", "/"), i,
-                                 m.group(0), dest))
+            for found, dest in scan_line(line):
+                hits.append((os.path.relpath(p, REPO).replace("\\", "/"), i, found, dest))
     print("=" * 60)
     print("  relocated-path check")
     print("  relocations tracked : %d" % len(RULES))
