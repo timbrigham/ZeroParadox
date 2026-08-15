@@ -122,6 +122,54 @@ remembering, which this file elsewhere records as failing by construction. That 
 solved problem — and this register is the **seventh** convention of this shape, the previous six having
 all leaked.
 
+## ⭐⭐⭐ WHEN A FAILURE RECURS: the rule is wrong, not the reader. Run this list. (Tim, 2026-08-15.)
+
+**THE PRINCIPLE, and everything below follows from it: a failure that recurs is evidence about the
+RULE, never about whoever tripped it.** The response is to change the rule's SHAPE. It is never to try
+harder, and it is never to add a second rule saying the same thing louder — this file records **seven**
+conventions that leaked, and every one leaked while being remembered by people who had read it.
+
+**THE LIST. Run it in order; stop when a step resolves.**
+
+1. **CHECK `DEFECTS.md` AND `DEFECT_CLASSES.md` FIRST.** If the class is already there, **a rule
+   already exists and did not fire** — which is a different and more useful problem than a novel
+   failure. Skipping this step is itself one of the recorded recurrences.
+2. **DIAGNOSE THE TRIGGER, NOT THE CONTENT.** A rule that exists and did not fire almost never has a
+   content problem. Ask: **is the trigger an ACTION, or a CATEGORY you must adjudicate?** A category
+   leaks, because the adjudication is where it gets talked past. Ask also: **how deep in this file does
+   it sit?** ⭐ **Measured 2026-08-15: line 127 fired reliably all day; line 2135 did not fire once.**
+3. **FIX AT THE HIGHEST LEVERAGE AVAILABLE.** In descending order of reliability:
+   - a **MECHANICAL check** — a gate, a hook, a checker. Fires whether or not anyone remembers. *Always
+     prefer this.*
+   - a **TRIGGER + NAMED FILE in this file** — the `CannotBe` pattern. Fires when someone reads. Needs
+     all four properties: unmissable trigger, exact path, stated consequence, target worth opening.
+   - a **NOTE.** Fires only if someone chooses to read it. **~10% of notes are ever referenced again** —
+     treat this as recording, not fixing.
+4. **CONTROL-TEST THE FIX.** ⭐ **Tim's addition, and it is what turned this protocol from a checklist
+   into something that works.** Give a **fresh agent the exact failing task**, read-only, **without
+   telling it the answer** — not the counts, not the finding, not that a prior attempt failed. **Fix
+   the scorecard BEFORE the result comes back.** A fix you have not tested is a hypothesis.
+5. **TEST DELIVERY SEPARATELY FROM CORRECTNESS.** ⚠ They fail independently and the second is invisible.
+   Measured the same day: the fix was correct and **did not reach the agents it was written for** — a
+   mid-session `CLAUDE.md` edit is absent from the context of agents spawned afterward. **Ask: did it
+   arrive?** separately from *did it work?*
+6. **RECORD ALL THREE — the class, the TRIGGER diagnosis, and the test result including how it was
+   compromised.** A control that passed for the wrong reason is worth more written down than a clean
+   pass, because the next person will otherwise trust it.
+
+**⚠ THE ESCALATION LADDER — the count is the signal, and this file's own history is the calibration:**
+
+| occurrence | what it is | where it goes |
+|---|---|---|
+| **1st** | an instance | `DEFECTS.md` |
+| **2nd** | a **class** | `DEFECT_CLASSES.md`, with a **detector** |
+| **3rd** | the rule's **TRIGGER** is wrong | fix the trigger — do not restate the rule |
+| **4th+** | **discipline will not work here** | build the mechanical check; stop writing prose about it |
+
+**⚠⚠ DO NOT SKIP TO STEP 3 AND WRITE A NEW SECTION.** That is the reflex, it feels like progress, and it
+is how this file reached 2438 lines. A recurrence usually needs a **trigger changed**, not a rule added.
+If you are about to add a section, first find the one that already says it and ask why it did not fire.
+
 ## ⭐⭐ BEFORE YOU EDIT ANY `.lean` FILE: read `ZeroParadox/MANIFEST.md` AND grep the identifiers you are about to touch. Hard Rule. (Tim, 2026-08-15.)
 
 **The trigger is an ACTION, not a category. If you are about to change a `.lean` file — one character, a
