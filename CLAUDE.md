@@ -4,12 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Gate exemption — this file and operational meta.** `CLAUDE.md` itself (and other internal operating-instruction / meta files, as opposed to the mathematical publication content) is **exempt from the Editorial Review Gate and the Adversary Review Gate** below. The review gates are scoped to externally-facing publication prose — formal documents, companions, README.md/GUIDE.md, build-script prose. `CLAUDE.md` is the operating manual, not publication content, so it needs **version control only**: commit and push normally, and use `git push --no-verify` if the pre-push hook blocks on a stale review signal for a `CLAUDE.md`-only change.
 
-**The exemption covers the VERIFICATION TOOLING too (2026-08-15).** `tools/verify/**` is operating
+**The exemption covers the VERIFICATION CODE only (2026-08-15).** `tools/verify/**` is operating
 machinery on the same argument: a checker makes no claim about the mathematics, so there is nothing
-for an editorial or adversary gate to review. ⚠ **It does NOT extend to method PROSE.** Publishing
-`DEFECT_CLASSES.md`, `vocabulary_reference.md` or the gate protocols is externally-facing copy and
-needs both gates plus a preamble — see `VERIFICATION_BUILDOUT.md` Phase 7, which is why those stayed
-private when the code went public.
+for an editorial or adversary gate to review. **`/rely` reviews that layer instead, and it BLOCKS** —
+the two are a pair, so weakening the routing re-opens this exemption as a hole.
+
+⚠ **IT DOES NOT COVER `.claude/commands/`, AND THE DISTINCTION IS THE POINT.** The gate briefs are
+now published deliberately, as the artifact showing how this project reviews itself, so they are
+**publication content and both gates fire on them** — `VERIFICATION_BUILDOUT.md` Phase 7 lists "the
+gate command files" under publishing the method and calls the review non-discretionary. `CLAUDE.md`
+is exempt because it is an internal manual that happens to live in a public repo; a gate brief is
+being surfaced *on purpose*. **Published-and-exempt is not a category you may reason your way into
+from "it is operating instructions" — CLAUDE.md is the exception, not the rule.** Same for
+`DEFECT_CLASSES.md`, `vocabulary_reference.md` and the protocols, which is why those stayed private
+when the code went public.
 
 ## ⭐⭐ WHERE THINGS LIVE. Three tiers, and the boundary is PUBLISHABILITY, not convenience. (2026-08-15.)
 

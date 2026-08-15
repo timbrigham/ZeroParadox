@@ -704,7 +704,15 @@ EXEMPT_PATHS = ("claude.md", "ssot.json", "lake-manifest.json")
 # What is deliberately NOT exempt: `scripts/**` (build scripts render into published PDFs, so their
 # prose is publication prose) and every method document - DEFECT_CLASSES.md, vocabulary_reference.md,
 # the protocols - which stay private precisely because publishing them needs both gates.
-EXEMPT_PREFIXES = ("tools/verify/", ".claude/commands/")
+#
+# ⚠ `.claude/commands/` WAS in this tuple for about an hour and was REMOVED. The argument for
+# exempting it was that gate briefs are operating instructions, like CLAUDE.md, which is published
+# and exempt. That reasoning is wrong here, and VERIFICATION_BUILDOUT.md Phase 7 already settles it:
+# it lists "the gate command files" under what PUBLISHING THE METHOD means, and attaches
+# "Externally-facing copy -> both gates fire ... Non-discretionary." CLAUDE.md is exempt because it
+# is an internal manual that happens to sit in a public repo; the gate briefs are being published
+# ON PURPOSE, as the artifact showing how this project reviews itself. That is publication.
+EXEMPT_PREFIXES = ("tools/verify/",)
 
 
 def changed_files(ranges=None):
