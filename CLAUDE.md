@@ -1323,6 +1323,14 @@ withheld back within reach. **Searching harder gets you MORE** — the same less
 
 **The gates will always find something. Stopping is a decision about SEVERITY, not a wait for silence.**
 
+⚠ **THE NUMBERS BELOW ARE A HUMAN-READABLE ECHO. `tools/verify/gate_round.py` IS AUTHORITATIVE**
+(`BEDROCK_CAP` / `ORDINARY_CAP`), and `gate_round.py show` prints the current round beside both caps.
+**Change a cap THERE, in one place, and never here alone** — this paragraph is prose and cannot check
+itself. The four gate briefs used to restate the figures too; as of 2026-08-15 they instruct the
+reviewer to run `show` and obey it, so a cap change no longer has to be chased across five files.
+**What stays written out everywhere is the SEVERITY TIERING below, because that is semantics a
+reviewer must act on rather than a number that drifts.**
+
 - **BEDROCK severity → up to 5 iterations.** A violated core invariant (`ε₀ ≠ 0`, `ε₀ ≠ ⊥`, min≡max
   flattened, the snap-arc returning to the same ⊥, a cross-type `=`), a **fabricated** claim about an
   external source, or a false premise carrying a conclusion. These must not ship — keep iterating.

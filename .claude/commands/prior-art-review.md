@@ -5,12 +5,16 @@ Read `$ARGUMENTS` to determine what to review, then spawn an Agent using the Age
 
 ## CALLER PRE-FLIGHT — round number and the cap (do this BEFORE spawning)
 
-**CALLER ONLY: run `python tools/verify/gate_round.py bump` ONCE per round and put the number in the brief. The reviewer must NEVER bump — a spawned agent that bumps double-counts the round and burns the cap early (measured 2026-07-19). Reviewers may only `show`.**
+**CALLER ONLY: run `python tools/verify/gate_round.py bump` ONCE per round. The reviewer reads the number itself via `show`. The reviewer must NEVER bump — a spawned agent that bumps double-counts the round and burns the cap early (measured 2026-07-19). Reviewers may only `show`.**
 A rule about a loop does not fire from inside the loop — on 2026-07-19 three rounds ran against a
 2-round cap because the caller was fixing kills, not counting rounds. The reviewer stands outside the
-loop, so it enforces the cap. Paste this into the brief with N substituted:
+loop, so it enforces the cap. Paste this into the brief verbatim:
 
-> This is **gate round N** against a cap of 2 (ORDINARY) / 5 (BEDROCK). Your verdict must be one of
+> **FIRST, run `python tools/verify/gate_round.py show` and obey what it prints.** It reports the
+> current round and both caps. Do NOT run `bump` — that is the caller's job, once per round; a
+> reviewer that bumps double-counts and burns the cap early. **The round and the cap figures are
+> deliberately not repeated in this brief:** a number written into four briefs goes stale in four
+> places at once, and the tool computes it. Your verdict must be one of
 > **PASS**, **FAIL-BEDROCK** (a violated core invariant, a FABRICATED external-source claim, or a false
 > premise carrying a conclusion — the loop continues), or **STOP-ORDINARY** (past the ordinary cap with
 > nothing bedrock-tier — report findings, then state explicitly that the correct action is to PUSH, not
