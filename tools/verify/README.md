@@ -1,0 +1,284 @@
+# tools/verify — what each checker enforces, and why
+
+The checkers here are **blocking gates**, not advice. This file is the argument behind them: what
+each detects, the defect it exists to stop, and the measurement that justified building a checker
+rather than writing another convention.
+
+**Why this text is here and not in `CLAUDE.md`.** It was four sections of the operating manual,
+injected into every session and every subagent. Each is already enforced by a checker that BLOCKS
+at push — **the gate fires whether or not anyone reads the argument** — so the argument does not
+need to be in context to work. `CLAUDE.md` keeps the rule, the trigger, a one-line *why* and a
+pointer here. Same pattern as the `CannotBe` indexes: delivery is a trigger in the injected file
+naming a specific path, not injection of the content.
+
+⚠ **Only gate-enforced sections moved.** A neighbouring section on control objects stayed in
+`CLAUDE.md` precisely because nothing enforces it — an unenforced rule outside the firing zone is a
+rule that stops working. Enforcement is the criterion, not adjacency.
+
+**Nothing below was rewritten.** Lifted verbatim from `CLAUDE.md` on 2026-08-15: these sections
+carry measured history — counts, dates, the specific defect each rule was built against — and a
+summary would be a second copy that could drift from the original.
+
+| checker | mode | enforces |
+|---|---|---|
+| `check_pov.py` | warn at commit, **BLOCK** at push | a POV claim declares its KIND and STATUS; a DENIAL is never allowed |
+| `check_classes.py` | warn at commit, **BLOCK** at push | a new requirements class records a degeneracy verdict |
+| `check_prose.py` | warn at commit, **BLOCK** at push | prose caps: block size, docstring vs declaration, gloss labels |
+| `guards.py` | **BLOCK** at push | every enumerated ROUTE to a guarded property still behaves |
+
+Each prints its own invocation path; run with no arguments for a report.
+
+---
+
+## Point-of-view claims: declare the KIND and the STATUS. Gate-enforced.
+
+**"Point of view" / "chart" / "frame" was doing FIVE different jobs with one word.** The cost, measured
+2026-07-30: a full day of gate rounds, two bedrock findings, and a correction that itself over-corrected
+into *denying* the framework's own thesis. The sequence is worth keeping because both halves are traps:
+
+1. `snap_is_frameflip` was cited as proving the snap **is** a change of frame. Its statement contains no
+   snap. Witness-vs-statement defect.
+2. The fix then wrote *"the POLE EXCHANGE (**NOT** of the snap)"* into a dozen sites — which **denies** a
+   reading that is well-motivated and is ZP-Q's stated conjecture. Over-correction, and the same class as
+   `feedback_triage_review_vs_grounded_figures`: a review pass gutting a grounded claim.
+
+**Neither is possible if every POV claim declares WHICH KIND it is and WHETHER IT IS PROVED.**
+
+**THE FIVE KINDS** — genuinely different phenomena, previously all called "chart":
+
+| KIND | means | example witness |
+|---|---|---|
+| **COINCIDENCE** | both readings hold of ONE object **simultaneously** | `selfloop_is_zero_and_infinity`; `epsilon0_min_eq_max`; `catseam_is_frameflip` |
+| **INVERSION** | a map **exchanges** the readings; always an involution | `rInv_swaps`, `swap_involutive`, `flipPoles_involutive` |
+| **DRIFT** | two measures run **opposite** along one sequence | `pole_inversion` (element descends, complexity ascends) |
+| **CARRIER** | the claim's **truth value** depends which carrier you are in | snap available in ℚ₂, impossible in ℝ — both completions of ℚ (Ostrowski) |
+| **INVARIANT** | the quantity **does not transform**; flipping the chart gains nothing | measure-zero-ness, cardinality |
+
+**THE STATUS — folded into the EXISTING `Statement:` / `Reading:` labels. This adds no new label:**
+- **`Statement:` + KIND** — the theorem proves it. Name the witness.
+- **`Reading:` + KIND** — the framework reads X as an instance of that kind. Conjectural.
+
+**ONE THEOREM MAY CARRY TWO KINDS — write one `Statement:` line per KIND it actually proves.** A bundle
+carrying two is the **normal case for a self-dual object**, not an exception. `catseam_is_frameflip` is the
+worked example: (i) and (ii) say the seam is initial AND terminal — **COINCIDENCE** — while (iii) says `op`
+exchanges those characterisations and fixes the seam — **INVERSION**. Being both is exactly what makes it
+self-dual; either label alone is a mischaracterisation. **Measured 2026-07-30, one commit after this table
+was written:** the gloss went in tagged INVERSION only, disagreeing with the COINCIDENCE entry in this very
+table, and the prior-art gate caught it. The convention as first drafted implied one KIND per claim, and the
+mislabel followed immediately.
+
+**There is deliberately NO slot for denying a reading.** That is what makes trap 2 unwriteable. If a
+theorem does not establish an identification, say `Reading:` and mark it conjectural — never "NOT the snap".
+
+**And the DENIAL is checked directly, not inferred from a missing tag.** Measured 2026-07-30: the tag-check
+passed at **zero** new untagged claims while **seven** denial sites sat live in the corpus, and the editorial
+gate had to find four of them by eye. A denial is wrong regardless of how it is tagged, so `check_pov.py`
+carries a `DENIAL` pattern checked **unconditionally and never baselined**. **The generalizable lesson, which
+applies to every gate this project writes:** a convention with a *forbidden form* must detect the forbidden
+form itself — detecting only the *absence of the required form* leaves the violation invisible.
+
+**Enforcement is MECHANICAL, because this is the FOURTH convention of this shape and the previous three
+all leak.** (`vocabulary_reference.md`: the bare-"bottom" rule, "iterative bottoms", standard-math-first.)
+`feedback_jargon_blindspot` records why: Claude is embedded in the project's language and structurally
+cannot self-detect vocabulary drift, so discipline-level rules fail here by construction.
+- `python tools/verify/check_pov.py` — **WARNS**, wired into `.git/hooks/pre-commit` (staged copy at
+  `tools/verify/proposed_pre_commit_hook.sh`, now TRACKED; install with `python
+  tools/verify/install_hooks.py`, and `--check` reports whether the gates are actually armed).
+  It never blocks a commit — the stub-first protocol commits incomplete work on purpose, and a blocking
+  commit gate with false positives trains the `--no-verify` reflex that would cost the push gate too.
+- `python tools/verify/check_pov.py --block` — **BLOCKS**, wired into `pre-push` § 3b. Validated
+  2026-07-30 end-to-end: injecting a real POV overclaim made `git push --dry-run` exit 1 on the POV
+  check; removing it passed.
+- **Baselined.** The corpus already carries **90** untagged sites (measured). Demanding a tag on all of
+  them is a migration, not a gate, and a gate that blocks everything on day one gets muted. So
+  `tools/verify/pov_baseline.txt` grandfathers them and the gate blocks on **NEW** sites only —
+  as-touched rollout, same as the file-path and CC-2 conventions. **Shrink the baseline as files are
+  touched; never grow it deliberately.**
+
+**Do not flag the intentional collisions.** `project_notation_notes`: the ⊥ / ε₀ / P₀ overloads are
+deliberate. The checker allowlists them, and anything that starts crying wolf must be narrowed, not
+tolerated — a muted gate is worse than none.
+
+## A requirements class is only informative if something FAILS to be a member. Gate-enforced.
+
+**Five of seventeen classes in this corpus are degenerate or bundle a commitment as data. That is one
+design habit, not five incidents** — writing a class without asking what it EXCLUDES:
+
+| class | verdict |
+|---|---|
+| `WheelValuationStructure` | constant-`⊤` valuation satisfies every field on any commutative ring → `WVSNondegenerate` added |
+| `AbstractSelfApp` | `trivialSelfApp` inhabits it, so *"L carries it, therefore…"* is vacuous |
+| `InfinitudeFloor` | characterised 2026-08-07 as **exactly** `Infinite α` — nothing more |
+| `SeparatedSuccession` | `Unit` + the always-true relation discharges every field (2026-08-07) |
+| `KleeneStructure` | bundles a `Code` (data) with the assertion that it names ⊥ (commitment) |
+
+**⚠ THIS IS NOT A NEW RULE — IT IS TIM'S OWN 2026-06-29 NO-GO GAUGES, FINALLY ENFORCED AND FINALLY
+POINTED AT THE RIGHT OBJECT.** `.claude-local/notes/nogo_gauges_2026-06-29.md` already specifies
+**gauge 1, the decorative check** (*"delete all framework vocabulary; if nothing specific is lost, the
+entry is a label. REJECT"*), **gauge 4, the vacuity check** (*"if every confirmed edge is tier-1
+generic, the dictionary is true-but-empty"*), and **discipline (b): NAME the obstruction in advance —
+"if you can't say what would break it, you don't understand the claim."** That is *name a non-member*,
+written 40 days before this section.
+
+**Why it never fired:** the gauges were scoped to **dictionary transport edges**, nobody pointed them
+at **requirements classes**, and they lived in a memory body plus a note rather than here — exactly the
+failure this file names in its own words, *memory is for context, not enforcement*. Fifty files carry
+NO-GO text, so it was applied wherever someone remembered. Eighteen classes were never asked.
+
+**The check is mechanical and cheap: BUILD THE TRIVIAL WITNESS, or prove you cannot.** Both answers are
+worth having — a failed attempt is evidence the class has teeth. Do it **before** citing membership as
+meaningful, because a vacuous class makes every downstream *"X carries this, therefore…"* empty.
+
+**⚠ The failure is invisible from inside.** Every one of the five was found by someone building a
+witness, never by reading the class. `SeparatedSuccession`'s `separated` field even carries the comment
+*"the succession never repeats"* while admitting a **constant** sequence — the comment asserts what the
+field does not enforce.
+
+**Enforcement (2026-08-07, Tim's call — mechanical because this is the FIFTH convention of this shape
+and the earlier four all leak).** `python tools/verify/check_classes.py` WARNS at commit;
+`--block` ENFORCES at push. It cannot decide degeneracy (that needs a witness); it enforces that the
+question was **asked** — a `NO-GO` section, a `Nondegenerate` predicate, or a named trivial witness in
+the declaring file. Same design as `check_pov.py`: enforce that a convention was followed, never that a
+claim is true. **Baselined at 18 grandfathered sites; blocks on NEW classes only.** Shrink the baseline
+as files are touched; `SeparatedSuccession` is first to remove (tracked as `SEP-1`).
+
+**Detector verified before use**, per this file's own rule: it fires on `SeparatedSuccession` (the
+known-degenerate case, found by hand the same day) and suppresses `InfinitudeFloor`,
+`WheelValuationStructure` and `AbstractSelfApp` (where the question was asked). A checker with only a
+must-fire control is half-tested.
+
+## A guard protects a PROPERTY, not a hole. Enumerate every ROUTE — in `guards.py`. Gate-enforced.
+
+**Fixing one route to a property and calling it closed is this project's most repeated defect, and
+until 2026-08-10 nothing but memory stood against it.** Measured: *"a file cannot exempt itself from
+the gating checkers"* was fixed **four** times — content marker → nested `Vendored/` path → the
+`vendored_files.txt` allowlist → the four `*_baseline.txt` switches — and *"the bedrock cap cannot be
+walked"* **three** times, each fix correct and each leaving another door open. The routes live in
+different files, so *"enumerate them"* was a memory exercise performed by whoever had just forgotten
+one. (Tim: *"I'm getting a little tired of that behavior."*)
+
+**THE RULE — when you close a hole, name the PROPERTY, then add EVERY route to
+`tools/verify/guards.py`.** Not a comment, not a note. The registry is the deliverable; the fix is
+half of it. `python tools/verify/guards.py --list` prints the surface; it BLOCKS in `pre-push`,
+ahead of the checkers it protects, because a green checker whose exemption surface has a new hole is
+a **false zero**, and this file already records that a false zero costs more than a red one.
+
+- **List permitted routes too**, with a `visible` predicate. Vendoring must keep working; the
+  requirement on a legitimate exemption is not that it fails but that **it cannot happen quietly**.
+- **Include the enumerator.** `guards.py` is in `CHECKERS`, because deleting a route from the
+  registry would otherwise re-open it *and* remove the only thing that would say so — the **fifth**
+  instance of the property, found while wiring the fix for the first four.
+- **It found two live routes on its first run**, one of them (`P5-3`) already sitting open in the
+  ledger. That is the argument for the mechanism over the discipline, in one measurement.
+
+## Short header, statement per declaration. Prose never exceeds code. Gate-enforced.
+
+**Tim, 2026-08-08, and it is a software-engineering norm, not a preference:**
+
+> *"I'm not a big fan of having just a giant header block full of prose. Usually it's a short
+> summary of what the file is supposed to be doing as a whole, no more than a few sentences, and
+> only once you actually get into the individual lines, do you have a statement of what that exact
+> line is supposed to be doing. Apart from the Engineer's Take, I don't think there should be more
+> prose than code as a general rule, counted by line numbers."*
+
+**THE SHAPE:**
+1. **File header** — a few sentences on what the file does. **Not** an essay.
+2. **Every declaration** — a docstring saying what **that declaration** does, no longer than the
+   declaration itself.
+3. **Long-form reasoning** — a note in `.claude-local/notes/`, with a pointer. Not the source file.
+4. **The Engineer's Take is exempt.** It is Tim's voice and the only corpus written in the register
+   a question arrives in — `where.py` reports Takes for exactly that reason.
+
+**WHY IT IS A CORRECTNESS RULE AND NOT TIDINESS. Code is kernel-checked; prose is unchecked by
+construction.** The prose:code ratio is the ratio of verified asset to unverified liability.
+Measured across three gate rounds on 2026-08-08: **~12 findings, every one in prose, none in a
+theorem statement** — and an 82-line cut then passed all three gates with nothing load-bearing lost,
+one deletion being an outright *improvement* because the paragraph asserted a distinction the
+artifact could not support. **The corpus's characteristic defect class is prose, and prose volume is
+its carrier.**
+
+**MEASURED, so the rule is calibrated and not guessed** (2026-08-08, whole corpus):
+- prose **15,629** lines vs code **14,795** excluding Takes — ratio **1.06**, with **129 of 218
+  files** already over.
+- **The design is already the norm**: file-header blocks run **p50 = 1 line, p75 = 3, p90 = 7**;
+  section blocks **p50 = 1, p75 = 6, p90 = 14**; and **85% of declarations already have a
+  docstring**. This is **outlier control, not a migration** — the tail runs 121, 115, 100, 83 lines.
+- **41% of all prose sits in detached header blocks** rather than attached to what it describes.
+  The extreme is `ChoiceCannotBe.lean`: **302 prose lines, five blocks, zero docstrings** — and two
+  false universal negatives lived in exactly that prose until 2026-08-01.
+
+**⚠ THIRD-PARTY BACKPORTS ARE EXEMPT STRUCTURALLY, NOT BASELINED** (Tim, 2026-08-08: *"the vendored
+bucket we shouldn't touch at all, that's a backport from an official source"*). A baseline entry
+means *fix later*; this means **never**. Editing an Apache-2.0 backport's prose also destroys the
+diff against upstream, which is the reason for vendoring it. `check_prose.py` skips any file under
+`Vendored/` or carrying a provenance header (`VENDORED FROM`, `Apache-2.0`, `Upstream:`) and **names
+the exempt files in its output**, so the exemption is visible rather than silent. Currently
+`ZeroParadox/Vendored/NaturalOps.lean` (verbatim, Mathlib v4.28.0) and
+`ZeroParadox/Ordinal/NaturalOpsPow.lean` (a port of Hernández's Combinatorial Games file) — verified
+to match those two files and no others. This removed **140 sites, 119 of them undocumented
+declarations we did not author**.
+
+⚠ **The exemption has exactly ONE definition — `tools/verify/vendored.py`. Import it; never restate
+it** (Tim, 2026-08-09: *"the vendor files should be exempt extremely. we already did it elsewhere"*).
+It lived in `check_prose.py`, was re-implemented from memory in `batch.py`, and **the copy was
+already wrong three ways after a single day**: `Apache-2\.0` missed the space form, an unanchored
+`Upstream:` matched prose *about* upstream, and it scanned 4000 characters where the original scanned
+30 lines. A duplicated exemption drifts, and a drifting one is worse than none — it exempts files
+nobody meant to exempt. **All five checkers plus `batch.py decls` now import it**, which also closes
+the hole this line used to record: `check_pov` / `check_modal` / `check_classes` previously had no
+vendored handling at all. **Verified with matched pairs** — the same violations planted in a vendored
+file report 0 from every checker, and fire from every checker in a non-vendored one. ⚠ The scan is
+deliberately limited to the file HEAD; a whole-file search would exempt anything merely *mentioning*
+Apache-2.0.
+
+**AND AN INDEX LINE MUST JUSTIFY ITSELF** (Tim, same day): *"every one of those CannotBe line items
+should be distinguishable from the others, and the statement for why the CannotBe is applicable
+should be directly tied to the specific lines."* A `#check` index is nothing **but** line items, so
+a justification sitting in the header leaves every line uncheckable and no two items
+distinguishable. **Measured across the six index files:** 47 of 204 `#check`s carry **no gloss at
+all** — `BottomCannotBe.lean` is 36 of 72 — while `ChoiceCannotBe.lean` carries **203 header lines
+against 31 checks**, which is what "built after the fact" looks like. ⚠ **And the
+`Statement:`/`Reading:` convention is applied to 13 of 151 glosses** — zero in four of the six
+files. The mechanism meant to stop glosses overclaiming is, in the indexes whose premise is that
+they cannot overclaim, essentially absent.
+
+**ENFORCEMENT — mechanical, because this is the SIXTH convention of this shape and the previous
+five all leaked.** `python tools/verify/check_prose.py` WARNS at commit; `--block` ENFORCES at
+push (`pre-push` § 3b-e). **FOUR rules** (a fifth was retired 2026-08-08, below): a module-doc
+block over **10 lines** (just above the p90 for file headers); a docstring longer than its
+declaration; a `#check` with **no gloss**; and a gloss carrying **no `Statement:`/`Reading:`
+label**. **Fires on NEW and EDITED prose only.**
+
+⚠ **RETIRED — "a declaration with no docstring".** It was the only rule here that **demanded**
+prose rather than capping it, and authoring is where this corpus's defects come from: measured
+across one arc, roughly **one hand-written gloss in seven was false, while deletions produced
+none**. What it demanded is also redundant now — the public CI run summary publishes every
+declaration's axiom footprint and the build emits its elaborated signature, both regenerated per
+run and neither hand-maintained, so a docstring restating a signature is a second copy that can
+drift while the artifact cannot. Retiring it removed **119 sites by amending a rule rather than by
+writing anything**, which is the only category of burndown with a zero error rate. **An
+interpretive docstring is still welcome everywhere — it is simply no longer mandatory**, and the
+caps on over-long ones are untouched.
+- **The `bare` rule was deliberately NOT retired with it.** 17 of the 27 open bare-`#check` sites
+  are inside `CannotBe` indexes, which are reader maps for people who do not read Lean signatures;
+  a bare index line tells them nothing. Those stay real debt.
+- **The baseline was PRUNED, not regenerated.** `--baseline` rebuilds from whatever violates today
+  and can grandfather a site nobody has read, which would falsify the baseline's own premise that
+  each entry was verified by reading it. Removing a subset cannot add anything: 881 → 775 keys,
+  strict-subset assertion enforced in the pruning script. **Verified end-to-end**: a newly added
+  undocumented declaration no longer blocks (exit 0) and a newly added bare `#check` still does
+  (exit 1), with the working tree restored clean.
+Blocks are keyed by a **content hash**, so editing a grandfathered block re-fires it: the
+baseline-shrinking rule enforced rather than remembered. **Detector verified with six controls**
+(must-fire on an oversized block, an oversized docstring, an undocumented declaration, a bare
+`#check` and an unlabelled gloss; must-suppress on the Take, documented/attributed declarations,
+`private`, `example`, and both label forms in same-line, line-above and bolded shapes), plus an
+end-to-end control that `--block` exits 1 on a new site and 0 once baselined. ⚠ **The first
+baseline silently under-covered by six sites** because a truncated key could end in whitespace,
+which `.strip()` destroyed on read-back — a clean-looking zero that was wrong, and the reason the
+end-to-end control exists.
+
+⚠ **The failure mode to watch is mine, not the tool's.** Every gate round of that arc, I answered a
+finding by *adding a paragraph*, and each new paragraph carried a new claim. **When a section will
+not stabilise, cut the essay around the theorem — do not extend it.** That is the § *Prose that
+resists correction* protocol arriving at file scale.
