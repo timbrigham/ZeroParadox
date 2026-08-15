@@ -31,30 +31,28 @@ PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 
 
 def _font_dir():
-    """Locate the TTFs, preferring a copy that ships beside these scripts.
+    """The TTFs ship beside these scripts, in `scripts/fonts/`. One location, no fallback.
 
-    The build scripts stopped being mirrored on 2026-08-15 — `scripts/` is now their only home,
-    rather than a hand-copied transparency copy of `.claude-local/`. Fonts were the one dependency
-    that did not survive the move unchanged: they are 6.3 MB of binaries, and whether they belong
-    in public history is a decision worth taking deliberately rather than as a side effect.
+    Published 2026-08-15 along with the de-mirroring. They were the last thing keeping these
+    scripts from being runnable by anyone who clones the repo: the code was public and the fonts
+    were not, so `scripts/` was source-visible but not usable. Both families are freely
+    redistributable and both licences ship beside them — `LICENSE-DejaVu.txt` (Bitstream Vera,
+    extracted from the font's own `name` table) and `LICENSE-STIXTwo-OFL.txt` (SIL OFL 1.1, the
+    canonical upstream text). The OFL requires the licence to travel with the binaries.
 
-    So the lookup is a chain, not a constant:
-      1. `scripts/fonts/`     — present once the fonts are published; makes these scripts runnable
-                                by anyone who clones the repo, which is the point of publishing them.
-      2. `.claude-local/fonts/` — today's location. Builds keep working with nothing else changed.
+    A brief two-branch fallback to `.claude-local/fonts/` existed between the de-mirroring and the
+    publication; it is gone, because a second location that can hold different bytes is the exact
+    mirror this layout was changed to eliminate.
 
-    If neither exists, fail LOUDLY here rather than at the first `registerFont`, where the error is
-    a bare IOError naming one .ttf and says nothing about why it is missing."""
-    for cand in (os.path.join(SCRIPT_DIR, 'fonts'),
-                 os.path.join(PROJECT_ROOT, '.claude-local', 'fonts')):
-        if os.path.isdir(cand):
-            return cand + os.sep
+    Fail LOUDLY here rather than at the first `registerFont`, where the error is a bare IOError
+    naming one .ttf and saying nothing about why it is missing."""
+    cand = os.path.join(SCRIPT_DIR, 'fonts')
+    if os.path.isdir(cand):
+        return cand + os.sep
     raise SystemExit(
-        "zp_utils: no font directory found.\n"
-        "  looked in: %s\n             %s\n"
-        "  The PDF builds need the DejaVu + STIX Two TTFs. See scripts/README.md."
-        % (os.path.join(SCRIPT_DIR, 'fonts'),
-           os.path.join(PROJECT_ROOT, '.claude-local', 'fonts')))
+        "zp_utils: no font directory at %s\n"
+        "  The PDF builds need the DejaVu + STIX Two TTFs, which are tracked in this repo.\n"
+        "  If this is a clone, the checkout is incomplete." % cand)
 
 
 FONT_DIR = _font_dir()

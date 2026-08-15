@@ -1981,12 +1981,16 @@ fingerprints `scripts/`, so **what `register.md` attests to is exactly what a re
 **The four-step rule for changing a build script is unchanged** — edit, bump the internal version,
 rebuild the PDF, update the hash token in `register.md`. Only the copy step is gone.
 
-⚠ **Fonts are the one dependency that did not move.** `zp_utils.py` looks for `scripts/fonts/`
-first and falls back to `.claude-local/fonts/`, so builds work unchanged today — but the 6.3 MB of
-DejaVu + STIX Two TTFs are still private, which means **a public clone cannot actually run these
-scripts.** That is an open decision rather than an oversight: both families are freely
-redistributable (DejaVu; STIX Two under the SIL OFL), and publishing them is a one-time drop into
-`scripts/fonts/` with no code change. Until then `scripts/` is source-visible, not runnable.
+✅ **The fonts are published too, so `scripts/` is RUNNABLE and not merely source-visible.** The
+13 DejaVu + STIX Two TTFs live in `scripts/fonts/` (6.3 MB), which was the last thing standing
+between a clone and a working build — the code was public and its fonts were not.
+
+⚠ **Both licences ship beside them and that is a requirement, not a courtesy.** The SIL OFL says
+copies "must contain the above copyright notice, this license"; redistributing the binaries bare
+would violate it. `LICENSE-DejaVu.txt` is the Bitstream Vera text extracted from the font's own
+`name` table (authoritative for these exact files, rather than assumed from the family name), and
+`LICENSE-STIXTwo-OFL.txt` is the canonical upstream OFL 1.1. **If a font is ever added or replaced,
+read its `name` table id 13 and ship whatever licence it declares.**
 
 If a script is new, add a row for it to `scripts/README.md` in the same commit.
 
