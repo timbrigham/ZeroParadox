@@ -122,6 +122,46 @@ remembering, which this file elsewhere records as failing by construction. That 
 solved problem — and this register is the **seventh** convention of this shape, the previous six having
 all leaked.
 
+## ⭐⭐ BEFORE YOU EDIT ANY `.lean` FILE: read `ZeroParadox/MANIFEST.md` AND grep the identifiers you are about to touch. Hard Rule. (Tim, 2026-08-15.)
+
+**The trigger is an ACTION, not a category. If you are about to change a `.lean` file — one character, a
+docstring, a comment — this fires.** No judgement call, nothing to classify, no exception for "it's only
+prose".
+
+1. **Read `ZeroParadox/MANIFEST.md`** — the by-folder index of the whole corpus, **~7k tokens**, cheaper
+   than the Engineer's Takes and far cheaper than loading a folder. **104 `.lean` files already point at
+   it**; until today this file mentioned it once.
+2. **Grep the IDENTIFIER of every declaration you are touching**, not the wording of the claim. Then read
+   the hits.
+
+**⚠ WHY THIS EXISTS, AND IT IS A DIAGNOSIS RATHER THAN A RESOLUTION.** § *Development mode* below already
+says to load the subsystem. **It did not fire on 2026-08-15 and the reason is its trigger:** *"before
+fresh **mathematical development**"* is a **category that has to be adjudicated**, and the adjudication is
+where it leaks — *"this is a docstring edit, not development"* is how the rule was talked past, in this
+session, by someone who had read it. **Compare § *Core Objects* directly below, which binds reliably: its
+trigger is an unmissable TOPIC and it NAMES THREE EXACT FILES.** A rule you must first decide applies is a
+rule that does not.
+
+**What it cost, measured the same day.** A `l_inf` docstring was rewritten after grepping three theorem
+names. The wording survey found **4** citing sites; `grep -n "l_inf"` returns **9**. And the appended
+paragraph re-committed an overclaim that had **already been made and retracted** — the retraction sits at
+`Computability/Occurrence.lean:263` (*"But 'nothing else' would be too strong, and an earlier version of
+this line said it"*), in the very file the new text cited and never opened. **FAIL-BEDROCK, reverted in
+full.** Ledger: `PROC-2`, `OCC-2`.
+
+⚠ **Searching the CLAIM is not the same as searching the NAME, and this file already says the first
+half.** § *Review-Loop Cap* says *"grep the corpus for the CLAIM, not the named file"* — correct, and
+**insufficient**: a paraphrase search misses every site that cites the identifier without repeating the
+phrasing. **Do both. The identifier sweep is the mechanical one, so it is the one that cannot be talked
+past.**
+
+⚠ **This is the EIGHTH convention of this shape and the previous seven leaked**, which is the argument for
+the narrow mechanical half over the broad remembered one. The durable fix is a tool that prints reverse
+references at edit time (`refs.py`, wired into a `PreToolUse` hook and the `precommit` manifest) so it
+fires whether or not anyone remembers — the `guards.py` pattern, where the registry is the deliverable and
+the discipline is not. **Until that exists, this rule is remembered, and this file records that remembered
+rules fail here by construction.**
+
 ## Core Objects — Read the Lean First (Hard Rule)
 
 The framework has three core objects, each pinned by an authoritative Lean characterization. **Before writing ANY prose, figure, docstring, companion text, or claim about ⊥ (the bottom), the snap (⊥ → ε₀), or ε₀ — first READ that object's Lean source and ground every statement in a named theorem there.** Do NOT reconstruct these objects from working memory, from prose notes, or from this summary; the Lean is the ground truth. State the theorem, not a gloss. If this summary and the Lean ever appear to disagree, **the Lean wins — stop and ask Tim.**
