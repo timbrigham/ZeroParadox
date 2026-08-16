@@ -8,9 +8,9 @@ This folder contains the tooling used to generate the Zero Paradox PDF documents
 
 ## A Note on Reproducibility
 
-These scripts are copied from an active private development folder for the sake of transparency. They are not packaged or hardened for external use. You are welcome to read them and understand how the documents were produced, but be aware:
+These scripts are the working copies; they moved out of the private folder on 2026-08-15 and this is now their only home for the sake of transparency. They are not packaged or hardened for external use. You are welcome to read them and understand how the documents were produced, but be aware:
 
-- Font files are not included (binary files, ~5MB) — you must download them separately (see Setup below)
+- Font files ARE included, in [`fonts/`](fonts/) — tracked since 2026-08-15, with both licences beside them. No download step
 - The scripts were developed and run on Windows 11; path handling may behave differently on other platforms
 - Some scripts reference internal conventions that evolved over the course of the project — earlier scripts in this folder may not reflect the current rendering standards
 - No support or troubleshooting is provided for third-party builds
@@ -36,7 +36,7 @@ build's own exit code and reports what the machine actually checked.
 | File | Purpose |
 |------|---------|
 | [zp_utils.py](zp_utils.py) | Shared utility module imported by all build scripts. Provides font registration, colour constants (including palette enforcement gate), layout constants, style dicts, and all standard component helpers: `sp`, `fix`, `body`, `li`, `derived`, `label_box`, `data_table`, `make_doc`, `callout`, `result_box`, `axiom_box`, `def_box`, `remark_box`, `import_box`. The palette gate runs at import time and aborts the build if a script redefines a protected colour constant without an explicit `# ZP-OVERRIDE:` annotation. |
-| [setup_fonts.py](setup_fonts.py) | Downloads the required font files into `scripts/fonts/` |
+| [setup_fonts.py](setup_fonts.py) | **Effectively retired.** It short-circuits on `All fonts already present.` now that `fonts/` is tracked, and its download list never included the five STIX faces. Kept as a record of where the DejaVu files came from |
 | [scan_pdfs.py](scan_pdfs.py) | Pre-push validation: checks DVS font registrations, STIXTwo-Math glyph coverage, and presence of all expected output PDFs |
 
 ### Formal layer builders
@@ -119,7 +119,7 @@ it could not start without was missing. Both families are freely redistributable
 nothing to gain by withholding them.
 
 Both licences ship beside the binaries, which their terms require — the SIL Open Font License says
-copies "must contain the above copyright notice, this license":
+copies "provided that each copy contains the above copyright notice and this license":
 
 - [`fonts/LICENSE-DejaVu.txt`](fonts/LICENSE-DejaVu.txt) — Bitstream Vera, as embedded in the fonts'
   own metadata

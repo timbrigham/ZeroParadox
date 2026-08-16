@@ -155,7 +155,7 @@ Hosted at [timbrigham/ZeroParadox](https://github.com/timbrigham/ZeroParadox). P
 
 All conceptual development, structure, and authorship originate with the human creator.
 
-This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0 (the fonts in `scripts/fonts/` are the exception — third-party and under their own terms, DejaVu/Bitstream Vera and SIL OFL 1.1, whose licences ship beside them)).
 
 You may share the work with attribution, but you may not modify it or use it commercially. See [License](LICENSE) for full details.
 

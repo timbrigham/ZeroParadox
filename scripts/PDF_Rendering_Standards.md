@@ -1,5 +1,5 @@
 # Zero Paradox — PDF Rendering Standards
-## Instructions for Claude | Updated May 2026
+## Instructions for Claude | Updated 2026-08-15
 
 This document is the single authoritative source for all PDF rendering rules in this project. Read it before writing a single line of builder code. Every rule here applies to all PDFs — formal layers, companions, and any other document in this repository.
 
@@ -28,7 +28,7 @@ Two font families. All registration happens in `zp_utils.py` — individual scri
 | `DVS-I` | STIXTwo-Math.ttf | (same file — ReportLab alias) |
 | `DVS-BI` | STIXTwo-Math.ttf | (same file — ReportLab alias) |
 
-Fonts are stored at `.claude-local\fonts\` (gitignored). Every script begins with:
+Fonts ship with the repository at `scripts/fonts/` (tracked since 2026-08-15, with both licences beside them). Every script begins with:
 
 ```python
 from zp_utils import *

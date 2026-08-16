@@ -37,7 +37,7 @@ abandoned mid-round the lock stays held and the pre-push guard refuses — recov
 
 ## 2. Spawn exactly the gates in `SHIP_GATES` — one Agent call each, all in one message.
 
-For each gate: **read its command file** (`~/.claude/commands/<gate>.md`) and pass the prompt
+For each gate: **read its command file** (`.claude/commands/<gate>.md`) and pass the prompt
 **verbatim** from after the "Spawn the Agent with this prompt" marker — never a hand-written brief.
 Substitute `ARGUMENTS_VALUE` with `SHIP_SCOPE` (or the gate's own mode, e.g. `crank`). Add the
 caller pre-flight: `SHIP_ROUND` and the cap, the permitted verdicts, and the three warnings below.

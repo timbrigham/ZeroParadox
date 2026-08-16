@@ -53,8 +53,10 @@ directory is an interface, not a folder — anything explaining it goes here ins
 catching exactly that proposal.)
 
 **What a public reader should know about the published gate briefs, since they cannot follow all of
-it:** the 11 files in `.claude/commands/` are the real briefs, run verbatim, and they contain **66
-references into `.claude-local/`** — the notes, the defect ledger, the papers library, the DeepSeek
+it:** the 11 files in `.claude/commands/` are the real briefs, run verbatim, and the published
+surface as a whole references a substantial number of artifacts inside `.claude-local/` —
+measure it rather than quoting a figure; an earlier count here said 66 and an adversary pass
+measured considerably more across the wider surface — the notes, the defect ledger, the papers library, the DeepSeek
 screening scripts, and the per-push signal files. Those are deliberately private (see § *Private
 Working Folder*), so a reader can see exactly what each gate is instructed to do and cannot open
 every artifact it names. That is the honest position and it should be stated rather than discovered:
@@ -1801,7 +1803,7 @@ rebuild the PDF, update the hash token in `register.md`. Only the copy step is g
 between a clone and a working build — the code was public and its fonts were not.
 
 ⚠ **Both licences ship beside them and that is a requirement, not a courtesy.** The SIL OFL says
-copies "must contain the above copyright notice, this license"; redistributing the binaries bare
+each copy must contain "the above copyright notice and this license"; redistributing the binaries bare
 would violate it. `LICENSE-DejaVu.txt` is the Bitstream Vera text extracted from the font's own
 `name` table (authoritative for these exact files, rather than assumed from the family name), and
 `LICENSE-STIXTwo-OFL.txt` is the canonical upstream OFL 1.1. **If a font is ever added or replaced,

@@ -146,9 +146,19 @@ Format, matching what `batch.py` reads:
 
 ⚠ **`/rely` is capped at TWO passes when `BLOCKING:0`** (Tim, 2026-08-10: *"any non bedrock failure should cap at a certain iteration… A nitpicker will always find a knit to pick."*). Four unbounded passes on this layer found 10 → 4 → 6 → 9 and never converged, because each pass reviews code changed in response to the last. **Do not inflate a finding to BLOCKING to keep the loop alive, and do not deflate one to end it.** If you are unsure whether something lets bad work through, say so explicitly in the note and call it BLOCKING — the caller can then judge with the evidence in front of them.
 - **line 2+** = `<first-12-hex-of-sha256>  <filename>`, two spaces, **one per file in `batch.py`'s
-  `CHECKERS` list** — currently the five `check_*.py` plus `vendored.py`, `hooks.py`, `batch.py`.
-  Basename only, not a path. Get the exact set and the exact hashing with:
-  `python -c "import sys;sys.path.insert(0,'.claude-local');import batch;[print(h,' ',c) for c,h in sorted(batch.checker_hashes().items())]"`
+  `CHECKERS` list**. Basename only, not a path. **Do not write the set down here** — it grows,
+  and the enumeration that used to sit on this line went stale as soon as a checker was added.
+  `batch.py` is authoritative and computes it:
+
+  ```
+  python -c "import sys;sys.path.insert(0,'tools/verify');import batch;[print(h,' ',c) for c,h in sorted(batch.checker_hashes().items())]"
+  ```
+
+  ⚠ **Both halves of that command were wrong until 2026-08-15, and the editorial gate proved
+  it by RUNNING it:** the path said `.claude-local`, so it exited **2** and emitted zero hashes
+  — while `batch.py prepush` still BLOCKED on the signal it was meant to produce. **The gate
+  was unsatisfiable from its own documentation.** It failed closed, which is the right
+  direction, but a reviewer following this file could not have cleared the push it blocked.
 
 ⚠ **Hash the FILE ON DISK.** Never a git value. Write BOM-free:
 `[System.IO.File]::WriteAllText($p, $s, (New-Object System.Text.ASCIIEncoding))`.

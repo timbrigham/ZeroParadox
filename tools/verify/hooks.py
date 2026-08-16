@@ -91,6 +91,7 @@ PRE_COMMIT_PLAN = [
 ]
 
 PRE_PUSH_PLAN = [
+    ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
     ("gate lock", "BLOCK", "no push while a review round is open or files are frozen"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
@@ -247,6 +248,18 @@ def pre_push(stream):
     # human browsing the folder, while this fails when ANY file still points at a relocated path.
     # It was written, tested, given controls, and run only by hand and in CI: the exact "fires only
     # if someone remembers" shape it exists to eliminate, in the tool built to eliminate it.
+    # REL10-4. `install_hooks --check` asks "are the gates actually armed?" — a question its own
+    # docstring said had NEVER been asked mechanically. It still had not: nothing invoked it.
+    #
+    # ⚠ A hook cannot detect its own absence — if it is not installed, none of this runs. What it
+    # CAN detect is DRIFT: an installed hook that no longer matches its tracked source, which is a
+    # hand-edited or half-updated gate. That is the catchable half, and it is worth catching here
+    # because everything downstream assumes the shim it was invoked through is the current one.
+    if py("install_hooks.py", "--check") != 0:
+        print("\nPush blocked: the installed hooks do not match their tracked sources.")
+        print("Run: python tools/verify/install_hooks.py --force")
+        return 1
+
     if py("check_moved.py", "--block") != 0:
         print("\nPush blocked: something still points at a relocated path.")
         print("Update the reference, or record the file as a dated record in check_moved.py.")

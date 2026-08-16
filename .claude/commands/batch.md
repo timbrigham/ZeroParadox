@@ -77,7 +77,7 @@ Then commit with `git add` **named paths** — never `-A`.
 ## Stage 6 — `prepush`, then the gates
 
 `batch.py prepush` reports which reviews are **required**, validating each signal by hash and
-coverage rather than existence. Run the required gates from `~/.claude/commands/*.md` **verbatim, as
+coverage rather than existence. Run the required gates from `.claude/commands/*.md` **verbatim, as
 separate agents**. Bump `gate_round.py` once per round with a stable `--target`; reviewers may only
 `show`.
 

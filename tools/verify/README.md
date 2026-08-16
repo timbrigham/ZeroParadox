@@ -26,9 +26,16 @@ naming a specific path, not injection of the content.
 `CLAUDE.md` precisely because nothing enforces it — an unenforced rule outside the firing zone is a
 rule that stops working. Enforcement is the criterion, not adjacency.
 
-**Nothing below was rewritten.** Lifted verbatim from `CLAUDE.md` on 2026-08-15: these sections
-carry measured history — counts, dates, the specific defect each rule was built against — and a
-summary would be a second copy that could drift from the original.
+**Lifted from `CLAUDE.md` on 2026-08-15, near-verbatim.** These sections carry measured history
+— dates, and the specific defect each rule was built against — which a summary would lose.
+
+⚠ **The first version of this line said "nothing below was rewritten", and that was wrong
+within hours.** Moving the text verbatim was meant to avoid drift; what it actually did was
+import figures that had ALREADY drifted — a recorded baseline count here disagreed with the
+baseline file in this same directory, and CI publishes both, one click apart. An adversary
+pass caught it. The stale counts are now removed in favour of running the checker, or dated
+where they are historical measurements. **Verbatim is not a defence against staleness when
+the source was already stale.**
 
 | checker | mode | enforces |
 |---|---|---|
@@ -100,7 +107,7 @@ cannot self-detect vocabulary drift, so discipline-level rules fail here by cons
 - `python tools/verify/check_pov.py --block` — **BLOCKS**, wired into `pre-push` § 3b. Validated
   2026-07-30 end-to-end: injecting a real POV overclaim made `git push --dry-run` exit 1 on the POV
   check; removing it passed.
-- **Baselined.** The corpus already carries **90** untagged sites (measured). Demanding a tag on all of
+- **Baselined.** The corpus carries a baselined set of untagged sites; `check_pov.py` prints the current figure on every run. (A recorded count here disagreed with `pov_baseline.txt` beside it.) Demanding a tag on all of
   them is a migration, not a gate, and a gate that blocks everything on day one gets muted. So
   `tools/verify/pov_baseline.txt` grandfathers them and the gate blocks on **NEW** sites only —
   as-touched rollout, same as the file-path and CC-2 conventions. **Shrink the baseline as files are
@@ -112,7 +119,7 @@ tolerated — a muted gate is worse than none.
 
 ## A requirements class is only informative if something FAILS to be a member. Gate-enforced.
 
-**Five of seventeen classes in this corpus are degenerate or bundle a commitment as data. That is one
+**Measured 2026-08-07: five of the seventeen requirements classes then in the corpus were degenerate or bundled a commitment as data. That is one
 design habit, not five incidents** — writing a class without asking what it EXCLUDES:
 
 | class | verdict |
@@ -134,7 +141,7 @@ written 40 days before this section.
 **Why it never fired:** the gauges were scoped to **dictionary transport edges**, nobody pointed them
 at **requirements classes**, and they lived in a memory body plus a note rather than here — exactly the
 failure this file names in its own words, *memory is for context, not enforcement*. Fifty files carry
-NO-GO text, so it was applied wherever someone remembered. Eighteen classes were never asked.
+NO-GO text, so it was applied wherever someone remembered. As of that same 2026-08-07 audit, most classes had never been asked the question at all. (The two counts in this section were taken on the same day and differ by one; both are dated rather than corrected, because a survey result is a measurement at a moment, not a standing claim.)
 
 **The check is mechanical and cheap: BUILD THE TRIVIAL WITNESS, or prove you cannot.** Both answers are
 worth having — a failed attempt is evidence the class has teeth. Do it **before** citing membership as
@@ -150,7 +157,7 @@ and the earlier four all leak).** `python tools/verify/check_classes.py` WARNS a
 `--block` ENFORCES at push. It cannot decide degeneracy (that needs a witness); it enforces that the
 question was **asked** — a `NO-GO` section, a `Nondegenerate` predicate, or a named trivial witness in
 the declaring file. Same design as `check_pov.py`: enforce that a convention was followed, never that a
-claim is true. **Baselined at 18 grandfathered sites; blocks on NEW classes only.** Shrink the baseline
+claim is true. **Baselined; blocks on NEW classes only.** (For the current count run the checker — it prints `grandfathered` on every run. A number written here contradicted `class_baseline.txt` in the same directory, which is DC-6 inside the file that documents DC-6.) Shrink the baseline
 as files are touched; `SeparatedSuccession` is first to remove (tracked as `SEP-1`).
 
 **Detector verified before use**, per this file's own rule: it fires on `SeparatedSuccession` (the
@@ -275,7 +282,7 @@ caps on over-long ones are untouched.
   a bare index line tells them nothing. Those stay real debt.
 - **The baseline was PRUNED, not regenerated.** `--baseline` rebuilds from whatever violates today
   and can grandfather a site nobody has read, which would falsify the baseline's own premise that
-  each entry was verified by reading it. Removing a subset cannot add anything: 881 → 775 keys,
+  each entry was verified by reading it. Removing a subset cannot add anything: a strict subset of the previous keys,
   strict-subset assertion enforced in the pruning script. **Verified end-to-end**: a newly added
   undocumented declaration no longer blocks (exit 0) and a newly added bare `#check` still does
   (exit 1), with the working tree restored clean.
