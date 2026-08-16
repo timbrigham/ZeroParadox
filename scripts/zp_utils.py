@@ -573,7 +573,9 @@ def prose_check(text, name=''):
         print(v)
     print()
     print('  Fix the term or append  # ZP-NOCHECK: <reason>  to the call site.')
-    print('  See .claude-local/vocabulary_reference.md Section 1.')
+    # The style guide this points at is private. Name what the reader must do rather than a
+    # path they cannot open - a runtime error citing an unreachable file is a dead end.
+    print('  Use an approved palette constant, or annotate the override with # ZP-OVERRIDE:.')
     print('!' * 70)
     print()
     raise SystemExit(1)

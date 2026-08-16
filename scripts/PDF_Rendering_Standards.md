@@ -38,7 +38,7 @@ That single import provides fonts, colours, layout constants, all styles (`S`, `
 
 **Run command (PowerShell — always include PYTHONUTF8=1):**
 ```powershell
-$env:PYTHONUTF8=1; python .claude-local\build_zpx_companion.py
+$env:PYTHONUTF8=1; python scripts/build_<doc>_companion.py
 ```
 
 ---
@@ -271,7 +271,7 @@ if __name__ == '__main__':
     build()
 ```
 
-`companion_template.py` in `.claude-local/` is the full starting-point template for new companion scripts. Use it.
+`companion_template.py` (private; kept in `.claude-local/` and not published) in `.claude-local/` is the full starting-point template for new companion scripts. Use it.
 
 ---
 

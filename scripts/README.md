@@ -22,7 +22,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 ### CI verification reports
 
 Unlike everything else in this folder, these two are **primary and executed** — GitHub
-Actions runs them on every build and publishes their output to the run summary, so they
+Actions runs `corpus_verification_report.py` on every build (`minimal_core_report.py` is manual by design, per its own workflow header) and publishes their output to the run summary, so they
 are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the
 build's own exit code and reports what the machine actually checked.
 
@@ -121,12 +121,13 @@ nothing to gain by withholding them.
 Both licences ship beside the binaries, which their terms require — the SIL Open Font License says
 copies "provided that each copy contains the above copyright notice and this license":
 
-- [`fonts/LICENSE-DejaVu.txt`](fonts/LICENSE-DejaVu.txt) — Bitstream Vera, as embedded in the fonts'
-  own metadata
+- [`fonts/LICENSE-DejaVu.txt`](fonts/LICENSE-DejaVu.txt) — as embedded in the fonts' own
+  metadata (nameID 13). It carries THREE statements, not one: Bitstream Vera, **Arev (© Tavmjong Bah)**, and the DejaVu changes released into the public domain
 - [`fonts/LICENSE-STIXTwo-OFL.txt`](fonts/LICENSE-STIXTwo-OFL.txt) — SIL OFL 1.1, upstream text
 
-`setup_fonts.py` is kept for the case where you want to refresh them from source; you should not
-need it.
+⚠ `setup_fonts.py` does NOT work as a refresh path: it returns at `All fonts already present.`
+whenever the DejaVu files exist, which is now always, and the five STIX faces were never in its
+download list. It is kept only as a record of where the DejaVu files came from.
 
 ## Running a Builder
 

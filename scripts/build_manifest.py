@@ -10,7 +10,7 @@ original with only the reorg-dead filenames corrected.
 
 So the manifest can no longer drift on a file move/rename/add — rerun it.
 
-Run:  python scripts/build_manifest.py   (mirror to scripts/ per the scripts/ sync rule)
+Run:  python scripts/build_manifest.py   (this folder is its only home; the mirror rule was retired 2026-08-15)
 Out:  ZeroParadox/MANIFEST.md
 """
 import os, re, sys

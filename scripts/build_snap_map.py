@@ -17,7 +17,7 @@ Option A - the proven flat-data + corpus-resolution pattern.
 
 Assumes the output .md lives at the REPO ROOT (relative links point into `ZeroParadox/`).
 
-Run:  python scripts/build_snap_map.py   (active copy; also mirrored read-only to scripts/)
+Run:  python scripts/build_snap_map.py   (this folder is its only home since 2026-08-15)
 Out:  SNAP.md at the repo root   (Mermaid + relative links render on GitHub)
 """
 import sys, os, re

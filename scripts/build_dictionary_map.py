@@ -9,16 +9,30 @@ as a warning. So the page cannot link a witness the Lean does not contain.
 Assumes the output .md lives at the REPO ROOT (relative links point into `ZeroParadox/`).
 
 MAP data (CELLS/SLOTS) is imported from build_bottom_matrix.py, an internal companion generator kept in
-the private working folder and not mirrored to scripts/; this file is the one that emits the public page.
+the private working folder; this file is the one that emits the public page.
 
-Run:  python scripts/build_dictionary_map.py   (active copy; also mirrored read-only to scripts/)
+Run:  python scripts/build_dictionary_map.py   (this folder is its only home since 2026-08-15)
 Out:  BOTTOMELEMENT.md at the repo root   (Mermaid + relative links render on GitHub)
 """
 import sys, os, re
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, os.path.dirname(__file__))
-from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH, dyn_glyph
+# ⚠ THIS DEPENDENCY IS PRIVATE, and that predates the 2026-08-15 publication of this folder.
+# `build_bottom_matrix.py` is the CELLS data module; it lives only in gitignored
+# `.claude-local/` because its own output target is a private note. A public reader
+# therefore cannot regenerate BOTTOMELEMENT.md, and until now found that out via a bare
+# ModuleNotFoundError. Say it plainly instead: an honest failure is worth more than a
+# confusing one, and the generated artifact is committed regardless.
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '.claude-local'))
+try:
+    from build_bottom_matrix import CELLS, SLOTS, classify, GLYPH, dyn_glyph
+except ImportError:
+    raise SystemExit(
+        'build_dictionary_map: its data module `build_bottom_matrix.py` is not present.\n'
+        'It lives in the private .claude-local/ folder, so this generator cannot be re-run\n'
+        'from a public clone. The artifact it produces, BOTTOMELEMENT.md, is committed and\n'
+        'is the readable output; this script is here for provenance, not reproduction.')
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO_ROOT, "BOTTOMELEMENT.md")  # front-door reference at repo root (relative links resolve from here)
