@@ -428,6 +428,12 @@ def selftest():
     bad += 0 if no_marker else 1
     print('    %-32s %s' % ('...but a bare mention is NOT', 'ok' if no_marker else '*** OVER-WIDE ***'))
 
+    # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
+    # this proves the rest are still there. Measured before it was written: 30 of 34
+    # list-shaped patterns could be deleted with every control green, and the compiled
+    # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    print('  PATTERNS')
+    bad += common.check_vocabulary('check_paths', globals())
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
 

@@ -183,6 +183,12 @@ def selftest():
     # enumerator still needs pinning: narrowing this list took a planted violation from detected to
     # undetected with the whole suite green, because `common.py`'s pin only covers the SHARED
     # enumerator and correctly reported it intact. Independent scope, independent pin.
+    # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
+    # this proves the rest are still there. Measured before it was written: 30 of 34
+    # list-shaped patterns could be deleted with every control green, and the compiled
+    # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    print('PATTERNS')
+    bad += common.check_vocabulary('check_pov', globals())
     print('SCOPE')
     bad += common.check_scope(
         'check_pov', [str(p.relative_to(REPO)).replace('\\', '/') for p in TARGETS if p.is_file()])

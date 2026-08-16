@@ -204,11 +204,20 @@ def _suppress_probe(text):
 
 
 def selftest():
-    return common.run_controls([
+    bad = common.run_controls([
         ('  MUST FIRE', MUST_FIRE, _fire_probe, True, 'MISSED'),
         ('  MUST SUPPRESS', MUST_SUPPRESS, _suppress_probe, False, 'FALSE POSITIVE',
          lambda text: '  -> ' + _suppress_probe(text)[0][1]),
     ])
+    # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
+    # this proves the rest are still there. Measured before it was written: 30 of 34
+    # list-shaped patterns could be deleted with every control green, and ~39 compiled
+    # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    print('  PATTERNS')
+    bad += common.check_vocabulary('check_figures', globals())
+    if bad:
+        print('\nselftest: FAIL (%d)' % bad)
+    return 1 if bad else 0
 
 
 def main(argv):

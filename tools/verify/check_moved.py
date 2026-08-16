@@ -255,8 +255,7 @@ def selftest():
     # for. The destinations are pinned rather than the regexes: a destination is stable and readable,
     # where the patterns carry `SEP` and are rebuilt per platform.
     print("  PATTERNS")
-    bad += common.check_patterns("check_moved.MOVED_FAMILIES", _MOVED_FAMILIES)
-    bad += common.check_patterns("check_moved.MOVED", {dest for _pat, dest in MOVED})
+    bad += common.check_vocabulary("check_moved", globals())
 
     print("\n  selftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0

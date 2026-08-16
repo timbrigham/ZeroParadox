@@ -228,7 +228,7 @@ def selftest():
     # checkers, so a scope collapse there is a false zero in all three at once rather than in one.
     # Asserting the three extensions are present is what makes that visible from inside this file.
     exts = {os.path.splitext(rel)[1] for _p, rel in targets()}
-    return common.run_controls([
+    bad = common.run_controls([
         ('  MUST FIRE', MUST_FIRE, scan_text, True, 'MISSED'),
         # The 6th element renders WHICH pattern matched when a suppression control fails — the one
         # piece of output the shared harness would otherwise have dropped.
@@ -237,6 +237,15 @@ def selftest():
         ('  SCOPE', [('scans .lean AND .md AND .py %s' % sorted(exts), None)],
          lambda _t: {'.py', '.md', '.lean'} <= exts, True, 'SCOPE TOO NARROW'),
     ], width=44)
+    # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
+    # this proves the rest are still there. Measured before it was written: 30 of 34
+    # list-shaped patterns could be deleted with every control green, and ~39 compiled
+    # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    print('  PATTERNS')
+    bad += common.check_vocabulary('check_negatives', globals())
+    if bad:
+        print('\nselftest: FAIL (%d)' % bad)
+    return 1 if bad else 0
 
 
 def main(argv):

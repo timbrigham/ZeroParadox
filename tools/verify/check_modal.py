@@ -240,7 +240,7 @@ def selftest():
     # `--block` at exit 0 — the checker silently stops catching the defect class it exists for. The
     # controls prove the patterns they exercise; the pin proves the rest are still there.
     print('PATTERNS')
-    bad += common.check_patterns('check_modal.MODAL_PHRASES', _MODAL_PHRASES)
+    bad += common.check_vocabulary('check_modal', globals())
     if bad:
         print('\nselftest: FAIL (%d)' % bad)
     return 1 if bad else 0

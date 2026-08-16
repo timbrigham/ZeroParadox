@@ -157,16 +157,21 @@ def load_pinned(path, section):
     if not path.exists():
         return set()
     out, cur = set(), None
-    for line in io.open(str(path), encoding='utf-8-sig').read().splitlines():
-        line = line.rstrip('\n')
-        if not line.strip() or line.lstrip().startswith('#'):
-            continue
+    for line in io.open(str(path), encoding='utf-8-sig').read().split('\n'):
         s = line.strip()
+        if not s or s.startswith('#'):
+            continue
         if s.startswith('[') and s.endswith(']'):
             cur = s[1:-1]
             continue
         if cur == section:
-            out.add(s)
+            # ⚠ THE RECORDED VALUE IS NOT STRIPPED, and stripping it was a fidelity bug the pin
+            # caught in itself on its first full run. `check_invariants.REGISTRY_ENTRY` is
+            # `(?m)^### ` — **with a trailing space** — so a `.strip()` here stored something the
+            # live pattern could never equal, and the checker reported its own regex as REMOVED.
+            # A pin that mangles the value it stores cannot detect a change to it. Blank and
+            # comment lines are still recognised from the stripped form; only the VALUE is verbatim.
+            out.add(line)
     return out
 
 
@@ -190,6 +195,71 @@ def check_patterns(section, live, label=None):
     and for the same reason: weakening a detector must never be quiet, while strengthening one must
     never be obstructed."""
     return _superset(PATTERN_BASELINE, section, live, label, kind='pattern')
+
+
+# Module-level names that are NOT detection vocabulary: accumulators, roots, scan scope (pinned
+# separately by `scope_baseline.txt`), and roster lists.
+_NOT_VOCAB = frozenset({
+    'SKIP_DIRS', 'SKIP_NAMES', 'GLOBS', 'SCAN_EXT', 'EXEMPT_DIRS', 'EXEMPT_FILES', 'BINARY_EXT',
+    'SKIP_RELDIRS', 'CALLERS', 'ALSO_AUDITED', 'SELFTESTS', 'CHECKERS', 'GATING_CHECKERS',
+    'MUST_FIRE', 'MUST_SUPPRESS', 'MUST_DENY', 'TOUCHED', 'PROPERTIES', 'failures', 'fails',
+    'warns', 'UNREADABLE', 'MOVED', 'RULES',
+})
+
+
+def vocabulary(mod_globals):
+    """Every detection pattern a module advertises, as `NAME<TAB>value` lines.
+
+    ⚠ **DISCOVERED AT RUNTIME BY TYPE, NOT LISTED.** A hand-maintained roster of which constants
+    matter is the `DEB-2` hazard, and this suite has already paid for it twice. Anything that IS a
+    compiled regex, or a collection of strings that is not on the small `_NOT_VOCAB` denylist, is
+    vocabulary — so a regex added tomorrow is pinned the day it is written, with nothing to remember.
+
+    ⚠ **REGEXES ARE PINNED EXACTLY, IN BOTH DIRECTIONS, AND THAT IS DELIBERATE.** For a DETECTION
+    pattern, removal is the danger — it stops catching. For an EVIDENCE or suppression pattern, it is
+    ADDITION: one more alternative silently clears more hits. A superset test is right for a list of
+    things to catch and wrong for a list of excuses, so an exact match covers both and the pin is
+    updated as a reviewable act when a pattern legitimately changes."""
+    out = set()
+    for name, val in sorted(mod_globals.items()):
+        if name.lstrip('_').upper() != name.lstrip('_') or name in _NOT_VOCAB:
+            continue                      # not a CONSTANT-cased name, or explicitly not vocabulary
+        if isinstance(val, re.Pattern):
+            out.add('%s\t%s' % (name, val.pattern))
+        elif isinstance(val, (list, tuple, set, frozenset)) and val and \
+                all(isinstance(x, str) for x in val):
+            for item in val:
+                out.add('%s\t%s' % (name, item))
+    return out
+
+
+def check_vocabulary(section, mod_globals, label=None):
+    """Pin every detection pattern a module advertises. See `vocabulary`."""
+    live = vocabulary(mod_globals)
+    recorded = load_pinned(PATTERN_BASELINE, section)
+    dropped = sorted(recorded - live)
+    added = sorted(live - recorded)
+    bad = 0
+    ok = not dropped and not added
+    detail = 'ok (%d patterns)' % len(live)
+    if dropped:
+        detail = '*** %d REMOVED: %s ***' % (len(dropped), '; '.join(d[:44] for d in dropped[:2]))
+    elif added:
+        detail = ('*** %d ADDED and unrecorded: %s *** (strengthening is fine — record it)'
+                  % (len(added), '; '.join(a[:44] for a in added[:2])))
+    print('  %-40s %s' % ('%s: vocabulary unchanged' % (label or section), detail))
+    bad += 0 if ok else 1
+    # ⚠ THE VACUITY GUARD IS ON `live`, NOT ON `recorded`, and the difference is the whole point.
+    # Under EXACT match an empty section already fires — as "N ADDED and unrecorded" — so a
+    # threshold on the recorded side is redundant AND wrong: it failed `check_figures`, which
+    # legitimately advertises two regexes. What cannot be caught that way is a module whose
+    # vocabulary went to ZERO, because then recorded and live agree at nothing. That is the real
+    # vacuous state and it is what this asserts.
+    alive = len(live) > 0
+    print('  %-40s %s' % ('%s: the module still has vocabulary' % (label or section),
+                          'ok' if alive else '*** NO PATTERNS AT ALL — check is vacuous ***'))
+    bad += 0 if alive else 1
+    return bad
 
 
 def _superset(path, section, live, label, kind, present_filter=None):

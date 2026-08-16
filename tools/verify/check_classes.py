@@ -271,6 +271,12 @@ def selftest():
     # ⚠ THE SCOPE PIN (SCOPE-3). This checker walks `ZeroParadox/` privately. The controls above run
     # on planted strings in memory, so they are scope-independent by construction and cannot notice
     # if the walk stops covering the corpus.
+    # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
+    # this proves the rest are still there. Measured before it was written: 30 of 34
+    # list-shaped patterns could be deleted with every control green, and the compiled
+    # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    print("PATTERNS")
+    bad += common.check_vocabulary("check_classes", globals())
     print("SCOPE")
     bad += common.check_scope(
         "check_classes",

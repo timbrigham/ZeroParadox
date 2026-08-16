@@ -643,6 +643,13 @@ def selftest():
     # `common.targets()`. Every control above builds its input in a tempfile, so they are
     # scope-independent BY CONSTRUCTION — they cannot notice if this walk stops covering the corpus.
     # Narrowing it took a planted violation from detected to undetected with the whole suite green.
+    # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
+    # this proves the rest are still there. Measured before it was written: 30 of 34
+    # list-shaped patterns could be deleted with every control green, and the compiled
+    # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    print("  PATTERNS")
+    if common.check_vocabulary("check_prose", globals()):
+        ok = False
     print("  SCOPE")
     if common.check_scope("check_prose", [rel for _p, rel in all_files()]):
         ok = False

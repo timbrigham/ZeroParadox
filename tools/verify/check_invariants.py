@@ -212,6 +212,12 @@ def selftest():
           % ('the scan is RECURSIVE', 'ok' if ok else '*** NOT RECURSIVE ***',
              len(LEAN), len(nested)))
 
+    # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
+    # this proves the rest are still there. Measured before it was written: 30 of 34
+    # list-shaped patterns could be deleted with every control green, and the compiled
+    # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    print('  PATTERNS')
+    bad += common.check_vocabulary('check_invariants', globals())
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
 

@@ -228,7 +228,7 @@ def selftest():
     # correct site starts being reported AND the vocabulary the gate recognises shrinks. One control
     # covered sixteen entries; mutation-tested, fifteen were silent.
     print("PATTERNS")
-    bad += common.check_patterns("check_poles.MAPS", MAPS)
+    bad += common.check_vocabulary("check_poles", globals())
     print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0
 

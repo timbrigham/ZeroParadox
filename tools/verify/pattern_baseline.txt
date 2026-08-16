@@ -1,144 +1,227 @@
-# Every DETECTION PATTERN this suite advertises. One section per checker.
-# Each checker's `--selftest` asserts its live pattern set is a SUPERSET of its section.
+# Every DETECTION PATTERN this suite advertises, discovered at runtime BY TYPE.
+# Each checker's `--selftest` asserts its live vocabulary matches its section EXACTLY.
 #
 # WHY (PAT-1, 2026-08-16). The scope pins answer "did the checker look at everything". Nothing
 # answered "would it recognise anything". Measured by mutation -- replacing each advertised pattern
 # with a string that cannot match, one at a time, then re-running that checker's own --selftest --
-# **30 of 34 patterns were SILENT**. Deleting `artifact` from check_modal's list stops it catching
-# the defect class it was built for, with --selftest green, --block exit 0, and check_checkers
-# reporting all four properties satisfied.
+# 30 of 34 list-shaped patterns were SILENT. Deleting `artifact` from check_modal's list stops it
+# catching the defect class it was built for, with --selftest green and --block exit 0. A survey then
+# found ~39 compiled regexes carrying the rest of the vocabulary, none pinned at all.
 #
-# A must-fire control only proves the patterns it happens to exercise. There were 3 controls for 14
-# phrases.
+# ⚠ EXACT MATCH, BOTH DIRECTIONS, DELIBERATELY. For a DETECTION pattern, REMOVAL is the danger: it
+# stops catching. For an EVIDENCE or suppression pattern it is ADDITION: one more alternative
+# silently clears more hits. A superset test is right for a list of things to catch and wrong for a
+# list of excuses. So a legitimate change to any pattern updates this file in the same commit -- a
+# reviewable act, and this file is in `batch.CHECKERS`.
 #
-# ⚠ THE CONTROLS CANNOT BE GENERATED FROM THE LIVE LIST. A control derived from the pattern list
-# vanishes together with the pattern it guards, so deletion stays silent and the design defeats
-# itself. The pin must be an INDEPENDENT record. That is this file.
-#
-# SUPERSET: adding a pattern is free, only a REMOVAL fires. Weakening a detector must never be
-# quiet; strengthening one must never be obstructed. To retire a pattern deliberately, delete its
-# line here in the same change -- a reviewable act, and this file is in `batch.CHECKERS`.
+# ⚠ DISCOVERED BY TYPE, NOT LISTED. A hand-maintained roster of which constants matter is the DEB-2
+# hazard, already paid for twice here. Anything that IS a compiled regex, or a CONSTANT-cased
+# collection of strings not on `common._NOT_VOCAB`, is vocabulary -- so a regex added tomorrow is
+# pinned the day it is written.
 #
 # ⚠ NOT a suppression baseline. Nothing here is a grandfathered defect. Do not count it as debt.
 
-# the modal-removability vocabulary this gate exists to detect
-[check_modal.MODAL_PHRASES]
-are removable
-artifact
-can be removed
-choice-free in principle
-could be removed
-eliminable
-is removable
-not a fact about
-not a fact about the mathematics
-not a necessity
-not asserted as a necessity
-not forced by the mathematics
-rather than as a necessity
-removable in principle
+[check_modal]
+ARTIFACT_SCOPE	Classical\.choice
+EVIDENCE	measur|UNCLASSIFIED|retract|corrected|does \*\*not\*\* show|does not show|no such re-proof|not attempted|reduction|taboo|em_of_wellOrder_comparable|wem_of_fixedPointFree|in the type|in the TYPE|strict_cofix_nonempty|open question|is open|destructor|eliminator|M\.children|M\.dest|axiom-free witness|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|choice-free outright|choice-free \(his|Thm 1|Theorem 1
+MODAL	not\s+a\s+necessity|not\s+asserted\s+as\s+a\s+necessity|rather\s+than\s+as\s+a\s+necessity|artifact|choice\-free\s+in\s+principle|removable\s+in\s+principle|could\s+be\s+removed|can\s+be\s+removed|is\s+removable|are\s+removable|eliminable|not\s+forced\s+by\s+the\s+mathematics|not\s+a\s+fact\s+about\s+the\s+mathematics|not\s+a\s+fact\s+about
+SCOPE	Classical\.choice|axiom|choice-free|#print axioms|propext|Quot\.sound|LLPO|excluded middle|constructive
+STRONG	UNCLASSIFIED|retract|corrected|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|does \*\*not\*\* show|does not show|no such re-proof|not attempted|open question|is open
+_MODAL_PHRASES	are removable
+_MODAL_PHRASES	artifact
+_MODAL_PHRASES	can be removed
+_MODAL_PHRASES	choice-free in principle
+_MODAL_PHRASES	could be removed
+_MODAL_PHRASES	eliminable
+_MODAL_PHRASES	is removable
+_MODAL_PHRASES	not a fact about
+_MODAL_PHRASES	not a fact about the mathematics
+_MODAL_PHRASES	not a necessity
+_MODAL_PHRASES	not asserted as a necessity
+_MODAL_PHRASES	not forced by the mathematics
+_MODAL_PHRASES	rather than as a necessity
+_MODAL_PHRASES	removable in principle
 
-# the named maps whose APPLICATION to a pole is legitimate; losing one turns a
-# correct `rInv 0 = infinity` into a reported defect AND lets a bare chain through
-[check_poles.MAPS]
-cnfToZp2
-cornerId
-cx
-endVal
-localCx
-poleToSphere
-rInv
-rInvHomeo
-shiftEnd
-snapNucleus
-swap
-v_2
-val
-v₂
-winv
-wmul
+[check_negatives]
+CLAIM	(?:\bno\s+(?:\w+[\s-]+){0,3}ha(?:s|ve)\s+(?:ever\s+)?been\s+(?:found|located|observed))|(?:\bnone\s+(?:ha(?:s|ve)\s+(?:ever\s+)?been\s+)?(?:found|located|observed)\b)|(?:\bnever\s+been\s+(?:found|located|observed)\b)|(?:\bhas\s+never\s+been\s+(?:found|located|observed)\b)|(?:\bnowhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bnot\s+in\s+Mathlib\b)|(?:\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))|(?:\bthe\s+corpus\s+does\s+not\s+have\b)|(?:\bno\s+such\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))
+EVIDENCE	as\s+of\s+\d{4}|\b20\d\d-\d\d-\d\d\b|located\s+as\s+of|searched\s+as\s+follows|searched\s+\d|searched[,;]?\s+(?:and\s+)?none\s+found|prior[- ]art\s+search|not\s+located\b|retract|used\s+to\s+(?:say|read)|corrected\b|WAS\s+FALSE|this\s+line\s+said
+_N	\bhas\s+never\s+been\s+(?:found|located|observed)\b
+_N	\bnever\s+been\s+(?:found|located|observed)\b
+_N	\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase)
+_N	\bno\s+(?:\w+[\s-]+){0,3}ha(?:s|ve)\s+(?:ever\s+)?been\s+(?:found|located|observed)
+_N	\bno\s+such\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework)
+_N	\bnone\s+(?:ha(?:s|ve)\s+(?:ever\s+)?been\s+)?(?:found|located|observed)\b
+_N	\bnot\s+in\s+Mathlib\b
+_N	\bnowhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase)
+_N	\bthe\s+corpus\s+does\s+not\s+have\b
+_N	\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework)
 
-# the globbed relocation families
-[check_moved.MOVED_FAMILIES]
-\w*\*\w*_baseline\.txt
-build_zp\w*\*\w*\.py
-check_\w*\*\w*\.py
-proposed_pre_\w*\*\w*_hook\.sh
+[check_figures]
+EVIDENCE	\bas\s+of\b|\b20\d\d-\d\d-\d\d\b|\bmeasured\b|\bmeasure\s+(?:it|on\s+demand)\b|\bnever\s+record\b|\bdo\s+not\s+record\b|\bre-?measure\b|\bcomputed\s+now\b|\bat\s+the\s+time\b|\bwas\s+stale\b|\bwent\s+stale\b|\bstale\s+by\b|\bcorrected\b|\bretract
+FIGURE	\b(\d{2,})\s+(?:files?|declarations?|decls?|sites?|papers?|entries|entry|rows?|checkers?|occurrences?|hits?|violations?|instances?|modules?|scripts?|commits?|baselines?|notes?|defects?)\b
 
-# every relocation DESTINATION; a rule deleted from the table is a stale path
-# that stops being reported
-[check_moved.MOVED]
-.claude/commands/
-scripts/PDF_Rendering_Standards.md
-scripts/build_dictionary_map.py
-scripts/build_foreword.py
-scripts/build_manifest.py
-scripts/build_snap_map.py
-scripts/build_tools.py
-scripts/build_zp_choice_free_core.py
-scripts/build_zp_philosophical_question.py
-scripts/build_zpa.py
-scripts/build_zpa_companion.py
-scripts/build_zpb.py
-scripts/build_zpb_companion.py
-scripts/build_zpc.py
-scripts/build_zpc_companion.py
-scripts/build_zpd.py
-scripts/build_zpd_companion.py
-scripts/build_zpe.py
-scripts/build_zpe_companion.py
-scripts/build_zpf.py
-scripts/build_zpf_companion.py
-scripts/build_zpg.py
-scripts/build_zpg_companion.py
-scripts/build_zph.py
-scripts/build_zph_companion.py
-scripts/build_zph_native_addendum.py
-scripts/build_zpi.py
-scripts/build_zpi_companion.py
-scripts/build_zpj.py
-scripts/build_zpj_afa_addendum.py
-scripts/build_zpj_companion.py
-scripts/build_zpj_keystone_addendum.py
-scripts/build_zpj_wheel_addendum.py
-scripts/build_zpj_wheel_companion.py
-scripts/build_zpk.py
-scripts/build_zpk_companion.py
-scripts/build_zpl.py
-scripts/build_zpl_companion.py
-scripts/build_zpm.py
-scripts/build_zpm_companion.py
-scripts/build_zpn.py
-scripts/build_zpp.py
-scripts/build_zpq.py
-scripts/build_zpr.py
-scripts/build_zpr_addendum.py
-scripts/scan_pdfs.py
-scripts/zp_utils.py
-tools/verify/batch.py
-tools/verify/check_classes.py
-tools/verify/check_hashes.py
-tools/verify/check_invariants.py
-tools/verify/check_modal.py
-tools/verify/check_paths.py
-tools/verify/check_poles.py
-tools/verify/check_pov.py
-tools/verify/check_prose.py
-tools/verify/check_release_ready.py
-tools/verify/class_baseline.txt
-tools/verify/debaseline.py
-tools/verify/decl_baseline.txt
-tools/verify/gate_round.py
-tools/verify/gatelock.py
-tools/verify/guards.py
-tools/verify/hooks.py
-tools/verify/modal_baseline.txt
-tools/verify/pov_baseline.txt
-tools/verify/proposed_pre_commit_hook.sh
-tools/verify/proposed_pre_push_hook.sh
-tools/verify/prose_baseline.txt
-tools/verify/report.py
-tools/verify/selfheal.py
-tools/verify/ship.py
-tools/verify/vendored.py
-tools/verify/vendored_files.txt
+[check_pov]
+ALLOW	check_pov\.py|vocabulary_reference|^\s*--\s*\[ZP-CUSTOM\]|CORRECTED|corrected 20|an earlier revision|v1\.\d+:|v2\.\d+:
+CITES_DECL	`[a-z][A-Za-z0-9_]*_[A-Za-z0-9_]+`|`[A-Z][A-Za-z]+\.[a-z]
+DENIAL	(NOT the snap|NOT of the snap|NOT that the snap|is not the snap|never the same map|were never the same map)
+KINDS	\b(COINCIDENCE|INVERSION|DRIFT|CARRIER|INVARIANT)\b
+LABEL	\b(Statement:|Reading:)
+POV_TERMS	(point of view|change of frame|frame[- ]change|frame[- ]flip|frameflip|pole exchange|both poles|two chart|chart[- ]reading|reads as both|swaps? the poles|min\s*≡\s*max|both min and max|both extremal|initial AND terminal|least AND greatest)
+
+[check_classes]
+DECL	^\s*(?:@\[[^\]]*\]\s*)?(class|structure)\s+([^\W\da-z][\w']*)
+GAUGE	NO-GO|degenerat|vacuous|nondegenerate|newtype|trivially inhabited|nothing (?:can |could |else )?fail|bundled proposition
+
+[check_prose]
+BOUNDARY_RE	^(?:@\[|/--|/-!|end\b|section\b|namespace\b|open\b|variable\b|attribute\b|import\b|#|(?:private\s+|protected\s+|noncomputable\s+|scoped\s+)*(?:theorem|lemma|def|abbrev|instance|structure|class|inductive|example)\b)
+CHECK_RE	^\s*#check\s+(.+?)\s*(?:--\s*(.*))?$
+DECL_RE	^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|scoped\s+)*(theorem|lemma|def|abbrev|instance|structure|class|inductive|example)\b(?:\s+([A-Za-z_À-￿][^\s:({\[]*))?
+LABEL_RE	^\**\s*(Statement|Reading)\b\s*\**\s*:
+TAKE_RE	#+\s*Engineer'?s\s+Take
+
+[check_poles]
+APPLIED	(?:(?:rInv|rInvHomeo|winv|wmul|swap|cornerId|poleToSphere|cnfToZp2|snapNucleus|shiftEnd|localCx|endVal|cx|val|v_2|v₂)|(?<![A-Za-z])[a-z])\s+$
+CHAIN	((?:0|∞|⊥))(?:\s*=\s*((?:0|∞|⊥)))+
+EXPR_BEFORE	[+\-·*/^]\s*$
+IDIOM	\bIdiom:
+MAPS	cnfToZp2
+MAPS	cornerId
+MAPS	cx
+MAPS	endVal
+MAPS	localCx
+MAPS	poleToSphere
+MAPS	rInv
+MAPS	rInvHomeo
+MAPS	shiftEnd
+MAPS	snapNucleus
+MAPS	swap
+MAPS	v_2
+MAPS	val
+MAPS	v₂
+MAPS	winv
+MAPS	wmul
+NEGATED	≠|!=|\\ne\b|not equal
+OPERATION	[/·*]\s*0|0\s*[·*]\s*/|winv|wmul|wheelBot|wheelInf
+REJECTED	meadow|collapse|field is a wheel|degenerate
+
+[check_moved]
+GLOB_REF	\.claude-local[/\\](?:check_\w*\*\w*\.py|proposed_pre_\w*\*\w*_hook\.sh|\w*\*\w*_baseline\.txt|build_zp\w*\*\w*\.py)
+_MOVED_BUILDS	build_dictionary_map.py
+_MOVED_BUILDS	build_foreword.py
+_MOVED_BUILDS	build_manifest.py
+_MOVED_BUILDS	build_snap_map.py
+_MOVED_BUILDS	build_tools.py
+_MOVED_BUILDS	build_zp_choice_free_core.py
+_MOVED_BUILDS	build_zp_philosophical_question.py
+_MOVED_BUILDS	build_zpa.py
+_MOVED_BUILDS	build_zpa_companion.py
+_MOVED_BUILDS	build_zpb.py
+_MOVED_BUILDS	build_zpb_companion.py
+_MOVED_BUILDS	build_zpc.py
+_MOVED_BUILDS	build_zpc_companion.py
+_MOVED_BUILDS	build_zpd.py
+_MOVED_BUILDS	build_zpd_companion.py
+_MOVED_BUILDS	build_zpe.py
+_MOVED_BUILDS	build_zpe_companion.py
+_MOVED_BUILDS	build_zpf.py
+_MOVED_BUILDS	build_zpf_companion.py
+_MOVED_BUILDS	build_zpg.py
+_MOVED_BUILDS	build_zpg_companion.py
+_MOVED_BUILDS	build_zph.py
+_MOVED_BUILDS	build_zph_companion.py
+_MOVED_BUILDS	build_zph_native_addendum.py
+_MOVED_BUILDS	build_zpi.py
+_MOVED_BUILDS	build_zpi_companion.py
+_MOVED_BUILDS	build_zpj.py
+_MOVED_BUILDS	build_zpj_afa_addendum.py
+_MOVED_BUILDS	build_zpj_companion.py
+_MOVED_BUILDS	build_zpj_keystone_addendum.py
+_MOVED_BUILDS	build_zpj_wheel_addendum.py
+_MOVED_BUILDS	build_zpj_wheel_companion.py
+_MOVED_BUILDS	build_zpk.py
+_MOVED_BUILDS	build_zpk_companion.py
+_MOVED_BUILDS	build_zpl.py
+_MOVED_BUILDS	build_zpl_companion.py
+_MOVED_BUILDS	build_zpm.py
+_MOVED_BUILDS	build_zpm_companion.py
+_MOVED_BUILDS	build_zpn.py
+_MOVED_BUILDS	build_zpp.py
+_MOVED_BUILDS	build_zpq.py
+_MOVED_BUILDS	build_zpr.py
+_MOVED_BUILDS	build_zpr_addendum.py
+_MOVED_FAMILIES	\w*\*\w*_baseline\.txt
+_MOVED_FAMILIES	build_zp\w*\*\w*\.py
+_MOVED_FAMILIES	check_\w*\*\w*\.py
+_MOVED_FAMILIES	proposed_pre_\w*\*\w*_hook\.sh
+_VERIFY	batch
+_VERIFY	check_classes
+_VERIFY	check_hashes
+_VERIFY	check_invariants
+_VERIFY	check_modal
+_VERIFY	check_paths
+_VERIFY	check_poles
+_VERIFY	check_pov
+_VERIFY	check_prose
+_VERIFY	check_release_ready
+_VERIFY	debaseline
+_VERIFY	gate_round
+_VERIFY	gatelock
+_VERIFY	guards
+_VERIFY	hooks
+_VERIFY	report
+_VERIFY	selfheal
+_VERIFY	ship
+_VERIFY	vendored
+
+[check_paths]
+BARE_LEAN	(?<![\w/.-])((?:ZP[A-Z]?[A-Za-z0-9_]*)\.lean)
+DATED	\d{4}-\d{2}-\d{2}|(?<!\d)\d{8}(?!\d)|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4}
+MATHLIB_EXEMPT_DIRS	Vendored
+MATHLIB_PATTERN	(?<![\w/.-])((?:Mathlib|Std|Batteries)/[A-Za-z0-9_./-]+\.lean)
+NOTE_REF	(?<![\w/.-])((?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9][A-Za-z0-9_-]*(?:\d{4}-\d{2}-\d{2}|\d{8}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4})\.md)
+PATTERN	(?<![\w/.-])((?:ZeroParadox|scripts|\.github)/[A-Za-z0-9_./-]+\.(?:lean|py|md|json|yml|yaml))
+PRIVATE_REF	(?<![\w/.-])(\.claude-local/[A-Za-z0-9_./-]+)
+RECORD_FILES	RELEASES.md
+SKIP_MARKERS	->
+SKIP_MARKERS	corrected
+SKIP_MARKERS	dead
+SKIP_MARKERS	do not recreate
+SKIP_MARKERS	does not exist
+SKIP_MARKERS	formerly
+SKIP_MARKERS	historical
+SKIP_MARKERS	moved to
+SKIP_MARKERS	no longer exist
+SKIP_MARKERS	now at
+SKIP_MARKERS	old path
+SKIP_MARKERS	post-reorg
+SKIP_MARKERS	pre-reorg
+SKIP_MARKERS	renamed
+SKIP_MARKERS	retired
+SKIP_MARKERS	stale
+SKIP_MARKERS	superseded
+SKIP_MARKERS	synced to
+SKIP_MARKERS	was at
+SKIP_MARKERS	→
+SKIP_MARKERS_LEAN	corrected
+SKIP_MARKERS_LEAN	dead
+SKIP_MARKERS_LEAN	do not recreate
+SKIP_MARKERS_LEAN	does not exist
+SKIP_MARKERS_LEAN	formerly
+SKIP_MARKERS_LEAN	historical
+SKIP_MARKERS_LEAN	moved to
+SKIP_MARKERS_LEAN	no longer exist
+SKIP_MARKERS_LEAN	now at
+SKIP_MARKERS_LEAN	old path
+SKIP_MARKERS_LEAN	post-reorg
+SKIP_MARKERS_LEAN	pre-reorg
+SKIP_MARKERS_LEAN	renamed
+SKIP_MARKERS_LEAN	retired
+SKIP_MARKERS_LEAN	stale
+SKIP_MARKERS_LEAN	superseded
+SKIP_MARKERS_LEAN	synced to
+SKIP_MARKERS_LEAN	was at
+
+[check_invariants]
+CUSTOM_TAG	\[ZP-CUSTOM\]
+REGISTRY_ENTRY	(?m)^### 
+TAKE_PLACEHOLDER	TODO \(Tim|TODO: Engineer
