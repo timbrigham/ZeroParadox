@@ -95,6 +95,7 @@ PRE_PUSH_PLAN = [
     ("gate lock", "BLOCK", "no push while a review round is open or files are frozen"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
+    ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
@@ -237,6 +238,17 @@ def pre_push(stream):
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1
     print("===========================")
+
+    # ⚠ WIRED IN 2026-08-15, AFTER BEING BUILT AND LEFT UNCONNECTED FOR A DAY. `check_moved.py` is
+    # the control that proves the tools/verify migration is complete — a tombstone only helps a
+    # human browsing the folder, while this fails when ANY file still points at a relocated path.
+    # It was written, tested, given controls, and run only by hand and in CI: the exact "fires only
+    # if someone remembers" shape it exists to eliminate, in the tool built to eliminate it.
+    if py("check_moved.py", "--block") != 0:
+        print("\nPush blocked: something still points at a relocated path.")
+        print("Update the reference, or record the file as a dated record in check_moved.py.")
+        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        return 1
 
     if py("check_invariants.py") != 0:
         return 1

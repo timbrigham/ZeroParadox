@@ -91,7 +91,17 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # editing it alone took `check_hashes.py` from exit 1 to exit 0 for
                               # `build_tools.py`, which builds a SHIPPED PDF and has no register.md
                               # row to anchor it. Both measured, /rely pass 7.
-                              "decl_baseline.txt", "ar_status.json"]
+                              "decl_baseline.txt", "ar_status.json",
+                              # ⚠ THE 2026-08-15 ADDITIONS, and the rule above ("if it can stop a
+                              # push, it is in here") is what pulled them in. `check_moved.py` is a
+                              # BLOCK step in the pre-push plan — it was built, given controls, and
+                              # then left out of both the hook and this list, so a three-line
+                              # `sys.exit(0)` in it would have gone unnoticed exactly as
+                              # `check_paths.py` once would. `install_hooks.py` writes the hooks
+                              # themselves, which is upstream of every gate. `ci_report.py` decides
+                              # what the PUBLIC verification claim says; a fail-open there publishes
+                              # a false clean.
+                              "check_moved.py", "install_hooks.py", "ci_report.py"]
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).
@@ -130,7 +140,9 @@ STAGES = ["start", "ledger", "screen", "probe", "judge", "precommit", "prepush",
 # a checker change is an ordinary tracked diff, so git sees it, CI sees it, and a reviewer sees it.
 ROUTING = [
     (re.compile(r"^tools/verify/(check_\w+\.py|batch\.py|hooks\.py|guards\.py|vendored\.py"
-                r"|report\.py|proposed_pre_\w+_hook\.sh|\w+_baseline\.txt|vendored_files\.txt)$"),
+                r"|report\.py|ci_report\.py|install_hooks\.py|gate_round\.py|gatelock\.py"
+                r"|ship\.py|selfheal\.py|debaseline\.py"
+                r"|proposed_pre_\w+_hook\.sh|\w+_baseline\.txt|vendored_files\.txt)$"),
      "/rely", "a checker, hook, or exemption switch changed - its first run produced CHK-2 and "
               "CHK-3, both checker bugs, so this is the measured persona for the verification layer"),
     (re.compile(r"^\.github/workflows/"),
@@ -762,8 +774,19 @@ def reviewable_changed(ranges=None):
 
     THE one definition. The shell hook used to carry a second copy of this filter and the two
     disagreed three ways (PIPE-1); the hook is now a shim that calls in here."""
+    return reviewable_from(changed_files(ranges))
+
+
+def reviewable_from(paths):
+    """THE exemption decision, as a pure function of a path list.
+
+    Split out of `reviewable_changed` on 2026-08-15 so `guards.py` can interrogate the decision
+    DIRECTLY instead of inferring it from a checker's exit code. Every other guarded property is
+    tested by planting a violation and watching a gate react; this surface has no gate to watch —
+    a file that falls out of this set is simply never reviewed, silently. Asking the classifier is
+    the only honest control for it."""
     out2 = []
-    for f in changed_files(ranges):
+    for f in paths:
         norm = f.replace(chr(92), '/').lower()
         if f.lower().endswith(DATA_EXT):
             continue

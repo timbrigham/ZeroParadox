@@ -129,6 +129,68 @@ def pov_blocks():
     return rc != 0, out
 
 
+# ═══ PROPERTY 6 — a changed file cannot escape the REVIEW-SIGNAL requirement ══════════════════
+#
+# ⚠ ADDED 2026-08-15, and it was missing at the moment it was most needed. The properties above all
+# guard the CHECKERS. Nothing guarded the other exemption surface: `batch.reviewable_changed()`,
+# which decides whether a changed file needs editorial and adversary coverage at all. A file that
+# falls out of THAT set is not reviewed by anyone, and no guard would have noticed.
+#
+# It became urgent the same day, because the tools/verify migration ADDED a route: `EXEMPT_PREFIXES`
+# now skips an entire directory tree. That is a defensible exemption — the argument is at its
+# definition — but CLAUDE.md's rule is that closing OR OPENING a route means registering it here,
+# and the author of that exemption (me) did not. This registry exists because "enumerate the routes"
+# performed from memory is how one property got fixed four times.
+#
+# ⚠ These routes are classification, not mutation, so they are tested by asking the classifier
+# directly rather than by planting files. That is deliberate and it is stronger: the other
+# properties infer suppression from a checker's exit code, whereas this reads the decision itself.
+_ORDINARY = "ZeroParadox/Order/Snap.lean"          # must always be reviewable
+_EXEMPT_PATH = "CLAUDE.md"                          # exempt by exact path
+_EXEMPT_PREFIX = "tools/verify/check_pov.py"        # exempt by directory prefix
+_EXEMPT_DATA = "scripts/fonts/DejaVuSans.ttf"       # exempt by data extension
+
+
+def _classifies(paths):
+    """Which of `paths` batch.py considers REVIEWABLE. The decision itself, not a proxy."""
+    import importlib
+    import batch
+    importlib.reload(batch)
+    return set(batch.reviewable_from(paths))
+
+
+EXEMPTION_SURFACE = [
+    # (label, path, may_be_exempt, why)
+    ("an ordinary corpus file", _ORDINARY, False,
+     "must ALWAYS be reviewable - this is the must-fire control"),
+    ("exact path (CLAUDE.md)", _EXEMPT_PATH, True,
+     "the operating manual; its own header exempts it"),
+    ("directory prefix (tools/verify/)", _EXEMPT_PREFIX, True,
+     "operating machinery; /rely reviews this layer and BLOCKS"),
+    ("data extension (a .ttf)", _EXEMPT_DATA, True,
+     "a binary carries no prose for a prose gate to read"),
+]
+
+
+def check_exemption_surface():
+    """Every route by which a changed file can escape the review-signal requirement.
+
+    Returns (rows, bad). A row fails when a path that MUST be reviewable is not, or when a path
+    recorded as exempt has quietly stopped being exempt — both directions, because an exemption
+    that silently disappears is a false alarm generator and one that silently appears is a hole."""
+    rows, bad = [], 0
+    for label, path, may_exempt, why in EXEMPTION_SURFACE:
+        got = _classifies([path])
+        is_exempt = path not in got
+        ok = (is_exempt == may_exempt)
+        if not ok:
+            bad += 1
+        state = "exempt" if is_exempt else "reviewable"
+        expect = "exempt (permitted)" if may_exempt else "reviewable (required)"
+        rows.append((label, ok, "%s — expected %s; %s" % (state, expect, why)))
+    return rows, bad
+
+
 def routing_hash():
     """What `/rely` routing sees. A permitted exemption must MOVE this."""
     import importlib
@@ -621,6 +683,9 @@ def main():
             print("  %s" % p["name"])
             for label, _f, may, _v in p["routes"]:
                 print("     - %-34s %s" % (label, "may suppress" if may else "must NOT suppress"))
+        print("  a changed file cannot escape the REVIEW-SIGNAL requirement")
+        for label, _path, may, _why in EXEMPTION_SURFACE:
+            print("     - %-34s %s" % (label, "may exempt" if may else "must NOT exempt"))
         return 0
 
     before = snapshot()
@@ -631,6 +696,12 @@ def main():
             for label, verdict, ok in run_property(p):
                 print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
                 bad += 0 if ok else 1
+        # Classification, not mutation — so it runs inside the try but plants nothing.
+        print("\n  PROPERTY: a changed file cannot escape the REVIEW-SIGNAL requirement")
+        _rows, _bad = check_exemption_surface()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
     finally:
         after = snapshot()
     moved = [p for p in TOUCHED if before[p] != after[p]]
