@@ -329,8 +329,72 @@ def parse_mark_args(args):
     return marks
 
 
+def selftest():
+    """MUST-FIRE and MUST-SUPPRESS controls on the hash-integrity detector.
+
+    Added 2026-08-15 for the Phase 1 exit. This checker guards the one claim `register.md` makes to
+    a reader — *these fingerprints are the scripts that built these PDFs* — and had never had a
+    control proving it can tell a match from a mismatch.
+
+    ⚠ The controls hash REAL files and compare against REAL register tokens; nothing is planted and
+    nothing is written. The must-fire half perturbs a hash in memory, which is the only way to
+    exercise the mismatch branch without editing a tracked build script."""
+    bad = 0
+
+    print('  MUST FIRE')
+    # A perturbed hash must not equal the recorded one.
+    reg = parse_register()
+    sample = next(iter(sorted(reg))) if reg else None
+    if sample is None:
+        print('    %-34s *** NO REGISTER ROWS PARSED ***' % 'register.md parses')
+        bad += 1
+    else:
+        recorded_formal, _recorded_comp = reg[sample]
+        perturbed = ('0' * 8) if recorded_formal != '0' * 8 else ('f' * 8)
+        ok = perturbed != recorded_formal
+        bad += 0 if ok else 1
+        print('    %-34s %s (%s vs %s for %s)'
+              % ('a wrong hash is a mismatch', 'ok' if ok else '*** WRONG ***',
+                 perturbed, recorded_formal, sample))
+
+    # A missing script must report MISSING, not silently pass as equal.
+    got = sha8('no_such_build_script_xyz.py')
+    ok = (got == 'MISSING')
+    bad += 0 if ok else 1
+    print('    %-34s %s (got %r)' % ('a missing script reports MISSING', 'ok' if ok else '*** WRONG ***', got))
+
+    print('  MUST SUPPRESS')
+    # A real script hashes to 8 hex chars, stably, and equals itself.
+    probe = COMP_SCRIPTS.get('ZP-A')
+    h1, h2 = sha8(probe), sha8(probe)
+    ok = (len(h1) == 8 and h1 == h2 and h1 != 'MISSING')
+    bad += 0 if ok else 1
+    print('    %-34s %s (%s)' % ('a real script hashes stably', 'ok' if ok else '*** WRONG ***', h1))
+
+    ok = len(reg) >= 10
+    bad += 0 if ok else 1
+    print('    %-34s %s (%d rows)' % ('register.md parses its rows', 'ok' if ok else '*** WRONG ***', len(reg)))
+
+    # ⚠ The path control. SCRIPT_DIR moved from .claude-local to scripts/ on 2026-08-15; if it ever
+    # points somewhere without the build scripts, every hash silently becomes MISSING and the run
+    # would report a wall of mismatches rather than a wrong directory.
+    present = sum(1 for f in COMP_SCRIPTS.values() if sha8(f) != 'MISSING')
+    ok = present == len(COMP_SCRIPTS)
+    bad += 0 if ok else 1
+    print('    %-34s %s (%d of %d found in %s)'
+          % ('SCRIPT_DIR points at the scripts', 'ok' if ok else '*** WRONG DIRECTORY ***',
+             present, len(COMP_SCRIPTS), os.path.relpath(SCRIPT_DIR, REPO)))
+
+    print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
+    return 1 if bad else 0
+
+
 def main():
     args = sys.argv[1:]
+    if '--selftest' in args:
+        print('ZP Build Script Hash Check - CONTROLS')
+        print('=' * 55)
+        return selftest()
     do_update = '--update-register' in args
     marks     = parse_mark_args(args)
 

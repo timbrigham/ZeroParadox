@@ -14,6 +14,7 @@ Usage (the exact invocation path is printed in this tool's own output):
     check_paths.py --all      # + memory and .claude-local notes
     check_paths.py --all --warn-private
                               # private-layer hits do not fail the build
+    check_paths.py --selftest # must-fire AND must-suppress controls
 
 Exit 0 = clean.  Exit 1 = at least one dangling reference in a failing scope.
 """
@@ -345,8 +346,75 @@ def report(label, dangling, bare, checked):
             print(f'  {path}:{lineno}  ->  {ref}   ({where})')
 
 
+def selftest():
+    """MUST-FIRE and MUST-SUPPRESS controls on the reference detector.
+
+    Added 2026-08-15 for the Phase 1 exit ("each with both control types"), which this checker had
+    never met. Everything below runs against planted strings and the REAL filesystem, so it writes
+    nothing into the repo.
+
+    ⚠ The SKIP_MARKERS control is the one with teeth. This checker deliberately ignores a path in a
+    sentence that says the path is dead ("no longer exists", "moved to", "renamed"), because a
+    historical record naming an old location is not a broken link. That exemption is also the
+    obvious way to silence a real finding by accident, so both halves are pinned here: a marker
+    suppresses, and a bare dangling path does not."""
+    bad = 0
+
+    def fires(text):
+        return bool(PATTERN.search(text))
+
+    print('  MUST FIRE')
+    cases = [
+        ('a repo-relative .lean path', 'see ZeroParadox/Order/Snap.lean for the theorem'),
+        ('a scripts/ path', 'built by scripts/build_zpa.py'),
+        ('a workflow path', 'defined in .github/workflows/verify.yml'),
+    ]
+    for label, text in cases:
+        ok = fires(text)
+        bad += 0 if ok else 1
+        print('    %-32s %s' % (label, 'ok' if ok else '*** MISSED ***'))
+
+    # A path that does NOT resolve must be reported by the resolver, not merely matched.
+    ghost = 'ZeroParadox/Order/NoSuchFile.lean'
+    ok = not (ROOT / ghost).exists() and fires('see %s' % ghost)
+    bad += 0 if ok else 1
+    print('    %-32s %s' % ('a dangling path is detectable', 'ok' if ok else '*** WRONG ***'))
+
+    print('  MUST SUPPRESS')
+    # A real file must resolve.
+    real = 'ZeroParadox/Order/Snap.lean'
+    ok = (ROOT / real).exists()
+    bad += 0 if ok else 1
+    print('    %-32s %s' % ('a real path resolves', 'ok' if ok else '*** WRONG ***'))
+
+    for label, text in (
+        ('prose with no path at all', 'the bottom is the diagonal fixed point'),
+        ('a bare identifier', 'see t_snap_derived for the statement'),
+        ('a Mathlib path (own class)', 'Mathlib/Order/RelClasses.lean:225'),
+    ):
+        ok = not fires(text)
+        bad += 0 if ok else 1
+        print('    %-32s %s' % (label, 'ok' if ok else '*** FALSE POSITIVE ***'))
+
+    # SKIP_MARKERS: a dead path in a sentence that SAYS it is dead must be tolerated.
+    marked = 'ZeroParadox/ZZTestOrd.lean no longer exists'
+    has_marker = any(m in marked.lower() for m in SKIP_MARKERS)
+    bad += 0 if has_marker else 1
+    print('    %-32s %s' % ('a "no longer exists" marker', 'ok' if has_marker else '*** WRONG ***'))
+    unmarked = 'see ZeroParadox/ZZTestOrd.lean for the probe'
+    no_marker = not any(m in unmarked.lower() for m in SKIP_MARKERS)
+    bad += 0 if no_marker else 1
+    print('    %-32s %s' % ('...but a bare mention is NOT', 'ok' if no_marker else '*** OVER-WIDE ***'))
+
+    print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
+    return 1 if bad else 0
+
+
 def main():
     args = sys.argv[1:]
+    if '--selftest' in args:
+        print('== file-reference resolver - CONTROLS ==')
+        return selftest()
     do_all = '--all' in args
     warn_private = '--warn-private' in args
 

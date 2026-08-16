@@ -78,8 +78,14 @@ CHECKS = [
 ]
 
 # The controls. A checker suite whose own controls are not run is a suite nobody has verified.
+# ⚠ ALL TEN, as of 2026-08-15. The last four (`check_paths`, `check_invariants`, `check_hashes`,
+# `check_release_ready`) had no `--selftest` at all until then — the Phase 1 exit says "each with
+# both control types" and four checkers had never met it, including the one guarding the claim
+# register.md makes to a reader about which scripts built which PDFs.
 SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
-             "check_classes.py", "check_poles.py", "check_moved.py"]
+             "check_classes.py", "check_poles.py", "check_moved.py",
+             "check_paths.py", "check_invariants.py", "check_hashes.py",
+             "check_release_ready.py"]
 
 
 def run(script, args):

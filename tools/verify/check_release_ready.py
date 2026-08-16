@@ -311,8 +311,62 @@ def line(status, name, detail=''):
     print(f'  [{status:4}] {name}{("  - " + detail) if detail else ""}')
 
 
+def selftest():
+    """MUST-FIRE and MUST-SUPPRESS controls on the release gate's decidable parts.
+
+    Added 2026-08-15 for the Phase 1 exit. This gate is PROCEDURAL — no git event fires on tag
+    creation, so nothing runs it automatically and a broken check here is invisible until a release
+    is being cut, which is the worst moment to discover it.
+
+    Scope is honest and narrow: the mechanically decidable helpers, plus the two structural facts a
+    release depends on. It does NOT simulate a whole release; the judgement checklist this gate
+    prints is not mechanizable and is not pretended to be."""
+    bad = 0
+
+    print('  MUST FIRE')
+    # An absent tag must be NO-GO, never a silent pass.
+    txt = read(RELEASES)
+    ghost = 'v99.99'
+    ok = ('## %s' % ghost) not in txt
+    bad += 0 if ok else 1
+    print('    %-34s %s' % ('an unknown tag has no RELEASES row', 'ok' if ok else '*** WRONG ***'))
+
+    # A version mismatch must compare unequal after normalisation.
+    ok = norm_ver('v1.2') != norm_ver('1.3')
+    bad += 0 if ok else 1
+    print('    %-34s %s' % ('differing versions compare unequal', 'ok' if ok else '*** WRONG ***'))
+
+    print('  MUST SUPPRESS')
+    # Normalisation must NOT invent a difference across the forms actually used in register.md.
+    ok = norm_ver('v1.2') == norm_ver('1.2') == norm_ver(' V1.2 ')
+    bad += 0 if ok else 1
+    print('    %-34s %s' % ('v-prefix/space/case normalise equal', 'ok' if ok else '*** WRONG ***'))
+
+    # The files this gate reads must exist; a missing one would make every check vacuous.
+    missing = [f for f in (REGISTER, RELEASES, REGISTRY, ZENODO, README, GUIDE)
+               if not os.path.exists(os.path.join(REPO, f))]
+    ok = not missing
+    bad += 0 if ok else 1
+    print('    %-34s %s%s' % ('every input file exists', 'ok' if ok else '*** MISSING ***',
+                              '' if ok else ' ' + ', '.join(missing)))
+
+    # ⚠ The retired mirror check must stay a no-op returning True. If someone "restores" it, it
+    # would compare scripts/ against a .claude-local/ that no longer holds build scripts and warn
+    # on all 43 forever.
+    ok = c_scripts_mirror() is True
+    bad += 0 if ok else 1
+    print('    %-34s %s' % ('the retired mirror check is inert', 'ok' if ok else '*** REVIVED ***'))
+
+    print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
+    return 1 if bad else 0
+
+
 def main():
     args = [a for a in sys.argv[1:]]
+    if args and args[0] == '--selftest':
+        print('ZP Release-Readiness Gate - CONTROLS')
+        print('=' * 64)
+        return selftest()
     if not args or args[0].startswith('-'):
         print('usage: python %s <tag>   (e.g. v2.7)' % SELF)
         return 2
