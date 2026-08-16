@@ -26,8 +26,9 @@ validated `export_full` — not by committing this tool's raw output.
 
 The baseline corresponds to a fixed public-production commit (recorded in `tm_registry.py`):
 `origin/main @ 7075d4abfe49b81c0080166d848e08579f1cafb7` (tree `eacbc513a541d465b9937b33a53f923d3e9ea4b6`).
-Re-running the extractor against that tree reproduces that inventory exactly. ⚠ **The count is deliberately not written here.** It has been written down four times and been wrong every time — including twice in this file at once, with the two figures contradicting each other. It changes on every declaration added or renamed, so any value committed to prose is right on the day it is typed and wrong afterwards. **Measure it: `python -c "import json; print(len(json.load(open('ssot.json',encoding='utf-8'))['collections']['declarations']['entries']))"`.**
-Per this project's standing rule, **measure it rather than quoting it**: run the extractor against the pinned commit and read the number from `tm_registry.py`.
+Re-running the extractor against that tree reproduces that inventory exactly. ⚠ **The count is deliberately not written here.** It changes with every declaration added or renamed, so a figure committed to prose is right on the day it is typed and wrong afterwards.
+
+To obtain **this anchor's** inventory, re-run the extractor against the pinned tree above. ⚠ There is no number to read out of `tm_registry.py`: it *computes* the count at runtime and writes it into `registry.json`'s `counts`. And do not use the live-store command in § *The published SSOT* for this — that measures the CURRENT store, which is a different quantity from the anchor and is the conflation that put two contradictory figures in this file at once.
 
 ## Identifier handling (why the count is what it is)
 
@@ -94,7 +95,8 @@ the claims-layer work it is a **multi-collection envelope**, not a bare declarat
 
 - **`collections.declarations.entries`** — the declaration inventory enriched with an **ontology
   overlay**: per-declaration `object` / `domain` / `role` tags (each a controlled, multi-valued list).
-  The count is not recorded here; see § *Scope* above and measure it.
+  The count is not recorded here — measure the live store:
+  `python -c "import json; print(len(json.load(open('ssot.json',encoding='utf-8'))['collections']['declarations']['entries']))"`
 - **`collections.claims.entries`** — the curated **claim graph**: ⊥-face domain nodes, the adjudicated
   inter-domain edges, and the free-standing keystones. Each claim carries a `status`
   (`proved`/`deep`/`corr`/`conj`/`commitment`), and a declaration links back to a claim via its
