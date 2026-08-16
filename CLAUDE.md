@@ -1836,7 +1836,24 @@ By reference kind and surface:
 
 ## Transparency Notices on Unlinked Public Documents
 
-Any file that is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
+⚠⚠ **EXCEPTION — AN INSTRUCTION FILE CANNOT CARRY A TRANSPARENCY HEADER. (Tim, 2026-08-15.)**
+**The test is whether the file's CONTENT IS CONSUMED AS INSTRUCTIONS rather than read by a person.**
+If it is, a notice prepended to it **becomes part of the instruction** and changes what the machine
+does. The notice is not merely redundant there — it is a behavioural change dressed as boilerplate.
+
+- **`.claude/commands/*.md`** — every one is a slash-command prompt. A transparency blockquote at the
+  top would be prepended to the brief **on every gate invocation**, silently editing what each
+  reviewer is told. Eleven files, all exempt. This is the same structural fact as *"never put a
+  non-command `.md` in `.claude/commands/`"* above: **that directory is an interface, and anything
+  added to a file in it is added to the interface.**
+- **`CLAUDE.md`** — injected wholesale at session start. Same reason.
+
+**Their disclosure lives HERE instead**, in § *WHERE THINGS LIVE* and § *the published gate briefs*,
+which is a page a human reads rather than a prompt a machine executes. ⚠ **Do not "fix" the missing
+notices by linking the briefs from README.md either** without agreement — README is the formal index
+for mathematicians and its section order is fixed by rule.
+
+**For everything else the rule stands as written.** Any file that is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
 
 **For Markdown files:** Add a blockquote at the very top of the file:
 ```
