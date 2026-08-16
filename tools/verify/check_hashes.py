@@ -57,6 +57,9 @@ SELF       = os.path.relpath(os.path.abspath(__file__), REPO).replace('\\', '/')
 REGISTER   = os.path.join(REPO, 'register.md')
 SCRIPT_DIR = os.path.join(REPO, 'scripts')
 AR_STATUS  = os.path.join(PRIV, 'ar_status.json')   # legacy per-doc AR tracker: private state
+# Whether the private tracker is reachable at all. A clone that is not the author's has no
+# .claude-local/, and treating its absence as a hash mismatch produced three false positives.
+AR_AVAILABLE = os.path.exists(AR_STATUS)
 
 COMP_SCRIPTS = {
     'ZP-A': 'build_zpa_companion.py',
@@ -476,6 +479,25 @@ def main():
         if reg_tok and reg_tok != current_hash:
             print(f'  {key}: REGISTER TOKEN STALE - register has {reg_tok}, script is {current_hash}')
             hash_mismatches.append(key + ' (register token)')
+
+        # ⚠ THE AR TRACKER IS PRIVATE, AND ITS ABSENCE IS NOT A HASH MISMATCH.
+        #
+        # `ar_status.json` lives in gitignored `.claude-local/`. In any clone that is not the
+        # author's it simply does not exist, so `stored_hash` fell back to '?' and all three
+        # standalone docs reported MISMATCH — three false positives in the suite whose whole value
+        # is that its zeros mean something. Measured 2026-08-15 in a clean worktree; it is also
+        # what the CI job would have published.
+        #
+        # The PUBLIC provenance check is `reg_tok` above, against register.md, and it runs
+        # regardless. This one is a legacy per-doc review tracker that CLAUDE.md already records as
+        # superseded by the per-file `*_cleared.txt` signals. Unavailable != wrong.
+        if not AR_AVAILABLE:
+            print(f'  {key}: hash={"OK" if reg_tok else "not publicly tracked"}  '
+                  f'AR=n/a (private tracker absent)')
+            if not reg_tok:
+                print(f'       no register.md token for {script} — this build script has NO public '
+                      f'provenance. Ledgered, not silently passed.')
+            continue
 
         stored_hash = ar_data.get(key, {}).get('hash', '?')
         hash_ok = (current_hash == stored_hash)
