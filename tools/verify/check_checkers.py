@@ -46,6 +46,18 @@ NO_CONTROL_EXEMPT = {}
 # orphan no matter how good it is.
 CALLERS = ("hooks.py", "ci_report.py", "batch.py", "ship.py")
 
+# Checkers with NO automatic caller, and the reason. ⚠ Each entry is a checker that runs only when
+# a human remembers, so keep this list short and justified — it is the exemption surface for
+# property 4 and every addition weakens the property.
+ORPHAN_EXEMPT = {
+    # Genuinely unhookable: there is no git event for tag creation, so nothing can fire this on
+    # the thing it gates. CLAUDE.md states the consequence — "enforcement is procedural: the gate
+    # must exit 0 AND its judgement checklist must be confirmed before the release body is
+    # drafted." Its CONTROLS still run on every push via ci_report's SELFTESTS, so the checker is
+    # verified even though its invocation is not automatic.
+    "check_release_ready.py": "pre-release gate; no git event exists for tag creation",
+}
+
 
 def checkers():
     return sorted(f for f in os.listdir(HERE)
@@ -100,10 +112,29 @@ def audit():
             rows.append((c, "controls pass", False, "cannot run - no --selftest"))
             rows.append((c, "both halves [proxy]", False, "cannot check - no --selftest"))
 
-        # 4. something calls it
-        called = [k for k, t in caller_text.items() if c in t]
-        rows.append((c, "is invoked", bool(called),
-                     "called by " + ", ".join(called) if called else "ORPHAN - no entry point runs it"))
+        # 4. something INVOKES it — not merely mentions it.
+        #
+        # ⚠⚠ THE FIRST VERSION TESTED `c in t`, AND THE CONTROL TEST CAUGHT IT AS A FALSE PASS.
+        # `batch.py` carries a CHECKERS list naming every checker so their bytes get hashed and
+        # route to `/rely`. Being in that list means the file is WATCHED; it says nothing about
+        # whether anything RUNS it. With both real call sites renamed away, a substring test still
+        # found the name in that list and reported the checker healthy — the exact fail-open shape
+        # this whole script exists to detect, inside the script that detects it.
+        #
+        # So the patterns below match CALLS, not names:
+        #   hooks.py     py("check_x.py", ...)
+        #   ci_report.py ("check_x.py", [...], GATE, ...)   - a row in CHECKS
+        #   ship/batch   subprocess of the script path
+        invocations = ('py("%s"' % c, "py('%s'" % c,
+                       '("%s",' % c, "('%s'," % c)
+        called = [k for k, t in caller_text.items() if any(p in t for p in invocations)]
+        if c in ORPHAN_EXEMPT:
+            rows.append((c, "is invoked", True,
+                         "exempt: %s (controls still run every push)" % ORPHAN_EXEMPT[c]))
+        else:
+            rows.append((c, "is invoked", bool(called),
+                         "invoked by " + ", ".join(called) if called
+                         else "ORPHAN - named nowhere as a CALL (a hash-list mention is not a call)"))
 
     return rows, [r for r in rows if not r[2]]
 
