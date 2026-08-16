@@ -102,7 +102,8 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # what the PUBLIC verification claim says; a fail-open there publishes
                               # a false clean.
                               "check_moved.py", "install_hooks.py", "ci_report.py",
-                              "check_negatives.py", "negatives_baseline.txt"]
+                              "check_negatives.py", "negatives_baseline.txt",
+                              "check_figures.py", "figures_baseline.txt"]
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).

@@ -16,9 +16,12 @@ fail-opens in an earlier CI report that all came from parsing output: Lean tags 
 
 ⚠ **THE BASELINE COUNT IS PUBLISHED BESIDE THE GREEN, and that is the point of the table.** These
 checkers block on NEW sites only; several hundred known sites are grandfathered. A report saying
-"0 violations" while 862 sites sit suppressed would be true and misleading in the way this project
-most often gets caught. "0 new, N grandfathered" is the honest form, and it makes the debt visible
-on every run instead of only when someone thinks to ask.
+"0 violations" while hundreds of sites sit suppressed would be true and misleading in the way this
+project most often gets caught. "0 new, N grandfathered" is the honest form, and it makes the debt
+visible on every run instead of only when someone thinks to ask.
+
+⚠ The count itself is NEVER written here — it is computed by `baselines()` on every run. Recording
+it in this docstring would be DC-6 in the file whose job is to publish it honestly.
 
     python tools/verify/ci_report.py            # report, always exit 0  (Phase 3)
     python tools/verify/ci_report.py --block    # exit 1 if any checker failed (Phase 4)
@@ -71,6 +74,7 @@ CHECKS = [
     ("check_classes.py",    ["--block"], GATE,  "a requirements class records a degeneracy verdict"),
     ("check_moved.py",      ["--block"], GATE,  "nothing points at a relocated path"),
     ("check_negatives.py",  ["--block"], GATE,  "a universal negative carries a date or a search record"),
+    ("check_figures.py",    ["--block"], GATE,  "an artifact count carries a date, or is measured on demand"),
     # No --block flag: these exit non-zero on a finding natively.
     ("check_invariants.py", [],          GATE,  "always-true invariants hold across the corpus"),
     ("check_paths.py",      [],          GATE,  "every repo-relative reference resolves"),
@@ -86,6 +90,7 @@ CHECKS = [
 SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
              "check_classes.py", "check_poles.py", "check_moved.py",
              "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
+             "check_figures.py",
              "check_release_ready.py"]
 
 
@@ -99,10 +104,10 @@ def run(script, args):
 
 # ⚠ `decl_baseline.txt` is NOT DEBT and must not be counted as it. It is a reference SNAPSHOT of
 # the declaration names present when it was taken, used to compute "what is new" for the purity and
-# SSOT checks — nothing in it is a suppressed violation. Counting its 1721 entries alongside the
-# suppression baselines reported 2583 grandfathered sites where the real figure is 862: an
-# OVERSTATEMENT of debt, which is exactly as wrong as understating it and would have been published
-# on every run. Caught by reading the first local report instead of accepting its total.
+# SSOT checks — nothing in it is a suppressed violation. Measured 2026-08-15: counting its entries
+# alongside the suppression baselines reported roughly three times the real debt — an OVERSTATEMENT,
+# which is exactly as wrong as understating it and would have been published on every run. Caught by
+# reading the first local report instead of accepting its total.
 NOT_DEBT = ("decl_baseline.txt",)
 
 

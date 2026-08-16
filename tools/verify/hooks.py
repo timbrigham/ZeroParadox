@@ -97,6 +97,7 @@ PRE_PUSH_PLAN = [
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
+    ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
@@ -256,6 +257,12 @@ def pre_push(stream):
         print("Write 'none located as of <date>, searched as follows' — a universal negative")
         print("is falsified by any single future commit and nothing mechanical notices.")
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        return 1
+
+    if py("check_figures.py", "--block") != 0:
+        print("\nPush blocked: an artifact count recorded in prose with no date.")
+        print("Prefer measuring on demand. If it must be written down, date it -")
+        print("the papers count went stale by 15 in a day, and nothing noticed.")
         return 1
 
     if py("check_invariants.py") != 0:
