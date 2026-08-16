@@ -98,6 +98,7 @@ PRE_PUSH_PLAN = [
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
+    ("check_checkers", "BLOCK", "every checker has passing controls, and something invokes it"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
@@ -263,6 +264,12 @@ def pre_push(stream):
         print("\nPush blocked: an artifact count recorded in prose with no date.")
         print("Prefer measuring on demand. If it must be written down, date it -")
         print("the papers count went stale by 15 in a day, and nothing noticed.")
+        return 1
+
+    if py("check_checkers.py", "--block") != 0:
+        print("\nPush blocked: a checker cannot fail, or nothing runs it.")
+        print("This suite's characteristic defect is a check that could not have failed;")
+        print("every instance so far was found by probing, never by reading.")
         return 1
 
     if py("check_invariants.py") != 0:

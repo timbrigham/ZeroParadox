@@ -75,6 +75,7 @@ CHECKS = [
     ("check_moved.py",      ["--block"], GATE,  "nothing points at a relocated path"),
     ("check_negatives.py",  ["--block"], GATE,  "a universal negative carries a date or a search record"),
     ("check_figures.py",    ["--block"], GATE,  "an artifact count carries a date, or is measured on demand"),
+    ("check_checkers.py",   ["--block"], GATE,  "every checker has passing controls in both directions, and is invoked"),
     # No --block flag: these exit non-zero on a finding natively.
     ("check_invariants.py", [],          GATE,  "always-true invariants hold across the corpus"),
     ("check_paths.py",      [],          GATE,  "every repo-relative reference resolves"),
@@ -90,7 +91,7 @@ CHECKS = [
 SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
              "check_classes.py", "check_poles.py", "check_moved.py",
              "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
-             "check_figures.py",
+             "check_figures.py", "check_checkers.py",
              "check_release_ready.py"]
 
 
