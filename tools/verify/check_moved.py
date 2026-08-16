@@ -249,6 +249,15 @@ def selftest():
                 bad += 1
             print("    %-28s %s" % (label, "ok" if ok else "*** WRONG ***"))
 
+    # ⚠ THE PATTERN PINS (PAT-1). This checker's whole content is its relocation TABLE — 74 rules
+    # and 4 globbed families — and ten controls covered them. A rule deleted from the table is a
+    # stale path that silently stops being reported, which is the exact failure `MIG-2` was opened
+    # for. The destinations are pinned rather than the regexes: a destination is stable and readable,
+    # where the patterns carry `SEP` and are rebuilt per platform.
+    print("  PATTERNS")
+    bad += common.check_patterns("check_moved.MOVED_FAMILIES", _MOVED_FAMILIES)
+    bad += common.check_patterns("check_moved.MOVED", {dest for _pat, dest in MOVED})
+
     print("\n  selftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0
 

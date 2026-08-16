@@ -1,0 +1,144 @@
+# Every DETECTION PATTERN this suite advertises. One section per checker.
+# Each checker's `--selftest` asserts its live pattern set is a SUPERSET of its section.
+#
+# WHY (PAT-1, 2026-08-16). The scope pins answer "did the checker look at everything". Nothing
+# answered "would it recognise anything". Measured by mutation -- replacing each advertised pattern
+# with a string that cannot match, one at a time, then re-running that checker's own --selftest --
+# **30 of 34 patterns were SILENT**. Deleting `artifact` from check_modal's list stops it catching
+# the defect class it was built for, with --selftest green, --block exit 0, and check_checkers
+# reporting all four properties satisfied.
+#
+# A must-fire control only proves the patterns it happens to exercise. There were 3 controls for 14
+# phrases.
+#
+# ⚠ THE CONTROLS CANNOT BE GENERATED FROM THE LIVE LIST. A control derived from the pattern list
+# vanishes together with the pattern it guards, so deletion stays silent and the design defeats
+# itself. The pin must be an INDEPENDENT record. That is this file.
+#
+# SUPERSET: adding a pattern is free, only a REMOVAL fires. Weakening a detector must never be
+# quiet; strengthening one must never be obstructed. To retire a pattern deliberately, delete its
+# line here in the same change -- a reviewable act, and this file is in `batch.CHECKERS`.
+#
+# ⚠ NOT a suppression baseline. Nothing here is a grandfathered defect. Do not count it as debt.
+
+# the modal-removability vocabulary this gate exists to detect
+[check_modal.MODAL_PHRASES]
+are removable
+artifact
+can be removed
+choice-free in principle
+could be removed
+eliminable
+is removable
+not a fact about
+not a fact about the mathematics
+not a necessity
+not asserted as a necessity
+not forced by the mathematics
+rather than as a necessity
+removable in principle
+
+# the named maps whose APPLICATION to a pole is legitimate; losing one turns a
+# correct `rInv 0 = infinity` into a reported defect AND lets a bare chain through
+[check_poles.MAPS]
+cnfToZp2
+cornerId
+cx
+endVal
+localCx
+poleToSphere
+rInv
+rInvHomeo
+shiftEnd
+snapNucleus
+swap
+v_2
+val
+v₂
+winv
+wmul
+
+# the globbed relocation families
+[check_moved.MOVED_FAMILIES]
+\w*\*\w*_baseline\.txt
+build_zp\w*\*\w*\.py
+check_\w*\*\w*\.py
+proposed_pre_\w*\*\w*_hook\.sh
+
+# every relocation DESTINATION; a rule deleted from the table is a stale path
+# that stops being reported
+[check_moved.MOVED]
+.claude/commands/
+scripts/PDF_Rendering_Standards.md
+scripts/build_dictionary_map.py
+scripts/build_foreword.py
+scripts/build_manifest.py
+scripts/build_snap_map.py
+scripts/build_tools.py
+scripts/build_zp_choice_free_core.py
+scripts/build_zp_philosophical_question.py
+scripts/build_zpa.py
+scripts/build_zpa_companion.py
+scripts/build_zpb.py
+scripts/build_zpb_companion.py
+scripts/build_zpc.py
+scripts/build_zpc_companion.py
+scripts/build_zpd.py
+scripts/build_zpd_companion.py
+scripts/build_zpe.py
+scripts/build_zpe_companion.py
+scripts/build_zpf.py
+scripts/build_zpf_companion.py
+scripts/build_zpg.py
+scripts/build_zpg_companion.py
+scripts/build_zph.py
+scripts/build_zph_companion.py
+scripts/build_zph_native_addendum.py
+scripts/build_zpi.py
+scripts/build_zpi_companion.py
+scripts/build_zpj.py
+scripts/build_zpj_afa_addendum.py
+scripts/build_zpj_companion.py
+scripts/build_zpj_keystone_addendum.py
+scripts/build_zpj_wheel_addendum.py
+scripts/build_zpj_wheel_companion.py
+scripts/build_zpk.py
+scripts/build_zpk_companion.py
+scripts/build_zpl.py
+scripts/build_zpl_companion.py
+scripts/build_zpm.py
+scripts/build_zpm_companion.py
+scripts/build_zpn.py
+scripts/build_zpp.py
+scripts/build_zpq.py
+scripts/build_zpr.py
+scripts/build_zpr_addendum.py
+scripts/scan_pdfs.py
+scripts/zp_utils.py
+tools/verify/batch.py
+tools/verify/check_classes.py
+tools/verify/check_hashes.py
+tools/verify/check_invariants.py
+tools/verify/check_modal.py
+tools/verify/check_paths.py
+tools/verify/check_poles.py
+tools/verify/check_pov.py
+tools/verify/check_prose.py
+tools/verify/check_release_ready.py
+tools/verify/class_baseline.txt
+tools/verify/debaseline.py
+tools/verify/decl_baseline.txt
+tools/verify/gate_round.py
+tools/verify/gatelock.py
+tools/verify/guards.py
+tools/verify/hooks.py
+tools/verify/modal_baseline.txt
+tools/verify/pov_baseline.txt
+tools/verify/proposed_pre_commit_hook.sh
+tools/verify/proposed_pre_push_hook.sh
+tools/verify/prose_baseline.txt
+tools/verify/report.py
+tools/verify/selfheal.py
+tools/verify/ship.py
+tools/verify/vendored.py
+tools/verify/vendored_files.txt

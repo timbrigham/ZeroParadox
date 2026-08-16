@@ -231,10 +231,19 @@ def selftest():
     # `ok` on all five. The summary contradicting the detail is the only reason it was caught.
     # `common.fire_suppress` takes the expected polarity as a parameter, so there is no second loop
     # to get backwards -- in this file or in the fourteen others that had their own copy.
-    return common.fire_suppress(
+    bad = common.fire_suppress(
         MUST_FIRE, MUST_SUPPRESS,
         lambda text: scan_text(normalize_separators(text)),
         'unmeasured modal claim')
+    # ⚠ THE PATTERN PIN (PAT-1). Three controls guard fourteen phrases. Mutation-tested 2026-08-16:
+    # replacing any of the other eleven with a string that cannot match leaves `--selftest` green and
+    # `--block` at exit 0 — the checker silently stops catching the defect class it exists for. The
+    # controls prove the patterns they exercise; the pin proves the rest are still there.
+    print('PATTERNS')
+    bad += common.check_patterns('check_modal.MODAL_PHRASES', _MODAL_PHRASES)
+    if bad:
+        print('\nselftest: FAIL (%d)' % bad)
+    return 1 if bad else 0
 
 
 def scan():

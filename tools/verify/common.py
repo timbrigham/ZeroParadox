@@ -149,6 +149,68 @@ def load_scope(section):
     return out
 
 
+PATTERN_BASELINE = HERE / 'pattern_baseline.txt'
+
+
+def load_pinned(path, section):
+    """Sectioned `[name]` reader, shared by the scope and pattern pins."""
+    if not path.exists():
+        return set()
+    out, cur = set(), None
+    for line in io.open(str(path), encoding='utf-8-sig').read().splitlines():
+        line = line.rstrip('\n')
+        if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        s = line.strip()
+        if s.startswith('[') and s.endswith(']'):
+            cur = s[1:-1]
+            continue
+        if cur == section:
+            out.add(s)
+    return out
+
+
+def check_patterns(section, live, label=None):
+    """Every DETECTION PATTERN a checker advertises must still be there.
+
+    ⚠⚠ **SCOPE ANSWERS "DID IT LOOK AT EVERYTHING". THIS ANSWERS "WOULD IT RECOGNISE ANYTHING",
+    AND ONLY THE FIRST WAS GUARDED** (`PAT-1`, 2026-08-16). Measured by mutation: replacing each
+    advertised pattern with a string that cannot match, one at a time, and re-running that checker's
+    own `--selftest`. **30 of 34 patterns were SILENT** — delete `artifact` from `check_modal`'s
+    phrase list and it stops catching the defect class it was built for, with `--selftest` green,
+    `--block` exit 0, and `check_checkers` reporting all four properties satisfied. A must-fire
+    control only ever proves the patterns it happens to exercise.
+
+    ⚠ **THE CONTROLS CANNOT BE GENERATED FROM THE PATTERN LIST — that is the trap.** A control
+    derived from the live list disappears with the pattern it was meant to guard, so deletion stays
+    silent and the design defeats itself. The pin has to be an INDEPENDENT record, which is what this
+    baseline is.
+
+    SUPERSET, so adding a pattern is free and only a REMOVAL fires. Same bargain as the scope pin,
+    and for the same reason: weakening a detector must never be quiet, while strengthening one must
+    never be obstructed."""
+    return _superset(PATTERN_BASELINE, section, live, label, kind='pattern')
+
+
+def _superset(path, section, live, label, kind, present_filter=None):
+    recorded = load_pinned(path, section)
+    present = present_filter(recorded) if present_filter else recorded
+    live = set(live)
+    dropped = sorted(present - live)
+    bad = 0
+    ok = not dropped
+    print('  %-40s %s'
+          % ('%s: no recorded %s dropped' % (label or section, kind),
+             'ok (%d recorded, %d live)' % (len(present), len(live)) if ok
+             else '*** %d DROPPED: %s ***' % (len(dropped), ', '.join(repr(d) for d in dropped[:3]))))
+    bad += 0 if ok else 1
+    populated = len(present) > 2
+    print('  %-40s %s' % ('%s: the pin is populated' % (label or section),
+                          'ok' if populated else '*** EMPTY SECTION — check is vacuous ***'))
+    bad += 0 if populated else 1
+    return bad
+
+
 def check_scope(section, live, label=None):
     """Print and score one enumerator's scope pin. Returns the number of failures (0, 1 or 2).
 

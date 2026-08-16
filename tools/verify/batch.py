@@ -132,7 +132,14 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # checker's scope with the control still green. Same argument as the
                               # four suppression baselines above; a data switch left out of this
                               # list is unreviewable by construction.
-                              "scope_baseline.txt"]
+                              "scope_baseline.txt",
+                              # ⚠ AND THE PATTERN PIN (PAT-1). `scope_baseline.txt` records what the
+                              # checkers LOOK AT; this one records what they look FOR. Deleting a
+                              # line here retires a detection pattern, which is exactly as powerful
+                              # as deleting a scanned directory — measured before it was written:
+                              # 30 of 34 advertised patterns could be removed with every control
+                              # green. Both pins are data switches and both belong in this list.
+                              "pattern_baseline.txt"]
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).

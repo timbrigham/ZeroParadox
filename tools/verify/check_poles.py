@@ -223,6 +223,12 @@ def selftest():
     # wrong, which for a counter whose whole output IS the number is the same failure.
     print("SCOPE")
     bad += common.check_scope("check_poles", list(enumerate_files()))
+    # ⚠ THE PATTERN PIN (PAT-1). `MAPS` is the allowlist of named maps whose APPLICATION to a pole is
+    # legitimate — `rInv 0 = infinity` is a theorem, not a defect. Losing an entry is doubly bad: the
+    # correct site starts being reported AND the vocabulary the gate recognises shrinks. One control
+    # covered sixteen entries; mutation-tested, fifteen were silent.
+    print("PATTERNS")
+    bad += common.check_patterns("check_poles.MAPS", MAPS)
     print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0
 
