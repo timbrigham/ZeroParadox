@@ -146,7 +146,10 @@ def load():
 
 
 def save(d):
-    STATE.write_text(json.dumps(d, indent=2) + '\n', encoding='utf-8')
+    # ⚠ Via the shared writer, which creates `.claude-local/` if it is absent. It IS absent in every
+    # clone that is not the author's, and `bump` used to die there with a raw FileNotFoundError —
+    # on the one command CLAUDE.md requires the CALLER to run before spawning any review round.
+    common.write_text_lf(STATE, json.dumps(d, indent=2) + '\n')
 
 
 def guidance(n, targets=None, arc_base=None):

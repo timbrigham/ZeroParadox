@@ -239,7 +239,11 @@ def load():
 
 
 def save(s):
-    io.open(STATE, "w", encoding="utf-8").write(json.dumps(s, indent=1, ensure_ascii=False))
+    # ⚠ Via the shared writer, which creates `.claude-local/` if it is absent. It IS absent in every
+    # clone that is not the author's, and `batch.py start` used to die there with a raw
+    # FileNotFoundError — on the command this project's own manual calls the default entry point for
+    # any multi-site work.
+    common.write_text_lf(STATE, json.dumps(s, indent=1, ensure_ascii=False))
 
 
 def die(msg):

@@ -201,8 +201,23 @@ def write_text_lf(path, text):
     Why it matters beyond the gate: `register.md` carries build-script fingerprints, and
     `check_invariants` records what a byte difference costs there — `check_hashes` exiting 0 on the
     author's machine and 1 in a fresh clone. A provenance token that reproduces on one machine only
-    is not provenance."""
+    is not provenance.
+
+    ⚠ **THE PARENT DIRECTORY IS CREATED IF ABSENT, and that is not a convenience — it is the fix for
+    three crashes in a PUBLIC CLONE.** `.claude-local/` is gitignored, so it does not exist in any
+    clone that is not the author's, and every piece of per-push state lives there. Measured
+    2026-08-16 in a worktree with the private folder absent: `gate_round.py bump`, `gate_round.py
+    reset` and `batch.py start` each died with a raw `FileNotFoundError` traceback rather than a
+    verdict — **the three commands a remediation cycle needs FIRST.** `gate_round.py show` succeeds
+    (it reports round 0 when state is missing), so the failure arrives mid-flow rather than at the
+    door. Pre-existing at `ab2a693`, so not introduced by the dedup.
+
+    `guards.py`'s `_rewrite` had already learned this the same way and fixed it locally, for itself,
+    in August — which is the copy-instead-of-share pattern this module exists to end. One writer, one
+    place, and the lesson applies everywhere it is used."""
     p = Path(path)
+    if p.parent and not p.parent.is_dir():
+        p.parent.mkdir(parents=True, exist_ok=True)
     with io.open(str(p), 'w', encoding='utf-8', newline='\n') as fh:
         fh.write(text)
 
