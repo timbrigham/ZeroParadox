@@ -110,24 +110,23 @@ build's own exit code and reports what the machine actually checked.
 
 ## Setup
 
-Font files are not tracked in git. Download them before running any builder:
+**No setup step. The fonts ship with the repository** (2026-08-15) — 13 DejaVu and STIX Two TTFs in
+[`fonts/`](fonts/), so a fresh clone can run a builder immediately.
 
-```bash
-python setup_fonts.py
-```
+This section previously told you to fetch them with `setup_fonts.py`, because the font files were
+not tracked. That made `scripts/` readable but not runnable: the code was public and the one thing
+it could not start without was missing. Both families are freely redistributable, so there was
+nothing to gain by withholding them.
 
-Or manually: download the [DejaVu fonts](https://dejavu-fonts.github.io/) TTF release and place the following files in `scripts/fonts/`:
+Both licences ship beside the binaries, which their terms require — the SIL Open Font License says
+copies "must contain the above copyright notice, this license":
 
-```
-DejaVuSans.ttf
-DejaVuSans-Bold.ttf
-DejaVuSans-Oblique.ttf
-DejaVuSans-BoldOblique.ttf
-DejaVuSerif.ttf
-DejaVuSerif-Bold.ttf
-DejaVuSerif-Italic.ttf
-DejaVuSerif-BoldItalic.ttf
-```
+- [`fonts/LICENSE-DejaVu.txt`](fonts/LICENSE-DejaVu.txt) — Bitstream Vera, as embedded in the fonts'
+  own metadata
+- [`fonts/LICENSE-STIXTwo-OFL.txt`](fonts/LICENSE-STIXTwo-OFL.txt) — SIL OFL 1.1, upstream text
+
+`setup_fonts.py` is kept for the case where you want to refresh them from source; you should not
+need it.
 
 ## Running a Builder
 

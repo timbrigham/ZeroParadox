@@ -1,8 +1,19 @@
-# tools/verify — what each checker enforces, and why
+# tools/verify — the verification suite, and what each checker enforces
 
-The checkers here are **blocking gates**, not advice. This file is the argument behind them: what
-each detects, the defect it exists to stop, and the measurement that justified building a checker
-rather than writing another convention.
+The checkers in this repository that gate every commit and push. Like `tools/registry/` (the
+declaration extractor), `tools/render/` (the diagram generators) and `scripts/` (the PDF build),
+this folder exists so the provenance of a claim is inspectable — here, the claim is *"this corpus
+was checked"*. You can read exactly what is checked, run it yourself, and see what is deliberately
+**not** checked.
+
+⚠ **Unlike its sibling folders, this is not a source-visibility COPY. It is the working code**,
+tracked in place since 2026-08-15. There is no private original: the file you are reading is the
+file that runs. That was the point of moving it — a gate whose source nobody can see is an
+assertion rather than evidence, and a copy of a gate is a copy that can drift from the gate.
+
+They are **blocking gates, not advice.** What follows is the argument behind each: what it detects,
+the defect it exists to stop, and the measurement that justified building a checker rather than
+writing another convention.
 
 **Why this text is here and not in `CLAUDE.md`.** It was four sections of the operating manual,
 injected into every session and every subagent. Each is already enforced by a checker that BLOCKS
