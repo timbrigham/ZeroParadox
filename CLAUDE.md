@@ -1796,7 +1796,8 @@ fingerprints `scripts/`, so **what `register.md` attests to is exactly what a re
 rebuild the PDF, update the hash token in `register.md`. Only the copy step is gone.
 
 ✅ **The fonts are published too, so `scripts/` is RUNNABLE and not merely source-visible.** The
-13 DejaVu + STIX Two TTFs live in `scripts/fonts/` (6.3 MB), which was the last thing standing
+12 DejaVu + STIX Two TTFs live in `scripts/fonts/` (6.1 MB, measured 2026-08-16), which was the
+last thing standing
 between a clone and a working build — the code was public and its fonts were not.
 
 ⚠ **Both licences ship beside them and that is a requirement, not a courtesy.** The SIL OFL says

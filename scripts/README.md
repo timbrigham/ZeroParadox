@@ -22,7 +22,7 @@ If you are primarily interested in the mathematical content, the PDF documents t
 ### CI verification reports
 
 Unlike everything else in this folder, these two are **primary and executed** — GitHub
-Actions runs `corpus_verification_report.py` on every build (`minimal_core_report.py` is manual by design, per its own workflow header) and publishes their output to the run summary, so they
+Actions runs `corpus_verification_report.py` on every build; `minimal_core_report.py` is `workflow_dispatch` so it can be fired by hand against any branch, **and also runs automatically when `Miniature.lean`, the report script, or the workflow changes**. Both publish their output to the run summary, so they
 are not copies of anything and they are not PDF tooling. Each reads a Lean log plus the
 build's own exit code and reports what the machine actually checked.
 
@@ -110,7 +110,7 @@ build's own exit code and reports what the machine actually checked.
 
 ## Setup
 
-**No setup step. The fonts ship with the repository** (2026-08-15) — 13 DejaVu and STIX Two TTFs in
+**No setup step. The fonts ship with the repository** (2026-08-15) — 12 DejaVu and STIX Two TTFs in
 [`fonts/`](fonts/), so a fresh clone can run a builder immediately.
 
 This section previously told you to fetch them with `setup_fonts.py`, because the font files were
