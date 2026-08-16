@@ -74,6 +74,40 @@ MOVED += [(r"\.claude-local" + SEP + "commands" + SEP, ".claude/commands/")]
 
 RULES = [(re.compile(pat), dest) for pat, dest in MOVED]
 
+# ⚠ GLOBBED REFERENCES — `MIG-2`, and it is the hole this checker was built to have. Every rule above
+# matches a CONCRETE filename, so prose that names a family with a wildcard is invisible. Measured
+# 2026-08-15: `--block` exited 0 while `.claude-local/proposed_pre_*_hook.sh` sat stale in the defect
+# ledger, and again 2026-08-16 on `.claude-local/build_zp*.py` in a PUBLISHED gate brief — which also
+# called `scripts/` a mirror it stopped being. Both would have sent a reviewer to files that do not
+# exist.
+#
+# ⚠ THE 14 CONTROLS THIS CHECKER SHIPPED WITH ALL PLANT CONCRETE PATHS, so the blind half was never
+# probed. A must-fire control in the wrong shape passes and teaches you nothing.
+#
+# The rule stays NARROW deliberately: it reports the reference as needing a look rather than
+# resolving it to a destination. Resolving is impossible — a glob may cover files that moved AND
+# files that legitimately stayed private, which is exactly why the concrete rules above are
+# enumerated rather than globbed (see `_MOVED_BUILDS`).
+#
+# ⚠⚠ ENUMERATED BY FAMILY, NOT "ANY WILDCARD" — and the broad version was written first and was
+# wrong twice over. `\.claude-local/<anything-with-a-*>` flagged **markdown bold**: `` `.claude-local/`
+# ** `` reads as a wildcard, so `CLAUDE.md` and the ledger lit up. It also flagged
+# `.claude-local/*_cleared.txt`, and the review SIGNALS never moved — they are per-push private state
+# by design. A rule that fires on correct prose is the cry-wolf shape this file already records
+# narrowing rather than tolerating, one paragraph up, about `build_*`.
+#
+# So: only the families that ACTUALLY RELOCATED, each spelled out. Same principle as `_MOVED_BUILDS`
+# above, applied to the globbed half. What stayed private and must not fire: `*_cleared.txt`,
+# `gate_round.json`, `batch_state.json`, and every subdirectory (`notes/`, `papers/`, `feedback/`,
+# `outreach/`, `deepseek/`).
+_MOVED_FAMILIES = (
+    r"check_\w*\*\w*\.py",                       # the checkers -> tools/verify/
+    r"proposed_pre_\w*\*\w*_hook\.sh",           # the hook sources -> tools/verify/
+    r"\w*\*\w*_baseline\.txt",                   # the baselines -> tools/verify/
+    r"build_zp\w*\*\w*\.py",                     # the formal builders -> scripts/
+)
+GLOB_REF = re.compile(r"\.claude-local[/\\](?:" + "|".join(_MOVED_FAMILIES) + ")")
+
 # Surfaces that are DATED RECORDS, plus the tombstones (which name the old path by design).
 EXEMPT_DIRS = ("/notes/", "/archive/", "/autobiography/", "/feedback/", "/outreach/",
                "/papers/", "/deepseek/", "/.git/", "/.lake/", "/__pycache__/")
@@ -127,7 +161,12 @@ def scan_line(line):
     selftest that wrote probe files into the repo would violate the no-scratch-files rule this
     project enforces on its reviewers, and would be scanned by the other checkers while it sat
     there."""
-    return [(m.group(0), dest) for pat, dest in RULES for m in [pat.search(line)] if m]
+    hits = [(m.group(0), dest) for pat, dest in RULES for m in [pat.search(line)] if m]
+    # A globbed reference names a FAMILY, so there is no single destination to point at — say so
+    # rather than guessing one. See GLOB_REF.
+    hits += [(m.group(0), "(globbed - resolve by hand; a wildcard may span moved AND still-private "
+                          "files)") for m in [GLOB_REF.search(line)] if m]
+    return hits
 
 
 def selftest():
@@ -149,6 +188,13 @@ def selftest():
         # sent a reviewer to two files that no longer exist.
         ("backslash: a moved doc",    r"read .claude-local\PDF_Rendering_Standards.md first"),
         ("backslash: a moved script", r"the build script in .claude-local\build_zpa.py"),
+        # ⚠ GLOB-SHAPED, and MIG-2's ledger row demands these specifically: the 14 original controls
+        # all planted CONCRETE paths, so the blind half was never probed and `--block` exited 0 over
+        # two real stale references. Both shapes below are verbatim from where they were found.
+        ("globbed: the hook sources", ".claude-local/proposed_pre_*_hook.sh per clone"),
+        ("globbed: the build scripts",
+         "the formal build scripts (`.claude-local/build_zp*.py`, mirrored in `scripts/`)"),
+        ("globbed: a backslash form", r"see .claude-local\build_zp*.py"),
     ]
     suppress = [
         # Still private and still correct - these did NOT move.
@@ -162,6 +208,14 @@ def selftest():
         ("an unmirrored build script", "python .claude-local/build_padicbridge.py"),
         ("the new path itself",      "python tools/verify/check_prose.py --block"),
         ("unrelated prose",          "the bottom is the diagonal fixed point"),
+        # ⚠ THE GLOB RULE MUST NOT SWALLOW A DIRECTORY THAT LEGITIMATELY STAYED PRIVATE. These name
+        # families under `.claude-local/` that never moved; a wildcard over them is correct prose.
+        ("globbed but still private", "every .claude-local/notes/*.md from that arc"),
+        ("a wildcard outside the private folder", "scripts/build_zp*.py render the formal layers"),
+        # ⚠ Both of these were FALSE POSITIVES of the first, broad version of GLOB_REF.
+        ("markdown bold, not a wildcard", "the private folder `.claude-local/` **is gitignored**"),
+        ("signals never moved",       "the hook validates .claude-local/*_cleared.txt"),
+        ("private state never moved", "round state lives in .claude-local/gate_round*.json"),
     ]
 
     bad = 0
