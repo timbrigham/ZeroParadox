@@ -162,10 +162,39 @@ def _invokes(src, name):
     return False
 
 
+def roster_agrees():
+    """Do THIS checker's audited set and `ci_report.SELFTESTS` name the same modules?
+
+    ⚠ **THE FIFTH PROPERTY, AND IT CLOSES THE CLASS `COM-1` AND `DEB-1` ARE INSTANCES OF** (DEB-2).
+    Both are the same shape: a module's controls are reachable only through a HAND-MAINTAINED
+    ROSTER, and there are two rosters. `common.py` was in one and not the other, so a dead
+    `--selftest` dispatch published `pass`; `debaseline.py` was in neither, so controls that had
+    never run turned out to be half-tested the moment they did. Adding a third entry to each list
+    does not close that — it just makes the next divergence later.
+
+    Three lines, and the import is safe: `ci_report`'s only local import is `common`, which imports
+    nothing local, so there is no cycle (measured before writing this). Reading the roster from the
+    module itself rather than re-listing it here is the whole point — a third copy would be the
+    defect one level up again."""
+    sys.path.insert(0, HERE)
+    import ci_report
+    theirs = set(ci_report.SELFTESTS)
+    mine = {c for c in checkers() if "--selftest" in source(c)}
+    return sorted(mine - theirs), sorted(theirs - mine)
+
+
 def audit():
     """(rows, failures). Each row is (checker, property, ok, detail)."""
     rows = []
     caller_text = {c: source(c) for c in CALLERS if os.path.exists(os.path.join(HERE, c))}
+
+    # 5. the two rosters agree (DEB-2). Run once, not per checker — it is a property of the PAIR.
+    unlisted, phantom = roster_agrees()
+    rows.append(("(roster)", "rosters agree", not (unlisted or phantom),
+                 "audited here and in ci_report.SELFTESTS match"
+                 if not (unlisted or phantom)
+                 else "audited but not in SELFTESTS: %s; in SELFTESTS but not audited: %s"
+                      % (unlisted or "-", phantom or "-")))
 
     for c in checkers():
         src = source(c)

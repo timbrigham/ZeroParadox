@@ -159,7 +159,15 @@ PATH_CASES = [
 
 def selftest():
     bad = 0
-    print("prose kind -> bucket mapping")
+    # ⚠ THE GROUP HEADER CARRIES `MUST SUPPRESS` DELIBERATELY. `check_checkers` property 3 is a
+    # declared PROXY: it reads a selftest's own output for both markers rather than proving the
+    # controls are semantically opposite. These three groups always were the suppress side — correct
+    # input must classify correctly — but they were headed with topic names, so adding a `MUST FIRE`
+    # group turned the proxy from "only suppress asserted" to "only fire asserted" and took the PUSH
+    # GATE RED (CHK-RED, /rely round 3). The controls were right in both directions the whole time;
+    # the proxy reads wording. Renaming is the fix — removing this module from `ALSO_AUDITED` would
+    # reopen DEB-1.
+    print("MUST SUPPRESS: prose kind -> bucket mapping")
     for label, entry, want_bucket, want_disp in CASES:
         parts = entry.split("::")
         bucket, disp, _probe = PROSE_KIND.get(parts[1], ("prose-?", "SEMANTIC", False))

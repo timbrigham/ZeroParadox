@@ -262,12 +262,22 @@ def selftest():
     # control therefore expects `_audited == False`. Writing that as a hand-rolled loop is exactly
     # how `check_modal`'s selftest once tallied FAIL(5) while printing `ok` five times; passing the
     # expected polarity as a parameter makes it a value rather than a line of arithmetic.
-    return common.run_controls([
+    bad = common.run_controls([
         ("MUST FIRE (must NOT be treated as audited)", MUST_FIRE,
          _audited, False, "FALSELY CLEARED"),
         ("MUST SUPPRESS (must be treated as audited)", MUST_SUPPRESS,
          _audited, True, "FALSE POSITIVE"),
     ], width=32)
+    # ⚠ THE SCOPE PIN (SCOPE-3). This checker walks `ZeroParadox/` privately. The controls above run
+    # on planted strings in memory, so they are scope-independent by construction and cannot notice
+    # if the walk stops covering the corpus.
+    print("SCOPE")
+    bad += common.check_scope(
+        "check_classes",
+        [os.path.relpath(p, REPO).replace("\\", "/") for p in lean_files()])
+    if bad:
+        print("\nselftest: FAIL (%d)" % bad)
+    return 1 if bad else 0
 
 
 if __name__ == "__main__":

@@ -169,7 +169,7 @@ MUST_DENY = [                       # must be reported as a DENIAL — never bas
 def selftest():
     # Three groups, not two — the denial group is this checker's own, and the shared harness takes
     # a list of groups precisely so a third does not force a hand-written loop back into the file.
-    return common.run_controls([
+    bad = common.run_controls([
         ('MUST FIRE (untagged POV claim)', MUST_FIRE,
          lambda line: verdict(line, line)[1] == 'untagged', True, 'MISSED',
          lambda line: ' (%s)' % verdict(line, line)[1]),
@@ -178,6 +178,17 @@ def selftest():
         ('MUST DENY (never baselined)', MUST_DENY,
          lambda line: verdict(line, line)[0], True, 'DENIAL NOT DETECTED'),
     ], width=32)
+    # ⚠ THE SCOPE PIN (SCOPE-3). This checker enumerates its own `TARGETS` deliberately — folding it
+    # into `common.targets()` would WIDEN a gate baselined at ~78 grandfathered sites. But a private
+    # enumerator still needs pinning: narrowing this list took a planted violation from detected to
+    # undetected with the whole suite green, because `common.py`'s pin only covers the SHARED
+    # enumerator and correctly reported it intact. Independent scope, independent pin.
+    print('SCOPE')
+    bad += common.check_scope(
+        'check_pov', [str(p.relative_to(REPO)).replace('\\', '/') for p in TARGETS if p.is_file()])
+    if bad:
+        print('\nselftest: FAIL (%d)' % bad)
+    return 1 if bad else 0
 
 
 def scan():

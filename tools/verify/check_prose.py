@@ -639,6 +639,14 @@ def selftest():
     if not v7:
         print("  SELFTEST FAIL: essay hiding beside the Take was exempted wholesale"); ok = False
 
+    # ⚠ THE SCOPE PIN (SCOPE-3). This checker walks `ZeroParadox/` privately rather than using
+    # `common.targets()`. Every control above builds its input in a tempfile, so they are
+    # scope-independent BY CONSTRUCTION — they cannot notice if this walk stops covering the corpus.
+    # Narrowing it took a planted violation from detected to undetected with the whole suite green.
+    print("  SCOPE")
+    if common.check_scope("check_prose", [rel for _p, rel in all_files()]):
+        ok = False
+
     print("  selftest: %s" % ("PASS (fires on both, suppresses both)" if ok else "FAIL"))
     return 0 if ok else 1
 

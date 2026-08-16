@@ -149,6 +149,23 @@ def scan_text(text, path="<str>"):
     scan_text.last_idioms = idioms
     return out
 
+def enumerate_files():
+    """Every file this checker scans, repo-relative. EXTRACTED so the scope pin can see it.
+
+    The walk used to be inline in `scan_repo`, which meant nothing outside this function could ask
+    what it covers — and a scope pin you cannot query is a scope pin you do not have (SCOPE-3)."""
+    for root, dirs, files in os.walk(REPO):
+        relroot = os.path.relpath(root, REPO).replace("\\", "/")
+        dirs[:] = [
+            d for d in dirs
+            if d not in SKIP_DIRS
+            and (relroot + "/" + d).lstrip("./") not in SKIP_RELDIRS
+        ]
+        for fn in files:
+            if fn.endswith(SCAN_EXT):
+                yield os.path.relpath(os.path.join(root, fn), REPO).replace("\\", "/")
+
+
 def scan_repo():
     hits, idioms = [], []
     for root, dirs, files in os.walk(REPO):
@@ -200,6 +217,12 @@ def selftest():
         got = bool(scan_text(line))
         print("  %-24s %s" % (name, "ok" if not got else "*** FALSE POSITIVE ***"))
         bad += 1 if got else 0
+    # ⚠ THE SCOPE PIN (SCOPE-3). This checker walks the WHOLE repo privately, and its controls above
+    # run on planted strings, so they cannot notice the walk narrowing. It is a COUNTER rather than
+    # a gate, so a collapse here does not let a violation through — it makes the number quietly
+    # wrong, which for a counter whose whole output IS the number is the same failure.
+    print("SCOPE")
+    bad += common.check_scope("check_poles", list(enumerate_files()))
     print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0
 

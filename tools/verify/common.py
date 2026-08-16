@@ -117,7 +117,73 @@ GLOBS = ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
 
 # The reviewed scan scope, pinned. `selftest()` asserts the live set is a SUPERSET of it, so any
 # narrowing of GLOBS, SKIP_DIRS, SKIP_NAMES or a per-checker skip fires — see SCOPE-1 there.
+#
+# ⚠⚠ **SECTIONED, BECAUSE PINNING `targets()` ALONE PINNED THREE CHECKERS OUT OF SEVEN** (SCOPE-3,
+# `/rely` round 3). Only `check_modal`, `check_negatives` and `check_figures` use the shared
+# enumerator. `check_pov`, `check_prose`, `check_classes` and `check_poles` each walk the tree
+# privately — `check_pov`'s source says so deliberately, and the others predate `common.py`. So the
+# output pin was correct and **not connected to four of the gating checkers**: narrowing any private
+# enumerator took a planted violation from detected to undetected with the whole suite green, and
+# `common.py --selftest` kept reporting the shared scan set intact, correctly, because it was.
+#
+# ⚠ The one thing that noticed was `guards.py` — reporting *itself* `DETECTOR BROKEN`, and the
+# narrowing silenced that too. **Fixing the shared thing and leaving the private ones is the same
+# one-route-not-the-property error, one level out.**
 SCOPE_BASELINE = HERE / 'scope_baseline.txt'
+
+
+def load_scope(section):
+    """The recorded scan set for one enumerator. Sections are `[name]` headed."""
+    if not SCOPE_BASELINE.exists():
+        return set()
+    out, cur = set(), None
+    for line in io.open(str(SCOPE_BASELINE), encoding='utf-8-sig').read().splitlines():
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+        if line.startswith('[') and line.endswith(']'):
+            cur = line[1:-1]
+            continue
+        if cur == section:
+            out.add(line)
+    return out
+
+
+def check_scope(section, live, label=None):
+    """Print and score one enumerator's scope pin. Returns the number of failures (0, 1 or 2).
+
+    SUPERSET, so adding files never fires; only a NARROWING does. The vacuity guard is not
+    decoration — an absent section makes the superset test trivially true, which is the
+    `decl_baseline.txt` failure mode `batch.py` records, where "added declarations" computed against
+    nothing returned nothing and both purity and SSOT passed blind.
+
+    ⚠ **A RECORDED PATH THAT NO LONGER EXISTS IS NOT A NARROWING — it is a different tree**, and
+    filtering by existence is what makes this pin survive a clone. The first version compared against
+    the raw recorded set and failed in a fresh worktree, because the baseline had been generated in a
+    working tree that carried untracked files. A control that only passes on the author's machine is
+    the `check_hashes` failure this project already has on record: exit 0 here, exit 1 in a clean
+    checkout. Caught by running the control in a worktree rather than trusting it in place.
+
+    What the check therefore asserts is the property that matters: **every file that EXISTS and was
+    in scope is still in scope.**"""
+    recorded = load_scope(section)
+    present = {r for r in recorded if (REPO / r).exists()}
+    dropped = sorted(present - set(live))
+    bad = 0
+    ok = not dropped
+    print('  %-40s %s'
+          % ('%s: no recorded path dropped' % (label or section),
+             'ok (%d recorded, %d present, %d live)'
+             % (len(recorded), len(present), len(list(live))) if ok
+             else '*** %d DROPPED: %s ***' % (len(dropped), ', '.join(dropped[:4]))))
+    bad += 0 if ok else 1
+    # ⚠ Vacuity is measured on what is PRESENT, not on what is recorded: a section full of paths
+    # that no longer exist would pass the superset test trivially while pinning nothing.
+    populated = len(present) > 20
+    print('  %-40s %s' % ('%s: the pin is populated' % (label or section),
+                          'ok' if populated else '*** EMPTY SECTION — check is vacuous ***'))
+    bad += 0 if populated else 1
+    return bad
 
 
 def tracked_md():
@@ -418,23 +484,8 @@ def selftest():
     # and only a NARROWING fires; deleting a source file needs its line removed here, a reviewable
     # act, on the same bargain every other baseline in this suite makes.
     print('SCOPE (the recorded scan set is still covered)')
-    recorded = load_baseline(SCOPE_BASELINE)
-    live = set(rels)
-    dropped = sorted(recorded - live)
-    ok = not dropped
-    print('  %-40s %s'
-          % ('no recorded path has fallen out of scope',
-             'ok (%d recorded, %d live)' % (len(recorded), len(live)) if ok
-             else '*** %d DROPPED: %s ***' % (len(dropped), ', '.join(dropped[:4]))))
-    bad += 0 if ok else 1
-
-    # A baseline that is absent or empty would make the check above vacuously true — the failure
-    # mode `batch.py` records for `decl_baseline.txt`, where "added declarations" computed against
-    # nothing returned nothing and both purity and SSOT passed blind.
-    plausible = len(recorded) > 100
-    print('  %-40s %s' % ('the baseline itself is populated',
-                          'ok' if plausible else '*** EMPTY OR MISSING — check is vacuous ***'))
-    bad += 0 if plausible else 1
+    recorded = load_scope('common.targets')
+    bad += check_scope('common.targets', rels)
 
     # ⚠ MUST-FIRE, IN PROCESS. Each is a route `/rely` used to defeat the previous control. They
     # mutate module constants and restore them, so nothing touches disk and no probe can be left
