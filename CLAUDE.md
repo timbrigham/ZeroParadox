@@ -26,7 +26,7 @@ when the code went public.
 | **`tools/verify/`** | every checker, the pipeline (`batch.py`, `hooks.py`, `guards.py`, `report.py`, `vendored.py`), the **baselines**, the hook sources + `install_hooks.py` | **yes — public** |
 | **`scripts/`** | every PDF build script, `zp_utils.py`, `scan_pdfs.py`, `PDF_Rendering_Standards.md` | **yes — public** |
 | **`.claude/commands/`** | the review-gate definitions Claude Code reads | **yes — public** |
-| **`.claude-local/`** | signals (`*_cleared.txt`), `gate.lock`, `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/`, `fonts/` | no — private, own git repo, no remote |
+| **`.claude-local/`** | signals (`*_cleared.txt`), `gate.lock`, `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/` | no — private, own git repo, no remote |
 
 **The line: artifacts of VERIFICATION are public; artifacts of PROCESS-IN-FLIGHT are private.**
 A checker and its baseline are reproducible from the public corpus, so withholding them protected
@@ -1770,23 +1770,20 @@ The minimum margin is 10 pts top and 5 pts bottom. If either fails, increase `dh
 - [ ] No internal title string that duplicates the caption
 - [ ] `dh` expressed in inches with comment: `# N * 72 = M pts; content top = X, content bottom = Y`
 
-## README.md Link Restrictions
-
-The following files exist in the repository but **must not be linked from README.md or GUIDE.md** until the conditions below are met:
-
-| File | Reason | Condition to lift restriction |
-|------|--------|-------------------------------|
-| `ZP_Gen2_Applications.pdf` | Speculative applications document — depends on Gen 1 being formally complete and bridge documents written. Premature to surface publicly in the index. | All Gen 1 layers (ZP-A through ZP-H) fully tightened; thermodynamic bridge and OQ-E2 resolved; explicit decision by Tim to promote. |
-| `ABOUTME.md` | Not ready for prominent public linking from the main index. | Explicit decision by Tim to promote. |
-
-Do not add links to these files in README.md or GUIDE.md under any circumstances without explicit instruction. They may exist in the repo and be committed — they just must not appear in either index.
-
 ## scripts/ is the build scripts' ONLY home. There is no mirror to keep current. (2026-08-15.)
 
 **This section used to describe a hand-copied mirror and a per-commit obligation to refresh it.
 Both are gone.** `scripts/build_*.py`, `zp_utils.py` and `scan_pdfs.py` are the working copies now;
-the `.claude-local/` originals were deleted. Edit the file in `scripts/` and commit it like any
-other source file.
+the `.claude-local/` originals of those were deleted. Edit the file in `scripts/` and commit it
+like any other source file.
+
+⚠ **NOT every build script moved, and this paragraph said otherwise until 2026-08-15.** Five
+remain private-only: `build_bottom_matrix.py`, `build_claim_map.py`, `build_padicbridge.py`,
+`build_zp_reals_companion.py`, `build_zpj_bridge_companion.py`. **Measured 2026-08-15: none of
+the five emits a TRACKED artifact**, so nothing published depends on an unpublished builder and
+the transparency position holds — but `scripts/build_dictionary_map.py` *imports* the first of
+them, which is why it cannot run from a public clone and now says so instead of raising
+`ModuleNotFoundError`.
 
 ⚠ **WHY IT WAS RETIRED, and the failure is the general argument against mirrors.** The rule asked a
 human to remember a copy step on every commit, and `register.md` fingerprinted only the PRIVATE
@@ -1836,35 +1833,36 @@ By reference kind and surface:
 
 **Enforcement:** a `check_paths.py`-style resolver (the one used in the 2026-07-08 sweep, in the scratch/`.claude-local` tooling) verifies every repo-relative file reference in tracked markdown resolves against the filesystem. Run it before any doc-touching commit; it should become a pre-push/CI check so a future reorg cannot silently rot the citation layer again.
 
-## Transparency Notices on Unlinked Public Documents
+## Transparency notices on unlinked files — RETIRED 2026-08-15 (Tim).
 
-⚠⚠ **EXCEPTION — AN INSTRUCTION FILE CANNOT CARRY A TRANSPARENCY HEADER. (Tim, 2026-08-15.)**
-**The test is whether the file's CONTENT IS CONSUMED AS INSTRUCTIONS rather than read by a person.**
-If it is, a notice prepended to it **becomes part of the instruction** and changes what the machine
-does. The notice is not merely redundant there — it is a behavioural change dressed as boilerplate.
+**The rule was: any tracked file unlinked from both README.md and GUIDE.md must carry a
+transparency blockquote (or, for a PDF, an amber callout). It is gone.** It bound seven files
+and exactly one honoured it, for months, with nothing noticing — which is past this file's own
+*fix the trigger* rung and into *discipline will not work here*.
 
-- **`.claude/commands/*.md`** — every one is a slash-command prompt. A transparency blockquote at the
-  top would be prepended to the brief **on every gate invocation**, silently editing what each
-  reviewer is told. Eleven files, all exempt. This is the same structural fact as *"never put a
-  non-command `.md` in `.claude/commands/`"* above: **that directory is an interface, and anything
-  added to a file in it is added to the interface.**
-- **`CLAUDE.md`** — injected wholesale at session start. Same reason.
+**Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md`,
+`BOTTOMELEMENT_findings.md`, `CLAUDE.md`, `LEAN_CUSTOM_REGISTRY.md`, `RELEASES.md`,
+`register.md`, `scripts/PDF_Rendering_Standards.md`. Only `ABOUTME.md` carried a notice. Its own
+table named two files and one of them, `ZP_Gen2_Applications.pdf`, had been moved to the private
+folder and was not tracked at all.
 
-**Their disclosure lives HERE instead**, in § *WHERE THINGS LIVE* and § *the published gate briefs*,
-which is a page a human reads rather than a prompt a machine executes. ⚠ **Do not "fix" the missing
-notices by linking the briefs from README.md either** without agreement — README is the formal index
-for mathematicians and its section order is fixed by rule.
+⚠ **THE TRIGGER WAS MEASURING THE WRONG THING, and that is the transferable part.** It asked
+*is this linked?* when what anyone actually cared about is *would a reader be misled about why
+this exists?* Those came apart twice: `register.md` is flagged unlinked while this same file
+says it is deliberately reachable through the Claims Ledger, and an instruction file cannot
+carry a header at all, because a notice prepended to a prompt **becomes part of the prompt**.
+The exception carved for `.claude/commands/*.md` and `CLAUDE.md` was the tell that the trigger
+was wrong, not that it needed one more exception.
 
-**For everything else the rule stands as written.** Any file that is committed to the public repository but intentionally unlinked from both README.md and GUIDE.md **must carry a transparency notice** explaining its status. This is a standing policy — apply it whenever a new unlinked file is added or discovered.
+**What replaces it: nothing mechanical, and that is deliberate.** Disclosure lives in
+§ *WHERE THINGS LIVE* and § *Private Working Folder* — pages a human reads. Where a document's
+STATUS could mislead (speculative, superseded, a development artifact), say so in its own
+opening because it is true, not because a linkage rule fired. `ABOUTME.md` keeps its note on
+exactly that basis.
 
-**For Markdown files:** Add a blockquote at the very top of the file:
-```
-> **A note on transparency:** This file lives in the public repository but is intentionally unlinked from the main project index. [One sentence on why — e.g. speculative content, development artifact, etc.] The main entry point for the Zero Paradox is the [Formal Index](README.md).
-```
-
-**For PDF files:** Add an amber callout box as the first element in the document (before the title block), using the `callout(text, bg=AMBER_LITE, border=AMBER)` helper in the build script. Wording should follow the same pattern: explain the document is unlinked, why, and direct the reader to the README.
-
-**If no build script exists for an unlinked PDF:** it is almost always a superseded development artifact - remove it from the root (git history preserves it) rather than leave it unnoticed.
+**Also retired with it: § *README.md Link Restrictions*,** whose table named the same two files
+and was stale the same way. Nothing is being *hidden* — if a file should not be in the index,
+the reason belongs in a commit message or a defect row, not a standing table that outlives it.
 
 ## Development Environment
 

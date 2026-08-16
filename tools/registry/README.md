@@ -26,8 +26,9 @@ validated `export_full` — not by committing this tool's raw output.
 
 The baseline corresponds to a fixed public-production commit (recorded in `tm_registry.py`):
 `origin/main @ 7075d4abfe49b81c0080166d848e08579f1cafb7` (tree `eacbc513a541d465b9937b33a53f923d3e9ea4b6`).
-Re-running the extractor against that tree reproduces the same inventory (currently **1025**
-declarations across 136 declaration-bearing files).
+Re-running the extractor against that tree reproduces the same inventory: **1025 declarations, measured against that pinned commit**,
+spread across **136 declaration-bearing files, measured against the same commit** — reproducible on demand
+rather than a figure that drifts.
 
 ## Identifier handling (why the count is what it is)
 

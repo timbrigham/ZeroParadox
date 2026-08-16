@@ -278,9 +278,10 @@ def main():
         print('')
         print('Push blocked: NEW untagged point-of-view claim(s) and/or DENIAL(s).')
         print('Fix the finding, or record it in .claude-local/DEFECTS.md and fix the')
-        print('site it points at. This gate is NOT mirrored in CI - CI runs `lake build`')
-        print('only, so this is the LAST check before the remote. Measured 2026-08-10:')
-        print('no workflow references any checker. Bypassing it ships the change unchecked.')
+        print('site it points at. CI re-runs this checker on pushes and PRs to `main`')
+        print('(.github/workflows/verify.yml), but REPORT-ONLY - it publishes the finding')
+        print('and does not fail the run. So this is still the last check that STOPS a')
+        print('change reaching the remote. Bypassing it ships the change unchecked.')
         return 1
     if new or denials:
         print('')

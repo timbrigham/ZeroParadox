@@ -9,7 +9,13 @@ name: Verification suite
 #
 # REPORT-ONLY, DELIBERATELY. This job does not block a merge. Phase 4 makes it a required status
 # check via branch protection on `main`, which is a separate GitHub setting from running the
-# workflow; the code change for it is adding `--block` below and nothing else.
+# workflow.
+#
+# ⚠ THE CODE CHANGE IS NOT JUST ADDING `--block`, AND THIS COMMENT CLAIMED IT WAS UNTIL
+# 2026-08-15. Measured here, with no Mathlib present: `ci_report.py --block` exits 0 while
+# `check_paths.py` is rendered **skipped**, and any checker returning 3 is scored the same way.
+# Flipping the switch today would make a green REQUIRED check out of a gate that never ran.
+# See the prerequisites in tools/verify/ci_report.py's header before attempting Phase 4.
 #
 # ⚠ This workflow could not have existed before 2026-08-15. The checkers lived in gitignored
 # `.claude-local/`, and CI cannot run a file that is not in the repository. Relocating them to

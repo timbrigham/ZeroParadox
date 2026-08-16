@@ -338,8 +338,9 @@ def pre_push(stream):
         # workflows for any checker returns nothing — CI runs `lake build`. Telling the operator a
         # backstop exists when it does not is the worst possible failure mode for a deterrent, and
         # the true statement deters harder.
-        print("⚠ This gate is NOT mirrored in CI — CI runs `lake build` only. It is the LAST check")
-        print("  between this change and the remote; bypassing it ships the change unchecked.")
+        print("⚠ CI re-runs these checkers on `main` (.github/workflows/verify.yml) but")
+        print("  REPORT-ONLY — it publishes findings and does not fail the run. This hook is")
+        print("  the last check that STOPS a change; bypassing it ships the change unchecked.")
         return 1
 
     return scan_exit

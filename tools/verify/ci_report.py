@@ -6,8 +6,23 @@ public CI so nobody takes our word for it"* — until now every checker ran only
 evidence.
 
 REPORT-ONLY BY DEFAULT, AND THAT IS DELIBERATE. Phase 3 publishes; Phase 4 makes it block, via
-branch protection on `main`. Flipping it is `--block` on the command line and nothing else — the
-exit code is already computed honestly, it is simply not returned unless asked for.
+branch protection on `main`.
+
+⚠ FLIPPING IT IS **NOT** FREE, AND THIS PARAGRAPH SAID IT WAS UNTIL 2026-08-15. The claim was
+that `--block` is the whole change because the exit code is already computed honestly. Measured
+in the real CI environment (a checkout with no Mathlib), it is not:
+
+  1. `check_paths.py` legitimately returns 3 (EXIT_SKIPPED) there, and a skip is scored as a
+     non-failure, so `ci_report.py --block` exits 0 while that gate has not run. Adding
+     `--block` today would publish a GREEN REQUIRED CHECK covering a gate that was skipped.
+  2. `SKIPPED_RC = 3` is applied to every row, but only `check_paths.py` defines it. So ANY
+     checker can exempt itself from the CI gate by returning 3 — verified by patching
+     `check_pov.py`'s gate path to return 3, after which `--block` exits 0 and the row reads
+     `**skipped**` with its controls still passing. `guards.py --list` registers four routes
+     for a FILE to self-exempt and none for a CHECKER to.
+
+Both are prerequisites for Phase 4, ledgered as such. Until they are closed, `--block` buys a
+worse signal than no signal: a required check that is green because nothing ran.
 
 ⚠ **EXIT CODES ARE TAKEN AS VALUES, NEVER INFERRED FROM LOG TEXT.** The buildout records three
 fail-opens in an earlier CI report that all came from parsing output: Lean tags some diagnostics
@@ -91,7 +106,7 @@ CHECKS = [
     ("check_moved.py",      ["--block"], GATE,  "nothing points at a relocated path"),
     ("check_negatives.py",  ["--block"], GATE,  "a universal negative carries a date or a search record"),
     ("check_figures.py",    ["--block"], GATE,  "an artifact count carries a date, or is measured on demand"),
-    ("check_checkers.py",   ["--block"], GATE,  "every checker has passing controls in both directions, and is invoked"),
+    ("check_checkers.py",   ["--block"], GATE,  "every check_*.py has passing controls in both directions, and is invoked (guards.py is NOT audited)"),
     # No --block flag: these exit non-zero on a finding natively.
     ("check_invariants.py", [],          GATE,  "always-true invariants hold across the corpus"),
     ("check_paths.py",      [],          GATE,  "every repo-relative reference resolves"),

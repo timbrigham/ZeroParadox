@@ -30,6 +30,7 @@ import hashlib
 import io
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -121,15 +122,29 @@ def prose_lines(text, suffix):
     return out
 
 
+def tracked_md():
+    """Every TRACKED `.md`, at any depth.
+
+    ⚠ `ROOT.glob('*.md')` is ROOT-ONLY. That is how 18 tracked markdown files sat outside this
+    checker while its own scope control still passed — among them all 11 gate briefs under
+    `.claude/commands/`, which CLAUDE.md declares publication content. `git ls-files` is what
+    `check_paths` already uses, and tracked-only is the load-bearing half: the gitignored private
+    folder stays out by construction rather than by remembering to extend SKIP_DIRS."""
+    out = subprocess.run(['git', 'ls-files', '*.md'], cwd=str(ROOT),
+                         capture_output=True, text=True, check=True).stdout.split()
+    return [ROOT / rel for rel in out]
+
+
 def targets():
-    for pat in ('ZeroParadox/**/*.lean', '*.md', 'scripts/*.py', 'tools/**/*.py'):
-        for p in ROOT.glob(pat):
-            rel = p.relative_to(ROOT).as_posix()
-            if p.name in SKIP_NAMES or any(('/' + d + '/') in ('/' + rel) for d in SKIP_DIRS):
-                continue
-            if is_vendored(p, rel):
-                continue
-            yield p, rel
+    globbed = [p for pat in ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
+               for p in ROOT.glob(pat)]
+    for p in globbed + tracked_md():
+        rel = p.relative_to(ROOT).as_posix()
+        if p.name in SKIP_NAMES or any(('/' + d + '/') in ('/' + rel) for d in SKIP_DIRS):
+            continue
+        if is_vendored(p, rel):
+            continue
+        yield p, rel
 
 
 def scan_text(text, suffix='.md'):

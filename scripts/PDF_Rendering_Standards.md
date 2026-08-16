@@ -271,7 +271,7 @@ if __name__ == '__main__':
     build()
 ```
 
-`companion_template.py` (private; kept in `.claude-local/` and not published) in `.claude-local/` is the full starting-point template for new companion scripts. Use it.
+`companion_template.py` is the full starting-point template for new companion scripts, and it is **private** — kept in `.claude-local/` and not published. A maintainer with that folder should start from it; a public reader cannot, and should copy the nearest existing `scripts/build_*_companion.py` instead.
 
 ---
 

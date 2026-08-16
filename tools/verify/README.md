@@ -39,9 +39,10 @@ the source was already stale.**
 
 | checker | mode | enforces |
 |---|---|---|
-| `check_pov.py` | warn at commit, **BLOCK** at push | a POV claim declares its KIND and STATUS; a DENIAL is never allowed |
-| `check_classes.py` | warn at commit, **BLOCK** at push | a new requirements class records a degeneracy verdict |
-| `check_prose.py` | warn at commit, **BLOCK** at push | prose caps: block size, docstring vs declaration, gloss labels |
+| `check_pov.py` | **BLOCK** at commit and at push | a POV claim declares its KIND and STATUS; a DENIAL is never allowed |
+| `check_modal.py` | **BLOCK** at commit and at push | a modal claim carries a measurement or a reduction |
+| `check_classes.py` | **BLOCK** at commit and at push | a new requirements class records a degeneracy verdict |
+| `check_prose.py` | **BLOCK** at commit and at push | prose caps: block size, docstring vs declaration, gloss labels |
 | `guards.py` | **BLOCK** at push | every enumerated ROUTE to a guarded property still behaves |
 
 Each prints its own invocation path; run with no arguments for a report.
@@ -99,14 +100,19 @@ form itself — detecting only the *absence of the required form* leaves the vio
 all leak.** (`vocabulary_reference.md`: the bare-"bottom" rule, "iterative bottoms", standard-math-first.)
 `feedback_jargon_blindspot` records why: Claude is embedded in the project's language and structurally
 cannot self-detect vocabulary drift, so discipline-level rules fail here by construction.
-- `python tools/verify/check_pov.py` — **WARNS**, wired into `.git/hooks/pre-commit` (staged copy at
-  `tools/verify/proposed_pre_commit_hook.sh`, now TRACKED; install with `python
-  tools/verify/install_hooks.py`, and `--check` reports whether the gates are actually armed).
-  It never blocks a commit — the stub-first protocol commits incomplete work on purpose, and a blocking
-  commit gate with false positives trains the `--no-verify` reflex that would cost the push gate too.
-- `python tools/verify/check_pov.py --block` — **BLOCKS**, wired into `pre-push` § 3b. Validated
-  2026-07-30 end-to-end: injecting a real POV overclaim made `git push --dry-run` exit 1 on the POV
-  check; removing it passed.
+- `python tools/verify/check_pov.py --block` — **BLOCKS AT BOTH STAGES.** `pre-commit` runs it
+  (with the other three) via `hooks.py`, and `pre-push` § 3b runs it again. Install the hooks with
+  `python tools/verify/install_hooks.py`; `--check` reports whether the gates are actually armed,
+  which is a different question from whether the checks passed. **`hooks.py` is the authority on
+  enforcement mode, not this file** — its `PRE_COMMIT_PLAN` is printed to the operator on every
+  commit, so the mode is visible at the moment it applies and cannot drift from the code the way a
+  sentence here can. ⚠ This paragraph described a warn-only commit gate until 2026-08-15, six days
+  after the behaviour changed.
+- Validated end-to-end, twice, by planting each checker's own must-fire text and running the real
+  hook: commit → exit 1, `Commit blocked — NEW violations in: check_pov.py`; push → exit 1.
+  ⚠ A hand-written violation is NOT a control — it is not a shape the checker detects, and two
+  separate reviewers reached the opposite (wrong) conclusion from one before re-running with the
+  checker's own text.
 - **Baselined.** The corpus carries a baselined set of untagged sites; `check_pov.py` prints the current figure on every run. (A recorded count here disagreed with `pov_baseline.txt` beside it.) Demanding a tag on all of
   them is a migration, not a gate, and a gate that blocks everything on day one gets muted. So
   `tools/verify/pov_baseline.txt` grandfathers them and the gate blocks on **NEW** sites only —
@@ -153,8 +159,7 @@ witness, never by reading the class. `SeparatedSuccession`'s `separated` field e
 field does not enforce.
 
 **Enforcement (2026-08-07, Tim's call — mechanical because this is the FIFTH convention of this shape
-and the earlier four all leak).** `python tools/verify/check_classes.py` WARNS at commit;
-`--block` ENFORCES at push. It cannot decide degeneracy (that needs a witness); it enforces that the
+and the earlier four all leak).** `python tools/verify/check_classes.py --block` ENFORCES at commit AND at push. It cannot decide degeneracy (that needs a witness); it enforces that the
 question was **asked** — a `NO-GO` section, a `Nondegenerate` predicate, or a named trivial witness in
 the declaring file. Same design as `check_pov.py`: enforce that a convention was followed, never that a
 claim is true. **Baselined; blocks on NEW classes only.** (For the current count run the checker — it prints `grandfathered` on every run. A number written here contradicted `class_baseline.txt` in the same directory, which is DC-6 inside the file that documents DC-6.) Shrink the baseline
@@ -233,8 +238,9 @@ diff against upstream, which is the reason for vendoring it. `check_prose.py` sk
 the exempt files in its output**, so the exemption is visible rather than silent. Currently
 `ZeroParadox/Vendored/NaturalOps.lean` (verbatim, Mathlib v4.28.0) and
 `ZeroParadox/Ordinal/NaturalOpsPow.lean` (a port of Hernández's Combinatorial Games file) — verified
-to match those two files and no others. This removed **140 sites, 119 of them undocumented
-declarations we did not author**.
+to match those two files and no others. When the exemption landed it removed **140 sites, measured 2026-08-08**,
+of which **119 were undocumented declarations we did not author, measured the same day** — a
+one-time delta, not a running total.
 
 ⚠ **The exemption has exactly ONE definition — `tools/verify/vendored.py`. Import it; never restate
 it** (Tim, 2026-08-09: *"the vendor files should be exempt extremely. we already did it elsewhere"*).
@@ -261,8 +267,8 @@ files. The mechanism meant to stop glosses overclaiming is, in the indexes whose
 they cannot overclaim, essentially absent.
 
 **ENFORCEMENT — mechanical, because this is the SIXTH convention of this shape and the previous
-five all leaked.** `python tools/verify/check_prose.py` WARNS at commit; `--block` ENFORCES at
-push (`pre-push` § 3b-e). **FOUR rules** (a fifth was retired 2026-08-08, below): a module-doc
+five all leaked.** `python tools/verify/check_prose.py --block` ENFORCES at commit and at push
+(`pre-push` § 3b-e). **FOUR rules** (a fifth was retired 2026-08-08, below): a module-doc
 block over **10 lines** (just above the p90 for file headers); a docstring longer than its
 declaration; a `#check` with **no gloss**; and a gloss carrying **no `Statement:`/`Reading:`
 label**. **Fires on NEW and EDITED prose only.**
@@ -273,8 +279,9 @@ across one arc, roughly **one hand-written gloss in seven was false, while delet
 none**. What it demanded is also redundant now — the public CI run summary publishes every
 declaration's axiom footprint and the build emits its elaborated signature, both regenerated per
 run and neither hand-maintained, so a docstring restating a signature is a second copy that can
-drift while the artifact cannot. Retiring it removed **119 sites by amending a rule rather than by
-writing anything**, which is the only category of burndown with a zero error rate. **An
+drift while the artifact cannot. Retiring it removed **119 sites, measured 2026-08-08, by
+amending a rule rather than by writing anything** — the only category of burndown with a zero
+error rate. **An
 interpretive docstring is still welcome everywhere — it is simply no longer mandatory**, and the
 caps on over-long ones are untouched.
 - **The `bare` rule was deliberately NOT retired with it.** 17 of the 27 open bare-`#check` sites
