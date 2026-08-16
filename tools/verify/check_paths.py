@@ -120,8 +120,28 @@ MATHLIB_ROOTS = (
 )
 
 
+# ⚠ IS THE PINNED CHECKOUT EVEN HERE? `.lake/packages/` is a BUILD ARTIFACT — gitignored, absent
+# from every fresh clone, absent from a git worktree, and absent in CI, which runs this suite with
+# `actions/setup-python` and no Lean toolchain at all.
+#
+# Without this guard the checker reported "63 of 63 DANGLING MATHLIB CITATIONS" anywhere Mathlib
+# was not built, and exited 1. Measured 2026-08-15 in a clean worktree; the new CI job would have
+# published that on every single run. Sixty-three correct citations reported as broken is the
+# cry-wolf shape, and it would have taught everyone to ignore a red `check_paths`.
+#
+# Unavailable is not wrong. The same distinction the AR tracker needed in `check_hashes.py`: a
+# check that cannot run must SAY SO, not fail.
+MATHLIB_PRESENT = any(base.is_dir() for base in MATHLIB_ROOTS)
+
+
 def mathlib_resolves(ref):
-    """True if a Mathlib/Std/Batteries path exists under any pinned package root."""
+    """True if a Mathlib/Std/Batteries path exists under any pinned package root.
+
+    ⚠ Returns True unconditionally when the checkout is ABSENT. That is a skip, not a pass, and the
+    caller says so in its output — `scan()` returns a different arity depending on `check_mathlib`,
+    so branching at the call site raised `ValueError: expected 5, got 3` the moment it was tried."""
+    if not MATHLIB_PRESENT:
+        return True
     return any((base / ref).exists() for base in MATHLIB_ROOTS)
 
 
@@ -433,7 +453,11 @@ def main():
     # fail exactly as silently as in markdown, and there are far more of them.
     dl, bl, cl, ml, cm = scan(tracked_lean(), find_bare=True, lean_mode=True, check_mathlib=True)
     report('tracked Lean sources (live)', dl, bl, cl)
-    if ml:
+    if not MATHLIB_PRESENT:
+        print('  (Mathlib/Std citations NOT CHECKED — no pinned checkout at .lake/packages/.')
+        print('   That is a build artifact: absent in a fresh clone, a worktree, and CI.')
+        print('   A SKIP, not a pass — these citations were not verified here.)')
+    elif ml:
         print(f'\nDANGLING MATHLIB/STD CITATIONS ({len(ml)} of {cm} checked) — '
               f'not in the pinned checkout:')
         for path, lineno, ref in ml:
