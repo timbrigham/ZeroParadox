@@ -34,17 +34,18 @@ import subprocess
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent.parent
-SELF = Path(__file__).resolve().relative_to(ROOT).as_posix()
-BASELINE = HERE / 'figures_baseline.txt'
-
-sys.path.insert(0, str(HERE))
-from vendored import is_vendored          # noqa: E402
-# ⚠ ONE DEFINITION. This glob had three copies and a fix reached two of them;
-# see tracked_md's docstring. Import it.
-from check_modal import tracked_md        # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import common                              # noqa: E402
+# ⚠ ONE DEFINITION. The markdown glob had three copies and a fix reached two of them; see
+# `common.tracked_md`. Until 2026-08-16 this line imported it FROM `check_modal`, which made a peer
+# checker into a library (`DEFECTS.md` MIG-3) — the cheap move, not the right one. Shared machinery
+# belongs in a module that checks nothing.
+from common import HERE, REPO              # noqa: E402
+from vendored import is_vendored           # noqa: E402
 import report                              # noqa: F401,E402  (utf-8 stdout, side effect)
+
+SELF = common.self_rel(__file__)
+BASELINE = HERE / 'figures_baseline.txt'
 
 # ── the countable artifacts ──────────────────────────────────────────────────────────────────
 # Deliberately NARROW. Every noun here names a set that GROWS OR SHRINKS as work happens, which is
@@ -78,10 +79,10 @@ EVIDENCE = re.compile(
     r"\bcorrected\b|\bretract",
     re.I)
 
-SKIP_NAMES = {'CLAUDE.md', 'check_figures.py', 'figures_baseline.txt',
-              'register.md', 'RELEASES.md'}
-SKIP_DIRS = ('.lake', '.git', 'notes', 'papers', 'archive', 'feedback', 'outreach',
-             'autobiography', '__pycache__', 'deepseek', 'fonts')
+# The shared skips live in `common.SKIP_NAMES`; only this checker's own source and baseline are
+# genuinely its own. `common.SKIP_DIRS` carries the union of what the three copies of this constant
+# used to hold — measured inert before merging, since the globs cannot yield a `.pyc` or a `.ttf`.
+SKIP_NAMES = {'check_figures.py', 'figures_baseline.txt'}
 
 
 def prose_lines(text, suffix):
@@ -126,15 +127,7 @@ def prose_lines(text, suffix):
 
 
 def targets():
-    globbed = [p for pat in ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
-               for p in ROOT.glob(pat)]
-    for p in globbed + tracked_md():
-        rel = p.relative_to(ROOT).as_posix()
-        if p.name in SKIP_NAMES or any(('/' + d + '/') in ('/' + rel) for d in SKIP_DIRS):
-            continue
-        if is_vendored(p, rel):
-            continue
-        yield p, rel
+    return common.targets(skip_names=SKIP_NAMES, is_vendored=is_vendored)
 
 
 def scan_text(text, suffix='.md'):
@@ -165,22 +158,19 @@ def key(h):
 
 
 def load_baseline():
-    if not BASELINE.exists():
-        return set()
-    return {l.strip() for l in io.open(BASELINE, encoding='utf-8-sig').read().splitlines()
-            if l.strip() and not l.startswith('#')}
+    return common.load_baseline(BASELINE)
 
 
-def selftest():
-    bad = 0
-    fire = [
+# --------------------------------------------------------------------------- controls
+# ⚠ MODULE-LEVEL, so `check_checkers.py` can audit that this checker ships controls at all.
+MUST_FIRE = [
         # ⚠ THE THREE REAL ONES, from this project's own recorded history.
         ('the papers count (stale by 15)', '-- The library holds 55 files, of which 43 are PDFs.'),
         ('a corpus declaration count', '-- Snapshot.lean runs over 2494 declarations every build.'),
         ('a site count', '-- The wording survey found 25 sites citing this docstring.'),
         ('an entry tally', '# The registry carries 18 entries for custom declarations.'),
-    ]
-    suppress = [
+]
+MUST_SUPPRESS = [
         ('dated: "as of"', '-- 70 files as of 2026-08-02, measured not quoted.'),
         ('an ISO date present', '-- 862 sites remain (2026-08-15).'),
         ('explicitly measured', '-- measured 2026-08-15: 17 sites in 8 files.'),
@@ -199,24 +189,26 @@ def selftest():
         # reported a pre-existing figure 200 lines away as NEW, blocking a push.
         ('code after a 1-line docstring', 'def f():\n    """One line."""\n    return tally(1847, sites)'),
         ('a Lean term', 'def probe : Fin 12 := ⟨7, by decide⟩'),
-    ]
+]
 
-    print('  MUST FIRE')
-    for label, text in fire:
-        got = scan_text(text, '.lean' if text.strip().startswith('--') else '.py')
-        ok = bool(got)
-        bad += 0 if ok else 1
-        print('    %-34s %s' % (label, 'ok' if ok else '*** MISSED ***'))
-    print('  MUST SUPPRESS')
-    for label, text in suppress:
-        suffix = '.lean' if text.strip().startswith(('--', 'def')) else '.py'
-        got = scan_text(text, suffix)
-        ok = not got
-        bad += 0 if ok else 1
-        print('    %-34s %s%s' % (label, 'ok' if ok else '*** FALSE POSITIVE ***',
-                                  '' if ok else '  -> ' + got[0][1]))
-    print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
-    return 1 if bad else 0
+
+def _fire_probe(text):
+    return scan_text(text, '.lean' if text.strip().startswith('--') else '.py')
+
+
+def _suppress_probe(text):
+    # ⚠ The suffix rule differs between the two groups and always has: a suppression control may be
+    # a bare `def` line with no comment marker, which must still be read as Lean. Kept as two named
+    # probes rather than one clever expression, because the difference is the point.
+    return scan_text(text, '.lean' if text.strip().startswith(('--', 'def')) else '.py')
+
+
+def selftest():
+    return common.run_controls([
+        ('  MUST FIRE', MUST_FIRE, _fire_probe, True, 'MISSED'),
+        ('  MUST SUPPRESS', MUST_SUPPRESS, _suppress_probe, False, 'FALSE POSITIVE',
+         lambda text: '  -> ' + _suppress_probe(text)[0][1]),
+    ])
 
 
 def main(argv):

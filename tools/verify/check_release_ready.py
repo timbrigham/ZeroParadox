@@ -28,12 +28,20 @@ import subprocess
 import sys
 import glob
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, HERE)
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3), coerced to
+# `str` because this module speaks `os.path`.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+# ⚠ THE ONE REMAINING CHECKER-IMPORTS-A-CHECKER EDGE, AND IT IS DELIBERATE. This is the RELEASE
+# gate re-running the HASH gate's own parser rather than a second copy of it: `check_hashes` owns
+# `register.md`'s format, and the alternative is two parsers for one file, which is the mirror
+# defect this bundle spent its length removing. It is a gate composing a gate, not a checker
+# borrowing a peer's text utilities — which is what MIG-3 objected to.
 import check_hashes as ch  # noqa: E402  (sha8, parse_register, *_SCRIPTS dicts)
 
-REPO = os.path.dirname(os.path.dirname(HERE))
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace('\\', '/')
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+SELF = common.self_rel(__file__)
 
 REGISTER = 'register.md'
 RELEASES = 'RELEASES.md'

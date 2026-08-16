@@ -84,17 +84,27 @@ import stat
 import subprocess
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(os.path.dirname(HERE))
-SELF = os.path.relpath(os.path.abspath(__file__), ROOT).replace("\\", "/")
-LOCK = os.path.join(ROOT, '.claude-local', 'gate.lock')
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+SELF = common.self_rel(__file__)
+LOCK = os.path.join(REPO, '.claude-local', 'gate.lock')
 
 
 def norm(p):
     """Repo-relative, forward slashes, lowercased — the hook normalizes the same way."""
-    p = os.path.abspath(os.path.join(ROOT, p)) if not os.path.isabs(p) else os.path.abspath(p)
+    p = os.path.abspath(os.path.join(REPO, p)) if not os.path.isabs(p) else os.path.abspath(p)
     try:
-        p = os.path.relpath(p, ROOT)
+        p = os.path.relpath(p, REPO)
     except ValueError:
         pass
     return p.replace('\\', '/').lower()
@@ -102,7 +112,7 @@ def norm(p):
 
 def full(rel):
     """Absolute path for a repo-relative locked path."""
-    return os.path.join(ROOT, rel.replace('/', os.sep))
+    return os.path.join(REPO, rel.replace('/', os.sep))
 
 
 def is_frozen(rel):
@@ -131,7 +141,7 @@ def tracked_files():
     """Every tracked path, from git. Returns None if git could not be asked — which is NOT the
     same as 'nothing is frozen', and callers must not conflate the two."""
     try:
-        out = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT,
+        out = subprocess.check_output(['git', 'ls-files', '-z'], cwd=REPO,
                                       stderr=subprocess.PIPE)
     except Exception:
         return None
@@ -150,7 +160,7 @@ def frozen_tracked():
         return None
     out = []
     for rel in files:
-        f = os.path.join(ROOT, rel.replace('/', os.sep))
+        f = os.path.join(REPO, rel.replace('/', os.sep))
         if os.path.exists(f) and not os.access(f, os.W_OK):
             out.append(rel)
     return out

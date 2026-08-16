@@ -19,11 +19,14 @@ import subprocess
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent.parent
-SELF = Path(__file__).resolve().relative_to(ROOT).as_posix()
-LEAN = sorted((ROOT / 'ZeroParadox').rglob('*.lean'))   # RECURSIVE — the whole point
-REGISTRY = ROOT / 'LEAN_CUSTOM_REGISTRY.md'
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3).
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import common  # noqa: E402
+from common import HERE, REPO, SRC  # noqa: E402
+
+SELF = common.self_rel(__file__)
+LEAN = sorted(SRC.rglob('*.lean'))   # RECURSIVE — the whole point
+REGISTRY = REPO / 'LEAN_CUSTOM_REGISTRY.md'
 
 TAKE_PLACEHOLDER = re.compile(r"TODO \(Tim|TODO: Engineer")
 CUSTOM_TAG = re.compile(r'\[ZP-CUSTOM\]')
@@ -41,7 +44,7 @@ def check_engineers_takes():
     for f in LEAN:
         for i, line in enumerate(read(f).split('\n'), 1):
             if TAKE_PLACEHOLDER.search(line):
-                hits.append(f'{f.relative_to(ROOT)}:{i}')
+                hits.append(f'{f.relative_to(REPO)}:{i}')
     if hits:
         failures.append(
             'Unfilled Engineer\'s Take placeholder(s) — these are Tim\'s prose, never Claude\'s:\n'
@@ -62,7 +65,7 @@ def check_custom_registry():
         n = len(CUSTOM_TAG.findall(read(f)))
         if n:
             tags += n
-            tagged_files.append(f'{f.relative_to(ROOT)} x{n}')
+            tagged_files.append(f'{f.relative_to(REPO)} x{n}')
     if entries != tags:
         failures.append(
             f'LEAN_CUSTOM_REGISTRY invariant broken: {entries} "### " entries vs {tags} '
@@ -79,7 +82,7 @@ BINARY_EXT = ('.pdf', '.png', '.jpg', '.jpeg', '.ico', '.ttf', '.otf', '.woff',
 
 
 def tracked_text():
-    r = subprocess.run(['git', 'ls-files'], cwd=str(ROOT), capture_output=True,
+    r = subprocess.run(['git', 'ls-files'], cwd=str(REPO), capture_output=True,
                        text=True, encoding='utf-8')
     return [f for f in r.stdout.split('\n')
             if f.strip() and not f.lower().endswith(BINARY_EXT)]
@@ -106,7 +109,7 @@ def check_bytes_are_portable():
     give the same answer."""
     crlf, bom, bad_utf8, differs = [], [], [], []
     for f in tracked_text():
-        p = ROOT / f
+        p = REPO / f
         if not p.is_file():
             continue
         raw = p.read_bytes()
@@ -129,7 +132,7 @@ def check_bytes_are_portable():
         # checks the committed side. Given `.gitattributes` (`* text=auto eol=lf`), an LF disk
         # file commits to an LF blob, so the two together give disk == blob without penalising
         # work in progress.
-        blob = subprocess.run(['git', 'show', 'HEAD:' + f], cwd=str(ROOT), capture_output=True)
+        blob = subprocess.run(['git', 'show', 'HEAD:' + f], cwd=str(REPO), capture_output=True)
         if blob.returncode == 0 and b'\r\n' in blob.stdout:
             differs.append(f)
 
@@ -202,7 +205,7 @@ def selftest():
         print('    %-30s %s' % (label, 'ok' if ok else '*** WRONG ***'))
 
     # The recursion control: rglob must see past the top level.
-    nested = [f for f in LEAN if len(f.relative_to(ROOT).parts) > 2]
+    nested = [f for f in LEAN if len(f.relative_to(REPO).parts) > 2]
     ok = len(nested) > 0 and len(LEAN) > 10
     bad += 0 if ok else 1
     print('    %-30s %s (%d files, %d in subdirectories)'

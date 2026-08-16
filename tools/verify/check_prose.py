@@ -48,10 +48,20 @@ sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
 
 # Roots. HERE is this bundle (public, tracked); the baseline travels WITH the checker. SELF is
 # derived, never written down — a hardcoded invocation path is a copy of the path, and copies drift.
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.dirname(os.path.dirname(HERE))
-SRC = os.path.join(REPO, "ZeroParadox")
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+SRC = str(common.SRC)
+SELF = common.self_rel(__file__)
 BASELINE = os.path.join(HERE, "prose_baseline.txt")
 
 """Tim's design, 2026-08-08, which is the rule this file enforces:
@@ -382,14 +392,7 @@ def vendored_files():
 
 
 def load_baseline():
-    if not os.path.exists(BASELINE):
-        return set()
-    keys = set()
-    for ln in io.open(BASELINE, encoding="utf-8"):
-        ln = ln.strip()
-        if ln and not ln.startswith("#"):
-            keys.add(ln)
-    return keys
+    return common.load_baseline(BASELINE)
 
 
 def run(block_mode=False, write_baseline=False):

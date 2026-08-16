@@ -50,10 +50,20 @@ import sys
 #
 # Anchored to REPO rather than relying on the caller's cwd: the hook runs with cwd=REPO, but this
 # tool is now published and may be run from anywhere.
-HERE       = os.path.dirname(os.path.abspath(__file__))
-REPO       = os.path.dirname(os.path.dirname(HERE))
-PRIV       = os.path.join(REPO, '.claude-local')
-SELF       = os.path.relpath(os.path.abspath(__file__), REPO).replace('\\', '/')
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+PRIV = str(common.PRIV)
+SELF = common.self_rel(__file__)
 REGISTER   = os.path.join(REPO, 'register.md')
 SCRIPT_DIR = os.path.join(REPO, 'scripts')
 AR_STATUS  = os.path.join(PRIV, 'ar_status.json')   # legacy per-doc AR tracker: private state
@@ -203,9 +213,7 @@ def load_ar_status():
 
 
 def save_ar_status(ar_data):
-    with open(AR_STATUS, 'w', encoding='utf-8') as f:
-        json.dump(ar_data, f, indent=2)
-        f.write('\n')
+    common.write_text_lf(AR_STATUS, json.dumps(ar_data, indent=2) + '\n')
 
 
 def compute_ar_label(key, current_hash, ar_data):
@@ -217,6 +225,13 @@ def compute_ar_label(key, current_hash, ar_data):
     return AR_DISPLAY.get(entry.get('status'), 'N/—')
 
 
+# ⚠ ALL THREE REGISTER WRITERS GO THROUGH `common.write_text_lf`. `register.md` is TRACKED, and a
+# bare `open(..., 'w')` translates every `\n` to `\r\n` on Windows — so a single `--mark` run used to
+# rewrite the whole file as CRLF. That is not cosmetic HERE of all places: this file's own
+# fingerprints are the provenance tokens, `check_invariants` blocks on CRLF in a tracked text file,
+# and the recorded consequence of a byte difference is `check_hashes` exiting 0 on the author's
+# machine and 1 in a fresh clone. Same class the build scripts closed on 2026-08-16; these five
+# sites inside the bundle were still open.
 def update_register_comp_hash(doc, new_hash):
     """Replace comp:XXXXXXXX in the Notes column for doc's register.md row."""
     with open(REGISTER, encoding='utf-8') as f:
@@ -226,9 +241,7 @@ def update_register_comp_hash(doc, new_hash):
         return re.sub(r'comp:[0-9a-f]{8}', f'comp:{new_hash}', m.group(0))
 
     pattern = r'\|\s*' + re.escape(doc) + r'[^\n]*\n'
-    updated = re.sub(pattern, replace_comp, content)
-    with open(REGISTER, 'w', encoding='utf-8') as f:
-        f.write(updated)
+    common.write_text_lf(REGISTER, re.sub(pattern, replace_comp, content))
 
 
 def update_register_formal_hash(doc, new_hash):
@@ -240,9 +253,7 @@ def update_register_formal_hash(doc, new_hash):
         return re.sub(r'formal:[0-9a-f]{8}', f'formal:{new_hash}', m.group(0))
 
     pattern = r'\|\s*' + re.escape(doc) + r'[^\n]*\n'
-    updated = re.sub(pattern, replace_formal, content)
-    with open(REGISTER, 'w', encoding='utf-8') as f:
-        f.write(updated)
+    common.write_text_lf(REGISTER, re.sub(pattern, replace_formal, content))
 
 
 def update_register_ar_column(ar_labels):
@@ -261,8 +272,7 @@ def update_register_ar_column(ar_labels):
                         line = '|'.join(parts)
                         break
         updated.append(line)
-    with open(REGISTER, 'w', encoding='utf-8') as f:
-        f.writelines(updated)
+    common.write_text_lf(REGISTER, ''.join(updated))
 
 
 def mark_doc(key, status, ar_data):

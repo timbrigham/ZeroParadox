@@ -44,22 +44,26 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import common  # noqa: E402
+from common import REPO  # noqa: E402
+
 # The Windows console defaults to cp1252, which cannot encode the warning glyphs used below — and a
 # UnicodeEncodeError here is not cosmetic: it crashes the process, so `show` returns 1 instead of the
 # 2 that means "past the bedrock cap", and every caller reads the crash as an ordinary failure.
-# Measured 2026-08-10, immediately after adding that exit code. `report.py` does the same for the
-# pipeline entry points; this file stays standalone because everything calls it.
-try:
-    sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
-except Exception:
-    pass
+# Measured 2026-08-10, immediately after adding that exit code.
+#
+# ⚠ This used to be a hand-rolled `try: sys.stdout.reconfigure(...)`, with the note that the file
+# "stays standalone because everything calls it". Two of the eight copies of that guard had already
+# dropped `line_buffering=True`, which is the divergence `common.utf8_stdout` exists to end. The
+# standalone argument was about STDOUT and is satisfied by a layer-0 module that imports nothing.
+common.utf8_stdout()
 
 # Round state is per-arc PRIVATE state, not part of the published bundle: it records what THIS
 # working session is mid-way through reviewing. It stays in `.claude-local/` while the tool itself
 # is tracked, which is the split the 2026-08-15 move exists to make.
-_REPO = Path(__file__).resolve().parent.parent.parent
-STATE = _REPO / '.claude-local' / 'gate_round.json'
-SELF = Path(__file__).resolve().relative_to(_REPO).as_posix()
+STATE = common.PRIV / 'gate_round.json'
+SELF = common.self_rel(__file__)
 
 BEDROCK_CAP = 5
 ORDINARY_CAP = 2

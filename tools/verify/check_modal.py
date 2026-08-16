@@ -39,18 +39,19 @@ only on NEW ones (same as-touched model as check_pov.py). SHRINK it as files are
 it deliberately. A muted gate is worse than none.
 """
 import re
-import subprocess
 import sys
 from pathlib import Path
 
-# Roots. HERE is this bundle (public, tracked); the baseline travels WITH the checker. SELF is
-# derived, never written down — a hardcoded invocation path is a copy of the path, and copies drift.
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent.parent
-SELF = Path(__file__).resolve().relative_to(ROOT).as_posix()
-
-sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import common  # noqa: E402
+from common import HERE, REPO, normalize_separators, strip_module_docstring  # noqa: E402
 from vendored import is_vendored  # noqa: E402
+
+# ⚠ THIS FILE WAS A LIBRARY UNTIL 2026-08-16, AND THAT WAS THE DEFECT (`DEFECTS.md` MIG-3).
+# `check_negatives` and `check_figures` imported `tracked_md`, `normalize_separators` and
+# `strip_module_docstring` FROM HERE, so two checkers depended on a peer's internals. Those three now
+# live in `common.py`; nothing imports this module any more, and nothing should.
+SELF = common.self_rel(__file__)
 BASELINE = HERE / 'modal_baseline.txt'
 
 # Claims about what CANNOT be proved. No footprint measurement establishes one.
@@ -162,83 +163,19 @@ STRONG = re.compile(
 
 # register.md's Notes column and each build script's module docstring are THE CHANGELOG OF RECORD
 # (CLAUDE.md exempts them). They quote what past versions said, verbatim and on purpose -- exactly the
-# retraction-pollution case. Structurally exempt, not grandfathered.
-SKIP_NAMES = {'CLAUDE.md', 'check_modal.py', 'modal_baseline.txt', 'register.md', 'RELEASES.md'}
-SKIP_DIRS = ('.lake', '.git', 'notes', 'papers', 'archive', 'feedback', 'outreach', 'autobiography')
-
-
-# ⚠ SECOND WRAP FIX, and the first one was not enough. `\s+` in MODAL bridges a plain newline, but in
-# real sources the gap between wrapped words is NOT whitespace:
-#     Lean:   "-- ... is a library\n--     artifact, not a\n--     necessity."
-#     Python: "'... is a library '\n            'artifact, not a necessity'"
-# A `--` or a quote-comma-quote sits in the middle, so the phrase stayed invisible. Measured by
-# planting a wrapped probe in a real file after the first fix: it did not fire.
-#
-# Fix: blank those separators to spaces of EQUAL LENGTH before scanning. Equal length preserves every
-# character OFFSET.
-#
-# ⚠ BUT NOT LINE NUMBERS, and the first version's docstring wrongly claimed it did. The Python
-# adjacent-string-literal alternative CONSUMES the newline, so a phrase on line 78 was reported as
-# line 40 after 38 joins. Not a false negative -- a misreport, in exactly the `.py` file class where
-# the last false universal negative hid for two days. Line numbers are therefore counted against the
-# ORIGINAL text (see `scan`), never the normalized copy.
-_SEP = re.compile(
-    r"(?m)^[ \t]*(?:--+|//+|\*)[ \t]*"      # Lean/C line-comment continuation
-    r"|'[ \t]*\r?\n[ \t]*'"                  # Python adjacent-string-literal join
-    r'|"[ \t]*\r?\n[ \t]*"')
-
-
-def normalize_separators(text):
-    return _SEP.sub(lambda m: ' ' * len(m.group(0)), text)
-
-
-def strip_module_docstring(text, path):
-    """Blank out a build script's leading docstring so its changelog is not scanned."""
-    if not path.endswith('.py'):
-        return text
-    m = re.match(r'\s*(?:"""|\'\'\')', text)
-    if not m:
-        return text
-    q = text[m.end() - 3: m.end()]
-    end = text.find(q, m.end())
-    if end < 0:
-        return text
-    # preserve line count so reported line numbers stay correct
-    head = text[:end]
-    return '\n' * head.count('\n') + text[end:]
-
-
-def tracked_md():
-    """Every TRACKED `.md`, at any depth. **The single definition — import it, never re-glob.**
-
-    ⚠ `ROOT.glob('*.md')` is ROOT-ONLY, and this class had THREE members: `check_modal`,
-    `check_negatives`, `check_figures`. A round-3 fix closed two and left this one, which is the
-    fix-the-site-not-the-class defect the corpus names, committed while fixing an instance of it.
-    18 tracked markdown files were unscanned, including all 11 published gate briefs.
-
-    `git ls-files` is what `check_paths` already used. Tracked-only is the load-bearing half: the
-    gitignored private folder stays out by construction rather than by remembering SKIP_DIRS."""
-    out = subprocess.run(['git', 'ls-files', '*.md'], cwd=str(ROOT),
-                         capture_output=True, text=True, check=True).stdout.split()
-    return [ROOT / rel for rel in out]
+# retraction-pollution case. Structurally exempt, not grandfathered -- and shared, so the exemption
+# cannot hold in one checker and lapse in another (`common.SKIP_NAMES`). What stays here is only what
+# is genuinely THIS checker's: its own source and its own baseline.
+SKIP_NAMES = {'check_modal.py', 'modal_baseline.txt'}
 
 
 def targets():
-    """Vendored backports are EXEMPT STRUCTURALLY (see vendored.py). Nothing here fires on them
-    today, so this closes a latent hole rather than a live one: a backport whose header discusses
-    what is "removable" or "in principle" is upstream's prose, not a claim of ours to measure."""
-    # `.claude-local/build_*.py` was a fourth pattern until the build scripts stopped being
-    # mirrored: `scripts/` is now their only home, so the third pattern already covers them and a
-    # fourth would have been a second copy of the same coverage claim.
-    globbed = [p for pat in ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
-               for p in ROOT.glob(pat)]
-    for p in globbed + tracked_md():
-        rel = p.relative_to(ROOT).as_posix()
-        if p.name in SKIP_NAMES or any(('/' + d + '/') in ('/' + rel) for d in SKIP_DIRS):
-            continue
-        if is_vendored(p, rel):
-            continue
-        yield p, rel
+    """The shared enumerator. Scope, skips and the vendored exemption all live in `common`.
+
+    Vendored backports are EXEMPT STRUCTURALLY (see vendored.py). Nothing here fires on them today,
+    so that closes a latent hole rather than a live one: a backport whose header discusses what is
+    "removable" or "in principle" is upstream's prose, not a claim of ours to measure."""
+    return common.targets(skip_names=SKIP_NAMES, is_vendored=is_vendored)
 
 
 def scan_text(t):
@@ -289,23 +226,15 @@ MUST_SUPPRESS = [
 
 
 def selftest():
-    bad = 0
-    print('MUST FIRE (unmeasured modal claim)')
-    for label, text in MUST_FIRE:
-        got = bool(scan_text(normalize_separators(text)))
-        print('  %-34s %s' % (label, 'ok' if got else '*** MISSED ***'))
-        bad += 0 if got else 1
-    print('MUST SUPPRESS')
-    for label, text in MUST_SUPPRESS:
-        got = bool(scan_text(normalize_separators(text)))
-        print('  %-34s %s' % (label, 'ok' if not got else '*** FALSE POSITIVE ***'))
-        # ⚠ Inverted here, not copied from the must-fire loop above: a suppression control FAILS
-        # when it fires. The first version reused `0 if got else 1` and reported FAIL(5) while
-        # printing "ok" on all five — the summary contradicted the detail, which is the only reason
-        # it was caught. A selftest whose own arithmetic is wrong is worse than none.
-        bad += 1 if got else 0
-    print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
-    return 1 if bad else 0
+    # ⚠ THE INVERSION USED TO BE HAND-WRITTEN HERE, AND IT WAS WRITTEN WRONG ONCE: the suppression
+    # loop reused the must-fire loop's `bad += 0 if got else 1` and reported FAIL(5) while printing
+    # `ok` on all five. The summary contradicting the detail is the only reason it was caught.
+    # `common.fire_suppress` takes the expected polarity as a parameter, so there is no second loop
+    # to get backwards -- in this file or in the fourteen others that had their own copy.
+    return common.fire_suppress(
+        MUST_FIRE, MUST_SUPPRESS,
+        lambda text: scan_text(normalize_separators(text)),
+        'unmeasured modal claim')
 
 
 def scan():
@@ -327,14 +256,7 @@ def scan():
 
 
 def load_baseline():
-    if not BASELINE.exists():
-        return set()
-    out = set()
-    for line in BASELINE.read_text(encoding='utf-8').splitlines():
-        line = line.strip()
-        if line and not line.startswith('#'):
-            out.add(line)
-    return out
+    return common.load_baseline(BASELINE)
 
 
 def key(h):
@@ -346,10 +268,16 @@ def main():
     hits = scan()
 
     if '--baseline' in sys.argv:
-        BASELINE.write_text(
+        # ⚠ LF, via the shared writer. A bare `write_text` emits CRLF on Windows, and this file is
+        # TRACKED — so regenerating the baseline used to break `check_invariants` on the next run.
+        common.write_text_lf(
+            BASELINE,
             '# check_modal.py baseline - grandfathered modal claims lacking evidence vocabulary.\n'
             '# SHRINK as files are touched; never grow deliberately. Format: <path>|<phrase>\n'
-            + ''.join(sorted(key(h) + '\n' for h in hits)), encoding='utf-8')
+            '#\n'
+            '# ⚠ ADD ENTRIES BY HAND. This regeneration DISCARDS EVERY COMMENT: it once took this\n'
+            '# file from 26 lines to 5, destroying the per-site reading notes the header requires.\n'
+            + ''.join(sorted(key(h) + '\n' for h in hits)))
         print('baseline written: %d site(s)' % len(hits))
         return 0
 

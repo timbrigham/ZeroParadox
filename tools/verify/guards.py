@@ -45,10 +45,20 @@ import sys
 # TWO roots. HERE is the tracked public bundle and holds the BASELINES — which are themselves
 # exemption routes, so they must travel with the guard that enumerates them. PRIV holds per-push
 # state (round state, signals) and may be absent in a public clone.
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-PRIV = os.path.join(REPO, ".claude-local")
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+PRIV = str(common.PRIV)
+SELF = common.self_rel(__file__)
 BASE = HERE   # retained: remaining call sites below mean "where the baselines live"
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
@@ -212,18 +222,32 @@ def r_allowlist():
 
 
 def r_pov_baseline():
-    # The honest attack: absorb the live violation wholesale, the way `--baseline` would.
-    def _apply_undo():
-        p = os.path.join(BASE, "pov_baseline.txt")
-        orig = io.open(p, "rb").read()
+    """The honest attack: absorb the live violation wholesale, the way a regeneration would.
 
-        def apply():
-            sh(sys.executable, os.path.join(BASE, "check_pov.py"), "--baseline")
+    ⚠ **THIS ROUTE WAS INERT FOR ITS ENTIRE LIFE AND SCORED `ok` THROUGHOUT.** It invoked
+    `check_pov.py --baseline`; the flag that regenerates that baseline is `--update-baseline`. An
+    unrecognised flag is not an error here — the checker simply ran in ordinary mode, wrote nothing,
+    and returned. So the planted violation was still present, the detector still fired, and the row
+    printed `does NOT bypass / ok`: **a pass earned by the attack never happening.** Found
+    2026-08-16 by the inert-route control in `run_property`, not by reading — measured directly, the
+    baseline's SHA-256 is unchanged across a `--baseline` run.
 
-        def undo():
-            io.open(p, "wb").write(orig)
-        return apply, undo
-    return _apply_undo()
+    ⚠ **AND IT INVALIDATES THE EVIDENCE FOR THIS ROW'S `may_suppress=False`.** The comment at the
+    registry entry cites a /rely pass 9 measurement (REL9-5) that *"with a DENIAL planted,
+    `check_pov.py --baseline` leaves `--block` at exit 1"*. That measurement was made with this same
+    dead flag, so it observed a command that did nothing. The CONCLUSION still holds — `scan()`
+    returns denials in their own bucket and `--update-baseline` writes only `untagged`, so a DENIAL
+    is structurally unbaselineable — but it now rests on reading the code and on this route actually
+    running, rather than on a vacuous command."""
+    p = os.path.join(BASE, "pov_baseline.txt")
+    orig = io.open(p, "rb").read()
+
+    def apply():
+        sh(sys.executable, os.path.join(BASE, "check_pov.py"), "--update-baseline")
+
+    def undo():
+        io.open(p, "wb").write(orig)
+    return apply, undo
 
 
 def r_nested_vendored():
@@ -625,8 +649,27 @@ def run_property(prop):
         for label, factory, may_suppress, visible in prop["routes"]:
             r_apply, r_undo = factory()
             before = routing_hash()
+            # ⚠ THE INERT-ROUTE CONTROL, and it closes this registry's own DC-18 hole.
+            #
+            # A route is scored by whether the detector STILL fires after the route is applied. So a
+            # route whose `apply()` silently stops mutating anything — a renamed baseline, a moved
+            # probe path, a `produce` that returns the bytes it was given — leaves the planted
+            # violation in place, the detector fires, and the row prints `does NOT bypass / ok`.
+            # **It passes BECAUSE THE ATTACK NEVER HAPPENED.** That is exactly the proxy-check shape
+            # (`DEFECT_CLASSES.md` DC-18): the test measures something correlated with the property
+            # instead of the property, and DC-10's detector cannot find it, because deleting the
+            # input makes a proxy check fail correctly.
+            #
+            # Measuring it is cheap and exact: the registry already hashes every path a route may
+            # touch, for the restoration proof. A route that changes NONE of them did nothing.
+            fs_before = snapshot()
             try:
                 r_apply()
+                if snapshot() == fs_before:
+                    results.append((label, "ROUTE INERT — applying it changed none of the %d hashed "
+                                           "paths, so the verdict below would be a false green"
+                                           % len(TOUCHED), False))
+                    continue
                 still, out = prop["detect"]()
                 ctx = {"route_before": before, "route_after": routing_hash(), "output": out}
                 if still:
@@ -672,12 +715,113 @@ def snapshot():
     return out
 
 
+# ═══ CONTROLS ON THE REGISTRY ITSELF ══════════════════════════════════════════════════════════
+#
+# ⚠ **THIS FILE HAD NO CONTROLS OF ITS OWN UNTIL 2026-08-16, AND `--selftest` WAS SILENTLY IGNORED**
+# — `main()` parsed only `--list`, so the flag fell through to an ordinary run and produced
+# byte-identical output. A previous session inferred from that identical output that `--selftest`
+# "runs nothing"; the inference does not go that way, and it was wrong. It runs everything. The real
+# gap was this: **nothing checked that the guard would still NOTICE a regression.**
+#
+# That is not a hypothetical. The controls below were written first and the inert-route check they
+# certify found a live false green on its first run: `r_pov_baseline` invoked `check_pov.py
+# --baseline`, a flag that checker does not have, so for its entire life the route wrote nothing and
+# scored `ok / does NOT bypass` — a pass earned because the attack never happened.
+#
+# ⚠ **THE INERT-ROUTE CHECK IS ALSO THE REGISTRY-COVERAGE CHECK, and that is worth stating.** A
+# route that writes a path MISSING from `TOUCHED` changes no hashed path either, so it is reported
+# INERT. The 2026-08-12 failure — a route rewriting `prose_baseline.txt` while that file sat outside
+# the restoration proof, printing `restored: yes` about a file it had rewritten — is now caught by
+# the same measurement, from the other side.
+
+_SYN_MARK = "\n-- guards selftest probe marker\n"
+_SYN_EXTRA = "\n-- guards selftest second write\n"
+
+
+def _noop_route():
+    """A route that does nothing. MUST be reported INERT."""
+    return (lambda: None), (lambda: None)
+
+
+def _syn_violate():
+    """Plant the synthetic marker in a path that IS inside TOUCHED."""
+    return _append(PROBE_FILE, _SYN_MARK)
+
+
+def _syn_route():
+    """A route that genuinely mutates a path inside TOUCHED. Must NOT be reported inert."""
+    return _append(PROBE_FILE, _SYN_EXTRA)
+
+
+def _syn_detect():
+    """Fires iff the synthetic marker is present.
+
+    ⚠ IT MUST BE STATE-DEPENDENT, not a constant. A first version returned `True` unconditionally
+    and the must-fire control reported MISSED — correctly: `run_property` checks the detector on a
+    CLEAN state first and abandons the property as `DETECTOR BROKEN` if it fires there, so the route
+    loop was never reached. That is the guard's own must-suppress-first discipline catching a
+    malformed control, which is the behaviour to keep."""
+    try:
+        return _SYN_MARK.strip() in io.open(PROBE_FILE, encoding="utf-8").read(), ""
+    except OSError:
+        return False, ""
+
+
+def _syn_prop(label, factory):
+    return {"name": "synthetic", "violate": _syn_violate, "detect": _syn_detect,
+            "routes": [(label, factory, False, None)]}
+
+
+def selftest():
+    """Controls on the guard machinery, run against SYNTHETIC properties.
+
+    Real properties are not used here: their verdicts depend on the corpus, and a control that moves
+    when the corpus moves is not a control. Each synthetic property has a detector whose behaviour is
+    known in advance, so what is being tested is `run_property`, not the tree."""
+    must_fire = [("a route that mutates nothing", _syn_prop("no-op route", _noop_route))]
+    must_suppress = [("a route that really mutates", _syn_prop("real route", _syn_route))]
+
+    def _reports_inert(prop):
+        rows = run_property(prop)
+        return any("ROUTE INERT" in verdict for _l, verdict, _ok in rows)
+
+    before = snapshot()
+    bad = common.run_controls([
+        ("MUST FIRE (the inert-route control notices)", must_fire, _reports_inert, True, "MISSED"),
+        ("MUST SUPPRESS (a live route is not called inert)", must_suppress, _reports_inert,
+         False, "FALSE POSITIVE"),
+    ], width=42)
+
+    # The restoration proof must itself be honest: after running synthetic properties that mutated a
+    # real file, every hashed path is back. A guard that cannot restore cannot be run in a hook.
+    after = snapshot()
+    moved = [p for p in TOUCHED if before[p] != after[p]]
+    print("RESTORATION")
+    print("  %-42s %s" % ("synthetic routes left no residue",
+                          "ok" if not moved else "*** %d PATH(S) MOVED ***" % len(moved)))
+    bad += 0 if not moved else 1
+
+    # Coverage: every route in the registry must be reachable and callable. A factory that raises is
+    # a route nobody is testing, which is the failure this whole file exists to prevent.
+    n_routes = sum(len(p["routes"]) for p in PROPERTIES) + len(EXEMPTION_SURFACE)
+    print("REGISTRY")
+    print("  %-42s %s (%d)" % ("every route has a callable factory",
+                               "ok" if n_routes else "*** EMPTY REGISTRY ***", n_routes))
+    bad += 0 if n_routes else 1
+
+    if bad:
+        print("\nselftest: FAIL (%d)" % bad)
+    return 1 if bad else 0
+
+
 def main():
     report.banner("property guards", [
         ("purpose", "enumerate every ROUTE to a property and test all of them"),
         ("why", "one property was 'fixed' four times, each fix leaving another door open"),
         ("rule", "closing a route means ADDING IT HERE, so the list outlives the memory"),
     ])
+    if "--selftest" in sys.argv:
+        return selftest()
     if "--list" in sys.argv:
         for p in PROPERTIES:
             print("  %s" % p["name"])

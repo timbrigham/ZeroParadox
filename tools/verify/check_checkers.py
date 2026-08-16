@@ -35,9 +35,19 @@ import os
 import subprocess
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.dirname(os.path.dirname(HERE))
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+SELF = common.self_rel(__file__)
 
 # Checkers that legitimately have no `--selftest`, with the reason. EMPTY, and it should stay that
 # way: every exemption here is a checker nobody has shown can fail.
@@ -60,9 +70,19 @@ ORPHAN_EXEMPT = {
 }
 
 
+# ⚠ GATES THAT ARE NOT NAMED `check_*.py`. The glob below is a NAMING convention, and a naming
+# convention is not a property — `guards.py` BLOCKS at push (`hooks.py:107`, `hooks.py:243`) and was
+# audited by nothing here purely because of what it is called. It shipped with no controls and a
+# `--selftest` flag that was parsed away and silently ignored; when controls were finally written
+# (2026-08-16) they found a live false green on their first run. **Add a gate here the moment it can
+# block, whatever its filename.**
+ALSO_AUDITED = ("guards.py",)
+
+
 def checkers():
-    return sorted(f for f in os.listdir(HERE)
-                  if f.startswith("check_") and f.endswith(".py"))
+    return sorted([f for f in os.listdir(HERE)
+                   if f.startswith("check_") and f.endswith(".py")]
+                  + [f for f in ALSO_AUDITED if os.path.exists(os.path.join(HERE, f))])
 
 
 def run(script, *args):
@@ -246,22 +266,19 @@ def main(argv):
         print("\nA checker that cannot fail, or that nothing runs, is not a check.")
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1 if "--block" in argv else 0
-    # ⚠ "every checker" means the `check_*.py` files this script globs, which is WIDER than the
-    # CHECKS list. `guards.py` BLOCKS at push and is audited by nothing here. State the gap
-    # precisely: it parses only `--list`, so `guards.py --selftest` is IGNORED and falls through
-    # to an ordinary run — measured, 22 route checks, all executed, output byte-identical to a
-    # bare invocation. It is not a checker that does nothing; it is a checker with no CONTROLS
-    # of its own and no way to ask for them. An earlier version of this comment said "runs
-    # nothing", inferred from the identical output, which shows only that the flag is ignored.
-    print("OK: every check_*.py has passing controls in both directions, and is invoked.")
-    print("   (scope: the check_*.py glob, WIDER than the CHECKS list;")
-    print("    guards.py blocks at push and is NOT audited here.)")
+    # ⚠ SCOPE IS THE `check_*.py` GLOB **PLUS `ALSO_AUDITED`**, which is wider than the CHECKS list
+    # in both directions. `guards.py` was outside this audit until 2026-08-16 for no reason but its
+    # filename, while blocking at push — and it turned out to have no controls at all, with
+    # `--selftest` parsed away and silently ignored. It is in scope now and passes all four
+    # properties. `common.py` is deliberately NOT here: it is a library that gates nothing, so
+    # property 4 does not apply to it; its controls run via `ci_report.SELFTESTS`.
+    print("OK: every audited gate has passing controls in both directions, and is invoked.")
+    print("   (scope: the check_*.py glob PLUS %s — wider than the CHECKS list.)"
+          % ", ".join(ALSO_AUDITED))
     return 0
 
 
 if __name__ == "__main__":
-    try:
-        sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
-    except Exception:
-        pass
+    common.utf8_stdout()   # one definition; two of the eight copies had dropped
+                           # line_buffering=True, which reorders output against children
     sys.exit(main(sys.argv[1:]))

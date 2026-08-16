@@ -46,9 +46,19 @@ import os
 import subprocess
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.dirname(os.path.dirname(HERE))
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+SELF = common.self_rel(__file__)
 
 # Checkers that run against the PUBLIC corpus alone. Each is (script, args, what it enforces).
 #
@@ -106,7 +116,7 @@ CHECKS = [
     ("check_moved.py",      ["--block"], GATE,  "nothing points at a relocated path"),
     ("check_negatives.py",  ["--block"], GATE,  "a universal negative carries a date or a search record"),
     ("check_figures.py",    ["--block"], GATE,  "an artifact count carries a date, or is measured on demand"),
-    ("check_checkers.py",   ["--block"], GATE,  "every check_*.py has passing controls in both directions, and is invoked (guards.py is NOT audited)"),
+    ("check_checkers.py",   ["--block"], GATE,  "every audited gate has passing controls in both directions, and is invoked (scope: check_*.py plus guards.py)"),
     # No --block flag: these exit non-zero on a finding natively.
     ("check_invariants.py", [],          GATE,  "always-true invariants hold across the corpus"),
     ("check_paths.py",      [],          GATE,  "every repo-relative reference resolves"),
@@ -119,11 +129,19 @@ CHECKS = [
 # `check_release_ready`) had no `--selftest` at all until then — the Phase 1 exit says "each with
 # both control types" and four checkers had never met it, including the one guarding the claim
 # register.md makes to a reader about which scripts built which PDFs.
+#
+# ⚠ `guards.py` ADDED 2026-08-16, and it was the largest remaining hole in this list. It runs 22
+# routes across 6 properties on every invocation and they all passed — but **nothing checked that it
+# would still NOTICE a regression**: it shipped no controls, and `--selftest` was parsed away and
+# silently ignored, so the flag produced an ordinary run. The controls it now carries found a live
+# false green on their first execution (a route invoking a flag its checker does not have, inert for
+# its whole life, scoring `ok` because the attack never happened). A registry of routes that cannot
+# detect a dead route is the fail-open shape it exists to prevent, one level up.
 SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
              "check_classes.py", "check_poles.py", "check_moved.py",
              "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
              "check_figures.py", "check_checkers.py",
-             "check_release_ready.py"]
+             "check_release_ready.py", "common.py", "guards.py"]
 
 
 def run(script, args):
@@ -237,8 +255,6 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    try:
-        sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
-    except Exception:
-        pass
+    common.utf8_stdout()   # one definition; two of the eight copies had dropped
+                           # line_buffering=True, which reorders output against children
     sys.exit(main(sys.argv[1:]))

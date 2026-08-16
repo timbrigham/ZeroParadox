@@ -33,21 +33,24 @@ import subprocess
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent.parent
-SELF = Path(__file__).resolve().relative_to(ROOT).as_posix()
-BASELINE = HERE / 'negatives_baseline.txt'
-
-sys.path.insert(0, str(HERE))
-from vendored import is_vendored          # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import common                              # noqa: E402
 # ⚠ IMPORTED, NOT RE-IMPLEMENTED. `normalize_separators` handles wrapped claims — a phrase split
 # across a Lean `--` comment continuation or a Python adjacent-string join is invisible to a flat
-# pattern, and check_modal.py needed THREE fixes to get it right (literal spaces, then the
-# separators, then line numbers counted against the original). A second copy here would be the
-# mirror defect this project spent 2026-08-15 removing. One definition.
-from check_modal import (normalize_separators, strip_module_docstring,
-                         tracked_md)   # noqa: E402
+# pattern, and it needed THREE fixes to get right (literal spaces, then the separators, then line
+# numbers counted against the original). A second copy here would be the mirror defect this project
+# spent 2026-08-15 removing. One definition.
+#
+# ⚠ AND IT COMES FROM `common` NOW, NOT FROM `check_modal`. Until 2026-08-16 this line read
+# `from check_modal import ...`, which made a CHECKER into a LIBRARY: two peers depended on a third
+# peer's internals, invisibly from either end (`DEFECTS.md` MIG-3). Shared machinery belongs in a
+# module that checks nothing.
+from common import HERE, REPO, normalize_separators, strip_module_docstring  # noqa: E402
+from vendored import is_vendored          # noqa: E402
 import report                              # noqa: F401,E402  (utf-8 stdout, side effect)
+
+SELF = common.self_rel(__file__)
+BASELINE = HERE / 'negatives_baseline.txt'
 
 # ── the claim ────────────────────────────────────────────────────────────────────────────────
 # Every space is `\s+`: a claim wrapped across two lines must still match.
@@ -125,23 +128,17 @@ EVIDENCE = re.compile(
     r"this\s+line\s+said",
     re.I)
 
-SKIP_NAMES = {'CLAUDE.md', 'check_negatives.py', 'negatives_baseline.txt',
-              'register.md', 'RELEASES.md', 'DEFECT_CLASSES.md'}
-SKIP_DIRS = ('.lake', '.git', 'notes', 'papers', 'archive', 'feedback', 'outreach',
-             'autobiography', '__pycache__', 'deepseek')
+# The shared skips (`CLAUDE.md`, `register.md`, `RELEASES.md`) live in `common.SKIP_NAMES`. What is
+# genuinely THIS checker's stays here: its own source, its own baseline, and the defect register —
+# which is an INDEX OF DEFECT KINDS, so it states universal negatives as the thing being catalogued
+# rather than as claims of its own. (It is gitignored, so this skip is intent rather than filter:
+# `tracked_md()` is tracked-only and cannot yield it.)
+SKIP_NAMES = {'check_negatives.py', 'negatives_baseline.txt', 'DEFECT_CLASSES.md'}
 
 
 def targets():
     """`.lean` + `.md` + `.py`. The `.py` half is the whole point — see the header."""
-    globbed = [p for pat in ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
-               for p in ROOT.glob(pat)]
-    for p in globbed + tracked_md():
-        rel = p.relative_to(ROOT).as_posix()
-        if p.name in SKIP_NAMES or any(('/' + d + '/') in ('/' + rel) for d in SKIP_DIRS):
-            continue
-        if is_vendored(p, rel):
-            continue
-        yield p, rel
+    return common.targets(skip_names=SKIP_NAMES, is_vendored=is_vendored)
 
 
 def sentence_around(text, pos):
@@ -184,16 +181,13 @@ def key(h):
 
 
 def load_baseline():
-    if not BASELINE.exists():
-        return set()
-    return {l.strip() for l in io.open(BASELINE, encoding='utf-8-sig').read().splitlines()
-            if l.strip() and not l.startswith('#')}
+    return common.load_baseline(BASELINE)
 
 
-def selftest():
-    """MUST-FIRE and MUST-SUPPRESS, including the two shapes that defeated earlier checkers."""
-    bad = 0
-    fire = [
+# --------------------------------------------------------------------------- controls
+# ⚠ MODULE-LEVEL, not local to `selftest`. `check_checkers.py` audits that every checker SHIPS
+# must-fire and must-suppress controls, and it can only see them if they are named at module level.
+MUST_FIRE = [
         # ⚠ THE FIRST TWO ARE THE ACTUAL PUBLISHED DEFECT, VERBATIM from ChoiceCannotBe.lean.
         # Written from the real text rather than a paraphrase, which is what exposed the missing
         # adjective slot: the first version of this checker could not match either of them.
@@ -207,8 +201,8 @@ def selftest():
         ('"no X anywhere in the corpus"', 'There is no such instance anywhere in the corpus.'),
         # ⚠ THE WRAPPED SHAPE. A flat pattern misses this, and it is how a real one hid.
         ('wrapped across a Lean comment', '-- the corpus\n--     does not have\n-- any such case'),
-    ]
-    suppress = [
+]
+MUST_SUPPRESS = [
         ('dated: "as of 2026-08-15"', 'None located as of 2026-08-15, searched as follows.'),
         ('an ISO date in the sentence', 'No instance exists in the tree at 2026-08-01.'),
         ('the ratified "not located"', 'Not located in Mathlib; searched three vocabularies.'),
@@ -223,31 +217,26 @@ def selftest():
         ('PROVED: AX-G1', 'AX-G1: no greatest natural number exists.'),
         ('PROVED: an empty W-type', 'no base case, so no finite tree exists - the strict regime.'),
         ('PROVED: a type boundary', 'the QPF instance relates distinct types, and no cross-setting map exists.'),
-    ]
+]
 
-    print('  MUST FIRE')
-    for label, text in fire:
-        got = scan_text(text)
-        ok = bool(got)
-        bad += 0 if ok else 1
-        print('    %-34s %s' % (label, 'ok' if ok else '*** MISSED ***'))
-    print('  MUST SUPPRESS')
-    for label, text in suppress:
-        got = scan_text(text)
-        ok = not got
-        bad += 0 if ok else 1
-        print('    %-34s %s%s' % (label, 'ok' if ok else '*** FALSE POSITIVE ***',
-                                  '' if ok else '  -> ' + got[0][1]))
 
+def selftest():
+    """MUST-FIRE and MUST-SUPPRESS, including the two shapes that defeated earlier checkers."""
     # The scope control: the .py half is the reason this checker exists at all.
+    #
+    # ⚠ THIS IS NOW ALSO THE SHARED-ENUMERATOR CONTROL. `targets()` is `common.targets()` for three
+    # checkers, so a scope collapse there is a false zero in all three at once rather than in one.
+    # Asserting the three extensions are present is what makes that visible from inside this file.
     exts = {os.path.splitext(rel)[1] for _p, rel in targets()}
-    ok = {'.py', '.md', '.lean'} <= exts
-    bad += 0 if ok else 1
-    print('    %-34s %s (%s)' % ('scans .lean AND .md AND .py',
-                                 'ok' if ok else '*** SCOPE TOO NARROW ***', sorted(exts)))
-
-    print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
-    return 1 if bad else 0
+    return common.run_controls([
+        ('  MUST FIRE', MUST_FIRE, scan_text, True, 'MISSED'),
+        # The 6th element renders WHICH pattern matched when a suppression control fails — the one
+        # piece of output the shared harness would otherwise have dropped.
+        ('  MUST SUPPRESS', MUST_SUPPRESS, scan_text, False, 'FALSE POSITIVE',
+         lambda text: '  -> ' + scan_text(text)[0][1]),
+        ('  SCOPE', [('scans .lean AND .md AND .py %s' % sorted(exts), None)],
+         lambda _t: {'.py', '.md', '.lean'} <= exts, True, 'SCOPE TOO NARROW'),
+    ], width=44)
 
 
 def main(argv):

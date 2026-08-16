@@ -36,16 +36,27 @@ in either direction.
 """
 import io, os, re, sys, json
 
-# The corpus is full of ⊥ ∞ ℤ₂; Windows stdout defaults to cp1252 and raises on them.
-try:
-    sys.stdout.reconfigure(encoding="utf-8")
-except Exception:
-    pass
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-PRIV = os.path.join(REPO, ".claude-local")   # private state; may be absent in a public clone
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
+# The corpus is full of ⊥ ∞ ℤ₂; Windows stdout defaults to cp1252 and raises on them.
+# ⚠ This file's own copy of the guard OMITTED `line_buffering=True` — one of the two that did, out
+# of eight. `report.py:34` records what the missing flag costs: Python block-buffers while children
+# write straight to the terminal fd, so output arrives out of order and section headers land under
+# the wrong section. Shared now, so there is no second copy to get half right.
+common.utf8_stdout()
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+PRIV = str(common.PRIV)   # private state; ABSENT in a public clone
+SELF = common.self_rel(__file__)
 SCAN_EXT = (".lean", ".md", ".py")
 SKIP_DIRS = {".lake", ".git", "__pycache__", ".claude-local", "node_modules"}
 # ⚠ ANCHORED, and deliberately not a bare directory name. This bundle IS the detector, and its own

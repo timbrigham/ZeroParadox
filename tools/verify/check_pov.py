@@ -45,24 +45,29 @@ import re
 import sys
 from pathlib import Path
 
-# Roots. HERE is this bundle (public, tracked); the baseline travels WITH the checker. SELF is
-# derived, never written down — a hardcoded invocation path is a copy of the path, and copies drift.
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent.parent
-SELF = Path(__file__).resolve().relative_to(ROOT).as_posix()
-
-sys.path.insert(0, str(HERE))
+# Roots come from `common` — one derivation for the whole bundle. SELF is derived from `__file__`,
+# never written down: a hardcoded invocation path is a copy of the path, and copies drift.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import common  # noqa: E402
+from common import HERE, REPO, SRC  # noqa: E402
 from vendored import is_vendored  # noqa: E402
 
-# Tracked prose only. Build scripts render into public PDFs, so they count.
-# Vendored backports are EXEMPT STRUCTURALLY (see vendored.py) — nothing in this checker fires on
-# them today, so this is closing a latent hole rather than a live one, and it stops a future
-# vendored drop from being reported as our prose.
+SELF = common.self_rel(__file__)
+
+# ⚠ THIS CHECKER'S SCOPE IS ITS OWN, DELIBERATELY, AND IT IS NOT `common.targets()`. Four named
+# reader-facing markdown files and `build_*.py` only — a narrow, hand-picked list, where the
+# `targets()` family scans every tracked `.md` and every `.py` under `tools/` and `scripts/`.
+# Folding this into the shared enumerator would silently WIDEN a gate that is baselined at ~78
+# grandfathered sites, which is a different change wearing a refactor's clothes.
+#
+# Vendored backports are EXEMPT STRUCTURALLY (see vendored.py) — nothing here fires on them today,
+# so that closes a latent hole rather than a live one, and it stops a future vendored drop from
+# being reported as our prose.
 TARGETS = (
-    [p for p in sorted((ROOT / 'ZeroParadox').rglob('*.lean'))
-     if not is_vendored(p, p.relative_to(ROOT))]
-    + sorted((ROOT / 'scripts').glob('build_*.py'))
-    + [ROOT / p for p in ('README.md', 'CLAIMS.md', 'SNAP.md', 'BOTTOMELEMENT.md')]
+    [p for p in sorted(SRC.rglob('*.lean'))
+     if not is_vendored(p, p.relative_to(REPO))]
+    + sorted((REPO / 'scripts').glob('build_*.py'))
+    + [REPO / p for p in ('README.md', 'CLAIMS.md', 'SNAP.md', 'BOTTOMELEMENT.md')]
 )
 
 # The predefined term list: vocabulary that SIGNALS a point-of-view claim.
@@ -162,26 +167,17 @@ MUST_DENY = [                       # must be reported as a DENIAL — never bas
 
 
 def selftest():
-    bad = 0
-    print('MUST FIRE (untagged POV claim)')
-    for label, line in MUST_FIRE:
-        _d, st = verdict(line, line)
-        ok = st == 'untagged'
-        print('  %-32s %s' % (label, 'ok' if ok else '*** MISSED (%s) ***' % st))
-        bad += 0 if ok else 1
-    print('MUST SUPPRESS')
-    for label, line in MUST_SUPPRESS:
-        _d, st = verdict(line, line)
-        ok = st != 'untagged'
-        print('  %-32s %s' % (label, 'ok' if ok else '*** FALSE POSITIVE ***'))
-        bad += 0 if ok else 1
-    print('MUST DENY (never baselined)')
-    for label, line in MUST_DENY:
-        d, _st = verdict(line, line)
-        print('  %-32s %s' % (label, 'ok' if d else '*** DENIAL NOT DETECTED ***'))
-        bad += 0 if d else 1
-    print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
-    return 1 if bad else 0
+    # Three groups, not two — the denial group is this checker's own, and the shared harness takes
+    # a list of groups precisely so a third does not force a hand-written loop back into the file.
+    return common.run_controls([
+        ('MUST FIRE (untagged POV claim)', MUST_FIRE,
+         lambda line: verdict(line, line)[1] == 'untagged', True, 'MISSED',
+         lambda line: ' (%s)' % verdict(line, line)[1]),
+        ('MUST SUPPRESS', MUST_SUPPRESS,
+         lambda line: verdict(line, line)[1] == 'untagged', False, 'FALSE POSITIVE'),
+        ('MUST DENY (never baselined)', MUST_DENY,
+         lambda line: verdict(line, line)[0], True, 'DENIAL NOT DETECTED'),
+    ], width=32)
 
 
 def scan():
@@ -197,7 +193,7 @@ def scan():
             lo = max(0, i - 6)
             window = '\n'.join(lines[lo:i + 2])
             is_denial, status = verdict(line, window)
-            rel = str(f.relative_to(ROOT)).replace(chr(92), '/')
+            rel = str(f.relative_to(REPO)).replace(chr(92), '/')
             if is_denial:
                 denials.append((f'{rel}:{i}', line.strip()[:110]))
             if status == 'skip':
@@ -225,12 +221,11 @@ def load_baseline():
     and then ignored. So this follows the project's standing as-touched rollout (same as the
     file-path and CC-2 conventions): NEW prose must be tagged; existing sites convert when their
     file is next opened, and each conversion shrinks the baseline.
+
+    `field0=True`: this baseline is tab-delimited, key first, with the site's location and text
+    after it. The shared reader takes the key.
     """
-    if not BASELINE.exists():
-        return set()
-    return {ln.split('\t')[0].strip()
-            for ln in BASELINE.read_text(encoding='utf-8').split('\n')
-            if ln.strip() and not ln.startswith('#')}
+    return common.load_baseline(BASELINE, field0=True)
 
 
 def ascii_safe(s):
@@ -241,11 +236,13 @@ def main():
     block = '--block' in sys.argv
     untagged, tagged, denials = scan()
     if '--update-baseline' in sys.argv:
-        BASELINE.write_text(
+        # ⚠ LF, via the shared writer. A bare `write_text` emits CRLF on Windows and this file is
+        # TRACKED, so regenerating used to leave the tree failing `check_invariants`.
+        common.write_text_lf(
+            BASELINE,
             '# Grandfathered untagged point-of-view claims. See check_pov.py.\n'
             '# Shrink this file as sites are tagged; never grow it deliberately.\n'
-            + '\n'.join(f'{k}\t{loc}\t{ascii_safe(sn)}' for k, loc, sn in sorted(untagged)) + '\n',
-            encoding='utf-8')
+            + '\n'.join(f'{k}\t{loc}\t{ascii_safe(sn)}' for k, loc, sn in sorted(untagged)) + '\n')
         print(f'baseline written: {len(untagged)} grandfathered site(s)')
         return 0
     base = load_baseline()

@@ -38,25 +38,30 @@ import os
 import re
 import sys
 
-# Roots. HERE is this bundle (public, tracked); the baseline travels WITH the checker, so a move
-# never strands it. SELF is derived, never written down — a hardcoded invocation path is a copy of
-# the path and drifts exactly like a mirrored file does.
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(os.path.dirname(HERE))
-SRC = os.path.join(ROOT, "ZeroParadox")
-SELF = os.path.relpath(os.path.abspath(__file__), ROOT).replace("\\", "/")
-
-sys.path.insert(0, HERE)
+# Roots come from `common` â€” one derivation for the whole bundle; the baseline travels WITH the
+# checker, so a move never strands it. SELF is derived, never written down: a hardcoded invocation
+# path is a copy of the path and drifts exactly like a mirrored file does.
+#
+# âš  COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. One
+# line of type conversion is not a second definition â€” change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
 from vendored import is_vendored  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+SRC = str(common.SRC)
+SELF = common.self_rel(__file__)
 BASELINE = os.path.join(HERE, "class_baseline.txt")
 
 # `class Foo` / `structure Foo` / `class Foo (a : T) extends ...`
-# ⚠ The name class must accept UNICODE. `[A-Za-z0-9_']` truncated `structure Q₂BallDepth` to `Q`
+# âš  The name class must accept UNICODE. `[A-Za-z0-9_']` truncated `structure Qâ‚‚BallDepth` to `Q`
 # at the subscript, which then sat in the baseline as an entry matching no declaration in the
 # corpus. Same defect as the `[^']+` name pattern in the CI report: an ASCII identifier class in a
-# corpus whose names routinely carry ₂ ε ω ℚ. `\w` is Unicode-aware in Python 3.
-#     `[^\W\da-z]` is "a word character that is neither a digit nor ASCII-lowercase" — i.e. any
-#     uppercase or non-ASCII letter. It closes the LEADING case too (`ΔUnauditedThing`, `εTest`),
+# corpus whose names routinely carry â‚‚ Îµ Ï‰ â„š. `\w` is Unicode-aware in Python 3.
+#     `[^\W\da-z]` is "a word character that is neither a digit nor ASCII-lowercase" â€” i.e. any
+#     uppercase or non-ASCII letter. It closes the LEADING case too (`Î”UnauditedThing`, `ÎµTest`),
 #     which `[A-Z]` missed entirely, while still rejecting `lowercaseThing`. Verified against both.
 DECL = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(class|structure)\s+([^\W\da-z][\w']*)", re.M | re.U)
 
@@ -68,7 +73,7 @@ def evidence_patterns(name):
     """Signs that the degeneracy question was asked, SPLIT BY WHETHER THEY NAME THE CLASS.
 
     CHK-3: five of the original eight patterns are name-agnostic (`NO-GO`, `vacuous`,
-    `degenerate…`), and they were searched over the WHOLE FILE. So one gauge cleared every class in
+    `degenerateâ€¦`), and they were searched over the WHOLE FILE. So one gauge cleared every class in
     the file, and the word "vacuous" anywhere cleared all of them. Measured 2026-08-09: a `NO-GO`
     section written for `APG` silently cleared `DecorationUniverse`, declared 60 lines later in the
     same file and never audited.
@@ -82,9 +87,9 @@ def evidence_patterns(name):
         re.compile(r"\btrivial" + n, re.I),
         re.compile(r"\bdegenerate" + n, re.I),
     ]
-    # ⚠ NO GENERIC PATTERNS. They were the whole of CHK-3: `NO-GO` / `vacuous` / `degenerate`
+    # âš  NO GENERIC PATTERNS. They were the whole of CHK-3: `NO-GO` / `vacuous` / `degenerate`
     # matched file-wide, so one gauge cleared every class in the file. Scoping them to a window
-    # around the declaration was NOT enough — a control showed a gauge naming a DIFFERENT class,
+    # around the declaration was NOT enough â€” a control showed a gauge naming a DIFFERENT class,
     # sitting immediately above `structure Foo`, still cleared `Foo`. The gauge must NAME the class
     # it is about; anything weaker answers "was a question asked here?" rather than "was it asked
     # about this?".
@@ -93,8 +98,8 @@ def evidence_patterns(name):
 
 # Lines of context around a declaration in which a GENERIC gauge is taken to be about it. A NO-GO
 # section usually sits just above the declaration, but sometimes just below it, so the window runs
-# both ways. ⚠ The first version ran -30/+5 and missed a gauge 5 lines BELOW its declaration by one
-# line — an off-by-one that reads as "unaudited" and manufactures work.
+# both ways. âš  The first version ran -30/+5 and missed a gauge 5 lines BELOW its declaration by one
+# line â€” an off-by-one that reads as "unaudited" and manufactures work.
 EVIDENCE_BEFORE, EVIDENCE_AFTER = 30, 40
 
 # Vocabulary that marks a passage as a degeneracy gauge rather than incidental prose.
@@ -107,7 +112,7 @@ def named_gauge(text, name):
     """True if the class is NAMED within `NEAR` chars of gauge vocabulary, in EITHER order.
 
     Order matters and a lookahead cannot express both directions: a section headed
-    `NO-GO gauge — what fails to be a `Foo`?` puts the keyword BEFORE the name, while
+    `NO-GO gauge â€” what fails to be a `Foo`?` puts the keyword BEFORE the name, while
     `Foo is degenerate` puts it after. Checking a window around each mention handles both, and
     keeps the evidence tied to the class it names rather than to the file it sits in.
 
@@ -131,7 +136,7 @@ def lean_files():
         for fn in filenames:
             if fn.endswith(".lean"):
                 p = os.path.join(dirpath, fn)
-                if not is_vendored(p, os.path.relpath(p, ROOT)):
+                if not is_vendored(p, os.path.relpath(p, REPO)):
                     yield p
 
 
@@ -143,7 +148,7 @@ def scan():
             text = open(path, encoding="utf-8").read()
         except (OSError, UnicodeDecodeError):
             continue
-        rel = os.path.relpath(path, ROOT).replace("\\", "/")
+        rel = os.path.relpath(path, REPO).replace("\\", "/")
         for m in DECL.finditer(text):
             kind, name = m.group(1), m.group(2)
             if name in SKIP_NAMES:
@@ -163,10 +168,7 @@ def key(entry):
 
 
 def load_baseline():
-    if not os.path.exists(BASELINE):
-        return set()
-    with open(BASELINE, encoding="utf-8") as f:
-        return {ln.strip() for ln in f if ln.strip() and not ln.startswith("#")}
+    return common.load_baseline(BASELINE)
 
 
 def main():
@@ -176,12 +178,12 @@ def main():
     found = scan()
 
     if rebuild:
-        with open(BASELINE, "w", encoding="utf-8", newline="\n") as f:
-            f.write("# check_classes.py baseline - requirements classes whose DEGENERACY question\n")
-            f.write("# was never asked, grandfathered at creation time. SHRINK as files are touched;\n")
-            f.write("# never grow deliberately. Regenerate with --baseline only after a real audit.\n")
-            for e in found:
-                f.write(key(e) + "\n")
+        common.write_text_lf(
+            BASELINE,
+            "# check_classes.py baseline - requirements classes whose DEGENERACY question\n"
+            "# was never asked, grandfathered at creation time. SHRINK as files are touched;\n"
+            "# never grow deliberately. Regenerate with --baseline only after a real audit.\n"
+            + "".join(key(e) + "\n" for e in found))
         print("baseline written: %d entries" % len(found))
         return 0
 
@@ -220,7 +222,7 @@ def main():
 
 
 # --------------------------------------------------------------------------- controls
-# ⚠ These were RUN on 2026-08-09 and not retained — they lived in a throwaway heredoc, so the
+# âš  These were RUN on 2026-08-09 and not retained â€” they lived in a throwaway heredoc, so the
 # validation could not be repeated by anyone. A validation nobody can re-run is a claim about a
 # past session, not a control. Transcribed here so `--selftest` reproduces it.
 #
@@ -238,15 +240,15 @@ MUST_FIRE = [                      # must NOT be treated as audited
 ]
 MUST_SUPPRESS = [                  # must be treated as audited
     ("gauge above, names it",
-     "/-! NO-GO — what fails to be a `Foo`? Nothing. -/\nstructure Foo where\n  a : Nat\n"),
+     "/-! NO-GO â€” what fails to be a `Foo`? Nothing. -/\nstructure Foo where\n  a : Nat\n"),
     ("gauge BELOW, names it",
-     "structure Foo where\n  a : Nat\n\n/-! NO-GO gauge — `Foo` is trivially inhabited. -/\n"),
+     "structure Foo where\n  a : Nat\n\n/-! NO-GO gauge â€” `Foo` is trivially inhabited. -/\n"),
     ("named far away",
      "structure Foo where\n  a : Nat\n" + "\n" * 80 + "/-! `Foo` is degenerate on Unit. -/\n"),
     ("Nondegenerate predicate",
      "structure Foo where\n  a : Nat\ndef FooNondegenerate : Prop := True\n"),
     ("named trivial witness",
-     "structure Foo where\n  a : Nat\ndef trivialFoo : Foo := ⟨0⟩\n"),
+     "structure Foo where\n  a : Nat\ndef trivialFoo : Foo := âŸ¨0âŸ©\n"),
 ]
 
 
@@ -255,19 +257,17 @@ def _audited(text, name="Foo"):
 
 
 def selftest():
-    bad = 0
-    print("MUST FIRE (must NOT be treated as audited)")
-    for label, text in MUST_FIRE:
-        ok = not _audited(text)
-        print("  %-32s %s" % (label, "ok" if ok else "*** FALSELY CLEARED ***"))
-        bad += 0 if ok else 1
-    print("MUST SUPPRESS (must be treated as audited)")
-    for label, text in MUST_SUPPRESS:
-        ok = _audited(text)
-        print("  %-32s %s" % (label, "ok" if ok else "*** FALSE POSITIVE ***"))
-        bad += 0 if ok else 1
-    print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
-    return 1 if bad else 0
+    # ⚠ THE POLARITY IS INVERTED RELATIVE TO EVERY OTHER CHECKER, AND THAT IS NOT A MISTAKE.
+    # `_audited` reports that a class was CLEARED, so this gate FIRES when it is False. A must-fire
+    # control therefore expects `_audited == False`. Writing that as a hand-rolled loop is exactly
+    # how `check_modal`'s selftest once tallied FAIL(5) while printing `ok` five times; passing the
+    # expected polarity as a parameter makes it a value rather than a line of arithmetic.
+    return common.run_controls([
+        ("MUST FIRE (must NOT be treated as audited)", MUST_FIRE,
+         _audited, False, "FALSELY CLEARED"),
+        ("MUST SUPPRESS (must be treated as audited)", MUST_SUPPRESS,
+         _audited, True, "FALSE POSITIVE"),
+    ], width=32)
 
 
 if __name__ == "__main__":

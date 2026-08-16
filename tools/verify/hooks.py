@@ -30,10 +30,20 @@ import sys
 # `.claude-local` and served both purposes at once, which is why publishing the bundle was not a
 # copy: HERE is the tracked, public tool bundle; PRIV is per-push private state (signals, locks,
 # batch state) that deliberately did NOT move and MAY BE ABSENT ENTIRELY in a public clone.
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-PRIV = os.path.join(REPO, ".claude-local")
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+PRIV = str(common.PRIV)
+SELF = common.self_rel(__file__)
 BASE = HERE   # retained: existing call sites below mean "where the tools live"
 
 if HERE not in sys.path:

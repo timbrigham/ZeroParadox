@@ -32,10 +32,20 @@ import io, os, re, sys, json, hashlib, subprocess
 # TWO roots. HERE is the tracked public bundle (checkers + the baselines they consult); PRIV is
 # per-push private state — batch state, signals, the defect ledger — which did NOT move and may be
 # absent entirely in a public clone. Conflating them is what made this migration more than a copy.
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-PRIV = os.path.join(REPO, ".claude-local")
-SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3). SELF is
+# derived from `__file__`, never written down: a hardcoded invocation path is a copy of the path and
+# drifts exactly like a mirrored file does.
+#
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. A
+# line of type conversion is not a second definition — change the layout and there is still exactly
+# one place to edit.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import common  # noqa: E402
+
+HERE = str(common.HERE)
+REPO = str(common.REPO)
+PRIV = str(common.PRIV)
+SELF = common.self_rel(__file__)
 BASE = HERE   # retained: remaining call sites mean "where the tools and baselines live"
 
 # The vendored exemption has exactly ONE definition. Path-insert so this works however batch.py is
@@ -103,7 +113,19 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # a false clean.
                               "check_moved.py", "install_hooks.py", "ci_report.py",
                               "check_negatives.py", "negatives_baseline.txt",
-                              "check_figures.py", "figures_baseline.txt", "check_checkers.py"]
+                              "check_figures.py", "figures_baseline.txt", "check_checkers.py",
+                              # ⚠⚠ `common.py`, ADDED 2026-08-16 IN THE SAME CHANGE THAT CREATED IT,
+                              # and it is now the WIDEST-BLAST-RADIUS entry in this list. It owns
+                              # `SKIP_DIRS`, `SKIP_NAMES`, `GLOBS`, `targets()` and `load_baseline`
+                              # for the checkers that use them, so ONE edited line there changes what
+                              # several gates scan or what they treat as grandfathered — a false zero
+                              # in all of them at once, where every route above is a false zero in
+                              # one. The rule that pulled in the six blocking scripts ("if it can
+                              # stop a push, it is in here") reaches further than intended once a
+                              # shared module exists: it can stop a push, and it can stop several.
+                              # ⚠ Deduplication CONCENTRATES risk even as it removes drift — that is
+                              # the trade, and this line is the half that pays for it.
+                              "common.py"]
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).
@@ -163,10 +185,10 @@ ROUTING = [
      "/rely", "CI workflow changed - a fail-open here publishes a false verification claim"),
 ]
 
-try:
-    sys.stdout.reconfigure(encoding="utf-8")
-except Exception:
-    pass
+# ⚠ THIS FILE'S OWN COPY OMITTED `line_buffering=True` — one of two out of eight that did, and this
+# is the orchestrator, the entry point whose manifest ordering `report.py:34` was written to fix.
+# Shared now, so a copy cannot be half right.
+common.utf8_stdout()
 
 
 def sh(*args, cwd=REPO):

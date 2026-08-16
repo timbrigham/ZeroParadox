@@ -37,13 +37,15 @@ from vendored import is_vendored
 # is not an instrument. Measured by a `/rely` pass whose environment did not carry the variable.
 import report  # noqa: F401  (side effect only)
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parent.parent
-SELF = Path(__file__).resolve().relative_to(ROOT).as_posix()
+# Roots come from `common` — ONE derivation for the whole bundle (`DEFECTS.md` MIG-3).
+import common  # noqa: E402
+from common import HERE, REPO  # noqa: E402
+
+SELF = common.self_rel(__file__)
 MEMORY = Path.home() / '.claude' / 'projects' / 'C--Workspace-ZeroParadox' / 'memory'
 # The private layer this tool scans for dangling references. Unlike the baselines, this genuinely
 # IS `.claude-local` — it is the thing being checked, not state belonging to the checker.
-NOTES = ROOT / '.claude-local'
+NOTES = REPO / '.claude-local'
 
 # Repo-relative references to real project files. Deliberately narrow: only paths that
 # start at a known top-level directory, so prose like "see Foo/Bar" is not misread.
@@ -113,10 +115,10 @@ MATHLIB_PATTERN = re.compile(
     r'(?<![\w/.-])((?:Mathlib|Std|Batteries)/[A-Za-z0-9_./-]+\.lean)'
 )
 MATHLIB_ROOTS = (
-    ROOT / '.lake' / 'packages' / 'mathlib',
-    ROOT / '.lake' / 'packages' / 'batteries',
-    ROOT / '.lake' / 'packages' / 'std4',
-    ROOT / '.lake' / 'packages',
+    REPO / '.lake' / 'packages' / 'mathlib',
+    REPO / '.lake' / 'packages' / 'batteries',
+    REPO / '.lake' / 'packages' / 'std4',
+    REPO / '.lake' / 'packages',
 )
 
 
@@ -159,9 +161,9 @@ def mathlib_exempt(path):
 
 def tracked_markdown():
     out = subprocess.run(
-        ['git', 'ls-files', '*.md'], cwd=ROOT, capture_output=True, text=True, check=True
+        ['git', 'ls-files', '*.md'], cwd=REPO, capture_output=True, text=True, check=True
     ).stdout.split('\n')
-    return [ROOT / p for p in out if p.strip()]
+    return [REPO / p for p in out if p.strip()]
 
 
 # A filename carrying a date is a DATED RECORD (a review verdict, a session note). Its file
@@ -202,9 +204,9 @@ def split_live_records(files):
 def tracked_lean():
     """Tracked Lean sources. Never .lake/ — that is thousands of Mathlib files, not ours."""
     out = subprocess.run(
-        ['git', 'ls-files', '*.lean'], cwd=ROOT, capture_output=True, text=True, check=True
+        ['git', 'ls-files', '*.lean'], cwd=REPO, capture_output=True, text=True, check=True
     ).stdout.split('\n')
-    return [ROOT / p for p in out if p.strip()]
+    return [REPO / p for p in out if p.strip()]
 
 
 UNREADABLE = []          # tracked files the scanner could not decode; each is a FAILURE, not a skip
@@ -232,7 +234,7 @@ def scan(files, find_bare, lean_mode=False, check_mathlib=False):
                 continue  # the line is discussing a dead path on purpose
             for ref in PATTERN.findall(line):
                 checked += 1
-                if not (ROOT / ref).exists():
+                if not (REPO / ref).exists():
                     dangling.append((md, lineno, ref))
             if check_mathlib and not mathlib_exempt(md):
                 for ref in MATHLIB_PATTERN.findall(line):
@@ -241,8 +243,8 @@ def scan(files, find_bare, lean_mode=False, check_mathlib=False):
                         mathlib_bad.append((md, lineno, ref))
             if find_bare:
                 for ref in BARE_LEAN.findall(line):
-                    hits = list((ROOT / 'ZeroParadox').rglob(ref))
-                    bare.append((md, lineno, ref, hits[0].relative_to(ROOT) if hits else None))
+                    hits = list((REPO / 'ZeroParadox').rglob(ref))
+                    bare.append((md, lineno, ref, hits[0].relative_to(REPO) if hits else None))
     if check_mathlib:
         return dangling, bare, checked, mathlib_bad, mathlib_checked
     return dangling, bare, checked
@@ -262,7 +264,7 @@ def scan_private_deps(files):
         # True, `is_vendored(abs)` False, and all three planted violations (Vendored/, allowlisted,
         # ordinary) were counted where one should have been. Importing the single shared definition
         # is necessary and was done; it is not sufficient, because the CALL can still be wrong.
-        if is_vendored(f.relative_to(ROOT).as_posix()):
+        if is_vendored(f.relative_to(REPO).as_posix()):
             continue
         try:
             text = f.read_text(encoding='utf-8')
@@ -331,7 +333,7 @@ def report_private_deps(qualified, bare):
         # a `/` means it carried SOME prefix, just not `.claude-local/` — the RLY14-2 shape, which
         # was invisible to all three patterns until this run
         shape = 'other-prefix' if '/' in ref else 'bare'
-        print(f'      {path.relative_to(ROOT)}:{lineno}  [{shape}]  ->  {ref}')
+        print(f'      {path.relative_to(REPO)}:{lineno}  [{shape}]  ->  {ref}')
     # ⚠⚠ THIS OUTPUT IS A READING LIST, NOT A FINDING LIST — do not size a burn-down from it.
     # The ratified rule (`vocabulary_reference.md` § 1b, 2026-07-19) splits by FUNCTION, not by
     # destination:
@@ -396,14 +398,14 @@ def selftest():
 
     # A path that does NOT resolve must be reported by the resolver, not merely matched.
     ghost = 'ZeroParadox/Order/NoSuchFile.lean'
-    ok = not (ROOT / ghost).exists() and fires('see %s' % ghost)
+    ok = not (REPO / ghost).exists() and fires('see %s' % ghost)
     bad += 0 if ok else 1
     print('    %-32s %s' % ('a dangling path is detectable', 'ok' if ok else '*** WRONG ***'))
 
     print('  MUST SUPPRESS')
     # A real file must resolve.
     real = 'ZeroParadox/Order/Snap.lean'
-    ok = (ROOT / real).exists()
+    ok = (REPO / real).exists()
     bad += 0 if ok else 1
     print('    %-32s %s' % ('a real path resolves', 'ok' if ok else '*** WRONG ***'))
 
