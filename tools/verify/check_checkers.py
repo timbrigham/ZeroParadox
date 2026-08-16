@@ -29,9 +29,9 @@ Usage (the exact invocation path is printed in this tool's own output):
   check_checkers.py --block    # exit 1 if any property is violated
   check_checkers.py --selftest # controls for this checker itself
 """
+import ast
 import io
 import os
-import re
 import subprocess
 import sys
 
@@ -74,6 +74,47 @@ def run(script, *args):
 
 def source(name):
     return io.open(os.path.join(HERE, name), encoding="utf-8").read()
+
+
+def _invokes(src, name):
+    """Does this source actually CALL `name`, as opposed to listing it?
+
+    ⚠⚠ PARSED, NOT GREPPED, AND THAT IS THE THIRD ATTEMPT. Version 1 matched the bare name,
+    which a hash list satisfies. Version 2 matched `("name.py",`, which a manifest row
+    satisfies. Version 3 stripped manifest rows by regex — and /rely defeated it TWICE in one
+    pass: once with a row wrapped across two lines, once with an unquoted mode constant, which
+    is the form `ci_report.py`'s own rows use. Each fix hardened one SYNTACTIC SHAPE while the
+    property stayed unguarded.
+
+    The AST does not care about line breaks, quoting style or formatting. A CALL is a Call
+    node; a manifest row is a Tuple inside a List assignment. Those are different node types,
+    so no amount of reformatting turns one into the other.
+
+    Counts as an invocation:
+      py("check_x.py", ...)                      - a direct call with the name as an argument
+      run(sys.executable, os.path.join(H, "check_x.py"))
+      ("check_x.py", ["--block"], GATE, "...")   - a CHECKS row: a tuple carrying an ARGV LIST,
+                                                   which is what makes it a spec rather than a
+                                                   label. A manifest row has no list.
+    """
+    try:
+        tree = ast.parse(src)
+    except SyntaxError:
+        return False
+
+    for node in ast.walk(tree):
+        # (a) the name appears as an argument to an actual call
+        if isinstance(node, ast.Call):
+            for a in list(node.args) + [k.value for k in node.keywords]:
+                if isinstance(a, ast.Constant) and a.value == name:
+                    return True
+        # (b) a spec tuple: the name beside an argv LIST. A three-literal manifest row has none.
+        if isinstance(node, ast.Tuple):
+            elts = node.elts
+            if (elts and isinstance(elts[0], ast.Constant) and elts[0].value == name
+                    and any(isinstance(e, ast.List) for e in elts[1:])):
+                return True
+    return False
 
 
 def audit():
@@ -138,20 +179,7 @@ def audit():
         # PLAN/manifest rows are therefore stripped before the search. What remains has to be
         # an actual invocation: `py("x.py")`, a `CHECKS` row carrying its argv, or a
         # subprocess of the path.
-        def _calls_only(text):
-            out = []
-            for line in text.split("\n"):
-                s = line.strip()
-                # a manifest row is (name, MODE, description) - three literals, no argv list
-                if re.match(r'^\(\s*"[\w.]+"\s*,\s*"(BLOCK|warn|report|GATE|count)"', s):
-                    continue
-                out.append(line)
-            return "\n".join(out)
-
-        invocations = ('py("%s"' % c, "py('%s'" % c,
-                       '("%s",' % c, "('%s'," % c)
-        called = [k for k, t in caller_text.items()
-                  if any(p in _calls_only(t) for p in invocations)]
+        called = [k for k, t in caller_text.items() if _invokes(t, c)]
         if c in ORPHAN_EXEMPT:
             rows.append((c, "is invoked", True,
                          "exempt: %s (controls still run every push)" % ORPHAN_EXEMPT[c]))

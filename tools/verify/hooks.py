@@ -236,7 +236,11 @@ def pre_push(stream):
         return 1
 
     print("\n=== File-reference check ===")
-    if py("check_paths.py", "--all", "--warn-private") != 0:
+    # ⚠ 3 means "skipped part of my scope", not failure — see check_paths.EXIT_SKIPPED.
+    # Locally the pinned Mathlib checkout is present, so this is normally 0; the branch
+    # exists so a developer without a built .lake is not blocked by an unrunnable check.
+    _rc_paths = py("check_paths.py", "--all", "--warn-private")
+    if _rc_paths not in (0, 3):
         print("\nPush blocked: a repo-relative reference in TRACKED markdown does not resolve.")
         print("Fix the path, or word the line so the resolver skips it (e.g. 'no longer exists').")
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")

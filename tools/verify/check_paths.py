@@ -430,7 +430,27 @@ def selftest():
     return 1 if bad else 0
 
 
+# ⚠ EXIT 3 MEANS 'PASSED WHAT I COULD RUN, AND SKIPPED PART OF MY SCOPE'.
+#
+# This checker skips Mathlib citations when `.lake/packages/` is absent, which is always the
+# case in CI. It said so honestly in its own output — and `ci_report.py` reads the EXIT CODE
+# and discards stdout, so the published summary said `pass` while 0 of 63 citations had been
+# verified. Measured by both gates independently; /rely planted two genuinely dangling
+# citations in a tracked .lean file and got exit 0 with `**all checks pass**`.
+#
+# The honesty has to live in the exit code, because that is the only channel the reporter
+# consumes — and it must NOT be parsed out of the text, which is the fail-open the buildout
+# records three times. Callers that only care about pass/fail treat 3 as success.
+EXIT_SKIPPED = 3
+
+
 def main():
+    # ⚠ LOCAL, initialised HERE. The first version declared this at module level and assigned to
+    # it inside `main`, which makes it a LOCAL by Python's scoping rule — so reading it raised
+    # UnboundLocalError on exactly the path where the skip does NOT happen, i.e. wherever Mathlib
+    # IS present. It worked in the clean worktree and crashed locally: a bug visible only in the
+    # environment the change was not aimed at.
+    skipped_a_class = False
     args = sys.argv[1:]
     if '--selftest' in args:
         print('== file-reference resolver - CONTROLS ==')
@@ -454,6 +474,7 @@ def main():
     dl, bl, cl, ml, cm = scan(tracked_lean(), find_bare=True, lean_mode=True, check_mathlib=True)
     report('tracked Lean sources (live)', dl, bl, cl)
     if not MATHLIB_PRESENT:
+        skipped_a_class = True
         print('  (Mathlib/Std citations NOT CHECKED — no pinned checkout at .lake/packages/.')
         print('   That is a build artifact: absent in a fresh clone, a worktree, and CI.')
         print('   A SKIP, not a pass — these citations were not verified here.)')
@@ -502,7 +523,9 @@ def main():
         for p in UNREADABLE:
             print('  %s' % p)
         failed = True
-    return 1 if failed else 0
+    if failed:
+        return 1
+    return EXIT_SKIPPED if skipped_a_class else 0
 
 
 if __name__ == '__main__':

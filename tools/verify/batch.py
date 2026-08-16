@@ -151,10 +151,15 @@ ROUTING = [
     #
     # An exemption and its compensating control must cover the SAME SET or the pair is a
     # story. Anything under `tools/verify/` now routes to `/rely`, whatever it is called.
-    (re.compile(r"^tools/verify/"),
+    # ⚠ CASE-INSENSITIVE, because `reviewable_from()` lowercases before its prefix test and
+    # this regex did not. /rely committed `Tools/Verify/CASETEST.md` and got `reviewable: []`
+    # AND `ROUTING rows: NONE` — the same file exempt from the prose gates and routed to no
+    # gate at all, which is the round-1 signature character for character. Latent on Windows
+    # (git normalises case here) and LIVE on ubuntu-latest, where CI runs.
+    (re.compile(r"^tools/verify/", re.I),
      "/rely", "a checker, hook, or exemption switch changed - its first run produced CHK-2 and "
               "CHK-3, both checker bugs, so this is the measured persona for the verification layer"),
-    (re.compile(r"^\.github/workflows/"),
+    (re.compile(r"^\.github/workflows/", re.I),
      "/rely", "CI workflow changed - a fail-open here publishes a false verification claim"),
 ]
 

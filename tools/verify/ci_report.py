@@ -66,6 +66,22 @@ SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
 # GATING_CHECKERS. Run with --block it fails on a clean tree forever — a permanently red check is
 # one people learn to ignore, which is the cry-wolf shape this project says to narrow rather than
 # tolerate. It reports its number; the number moving is the signal.
+# ⚠ EXIT 3 IS A THIRD STATE, AND ITS ABSENCE PUBLISHED A PASS NOBODY EARNED.
+#
+# `check_paths` skips Mathlib citations when `.lake/packages/` is missing, which is ALWAYS the
+# case in CI — this workflow runs `checkout` + `setup-python` and no lake setup. The checker
+# said so in its own output; this reporter reads the exit code and DISCARDS stdout, so the
+# summary rendered `check_paths.py | GATE | pass | every repo-relative reference resolves`
+# while 0 of 63 citations had been verified.
+#
+# Both gates found it independently. /rely planted two genuinely dangling citations in a
+# tracked .lean file, ran this reporter in the CI environment, and got `**all checks pass**`,
+# exit 0 — with the published summary BYTE-IDENTICAL to the run where all 63 were checked.
+#
+# The fix is a code, not a parsed string: deciding a verdict from log text is the fail-open
+# this file already warns about three times. A skipped class now renders as `skipped`, which
+# is neither a pass nor a failure and is visible to a reader of the summary.
+SKIPPED_RC = 3
 GATE, COUNT = "GATE", "count"
 CHECKS = [
     ("check_prose.py",      ["--block"], GATE,  "prose caps: block size, docstring vs declaration, gloss labels"),
@@ -131,10 +147,14 @@ def main(argv):
     block = "--block" in argv
     rows, failed = [], 0
 
+    skipped = 0
     for script, args, mode, what in CHECKS:
         rc, _out = run(script, args)
         # A COUNT never contributes to the verdict; that is what makes it a count.
-        if rc != 0 and mode == GATE:
+        # SKIPPED_RC is not a failure and is emphatically not a pass.
+        if rc == SKIPPED_RC:
+            skipped += 1
+        elif rc != 0 and mode == GATE:
             failed += 1
         rows.append((script, rc, mode, what))
 
@@ -153,6 +173,8 @@ def main(argv):
     for script, rc, mode, what in rows:
         if mode == COUNT:
             result = "reported"
+        elif rc == SKIPPED_RC:
+            result = "**skipped**"
         else:
             result = "pass" if rc == 0 else "**FAIL (%d)**" % rc
         w.append("| `%s` | %s | %s | %s |" % (script, mode, result, what))
@@ -176,8 +198,13 @@ def main(argv):
         w.append("| `%s` | %d |" % (b, n))
     w.append("| **total** | **%d** |" % total)
 
-    verdict = "all checks pass" if not (failed or ctl_failed) else \
-              "%d checker(s) and %d control(s) failing" % (failed, ctl_failed)
+    if failed or ctl_failed:
+        verdict = "%d checker(s) and %d control(s) failing" % (failed, ctl_failed)
+    elif skipped:
+        verdict = ("all checks that COULD run pass — %d skipped part of its scope in this "
+                   "environment (see the table; a skip is not a pass)" % skipped)
+    else:
+        verdict = "all checks pass"
     w.append("\n**%s** — %d grandfathered site(s) outstanding.\n" % (verdict, total))
     if not block:
         w.append("_Report-only (Phase 3): this step does not block. "

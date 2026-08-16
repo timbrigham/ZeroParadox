@@ -147,3 +147,5 @@ Output PDFs are written to the repo root.
 ## License
 
 CC BY-NC-ND 4.0 — same as the rest of the repository.
+
+⚠ The fonts in `scripts/fonts/` are the exception: they are third-party and remain under their own licences (DejaVu/Bitstream Vera; STIX Two under SIL OFL 1.1), which ship beside them. OFL clause 5 forbids releasing them under any other licence, so they are **not** covered by the terms above.
