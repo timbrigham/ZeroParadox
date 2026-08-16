@@ -39,6 +39,7 @@ only on NEW ones (same as-touched model as check_pov.py). SHRINK it as files are
 it deliberately. A muted gate is worse than none.
 """
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -207,6 +208,21 @@ def strip_module_docstring(text, path):
     return '\n' * head.count('\n') + text[end:]
 
 
+def tracked_md():
+    """Every TRACKED `.md`, at any depth. **The single definition — import it, never re-glob.**
+
+    ⚠ `ROOT.glob('*.md')` is ROOT-ONLY, and this class had THREE members: `check_modal`,
+    `check_negatives`, `check_figures`. A round-3 fix closed two and left this one, which is the
+    fix-the-site-not-the-class defect the corpus names, committed while fixing an instance of it.
+    18 tracked markdown files were unscanned, including all 11 published gate briefs.
+
+    `git ls-files` is what `check_paths` already used. Tracked-only is the load-bearing half: the
+    gitignored private folder stays out by construction rather than by remembering SKIP_DIRS."""
+    out = subprocess.run(['git', 'ls-files', '*.md'], cwd=str(ROOT),
+                         capture_output=True, text=True, check=True).stdout.split()
+    return [ROOT / rel for rel in out]
+
+
 def targets():
     """Vendored backports are EXEMPT STRUCTURALLY (see vendored.py). Nothing here fires on them
     today, so this closes a latent hole rather than a live one: a backport whose header discusses
@@ -214,14 +230,15 @@ def targets():
     # `.claude-local/build_*.py` was a fourth pattern until the build scripts stopped being
     # mirrored: `scripts/` is now their only home, so the third pattern already covers them and a
     # fourth would have been a second copy of the same coverage claim.
-    for pat in ('ZeroParadox/**/*.lean', '*.md', 'scripts/*.py'):
-        for p in ROOT.glob(pat):
-            rel = p.relative_to(ROOT).as_posix()
-            if p.name in SKIP_NAMES or any(('/' + d + '/') in ('/' + rel) for d in SKIP_DIRS):
-                continue
-            if is_vendored(p, rel):
-                continue
-            yield p, rel
+    globbed = [p for pat in ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
+               for p in ROOT.glob(pat)]
+    for p in globbed + tracked_md():
+        rel = p.relative_to(ROOT).as_posix()
+        if p.name in SKIP_NAMES or any(('/' + d + '/') in ('/' + rel) for d in SKIP_DIRS):
+            continue
+        if is_vendored(p, rel):
+            continue
+        yield p, rel
 
 
 def scan_text(t):

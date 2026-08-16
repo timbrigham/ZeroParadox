@@ -245,7 +245,10 @@ def main():
                             ["the snap is not...", "witness (or meta / open)"]),
         boundary_map=render_boundary_map(),
     )
-    with open(OUT, "w", encoding="utf-8") as f:
+    # newline="\n" is REQUIRED, not cosmetic: .gitattributes declares `* text=auto eol=lf`,
+    # and check_invariants blocks a push carrying CRLF in a tracked text file. Its two sibling
+    # generators already had this; running THIS one as documented used to trip the gate.
+    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(page)
     print(f"wrote {OUT}")
     print(f"{len(INDEX)} declarations indexed - {len(IS_FACES)} positive faces - {len(IS_NOT)} exclusions - {len(BOUNDARY_MAP)} boundary-map fields")

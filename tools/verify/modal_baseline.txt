@@ -24,3 +24,20 @@
 #
 # SHRINK this file as files are touched; never grow it deliberately. Format: <path>|<phrase>
 ZeroParadox/Ordinal/Kruskal.lean|artifact
+
+# .claude/commands/claim-review.md - NOT a defect. The hit is a SECTION HEADING that NAMES the
+# defect class the gate looks for: "3. Eliminable vs. necessary (the method-reach asymmetry)."
+# It does not assert that anything is eliminable; it instructs a reviewer to catch someone who
+# does. This is CLAUDE.md's `Idiom:` case - prose that NAMES a phenomenon rather than USING the
+# claim - and the test it gives applies cleanly: does the sentence USE the claim, or NAME
+# something? It names. Grandfathered rather than reworded: contorting a gate brief's own
+# vocabulary so it stops matching its own subject would make the brief worse to read, and the
+# checker cannot distinguish mention from use.
+#
+# Became visible 2026-08-16 only because check_modal's markdown scope was widened from a
+# root-only glob to `git ls-files`; the file was never scanned before.
+#
+# ⚠ DO NOT REGENERATE THIS FILE WITH `--baseline`. Measured 2026-08-16: it rewrites the file
+# from current state and DISCARDS every comment here - 26 lines to 5 - destroying exactly the
+# per-site reading notes this file's own header requires. Add a site by hand, with its reason.
+.claude/commands/claim-review.md|eliminable

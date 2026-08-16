@@ -572,10 +572,11 @@ def prose_check(text, name=''):
     for v in violations:
         print(v)
     print()
+    # This is the VOCABULARY gate; the line above is its whole remedy. A private-path pointer
+    # was removed here (a runtime error citing a file the reader cannot open is a dead end) and
+    # briefly replaced with the PALETTE gate's remedy, which `# ZP-NOCHECK` parsing cannot act
+    # on. Nothing replaces it: the correct instruction was already printed.
     print('  Fix the term or append  # ZP-NOCHECK: <reason>  to the call site.')
-    # The style guide this points at is private. Name what the reader must do rather than a
-    # path they cannot open - a runtime error citing an unreachable file is a dead end.
-    print('  Use an approved palette constant, or annotate the override with # ZP-OVERRIDE:.')
     print('!' * 70)
     print()
     raise SystemExit(1)

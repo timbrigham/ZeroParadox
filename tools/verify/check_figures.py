@@ -41,6 +41,9 @@ BASELINE = HERE / 'figures_baseline.txt'
 
 sys.path.insert(0, str(HERE))
 from vendored import is_vendored          # noqa: E402
+# ⚠ ONE DEFINITION. This glob had three copies and a fix reached two of them;
+# see tracked_md's docstring. Import it.
+from check_modal import tracked_md        # noqa: E402
 import report                              # noqa: F401,E402  (utf-8 stdout, side effect)
 
 # ── the countable artifacts ──────────────────────────────────────────────────────────────────
@@ -120,19 +123,6 @@ def prose_lines(text, suffix):
             if in_doc or s.startswith('#'):
                 out.append((i, line))
     return out
-
-
-def tracked_md():
-    """Every TRACKED `.md`, at any depth.
-
-    ⚠ `ROOT.glob('*.md')` is ROOT-ONLY. That is how 18 tracked markdown files sat outside this
-    checker while its own scope control still passed — among them all 11 gate briefs under
-    `.claude/commands/`, which CLAUDE.md declares publication content. `git ls-files` is what
-    `check_paths` already uses, and tracked-only is the load-bearing half: the gitignored private
-    folder stays out by construction rather than by remembering to extend SKIP_DIRS."""
-    out = subprocess.run(['git', 'ls-files', '*.md'], cwd=str(ROOT),
-                         capture_output=True, text=True, check=True).stdout.split()
-    return [ROOT / rel for rel in out]
 
 
 def targets():

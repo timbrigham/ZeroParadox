@@ -45,7 +45,8 @@ from vendored import is_vendored          # noqa: E402
 # pattern, and check_modal.py needed THREE fixes to get it right (literal spaces, then the
 # separators, then line numbers counted against the original). A second copy here would be the
 # mirror defect this project spent 2026-08-15 removing. One definition.
-from check_modal import normalize_separators, strip_module_docstring   # noqa: E402
+from check_modal import (normalize_separators, strip_module_docstring,
+                         tracked_md)   # noqa: E402
 import report                              # noqa: F401,E402  (utf-8 stdout, side effect)
 
 # ── the claim ────────────────────────────────────────────────────────────────────────────────
@@ -128,19 +129,6 @@ SKIP_NAMES = {'CLAUDE.md', 'check_negatives.py', 'negatives_baseline.txt',
               'register.md', 'RELEASES.md', 'DEFECT_CLASSES.md'}
 SKIP_DIRS = ('.lake', '.git', 'notes', 'papers', 'archive', 'feedback', 'outreach',
              'autobiography', '__pycache__', 'deepseek')
-
-
-def tracked_md():
-    """Every TRACKED `.md`, at any depth.
-
-    ⚠ `ROOT.glob('*.md')` is ROOT-ONLY. That is how 18 tracked markdown files sat outside this
-    checker while its own scope control still passed — among them all 11 gate briefs under
-    `.claude/commands/`, which CLAUDE.md declares publication content. `git ls-files` is what
-    `check_paths` already uses, and tracked-only is the load-bearing half: the gitignored private
-    folder stays out by construction rather than by remembering to extend SKIP_DIRS."""
-    out = subprocess.run(['git', 'ls-files', '*.md'], cwd=str(ROOT),
-                         capture_output=True, text=True, check=True).stdout.split()
-    return [ROOT / rel for rel in out]
 
 
 def targets():

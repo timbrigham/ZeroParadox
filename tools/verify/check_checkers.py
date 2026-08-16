@@ -246,13 +246,16 @@ def main(argv):
         print("\nA checker that cannot fail, or that nothing runs, is not a check.")
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1 if "--block" in argv else 0
-    # ⚠ "every checker" means the `check_*.py` files in CHECKS. `guards.py` BLOCKS at push and
-    # is audited by nothing here: it parses only `--list`, so `guards.py --selftest` silently
-    # succeeds without running anything — worse than erroring, because a pipeline wired to it
-    # would collect a green tick having tested nothing. Ledgered; do not read this line as
-    # covering the whole verification layer.
+    # ⚠ "every checker" means the `check_*.py` files this script globs, which is WIDER than the
+    # CHECKS list. `guards.py` BLOCKS at push and is audited by nothing here. State the gap
+    # precisely: it parses only `--list`, so `guards.py --selftest` is IGNORED and falls through
+    # to an ordinary run — measured, 22 route checks, all executed, output byte-identical to a
+    # bare invocation. It is not a checker that does nothing; it is a checker with no CONTROLS
+    # of its own and no way to ask for them. An earlier version of this comment said "runs
+    # nothing", inferred from the identical output, which shows only that the flag is ignored.
     print("OK: every check_*.py has passing controls in both directions, and is invoked.")
-    print("   (scope: the CHECKS list. guards.py blocks at push and is NOT audited here.)")
+    print("   (scope: the check_*.py glob, WIDER than the CHECKS list;")
+    print("    guards.py blocks at push and is NOT audited here.)")
     return 0
 
 

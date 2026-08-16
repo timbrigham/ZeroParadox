@@ -26,9 +26,8 @@ validated `export_full` — not by committing this tool's raw output.
 
 The baseline corresponds to a fixed public-production commit (recorded in `tm_registry.py`):
 `origin/main @ 7075d4abfe49b81c0080166d848e08579f1cafb7` (tree `eacbc513a541d465b9937b33a53f923d3e9ea4b6`).
-Re-running the extractor against that tree reproduces the same inventory: **1025 declarations, measured against that pinned commit**,
-spread across **136 declaration-bearing files, measured against the same commit** — reproducible on demand
-rather than a figure that drifts.
+Re-running the extractor against that tree reproduces that inventory exactly. ⚠ **The count is deliberately not written here.** It read `1025` while line 78 of this same file read `~1012`, and an independent re-run at the pinned tree measured 1012 — so the figure was both wrong and self-contradictory, and an earlier edit made it worse by removing the `currently` hedge that had at least flagged it as volatile.
+Per this project's standing rule, **measure it rather than quoting it**: run the extractor against the pinned commit and read the number from `tm_registry.py`.
 
 ## Identifier handling (why the count is what it is)
 

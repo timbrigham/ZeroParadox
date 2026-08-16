@@ -72,5 +72,5 @@ jobs:
           # This step DOES fail if ci_report.py itself crashes. That is intended: a reporter that
           # died has not verified anything, and a green tick on a crashed reporter is the exact
           # false zero this suite exists to prevent. It does NOT fail on a checker finding — that
-          # is Phase 4, and it is `--block`.
+          # is Phase 4 — and see this file's header: that flip is NOT just adding `--block`.
           python tools/verify/ci_report.py
