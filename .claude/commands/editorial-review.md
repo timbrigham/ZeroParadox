@@ -60,7 +60,7 @@ Read these files first. They define the standards you are enforcing:
 
 1. `CLAUDE.md` — versioning conventions, companion sync rules, prose standards, vocabulary rules
 2. `.claude-local\vocabulary_reference.md` — terms to avoid, terms requiring a gloss, ZP-internal vocabulary
-3. `.claude-local\PDF_Rendering_Standards.md` — build script standards
+3. `scripts/PDF_Rendering_Standards.md` — build script standards
 4. `register.md` — canonical version registry (source of truth for all version numbers)
 
 Do not rely on memory of what these files say. Read them.
@@ -99,7 +99,7 @@ For `README.md` and `GUIDE.md` (if in scope, or always for Full Scan):
 
 Read `register.md`. For each row:
 
-- Find the corresponding build script in `.claude-local\` (e.g., `build_zpa.py` for ZP-A).
+- Find the corresponding build script in `scripts/` (e.g., `build_zpa.py` for ZP-A). They moved out of the private folder on 2026-08-15 and `scripts/` is now their only home.
 - Read the `VERSION = '...'` line from that script.
 - Compare to the Formal Version column in register.md.
 - Flag any mismatch with the register value, the script value, and the file name.

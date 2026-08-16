@@ -29,15 +29,26 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 SELF = os.path.relpath(os.path.abspath(__file__), REPO).replace("\\", "/")
 
 # old path (regex, anchored on the literal old location) -> where it went.
+# ⚠ BOTH SEPARATORS, BUILT IN. `SEP` is `[\\/]`, not a literal `/`.
+#
+# Every pattern used `/` until 2026-08-15, which made Windows-style references INVISIBLE:
+# `.claude-local\PDF_Rendering_Standards.md` and `.claude-local\build_zpa.py` sat stale in the
+# EDITORIAL GATE BRIEF while this checker reported zero stale references. The reviewer would have
+# been sent to two files that no longer exist. Paths here get written by hand on Windows and by
+# tools with POSIX separators, so knowing one of them is a detector with a blind half.
+#
+# ⚠ Do NOT post-process the patterns to add this. The first fix chained two `.replace` calls and
+# the second mangled the `[\\/]` the first had just inserted — seven controls failed at once.
+SEP = r"[\\/]"
 _VERIFY = ("hooks batch report guards vendored gate_round gatelock debaseline selfheal ship "
            "check_classes check_hashes check_invariants check_modal check_paths check_poles "
            "check_pov check_prose check_release_ready").split()
-MOVED = [(r"\.claude-local/%s\.py" % n, "tools/verify/%s.py" % n) for n in _VERIFY]
-MOVED += [(r"\.claude-local/%s" % n, "tools/verify/%s" % n) for n in
+MOVED = [(r"\.claude-local" + SEP + r"%s\.py" % n, "tools/verify/%s.py" % n) for n in _VERIFY]
+MOVED += [(r"\.claude-local" + SEP + re.escape(n), "tools/verify/%s" % n) for n in
           ("class_baseline.txt", "modal_baseline.txt", "pov_baseline.txt", "prose_baseline.txt",
            "decl_baseline.txt", "vendored_files.txt",
            "proposed_pre_commit_hook.sh", "proposed_pre_push_hook.sh")]
-MOVED += [(r"\.claude-local/%s" % n, "scripts/%s" % n) for n in
+MOVED += [(r"\.claude-local" + SEP + re.escape(n), "scripts/%s" % n) for n in
           ("zp_utils.py", "scan_pdfs.py", "PDF_Rendering_Standards.md")]
 # ⚠ ENUMERATED, NOT GLOBBED. `\.claude-local/build_.*\.py` looks right and is wrong: five build
 # scripts (build_bottom_matrix, build_claim_map, build_padicbridge, build_zp_reals_companion,
@@ -48,8 +59,8 @@ _MOVED_BUILDS = sorted(
     f for f in os.listdir(os.path.join(REPO, "scripts"))
     if f.startswith("build_") and f.endswith(".py")
 ) if os.path.isdir(os.path.join(REPO, "scripts")) else []
-MOVED += [(r"\.claude-local/" + re.escape(f), "scripts/" + f) for f in _MOVED_BUILDS]
-MOVED += [(r"\.claude-local/commands/", ".claude/commands/")]
+MOVED += [(r"\.claude-local" + SEP + re.escape(f), "scripts/" + f) for f in _MOVED_BUILDS]
+MOVED += [(r"\.claude-local" + SEP + "commands" + SEP, ".claude/commands/")]
 
 RULES = [(re.compile(pat), dest) for pat, dest in MOVED]
 
@@ -59,7 +70,10 @@ EXEMPT_DIRS = ("/notes/", "/archive/", "/autobiography/", "/feedback/", "/outrea
 # register.md / RELEASES.md: the changelog of record, quoting past versions verbatim and on purpose.
 # check_moved.py: this file IS the relocation table, so every old path appears here by definition.
 # phase2_file_list.txt: a frozen worklist from an earlier migration - a dated record, not guidance.
-EXEMPT_FILES = ("register.md", "RELEASES.md", "check_moved.py", "phase2_file_list.txt")
+# nb.txt and friends: captured console OUTPUT. A log records what a tool printed at a moment
+# in time, so a path inside it is a historical fact, not a live instruction to follow.
+EXEMPT_FILES = ("register.md", "RELEASES.md", "check_moved.py", "phase2_file_list.txt",
+                "nb.txt")
 SCAN_EXT = (".py", ".md", ".sh", ".ps1", ".yml", ".txt", ".lean")
 
 
@@ -120,6 +134,11 @@ def selftest():
         ("a relocated build script", "run python .claude-local/build_zpa.py"),
         ("a relocated hook source",  ".claude-local/proposed_pre_push_hook.sh"),
         ("the old commands dir",     "briefs live in .claude-local/commands/"),
+        # ⚠ WINDOWS SEPARATORS. These two shapes sat stale in the EDITORIAL GATE BRIEF while this
+        # checker reported zero, because every pattern was written with `/`. The brief would have
+        # sent a reviewer to two files that no longer exist.
+        ("backslash: a moved doc",    r"read .claude-local\PDF_Rendering_Standards.md first"),
+        ("backslash: a moved script", r"the build script in .claude-local\build_zpa.py"),
     ]
     suppress = [
         # Still private and still correct - these did NOT move.
