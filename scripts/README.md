@@ -36,7 +36,7 @@ build's own exit code and reports what the machine actually checked.
 | File | Purpose |
 |------|---------|
 | [zp_utils.py](zp_utils.py) | Shared utility module imported by all build scripts. Provides font registration, colour constants (including palette enforcement gate), layout constants, style dicts, and all standard component helpers: `sp`, `fix`, `body`, `li`, `derived`, `label_box`, `data_table`, `make_doc`, `callout`, `result_box`, `axiom_box`, `def_box`, `remark_box`, `import_box`. The palette gate runs at import time and aborts the build if a script redefines a protected colour constant without an explicit `# ZP-OVERRIDE:` annotation. |
-| [setup_fonts.py](setup_fonts.py) | **Effectively retired.** It short-circuits on `All fonts already present.` now that `fonts/` is tracked, and its download list never included the five STIX faces. Kept as a record of where the DejaVu files came from |
+| [setup_fonts.py](setup_fonts.py) | **Effectively retired.** It short-circuits on `All fonts already present.` now that `fonts/` is tracked, and its download list never included the four STIX faces. Kept as a record of where the DejaVu files came from |
 | [scan_pdfs.py](scan_pdfs.py) | Pre-push validation: checks DVS font registrations, STIXTwo-Math glyph coverage, and presence of all expected output PDFs |
 
 ### Formal layer builders
@@ -126,7 +126,7 @@ copies "provided that each copy contains the above copyright notice and this lic
 - [`fonts/LICENSE-STIXTwo-OFL.txt`](fonts/LICENSE-STIXTwo-OFL.txt) — SIL OFL 1.1, upstream text
 
 ⚠ `setup_fonts.py` does NOT work as a refresh path: it returns at `All fonts already present.`
-whenever the DejaVu files exist, which is now always, and the five STIX faces were never in its
+whenever the DejaVu files exist, which is now always, and the four STIX faces were never in its
 download list. It is kept only as a record of where the DejaVu files came from.
 
 ## Running a Builder

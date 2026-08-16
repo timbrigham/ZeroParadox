@@ -42,8 +42,13 @@ The registry tracks *Zero Paradox framework* declarations — the things that ge
 restructured. Two categories are excluded by explicit policy, and the excluded counts are printed on
 every run:
 
-1. **Vendored external code** (`EXCLUDE_DIRS` — `ZeroParadox/Vendored/`). These files
-   (`NaturalOps.lean`, `NaturalOpsPow.lean`) are Mathlib / Combinatorial-Game-Theory code
+1. **Vendored external code.** Two files, exempted by two different mechanisms:
+   `ZeroParadox/Vendored/NaturalOps.lean` by the directory rule (`EXCLUDE_DIRS`), and
+   `ZeroParadox/Ordinal/NaturalOpsPow.lean` by the content allowlist — run
+   `python -c "import sys; sys.path.insert(0,'tools/verify'); import vendored; print(sorted(vendored.allowlist()))"`
+   to see it. ⚠ This paragraph attributed **both** to `ZeroParadox/Vendored/`, which is why a
+   review read it as naming a file that does not exist; the file exists, in a different directory,
+   under a different exemption. Both are Mathlib / Combinatorial-Game-Theory code
    (Violeta Hernández, Apache-2.0), vendored because the upstream copy was removed after Mathlib
    v4.28. They are not Zero Paradox original work, are never cited by name in the framework, and are
    never restructured — registering them would only add infrastructure noise and misattribute
@@ -74,8 +79,11 @@ the claims-layer work it is a **multi-collection envelope**, not a bare declarat
   "store_version": "2" }
 ```
 
-- **`collections.declarations.entries`** — the ~1012-declaration inventory enriched with an **ontology
+- **`collections.declarations.entries`** — the declaration inventory enriched with an **ontology
   overlay**: per-declaration `object` / `domain` / `role` tags (each a controlled, multi-valued list).
+  ⚠ This line read `~1012-declaration` — a **fourth** wrong value for the figure line 29 of this same
+  file already forbids writing down, 48 lines above it. Measured on the live store it is 1676. The
+  count is not recorded here; measure it.
 - **`collections.claims.entries`** — the curated **claim graph**: ⊥-face domain nodes, the adjudicated
   inter-domain edges, and the free-standing keystones. Each claim carries a `status`
   (`proved`/`deep`/`corr`/`conj`/`commitment`), and a declaration links back to a claim via its

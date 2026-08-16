@@ -279,12 +279,17 @@ def run_controls(groups, width=34):
     FIRED; `expect` is what firing should be for that group — `True` for a must-fire, `False` for a
     must-suppress.
 
-    ⚠ **THE INVERSION IS WHY THIS IS SHARED AND NOT COPIED.** `check_modal.py:302` records the bug
-    verbatim: the first version of that selftest reused the must-fire loop's `bad += 0 if got else 1`
-    for the suppression group, and reported `FAIL (5)` while printing `ok` on all five. The summary
-    contradicted the detail, which is the only reason it was caught. Fifteen hand-written copies of
-    this loop is fifteen chances to write that line the wrong way round; one `expect` parameter is
-    none.
+    ⚠ **THE INVERSION IS WHY THIS IS SHARED AND NOT COPIED.** The comment inside
+    `check_modal.py`'s `selftest()` records the bug verbatim: the first version reused the must-fire
+    loop's `bad += 0 if got else 1` for the suppression group, and reported `FAIL (5)` while printing
+    `ok` on all five. The summary contradicted the detail, which is the only reason it was caught.
+    Fifteen hand-written copies of this loop is fifteen chances to write that line the wrong way
+    round; one `expect` parameter is none.
+
+    ⚠ Cited by DECLARATION, not by line. This sentence said `check_modal.py:302` and the record had
+    moved to `:230` — because collapsing that very selftest into this harness shortened the file.
+    A line number is a copy of a location and drifts exactly like any other copy; a function name
+    does not.
 
     ⚠ **AND THE CONTROL TEXT MUST BE THE CHECKER'S OWN.** Three separate agents independently ran a
     must-fire probe using a hand-written violation the checker does not detect, got a pass, and
@@ -373,10 +378,10 @@ def selftest():
         print('  %-40s %s' % ('%s resolves (%s)' % (name, p.name), 'ok' if ok else '*** MISSING ***'))
         bad += 0 if ok else 1
 
-    # ⚠ THE SCOPE CONTROL. `targets()` is now the single enumerator for three checkers, so an empty
-    # or collapsed scan set here is a false zero in all three. Assert it is populated and that the
-    # three file kinds it exists to cover are each present.
-    print('SCOPE')
+    # ⚠ SHAPE ASSERTIONS. These say the enumerator returns the right KINDS of file. They are NOT a
+    # scope control and must not be described as one — see the block below for why that distinction
+    # cost a bedrock finding.
+    print('SHAPE')
     rels = [rel for _p, rel in targets()]
     for label, test in (
             ('scan set is populated', len(rels) > 100),
@@ -389,6 +394,38 @@ def selftest():
     ):
         print('  %-40s %s' % (label, 'ok' if test else '*** FAILED ***'))
         bad += 0 if test else 1
+
+    # ═══ THE SCOPE CONTROL ═══════════════════════════════════════════════════════════════════
+    #
+    # ⚠⚠ **THE ASSERTIONS ABOVE WERE LABELLED "THE SCOPE CONTROL" AND COULD NOT SEE A SCOPE
+    # COLLAPSE. That is DC-18 — a proxy for the property, in the control written against exactly the
+    # risk this module creates.** Measured by `/rely` 2026-08-16, and the probe is the one to keep:
+    # plant `check_negatives`' own MUST_FIRE string (confirmed exit 1), then add ONE WORD — `'Order'`
+    # — to `SKIP_DIRS`. `check_negatives`, `check_modal` and `check_figures` all went to **exit 0
+    # with the violation still live**, the scan set fell 330 → 317, and every assertion above still
+    # printed `ok`. They test NON-EMPTINESS: drop one directory and there are still nested `.lean`
+    # files elsewhere, so nothing fires.
+    #
+    # **The fix is to derive what MUST be covered from the tree rather than asserting a shape.**
+    # Every immediate subdirectory of `ZeroParadox/` holding a `.lean` file must contribute at least
+    # one file to the scan set. That is self-maintaining — a new subsystem is covered the day it is
+    # created, with nothing to remember — and it fails loud on precisely the edit that defeated the
+    # old version, because excluding `Order` removes `ZeroParadox/Order/` from the set entirely.
+    #
+    # ⚠ `Vendored/` is the one legitimate absence: backports are exempt STRUCTURALLY (`vendored.py`),
+    # so requiring coverage of it would assert the opposite of the rule.
+    print('SCOPE (every ZeroParadox/ subsystem is reached)')
+    covered = {r.split('/')[1] for r in rels
+               if r.startswith('ZeroParadox/') and r.count('/') > 1}
+    expected = {d.name for d in SRC.iterdir()
+                if d.is_dir() and d.name != 'Vendored' and any(d.rglob('*.lean'))}
+    missing = sorted(expected - covered)
+    ok = not missing
+    print('  %-40s %s (%d/%d subsystems)'
+          % ('no subsystem has fallen out of scope',
+             'ok' if ok else '*** %d MISSING: %s ***' % (len(missing), ', '.join(missing[:5])),
+             len(covered & expected), len(expected)))
+    bad += 0 if ok else 1
 
     print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0

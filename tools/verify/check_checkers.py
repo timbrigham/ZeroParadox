@@ -67,16 +67,33 @@ ORPHAN_EXEMPT = {
     # drafted." Its CONTROLS still run on every push via ci_report's SELFTESTS, so the checker is
     # verified even though its invocation is not automatic.
     "check_release_ready.py": "pre-release gate; no git event exists for tag creation",
+    # ⚠ A LIBRARY, not a gate — nothing invokes it and nothing should; it is IMPORTED by most of
+    # this bundle, which is a stronger dependency than being called by one entry point. Property 4
+    # ("is it invoked") is the only one that does not apply. Properties 1-3 DO, and they are why it
+    # is in `ALSO_AUDITED`: its controls are now run by this checker, which BLOCKS at push, rather
+    # than only by the report-only CI job. Exempting the inapplicable property is not the same as
+    # exempting the module (COM-1).
+    "common.py": "shared library; imported across the bundle rather than invoked by any entry point",
 }
 
 
-# ⚠ GATES THAT ARE NOT NAMED `check_*.py`. The glob below is a NAMING convention, and a naming
-# convention is not a property — `guards.py` BLOCKS at push (`hooks.py:107`, `hooks.py:243`) and was
+# ⚠ MODULES THAT ARE NOT NAMED `check_*.py`. The glob below is a NAMING convention, and a naming
+# convention is not a property — `guards.py` BLOCKS at push (`hooks.py`'s pre-push plan) and was
 # audited by nothing here purely because of what it is called. It shipped with no controls and a
 # `--selftest` flag that was parsed away and silently ignored; when controls were finally written
-# (2026-08-16) they found a live false green on their first run. **Add a gate here the moment it can
-# block, whatever its filename.**
-ALSO_AUDITED = ("guards.py",)
+# (2026-08-16) they found a live false green on their first run. **Add a module here the moment it
+# can block OR the moment other gates depend on it, whatever its filename.**
+#
+# ⚠⚠ `common.py` WAS LEFT OUT ON THE ARGUMENT THAT IT "GATES NOTHING", AND THAT ARGUMENT WAS WRONG
+# (COM-1, /rely 2026-08-16). It was added to `ci_report.SELFTESTS` instead — but `ci_report`'s
+# control loop reads only an EXIT CODE, so it cannot distinguish a control that passed from a
+# `--selftest` flag that is silently ignored, which is `GRD-2` exactly. Measured by deleting
+# `common.py`'s two-line `--selftest` dispatch: `common.py --selftest` exited 0 having run nothing,
+# `ci_report --block` published `pass`, and this checker exited 0 with `violations: 0`. And
+# `ci_report` is the REPORT-ONLY CI job, so that was the module's only execution anywhere — no hook,
+# commit gate or push gate ran it. Property 4 does not apply to it, which is what `ORPHAN_EXEMPT` is
+# FOR; excluding it from the audit entirely was the wrong way to say that.
+ALSO_AUDITED = ("guards.py", "common.py")
 
 
 def checkers():

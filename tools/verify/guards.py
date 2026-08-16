@@ -215,10 +215,12 @@ def moves_routing(ctx):
 
 def r_content_marker():
     return _append(PROBE_FILE, "\n-- VENDORED FROM upstream, Apache-2.0\n")
+r_content_marker.attacks = PROBE_FILE
 
 
 def r_allowlist():
     return _append(os.path.join(BASE, "vendored_files.txt"), "ZeroParadox/Order/Snap.lean\n")
+r_allowlist.attacks = os.path.join(BASE, "vendored_files.txt")
 
 
 def r_pov_baseline():
@@ -248,6 +250,7 @@ def r_pov_baseline():
     def undo():
         io.open(p, "wb").write(orig)
     return apply, undo
+r_pov_baseline.attacks = os.path.join(BASE, "pov_baseline.txt")
 
 
 def r_nested_vendored():
@@ -265,6 +268,7 @@ def r_nested_vendored():
         if os.path.isdir(d) and not os.listdir(d):
             os.rmdir(d)
     return apply, undo
+r_nested_vendored.attacks = os.path.join(REPO, "ZeroParadox", "Order", "Vendored", "Probe.lean")
 
 
 # ═══ PROPERTY 2 — the bedrock review cap cannot be walked ═════════════════════════════════════
@@ -296,6 +300,7 @@ def r_bump_fresh_target():
     def undo():
         pass                                    # the property's own violate/undo restores the file
     return apply, undo
+r_bump_fresh_target.attacks = ROUND_STATE
 
 
 def r_bump_empty_target():
@@ -305,6 +310,7 @@ def r_bump_empty_target():
     def undo():
         pass
     return apply, undo
+r_bump_empty_target.attacks = ROUND_STATE
 
 
 def r_bump_no_target():
@@ -314,14 +320,17 @@ def r_bump_no_target():
     def undo():
         pass
     return apply, undo
+r_bump_no_target.attacks = ROUND_STATE
 
 
 def r_delete_state():
     return _rewrite(ROUND_STATE, lambda _o: None)
+r_delete_state.attacks = ROUND_STATE
 
 
 def r_corrupt_state():
     return _rewrite(ROUND_STATE, lambda _o: b"{ this is not json")
+r_corrupt_state.attacks = ROUND_STATE
 
 
 def r_reset_command():
@@ -332,12 +341,14 @@ def r_reset_command():
     def undo():
         pass                                    # the property's violate/undo rewrites the file
     return apply, undo
+r_reset_command.attacks = ROUND_STATE
 
 
 def r_missing_round_key():
     """Valid JSON with no `round` key — `.get('round', 0)` silently restarted the count."""
     return _rewrite(ROUND_STATE, lambda _o: json.dumps(
         {"arc_base": "0" * 40, "targets": {}}, indent=2).encode("utf-8"))
+r_missing_round_key.attacks = ROUND_STATE
 
 
 def announces_reset(ctx):
@@ -348,11 +359,13 @@ def r_bool_round():
     """`{"round": true}` — `isinstance(True, int)` is True in Python, so `True > 5` compared as 1."""
     return _rewrite(ROUND_STATE, lambda _o: json.dumps(
         {"round": True, "arc_base": "0" * 40, "targets": {}}, indent=2).encode("utf-8"))
+r_bool_round.attacks = ROUND_STATE
 
 
 def r_negative_round():
     return _rewrite(ROUND_STATE, lambda _o: json.dumps(
         {"round": -99, "arc_base": "0" * 40, "targets": {}}, indent=2).encode("utf-8"))
+r_negative_round.attacks = ROUND_STATE
 
 
 # ═══ PROPERTY 3 — the /rely iteration cap cannot be walked ═══════════════════════════════════
@@ -381,12 +394,14 @@ def r_no_target_bump():
     """The round counter never incremented — the reviewer's own pass number must still count."""
     return _rewrite(ROUND_STATE, lambda _o: json.dumps(
         {"round": 1, "arc_base": "0" * 40, "targets": {}}, indent=2).encode("utf-8"))
+r_no_target_bump.attacks = ROUND_STATE
 
 
 def r_drop_blocking_token():
     """Line 1 without `BLOCKING:` — must not read as 'not capped, carry on'."""
     return _rewrite(RELY_SIG, lambda o: b"REVIEWED - /rely pass 4, scope the pipeline.\n"
                     + (o.split(b"\n", 1)[1] if o and b"\n" in o else b""))
+r_drop_blocking_token.attacks = RELY_SIG
 
 
 def says_malformed(ctx):
@@ -441,6 +456,7 @@ def r_drop_take_delimiter():
     def undo():
         io.open(PROBE_FILE, "wb").write(orig)
     return apply, undo
+r_drop_take_delimiter.attacks = PROBE_FILE
 
 
 def r_prose_baseline():
@@ -456,6 +472,7 @@ def r_prose_baseline():
     def undo():
         io.open(p, "wb").write(orig)
     return apply, undo
+r_prose_baseline.attacks = os.path.join(BASE, "prose_baseline.txt")
 
 
 # ═══ PROPERTY 5 — a block that is BOTH over cap and latching appears in BOTH reports ═════════
@@ -660,14 +677,30 @@ def run_property(prop):
             # instead of the property, and DC-10's detector cannot find it, because deleting the
             # input makes a proxy check fail correctly.
             #
-            # Measuring it is cheap and exact: the registry already hashes every path a route may
-            # touch, for the restoration proof. A route that changes NONE of them did nothing.
+            # ⚠ MEASURED PER ROUTE, NOT OVER THE UNION — and the union version was itself a false
+            # green (COM-3, /rely 2026-08-16). Hashing all of `TOUCHED` together only asks "did
+            # ANYTHING move", so a route whose real attack is dead but which incidentally writes some
+            # other tracked path still scored `ok`. That is GRD-1 again with one extra step. A
+            # constructed probe demonstrated it: a route running the dead `check_pov.py --baseline`
+            # flag AND appending a comment to `vendored_files.txt` passed.
+            #
+            # So each factory DECLARES the path its attack must move, beside its own definition —
+            # `r_allowlist.attacks = ...` — and the control requires THAT path to have changed. A
+            # central table would have been a second place to maintain, which is the pattern this
+            # file exists to argue against.
+            attacked = getattr(factory, "attacks", None)
             fs_before = snapshot()
             try:
                 r_apply()
-                if snapshot() == fs_before:
+                moved = [p for p in TOUCHED if snapshot()[p] != fs_before[p]]
+                if attacked is not None and attacked not in moved:
+                    results.append((label, "ROUTE INERT — its declared target (%s) did not change, "
+                                           "so the verdict below would be a false green"
+                                           % os.path.relpath(attacked, REPO), False))
+                    continue
+                if attacked is None and not moved:
                     results.append((label, "ROUTE INERT — applying it changed none of the %d hashed "
-                                           "paths, so the verdict below would be a false green"
+                                           "paths, and it declares no target to check against"
                                            % len(TOUCHED), False))
                     continue
                 still, out = prop["detect"]()
@@ -743,6 +776,18 @@ def _noop_route():
     return (lambda: None), (lambda: None)
 
 
+def _misdirected_route():
+    """A route whose DECLARED attack is dead but which writes some OTHER hashed path.
+
+    ⚠ This is COM-3's probe, kept as a permanent control. Under the union-hashing version it scored
+    `ok / does NOT bypass` — the GRD-1 false green with one extra step, because something moved even
+    though the attack did not. It must now be reported INERT."""
+    return _append(os.path.join(BASE, "vendored_files.txt"), "\n# guards selftest misdirection\n")
+
+
+_misdirected_route.attacks = os.path.join(BASE, "pov_baseline.txt")   # never touched by the above
+
+
 def _syn_violate():
     """Plant the synthetic marker in a path that IS inside TOUCHED."""
     return _append(PROBE_FILE, _SYN_MARK)
@@ -778,7 +823,12 @@ def selftest():
     Real properties are not used here: their verdicts depend on the corpus, and a control that moves
     when the corpus moves is not a control. Each synthetic property has a detector whose behaviour is
     known in advance, so what is being tested is `run_property`, not the tree."""
-    must_fire = [("a route that mutates nothing", _syn_prop("no-op route", _noop_route))]
+    must_fire = [
+        ("a route that mutates nothing", _syn_prop("no-op route", _noop_route)),
+        # COM-3: writes a hashed path, but not the one it declares it attacks.
+        ("a route that moves the WRONG path",
+         _syn_prop("misdirected route", _misdirected_route)),
+    ]
     must_suppress = [("a route that really mutates", _syn_prop("real route", _syn_route))]
 
     def _reports_inert(prop):

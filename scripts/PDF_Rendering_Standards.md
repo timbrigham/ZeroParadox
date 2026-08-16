@@ -45,12 +45,21 @@ $env:PYTHONUTF8=1; python scripts/build_<doc>_companion.py
 
 ## 2. Glyph Safety — Use fix() and the Paragraph Helpers
 
-STIXTwo-Math covers most mathematical symbols well, but two glyphs are confirmed to require a DV (DejaVuSans) font switch:
+STIXTwo-Math covers most mathematical symbols well. Two glyphs are routed through a DV (DejaVuSans)
+font switch:
 
-| Glyph | Codepoint | Issue |
+| Glyph | Codepoint | Why it is wrapped |
 |---|---|---|
-| ✓ | U+2713 | Missing from STIXTwo-Math — renders as blank box in DVS text |
-| ∅ | U+2205 | Missing from STIXTwo-Math — renders as blank box in DVS text |
+| ✓ | U+2713 | absent from **DejaVuSerif**, the body font before the STIXTwo-Math swap |
+| ∅ | U+2205 | absent from **DejaVuSerif**, the body font before the STIXTwo-Math swap |
+
+⚠ **Not a STIXTwo-Math gap, and this table said it was.** Measured 2026-08-16 against the binary
+now shipped in `scripts/fonts/`: resolving each codepoint through the cmap gives a real glyph with
+outline data, and rendering both in `DVS` style with no wrap produces zero null characters — this
+document's own pass criterion. `DejaVuSerif.ttf` maps both to `.notdef`, which is where the finding
+came from. It was true of the body font **before** the May 2026 substrate change, was carried across
+that change, and was then relabelled "confirmed". The wrap is harmless and is kept; the reason it
+gives was wrong.
 
 **The `fix()` helper handles both automatically.** It also converts raw Unicode math symbols (subscripts, superscripts, operators, arrows, blackboard bold) to ReportLab-safe HTML entities. `fix()` is your primary defence against rendering failures.
 
