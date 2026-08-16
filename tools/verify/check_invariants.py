@@ -216,6 +216,13 @@ def selftest():
     # this proves the rest are still there. Measured before it was written: 30 of 34
     # list-shaped patterns could be deleted with every control green, and the compiled
     # regexes carrying the rest of the vocabulary were pinned by nothing at all.
+    # ⚠ THE SCOPE PIN (PAT-2). This checker BLOCKS at push and walks privately, and had no
+    # scope section at all: its controls run in memory and never touch its enumerator, so
+    # nothing exercised what it covers. Verified rather than inferred by /rely round 4.
+    print('  SCOPE')
+    bad += common.check_scope('check_invariants',
+                              [str(p.relative_to(REPO)).replace('\\', '/') for p in LEAN]
+                              + list(tracked_text()))
     print('  PATTERNS')
     bad += common.check_vocabulary('check_invariants', globals())
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))

@@ -74,3 +74,64 @@ def is_vendored(path, rel=None):
     if norm.lower().startswith(VENDOR_DIR.lower()):
         return True
     return norm.lower() in allowlist()
+
+
+# --------------------------------------------------------------------------- controls
+# ⚠ **THIS MODULE WAS AUDITED BY NOTHING** (`VEND-1`, `/rely` round 4): no `--selftest`, not matched
+# by the `check_*.py` glob, absent from `check_checkers.ALSO_AUDITED` and from
+# `ci_report.SELFTESTS`. It is the SINGLE DEFINITION of the exemption surface that all four gating
+# checkers import — precisely the trigger `check_checkers.py`'s own header states, *"add a module the
+# moment other gates depend on it, whatever its filename"*.
+#
+# ⚠ Third instance of the `COM-1` / `DEB-1` class, and the one that shows why a roster reconciliation
+# is not enough: `roster_agrees()` is STRUCTURALLY BLIND here, because both rosters omit this file
+# identically and agreeing on an omission is still agreement.
+#
+# The PROPERTY was defended even while the module was unaudited — mutating `is_vendored` to exempt
+# every `.lean` file is caught independently by `check_checkers --block` and by `guards --block`.
+# What was missing is the demonstration that this file itself can fail.
+MUST_FIRE = [                       # these MUST be reported vendored
+    ("the canonical directory", "ZeroParadox/Vendored/NaturalOps.lean"),
+    ("windows separators", r"ZeroParadox\Vendored\NaturalOps.lean"),
+    ("a leading ./", "./ZeroParadox/Vendored/NaturalOps.lean"),
+    ("case-insensitively", "zeroparadox/vendored/naturalops.lean"),
+    ("an explicit allowlist line", "ZeroParadox/Ordinal/NaturalOpsPow.lean"),
+]
+MUST_SUPPRESS = [                   # these must NOT be exempt
+    ("an ordinary corpus file", "ZeroParadox/Order/Snap.lean"),
+    # ⚠ THE ANCHORING REGRESSION. A nested `Vendored/` exempted a file from all four checkers and
+    # survived the first fix (RLY2-1's sibling, found by /rely pass 2). If someone un-anchors the
+    # test, this control fails rather than the hole silently reopening.
+    ("a NESTED Vendored directory", "ZeroParadox/Order/Vendored/Probe.lean"),
+    ("a checker itself", "tools/verify/check_pov.py"),
+    # ⚠ CONTENT IS NEVER CONSULTED. Until 2026-08-10 a file exempted itself by CONTAINING
+    # `Apache-2.0` or `VENDORED FROM` in its head — RLY2-1, logged BEDROCK. This control is what
+    # stops that being reintroduced as a convenience.
+    ("a file merely NAMING a licence", "ZeroParadox/Order/Apache-2.0-notes.lean"),
+]
+
+
+def selftest():
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import common
+    bad = common.fire_suppress(MUST_FIRE, MUST_SUPPRESS,
+                               lambda rel: is_vendored(rel), 'a vendored exemption', width=34)
+    print('PATTERNS')
+    bad += common.check_vocabulary('vendored', globals())
+    if bad:
+        print('\nselftest: FAIL (%d)' % bad)
+    return 1 if bad else 0
+
+
+if __name__ == '__main__':
+    import sys
+    if '--selftest' in sys.argv:
+        sys.exit(selftest())
+    print('%s — THE definition of the vendored exemption. Import it; never re-implement it.'
+          % os.path.relpath(os.path.abspath(__file__),
+                            os.path.dirname(os.path.dirname(os.path.dirname(
+                                os.path.abspath(__file__))))).replace('\\', '/'))
+    print('  exempt directory : %s' % VENDOR_DIR)
+    print('  allowlist        : %s' % (', '.join(sorted(allowlist())) or '(empty)'))
+    print('\n  --selftest   run this module\'s own controls')

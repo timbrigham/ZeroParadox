@@ -74,6 +74,10 @@ ORPHAN_EXEMPT = {
     # than only by the report-only CI job. Exempting the inapplicable property is not the same as
     # exempting the module (COM-1).
     "common.py": "shared library; imported across the bundle rather than invoked by any entry point",
+    # Same shape, and the one whose absence was `VEND-1`: THE definition of the vendored exemption,
+    # imported by every gating checker and invoked by no entry point. Property 4 is the only one
+    # that cannot apply; properties 1-3 now do.
+    "vendored.py": "shared definition of the exemption surface; imported, never invoked",
 }
 
 
@@ -101,7 +105,14 @@ ORPHAN_EXEMPT = {
 # controls nobody has shown can fail. ⚠ Note this file's three `SELFTESTS` mentions are COMMENTS,
 # not a reconciliation: nothing mechanically checks that the two rosters agree, which is the
 # hand-maintained-roster hazard one level up and is not closed by adding a third entry.
-ALSO_AUDITED = ("guards.py", "common.py", "debaseline.py")
+#
+# ⚠⚠ `vendored.py` ADDED 2026-08-16 (`VEND-1`, `/rely` round 4) — the THIRD instance of this class,
+# and the one that shows a roster reconciliation is not sufficient. It is the SINGLE DEFINITION of
+# the exemption surface all four gating checkers import, it had no `--selftest` at all, and
+# `roster_agrees()` was STRUCTURALLY BLIND to it because both rosters omitted it identically.
+# **Agreeing on an omission is still agreement.** The property was defended throughout — mutating
+# `is_vendored` is caught by this checker and by `guards` — but the module could not be shown to fail.
+ALSO_AUDITED = ("guards.py", "common.py", "debaseline.py", "vendored.py")
 
 
 def checkers():

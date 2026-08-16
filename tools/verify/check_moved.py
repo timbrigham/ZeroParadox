@@ -116,8 +116,17 @@ EXEMPT_DIRS = ("/notes/", "/archive/", "/autobiography/", "/feedback/", "/outrea
 # phase2_file_list.txt: a frozen worklist from an earlier migration - a dated record, not guidance.
 # nb.txt and friends: captured console OUTPUT. A log records what a tool printed at a moment
 # in time, so a path inside it is a historical fact, not a live instruction to follow.
+# scope_baseline.txt: a GENERATED INVENTORY of what each enumerator covers. `check_moved.surfaces()`
+# legitimately walks `.claude-local/`, so its section necessarily names the tombstones there — 19 of
+# them, every one a path this table itself defines as relocated. Same category as `check_moved.py`
+# above: the file is a record of paths, not an instruction to follow one.
+# ⚠ The cost, stated rather than discovered: a genuinely stale reference inside that file would go
+# unnoticed here. Acceptable only because it is machine-generated from live state and never hand-
+# edited, and because it sits in `batch.CHECKERS`, so a change to it is a hash change routed to
+# `/rely`. Do NOT extend this to the other `*_baseline.txt` files — those carry prose keys that can
+# and do contain real stale paths.
 EXEMPT_FILES = ("register.md", "RELEASES.md", "check_moved.py", "phase2_file_list.txt",
-                "nb.txt")
+                "nb.txt", "scope_baseline.txt")
 SCAN_EXT = (".py", ".md", ".sh", ".ps1", ".yml", ".txt", ".lean")
 
 
@@ -254,6 +263,13 @@ def selftest():
     # stale path that silently stops being reported, which is the exact failure `MIG-2` was opened
     # for. The destinations are pinned rather than the regexes: a destination is stable and readable,
     # where the patterns carry `SEP` and are rebuilt per platform.
+    # ⚠ THE SCOPE PIN (PAT-2). This checker BLOCKS at push and walks privately, and had no
+    # scope section at all: its controls run in memory and never touch its enumerator, so
+    # nothing exercised what it covers. Verified rather than inferred by /rely round 4.
+    print("  SCOPE")
+    bad += common.check_scope("check_moved",
+                              [os.path.relpath(p, REPO).replace("\\", "/")
+                               for p in surfaces()])
     print("  PATTERNS")
     bad += common.check_vocabulary("check_moved", globals())
 

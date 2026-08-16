@@ -197,52 +197,110 @@ def check_patterns(section, live, label=None):
     return _superset(PATTERN_BASELINE, section, live, label, kind='pattern')
 
 
-# Module-level names that are NOT detection vocabulary: accumulators, roots, scan scope (pinned
-# separately by `scope_baseline.txt`), and roster lists.
+# Names that are NOT detection vocabulary: accumulators, scan scope (pinned separately by
+# `scope_baseline.txt`), rosters, and the controls themselves.
+#
+# ⚠⚠ **QUALIFIED `module.NAME`, NEVER BARE — A BARE DENYLIST IS KEYED BY A NAME COLLISION** (`PAT-2`,
+# `/rely` round 4). `SKIP_NAMES` means *files not to scan* in the `targets()` family, where it is
+# correctly excluded because `scope_baseline.txt` pins it. In `check_classes` the identical name
+# means *declarations exempt from the degeneracy gauge* — detection surface, and it was silently
+# exempted from pinning by the other module's entry. Adding one line to it took that checker from
+# exit 1 to exit 0 with every gate green. **One correct exemption granting an unrelated one is the
+# self-exemption shape this bundle exists to close, arriving through a namespace.**
 _NOT_VOCAB = frozenset({
-    'SKIP_DIRS', 'SKIP_NAMES', 'GLOBS', 'SCAN_EXT', 'EXEMPT_DIRS', 'EXEMPT_FILES', 'BINARY_EXT',
-    'SKIP_RELDIRS', 'CALLERS', 'ALSO_AUDITED', 'SELFTESTS', 'CHECKERS', 'GATING_CHECKERS',
-    'MUST_FIRE', 'MUST_SUPPRESS', 'MUST_DENY', 'TOUCHED', 'PROPERTIES', 'failures', 'fails',
-    'warns', 'UNREADABLE', 'MOVED', 'RULES',
+    # scan scope — pinned by `scope_baseline.txt` instead, per enumerator
+    'common.SKIP_DIRS', 'common.SKIP_NAMES', 'common.GLOBS',
+    'check_modal.SKIP_NAMES', 'check_negatives.SKIP_NAMES', 'check_figures.SKIP_NAMES',
+    'check_poles.SKIP_DIRS', 'check_poles.SKIP_RELDIRS', 'check_poles.SCAN_EXT',
+    'check_moved.SKIP_DIRS', 'check_moved.SCAN_EXT',
+    'check_invariants.BINARY_EXT',
+    # rosters — reconciled by `check_checkers.roster_agrees()` instead
+    'check_checkers.CALLERS', 'check_checkers.ALSO_AUDITED', 'ci_report.SELFTESTS',
+    'batch.CHECKERS', 'batch.GATING_CHECKERS',
+    # the controls themselves: pinning them would pin the test, not the thing tested
+    'check_modal.MUST_FIRE', 'check_modal.MUST_SUPPRESS',
+    'check_negatives.MUST_FIRE', 'check_negatives.MUST_SUPPRESS',
+    'check_figures.MUST_FIRE', 'check_figures.MUST_SUPPRESS',
+    'check_pov.MUST_FIRE', 'check_pov.MUST_SUPPRESS', 'check_pov.MUST_DENY',
+    'check_classes.MUST_FIRE', 'check_classes.MUST_SUPPRESS',
+    'check_poles.MUST_FIRE', 'check_poles.MUST_SUPPRESS',
+    'vendored.MUST_FIRE', 'vendored.MUST_SUPPRESS',
+    'guards.TOUCHED', 'guards.PROPERTIES',
+    # derived from a pinned source, so pinning it twice adds nothing
+    'check_moved.RULES',
+    # ⚠ COMPUTED STATE, NOT AN AUTHORED KNOB — and the distinction is the whole rule for scalars.
+    # `MATHLIB_PRESENT` is True where `.lake/packages/` exists and False in a worktree, in CI, and in
+    # any fresh clone. Pinning it made `check_paths --selftest` fail everywhere Mathlib is absent,
+    # which is a control that only passes on the author's machine — the `check_hashes` failure this
+    # project already has on record. Caught by running the PAT-2 control in a worktree rather than
+    # in place. **Pin what someone TUNES; never pin what the environment answers.**
+    'check_paths.MATHLIB_PRESENT',
 })
 
 
-def vocabulary(mod_globals):
+def vocabulary(mod_globals, module=None):
     """Every detection pattern a module advertises, as `NAME<TAB>value` lines.
 
     ⚠ **DISCOVERED AT RUNTIME BY TYPE, NOT LISTED.** A hand-maintained roster of which constants
-    matter is the `DEB-2` hazard, and this suite has already paid for it twice. Anything that IS a
-    compiled regex, or a collection of strings that is not on the small `_NOT_VOCAB` denylist, is
-    vocabulary — so a regex added tomorrow is pinned the day it is written, with nothing to remember.
+    matter is the `DEB-2` hazard, and this suite has already paid for it three times. Anything that
+    IS a compiled regex, a threshold, or a collection of strings not explicitly denylisted is
+    vocabulary — so a knob added tomorrow is pinned the day it is written.
 
-    ⚠ **REGEXES ARE PINNED EXACTLY, IN BOTH DIRECTIONS, AND THAT IS DELIBERATE.** For a DETECTION
-    pattern, removal is the danger — it stops catching. For an EVIDENCE or suppression pattern, it is
-    ADDITION: one more alternative silently clears more hits. A superset test is right for a list of
-    things to catch and wrong for a list of excuses, so an exact match covers both and the pin is
-    updated as a reviewable act when a pattern legitimately changes."""
+    ⚠⚠ **`int` IS COLLECTED, AND LEAVING IT OUT WAS A BEDROCK HOLE** (`PAT-2`). A detector is tuned
+    by NUMBERS as much as by phrases: `check_modal.SENTENCE` is the window in which *weak* evidence
+    counts, so ENLARGING it monotonically suppresses hits. Measured on the real corpus with no file
+    edited at all — `SENTENCE` 260 → 10000 takes `check_modal.scan()` from three sites to **zero**,
+    with `--selftest` PASS, both pins `ok`, and `check_checkers --block` exit 0. That is the
+    "addition silently clears more hits" direction this module's own header names as the danger,
+    with the knob for it outside the pin. ⚠ And it has an INNOCENT PATH — *"widen the window, we keep
+    getting false positives on wrapped prose"* is a plausible well-meaning edit that zeroes a gate.
+
+    ⚠ **PINNED EXACTLY, IN BOTH DIRECTIONS.** For a DETECTION pattern removal is the danger; for an
+    EVIDENCE or suppression pattern, or a window, it is ADDITION. A superset test is right for a list
+    of things to catch and wrong for a list of excuses."""
     out = set()
     for name, val in sorted(mod_globals.items()):
-        if name.lstrip('_').upper() != name.lstrip('_') or name in _NOT_VOCAB:
-            continue                      # not a CONSTANT-cased name, or explicitly not vocabulary
+        if name.lstrip('_').upper() != name.lstrip('_'):
+            continue                                        # not a CONSTANT-cased name
+        if '%s.%s' % (module, name) in _NOT_VOCAB:
+            continue
         if isinstance(val, re.Pattern):
             out.add('%s\t%s' % (name, val.pattern))
-        elif isinstance(val, (list, tuple, set, frozenset)) and val and \
-                all(isinstance(x, str) for x in val):
+        elif isinstance(val, bool):
+            out.add('%s\t%r' % (name, val))                 # before int: bool IS an int in Python
+        elif isinstance(val, int):
+            out.add('%s\t%d' % (name, val))
+        elif isinstance(val, (list, tuple, set, frozenset)) and val:
             for item in val:
-                out.add('%s\t%s' % (name, item))
+                if isinstance(item, str):
+                    out.add('%s\t%s' % (name, item))
+                elif isinstance(item, (tuple, list)) and all(isinstance(x, str) for x in item):
+                    # ⚠ `check_moved.MOVED` is a list of (pattern, destination) PAIRS — its own
+                    # docstring calls the table "this checker's whole content", and it was invisible
+                    # twice over: denylisted AND tuple-shaped. Deleting one entry took
+                    # `relocations tracked` from 74 to 73 with the pin still reporting ok.
+                    out.add('%s\t%s' % (name, '\t'.join(item)))
     return out
 
 
 def check_vocabulary(section, mod_globals, label=None):
     """Pin every detection pattern a module advertises. See `vocabulary`."""
-    live = vocabulary(mod_globals)
+    live = vocabulary(mod_globals, section)
     recorded = load_pinned(PATTERN_BASELINE, section)
     dropped = sorted(recorded - live)
     added = sorted(live - recorded)
     bad = 0
     ok = not dropped and not added
+    # ⚠ BOTH SIDES ARE REPORTED, AND THE FIRST VERSION DESCRIBED THE WRONG EVENT (`PIN-MSG`,
+    # `/rely` round 4). It printed `dropped` first, so EDITING a pattern — which is one removal and
+    # one addition — was announced as `1 REMOVED` showing the OLD value. It fired correctly and
+    # named the wrong thing, which for a gate is its own defect: the reader is sent to look for a
+    # deletion that did not happen.
     detail = 'ok (%d patterns)' % len(live)
-    if dropped:
+    if dropped and added:
+        detail = ('*** %d CHANGED: %s -> %s *** (an edit is one removal and one addition)'
+                  % (max(len(dropped), len(added)), dropped[0][:38], added[0][:38]))
+    elif dropped:
         detail = '*** %d REMOVED: %s ***' % (len(dropped), '; '.join(d[:44] for d in dropped[:2]))
     elif added:
         detail = ('*** %d ADDED and unrecorded: %s *** (strengthening is fine — record it)'

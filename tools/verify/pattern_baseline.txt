@@ -22,11 +22,14 @@
 # ⚠ NOT a suppression baseline. Nothing here is a grandfathered defect. Do not count it as debt.
 
 [check_modal]
+ARTIFACT_NEAR	110
 ARTIFACT_SCOPE	Classical\.choice
 EVIDENCE	measur|UNCLASSIFIED|retract|corrected|does \*\*not\*\* show|does not show|no such re-proof|not attempted|reduction|taboo|em_of_wellOrder_comparable|wem_of_fixedPointFree|in the type|in the TYPE|strict_cofix_nonempty|open question|is open|destructor|eliminator|M\.children|M\.dest|axiom-free witness|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|choice-free outright|choice-free \(his|Thm 1|Theorem 1
 MODAL	not\s+a\s+necessity|not\s+asserted\s+as\s+a\s+necessity|rather\s+than\s+as\s+a\s+necessity|artifact|choice\-free\s+in\s+principle|removable\s+in\s+principle|could\s+be\s+removed|can\s+be\s+removed|is\s+removable|are\s+removable|eliminable|not\s+forced\s+by\s+the\s+mathematics|not\s+a\s+fact\s+about\s+the\s+mathematics|not\s+a\s+fact\s+about
 SCOPE	Classical\.choice|axiom|choice-free|#print axioms|propext|Quot\.sound|LLPO|excluded middle|constructive
+SENTENCE	260
 STRONG	UNCLASSIFIED|retract|corrected|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|does \*\*not\*\* show|does not show|no such re-proof|not attempted|open question|is open
+WINDOW	420
 _MODAL_PHRASES	are removable
 _MODAL_PHRASES	artifact
 _MODAL_PHRASES	can be removed
@@ -70,9 +73,14 @@ POV_TERMS	(point of view|change of frame|frame[- ]change|frame[- ]flip|frameflip
 
 [check_classes]
 DECL	^\s*(?:@\[[^\]]*\]\s*)?(class|structure)\s+([^\W\da-z][\w']*)
+EVIDENCE_AFTER	40
+EVIDENCE_BEFORE	30
 GAUGE	NO-GO|degenerat|vacuous|nondegenerate|newtype|trivially inhabited|nothing (?:can |could |else )?fail|bundled proposition
+NEAR	400
+SKIP_NAMES	PurityCheck
 
 [check_prose]
+BLOCK_CAP	10
 BOUNDARY_RE	^(?:@\[|/--|/-!|end\b|section\b|namespace\b|open\b|variable\b|attribute\b|import\b|#|(?:private\s+|protected\s+|noncomputable\s+|scoped\s+)*(?:theorem|lemma|def|abbrev|instance|structure|class|inductive|example)\b)
 CHECK_RE	^\s*#check\s+(.+?)\s*(?:--\s*(.*))?$
 DECL_RE	^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|scoped\s+)*(theorem|lemma|def|abbrev|instance|structure|class|inductive|example)\b(?:\s+([A-Za-z_À-￿][^\s:({\[]*))?
@@ -83,6 +91,7 @@ TAKE_RE	#+\s*Engineer'?s\s+Take
 APPLIED	(?:(?:rInv|rInvHomeo|winv|wmul|swap|cornerId|poleToSphere|cnfToZp2|snapNucleus|shiftEnd|localCx|endVal|cx|val|v_2|v₂)|(?<![A-Za-z])[a-z])\s+$
 CHAIN	((?:0|∞|⊥))(?:\s*=\s*((?:0|∞|⊥)))+
 EXPR_BEFORE	[+\-·*/^]\s*$
+GRACE	24
 IDIOM	\bIdiom:
 MAPS	cnfToZp2
 MAPS	cornerId
@@ -105,7 +114,97 @@ OPERATION	[/·*]\s*0|0\s*[·*]\s*/|winv|wmul|wheelBot|wheelInf
 REJECTED	meadow|collapse|field is a wheel|degenerate
 
 [check_moved]
+EXEMPT_DIRS	/.git/
+EXEMPT_DIRS	/.lake/
+EXEMPT_DIRS	/__pycache__/
+EXEMPT_DIRS	/archive/
+EXEMPT_DIRS	/autobiography/
+EXEMPT_DIRS	/deepseek/
+EXEMPT_DIRS	/feedback/
+EXEMPT_DIRS	/notes/
+EXEMPT_DIRS	/outreach/
+EXEMPT_DIRS	/papers/
+EXEMPT_FILES	RELEASES.md
+EXEMPT_FILES	check_moved.py
+EXEMPT_FILES	nb.txt
+EXEMPT_FILES	phase2_file_list.txt
+EXEMPT_FILES	register.md
+EXEMPT_FILES	scope_baseline.txt
 GLOB_REF	\.claude-local[/\\](?:check_\w*\*\w*\.py|proposed_pre_\w*\*\w*_hook\.sh|\w*\*\w*_baseline\.txt|build_zp\w*\*\w*\.py)
+MOVED	\.claude-local[\\/]PDF_Rendering_Standards\.md	scripts/PDF_Rendering_Standards.md
+MOVED	\.claude-local[\\/]batch\.py	tools/verify/batch.py
+MOVED	\.claude-local[\\/]build_dictionary_map\.py	scripts/build_dictionary_map.py
+MOVED	\.claude-local[\\/]build_foreword\.py	scripts/build_foreword.py
+MOVED	\.claude-local[\\/]build_manifest\.py	scripts/build_manifest.py
+MOVED	\.claude-local[\\/]build_snap_map\.py	scripts/build_snap_map.py
+MOVED	\.claude-local[\\/]build_tools\.py	scripts/build_tools.py
+MOVED	\.claude-local[\\/]build_zp_choice_free_core\.py	scripts/build_zp_choice_free_core.py
+MOVED	\.claude-local[\\/]build_zp_philosophical_question\.py	scripts/build_zp_philosophical_question.py
+MOVED	\.claude-local[\\/]build_zpa\.py	scripts/build_zpa.py
+MOVED	\.claude-local[\\/]build_zpa_companion\.py	scripts/build_zpa_companion.py
+MOVED	\.claude-local[\\/]build_zpb\.py	scripts/build_zpb.py
+MOVED	\.claude-local[\\/]build_zpb_companion\.py	scripts/build_zpb_companion.py
+MOVED	\.claude-local[\\/]build_zpc\.py	scripts/build_zpc.py
+MOVED	\.claude-local[\\/]build_zpc_companion\.py	scripts/build_zpc_companion.py
+MOVED	\.claude-local[\\/]build_zpd\.py	scripts/build_zpd.py
+MOVED	\.claude-local[\\/]build_zpd_companion\.py	scripts/build_zpd_companion.py
+MOVED	\.claude-local[\\/]build_zpe\.py	scripts/build_zpe.py
+MOVED	\.claude-local[\\/]build_zpe_companion\.py	scripts/build_zpe_companion.py
+MOVED	\.claude-local[\\/]build_zpf\.py	scripts/build_zpf.py
+MOVED	\.claude-local[\\/]build_zpf_companion\.py	scripts/build_zpf_companion.py
+MOVED	\.claude-local[\\/]build_zpg\.py	scripts/build_zpg.py
+MOVED	\.claude-local[\\/]build_zpg_companion\.py	scripts/build_zpg_companion.py
+MOVED	\.claude-local[\\/]build_zph\.py	scripts/build_zph.py
+MOVED	\.claude-local[\\/]build_zph_companion\.py	scripts/build_zph_companion.py
+MOVED	\.claude-local[\\/]build_zph_native_addendum\.py	scripts/build_zph_native_addendum.py
+MOVED	\.claude-local[\\/]build_zpi\.py	scripts/build_zpi.py
+MOVED	\.claude-local[\\/]build_zpi_companion\.py	scripts/build_zpi_companion.py
+MOVED	\.claude-local[\\/]build_zpj\.py	scripts/build_zpj.py
+MOVED	\.claude-local[\\/]build_zpj_afa_addendum\.py	scripts/build_zpj_afa_addendum.py
+MOVED	\.claude-local[\\/]build_zpj_companion\.py	scripts/build_zpj_companion.py
+MOVED	\.claude-local[\\/]build_zpj_keystone_addendum\.py	scripts/build_zpj_keystone_addendum.py
+MOVED	\.claude-local[\\/]build_zpj_wheel_addendum\.py	scripts/build_zpj_wheel_addendum.py
+MOVED	\.claude-local[\\/]build_zpj_wheel_companion\.py	scripts/build_zpj_wheel_companion.py
+MOVED	\.claude-local[\\/]build_zpk\.py	scripts/build_zpk.py
+MOVED	\.claude-local[\\/]build_zpk_companion\.py	scripts/build_zpk_companion.py
+MOVED	\.claude-local[\\/]build_zpl\.py	scripts/build_zpl.py
+MOVED	\.claude-local[\\/]build_zpl_companion\.py	scripts/build_zpl_companion.py
+MOVED	\.claude-local[\\/]build_zpm\.py	scripts/build_zpm.py
+MOVED	\.claude-local[\\/]build_zpm_companion\.py	scripts/build_zpm_companion.py
+MOVED	\.claude-local[\\/]build_zpn\.py	scripts/build_zpn.py
+MOVED	\.claude-local[\\/]build_zpp\.py	scripts/build_zpp.py
+MOVED	\.claude-local[\\/]build_zpq\.py	scripts/build_zpq.py
+MOVED	\.claude-local[\\/]build_zpr\.py	scripts/build_zpr.py
+MOVED	\.claude-local[\\/]build_zpr_addendum\.py	scripts/build_zpr_addendum.py
+MOVED	\.claude-local[\\/]check_classes\.py	tools/verify/check_classes.py
+MOVED	\.claude-local[\\/]check_hashes\.py	tools/verify/check_hashes.py
+MOVED	\.claude-local[\\/]check_invariants\.py	tools/verify/check_invariants.py
+MOVED	\.claude-local[\\/]check_modal\.py	tools/verify/check_modal.py
+MOVED	\.claude-local[\\/]check_paths\.py	tools/verify/check_paths.py
+MOVED	\.claude-local[\\/]check_poles\.py	tools/verify/check_poles.py
+MOVED	\.claude-local[\\/]check_pov\.py	tools/verify/check_pov.py
+MOVED	\.claude-local[\\/]check_prose\.py	tools/verify/check_prose.py
+MOVED	\.claude-local[\\/]check_release_ready\.py	tools/verify/check_release_ready.py
+MOVED	\.claude-local[\\/]class_baseline\.txt	tools/verify/class_baseline.txt
+MOVED	\.claude-local[\\/]commands[\\/]	.claude/commands/
+MOVED	\.claude-local[\\/]debaseline\.py	tools/verify/debaseline.py
+MOVED	\.claude-local[\\/]decl_baseline\.txt	tools/verify/decl_baseline.txt
+MOVED	\.claude-local[\\/]gate_round\.py	tools/verify/gate_round.py
+MOVED	\.claude-local[\\/]gatelock\.py	tools/verify/gatelock.py
+MOVED	\.claude-local[\\/]guards\.py	tools/verify/guards.py
+MOVED	\.claude-local[\\/]hooks\.py	tools/verify/hooks.py
+MOVED	\.claude-local[\\/]modal_baseline\.txt	tools/verify/modal_baseline.txt
+MOVED	\.claude-local[\\/]pov_baseline\.txt	tools/verify/pov_baseline.txt
+MOVED	\.claude-local[\\/]proposed_pre_commit_hook\.sh	tools/verify/proposed_pre_commit_hook.sh
+MOVED	\.claude-local[\\/]proposed_pre_push_hook\.sh	tools/verify/proposed_pre_push_hook.sh
+MOVED	\.claude-local[\\/]prose_baseline\.txt	tools/verify/prose_baseline.txt
+MOVED	\.claude-local[\\/]report\.py	tools/verify/report.py
+MOVED	\.claude-local[\\/]scan_pdfs\.py	scripts/scan_pdfs.py
+MOVED	\.claude-local[\\/]selfheal\.py	tools/verify/selfheal.py
+MOVED	\.claude-local[\\/]ship\.py	tools/verify/ship.py
+MOVED	\.claude-local[\\/]vendored\.py	tools/verify/vendored.py
+MOVED	\.claude-local[\\/]vendored_files\.txt	tools/verify/vendored_files.txt
+MOVED	\.claude-local[\\/]zp_utils\.py	scripts/zp_utils.py
 _MOVED_BUILDS	build_dictionary_map.py
 _MOVED_BUILDS	build_foreword.py
 _MOVED_BUILDS	build_manifest.py
@@ -176,6 +275,7 @@ _VERIFY	vendored
 [check_paths]
 BARE_LEAN	(?<![\w/.-])((?:ZP[A-Z]?[A-Za-z0-9_]*)\.lean)
 DATED	\d{4}-\d{2}-\d{2}|(?<!\d)\d{8}(?!\d)|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4}
+EXIT_SKIPPED	3
 MATHLIB_EXEMPT_DIRS	Vendored
 MATHLIB_PATTERN	(?<![\w/.-])((?:Mathlib|Std|Batteries)/[A-Za-z0-9_./-]+\.lean)
 NOTE_REF	(?<![\w/.-])((?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9][A-Za-z0-9_-]*(?:\d{4}-\d{2}-\d{2}|\d{8}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4})\.md)
@@ -225,3 +325,6 @@ SKIP_MARKERS_LEAN	was at
 CUSTOM_TAG	\[ZP-CUSTOM\]
 REGISTRY_ENTRY	(?m)^### 
 TAKE_PLACEHOLDER	TODO \(Tim|TODO: Engineer
+
+[vendored]
+_CACHE	zeroparadox/ordinal/naturalopspow.lean
