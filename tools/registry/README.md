@@ -42,17 +42,25 @@ The registry tracks *Zero Paradox framework* declarations — the things that ge
 restructured. Two categories are excluded by explicit policy, and the excluded counts are printed on
 every run:
 
-1. **Vendored external code.** Two files, exempted by two different mechanisms:
-   `ZeroParadox/Vendored/NaturalOps.lean` by the directory rule (`EXCLUDE_DIRS`), and
-   `ZeroParadox/Ordinal/NaturalOpsPow.lean` by the content allowlist — run
-   `python -c "import sys; sys.path.insert(0,'tools/verify'); import vendored; print(sorted(vendored.allowlist()))"`
-   to see it. ⚠ This paragraph attributed **both** to `ZeroParadox/Vendored/`, which is why a
-   review read it as naming a file that does not exist; the file exists, in a different directory,
-   under a different exemption. Both are Mathlib / Combinatorial-Game-Theory code
+1. **Vendored external code** (`EXCLUDE_DIRS` — `ZeroParadox/Vendored/`). **One file:
+   `NaturalOps.lean`**, verbatim Mathlib / Combinatorial-Game-Theory code
    (Violeta Hernández, Apache-2.0), vendored because the upstream copy was removed after Mathlib
-   v4.28. They are not Zero Paradox original work, are never cited by name in the framework, and are
-   never restructured — registering them would only add infrastructure noise and misattribute
-   provenance.
+   v4.28. It is not Zero Paradox original work, is never cited by name in the framework, and is
+   never restructured — registering it would only add infrastructure noise and misattribute
+   provenance. **Measured: 0 declarations from `ZeroParadox/Vendored/` are in the store.**
+
+   ⚠ **`ZeroParadox/Ordinal/NaturalOpsPow.lean` IS NOT IN THIS CATEGORY, AND THIS PARAGRAPH SAID IT
+   WAS.** It is a **PORT**, not a verbatim copy — Hernández's `CombinatorialGames` proof adapted to
+   the vendored v4.28 API, with every port change marked `-- [ZP]`. Measured 2026-08-16, both of the
+   reasons given above are false of it: **20 of its declarations are registered**, and
+   `Ordinal/KirbyParis.lean` cites `NaturalOpsPow.nadd_lt_omega0_opow` **by name**. Its only
+   exemption is from the PROSE checkers, via `vendored.py`'s content allowlist, on the ground that
+   its header and proof commentary are upstream's.
+
+   ⚠ **That leaves it in an incoherent middle, and the inconsistency is OPEN rather than resolved:**
+   it is exempt like vendored code, but registered and cited like framework code, and filed like
+   framework code. Two of those three have to agree. Do not read this paragraph as ratifying the
+   current arrangement.
 
 2. **Source-unnamed anonymous instances** (`INCLUDE_ANON = False`). `instance : Foo` declarations
    whose names Lean generates at compile time have no citable source name and no stable identity to
