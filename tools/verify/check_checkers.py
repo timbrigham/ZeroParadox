@@ -93,7 +93,15 @@ ORPHAN_EXEMPT = {
 # `ci_report` is the REPORT-ONLY CI job, so that was the module's only execution anywhere — no hook,
 # commit gate or push gate ran it. Property 4 does not apply to it, which is what `ORPHAN_EXEMPT` is
 # FOR; excluding it from the audit entirely was the wrong way to say that.
-ALSO_AUDITED = ("guards.py", "common.py")
+#
+# ⚠ `debaseline.py` ADDED 2026-08-16 (DEB-1, /rely round 2) — the SECOND instance of the class
+# COM-1 opened, which is what makes it a class rather than an incident. It ships passing controls
+# that **nothing ran**: not this checker, not `ci_report.SELFTESTS`, not any workflow — while
+# `batch.py` depends on it to compute every debaselining worklist. Controls nobody executes are
+# controls nobody has shown can fail. ⚠ Note this file's three `SELFTESTS` mentions are COMMENTS,
+# not a reconciliation: nothing mechanically checks that the two rosters agree, which is the
+# hand-maintained-roster hazard one level up and is not closed by adding a third entry.
+ALSO_AUDITED = ("guards.py", "common.py", "debaseline.py")
 
 
 def checkers():
@@ -286,9 +294,14 @@ def main(argv):
     # ⚠ SCOPE IS THE `check_*.py` GLOB **PLUS `ALSO_AUDITED`**, which is wider than the CHECKS list
     # in both directions. `guards.py` was outside this audit until 2026-08-16 for no reason but its
     # filename, while blocking at push — and it turned out to have no controls at all, with
-    # `--selftest` parsed away and silently ignored. It is in scope now and passes all four
-    # properties. `common.py` is deliberately NOT here: it is a library that gates nothing, so
-    # property 4 does not apply to it; its controls run via `ci_report.SELFTESTS`.
+    # `--selftest` parsed away and silently ignored.
+    #
+    # ⚠ This paragraph used to end by saying `common.py` is "deliberately NOT here", contradicting
+    # `ALSO_AUDITED` at the top of this file — in the text printed on every green run (CHK-STALE,
+    # /rely round 2). That was true for about an hour, until COM-1 showed why routing a module's
+    # controls through `ci_report` alone cannot distinguish a control that passed from a flag that is
+    # ignored. `common.py` and `debaseline.py` are both audited here now; each is listed in
+    # `ORPHAN_EXEMPT` where property 4 genuinely does not apply.
     print("OK: every audited gate has passing controls in both directions, and is invoked.")
     print("   (scope: the check_*.py glob PLUS %s — wider than the CHECKS list.)"
           % ", ".join(ALSO_AUDITED))

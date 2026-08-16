@@ -125,7 +125,14 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # shared module exists: it can stop a push, and it can stop several.
                               # ⚠ Deduplication CONCENTRATES risk even as it removes drift — that is
                               # the trade, and this line is the half that pays for it.
-                              "common.py"]
+                              "common.py",
+                              # ⚠ AND ITS BASELINE. `scope_baseline.txt` pins the reviewed scan
+                              # scope, so editing it is exactly as powerful as editing `SKIP_DIRS` —
+                              # delete a line and the file it names can silently leave every
+                              # checker's scope with the control still green. Same argument as the
+                              # four suppression baselines above; a data switch left out of this
+                              # list is unreviewable by construction.
+                              "scope_baseline.txt"]
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).

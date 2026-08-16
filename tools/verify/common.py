@@ -115,6 +115,10 @@ SKIP_NAMES = frozenset({'CLAUDE.md', 'register.md', 'RELEASES.md'})
 # would have been a second copy of the same coverage claim.
 GLOBS = ('ZeroParadox/**/*.lean', 'scripts/*.py', 'tools/**/*.py')
 
+# The reviewed scan scope, pinned. `selftest()` asserts the live set is a SUPERSET of it, so any
+# narrowing of GLOBS, SKIP_DIRS, SKIP_NAMES or a per-checker skip fires — see SCOPE-1 there.
+SCOPE_BASELINE = HERE / 'scope_baseline.txt'
+
 
 def tracked_md():
     """Every TRACKED `.md`, at any depth. **The single definition — import it, never re-glob.**
@@ -397,35 +401,68 @@ def selftest():
 
     # ═══ THE SCOPE CONTROL ═══════════════════════════════════════════════════════════════════
     #
-    # ⚠⚠ **THE ASSERTIONS ABOVE WERE LABELLED "THE SCOPE CONTROL" AND COULD NOT SEE A SCOPE
-    # COLLAPSE. That is DC-18 — a proxy for the property, in the control written against exactly the
-    # risk this module creates.** Measured by `/rely` 2026-08-16, and the probe is the one to keep:
-    # plant `check_negatives`' own MUST_FIRE string (confirmed exit 1), then add ONE WORD — `'Order'`
-    # — to `SKIP_DIRS`. `check_negatives`, `check_modal` and `check_figures` all went to **exit 0
-    # with the violation still live**, the scan set fell 330 → 317, and every assertion above still
-    # printed `ok`. They test NON-EMPTINESS: drop one directory and there are still nested `.lean`
-    # files elsewhere, so nothing fires.
+    # ⚠⚠ **TWO EARLIER VERSIONS OF THIS CONTROL EACH CLOSED ONE ROUTE AND LEFT THE PROPERTY OPEN.**
+    # The first asserted the scan set was non-empty and reached each file KIND — defeated by adding
+    # `'Order'` to `SKIP_DIRS`, which left nested `.lean` files elsewhere so nothing fired. The
+    # second asserted every `ZeroParadox/` subdirectory contributed a file — defeated three more
+    # ways, each a one-word edit, each with a live violation on disk and every gate green including
+    # the PUSH gate: `SKIP_DIRS += 'commands'` took out every published gate brief, `SKIP_NAMES +=
+    # 'BottomCannotBe.lean'` took out a keystone index, and dropping `tools/**/*.py` from `GLOBS`
+    # took out the verification layer itself. Roughly a THIRD of the scan set was pinned by nothing
+    # at all (measured 2026-08-16; the four routes below are now controls, so measure rather than
+    # trust this sentence).
     #
-    # **The fix is to derive what MUST be covered from the tree rather than asserting a shape.**
-    # Every immediate subdirectory of `ZeroParadox/` holding a `.lean` file must contribute at least
-    # one file to the scan set. That is self-maintaining — a new subsystem is covered the day it is
-    # created, with nothing to remember — and it fails loud on precisely the edit that defeated the
-    # old version, because excluding `Order` removes `ZeroParadox/Order/` from the set entirely.
-    #
-    # ⚠ `Vendored/` is the one legitimate absence: backports are exempt STRUCTURALLY (`vendored.py`),
-    # so requiring coverage of it would assert the opposite of the rule.
-    print('SCOPE (every ZeroParadox/ subsystem is reached)')
-    covered = {r.split('/')[1] for r in rels
-               if r.startswith('ZeroParadox/') and r.count('/') > 1}
-    expected = {d.name for d in SRC.iterdir()
-                if d.is_dir() and d.name != 'Vendored' and any(d.rglob('*.lean'))}
-    missing = sorted(expected - covered)
-    ok = not missing
-    print('  %-40s %s (%d/%d subsystems)'
-          % ('no subsystem has fallen out of scope',
-             'ok' if ok else '*** %d MISSING: %s ***' % (len(missing), ', '.join(missing[:5])),
-             len(covered & expected), len(expected)))
+    # **The error was enumerating INPUT routes inside a fix for a routes-class defect.** Pinning the
+    # OUTPUT makes every route fail at once, including the ones nobody has enumerated — which is the
+    # only form that survives a reviewer smarter than the author. SUPERSET, so adding files is free
+    # and only a NARROWING fires; deleting a source file needs its line removed here, a reviewable
+    # act, on the same bargain every other baseline in this suite makes.
+    print('SCOPE (the recorded scan set is still covered)')
+    recorded = load_baseline(SCOPE_BASELINE)
+    live = set(rels)
+    dropped = sorted(recorded - live)
+    ok = not dropped
+    print('  %-40s %s'
+          % ('no recorded path has fallen out of scope',
+             'ok (%d recorded, %d live)' % (len(recorded), len(live)) if ok
+             else '*** %d DROPPED: %s ***' % (len(dropped), ', '.join(dropped[:4]))))
     bad += 0 if ok else 1
+
+    # A baseline that is absent or empty would make the check above vacuously true — the failure
+    # mode `batch.py` records for `decl_baseline.txt`, where "added declarations" computed against
+    # nothing returned nothing and both purity and SSOT passed blind.
+    plausible = len(recorded) > 100
+    print('  %-40s %s' % ('the baseline itself is populated',
+                          'ok' if plausible else '*** EMPTY OR MISSING — check is vacuous ***'))
+    bad += 0 if plausible else 1
+
+    # ⚠ MUST-FIRE, IN PROCESS. Each is a route `/rely` used to defeat the previous control. They
+    # mutate module constants and restore them, so nothing touches disk and no probe can be left
+    # behind by a killed run — unlike `guards.py`, whose file-planting probe was found stranded in a
+    # real source file today after an interrupted run.
+    print('SCOPE CONTROLS (each route must be caught)')
+    import contextlib
+
+    @contextlib.contextmanager
+    def _swapped(name, value):
+        old = globals()[name]
+        globals()[name] = value
+        try:
+            yield
+        finally:
+            globals()[name] = old
+
+    for label, name, value in (
+            ('SKIP_DIRS gains a ZeroParadox subdir', 'SKIP_DIRS', SKIP_DIRS + ('Order',)),
+            ('SKIP_DIRS gains a non-corpus dir', 'SKIP_DIRS', SKIP_DIRS + ('commands',)),
+            ('SKIP_NAMES gains a basename', 'SKIP_NAMES',
+             frozenset(SKIP_NAMES | {'BottomCannotBe.lean'})),
+            ('GLOBS drops a pattern', 'GLOBS', tuple(g for g in GLOBS if g != 'tools/**/*.py')),
+    ):
+        with _swapped(name, value):
+            caught = bool(recorded - {r for _p, r in targets()})
+        print('  %-40s %s' % (label, 'ok' if caught else '*** NOT CAUGHT ***'))
+        bad += 0 if caught else 1
 
     print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0

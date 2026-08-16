@@ -178,6 +178,33 @@ def selftest():
     print("  %-46s %s" % ("no bucket missing from RISK order",
                           "ok" if ok else "*** unranked: %s ***" % missing))
     bad += 0 if ok else 1
+
+    # ⚠ MUST FIRE — the half this selftest shipped without, and it went unnoticed because NOTHING
+    # RAN THESE CONTROLS (DEB-1, /rely round 2): not `check_checkers`, not `ci_report.SELFTESTS`,
+    # not any workflow, while `batch.py` depends on this module for every debaselining worklist.
+    # The assertions above are all must-SUPPRESS — they check that correct input is classified
+    # correctly. None of them could fail if the classifier answered "prose-?" to everything.
+    print("MUST FIRE (a misclassification is caught)")
+    for label, entry, wrong_bucket in (
+            ("a kind is NOT silently bucketed as its neighbour",
+             "ZeroParadox/Foo.lean::unlabelled::1", "prose-bare"),
+            ("an unknown kind falls to the sentinel, not a real bucket",
+             "ZeroParadox/Foo.lean::not-a-real-kind::1", "prose-doc"),
+    ):
+        parts = entry.split("::")
+        got, _disp, _probe = PROSE_KIND.get(parts[1], ("prose-?", "SEMANTIC", False))
+        ok = got != wrong_bucket
+        print("  %-46s %s" % (label, "ok" if ok else "*** COLLAPSED to %s ***" % got))
+        bad += 0 if ok else 1
+
+    # And the mapping must not be degenerate: if every kind mapped to one bucket the cases above
+    # would still pass individually. A classifier with one output class classifies nothing.
+    distinct = {b for b, _d, _p in PROSE_KIND.values()}
+    ok = len(distinct) > 1
+    print("  %-46s %s" % ("the mapping is not degenerate",
+                          "ok" if ok else "*** ONE BUCKET — classifies nothing ***"))
+    bad += 0 if ok else 1
+
     print("\nselftest: %s" % ("PASS" if not bad else "FAIL (%d)" % bad))
     return 1 if bad else 0
 

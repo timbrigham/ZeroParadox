@@ -141,7 +141,7 @@ SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
              "check_classes.py", "check_poles.py", "check_moved.py",
              "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
              "check_figures.py", "check_checkers.py",
-             "check_release_ready.py", "common.py", "guards.py"]
+             "check_release_ready.py", "common.py", "guards.py", "debaseline.py"]
 
 
 def run(script, args):
