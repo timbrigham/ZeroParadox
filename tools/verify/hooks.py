@@ -300,7 +300,14 @@ def pre_push(stream):
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1
 
-    scan_exit = py("scan_pdfs.py")
+    # ⚠ scan_pdfs lives in `scripts/`, NOT in this bundle. It is a BUILD-side tool (it checks
+    # PDF assets and font registrations), and it moved with the build scripts on 2026-08-15
+    # while this call kept looking here. Measured by /rely: `py("scan_pdfs.py") -> 2`, and
+    # `pre_push` returns that, so EVERY push exited 2 with a bare [Errno 2] at the end of an
+    # otherwise-green run. It failed CLOSED, which is why it is ordinary rather than bedrock —
+    # but an unexplained exit 2 on a green run is precisely the shape that trains the
+    # `--no-verify` reflex, which this project has already had fire twice.
+    scan_exit = run(sys.executable, os.path.join(REPO, "scripts", "scan_pdfs.py"))
 
     # Routing + review signals, computed from the RANGES BEING PUSHED. This is the one call that
     # `batch.py` could not make correctly on its own (REL-1): it had only the working tree, which

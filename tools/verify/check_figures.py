@@ -100,7 +100,19 @@ def prose_lines(text, suffix):
             if in_doc or s.startswith('--'):
                 out.append((i, line))
         else:                                    # .py
-            if s.startswith('"""') or s.endswith('"""'):
+            # ⚠ A ONE-LINE DOCSTRING MUST NOT TOGGLE THE STATE. `"""text."""` both starts and ends
+            # with the delimiter, so `startswith or endswith` flips `in_doc` ON and never back —
+            # and every subsequent line of CODE then counts as prose.
+            #
+            # Measured 2026-08-15: adding a single one-line docstring to `batch.py` made this
+            # checker "discover" a pre-existing figure 200 lines further down and block a push.
+            # That is the worst shape of false positive, because the site it reports is nowhere
+            # near the cause, and the obvious reading is that the reported line is new.
+            triple = s.count('"""')
+            if triple >= 2:                      # opens and closes on the same line
+                out.append((i, line))
+                continue
+            if triple == 1:
                 in_doc = not in_doc
                 out.append((i, line))
                 continue
@@ -177,6 +189,10 @@ def selftest():
         ('a version string', '-- corrected in ZP-P v1.21 after the gate round.'),
         # ⚠ CODE IS NOT PROSE. This is the control that keeps the checker usable at all.
         ('a code line, not a comment', 'assert len(rows) == 25 and len(cols) == 40'),
+        # ⚠ THE STATE-MACHINE CONTROL. A one-line docstring must not leave `in_doc` stuck
+        # ON. When it did, every line of CODE after it counted as prose and this checker
+        # reported a pre-existing figure 200 lines away as NEW, blocking a push.
+        ('code after a 1-line docstring', 'def f():\n    """One line."""\n    return tally(1847, sites)'),
         ('a Lean term', 'def probe : Fin 12 := ⟨7, by decide⟩'),
     ]
 

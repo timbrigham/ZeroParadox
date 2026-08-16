@@ -141,10 +141,17 @@ STAGES = ["start", "ledger", "screen", "probe", "judge", "precommit", "prepush",
 # fire off the working tree; the hash rule was carrying the whole load. Tracked under `tools/verify/`
 # a checker change is an ordinary tracked diff, so git sees it, CI sees it, and a reviewer sees it.
 ROUTING = [
-    (re.compile(r"^tools/verify/(check_\w+\.py|batch\.py|hooks\.py|guards\.py|vendored\.py"
-                r"|report\.py|ci_report\.py|install_hooks\.py|gate_round\.py|gatelock\.py"
-                r"|ship\.py|selfheal\.py|debaseline\.py"
-                r"|proposed_pre_\w+_hook\.sh|\w+_baseline\.txt|vendored_files\.txt)$"),
+    # ⚠⚠ THE WHOLE DIRECTORY, NOT AN ALLOWLIST OF FILENAMES. This was an allowlist, and the
+    # exemption that depends on it is a DIRECTORY PREFIX — so they did not cover the same set
+    # and the justification for the exemption ("ROUTING fires on exactly this prefix ... they
+    # are a pair") was false. Found independently by /rely and the adversary gate on
+    # 2026-08-15, both with a real commit: `tools/verify/README.md` came back `reviewable: []`
+    # and routing `ROWS: NONE` — a tracked, public, 22KB prose file reviewed by NOTHING, and
+    # ~250 lines of argument had just been moved into it.
+    #
+    # An exemption and its compensating control must cover the SAME SET or the pair is a
+    # story. Anything under `tools/verify/` now routes to `/rely`, whatever it is called.
+    (re.compile(r"^tools/verify/"),
      "/rely", "a checker, hook, or exemption switch changed - its first run produced CHK-2 and "
               "CHK-3, both checker bugs, so this is the measured persona for the verification layer"),
     (re.compile(r"^\.github/workflows/"),
@@ -163,6 +170,25 @@ def sh(*args, cwd=REPO):
     return r.returncode, (r.stdout or "") + (r.stderr or "")
 
 
+# ⚠ NOT EVERY WATCHED FILE LIVES IN THIS BUNDLE, and assuming so silently re-opened two
+# closed routes. `CHECKERS` is the list of things whose change must route to `/rely`; after
+# the 2026-08-15 move it was resolved wholesale against `tools/verify/`, so `scan_pdfs.py`
+# (now in `scripts/`) and `ar_status.json` (private) were pinned at `<ABSENT>` forever.
+#
+# Measured by /rely: neutralising the PDF scanner to `sys.exit(0)` AND rewriting the AR
+# tracker left the hash dict BYTE-IDENTICAL. Both entries were added specifically to close
+# measured routes — the comments above call them the fifth and sixth — and the move undid
+# both. The `<ABSENT>` sentinel, which exists so a DELETED checker still trips the routing,
+# is what made it silent: a file in the wrong place is indistinguishable from a deleted one.
+def _checker_path(name):
+    """Where a watched file actually lives. Three roots, not one."""
+    if name == "scan_pdfs.py":
+        return os.path.join(REPO, "scripts", name)      # build-side tool
+    if name == "ar_status.json":
+        return os.path.join(PRIV, name)                 # private legacy tracker
+    return os.path.join(BASE, name)                     # the verification bundle
+
+
 def checker_hashes():
     """Fingerprint the filters, so a mid-batch change to one is VISIBLE.
 
@@ -170,7 +196,7 @@ def checker_hashes():
     "freeze the filter before a batch" — unenforceable as a discipline, trivial as a hash."""
     out = {}
     for c in CHECKERS:
-        p = os.path.join(BASE, c)
+        p = _checker_path(c)
         # ⚠ A MISSING file gets a sentinel, not an omission. Skipping it meant DELETING a checker
         # did not trip the routing — the hash simply vanished from the dict and nothing compared
         # unequal, so removing a gate was quieter than editing one (/rely pass 2).

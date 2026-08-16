@@ -31,6 +31,7 @@ Usage (the exact invocation path is printed in this tool's own output):
 """
 import io
 import os
+import re
 import subprocess
 import sys
 
@@ -125,9 +126,32 @@ def audit():
         #   hooks.py     py("check_x.py", ...)
         #   ci_report.py ("check_x.py", [...], GATE, ...)   - a row in CHECKS
         #   ship/batch   subprocess of the script path
+        # ⚠⚠ A MANIFEST ROW IS NOT A CALL, AND MY PREVIOUS FIX COULD NOT TELL. The first
+        # version matched the bare name, which a hash list satisfies. The second matched
+        # `("name.py",` — and /rely defeated it in one edit: it deleted every call site for
+        # `check_moved.py`, then rewrote the surviving PRE_PUSH_PLAN row from
+        # `("check_moved", ...)` to `("check_moved.py", ...)`. Result: `violations: 0`,
+        # exit 0, `and is invoked` — while `grep 'py("check_moved'` returned nothing. A
+        # blocking checker run by nobody, certified healthy by the script written to catch
+        # exactly that.
+        #
+        # PLAN/manifest rows are therefore stripped before the search. What remains has to be
+        # an actual invocation: `py("x.py")`, a `CHECKS` row carrying its argv, or a
+        # subprocess of the path.
+        def _calls_only(text):
+            out = []
+            for line in text.split("\n"):
+                s = line.strip()
+                # a manifest row is (name, MODE, description) - three literals, no argv list
+                if re.match(r'^\(\s*"[\w.]+"\s*,\s*"(BLOCK|warn|report|GATE|count)"', s):
+                    continue
+                out.append(line)
+            return "\n".join(out)
+
         invocations = ('py("%s"' % c, "py('%s'" % c,
                        '("%s",' % c, "('%s'," % c)
-        called = [k for k, t in caller_text.items() if any(p in t for p in invocations)]
+        called = [k for k, t in caller_text.items()
+                  if any(p in _calls_only(t) for p in invocations)]
         if c in ORPHAN_EXEMPT:
             rows.append((c, "is invoked", True,
                          "exempt: %s (controls still run every push)" % ORPHAN_EXEMPT[c]))
