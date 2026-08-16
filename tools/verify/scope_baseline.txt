@@ -25,6 +25,7 @@
 # the shared enumerator: check_modal, check_negatives, check_figures
 # the shared enumerator: check_modal, check_negatives, check_figures
 # the shared enumerator: check_modal, check_negatives, check_figures
+# the shared enumerator: check_modal, check_negatives, check_figures
 [common.targets]
 .claude/commands/adversary-review.md
 .claude/commands/batch.md

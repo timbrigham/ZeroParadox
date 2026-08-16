@@ -28,6 +28,8 @@ EVIDENCE	measur|UNCLASSIFIED|retract|corrected|does \*\*not\*\* show|does not sh
 MODAL	not\s+a\s+necessity|not\s+asserted\s+as\s+a\s+necessity|rather\s+than\s+as\s+a\s+necessity|artifact|choice\-free\s+in\s+principle|removable\s+in\s+principle|could\s+be\s+removed|can\s+be\s+removed|is\s+removable|are\s+removable|eliminable|not\s+forced\s+by\s+the\s+mathematics|not\s+a\s+fact\s+about\s+the\s+mathematics|not\s+a\s+fact\s+about
 SCOPE	Classical\.choice|axiom|choice-free|#print axioms|propext|Quot\.sound|LLPO|excluded middle|constructive
 SENTENCE	260
+SKIP_NAMES	check_modal.py
+SKIP_NAMES	modal_baseline.txt
 STRONG	UNCLASSIFIED|retract|corrected|does not settle|honest tier|not classified|\(open\)|NOT claimed|not claimed|does \*\*not\*\* show|does not show|no such re-proof|not attempted|open question|is open
 WINDOW	420
 _MODAL_PHRASES	are removable
@@ -48,6 +50,9 @@ _MODAL_PHRASES	removable in principle
 [check_negatives]
 CLAIM	(?:\bno\s+(?:\w+[\s-]+){0,3}ha(?:s|ve)\s+(?:ever\s+)?been\s+(?:found|located|observed))|(?:\bnone\s+(?:ha(?:s|ve)\s+(?:ever\s+)?been\s+)?(?:found|located|observed)\b)|(?:\bnever\s+been\s+(?:found|located|observed)\b)|(?:\bhas\s+never\s+been\s+(?:found|located|observed)\b)|(?:\bnowhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase))|(?:\bnot\s+in\s+Mathlib\b)|(?:\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))|(?:\bthe\s+corpus\s+does\s+not\s+have\b)|(?:\bno\s+such\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+framework))
 EVIDENCE	as\s+of\s+\d{4}|\b20\d\d-\d\d-\d\d\b|located\s+as\s+of|searched\s+as\s+follows|searched\s+\d|searched[,;]?\s+(?:and\s+)?none\s+found|prior[- ]art\s+search|not\s+located\b|retract|used\s+to\s+(?:say|read)|corrected\b|WAS\s+FALSE|this\s+line\s+said
+SKIP_NAMES	DEFECT_CLASSES.md
+SKIP_NAMES	check_negatives.py
+SKIP_NAMES	negatives_baseline.txt
 _N	\bhas\s+never\s+been\s+(?:found|located|observed)\b
 _N	\bnever\s+been\s+(?:found|located|observed)\b
 _N	\bno\s+(?:\w+[\s-]+){0,3}anywhere\s+in\s+the\s+(?:framework|corpus|repo\w*|codebase)
@@ -62,6 +67,8 @@ _N	\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+fram
 [check_figures]
 EVIDENCE	\bas\s+of\b|\b20\d\d-\d\d-\d\d\b|\bmeasured\b|\bmeasure\s+(?:it|on\s+demand)\b|\bnever\s+record\b|\bdo\s+not\s+record\b|\bre-?measure\b|\bcomputed\s+now\b|\bat\s+the\s+time\b|\bwas\s+stale\b|\bwent\s+stale\b|\bstale\s+by\b|\bcorrected\b|\bretract
 FIGURE	\b(\d{2,})\s+(?:files?|declarations?|decls?|sites?|papers?|entries|entry|rows?|checkers?|occurrences?|hits?|violations?|instances?|modules?|scripts?|commits?|baselines?|notes?|defects?)\b
+SKIP_NAMES	check_figures.py
+SKIP_NAMES	figures_baseline.txt
 
 [check_pov]
 ALLOW	check_pov\.py|vocabulary_reference|^\s*--\s*\[ZP-CUSTOM\]|CORRECTED|corrected 20|an earlier revision|v1\.\d+:|v2\.\d+:

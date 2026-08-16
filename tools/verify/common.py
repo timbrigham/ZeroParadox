@@ -207,35 +207,70 @@ def check_patterns(section, live, label=None):
 # exempted from pinning by the other module's entry. Adding one line to it took that checker from
 # exit 1 to exit 0 with every gate green. **One correct exemption granting an unrelated one is the
 # self-exemption shape this bundle exists to close, arriving through a namespace.**
-_NOT_VOCAB = frozenset({
-    # scan scope — pinned by `scope_baseline.txt` instead, per enumerator
-    'common.SKIP_DIRS', 'common.SKIP_NAMES', 'common.GLOBS',
-    'check_modal.SKIP_NAMES', 'check_negatives.SKIP_NAMES', 'check_figures.SKIP_NAMES',
-    'check_poles.SKIP_DIRS', 'check_poles.SKIP_RELDIRS', 'check_poles.SCAN_EXT',
-    'check_moved.SKIP_DIRS', 'check_moved.SCAN_EXT',
-    'check_invariants.BINARY_EXT',
+# ⚠⚠ **EVERY ENTRY CARRIES ITS REASON, AND THE REASON IS CHECKED** (`SKIP-3`, `/rely` round 5). This
+# was a flat set under one blanket comment — *"scan scope, pinned by `scope_baseline.txt` instead"* —
+# and that claim was **FALSE FOR THREE OF TWELVE ROWS**. `check_modal`, `check_negatives` and
+# `check_figures` have no `scope_baseline.txt` section: they feed their own `SKIP_NAMES` into the
+# SHARED walk, so `[common.targets]` pins that walk under the DEFAULT skips, not each checker's
+# effective scan set. Measured per checker with its own `MUST_FIRE[0]` planted live on disk — adding
+# one filename to any of the three took it from exit 1 to exit 0 with the violation still present
+# and both pins, all selftests, `guards --block` and `check_checkers --block` reporting green. One
+# further row was simply **DEAD**: `check_moved.SKIP_DIRS` named an attribute that does not exist,
+# drifted in the same edit meant to harden this list.
+#
+# **A blanket justification over a list nobody re-checks is the shape this bundle exists to close.**
+# So: `module.NAME -> (reason, detail)`, and `selftest()` asserts every row is LIVE (the attribute
+# exists) and COVERED (its stated reason actually holds). That is `guards.py` doctrine — the
+# registry is the deliverable — applied to the one exemption registry here that had no
+# registry-level check.
+_SCOPE, _ROSTER, _CONTROL, _DERIVED, _COMPUTED = 'scope', 'roster', 'control', 'derived', 'computed'
+
+_NOT_VOCAB_REASONS = {
+    # scan scope — genuinely pinned by the named `scope_baseline.txt` section
+    'common.SKIP_DIRS': (_SCOPE, 'common.targets'),
+    'common.SKIP_NAMES': (_SCOPE, 'common.targets'),
+    'common.GLOBS': (_SCOPE, 'common.targets'),
+    'check_poles.SKIP_DIRS': (_SCOPE, 'check_poles'),
+    'check_poles.SKIP_RELDIRS': (_SCOPE, 'check_poles'),
+    'check_poles.SCAN_EXT': (_SCOPE, 'check_poles'),
+    'check_moved.SCAN_EXT': (_SCOPE, 'check_moved'),
+    'check_invariants.BINARY_EXT': (_SCOPE, 'check_invariants'),
+    # ⚠ `check_modal.SKIP_NAMES`, `check_negatives.SKIP_NAMES` and `check_figures.SKIP_NAMES` are
+    # DELIBERATELY ABSENT — they were here, the claim did not hold, and they are now pinned as
+    # ordinary vocabulary. Each is a set of two strings; pinning costs nothing and closes SKIP-3.
+    # `check_moved.SKIP_DIRS` is absent because it never existed.
+
     # rosters — reconciled by `check_checkers.roster_agrees()` instead
-    'check_checkers.CALLERS', 'check_checkers.ALSO_AUDITED', 'ci_report.SELFTESTS',
-    'batch.CHECKERS', 'batch.GATING_CHECKERS',
+    'check_checkers.CALLERS': (_ROSTER, None),
+    'check_checkers.ALSO_AUDITED': (_ROSTER, None),
+    'ci_report.SELFTESTS': (_ROSTER, None),
+    'batch.CHECKERS': (_ROSTER, None),
+    'batch.GATING_CHECKERS': (_ROSTER, None),
+
     # the controls themselves: pinning them would pin the test, not the thing tested
-    'check_modal.MUST_FIRE', 'check_modal.MUST_SUPPRESS',
-    'check_negatives.MUST_FIRE', 'check_negatives.MUST_SUPPRESS',
-    'check_figures.MUST_FIRE', 'check_figures.MUST_SUPPRESS',
-    'check_pov.MUST_FIRE', 'check_pov.MUST_SUPPRESS', 'check_pov.MUST_DENY',
-    'check_classes.MUST_FIRE', 'check_classes.MUST_SUPPRESS',
-    'check_poles.MUST_FIRE', 'check_poles.MUST_SUPPRESS',
-    'vendored.MUST_FIRE', 'vendored.MUST_SUPPRESS',
-    'guards.TOUCHED', 'guards.PROPERTIES',
+    'check_modal.MUST_FIRE': (_CONTROL, None), 'check_modal.MUST_SUPPRESS': (_CONTROL, None),
+    'check_negatives.MUST_FIRE': (_CONTROL, None),
+    'check_negatives.MUST_SUPPRESS': (_CONTROL, None),
+    'check_figures.MUST_FIRE': (_CONTROL, None), 'check_figures.MUST_SUPPRESS': (_CONTROL, None),
+    'check_pov.MUST_FIRE': (_CONTROL, None), 'check_pov.MUST_SUPPRESS': (_CONTROL, None),
+    'check_pov.MUST_DENY': (_CONTROL, None),
+    'check_classes.MUST_FIRE': (_CONTROL, None), 'check_classes.MUST_SUPPRESS': (_CONTROL, None),
+    'check_poles.MUST_FIRE': (_CONTROL, None), 'check_poles.MUST_SUPPRESS': (_CONTROL, None),
+    'vendored.MUST_FIRE': (_CONTROL, None), 'vendored.MUST_SUPPRESS': (_CONTROL, None),
+    'guards.TOUCHED': (_CONTROL, None), 'guards.PROPERTIES': (_CONTROL, None),
+
     # derived from a pinned source, so pinning it twice adds nothing
-    'check_moved.RULES',
-    # ⚠ COMPUTED STATE, NOT AN AUTHORED KNOB — and the distinction is the whole rule for scalars.
-    # `MATHLIB_PRESENT` is True where `.lake/packages/` exists and False in a worktree, in CI, and in
-    # any fresh clone. Pinning it made `check_paths --selftest` fail everywhere Mathlib is absent,
-    # which is a control that only passes on the author's machine — the `check_hashes` failure this
-    # project already has on record. Caught by running the PAT-2 control in a worktree rather than
-    # in place. **Pin what someone TUNES; never pin what the environment answers.**
-    'check_paths.MATHLIB_PRESENT',
-})
+    'check_moved.RULES': (_DERIVED, 'check_moved.MOVED'),
+
+    # ⚠ COMPUTED STATE, NOT AN AUTHORED KNOB — the whole rule for scalars. `MATHLIB_PRESENT` is True
+    # where `.lake/packages/` exists and False in a worktree, in CI, and in any fresh clone. Pinning
+    # it made `check_paths --selftest` fail everywhere Mathlib is absent: a control that only passes
+    # on the author's machine, which is the `check_hashes` failure already on record here. Caught by
+    # running the PAT-2 control in a worktree rather than in place.
+    # **Pin what someone TUNES; never pin what the environment answers.**
+    'check_paths.MATHLIB_PRESENT': (_COMPUTED, None),
+}
+_NOT_VOCAB = frozenset(_NOT_VOCAB_REASONS)
 
 
 def vocabulary(mod_globals, module=None):
@@ -281,6 +316,48 @@ def vocabulary(mod_globals, module=None):
                     # `relocations tracked` from 74 to 73 with the pin still reporting ok.
                     out.add('%s\t%s' % (name, '\t'.join(item)))
     return out
+
+
+def check_exemption_registry():
+    """Every `_NOT_VOCAB` row must be LIVE and its stated reason must actually HOLD.
+
+    ⚠ **THIS IS THE PART THAT TERMINATES THE REGRESS** (`SKIP-3`). Removing three wrong rows fixes
+    three rows; checking the registry fixes the class. A blanket justification over a list nobody
+    re-checks is how `SKIP-3` happened — twelve entries under one comment, three of them false and
+    one naming an attribute that had ceased to exist.
+
+    Two assertions per row:
+      * **LIVE** — the module has that attribute. A dead row is a rule about nothing, and it drifts
+        silently because nothing dereferences it.
+      * **COVERED** — a `scope` row names a `scope_baseline.txt` section that exists and is
+        populated. The other reasons (`roster`, `control`, `derived`, `computed`) are structural
+        claims checked elsewhere or by construction, and are recorded so the reason is at least
+        legible rather than blanket.
+
+    Returns the failure count."""
+    import importlib
+    bad = 0
+    print('EXEMPTION REGISTRY (every _NOT_VOCAB row live and covered)')
+    dead, uncovered = [], []
+    for key, (reason, detail) in sorted(_NOT_VOCAB_REASONS.items()):
+        mod_name, attr = key.rsplit('.', 1)
+        try:
+            mod = importlib.import_module(mod_name)
+        except Exception:
+            dead.append('%s (module will not import)' % key)
+            continue
+        if not hasattr(mod, attr):
+            dead.append(key)
+            continue
+        if reason == _SCOPE and not load_pinned(SCOPE_BASELINE, detail):
+            uncovered.append('%s -> [%s] absent or empty' % (key, detail))
+    for label, rows in (('every row names a live attribute', dead),
+                        ('every scope row is really scope-pinned', uncovered)):
+        ok = not rows
+        print('  %-40s %s' % (label, 'ok (%d rows)' % len(_NOT_VOCAB_REASONS) if ok
+                              else '*** %d BAD: %s ***' % (len(rows), '; '.join(rows[:3]))))
+        bad += 0 if ok else 1
+    return bad
 
 
 def check_vocabulary(section, mod_globals, label=None):
@@ -676,6 +753,11 @@ def selftest():
     print('SCOPE (the recorded scan set is still covered)')
     recorded = load_scope('common.targets')
     bad += check_scope('common.targets', rels)
+
+    # The registry that decides what is EXEMPT from pinning is itself checked here — it is the one
+    # exemption surface in this bundle that had no registry-level control, which is exactly how
+    # SKIP-3 got in.
+    bad += check_exemption_registry()
 
     # ⚠ MUST-FIRE, IN PROCESS. Each is a route `/rely` used to defeat the previous control. They
     # mutate module constants and restore them, so nothing touches disk and no probe can be left
