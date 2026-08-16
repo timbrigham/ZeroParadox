@@ -70,6 +70,7 @@ CHECKS = [
     ("check_modal.py",      ["--block"], GATE,  "modal claims carry a measurement or a reduction"),
     ("check_classes.py",    ["--block"], GATE,  "a requirements class records a degeneracy verdict"),
     ("check_moved.py",      ["--block"], GATE,  "nothing points at a relocated path"),
+    ("check_negatives.py",  ["--block"], GATE,  "a universal negative carries a date or a search record"),
     # No --block flag: these exit non-zero on a finding natively.
     ("check_invariants.py", [],          GATE,  "always-true invariants hold across the corpus"),
     ("check_paths.py",      [],          GATE,  "every repo-relative reference resolves"),
@@ -84,7 +85,7 @@ CHECKS = [
 # register.md makes to a reader about which scripts built which PDFs.
 SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
              "check_classes.py", "check_poles.py", "check_moved.py",
-             "check_paths.py", "check_invariants.py", "check_hashes.py",
+             "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
              "check_release_ready.py"]
 
 

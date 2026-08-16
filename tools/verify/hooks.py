@@ -96,6 +96,7 @@ PRE_PUSH_PLAN = [
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
+    ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
@@ -247,6 +248,13 @@ def pre_push(stream):
     if py("check_moved.py", "--block") != 0:
         print("\nPush blocked: something still points at a relocated path.")
         print("Update the reference, or record the file as a dated record in check_moved.py.")
+        print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
+        return 1
+
+    if py("check_negatives.py", "--block") != 0:
+        print("\nPush blocked: an undated universal negative.")
+        print("Write 'none located as of <date>, searched as follows' — a universal negative")
+        print("is falsified by any single future commit and nothing mechanical notices.")
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1
 
