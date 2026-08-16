@@ -26,7 +26,7 @@ validated `export_full` — not by committing this tool's raw output.
 
 The baseline corresponds to a fixed public-production commit (recorded in `tm_registry.py`):
 `origin/main @ 7075d4abfe49b81c0080166d848e08579f1cafb7` (tree `eacbc513a541d465b9937b33a53f923d3e9ea4b6`).
-Re-running the extractor against that tree reproduces that inventory exactly. ⚠ **The count is deliberately not written here.** It read `1025` while line 78 of this same file read `~1012`, and an independent re-run at the pinned tree measured 1012 — so the figure was both wrong and self-contradictory, and an earlier edit made it worse by removing the `currently` hedge that had at least flagged it as volatile.
+Re-running the extractor against that tree reproduces that inventory exactly. ⚠ **The count is deliberately not written here.** It has been written down four times and been wrong every time — including twice in this file at once, with the two figures contradicting each other. It changes on every declaration added or renamed, so any value committed to prose is right on the day it is typed and wrong afterwards. **Measure it: `python -c "import json; print(len(json.load(open('ssot.json',encoding='utf-8'))['collections']['declarations']['entries']))"`.**
 Per this project's standing rule, **measure it rather than quoting it**: run the extractor against the pinned commit and read the number from `tm_registry.py`.
 
 ## Identifier handling (why the count is what it is)
@@ -49,18 +49,23 @@ every run:
    never restructured — registering it would only add infrastructure noise and misattribute
    provenance. **Measured: 0 declarations from `ZeroParadox/Vendored/` are in the store.**
 
-   ⚠ **`ZeroParadox/Ordinal/NaturalOpsPow.lean` IS NOT IN THIS CATEGORY, AND THIS PARAGRAPH SAID IT
-   WAS.** It is a **PORT**, not a verbatim copy — Hernández's `CombinatorialGames` proof adapted to
-   the vendored v4.28 API, with every port change marked `-- [ZP]`. Measured 2026-08-16, both of the
-   reasons given above are false of it: **20 of its declarations are registered**, and
-   `Ordinal/KirbyParis.lean` cites `NaturalOpsPow.nadd_lt_omega0_opow` **by name**. Its only
-   exemption is from the PROSE checkers, via `vendored.py`'s content allowlist, on the ground that
-   its header and proof commentary are upstream's.
+   ⚠ **`ZeroParadox/Ordinal/NaturalOpsPow.lean` IS NOT IN THIS CATEGORY.** It is a **PORT** —
+   Hernández's `CombinatorialGames` proof adapted to the vendored v4.28 API, with port changes marked
+   `-- [ZP]` — rather than a verbatim copy. Neither reason above holds of it: its declarations ARE
+   registered, and `Ordinal/KirbyParis.lean` cites `NaturalOpsPow.nadd_lt_omega0_opow` **by name**.
 
-   ⚠ **That leaves it in an incoherent middle, and the inconsistency is OPEN rather than resolved:**
-   it is exempt like vendored code, but registered and cited like framework code, and filed like
-   framework code. Two of those three have to agree. Do not read this paragraph as ratifying the
-   current arrangement.
+   Its exemption is a **path line in `vendored_files.txt`**, whose own header scopes it as *exempt
+   from every checker* — not from the prose checkers alone. ⚠ There is no content-based exemption to
+   appeal to: `vendored.py` records that content sniffing was **removed 2026-08-10 as a
+   self-exemption hole** (`RLY2-1`, bedrock), because a file could exempt itself from every checker
+   by naming a licence in its header. Adding a line to the allowlist is a reviewable act; matching a
+   string was not.
+
+   ⚠ **The arrangement is OPEN, not ratified.** The file is exempt like vendored code, registered and
+   cited like framework code, and filed like framework code. Those can be reconciled — a port may
+   legitimately carry upstream prose while proving locally-cited theorems — but the allowlist's own
+   entry criterion asks whether the content is *genuinely upstream's*, and an API adaptation is a
+   fair question against that bar. Do not read this paragraph as settling it.
 
 2. **Source-unnamed anonymous instances** (`INCLUDE_ANON = False`). `instance : Foo` declarations
    whose names Lean generates at compile time have no citable source name and no stable identity to
@@ -89,9 +94,7 @@ the claims-layer work it is a **multi-collection envelope**, not a bare declarat
 
 - **`collections.declarations.entries`** — the declaration inventory enriched with an **ontology
   overlay**: per-declaration `object` / `domain` / `role` tags (each a controlled, multi-valued list).
-  ⚠ This line read `~1012-declaration` — a **fourth** wrong value for the figure line 29 of this same
-  file already forbids writing down, 48 lines above it. Measured on the live store it is 1676. The
-  count is not recorded here; measure it.
+  The count is not recorded here; see § *Scope* above and measure it.
 - **`collections.claims.entries`** — the curated **claim graph**: ⊥-face domain nodes, the adjudicated
   inter-domain edges, and the free-standing keystones. Each claim carries a `status`
   (`proved`/`deep`/`corr`/`conj`/`commitment`), and a declaration links back to a claim via its
