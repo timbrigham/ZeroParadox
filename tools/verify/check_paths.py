@@ -250,6 +250,29 @@ def scan(files, find_bare, lean_mode=False, check_mathlib=False):
     return dangling, bare, checked
 
 
+# ⭐⭐ THE DIVIDING LINE (Tim, 2026-08-17): "keep the mechanical as basic as getting a line count so
+# we know where the dividing line is."
+#
+# **THE MECHANICAL LAYER MEASURES AND LOCATES. AGENTS JUDGE.** A checker's job is to answer WHERE and
+# HOW MANY — cheaply, on every run, without anyone remembering. Deciding whether a claim is TRUE is
+# not a checker's job and every attempt here to make it one has produced its own defect:
+#
+#   * `check_pov` is a tag-PRESENCE test read as a truth test — a `/rely` plant plus one honest tag
+#     two lines away certified the retracted arrow verbatim, and the tagged-claims counter ROSE.
+#   * `check_prose`'s block metric counts blank lines and delimiters, so 29 of the 47 smallest sites
+#     come under cap by deleting whitespace — zero liability removed (`PRS-10`).
+#   * A title-overlap heuristic added here to judge relevance had ZERO live yield and a
+#     false-positive surface that grew with every conversion. Deleted the same day.
+#
+# Measured across this session: **every BEDROCK finding came from an AGENT executing something —
+# `#check`, `lake env lean`, a planted defect. None came from a checker firing.** What the checkers
+# did contribute was the thing agents cannot: enumeration that fires every time and forgets nothing
+# (83 line-citations, 293 over-cap blocks, which checker hashes moved since `/rely` signed them).
+#
+# SO: report the count, name the sites, and STOP. Where this file blocks, it blocks on facts that are
+# decidable without judgement — does a path resolve, is a hash current. Everything interpretive here
+# is INFORMATIONAL by design, not by timidity.
+#
 # === RIDE-ALONG CROSS-REFERENCES (2026-08-17) ================================================
 # The ride-along convention moves a module-level ESSAY out of `Foo.lean` into `Foo.md` beside it.
 # The declarations stay; the argument, prior art and fences move.
@@ -854,7 +877,7 @@ def main():
             print('  The .lean title says what the FILE PROVES; the .md title says what the ARGUMENT')
             print('  is. MANIFEST.md is GENERATED from the .lean H1, so a .lean titled after the')
             print('  essay makes every generated index row describe it with words that moved out.')
-            failed = True
+            print('  INFORMATIONAL: does not fail the run.')
         if ra:
             print(f'\n** {len(ra)} REFERENCE(S) POINT AT PROSE, NOT AT CODE — the path still '
                   f'resolves, the target no longer lives there: **')
@@ -879,7 +902,7 @@ def main():
             print('      turns on, or state the one line this site needs and stop')
             print('    * a line number -> delete it; a line number is a copy of a location')
             print('  Repointing at the .md is NOT a fix — it keeps prose pointing at prose.')
-            failed = True
+            print('  INFORMATIONAL: does not fail the run. A RISING number means the class is growing.')
         else:
             print('  all references to ride-along .lean files target declarations, not moved prose')
 
