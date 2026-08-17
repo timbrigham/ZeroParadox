@@ -2226,6 +2226,7 @@ ZeroParadox/Settheory/RequirementsGap.lean
 ZeroParadox/Settheory/SetTheoryAFA.lean
 ZeroParadox/Settheory/Tarski.lean
 ZeroParadox/Settheory/Wall.lean
+ZeroParadox/Settheory/Wall.md
 ZeroParadox/Settheory/Wall_OneRoot.lean
 ZeroParadox/State/HilbFunctor.lean
 ZeroParadox/State/MeanErgodic.lean
@@ -2300,8 +2301,6 @@ scripts/README.md
 tools/registry/README.md
 tools/render/README.md
 tools/verify/README.md
-
-# PAT-2: same shape
 [check_invariants]
 .claude/commands/adversary-review.md
 .claude/commands/batch.md

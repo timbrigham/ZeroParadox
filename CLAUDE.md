@@ -413,7 +413,7 @@ not build it again.** Authoritative sites, all pre-existing: `ZeroParadox/Setthe
 `mu_nu_branch_exclusion` (`:124`) and `selfApp_lands_on_nu` (`:133`) are the theorems;
 `ZeroParadox/Settheory/QuineHost.lean`, whose class is named for the host and already sorts three theories
 by whether they permit the self-loop; `ZeroParadox/DiagonalFixedPoint.lean` § II/§ III, whose spine is the
-wall/floor (μ/ν) carving; and `Settheory/Wall.lean`'s reframe paragraph.
+wall/floor (μ/ν) carving; and the reframe section of `ZeroParadox/Settheory/Wall.md`.
 
 The engine (`negation_no_fixedpoint` → `lawvere_fixedpoint`) forks: **μ** — the map is fixed-point-free, no
 object forms; **ν** — a fixed point exists. The well-founded family then renders a **verdict on ν**: a
@@ -423,7 +423,7 @@ well-foundedness is **not a third root of self-reference; it is the axis of the 
 
 **Use the STANDARD NAMES — all four are published and all four sources are in `.claude-local/papers/`:**
 - the ν direction is **"the Diagonal Theorem"** (Lawvere & Schanuel, via Yanofsky 2003 p. 5 Remark 3,
-  p. 14 Thm 3 — Yanofsky was already cited in `Wall.lean`; the names were not);
+  p. 14 Thm 3 — Yanofsky was already cited in `ZeroParadox/Settheory/Wall.md`; the names were not);
 - a host permitting ν is **"degenerate"** (Yanofsky p. 3; nLab, *Lawvere's fixed point theorem*);
 - in set theory the permit/refuse split **is** Foundation vs Anti-Foundation (Aczel 1988 **p. 6**);
 - the general form is a **published theorem** — Adámek-Milius-Moss 2020 **Thm 7.6** p. 30, *"the only
@@ -448,7 +448,7 @@ Two-Pole rule demands, which the `r x x` form hides.**
 
 **⚠ THAT ADOPTION IS DONE — do not build it again.** It landed 2026-07-29 (`27b1911`) at
 `ZeroParadox/Multihomed/Boundary.lean` § I-b: `floor_descent_from_bot`, `bot_not_acc`,
-`floor_not_wellFounded_via_descent`. `ZeroParadox/Settheory/Wall.lean:74-75` already says "Now adopted."
+`floor_not_wellFounded_via_descent`. `ZeroParadox/Settheory/Wall.md` already says "Now adopted."
 **This line said "Adopting it is open work worth doing" until 2026-07-30 — while § "unstated adjacency"
 BELOW, in this same file, already listed the descending-chain form among the CLOSED finds. One file,
 two contradictory answers, 186 lines apart.** That is the exact trap that produced the `HostVerdict.lean`

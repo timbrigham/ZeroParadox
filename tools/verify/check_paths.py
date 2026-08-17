@@ -250,6 +250,82 @@ def scan(files, find_bare, lean_mode=False, check_mathlib=False):
     return dangling, bare, checked
 
 
+# === RIDE-ALONG CROSS-REFERENCES (2026-08-17) ================================================
+# The ride-along convention moves a module-level ESSAY out of `Foo.lean` into `Foo.md` beside it.
+# The declarations stay; the argument, prior art and fences move.
+#
+# ⚠⚠ THE FAILURE THIS CATCHES IS INVISIBLE TO EVERY OTHER CHECK IN THIS FILE, BECAUSE THE PATH
+# STILL RESOLVES. `Foo.lean` exists, so the resolver is happy; what moved is the TARGET INSIDE it.
+# A reference reading "`Wall.lean`'s NO-GO table" or "`Wall.lean:74-75` says 'Now adopted'" now
+# points at a file that no longer contains either. Measured on the FIRST conversion, 2026-08-17:
+# one file produced 13+ live tracked breaks, none of which any gate reported.
+#
+# Two shapes, and both are the project's own recorded defect classes arriving here:
+#   * a LINE NUMBER into a `.lean` that has a ride-along — a line number is a copy of a location
+#     and drifts (the `COM-4` rule), and relocation is the extreme case of that drift;
+#   * a PROSE NOUN attached to the `.lean` — table, section, paragraph, citation, fence — naming
+#     content that by construction is now next door.
+#
+# ⚠ A DECLARATION citation is NOT a hit and must never become one: `wf_no_selfloop` really does
+# live in the `.lean`, and firing on those would be the cry-wolf shape that gets a gate muted.
+# ⚠ THE CLOSING DELIMITER IS PART OF THE GAP AND THE FIRST DRAFT MISSED IT. References are written
+# `` `Settheory/Wall.lean`'s reframe paragraph `` — a BACKTICK sits between the name and the `'s`,
+# so an anchored match on `'s` returned a clean ZERO against 13 known-live breaks. Allow the
+# closing delimiter. (Verified the detector against a known-bad line rather than believing the zero.)
+PROSE_NOUN = re.compile(
+    r"[`'\"\)\]]*\s*(?:'s|’s|s')\s+"
+    r"(?:[A-Za-z][\w-]*\s+){0,3}"      # intervening modifiers: "failure-mode taxonomy", "one-root reframe"
+    r"(paragraph|section|§|table|note|docstring|header|reframe|taxonomy|fence|fenced|"
+    r"citation|cites|cited|overview|gloss|discussion|argument|prior art|hypothesis|"
+    r"classification|module doc)",
+    re.I)
+# The same reference also appears as "cited in `Wall.lean`" / "fenced conjecture of `Wall.lean`",
+# where the prose noun PRECEDES the name. One-sided matching is a blind half (the Two-Pole rule
+# applied to a detector), so look behind as well as ahead.
+PROSE_NOUN_BEFORE = re.compile(
+    r"(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|"
+    r"docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$",
+    re.I)
+LINE_REF = re.compile(r'\.lean:\d+')
+
+
+def ride_along_pairs():
+    """`Foo.lean` files that have a `Foo.md` beside them."""
+    out = {}
+    for p in (REPO / 'ZeroParadox').rglob('*.md'):
+        lean = p.with_suffix('.lean')
+        if lean.exists():
+            out[lean.name] = str(p.relative_to(REPO)).replace('\\', '/')
+    return out
+
+
+def scan_ride_along(files, pairs):
+    """References to a ride-along `.lean` that actually target its RELOCATED PROSE."""
+    hits = []
+    if not pairs:
+        return hits
+    # ⚠ NO `/` IN THE LOOKBEHIND. The convention REQUIRES the full repo path, so almost every real
+    # citation reads `ZeroParadox/Settheory/Wall.lean` — and excluding a preceding `/` made the
+    # detector blind to exactly the form the project mandates. It returned 0 against 13 known breaks.
+    names = re.compile(r'(?<![\w.-])(' + '|'.join(re.escape(n) for n in pairs) + r')')
+    for path in files:
+        try:
+            text = path.read_text(encoding='utf-8', errors='replace')
+        except OSError:
+            continue
+        rel = str(path.relative_to(REPO)).replace('\\', '/')
+        for lineno, line in enumerate(text.split('\n'), 1):
+            # ⚠ BLANK THE DELIMITERS, LENGTH-PRESERVING, so offsets stay exact. Every real citation
+            # is written `` `Foo.lean` ``, so the backtick sits between the name and the prose noun
+            # on BOTH sides — matching the raw line found 5 of 13 known breaks. Same fix, same
+            # reason, as `common.normalize_separators`; the bug it prevents is the one this
+            # project keeps paying for, a detector blind to the form the convention mandates.
+            for why in _ride_along_line_hits(line, pairs):
+                name = next(n for n in pairs if n in line)
+                hits.append((rel, lineno, name, pairs[name], why))
+    return hits
+
+
 def scan_private_deps(files):
     """Tracked files depending on the gitignored private layer. Returns (qualified, bare).
 
@@ -368,6 +444,75 @@ def report(label, dangling, bare, checked):
             print(f'  {path}:{lineno}  ->  {ref}   ({where})')
 
 
+def selftest_ride_along():
+    """Controls for the ride-along cross-reference rule.
+
+    ⚠ WRITTEN AFTER THE DETECTOR RETURNED A FALSE ZERO TWICE, which is why they are in the shapes
+    the corpus actually uses rather than the shapes that were convenient to invent. First draft:
+    the lookbehind excluded a preceding `/`, so it could not see `ZeroParadox/Settheory/Wall.lean`
+    — the very form the file-reference convention MANDATES. Second: the closing backtick sits
+    between the name and the prose noun, so an anchored match found 5 of 13 known-live breaks.
+    Both were caught by checking a known-bad line instead of believing the zero.
+
+    ⚠ DECLARED LIMIT, not a to-do: a reference whose prose noun WRAPS to the next line is not
+    caught — this scans line by line. One such site exists today (`WheelFrac.lean`, where the
+    sentence breaks straight after the name). Same root cause as the intra-line/wrap gap recorded
+    for `check_pov`, and it is stated here rather than left to be discovered."""
+    pairs = {'Wall.lean': 'ZeroParadox/Settheory/Wall.md'}
+    must_fire = [
+        ("full path + closing backtick, the mandated form",
+         "the wall/floor carving; and `ZeroParadox/Settheory/Wall.lean`'s reframe paragraph."),
+        ("intervening modifier", "`Wall.lean`'s failure-mode taxonomy singles out the row"),
+        ("prose noun BEFORE the name", "the diagonal framing is Lawvere (cited in `Wall.lean`)."),
+        ("line number into relocated prose", "recorded at `ZeroParadox/Settheory/Wall.lean:67`."),
+    ]
+    must_suppress = [
+        ("a DECLARATION citation — the prose moved, the theorem did not",
+         "`wf_no_selfloop` (`ZeroParadox/Settheory/Wall.lean`) is axiom-free."),
+        ("a bare file pointer with no prose noun",
+         "See `ZeroParadox/Settheory/Wall.lean` for the engine."),
+        ("an unrelated file", "`ZeroParadox/Order/Snap.lean`'s NO-GO gauge section."),
+    ]
+    import tempfile
+    bad = 0
+    tmp = Path(tempfile.mkdtemp())
+    print('\n== ride-along cross-references - CONTROLS ==')
+    for label, group, want in (('MUST FIRE', must_fire, True),
+                               ('MUST SUPPRESS', must_suppress, False)):
+        print(f'{label}')
+        for why, line in group:
+            f = tmp / 'Probe.md'
+            f.write_text(line, encoding='utf-8')
+            # scan_ride_along resolves paths against REPO; probe via the pure matchers instead by
+            # pointing it at a file inside the repo tree is not possible read-only, so call the
+            # matcher on the constructed line directly through a shim file in the repo-relative tmp.
+            got = bool(_ride_along_line_hits(line, pairs))
+            ok = (got == want)
+            bad += 0 if ok else 1
+            print('  %-52s %s' % (why[:52], 'ok' if ok else ('MISSED' if want else 'FALSE POSITIVE')))
+    return bad
+
+
+def _ride_along_line_hits(line, pairs):
+    """The per-line decision, EXTRACTED so the controls exercise the real path rather than a copy.
+
+    A replica drifts from the thing it certifies — the mirror problem this project keeps paying for.
+    `scan_ride_along` calls this, so the controls test what actually runs."""
+    names = re.compile(r'(?<![\w.-])(' + '|'.join(re.escape(n) for n in pairs) + r')')
+    out = []
+    soft = line.replace('`', ' ')
+    for m in names.finditer(line):
+        tail = soft[m.end():m.end() + 90]
+        before = soft[:m.start()]
+        if LINE_REF.search(line[m.start():m.end() + 8]):
+            out.append('line number into relocated prose')
+        elif PROSE_NOUN.match(tail):
+            out.append('names prose that moved: ' + PROSE_NOUN.match(tail).group(1))
+        elif PROSE_NOUN_BEFORE.search(before):
+            out.append('names prose that moved: ' + PROSE_NOUN_BEFORE.search(before).group(1))
+    return out
+
+
 def selftest():
     """MUST-FIRE and MUST-SUPPRESS controls on the reference detector.
 
@@ -469,7 +614,7 @@ def main():
     args = sys.argv[1:]
     if '--selftest' in args:
         print('== file-reference resolver - CONTROLS ==')
-        return selftest()
+        return selftest() + selftest_ride_along()
     do_all = '--all' in args
     warn_private = '--warn-private' in args
 
@@ -500,6 +645,25 @@ def main():
             print(f'  {path}:{lineno}  ->  {ref}')
     else:
         print(f'  (+ {cm} Mathlib/Std citation(s) checked against the pinned checkout, all resolve)')
+    # === Ride-along cross-references =========================================================
+    pairs = ride_along_pairs()
+    if pairs:
+        ra = scan_ride_along(tracked_live + tracked_rec + tracked_lean(), pairs)
+        # Dated records describe the tree as it stood then; "fixing" them would falsify the record.
+        ra = [h for h in ra if not DATED.search(h[0].rsplit('/', 1)[-1])]
+        print(f'\n== ride-along cross-references ({len(pairs)} pair(s)) ==')
+        for name, md in sorted(pairs.items()):
+            print(f'  {name}  ->  {md}')
+        if ra:
+            print(f'\n** {len(ra)} REFERENCE(S) POINT AT PROSE THAT MOVED — the path still '
+                  f'resolves, the target no longer lives there: **')
+            for rel, lineno, name, md, why in ra:
+                print(f'  {rel}:{lineno}  cites {name} but {why}')
+                print(f'      -> retarget at {md}')
+            failed = True
+        else:
+            print('  all references to ride-along .lean files target declarations, not moved prose')
+
     # A bare basename that resolves NOWHERE is a genuinely dead citation, not a style nit — it is
     # the silent-failure class the convention exists to stop, so it FAILS. A bare basename that
     # does resolve is merely un-converted style and stays a warning.

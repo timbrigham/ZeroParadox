@@ -283,11 +283,14 @@ _VERIFY	vendored
 BARE_LEAN	(?<![\w/.-])((?:ZP[A-Z]?[A-Za-z0-9_]*)\.lean)
 DATED	\d{4}-\d{2}-\d{2}|(?<!\d)\d{8}(?!\d)|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4}
 EXIT_SKIPPED	3
+LINE_REF	\.lean:\d+
 MATHLIB_EXEMPT_DIRS	Vendored
 MATHLIB_PATTERN	(?<![\w/.-])((?:Mathlib|Std|Batteries)/[A-Za-z0-9_./-]+\.lean)
 NOTE_REF	(?<![\w/.-])((?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9][A-Za-z0-9_-]*(?:\d{4}-\d{2}-\d{2}|\d{8}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4})\.md)
 PATTERN	(?<![\w/.-])((?:ZeroParadox|scripts|\.github)/[A-Za-z0-9_./-]+\.(?:lean|py|md|json|yml|yaml))
 PRIVATE_REF	(?<![\w/.-])(\.claude-local/[A-Za-z0-9_./-]+)
+PROSE_NOUN	[`'\"\)\]]*\s*(?:'s|’s|s')\s+(?:[A-Za-z][\w-]*\s+){0,3}(paragraph|section|§|table|note|docstring|header|reframe|taxonomy|fence|fenced|citation|cites|cited|overview|gloss|discussion|argument|prior art|hypothesis|classification|module doc)
+PROSE_NOUN_BEFORE	(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$
 RECORD_FILES	RELEASES.md
 SKIP_MARKERS	->
 SKIP_MARKERS	corrected
@@ -327,7 +330,6 @@ SKIP_MARKERS_LEAN	stale
 SKIP_MARKERS_LEAN	superseded
 SKIP_MARKERS_LEAN	synced to
 SKIP_MARKERS_LEAN	was at
-
 [check_invariants]
 CUSTOM_TAG	\[ZP-CUSTOM\]
 REGISTRY_ENTRY	(?m)^### 
