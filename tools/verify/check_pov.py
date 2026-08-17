@@ -37,6 +37,37 @@ THE VOCABULARY — every POV claim declares a KIND and a STATUS.
     `Reading:`   + KIND   the framework reads X as an instance of that kind. Conjectural.
                           NOT a denial — there is no slot for denying a reading, by design.
 
+⚠⚠ WHAT THIS DOES NOT DO — READ BEFORE RELYING ON A ZERO.
+
+**This enforces that a convention was FOLLOWED. It never checks that a claim is TRUE.**
+`check_classes.py:25` has said so about this file since it was written; this file did not say it
+about itself, and a reader who only opened this one could not have known. Measured 2026-08-17 by a
+`/rely` trial that planted defects and ran the gate, so each item below is a reproduction, not a
+worry:
+
+  * **A tag LAUNDERS ITS NEIGHBOURS.** KIND and LABEL are searched in a 9-line WINDOW
+    (`lines[i-6:i+2]`), not on the line. So an honest `Reading:` CARRIER two lines up certifies a
+    false claim below it. The trial replaced `SnapDichotomy.lean`'s own fence with its exact
+    negation — the retracted "totally disconnected TO the snap" arrow, verbatim — and got
+    `--block` exit 0, `hooks.py pre-commit` exit 0, with the inverted claim COUNTED in
+    `tagged POV claims` (44 -> 46). The number a reader takes for good news went up.
+    ⚠ And the 2026-08-17 remediation ADDED tags at the four sites where this class recurs, so the
+    laundering window is now centred exactly on the recurrence sites. The fix made this worse.
+  * **The gate can be WALKED PAST by typing.** `Statement:` CARRIER on the line, or on a
+    neighbouring unrelated line, satisfies it with the claim left flatly false. Tagging is the
+    whole test.
+  * **`ALLOW` is matched against the LINE**, so any line containing `CORRECTED`, `check_pov.py`,
+    `vocabulary_reference` or a `v1.N:` token is exempt whatever else it says — an exemption
+    anything can grant itself by typing a word.
+  * **Scope holes, all reproduced silent:** a claim wrapped across two lines (there is no separator
+    normalisation here, unlike `check_modal.py`); `ZeroParadox/MANIFEST.md` and `GUIDE.md`, absent
+    from `TARGETS`; and any claim with no backticked declaration name within six lines, which is how
+    the build scripts that render this vocabulary into PUBLISHED PDFs stay out of remit.
+
+**So a zero here means "nobody skipped the label", never "the corpus says nothing false."** The
+truth question belongs to `/reconstruct`, `/rely` and the adversary gate, which read the elaborated
+statement. Do not cite this gate as evidence that a carrier claim is correct.
+
 Usage:  check_pov.py [--block]     (the exact invocation path is printed in this tool's output)
 Exit 0 = clean (or warn-only mode).  Exit 1 = untagged POV prose found AND --block was passed.
 """
@@ -76,9 +107,11 @@ TARGETS = (
 # WORKED EXAMPLE. The docstring above illustrates the CARRIER kind with *"snap available in Q_2,
 # impossible in R; both completions of Q — Ostrowski"* — and none of `totally disconnected`,
 # `total disconnectedness` or `domain of validity` was in this pattern, so the gate could not see
-# the one claim it names. Measured 2026-08-17: adding them reports `CLAIMS.md:76`
-# (*"Q_p totally disconnected = snap"*, in the PUBLIC claims ledger) and `SnapDichotomy.lean:23,25`
-# (*"totally disconnected -> snap"*).
+# the one claim it names. Measured 2026-08-17: adding them reported the *"Q_p totally disconnected =
+# snap"* row in the PUBLIC claims ledger `CLAIMS.md`, and the *"totally disconnected -> snap"*
+# bullets in `SnapDichotomy.lean`'s module docstring. (Named by FILE and CONTENT, never by line
+# number — a line number is a copy of a location and drifts exactly like any other copy. The
+# pointer here said `:23,25` for one day and the lines had already moved.)
 #
 # ⚠ WHAT THE ZERO ELSEWHERE DOES *NOT* MEAN, because an earlier version of this comment said it did.
 # `Padic.lean` reports zero under this vocabulary, and that was offered here as evidence of
@@ -87,16 +120,21 @@ TARGETS = (
 # dishonest carrier claim at four of `Padic.lean`'s own sites, each in its own window, stays SILENT
 # at all four; the same text with a backticked declaration name on the line FIRES. So the file is
 # out of remit via `CITES_DECL`, not cleared by it, and the gate would stay silent there if the file
-# asserted the opposite. That is a must-suppress passing for an unrelated reason (`DC-22`) and
-# attribution by proximity (`DC-9`) — in the justification block for a gate change.
+# asserted the opposite. That is a must-suppress passing for an unrelated reason — it looks like
+# confirmation and is not — sitting in the justification block for a gate change.
 #
 # ⚠ `CITES_DECL` IS WHAT BOUNDS THE BLAST RADIUS, so anyone widening the window should know what it
-# holds back. Measured: of 59 lines matching only the newly-added vocabulary, 11 tagged, 0 new,
-# 47 skipped for want of a nearby declaration citation, 1 allowlisted. The 47 include `Padic.lean`
-# and every `scripts/build_zp*.py` that renders "totally disconnected" into a PUBLISHED PDF. So this
-# closes the class wherever a declaration name happens to sit within six lines — a proxy for "is a
-# claim", not the property itself. ⚠ It also does NOT match `SNAP-5`'s upstream phrasing,
-# *"removes the topological obstruction"*, which is the misattribution this family started from.
+# holds back. A claim is skipped entirely unless a backticked declaration name sits within six
+# lines. The skipped set includes `Padic.lean` — the canonical home of this argument — and the
+# `scripts/build_*.py` strings that render this vocabulary into PUBLISHED PDFs. So this closes the
+# class wherever a declaration name happens to sit nearby, which is a proxy for "is a claim" rather
+# than the property itself. It also does NOT match the upstream phrasing this whole family started
+# from, *"removes the topological obstruction"*.
+#
+# ⚠ NO COUNTS ARE RECORDED HERE, DELIBERATELY. This comment carried "59 lines … 47 skipped" for one
+# day; regenerated, it was 58 and 46, matching neither the commit that recorded it nor its parent —
+# the fixes in that same commit deleted a matching line, so the figure went stale INSIDE the commit
+# that wrote it. Measure on demand instead: run this checker and read the hits.
 #
 # The class had recurred at least four times: `Padic.lean`'s *"the snap is forced"* (retracted
 # 2026-07-31), the two live sites above, and twice in `SnapCannotBe.lean` § V on 2026-08-16, the
@@ -110,7 +148,9 @@ POV_TERMS = re.compile(
     r'|swaps? the poles|min\s*≡\s*max|both min and max'
     r'|both extremal|initial AND terminal|least AND greatest'
     r'|totally disconnected|total disconnectedness|domain of validity'
-    r'|ultrametric.{0,30}(suffic|forc|yield|give)|carrier requirement)',
+    r'|totally separated|total separatedness|zero[- ]dimensional'
+    r'|range of applicability'
+    r'|ultrametric.{0,30}(suffic|forc|yield|give|suppl)|carrier requirement)',
     re.IGNORECASE,
 )
 
