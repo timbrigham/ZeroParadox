@@ -49,15 +49,18 @@ section SnapCannotBeIndex
 #check @ZeroParadox.snap_arc_z2_loop                  -- the ℤ₂ realization: start 0, depart, reapproach 0
 #check @ZeroParadox.t_iz_limit_is_new_null            -- role half only: (∀ x, join terminal x = x) → terminal = bot. Novelty is NOT in this statement; do not cite it as the novelty witness
 
-/-! ### § V. WHERE the snap can occur — the carrier requirements, and the witness failing each
+/-! ### § V. WHERE the snap is RULED OUT — and what only removes the obstruction
 
-§§ I-IV characterize the snap; this section bounds it. Each line is a live theorem about a CARRIER.
-Both requirements located here are witnessed by something that FAILS them, which is what makes them
-requirements rather than a list of properties ℚ_p happens to have. -/
-#check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, ε₀/2 is a smaller positive element. The constructive half
-#check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element — the FIRST STEP is unavailable. Blocked by DENSITY, not by the Archimedean property (ℝ(t) is non-Archimedean and still fails)
+Reading: CARRIER. These lines BOUND the snap; none supplies it. ZP-F rules it out in every ordered
+field; ZP-B removes the topological obstruction in ℚ_p without replacing it, since the 2-adic norms
+accumulate at 0 and ℚ_p has no closest non-zero element either. The first step is AX-B1, a modelling
+commitment — see `ZeroParadox/Valuation/Padic.lean`'s classification note. -/
+#check @ZeroParadox.HasFirstStep                      -- Statement: the first step IS Mathlib's covering relation, `∃ a, bot ⋖ a`
+#check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, every positive ε₀ admits a smaller positive δ
+#check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element. No Archimedean hypothesis appears in the binders
+#check @ZeroParadox.axb1_fails_in_ordered_field       -- Statement: `¬ HasFirstStep (0 : F)`. AX-B1 is what supplies the step, and it is a commitment, not a carrier property
 #check @ZeroParadox.real_no_snap                      -- Statement: ℝ is NOT totally disconnected
-#check @ZeroParadox.padic_snaps                       -- Statement: ℚ_p IS totally disconnected
-#check @ZeroParadox.snap_dichotomy                    -- Statement: over completions of ℚ the two are exclusive and exhaustive, by Ostrowski. ⚠ SCOPE: completions of ℚ ONLY — the identification of "snap occurs" with total disconnectedness is not claimed outside that class
+#check @ZeroParadox.padic_snaps                       -- Statement: ℚ_p IS totally disconnected. Removes the obstruction; supplies no first step
+#check @ZeroParadox.snap_dichotomy                    -- Statement: for NONTRIVIAL absolute values on ℚ, real and p-adic are exclusive and exhaustive (Ostrowski). ⚠ SCOPE: completions of ℚ only
 
 end SnapCannotBeIndex
