@@ -655,11 +655,29 @@ def main():
         for name, md in sorted(pairs.items()):
             print(f'  {name}  ->  {md}')
         if ra:
-            print(f'\n** {len(ra)} REFERENCE(S) POINT AT PROSE THAT MOVED — the path still '
+            print(f'\n** {len(ra)} REFERENCE(S) POINT AT PROSE, NOT AT CODE — the path still '
                   f'resolves, the target no longer lives there: **')
             for rel, lineno, name, md, why in ra:
                 print(f'  {rel}:{lineno}  cites {name} but {why}')
-                print(f'      -> retarget at {md}')
+            # ⚠⚠ THE REMEDY IS *NOT* "RETARGET IT AT THE .md", AND SAYING SO WAS THIS RULE'S OWN
+            # FIRST DEFECT (Tim, 2026-08-17: "I don't think we should ever have prose blocks that
+            # point at each other. that sounds exactly the opposite of how the damn things are
+            # supposed to work"). Repointing prose at prose one directory over just relocates the
+            # coupling — it is the mirror problem this project has already paid for three times,
+            # and a paragraph is not a stable target the way a declaration is.
+            #
+            # PROSE HANGS OFF CODE. A `.lean` pairs with its OWN `.md`, one structural hop, and
+            # everything else cites a DECLARATION (globally unique, self-locating via
+            # `#print axioms`) or states the one line it needs inline. That is `CLAUDE.md`'s
+            # existing rule — "keep declaration names bare" — and its one-line-plus-pointer rule,
+            # where the canonical home of a MATHEMATICAL fact is a theorem, never a paragraph.
+            print('\n  FIX BY DE-REFERENCING, NOT BY REPOINTING:')
+            print('    * naming a source ("cited in X") -> cite the SOURCE itself; a pointer at a')
+            print('      file that quotes Lawvere 1969 is strictly worse than citing Lawvere 1969')
+            print('    * naming an argument ("X\'s taxonomy/table/fence") -> name the DECLARATION it')
+            print('      turns on, or state the one line this site needs and stop')
+            print('    * a line number -> delete it; a line number is a copy of a location')
+            print('  Repointing at the .md is NOT a fix — it keeps prose pointing at prose.')
             failed = True
         else:
             print('  all references to ride-along .lean files target declarations, not moved prose')
