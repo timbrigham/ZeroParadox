@@ -1,6 +1,8 @@
 import ZeroParadox.Order.Snap
 import ZeroParadox.Ordinal.CnfBridge
 import ZeroParadox.Valuation.SemilatticeInstance
+import ZeroParadox.Valuation.SnapDichotomy
+import ZeroParadox.Reals.OrderedField
 
 /-!
 # Machine-checked characterization index of the snap ⊥ → ε₀ — what the snap IS and IS NOT
@@ -46,5 +48,16 @@ section SnapCannotBeIndex
 #check @ZeroParadox.c_da2_novelty                     -- contrapositive of the role fact: a non-⊥ state cannot satisfy the join-identity. "Distinct successor instantiation" is the reading, not the statement
 #check @ZeroParadox.snap_arc_z2_loop                  -- the ℤ₂ realization: start 0, depart, reapproach 0
 #check @ZeroParadox.t_iz_limit_is_new_null            -- role half only: (∀ x, join terminal x = x) → terminal = bot. Novelty is NOT in this statement; do not cite it as the novelty witness
+
+/-! ### § V. WHERE the snap can occur — the carrier requirements, and the witness failing each
+
+§§ I-IV characterize the snap; this section bounds it. Each line is a live theorem about a CARRIER.
+Both requirements located here are witnessed by something that FAILS them, which is what makes them
+requirements rather than a list of properties ℚ_p happens to have. -/
+#check @ZeroParadox.f_snap_blocked                    -- Statement: over `Field + LinearOrder + IsStrictOrderedRing`, ε₀/2 is a smaller positive element. The constructive half
+#check @ZeroParadox.f_snap_impossible                 -- Statement: hence no such field has a least positive element — the FIRST STEP is unavailable. Blocked by DENSITY, not by the Archimedean property (ℝ(t) is non-Archimedean and still fails)
+#check @ZeroParadox.real_no_snap                      -- Statement: ℝ is NOT totally disconnected
+#check @ZeroParadox.padic_snaps                       -- Statement: ℚ_p IS totally disconnected
+#check @ZeroParadox.snap_dichotomy                    -- Statement: over completions of ℚ the two are exclusive and exhaustive, by Ostrowski. ⚠ SCOPE: completions of ℚ ONLY — the identification of "snap occurs" with total disconnectedness is not claimed outside that class
 
 end SnapCannotBeIndex
