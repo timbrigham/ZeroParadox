@@ -154,6 +154,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
 - `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
 - `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` - No snap-shaped closure on the `ONote` carrier: a proved obstruction
+  - ride-along docs: `ZeroParadox/Ordinal/SnapNucleusConstructive.md` - Cantor normal form, the ε₀ ceiling, and the choice question
 - `ZeroParadox/Ordinal/SnapSuccession.lean` - The succession as a chain: the ε-numbers are the snap's successive targets, strictly climbing
 - `ZeroParadox/Ordinal/SyntacticCollapse.lean` - Syntactic surrogate for the 2-adic metric collapse (choice-free)
 - `ZeroParadox/Ordinal/WeakGoodstein.lean` - Weak Goodstein termination (second-domain depth test: ordinals / proof theory)
