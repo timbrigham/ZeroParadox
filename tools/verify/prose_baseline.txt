@@ -322,7 +322,6 @@ ZeroParadox/Multihomed/Boundary.lean::doc::floor_not_wellFounded_via_descent
 ZeroParadox/Multihomed/Boundary.lean::doc::floor_not_wellFounded_via_descent'
 ZeroParadox/Multihomed/Boundary.lean::doc::not_wf_of_descent
 ZeroParadox/Multihomed/Boundary.lean::doc::oscillation_split
-ZeroParadox/Multihomed/BoundaryBridge.lean::block::2dbc50e38b64::ZPJ — The snap-boundary, QPF bridge (best-effort
 ZeroParadox/Multihomed/BoundaryBridge.lean::doc::snap_boundary_two_registers
 ZeroParadox/Multihomed/CategoricalBridge.lean::block::0f8fdb7ac609::Appendix — NNRealZPCat: ℝ≥0 as a Concrete ZPCate
 ZeroParadox/Multihomed/CategoricalBridge.lean::block::3bc5e0326529::Section III — Instantiation Functors: Domain Pro
@@ -373,7 +372,6 @@ ZeroParadox/Multihomed/SpanObstruction.lean::doc::apex_span_no_ambient_strictMon
 ZeroParadox/Multihomed/TreeObstructions.lean::block::727b4216a723::ZP-H: The bottom-diagram tree — machine-checked
 ZeroParadox/Multihomed/TreeT1.lean::block::f26d2af1d4f3::ZP-H tree, edge T1 — the within-μ edge: proof-th
 ZeroParadox/Multihomed/TreeT1.lean::doc::fC_floor_transport
-ZeroParadox/Multihomed/TreeT2.lean::block::f645d74e8a70::ZP-H tree, edge T2 — the within-ν edge: Markov a
 ZeroParadox/Multihomed/TwoFacesBot.lean::block::b7a00aba69f1::Direction B — the two faces of ⊥ at the seam: VA
 ZeroParadox/Multihomed/WallSpanRobust.lean::block::891a84b8d374::Span-robustness of the well-founded cross-root w
 ZeroParadox/Multihomed/WallSpanRobust.lean::doc::no_faithful_span_to_ordinal_and_descending
@@ -414,9 +412,7 @@ ZeroParadox/Order/Snap.lean::doc::postInstantiation
 ZeroParadox/Order/Snap.lean::doc::t_snap_derived
 ZeroParadox/Order/Snap.lean::doc::t_snap_irreversible
 ZeroParadox/Order/Snap.lean::doc::t_snap_machine
-ZeroParadox/Order/SnapCannotBe.lean::block::d7c74d9a2b0a::Machine-checked characterization index of the sn
 ZeroParadox/Order/SnapCannotBe.lean::label::c_da2_novelty
-ZeroParadox/Order/SnapCannotBe.lean::label::da1_minimal_path
 ZeroParadox/Order/SnapCannotBe.lean::label::da2_bottom_characterization
 ZeroParadox/Order/SnapCannotBe.lean::label::da3_accessibleCardinality
 ZeroParadox/Order/SnapCannotBe.lean::label::dp2_execution_distinguishability
@@ -644,7 +640,6 @@ ZeroParadox/Valuation/BottomInvariant.lean::doc::unitMul_preserving_dirac
 ZeroParadox/Valuation/BoundaryGap.lean::block::5b1c7eafe66c::The boundary embedding: the exact gap to the Bru
 ZeroParadox/Valuation/BoundaryGap.lean::doc::embedsAsRootedSubtree_of_self
 ZeroParadox/Valuation/BranchingRequirement.lean::block::8da21bdf02ef::A further requirement — the branching axis: bran
-ZeroParadox/Valuation/BranchingSnapChain.lean::block::622071fd9157::The single chain: branching → disconnectedness →
 ZeroParadox/Valuation/CantorPropertiesProbe.lean::block::537bb1bacad5::Completeness-critic, final pass: homogeneity and
 ZeroParadox/Valuation/CompletenessCriticProbe.lean::block::c15e4b17e8d2::Completeness-critic probe: what property of the
 ZeroParadox/Valuation/ComplexityLadder.lean::block::c5215bc5bfb7::The complexity ladder: the arity is the variable
@@ -656,20 +651,17 @@ ZeroParadox/Valuation/ContractionRate.lean::doc::two_is_contraction
 ZeroParadox/Valuation/FloorWitness.lean::block::528f4833497b::Floor-class witnesses: valuation = ⊤ at the bott
 ZeroParadox/Valuation/ForkPoleProbe.lean::block::8f9f582afd49::Experimental probe: is the μ/ν fork independent
 ZeroParadox/Valuation/IndependenceProbe.lean::block::f8ec2c4c1459::Experimental probe: are the chain axis and the b
-ZeroParadox/Valuation/InfinitudeFloor.lean::block::4570c0100041::§ III-b. The OFFSET structure — the floor is the
 ZeroParadox/Valuation/InfinitudeFloor.lean::block::64570737b23d::§ VIII. NO-GO — what the requirements class does
 ZeroParadox/Valuation/InfinitudeFloor.lean::block::a3f426aa875b::The floor's infinite complexity AS an infinitude
 ZeroParadox/Valuation/InfinitudeFloor.lean::doc::BookkeepingCarrier
 ZeroParadox/Valuation/InfinitudeFloor.lean::doc::infinitudeFloor_forces_infinite
 ZeroParadox/Valuation/InfinitudeFloor.lean::doc::infinitudeFloor_nonempty_iff_infinite
-ZeroParadox/Valuation/InfinitudeFloor.lean::doc::member_cx_ne_floor_cx
 ZeroParadox/Valuation/InfinitudeFloor.lean::doc::member_injective
 ZeroParadox/Valuation/InfinitudeFloor.lean::doc::pole_inversion
 ZeroParadox/Valuation/InvTowerNorm.lean::block::0cdfc8cd0519::Batch 2 / G3 (pipeline, T6): the 0↔∞ duality on
 ZeroParadox/Valuation/InversionValuation.lean::block::8f5cfe07130e::An elementary fact: 2-adic inversion reverses th
 ZeroParadox/Valuation/IrreversibilityProbe.lean::block::772a6fd7420d::Experimental probe: is irreversibility (the snap
 ZeroParadox/Valuation/IrreversibilityProbe.lean::doc::irreversibility_forced_at_pole_not_beyond
-ZeroParadox/Valuation/LocalFloor.lean::block::c4ad4771252c::Every node is a floor, literally: a genuine Infi
 ZeroParadox/Valuation/LocalFloor.lean::doc::every_node_is_a_floor
 ZeroParadox/Valuation/NuLeafReconcile.lean::block::9e0b0f8cf8e2::The within-ν edge reconciles at the LEAF, not th
 ZeroParadox/Valuation/NuLeafReconcile.lean::doc::nu_leaf_glue_subsingleton
@@ -765,7 +757,6 @@ ZeroParadox/Valuation/SemilatticeInstance.lean::block::bee21dc6b8e0::ZP-I: Insid
 ZeroParadox/Valuation/SemilatticeInstance.lean::block::d07e6942cbb0::II. Valuation-Complexity Bridge — SUPERSEDED
 ZeroParadox/Valuation/SemilatticeInstance.lean::doc::t_inside_zero
 ZeroParadox/Valuation/SemilatticeInstance.lean::doc::t_iz_valuation_unbounded
-ZeroParadox/Valuation/SnapDichotomy.lean::block::cf7362208ef1::ZPF — the snap-occurrence dichotomy over ℚ
 ZeroParadox/Valuation/StrippedBottom.lean::block::fa184177b59b::⊥ by inversion of attribute-classes — the "typec
 ZeroParadox/Valuation/StrippedBottom.lean::doc::extent_single_point
 ZeroParadox/Valuation/StrippedBottom.lean::doc::measure_degenerate
