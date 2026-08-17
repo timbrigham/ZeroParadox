@@ -100,7 +100,7 @@ theorem selfMem_eq_singleton_free :
     This is the formal instance that ZeroParadox/Valuation/Scale.lean could not build because
     ℤ_[2] is not a ZPSemilattice — showing the ZPSemilattice constraint
     was an encoding artefact, not a mathematical requirement. -/
--- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] cannot be a ValuationStructure instance, which requires one. (Being a ring is not itself the obstruction: nothing in ZPSemilattice's axioms mentions a ring operation, and ZPSemilattice ℕ exists.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to theorems proved in ZeroParadox/Valuation/Scale.lean §V (q2Scale_bot, q2Val_bot, q2Val_unique, q2Val_scale).
+-- [ZP-CUSTOM] instance: ValBridge ℤ_[2] | reason: no ZPSemilattice ℤ_[2] is defined — its ring structure supplies no natural join with 0 as bottom — so ℤ_[2] cannot be a ValuationStructure instance, which requires one. (Being a ring is not itself the obstruction: nothing in ZPSemilattice's axioms mentions a ring operation, and ZPSemilattice ℕ exists.) ValBridge's bot-as-plain-field design drops the requirement, which the four axioms never used anyway. All four delegate directly to q2Scale_bot, q2Val_bot, q2Val_unique and q2Val_scale, proved in ZeroParadox/Valuation/Scale.lean.
 noncomputable instance instZ2ValBridge : ValBridge ℤ_[2] where
   bot := 0
   scale := (2 * ·)

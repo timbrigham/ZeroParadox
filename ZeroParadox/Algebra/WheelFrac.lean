@@ -305,11 +305,11 @@ theorem wheelFork_not_collapsed (h0 : (0 : A) ∉ S) :
 
 /-- **The obstruction, Lean-witnessed.** An involutive fork whose pole is a FIXED point of the
     involution — the ordered-fork condition — is necessarily COLLAPSED. Hence the involutive and
-    ordered forks coincide only at the diagonal point: they are different species. This is the witness
-    `ZeroParadox/Settheory/Wall.lean`'s NO-GO table cites, in the row whose condition-set is *an
-    involutive fork whose pole is fixed by the involution*. **That row previously read "lightweight
-    categorical typeclass / NO NON-VACUOUS UNIFIER" — a universal negative this theorem does not
-    prove**; it was corrected 2026-08-02 to state this signature. -/
+    ordered forks coincide only at the diagonal point: they are different species. This is the
+    no-go witness for that condition-set: hypothesis *the pole is fixed by the involution*,
+    conclusion *the poles coincide*. ⚠ It proves **no** universal negative about typeclasses —
+    "no non-vacuous unifier exists" quantifies over all possible typeclasses and is not a Lean
+    statement at all. -/
 theorem fixed_pole_forces_collapse {α : Type*} (F : InvolutiveFork α)
     (h : F.dual F.pole₀ = F.pole₀) : F.Collapsed :=
   F.collapsed_iff_fixed.mpr h
