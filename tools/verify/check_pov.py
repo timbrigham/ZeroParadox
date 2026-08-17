@@ -45,28 +45,45 @@ about itself, and a reader who only opened this one could not have known. Measur
 `/rely` trial that planted defects and ran the gate, so each item below is a reproduction, not a
 worry:
 
-  * **A tag LAUNDERS ITS NEIGHBOURS.** KIND and LABEL are searched in a 9-line WINDOW
-    (`lines[i-6:i+2]`), not on the line. So an honest `Reading:` CARRIER two lines up certifies a
-    false claim below it. The trial replaced `SnapDichotomy.lean`'s own fence with its exact
-    negation — the retracted "totally disconnected TO the snap" arrow, verbatim — and got
-    `--block` exit 0, `hooks.py pre-commit` exit 0, with the inverted claim COUNTED in
-    `tagged POV claims` (44 -> 46). The number a reader takes for good news went up.
+  * **A tag LAUNDERS ITS NEIGHBOURS.** KIND and LABEL are searched in an **8-line WINDOW**
+    (`lines[i-6:i+2]` — five lines above, the line, two below), not on the line. So an honest
+    `Reading:` CARRIER two lines up certifies a false claim below it. The trial replaced
+    `SnapDichotomy.lean`'s own fence with its exact negation — the retracted "totally disconnected
+    TO the snap" arrow, verbatim — and got `--block` exit 0, `hooks.py pre-commit` exit 0, with the
+    inverted claim COUNTED in `tagged POV claims` (44 -> 46). The number a reader takes for good
+    news went up.
     ⚠ And the 2026-08-17 remediation ADDED tags at the four sites where this class recurs, so the
     laundering window is now centred exactly on the recurrence sites. The fix made this worse.
+  * **WORSE: no real tag is needed.** KIND and LABEL are searched INDEPENDENTLY, so the bare word
+    `CARRIER` in ordinary prose plus a bare `Statement:` on a different, unrelated line satisfies
+    the test. Neither has to be a gloss, and neither has to be about the claim.
   * **The gate can be WALKED PAST by typing.** `Statement:` CARRIER on the line, or on a
     neighbouring unrelated line, satisfies it with the claim left flatly false. Tagging is the
     whole test.
   * **`ALLOW` is matched against the LINE**, so any line containing `CORRECTED`, `check_pov.py`,
-    `vocabulary_reference` or a `v1.N:` token is exempt whatever else it says — an exemption
-    anything can grant itself by typing a word.
-  * **Scope holes, all reproduced silent:** a claim wrapped across two lines (there is no separator
-    normalisation here, unlike `check_modal.py`); `ZeroParadox/MANIFEST.md` and `GUIDE.md`, absent
-    from `TARGETS`; and any claim with no backticked declaration name within six lines, which is how
-    the build scripts that render this vocabulary into PUBLISHED PDFs stay out of remit.
+    `vocabulary_reference` or a `v1.N:` token is exempt whatever else it says — and per the note at
+    `DENIAL` below, that mutes the DENIAL check too.
+  * **Scope holes, all reproduced silent.** ACROSS lines: a claim wrapped over two (there is no
+    separator normalisation here, unlike `check_modal.py`). WITHIN a line, and this is the one a
+    markdown ledger actually hits: `totally **disconnected**`, `totally *disconnected*`,
+    `totally-disconnected`, `totally <b>disconnected</b>`, a double space and a non-breaking space
+    are ALL silent where the plain form fires — measured, in `CLAIMS.md`, which is published and is
+    the file this defect occurred in. By FILE: `ZeroParadox/MANIFEST.md`, `RELEASES.md` and most
+    tracked `.md` are absent from `TARGETS`. And any claim with no backticked declaration name
+    within the window is skipped, which is how the build scripts that render this vocabulary into
+    PUBLISHED PDFs stay out of remit.
 
 **So a zero here means "nobody skipped the label", never "the corpus says nothing false."** The
 truth question belongs to `/reconstruct`, `/rely` and the adversary gate, which read the elaborated
 statement. Do not cite this gate as evidence that a carrier claim is correct.
+
+⚠⚠ **AND THE HONEST FRAME, WHICH THE LIST ABOVE SHOULD NOT BE READ AS CONTRADICTING: this is a
+DISCIPLINE AID AGAINST FORGETTING, NOT A CONTROL AGAINST AN ADVERSARY.** A tag-presence test cannot
+be made adversary-proof — every route closed leaves another, because the property it would need to
+decide ("is this carrier claim true?") is not mechanically decidable. Chasing evasion routes one at
+a time is the whack-a-mole this project records as its most repeated defect. **Treat the list above
+as an enumeration of what it does not cover, not as a to-do list to be driven to zero**, and put the
+weight on the gates that read the elaborated statement.
 
 Usage:  check_pov.py [--block]     (the exact invocation path is printed in this tool's output)
 Exit 0 = clean (or warn-only mode).  Exit 1 = untagged POV prose found AND --block was passed.
@@ -163,7 +180,22 @@ LABEL = re.compile(r'\b(Statement:|Reading:)')
 # snap" instead denies a claim the framework actually holds — that was the SECOND bedrock failure of
 # 2026-07-30, and the editorial gate had to catch four surviving sites by eye at round 5 because this
 # checker only looked for MISSING tags. A denial is always wrong regardless of tagging, so it is
-# checked unconditionally and is NOT baselined.
+# NOT baselined — no grandfather list can mute it.
+#
+# ⚠ BUT IT IS NOT "CHECKED UNCONDITIONALLY", WHICH THIS COMMENT CLAIMED UNTIL 2026-08-17.
+# `verdict()` computes `DENIAL.search(line) and not ALLOW.search(line)`, so **`ALLOW` mutes a
+# denial exactly as it mutes a tag check.** Measured: prefixing a planted denial with `CORRECTED`,
+# `v1.4:`, `vocabulary_reference` or `check_pov.py` takes it from reported to silent.
+#
+# That coupling is DELIBERATE and the corpus needs it — a recorded correction QUOTES the wording it
+# retracts, and flagging the retraction as if it were making the claim is the cry-wolf shape. The one
+# corpus line this currently mutes is a build-script docstring changelog recording a past adversary
+# round; making the check unconditional would fire on an honest historical record, so do not simply
+# invert the boolean.
+# **The cost is real and is the thing to know: an author can mute a genuine denial by typing one
+# allowlisted token on the line.** Narrowing `ALLOW` (it exempts hundreds of lines in scope, many by
+# the ordinary English word "corrected") is the fix, and it is tracked in the defect ledger rather
+# than done here, because narrowing it changes what the TAG check sees as well.
 DENIAL = re.compile(
     r'(NOT the snap|NOT of the snap|NOT that the snap|is not the snap'
     r'|never the same map|were never the same map)',
