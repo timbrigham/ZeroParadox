@@ -121,6 +121,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Settheory/SetTheoryAFA.lean` - ZP-J: Executability of Self-Reference
 - `ZeroParadox/Settheory/Tarski.lean` - Tarski's undefinability of truth — the diagonal family's TRUTH face (probe)
 - `ZeroParadox/Settheory/Wall.lean` - Zero as a Wall — the self-loop refutation and the diagonal engine (formal object)
+  - ride-along docs: `ZeroParadox/Settheory/Wall.md` - Zero as a Wall — the failure-mode taxonomy
 - `ZeroParadox/Settheory/Wall_OneRoot.lean` - Two small facts: self-loops exist without well-foundedness; the Lawvere lemma needs no order
 
 ### Computability (ZP-K, ZP-J)

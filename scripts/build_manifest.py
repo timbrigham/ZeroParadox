@@ -88,7 +88,22 @@ def scan():
                         continue
                     if s and not s.startswith(("-", "#")):
                         title = s.lstrip("# ").strip(); break
-            out.setdefault(folder, []).append((rel, title or fn, exp))
+            # RIDE-ALONG: `Foo.md` beside `Foo.lean` holds the argument this file used to carry
+            # in its module docstring. It is nested under its `.lean` below, because the PAIRING
+            # is the structure. Without this the manifest silently omits every converted essay.
+            ride = None
+            md = full[:-5] + ".md"
+            if os.path.exists(md):
+                mrel = os.path.relpath(md, REPO).replace(os.sep, "/")
+                mtitle = None
+                with open(md, encoding="utf-8") as g:
+                    for ln in g:
+                        m = TITLE_RE.match(ln.rstrip())
+                        if m:
+                            mtitle = m.group(1)
+                            break
+                ride = (mrel, mtitle or os.path.basename(md))
+            out.setdefault(folder, []).append((rel, title or fn, exp, ride))
     return out
 
 # folder -> human domain label
@@ -111,8 +126,10 @@ def section(data, want_exp):
         if not items:
             continue
         lines.append(f"\n### {DOMAIN.get(folder, folder)}\n")
-        for rel, title, _ in sorted(items):
+        for rel, title, _, ride in sorted(items):
             lines.append(f"- `{rel}` - {title}")
+            if ride:
+                lines.append(f"  - ride-along docs: `{ride[0]}` - {ride[1]}")
     return "\n".join(lines)
 
 def main():
