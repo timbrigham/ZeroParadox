@@ -2,8 +2,8 @@
 
 Ride-along documentation for [`ZeroParadox/Settheory/Wall.lean`](Wall.lean). The Lean file holds the
 declarations and a statement per declaration; this file holds the argument, the prior art and the
-fences. Nothing here restates a theorem the Lean file proves — where the two would overlap, the Lean
-is authoritative.
+fences. Where this file and the Lean file would overlap, **the Lean is authoritative** — a statement
+here is a reading of a declaration, never a substitute for it.
 
 **Name: "Zero as a Wall"** — ⊥/zero is the boundary self-reference cannot cross. Precise gloss (for
 translation / external readers): *the metatheoretic boundary where ⊥'s self-reference cannot be
@@ -35,9 +35,11 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   the system, Gödel territory), not a Lean proposition. We prove the OBJECT-LEVEL refutation of the
   self-loop in well-founded settings.
 - The "same role, not transferable" face is proved elsewhere and referenced, not re-proved here:
-  `real_not_equiv_padic` (ℝ and ℚ_p are both completions of ℚ but no equivalence transfers
-  one to the other) and `categorical_fork_strict` (μ empty / ν inhabited — the two ends, provably
-  distinct).
+  `real_not_equiv_padic` and `categorical_fork_strict` (μ empty / ν inhabited — the two ends,
+  provably distinct). ⚠ State `real_not_equiv_padic` as what it contains: `¬ real.IsEquiv (padic p)`,
+  where both sides are absolute values **on ℚ** and `IsEquiv v w := ∀ x y, v x ≤ v y ↔ w x ≤ w y`.
+  `ℚ_p` does not appear in the statement at all — the step to "the completions do not transfer" is
+  one Ostrowski inference beyond the cited declaration, and is not part of it.
 - The FORMAL SIGNATURE of the wall is the contrast: shadow realizable choice-free (proved upstream) ∧
   literal self-loop refuted under well-foundedness (proved in the Lean file). The wall is that pairing,
   not a claim that the residue is "closed."
@@ -102,12 +104,18 @@ are proved in their own modules, each a checkable witness whose hypotheses ARE t
 hold one condition-set fixed, characterize the exact failure, then read the pattern across them (the same
 experiment-style discipline that narrowed MC-1 and that EXTRACTED `wf_no_selfloop` itself).
 
+**Reading the Footprint column:** it is the `#print axioms` result **of the theorem named on that
+row**, measured, not inferred. Where a face has two witnesses with different footprints they get
+their own rows rather than one stamp — the Turing face below is exactly that case, and collapsing it
+was a defect caught 2026-08-17 by measuring rather than reading.
+
 | Condition-set held fixed | Failure SIGNATURE | Theorem (module) | Footprint |
 |---|---|---|---|
 | logical / `Prop` (**the ENGINE**) | NEGATION HAS NO FIXED POINT (`¬(p↔¬p)`) | `negation_no_fixedpoint` (Wall.lean) | axiom-free |
 | sets/functions, Cantor (**engine-linked ✓**) | no self-surjection onto predicates | `cantor_via_engine` (= engine at the diagonal) | axiom-free |
 | naive comprehension, Russell (**engine-linked ✓**) | no membership realizes every predicate | `russell_via_engine` (via `lawvere_fixedpoint` + engine) | axiom-free |
-| deciders, Turing (**engine-linked ✓**) | no self-surjection onto Bool-deciders (the halting diagonal) | `no_self_decider` (Lawvere + Bool engine); faithful: `self_halting_undecidable` (`ZeroParadox/Computability/Kleene.lean`) | axiom-free |
+| deciders, Turing (**engine-linked ✓**) | no self-surjection onto Bool-deciders (the halting diagonal) | `no_self_decider` (Lawvere + Bool engine) | axiom-free |
+|  ↳ the same face with a real machine model | the halting problem, faithfully | `self_halting_undecidable` (`ZeroParadox/Computability/Kleene.lean`) | **choice** |
 | any well-founded relation | NO CYCLE (any length) | `wf_no_cycle` (1-cycle: `wf_no_selfloop`) | axiom-free |
 | set theory + Foundation | NO MEMBERSHIP CYCLE (any length) | `no_membership_cycle` (1-cycle: `no_quine_atom`) | choice-free |
 | ordinal notation naming `<ε₀` | UNREACHABLE FROM BELOW | `omegaPow_no_fixedpoint` | choice-free |
@@ -130,15 +138,11 @@ NARROW form, and said "do not restore the citation without moving the declaratio
 moved and the citation restored — but nobody re-asked whether the narrow theorem supported the broad
 signature.)*
 
-*(History. The row cited `fixed_pole_forces_collapse` from a pre-reorg module that **was not at HEAD** —
-the declaration existed only on `private/physics-bridge`, a permanently local, quarantined branch that
-never reaches any remote. So a reader of the public repository could not check it, and it sat in this
-table beside witnesses that are checkable. **Resolved by promoting the declaration**, not by deleting the
-row: `InvolutiveFork`, `collapsed_iff_fixed`, `wheelFork`, `wheelFrac_fork_open`, `wheelFork_not_collapsed`
-and `fixed_pole_forces_collapse` now live in `ZeroParadox/Algebra/WheelFrac.lean` § "The involutive
-fork". The footprint above is **measured, not carried over**: `fixed_pole_forces_collapse` and
-`collapsed_iff_fixed` depend on no axioms at all; the two wheel-of-fractions instances are
-`[propext, Quot.sound]`.)*
+The involutive-fork witnesses — `InvolutiveFork`, `collapsed_iff_fixed`, `wheelFork`,
+`wheelFrac_fork_open`, `wheelFork_not_collapsed` and `fixed_pole_forces_collapse` — live in
+`ZeroParadox/Algebra/WheelFrac.lean` § "The involutive fork". Footprints measured, not carried over:
+`fixed_pole_forces_collapse` and `collapsed_iff_fixed` depend on no axioms; the two
+wheel-of-fractions instances are `[propext, Quot.sound]`.
 
 `lawvere_fixedpoint` (axiom-free) is the GENERAL theorem unifying the **diagonal family** — Cantor and
 Russell are its corollaries, triggered by the engine (`Not` is fixed-point-free). Within the diagonal family
@@ -161,8 +165,11 @@ The engine's two regimes (μ = no fixed point / ν = a fixed point exists, see `
   (*Non-Well-Founded Sets*, 1988, p. 6): *"Non-well-founded sets exist… Of course we must relinquish the
   foundation axiom, but it will turn out that we need drop none of the other axioms of set theory."*
 - The general categorical form is a **published theorem**: Adámek-Milius-Moss (2020, arXiv:1910.09401v2)
-  **Theorem 7.6**, p. 30 — *"the only well-founded fixed point is the initial algebra"*: a well-founded
-  host admits no fixed point except the μ end. The standard name for the *axis* is the **well-founded part
+  **Theorem 7.6**, p. 30 — *"the only well-founded fixed point is the initial algebra"*. ⚠ **Quote the
+  hypotheses with it**: the theorem is stated for *a complete and well-powered category with smooth
+  monomorphisms*, and *for F preserving monomorphisms*. Example 7.5, immediately above it on the same
+  page, is the counterexample showing what fails when the monomorphism condition is dropped. The bare
+  gloss "a well-founded host admits no fixed point except the μ end" drops all four and overstates it. The standard name for the *axis* is the **well-founded part
   / the coreflection into well-founded coalgebras** (their Definition 5.1, p. 22, credited there to their
   own **[5]** — Adámek-Milius-Moss, *Fixed points of functors*, JLAMP 95, 2018 — and the coreflection to
   **[6]**, Adámek-Milius-Moss-Sousa, *Well-pointed coalgebras*, LMCS 9(2), 2014). **Taylor [27,28] is
@@ -188,7 +195,13 @@ internalization, not one failure repeated. The formal/metatheoretic frontier is 
 literal AFA universe are metatheoretic-only.
 
 **The computability row is the pivot (2026-06-27).** It is the ONLY framework where the fixed point is
-NOT refuted/unreachable but provably EXISTS — `infinite_quine_family` gives infinitely many — while the
+NOT refuted/unreachable but provably EXISTS — `infinite_quine_family` gives infinitely many. ⚠ **Carry
+the fence with the claim:** `IsComputationalQuine c` unfolds to `eval c = selfApply c`, which is a
+**periodicity** condition, strictly weaker than self-reference — and the family is witnessed by
+**constant** codes. `ZeroParadox/Computability/Kleene.lean` states this at the declaration
+(`hconst_quine`, a `have` inside `infinite_quine_family`'s proof): constant codes satisfy the
+predicate vacuously. So the family is broad rather than a padding orbit, and "the fixed point exists"
+must not be read as "a self-referential object was constructed". Meanwhile the
 failure migrates entirely to DECIDABILITY (`isComputationalQuine_undecidable`, `¬ComputablePred`). That is
 "has all its attributes in theory (∃) but is incomputable (¬decidable)" stated as two theorems — the
 exact premise of the incomputability-lever hypothesis below, now a confirmed real entry (footprint

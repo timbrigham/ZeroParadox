@@ -1,7 +1,7 @@
 import Mathlib.SetTheory.ZFC.Basic
 
 /-!
-# Zero as a Wall — the metatheoretic boundary, as a failure-mode taxonomy (formal object)
+# Zero as a Wall — the self-loop refutation and the diagonal engine (formal object)
 
 ## Engineer's Take
 
@@ -13,9 +13,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ## Formal Overview
 ⊥/zero is the boundary self-reference cannot cross, and the provable core is one theorem:
 **a well-founded relation admits no self-loop** (`wf_no_selfloop`), with the diagonal family hanging
-off the engine `negation_no_fixedpoint`. The failure-mode taxonomy, the prior-art citations, the
-honest fences and the open one-root-or-two question live beside this file in
-`ZeroParadox/Settheory/Wall.md`.
+off the engine `negation_no_fixedpoint`. ("Wall" is a flagged metaphor-nickname; the precise term is
+*the metatheoretic boundary where ⊥'s self-reference cannot be internalized*.) The argument, the
+prior art and the fences are in `ZeroParadox/Settheory/Wall.md`, beside this file.
 -/
 
 set_option maxHeartbeats 400000
@@ -50,7 +50,7 @@ theorem cantor_via_engine {A : Type*} (g : A → (A → Prop)) : ¬ Function.Sur
     negation, whose fixed-point-freeness is exactly `negation_no_fixedpoint`. So all of them are one
     theorem (this) triggered by the one engine. (This is Mathlib's
     `Function.exists_fixed_point_of_surjective`, curried `A → A → B`; re-proved here axiom-free as the hub of
-    a self-contained family. Credit: Lawvere 1969, Yanofsky 2003 — see the header.) -/
+    a self-contained family. Credit: Lawvere 1969; Yanofsky 2003 (Bull. Symbolic Logic 9(3):362–386).) -/
 theorem lawvere_fixedpoint {A : Type*} {B : Type*} (e : A → (A → B))
     (he : Function.Surjective e) (f : B → B) : ∃ b, f b = b := by
   obtain ⟨a, ha⟩ := he (fun x => f (e x x))

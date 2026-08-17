@@ -286,6 +286,38 @@ PROSE_NOUN_BEFORE = re.compile(
     r"(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|"
     r"docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$",
     re.I)
+# ⚠ THE THIRD BLIND FORM: THE APPOSITIVE — a prose noun after the name with NO possessive, as in
+# "`Wall.lean` - a failure-mode taxonomy" or "`Wall.lean` § V". Found 2026-08-17 by a `/rely` pass
+# told to assume a third form existed, after two had already been found and fixed.
+#
+# ⚠⚠ IT IS LIVE IN THE ONE PLACE THAT MATTERS MOST. `ZeroParadox/MANIFEST.md`'s row template is
+# `path - description`, so EVERY manifest row is an appositive by construction — and the row for a
+# converted file describes the `.lean` using the title that now belongs to the `.md`. The manifest
+# is the index `CLAUDE.md` mandates reading before any `.lean` edit, so the blind spot sat exactly
+# there, growing by one row per conversion.
+# ⚠ TWO SHAPES, AND THE FIRST DRAFT GUESSED GRAMMAR AND MISSED BOTH CONTROLS. An appositive puts
+# arbitrary prose between the name and the noun ("`Wall.lean` - Zero as a Wall, a failure-mode
+# taxonomy"), so no fixed-width regex catches it without firing on everything. Derive it from
+# CONTENT instead of sentence shape:
+#   (a) a section marker after the name — the section is in the `.md` now;
+#   (b) the line repeats the ride-along's OWN TITLE while citing the `.lean`, which is exactly
+#       what a `MANIFEST.md` row does after a conversion.
+# (b) is the robust one precisely because it compares against the artifact rather than guessing.
+SECTION_AFTER = re.compile(r"^[`'\"\)\]]*\s*(?:§|section\b|\bch(?:apter)?\b)\s*[IVXLC0-9]", re.I)
+_STOP = {'the', 'a', 'an', 'of', 'as', 'and', 'to', 'in', 'is', 'for', 'on', 'at', 'by', 'it',
+         'its', 'that', 'this', 'with', 'from', 'formal', 'object'}
+
+
+def _title_words(md_path):
+    """Distinctive words of a ride-along's H1 — the phrase a stale index row will repeat."""
+    try:
+        for line in md_path.read_text(encoding='utf-8', errors='replace').split('\n'):
+            if line.startswith('# '):
+                ws = re.findall(r"[A-Za-z][\w-]{2,}", line[2:].lower())
+                return {w for w in ws if w not in _STOP}
+    except OSError:
+        pass
+    return set()
 LINE_REF = re.compile(r'\.lean:\d+')
 
 
@@ -343,6 +375,8 @@ def scan_ride_along(files, pairs):
     hits = []
     if not pairs:
         return hits
+    for _n, md in pairs.items():
+        _titles.setdefault(md, _title_words(REPO / md))
     # ⚠ NO `/` IN THE LOOKBEHIND. The convention REQUIRES the full repo path, so almost every real
     # citation reads `ZeroParadox/Settheory/Wall.lean` — and excluding a preceding `/` made the
     # detector blind to exactly the form the project mandates. It returned 0 against 13 known breaks.
@@ -498,12 +532,17 @@ def selftest_ride_along():
     sentence breaks straight after the name). Same root cause as the intra-line/wrap gap recorded
     for `check_pov`, and it is stated here rather than left to be discovered."""
     pairs = {'Wall.lean': 'ZeroParadox/Settheory/Wall.md'}
+    _titles.setdefault(pairs['Wall.lean'], _title_words(REPO / pairs['Wall.lean']))
     must_fire = [
         ("full path + closing backtick, the mandated form",
          "the wall/floor carving; and `ZeroParadox/Settheory/Wall.lean`'s reframe paragraph."),
         ("intervening modifier", "`Wall.lean`'s failure-mode taxonomy singles out the row"),
         ("prose noun BEFORE the name", "the diagonal framing is Lawvere (cited in `Wall.lean`)."),
         ("line number into relocated prose", "recorded at `ZeroParadox/Settheory/Wall.lean:67`."),
+        # ⚠ THE APPOSITIVE — the third blind form, and the shape EVERY `MANIFEST.md` row has.
+        ("appositive, the MANIFEST.md row shape",
+         "- `ZeroParadox/Settheory/Wall.lean` - Zero as a Wall, a failure-mode taxonomy"),
+        ("appositive with a section marker", "see `Wall.lean` § V for the carving."),
     ]
     must_suppress = [
         ("a DECLARATION citation — the prose moved, the theorem did not",
@@ -549,7 +588,22 @@ def _ride_along_line_hits(line, pairs):
             out.append('names prose that moved: ' + PROSE_NOUN.match(tail).group(1))
         elif PROSE_NOUN_BEFORE.search(before):
             out.append('names prose that moved: ' + PROSE_NOUN_BEFORE.search(before).group(1))
+        elif SECTION_AFTER.match(tail):
+            out.append('names a SECTION that moved to the ride-along')
+        else:
+            # The appositive: the line repeats the ride-along's own title while citing the .lean.
+            title = _titles.get(pairs[m.group(1)], set())
+            if title:
+                words = set(re.findall(r"[A-Za-z][\w-]{2,}", line.lower()))
+                shared = title & words
+                if len(shared) >= 3:
+                    out.append("repeats the ride-along's TITLE while citing the .lean (%s)"
+                               % ', '.join(sorted(shared)[:4]))
     return out
+
+
+# Title words per ride-along, computed once. Populated by `scan_ride_along`.
+_titles = {}
 
 
 def selftest():
@@ -702,7 +756,13 @@ def main():
     # === Ride-along cross-references =========================================================
     pairs = ride_along_pairs()
     if pairs:
-        ra = scan_ride_along(tracked_live + tracked_rec + tracked_lean(), pairs)
+        # ⚠ BUILD SCRIPTS ARE IN SCOPE, AND LEAVING THEM OUT WAS A FAIL-OPEN. Measured 2026-08-17
+        # by a `/rely` plant: the SAME sentence was reported in `Tarski.lean` and silent in
+        # `scripts/build_zpr_addendum.py`, because this set was `{.md, .lean}` only. So a stale
+        # pointer in a Lean docstring blocked a push while the identical one in a build script —
+        # the surface a Zenodo DOI freezes PERMANENTLY — went through. That is the wrong way round.
+        build_scripts = sorted((REPO / 'scripts').glob('build_*.py'))
+        ra = scan_ride_along(tracked_live + tracked_rec + tracked_lean() + build_scripts, pairs)
         # Dated records describe the tree as it stood then; "fixing" them would falsify the record.
         ra = [h for h in ra if not DATED.search(h[0].rsplit('/', 1)[-1])]
         print(f'\n== ride-along cross-references ({len(pairs)} pair(s)) ==')

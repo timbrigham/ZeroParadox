@@ -292,8 +292,8 @@ ascent costs the ordinal library.** -/
     `[IsTrans α r] : TransGen r = r`), which `Ordinal` satisfies. The hand proof is kept per the
     `CovBy` precedent (keep the proof, cite the standard name); the footprint here is already
     `[propext, Classical.choice, Quot.sound]` from `Ordinal`, not from anything done here.
-    The asymmetry route is `WellFounded.asymmetric` (`Mathlib/Order/RelClasses.lean:225`), whose
-    `Std.Asymm` instance is registered — recorded at `Settheory/Wall.lean:67`. -/
+    The asymmetry route is `WellFounded.asymmetric` (`Mathlib/Order/RelClasses.lean`), whose
+    `Std.Asymm` instance is registered for `IsWellFounded`. -/
 theorem ascent_no_oscillation (o : Ordinal) :
     ¬ Relation.TransGen ((· < ·) : Ordinal → Ordinal → Prop) o o := by
   intro h
