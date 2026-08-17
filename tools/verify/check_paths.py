@@ -290,11 +290,17 @@ PROSE_NOUN_BEFORE = re.compile(
 # "`Wall.lean` - a failure-mode taxonomy" or "`Wall.lean` § V". Found 2026-08-17 by a `/rely` pass
 # told to assume a third form existed, after two had already been found and fixed.
 #
-# ⚠⚠ IT IS LIVE IN THE ONE PLACE THAT MATTERS MOST. `ZeroParadox/MANIFEST.md`'s row template is
-# `path - description`, so EVERY manifest row is an appositive by construction — and the row for a
-# converted file describes the `.lean` using the title that now belongs to the `.md`. The manifest
-# is the index `CLAUDE.md` mandates reading before any `.lean` edit, so the blind spot sat exactly
-# there, growing by one row per conversion.
+# ⚠⚠ IT IS STILL BLIND, AND THIS SECTION CLAIMED OTHERWISE FOR ONE COMMIT. Only the SECTION-MARKER
+# subcase below is detected. The general appositive is NOT, and a second `/rely` pass constructed
+# seven stale references that all walk past: a paraphrased appositive, an em-dash appositive, an
+# inflected noun (`taxonomies` vs `taxonomy`), a noun outside the vocabulary (`roster`), and a
+# possessive beyond the modifier cap. **A hole described as closed is worse than one described as
+# open**, and that is the same defect this file's own limits paragraph exists to prevent — made
+# twice in one day, in the paragraph documenting it.
+#
+# The `MANIFEST.md` case that motivated it is handled UPSTREAM instead, by
+# `scan_title_duplication` below: the manifest is GENERATED from the `.lean` H1, so keeping that
+# title about the declarations keeps every generated row correct at the source.
 # ⚠ TWO SHAPES, AND THE FIRST DRAFT GUESSED GRAMMAR AND MISSED BOTH CONTROLS. An appositive puts
 # arbitrary prose between the name and the noun ("`Wall.lean` - Zero as a Wall, a failure-mode
 # taxonomy"), so no fixed-width regex catches it without firing on everything. Derive it from
@@ -527,10 +533,22 @@ def selftest_ride_along():
     between the name and the prose noun, so an anchored match found 5 of 13 known-live breaks.
     Both were caught by checking a known-bad line instead of believing the zero.
 
-    ⚠ DECLARED LIMIT, not a to-do: a reference whose prose noun WRAPS to the next line is not
-    caught — this scans line by line. One such site exists today (`WheelFrac.lean`, where the
-    sentence breaks straight after the name). Same root cause as the intra-line/wrap gap recorded
-    for `check_pov`, and it is stated here rather than left to be discovered."""
+    ⚠ DECLARED LIMITS — TWO, not one, and the second was mis-stated as CLOSED for one commit:
+
+    1. A reference whose prose noun WRAPS to the next line is not caught — this scans line by line.
+       One such site exists today (`WheelFrac.lean`). Same root cause as `check_pov`'s wrap gap.
+    2. The general APPOSITIVE is not caught — a prose noun after the name with no possessive and no
+       section marker. Only the section-marker subcase fires. A `/rely` pass constructed seven stale
+       references that walk past: paraphrased and em-dash appositives, an inflected noun
+       (`taxonomies` vs `taxonomy`), a noun outside the vocabulary (`roster`), and a possessive
+       beyond the modifier cap. Three are pinned as MUST-MISS controls below, so the gap is a listed
+       fact — and widening the rule without updating that list fails loudly.
+
+    ⚠ Limit 2 was briefly claimed CLOSED here by a title-overlap heuristic, which was then measured
+    to have ZERO live yield and a false-positive surface that GREW with every conversion. It was
+    removed; `scan_title_duplication` handles the case that motivated it, upstream and precisely.
+    **A hole described as closed is worse than one described as open** — and getting that wrong in
+    the paragraph whose whole job is honest limits is exactly what this paragraph exists to stop."""
     pairs = {'Wall.lean': 'ZeroParadox/Settheory/Wall.md'}
     _titles.setdefault(pairs['Wall.lean'], _title_words(REPO / pairs['Wall.lean']))
     must_fire = [
@@ -539,10 +557,17 @@ def selftest_ride_along():
         ("intervening modifier", "`Wall.lean`'s failure-mode taxonomy singles out the row"),
         ("prose noun BEFORE the name", "the diagonal framing is Lawvere (cited in `Wall.lean`)."),
         ("line number into relocated prose", "recorded at `ZeroParadox/Settheory/Wall.lean:67`."),
-        # ⚠ THE APPOSITIVE — the third blind form, and the shape EVERY `MANIFEST.md` row has.
-        ("appositive, the MANIFEST.md row shape",
-         "- `ZeroParadox/Settheory/Wall.lean` - Zero as a Wall, a failure-mode taxonomy"),
         ("appositive with a section marker", "see `Wall.lean` § V for the carving."),
+    ]
+    # ⚠ MUST-MISS, RECORDED AS SUCH. These are stale references the rule does NOT catch. They are
+    # here so the gap is a listed fact rather than a discovery: a control that asserts a known
+    # blind form stays blind is the honest way to keep it visible, and it fails loudly the day
+    # someone widens the rule without updating this list.
+    must_miss = [
+        ("general appositive (no possessive, no section marker)",
+         "- `ZeroParadox/Settheory/Wall.lean` - Zero as a Wall, a failure-mode taxonomy"),
+        ("em-dash appositive", "`Wall.lean` — the failure-mode taxonomy — lists the rows."),
+        ("inflected noun", "the `Wall.lean` taxonomies cover each condition-set."),
     ]
     must_suppress = [
         ("a DECLARATION citation — the prose moved, the theorem did not",
@@ -556,7 +581,8 @@ def selftest_ride_along():
     tmp = Path(tempfile.mkdtemp())
     print('\n== ride-along cross-references - CONTROLS ==')
     for label, group, want in (('MUST FIRE', must_fire, True),
-                               ('MUST SUPPRESS', must_suppress, False)):
+                               ('MUST SUPPRESS', must_suppress, False),
+                               ('MUST MISS (known blind forms, kept visible)', must_miss, False)):
         print(f'{label}')
         for why, line in group:
             f = tmp / 'Probe.md'
@@ -590,16 +616,59 @@ def _ride_along_line_hits(line, pairs):
             out.append('names prose that moved: ' + PROSE_NOUN_BEFORE.search(before).group(1))
         elif SECTION_AFTER.match(tail):
             out.append('names a SECTION that moved to the ride-along')
-        else:
-            # The appositive: the line repeats the ride-along's own title while citing the .lean.
-            title = _titles.get(pairs[m.group(1)], set())
-            if title:
-                words = set(re.findall(r"[A-Za-z][\w-]{2,}", line.lower()))
-                shared = title & words
-                if len(shared) >= 3:
-                    out.append("repeats the ride-along's TITLE while citing the .lean (%s)"
-                               % ', '.join(sorted(shared)[:4]))
     return out
+# ⚠⚠ A TITLE-OVERLAP HEURISTIC LIVED HERE FOR ONE COMMIT AND WAS REMOVED. Recorded because the
+# measurement is the useful part, not the code. It flagged a line sharing >=3 distinctive words with
+# the ride-along's H1 while citing the `.lean`, aimed at the `MANIFEST.md` row shape.
+#
+#   * LIVE YIELD: ZERO. The only corpus line meeting the threshold already fired on `PROSE_NOUN`.
+#   * The threshold was nominally 3 and effectively 2 — a ride-along is named after its `.lean`, so
+#     the subject noun sits in the title AND in every citation path. One word is always free.
+#   * FALSE POSITIVES GREW WITH EVERY CONVERSION, which is fatal for a convention meant to scale.
+#     Measured: retitling `Wall.md`'s H1 took the run 9 -> 19 hits, 10 on real corpus lines nobody
+#     wrote for the test — including a BARE DECLARATION CITATION, the canonical must-suppress class,
+#     plus `BOTTOMELEMENT.md` x4, `CLAIMS.md`, `register.md`, and `MANIFEST.md` *while correct*.
+#     Simulating the next conversion (`Snap.lean`) fired on `register.md` and `CLAIMS.md` because the
+#     shared words are the name of a PDF; simulating `DiagonalFixedPoint.lean` fired on a
+#     gate-exempt file; and the ride-along fired on ITSELF.
+#   * A gate that cries wolf gets muted, and a muted gate protects nothing.
+#
+# WHAT REPLACED IT is below and is precise: compare the PAIR'S OWN TWO TITLES to each other. That is
+# two strings this project controls, not arbitrary corpus prose, so it has no false-positive surface
+# — and it catches the ROOT CAUSE (a `.lean` whose title describes the essay rather than its own
+# declarations) instead of the symptom (index rows echoing that title).
+
+
+def scan_title_duplication(pairs):
+    """A ride-along's `.md` title must not duplicate its `.lean` title.
+
+    The `.lean` says what the FILE PROVES; the `.md` says what the ARGUMENT is. When both carry the
+    essay's title, every generated index row describes the `.lean` using words that now belong to
+    the `.md` — which is how `MANIFEST.md` (template `path - description`) went stale on the first
+    conversion, one row per conversion thereafter."""
+    out = []
+    for lean_name, md_rel in sorted(pairs.items()):
+        md_words = _title_words(REPO / md_rel)
+        lean_rel = md_rel[:-3] + '.lean'
+        lean_words = _title_words_lean(REPO / lean_rel)
+        if not md_words or not lean_words:
+            continue
+        shared = md_words & lean_words
+        if len(shared) >= 3:
+            out.append((lean_rel, md_rel, sorted(shared)))
+    return out
+
+
+def _title_words_lean(path):
+    """Distinctive words of a `.lean` module docstring's H1."""
+    try:
+        for line in path.read_text(encoding='utf-8', errors='replace').split('\n'):
+            if line.startswith('# '):
+                ws = re.findall(r"[A-Za-z][\w-]{2,}", line[2:].lower())
+                return {w for w in ws if w not in _STOP}
+    except OSError:
+        pass
+    return set()
 
 
 # Title words per ride-along, computed once. Populated by `scan_ride_along`.
@@ -768,6 +837,15 @@ def main():
         print(f'\n== ride-along cross-references ({len(pairs)} pair(s)) ==')
         for name, md in sorted(pairs.items()):
             print(f'  {name}  ->  {md}')
+        dup = scan_title_duplication(pairs)
+        if dup:
+            print('\n** TITLE DUPLICATION — the .lean and its ride-along carry the same title: **')
+            for lean_rel, md_rel, shared in dup:
+                print(f'  {lean_rel}\n      and {md_rel}\n      share: {", ".join(shared[:6])}')
+            print('  The .lean title says what the FILE PROVES; the .md title says what the ARGUMENT')
+            print('  is. MANIFEST.md is GENERATED from the .lean H1, so a .lean titled after the')
+            print('  essay makes every generated index row describe it with words that moved out.')
+            failed = True
         if ra:
             print(f'\n** {len(ra)} REFERENCE(S) POINT AT PROSE, NOT AT CODE — the path still '
                   f'resolves, the target no longer lives there: **')
