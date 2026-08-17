@@ -114,6 +114,13 @@ SELF = common.self_rel(__file__)
 TARGETS = (
     [p for p in sorted(SRC.rglob('*.lean'))
      if not is_vendored(p, p.relative_to(REPO))]
+    # ⚠ RIDE-ALONG DOCS — `Foo.md` beside `Foo.lean`. Added 2026-08-17 with the convention itself,
+    # in the SAME change, deliberately: an essay relocated out of a module docstring must not thereby
+    # leave this gate's remit. A carrier claim is exactly the thing that would hide in one, and the
+    # 2026-08-17 arc exists because that class recurred four times, once in a published ledger.
+    # Not a general widening — only `.md` files paired with a `.lean` of the same stem.
+    + [p for p in sorted(SRC.rglob('*.md'))
+       if p.with_suffix('.lean').exists() and not is_vendored(p, p.relative_to(REPO))]
     + sorted((REPO / 'scripts').glob('build_*.py'))
     + [REPO / p for p in ('README.md', 'CLAIMS.md', 'SNAP.md', 'BOTTOMELEMENT.md')]
 )

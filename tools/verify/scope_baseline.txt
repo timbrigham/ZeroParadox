@@ -515,6 +515,7 @@ ZeroParadox/Settheory/RequirementsGap.lean
 ZeroParadox/Settheory/SetTheoryAFA.lean
 ZeroParadox/Settheory/Tarski.lean
 ZeroParadox/Settheory/Wall.lean
+ZeroParadox/Settheory/Wall.md
 ZeroParadox/Settheory/Wall_OneRoot.lean
 ZeroParadox/State/HilbFunctor.lean
 ZeroParadox/State/MeanErgodic.lean
@@ -623,8 +624,6 @@ scripts/build_zpp.py
 scripts/build_zpq.py
 scripts/build_zpr.py
 scripts/build_zpr_addendum.py
-
-# private os.walk over ZeroParadox/, vendored excluded
 [check_prose]
 ZeroParadox/Algebra/Wheel.lean
 ZeroParadox/Algebra/WheelFrac.lean

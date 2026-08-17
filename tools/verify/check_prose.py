@@ -379,6 +379,31 @@ def all_files(include_vendored=False):
                 yield p, rel
 
 
+def ride_along_files():
+    """`Foo.md` sitting beside `Foo.lean` — the ride-along documentation convention.
+
+    ⚠ THIS EXISTS SO THE CONVENTION CANNOT BE A LAUNDERING. Moving a 200-line essay out of a module
+    docstring into a file no checker scans would take the block under cap, improve every counter, and
+    reduce the unverified liability by exactly zero — which is `PRS-10` one level up, satisfying the
+    metric without touching the property. So a ride-along is counted in the RATIO here and is in
+    `check_pov`'s `TARGETS`; `common.targets()` already reaches it, so `check_modal`,
+    `check_negatives` and `check_figures` get it for free.
+
+    ⚠ It is deliberately EXEMPT FROM `BLOCK_CAP`, and that is the whole point rather than an
+    oversight: the essay is *allowed* to live here. Capping it here would just move the destructive
+    pressure one file sideways. Measured 2026-08-17 on the first conversion — `Settheory/Wall.lean`,
+    184 lines over cap, whose smallest-available cuts included a NO-GO gauge — the cap's only
+    remedy in the `.lean` was to delete a guard."""
+    out = []
+    for dirpath, _, filenames in os.walk(SRC):
+        names = set(filenames)
+        for fn in sorted(filenames):
+            if fn.endswith(".md") and fn[:-3] + ".lean" in names:
+                p = os.path.join(dirpath, fn)
+                out.append((p, os.path.relpath(p, REPO).replace("\\", "/")))
+    return out
+
+
 def vendored_files():
     out = []
     for dirpath, _, filenames in os.walk(SRC):
@@ -435,8 +460,19 @@ def run(block_mode=False, write_baseline=False):
         print("  EXEMPT (third-party backport, not ours to edit): %d file(s)" % len(vend))
         for v in vend:
             print("      %s" % v)
+    # Ride-alongs are counted, never capped — see `ride_along_files`. Reported on their own line so
+    # a conversion shows up as prose MOVING rather than as prose vanishing.
+    ride = ride_along_files()
+    ride_lines = sum(len([l for l in _read(p) if l.strip()]) for p, _rel in ride)
     print("  corpus prose/code (Takes excluded): %.2f  (%d / %d)"
           % (tot_p / max(tot_c, 1), tot_p, tot_c))
+    if ride:
+        print("  ride-along docs (counted, not capped): %d file(s), %d prose line(s)"
+              % (len(ride), ride_lines))
+        print("  prose incl. ride-alongs:            %.2f  (%d / %d)"
+              % ((tot_p + ride_lines) / max(tot_c, 1), tot_p + ride_lines, tot_c))
+        for _p, rel in ride:
+            print("      %s" % rel)
     print("  files where prose exceeds code:     %d" % len(worst))
     print("  block cap: %d lines   sites over: %d" % (BLOCK_CAP, len(viols)))
     KINDS = [("block", "module-doc blocks over cap"),

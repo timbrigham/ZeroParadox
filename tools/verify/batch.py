@@ -624,6 +624,22 @@ def check_routing(state, ranges=None):
     # fired never at push time, which is the only time it matters (measured, /rely pass 4).
     files = [f.replace("\\", "/") for f in changed_files(ranges)]
     done = set(state.get("reviews", []))
+    # ⚠⚠ WITHOUT THIS, A VERIFICATION-LAYER PUSH OUTSIDE A BATCH HAD NO DISCHARGE AT ALL, AND THE
+    # DEBASELINING WORKFLOW COULD NOT TERMINATE (`BATCH-1`, measured 2026-08-17 end to end).
+    # `batch.py review /rely` is the only writer of `state["reviews"]` and it opens with
+    # `load() or die("no batch in progress")`. So with no batch this leg was unsatisfiable — and
+    # `close` REQUIRES a baseline prune, whose output is itself a `tools/verify/` file, so finishing
+    # a batch produced a change that this leg then blocked, with the state already deleted by the
+    # `close` that demanded it. Re-running the batch did not escape: the next `close` wanted another
+    # shrink, hence another verification-layer change.
+    #
+    # The signature is the STRONGER evidence, which is why this is safe: leg (a) above still demands
+    # a `rely_cleared.txt` covering the CURRENT bytes of every checker, so a real `/rely` pass is
+    # still forced. What is dropped is only the bookkeeping duplicate that a batch happens to carry.
+    # ⚠ Deliberately narrow: `/rely` ONLY, no batch ONLY, and only when leg (a) is clean (`moved`
+    # empty). If the hashes have drifted, `moved` is non-empty and this does nothing.
+    if not state and not moved:
+        done.add("/rely")
     for pat, agent, why in ROUTING:
         hits = [f for f in files if pat.match(f)]
         if hits:
