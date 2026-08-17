@@ -198,7 +198,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/BottomInvariant.lean` - A first universal: the bottom carries an invariant probability measure
 - `ZeroParadox/Valuation/BoundaryGap.lean` - The boundary embedding: the exact gap to the Bruhat-Tits tree
 - `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
-- `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → forbidden return → the snap
+- `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → the forbidden return
 - `ZeroParadox/Valuation/CantorPropertiesProbe.lean` - Completeness-critic, final pass: homogeneity and ultrametric are derived; compactness is AX-B1
 - `ZeroParadox/Valuation/CompletenessCriticProbe.lean` - Completeness-critic probe: what property of the generic object do the four axes NOT capture?
 - `ZeroParadox/Valuation/ComplexityLadder.lean` - The complexity ladder: the arity is the variable-count, and it climbs without bound

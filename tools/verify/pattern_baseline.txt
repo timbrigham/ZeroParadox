@@ -76,7 +76,7 @@ CITES_DECL	`[a-z][A-Za-z0-9_]*_[A-Za-z0-9_]+`|`[A-Z][A-Za-z]+\.[a-z]
 DENIAL	(NOT the snap|NOT of the snap|NOT that the snap|is not the snap|never the same map|were never the same map)
 KINDS	\b(COINCIDENCE|INVERSION|DRIFT|CARRIER|INVARIANT)\b
 LABEL	\b(Statement:|Reading:)
-POV_TERMS	(point of view|change of frame|frame[- ]change|frame[- ]flip|frameflip|pole exchange|both poles|two chart|chart[- ]reading|reads as both|swaps? the poles|min\s*≡\s*max|both min and max|both extremal|initial AND terminal|least AND greatest)
+POV_TERMS	(point of view|change of frame|frame[- ]change|frame[- ]flip|frameflip|pole exchange|both poles|two chart|chart[- ]reading|reads as both|swaps? the poles|min\s*≡\s*max|both min and max|both extremal|initial AND terminal|least AND greatest|totally disconnected|total disconnectedness|domain of validity|ultrametric.{0,30}(suffic|forc|yield|give)|carrier requirement)
 
 [check_classes]
 DECL	^\s*(?:@\[[^\]]*\]\s*)?(class|structure)\s+([^\W\da-z][\w']*)

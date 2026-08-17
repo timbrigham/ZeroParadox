@@ -79,8 +79,9 @@ example (X Y : Type) [TopologicalSpace X] [TopologicalSpace Y]
   haveI : ConnectedSpace Y := e.connectedSpace_iff.mp inferInstance
   exact not_subsingleton Y subsingleton_of_preconnected_totallyDisconnected
 
--- Statement: `Nontrivial` is load-bearing — dropping it makes the universal above FALSE, not weaker,
--- and `Unit` is the refutation because it is connected AND totally disconnected at once. Stated as a
+-- Statement: COINCIDENCE — `Nontrivial` is load-bearing; dropping it makes the universal above FALSE,
+-- not weaker, and `Unit` is the refutation because it is connected AND totally disconnected at once
+-- (both readings of one object, which is what makes it a refutation). Stated as a
 -- refutation rather than as `Nonempty (Unit ≃ₜ Unit)`, which would witness nothing: `Homeomorph.refl`
 -- inhabits `Z ≃ₜ Z` for every `Z` carrying a topology. Instantiating the universal at `Unit` forces
 -- the ELABORATOR to synthesize both instances, so those two conjuncts are checked rather than

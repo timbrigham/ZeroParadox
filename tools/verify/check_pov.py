@@ -71,11 +71,46 @@ TARGETS = (
 )
 
 # The predefined term list: vocabulary that SIGNALS a point-of-view claim.
+#
+# ⚠ THE CARRIER VOCABULARY WAS MISSING FOR THIRTEEN MONTHS, AND CARRIER IS THIS CHECKER'S OWN
+# WORKED EXAMPLE. The docstring above illustrates the CARRIER kind with *"snap available in Q_2,
+# impossible in R; both completions of Q — Ostrowski"* — and none of `totally disconnected`,
+# `total disconnectedness` or `domain of validity` was in this pattern, so the gate could not see
+# the one claim it names. Measured 2026-08-17: adding them reports `CLAIMS.md:76`
+# (*"Q_p totally disconnected = snap"*, in the PUBLIC claims ledger) and `SnapDichotomy.lean:23,25`
+# (*"totally disconnected -> snap"*).
+#
+# ⚠ WHAT THE ZERO ELSEWHERE DOES *NOT* MEAN, because an earlier version of this comment said it did.
+# `Padic.lean` reports zero under this vocabulary, and that was offered here as evidence of
+# precision — *"it leaves the file that states the honest form reporting ZERO"*. **The zero is
+# real and the inference was false.** Measured by an editorial gate the same day: planting a flatly
+# dishonest carrier claim at four of `Padic.lean`'s own sites, each in its own window, stays SILENT
+# at all four; the same text with a backticked declaration name on the line FIRES. So the file is
+# out of remit via `CITES_DECL`, not cleared by it, and the gate would stay silent there if the file
+# asserted the opposite. That is a must-suppress passing for an unrelated reason (`DC-22`) and
+# attribution by proximity (`DC-9`) — in the justification block for a gate change.
+#
+# ⚠ `CITES_DECL` IS WHAT BOUNDS THE BLAST RADIUS, so anyone widening the window should know what it
+# holds back. Measured: of 59 lines matching only the newly-added vocabulary, 11 tagged, 0 new,
+# 47 skipped for want of a nearby declaration citation, 1 allowlisted. The 47 include `Padic.lean`
+# and every `scripts/build_zp*.py` that renders "totally disconnected" into a PUBLISHED PDF. So this
+# closes the class wherever a declaration name happens to sit within six lines — a proxy for "is a
+# claim", not the property itself. ⚠ It also does NOT match `SNAP-5`'s upstream phrasing,
+# *"removes the topological obstruction"*, which is the misattribution this family started from.
+#
+# The class had recurred at least four times: `Padic.lean`'s *"the snap is forced"* (retracted
+# 2026-07-31), the two live sites above, and twice in `SnapCannotBe.lean` § V on 2026-08-16, the
+# first of which was a FAIL-BEDROCK. Per the escalation ladder, a 4th occurrence is the rung where
+# discipline stops working and a mechanical check is the response. This is that check, and it is a
+# VOCABULARY ADDITION rather than a new checker: a carrier-property-versus-snap claim IS a
+# CARRIER-kind point-of-view claim, so it was always in this gate's remit and never in its pattern.
 POV_TERMS = re.compile(
     r'(point of view|change of frame|frame[- ]change|frame[- ]flip|frameflip'
     r'|pole exchange|both poles|two chart|chart[- ]reading|reads as both'
     r'|swaps? the poles|min\s*≡\s*max|both min and max'
-    r'|both extremal|initial AND terminal|least AND greatest)',
+    r'|both extremal|initial AND terminal|least AND greatest'
+    r'|totally disconnected|total disconnectedness|domain of validity'
+    r'|ultrametric.{0,30}(suffic|forc|yield|give)|carrier requirement)',
     re.IGNORECASE,
 )
 
@@ -149,6 +184,14 @@ MUST_FIRE = [                       # must be reported UNTAGGED
      _W + 'this is the pole exchange, a COINCIDENCE at one object.'),
     ('label present but no KIND',
      _W + '`Statement:` the seam is initial AND terminal.'),
+    # ⚠ The CARRIER controls. Taken from the two sites this vocabulary was added for, so a future
+    # narrowing of the pattern takes them from FIRE to MISSED rather than passing silently.
+    ('carrier property identified WITH the snap',
+     _W + 'completions of Q: Q_p totally disconnected = snap, R connected = no snap.'),
+    ('carrier property claimed to YIELD the snap',
+     _W + 'Q_p (the non-Archimedean completions): totally disconnected -> snap.'),
+    ('the scope claim, which is the same error in prose form',
+     _W + "the Binary Snap's domain of validity is exactly the non-Archimedean completions."),
 ]
 MUST_SUPPRESS = [                   # must NOT be reported
     ('fully tagged',
@@ -159,6 +202,11 @@ MUST_SUPPRESS = [                   # must NOT be reported
     ('no POV vocabulary at all', _W + 'the floor has complexity ⊤.'),
     ('allowlisted — a recorded correction',
      _W + 'CORRECTED 2026-07-30: it reads as both, which an earlier revision denied.'),
+    # ⚠ The CARRIER must-suppress: the HONEST form of the same claim, tagged, must stay silent.
+    # Without this, narrowing the fix to "ban the vocabulary" would look correct and would make the
+    # gate un-satisfiable — there would be no way to state the true claim at all.
+    ('carrier claim, fully tagged',
+     _W + '`Statement:` CARRIER — Q_p is totally disconnected and R is not.'),
 ]
 MUST_DENY = [                       # must be reported as a DENIAL — never baselined
     ('explicit denial of a reading',
