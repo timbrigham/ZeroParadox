@@ -525,9 +525,19 @@ def run(block_mode=False, write_baseline=False):
                   % (rel, line, detail, actual, limit))
 
     if new:
+        # ⚠ THIS ADVICE USED TO SAY "Long-form reasoning belongs in .claude-local/notes/ with a
+        # pointer" AND THAT IS NOW THE WRONG ANSWER — caught 2026-08-17 by a control agent, which
+        # noted it is the exact text a person reads at the moment they hit the cap. `.claude-local/`
+        # is gitignored, so that route sends a published file's reasoning somewhere no reader
+        # outside this machine can follow, and `check_paths`' PATH-3 rule exists to catch precisely
+        # that coupling. The ride-along keeps it tracked, reviewable and beside its own source.
         print("\n  The shape: a short header saying what the FILE does, then a statement on")
-        print("  each declaration saying what THAT declaration does. Long-form reasoning")
-        print("  belongs in .claude-local/notes/ with a pointer. The Take is exempt.")
+        print("  each declaration saying what THAT declaration does. The Take is exempt.")
+        print("  Long-form reasoning — argument, prior art, taxonomies, fences — goes in the")
+        print("  RIDE-ALONG: Foo.md beside Foo.lean, tracked and reviewable, counted in the")
+        print("  ratio above but never capped. Prose hangs off CODE: the .lean pairs with its")
+        print("  own .md, one hop, and everything else cites a DECLARATION or states the one")
+        print("  line it needs. Do not repoint prose at other prose.")
         print("  Prose is the unchecked half of the file; code is kernel-checked.")
         if block_mode:
             print("\nPush blocked: new prose exceeds the cap.")
