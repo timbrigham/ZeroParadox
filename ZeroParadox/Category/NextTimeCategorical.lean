@@ -250,10 +250,9 @@ statement can carry; the locator table in the overview is the evidence for it.
 
 **What this does and does not license.** It closes the *predicate transport*, so results stated with
 `IsWellFoundedCoalg` are results about AMM's notion. It does **not** formalize AMM Thm 7.6, and does
-not by itself earn every instance-of claim — see
-`ZeroParadox/Category/WellFoundedCoalgebra.lean`'s overview and § V, which carry the ambient-hypothesis
-side (all four now discharged, smoothness clause (b) included) and the fences on what the pair of them
-does and does not license. -/
+not by itself earn every instance-of claim: AMM's
+ambient hypotheses are discharged separately (all four, smoothness clause (b) included), and that
+discharge is what the instance-of claim would additionally require. -/
 theorem isWellFoundedCoalgCat_iff (P : PFunctor.{u, u})
     (α : X ⟶ (ofTypeFunctor P.Obj).obj X) :
     IsWellFoundedCoalgCat (ofTypeFunctor P.Obj) α

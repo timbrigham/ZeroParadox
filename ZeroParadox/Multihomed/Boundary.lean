@@ -114,7 +114,7 @@ theorem floor_descent_from_bot :
 /-- **⊥ is not accessible** — the empty pole stated as inaccessibility. Proved by hand from `fixed_bot`
     (via this file's `acc_irrefl`), **axiom-free**.
     That this is *equivalent* to the descent above is Mathlib's `not_acc_iff_exists_descending_chain`
-    (`Order/WellFounded.lean:34`) — cited, deliberately **not** used: routing through that biconditional
+    (`Mathlib/Order/WellFounded.lean`) — cited, deliberately **not** used: routing through that biconditional
     puts `Classical.choice` in the footprint (measured — see the purity note in § I-b). So "unreachable
     from below" and "an infinite descent issues from it" are the same fact about ⊥ in the two charts, and
     both halves are available here without choice. -/
@@ -288,7 +288,7 @@ ascent costs the ordinal library.** -/
     `ascent_wellFounded`; proved directly here since `<` on ordinals is already transitive.
 
     **Prior art (cited, not reproved).** The inner step below — `TransGen (· < ·) a b → a < b` — is
-    the forward direction of Mathlib's `Relation.transGen_eq_self` (`Mathlib/Logic/Relation.lean:594`,
+    the forward direction of Mathlib's `Relation.transGen_eq_self` (`Mathlib/Logic/Relation.lean`,
     `[IsTrans α r] : TransGen r = r`), which `Ordinal` satisfies. The hand proof is kept per the
     `CovBy` precedent (keep the proof, cite the standard name); the footprint here is already
     `[propext, Classical.choice, Quot.sound]` from `Ordinal`, not from anything done here.

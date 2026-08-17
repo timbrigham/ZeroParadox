@@ -211,8 +211,9 @@ open scoped ENat
 /-! ## § I. The valuation face — `v2` on ℕ
 
 A choice-free 2-adic valuation into `ℕ∞`, and the four ZP-J `ValuationStructure` axioms
-(`ZeroParadox/Valuation/Scale.lean` § I) instantiated on ℕ with `scale = (2 * ·)`. Compare
-`Scale.lean` § V, which proves the same four in `ℤ_[2]` and carries `Classical.choice`. -/
+(`ValuationStructure`, in `ZeroParadox/Valuation/Scale.lean`) instantiated on ℕ with
+`scale = (2 * ·)`. Compare `q2Val_bot`, `q2Val_unique`, `q2Scale_bot` and `q2Scale_unique_fp` in the
+same file, which prove the same four in `ℤ_[2]` and carry `Classical.choice`. -/
 
 /-- **The 2-adic valuation counter on ℕ, by structural fuel recursion.** `v2nat n f` counts factors of
 2 in `n`, using `f` as a structurally-decreasing fuel; for `f ≥ n` the fuel is always sufficient
@@ -376,7 +377,7 @@ theorem not_apart_of_agree_all (x y : Str) (h : ∀ n, AgreeTo n x y) : ¬ Apart
 /-! ## § III. The crossing — one named map into `ℤ_[2]`
 
 This is where the classical assumption is paid. `natToZ2` is `Nat.cast`; `q2Val`
-(`ZeroParadox/Valuation/Scale.lean` § V) is the choice-carrying 2-adic valuation on `ℤ_[2]`. Expect
+(`ZeroParadox/Valuation/Scale.lean`) is the choice-carrying 2-adic valuation on `ℤ_[2]`. Expect
 `[propext, Classical.choice, Quot.sound]` at every declaration here. -/
 
 /-- **The crossing map.** The canonical ring map ℕ → `ℤ_[2]`. -/

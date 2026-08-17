@@ -413,7 +413,7 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
 
     **PRIOR ART — the neighbour is Mathlib's `AddValuation A ℕ∞` (found 2026-08-01).** `ℕ∞` is a
     `LinearOrderedAddCommMonoidWithTop`, so `AddValuation A ℕ∞` is well-formed at this generality.
-    `AddValuation.of` (`RingTheory/Valuation/Basic.lean:1102`) takes **four** axioms — `map_zero'`,
+    `AddValuation.of` (`Mathlib/RingTheory/Valuation/Basic.lean`) takes **four** axioms — `map_zero'`,
     `map_one'`, `map_add_le_max'` (the **ultrametric** inequality `min (v x) (v y) ≤ v (x+y)`), and
     `map_mul'`. This class supplies only the first and last, so it omits **two**, and the omissions
     do different work:
@@ -435,8 +435,8 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
 
     **And the porthole condition is NOT discharged by adopting the standard structure.** `map_zero'`
     is a structure *field* (reached via `Valuation` → `MonoidWithZeroHom` → `ZeroHom`; `AddValuation.map_zero`
-    is its projection at `Mathlib/RingTheory/Valuation/Basic.lean:1150` — **not** `:1105`, which is the
-    assignment inside `AddValuation.of`), and `ZeroParadox/Valuation/FloorWitness.lean`'s `addVal_bot`
+    is the projection — **not** the `map_zero'` assignment inside `AddValuation.of`, which is a
+    different thing), and `ZeroParadox/Valuation/FloorWitness.lean`'s `addVal_bot`
     is literally the projection `v.map_zero`. Adoption **relocates** the assumption; it does not
     derive it. (Corrected 2026-08-01: an earlier revision of this block said the condition becomes a
     theorem, and said the class omits one axiom. Both were wrong, and the definition itself is what
@@ -462,7 +462,7 @@ theorem zpw_top_val_iff_inv_is_inf (x : ZPWheelElem) :
     Tier 3 result of the porthole conjecture (§VIII). -/
 -- [ZP-CUSTOM] incomparable with: Mathlib `AddValuation A ℕ∞` (RingTheory/Valuation/Basic.lean) | reason:
 -- INCOMPARABLE, not ordered — it drops `map_one'` AND the ultrametric `map_add_le_max'`, so it is not a
--- reduct by one axiom; but `AddValuation` needs only `[Ring R]` (Basic.lean:1070) while this class
+-- reduct by one axiom; but `AddValuation` needs only `[Ring R]` while this class
 -- `extends CommRing`, so neither implies the other and `AddValuation` cannot simply be substituted.
 -- The weakening holds only for the valuation conditions over a fixed commutative carrier. See the
 -- PRIOR ART block above for the separating witness. Kept as a named handle for the wheel bridge.

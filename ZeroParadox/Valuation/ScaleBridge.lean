@@ -95,7 +95,8 @@ theorem selfMem_eq_singleton_free :
 /-! ## § III. ℤ_[2] Instance — The Formal Bridge -/
 
 /-- ℤ_[2] with scale = ×2 and val = v₂ is a ValBridge.
-    bot = 0. All four axioms proved in ZeroParadox/Valuation/Scale.lean §V as standalone theorems.
+    bot = 0. All four proved as standalone theorems in ZeroParadox/Valuation/Scale.lean: q2Val_bot,
+-- q2Val_unique, q2Scale_bot, q2Scale_unique_fp.
     This is the formal instance that ZeroParadox/Valuation/Scale.lean could not build because
     ℤ_[2] is not a ZPSemilattice — showing the ZPSemilattice constraint
     was an encoding artefact, not a mathematical requirement. -/

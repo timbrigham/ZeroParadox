@@ -499,7 +499,7 @@ end PoleSwap
 
 /-! ## § VI. The fan-out — and what actually blocks the snap
 
-`Miniature.lean` § VI carries `fan_out` (three incomparable successors) alongside
+`fan_out` in `ZeroParadox/Miniature.lean` (three incomparable successors) sits alongside
 `pole_cannot_fan : Fintype.card Pole = 2`: **the two-element pole cannot hold the branching
 field.** The computational face as modelled here lives entirely at that pole — halted or
 looping — and the two theorems below say why that matters.

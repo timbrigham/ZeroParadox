@@ -623,7 +623,7 @@ theorem unitMul_norm_const {u : ℤ_[p]} (hu : ‖u‖ = 1) (x : ℤ_[p]) : ‖u
 
     Prior art (cited, not reproved): the pushforward step is discharged by `simp`, which has BOTH
     Dirac pushforward lemmas registered — `MeasureTheory.Measure.map_dirac'`
-    (`Mathlib/MeasureTheory/Measure/Dirac.lean:86`, `@[simp]`, takes `(hf : Measurable f)`) and the
+    (`Mathlib/MeasureTheory/Measure/Dirac.lean, line 86`, `@[simp]`, takes `(hf : Measurable f)`) and the
     instance-based sibling `Measure.map_dirac` (`:224`, `@[simp]`, `[MeasurableSingletonClass _]`,
     no measurability hypothesis). Either closes it, because `unitMul` FIXES the point, so the
     pushforward returns the same Dirac.

@@ -267,8 +267,8 @@ exactly what upgrades it to **non-degenerate** — see the corollary.
 
 **Prior art.** In this file, `not_pure_of_two_support` (above) already proves two support points imply
 non-pureness; **no construction supplying its hypotheses was located in this corpus as of `d6a1ece`**
-(the nearest are `ZeroParadox/Valuation/BottomInvariant.lean:214` and
-`ZeroParadox/Reals/MarkovSpectralGap.lean:96`, both of which build a specific two-point distribution
+(the nearest are `markovBIK` in `ZeroParadox/Valuation/BottomInvariant.lean` and `fullMix` in
+`ZeroParadox/Reals/MarkovSpectralGap.lean`, both of which build a specific two-point distribution
 for their own purpose rather than the general constructor). Stated as a dated search result, not as a
 universal negative.
 ⚠ **Not missing from Mathlib** — `PMF.uniformOfFinset` with `PMF.support_uniformOfFinset`

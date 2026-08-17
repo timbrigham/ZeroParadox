@@ -258,8 +258,8 @@ The hypothesis of § III is not an unsatisfiable antecedent: the framework's own
 the source end of the arrow, exactly as `comparable_of_classical` is in
 `ZeroParadox/Ordinal/OrdinalChoiceEssential.lean`. -/
 
-/-- **The hypothesis is not vacuous** — `ZeroParadox/Category/Lawvere.lean`'s
-`fixedPointFree_of_nontrivial` supplies it. Classical by construction; that is what § III is
+/-- **The hypothesis is not vacuous** — `fixedPointFree_of_nontrivial`
+(`ZeroParadox/Category/Lawvere.lean`) supplies it. Classical by construction; that is what § III is
 measuring the price of. -/
 theorem fixedPointFree_of_classical :
     ∀ (β : Type) (b₀ b₁ : β), b₀ ≠ b₁ → ∃ g : β → β, ∀ x, g x ≠ x :=

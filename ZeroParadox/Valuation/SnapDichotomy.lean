@@ -19,7 +19,7 @@ Completes ZP-F's "Classification Note": **where the Binary Snap is RULED OUT** a
 `Reading:` CARRIER — "snap occurs" is STIPULATED as total disconnectedness (predicate (a)), the only
 non-circular choice, since "snap := non-Archimedean" would merely rename Ostrowski (Tim 2026-06-24). So nothing
 here runs from a carrier property TO the snap, and each declaration below carries its own fence. ⚠ The first
-step is AX-B1, a commitment — canonical in `ZeroParadox/Valuation/Padic.lean`'s classification note.
+step is AX-B1, a commitment, never a consequence of the carrier.
 -/
 
 set_option maxHeartbeats 400000

@@ -225,7 +225,7 @@ The witness is the three-element chain `Fin 3`, made a Heyting algebra by
 element `1` then has `1ᶜ = ⊥ = 0` and `1ᶜᶜ = ⊤ = 2 ≠ 1`. -/
 
 -- The bi-Heyting structure on `Fin 3` is Mathlib's own: `Fin.instBiheytingAlgebra [NeZero n]`
--- (`Mathlib/Order/Fin/Basic.lean:70`), itself built from `LinearOrder.toBiheytingAlgebra`. This file
+-- (`Mathlib/Order/Fin/Basic.lean`), itself built from `LinearOrder.toBiheytingAlgebra`. This file
 -- imports it, so `ᶜ` and `dnegNucleus` resolve on `Fin 3` with nothing declared here.
 -- An earlier draft declared a local instance and described Mathlib as providing this "only as a
 -- reducible non-instance" — false by implicature, and a latent instance diamond. Removed 2026-07-19.

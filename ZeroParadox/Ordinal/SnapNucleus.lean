@@ -76,7 +76,7 @@ noncomputable def snapNucleus : Nucleus Ordinal where
 
 /-- **The difference generates ε₀ from the bottom.** The snap-nucleus sends the ordinal bottom ⊥ to ε₀
     (`epsilon0_eq_nfp_bot`): ⊥ the seed, ε₀ the fixed point the modality generates. ⊥ is the least
-    seed rather than a distinguished one (`Epsilon0MinMax.lean` § I-b). -/
+    seed rather than a distinguished one (`isLeastFixedPointFrom_nfp`). -/
 theorem snapNucleus_bot : snapNucleus (⊥ : Ordinal) = epsilonZero :=
   epsilon0_eq_nfp_bot.symm
 

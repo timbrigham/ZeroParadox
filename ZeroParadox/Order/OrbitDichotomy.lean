@@ -37,7 +37,7 @@ subsingleton or infinite — never a finite set of size ≥ 2. The finite middle
 witness `x ≠ p` in `S` drags its whole (infinite) forward orbit into `S`.
 
 **The scale branch this file's header calls "checkable" is now checked**, at
-ZeroParadox/Valuation/ScaleBridge.lean § VI: `valBridge_forces_infinite` runs the same argument for
+`valBridge_forces_infinite` (`ZeroParadox/Valuation/ScaleBridge.lean`) runs the same argument for
 the framework's scale map and concludes that a `ValBridge` carrier holding any point besides `bot` is
 infinite. ⚠ It is **not** an instance of this theorem, and the reason is the `hs` hypothesis here:
 `ValBridge` does not supply `Function.Injective s`, and cannot be made to — `L = {bot} ⊎ (ℕ × Bool)`
