@@ -291,7 +291,7 @@ NOTE_REF	(?<![\w/.-])((?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9][A-Za-z0-9_-]*(?:\d{4}-\d{
 PATTERN	(?<![\w/.-])((?:ZeroParadox|scripts|\.github)/[A-Za-z0-9_./-]+\.(?:lean|py|md|json|yml|yaml))
 PRIVATE_REF	(?<![\w/.-])(\.claude-local/[A-Za-z0-9_./-]+)
 PROSE_NOUN	[`'\"\)\]]*\s*(?:'s|’s|s')\s+(?:[A-Za-z][\w-]*\s+){0,3}(paragraph|section|§|table|note|docstring|header|reframe|taxonomy|fence|fenced|citation|cites|cited|overview|gloss|discussion|argument|prior art|hypothesis|classification|module doc)
-PROSE_NOUN_BEFORE	(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$
+PROSE_NOUN_BEFORE	\b(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$
 RECORD_FILES	RELEASES.md
 SECTION_AFTER	^[`'\"\)\]]*\s*(?:§|section\b|\bch(?:apter)?\b)\s*[IVXLC0-9]
 SKIP_MARKERS	->

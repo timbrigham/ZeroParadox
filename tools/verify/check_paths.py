@@ -282,8 +282,12 @@ PROSE_NOUN = re.compile(
 # The same reference also appears as "cited in `Wall.lean`" / "fenced conjecture of `Wall.lean`",
 # where the prose noun PRECEDES the name. One-sided matching is a blind half (the Two-Pole rule
 # applied to a detector), so look behind as well as ahead.
+# ⚠ THE LEADING `\b` IS LOad-BEARING AND WAS MISSING. Without it the `note` alternative matched the
+# TAIL of an identifier: `SynONote` — a `def` that never left its `.lean` — reported as a pointer at
+# relocated prose. Found 2026-08-17 by the SECOND conversion, i.e. by using the rule rather than by
+# reading it, which is the only way a word-boundary bug of this shape surfaces.
 PROSE_NOUN_BEFORE = re.compile(
-    r"(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|"
+    r"\b(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|"
     r"docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$",
     re.I)
 # ⚠ THE THIRD BLIND FORM: THE APPOSITIVE — a prose noun after the name with NO possessive, as in
@@ -575,6 +579,11 @@ def selftest_ride_along():
         ("a bare file pointer with no prose noun",
          "See `ZeroParadox/Settheory/Wall.lean` for the engine."),
         ("an unrelated file", "`ZeroParadox/Order/Snap.lean`'s NO-GO gauge section."),
+        # ⚠ IN THE LIVE SHAPE that produced the false positive, not an invented one: an identifier
+        # ending in a vocabulary word, beside a citation of a ride-along `.lean`. `SynONote` is a
+        # `def` that never moved.
+        ("identifier ending in a vocabulary word (SynONote / 'note')",
+         "The `SynONote` bridge is defined in `ZeroParadox/Settheory/Wall.lean` for the carrier."),
     ]
     import tempfile
     bad = 0
