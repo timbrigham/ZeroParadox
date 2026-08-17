@@ -62,6 +62,38 @@ Working Folder*), so a reader can see exactly what each gate is instructed to do
 every artifact it names. That is the honest position and it should be stated rather than discovered:
 **the method is public; some of the material it operates on is not.**
 
+## NARRATE THE MATH — in an engineer's register, every report. (Tim, 2026-08-12.)
+
+> *"for future iterations I want you to narrate the math for me. and do it in terms fitting to an
+> engineer that's not a mathematician by trade."*
+
+**Every report touching mathematical content carries a plain-language pass on the MATHEMATICS, beside
+the process summary — not instead of it, and not only when asked.** Long verification arcs drift into
+reporting gate verdicts, defect ids, signal freshness and exit codes. That is scaffolding. *"The
+prior-art gate verified AMM Thm 7.2 p. 27"* says a check passed; it does not say what the theorem
+**states** or why its direction was load-bearing.
+
+**Tim is this project's mathematician of record by decision, not by training. He cannot review what is
+never explained, and his review is the control that has repeatedly caught what the gates did not.**
+
+- **Use systems and programming analogies** — recursion and termination, type signatures,
+  preconditions, interface vs implementation, invariants, null vs empty, cycles in a graph. Name the
+  object before using its symbol.
+- **Spell glyphs out in words at least once per paragraph** (bottom, epsilon-zero, infinity) — the
+  standing mobile-readability rule.
+- **Standard mathematical term first, ZP shorthand after.** Narration is never licence to lead with
+  framework vocabulary; the § on language ordering still governs.
+- **State which direction an implication runs, and why that matters.** The 2026-08-12 arc turned
+  entirely on sufficiency versus necessity in a cited theorem, and *"the biconditional overstates the
+  source"* is precisely the phrasing that hides the point from anyone not already holding it.
+- **Do not soften the claim.** Precision is the deliverable; only the register changes. If a
+  distinction is load-bearing, explain it rather than dropping it.
+
+⚠ **This governs REPORTS TO Tim, not the corpus.** It is not licence to add prose to `.lean` files —
+the prose cap, the `Statement:`/`Reading:` labels and *"anything convertible to Lean MUST be
+converted"* are untouched. If narration reveals that a claim is only expressible in prose, that is a
+finding about the claim, not a reason to write an essay into the source.
+
 ## ⭐⭐ `batch.py precommit` BEFORE EVERY COMMIT. `/batch` for any multi-site work. Not optional.
 
 **The orchestrator is the default entry point, not a special mode.** `tools/verify/batch.py` owns
@@ -179,6 +211,42 @@ something and every ORDINARY finding from an agent **reading** something, with n
 remembering, which this file elsewhere records as failing by construction. That is visible debt, not a
 solved problem — and this register is the **seventh** convention of this shape, the previous six having
 all leaked.
+
+## The open-defect ledger — `.claude-local/DEFECTS.md`. Read it before choosing what to work on.
+
+**A defect's home is this ledger.** Not a note, not a gate-findings archive, not a line in the handoff.
+(Opened 2026-08-01, Tim.)
+
+**Why it exists, and it is a gap this file created.** The § below correctly says *"if a finding is a
+DEFECT, its home is a gate finding or a fix, never a note that cannot know when it stops being true."*
+But the 2026-08-01 notes triage sorted 767 notes into `active` / `future-research` /
+`archive{gate-findings, resolved, superseded}` — and **none of those is "open defect."** So the rule
+forbade the wrong home without providing a right one, and defects scattered into gate-findings
+archives that this same file says to *"write, never expect to read."* Tim's observation on reviewing the
+triage: the classification should have been there from the start.
+
+**The standing rule it serves: NO RELEASE IS CUT WHILE THE LEDGER IS NON-EMPTY.** A GitHub Release
+mints a permanent Zenodo DOI; four already carry latent flaws that cannot be withdrawn. A defect fixed
+before a release costs one gate round; a defect shipped in one is permanent. **Never rank release
+readiness above defect elimination, and never let release pressure defer a finding to next-touch debt.**
+(Memory `feedback_no_release_until_defects_zero`.) One correction worth carrying: deposited **files** in
+a Zenodo snapshot are frozen, but record **metadata** can be corrected through the Zenodo web UI — so a
+wrong claim in a release *description* is fixable; a flaw inside a published PDF is not.
+
+**The target is ZERO KNOWN DEFECTS, not zero defects.** The gates always find something — that is why
+the severity-tiered cap exists. Do not blur the two, and do not imply a clean sheet.
+
+**Rules for the ledger:**
+- **Verify every entry AT THE ARTIFACT** before recording it open or closed. It goes stale exactly like
+  the notes it replaces — that is not a reason to distrust it, it is a reason to re-check before acting.
+- **GREP LOOSELY.** Measured while building it: two live defects first read as already-fixed because the
+  pattern was too tight — one phrase split across a line break, one with markdown bold inside it. A
+  tight-pattern miss is **not** evidence a defect is closed.
+- **Burn down in FILE-SIZED BATCHES.** Gate rounds are per-push; one file fixed completely and gated
+  once costs far less than one item at a time.
+- **Fixing an item creates new unreviewed prose** and restarts the review obligation for the text
+  changed — fix and re-sign, or push what was certified.
+- Keep the ledger the SINGLE copy. Do not re-list its entries in the handoff; two copies drift.
 
 ## ⭐⭐⭐ WHEN A FAILURE RECURS: the rule is wrong, not the reader. Run this list. (Tim, 2026-08-15.)
 
@@ -572,6 +640,79 @@ inverted — `Order/Lattice.lean` claimed non-members *"abound"* when **every in
 row (`scTriv`) **did not resolve anywhere in the corpus**. A brief citing a control that does not
 exist is worse than a brief with no controls: the agent reports it could not build the witness, and
 that reads as evidence the class has teeth.
+
+## Rules That Must Reach Spawned Agents — Hard Rules
+
+**Why this section exists (measured 2026-07-19).** A spawned agent receives, automatically: this file in
+full, the user-level `CLAUDE.md`, the Lean `.claudecodes` block, the project-standards block — **and the
+memory INDEX only, not memory file bodies.** So a rule whose content lives in a memory body reaches a
+subagent as one line among ~100 in an index, competing for attention with ninety-nine others, firing at
+no particular moment. That is not a control.
+
+**The consequence, verified:** a subagent invented a factual detail about a cited paper while the line
+*"Draft from source only — public math claims must trace to a specific source passage"* was sitting in
+its index. The rule was visible and did not bind. **A rule that must not be violated belongs HERE or in
+the task brief. Memory is for context, not enforcement.** When delegating, carry the relevant rules below
+into the brief explicitly — the same way the encoding and glob warnings are already carried.
+
+- **Draft from source.** Never describe the content of a source you have not read. Cite existence (title,
+  venue, that it exists) freely; assert specific technical content **only with the passage in hand**. If
+  you cannot read it, say so explicitly — do **not** soften a specific into a vaguer assertion about a
+  paper nobody opened. Applies to Lean docstrings citing external papers, companion sections, discussion
+  comments, and outreach. Before concluding a PDF is unreadable, try `pypdf`/`pdfminer` directly
+  (`.claude-local/extract_pdf_text.py`); a fetch tool's failure is not a fact about the source.
+- **Start new files from the templates.** Any new `.lean` file starts from `.claude-local/templates/`
+  (`TEMPLATE_lean.lean`, `TEMPLATE_experimental_mapping.lean`) and its `README.md`. Note the template's
+  namespace line is stale — namespaces are FLAT (`ZeroParadox`), not `ZeroParadox.ZPX`.
+- **Never write a bare "bottom."** Always say which level: the structureless referent / a specific
+  structured instance (a face) / the family-and-schema. The bare word sliding between senses is the
+  project's longest-standing source of confusion. (`/remember-bottom` re-orients.)
+- **The literal string `ε₀ = 0`** may appear ONLY as a guard or fence forbidding it, or as a theorem where
+  ε₀ is an argument. Never a bare assertion, never in conversation — even to deny it. Canary:
+  `epsilon0_ne_zero`.
+- **Standard mathematical term first**, ZP term after as a declared shorthand — never the reverse. This is
+  the defense against the "ontology built on an equivocation" reading.
+- **Verify an API exists before naming it in a plan.** Grep the Mathlib pin; a plan citing a lemma that
+  does not exist in the pinned version is worse than no plan.
+- **Never delete a Lean file a subagent produced**, even a failed experiment — say so in the brief.
+- **NO SCRATCH FILES IN THE REPO.** Any probe, temp script, or measurement file goes in the session
+  scratchpad directory, never under `ZeroParadox/` or anywhere else in the working tree. A reviewer that
+  needs to measure something writes it to the scratchpad, runs it, and deletes it. **Measured
+  2026-07-19:** a review agent left a `ZZTestOrd.lean` probe in the source tree (since deleted, so the
+  path no longer exists) and it was committed — a scratch probe is now in the permanent history. Put this
+  line in every subagent brief.
+- **Reviews are READ-ONLY on the working tree.** A gate reads, measures, and reports; it does not modify
+  repo files. The only writes a gate may make are its signal file and its findings note under
+  `.claude-local/notes/`.
+- ⚠⚠ **AN AGENT THAT EXERCISES THE HOOKS MUST NEVER `git reset --hard`, `git checkout -- .`,
+  `git clean`, OR `git stash` THE SHARED TREE — IT WILL DESTROY THE CALLER'S UNCOMMITTED WORK AND
+  REPORT SUCCESS.** Measured 2026-08-10: a `/rely` run was told to exercise the commit and push
+  gates and to leave the repository exactly as it found it. It made probe commits and reset
+  **`--hard`** to the base three times. That is a *correct* reading of the instruction, and it
+  **silently deleted an uncommitted `CLAUDE.md` edit** the caller was holding; the agent then
+  verified *"tracked tree clean, HEAD unchanged"*, which was true — and was the destruction. It had
+  even NOTICED the concurrency, reporting that two files *"were being edited by their author during
+  the trial"*, and hard-reset anyway. **"Restore the tree" and "preserve the tree" are different
+  instructions, and only the caller knows which is meant.**
+  - **Rule for the BRIEF:** an agent needing to create commits works in a dedicated worktree —
+    `git worktree add --detach <scratchpad-path> <ref>` — never in the shared checkout. It gets a
+    private HEAD and index, so nothing it does can reach the caller's tree; cleanup is
+    `git worktree remove --force` plus `git worktree prune`. The `CAL-2` pipeline replay used
+    exactly this and left the main tree untouched.
+  - **Rule for the CALLER:** commit or stash your own work **before** spawning any agent licensed to
+    touch git state, and treat the tree as unstable until it returns. This file already warns that
+    background agents run concurrently so the tree is not a stable snapshot; this is that hazard
+    with a **destructive** edge rather than the merely additive one of the `git add -A` incident.
+  - ⚠ **`.claude-local/` survived only because it is gitignored — do not read that as safety.** A
+    `git clean -xfd` would have taken the whole private working folder, which has no remote and is
+    backed up by hand.
+- **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
+  restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
+  **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
+  file, so the reviews must cover it. Order: finish the work → insert Tim's Take (with approval) → run
+  editorial/adversary/prior-art on the COMPLETE file → push. Gating first and adding the Take after
+  leaves it unreviewed and (under the SHA-256-per-file signal scheme) stales every signal, forcing a
+  needless re-run.
 
 ## Anything convertible from prose to Lean MUST be converted. (Tim, 2026-08-08.)
 
@@ -1337,79 +1478,6 @@ did not edit, find out where it came from before committing it.
 `-A` is acceptable only when nothing has been spawned since the last commit and `git status` has been
 eyeballed. When in doubt, name the paths.
 
-## Rules That Must Reach Spawned Agents — Hard Rules
-
-**Why this section exists (measured 2026-07-19).** A spawned agent receives, automatically: this file in
-full, the user-level `CLAUDE.md`, the Lean `.claudecodes` block, the project-standards block — **and the
-memory INDEX only, not memory file bodies.** So a rule whose content lives in a memory body reaches a
-subagent as one line among ~100 in an index, competing for attention with ninety-nine others, firing at
-no particular moment. That is not a control.
-
-**The consequence, verified:** a subagent invented a factual detail about a cited paper while the line
-*"Draft from source only — public math claims must trace to a specific source passage"* was sitting in
-its index. The rule was visible and did not bind. **A rule that must not be violated belongs HERE or in
-the task brief. Memory is for context, not enforcement.** When delegating, carry the relevant rules below
-into the brief explicitly — the same way the encoding and glob warnings are already carried.
-
-- **Draft from source.** Never describe the content of a source you have not read. Cite existence (title,
-  venue, that it exists) freely; assert specific technical content **only with the passage in hand**. If
-  you cannot read it, say so explicitly — do **not** soften a specific into a vaguer assertion about a
-  paper nobody opened. Applies to Lean docstrings citing external papers, companion sections, discussion
-  comments, and outreach. Before concluding a PDF is unreadable, try `pypdf`/`pdfminer` directly
-  (`.claude-local/extract_pdf_text.py`); a fetch tool's failure is not a fact about the source.
-- **Start new files from the templates.** Any new `.lean` file starts from `.claude-local/templates/`
-  (`TEMPLATE_lean.lean`, `TEMPLATE_experimental_mapping.lean`) and its `README.md`. Note the template's
-  namespace line is stale — namespaces are FLAT (`ZeroParadox`), not `ZeroParadox.ZPX`.
-- **Never write a bare "bottom."** Always say which level: the structureless referent / a specific
-  structured instance (a face) / the family-and-schema. The bare word sliding between senses is the
-  project's longest-standing source of confusion. (`/remember-bottom` re-orients.)
-- **The literal string `ε₀ = 0`** may appear ONLY as a guard or fence forbidding it, or as a theorem where
-  ε₀ is an argument. Never a bare assertion, never in conversation — even to deny it. Canary:
-  `epsilon0_ne_zero`.
-- **Standard mathematical term first**, ZP term after as a declared shorthand — never the reverse. This is
-  the defense against the "ontology built on an equivocation" reading.
-- **Verify an API exists before naming it in a plan.** Grep the Mathlib pin; a plan citing a lemma that
-  does not exist in the pinned version is worse than no plan.
-- **Never delete a Lean file a subagent produced**, even a failed experiment — say so in the brief.
-- **NO SCRATCH FILES IN THE REPO.** Any probe, temp script, or measurement file goes in the session
-  scratchpad directory, never under `ZeroParadox/` or anywhere else in the working tree. A reviewer that
-  needs to measure something writes it to the scratchpad, runs it, and deletes it. **Measured
-  2026-07-19:** a review agent left a `ZZTestOrd.lean` probe in the source tree (since deleted, so the
-  path no longer exists) and it was committed — a scratch probe is now in the permanent history. Put this
-  line in every subagent brief.
-- **Reviews are READ-ONLY on the working tree.** A gate reads, measures, and reports; it does not modify
-  repo files. The only writes a gate may make are its signal file and its findings note under
-  `.claude-local/notes/`.
-- ⚠⚠ **AN AGENT THAT EXERCISES THE HOOKS MUST NEVER `git reset --hard`, `git checkout -- .`,
-  `git clean`, OR `git stash` THE SHARED TREE — IT WILL DESTROY THE CALLER'S UNCOMMITTED WORK AND
-  REPORT SUCCESS.** Measured 2026-08-10: a `/rely` run was told to exercise the commit and push
-  gates and to leave the repository exactly as it found it. It made probe commits and reset
-  **`--hard`** to the base three times. That is a *correct* reading of the instruction, and it
-  **silently deleted an uncommitted `CLAUDE.md` edit** the caller was holding; the agent then
-  verified *"tracked tree clean, HEAD unchanged"*, which was true — and was the destruction. It had
-  even NOTICED the concurrency, reporting that two files *"were being edited by their author during
-  the trial"*, and hard-reset anyway. **"Restore the tree" and "preserve the tree" are different
-  instructions, and only the caller knows which is meant.**
-  - **Rule for the BRIEF:** an agent needing to create commits works in a dedicated worktree —
-    `git worktree add --detach <scratchpad-path> <ref>` — never in the shared checkout. It gets a
-    private HEAD and index, so nothing it does can reach the caller's tree; cleanup is
-    `git worktree remove --force` plus `git worktree prune`. The `CAL-2` pipeline replay used
-    exactly this and left the main tree untouched.
-  - **Rule for the CALLER:** commit or stash your own work **before** spawning any agent licensed to
-    touch git state, and treat the tree as unstable until it returns. This file already warns that
-    background agents run concurrently so the tree is not a stable snapshot; this is that hazard
-    with a **destructive** edge rather than the merely additive one of the `git add -A` incident.
-  - ⚠ **`.claude-local/` survived only because it is gitignored — do not read that as safety.** A
-    `git clean -xfd` would have taken the whole private working folder, which has no remote and is
-    backed up by hand.
-- **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
-  restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
-  **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
-  file, so the reviews must cover it. Order: finish the work → insert Tim's Take (with approval) → run
-  editorial/adversary/prior-art on the COMPLETE file → push. Gating first and adding the Take after
-  leaves it unreviewed and (under the SHA-256-per-file signal scheme) stales every signal, forcing a
-  needless re-run.
-
 ## Editorial Review Gate — Hard Rule
 
 **Any commit touching document prose requires editorial review to have completed before the commit is made.** This applies to:
@@ -2144,38 +2212,6 @@ This log is the authoritative record of what has been reviewed and why. Future s
 
 **Standing rule:** A scan pass is not complete until all reviewed items have a decision recorded. "PENDING" is a valid decision for items deferred to a future session.
 
-## NARRATE THE MATH — in an engineer's register, every report. (Tim, 2026-08-12.)
-
-> *"for future iterations I want you to narrate the math for me. and do it in terms fitting to an
-> engineer that's not a mathematician by trade."*
-
-**Every report touching mathematical content carries a plain-language pass on the MATHEMATICS, beside
-the process summary — not instead of it, and not only when asked.** Long verification arcs drift into
-reporting gate verdicts, defect ids, signal freshness and exit codes. That is scaffolding. *"The
-prior-art gate verified AMM Thm 7.2 p. 27"* says a check passed; it does not say what the theorem
-**states** or why its direction was load-bearing.
-
-**Tim is this project's mathematician of record by decision, not by training. He cannot review what is
-never explained, and his review is the control that has repeatedly caught what the gates did not.**
-
-- **Use systems and programming analogies** — recursion and termination, type signatures,
-  preconditions, interface vs implementation, invariants, null vs empty, cycles in a graph. Name the
-  object before using its symbol.
-- **Spell glyphs out in words at least once per paragraph** (bottom, epsilon-zero, infinity) — the
-  standing mobile-readability rule.
-- **Standard mathematical term first, ZP shorthand after.** Narration is never licence to lead with
-  framework vocabulary; the § on language ordering still governs.
-- **State which direction an implication runs, and why that matters.** The 2026-08-12 arc turned
-  entirely on sufficiency versus necessity in a cited theorem, and *"the biconditional overstates the
-  source"* is precisely the phrasing that hides the point from anyone not already holding it.
-- **Do not soften the claim.** Precision is the deliverable; only the register changes. If a
-  distinction is load-bearing, explain it rather than dropping it.
-
-⚠ **This governs REPORTS TO Tim, not the corpus.** It is not licence to add prose to `.lean` files —
-the prose cap, the `Statement:`/`Reading:` labels and *"anything convertible to Lean MUST be
-converted"* are untouched. If narration reveals that a claim is only expressible in prose, that is a
-finding about the claim, not a reason to write an essay into the source.
-
 ## Communication Quality Feedback
 
 During working sessions, apply the Communication Quality Rubric to evaluate Tim's statements about the framework in real time. Flag anything scoring **7 or below** on the composite scale (35% terminological accuracy, 35% structural accuracy, 15% consistency, 15% clarity). The full rubric with scoring tables and calibration notes lives at `.claude-local/communication_quality_rubric.md`. Key terms requiring extra care: ⊥ (three-way identification), T-SNAP (theorem, not axiom), DA-1 (derived proposition, conditional on DP-2), DP-2 (grounded in D7 — not freely chosen), CC-1/CC-2 (both now derived via ZP-J, not freestanding commitments).
@@ -2220,42 +2256,6 @@ Take was found *after* the work, never before.
 **Not this, for error-sweeps.** A claim-sweep's unit is the **rendered PDF text**, never the source —
 a claim survived four vocabulary changes and one split across two Python string literals. See
 `vocabulary_reference.md`.
-
-## The open-defect ledger — `.claude-local/DEFECTS.md`. Read it before choosing what to work on.
-
-**A defect's home is this ledger.** Not a note, not a gate-findings archive, not a line in the handoff.
-(Opened 2026-08-01, Tim.)
-
-**Why it exists, and it is a gap this file created.** The § below correctly says *"if a finding is a
-DEFECT, its home is a gate finding or a fix, never a note that cannot know when it stops being true."*
-But the 2026-08-01 notes triage sorted 767 notes into `active` / `future-research` /
-`archive{gate-findings, resolved, superseded}` — and **none of those is "open defect."** So the rule
-forbade the wrong home without providing a right one, and defects scattered into gate-findings
-archives that this same file says to *"write, never expect to read."* Tim's observation on reviewing the
-triage: the classification should have been there from the start.
-
-**The standing rule it serves: NO RELEASE IS CUT WHILE THE LEDGER IS NON-EMPTY.** A GitHub Release
-mints a permanent Zenodo DOI; four already carry latent flaws that cannot be withdrawn. A defect fixed
-before a release costs one gate round; a defect shipped in one is permanent. **Never rank release
-readiness above defect elimination, and never let release pressure defer a finding to next-touch debt.**
-(Memory `feedback_no_release_until_defects_zero`.) One correction worth carrying: deposited **files** in
-a Zenodo snapshot are frozen, but record **metadata** can be corrected through the Zenodo web UI — so a
-wrong claim in a release *description* is fixable; a flaw inside a published PDF is not.
-
-**The target is ZERO KNOWN DEFECTS, not zero defects.** The gates always find something — that is why
-the severity-tiered cap exists. Do not blur the two, and do not imply a clean sheet.
-
-**Rules for the ledger:**
-- **Verify every entry AT THE ARTIFACT** before recording it open or closed. It goes stale exactly like
-  the notes it replaces — that is not a reason to distrust it, it is a reason to re-check before acting.
-- **GREP LOOSELY.** Measured while building it: two live defects first read as already-fixed because the
-  pattern was too tight — one phrase split across a line break, one with markdown bold inside it. A
-  tight-pattern miss is **not** evidence a defect is closed.
-- **Burn down in FILE-SIZED BATCHES.** Gate rounds are per-push; one file fixed completely and gated
-  once costs far less than one item at a time.
-- **Fixing an item creates new unreviewed prose** and restarts the review obligation for the text
-  changed — fix and re-sign, or push what was certified.
-- Keep the ledger the SINGLE copy. Do not re-list its entries in the handoff; two copies drift.
 
 ## High-Value Insight Capture — Standing Rule
 
