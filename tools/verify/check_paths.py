@@ -289,6 +289,45 @@ PROSE_NOUN_BEFORE = re.compile(
 LINE_REF = re.compile(r'\.lean:\d+')
 
 
+# === LINE-NUMBER CITATIONS (Tim, 2026-08-17) =================================================
+# "line numbers for comments on other files need to go. the block/ paragraph"
+#
+# A line number is a COPY OF A LOCATION and drifts exactly like any other copy — the failure this
+# project has paid for repeatedly (`COM-4`: `common.py` cited `check_modal.py:302` when the record
+# had moved to `:230`, moved by the very edit that made the citation). Relocation is the extreme
+# case, and the ride-along conversion demonstrated it at full scale in a single commit.
+#
+# THE STABLE ANCHOR IS A NAME, NOT A NUMBER: a declaration (globally unique, self-locating,
+# `#check`-able) or a section heading. Both survive edits above them; a line number does not.
+#
+# ⚠ REPORTED, NOT BLOCKING, and deliberately so. There are ~100 pre-existing sites; a gate that
+# blocks everything on day one gets bypassed and then ignored, which this project has recorded.
+# The count is printed so a RISING number is visible — the same bargain as the measurement-gap
+# line in `check_prose`. It should become blocking, with a baseline, once the burn-down starts.
+LINE_CITATION = re.compile(
+    r'(?<![\w/.-])([A-Za-z0-9_./-]+\.(?:lean|py|md))[:∶](\d+)(?:\s*[-–]\s*\d+)?')
+
+
+def scan_line_citations(files):
+    """File references carrying a line number, in tracked prose."""
+    hits = []
+    for path in files:
+        try:
+            text = path.read_text(encoding='utf-8', errors='replace')
+        except OSError:
+            continue
+        rel = str(path.relative_to(REPO)).replace('\\', '/')
+        if DATED.search(rel.rsplit('/', 1)[-1]):
+            continue                    # a dated record describes the tree as it stood
+        for lineno, line in enumerate(text.split('\n'), 1):
+            # A checker printing its OWN findings emits `file:line` as tool output, not as prose.
+            if 'print(' in line or "print (" in line or line.lstrip().startswith(('>>>', '$')):
+                continue
+            for m in LINE_CITATION.finditer(line):
+                hits.append((rel, lineno, m.group(0)))
+    return hits
+
+
 def ride_along_pairs():
     """`Foo.lean` files that have a `Foo.md` beside them."""
     out = {}
@@ -645,6 +684,21 @@ def main():
             print(f'  {path}:{lineno}  ->  {ref}')
     else:
         print(f'  (+ {cm} Mathlib/Std citation(s) checked against the pinned checkout, all resolve)')
+    # === Line-number citations ===============================================================
+    lc = scan_line_citations(tracked_markdown() + tracked_lean())
+    by_file = {}
+    for rel, _ln, ref in lc:
+        by_file[rel] = by_file.get(rel, 0) + 1
+    print(f'\n== line-number citations into other files ({len(lc)} in {len(by_file)} file(s)) ==')
+    print('  A line number is a COPY OF A LOCATION and drifts. Cite the DECLARATION (unique,')
+    print('  self-locating, #check-able) or the section heading — the block, not the number.')
+    if by_file:
+        for rel, n in sorted(by_file.items(), key=lambda kv: -kv[1])[:8]:
+            print(f'      {n:4d}  {rel}')
+        if len(by_file) > 8:
+            print(f'      ... and {len(by_file) - 8} more file(s)')
+    print('  INFORMATIONAL: does not fail the run. A RISING number means the class is growing.')
+
     # === Ride-along cross-references =========================================================
     pairs = ride_along_pairs()
     if pairs:

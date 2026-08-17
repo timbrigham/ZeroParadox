@@ -56,8 +56,8 @@ Foundation," the in-kernel refutation of the literal Quine atom.
   Russell + Turing) as corollaries off one named engine — not the theorems, which are not new.
 - The **well-founded / membership / Bool / logical** re-proofs have exact library equivalents too,
   kept as self-contained hubs alongside the function-fixed-point ones: `wf_no_selfloop` is Mathlib's
-  `WellFounded.irrefl` (`Mathlib/Order/WellFounded.lean:66`); `no_quine_atom` (`x ∉ x`) is
-  `ZFSet.mem_irrefl` (`Mathlib/SetTheory/ZFC/Basic.lean:631`); `bool_not_no_fixedpoint` is
+  `WellFounded.irrefl` (`Mathlib/Order/WellFounded.lean`); `no_quine_atom` (`x ∉ x`) is
+  `ZFSet.mem_irrefl` (`Mathlib/SetTheory/ZFC/Basic.lean`); `bool_not_no_fixedpoint` is
   `Bool.not_ne_self`; and `negation_no_fixedpoint` (`¬(p ↔ ¬p)`) is core Lean's `not_iff_self` /
   `iff_not_self`. The delta is again the PRESENTATION — one named engine with these as its faces — not
   the lemmas, which are standard.
@@ -65,34 +65,34 @@ Foundation," the in-kernel refutation of the literal Quine atom.
 ### ⚠ Three stronger library forms, measured 2026-07-29. Read before re-proving anything in this family.
 
 A gloss previously said "`Std.Irrefl r` unfolds to `¬ r x x`" — **it does not**; `Std.Irrefl` is a
-*class with a field* (core `Init/Core.lean:2588`), so `WellFounded.irrefl h : Std.Irrefl r` and you
+*class with a field* (core `Init/Core.lean`, `Std.Irrefl`), so `WellFounded.irrefl h : Std.Irrefl r` and you
 project `(WellFounded.irrefl h).irrefl x`. That matters, because Mathlib's form being class-valued is
 what makes the following free:
 
-- **`WellFounded.asymmetric`** (`Mathlib/Order/RelClasses.lean:225`) is **strictly stronger** than
-  `wf_no_selfloop` — it forbids 2-cycles between *distinct* points, with `asymmetric₃` (`:229`) for
-  3-cycles. Irreflexivity is its `a := b` instance. So `wf_no_selfloop` is the weakest rung of a
+- **`WellFounded.asymmetric`** (`Mathlib/Order/RelClasses.lean`) is **strictly stronger** than
+  `wf_no_selfloop` — it forbids 2-cycles between *distinct* points, with `asymmetric₃` for 3-cycles. Irreflexivity is its `a := b` instance. So `wf_no_selfloop` is the weakest rung of a
   published chain; the Lean file states it deliberately as the one-cycle case, with `wf_no_cycle`
   covering cycles of any length.
 - **Instance resolution already carries it.** `IsWellFounded → Std.Asymm` is registered
-  (`Mathlib/Order/RelClasses.lean:234`), so `irrefl_of` / `asymm_of` fire on any type with the instance —
-  and `ZFSet` has it (`Mathlib/SetTheory/ZFC/Basic.lean:622`). Hand-rolled `∀`-form restatements get none
+  (`Mathlib/Order/RelClasses.lean`), so `irrefl_of` / `asymm_of` fire on any type with the instance —
+  and `ZFSet` has it (`Mathlib/SetTheory/ZFC/Basic.lean`, via `ZFSet.mem_wf`). Hand-rolled `∀`-form restatements get none
   of that machinery.
-- **`wellFounded_iff_isEmpty_descending_chain`** (`Mathlib/Order/WellFounded.lean:51`) is a
+- **`wellFounded_iff_isEmpty_descending_chain`** (`Mathlib/Order/WellFounded.lean`) is a
   **biconditional**: `WellFounded r ↔ IsEmpty {f : ℕ → α // ∀ n, r (f (n+1)) (f n)}`. A self-loop is
   the *constant* descending chain, so it renders the non-well-founded side as **"the host contains an
   infinite ℕ-indexed descent."** That is the **INFINITE pole** the two-pole hard rule asks for, which
   the `r x x` form hides. **Now adopted** at `ZeroParadox/Multihomed/Boundary.lean` § I-b
   (`floor_descent_from_bot`, `bot_not_acc`, `floor_not_wellFounded_via_descent`).
-  The **pointwise** form is `not_acc_iff_exists_descending_chain` (`:34`) —
+  The **pointwise** form is `not_acc_iff_exists_descending_chain` —
   `¬ Acc r x ↔ ∃ f, f 0 = x ∧ ∀ n, r (f (n+1)) (f n)` — which is the one that locates the descent AT a
-  given point. ⚠ Its *extract-a-chain* direction (`:36-38`) builds the sequence with `.choose_spec` and
+  given point. ⚠ Its *extract-a-chain* direction builds the sequence with `.choose_spec` and
   so carries `Classical.choice`. **⚠ The natural inference — "supply the witness yourself and use only
   the other direction to stay choice-free" — is FALSE, and was MEASURED false**: `#print axioms`
   follows the STATEMENT, so citing the biconditional at all pulls in the choice used by the direction
   you did not take. See `ZeroParadox/Multihomed/Boundary.lean` § I-b's purity block, where the one-line
   `mpr` version measured `[propext, Classical.choice, Quot.sound]` and only a HAND proof came back
-  axiom-free. (Line numbers verified at source 2026-07-29.)
+  axiom-free. (Verified at source 2026-07-29. Line numbers deliberately omitted: a line number is a copy of
+  a location and drifts — the lemma name is the stable anchor and is `#check`-able.)
 
 ## The wall as a failure-mode taxonomy (built one condition-set at a time)
 

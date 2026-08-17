@@ -283,6 +283,7 @@ _VERIFY	vendored
 BARE_LEAN	(?<![\w/.-])((?:ZP[A-Z]?[A-Za-z0-9_]*)\.lean)
 DATED	\d{4}-\d{2}-\d{2}|(?<!\d)\d{8}(?!\d)|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4}
 EXIT_SKIPPED	3
+LINE_CITATION	(?<![\w/.-])([A-Za-z0-9_./-]+\.(?:lean|py|md))[:∶](\d+)(?:\s*[-–]\s*\d+)?
 LINE_REF	\.lean:\d+
 MATHLIB_EXEMPT_DIRS	Vendored
 MATHLIB_PATTERN	(?<![\w/.-])((?:Mathlib|Std|Batteries)/[A-Za-z0-9_./-]+\.lean)
