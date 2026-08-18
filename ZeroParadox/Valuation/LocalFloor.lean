@@ -153,13 +153,11 @@ theorem boundaryFloor_nil_floor : (boundaryFloor []).floor = botEnd := by
 
 /-! ## § The discriminator is a nonzero digit — descending 0-ward is standing still
 
-The two theorems below make the prose claim above checkable: a child's local floor is a NEW floor
-only when the step branches away. They were proved 2026-07-26 and are promoted here unchanged.
-
-⚠ The distinctness is **earned, not stipulated**. `localBotEnd` is deliberately NOT injective, so
-`one_branch_new` is a fact about digits rather than about a label — the alternative construction
-(bolt an instantiation counter onto the state and let the index do the work) would prove novelty by
-stipulation and is exactly as empty as a trivially-inhabited requirements class. -/
+The two theorems below make the prose claim above checkable: a child's local floor is NEW only when
+the step branches away. ⚠ The distinctness is **earned, not stipulated** — `localBotEnd` is
+deliberately NOT injective. ⚠ Scope is the **0-spine**, not branching in general. Prior art
+(`Nat.ofDigits_append`, `Turing.ListBlank`, Cobos & Navas) and what it settles:
+`ZeroParadox/Valuation/LocalFloor.md`. -/
 
 /-- `Statement:` the 0-branch gives back the SAME local floor: `localBotEnd (v ++ [0]) = localBotEnd v`.
     Descending 0-ward does not produce a new bottom. -/

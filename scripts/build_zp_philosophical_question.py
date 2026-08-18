@@ -1,5 +1,5 @@
 """
-Build: The Philosophical Question That Started This (v1.14)
+Build: The Philosophical Question That Started This (v1.15)
 v1.15: FORCING OVERCLAIM RETRACTED. The document asserted that T-SNAP establishes the snap OCCURS. It does not: T-SNAP fixes the transition's shape, and Order/Snap.lean's NO-GO gauge tsnap_holds_but_nothing_moves proves T-SNAP holds in a model where nothing moves. Occurrence is a framework commitment (Information/Surprisal.lean's l_inf docstring is the designated honest stopping point). Prose only; no claim gains support and none is withdrawn beyond this one. 'You cannot avoid it' asserted occurrence; the surrounding passage's derivability claim (the snap was an axiom, now a theorem) is correct and is kept.
 v1.14: rendered layer COUNT eliminated (project-wide counter removal) - "Thirteen formal layers"/"Thirteen layers" de-counted; stale "ZP-A through ZP-M" range dropped from the body and the endnote.
 v1.13: rendered Lean-file citation synced to post-reorg basename (ZPJ_ScaleBridge -> ScaleBridge).

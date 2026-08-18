@@ -93,6 +93,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Category/DoubleNegationNucleus.lean` - The double-negation nucleus: the excluded-middle modality
 - `ZeroParadox/Category/ExcludedMiddleBridge.lean` - The excluded-middle bridge: choice → excluded middle → the `Prop` nucleus is trivial
 - `ZeroParadox/Category/Lawvere.lean` - ZPJ — The Lawvere bridge (keystone Tier-6 upgrade probe)
+  - ride-along docs: `ZeroParadox/Category/Lawvere.md` - Category-relative verdicts: what each face fails, and what the shared shape is not
 - `ZeroParadox/Category/LawvereDecidable.lean` - Lawvere's engine, priced: the same theorems over decidable equality
 - `ZeroParadox/Category/LawvereTaboo.lean` - The diagonal engine's supplier is a constructive taboo
 
@@ -229,6 +230,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
   - ride-along docs: `ZeroParadox/Valuation/InfinitudeFloor.md` - What the requirements class pins down, and why non-degeneracy must be an inequation
 - `ZeroParadox/Valuation/IrreversibilityProbe.lean` - Experimental probe: is irreversibility (the snap direction) a fifth independent requirement?
 - `ZeroParadox/Valuation/LocalFloor.lean` - Every node is a floor, literally: a genuine InfinitudeFloor at each node of the generic tree
+  - ride-along docs: `ZeroParadox/Valuation/LocalFloor.md` - Why the 0-spine is standing still, and whose result this already is
 - `ZeroParadox/Valuation/NuLeafReconcile.lean` - The within-ν edge reconciles at the LEAF, not the ambient
 - `ZeroParadox/Valuation/NuRateEdge.lean` - The within-ν edge at the orbit-RATE level (#3 ↔ #2)
 - `ZeroParadox/Valuation/NuRateMatch.lean` - Within-ν geometric-rate match: #2 (irreducible Markov) and #3 (p-adic) share rate 1/2

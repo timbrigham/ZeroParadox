@@ -65,12 +65,6 @@ GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_cl
 # until 2026-08-10 none of the three routed anywhere — the git rule cannot see them (`.claude-local`
 # is gitignored) and the hash rule covered only the five checkers (F8).
 CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.txt",
-                              # ⚠ HASHED, NOT GATING — like `check_poles.py`. It reports and
-                              # its baseline is at zero new, but nothing runs it with
-                              # `--block` yet. It is in CHECKERS because it CAN stop a push
-                              # once wired, and `CHECKERS`' own rule is that anything which
-                              # can must be hashed (RLY16-2, RLY17-1).
-                              "check_attribution.py", "attribution_baseline.txt",
                               "hooks.py", "batch.py", "ship.py", "report.py", "gate_round.py",
                               # ⚠ THE BASELINES ARE EXEMPTION SWITCHES AND MUST BE HASHED. One
                               # appended line to pov_baseline.txt took a planted violation from

@@ -1,5 +1,5 @@
 """
-Build ZP-F: The Counterexamples (v1.5)
+Build ZP-F: The Counterexamples (v1.6)
 v1.6: FORCING OVERCLAIM RETRACTED. The document described the snap as a forced transition without ever hedging occurrence. T-SNAP fixes the transition's SHAPE; Order/Snap.lean's tsnap_holds_but_nothing_moves proves it holds in a model where nothing moves, so occurrence is a framework commitment. Prose only.
 v1.4: Vocabulary fix — "departure from the null state" → "departure from ⊥" in preamble. Palette rebuild.
 v1.3: K-16 vocabulary fix — "topological isolation of zero" → "valuative gap at zero

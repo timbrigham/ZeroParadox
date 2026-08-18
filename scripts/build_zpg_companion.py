@@ -1,5 +1,5 @@
 """
-Build ZP-G Illustrated Companion (v1.6)
+Build ZP-G Illustrated Companion (v1.9)
 v1.8: category_diagram — fix overlapping text: use fixed cy=68, dh=2.2in, remove redundant internal title string.
 v1.7: vocab fix: null state → ⊥; categorical bridge → ZP-H.
 v1.6: Strip version number from companion footer.

@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.7 | July 2026
+Version 1.8 | July 2026
 
 v1.7: VOCABULARY DECISION, recorded rather than deferred (adversary round-5 verification). The word "instance" was doing two jobs: the technical instance-of-a-theorem relation, and ZP-P's inherited tier-2 word for a per-domain realization. After v1.6 answered the universal question in the negative, the title-block note on page 1 and the endnote on page 7 gave opposite answers about the same two objects purely through that collision. DECISION: "instance" is reserved for the instance-of-a-theorem relation; a per-domain realization is a "realization" or a "face". Five rendered sites changed; no claim changed. Recorded here because the reviewer's warning is the real risk - leaving it undecided is how the underlying claim survived four rounds. The Lawvere-instance uses in Section III are the technical sense and stay.
 v1.6: BEDROCK, the v1.5 fix was UNSWEPT (adversary round 5). v1.5 corrected Section I to say NONE of the min=max facts is an instance of fork_collapse_iff, and left Section III and the endnote byte-identical to v1.1, where Section III answered its own headline question - 'one theorem all the instances are cases of?' - in the AFFIRMATIVE for catseam_is_frameflip, the very object Section I rules out by name, and the endnote called it an 'instance' outright. One PDF asserting and denying the same proposition eight pages apart, in the two places a skimmer lands. Section III now answers in the negative and keeps the true half (the theorem is universal over complete lattices; the faces do not satisfy its hypotheses); the endnote says 'face', not 'instance'. Also: the denial framing ('they were never the same map', 'the snap is a separate object') is replaced by the conjectural form per the new POV KIND/STATUS convention - the identification is held OPEN, not settled either way.
@@ -26,7 +26,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -409,8 +409,11 @@ def build():
             '&#8212; Cantor forbids it (nontrivial_lattice_no_witness, q2_no_witness) &#8212; so '
             'the lattice and 2-adic bottoms share the diagonal <i>shape</i> but are provably NOT '
             'literal Lawvere instances. Only in the <b>effective</b> category is there a genuine '
-            'one, where the fixed-point-free diagonal is not computable '
-            '(computability_face_fixedPoint, Kleene&#8217;s recursion theorem). So the keystone '
+            'one, where the fixed-point-free <i>diagonal construction</i> is not admissible '
+            '&#8212; which is not the claim that no fixed-point-free computable endomap exists, since '
+            'c &#8614; pair(c, c) is one; removing the obstruction does not by itself supply the '
+            'witness, and the fixed point is cited rather than derived '
+            '(computability_face_fixedPoint). So the keystone '
             'unifies a shape, not a single mechanism.',
         ]
     ))

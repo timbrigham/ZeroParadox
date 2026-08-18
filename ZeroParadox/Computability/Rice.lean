@@ -52,8 +52,9 @@ theorem halting_undecidable (n : ℕ) : ¬ ComputablePred (fun c => (eval c n).D
 /-! ## § III. The pairing — ν-existence and Rice undecidability, one fixed point -/
 
 /-- **The exists-but-undecidable signature.** In the computability setting the recursion theorem gives
-    *both*: every computable self-map on codes has a fixed point (the Kleene quine exists — ν, via
-    `computability_face_fixedPoint`), *and* every non-trivial extensional property is undecidable (Rice).
+    *both*: every computable self-map on codes has a fixed point **up to `eval`** (the Kleene quine
+    exists — ν, via `computability_face_fixedPoint`; NOT a literal fixed point — `fun c => Code.pair c c`
+    has none), *and* every non-trivial extensional property is undecidable (Rice).
     The quine's existence and its undecidability are two faces of one recursion-theorem fixed point — the
     computability floor stated as a single conjunction. -/
 theorem quine_exists_yet_rice (C : Set Code)
@@ -67,7 +68,7 @@ theorem quine_exists_yet_rice (C : Set Code)
 
 /-- **Rice on the family's μ/ν fork: the computability face HAS a bottom element.** Unlike the truth /
     comprehension walls (Tarski, Curry — μ, no floor), computation reaches a floor: every computable
-    self-map on codes has a fixed point (`computability_face_fixedPoint` — Rogers' fixed-point theorem;
+    self-map on codes has a fixed point **up to `eval`** (`computability_face_fixedPoint` — Rogers';
     while `rice_face`, via `ComputablePred.rice₂`, is the one that genuinely routes through
     Kleene's second recursion theorem, `fixed_point₂`),
     the Kleene quine, a program computing its own code (verb = noun). So on the one-over-infinity-to-bottom

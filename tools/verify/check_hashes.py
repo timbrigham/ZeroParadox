@@ -23,6 +23,10 @@ Multiple docs in one call:
 
 Other flags:
     --update-register   Rewrite Comp AR column from ar_status.json only (no mark)
+    --sync-hash KEY...  Update the register hash token ONLY, leaving AR status alone. For a script
+                        edit that changes no RENDERED output (a docstring header, a comment): the
+                        PDF is unchanged and no re-review is owed, so --mark-remediated would
+                        assert a review nobody did.
 
 AR status meanings:
     Y/Y   — current hash adversary-reviewed and remediated (or confirmed clean)
@@ -242,10 +246,14 @@ def update_register_comp_hash(doc, new_hash):
     def replace_comp(m):
         return re.sub(r'comp:[0-9a-f]{8}', f'comp:{new_hash}', m.group(0))
 
+    # ⚠ RETURN WHETHER WE ACTUALLY WROTE. The refusal path used to `return` bare, so a
+    # caller printing 'register.md updated' said so after a REFUSAL - a fail-open created
+    # by the HASH-1 fix itself, where the guard tells the truth and the summary does not.
     pattern = _register_row_pattern(doc, content, 'comp')
     if pattern is None:
-        return
+        return False
     common.write_text_lf(REGISTER, re.sub(pattern, replace_comp, content, count=1))
+    return True
 
 
 def _register_row_pattern(doc, content, kind):
@@ -283,10 +291,14 @@ def update_register_formal_hash(doc, new_hash):
     def replace_formal(m):
         return re.sub(r'formal:[0-9a-f]{8}', f'formal:{new_hash}', m.group(0))
 
+    # ⚠ RETURN WHETHER WE ACTUALLY WROTE. The refusal path used to `return` bare, so a
+    # caller printing 'register.md updated' said so after a REFUSAL - a fail-open created
+    # by the HASH-1 fix itself, where the guard tells the truth and the summary does not.
     pattern = _register_row_pattern(doc, content, 'formal')
     if pattern is None:
-        return
+        return False
     common.write_text_lf(REGISTER, re.sub(pattern, replace_formal, content, count=1))
+    return True
 
 
 def update_register_ar_column(ar_labels):
@@ -331,7 +343,8 @@ def mark_doc(key, status, ar_data):
             return None
         ar_data[key] = {'hash': current_hash, 'status': status}
         doc = key.replace('-formal', '')
-        update_register_formal_hash(doc, current_hash)
+        if not update_register_formal_hash(doc, current_hash):
+            print('  ⚠ %s: ar_status.json updated, register.md NOT written (see refusal above)' % key)
         return current_hash
 
     if key in STANDALONE_SCRIPTS:
@@ -456,14 +469,107 @@ def check_docstring_versions():
         m = re.search(r"^VERSION\s*=\s*['\"]([^'\"]+)['\"]", body, re.M)
         if not m:
             continue
-        head = re.search(r"(?m)^\s*Version\s+(\d+(?:\.\d+)*)\s*\|", body[:m.start()])
-        if head and head.group(1) != m.group(1):
-            out.append((os.path.basename(p), head.group(1), m.group(1)))
+        head = _header_version(body[:m.start()])
+        if head and head != m.group(1):
+            out.append((os.path.basename(p), head, m.group(1)))
     return out
+
+
+# ⚠ TWO HEADER SHAPES, AND RECOGNISING ONE OF THEM REPORTED A CLEAN ZERO OVER THE OTHER.
+# `Version 1.21 |` was covered; `Build ZP-A: Lattice Algebra (v1.21)` was not, and 13 of 43 scripts
+# use it - so they were silently exempt and SIX were genuinely stale while the check said clean
+# (/rely, 2026-08-18). A checker reporting zero over ground it never walked is the exact fail-open
+# this layer exists to prevent, and it shipped inside the fix for the same class.
+_HEADER_SHAPES = (
+    re.compile(r"(?m)^\s*Version\s+(\d+(?:\.\d+)*)\s*\|"),   # `Version 1.21 | July 2026`
+    re.compile(r"\(v(\d+(?:\.\d+)*)\)"),                       # `Build ZP-A: ... (v1.21)`
+)
+
+
+# A changelog line: `v1.10: ...`. Everything from the FIRST one onward is historical record.
+_CHANGELOG_LINE = re.compile(r"(?m)^\s*v\d+(?:\.\d+)*\s*:")
+
+
+def _header_version(head):
+    """The version a build script's docstring header advertises, under either shape.
+
+    ⚠ Search the HEADER ONLY - the caller slices off everything from the `VERSION` constant onward.
+    A changelog entry below it (`v1.18: ...`, or prose like "Version 1.4 updates this") is a
+    HISTORICAL record and must never be rewritten to match the constant.
+    """
+    # ⚠⚠ TRUNCATE AT THE FIRST CHANGELOG LINE, AND THIS IS NOT THEORETICAL. Without it the
+    # `(vN)` shape matched `(v1.1)` INSIDE `build_zpi.py`'s v1.10 note - "version references
+    # \"(v1.1)\", \"v2.0\" removed from body prose" - and a sync run rewrote it to `(v1.15)`,
+    # falsifying a record of what v1.10 actually did. Caught and reverted 2026-08-18. The header
+    # is what precedes the changelog; everything from the first `vN:` line on is history.
+    cut = _CHANGELOG_LINE.search(head)
+    if cut:
+        head = head[:cut.start()]
+    for pat in _HEADER_SHAPES:
+        m = pat.search(head)
+        if m:
+            return m.group(1)
+    return None
+
+
+def sync_hash(key):
+    """Update `key`'s register hash token ONLY. Does not touch AR status.
+
+    For the case the four-step rule does not cover: a script edited in a way that changes no
+    RENDERED output - a docstring header, a comment - so the PDF is unchanged, the version already
+    describes it, and no re-review is owed. `--mark-remediated` would stamp AR as
+    reviewed-and-remediated, which would be a claim about work nobody did.
+
+    Routes through the same `FORMAL_SCRIPTS` / `COMP_SCRIPTS` maps and the same boundary-aware row
+    matcher as everything else here, so it cannot write a row the caller did not name.
+    """
+    if key in FORMAL_SCRIPTS:
+        h = sha8(FORMAL_SCRIPTS[key])
+        if h == 'MISSING':
+            print('  ERROR: %s not found' % FORMAL_SCRIPTS[key])
+            return False
+        ok = update_register_formal_hash(key.replace('-formal', ''), h)
+        print('  %-26s formal:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
+        return ok
+    if key in COMP_SCRIPTS:
+        h = sha8(COMP_SCRIPTS[key])
+        if h == 'MISSING':
+            print('  ERROR: %s not found' % COMP_SCRIPTS[key])
+            return False
+        ok = update_register_comp_hash(key, h)
+        print('  %-26s comp:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
+        return ok
+    if key in STANDALONE_SCRIPTS:
+        # ⚠ STANDALONE DOCS LIVE IN `ar_status.json`, NOT `register.md` - the header says so, and a
+        # register write for one silently matches nothing. Update the recorded hash and PRESERVE the
+        # status: the rendered content did not change, so a `remediated` doc is still remediated;
+        # only the script bytes moved. Overwriting the status here would be the same false claim
+        # `--mark-remediated` would make.
+        h = sha8(STANDALONE_SCRIPTS[key])
+        if h == 'MISSING':
+            print('  ERROR: %s not found' % STANDALONE_SCRIPTS[key])
+            return False
+        ar = load_ar_status()
+        prev = ar.get(key, {})
+        status = prev.get('status', 'unknown')
+        ar[key] = {'hash': h, 'status': status}
+        save_ar_status(ar)
+        print('  %-26s ar_status:%s  status preserved as %r' % (key, h, status))
+        return True
+    print('  ERROR: unknown key %r' % key)
+    return False
 
 
 def main():
     args = sys.argv[1:]
+    if '--sync-hash' in args:
+        keys = [a for a in args[args.index('--sync-hash') + 1:] if not a.startswith('--')]
+        if not keys:
+            print('--sync-hash needs at least one document key')
+            return 1
+        print('Register hash sync (AR status untouched):')
+        bad = sum(0 if sync_hash(k) else 1 for k in keys)
+        return 1 if bad else 0
     if '--selftest' in args:
         print('ZP Build Script Hash Check - CONTROLS')
         print('=' * 55)
