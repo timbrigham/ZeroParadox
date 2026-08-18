@@ -13,7 +13,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.1'
+VERSION = '1.2'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -193,9 +193,15 @@ def build():
         [
             'The category of numbered sets carries a canonical reflexive object: the universal '
             'machine. The evaluation map eval is point-surjective onto the computable functions &#8212; '
-            'every computable function has an index (Rogers 1967). And there is no fixed-point-free '
-            '<i>total computable</i> endomap.',
-            'So the obstruction is absent, the reflexive object is present, and the self-referential '
+            'every computable function has an index (Rogers 1967). And Rogers\' fixed-point theorem '
+            'gives every total computable endomap of codes a fixed point <i>up to eval</i> &#8212; two '
+            'codes computing the same function.',
+            'That is weaker than "no fixed-point-free endomap", and the strong form is false: '
+            'c &#8614; pair(c, c) is total, computable, and returns its own input for no c. The '
+            'obstruction is absent at the level of <i>eval</i>, which is where the reflexive object '
+            'lives &#8212; eval lands in the partial functions, not in the codes, so the Set '
+            'refutation (which consumes literal inequality) never applied to it.',
+            'So the reflexive object is present and the self-referential '
             'fixed point exists there &#8212; Kleene\'s second recursion theorem: for a computable map '
             'f, a code c with eval c = f c.',
             'Witnesses: eval_point_surjective, computable_no_fixedpointfree, '
