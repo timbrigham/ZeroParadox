@@ -616,7 +616,7 @@
         "tree": "eacbc513a541d465b9937b33a53f923d3e9ea4b6"
       },
       "counts": {
-        "declarations": 1676,
+        "declarations": 1678,
         "files": 136
       },
       "entries": [
@@ -23019,6 +23019,44 @@
             "witness_of": []
           },
           "disposition": "new",
+          "id": "5bf6ee77-5bd2-4e62-a2b0-43924bbc0de6",
+          "new": {
+            "file": "ZeroParadox/Valuation/LocalFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.one_branch_new",
+            "short": "one_branch_new"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Promote the branch-dependent successor-null theorems from the 2026-07-26 probe into LocalFloor.lean, beside the prose claim they prove.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
           "id": "5c2b96dc-75c5-4a84-b078-35ec5a00b9e8",
           "new": {
             "file": "ZeroParadox/Category/NextTimeCategorical.lean",
@@ -35472,6 +35510,44 @@
             ]
           },
           "reason": "Sibling faces of the diagonal fixed point, built 2026-07-16: Tarski (truth/wall), Curry (explosion/wall), Rice (computability undecidability, cites Mathlib), Löb (provability, from-scratch ProvabilityLogic typeclass + Gödel 2). Each wired to the bottom element via the family's μ/ν structure.",
+          "verify": {
+            "axioms": null,
+            "sorry_free": true
+          }
+        },
+        {
+          "claims": {
+            "citations": [],
+            "witness_of": []
+          },
+          "disposition": "new",
+          "id": "93ec674f-8f1d-4bc9-a09a-7ab7a1d5a1d2",
+          "new": {
+            "file": "ZeroParadox/Valuation/LocalFloor.lean",
+            "namespace": "ZeroParadox",
+            "qualified": "ZeroParadox.zero_branch_same",
+            "short": "zero_branch_same"
+          },
+          "old": {
+            "file": null,
+            "kind": null,
+            "line": null,
+            "prefix": null,
+            "qualified": null,
+            "short": null
+          },
+          "ontology": {
+            "domain": [
+              "valuation"
+            ],
+            "object": [
+              "bottom"
+            ],
+            "role": [
+              "face"
+            ]
+          },
+          "reason": "Promote the branch-dependent successor-null theorems from the 2026-07-26 probe into LocalFloor.lean, beside the prose claim they prove.",
           "verify": {
             "axioms": null,
             "sorry_free": true

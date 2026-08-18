@@ -109,17 +109,18 @@ theorem q2_no_witness : ¬ HasLawvereWitness ℚ_[2] :=
 
 /-! ## § V. The computability face — a GENUINE fixed point, in a different category
 
-    Here the verdict flips, and the reason is the **category**. The failure above is in **Set** (raw
-    types, *all* endofunctions): a witness would force every endo to have a fixed point, impossible by
-    Cantor. The computability face lives in the **effective** setting, where "endomap" means *computable*
-    endomap — and the fixed-point-free diagonal (the `g` Cantor builds) is **not computable**, so the
-    obstruction vanishes. Mathlib's `Nat.Partrec.Code.fixed_point` (Rogers / Kleene's recursion theorem)
-    is exactly this: *every computable* self-map on codes has a fixed point. This is ZP-K's face (the
-    Kleene quine), and it is a genuine diagonal-produced fixed point. -/
+    The verdict flips, and the reason is the **category**. § IV's failure is in **Set** (all
+    endofunctions), where Cantor forbids the witness. Here "endomap" means *computable*, and Mathlib's
+    `Nat.Partrec.Code.fixed_point` gives every such map a fixed point **up to `eval`**.
+    ⚠ **The qualifier is load-bearing, because the Cantor contrast above is drawn in the LITERAL
+    register and the literal claim is FALSE here too:** `fun c => Code.pair c c` is total, computable
+    and returns its own input for no `c`. The escape is not that the diagonal stops existing — it is
+    that `eval` lands in `ℕ →. ℕ`, a different codomain from `Code → Code`, so the Set refutation
+    never applied. ZP-K's face (the Kleene quine), genuine at the level of `eval`. -/
 
-/-- **Computability face (genuine instance).** Every *computable* self-map on codes has a fixed point —
-    Rogers' fixed-point / Kleene's recursion theorem (`Nat.Partrec.Code.fixed_point`). The escape from
-    the Cantor obstruction is computability: the fixed-point-free diagonal is not a computable endomap. -/
+/-- `Statement:` a fixed point **up to `eval`**, not a literal one (Rogers / Kleene).
+    ⚠ `fun c => Code.pair c c` is a total computable endomap with no `c` satisfying `f c = c`;
+    the escape is `eval`'s codomain being `ℕ →. ℕ` rather than `Code`. See § V. -/
 theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code} (hf : Computable f) :
     ∃ c, Nat.Partrec.Code.eval (f c) = Nat.Partrec.Code.eval c :=
   Nat.Partrec.Code.fixed_point hf

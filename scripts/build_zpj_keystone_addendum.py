@@ -19,7 +19,7 @@ Reads after ZP-J Self-Reference.
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard: route all bare Paragraph() text through Unicode-to-entity conversion ──
@@ -149,11 +149,12 @@ def build():
         'In computability: a genuine instance (Lawvere.lean)',
         [
             'computability_face_fixedPoint &#8212; every <i>computable</i> self-map on codes '
-            'has a fixed point. This wraps Mathlib\'s Nat.Partrec.Code.fixed_point (Rogers / '
-            'Kleene\'s recursion theorem).',
-            'The escape from the Cantor obstruction is computability: the fixed-point-free '
-            'diagonal is not a computable endomap, so the witness can exist in the effective '
-            'category. This is ZP-K\'s face (the Kleene quine).',
+            'has a fixed point <i>up to eval</i>: two codes computing the same function. This wraps '
+            'Mathlib\'s Nat.Partrec.Code.fixed_point (Rogers / Kleene\'s recursion theorem).',
+            'The qualifier is load-bearing. A literal fixed point is not on offer &#8212; c &#8614; '
+            'pair(c, c) is total, computable, and returns its own input for no c. The escape from the '
+            'Cantor obstruction is that eval lands in the partial functions, not in the codes, so the '
+            'Set refutation never applied to it. This is ZP-K\'s face (the Kleene quine).',
             'Footprint: [propext, Classical.choice, Quot.sound], inherited from Mathlib.',
         ]
     ))

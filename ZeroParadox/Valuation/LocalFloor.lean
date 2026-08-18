@@ -1,6 +1,7 @@
 -- EXPERIMENTAL (branch scaffolding): bottom-as-boundary pivot, worked through from the ground up; mostly re-derivation of existing framework results, kept for transparency. Curated/load-bearing results are indexed in ZeroParadox/BottomCannotBe.lean and classified in ZeroParadox/MANIFEST.md.
 import ZeroParadox.Valuation.PadicTree
 import ZeroParadox.Valuation.InfinitudeFloor
+import Mathlib.Data.List.GetD
 import Mathlib.Tactic
 
 set_option maxHeartbeats 400000
@@ -128,7 +129,8 @@ in its own subtree. ⚠ **The scoping is load-bearing.** Under the GLOBAL valuat
 **is** distinguished: `botEnd_val_top : endVal botEnd = ⊤`
 (`ZeroParadox/Valuation/PadicTree.lean`), while a floor below a prefix **containing a nonzero digit**
 has finite `endVal`. ⚠ **A nonempty prefix is not enough** — an all-zero prefix gives
-`localBotEnd v = botEnd`, so `endVal` is `⊤` there too. The discriminator is a **nonzero digit**.
+`localBotEnd v = botEnd`, so `endVal` is `⊤` there too. The discriminator is a **nonzero digit**,
+and `zero_branch_same` / `one_branch_new` below prove it.
 The non-distinction is a statement about the local measures, never about the carrier.
 
 **A comparable shape holds in the ordinal carrier by a different mechanism** —
@@ -149,6 +151,49 @@ theorem boundaryFloor_nil_floor : (boundaryFloor []).floor = botEnd := by
   simp only [localBotEnd, prependEnd, List.length_nil]
   rw [if_neg (Nat.not_lt_zero n), Nat.sub_zero]
 
+/-! ## § The discriminator is a nonzero digit — descending 0-ward is standing still
+
+The two theorems below make the prose claim above checkable: a child's local floor is a NEW floor
+only when the step branches away. They were proved 2026-07-26 and are promoted here unchanged.
+
+⚠ The distinctness is **earned, not stipulated**. `localBotEnd` is deliberately NOT injective, so
+`one_branch_new` is a fact about digits rather than about a label — the alternative construction
+(bolt an instantiation counter onto the state and let the index do the work) would prove novelty by
+stipulation and is exactly as empty as a trivially-inhabited requirements class. -/
+
+/-- `Statement:` the 0-branch gives back the SAME local floor: `localBotEnd (v ++ [0]) = localBotEnd v`.
+    Descending 0-ward does not produce a new bottom. -/
+theorem zero_branch_same (v : List (Fin 2)) :
+    localBotEnd (v ++ [0]) = localBotEnd v := by
+  funext n
+  simp only [localBotEnd, prependEnd, List.length_append, List.length_cons,
+             List.length_nil, botEnd]
+  by_cases hn : n < v.length
+  · rw [if_pos (by omega), if_pos hn, List.getD_append _ _ _ _ hn]
+  · rw [if_neg hn]
+    by_cases hn' : n < v.length + 1
+    · have hv : n = v.length := by omega
+      subst hv
+      rw [if_pos (by omega), List.getD_append_right _ _ _ _ (by omega)]
+      simp
+    · rw [if_neg (by omega)]
+
+/-- `Statement:` the 1-branch gives a DIFFERENT local floor: `localBotEnd (v ++ [1]) ≠ localBotEnd v`.
+    They differ at position `|v|`, where the child carries digit 1 and the parent's tail is 0.
+
+    `Reading:` taken with `zero_branch_same`, this QUALIFIES the framework's commitment that the
+    snap-arc returns to a new bottom — it neither confirms nor refutes it. A new bottom is obtained
+    exactly when the step branches away; 0-ward is standing still. -/
+theorem one_branch_new (v : List (Fin 2)) :
+    localBotEnd (v ++ [1]) ≠ localBotEnd v := by
+  intro h
+  have hv := congrFun h v.length
+  simp only [localBotEnd, prependEnd, List.length_append, List.length_cons,
+             List.length_nil, botEnd] at hv
+  rw [if_pos (by omega), if_neg (by omega),
+      List.getD_append_right _ _ _ _ (by omega)] at hv
+  simp at hv
+
 end ZeroParadox
 
 section PurityCheck
@@ -158,4 +203,6 @@ open ZeroParadox
 #print axioms boundaryFloor
 #print axioms every_node_is_a_floor
 #print axioms boundaryFloor_nil_floor
+#print axioms zero_branch_same
+#print axioms one_branch_new
 end PurityCheck
