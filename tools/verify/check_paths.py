@@ -410,6 +410,7 @@ def scan_ride_along(files, pairs):
         return hits
     for _n, md in pairs.items():
         _titles.setdefault(md, _title_words(REPO / md))
+        _owner[_n] = md[:-3] + '.lean'
     # ⚠ NO `/` IN THE LOOKBEHIND. The convention REQUIRES the full repo path, so almost every real
     # citation reads `ZeroParadox/Settheory/Wall.lean` — and excluding a preceding `/` made the
     # detector blind to exactly the form the project mandates. It returned 0 against 13 known breaks.
@@ -576,8 +577,14 @@ def selftest_ride_along():
     removed; `scan_title_duplication` handles the case that motivated it, upstream and precisely.
     **A hole described as closed is worse than one described as open** — and getting that wrong in
     the paragraph whose whole job is honest limits is exactly what this paragraph exists to stop."""
-    pairs = {'Wall.lean': 'ZeroParadox/Settheory/Wall.md'}
-    _titles.setdefault(pairs['Wall.lean'], _title_words(REPO / pairs['Wall.lean']))
+    # Two ride-alongs on purpose: `Wall.lean` kept NO section headings (its whole essay moved), and
+    # `Occurrence.lean` kept several while their bodies moved. The section rule must behave
+    # differently on the two, and one fixture cannot show that.
+    pairs = {'Wall.lean': 'ZeroParadox/Settheory/Wall.md',
+             'Occurrence.lean': 'ZeroParadox/Computability/Occurrence.md'}
+    for _n, _md in pairs.items():
+        _titles.setdefault(_md, _title_words(REPO / _md))
+        _owner[_n] = _md[:-3] + '.lean'
     must_fire = [
         ("full path + closing backtick, the mandated form",
          "the wall/floor carving; and `ZeroParadox/Settheory/Wall.lean`'s reframe paragraph."),
@@ -608,6 +615,17 @@ def selftest_ride_along():
         ("identifier ending in a vocabulary word (SynONote / 'note')",
          "The `SynONote` bridge is defined in `ZeroParadox/Settheory/Wall.lean` for the carrier."),
     ]
+    # ⚠ THE SECTION RULE HAS TWO BRANCHES AND ONE CONTROL WOULD PASS ON EITHER. A heading that
+    # is STILL in the `.lean` must downgrade; one that LEFT must say it moved. Without both, the
+    # `§ III` false positive that prompted the fix would have gone on passing its own control.
+    section_branches = [
+        ('heading still present in the .lean -> downgraded, not "moved"',
+         'See `ZeroParadox/Computability/Occurrence.lean` § III for the obstruction.',
+         'heading is still'),
+        ('heading absent from the .lean -> reported as moved',
+         'See `ZeroParadox/Computability/Occurrence.lean` § XCIX for the obstruction.',
+         'moved to the ride-along'),
+    ]
     import tempfile
     bad = 0
     tmp = Path(tempfile.mkdtemp())
@@ -626,7 +644,26 @@ def selftest_ride_along():
             ok = (got == want)
             bad += 0 if ok else 1
             print('  %-52s %s' % (why[:52], 'ok' if ok else ('MISSED' if want else 'FALSE POSITIVE')))
+    print('SECTION BRANCH (both, or the rule is untested on one side)')
+    for why, line, want_sub in section_branches:
+        hits = _ride_along_line_hits(line, pairs)
+        ok = any(want_sub in h for h in hits)
+        bad += 0 if ok else 1
+        print('  %-52s %s' % (why[:52], 'ok' if ok else 'WRONG BRANCH: %s' % (hits or 'no hit')))
     return bad
+
+
+def _trim_punct(s):
+    """Strip the delimiters a citation is wrapped in, leaving the bare section marker."""
+    return s.strip(" 	`)]" + chr(39) + chr(34))
+
+
+def pairs_owner(basename):
+    """Repo-relative `.lean` path for a matched ride-along basename, or None."""
+    return _owner.get(basename)
+
+
+_owner = {}
 
 
 def _ride_along_line_hits(line, pairs):
@@ -647,8 +684,39 @@ def _ride_along_line_hits(line, pairs):
         elif PROSE_NOUN_BEFORE.search(before):
             out.append('names prose that moved: ' + PROSE_NOUN_BEFORE.search(before).group(1))
         elif SECTION_AFTER.match(tail):
-            out.append('names a SECTION that moved to the ride-along')
+            # ⚠ ONLY IF THE HEADING ACTUALLY LEFT. Firing on every `§` after a ride-along name
+            # asserts a move that did not happen: `Occurrence.lean` kept `§ III` and `§ VI` as
+            # headings while their BODIES moved, and the check reported both as relocated. That is
+            # a false positive whose surface GROWS with every conversion — the same shape as the
+            # title-overlap heuristic deleted below, and the reason it was deleted.
+            mark = _trim_punct(SECTION_AFTER.match(tail).group(0))
+            if _section_heading_present(pairs_owner(m.group(1)), mark):
+                out.append('names a SECTION of a file that has a ride-along — heading is still '
+                           'in the .lean; confirm the CONTENT it names did not move')
+            else:
+                out.append('names a SECTION that moved to the ride-along')
     return out
+
+
+_headings = {}
+
+
+def _section_heading_present(lean_rel, mark):
+    """Does `mark` (e.g. `§ III`) still open a heading in the cited `.lean`?
+
+    Existence of the heading is NOT proof the cited content stayed — `§ 0 Consequence 3` moved out
+    from under a heading that remains. So a present heading DOWNGRADES the message rather than
+    suppressing the hit: the checker locates, the reader judges."""
+    if lean_rel is None:
+        return False
+    if lean_rel not in _headings:
+        try:
+            body = (REPO / lean_rel).read_text(encoding='utf-8', errors='replace')
+        except OSError:
+            body = ''
+        _headings[lean_rel] = re.findall(r'^\s*/-!\s*#+\s*(.+?)\s*$', body, re.M)
+    norm = re.sub(r'\s+', ' ', mark).strip().rstrip('.')
+    return any(re.sub(r'\s+', ' ', h).startswith(norm) for h in _headings[lean_rel])
 # ⚠⚠ A TITLE-OVERLAP HEURISTIC LIVED HERE FOR ONE COMMIT AND WAS REMOVED. Recorded because the
 # measurement is the useful part, not the code. It flagged a line sharing >=3 distinctive words with
 # the ride-along's H1 while citing the `.lean`, aimed at the `MANIFEST.md` row shape.

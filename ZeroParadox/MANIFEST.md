@@ -131,6 +131,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Computability/GroundZero.lean` - Ground zero — the bottom as a behaviour, not a configuration
 - `ZeroParadox/Computability/Kleene.lean` - ZP-K: Computational Grounding of Self-Reference
 - `ZeroParadox/Computability/Occurrence.lean` - Occurrence — what it takes for the bottom to move, in the computational face
+  - ride-along docs: `ZeroParadox/Computability/Occurrence.md` - The carrier's reach, floor-directed motion, and stutter equivalence
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
@@ -143,6 +144,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
 - `ZeroParadox/Ordinal/Epsilon0MinMax.lean` - ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
+  - ride-along docs: `ZeroParadox/Ordinal/Epsilon0MinMax.md` - Least fixed point as a signature, and two fences on the seed
 - `ZeroParadox/Ordinal/Gentzen.lean` - ZP-L: Incomputability Convergence
 - `ZeroParadox/Ordinal/Goodstein.lean` - Goodstein's theorem (full, hereditary base) — ε₀ ordinal descent
 - `ZeroParadox/Ordinal/Incompleteness.lean` - ZP-M: Kleene–Ordinal Bridge Layer
@@ -195,6 +197,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Order/ProofFloorHomset.lean` - Axis III over the proof-theory floor #1 (the hom-set carrier convention)
 - `ZeroParadox/Order/SeamSchema.lean` - A shared "seam schema" for the QPF root-seam and the lattice selfApp seam, with the cross-setting fence IN the statement.
 - `ZeroParadox/Order/WellFoundedObstruct.lean` - Well-foundedness obstructs the attractor character of the μ floor
+  - ride-along docs: `ZeroParadox/Order/WellFoundedObstruct.md` - The NO-GO gauge on the attractor reading, and what the capstone does not claim
 
 ### Valuation / number theory (ZP-B, ZP-F)
 

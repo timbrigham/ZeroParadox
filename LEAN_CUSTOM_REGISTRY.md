@@ -12,7 +12,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ## Custom Typeclasses
 
-### `ZPSemilattice` — `ZeroParadox/Order/Lattice.lean:36`
+### `ZPSemilattice` — `ZeroParadox/Order/Lattice.lean`
 
 **Relationship to Mathlib:** Replaces `SemilatticeSup` + `OrderBot`
 
@@ -20,7 +20,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `AFAStructure` — `ZeroParadox/Settheory/SetTheoryAFA.lean:78`
+### `AFAStructure` — `ZeroParadox/Settheory/SetTheoryAFA.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -28,7 +28,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `AbstractSelfApp` — `ZeroParadox/Computability/SelfApp.lean:63`
+### `AbstractSelfApp` — `ZeroParadox/Computability/SelfApp.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -36,7 +36,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `SeparatedSuccession` — `ZeroParadox/Multihomed/SeparatedSuccession.lean:54`
+### `SeparatedSuccession` — `ZeroParadox/Multihomed/SeparatedSuccession.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -44,7 +44,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ValuationStructure` — `ZeroParadox/Valuation/Scale.lean:62`
+### `ValuationStructure` — `ZeroParadox/Valuation/Scale.lean`
 
 **Relationship to Mathlib:** Replaces `Mathlib.RingTheory.Valuation.Valued`
 
@@ -52,7 +52,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean:47`
+### `ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean`
 
 **Relationship to Mathlib:** Replaces `ValuationStructure` (this project)
 
@@ -60,7 +60,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `KleeneStructure` — `ZeroParadox/Computability/Kleene.lean:168`
+### `KleeneStructure` — `ZeroParadox/Computability/Kleene.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -68,7 +68,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ZPCategory` — `ZeroParadox/Category/Category.lean:42`
+### `ZPCategory` — `ZeroParadox/Category/Category.lean`
 
 **Relationship to Mathlib:** Extends `Mathlib.CategoryTheory.Limits.IsInitial`
 
@@ -76,7 +76,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `ZPSurprisal` — `ZeroParadox/Category/Category.lean:54`
+### `ZPSurprisal` — `ZeroParadox/Category/Category.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -84,7 +84,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `DecorationUniverse` — `ZeroParadox/Settheory/APG.lean:138`
+### `DecorationUniverse` — `ZeroParadox/Settheory/APG.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -92,7 +92,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `Wheel` — `ZeroParadox/Algebra/Wheel.lean:106`
+### `Wheel` — `ZeroParadox/Algebra/Wheel.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -114,7 +114,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ## Custom Types and Definitions
 
-### `OntologicalStates` — `ZeroParadox/Valuation/Padic.lean:51`
+### `OntologicalStates` — `ZeroParadox/Valuation/Padic.lean`
 
 **Relationship to Mathlib:** Replaces `Fin 2`
 
@@ -122,7 +122,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `BinaryState` — `ZeroParadox/Information/Surprisal.lean:48`
+### `BinaryState` — `ZeroParadox/Information/Surprisal.lean`
 
 **Relationship to Mathlib:** Replaces `Fin 2`
 
@@ -130,7 +130,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `IsQuineAtom` — `ZeroParadox/Settheory/SetTheoryAFA.lean:99`
+### `IsQuineAtom` — `ZeroParadox/Settheory/SetTheoryAFA.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -138,7 +138,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `APG` — `ZeroParadox/Settheory/APG.lean:84`
+### `APG` — `ZeroParadox/Settheory/APG.lean`
 
 **Relationship to Mathlib:** Extends `Mathlib.Combinatorics.Quiver.Basic`
 
@@ -146,7 +146,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `IsKleeneFixedPoint` — `ZeroParadox/Computability/Kleene.lean:92`
+### `IsKleeneFixedPoint` — `ZeroParadox/Computability/Kleene.lean`
 
 **Relationship to Mathlib:** Replaces `Mathlib.Function.IsFixedPt`
 
@@ -154,7 +154,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `IsComputationalQuine` — `ZeroParadox/Computability/Kleene.lean:129`
+### `IsComputationalQuine` — `ZeroParadox/Computability/Kleene.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -162,7 +162,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `HasLawvereWitness` — `ZeroParadox/Category/Lawvere.lean:43`
+### `HasLawvereWitness` — `ZeroParadox/Category/Lawvere.lean`
 
 **Relationship to Mathlib:** Names the hypothesis of `Function.exists_fixed_point_of_surjective` (no Mathlib named predicate)
 
@@ -170,7 +170,7 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ---
 
-### `Phase` (with `floorRel`, `phaseRel`, `snap`) — `ZeroParadox/Multihomed/Boundary.lean:94`
+### `Phase` (with `floorRel`, `phaseRel`, `snap`) — `ZeroParadox/Multihomed/Boundary.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
@@ -180,56 +180,56 @@ grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"
 
 ## Custom Instances
 
-### `machinePhaseZPS` — `ZeroParadox/Order/Snap.lean:55`
+### `machinePhaseZPS` — `ZeroParadox/Order/Snap.lean`
 `ZPSemilattice MachinePhase`
 
 The cross-framework bridge. `MachinePhase` is Surprisal's two-element type; giving it a `ZPSemilattice` instance makes T-SNAP (`bot_join` applied to `MachinePhase`) a direct consequence of ZP-A's A4, retiring AX-1 as an axiom. No Mathlib lattice instance exists for `MachinePhase`.
 
 ---
 
-### `machinePhaseAFA` — `ZeroParadox/Computability/Kleene.lean:265`
+### `machinePhaseAFA` — `ZeroParadox/Computability/Kleene.lean`
 `AFAStructure MachinePhase`
 
 `selfMem x := x = bot` is the CIC-compatible encoding of AFA self-containment (`⊥ = {⊥}` cannot be stated in Lean's well-founded type theory). `quine_unique` and `bot_self_mem` are provable by `rfl`. This is the concrete closure of DA-1 for ZP-E's machine model.
 
 ---
 
-### `machinePhaseKleene` — `ZeroParadox/Computability/Kleene.lean:275`
+### `machinePhaseKleene` — `ZeroParadox/Computability/Kleene.lean`
 `KleeneStructure MachinePhase` (noncomputable)
 
 `botCode` is chosen via `Classical.choose` — no algorithm can identify which `Code` is the `botCode` (`isComputationalQuine_undecidable`). The `noncomputable` marker is load-bearing, not a proof artifact: the non-constructivity is the formal content of DA-1's computational path. Removing it would misrepresent the result.
 
 ---
 
-### `instZ2ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean:97`
+### `instZ2ValBridge` — `ZeroParadox/Valuation/ScaleBridge.lean`
 `ValBridge ℤ_[2]`
 
 `ℤ_[2]` is a ring — it cannot be a `ZPSemilattice` instance and could not satisfy `ValuationStructure`. `ValBridge`'s bot-as-plain-field design makes this instance possible. All four axioms delegate directly to theorems proved in `Scale` §V (`q2Scale_bot`, `q2Val_bot`, `q2Val_unique`, `q2Val_scale`).
 
 ---
 
-### `instNatInfZPS` — `ZeroParadox/Settheory/Model.lean:63`
+### `instNatInfZPS` — `ZeroParadox/Settheory/Model.lean`
 `ZPSemilattice ℕ∞` with inverted order
 
 Mathlib's `WithTop ℕ` has `≤` as its standard order (`⊤` is maximum). Here `join = min` and `bot = ⊤` — a deliberate reversal. The ZP partial order `x ≤_ZP y ↔ min x y = y` makes `⊤` the bottom (valuation ∞) and `0` the maximum (fully constrained). No Mathlib instance covers this inverted reading.
 
 ---
 
-### `instNatInfVal` — `ZeroParadox/Settheory/Model.lean:76`
+### `instNatInfVal` — `ZeroParadox/Settheory/Model.lean`
 `ValuationStructure ℕ∞` (scale = +1, val = id)
 
 The concrete model confirming that `ValuationStructure`'s abstract axioms have an inhabitant. `val = id` works because `ℕ∞` already carries its own depth as its value; `scale = (· + 1)` satisfies `val_scale` by `rfl`.
 
 ---
 
-### `instOntZPS` — `ZeroParadox/Settheory/OntBridge.lean:46`
+### `instOntZPS` — `ZeroParadox/Settheory/OntBridge.lean`
 `ZPSemilattice OntologicalStates`
 
 `OntologicalStates` carries no Mathlib lattice structure. The join (null-identity, exist-absorbing) matches ZP-A's A1–A4 but does not correspond to any Mathlib-provided instance on a two-element type.
 
 ---
 
-### `instOntSelfApp` — `ZeroParadox/Settheory/OntBridge.lean:61`
+### `instOntSelfApp` — `ZeroParadox/Settheory/OntBridge.lean`
 `AbstractSelfApp OntologicalStates` via constant-to-null map
 
 `OntologicalStates` (two elements) cannot satisfy `ValuationStructure`'s `val_scale` axiom — a finite two-element type has no room for `val` to strictly increase. The direct `AbstractSelfApp` instance using the constant-to-null map (every element → null) is the shorter path to AFA content for finite types.
@@ -238,74 +238,74 @@ The concrete model confirming that `ValuationStructure`'s abstract axioms have a
 
 *Last updated: 2026-07-19. Regenerate with: `grep -rn "\[ZP-CUSTOM\]" ZeroParadox/ --include="*.lean"`*
 
-### `IsLeastFixedPointFrom` — `ZeroParadox/Order/LeastFixedPoint.lean:77`
+### `IsLeastFixedPointFrom` — `ZeroParadox/Order/LeastFixedPoint.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Mathlib's least-fixed-point API (`OrderHom.lfp`, `isLeast_lfp`) is fixed to a `CompleteLattice` carrier. This predicate states the SAME mu characterization (least fixed point at or above a seed) over a bare relation, so it applies to the framework's non-lattice carriers — the axiom-clean `ZPSemilattice` L, and `Ordinal`, which is not a complete lattice. It is the order-generic placement schema, grounded back to `OrderHom.lfp` in that file's section II.
 
-### `ProvabilityLogic` — `ZeroParadox/Settheory/Loeb.lean:60`
+### `ProvabilityLogic` — `ZeroParadox/Settheory/Loeb.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Mathlib carries no modal or provability logic — no Loeb, no GL, no derivability conditions, no modal Kripke apparatus (grep-verified). A minimal typeclass carrying just the Hilbert-Bernays-Loeb apparatus, so that Loeb's theorem can be presented as a face of the diagonal family.
 
-### `QuineHost` — `ZeroParadox/Settheory/QuineHost.lean:95`
+### `QuineHost` — `ZeroParadox/Settheory/QuineHost.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Mathlib's `ZFSet` carries Foundation (`ZFSet.mem_wf`), which forbids `x in x` and so cannot host a Quine atom; and no Mathlib typeclass abstracts "a membership relation with a unique self-membered bottom." `QuineHost` is the minimal set-theory-native encoding of the framework's requirements on a host theory (fields `bot_selfMem` / `selfMem_unique`), distinct from the lattice-level `AFAStructure` in `SetTheoryAFA.lean`.
 
-### `trivialSelfApp` — `ZeroParadox/Computability/SelfApp.lean:177`
+### `trivialSelfApp` — `ZeroParadox/Computability/SelfApp.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** A deliberately degenerate `AbstractSelfApp` witness — the constant-bottom self-application — built to bound what the typeclass hypothesis can be made to yield. Not a modelling instance but a NO-GO gauge: it shows every `ZPSemilattice` carries an `AbstractSelfApp`, so no property of the carrier follows from the bare hypothesis. Mathlib has no notion of a deliberately vacuous instance of a project-local class.
 
-### `LoopsInPlace` — `ZeroParadox/Computability/Occurrence.lean:81`
+### `LoopsInPlace` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Names the self-looping configuration of a state-transition function (`f s = some s`) as a first-class predicate, so the trichotomy and the trap result can be stated about it. Mathlib's `Computability/StateTransition.lean` supplies `Reaches` and `eval` but no name for "steps to itself", which is the case that turns out to be the self-referential object rather than a third route.
 
-### `IsComputationalBottom` — `ZeroParadox/Computability/Occurrence.lean:110`
+### `IsComputationalBottom` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Bundles the framework's own two requirements on the computational bottom — that it is a fixed point of its own step, and that the snap departs from it — so their joint satisfiability can be decided. Framework-specific by construction; no Mathlib notion corresponds. The bundle is proved uninhabited (`machine_snap_impossible`), which is the point of naming it.
 
-### `Occurs` — `ZeroParadox/Computability/Occurrence.lean:168`
+### `Occurs` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Names the framework's "the transition fires" as a step-indexed predicate on codes (`∃ k, evaln k c n ≠ none`), so the classical halting results apply to it. Mathlib carries the halting predicate (`ComputablePred.halting_problem`) but not this reading of it; the identification of framework-occurrence with this predicate is the framework's modelling choice and is fenced as such at the definition.
 
-### `Extremal` — `ZeroParadox/Computability/Occurrence.lean:233`
+### `Extremal` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** Names the two-element computational pole — a configuration is extremal when it is halted or looping in place — so the pole swap can be shown to preserve it as a set. Mathlib's `Computability/StateTransition.lean` has `Reaches` and `eval` but no notion of "sits at one of the two extremes of a state-transition function".
 
-### `flipPoles` — `ZeroParadox/Computability/Occurrence.lean:238`
+### `flipPoles` — `ZeroParadox/Computability/Occurrence.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** The computational analogue of `rInv` / `swap` — an involution on step functions that exchanges the halted and self-looping poles while fixing every configuration that steps onward. Mathlib has no such operation on `σ → Option σ`. Fenced at the definition: it is an automorphism of the SPACE of machines, not of one machine, so it is the same shape at a different level and never a cross-type identity.
 
 
-### `stepCoalg` — `ZeroParadox/Computability/GroundZero.lean:73`
+### `stepCoalg` — `ZeroParadox/Computability/GroundZero.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** The connector between a `StateTransition`-style step function `σ → Option σ` and the framework's own `natPF_NatListRegime` presentation of the polynomial functor `X ↦ 1 + X`. Mathlib carries both sides — `Computability/StateTransition.lean` and `Data/QPF/Univariate/Basic.lean` — and no map between them, because the two live in unrelated corners of the library. This is that bridge, and it is where the framework's operational face (`Occurrence.lean`) meets its coalgebraic one (`NatListRegime.lean`). The construction itself is standard: reading a partial step function as a `1 + X`-coalgebra is textbook (Jacobs, *Introduction to Coalgebra*, Ch. 2), and no novelty is claimed for it.
 
-### `streamPF` — `ZeroParadox/Computability/OutputSeparates.lean:131`
+### `streamPF` — `ZeroParadox/Computability/OutputSeparates.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 
 **Reason:** The two-element-head chain polynomial functor `⟨Bool, fun _ => PUnit⟩`, held at the same arity as `idPF_Coalgebra` so that the head type is the only thing varying against `binPF`. Its final coalgebra is the `Bool`-streams. Mathlib has `Stream'` and it has `PFunctor`/`QPF`, and it connects them nowhere: `Stream` appears zero times under `Mathlib/Data/QPF/` and `Mathlib/Data/PFunctor/`, and `PFunctor`/`QPF` zero times under `Mathlib/Data/Stream/`. No novelty is claimed — the cardinality of its final coalgebra is Rutten, TCS 249 (2000), Example 10.2(5), p. 44 (`A^{B*}`), cited not reproved.
 
-### `TriStep` — `ZeroParadox/Computability/GroundZero.lean:169`
+### `TriStep` — `ZeroParadox/Computability/GroundZero.lean`
 
 **Relationship to Mathlib:** No Mathlib analog
 

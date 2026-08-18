@@ -20,78 +20,10 @@ defer to my AI assistant regarding the specifics of how the internals work.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-This file is the **complementary test to `ZeroParadox/Valuation/PadicAttractor.lean`**, refining **Axis I** of the bottom-diagram tree
-(`thread_obstruction_table_2026-06-29.md`). `ZeroParadox/Valuation/PadicAttractor.lean` gave node #3 (the p-adic floor `{0} ⊆ Q₂`) a genuine
-**dynamical attractor** character: `0` is the global attractor of the doubling map `x ↦ 2·x`, because
-`‖2‖₂ = ½ < 1` makes the map a strict contraction, so every orbit `2ⁿ·x` is an **infinite,
-non-terminating** sequence converging to `0` *in the limit topology* — and (for `x ≠ 0`) it never
-actually reaches `0`. That is a ν-flavoured (limit / contraction) character.
-
-The question here: does the **well-founded μ floor** (node #1 — the floor `0` of ℕ, base of the
-proof-theory descent the framework uses for Goodstein / Kirby–Paris / Kruskal) carry the *same*
-attractor/contraction character in its own ambient? If it did, the dynamical (ν) and well-founded (μ)
-characters would collapse and the Axis-I cut between #1 and the ν-dynamical nodes #2/#3 would be
-undermined.
-
-**Pre-registered GO conjecture (the deflation side):** the well-founded floor admits descent maps that
-reach `0` from every point, but every orbit hits `0` in **finitely many steps** and is then constant —
-there is no infinite non-terminating orbit converging to `0` in the `ZeroParadox/Valuation/PadicAttractor.lean` sense, so the "attractor"
-character is *vacuous* on the μ floor.
-
-**Pre-registered NO-GO obstruction:** a genuine contraction/attractor with infinite non-terminating
-orbits converging to `0`, matching `ZeroParadox/Valuation/PadicAttractor.lean`'s topological `Tendsto`, IS constructible on the ℕ/Ordinal
-floor — collapsing the μ/ν distinction.
-
-**Verdict: GO.** The NO-GO is *refuted at the structural level*: well-foundedness of ℕ forbids the
-infinite descending orbit that `ZeroParadox/Valuation/PadicAttractor.lean`'s contraction produces.
-
-**Honest framing of the capstone.** The capstone `floor_reach_separates_mu_nu` is, syntactically, a
-conjunction (`μ-side ∧ ν-side`). Its content is not "two unrelated facts": both sides are stated under
-the *same* predicate `ReachesFloorInFiniteTime`, and the in-statement contrast is sharpened from the
-weak "eventually 0 vs never 0" to the real dynamical contrast — the ν side carries `ZeroParadox/Valuation/PadicAttractor.lean`'s topological
-`Tendsto … (nhds 0)` *together with* `¬ ReachesFloorInFiniteTime`, so the separation read in the
-statement is "reaches the floor in finite time" (μ) vs "converges to the floor as a limit it never
-reaches" (ν). That `ReachesFloorInFiniteTime` is *the* formalization of "attractor character" remains
-the framework reading, not a Lean claim.
-
-What the Lean proves (load-bearing, in the statements):
-
-- `no_infinite_descent` — `∀ f : ℕ → ℕ, ¬ StrictAnti f`: there is no infinite strictly-decreasing
-  orbit on the μ floor (`not_strictAnti_of_wellFoundedLT` at ℕ). ⚠ **It is proved and kept as the
-  GENERAL statement of the obstruction, and it has ZERO call sites — nothing below uses it.** So the
-  mirror with `doubling_norm_lt_one` is **asymmetric**: that one is genuinely load-bearing.
-- `descent_with_strict_steps_reaches_floor` — **the load-bearing bridge.** Any orbit `g : ℕ → ℕ` that
-  strictly decreases at every nonzero step (`∀ k, g k ≠ 0 → g (k+1) < g k`) reaches the floor:
-  `∃ N, g N = 0`. **Proved by induction on the bound `g 0`** — the hypothesis already carries the step
-  budget, so no general well-foundedness lemma is imported; its own docstring records the measured
-  purity consequence. Well-foundedness of ℕ is still what closes it, in the form of the induction
-  principle rather than an imported lemma.
-- `pred_descent_terminates` — for the canonical descent map `Nat.pred` (`x ↦ x-1`), the orbit
-  `pred^[k] n` equals `0` for **every** `k ≥ n`: it reaches the floor and stays.
-- `pred_orbit_reaches_floor` — the μ floor's `Nat.pred` orbit **satisfies** `ReachesFloorInFiniteTime`,
-  proved via `descent_with_strict_steps_reaches_floor` plus the stays-at-floor fact.
-- `padic_orbit_never_reaches_zero` — for `x ≠ 0` the doubling orbit `2ⁿ·x` is **never** `0`.
-- `ReachesFloorInFiniteTime` — **a single formal predicate** on a generic orbit `orbit : ℕ → α` into
-  a type with a `Zero`: `∃ N, ∀ k ≥ N, orbit k = 0`. The one definition both ambients are compared
-  under.
-- `padic_orbit_not_reaches_floor` — the 2-adic ν-orbit `2ⁿ·x` (`x ≠ 0`) **satisfies the negation**
-  `¬ ReachesFloorInFiniteTime`.
-- `floor_reach_separates_mu_nu` — the capstone: the μ orbit satisfies `ReachesFloorInFiniteTime` while the
-  ν orbit both **converges to the floor** (`Tendsto … (nhds 0)`, imported from `ZeroParadox/Valuation/PadicAttractor.lean`'s
-  `doubling_orbit_tendsto_zero`) and **satisfies `¬ ReachesFloorInFiniteTime`**. The in-statement
-  contrast is therefore finite-time termination vs convergence-without-arrival, not the weaker
-  eventually-0 vs never-0. The μ side is closed by `descent_with_strict_steps_reaches_floor`,
-  a direct induction on the bound.
-
-**Honest scope (interpretation, NOT proved here).** "Attractor" and "contraction" remain the
-*framework reading* — the file does not build a full dynamical-systems contraction framework, nor does
-it prove that `ReachesFloorInFiniteTime` is the unique formalization of "attractor character." What is
-proved in-statement is the concrete, single-definition separation, with the ν side additionally
-carrying `ZeroParadox/Valuation/PadicAttractor.lean`'s topological convergence. The claim that this separation *is* the μ/ν cut of Axis I is
-the framework reading; the Lean proves the separation under the stated predicate, with the
-well-foundedness obstruction in the proof term of the μ side.
+## Formal Overview
+The complementary test to `ZeroParadox/Valuation/PadicAttractor.lean`: the μ floor is reached in
+**finite time**, where the ν orbit converges to one it never reaches — both under the single predicate
+`ReachesFloorInFiniteTime`. Gauge, verdict and scope: `ZeroParadox/Order/WellFoundedObstruct.md`.
 -/
 
 namespace ZeroParadox
@@ -109,7 +41,7 @@ open Filter Topology
 
     It states the obstruction the μ side rests on **conceptually**;
     `descent_with_strict_steps_reaches_floor` below proves its own case by induction on the bound and
-    does **not** call this. An earlier overview said it did — corrected 2026-08-07. Contrast
+    does **not** call this. Contrast
     `doubling_norm_lt_one`, which genuinely IS invoked downstream: the mirror is asymmetric. -/
 theorem no_infinite_descent : ∀ f : ℕ → ℕ, ¬ StrictAnti f :=
   fun f => not_strictAnti_of_wellFoundedLT f
@@ -244,27 +176,11 @@ theorem floor_reach_separates_mu_nu :
     ⟨pred_orbit_reaches_floor,
       doubling_orbit_tendsto_zero x, padic_orbit_not_reaches_floor x hx⟩
 
-/-! ### Where the SAME question is asked in the other formalization
+/-! ### Where the SAME question is asked in the other formal faces
 
-**Pointer, not a result.** The capstone above carries **two** modes: the μ side is a step map
-(`Nat.pred^[k]`) reaching the floor in finite time, and only the **ν** side is asymptotic — a chosen
-orbit and a limit, with no first step. A related question (*can the structureless referent ⊥ move?*)
-is formalized over a single-valued **step function** at
-`ZeroParadox/Computability/Occurrence.lean` § III, over `f : σ → Option σ`, where
-`machine_snap_impossible` and `deterministic_has_no_fanout` derive an **obstruction**: such a step
-admits at most one successor, so nothing is both its own fixed point and departed from. (§ VI of that
-file deliberately restates the escape over a *relation*, where the obstruction lifts.)
-
-**The two files never referenced each other until 2026-08-07**, and the honest comparison is short:
-`machine_snap_impossible` stays true as stated (it is about a single-valued step), while the ν mode
-here exhibits floor-directed motion that never needs a first step. **They are not the same question** —
-the ν orbit is provably never *at* the floor (`padic_orbit_never_reaches_zero`; the capstone's
-`padic_orbit_not_reaches_floor` is the weaker `¬ ReachesFloorInFiniteTime` form), so it is about
-**approach to** a floor, where the snap question is about **departure from** one. **Neither derives
-motion**: the step side derives the obstruction, this side takes the orbit as given. Both modes here
-run inward. See `ZeroParadox/Computability/Occurrence.lean` § 0 Consequence 3 for the full relation
-and for the prior art (Benedetto on non-archimedean attracting points; Kahrs on infinitary
-rewriting, where a step relation and a metric limit do live over one carrier). -/
+*Can the floor be departed?* is asked in more than one carrier and the answers are not interchangeable:
+the step-function face derives an **obstruction**, this face takes the orbit as **given**, and neither
+derives motion. The comparison and its prior art: `ZeroParadox/Order/WellFoundedObstruct.md`. -/
 
 end ZeroParadox
 

@@ -339,9 +339,10 @@ rule that does not.
 
 **What it cost, measured the same day.** A `l_inf` docstring was rewritten after grepping three theorem
 names. The wording survey found **4** citing sites; `grep -n "l_inf"` returns **9**. And the appended
-paragraph re-committed an overclaim that had **already been made and retracted** — the retraction sits at
-`Computability/Occurrence.lean:263` (*"But 'nothing else' would be too strong, and an earlier version of
-this line said it"*), in the very file the new text cited and never opened. **FAIL-BEDROCK, reverted in
+paragraph re-committed an overclaim that had **already been made and corrected** — the correction sits on
+`machine_trichotomy` (`ZeroParadox/Computability/Occurrence.lean` § II), which fences that the
+function-vs-relation choice is not the ONLY encoding of the modality, in the very file the new text
+cited and never opened. **FAIL-BEDROCK, reverted in
 full.** Ledger: `PROC-2`, `OCC-2`.
 
 ⚠ **Searching the CLAIM is not the same as searching the NAME, and this file already says the first
