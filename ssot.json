@@ -13632,8 +13632,8 @@
           "new": {
             "file": "ZeroParadox/Computability/ComputableCrossing.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.computable_no_fixedpointfree",
-            "short": "computable_no_fixedpointfree"
+            "qualified": "ZeroParadox.computable_fixedpoint_up_to_eval",
+            "short": "computable_fixedpoint_up_to_eval"
           },
           "old": {
             "file": null,
@@ -13655,7 +13655,7 @@
               "go"
             ]
           },
-          "reason": "The hard bridge CROSSED in the computability face — eval is the reflexive object, Roger/Kleene = Lawvere firing (Tim was right, framework expedites it)",
+          "reason": "CC-NAME-1: the old name asserted the false strong form its own docstring refutes and was quoted as a witness in a DOI-bearing PDF.",
           "verify": {
             "axioms": null,
             "sorry_free": true

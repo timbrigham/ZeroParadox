@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.2 | July 2026
+Version 1.3 | July 2026
 v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
 self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
 (Cantor), obstruction-free but not itself a reflexive object in the monotone/domain regime
@@ -13,7 +13,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.2'
+VERSION = '1.3'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -168,8 +168,11 @@ def build():
     E.append(body(
         'Absence of a fixed-point-free endomap is <i>necessary</i> for a reflexive object &#8212; it '
         'removes Lawvere\'s contradiction &#8212; but not by itself <i>sufficient</i>. Two categories '
-        'are free of the obstruction, for structurally identical reasons, and the framework\'s &#8869; '
-        'lives in both; but only one of them furnishes a genuine reflexive object.'))
+        'are free of the obstruction, and the framework\'s &#8869; lives in both; but only one of '
+        'them furnishes a genuine reflexive object. The reasons are <i>not</i> the same, and the '
+        'difference is the point: the monotone regime is free of it <i>literally</i> (Knaster&#8211;Tarski '
+        'bans a fixed-point-free monotone endomap), while the computable regime is free of it only '
+        '<i>up to eval</i> &#8212; literally fixed-point-free total computable endomaps do exist.'))
 
     E.append(result_box(
         'R3-pos (monotone / domain) &#8212; obstruction absent, but no reflexive object here',
@@ -204,7 +207,7 @@ def build():
             'So the reflexive object is present and the self-referential '
             'fixed point exists there &#8212; Kleene\'s second recursion theorem: for a computable map '
             'f, a code c with eval c = f c.',
-            'Witnesses: eval_point_surjective, computable_no_fixedpointfree, '
+            'Witnesses: eval_point_surjective, computable_fixedpoint_up_to_eval, '
             'selfref_fixedpoint_exists_computable (ComputableCrossing.lean). Lean purity: '
             'choice-carrying (Mathlib computability). ✓',
         ]
@@ -406,7 +409,7 @@ def build():
             ['R3-pos monotone',
              'monotone_regime_derives_pinned (ZeroParadox/Settheory/LawvereBridge.lean)'],
             ['R3-pos computability (the crossing)',
-             'eval_point_surjective, computable_no_fixedpointfree, '
+             'eval_point_surjective, computable_fixedpoint_up_to_eval, '
              'selfref_fixedpoint_exists_computable (ZeroParadox/Computability/ComputableCrossing.lean)'],
             ['R4 (&#956;/&#957; = Lawvere regimes)',
              'mu_nu_branch_exclusion (ZeroParadox/Settheory/LawvereBridge.lean)'],
