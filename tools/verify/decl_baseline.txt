@@ -308,7 +308,6 @@ ZeroParadox/Computability/CodeDataFrameChange.lean::codeDataSwap_fixed_iff
 ZeroParadox/Computability/CodeDataFrameChange.lean::codeDataSwap_involutive
 ZeroParadox/Computability/CodeDataFrameChange.lean::codedata_is_frameflip
 ZeroParadox/Computability/CodeDataFrameChange.lean::selfConfig_on_fixedLocus
-ZeroParadox/Computability/ComputableCrossing.lean::computable_no_fixedpointfree
 ZeroParadox/Computability/ComputableCrossing.lean::eval_point_surjective
 ZeroParadox/Computability/ComputableCrossing.lean::selfref_fixedpoint_exists_computable
 ZeroParadox/Computability/GroundZero.lean::TriHalted
