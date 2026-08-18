@@ -175,28 +175,6 @@ def load_pinned(path, section):
     return out
 
 
-def check_patterns(section, live, label=None):
-    """Every DETECTION PATTERN a checker advertises must still be there.
-
-    ⚠⚠ **SCOPE ANSWERS "DID IT LOOK AT EVERYTHING". THIS ANSWERS "WOULD IT RECOGNISE ANYTHING",
-    AND ONLY THE FIRST WAS GUARDED** (`PAT-1`, 2026-08-16). Measured by mutation: replacing each
-    advertised pattern with a string that cannot match, one at a time, and re-running that checker's
-    own `--selftest`. **30 of 34 patterns were SILENT** — delete `artifact` from `check_modal`'s
-    phrase list and it stops catching the defect class it was built for, with `--selftest` green,
-    `--block` exit 0, and `check_checkers` reporting all four properties satisfied. A must-fire
-    control only ever proves the patterns it happens to exercise.
-
-    ⚠ **THE CONTROLS CANNOT BE GENERATED FROM THE PATTERN LIST — that is the trap.** A control
-    derived from the live list disappears with the pattern it was meant to guard, so deletion stays
-    silent and the design defeats itself. The pin has to be an INDEPENDENT record, which is what this
-    baseline is.
-
-    SUPERSET, so adding a pattern is free and only a REMOVAL fires. Same bargain as the scope pin,
-    and for the same reason: weakening a detector must never be quiet, while strengthening one must
-    never be obstructed."""
-    return _superset(PATTERN_BASELINE, section, live, label, kind='pattern')
-
-
 # Names that are NOT detection vocabulary: accumulators, scan scope (pinned separately by
 # `scope_baseline.txt`), rosters, and the controls themselves.
 #
@@ -361,7 +339,27 @@ def check_exemption_registry():
 
 
 def check_vocabulary(section, mod_globals, label=None):
-    """Pin every detection pattern a module advertises. See `vocabulary`."""
+    """Pin every detection pattern a module advertises. See `vocabulary`.
+
+    ⚠⚠ **SCOPE ANSWERS "DID IT LOOK AT EVERYTHING". THIS ANSWERS "WOULD IT RECOGNISE ANYTHING",
+    AND ONLY THE FIRST WAS GUARDED** (`PAT-1`, 2026-08-16). Measured by mutation - replacing each
+    advertised pattern with a string that cannot match, one at a time, and re-running that checker's
+    own `--selftest`: **30 of 34 patterns were SILENT**. Delete `artifact` from `check_modal`'s
+    phrase list and it stops catching the defect class it was built for, with `--selftest` green,
+    `--block` exit 0, and `check_checkers` reporting all four properties satisfied. A must-fire
+    control only ever proves the patterns it happens to exercise.
+
+    ⚠ **THE CONTROLS CANNOT BE GENERATED FROM THE PATTERN LIST — that is the trap.** A control
+    derived from the live list disappears with the pattern it was meant to guard, so deletion stays
+    silent and the design defeats itself. The pin has to be an INDEPENDENT record, which is what
+    `pattern_baseline.txt` is.
+
+    ⚠ **EXACT, NOT SUPERSET, AND A DEAD FUNCTION USED TO SAY OTHERWISE.** `check_patterns()` carried
+    this argument with the closing bargain *"adding a pattern is free and only a REMOVAL fires"* -
+    which is the scope pin's bargain, not this one. It had no callers, and the live behaviour is the
+    opposite: an unrecorded ADDITION fires too, exit 1, so strengthening a detector must be recorded
+    rather than merely permitted. Deleted 2026-08-18 (`/rely`); the argument kept, the false
+    semantics dropped."""
     live = vocabulary(mod_globals, section)
     recorded = load_pinned(PATTERN_BASELINE, section)
     dropped = sorted(recorded - live)

@@ -39,9 +39,11 @@ Exit codes:
     1 — one or more hash mismatches or STALE AR entries
 """
 
+import ast
 import glob
 import hashlib
 import io
+import subprocess
 import json
 import os
 import re
@@ -302,20 +304,44 @@ def update_register_formal_hash(doc, new_hash):
 
 
 def update_register_ar_column(ar_labels):
-    """Rewrite the Comp AR column (col 5) in register.md for companion docs."""
+    """Rewrite the Comp AR column (col 5) in register.md for companion docs.
+
+    ⚠ THIS CARRIED THE PREFIX BUG FIXED IN `d49e95d` FOR THE HASH WRITERS, AND KEPT IT because the
+    fix was applied per-function rather than at the property. `doc_cell.startswith(doc)` matched 4
+    rows for `ZP-J` and 2 for `ZP-H`. The sharp version is a SINGLE run: the hash writer printed
+    "REFUSING to update comp hash for 'ZP-J' - matches 4 rows" and four lines later this stamped all
+    four with an adversary-review verdict. One guarded writer beside one unguarded writer is not a
+    fixed defect, it is a relocated one. (/rely, 2026-08-18.)
+
+    Exact cell match wins; a prefix is used only when exactly one row carries it; anything else is
+    refused and reported, matching `_register_row_pattern`.
+    """
     with open(REGISTER, encoding='utf-8') as f:
         lines = f.readlines()
+
+    cells = {}
+    for i, line in enumerate(lines):
+        if line.startswith('|') and len(line.split('|')) >= 8:
+            cells[i] = line.split('|')[1].strip()
+
+    targets = {}
+    for doc in ar_labels:
+        exact = [i for i, c in cells.items() if c == doc]
+        rows = exact or [i for i, c in cells.items() if c.startswith(doc)]
+        if len(rows) == 1:
+            targets[rows[0]] = ar_labels[doc]
+        elif len(rows) > 1:
+            print('  REFUSING to update AR column for %r - matches %d rows: %s'
+                  % (doc, len(rows), ', '.join(cells[i] for i in rows)))
+        else:
+            print('  REFUSING to update AR column for %r - no register row matched' % doc)
+
     updated = []
-    for line in lines:
-        if line.startswith('|'):
+    for i, line in enumerate(lines):
+        if i in targets:
             parts = line.split('|')
-            if len(parts) >= 8:
-                doc_cell = parts[1].strip()
-                for doc in COMP_SCRIPTS:
-                    if doc_cell.startswith(doc) and doc in ar_labels:
-                        parts[5] = f' {ar_labels[doc]} '
-                        line = '|'.join(parts)
-                        break
+            parts[5] = f' {targets[i]} '
+            line = '|'.join(parts)
         updated.append(line)
     common.write_text_lf(REGISTER, ''.join(updated))
 
@@ -444,6 +470,67 @@ def selftest():
           % ('SCRIPT_DIR points at the scripts', 'ok' if ok else '*** WRONG DIRECTORY ***',
              present, len(COMP_SCRIPTS), os.path.relpath(SCRIPT_DIR, REPO)))
 
+
+    # ---- THE OTHER TWO DETECTORS IN THIS MODULE -------------------------------------------------
+    # ⚠ BOTH SHIPPED WITH NO CONTROLS, AND BOTH THEN FAILED OPEN OVER GROUND THEY NEVER WALKED.
+    # Neutering `_HEADER_SHAPES` used to leave this selftest reporting PASS exit 0 while
+    # check_checkers printed "every audited gate has passing controls in both directions" - a
+    # module-level audit cannot see a second detector inside the module, which is how HASH-1 and the
+    # `(vN, revised ...)` shape both survived. (/rely, 2026-08-18.)
+    print('  MUST FIRE  (docstring-version detector)')
+    for head, want, why in (
+            ('"""Build ZP-A: Lattice Algebra (v1.21)\n"""', '1.21', 'paren shape'),
+            ('"""Foreword (v2.14, revised July 2026)\n"""', '2.14', 'paren-comma shape'),
+            ('"""Build ZP-C\n\nVersion 1.4 | July 2026\n"""', '1.4', 'pipe shape'),
+            ('"""ZP-I\n\nVersion 1.15 | July\n\nv1.10: refs "(v1.1)" removed\n"""',
+             '1.15', 'header beats a changelog line below it')):
+        got = _header_version(head)
+        ok = got == want
+        bad += 0 if ok else 1
+        print('    %-34s %s (%r)' % (why, 'ok' if ok else '*** WRONG ***', got))
+
+    print('  MUST SUPPRESS  (docstring-version detector)')
+    for head, why in (
+            ('"""Build something with no version anywhere\n"""', 'no version is not a version'),
+            ('"""ZP-X\n\nv1.10: version refs "(v1.1)" removed from body prose\n"""',
+             'a changelog line alone is NOT a header')):
+        got = _header_version(head)
+        ok = got is None
+        bad += 0 if ok else 1
+        print('    %-34s %s (%r)' % (why, 'ok' if ok else '*** WRONG ***', got))
+
+    # The --sync-hash laundering guard. Rendered text lives in `body()` string literals, which are
+    # CODE, so an edit there must be visible; comments and docstrings must not be.
+    _base = ('"""ZP-X\n\nVersion 1.0 | July\n"""\n'
+             'VERSION = "1.0"\n'
+             'def body(sp):\n'
+             '    sp("the monotone regime is free of it literally")\n')
+    _prose = ('"""ZP-X\n\nVersion 1.0 | July\n\nv1.0: initial\n"""\n'
+              'VERSION = "1.0"\n'
+              'def body(sp):\n'
+              '    # a new comment, changing nothing rendered\n'
+              '    sp("the monotone regime is free of it literally")\n')
+    _rendered = ('"""ZP-X\n\nVersion 1.0 | July\n"""\n'
+                 'VERSION = "1.0"\n'
+                 'def body(sp):\n'
+                 '    sp("free of it LITERALLY, on a complete lattice")\n')
+
+    print('  MUST FIRE  (--sync-hash laundering guard)')
+    for a, b, why in ((_base, _rendered, 'an edit to RENDERED text is refused'),
+                      (_base, 'def body(:\n', 'an unparsable side vouches for nothing')):
+        got = _code_identical_ignoring_prose(a, b)
+        ok = got is not True
+        bad += 0 if ok else 1
+        print('    %-34s %s (%r)' % (why, 'ok' if ok else '*** WRONG ***', got))
+
+    print('  MUST SUPPRESS  (--sync-hash laundering guard)')
+    for a, b, why in ((_base, _prose, 'a comment/docstring edit is allowed'),
+                      (_base, _base, 'an identical script is allowed')):
+        got = _code_identical_ignoring_prose(a, b)
+        ok = got is True
+        bad += 0 if ok else 1
+        print('    %-34s %s (%r)' % (why, 'ok' if ok else '*** WRONG ***', got))
+
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
 
@@ -482,7 +569,11 @@ def check_docstring_versions():
 # this layer exists to prevent, and it shipped inside the fix for the same class.
 _HEADER_SHAPES = (
     re.compile(r"(?m)^\s*Version\s+(\d+(?:\.\d+)*)\s*\|"),   # `Version 1.21 | July 2026`
-    re.compile(r"\(v(\d+(?:\.\d+)*)\)"),                       # `Build ZP-A: ... (v1.21)`
+    # ⚠ A THIRD SHAPE, and the fix for the second shipped without it: `build_foreword.py`
+    # writes `(v2.14, revised July 2026)` - a COMMA where this pattern demanded `)`. Planted
+    # staleness there was SILENT while the identical plant in build_zpa/zpe/zpi was CAUGHT
+    # (/rely, 2026-08-18).
+    re.compile(r"\(v(\d+(?:\.\d+)*)\s*[,)]"),                   # `(v1.21)` and `(v2.14, revised ...)`
 )
 
 
@@ -512,6 +603,84 @@ def _header_version(head):
     return None
 
 
+def _strip_docstrings(tree):
+    """Remove every docstring node, in place. Comments are absent from an AST already."""
+    for node in ast.walk(tree):
+        body = getattr(node, 'body', None)
+        if not isinstance(body, list) or not body:
+            continue
+        if not isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            continue
+        first = body[0]
+        if (isinstance(first, ast.Expr) and isinstance(first.value, ast.Constant)
+                and isinstance(first.value.value, str)):
+            del body[0]
+    return tree
+
+
+def _code_identical_ignoring_prose(a, b):
+    """Do two versions of a script differ ONLY in comments and docstrings?
+
+    Exact, not heuristic. Comments never reach an AST, docstrings are stripped, and everything a
+    build script RENDERS lives in ordinary string literals inside `body()` / `cbody()` - which are
+    code, so any edit reaching rendered text shows up here. Returns None when either side will not
+    parse, and the caller treats that as "cannot vouch".
+    """
+    try:
+        ta, tb = ast.parse(a), ast.parse(b)
+    except SyntaxError:
+        return None
+    return ast.dump(_strip_docstrings(ta)) == ast.dump(_strip_docstrings(tb))
+
+
+def _register_attested_source(script, recorded_hash):
+    """The last committed content of `script` that the recorded token actually attests to.
+
+    ⚠ COMPARING AGAINST HEAD WOULD BE A HOLE, and it is the obvious implementation. Commit a
+    rendered change, then `--sync-hash`: HEAD and the working tree agree, the diff is empty, and the
+    laundering sails through. The honest reference is the last state the REGISTER was correct about,
+    so this walks history for the blob whose short hash equals the recorded token.
+    """
+    rel = 'scripts/' + script
+    try:
+        revs = subprocess.run(['git', 'log', '--format=%H', '-40', '--', rel],
+                              cwd=REPO, capture_output=True, text=True, timeout=60)
+        for rev in revs.stdout.split():
+            blob = subprocess.run(['git', 'show', '%s:%s' % (rev, rel)],
+                                  cwd=REPO, capture_output=True, timeout=60)
+            if blob.returncode != 0:
+                continue
+            if hashlib.sha256(blob.stdout).hexdigest()[:8] == recorded_hash:
+                return blob.stdout.decode('utf-8', 'replace')
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return None
+
+
+def _refuses_as_laundering(key, script, recorded_hash):
+    """Would `--sync-hash` here skip a re-review the four-step rule owes?
+
+    FAILS CLOSED. No attested source, unparsable either side, or any code-level difference all
+    refuse; only a provably prose-only edit is allowed through. Returns the reason, or None to allow.
+    """
+    if not recorded_hash:
+        return 'the register records no hash to compare against'
+    path = os.path.join(REPO, 'scripts', script)
+    if not os.path.exists(path):
+        return 'the script is missing'
+    was = _register_attested_source(script, recorded_hash)
+    if was is None:
+        return ('no committed version of %s hashes to the recorded %s, so what the register last '
+                'attested to cannot be established' % (script, recorded_hash))
+    verdict = _code_identical_ignoring_prose(was, io.open(path, encoding='utf-8').read())
+    if verdict is None:
+        return 'the script does not parse on one side, so the change cannot be characterised'
+    if verdict is False:
+        return ('the change reaches CODE, not only comments and docstrings - rendered output may '
+                'have moved, so a rebuild and a re-review are owed')
+    return None
+
+
 def sync_hash(key):
     """Update `key`'s register hash token ONLY. Does not touch AR status.
 
@@ -523,12 +692,29 @@ def sync_hash(key):
     Routes through the same script maps and the same boundary-aware row matcher as everything else
     here, so it cannot write a row the caller did not name.
 
-    ⚠ **MISUSE BOUNDARY.** Using this after a RENDERED change would skip the re-review the four-step
-    rule owes - that is laundering, and the tool cannot detect it, because it never opens the PDF.
-    The caller is the only one who knows whether the render moved. Where a document carries a real
-    AR status, prefer `--mark-remediated` after an actual review; this is for the case where the
-    bytes moved and the artifact did not.
+    ⚠ **GUARDED, after `/rely` demonstrated the laundering the previous docstring merely described.**
+    A prose MISUSE BOUNDARY is not a control. `_refuses_as_laundering` compares the working script
+    against the last COMMITTED content the register's own token attests to, and allows the write only
+    when the two are identical modulo comments and docstrings - so any change reaching a rendered
+    string literal is refused. It fails closed on every uncertainty.
     """
+    _script = (FORMAL_SCRIPTS.get(key) or COMP_SCRIPTS.get(key)
+               or FORMAL_ONLY_SCRIPTS.get(key) or STANDALONE_SCRIPTS.get(key))
+    if _script:
+        if key in STANDALONE_SCRIPTS:
+            _recorded = load_ar_status().get(key, {}).get('hash')
+        elif key in COMP_SCRIPTS:
+            _recorded = (parse_register().get(key) or {}).get('comp')
+        else:
+            _recorded = register_formal_token(key)
+        _why = _refuses_as_laundering(key, _script, _recorded)
+        if _why:
+            print('  REFUSING --sync-hash for %r: %s.' % (key, _why))
+            print('    --sync-hash is ONLY for a script edit that changes no rendered output.')
+            print('    After a real render change: bump VERSION, rebuild, then --mark-remediated')
+            print('    once the review has actually run.')
+            return False
+
     if key in FORMAL_SCRIPTS:
         h = sha8(FORMAL_SCRIPTS[key])
         if h == 'MISSING':
