@@ -638,8 +638,22 @@ def check_routing(state, ranges=None):
     # still forced. What is dropped is only the bookkeeping duplicate that a batch happens to carry.
     # ⚠ Deliberately narrow: `/rely` ONLY, no batch ONLY, and only when leg (a) is clean (`moved`
     # empty). If the hashes have drifted, `moved` is non-empty and this does nothing.
-    if not state and not moved:
+    # ⚠ THE DISCHARGE MUST REQUIRE THAT EVERY ROUTED FILE IS ACTUALLY HASHED. `moved` is computed
+    # only over `CHECKERS`, so a verification-layer file OUTSIDE that list never appears in it - and
+    # replacing `check_release_ready.py` with `sys.exit(0)` produced `prepush PASS`, exit 0, with
+    # the manifest printing "routing BLOCK - /rely has signed ..." directly above "/rely  ok"
+    # (measured end to end, /rely pass 4, RLY16-2). Adding four names would close those four; this
+    # closes the property, which is `CHECKERS`' own stated rule: if it can stop a push, it is hashed.
+    _routed = [f for f in files
+               if any(pat.match(f) for pat, agent, _w in ROUTING if agent == "/rely")]
+    _unhashed = sorted(f for f in _routed if os.path.basename(f) not in now)
+    if not state and not moved and not _unhashed:
         done.add("/rely")
+    elif _unhashed and not moved:
+        rows.append(("/rely", False,
+                     "%d routed file(s) are NOT in CHECKERS, so the hash leg cannot see them and "
+                     "the auto-discharge is unsafe: %s"
+                     % (len(_unhashed), ", ".join(_unhashed[:3]))))
     for pat, agent, why in ROUTING:
         hits = [f for f in files if pat.match(f)]
         if hits:

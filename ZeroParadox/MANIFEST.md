@@ -53,6 +53,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Valuation/RiemannSphere.lean` - The p-adic Riemann sphere: inversion swaps the floor 0 and its antipode ∞
 - `ZeroParadox/Valuation/Scale.lean` - ZPJ — Valuation Bridge: Deriving AFA Content from Scale Structure
 - `ZeroParadox/Valuation/ScaleBridge.lean` - ZPJ — Scale Bridge: AFA Content from Valuation Without ZPSemilattice
+  - ride-along docs: `ZeroParadox/Valuation/ScaleBridge.md` - Dropping the join, and a membership question settled exactly
 - `ZeroParadox/Valuation/SemilatticeInstance.lean` - ZP-I: Inside Zero
 - `ZeroParadox/Valuation/SnapDichotomy.lean` - ZPF — the snap-occurrence dichotomy over ℚ
 - `ZeroParadox/Valuation/TopFunctor.lean` - ZP-H Top Functor: F_B into the real category `TopCat` (MC-1 remediation)

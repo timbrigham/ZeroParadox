@@ -155,67 +155,10 @@ theorem zp_selfMem_singleton (L : Type*) [ZeroParadox.ZPSemilattice L]
 
 /-! ## § VI. NO-GO gauge — what FAILS to be a `ValBridge`
 
-    A requirements class carries information only where something fails to be a member, so this
-    section records the failure condition instead of leaving it to be rediscovered at a use site.
-
-    **The membership question is settled exactly** (`valBridge_nonempty_iff`):
-
-      `Nonempty (ValBridge α) ↔ Infinite α ∨ (Nonempty α ∧ Subsingleton α)`
-
-    The forcing half is `valBridge_forces_infinite`: from any `x ≠ bot` the scale orbit
-    `scale^[k] x` never reaches `bot` and its valuation climbs by exactly one per step, so
-    `k ↦ scale^[k] x` is injective. The one-point carrier is a member because `val_scale` is guarded
-    by `x ≠ bot` and is vacuous there (`trivialValBridge`). Both converse directions are built:
-    `nonempty_valBridge_of_infinite` places the orbit along an ℕ-embedding, and
-    `nonempty_valBridge_of_inhabited_subsingleton` is the degenerate case.
-
-    So the non-members are the finite carriers with two or more points, and also `Empty` — a
-    subsingleton, but `bot : L` is a field, so a carrier is always inhabited. `valBridge_bool_isEmpty`
-    records the smallest inhabited non-member.
-
-    ⚠ **`[ValBridge L]` therefore constrains cardinality and nothing else.** It does not distinguish
-    `instZ2ValBridge` from arbitrary bookkeeping, because `nonempty_valBridge_of_infinite` equips
-    *any* infinite carrier. The substance of the ℤ_[2] instance is in its chosen `scale` and `val`,
-    never in membership — do not cite membership as evidence that a witness is non-degenerate.
-
-    ### Prior art
-
-    **In this corpus, and it is the general form:** `orbit_dichotomy`
-    (ZeroParadox/Order/OrbitDichotomy.lean), whose file header already names the framework's scale
-    map as the checkable branch of exactly this argument. Cite that for the general pattern.
-    ⚠ **`valBridge_forces_infinite` is NOT an instance of it.** That theorem assumes
-    `Function.Injective s`; `ValBridge` does not supply it — take `L = {bot} ⊎ (ℕ × Bool)` with
-    `val (n, b) = n` and `scale (n, b) = (n+1, false)`, which satisfies all four axioms and collapses
-    `(0, true)` with `(0, false)`. `val_scale` buys injectivity *along an orbit*, which is all the
-    argument consumes.
-
-    The two-element case is older still: ZeroParadox/Settheory/OntBridge.lean records that
-    `OntologicalStates` cannot satisfy `val_scale`, "a finite two-element type has no room for val to
-    strictly increase".
-
-    **Outside the corpus**, the owning branch is valuation theory, whose statements use multiplicative
-    structure this class drops — **F.-V. Kuhlmann, *Valuation Theory*, Ch. 4, Corollary 4.13**: *"The
-    only fields which do not admit non-trivial places are precisely the algebraic extensions of finite
-    fields."* ⚠ The *setting* here is more general; the *results* are incomparable, since `F̄_p` is
-    infinite and this section says nothing about it. Credit points outward.
-
-    For the degenerate half, read the prior-art paragraph of
-    ZeroParadox/Valuation/InfinitudeFloor.lean, which cites Burris & Sankappanavar on why a
-    non-degeneracy condition must be an inequation rather than a further equation. ⚠ Its neighbouring
-    "trivial algebras satisfy any quasi-identity" does **not** apply here: `val_scale`'s antecedent
-    `x ≠ bot` is a negated atom, and a quasi-identity admits only positive ones.
-
-    Standard names, for searching: `(L, scale)` is a **mono-unary algebra** (a **unar**), and the
-    mechanism exhibiting `ℕ ↪ L` is **Dedekind-infinite**.
-
-    `Reading:` **COINCIDENCE** — the characterisation has the same shape as
-    `infinitudeFloor_nonempty_iff_infinite` (ZeroParadox/Valuation/InfinitudeFloor.lean), which pins
-    that class to exactly `Infinite`; the valuation climbing without bound along the orbit and the
-    floor carrying the value ⊤ read as the framework's zero and infinity poles on one carrier. **A
-    reading, carrying no declaration and no import here.** The membership transfer would be witnessed
-    by an arbitrary ℕ-embedding whose `floor` and `cx` are unrelated to `bot` and `val`, so it would
-    not witness the coincidence it names; the canonical witness — `member` the scale orbit, `cx` the
-    valuation — would, and is not built. -/
+**The membership question is settled exactly** (`valBridge_nonempty_iff`):
+`Nonempty (ValBridge α) ↔ Infinite α ∨ (Nonempty α ∧ Subsingleton α)`. ⚠ So `[ValBridge L]`
+constrains **cardinality and nothing else** — do not cite membership as evidence that a witness is
+non-degenerate. The forcing argument, the non-members, and the prior art: `ZeroParadox/Valuation/ScaleBridge.md`. -/
 
 /-- The scale of a non-bottom point is never the bottom: it would force `val x = ⊤`, and
     `val_unique` then puts `x` at the bottom. -/

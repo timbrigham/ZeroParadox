@@ -371,7 +371,8 @@ LINE_REF = re.compile(r'\.lean:\d+')
 # THE STABLE ANCHOR IS A NAME, NOT A NUMBER: a declaration (globally unique, self-locating,
 # `#check`-able) or a section heading. Both survive edits above them; a line number does not.
 #
-# ⚠ REPORTED, NOT BLOCKING, and deliberately so. There are ~100 pre-existing sites; a gate that
+# ⚠ REPORTED, NOT BLOCKING, and deliberately so. The checker measures the live count on every
+# run — do not quote one here, it goes stale the first time anyone acts on it. A gate that
 # blocks everything on day one gets bypassed and then ignored, which this project has recorded.
 # The count is printed so a RISING number is visible — the same bargain as the measurement-gap
 # line in `check_prose`. It should become blocking, with a baseline, once the burn-down starts.
@@ -669,28 +670,44 @@ def selftest_ride_along():
     # `_ride_along_line_hits` - the half that was already correct - so it reported green while the
     # caller silently dropped hits, and --selftest was byte-identical either way. The defect lives
     # in the CALLER; a control that never calls it cannot see it.
-    print('SELF-PAIR THROUGH THE CALLER (scan_ride_along, where the drop happened)')
+    # \u26a0\u26a0 THIS GROUP MUST GO THROUGH `scan_ride_along`, THE CALLER. A previous version was
+    # HEADED "through the caller" and called the matcher instead, re-implementing the self-pair
+    # filter inline - so it could not see a defect in the caller, which is the only thing it was
+    # added to catch. Measured: reinstating that defect left `--selftest` byte-identical, exit 0,
+    # every control `ok`. A control named after what it does not do is worse than no control.
+    print('SELF-PAIR THROUGH scan_ride_along (the caller, where the drop happened)')
     import tempfile as _tf
-    _probe_dir = Path(_tf.mkdtemp())
-    _probe = _probe_dir / 'Wall.md'
+    _probe_root = Path(_tf.mkdtemp())
+    _md = _probe_root / 'Probe.md'
     _stale = ("Argument for `ZeroParadox/Settheory/Wall.lean`. It restates "
               "`ZeroParadox/Computability/Occurrence.lean`'s taxonomy.")
     try:
-        _probe.write_text(_stale, encoding='utf-8')
-        _got = _ride_along_line_hits(_stale, pairs)
-        _kept = [n for n, _w in _got if pairs[n] != 'ZeroParadox/Settheory/Wall.md']
-        for _why, _ok in (('the foreign hit survives beside the self pair',
-                           _kept == ['Occurrence.lean']),
-                          ('the self pair is still suppressed',
-                           'Wall.lean' not in _kept)):
+        _md.write_text(_stale, encoding='utf-8')
+        # scan_ride_along keys the self-pair test on the file being scanned, so scan the probe
+        # AS IF it were Wall's ride-along: the Wall hit must drop, the Occurrence hit must not.
+        _saved = globals().get('REPO')
+        globals()['REPO'] = _probe_root
+        _pairs = {'Wall.lean': 'Probe.md',
+                  'Occurrence.lean': 'ZeroParadox/Computability/Occurrence.md'}
+        for _n, _m in _pairs.items():
+            _owner[_n] = _m[:-3] + '.lean'
+        _hits = scan_ride_along([_md], _pairs)
+        _names = sorted({h[2] for h in _hits})
+        globals()['REPO'] = _saved
+        for _why, _ok in (('the foreign hit survives the self-pair drop',
+                           _names == ['Occurrence.lean']),
+                          ('the reason is a plain string, not a tuple',
+                           all(isinstance(h[4], str) for h in _hits))):
             bad += 0 if _ok else 1
-            print('  %-52s %s' % (_why[:52], 'ok' if _ok else 'BROKEN: kept=%s' % _kept))
+            print('  %-52s %s' % (_why[:52], 'ok' if _ok else 'BROKEN: %s' % (_hits or 'no hit')))
     finally:
+        globals()['REPO'] = _saved
         try:
-            _probe.unlink()
-            _probe_dir.rmdir()
+            _md.unlink()
+            _probe_root.rmdir()
         except OSError:
             pass
+
     print('SELF-PAIR ATTRIBUTION (the name must come from the match, not a re-scan)')
     mixed = ("Argument for `ZeroParadox/Settheory/Wall.lean`, whose reframe paragraph restates "
              "`ZeroParadox/Computability/Occurrence.lean`'s taxonomy.")
@@ -741,7 +758,7 @@ def _names_a_declaration_docstring(line, lo=0, hi=None):
 
     A DECLARATION DOCSTRING NEVER MOVES under the ride-along convention - only module-doc blocks
     relocate, and a declaration's docstring travels with its declaration. Reporting "`l_inf`'s
-    docstring" as prose that moved is false on its face, and it was: 10 hits across CLAUDE.md,
+    docstring" as prose that moved is false on its face, and it was: measured 2026-08-17 across CLAUDE.md,
     ZeroParadox/README.md, Gentzen.lean and five build scripts, every one naming prose that is
     still exactly where it says it is.
 
@@ -1046,11 +1063,13 @@ def main():
         # `scripts/build_zpr_addendum.py`, because this set was `{.md, .lean}` only. So a stale
         # pointer in a Lean docstring blocked a push while the identical one in a build script —
         # the surface a Zenodo DOI freezes PERMANENTLY — went through. That is the wrong way round.
-        # ⚠ EVERY TRACKED `.py` UNDER `scripts/`, NOT JUST `build_*`. The glob walked past
+        # ⚠ EVERY `.py` UNDER `scripts/`, RECURSIVELY, NOT JUST `build_*`. The glob was
+        # non-recursive while this comment claimed otherwise, so `scripts/archive/` was
+        # invisible (measured by plant). The glob walked past
         # `zp_utils.py` — the shared library those build scripts IMPORT — so a stale pointer
         # there reached every rendered PDF while being invisible here. Measured by a plant:
         # the same sentence fired in `build_zpa.py` and was silent in `zp_utils.py`.
-        build_scripts = sorted(p for p in (REPO / 'scripts').glob('*.py') if p.is_file())
+        build_scripts = sorted(p for p in (REPO / 'scripts').rglob('*.py') if p.is_file())
         ra = scan_ride_along(tracked_live + tracked_rec + tracked_lean() + build_scripts, pairs)
         # Dated records describe the tree as it stood then; "fixing" them would falsify the record.
         ra = [h for h in ra if not DATED.search(h[0].rsplit('/', 1)[-1])]
