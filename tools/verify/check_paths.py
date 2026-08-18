@@ -421,6 +421,11 @@ def scan_ride_along(files, pairs):
         except OSError:
             continue
         rel = str(path.relative_to(REPO)).replace('\\', '/')
+        # ⚠ A RIDE-ALONG NAMING ITS OWN `.lean` IS THE REQUIRED CROSS-REFERENCE, NOT A DEFECT.
+        # The convention's whole point is that the pair name each other; firing on the `.md`'s
+        # opening line would make every correctly-written ride-along a finding, and the rule would
+        # be self-defeating. Suppress the SELF pair ONLY — a ride-along citing a DIFFERENT file's
+        # relocated prose is still a hit, which is how `Wall.md` was caught.
         for lineno, line in enumerate(text.split('\n'), 1):
             # ⚠ BLANK THE DELIMITERS, LENGTH-PRESERVING, so offsets stay exact. Every real citation
             # is written `` `Foo.lean` ``, so the backtick sits between the name and the prose noun
@@ -429,6 +434,8 @@ def scan_ride_along(files, pairs):
             # project keeps paying for, a detector blind to the form the convention mandates.
             for why in _ride_along_line_hits(line, pairs):
                 name = next(n for n in pairs if n in line)
+                if pairs[name] == rel:
+                    continue
                 hits.append((rel, lineno, name, pairs[name], why))
     return hits
 

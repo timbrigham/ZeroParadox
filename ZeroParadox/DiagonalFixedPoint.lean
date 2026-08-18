@@ -11,40 +11,17 @@ import ZeroParadox.Category.DiagonalWitness
 /-!
 # Machine-checked characterization index of self-reference — the diagonal fixed point
 
-The keystone index. ⊥ (the bottom), the snap, and ε₀ each have a `#check`-only object
-(`BottomCannotBe.lean`, `Order/SnapCannotBe.lean`, `Ordinal/Epsilon0CannotBe.lean`). Those are the three
-core *objects*; this file is the front door to the *phenomenon* they share a shape with — **self-reference**,
-the diagonal fixed point on which the whole framework rests. Until now self-reference had no single
-canonical reference: it lived one-face-per-domain with no direct route in. This is that route.
-
-Like the three object indexes, this file states no new results and reproduces no logic: every line
-`#check`s an already-proven theorem in its home file, so the `import`s recompile those files and the
-index cannot point at a dead or renamed result. A `#check`-only index creates no declarations and so
-*structurally cannot overclaim*.
-
-## The split (the μ/ν fork — the same structure the framework uses throughout)
-
-Self-reference runs off one **engine** — Lawvere's fixed-point construction — and forks in two:
-- **§ II. Wall faces (μ) — self-reference CANNOT close.** No fixed point exists; the reflexive object is
-  impossible. The classical negative diagonal arguments: Cantor, Russell, Turing, Tarski, Curry.
-- **§ III. Floor faces (ν) — self-reference CLOSES, and the fixed point lands at ⊥.** The fixed point is
-  genuinely produced and it is the bottom: the Quine atom, the Kleene quine, Löb / Gödel's second, Rice.
-
-This mirrors the ZP-R Diagonal Family Addendum exactly. As with the bottom family (MC-1), the roster is a
-matrix of domain cells; the cells below are the ones currently formalized, and other domains' cells remain
-to be filled in over time — the same open-cell structure the framework carries elsewhere.
-
-## The fence (built in, load-bearing)
-
-Each face is a proven theorem; this index only *routes* them. That the faces are **one** self-reference
-is **Lawvere (1969) / Yanofsky (2003)** — cited prior art, a recognized connection, NOT a Zero Paradox
-theorem. The cross-face identity across domains stays a **type boundary**, never a Lean `=`. So this is a
-machine-checked *view* over the existing diagonal family, not a new synthesis claim.
-
 ## Engineer's Take
 
 We see diagonal fixed points come up time and time again. Collect here to formalize the set, and define
 exactly what minimum set of requirements they take.
+
+---
+
+## Formal Overview
+One engine (Lawvere) forking into wall faces (μ, no fixed point) and floor faces (ν, landing at ⊥).
+`#check`-only, so it states no new result — that the faces are ONE self-reference is Lawvere/Yanofsky,
+cited prior art and **not** a ZP theorem. Split and fences: `ZeroParadox/DiagonalFixedPoint.md`.
 -/
 
 section DiagonalFixedPointIndex
@@ -55,16 +32,9 @@ section DiagonalFixedPointIndex
 
 /-! ### § II. Wall faces (μ) — self-reference CANNOT close (no fixed point / no reflexive object)
 
-**Scope note (2026-07-29) — `wf_no_selfloop` sits here but is NOT a μ engine face, and conflating the two
-was a live contradiction in this corpus.** The faces below it are engine faces: the map is fixed-point-free
-(negation), so *no object forms anywhere*. `wf_no_selfloop` says something different — it is a **verdict a
-HOST renders on the engine's ν output**: a well-founded host refuses the self-loop (`no_quine_atom`), while a
-host that carries it is thereby not well-founded (`quineHost_not_wellFounded`, `floor_not_wellFounded`, both
-in § III's family). Same theorem, two hosts. It is kept in this section because the *signature* is a refusal,
-but do not read it as "no fixed point exists" — the object exists and is refused, which is § III's object
-seen from a well-founded host. Standard framing: Aczel 1988 p. 6 (Foundation vs Anti-Foundation);
-Adámek-Milius-Moss 2020 Thm 7.6 ("the only well-founded fixed point is the initial algebra"). See
-`Settheory/Wall.lean`'s one-root-or-two reframe. -/
+⚠ **`wf_no_selfloop` sits here but is NOT an engine face.** The engine faces have a fixed-point-free
+map, so no object forms; `wf_no_selfloop` is a **verdict a HOST renders on the engine's ν output** — the
+object exists and is refused. Standard framing and the full scope note: `ZeroParadox/DiagonalFixedPoint.md`. -/
 #check @ZeroParadox.wf_no_selfloop           -- the host verdict, NOT an engine face: a well-founded relation has no self-loop (no x with r x x). Weakest rung — Mathlib's `WellFounded.asymmetric` is stronger
 #check @ZeroParadox.cantor_via_engine        -- Cantor: no surjection A → (A → Prop)
 #check @ZeroParadox.russell_via_engine       -- Russell: no surjection A → (A → Prop) via membership `mem : A → A → Prop`

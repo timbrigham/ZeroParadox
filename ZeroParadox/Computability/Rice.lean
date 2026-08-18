@@ -13,37 +13,10 @@ everything else in the family.
 
 ---
 
-## Overview (AI-assisted)
-
-Rice (1953): every *non-trivial extensional* (semantic) property of partial computable functions is
-undecidable. Rice's theorem is **already in Mathlib** (`ComputablePred.rice`, `ComputablePred.rice₂`,
-`Mathlib/Computability/Halting.lean`), and its proof runs through `fixed_point₂` — Kleene's second
-recursion theorem. This file does not re-prove it; it **cites** Mathlib and connects Rice to the
-framework's computability face.
-
-The connection (the genuine content): the framework's computability face is the one place the diagonal
-fixed point is *genuinely produced*, not walled — `computability_face_fixedPoint`
-(`ZeroParadox/Category/Lawvere.lean`) is **Rogers' fixed-point theorem** (Mathlib
-`Nat.Partrec.Code.fixed_point`; Mathlib reserves *Kleene's second recursion theorem* for
-`fixed_point₂`, which it derives from it), giving the Kleene quine (ν-existence). Rice is the **same**
-recursion-theorem
-fixed point read on the **decidability** axis: the quine *exists*, yet *which* programs have any non-trivial
-semantic property is *undecidable*. That pairing — ∃ but ¬decidable — is exactly the "exists-but-undecidable"
-signature that `Wall.lean`'s failure-mode taxonomy singles out as the computability row (the pivot face).
-
-So on the wall map: the total faces (lattice, 2-adic) *posit* the fixed point and it is *refuted* as a
-Lawvere instance in Set (Cantor); the computability face *has* the fixed point (recursion theorem) but pays
-for it with undecidability (Rice). Rice is the price of the ν-existence.
-
-Honest delta: Rice itself is Mathlib's (Rice 1953; the diagonal-family framing is Lawvere/Yanofsky, cited in
-`Wall.lean`). New here: the framework restatement, a concrete face (the halting problem), and the
-`quine_exists_yet_rice` pairing that states the ν-existence and the undecidability as two faces of one
-recursion-theorem setting.
-
-## Structure
-- § I.   Rice, framework restatement (a non-trivial extensional property is undecidable) — via `rice₂`.
-- § II.  The halting problem as a concrete Rice face — via Mathlib.
-- § III. The pairing: the quine exists (ν) yet Rice undecidability holds — two faces, one fixed point.
+## Formal Overview
+Rice is **Mathlib's** (`ComputablePred.rice₂`) and is cited, not re-proved. The content here is the
+pairing: one recursion-theorem fixed point gives the quine (ν-existence) and Rice undecidability at
+once. Why that is the price of ν-existence: `ZeroParadox/Computability/Rice.md`.
 -/
 
 set_option maxHeartbeats 400000

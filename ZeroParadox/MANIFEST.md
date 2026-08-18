@@ -27,6 +27,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 - `ZeroParadox/Order/Lattice.lean` - ZP-A: Lattice Algebra
 - `ZeroParadox/Order/LeastFixedPoint.lean` - The μ abstraction: least fixed point reached from a seed (the ceiling analogue of `AbstractSelfApp`)
+  - ride-along docs: `ZeroParadox/Order/LeastFixedPoint.md` - The schema, its three faces, and why the seed is a role rather than an origin
 - `ZeroParadox/Order/PerronCapstone.lean` - Capstone: Perron–Frobenius for finite stochastic operators
 - `ZeroParadox/Order/PowerSet.lean` - ZP-H Extension: Power Set Lattice as Structural Floor Witness
 - `ZeroParadox/Order/Snap.lean` - ZP-E: Bridge Document
@@ -96,6 +97,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 ### Multi-homed bridges (ZP-H)
 
 - `ZeroParadox/Multihomed/Boundary.lean` - ZPJ — The well-foundedness boundary (keystone snap-as-boundary probe)
+  - ride-along docs: `ZeroParadox/Multihomed/Boundary.md` - Two poles of the floor, two sources of choice, and what the toy carrier models
 - `ZeroParadox/Multihomed/BoundaryBridge.lean` - ZPJ — The snap-boundary, QPF bridge (best-effort; Rung C-QPF)
 - `ZeroParadox/Multihomed/CategoricalBridge.lean` - ZP-H: Categorical Bridge
 - `ZeroParadox/Multihomed/EigenvectorExists.lean` - Deep cross-domain entry: the transfer operator has a unit eigenvector (existence ⟹ existence)
@@ -113,14 +115,17 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Settheory/AczelConn.lean` - ZPJ — Aczel Fixed Point Connection
 - `ZeroParadox/Settheory/Coalgebra.lean` - ZP-P instance: the categorical parent (initial algebra vs final coalgebra)
 - `ZeroParadox/Settheory/Curry.lean` - Curry's paradox — the diagonal family's EXPLOSION face (probe)
+  - ride-along docs: `ZeroParadox/Settheory/Curry.md` - Why unrestricted comprehension yields every conclusion, and its floor dual
 - `ZeroParadox/Settheory/FixedPointFork.lean` - ZP-P: The Fixed-Point Fork
 - `ZeroParadox/Settheory/Loeb.lean` - Löb's theorem — the diagonal family's PROVABILITY-modal face (probe, from scratch)
+  - ride-along docs: `ZeroParadox/Settheory/Loeb.md` - Building an abstract provability logic, and Gödel's second as a corollary
 - `ZeroParadox/Settheory/Model.lean` - ZPJ — Concrete ValuationStructure Instance: (ℕ∞, min, ⊤)
 - `ZeroParadox/Settheory/OntBridge.lean` - ZPJ — OntologicalStates → AbstractSelfApp → AFA Content
 - `ZeroParadox/Settheory/QuineDichotomy.lean` - ZPJ — the Quine-atom dichotomy
 - `ZeroParadox/Settheory/QuineHost.lean` - The Quine-Host Requirements — the AFA fragment the framework actually needs
 - `ZeroParadox/Settheory/SetTheoryAFA.lean` - ZP-J: Executability of Self-Reference
 - `ZeroParadox/Settheory/Tarski.lean` - Tarski's undefinability of truth — the diagonal family's TRUTH face (probe)
+  - ride-along docs: `ZeroParadox/Settheory/Tarski.md` - The liar as the exact negation of the closing self-reference
 - `ZeroParadox/Settheory/Wall.lean` - Zero as a Wall — the self-loop refutation and the diagonal engine (formal object)
   - ride-along docs: `ZeroParadox/Settheory/Wall.md` - Zero as a Wall — the failure-mode taxonomy
 - `ZeroParadox/Settheory/Wall_OneRoot.lean` - Two small facts: self-loops exist without well-foundedness; the Lawvere lemma needs no order
@@ -134,6 +139,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
   - ride-along docs: `ZeroParadox/Computability/Occurrence.md` - The carrier's reach, floor-directed motion, and stutter equivalence
 - `ZeroParadox/Computability/Periodicity.lean` - ZP-K metric: the selfApply periodicity invariant (P5)
 - `ZeroParadox/Computability/Rice.lean` - Rice's theorem — the computability face's UNDECIDABILITY, from the recursion theorem (probe)
+  - ride-along docs: `ZeroParadox/Computability/Rice.md` - The price of ν-existence: one recursion-theorem fixed point read on two axes
 - `ZeroParadox/Computability/SelfApp.lean` - ZPJ — Abstract Self-Application Bridge
 
 ### Ordinals / proof theory (ZP-L, ZP-M, ZP-N)
@@ -166,6 +172,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 
 - `ZeroParadox/Algebra/Wheel.lean` - ZPJ — Wheel Theory Formalization: /0 as a First-Class Element
 - `ZeroParadox/Algebra/WheelFrac.lean` - The Wheel of Fractions `⊙_S A` (Carlström 2001:11, pp. 4-5, 10)
+  - ride-along docs: `ZeroParadox/Algebra/WheelFrac.md` - Two forks that do not unify, and what Carlström proves instead
 
 ### Root
 
@@ -173,6 +180,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/BottomCannotBe.lean` - Index of declarations characterizing ⊥
 - `ZeroParadox/ClaimsMirror.lean` - ZP Claims Mirror — the machine-checked representation of the claim graph
 - `ZeroParadox/DiagonalFixedPoint.lean` - Machine-checked characterization index of self-reference — the diagonal fixed point
+  - ride-along docs: `ZeroParadox/DiagonalFixedPoint.md` - The μ/ν split, the host verdict, and what this index does not claim
 - `ZeroParadox/Miniature.lean` - The Zero Paradox in miniature — the minimal core
 
 ### Meta / tooling (not framework content)
@@ -303,6 +311,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 - `ZeroParadox/Settheory/ForkFrameChange.lean` - The order-theoretic universal frame-change: duality swaps the fork's ends
 - `ZeroParadox/Settheory/LawvereBridge.lean` - The Lawvere dereference — selfApp as an instance of the general engine (probe)
+  - ride-along docs: `ZeroParadox/Settheory/LawvereBridge.md` - Existence from the engine, pinning from the framework, and where the reflexive object lives
 - `ZeroParadox/Settheory/MetaFork.lean` - The meta-level fork — the double dereference (probe)
 - `ZeroParadox/Settheory/RequirementsGap.lean` - The instance-vs-requirements gap as a fork instance (probe)
 

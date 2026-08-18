@@ -91,9 +91,9 @@ what makes the following free:
   so carries `Classical.choice`. **⚠ The natural inference — "supply the witness yourself and use only
   the other direction to stay choice-free" — is FALSE, and was MEASURED false**: `#print axioms`
   follows the STATEMENT, so citing the biconditional at all pulls in the choice used by the direction
-  you did not take. See `ZeroParadox/Multihomed/Boundary.lean` § I-b's purity block, where the one-line
-  `mpr` version measured `[propext, Classical.choice, Quot.sound]` and only a HAND proof came back
-  axiom-free. (Verified at source 2026-07-29. Line numbers deliberately omitted: a line number is a copy of
+  you did not take. Measured on `bot_not_acc` (`ZeroParadox/Multihomed/Boundary.lean`): the one-line
+  `not_acc_iff_exists_descending_chain.mpr` route came back `[propext, Classical.choice, Quot.sound]`,
+  and only the HAND proof from `fixed_bot` came back axiom-free. (Verified at source 2026-07-29. Line numbers deliberately omitted: a line number is a copy of
   a location and drifts — the lemma name is the stable anchor and is `#check`-able.)
 
 ## The wall as a failure-mode taxonomy (built one condition-set at a time)
