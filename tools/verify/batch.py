@@ -646,13 +646,22 @@ def check_routing(state, ranges=None):
     # closes the property, which is `CHECKERS`' own stated rule: if it can stop a push, it is hashed.
     _routed = [f for f in files
                if any(pat.match(f) for pat, agent, _w in ROUTING if agent == "/rely")]
-    _unhashed = sorted(f for f in _routed if os.path.basename(f) not in now)
+    # ⚠⚠ COMPARE PATHS, NOT BASENAMES. `now` is keyed on bare filenames and each key resolves
+    # through `_checker_path` to exactly ONE location, so a basename test is a NAME lookup wearing a
+    # path lookup's clothes. Measured (RLY17-1): a push whose entire content was a new
+    # `tools/verify/sub/check_prose.py` containing `sys.exit(0)` returned `prepush PASS`, exit 0 --
+    # the basename was a key, so the guard called it covered, while the only file ever hashed was
+    # `tools/verify/check_prose.py`. `/rely` is the ONLY gate covering a `.py` under `tools/verify/`,
+    # so nothing reviewed it at all. A basename collision in a subdirectory is a MISS.
+    _hashed_paths = {os.path.relpath(_checker_path(c), REPO).replace("\\", "/") for c in now}
+    _unhashed = sorted(f for f in _routed if f not in _hashed_paths)
     if not state and not moved and not _unhashed:
         done.add("/rely")
     elif _unhashed and not moved:
         rows.append(("/rely", False,
-                     "%d routed file(s) are NOT in CHECKERS, so the hash leg cannot see them and "
-                     "the auto-discharge is unsafe: %s"
+                     "%d routed file(s) are NOT hashed by CHECKERS, so the hash leg cannot see them "
+                     "and the auto-discharge is unsafe: %s — add the name to CHECKERS and re-sign "
+                     "(that is the fix, not a workaround)"
                      % (len(_unhashed), ", ".join(_unhashed[:3]))))
     for pat, agent, why in ROUTING:
         hits = [f for f in files if pat.match(f)]
