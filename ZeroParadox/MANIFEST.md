@@ -65,6 +65,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Information/CrossingTrials.lean` - Crossing trials: what a probability on the crossing would buy
 - `ZeroParadox/Information/PadicSurprisal.lean` - B3 (pipeline): information surprisal ≡ 2-adic depth at the floor
 - `ZeroParadox/Information/Surprisal.lean` - ZP-C: Information Theory
+  - ride-along docs: `ZeroParadox/Information/Surprisal.md` - The Archimedean fence, what repetition buys, and the concurrent readings
 
 ### State / Hilbert (ZP-D)
 

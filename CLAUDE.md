@@ -916,8 +916,15 @@ time, so it is written here rather than left to be found five sections into a fi
 are three distinct **states** under any dynamics, but under a **function** the first two share a **FATE** —
 `loop_is_a_trap` and `eval_of_halted` each give a singleton reachable set. The trichotomy is genuinely
 three-valued **only** in the non-deterministic setting; make the step single-valued and the self-loop is a
-relabelled trap. So **"could it still move?" is a MODAL question, and the framework encodes that modality as
-the function-vs-relation choice — nothing else.**
+relabelled trap. So **"could it still move?" is a MODAL question, and the function-vs-relation choice is
+how the framework encodes that modality WITHIN the trichotomy.**
+
+⚠ **It is not the only encoding, and "nothing else" is too strong** — the corpus's own counterexample is
+`carry` (§ VI-c, `ZeroParadox/Computability/Occurrence.lean`): a **function with no fixed point anywhere**
+whose observable projection never changes. `LoopsInPlace` demands the state return to *itself*, so adding
+any accumulating component leaves no fixed point at all and `machine_snap_impossible` does not apply —
+yet nothing observable moves. The separation being made is **the state moving** versus **the observable
+changing**, which is a question about a quotient rather than about determinism.
 
 **Do not re-derive this, and do not attribute the obstruction to the fixed point.** The self-loop is not
 what blocks departure; being a function is. Note also what it is NOT: this says nothing about whether the
