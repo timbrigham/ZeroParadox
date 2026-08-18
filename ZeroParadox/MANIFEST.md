@@ -149,6 +149,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/ConstructiveOrdinals.lean` - ZP-N: the ε₀ snap, constructively, on ordinal notations (choice-free)
 - `ZeroParadox/Ordinal/Epsilon0CannotBe.lean` - Machine-checked characterization index of ε₀ — what ε₀ IS and what it IS NOT
 - `ZeroParadox/Ordinal/Epsilon0LeastFP.lean` - Batch 2 / G1 (pipeline, T6): ε₀ is the LEAST fixed point of α ↦ ωᵅ — the snap sits at minimal closure
+  - ride-along docs: `ZeroParadox/Ordinal/Epsilon0LeastFP.md` - Least in which order, Veblen's Corollary 1, and three traps around the seed range
 - `ZeroParadox/Ordinal/Epsilon0MinMax.lean` - ε₀ is min ≡ max: the snap ⊥ → ε₀ is one Kleene chain (seed → closure)
   - ride-along docs: `ZeroParadox/Ordinal/Epsilon0MinMax.md` - Least fixed point as a signature, and two fences on the seed
 - `ZeroParadox/Ordinal/Gentzen.lean` - ZP-L: Incomputability Convergence
@@ -269,6 +270,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Category/LinFunctor.lean` - Info → Hilbert: the linearization functor (a genuine inter-domain edge — full functoriality proved)
 - `ZeroParadox/Category/Linearize.lean` - The free ℂ-module on the empty type is initial, hence isomorphic to the Hilbert bottom
 - `ZeroParadox/Category/NextTimeCategorical.lean` - The next-time operator, categorically — and the bridge to the concrete one
+  - ride-along docs: `ZeroParadox/Category/NextTimeCategorical.md` - Locators for AMM, the credit chain past them, and why the obvious descent fails
 - `ZeroParadox/Category/NoUniformCharacter.lean` - A conjunction of three already-proved facts about the three domain bottoms
 - `ZeroParadox/Category/Node4Generation.lean` - ZP-H node #4 GENERATION — the floor `Fin 0` generates the ceiling `ℕ` by iteration (an Adámek instance)
 - `ZeroParadox/Category/Obstruction.lean` - Two Finsupp facts (one ℂ-linearization stand-in pair, one opposite-category initiality)
@@ -320,6 +322,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Computability/ChoicePurityInvariant.lean` - Is choice-purity an IN-STATEMENT μ/ν separating invariant?
 - `ZeroParadox/Computability/CodeDataFrameChange.lean` - The frame-change in the computability frame: the code↔data involution and the quine on its fixed locus
 - `ZeroParadox/Computability/ComputableCrossing.lean` - The Lawvere bridge, crossed in the computability face (probe)
+  - ride-along docs: `ZeroParadox/Computability/ComputableCrossing.md` - Where the obstruction is absent: the universal machine as a reflexive object
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - Does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 - `ZeroParadox/Computability/NatListRegime.lean` - The third root-cut regime: the nat/list functor (leaf + recursive position)
 - `ZeroParadox/Computability/OutputSeparates.lean` - The head decides, the arity does not: two instances of Rutten's final-system formula
