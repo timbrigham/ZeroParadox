@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-H: Categorical Bridge PDF Builder
-Version 1.17 | June 2026
+Version 1.18 | June 2026
 v1.18: FORCING OVERCLAIM RETRACTED (Remark R-FORCING). F_B was said to "force an irreversible jump at 0"; Valuation/Padic.lean retracts exactly that - the 2-adic topology proves irreversibility and a clopen gap, never a first step, and no metric result could. The closing "structurally forced across all four" now reads as the SHAPE being constrained; occurrence stays a framework commitment.
 v1.16: Rendered version removed from endnote (C1 sweep — no version changelogs in rendered PDF content).
 v1.15: CC-1 framing updated — CC-1 is a derived theorem in ZP-J (cc1_derived, Lean 4),

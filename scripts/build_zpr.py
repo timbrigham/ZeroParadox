@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.0 | July 2026
+Version 1.2 | July 2026
 v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
 self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
 (Cantor), obstruction-free but not itself a reflexive object in the monotone/domain regime

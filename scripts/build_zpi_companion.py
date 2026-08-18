@@ -1,6 +1,6 @@
 """
 Build ZP-I Illustrated Companion
-Version 1.23 | May 2026
+Version 1.24 | May 2026
 v1.24: FORCING OVERCLAIM RETRACTED (companion sync with ZP-I v1.15). "T-SNAP (bottom -> eps0, necessarily)" asserted occurrence; T-SNAP fixes the transition's shape and does not establish that it is taken (Order/Snap.lean's tsnap_holds_but_nothing_moves holds in a model where nothing moves). Occurrence is a framework commitment.
 v1.23: rendered Lean citations synced to post-reorg files/namespaces the earlier passes missed (bare ZPx.lean / ZeroParadox.ZPx.* / ZPx.<decl>; SSOT-driven).
 v1.21: "(no sorryAx)" applied to step 1 source; ZP-internal labels removed from step table; "No new axioms" clarified to scope; "the framework" scoped to ZP-I (ER/AR fixes).

@@ -35,7 +35,9 @@ Exit codes:
     1 — one or more hash mismatches or STALE AR entries
 """
 
+import glob
 import hashlib
+import io
 import json
 import os
 import re
@@ -240,8 +242,37 @@ def update_register_comp_hash(doc, new_hash):
     def replace_comp(m):
         return re.sub(r'comp:[0-9a-f]{8}', f'comp:{new_hash}', m.group(0))
 
-    pattern = r'\|\s*' + re.escape(doc) + r'[^\n]*\n'
-    common.write_text_lf(REGISTER, re.sub(pattern, replace_comp, content))
+    pattern = _register_row_pattern(doc, content, 'comp')
+    if pattern is None:
+        return
+    common.write_text_lf(REGISTER, re.sub(pattern, replace_comp, content, count=1))
+
+
+def _register_row_pattern(doc, content, kind):
+    """A pattern matching EXACTLY the register row for `doc`, or None if that is ambiguous.
+
+    ⚠ THE OLD PATTERN HAD NO BOUNDARY AFTER `doc` AND `re.sub` REPLACES ALL MATCHES, so any
+    document whose name is a PREFIX of another rewrote both rows. Measured: updating `ZP-H` wrote
+    build_zph.py's hash into the `ZP-H Native Categories Addendum` row, which describes a different
+    script. Prefix-shadowed pairs exist today, so this is not hypothetical.
+
+    Exact cell match wins. A prefix match is used only when exactly one row has it. Anything else
+    returns None and the caller reports rather than guessing.
+    """
+    exact = r'(?m)^\|\s*' + re.escape(doc) + r'\s*\|[^\n]*$'
+    if re.search(exact, content):
+        return exact
+    prefix = r'(?m)^\|\s*' + re.escape(doc) + r'[^|\n]*\|[^\n]*$'
+    hits = re.findall(prefix, content)
+    if len(hits) == 1:
+        return prefix
+    if len(hits) > 1:
+        names = [h.split('|')[1].strip() for h in hits]
+        print('  REFUSING to update %s hash for %r - matches %d rows: %s'
+              % (kind, doc, len(hits), ', '.join(names)))
+    else:
+        print('  REFUSING to update %s hash for %r - no register row matched' % (kind, doc))
+    return None
 
 
 def update_register_formal_hash(doc, new_hash):
@@ -252,8 +283,10 @@ def update_register_formal_hash(doc, new_hash):
     def replace_formal(m):
         return re.sub(r'formal:[0-9a-f]{8}', f'formal:{new_hash}', m.group(0))
 
-    pattern = r'\|\s*' + re.escape(doc) + r'[^\n]*\n'
-    common.write_text_lf(REGISTER, re.sub(pattern, replace_formal, content))
+    pattern = _register_row_pattern(doc, content, 'formal')
+    if pattern is None:
+        return
+    common.write_text_lf(REGISTER, re.sub(pattern, replace_formal, content, count=1))
 
 
 def update_register_ar_column(ar_labels):
@@ -400,6 +433,33 @@ def selftest():
 
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
+
+
+def check_docstring_versions():
+    """Every build script's docstring header must agree with its own `VERSION` constant.
+
+    Step 4 of the four-step rule (edit, bump, rebuild, update the docstring) is the one that gets
+    skipped, because nothing mechanical reads it: the hash check fingerprints the file and the
+    release gate compares the constant. Returns a list of `(name, header, const)` mismatches.
+
+    ⚠ MATCH THE HEADER LINE ONLY. A first draft of this scanned for any `Version N.N` before the
+    constant and flagged `build_zpc.py`, whose only hit sits INSIDE a changelog entry
+    ("Version 1.4 updates this") - a historical record that must never be rewritten. Changelog
+    entries and the header line look alike to a loose pattern and mean opposite things.
+    """
+    out = []
+    for p in sorted(glob.glob(os.path.join(REPO, 'scripts', 'build_*.py'))):
+        try:
+            body = io.open(p, encoding='utf-8').read()
+        except OSError:
+            continue
+        m = re.search(r"^VERSION\s*=\s*['\"]([^'\"]+)['\"]", body, re.M)
+        if not m:
+            continue
+        head = re.search(r"(?m)^\s*Version\s+(\d+(?:\.\d+)*)\s*\|", body[:m.start()])
+        if head and head.group(1) != m.group(1):
+            out.append((os.path.basename(p), head.group(1), m.group(1)))
+    return out
 
 
 def main():
@@ -556,9 +616,10 @@ def main():
         update_register_ar_column(comp_labels)
         print('register.md Comp AR column updated.')
 
-    all_ok = not hash_mismatches and not ar_stale
+    doc_mismatches = check_docstring_versions()
+    all_ok = not hash_mismatches and not ar_stale and not doc_mismatches
     if all_ok:
-        print('All hashes match. AR status current.')
+        print('All hashes match. AR status current. Docstring versions in sync.')
         return 0
 
     if hash_mismatches:
@@ -567,6 +628,12 @@ def main():
     if ar_stale:
         print(f'AR STALE: {", ".join(ar_stale)}')
         print('Run: python %s --mark-remediated <KEY>' % SELF)
+    if doc_mismatches:
+        print('DOCSTRING VERSION != VERSION constant (step 4 of the four-step rule):')
+        for name, head, const in doc_mismatches:
+            print('  %-42s docstring %-8s constant %s' % (name, head, const))
+        print('Edit the docstring header line. Do NOT touch changelog entries below it - those')
+        print('record what each version actually contained and rewriting them falsifies the record.')
     return 1
 
 
