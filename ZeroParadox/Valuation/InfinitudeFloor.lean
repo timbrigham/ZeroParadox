@@ -28,37 +28,10 @@ what I needed.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-A well-typed form of the claim **"the bottom's infinite complexity IS its being an infinitude of zeros."**
-Rather than equate two objects across a type boundary (the MC-1 wall), we use the framework's
-instance-meets-requirements move: a REQUIREMENTS typeclass `InfinitudeFloor` with a `floor` carrying a
-complexity `cx : α → ℕ∞`, an infinitude of distinct `member`s below it whose complexities climb strictly,
-and the identity field `cx_floor_eq_iSup : cx floor = ⨆ n, cx (member n)` — the floor's complexity IS the
-supremum of the infinitude's.
-
-Its consequence, `infinitude_forces_infinite_complexity` (`cx floor = ⊤`), says the infinitude of
-(distinct, complexity-climbing) zeros is what MAKES the floor infinitely complex — recovering the
-framework's `addVal_bot` (v₂(0) = ⊤, `Valuation/FloorWitness.lean`) as a fact ABOUT the infinitude, not a
-separate assertion. "Same" is realized as "both are consequences of one requirements-structure, met by one
-witness," not as a cross-type `=`.
-
-Substance is in the WITNESS: the non-degenerate instance is ℚ₂ (floor = 0, cx = the 2-adic valuation,
-member n = 2ⁿ⁺¹ so cx(member n) climbs to ⊤ = v₂(0)). All of it is present and proved: the abstract
-requirements, the payoff theorem, a toy witness (ℕ∞), the power-series witness, and the full ℚ₂ witness with
-the 0 = ∞ inversion.
-
-## Structure
-- § I   The requirements typeclass `InfinitudeFloor`.
-- § II  Two support lemmas about `ℕ∞`.
-- § III The identity (well-typed) and its consequence (the infinitude forces infinite complexity).
-- § III-b The OFFSET structure: members sit at finite distance, the floor alone at ⊤ (Tim, 2026-08-05).
-- § IV  A toy witness (`ℕ∞`, inhabitability).
-- § V   The power-series witness (`R⟦X⟧`, order at the floor).
-- § VI  The inversion extension (both poles, concurrently and one after the other).
-- § VII The genuine 2-adic witness (`ℚ₂`).
-- § VIII NO-GO gauge: the class forces `Infinite α` and nothing more; a hand-built witness
-  shows the substance lives in the chosen witnesses, not in class membership.
+## Formal Overview
+The claim *"the floor's infinite complexity IS its being an infinitude of zeros"*, well-typed — as a
+REQUIREMENTS class rather than a cross-type `=`. Substance is in the WITNESS (ℚ₂); the class itself
+pins down only that the carrier is infinite. Requirements, witnesses and the NO-GO: `ZeroParadox/Valuation/InfinitudeFloor.md`.
 -/
 
 namespace ZeroParadox
@@ -356,70 +329,10 @@ noncomputable instance : InfinitudeFloorInversion Q₂ :=
 
 /-! ### § VIII. NO-GO — what the requirements class does and does not pin down
 
-**The sharp form, and it is a CHARACTERISATION rather than a bare negative.** `[InfinitudeFloor α]`
-does constrain `α`: `member_injective` (§ III-b) supplies `ℕ ↪ α`, so **the class forces `α` to be
-INFINITE** and no finite type can carry it. What it does **not** do is constrain `α` any further — the
-fields are satisfiable on a carrier whose only relevant property is that infinitude, with every field
-discharged from hand-written data. The honest statement is therefore:
-
-> **`Nonempty (InfinitudeFloor α) ↔ Infinite α`** — the class pins down infinitude and nothing else.
-
-That biconditional is `infinitudeFloor_nonempty_iff_infinite` below, so "nothing else" is proved
-rather than inferred from one witness. ⚠ An earlier draft asserted the "exactly / nothing beyond"
-reading while offering only a single hand-built carrier for the converse, and in the same edit deleted
-the fence that had said the general form was not proved. Both gates caught it; the answer was to prove
-it.
-
-⚠ **An earlier draft said `[InfinitudeFloor α]` "says nothing about `α`" and that membership "carries
-no content". BOTH ARE FALSE**, refuted by `member_injective` in this same file, and caught by two
-independent gate probes. The precedent cited below (`ZeroParadox/Algebra/Wheel.lean` § VII-b) carries a
-dated correction retiring exactly that sentence shape, on the ground that it tells a reader to discard
-legitimate results — the retired form was reproduced here while citing the corrected file.
-
-⚠ **The witness below is § IV's toy TRANSPORTED, not a new carrier.** `BookkeepingCarrier = ℕ ⊕ Unit`
-is canonically equivalent to `ℕ∞` (`Equiv.optionEquivSumPUnit`, since `ℕ∞ = WithTop ℕ = Option ℕ`), and
-the `cx` below is that equivalence's inverse — § IV's `cx = id` in other clothing. **The delta of this
-section is the STATEMENT of the no-go, not the carrier.** § IV already calls its own witness
-degenerate. What is new, and true as measured **on 2026-08-07, across the eight other files using the class**:
-**no corpus file states the no-go for `InfinitudeFloor`, and the class has no non-degeneracy
-predicate.**
-
-**Precedent.** `ZeroParadox/Algebra/Wheel.lean` § VII-b found `WheelValuationStructure` degenerately
-inhabited — a constant-`⊤` valuation satisfies every field on any **commutative ring** (that class
-extends `CommRing`; not "any carrier") — and answered with an explicit `WVSNondegenerate` predicate
-plus the standing rule that constructions over it carry that predicate as a hypothesis.
-`InfinitudeFloor` has no analogue. The older sibling is `trivialSelfApp`
-(`ZeroParadox/Computability/SelfApp.lean`), which `Wheel.lean` names as what its own gauge mirrors.
-
-**Prior art — the shape is standard and the framework joins it rather than inventing it.** Degenerate
-models of an axiom set, and non-degeneracy stated as an **inequation**, are ordinary universal
-algebra. Burris & Sankappanavar, *A Course in Universal Algebra* (all three read from the filed copy):
-an algebra is *"trivial if |A| = 1"* (§ II.1, p. 26); *"as trivial algebras satisfy any
-quasi-identity"* (p. 250); and — the load-bearing one — *"As a trivial algebra cannot satisfy a
-negated atomic formula, exactly one of Ψ₁, …, Ψₖ is atomic"* (p. 251). **That last is WHY a
-non-degeneracy condition has to be stated as an inequality**: a trivial model satisfies every positive
-axiom, so only a negated atom excludes it. It is the shape `WVSNondegenerate`, `0 ≠ 1` and Mathlib's
-**`Nontrivial`** all take; `Nontrivial` / `Valuation.IsNontrivial` (the latter already named in
-`Wheel.lean`) are the idioms to reach for if a predicate is ever added here.
-
-⚠ **A prior draft of this paragraph asserted those two passages were "not reproducible from the filed
-copy's text layer" and cited only the definition.** That was false, and it was a **truncated search
-recorded as an absence** — the sentences wrap across lines and a tight pattern with a result limit
-missed them, while the book's own index reads *"Quasi-identity 250"*. Two gates re-extracted them
-independently; both have since been re-verified here. **This is `CLAUDE.md` § *NOT IN THE LIBRARY IS
-A CLAIM* failing in the direction it warns about, inside a docstring, one edit after the rule was
-invoked.** Recorded rather than quietly repaired, because the narrowed citation had also stopped
-supporting the sentence it anchors.
-
-⚠ This is **not** an instance-of relation either way: `InfinitudeFloor` degenerates in its **chosen
-data**, not in its **carrier**. Shared shape, nothing more.
-
-⚠ **The degeneracy is NOT confined to `InfinitudeFloor`, and an earlier draft asserted a fence here
-that does not exist.** That draft claimed the members' convergence to the floor "could not even be
-stated" on this carrier. `TopologicalSpace (ℕ ⊕ Unit)` synthesizes, so it is perfectly statable; and a
-gate probe during review reported a full `InfinitudeFloorInversion` witness on this carrier under the
-indiscrete topology, with § VI's `pole_inversion` going through. **That extension is NOT built here** —
-it is recorded so no reader infers a protection that was never established. -/
+**A CHARACTERISATION, not a bare negative:** `member_injective` supplies `ℕ ↪ α`, so the class **forces
+`α` INFINITE** — and `infinitudeFloor_nonempty_iff_infinite` below proves it pins down nothing else.
+⚠ Do not say the class "carries no content"; `member_injective` refutes that. The precedent, why
+non-degeneracy must be an INEQUATION (Burris & Sankappanavar), and the unbuilt extension: `ZeroParadox/Valuation/InfinitudeFloor.md`. -/
 
 /-- **`Statement:` the class DOES constrain its carrier — it forces infinitude.** `member_injective`
 (§ III-b) gives `ℕ ↪ α`; the conclusion is Mathlib's `Infinite.of_injective` applied to it. This is

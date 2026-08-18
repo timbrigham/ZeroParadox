@@ -222,6 +222,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/ForkPoleProbe.lean` - Experimental probe: is the μ/ν fork independent of the pole?
 - `ZeroParadox/Valuation/IndependenceProbe.lean` - Experimental probe: are the chain axis and the branching axis independent?
 - `ZeroParadox/Valuation/InfinitudeFloor.lean` - The floor's infinite complexity AS an infinitude of zeros (research spike)
+  - ride-along docs: `ZeroParadox/Valuation/InfinitudeFloor.md` - What the requirements class pins down, and why non-degeneracy must be an inequation
 - `ZeroParadox/Valuation/IrreversibilityProbe.lean` - Experimental probe: is irreversibility (the snap direction) a fifth independent requirement?
 - `ZeroParadox/Valuation/LocalFloor.lean` - Every node is a floor, literally: a genuine InfinitudeFloor at each node of the generic tree
 - `ZeroParadox/Valuation/NuLeafReconcile.lean` - The within-ν edge reconciles at the LEAF, not the ambient
@@ -326,6 +327,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Computability/MarkovNuUniversal.lean` - Does the Markov node (#2) get a ν (terminal/unique-fixed-point) universal property?
 - `ZeroParadox/Computability/NatListRegime.lean` - The third root-cut regime: the nat/list functor (leaf + recursive position)
 - `ZeroParadox/Computability/OutputSeparates.lean` - The head decides, the arity does not: two instances of Rutten's final-system formula
+  - ride-along docs: `ZeroParadox/Computability/OutputSeparates.md` - Which Rutten example governs which family, and a discriminator that fails
 - `ZeroParadox/Computability/RootCutTrichotomy.lean` - The root cut is a TRICHOTOMY (leaf × recursive position)
 - `ZeroParadox/Computability/StationaryUnique.lean` - Irreducibility forces a unique stationary distribution for node #2
 

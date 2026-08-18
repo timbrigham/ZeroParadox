@@ -11,8 +11,6 @@ set_option maxHeartbeats 400000
 /-!
 # The head decides, the arity does not: two instances of Rutten's final-system formula
 
-Experimental probe in the bottom-diagram mapping campaign — not a finalized layer.
-
 ## Engineer's Take
 
 I know I am obsessed with this, and it still feels to me like we can get a self starting system out
@@ -28,78 +26,10 @@ I defer to my AI assistant regarding the specifics of how the internals work.
 
 ---
 
-## Formal Overview (AI-assisted)
-
-**This file claims NO new mathematics.** It records two Lean-checked instances of a published formula,
-and cross-links a third the corpus already had.
-
-**The governing result — Rutten, *Universal coalgebra: a theory of systems*, TCS 249 (2000),
-Example 10.2(5), printed p. 44** (`.claude-local/papers/rutten_universal_coalgebra_2000.pdf`; Rutten
-credits it to his [52], Manes & Arbib 1986): for `F(S) = A × S^B` the final system is `A^{B*}`. A polynomial functor `⟨A, fun _ => B⟩` is exactly that
-`F`, so its final coalgebra has `|A|^{|B*|}` elements — **a single point iff `|A| = 1`, for every `B`
-whatsoever.** The head type decides; the arity `B` is irrelevant to whether the final coalgebra is a
-single point.
-
-The two instances proved here:
-
-* `binCofix_subsingleton` — `binPF = ⟨Unit, fun _ => Bool⟩` (`A = 1`, `B = 2`): `1^{2*}` is one
-  element, so `Cofix binPF.Obj` is a **subsingleton**. Two recursive positions buy nothing.
-  `Category/RootCutBinary.lean`'s `arity_collapse` already showed arity does not move the *seam*
-  question; this shows it does not move the *cardinality* question either.
-* `output_separates` — `streamPF = ⟨Bool, fun _ => PUnit⟩` (`A = 2`, `B = 1`): `2^{1*}` is the
-  `Bool`-streams, and two of them are provably distinct.
-
-**The corpus already had the `B = 0` instance and it was never connected:**
-`Category/RootCutDegeneracy.lean`'s `cofixEquiv : Cofix (constPF A).Obj ≃ A`, since `B* ` is then a
-single point and `A^1 = A`. Three instances of one formula, in three files.
-
-**⚠ CORRECTED 2026-07-30 (adversary + prior-art gates, bedrock). Read before citing this file against
-`notEL_unique`.** An earlier revision was titled *"the infinite pole is a POINT unless the functor
-emits"* and concluded *"the discriminator is what a step emits."* **That is false**, and its own foil
-refutes it: `natPF_NatListRegime = ⟨Bool, fun b => cond b PUnit PEmpty⟩` has head type `Bool` — the
-**same head type as `streamPF`** — yet `GroundZero.notEL_unique` proves its non-terminating part is a
-single point. The stated discriminator was identical on both sides of the comparison.
-
-The real error was **comparing across families**: `natPF`'s child type *depends on its head*, so it is
-**not** of the form `⟨A, fun _ => B⟩` and Rutten 10.2(5) does not apply to it. Nothing here bears on
-`natPF`, and this file must not be cited as explaining `notEL_unique`.
-
-**But `natPF` is outside 10.2(5), NOT outside the literature.** Rutten gives the dependent-arity case
-three lines below on the same printed page — Example 10.2(6), `F(S) = C + (A × S^B)`, *"this example
-subsumes all of the above examples"* — and `natPF.Obj X ≅ 1 + X` is his item (4), whose final system is
-`(ℕ̄, pred)`. That is what `notEL_unique` witnesses, and `Computability/GroundZero.lean:49` already
-cites it. So **both** sides of the retracted comparison sit on one page of Rutten; the error was
-reading one item as if it governed the other item's family.
-
-`Reading:` CARRIER — the framework reads this as the computational-face counterpart of
-`Valuation/BranchingRequirement.lean`, which argues branching is what makes the 2-adic boundary a
-continuum "rather than a single chain's single end" — that file proves the *seed*
-(`branches_incomparable`) and leans on `PadicTree`'s boundary for the continuum half, as its own
-honest-scope paragraph states. On the 2-adic tree a branch choice **is** a
-digit, so branching and head-labelling coincide there and come apart here. **Conjectural**: different
-carriers, no map between them is claimed, and no framework bottom is identified with any behaviour in
-this file (⊥ does not appear in it).
-
-**A replacement criterion was proposed and it is FALSE — recorded so it is not re-proposed.** The
-suggestion was *the number of head values with inhabited child type*. Machine-checked against it:
-`natPF` has count one yet `Cofix natPF` is not a point (`eventuallyLeaf_ne_infinity`,
-`Computability/NatListRegime.lean:152`: any behaviour reaching a leaf differs from `natInfinity`,
-so there are at least two), and `constPF` has
-count zero yet `Cofix (constPF Bool)` has two elements. It survives only if restricted to the
-non-terminating part, which is not what it said. Dropped rather than repaired — it predicted nothing
-the cited formulas do not.
-
-**Fences.** `output_separates` proves exactly **two** distinct behaviours, not the continuum. Rutten
-10.2(5) identifies the carrier as `2^{1*}` and states **no cardinality** — that the set is uncountable
-is **Cantor's**, and is claimed nowhere here. **Uncountability is likewise NOT Adámek–Milius–Moss's**:
-their Example 7.7 (p. 31, arXiv:1910.09401v2) gives the terminal coalgebra `A^∞ ∪ A*` and the initial
-algebra `A*`, and no cardinality either. The general formula is
-cited, not formalized: what is machine-checked here is two of its instances.
-
-## Structure
-- § I   `A = 1`: `Cofix binPF.Obj` is a subsingleton (arity is irrelevant)
-- § II  `A = 2`: `streamPF`, its constant behaviours, and their distinctness
-- § III The contrast, bundled
+## Formal Overview
+**NO new mathematics** — two instances of Rutten Example 10.2(5): for `F(S) = A × S^B` the final system
+is `A^{B*}`, so the head decides and the arity is irrelevant. ⚠ It does NOT apply to `natPF`, so do not
+cite this against `notEL_unique`. Instances, families and fences: `ZeroParadox/Computability/OutputSeparates.md`.
 -/
 
 namespace ZeroParadox
