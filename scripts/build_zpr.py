@@ -1,6 +1,6 @@
 """
 Zero Paradox — ZP-R: A Cross-Category Account of the Self-Referential Fixed Point — PDF Builder
-Version 1.4 | July 2026
+Version 1.5 | July 2026
 v1.0: Initial release. Synthesis / placement layer. Locates and realizes the framework's
 self-application fixed point as a Lawvere fixed point across three categories (faces): refuted in Set
 (Cantor), obstruction-free but not itself a reflexive object in the monotone/domain regime
@@ -13,7 +13,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.4'
+VERSION = '1.5'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -170,10 +170,10 @@ def build():
         'removes Lawvere\'s contradiction &#8212; but not by itself <i>sufficient</i>. Two categories '
         'are free of the obstruction, and the framework\'s &#8869; lives in both; but only one of '
         'them furnishes a genuine reflexive object. The reasons are <i>not</i> the same, and the '
-        'difference is the point: the monotone regime is free of it <i>literally</i> (Knaster&#8211;Tarski, '
-        'on a <i>complete lattice</i> &#8212; the hypothesis is load-bearing, since Nat.succ is a monotone '
-        'endomap with no fixed point '
-        'bans a fixed-point-free monotone endomap), while the computable regime is free of it only '
+        'difference is the point: the monotone regime is free of it <i>literally</i> &#8212; on a '
+        '<i>complete lattice</i>, Knaster&#8211;Tarski bans a fixed-point-free monotone endomap, and the '
+        'completeness hypothesis is load-bearing, since Nat.succ is a monotone endomap with no fixed '
+        'point at all &#8212; while the computable regime is free of it only '
         '<i>up to eval</i> &#8212; literally fixed-point-free total computable endomaps do exist.'))
 
     E.append(result_box(

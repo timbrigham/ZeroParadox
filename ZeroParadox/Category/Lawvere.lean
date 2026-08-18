@@ -128,7 +128,7 @@ theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code
 /-! ## § VI. The completeness verdict — the face table
 
 **All four faces fail the Set test identically**: `Code` is a nontrivial total type, so
-`nontrivial_no_witness` forbids the witness there exactly as for the lattice and the 2-adics. What
+`no_witness_of_nontrivial` forbids the witness there exactly as for the lattice and the 2-adics. What
 distinguishes the computability row is the SECOND category it also lives in, never its Set verdict.
 ⚠ The keystone unifies a **shape**, not a mechanism, and not a cross-category identity. Table,
 verdict and fences: `ZeroParadox/Category/Lawvere.md`. -/

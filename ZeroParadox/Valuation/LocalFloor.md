@@ -25,7 +25,10 @@ away. `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`), and nothing here
 
 ## Prior art — neither statement is new, and the closest forms are in the pinned Mathlib
 
-* **`Nat.ofDigits_append`** — both statements are its trailing-digit corollaries.
+* **`Nat.ofDigits_append_zero`** (`@[simp]`) is the exact trailing-zero shape; `Nat.ofDigits_append`
+  is the general form. ⚠ **Analogue, not corollary** — those are statements about `List ℕ → ℕ`,
+  these about equality of `ℕ → Fin 2` functions, and "corollary" would assert a derivation across
+  a type boundary.
 * **`Turing.ListBlank` / `Turing.BlankExtends`** — Mathlib's quotient of finite lists by trailing
   `default` — is `localBotEnd`'s construction under another name, and the 0-branch case is that
   quotient's defining relation. ⚠ **This is the second time this corpus has been adjacent to
@@ -34,6 +37,9 @@ away. `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`), and nothing here
 * **Cobos & Navas**, arXiv:1911.00929v2, p. 8 § 3 — the digit-word→natural encoding
   `N(w) = a₀ + a₁p + ⋯`. Filed in the project's paper library.
 
-**The deliverable here was a pointer, not a construction.** Per the standing rule: when a question
-turns out to be already proved, write the one line of consequence at the site the reader lands on and
-name the canonical home — do not add an elementary instantiation.
+⚠ **A POINTER WAS NOT AVAILABLE HERE, AND SAYING OTHERWISE WOULD BE A FACE-SAVING GLOSS.** All three
+prior forms live in **other carriers** — `List ℕ → ℕ` for the digit lemmas, a quotient of `List Γ` for
+`ListBlank` — while this carrier is `ℕ → Fin 2`. Neither Lean proof touches `ofDigits`. So these are a
+shared **shape**, not an instance-of, and the two declarations had to be proved rather than cited. The
+standing rule (prefer a pointer to an elementary instantiation) does not apply when the pointer would
+cross a type boundary.

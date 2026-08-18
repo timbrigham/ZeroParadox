@@ -12,11 +12,16 @@ the declarations, the Engineer's Take and the per-declaration glosses.
 | 2-adic (`×2` in ℚ₂) | `x ↦ 2x` | NO witness — posited | `q2_no_witness` ✓ |
 | computability (Kleene quine) | computable endo | **NO witness — same as the others** | `computability_face_fixedPoint` ✓ (genuine, in the effective category) |
 
-⚠ **THE COMPUTABILITY ROW USED TO READ `n/a — lives in effective, not Set`, AND THAT MADE IT LOOK
-SPECIAL WHEN IT IS NOT.** `¬ HasLawvereWitness Nat.Partrec.Code` follows from this file's own
-`nontrivial_no_witness`: `Code` is a nontrivial total type, so Cantor forbids the witness there
-exactly as it does for the lattice and the 2-adics. **All four faces fail the Set test identically.**
-What distinguishes the computability row is not its Set verdict but the *second* category it also
+⚠ **ALL FOUR FACES FAIL THE SET TEST IDENTICALLY**, and the computability row is not special in
+that column. `Code` is a nontrivial total type, so `no_witness_of_nontrivial` forbids the witness
+there exactly as for the lattice and the 2-adics — checkable in one line:
+
+```lean
+example : ¬ HasLawvereWitness Nat.Partrec.Code :=
+  no_witness_of_nontrivial (b₀ := Code.zero) (b₁ := Code.succ) (by simp)
+```
+
+What distinguishes the computability row is not its Set verdict but the **second category** it also
 lives in.
 
 ## The honest verdict

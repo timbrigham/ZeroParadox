@@ -520,8 +520,14 @@ def sync_hash(key):
     describes it, and no re-review is owed. `--mark-remediated` would stamp AR as
     reviewed-and-remediated, which would be a claim about work nobody did.
 
-    Routes through the same `FORMAL_SCRIPTS` / `COMP_SCRIPTS` maps and the same boundary-aware row
-    matcher as everything else here, so it cannot write a row the caller did not name.
+    Routes through the same script maps and the same boundary-aware row matcher as everything else
+    here, so it cannot write a row the caller did not name.
+
+    ⚠ **MISUSE BOUNDARY.** Using this after a RENDERED change would skip the re-review the four-step
+    rule owes - that is laundering, and the tool cannot detect it, because it never opens the PDF.
+    The caller is the only one who knows whether the render moved. Where a document carries a real
+    AR status, prefer `--mark-remediated` after an actual review; this is for the case where the
+    bytes moved and the artifact did not.
     """
     if key in FORMAL_SCRIPTS:
         h = sha8(FORMAL_SCRIPTS[key])
@@ -538,6 +544,18 @@ def sync_hash(key):
             return False
         ok = update_register_comp_hash(key, h)
         print('  %-26s comp:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
+        return ok
+    if key in FORMAL_ONLY_SCRIPTS:
+        # ⚠ A FOURTH MAP EXISTS AND THE FIRST VERSION OF THIS FUNCTION WALKED THREE. `--sync-hash
+        # "ZP-R Cross-Category"` returned "unknown key" while the document sat mismatched - a tool
+        # reporting nothing over ground it never covered, which is the shape this layer exists to
+        # refuse. Found by using it, one commit after adding it.
+        h = sha8(FORMAL_ONLY_SCRIPTS[key])
+        if h == 'MISSING':
+            print('  ERROR: %s not found' % FORMAL_ONLY_SCRIPTS[key])
+            return False
+        ok = update_register_formal_hash(key, h)
+        print('  %-26s formal:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
         return ok
     if key in STANDALONE_SCRIPTS:
         # ⚠ STANDALONE DOCS LIVE IN `ar_status.json`, NOT `register.md` - the header says so, and a
