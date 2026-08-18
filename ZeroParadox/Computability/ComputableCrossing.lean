@@ -30,10 +30,14 @@ open Nat.Partrec Nat.Partrec.Code
 
 /-! ## § I. The obstruction is absent in the computable world -/
 
-/-- **No fixed-point-free total computable endomap.** Rogers' fixed-point theorem: every total computable
-`f : Code → Code` has a fixed point up to `eval`. This is the exact dual of `reflexive_object_refuted` —
-the fixed-point-free map that refutes the reflexive object in Set simply does not exist among the total
-computable endomaps. So the computable reflexive object is *not* refuted. -/
+/-- `Statement:` Rogers' fixed-point theorem — every total computable `f : Code → Code` has a fixed
+point **up to `eval`**: `∃ c, eval (f c) = eval c`.
+
+⚠ **Do not read this as "no fixed-point-free total computable endomap exists". That is false**:
+`fun c => Code.pair c c` is total, computable and fixed-point-free (structural size). Rogers is an
+equality under the `eval` quotient, not on `Code`. It is therefore **not** the literal dual of
+`reflexive_object_refuted`, which consumes `f x ≠ x`. `Reading:` the obstruction is absent at the level
+of `eval`, which is the level the reflexive object lives at. -/
 theorem computable_no_fixedpointfree {f : Code → Code} (hf : Computable f) :
     ∃ c : Code, eval (f c) = eval c :=
   Nat.Partrec.Code.fixed_point hf

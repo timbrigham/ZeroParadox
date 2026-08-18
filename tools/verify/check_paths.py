@@ -437,8 +437,13 @@ def scan_ride_along(files, pairs):
             # on BOTH sides — matching the raw line found 5 of 13 known breaks. Same fix, same
             # reason, as `common.normalize_separators`; the bug it prevents is the one this
             # project keeps paying for, a detector blind to the form the convention mandates.
-            for why in _ride_along_line_hits(line, pairs):
-                name = next(n for n in pairs if n in line)
+            # ⚠ THE NAME COMES FROM THE MATCH. This used to re-derive it as
+            # `next(n for n in pairs if n in line)` - the first basename in dict order - so on a
+            # line naming its own partner AND another ride-along, the self-pair test was applied
+            # to the wrong name and the other file's hit was silently dropped. Measured: the
+            # identical stale sentence reported 1 hit alone and 0 hits beside its own partner,
+            # which is precisely what the convention requires a ride-along to write.
+            for name, why in _ride_along_line_hits(line, pairs):
                 if pairs[name] == rel:
                     continue
                 hits.append((rel, lineno, name, pairs[name], why))
@@ -660,6 +665,32 @@ def selftest_ride_along():
     # suppression was applied to the WRONG name - dropping a real hit on any line naming its own
     # partner alongside another ride-along, which is what the convention requires a ride-along to
     # do. Found independently by two gates on the same day.
+    # \u26a0 THIS GROUP MUST EXERCISE `scan_ride_along`, NOT THE MATCHER. The previous version called
+    # `_ride_along_line_hits` - the half that was already correct - so it reported green while the
+    # caller silently dropped hits, and --selftest was byte-identical either way. The defect lives
+    # in the CALLER; a control that never calls it cannot see it.
+    print('SELF-PAIR THROUGH THE CALLER (scan_ride_along, where the drop happened)')
+    import tempfile as _tf
+    _probe_dir = Path(_tf.mkdtemp())
+    _probe = _probe_dir / 'Wall.md'
+    _stale = ("Argument for `ZeroParadox/Settheory/Wall.lean`. It restates "
+              "`ZeroParadox/Computability/Occurrence.lean`'s taxonomy.")
+    try:
+        _probe.write_text(_stale, encoding='utf-8')
+        _got = _ride_along_line_hits(_stale, pairs)
+        _kept = [n for n, _w in _got if pairs[n] != 'ZeroParadox/Settheory/Wall.md']
+        for _why, _ok in (('the foreign hit survives beside the self pair',
+                           _kept == ['Occurrence.lean']),
+                          ('the self pair is still suppressed',
+                           'Wall.lean' not in _kept)):
+            bad += 0 if _ok else 1
+            print('  %-52s %s' % (_why[:52], 'ok' if _ok else 'BROKEN: kept=%s' % _kept))
+    finally:
+        try:
+            _probe.unlink()
+            _probe_dir.rmdir()
+        except OSError:
+            pass
     print('SELF-PAIR ATTRIBUTION (the name must come from the match, not a re-scan)')
     mixed = ("Argument for `ZeroParadox/Settheory/Wall.lean`, whose reframe paragraph restates "
              "`ZeroParadox/Computability/Occurrence.lean`'s taxonomy.")
@@ -677,8 +708,11 @@ def selftest_ride_along():
     # character wide - so all four canonicalised to `I`, `\u00a7 IV` "matched" the `\u00a7 I` heading, and the
     # two controls below passed on a test that distinguished nothing.
     print('SECTION SPELLING + WIDTH (heading present -> downgrade; absent -> moved)')
+    # \u26a0 `IX` IS THE LOAD-BEARING CASE. `III` and `XCIX` both give the right verdict even with the
+    # one-character capture reinstated, so a group built from those two passes green with the bug
+    # back in. `\u00a7 IX` against the `\u00a7 I` heading is the discrimination that actually fails.
     spell_cases = [('\u00a7 III', True), ('\u00a7III', True), ('section III', True), ('\u00a7 III.', True),
-                   ('\u00a7 XCIX', False)]
+                   ('\u00a7 IX', False), ('\u00a7 XCIX', False)]
     for spell, want_present in spell_cases:
         line = ('See `ZeroParadox/Computability/Occurrence.lean` %s for the obstruction.' % spell)
         hits = _ride_along_line_hits(line, pairs)
@@ -702,7 +736,7 @@ _DOC_GENERIC = {"the", "its", "this", "a", "module", "own", "file", "header", "a
                 "that", "whose", "same", "s"}
 
 
-def _names_a_declaration_docstring(line):
+def _names_a_declaration_docstring(line, lo=0, hi=None):
     """Is the `docstring` on this line a DECLARATION's rather than the module's?
 
     A DECLARATION DOCSTRING NEVER MOVES under the ride-along convention - only module-doc blocks
@@ -718,7 +752,8 @@ def _names_a_declaration_docstring(line):
     fix that handled only the backticked form left 7 of the 10 standing - a probe written in a
     shape the corpus does not actually use.
     """
-    for m in re.finditer(r"([`\w.'/\\-]+)\s+docstring", line, re.I):
+    window = line[lo:hi if hi is not None else len(line)]
+    for m in re.finditer(r"([`\w.'/\\-]+)\s+docstring", window, re.I):
         tok = m.group(1).strip("`'\u2019")
         if not tok or tok.lower() in _DOC_GENERIC:
             continue
@@ -757,12 +792,12 @@ def _ride_along_line_hits(line, pairs):
             out.append((m.group(1), 'line number into relocated prose'))
         elif PROSE_NOUN.match(tail) and not (
                 PROSE_NOUN.match(tail).group(1).lower() == 'docstring'
-                and _names_a_declaration_docstring(line)):
+                and _names_a_declaration_docstring(soft, m.end(), m.end() + 90)):
             out.append((m.group(1), 'names prose that moved: '
                         + PROSE_NOUN.match(tail).group(1)))
         elif PROSE_NOUN_BEFORE.search(before) and not (
                 PROSE_NOUN_BEFORE.search(before).group(1).lower() == 'docstring'
-                and _names_a_declaration_docstring(line)):
+                and _names_a_declaration_docstring(soft, max(0, m.start() - 90), m.start())):
             out.append((m.group(1), 'names prose that moved: '
                         + PROSE_NOUN_BEFORE.search(before).group(1)))
         elif SECTION_AFTER.match(tail):
@@ -1011,7 +1046,11 @@ def main():
         # `scripts/build_zpr_addendum.py`, because this set was `{.md, .lean}` only. So a stale
         # pointer in a Lean docstring blocked a push while the identical one in a build script —
         # the surface a Zenodo DOI freezes PERMANENTLY — went through. That is the wrong way round.
-        build_scripts = sorted((REPO / 'scripts').glob('build_*.py'))
+        # ⚠ EVERY TRACKED `.py` UNDER `scripts/`, NOT JUST `build_*`. The glob walked past
+        # `zp_utils.py` — the shared library those build scripts IMPORT — so a stale pointer
+        # there reached every rendered PDF while being invisible here. Measured by a plant:
+        # the same sentence fired in `build_zpa.py` and was silent in `zp_utils.py`.
+        build_scripts = sorted(p for p in (REPO / 'scripts').glob('*.py') if p.is_file())
         ra = scan_ride_along(tracked_live + tracked_rec + tracked_lean() + build_scripts, pairs)
         # Dated records describe the tree as it stood then; "fixing" them would falsify the record.
         ra = [h for h in ra if not DATED.search(h[0].rsplit('/', 1)[-1])]

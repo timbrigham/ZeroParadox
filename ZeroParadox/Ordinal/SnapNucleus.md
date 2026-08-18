@@ -38,7 +38,10 @@ genuine on the bare ordinals, no top needed.
 What the ordinals lack is a **top / frame** structure (they ascend without bound), and that is needed
 only for the *lattice of all such nuclei* to itself be a locale — the "systems form a lattice"
 meta-level. That missing top is not an absence but a **boundary of a higher type**: the point at infinity
-the unbounded ascent manufactures, which by the self-dual pole (0 = ∞, `rInv_swaps`) is the next bottom.
+the unbounded ascent manufactures. `Reading:` **INVERSION** — the framework reads that boundary as the
+next bottom, by the antipodal exchange `rInv_swaps` fixes between the zero and infinity poles. ⚠ That
+is a CHART claim about two measurements of one object, never a point identity: in that carrier `some 0`
+and `∞` are provably distinct, which is what makes the swap non-trivial.
 Completing the meta-lattice by that boundary is a separate construction, not attempted here.
 
 ## Credit outward

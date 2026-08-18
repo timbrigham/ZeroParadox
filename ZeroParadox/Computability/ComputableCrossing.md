@@ -18,10 +18,20 @@ regime.
 ## Why the computable regime crosses it
 
 The universal machine `eval : Code → (ℕ →. ℕ)` is point-surjective onto the computable functions
-(`Nat.Partrec.Code.exists_code`) — the reflexive object. And the computable world has **no
-fixed-point-free total computable endomap**: Rogers' fixed-point theorem (`Nat.Partrec.Code.fixed_point`)
-gives every total computable `f : Code → Code` a fixed point up to `eval`. That is exactly the
-obstruction, absent — the dual of `reflexive_object_refuted`.
+(`Nat.Partrec.Code.exists_code`) — the reflexive object. And Rogers' fixed-point theorem
+(`Nat.Partrec.Code.fixed_point`) gives every total computable `f : Code → Code` a fixed point **up to
+`eval`**: `∃ c, (f c).eval = c.eval`.
+
+⚠ **THAT IS WEAKER THAN "no fixed-point-free total computable endomap", AND THE STRONG FORM IS FALSE.**
+`fun c => Code.pair c c` is total, computable, and has no fixed point anywhere — pairing a code with
+itself always makes it structurally larger. Rogers is an equality **under the `eval` quotient**: two
+different programs computing the same function.
+
+⚠ **So this is NOT the exact dual of `reflexive_object_refuted`**, which consumes *literal* `f x ≠ x` —
+a precondition the witness above satisfies. The conclusion (Lawvere fires in the computable category)
+still holds, but for a different reason: `eval` lands in `ℕ →. ℕ`, not in `Code → Code`, so the
+refutation theorem never applied to it. The obstruction is absent **at the level of `eval`**, which is
+the level the reflexive object lives at.
 
 So Lawvere fires in the computable category, and the self-referential fixed point *exists* there:
 Kleene's second recursion theorem (`fixed_point₂`), which is the framework's own Kleene fixed point
@@ -29,8 +39,12 @@ Kleene's second recursion theorem (`fixed_point₂`), which is the framework's o
 
 ## Prior art
 
-That Kleene's recursion theorem is an instance of Lawvere's fixed-point theorem is standard — Lawvere
-(1969) derives the recursion theorem; Yanofsky (2003) gives the unified treatment. The reflexive
+That Kleene's recursion theorem is an instance of Lawvere's fixed-point theorem is standard — the
+derivation is **Yanofsky (2003) Theorem 5 (The Recursion Theorem), printed p. 18**, within his unified
+treatment. ⚠ **Lawvere (1969) does NOT derive it**, and should not be cited as doing so: his § 2 p. 9
+raises it as an open question — *"Experts on recursive functions … may also wish to consider whether
+the fixed-point theorem of section one has any applications in those cases."* Lawvere supplies the
+engine; Yanofsky runs it at this face. The reflexive
 structure of the computable category is studied as *Turing categories* / partial combinatory algebras —
 Cockett–Hofstra; Longley.
 

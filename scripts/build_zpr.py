@@ -13,7 +13,7 @@ Follows all rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.0'
+VERSION = '1.1'
 FIRST_RELEASED = 'July 2026'
 
 
@@ -206,8 +206,10 @@ def build():
     E.append(sp(6))
 
     E.append(body(
-        'That Kleene\'s recursion theorem is an instance of Lawvere\'s theorem is standard: Lawvere '
-        '(1969) derives the recursion theorem, and Yanofsky (2003) gives the unified treatment; the '
+        'That Kleene\'s recursion theorem is an instance of Lawvere\'s theorem is standard: the '
+        'derivation is Yanofsky (2003) Theorem 5, p. 18, within his unified treatment. Lawvere '
+        '(1969) supplies the engine and raises the recursive case as an open question rather '
+        'than deriving it (his &#167;2, p. 9); the '
         'reflexive structure of the computable category is the subject of the Turing-category / '
         'partial-combinatory-algebra literature (Cockett&#8211;Hofstra 2008; Longley). Collecting the '
         'three faces:'))

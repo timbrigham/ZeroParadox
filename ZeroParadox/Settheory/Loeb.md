@@ -8,9 +8,10 @@ declarations, the Engineer's Take and the per-declaration glosses.
 Löb (1955): in a system with a provability predicate `□` satisfying the Hilbert–Bernays–Löb derivability
 conditions, `⊢ (□A → A)` implies `⊢ A`. This is the diagonal family's **provability-modal face** — the
 self-referential fixed point of the map `p ↦ (□p → A)` (the Löb sentence). It is the ONLY sibling of the
-four with no Mathlib support located as of 2026-08-17 (no modal / provability logic found in the pin),
-so it is built from scratch
-as an abstract provability logic.
+four with no Mathlib support located as of 2026-08-17, so it is built from scratch as an abstract
+provability logic. Searched as follows: `Löb`, `GL`, `provability`, `□`/`box` as a modality, and
+`derivability` across the pinned Mathlib; `#check` on the names those would carry. No modal or
+provability logic found.
 
 ## Placement in the family
 

@@ -40,7 +40,14 @@ fall outside this abstraction entirely.
 
 This is the EXISTENCE level only: each face carries *an* invariant probability measure. The *strong*
 uniform statement — that the measure is UNIQUE (unique ergodicity), so *every* orbit sees the same shape
-at the right rate — is **not** proved: Mathlib has no unique-ergodicity API.
+at the right rate — is **not** proved here.
+
+⚠ **Do not say "Mathlib has no unique-ergodicity API".** That is true of the NAME (`UniquelyErgodic`
+does not resolve) and false of the machinery: `Mathlib/Dynamics/Ergodic/Extreme.lean` gives the
+invariant measures as a convex set with the ergodic ones as its extreme points
+(`Ergodic.iff_mem_extremePoints`, a biconditional) plus `Ergodic.eq_of_absolutelyContinuous`. Unique
+ergodicity is "that convex body is a single point", and this is the machinery it is normally proved
+through. **As with the Haar half above, the gap is a BUILD, not an absence.**
 
 What is separately proved per face is the topological "same shape from anywhere": the odometer's orbits
 are all dense (`denseRange_odometer_orbit`) and the attractor's orbits all converge to the floor
@@ -91,4 +98,3 @@ topological group and `unitMul u` is a topological additive automorphism for `u`
 unique ergodicity, which the overview flags as the strong statement it cannot prove. This only *locates*
 a dynamic where the failure is visible; it proves neither the failure nor the uniqueness.
 
-Reading: `.claude-local/notes/paradox_as_simultaneous_inversion_2026-07-30.md`.

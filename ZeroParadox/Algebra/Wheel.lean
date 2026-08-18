@@ -97,7 +97,7 @@ open ZeroParadox
 /-- A wheel (Carlström 2001:11): a set with +, ·, and a total involution /,
     making /0 a defined first-class element (∞) and 0·/0 an absorbing element (⊥ₗ).
 
-    The 14 fields below are exactly Carlström's eight Definition 1.1 axioms, with his two
+    The axiom fields below are exactly Carlström's eight Definition 1.1 axioms, with his two
     "commutative monoid" axioms unbundled into their separate equational laws:
     Axioms W1–W3: (W, +, 0) commutative monoid                  [Carlström (1)]
     Axioms W4–W6: (W, ·, 1) commutative monoid                  [Carlström (2), monoid part]
