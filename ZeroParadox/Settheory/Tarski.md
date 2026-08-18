@@ -20,7 +20,7 @@ So Tarski is the wall-face and the Quine atom is the floor-face of the one diago
 
 ## Honest delta
 
-The engine is Lawvere (1969), via Yanofsky (2003) p. 5 Remark 3, and already in the repo; Cantor /
+The engine is Lawvere (1969), via Yanofsky (2003) § 1 p. 1, and already in the repo; Cantor /
 Russell / Turing are already named there. The new content is (a) exhibiting the **liar sentence
 explicitly** from a truth-naming and (b) the **T-schema** absurdity — Tarski named and placed, completing
 the diagonal-family roster on the truth axis. Every theorem reduces to the engine; no new axiomatic

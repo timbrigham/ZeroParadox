@@ -293,7 +293,7 @@ PRIVATE_REF	(?<![\w/.-])(\.claude-local/[A-Za-z0-9_./-]+)
 PROSE_NOUN	[`'\"\)\]]*\s*(?:'s|’s|s')\s+(?:[A-Za-z][\w-]*\s+){0,3}(paragraph|section|§|table|note|docstring|header|reframe|taxonomy|fence|fenced|citation|cites|cited|overview|gloss|discussion|argument|prior art|hypothesis|classification|module doc)
 PROSE_NOUN_BEFORE	\b(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$
 RECORD_FILES	RELEASES.md
-SECTION_AFTER	^[`'\"\)\]]*\s*(?:§|section\b|\bch(?:apter)?\b)\s*[IVXLC0-9]
+SECTION_AFTER	^[`'\"\)\]]*\s*(?:§|section\b|\bch(?:apter)?\b)\s*([IVXLC0-9][IVXLC0-9a-z-]*)
 SKIP_MARKERS	->
 SKIP_MARKERS	corrected
 SKIP_MARKERS	dead
@@ -332,6 +332,20 @@ SKIP_MARKERS_LEAN	stale
 SKIP_MARKERS_LEAN	superseded
 SKIP_MARKERS_LEAN	synced to
 SKIP_MARKERS_LEAN	was at
+_DOC_GENERIC	a
+_DOC_GENERIC	and
+_DOC_GENERIC	file
+_DOC_GENERIC	header
+_DOC_GENERIC	its
+_DOC_GENERIC	module
+_DOC_GENERIC	or
+_DOC_GENERIC	own
+_DOC_GENERIC	s
+_DOC_GENERIC	same
+_DOC_GENERIC	that
+_DOC_GENERIC	the
+_DOC_GENERIC	this
+_DOC_GENERIC	whose
 _STOP	a
 _STOP	an
 _STOP	and
@@ -353,6 +367,7 @@ _STOP	the
 _STOP	this
 _STOP	to
 _STOP	with
+
 [check_invariants]
 CUSTOM_TAG	\[ZP-CUSTOM\]
 REGISTRY_ENTRY	(?m)^### 

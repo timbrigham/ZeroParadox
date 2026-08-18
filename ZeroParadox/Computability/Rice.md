@@ -30,6 +30,6 @@ pays for it with undecidability (Rice). **Rice is the price of the ν-existence.
 ## Honest delta
 
 Rice itself is Mathlib's (Rice 1953; the diagonal-family framing is Lawvere (1969), via Yanofsky (2003)
-p. 5 Remark 3). New here: the framework restatement, a concrete face (the halting problem), and the
+§ 1 p. 1). New here: the framework restatement, a concrete face (the halting problem), and the
 `quine_exists_yet_rice` pairing that states the ν-existence and the undecidability as two faces of one
 recursion-theorem setting.

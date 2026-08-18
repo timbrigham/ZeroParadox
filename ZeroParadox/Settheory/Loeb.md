@@ -8,7 +8,8 @@ declarations, the Engineer's Take and the per-declaration glosses.
 Löb (1955): in a system with a provability predicate `□` satisfying the Hilbert–Bernays–Löb derivability
 conditions, `⊢ (□A → A)` implies `⊢ A`. This is the diagonal family's **provability-modal face** — the
 self-referential fixed point of the map `p ↦ (□p → A)` (the Löb sentence). It is the ONLY sibling of the
-four with no Mathlib support (no modal / provability logic in the library), so it is built from scratch
+four with no Mathlib support located as of 2026-08-17 (no modal / provability logic found in the pin),
+so it is built from scratch
 as an abstract provability logic.
 
 ## Placement in the family
@@ -30,5 +31,5 @@ separation of concerns: Löb from the derivability conditions plus a diagonal.
 
 A genuinely new construction — no Mathlib modal/provability logic, and nothing like it in the repo.
 Attribution: Löb (1955); Hilbert–Bernays–Löb derivability conditions; diagonal-family framing Lawvere
-(1969), via Yanofsky (2003) p. 5 Remark 3. The classical Löb derivation is standard; the contribution is
+(1969), via Yanofsky (2003) § 1 p. 1. The classical Löb derivation is standard; the contribution is
 the clean abstract typeclass and its placement as the provability face of ⊥'s diagonal.

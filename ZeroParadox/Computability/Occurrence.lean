@@ -31,7 +31,8 @@ namespace ZeroParadox
 /-! ## § 0. ADJACENCY — what this carrier already is
 
 **Read before adding anything here.** The carrier `f : σ → Option σ` is exactly Mathlib's
-`StateTransition`, so every result below already holds of every Mathlib Turing machine, and
+`StateTransition`, so the trichotomy, the trap and the fan-out results already hold of every Mathlib
+Turing machine (the five are named in the ride-along), and
 `StateTransition`'s own API is under-used. Adjacency, the asymptotic floor-directed results elsewhere
 in the corpus, and why no bridge declaration should be built: `ZeroParadox/Computability/Occurrence.md`. -/
 

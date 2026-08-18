@@ -18,7 +18,7 @@ and `/[x,y] = [y,x]`. Then `/0 = [1,0] = ∞`, `0·/0 = [0,0] = ⊥`, with `∞ 
 meadow) — matching the ZP porthole.
 
 **Status: complete.** Fully `sorry`-free: `≡_S` is an equivalence, the five operations are well-defined
-on the quotient, all 14 fields of the ZP `Wheel` typeclass hold (a faithful encoding of Carlström's
+on the quotient, every axiom of the ZP `Wheel` typeclass holds (a faithful encoding of Carlström's
 8-axiom Def 1.1, with his two commutative-monoid axioms unbundled), and `inf_ne_bot` holds given
 `0 ∉ S`. Both `instWheel` and `inf_ne_bot` are `Classical.choice`-free (`[propext, Quot.sound]`).
 

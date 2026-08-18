@@ -1,4 +1,4 @@
-# The four corners and the tower to omega: how the shared shape was assembled
+# Assembling a correspondence without asserting an identity
 
 Ride-along documentation for [`ZeroParadox/Valuation/PoleCornersBridge.lean`](PoleCornersBridge.lean).
 The Lean file holds the declarations and a statement per declaration; this document holds the

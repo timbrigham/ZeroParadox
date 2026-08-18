@@ -13,7 +13,7 @@ everything else in the family.
 
 ## Formal Overview
 `⊢ (□A → A)` implies `⊢ A`, from the Hilbert–Bernays–Löb derivability conditions plus a diagonal taken
-as a hypothesis — built from scratch, since Mathlib carries no modal or provability logic. Design,
+as a hypothesis — built from scratch; no modal or provability logic located in the pin (2026-08-17). Design,
 placement and the Gödel-second corollary: `ZeroParadox/Settheory/Loeb.md`.
 -/
 

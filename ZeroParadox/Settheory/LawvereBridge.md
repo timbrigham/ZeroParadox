@@ -10,8 +10,8 @@ are indexed in `ZeroParadox/MANIFEST.md`.
 
 The whole arc has been one pattern recurring at deeper and deeper dereferences: a *specific* object is
 only ever a witness of a *general* schema (instance-vs-requirements,
-`ZeroParadox/Multihomed/RequirementsGap.lean`), and that gap is scale-invariant up a tower
-(`ZeroParadox/Multihomed/MetaFork.lean`). This probes the deepest layer reachable: the general case at
+`ZeroParadox/Settheory/RequirementsGap.lean`), and that gap is scale-invariant up a tower
+(`ZeroParadox/Settheory/MetaFork.lean`). This probes the deepest layer reachable: the general case at
 the top is **Lawvere's fixed-point theorem** (`lawvere_fixedpoint`, `ZeroParadox/Settheory/Wall.lean`),
 and the framework's own self-referential fixed point (`AbstractSelfApp`) is an *instance* of it.
 
@@ -53,9 +53,12 @@ point. The theorems prove this cannot be done in plain type theory, and say exac
 look instead.
 
 **The wall.** `reflexive_object_refuted`: on any `D` carrying a fixed-point-free self-map, no reflexive
-object exists — Lawvere's own engine, run at that map, refutes it (Cantor). Type theory always has such
-maps (`no_reflexive_object_bool`), so `AbstractSelfApp.fixed_bot` genuinely *cannot* be sourced from a
-Set-level reflexive object; assuming it is forced, not lazy.
+object exists — Lawvere's own engine, run at that map, refutes it (Cantor). Type theory supplies such
+maps (`no_reflexive_object_bool` at `Bool`), so `AbstractSelfApp.fixed_bot` genuinely *cannot* be
+sourced from a Set-level reflexive object; assuming it is forced, not lazy. ⚠ The hypothesis is
+load-bearing and the refutation is NOT universal over types: `PUnit` **is** a reflexive object —
+`PUnit → PUnit` is a singleton, so any `e` into it is surjective — and it admits no fixed-point-free
+endomap, which is exactly the carrier `reflexive_object_refuted` excludes.
 
 **Where to look next — the escape, and the framework has been building it.** The obstruction is
 precisely the presence of a *fixed-point-free* map. Remove those and the reflexive object returns. That

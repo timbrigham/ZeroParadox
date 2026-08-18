@@ -164,6 +164,7 @@ The framework's reviewed, load-bearing Lean, organized by domain folder. The for
 - `ZeroParadox/Ordinal/PricedInterface.lean` - A priced interface: a carrier sized to ε₀, a map into `Ordinal`, and both sides' axiom footprints
 - `ZeroParadox/Ordinal/SnapMetaLattice.lean` - The lattice of systems: adjoining the point at infinity makes the ordinals a frame
 - `ZeroParadox/Ordinal/SnapNucleus.lean` - The snap is a nucleus: ε₀ is the modality generated from the bottom ⊥
+  - ride-along docs: `ZeroParadox/Ordinal/SnapNucleus.md` - A modality on a chain: the recognized structure, its scope, and what is owed outward
 - `ZeroParadox/Ordinal/SnapNucleusConstructive.lean` - No snap-shaped closure on the `ONote` carrier: a proved obstruction
   - ride-along docs: `ZeroParadox/Ordinal/SnapNucleusConstructive.md` - Cantor normal form, the ε₀ ceiling, and the choice question
 - `ZeroParadox/Ordinal/SnapSuccession.lean` - The succession as a chain: the ε-numbers are the snap's successive targets, strictly climbing
@@ -213,6 +214,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 
 - `ZeroParadox/Valuation/AxisSweepProbe.lean` - Experimental probes: the fork is trivially satisfiable, and the pole vs chain / branching pairs
 - `ZeroParadox/Valuation/BottomInvariant.lean` - A first universal: the bottom carries an invariant probability measure
+  - ride-along docs: `ZeroParadox/Valuation/BottomInvariant.md` - Evidence for a universal at the existence level, and where it stops
 - `ZeroParadox/Valuation/BoundaryGap.lean` - The boundary embedding: the exact gap to the Bruhat-Tits tree
 - `ZeroParadox/Valuation/BranchingRequirement.lean` - A further requirement — the branching axis: branches are incomparable (the tower does not stack)
 - `ZeroParadox/Valuation/BranchingSnapChain.lean` - The single chain: branching → disconnectedness → the forbidden return
@@ -244,7 +246,7 @@ These carry the `-- EXPERIMENTAL` header: the exploratory work the core results 
 - `ZeroParadox/Valuation/PoleCompletion.lean` - The pole completion: the floor is a genuine self-application fixed point (the Quine atom on the tree)
 - `ZeroParadox/Valuation/PoleCorners.lean` - The four corners: 0 and ∞ have exactly four representations to each other
 - `ZeroParadox/Valuation/PoleCornersBridge.lean` - Bridge: the four corners are the corners of the tower to ω (shared-shape correspondence)
-  - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - The four corners and the tower to omega: how the shared shape was assembled
+  - ride-along docs: `ZeroParadox/Valuation/PoleCornersBridge.md` - Assembling a correspondence without asserting an identity
 - `ZeroParadox/Valuation/RateTransport.lean` - within-Axis-I positive rate-transport via the shared geometric rate `2^(-n)`
 - `ZeroParadox/Valuation/RootAsymmetry.lean` - Root-asymmetry test: #1 (μ order-floor) vs #3 (ν p-adic limit)
 - `ZeroParadox/Valuation/StrippedBottom.lean` - ⊥ by inversion of attribute-classes — the "typecast" stand-in (Tim, 2026-06-30)

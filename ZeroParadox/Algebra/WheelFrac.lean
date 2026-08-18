@@ -13,7 +13,7 @@ A ZP-J wheel sub-file. See the Engineer's Take in `ZeroParadox/Algebra/Wheel.lea
 
 ## Formal Overview
 `⊙_S A = (A × A) / ≡_S`, giving `/0 = ∞` and `0·/0 = ⊥` with `∞ ≠ ⊥` — the wheel, not the meadow,
-matching the ZP porthole. **Status: complete**, `sorry`-free, all 14 `Wheel` fields; `instWheel` and
+matching the ZP porthole. **Status: complete**, `sorry`-free, every `Wheel` axiom; `instWheel` and
 `inf_ne_bot` are `Classical.choice`-free (`[propext, Quot.sound]`). Construction and argument: `ZeroParadox/Algebra/WheelFrac.md`.
 -/
 
@@ -78,7 +78,7 @@ def winvF : WheelFrac S → WheelFrac S :=
     rintro p p' ⟨s, hs, s', hs', hp1, hp2⟩
     exact Quotient.sound ⟨s, hs, s', hs', hp2, hp1⟩)
 
-/-- **Main result:** `⊙_S A` is a wheel (Carlström 2001:11, Def 1.1, pp. 4-5). All 14 fields of the
+/-- **Main result:** `⊙_S A` is a wheel (Carlström 2001:11, Def 1.1, pp. 4-5). Every axiom of the
     ZP `Wheel` typeclass proved (Carlström's eight axioms, two commutative-monoid axioms unbundled). -/
 instance instWheel : Wheel (WheelFrac S) where
   wadd := waddF S

@@ -19,9 +19,9 @@ defer to my AI assistant regarding the specifics of how the internals work.
 ---
 
 ## Formal Overview
-Set refutes the reflexive object (`reflexive_object_refuted`) because it has fixed-point-free maps. The
-computable world has none (Rogers), and `eval` IS the reflexive object, so Lawvere fires there.
-⚠ No ⊥-at-bottom and no uniqueness is claimed. Argument and fence: `ZeroParadox/Computability/ComputableCrossing.md`.
+Set refutes the reflexive object (`reflexive_object_refuted`) because it has fixed-point-free maps; the
+computable world has none **up to `eval`** (Rogers) and `eval` IS that object, so Lawvere fires there.
+⚠ No ⊥-at-bottom and no uniqueness is claimed. Fence: `ZeroParadox/Computability/ComputableCrossing.md`.
 -/
 
 namespace ZeroParadox

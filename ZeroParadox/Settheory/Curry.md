@@ -28,4 +28,4 @@ self-reference closes harmlessly instead of exploding.
 
 `curry_paradox` is a real generalization of the repo's engine (arbitrary conclusion `C`);
 `curry_from_naming` routes it through the existing Lawvere naming. Attribution: Curry (1942); the
-diagonal-family framing is Lawvere (1969), via Yanofsky (2003) p. 5 Remark 3. Axiom-free.
+diagonal-family framing is Lawvere (1969), via Yanofsky (2003) § 1 p. 1. Axiom-free.

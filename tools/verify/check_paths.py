@@ -16,7 +16,12 @@ Usage (the exact invocation path is printed in this tool's own output):
                               # private-layer hits do not fail the build
     check_paths.py --selftest # must-fire AND must-suppress controls
 
-Exit 0 = clean.  Exit 1 = at least one dangling reference in a failing scope.
+Exit 0 = no dangling reference in a failing scope. Exit 1 = at least one.
+Exit 3 (EXIT_SKIPPED) = the scope could not be determined.
+⚠ EXIT 0 IS NOT "CLEAN". Several classes here are INFORMATIONAL and do not affect the code:
+the ride-along cross-reference rule, the private-layer dependency list, and the line-citation
+reading list. A caller that reads only the exit status sees none of them - and CI does exactly
+that, discarding stdout, so those findings reach the push terminal only.
 """
 import re
 import subprocess
@@ -336,7 +341,8 @@ PROSE_NOUN_BEFORE = re.compile(
 #   (b) the line repeats the ride-along's OWN TITLE while citing the `.lean`, which is exactly
 #       what a `MANIFEST.md` row does after a conversion.
 # (b) is the robust one precisely because it compares against the artifact rather than guessing.
-SECTION_AFTER = re.compile(r"^[`'\"\)\]]*\s*(?:§|section\b|\bch(?:apter)?\b)\s*[IVXLC0-9]", re.I)
+SECTION_AFTER = re.compile(
+    r"^[`'\"\)\]]*\s*(?:§|section\b|\bch(?:apter)?\b)\s*([IVXLC0-9][IVXLC0-9a-z-]*)", re.I)
 _STOP = {'the', 'a', 'an', 'of', 'as', 'and', 'to', 'in', 'is', 'for', 'on', 'at', 'by', 'it',
          'its', 'that', 'this', 'with', 'from', 'formal', 'object'}
 
@@ -409,7 +415,6 @@ def scan_ride_along(files, pairs):
     if not pairs:
         return hits
     for _n, md in pairs.items():
-        _titles.setdefault(md, _title_words(REPO / md))
         _owner[_n] = md[:-3] + '.lean'
     # ⚠ NO `/` IN THE LOOKBEHIND. The convention REQUIRES the full repo path, so almost every real
     # citation reads `ZeroParadox/Settheory/Wall.lean` — and excluding a preceding `/` made the
@@ -590,7 +595,6 @@ def selftest_ride_along():
     pairs = {'Wall.lean': 'ZeroParadox/Settheory/Wall.md',
              'Occurrence.lean': 'ZeroParadox/Computability/Occurrence.md'}
     for _n, _md in pairs.items():
-        _titles.setdefault(_md, _title_words(REPO / _md))
         _owner[_n] = _md[:-3] + '.lean'
     must_fire = [
         ("full path + closing backtick, the mandated form",
@@ -651,13 +655,78 @@ def selftest_ride_along():
             ok = (got == want)
             bad += 0 if ok else 1
             print('  %-52s %s' % (why[:52], 'ok' if ok else ('MISSED' if want else 'FALSE POSITIVE')))
+    # \u26a0 THE FILE-LEVEL SELF-PAIR SUPPRESSION HAD NO CONTROL AND WAS BROKEN. It lives in
+    # `scan_ride_along`, not in `_ride_along_line_hits`, so every control above passed while the
+    # suppression was applied to the WRONG name - dropping a real hit on any line naming its own
+    # partner alongside another ride-along, which is what the convention requires a ride-along to
+    # do. Found independently by two gates on the same day.
+    print('SELF-PAIR ATTRIBUTION (the name must come from the match, not a re-scan)')
+    mixed = ("Argument for `ZeroParadox/Settheory/Wall.lean`, whose reframe paragraph restates "
+             "`ZeroParadox/Computability/Occurrence.lean`'s taxonomy.")
+    hits = _ride_along_line_hits(mixed, pairs)
+    names = {n for n, _w in hits}
+    for why, ok in (('both names produce their own hit',
+                     names == {'Wall.lean', 'Occurrence.lean'}),
+                    ('dropping the SELF pair leaves the foreign one',
+                     {n for n, _w in hits
+                      if pairs[n] != 'ZeroParadox/Settheory/Wall.md'} == {'Occurrence.lean'})):
+        bad += 0 if ok else 1
+        print('  %-52s %s' % (why[:52], 'ok' if ok else 'BROKEN: %s' % (hits or 'no hit')))
+
+    # \u26a0 EVERY SPELLING, because the rule was spelling-sensitive AND the marker capture was one
+    # character wide - so all four canonicalised to `I`, `\u00a7 IV` "matched" the `\u00a7 I` heading, and the
+    # two controls below passed on a test that distinguished nothing.
+    print('SECTION SPELLING + WIDTH (heading present -> downgrade; absent -> moved)')
+    spell_cases = [('\u00a7 III', True), ('\u00a7III', True), ('section III', True), ('\u00a7 III.', True),
+                   ('\u00a7 XCIX', False)]
+    for spell, want_present in spell_cases:
+        line = ('See `ZeroParadox/Computability/Occurrence.lean` %s for the obstruction.' % spell)
+        hits = _ride_along_line_hits(line, pairs)
+        got_present = any('heading is still' in why for _n, why in hits)
+        ok = bool(hits) and got_present == want_present
+        bad += 0 if ok else 1
+        print('  %-52s %s' % ('%r -> %s' % (spell, 'downgrade' if want_present else 'moved'),
+                              'ok' if ok else 'WRONG: %s' % (hits or 'no hit')))
     print('SECTION BRANCH (both, or the rule is untested on one side)')
     for why, line, want_sub in section_branches:
         hits = _ride_along_line_hits(line, pairs)
-        ok = any(want_sub in h for h in hits)
+        ok = any(want_sub in why for _n, why in hits)
         bad += 0 if ok else 1
         print('  %-52s %s' % (why[:52], 'ok' if ok else 'WRONG BRANCH: %s' % (hits or 'no hit')))
     return bad
+
+
+# Words that can sit before "docstring" while still meaning the MODULE's docstring. Anything
+# else in that slot names a declaration, and a declaration docstring never relocates.
+_DOC_GENERIC = {"the", "its", "this", "a", "module", "own", "file", "header", "and", "or",
+                "that", "whose", "same", "s"}
+
+
+def _names_a_declaration_docstring(line):
+    """Is the `docstring` on this line a DECLARATION's rather than the module's?
+
+    A DECLARATION DOCSTRING NEVER MOVES under the ride-along convention - only module-doc blocks
+    relocate, and a declaration's docstring travels with its declaration. Reporting "`l_inf`'s
+    docstring" as prose that moved is false on its face, and it was: 10 hits across CLAUDE.md,
+    ZeroParadox/README.md, Gentzen.lean and five build scripts, every one naming prose that is
+    still exactly where it says it is.
+
+    The discriminator is the QUALIFIER in the slot before the word: a name with no file extension
+    owns a declaration docstring; a bare file name, or a generic word, owns the module one.
+
+    BOTH SPELLINGS ARE COVERED ON PURPOSE. The corpus writes it backticked and bare, and a first
+    fix that handled only the backticked form left 7 of the 10 standing - a probe written in a
+    shape the corpus does not actually use.
+    """
+    for m in re.finditer(r"([`\w.'/\\-]+)\s+docstring", line, re.I):
+        tok = m.group(1).strip("`'\u2019")
+        if not tok or tok.lower() in _DOC_GENERIC:
+            continue
+        if re.search(r"\.(lean|md|py)$", tok, re.I):
+            continue                                    # the FILE's docstring - it can move
+        if re.match(r"^[A-Za-z_][\w.']*$", tok):
+            return True                                 # a declaration name
+    return False
 
 
 def _trim_punct(s):
@@ -685,65 +754,71 @@ def _ride_along_line_hits(line, pairs):
         tail = soft[m.end():m.end() + 90]
         before = soft[:m.start()]
         if LINE_REF.search(line[m.start():m.end() + 8]):
-            out.append('line number into relocated prose')
-        elif PROSE_NOUN.match(tail):
-            out.append('names prose that moved: ' + PROSE_NOUN.match(tail).group(1))
-        elif PROSE_NOUN_BEFORE.search(before):
-            out.append('names prose that moved: ' + PROSE_NOUN_BEFORE.search(before).group(1))
+            out.append((m.group(1), 'line number into relocated prose'))
+        elif PROSE_NOUN.match(tail) and not (
+                PROSE_NOUN.match(tail).group(1).lower() == 'docstring'
+                and _names_a_declaration_docstring(line)):
+            out.append((m.group(1), 'names prose that moved: '
+                        + PROSE_NOUN.match(tail).group(1)))
+        elif PROSE_NOUN_BEFORE.search(before) and not (
+                PROSE_NOUN_BEFORE.search(before).group(1).lower() == 'docstring'
+                and _names_a_declaration_docstring(line)):
+            out.append((m.group(1), 'names prose that moved: '
+                        + PROSE_NOUN_BEFORE.search(before).group(1)))
         elif SECTION_AFTER.match(tail):
             # ⚠ ONLY IF THE HEADING ACTUALLY LEFT. Firing on every `§` after a ride-along name
             # asserts a move that did not happen: `Occurrence.lean` kept `§ III` and `§ VI` as
             # headings while their BODIES moved, and the check reported both as relocated. That is
             # a false positive whose surface GROWS with every conversion — the same shape as the
             # title-overlap heuristic deleted below, and the reason it was deleted.
-            mark = _trim_punct(SECTION_AFTER.match(tail).group(0))
+            mark = SECTION_AFTER.match(tail).group(1)
             if _section_heading_present(pairs_owner(m.group(1)), mark):
-                out.append('names a SECTION of a file that has a ride-along — heading is still '
-                           'in the .lean; confirm the CONTENT it names did not move')
+                out.append((m.group(1),
+                            'names a SECTION of a file that has a ride-along — heading is still '
+                            'in the .lean; confirm the CONTENT it names did not move'))
             else:
-                out.append('names a SECTION that moved to the ride-along')
+                out.append((m.group(1), 'names a SECTION that moved to the ride-along'))
     return out
 
 
 _headings = {}
 
 
-def _section_heading_present(lean_rel, mark):
-    """Does `mark` (e.g. `§ III`) still open a heading in the cited `.lean`?
+def _canon_section(s):
+    """`§ III` / `§III` / `section III` / `§ III.` -> `III`.
 
-    Existence of the heading is NOT proof the cited content stayed — `§ 0 Consequence 3` moved out
-    from under a heading that remains. So a present heading DOWNGRADES the message rather than
-    suppressing the hit: the checker locates, the reader judges."""
+    All four spellings occur here. Comparing raw markers made the rule spelling-sensitive, and the
+    two controls that existed happened to use the one spelling that worked.
+    """
+    s = re.sub(r"^\s*(?:§|section\b|ch(?:apter)?\b)\s*", "", s.strip(), flags=re.I)
+    return re.sub(r"\s+", " ", s).strip().rstrip(".").upper()
+
+
+def _section_heading_present(lean_rel, mark):
+    """Does `mark` still open a heading in the cited `.lean`?
+
+    Existence of the heading is NOT proof the cited content stayed - a subsection can move out from
+    under a heading that remains. So a present heading DOWNGRADES the message rather than
+    suppressing the hit: the checker locates, the reader judges.
+
+    ⚠ MATCH THE WHOLE MARKER. `SECTION_AFTER` used to capture one character, so every marker
+    canonicalised to `I` and `§ IV` "matched" the `§ I` heading - the test distinguished nothing,
+    and passed its controls for that reason.
+    """
     if lean_rel is None:
         return False
     if lean_rel not in _headings:
         try:
-            body = (REPO / lean_rel).read_text(encoding='utf-8', errors='replace')
+            body = (REPO / lean_rel).read_text(encoding="utf-8", errors="replace")
         except OSError:
-            body = ''
-        _headings[lean_rel] = re.findall(r'^\s*/-!\s*#+\s*(.+?)\s*$', body, re.M)
-    norm = re.sub(r'\s+', ' ', mark).strip().rstrip('.')
-    return any(re.sub(r'\s+', ' ', h).startswith(norm) for h in _headings[lean_rel])
-# ⚠⚠ A TITLE-OVERLAP HEURISTIC LIVED HERE FOR ONE COMMIT AND WAS REMOVED. Recorded because the
-# measurement is the useful part, not the code. It flagged a line sharing >=3 distinctive words with
-# the ride-along's H1 while citing the `.lean`, aimed at the `MANIFEST.md` row shape.
-#
-#   * LIVE YIELD: ZERO. The only corpus line meeting the threshold already fired on `PROSE_NOUN`.
-#   * The threshold was nominally 3 and effectively 2 — a ride-along is named after its `.lean`, so
-#     the subject noun sits in the title AND in every citation path. One word is always free.
-#   * FALSE POSITIVES GREW WITH EVERY CONVERSION, which is fatal for a convention meant to scale.
-#     Measured: retitling `Wall.md`'s H1 took the run 9 -> 19 hits, 10 on real corpus lines nobody
-#     wrote for the test — including a BARE DECLARATION CITATION, the canonical must-suppress class,
-#     plus `BOTTOMELEMENT.md` x4, `CLAIMS.md`, `register.md`, and `MANIFEST.md` *while correct*.
-#     Simulating the next conversion (`Snap.lean`) fired on `register.md` and `CLAIMS.md` because the
-#     shared words are the name of a PDF; simulating `DiagonalFixedPoint.lean` fired on a
-#     gate-exempt file; and the ride-along fired on ITSELF.
-#   * A gate that cries wolf gets muted, and a muted gate protects nothing.
-#
-# WHAT REPLACED IT is below and is precise: compare the PAIR'S OWN TWO TITLES to each other. That is
-# two strings this project controls, not arbitrary corpus prose, so it has no false-positive surface
-# — and it catches the ROOT CAUSE (a `.lean` whose title describes the essay rather than its own
-# declarations) instead of the symptom (index rows echoing that title).
+            body = ""
+        _headings[lean_rel] = [_canon_section(h)
+                               for h in re.findall(r"^\s*/-!\s*#+\s*(.+?)\s*$", body, re.M)]
+    want = _canon_section(mark)
+    if not want:
+        return False
+    return any(h == want or h.startswith(want + ".") or h.startswith(want + " ")
+               for h in _headings[lean_rel])
 
 
 def scan_title_duplication(pairs):
@@ -779,7 +854,6 @@ def _title_words_lean(path):
 
 
 # Title words per ride-along, computed once. Populated by `scan_ride_along`.
-_titles = {}
 
 
 def selftest():

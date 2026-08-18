@@ -100,7 +100,8 @@ theorem selfApp_lands_on_nu :
 /-! ## § VI. The hard bridge — located, not crossed (the wall is Cantor; the escape is the fork)
 
 Deriving `fixed_bot` rather than assuming it needs a **reflexive object**, and
-`reflexive_object_refuted` shows type theory never supplies one — so the assumption is forced, not lazy.
+`reflexive_object_refuted` shows none exists on any carrier admitting a fixed-point-free self-map —
+and type theory has those (`no_reflexive_object_bool`), so the assumption is forced, not lazy.
 The escape is the monotone/domain regime, where no fixed-point-free maps exist; it is already crossed in
 the computability face. Where to look and why: `ZeroParadox/Settheory/LawvereBridge.md`. -/
 

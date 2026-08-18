@@ -1203,7 +1203,7 @@ applied to the output. **Absence was read off a line that contained the thing.**
 **Measured 2026-08-12**, and it produced a note, a handoff entry and a spoken claim all asserting a
 gap that did not exist: a search for `Γ₀|Feferman|Schütte` matched `Ordinal/Epsilon0CannotBe.lean:79`,
 whose gloss ends *"coords (1,0), the minimum closure, **below Γ₀**"* — at roughly character 110 of a
-line printed to 90. `Ordinal/Epsilon0LeastFP.lean:191` states the entire Veblen ladder up to Γ₀ and
+line printed to 90. `Ordinal/Epsilon0LeastFP.md` states the entire Veblen ladder up to Γ₀ and
 `SnapNucleusConstructive.lean` references `epsilon_zero_lt_gamma`. **The corpus was ahead of the
 search, and the deliverable dissolved.**
 **THE RULE: never conclude absence from truncated output.** Re-run untruncated — or print
@@ -1217,7 +1217,7 @@ caught them:**
 
 | axis | the claim | what was run | what should have been run |
 |---|---|---|---|
-| POLARITY | *"the corpus never measured seed-independence"* | `seed-independent` → **0 hits** | `"a seed, not"` → lands directly on `Epsilon0MinMax.lean` § I-b, which states the theorem, the proof route, and the verdict *"Elementary and not novel"* |
+| POLARITY | *"the corpus never measured seed-independence"* | `seed-independent` → **0 hits** | `"a seed, not"` → lands directly on `Epsilon0MinMax.md`, which states the theorem, the proof route, and the verdict *"Elementary and not novel"* |
 | POLARITY | *"every `Tendsto` in the corpus runs inward"* | `atTop (nhds _)` → 13 files, all convergent | `atTop atTop` → the divergences, immediately, in files the survey never saw |
 | **PART OF SPEECH** | *"the succession of bottoms is not formalized"* | the NOUN — `family of bottom`, `botSeq`, `ℕ → .*Bot` → nothing | the VERB — `next bottom`, `re-seed`, `succ` → **`succession_succ`**, the n → n+1 re-seeding theorem, which had been there all along |
 
