@@ -422,6 +422,22 @@ def mark_doc(key, status, ar_data):
             print('  ⚠ %s: ar_status.json updated, register.md NOT written (see refusal above)' % key)
         return current_hash
 
+    # ⚠ 10 OF 39 VALID KEYS HAD NO BRANCH HERE AT ALL (`RLY4-5`). Every FORMAL_ONLY document - ZP-N,
+    # ZP-P, ZP-Q, ZP-R and the addenda - fell through to "unknown key", which is why three register
+    # rows had to be hand-edited this round. `parse_mark_args` also upper-cased them into
+    # nonexistence; it preserves case for standalone keys and now for these.
+    if key in FORMAL_ONLY_SCRIPTS:
+        script = FORMAL_ONLY_SCRIPTS[key]
+        current_hash = sha8(script)
+        if current_hash == 'MISSING':
+            print(f'  ERROR: {script} not found — cannot mark {key}')
+            return None
+        if not update_register_formal_hash(key, current_hash):
+            print('  NOT marked %s: the register write was refused (see above)' % key)
+            return None
+        ar_data[key] = {'hash': current_hash, 'status': status}
+        return current_hash
+
     if key in STANDALONE_SCRIPTS:
         script = STANDALONE_SCRIPTS[key]
         current_hash = sha8(script)
@@ -608,6 +624,44 @@ def selftest():
     bad += 0 if ok else 1
     print('    %-34s %s (%r)' % ('a moved hash is not still Y/Y', 'ok' if ok else '*** WRONG ***', got))
 
+
+    # ⚠⚠ `sha8` IS THIS MODULE'S PRIMARY DETECTOR AND HAD NO CONTROL (`RLY4-2`, /rely round 4).
+    # Replacing it with a `register.md` lookup left `--selftest` at exit 0 and the run reporting
+    # "All hashes match" on a genuinely modified script. The old must-suppress hashed the same file
+    # TWICE - which a lookup table and a constant both satisfy. A control must distinguish the
+    # function from its impostors, not merely observe that it is deterministic.
+    print('  MUST FIRE  (sha8 is a real content hash)')
+    import tempfile as _tf
+    _probe = os.path.join(SCRIPT_DIR, '_sha8_control_probe.py')
+    try:
+        io.open(_probe, 'w', encoding='utf-8', newline='\n').write('X = 1\n')
+        h1 = sha8('_sha8_control_probe.py')
+        io.open(_probe, 'w', encoding='utf-8', newline='\n').write('X = 2\n')
+        h2 = sha8('_sha8_control_probe.py')
+    finally:
+        if os.path.exists(_probe):
+            os.remove(_probe)
+    ok = h1 != h2 and 'MISSING' not in (h1, h2) and len(h1) == 8
+    bad += 0 if ok else 1
+    print('    %-34s %s (%s vs %s)' % ('changed CONTENT changes the hash',
+                                       'ok' if ok else '*** WRONG ***', h1, h2))
+    # and it must be the real SHA-256 of those bytes, not any stable function of them
+    expect = hashlib.sha256(b'X = 2\n').hexdigest()[:8]
+    ok = h2 == expect
+    bad += 0 if ok else 1
+    print('    %-34s %s (%s, expected %s)' % ('and it is SHA-256 of the bytes',
+                                              'ok' if ok else '*** WRONG ***', h2, expect))
+
+    print('  MUST FIRE  (shared build layer)')
+    _saved = globals().get('SHARED_BUILD')
+    try:
+        globals()['SHARED_BUILD'] = ['_no_such_shared_module.py']
+        ok = bool(check_shared_build())
+    finally:
+        globals()['SHARED_BUILD'] = _saved
+    bad += 0 if ok else 1
+    print('    %-34s %s' % ('an unrecorded module is reported', 'ok' if ok else '*** WRONG ***'))
+
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
 
@@ -736,6 +790,11 @@ def _register_attested_source(script, recorded_hash):
         revs = subprocess.run(['git', 'log', '--format=%H', '--follow',
                                '-%d' % _ATTEST_WALK, '--', rel],
                               cwd=REPO, capture_output=True, text=True, timeout=60)
+        # ⚠ A `git log` that FAILS without raising used to fall through to exhausted=False and print
+        # "no committed version hashes to the recorded X" - fails closed, but for a false reason, and
+        # a wrong reason sends the reader to look for the wrong thing. (`RLY4-7`.)
+        if revs.returncode != 0:
+            return None, True
         for rev in revs.stdout.split():
             blob = subprocess.run(['git', 'show', '%s:%s' % (rev, rel)],
                                   cwd=REPO, capture_output=True, timeout=60)
@@ -747,7 +806,7 @@ def _register_attested_source(script, recorded_hash):
         return None, False
     # ⚠ DISTINGUISH "not found" FROM "ran out of history". The walk is bounded, and without this a
     # blob sitting beyond the limit produced "no committed version hashes to the recorded X" - a
-    # FALSE statement, not a conservative one. build_foreword.py is already at 36 of 40 commits.
+    # FALSE statement, not a conservative one. measured: the deepest history is build_zpe.py at 57 commits, so 400 is ample.
     return None, len(revs.stdout.split()) >= _ATTEST_WALK
 
 
@@ -902,11 +961,18 @@ def main():
     ar_data = load_ar_status()
 
     if marks:
+        # ⚠ COUNT THE FAILURES. This returned 0 unconditionally, so
+        # `--mark-remediated "ZP-Q The Frame-Change"` printed `ERROR: unknown key`, then
+        # "register.md updated", then exited 0 - three statements, two of them false. (`RLY4-5`.)
+        marked, failed = 0, []
         for key, status in marks:
             recorded_hash = mark_doc(key, status, ar_data)
             if recorded_hash:
+                marked += 1
                 label = AR_DISPLAY[status]
                 print(f'  Marked {key}: {label}  (hash: {recorded_hash})')
+            else:
+                failed.append(key)
         save_ar_status(ar_data)
         # Recompute Comp AR column for register.md (companions only)
         comp_labels = {}
@@ -914,9 +980,12 @@ def main():
             current_hash = sha8(script)
             comp_labels[doc] = compute_ar_label(doc, current_hash, ar_data)
         update_register_ar_column(comp_labels)
-        print('  ar_status.json and register.md updated.')
+        if marked:
+            print('  ar_status.json and register.md updated.')
+        if failed:
+            print('  NOT marked (%d): %s' % (len(failed), ', '.join(failed)))
         if not do_update:
-            return 0
+            return 1 if failed else 0
 
     # Full validation pass
     registered = parse_register()
@@ -1045,12 +1114,12 @@ def main():
         update_register_ar_column(comp_labels)
         print('register.md Comp AR column updated.')
 
-    doc_mismatches = check_docstring_versions()
-    all_ok = not hash_mismatches and not ar_stale and not doc_mismatches
-    if all_ok:
-        print('All hashes match. AR status current. Docstring versions in sync.')
-        return 0
-
+    # ⚠⚠ REPORT BEFORE THE EARLY RETURN, AND COUNT IT IN `all_ok`. Both were wrong on first write
+    # (`RLY4-1`, /rely round 4): `shared_moved` was computed, excluded from `all_ok`, and printed
+    # AFTER `return 0` - so a shared-layer change alone exited 0 in silence, and the block spoke only
+    # when some OTHER check had already failed. That is the SAME SHAPE as `RLY3-2`, the hole it was
+    # written to close: RLY3-2 reported a clean zero over ground it never walked; this walked the
+    # ground, saw the problem, and returned zero anyway.
     if shared_moved:
         print()
         print('  SHARED BUILD LAYER CHANGED - this affects EVERY rendered document, and the')
@@ -1058,6 +1127,13 @@ def main():
         for name, was, cur in shared_moved:
             print('    %-22s registered: %-10s current: %s' % (name, was, cur))
         print('  Rebuild what it affects, then: python %s --seed-shared' % SELF)
+
+    doc_mismatches = check_docstring_versions()
+    all_ok = (not hash_mismatches and not ar_stale and not doc_mismatches
+              and not shared_moved)
+    if all_ok:
+        print('All hashes match. AR status current. Docstring versions in sync.')
+        return 0
 
     if hash_mismatches:
         print(f'HASH MISMATCHES: {", ".join(hash_mismatches)}')

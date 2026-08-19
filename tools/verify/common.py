@@ -395,25 +395,6 @@ def check_vocabulary(section, mod_globals, label=None):
     return bad
 
 
-def _superset(path, section, live, label, kind, present_filter=None):
-    recorded = load_pinned(path, section)
-    present = present_filter(recorded) if present_filter else recorded
-    live = set(live)
-    dropped = sorted(present - live)
-    bad = 0
-    ok = not dropped
-    print('  %-40s %s'
-          % ('%s: no recorded %s dropped' % (label or section, kind),
-             'ok (%d recorded, %d live)' % (len(present), len(live)) if ok
-             else '*** %d DROPPED: %s ***' % (len(dropped), ', '.join(repr(d) for d in dropped[:3]))))
-    bad += 0 if ok else 1
-    populated = len(present) > 2
-    print('  %-40s %s' % ('%s: the pin is populated' % (label or section),
-                          'ok' if populated else '*** EMPTY SECTION — check is vacuous ***'))
-    bad += 0 if populated else 1
-    return bad
-
-
 def check_scope(section, live, label=None):
     """Print and score one enumerator's scope pin. Returns the number of failures (0, 1 or 2).
 

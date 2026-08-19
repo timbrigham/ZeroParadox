@@ -139,7 +139,18 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # as deleting a scanned directory — measured before it was written:
                               # 30 of 34 advertised patterns could be removed with every control
                               # green. Both pins are data switches and both belong in this list.
-                              "pattern_baseline.txt"]
+                              "pattern_baseline.txt",
+                              # ⚠ AND THE SHARED-BUILD PIN (RLY3-2 / RLY4-4). `shared_build_baseline.txt`
+                              # fingerprints `zp_utils.py`, which all 43 build scripts import and which
+                              # renders the meta line of EVERY document — a surface the per-document
+                              # tokens in `register.md` structurally cannot see, because a script's
+                              # bytes do not change when its import does. Editing this baseline
+                              # re-blesses whatever the shared layer currently says, so it is a data
+                              # switch of exactly the kind the four suppression baselines are, and it
+                              # blocks a push. It arrived ROUTED-BUT-UNHASHED, which `batch.py`'s own
+                              # `_unhashed` leg caught and named on its first run — the enumerator
+                              # working, one round after being written.
+                              "shared_build_baseline.txt"]
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).
