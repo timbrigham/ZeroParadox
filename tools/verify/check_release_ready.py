@@ -144,19 +144,20 @@ def c_engineers_takes():
 
 
 def c_hash_integrity():
-    """register.md formal:/comp: tokens match the build-script hashes (companions+formal)."""
-    registered = ch.parse_register()
-    bad = []
-    for doc in ch.COMP_SCRIPTS:
-        comp = ch.sha8(ch.COMP_SCRIPTS[doc])
-        fkey = f'{doc}-formal'
-        fscript = ch.FORMAL_SCRIPTS.get(fkey, '')
-        formal = ch.sha8(fscript) if fscript else 'MISSING'
-        reg_formal, reg_comp = registered.get(doc, ('?', '?'))
-        if formal != reg_formal:
-            bad.append(f'{doc} formal: register {reg_formal} vs script {formal}')
-        if comp != reg_comp:
-            bad.append(f'{doc} comp: register {reg_comp} vs script {comp}')
+    """Every recorded build-input hash matches its bytes - all four tiers, plus the shared layer.
+
+    ⚠ **THIS USED TO ITERATE `COMP_SCRIPTS` ALONE AND CALL THAT INTEGRITY** (`RLY5-1`, DC-18 proxy
+    check). It was blind to the 10 FORMAL_ONLY scripts, the 3 standalone register tokens, and
+    `zp_utils.py` - which all 43 build scripts import and which renders the meta line of every
+    document. Measured: `zp_utils.py` moved ALONE gave `check_hashes.py` exit 1 while this printed
+    `[PASS] Build-script hash integrity` and the gate said `GO`.
+
+    **The push hook and CI both blocked correctly; only this one was blind - and this is the one whose
+    output is a permanent Zenodo DOI.** Now DELEGATES to `check_hashes.all_hash_mismatches()`, which is
+    the single definition of the property and is control-bound to that module's own display loops.
+    A second copy of the logic here is what produced the drift in the first place.
+    """
+    bad = ch.all_hash_mismatches()
     for b in bad:
         fail(f'Hash mismatch (version bump/rebuild overdue) - {b}')
     return not bad

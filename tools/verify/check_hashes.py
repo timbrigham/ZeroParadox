@@ -194,6 +194,88 @@ def seed_shared():
     print('  seeded %s (%d module(s))' % (os.path.relpath(SHARED_BASELINE, REPO), len(SHARED_BUILD)))
 
 
+# README rows look like `| [Title](FILE.pdf) | ZP-X | v1.21 | description |`.
+_README_ROW = re.compile(r'^\|\s*\[[^\]]*\]\(([^)]+\.pdf)\)\s*\|[^|]*\|\s*(v[\d.]+)\s*\|', re.M)
+# register rows: `| ZP-X Title | v1.21 | FILE.pdf | comp | AR | notes |`
+_REGISTER_ROW = re.compile(r'^\|\s*([^|]+?)\s*\|\s*(v[\d.]+|N/A)\s*\|\s*([^\s|]+\.pdf)\s*\|', re.M)
+
+
+def check_readme_versions():
+    """README's version column must agree with `register.md`. Returns [(pdf, readme_v, reg_v)].
+
+    ⚠ **THIS OBLIGATION WAS DECIDABLE AND CARRIED BY MEMORY, AND IT FAILED TWICE IN ONE PUSH.**
+    `register.md` is the canonical registry and README is required to be verified against it; nothing
+    compared them. Measured 2026-08-18: the ZP-R row was corrected in one commit while the ZP-J
+    Keystone row went stale in the SAME push, one row away - and this module reported "docstring
+    versions in sync" throughout, because it was checking a different pair of records.
+
+    ⚠ **JOINED ON THE PDF FILENAME, NEVER THE `ZP-X` CODE.** Four register rows begin `ZP-J`, so the
+    code is ambiguous precisely where the addenda are; the filename is unique and appears in both. The
+    prefix trap this avoids corrupted a neighbouring register row earlier in the same arc.
+
+    GUIDE.md is deliberately not compared: measured 2026-08-18, it carries **no** version strings, so
+    there is nothing in it that can drift.
+    """
+    try:
+        readme = io.open(os.path.join(REPO, 'README.md'), encoding='utf-8').read()
+        reg = io.open(REGISTER, encoding='utf-8').read()
+    except OSError:
+        return []
+    by_pdf = {}
+    for _name, ver, pdf in _REGISTER_ROW.findall(reg):
+        by_pdf.setdefault(pdf.strip(), ver.strip())
+    out = []
+    for pdf, rv in _README_ROW.findall(readme):
+        pdf = pdf.strip()
+        reg_v = by_pdf.get(pdf)
+        # A README link with no register row is a different defect (check_paths owns dead links);
+        # only DISAGREEMENT between two present records is reported here.
+        if reg_v and reg_v != 'N/A' and reg_v != rv.strip():
+            out.append((pdf, rv.strip(), reg_v))
+    return out
+
+
+def all_hash_mismatches():
+    """Every build input whose recorded hash does not match its bytes. PURE - prints nothing.
+
+    ⚠ **THE FOUR TIERS PLUS THE SHARED LAYER, BECAUSE A SUBSET IS A PROXY** (`RLY5-1`, DC-18).
+    `check_release_ready.py` used to iterate `COMP_SCRIPTS` alone and call that "build-script hash
+    integrity" - so a stale FORMAL_ONLY script (10 of them), a stale standalone register token (3), or
+    a moved `zp_utils.py` all left it printing `[PASS]` and `GO`. Measured: `zp_utils.py` moved alone
+    gave `check_hashes.py` exit 1 and the release gate exit 0. **The push hook and CI blocked
+    correctly; only the gate whose output is a permanent DOI was blind.**
+
+    Returns a sorted list of human-readable reasons; empty means every recorded hash is current.
+    """
+    out = []
+    registered = parse_register()
+    for doc, script in COMP_SCRIPTS.items():
+        reg_formal, reg_comp = registered.get(doc, (None, None))
+        cur_comp = sha8(script)
+        if reg_comp != cur_comp:
+            out.append('%s comp: register %s vs script %s' % (doc, reg_comp, cur_comp))
+        fscript = FORMAL_SCRIPTS.get(doc + '-formal')
+        if fscript:
+            cur_formal = sha8(fscript)
+            if reg_formal != cur_formal:
+                out.append('%s formal: register %s vs script %s' % (doc, reg_formal, cur_formal))
+    for name, script in FORMAL_ONLY_SCRIPTS.items():
+        cur = sha8(script)
+        reg = parse_register_formal_by_name(name)
+        if reg is None:
+            out.append('%s: no formal: token in register.md' % name)
+        elif reg != cur:
+            out.append('%s formal: register %s vs script %s' % (name, reg, cur))
+    for key, script in STANDALONE_SCRIPTS.items():
+        cur = sha8(script)
+        reg = register_formal_token(key)
+        if reg and reg != cur:
+            out.append('%s register token: %s vs script %s' % (key, reg, cur))
+    for name, was, cur in check_shared_build():
+        out.append('SHARED %s: recorded %s vs current %s (affects EVERY document)' % (name, was, cur))
+    return sorted(out)
+
+
 def register_formal_token(key):
     """The formal: token recorded in register.md for a standalone doc, or None.
 
@@ -644,10 +726,21 @@ def selftest():
     import tempfile as _tf
     with _tf.TemporaryDirectory() as _d:
         _probe = os.path.join(_d, 'probe.py')
-        io.open(_probe, 'w', encoding='utf-8', newline='\n').write('X = 1\n')
-        h1 = hashlib.sha256(io.open(_probe, 'rb').read()).hexdigest()[:8]
-        io.open(_probe, 'w', encoding='utf-8', newline='\n').write('X = 2\n')
-        h2 = hashlib.sha256(io.open(_probe, 'rb').read()).hexdigest()[:8]
+        # ⚠⚠ CALL `sha8`, NOT `hashlib` - THE SUBJECT OF A CONTROL IS WHAT IT CALLS (`ORD-6-1`).
+        # Moving this probe out of `scripts/` was right; computing the hashes with `hashlib` here was
+        # not, and it silently removed the thing being tested: instrumented calls to `sha8` in this
+        # block reached ZERO, so a CACHING `sha8` passed the entire selftest. `sha8` joins SCRIPT_DIR,
+        # so the probe has to live there for the call to reach it - it is created and removed inside
+        # this block, and the `finally` guarantees removal even on a kill.
+        _in_scripts = os.path.join(SCRIPT_DIR, '_sha8_control_probe.py')
+        try:
+            io.open(_in_scripts, 'w', encoding='utf-8', newline='\n').write('X = 1\n')
+            h1 = sha8('_sha8_control_probe.py')
+            io.open(_in_scripts, 'w', encoding='utf-8', newline='\n').write('X = 2\n')
+            h2 = sha8('_sha8_control_probe.py')
+        finally:
+            if os.path.exists(_in_scripts):
+                os.remove(_in_scripts)
     # and sha8 itself must agree with that contract on a REAL tracked script
     _real = COMP_SCRIPTS['ZP-A']
     _direct = hashlib.sha256(
@@ -676,6 +769,74 @@ def selftest():
         globals()['SHARED_BUILD'] = _saved
     bad += 0 if ok else 1
     print('    %-34s %s' % ('an unrecorded module is reported', 'ok' if ok else '*** WRONG ***'))
+
+
+    # ⚠ `all_hash_mismatches()` IS A SECOND READER OF THE SAME PROPERTY, so it must agree with the
+    # display loops in `main()` - which /rely verified cover all four tiers plus the shared layer.
+    # Two readers that can disagree is how `check_release_ready.py` drifted into checking a SUBSET
+    # and calling it integrity (`RLY5-1`). This control is the thing that makes the delegation safe.
+    print('  MUST SUPPRESS  (full-coverage mismatch scan)')
+    _m = all_hash_mismatches()
+    ok = isinstance(_m, list)
+    bad += 0 if ok else 1
+    print('    %-34s %s (%d mismatch(es) on this tree)'
+          % ('scans without raising', 'ok' if ok else '*** WRONG ***', len(_m)))
+    # It must reach every tier: name one script from each and confirm a perturbed hash is seen.
+    print('  MUST FIRE  (every tier is reachable)')
+    _tiers = [('COMP', COMP_SCRIPTS, 'ZP-A'),
+              ('FORMAL_ONLY', FORMAL_ONLY_SCRIPTS, 'ZP-Q The Frame-Change'),
+              ('STANDALONE', STANDALONE_SCRIPTS, 'Foreword')]
+    for label, mapping, key in _tiers:
+        present = key in mapping and sha8(mapping[key]) != 'MISSING'
+        bad += 0 if present else 1
+        print('    %-34s %s' % ('%s tier is scanned (%s)' % (label, key),
+                                'ok' if present else '*** WRONG ***'))
+
+
+    # ⚠ THE TWO-RECORD COMPARATOR (README vs register.md). Editorial rated this above the claim sweep
+    # because it is DECIDABLE, and this arc is why: README's ZP-R row was fixed in one commit while its
+    # ZP-J Keystone row went stale in the SAME push, one row away, with this module reporting
+    # "docstring versions in sync" the whole time - a true statement about a different pair of records.
+    print('  MUST SUPPRESS  (README vs register)')
+    _before = check_readme_versions()
+    ok = _before == []
+    bad += 0 if ok else 1
+    print('    %-34s %s%s' % ('the real tables agree', 'ok' if ok else '*** DRIFT ***',
+                              '' if ok else ' — %s' % (_before,)))
+
+    print('  MUST FIRE  (README vs register)')
+    _rm = io.open(os.path.join(REPO, 'README.md'), encoding='utf-8').read()
+    _hit = _README_ROW.search(_rm)
+    if _hit:
+        _broken = _rm[:_hit.start(2)] + 'v0.1' + _rm[_hit.end(2):]
+        _saved = globals()['_README_ROW']
+        import types as _types
+        # Re-run the comparison against a PERTURBED copy without touching the file on disk.
+        _orig_open = io.open
+
+        def _fake_open(p, *a, **k):
+            if str(p).endswith('README.md'):
+                import io as _io
+                return _io.StringIO(_broken)
+            return _orig_open(p, *a, **k)
+        io.open = _fake_open
+        try:
+            drift = check_readme_versions()
+        finally:
+            io.open = _orig_open
+        # ⚠ COMPARE AGAINST THE BASELINE, DO NOT HARD-CODE IT. The first version asserted
+        # `len(drift) == 1`, which silently assumed the real tables already agreed - and on the very
+        # run that added this check they did NOT (two live drifts, one of them pre-existing). A
+        # control pinned to the world's current state fails the moment the world is the thing you are
+        # measuring.
+        ok = any(d[1] == 'v0.1' for d in drift) and len(drift) == len(_before) + 1
+        bad += 0 if ok else 1
+        print('    %-34s %s (+%d over baseline %d)'
+              % ('a wrong README version is caught', 'ok' if ok else '*** WRONG ***',
+                 len(drift) - len(_before), len(_before)))
+    else:
+        bad += 1
+        print('    %-34s *** NO README ROWS PARSED ***' % 'the row pattern matches')
 
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
@@ -1155,10 +1316,17 @@ def main():
         print('  Rebuild what it affects, then: python %s --seed-shared' % SELF)
 
     doc_mismatches = check_docstring_versions()
+    readme_drift = check_readme_versions()
+    if readme_drift:
+        print()
+        print('  README DISAGREES WITH register.md, which is the canonical registry:')
+        for pdf, rv, gv in readme_drift:
+            print('    %-44s README %-8s register %s' % (pdf, rv, gv))
+        print('  Update register.md FIRST, then propagate to README (and GUIDE if it ever carries one).')
     all_ok = (not hash_mismatches and not ar_stale and not doc_mismatches
-              and not shared_moved)
+              and not shared_moved and not readme_drift)
     if all_ok:
-        print('All hashes match. AR status current. Docstring versions in sync.')
+        print('All hashes match. AR status current. Docstring and README versions in sync.')
         return 0
 
     if hash_mismatches:

@@ -82,16 +82,16 @@ An independent re-check is three commands: `git clone https://github.com/timbrig
 | [p-adic Topology](ZP-B_pAdic_Topology.pdf) | ZP-B | v1.14 | The 2-adic topology: why p = 2, and why departure from ⊥ is irreversible. |
 | [Information Theory](ZP-C_Information_Theory.pdf) | ZP-C | v1.21 | The information layer: state distributions, 1-bit cost, unbounded surprisal at ⊥. |
 | [State Layer](ZP-D_State_Layer.pdf) | ZP-D | v1.15 | The Hilbert-space layer: the snap as an orthogonal shift between states. |
-| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.24 | The bridge: the snap assembled as a derived theorem across the layers. |
-| [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.5 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
+| [Bridge Document](ZP-E_Bridge_Document.pdf) | ZP-E | v3.25 | The bridge: the snap assembled as a derived theorem across the layers. |
+| [The Counterexamples](ZP-F_The_Counterexamples.pdf) | ZP-F | v1.6 | The counterexamples: ordered fields (ℝ, ℚ) where the snap cannot occur. |
 | [Category Theory](ZP-G_Category_Theory.pdf) | ZP-G | v1.15 | The categorical layer: ⊥ as initial object, the informational singularity. |
-| [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.17 | The categorical bridge: the snap holding under all four domain functors. |
+| [Categorical Bridge](ZP-H_Categorical_Bridge.pdf) | ZP-H | v1.18 | The categorical bridge: the snap holding under all four domain functors. |
 | [Native Categories Addendum](ZP-H_Native_Categories_Addendum.pdf) | ZP-H Native Categories Addendum | v1.2 | The snap floor realized inside each framework's native Mathlib category (TopCat, ModuleCat ℂ, KleisliCat PMF). Reads after ZP-H. |
-| [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.14 | Inside zero: each maximal chain converging to a limit that plays the ⊥ role, read as a successor ⊥. |
+| [Inside Zero](ZP-I_Inside_Zero.pdf) | ZP-I | v1.15 | Inside zero: each maximal chain converging to a limit that plays the ⊥ role, read as a successor ⊥. |
 | [Self-Reference](ZP-J_Self_Reference.pdf) | ZP-J | v2.5 | Self-reference: ⊥ as the Quine atom, and the AFA structure it requires. |
 | [AFA Addendum](ZP-J_AFA_Addendum.pdf) | ZP-J AFA Addendum | v1.7 | Decoration uniqueness for finite graphs from the valuation structure alone. Reads after ZP-J. |
 | [Wheel Addendum](ZP-J_Wheel_Addendum.pdf) | ZP-J Wheel Addendum | v1.3 | The wheel of fractions as a wheel: division by zero made total. Reads after ZP-J. |
-| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.6 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
+| [Keystone Addendum](ZP-J_Keystone_Addendum.pdf) | ZP-J Keystone Addendum | v1.7 | The diagonal-fixed-point keystone: the Lawvere face-split (machine-checked) and the snap as a well-foundedness boundary crossing. Reads after ZP-J. |
 | [Computational Grounding](ZP-K_Computational_Grounding.pdf) | ZP-K | v1.14 | Computational grounding: the bottom's structural self-containment, with the computational reading carried as a commitment. |
 | [Incomputability Convergence](ZP-L_Incomputability_Convergence.pdf) | ZP-L | v1.6 | ε₀ as the exact ordinal threshold where the snap occurs. |
 | [Kleene-Ordinal Bridge](ZP-M_Kleene_Ordinal_Bridge.pdf) | ZP-M | v1.3 | The bridge between the Kleene quine and the ε₀ fixed point. |
