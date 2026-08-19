@@ -47,6 +47,19 @@ supplier, and composing them returns `[propext, Classical.choice, Quot.sound]`. 
 they are themselves choice-free. A reduction that used choice would establish nothing. Re-proving
 either principle constructively would decide a taboo, so no choice-free re-proof exists.
 
+⚠⚠ **PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and collapsing them is the error this document
+has made in four successive rounds.** The two settled cases sit on *opposite* sides of provenance:
+`fixedPointFree_of_nontrivial` spends the framework's own bare `classical`, while well-order
+comparability spends **Mathlib's**, in `InitialSeg.total` — and `OrdinalChoiceEssential.lean` states
+outright that *"Mathlib's use of choice there is forced."* **So an inherited dependence can be
+essential.** That is a stronger result than "the framework's own choice is essential", and it is why
+*inherited* was never a synonym for *removable*.
+
+| | own | inherited |
+|---|---|---|
+| **essential** | `fixedPointFree_of_nontrivial` | well-order comparability |
+| **open** | — | the remaining analytic layers |
+
 ⚠ **A footprint measurement can never establish necessity.** `#print axioms` reports what a proof
 used, not what a proof must use. The accidental side needs an **exhibited clean proof**; the essential
 side needs a **reduction**. That asymmetry is why the table above is evidence for "not inherited" and

@@ -54,19 +54,22 @@ all.** Choice appears in the realization layers — mostly inherited from Mathli
 and not everywhere open. Argument and measurements: `ZeroParadox/AxiomProfile.md`.
 -/
 
-/-! ## 0. The framework's OWN choice — essential, not inherited
+/-! ## 0. Choice that is NOT removable — two settled cases
 
-⚠ These three are why "inherited from Mathlib" is false as a universal. The `.md` states it; this
-section makes it CHECKABLE, because a claim a reader cannot verify by building this file is a claim
-this file does not actually support. -/
+⚠ PROVENANCE and NECESSITY are independent axes, and the first version of this heading conflated
+them. `fixedPointFree_of_nontrivial` spends the framework's OWN `classical`; well-order comparability
+spends MATHLIB's, in `InitialSeg.total` — and both are essential. The two reductions below are
+choice-free, which is what makes them reductions rather than measurements. Full argument:
+`ZeroParadox/AxiomProfile.md`. -/
 section FrameworkOwnChoice
 
--- carries a bare `classical` written in framework source, not inherited:
-#print axioms ZeroParadox.fixedPointFree_of_nontrivial
--- the two taboo reductions that settle necessity. Both CHOICE-FREE: a reduction that used choice
--- would establish nothing.
-#print axioms ZeroParadox.wem_of_fixedPointFree
-#print axioms ZeroParadox.em_of_wellOrder_comparable
+-- PROVENANCE: a bare `classical` written in framework source (Lawvere.lean), not inherited.
+#print axioms ZeroParadox.fixedPointFree_of_nontrivial   -- [propext, Classical.choice, Quot.sound]
+-- NECESSITY: two reductions to taboos, themselves CHOICE-FREE. The first is about the declaration
+-- above; the SECOND is about well-order comparability, whose choice is MATHLIB's — so it witnesses
+-- that an INHERITED dependence can be essential too.
+#print axioms ZeroParadox.wem_of_fixedPointFree          -- [propext, Quot.sound]
+#print axioms ZeroParadox.em_of_wellOrder_comparable     -- [propext, Quot.sound]
 
 end FrameworkOwnChoice
 

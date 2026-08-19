@@ -154,12 +154,26 @@ def c_hash_integrity():
 
     **The push hook and CI both blocked correctly; only this one was blind - and this is the one whose
     output is a permanent Zenodo DOI.** Now DELEGATES to `check_hashes.all_hash_mismatches()`, which is
-    the single definition of the property and is control-bound to that module's own display loops.
+    the single definition of the property.
+
+    ⚠ **THE TWO READERS ARE NOT CONTROL-BOUND, AND THIS DOCSTRING CLAIMED THEY WERE.** `hooks.py`
+    judges `check_hashes.main()`'s EXIT CODE; this imports `all_hash_mismatches()`. The tier controls
+    in `--selftest` cover only the second — measured (/rely round 4): deleting a tier's accumulator
+    from `main()` leaves `--selftest` green, and `main()` then PRINTS the mismatch and returns zero.
+    Nothing passes through that gap today, so it is ledger debt rather than a live fail-open — but
+    the delegation's stated ground was stronger than what exists, which is the same overclaim shape
+    this file's own history is full of. Binding them is the mutation harness's first control set.
     A second copy of the logic here is what produced the drift in the first place.
     """
     bad = ch.all_hash_mismatches()
     for b in bad:
-        fail(f'Hash mismatch (version bump/rebuild overdue) - {b}')
+        # ⚠ NAME THE ACTUAL REMEDY. One label for two different faults sent readers to the wrong fix:
+        # a MISSING provenance token is not staleness, and no amount of bumping or rebuilding closes
+        # it — the fix is to add a `formal:` token. (Editorial round 4; the wording is theirs.)
+        if 'no formal: token in register.md' in b:
+            fail(f'No register provenance token (add a formal: token; do NOT bump or rebuild) - {b}')
+        else:
+            fail(f'Hash mismatch (version bump/rebuild overdue) - {b}')
     return not bad
 
 

@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.7 | August 2026
+Version 1.8 | August 2026
+v1.8: PROVENANCE AND NECESSITY ARE INDEPENDENT AXES, and v1.5-v1.7 collapsed them. The text said Section III locates two principles "where the choice is the framework's own and provably essential" - false for the second. `wem_of_fixedPointFree` reduces a principle whose choice IS the framework's own (a bare classical in Category/Lawvere.lean); `em_of_wellOrder_comparable` reduces well-order comparability, whose choice is MATHLIB's, spent in InitialSeg.total - and OrdinalChoiceEssential.lean states that Mathlib's use there is forced. So an INHERITED dependence can be essential, which is a STRONGER result than the one the prose was claiming, and it is why "inherited" never meant "removable". Found by the adversary gate keying on the POSITIVE assertion ("the framework's own") - four earlier rounds all keyed on the universal negative ("only ... Mathlib") and no search for that polarity could reach it.
 v1.7: THE v1.6 FIX REACHED THE ENDNOTE AND MISSED THE FRONT MATTER. Section III has named both taboo reductions since v1.5; v1.6 corrected the endnote; the PREAMBLE on page 1 and the Section II opener still said choice appears in "every place ... where the framework builds on Mathlib's libraries" and listed CATEGORY THEORY as one of them - the exact case corrected everywhere else. Both prose gates returned FAIL-BEDROCK, independently, on the two places a skimmer lands FIRST. That is the fourth consecutive version of this document fixing one site of one claim: v1.5 fixed Section III and left the endnote, v1.6 fixed the endnote and left the preamble. Corrected here at all four rendered sites at once. Also struck a claim v1.6 INTRODUCED - that the axiom-free sibling shows the choice is "not forced by the shape of the result" - which is the inversion of what LawvereTaboo section III proves: the cost IS the generality over arbitrary types, and it disappears under [DecidableEq beta].
 v1.6: THE ENDNOTE CONTRADICTED SECTION III. Section III has named both taboo reductions since v1.5 - `wem_of_fixedPointFree` and `em_of_wellOrder_comparable`, each choice-free (`[propext, Quot.sound]`), which is the only shape that can establish necessity. The endnote still said choice "appears only where the framework builds on Mathlib's ... libraries, and whether it is necessary there remains open" - both halves false, in the two places a skimmer lands. Measured: `fixedPointFree_of_nontrivial` carries choice from a bare `classical` in framework source (`Category/Lawvere.lean`), not from Mathlib, while its sibling `no_witness_of_fixedPointFree` is axiom-free - so the dependence is not inherited - the `classical` is the framework's own, and per LawvereTaboo section III the cost IS the generality over arbitrary types (it disappears under [DecidableEq beta]). Found by sweeping the CLAIM after both prose gates returned FAIL-BEDROCK on the same universal in README.
 v1.5: BEDROCK - Section III asserted THE FRAMEWORK HAS NO PROVEN-NECESSITY CASE ANYWHERE, a universal
@@ -35,7 +36,7 @@ Framework-wide note; reads after the Foreword.
 import os
 from zp_utils import *
 
-VERSION = '1.7'
+VERSION = '1.8'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -161,8 +162,9 @@ def build():
         'The pattern is clean: the core <i>states</i> the result; the analytic layers <i>realize</i> '
         'it inside the standard frameworks, and that is where the library\'s classical foundations '
         'enter. For those layers the choice is in the plumbing, not in the claim &#8212; but not '
-        'for all of it: Section III locates two principles where the choice is the framework\'s own '
-        'and provably essential.'))
+        'for all of it: Section III locates two principles that are provably essential. Their '
+        'provenance differs, and that is the point: one spends the framework\'s own bare classical, '
+        'the other spends Mathlib\'s &#8212; and both are essential. Inherited never meant removable.'))
     E.append(sp(6))
 
     # ── Section III ──────────────────────────────────────────────────────────────
@@ -210,9 +212,11 @@ def build():
             'selection. They do not. T-SNAP is axiom-free; the keystone is choice-free. The '
             '"forced, not chosen" thesis is internally consistent at the level of what the framework '
             'actually asserts. Where choice appears it is mostly the supporting library\'s classical '
-            'foundation showing through the realizations rather than an assumption of the argument '
-            '&#8212; with the two essential cases of Section III named as the exception, not '
-            'absorbed into the generalization.',
+            'foundation showing through the realizations rather than an assumption of the argument. '
+            'Section III\'s two cases are the exception on a different axis: they are about '
+            '<i>necessity</i>, not provenance. One of them is the framework\'s own and one is '
+            'Mathlib\'s, and both are essential &#8212; so "inherited" is not a synonym for '
+            '"removable", and neither case is absorbed into the generalization.',
         ]
     ))
     E.append(sp(6))
