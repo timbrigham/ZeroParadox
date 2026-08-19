@@ -109,18 +109,17 @@ theorem q2_no_witness : ¬ HasLawvereWitness ℚ_[2] :=
 
 /-! ## § V. The computability face — a GENUINE fixed point, in a different category
 
-    The verdict flips, and the reason is the **category**. § IV's failure is in **Set** (all
-    endofunctions), where Cantor forbids the witness. Here "endomap" means *computable*, and Mathlib's
-    `Nat.Partrec.Code.fixed_point` gives every such map a fixed point **up to `eval`**.
-    ⚠ **The qualifier is load-bearing, because the Cantor contrast above is drawn in the LITERAL
-    register and the literal claim is FALSE here too:** `fun c => Code.pair c c` is total, computable
-    and returns its own input for no `c`. The escape is not that the diagonal stops existing — it is
-    that `eval` lands in `ℕ →. ℕ`, a different codomain from `Code → Code`, so the Set refutation
-    never applied. ZP-K's face (the Kleene quine), genuine at the level of `eval`. -/
+    The verdict flips, and the reason is the **category**. § IV's failure is in **Set**; here
+    "endomap" means *computable*, and `Nat.Partrec.Code.fixed_point` gives every such map a fixed
+    point **up to `eval`**.
+    ⚠ The qualifier is load-bearing: the literal claim is FALSE here too, since
+    `fun c => Code.pair c c` is total, computable, and returns its own input for no `c`. The escape
+    restricts which MORPHISMS exist, not which codomain `eval` lands in
+    (`no_computable_evalFixedPointFree`). Argument: `ZeroParadox/Category/Lawvere.md`. -/
 
 /-- `Statement:` a fixed point **up to `eval`**, not a literal one (Rogers / Kleene).
-    ⚠ `fun c => Code.pair c c` is a total computable endomap with no `c` satisfying `f c = c`;
-    the escape is `eval`'s codomain being `ℕ →. ℕ` rather than `Code`. See § V. -/
+    ⚠ `fun c => Code.pair c c` is a total computable endomap fixing no `c`; the escape is fewer
+    MORPHISMS, not a different codomain (`no_computable_evalFixedPointFree`, § V). -/
 theorem computability_face_fixedPoint {f : Nat.Partrec.Code → Nat.Partrec.Code} (hf : Computable f) :
     ∃ c, Nat.Partrec.Code.eval (f c) = Nat.Partrec.Code.eval c :=
   Nat.Partrec.Code.fixed_point hf

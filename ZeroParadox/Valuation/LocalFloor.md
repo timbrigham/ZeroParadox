@@ -37,9 +37,17 @@ away. `ε₀ ≠ ⊥` is untouched bedrock (`epsilon0_ne_bot`), and nothing here
 * **Cobos & Navas**, arXiv:1911.00929v2, p. 8 § 3 — the digit-word→natural encoding
   `N(w) = a₀ + a₁p + ⋯`. Filed in the project's paper library.
 
-⚠ **A POINTER WAS NOT AVAILABLE HERE, AND SAYING OTHERWISE WOULD BE A FACE-SAVING GLOSS.** All three
-prior forms live in **other carriers** — `List ℕ → ℕ` for the digit lemmas, a quotient of `List Γ` for
-`ListBlank` — while this carrier is `ℕ → Fin 2`. Neither Lean proof touches `ofDigits`. So these are a
-shared **shape**, not an instance-of, and the two declarations had to be proved rather than cited. The
-standing rule (prefer a pointer to an elementary instantiation) does not apply when the pointer would
-cross a type boundary.
+⚠ **THE TWO THEOREMS STAND DIFFERENTLY TO THE PRIOR ART, AND AN EARLIER BLANKET FENCE HERE WAS FALSE.**
+Split them:
+
+* **`zero_branch_same` IS a corollary of the `ListBlank` quotient.** Mathlib supplies the carrier
+  bridge this file's own text assumed was missing: `Turing.ListBlank.nth : ListBlank Γ → ℕ → Γ` maps
+  the quotient straight into `ℕ → Fin 2`. Measured 2026-08-18: a short unfolding plus
+  `Quotient.sound (Or.inr ⟨1, by simp⟩)` derives it, and `#print axioms` is identical either way
+  (`[propext, Classical.choice, Quot.sound]`), so the `CovBy` purity caveat does not apply.
+* **`one_branch_new` is NOT.** Routing it through `ListBlank.ext` still needs the same digit
+  computation: Mathlib has the nth-equality ⇒ equality direction and not its negation.
+
+The hand proofs are kept — adopting the quotient route would import the Turing-machine tape module
+into a `Valuation/` file for one lemma — and the standard name is cited instead, which is the `CovBy`
+precedent. The digit-lemma and Cobos & Navas entries above are analogues as stated.

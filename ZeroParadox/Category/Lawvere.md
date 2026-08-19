@@ -40,6 +40,33 @@ diagonal CONSTRUCTION, not the existence of fixed-point-free maps — and per
 witness**; the implication runs one way, and the fixed point on that side is Rogers' theorem, cited
 rather than derived.
 
+### What the escape IS, and what it is not
+
+The Set refutation of § IV runs a **diagonal built from a fixed-point-free map**. Effectively there is
+no such map: `no_computable_evalFixedPointFree` (`ZeroParadox/Category/DiagonalWitness.lean`) shows no
+computable self-map on codes is eval-fixed-point-free, so the diagonal has **no computable
+representative**. It is not admissible here, and the obstruction cannot fire. **The restriction is on
+MORPHISMS.**
+
+⚠⚠ **NOT on codomains, and this file said otherwise until it was refuted by elaboration.** The claim
+was that `eval` lands in `ℕ →. ℕ` rather than `Code → Code`, "so the Set refutation never applied".
+One line kills it:
+
+```lean
+example : ¬ HasLawvereWitness (ℕ →. ℕ) :=
+  no_witness_of_nontrivial (b₀ := fun _ => Part.some 0) (b₁ := fun _ => Part.none)
+    (by intro h; have := congrFun h 0; exact Part.some_ne_none 0 this)
+```
+
+The partial-function type is nontrivial too, so the Set refutation lands on it exactly as on `Code` —
+changing the codomain buys nothing. `eval_point_surjective` carries `Nat.Partrec f`, so the
+point-surjection reaches only the **computable** partial functions; were it onto all of `ℕ →. ℕ`, that
+example would contradict it.
+
+**Prior art for the shape:** Lawvere (1969) § 2 p. 9 raises the recursive case as an open question
+rather than deriving it; the derivation is Yanofsky (2003) Theorem 5, printed p. 18, which states it
+in the up-to-`eval` form (φ_{h(n₀)} = φ_{n₀}) — the source itself carries this arc's qualifier.
+
 ## What the keystone unifies, and what it does not
 
 The keystone unifies a **shape** — the diagonal — not a single mechanism. The total faces carry a

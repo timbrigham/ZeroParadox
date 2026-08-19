@@ -69,6 +69,6 @@ further out, in the effective category (eval-equality); located here, fenced the
 #check @ZeroParadox.hasWitnessRel_of_subsingleton  -- the fine end is inhabited (non-degeneracy)
 #check @ZeroParadox.no_witnessRel_top_of_nontrivial -- the coarse end: nontrivial ⇒ no witness (Cantor; posited faces)
 #check @ZeroParadox.effective_floor_fixedPoint       -- axis 2: the genuine nontrivial floor (Kleene recursion, effective category)
-#check @ZeroParadox.no_computable_evalFixedPointFree -- axis 2 mechanism: no computable fixed-point-free map, so the wall lifts
+#check @ZeroParadox.no_computable_evalFixedPointFree -- axis 2 mechanism: no computable EVAL-fixed-point-free map, so the wall lifts
 
 end DiagonalFixedPointIndex

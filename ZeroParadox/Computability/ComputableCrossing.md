@@ -29,9 +29,16 @@ different programs computing the same function.
 
 ⚠ **So this is NOT the exact dual of `reflexive_object_refuted`**, which consumes *literal* `f x ≠ x` —
 a precondition the witness above satisfies. The conclusion (Lawvere fires in the computable category)
-still holds, but for a different reason: `eval` lands in `ℕ →. ℕ`, not in `Code → Code`, so the
-refutation theorem never applied to it. The obstruction is absent **at the level of `eval`**, which is
-the level the reflexive object lives at.
+still holds, for a reason about **which maps exist**, not about which types they land in:
+`no_computable_evalFixedPointFree` shows no computable self-map on codes is eval-fixed-point-free, so
+the diagonal that would refute the witness has no computable representative and the obstruction cannot
+fire. The obstruction is absent **at the level of `eval`**, which is the level the reflexive object
+lives at.
+
+⚠ **NOT because `eval` lands in a different codomain.** That reading is refuted in one line —
+`example : ¬ HasLawvereWitness (ℕ →. ℕ) := no_witness_of_nontrivial ...` elaborates, since the
+partial-function type is nontrivial too. `eval_point_surjective` carries `Nat.Partrec f`: the
+point-surjection reaches the *computable* partial functions only, never all of `ℕ →. ℕ`.
 
 So Lawvere fires in the computable category, and the self-referential fixed point *exists* there:
 Kleene's second recursion theorem (`fixed_point₂`), which is the framework's own Kleene fixed point

@@ -151,6 +151,49 @@ AR_DISPLAY = {
 
 
 
+# ---------------------------------------------------------------------------------------------
+# THE SHARED BUILD LAYER. Fingerprinted separately because the per-document tokens structurally
+# cannot cover it: `register.md` records each build SCRIPT's bytes, and a script's bytes do not
+# change when its IMPORT changes. `zp_utils.py` is imported by all 43 build scripts and renders the
+# meta line of every document, so editing its `version_line` text altered every rendered PDF while
+# this checker exited 0 printing "All hashes match" and `check_release_ready` printed
+# "[PASS] Build-script hash integrity". (`RLY3-2`, /rely round 3, pre-existing.)
+#
+# Re-seed DELIBERATELY with `--seed-shared` after rebuilding what the change affects. That the
+# re-seed is manual is the feature: a zp_utils change is precisely the event that should make
+# someone think about every document rather than one.
+SHARED_BUILD = ['zp_utils.py']
+SHARED_BASELINE = os.path.join(HERE, 'shared_build_baseline.txt')
+
+
+def check_shared_build():
+    """Return [(name, recorded, current)] for shared build modules that moved."""
+    recorded = {}
+    if os.path.exists(SHARED_BASELINE):
+        for line in io.open(SHARED_BASELINE, encoding='utf-8'):
+            line = line.strip()
+            if line and not line.startswith('#'):
+                h, _, n = line.partition('  ')
+                recorded[n.strip()] = h.strip()
+    out = []
+    for name in SHARED_BUILD:
+        cur = sha8(name)
+        was = recorded.get(name)
+        if was != cur:
+            out.append((name, was or '<UNRECORDED>', cur))
+    return out
+
+
+def seed_shared():
+    lines = ['# Fingerprints of the SHARED build layer - modules imported by the build scripts and',
+             '# therefore invisible to the per-document tokens in register.md. See RLY3-2.',
+             '# Re-seed with: python tools/verify/check_hashes.py --seed-shared']
+    for name in SHARED_BUILD:
+        lines.append('%s  %s' % (sha8(name), name))
+    common.write_text_lf(SHARED_BASELINE, '\n'.join(lines) + '\n')
+    print('  seeded %s (%d module(s))' % (os.path.relpath(SHARED_BASELINE, REPO), len(SHARED_BUILD)))
+
+
 def register_formal_token(key):
     """The formal: token recorded in register.md for a standalone doc, or None.
 
@@ -357,8 +400,14 @@ def mark_doc(key, status, ar_data):
         if current_hash == 'MISSING':
             print(f'  ERROR: {script} not found — cannot mark {key}')
             return None
+        # ⚠ CHECK THE WRITER'S RETURN. This branch used to ignore it, so `--mark-remediated ZP-J`
+        # printed "Marked ZP-J: Y/Y" and "register.md updated" after BOTH writers refused an
+        # ambiguous prefix - exit 0, empty diff, a claim of work not done. The FORMAL branch below
+        # already checked. (`/rely` round 3.)
+        if not update_register_comp_hash(key, current_hash):
+            print('  NOT marked %s: the register write was refused (see above)' % key)
+            return None
         ar_data[key] = {'hash': current_hash, 'status': status}
-        update_register_comp_hash(key, current_hash)
         return current_hash
 
     if key in FORMAL_SCRIPTS:
@@ -531,6 +580,34 @@ def selftest():
         bad += 0 if ok else 1
         print('    %-34s %s (%r)' % (why, 'ok' if ok else '*** WRONG ***', got))
 
+
+    # ⚠ TWO MORE DETECTORS IN THIS MODULE HAD NO CONTROLS (`/rely` round 3, after round 2 found the
+    # first two). Neutering `_register_row_pattern` back to the exact `d49e95d` prefix bug, or
+    # `compute_ar_label`'s STALE branch, both left `--selftest` PASS exit 0. The module keeps
+    # growing detectors and the audit is per-MODULE, so each new one is invisible until controlled.
+    print('  MUST FIRE  (register row matcher)')
+    _reg = io.open(REGISTER, encoding='utf-8').read()
+    for doc, why in (('ZP-J', 'an ambiguous prefix refuses'), ('ZP-H', 'an ambiguous prefix refuses')):
+        got = _register_row_pattern(doc, _reg, 'control')
+        ok = got is None
+        bad += 0 if ok else 1
+        print('    %-34s %s' % ('%s: %s' % (doc, why), 'ok' if ok else '*** WRONG ***'))
+
+    print('  MUST SUPPRESS  (register row matcher)')
+    _uniq = next((d for d in FORMAL_ONLY_SCRIPTS
+                  if _register_row_pattern(d, _reg, 'control') is not None), None)
+    ok = _uniq is not None
+    bad += 0 if ok else 1
+    print('    %-34s %s (%s)' % ('an unambiguous name still matches',
+                                 'ok' if ok else '*** WRONG ***', _uniq))
+
+    print('  MUST FIRE  (AR staleness)')
+    _probe = {'k': {'hash': 'deadbeef', 'status': 'remediated'}}
+    got = compute_ar_label('k', 'cafef00d', _probe)
+    ok = 'STALE' in str(got).upper() or got != AR_DISPLAY['remediated']
+    bad += 0 if ok else 1
+    print('    %-34s %s (%r)' % ('a moved hash is not still Y/Y', 'ok' if ok else '*** WRONG ***', got))
+
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
 
@@ -603,6 +680,11 @@ def _header_version(head):
     return None
 
 
+# How far back the attestation walk looks. Exhaustion is REPORTED, never silently treated as
+# "not found" - see `_register_attested_source`.
+_ATTEST_WALK = 400
+
+
 def _strip_docstrings(tree):
     """Remove every docstring node, in place. Comments are absent from an AST already."""
     for node in ast.walk(tree):
@@ -619,16 +701,24 @@ def _strip_docstrings(tree):
 
 
 def _code_identical_ignoring_prose(a, b):
-    """Do two versions of a script differ ONLY in comments and docstrings?
+    """Do two versions of a script differ ONLY in comments and docstrings? Takes BYTES.
 
     Exact, not heuristic. Comments never reach an AST, docstrings are stripped, and everything a
     build script RENDERS lives in ordinary string literals inside `body()` / `cbody()` - which are
     code, so any edit reaching rendered text shows up here. Returns None when either side will not
     parse, and the caller treats that as "cannot vouch".
-    """
+
+    ⚠⚠ **BYTES, NOT STR, AND THE FIRST VERSION TOOK STR** (`RLY3-1`, `/rely` round 3). `ast.parse`
+    on a **str** ignores the PEP 263 encoding cookie BY DESIGN. So inserting
+    `# -*- coding: latin-1 -*-` as line 1 - a COMMENT, invisible to any AST - changed **40 of 179**
+    string constants in `build_foreword.py`, every em-dash and arrow becoming mojibake, and the guard
+    ALLOWED it: exit 0, `status preserved as 'remediated'`, `hash=MISMATCH AR=STALE` turned into
+    `hash=OK AR=Y/Y`. Parsing bytes honours the cookie and returns False. **A comment that changes how
+    every literal in the file is decoded is exactly the case "comments cannot affect rendering"
+    misses.**"""
     try:
         ta, tb = ast.parse(a), ast.parse(b)
-    except SyntaxError:
+    except (SyntaxError, ValueError):
         return None
     return ast.dump(_strip_docstrings(ta)) == ast.dump(_strip_docstrings(tb))
 
@@ -643,7 +733,8 @@ def _register_attested_source(script, recorded_hash):
     """
     rel = 'scripts/' + script
     try:
-        revs = subprocess.run(['git', 'log', '--format=%H', '-40', '--', rel],
+        revs = subprocess.run(['git', 'log', '--format=%H', '--follow',
+                               '-%d' % _ATTEST_WALK, '--', rel],
                               cwd=REPO, capture_output=True, text=True, timeout=60)
         for rev in revs.stdout.split():
             blob = subprocess.run(['git', 'show', '%s:%s' % (rev, rel)],
@@ -651,9 +742,35 @@ def _register_attested_source(script, recorded_hash):
             if blob.returncode != 0:
                 continue
             if hashlib.sha256(blob.stdout).hexdigest()[:8] == recorded_hash:
-                return blob.stdout.decode('utf-8', 'replace')
+                return blob.stdout, False   # BYTES - see _code_identical_ignoring_prose (RLY3-1)
     except (OSError, subprocess.SubprocessError):
-        return None
+        return None, False
+    # ⚠ DISTINGUISH "not found" FROM "ran out of history". The walk is bounded, and without this a
+    # blob sitting beyond the limit produced "no committed version hashes to the recorded X" - a
+    # FALSE statement, not a conservative one. build_foreword.py is already at 36 of 40 commits.
+    return None, len(revs.stdout.split()) >= _ATTEST_WALK
+
+
+def _recorded_token(key):
+    """The hash `register.md` (or `ar_status.json`) currently records for `key`, or None.
+
+    ⚠ **MY OWN BUG, AND IT MADE THE GUARD UNREACHABLE** (`/rely` round 3). The first version called
+    `parse_register().get(key).get('comp')` - but `parse_register` returns **tuples**, so every one
+    of the 13 companion keys raised `AttributeError`, and the 23 formal keys fell to
+    `register_formal_token`, which knows only the three STANDALONE labels and so refused them all
+    with a FALSE reason. The guard was operable on **3 of 39 keys** and had therefore never once run
+    against a register token. It failed closed, which is why nothing noticed.
+    """
+    if key in STANDALONE_SCRIPTS:
+        return load_ar_status().get(key, {}).get('hash') or register_formal_token(key)
+    if key in COMP_SCRIPTS:
+        row = parse_register().get(key)
+        return row[1] if row else None          # (formal, comp)
+    if key in FORMAL_SCRIPTS:
+        row = parse_register().get(key.replace('-formal', ''))
+        return row[0] if row else None
+    if key in FORMAL_ONLY_SCRIPTS:
+        return parse_register_formal_by_name(key)
     return None
 
 
@@ -668,11 +785,15 @@ def _refuses_as_laundering(key, script, recorded_hash):
     path = os.path.join(REPO, 'scripts', script)
     if not os.path.exists(path):
         return 'the script is missing'
-    was = _register_attested_source(script, recorded_hash)
+    was, exhausted = _register_attested_source(script, recorded_hash)
     if was is None:
+        if exhausted:
+            return ('the attestation walk reached its %d-commit limit for %s without finding the '
+                    'recorded %s - this is a LIMIT, not evidence the blob is absent'
+                    % (_ATTEST_WALK, script, recorded_hash))
         return ('no committed version of %s hashes to the recorded %s, so what the register last '
                 'attested to cannot be established' % (script, recorded_hash))
-    verdict = _code_identical_ignoring_prose(was, io.open(path, encoding='utf-8').read())
+    verdict = _code_identical_ignoring_prose(was, io.open(path, 'rb').read())
     if verdict is None:
         return 'the script does not parse on one side, so the change cannot be characterised'
     if verdict is False:
@@ -701,13 +822,7 @@ def sync_hash(key):
     _script = (FORMAL_SCRIPTS.get(key) or COMP_SCRIPTS.get(key)
                or FORMAL_ONLY_SCRIPTS.get(key) or STANDALONE_SCRIPTS.get(key))
     if _script:
-        if key in STANDALONE_SCRIPTS:
-            _recorded = load_ar_status().get(key, {}).get('hash')
-        elif key in COMP_SCRIPTS:
-            _recorded = (parse_register().get(key) or {}).get('comp')
-        else:
-            _recorded = register_formal_token(key)
-        _why = _refuses_as_laundering(key, _script, _recorded)
+        _why = _refuses_as_laundering(key, _script, _recorded_token(key))
         if _why:
             print('  REFUSING --sync-hash for %r: %s.' % (key, _why))
             print('    --sync-hash is ONLY for a script edit that changes no rendered output.')
@@ -774,6 +889,9 @@ def main():
         print('Register hash sync (AR status untouched):')
         bad = sum(0 if sync_hash(k) else 1 for k in keys)
         return 1 if bad else 0
+    if '--seed-shared' in args:
+        seed_shared()
+        return 0
     if '--selftest' in args:
         print('ZP Build Script Hash Check - CONTROLS')
         print('=' * 55)
@@ -809,6 +927,7 @@ def main():
 
     print('ZP Build Script Hash + AR Status Check')
     print('=' * 55)
+    shared_moved = check_shared_build()
 
     # --- Companions + Formal (by ZP-X) ---
     for doc in COMP_SCRIPTS:
@@ -931,6 +1050,14 @@ def main():
     if all_ok:
         print('All hashes match. AR status current. Docstring versions in sync.')
         return 0
+
+    if shared_moved:
+        print()
+        print('  SHARED BUILD LAYER CHANGED - this affects EVERY rendered document, and the')
+        print('  per-document fingerprints in register.md cannot see it (RLY3-2):')
+        for name, was, cur in shared_moved:
+            print('    %-22s registered: %-10s current: %s' % (name, was, cur))
+        print('  Rebuild what it affects, then: python %s --seed-shared' % SELF)
 
     if hash_mismatches:
         print(f'HASH MISMATCHES: {", ".join(hash_mismatches)}')
