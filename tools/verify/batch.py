@@ -1237,12 +1237,68 @@ def cmd_prepush(ranges=None):
         if v:
             print("      verdict  %s" % v)
         bad += 0 if ok else 1
+    # ⚠ BEFORE the `die`, not after the PASS. On the success path only it would print just when the
+    # push was already clear — and a recurrence count matters MOST while something is failing. That
+    # placement would have re-created the original defect (surfacing at the rarest moment) in a new
+    # location, which is the shape this whole change exists to correct.
+    _recurrence_note()
     if bad:
         die("%d review signal(s) missing — run the gates" % bad)
     if state:
         state["stages"]["prepush"] = {"ok": True, "tool": self_hash()}
         save(state)
     print("\nprepush PASS")
+
+
+def _recurrence_note():
+    """Surface the top recurring PROCESS shapes. Advisory — never blocks.
+
+    ⚠⚠ **THE SELF-HEALING INPUT WAS WIRED TO THE WRONG ENTRY POINT, AND THAT IS A TRIGGER DEFECT
+    RATHER THAN A MISSING RULE.** `selfheal.py` counts how often a process shape has recurred, which
+    is the one fact the escalation ladder in `CLAUDE.md` § *WHEN A FAILURE RECURS* needs — and it ran
+    **only from `/ship`**, the release command, i.e. the least frequent action in the project.
+    `CLAUDE.md` does not mention it at all, so a fresh session cannot know it exists.
+
+    The ladder's own trigger is *"a gate returned FAIL"*, which fires on every ORDINARY finding too —
+    so it fires constantly and therefore fires never, the cry-wolf shape this project elsewhere says
+    to narrow. **The fact that discriminates is RECURRENCE, and it is decidable, so it belongs in the
+    output of the command that runs before every push.**
+
+    Measured 2026-08-18, which is why this exists: one session made the SAME control-subject error
+    three times (`DC-25`), each time closing the instance with a local comment and never lifting it to
+    a class — while the counter that would have said *"this shape has now happened three times"* sat
+    unrun. Six commits, zero process files touched.
+
+    ⚠ ADVISORY BY DESIGN. Counting is decidable; deciding whether N rows are one phenomenon or N
+    coincidences is not, and auto-filing would produce a class register nobody verified — the failure
+    `DEFECT_CLASSES.md` exists to avoid. It prints; a human or an agent judges.
+    """
+    try:
+        # ⚠ ENCODING EXPLICIT. `text=True` alone decodes with the Windows codepage, and this child's
+        # output contains the arrow and star glyphs the report format uses — so it raised
+        # `UnicodeDecodeError`, left `stdout` as None, and took the whole `prepush` down with it.
+        # That is `SH-2` (encoding/codepage, 9 ledger rows, still no class row) occurring INSIDE the
+        # function written to surface recurrences, which is as good an argument for the class row as
+        # the count was.
+        r = subprocess.run([sys.executable, os.path.join(str(HERE), "selfheal.py")],
+                           capture_output=True, text=True, timeout=60,
+                           encoding="utf-8", errors="replace")
+    except (OSError, subprocess.SubprocessError):
+        return
+    # ⚠ ADVISORY MEANS ADVISORY: this must never be able to fail the caller. A note about process
+    # health that can block a push is a worse defect than the one it reports.
+    if not r.stdout:
+        return
+    rows = [l.strip() for l in r.stdout.splitlines() if "← NO CLASS ROW" in l]
+    if not rows:
+        return
+    print()
+    print("  recurring process shapes with NO class row (advisory — `selfheal.py` for the full list):")
+    for line in rows[:3]:
+        print("    %s" % line.lstrip("0123456789. "))
+    print("  A shape here has recurred and has no DETECTOR. Second occurrence = a class"
+          " (DEFECT_CLASSES.md);")
+    print("  third = the rule's TRIGGER is wrong. See CLAUDE.md § WHEN A FAILURE RECURS.")
 
 
 BUCKET_BASELINE = {"class": "class_baseline.txt", "modal": "modal_baseline.txt",

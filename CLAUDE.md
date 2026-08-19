@@ -281,6 +281,17 @@ conventions that leaked, and every one leaked while being remembered by people w
 1. **CHECK `DEFECTS.md` AND `DEFECT_CLASSES.md` FIRST.** If the class is already there, **a rule
    already exists and did not fire** — which is a different and more useful problem than a novel
    failure. Skipping this step is itself one of the recorded recurrences.
+   - ⭐ **AND YOU DO NOT HAVE TO REMEMBER 60+ LEDGER ROWS TO SPOT A RECURRENCE — `tools/verify/selfheal.py`
+     COUNTS THEM.** It reports *"this shape has happened N times and has no class row"* and suggests;
+     it never corrects, because deciding whether N rows are one phenomenon or N coincidences is
+     judgement and auto-filing would produce a register nobody verified. **`batch.py prepush` now
+     prints the top uncovered shapes on every run, blocked or clear.** ⚠ It used to run only from
+     `/ship` — the release command, i.e. the rarest action — and this file did not mention it at all,
+     so the one decidable input to this whole list surfaced almost never. Measured 2026-08-18: a
+     session made the same control-subject error **three times** (`DC-25`), closing each instance with
+     a local comment and never lifting it to a class, while the counter that would have said *"three"*
+     sat unrun. **Its counts are a READING LIST, not a finding list** — read the rows before acting on
+     a number.
 2. **DIAGNOSE THE TRIGGER, NOT THE CONTENT.** A rule that exists and did not fire almost never has a
    content problem. Ask: **is the trigger an ACTION, or a CATEGORY you must adjudicate?** A category
    leaks, because the adjudication is where it gets talked past. Ask also: **how deep in this file does
