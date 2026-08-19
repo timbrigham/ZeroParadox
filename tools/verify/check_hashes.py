@@ -719,28 +719,37 @@ def selftest():
     # TWICE - which a lookup table and a constant both satisfy. A control must distinguish the
     # function from its impostors, not merely observe that it is deterministic.
     print('  MUST FIRE  (sha8 is a real content hash)')
-    # ⚠ THE PROBE GOES IN A TEMP DIR, NOT IN `scripts/`. A killed run would otherwise leave
-    # `_sha8_control_probe.py` untracked inside a tracked directory - the `ZZTestOrd.lean` shape this
-    # project already carries in permanent history. `sha8` joins SCRIPT_DIR, so the control hashes
-    # the bytes directly and compares against the same function's contract. (/rely round 5.)
+    # ⚠⚠ CALL `sha8` (not `hashlib`) AND WRITE NOTHING INTO `scripts/`. THESE ARE BOTH ACHIEVABLE,
+    # AND TREATING THEM AS A TRADEOFF WAS THE ERROR — twice, in opposite directions:
+    #   * the first version wrote `_sha8_control_probe.py` into `scripts/`, so a killed run left an
+    #     untracked file in a tracked directory (the `ZZTestOrd.lean` shape already in this project's
+    #     permanent history);
+    #   * the "fix" moved it to a tempdir and computed the hashes with `hashlib` directly, which
+    #     silently changed the SUBJECT — instrumented calls to `sha8` in this block reached ZERO, so a
+    #     CACHING `sha8` passed the whole selftest (`ORD-6-1`).
+    # `sha8` resolves against the module-level `SCRIPT_DIR`, so REDIRECTING that for the duration
+    # makes the real call land in the tempdir. The subject is `sha8`; the repo is never written to.
+    # **A control's subject is what it CALLS — relocating a probe is exactly the edit that quietly
+    # changes it.** (/rely round 5 and the re-signature; the false dilemma was named by the gate.)
+    # (assigned through `globals()` rather than `global`, which must precede every use of the name
+    # in the function and `SCRIPT_DIR` is read above — same form already used for `SHARED_BUILD`.)
     import tempfile as _tf
+    _saved_dir = globals()['SCRIPT_DIR']
     with _tf.TemporaryDirectory() as _d:
-        _probe = os.path.join(_d, 'probe.py')
-        # ⚠⚠ CALL `sha8`, NOT `hashlib` - THE SUBJECT OF A CONTROL IS WHAT IT CALLS (`ORD-6-1`).
-        # Moving this probe out of `scripts/` was right; computing the hashes with `hashlib` here was
-        # not, and it silently removed the thing being tested: instrumented calls to `sha8` in this
-        # block reached ZERO, so a CACHING `sha8` passed the entire selftest. `sha8` joins SCRIPT_DIR,
-        # so the probe has to live there for the call to reach it - it is created and removed inside
-        # this block, and the `finally` guarantees removal even on a kill.
-        _in_scripts = os.path.join(SCRIPT_DIR, '_sha8_control_probe.py')
         try:
-            io.open(_in_scripts, 'w', encoding='utf-8', newline='\n').write('X = 1\n')
-            h1 = sha8('_sha8_control_probe.py')
-            io.open(_in_scripts, 'w', encoding='utf-8', newline='\n').write('X = 2\n')
-            h2 = sha8('_sha8_control_probe.py')
+            globals()['SCRIPT_DIR'] = _d
+            io.open(os.path.join(_d, 'probe.py'), 'w', encoding='utf-8', newline='\n').write('X = 1\n')
+            h1 = sha8('probe.py')
+            io.open(os.path.join(_d, 'probe.py'), 'w', encoding='utf-8', newline='\n').write('X = 2\n')
+            h2 = sha8('probe.py')
+            # `sha8` must also report MISSING rather than raising on an absent name.
+            h_missing = sha8('no_such_probe_at_all.py')
         finally:
-            if os.path.exists(_in_scripts):
-                os.remove(_in_scripts)
+            globals()['SCRIPT_DIR'] = _saved_dir
+    ok = h_missing == 'MISSING'
+    bad += 0 if ok else 1
+    print('    %-34s %s (%r)' % ('an absent script reports MISSING',
+                                 'ok' if ok else '*** WRONG ***', h_missing))
     # and sha8 itself must agree with that contract on a REAL tracked script
     _real = COMP_SCRIPTS['ZP-A']
     _direct = hashlib.sha256(
