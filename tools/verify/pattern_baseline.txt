@@ -67,6 +67,7 @@ _N	\bthere\s+is\s+no\s+(?:\w+[\s-]+){0,3}in\s+(?:Mathlib|the\s+corpus|the\s+fram
 [check_figures]
 EVIDENCE	\bas\s+of\b|\b20\d\d-\d\d-\d\d\b|\bmeasured\b|\bmeasure\s+(?:it|on\s+demand)\b|\bnever\s+record\b|\bdo\s+not\s+record\b|\bre-?measure\b|\bcomputed\s+now\b|\bat\s+the\s+time\b|\bwas\s+stale\b|\bwent\s+stale\b|\bstale\s+by\b|\bcorrected\b|\bretract
 FIGURE	\b(\d{2,})\s+(?:files?|declarations?|decls?|sites?|papers?|entries|entry|rows?|checkers?|occurrences?|hits?|violations?|instances?|modules?|scripts?|commits?|baselines?|notes?|defects?)\b
+EVIDENCE_WINDOW	3
 SKIP_NAMES	check_figures.py
 SKIP_NAMES	figures_baseline.txt
 

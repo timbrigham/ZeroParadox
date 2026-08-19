@@ -465,10 +465,16 @@ def parse_mark_args(args):
                     base = key.replace('-formal', '').replace('-FORMAL', '').upper()
                     key = f'{base}-formal'
                 else:
-                    # check for standalone key match first (case-insensitive)
-                    standalone_match = next(
-                        (k for k in STANDALONE_SCRIPTS if k.lower() == key.lower()), None)
-                    key = standalone_match if standalone_match else key.upper()
+                    # ⚠ MATCH THE MULTI-WORD MAPS BEFORE UPPER-CASING, OR THE BRANCH CANNOT BE
+                    # REACHED. `mark_doc` grew a FORMAL_ONLY branch and this function still
+                    # upper-cased, so 0 of 10 keys arrived: `--mark-remediated "ZP-Q The
+                    # Frame-Change"` returned `unknown key "ZP-Q THE FRAME-CHANGE"` - printing the
+                    # correct key one column from the mangled one. A fix behind a locked door is not
+                    # a fix. (`RLY4-6`, /rely rounds 4 and 5.)
+                    named = next(
+                        (k for k in list(STANDALONE_SCRIPTS) + list(FORMAL_ONLY_SCRIPTS)
+                         if k.lower() == key.lower()), None)
+                    key = named if named else key.upper()
                 marks.append((key, status))
                 i += 2
             else:
@@ -631,16 +637,25 @@ def selftest():
     # TWICE - which a lookup table and a constant both satisfy. A control must distinguish the
     # function from its impostors, not merely observe that it is deterministic.
     print('  MUST FIRE  (sha8 is a real content hash)')
+    # ⚠ THE PROBE GOES IN A TEMP DIR, NOT IN `scripts/`. A killed run would otherwise leave
+    # `_sha8_control_probe.py` untracked inside a tracked directory - the `ZZTestOrd.lean` shape this
+    # project already carries in permanent history. `sha8` joins SCRIPT_DIR, so the control hashes
+    # the bytes directly and compares against the same function's contract. (/rely round 5.)
     import tempfile as _tf
-    _probe = os.path.join(SCRIPT_DIR, '_sha8_control_probe.py')
-    try:
+    with _tf.TemporaryDirectory() as _d:
+        _probe = os.path.join(_d, 'probe.py')
         io.open(_probe, 'w', encoding='utf-8', newline='\n').write('X = 1\n')
-        h1 = sha8('_sha8_control_probe.py')
+        h1 = hashlib.sha256(io.open(_probe, 'rb').read()).hexdigest()[:8]
         io.open(_probe, 'w', encoding='utf-8', newline='\n').write('X = 2\n')
-        h2 = sha8('_sha8_control_probe.py')
-    finally:
-        if os.path.exists(_probe):
-            os.remove(_probe)
+        h2 = hashlib.sha256(io.open(_probe, 'rb').read()).hexdigest()[:8]
+    # and sha8 itself must agree with that contract on a REAL tracked script
+    _real = COMP_SCRIPTS['ZP-A']
+    _direct = hashlib.sha256(
+        io.open(os.path.join(SCRIPT_DIR, _real), 'rb').read()).hexdigest()[:8]
+    ok = sha8(_real) == _direct
+    bad += 0 if ok else 1
+    print('    %-34s %s (%s)' % ('sha8 IS sha256-of-bytes on disk',
+                                 'ok' if ok else '*** WRONG ***', _direct))
     ok = h1 != h2 and 'MISSING' not in (h1, h2) and len(h1) == 8
     bad += 0 if ok else 1
     print('    %-34s %s (%s vs %s)' % ('changed CONTENT changes the hash',
@@ -973,13 +988,24 @@ def main():
                 print(f'  Marked {key}: {label}  (hash: {recorded_hash})')
             else:
                 failed.append(key)
-        save_ar_status(ar_data)
-        # Recompute Comp AR column for register.md (companions only)
+        # ⚠ ONLY PERSIST IF SOMETHING WAS MARKED. This ran unconditionally, so a FAILED mark wrote
+        # `{}` over ar_status.json, flipped `AR_AVAILABLE`, and made the next plain run report three
+        # false MISMATCHes (Foreword, PhilQ, Tools) on an UNMODIFIED tree - re-creating the exact
+        # false positives fixed on 2026-08-15. It compounded with `RLY4-6` above: the natural trigger
+        # was the very command that fix was meant to enable. (/rely round 5.)
+        if marked:
+            save_ar_status(ar_data)
+        # Recompute Comp AR column for register.md (companions only).
+        # ⚠ ONLY WHEN SOMETHING WAS ACTUALLY MARKED — same class as the `save_ar_status` guard above.
+        # A wholly failed `--mark` used to reach here and rewrite the column from unchanged state,
+        # printing two REFUSING lines that read as errors caused by the mark rather than as a guard
+        # firing on an unrelated ambiguous prefix.
         comp_labels = {}
-        for doc, script in COMP_SCRIPTS.items():
-            current_hash = sha8(script)
-            comp_labels[doc] = compute_ar_label(doc, current_hash, ar_data)
-        update_register_ar_column(comp_labels)
+        if marked:
+            for doc, script in COMP_SCRIPTS.items():
+                current_hash = sha8(script)
+                comp_labels[doc] = compute_ar_label(doc, current_hash, ar_data)
+            update_register_ar_column(comp_labels)
         if marked:
             print('  ar_status.json and register.md updated.')
         if failed:

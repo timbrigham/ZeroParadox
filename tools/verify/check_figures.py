@@ -130,12 +130,36 @@ def targets():
     return common.targets(skip_names=SKIP_NAMES, is_vendored=is_vendored)
 
 
+# How far from a figure its date may sit, in lines, within one CONTIGUOUS prose run.
+#
+# ⚠ NOT ZERO, AND NOT UNBOUNDED - both errors are recorded in this project's history.
+# ZERO (the original) blocked a push on TWO FALSE POSITIVES in `check_hashes.py`, whose figures were
+# dated two lines below in the same comment: prose WRAPS, and a one-line evidence window cannot see a
+# wrapped sentence. That is `check_modal`'s literal-space bug arriving from the other side - there the
+# CLAIM wrapped out of range, here the EVIDENCE does.
+# UNBOUNDED is the opposite failure, also measured: `check_modal` once passed a live claim because the
+# word "measured" sat six lines away describing a DIFFERENT measurement. **Proximity is not aboutness.**
+# Three lines is enough for a wrapped sentence and too few to borrow an unrelated date.
+EVIDENCE_WINDOW = 3
+
+
 def scan_text(text, suffix='.md'):
     """(line, matched, context) for every undated artifact count in PROSE."""
+    prose = prose_lines(text, suffix)
+    by_line = dict(prose)
     out = []
-    for lineno, line in prose_lines(text, suffix):
+    for lineno, line in prose:
         for m in FIGURE.finditer(line):
-            if EVIDENCE.search(line):
+            # The window walks only CONTIGUOUS prose: a gap means a different block, and a date on
+            # the far side of code is not this figure's date.
+            window = [line]
+            for step in (-1, 1):
+                for d in range(1, EVIDENCE_WINDOW + 1):
+                    nxt = by_line.get(lineno + step * d)
+                    if nxt is None:
+                        break
+                    window.append(nxt)
+            if EVIDENCE.search(' '.join(window)):
                 continue
             out.append((lineno, m.group(0).strip(), ' '.join(line.split())[:150]))
     return out
@@ -169,8 +193,17 @@ MUST_FIRE = [
         ('a corpus declaration count', '-- Snapshot.lean runs over 2494 declarations every build.'),
         ('a site count', '-- The wording survey found 25 sites citing this docstring.'),
         ('an entry tally', '# The registry carries 18 entries for custom declarations.'),
+        # ⚠ THE BOUND, in the direction that matters: a date FAR away must NOT discharge a figure.
+        # Without this control, widening the window to fix the wrapped case would have been
+        # unfalsifiable - and "proximity is not aboutness" is the failure check_modal already paid for.
+        ('a figure whose only nearby date is 5 lines off',
+         '# The survey found 25 sites citing this docstring.\n#\n#\n#\n#\n# (measured 2026-08-18).'),
 ]
 MUST_SUPPRESS = [
+        # ⚠ THE WRAPPED CASE, which the one-line window could not see and which blocked a push
+        # (/rely round 5). The figure and its date are in one sentence split across two lines.
+        ('a WRAPPED figure whose date is on the next line',
+         '# 13 of 43 scripts use it - so they were silently exempt\n# (/rely, 2026-08-18).'),
         ('dated: "as of"', '-- 70 files as of 2026-08-02, measured not quoted.'),
         ('an ISO date present', '-- 862 sites remain (2026-08-15).'),
         ('explicitly measured', '-- measured 2026-08-15: 17 sites in 8 files.'),
