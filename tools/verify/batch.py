@@ -161,25 +161,23 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # strictly worse than one in a push gate: a push is amendable and a
                               # minted DOI is not.** The rule is therefore wider than it was written:
                               # if it can stop a push OR A RELEASE, it is in here.
-                              "check_release_ready.py",
-                              # ⚠⚠ AND `register.md` ITSELF — THE SEVENTH ROUTE TO THIS PROPERTY, and
-                              # the one hiding in plain sight. Every hash check in `check_hashes.py`
-                              # compares a script against a token recorded THERE, so editing it is
-                              # exactly as powerful as editing a suppression baseline. Measured
-                              # (`RLY18-4`): modify `build_foreword.py` → `check_hashes` exit 1,
-                              # NO-GO, correct; ALSO blank its `formal:` token → **exit 0, GO**, with
-                              # `checker_hashes()` byte-identical, so nothing routed to `/rely`.
-                              # A record is a switch when a checker's verdict is defined against it.
-                              #
-                              # ⚠ THE COST IS REAL AND IS ACCEPTED DELIBERATELY: `register.md` changes
-                              # on every version bump, so ordinary document work now re-signs `/rely`.
-                              # That is the same trade the four suppression baselines already carry.
-                              # If a future reader judges the friction too high, the alternative is to
-                              # make a MISSING token a hard failure rather than a silent pass — which
-                              # closes the property instead of the file, and would surface
-                              # `ZP_Tools_and_Methods.pdf` (published, linked twice from GUIDE, no
-                              # register row at all) as the open defect it is.
-                              "../../register.md"]
+                              "check_release_ready.py"]
+# ⚠ `register.md` IS DELIBERATELY NOT IN THIS LIST, AND IT WAS ADDED AND THEN REMOVED — the reasoning
+# is worth more than the entry. It IS a switch: every hash check compares a script against a token
+# recorded there, and blanking one disarmed a check while `checker_hashes()` stayed byte-identical
+# (`RLY18-4`). But hashing it taxes the wrong thing. Measured over 60 days: **89 of 728 commits touch
+# `register.md`, and 81 of those — 11% of all commits — touch it WITHOUT touching `tools/verify/`**,
+# so every ordinary version bump would open a `/rely` round whose stated reason, *"N checker(s) changed
+# since /rely last signed them"*, is false on its face. **A block whose reason is wrong is how bypass
+# habits start.**
+#
+# The hole was also one tier wide, not general: COMP/FORMAL are immune via `(None, None)` and
+# FORMAL_ONLY already had an explicit `if reg is None`. Only STANDALONE read `if reg and ...`, so only
+# it could be disarmed by deleting a token — or the whole row. That is now fixed IN
+# `check_hashes.all_hash_mismatches()`, which closes the route **at the check that was disarmed**
+# instead of detecting the disarm afterwards, catches whole-row deletion too, and surfaces
+# `build_tools.py`'s missing provenance for free. (/rely round 2 measured the cost and made the call;
+# it overruled the author's choice to hash the file, with the commit data above.)
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).

@@ -203,6 +203,16 @@ _README_ROW = re.compile(r'^\|\s*\[[^\]]*\]\(([^)]+\.pdf[^)]*)\)\s*\|[^|]*\|\s*(
 _REGISTER_ROW = re.compile(r'^\|\s*([^|]+?)\s*\|\s*(v[\d.]+|N/A)\s*\|\s*([^\s|]+\.pdf)\s*\|', re.M)
 
 
+def _link_key(link):
+    """A markdown link target reduced to the filename both records can be joined on.
+
+    ⚠ ONE normalisation, used by the comparator AND its coverage floor. Two spellings of "the same
+    link" is how `?raw=true` slipped through: the comparator stripped `#anchor` and the floor stripped
+    nothing, so each thought the other had it. (`RLY18-3`, /rely round 2.)
+    """
+    return os.path.basename(link.strip().split('#')[0].split('?')[0])
+
+
 def check_readme_versions():
     """README's version column must agree with `register.md`. Returns [(pdf, readme_v, reg_v)].
 
@@ -238,28 +248,38 @@ def check_readme_versions():
         # the row silently vanishes from the comparison while still rendering correctly on GitHub
         # (`RLY18-3`). Measured end to end: README `v0.1` against register `v1.21`, link prefixed
         # `./`, gave exit 0 and "README versions in sync".
-        pdf = os.path.basename(pdf.strip().split('#')[0])
-        parsed.add(pdf)
+        pdf = _link_key(pdf)
         reg_v = by_pdf.get(pdf)
         # A README link with no register row is a different defect (check_paths owns dead links);
         # only DISAGREEMENT between two present records is reported here.
-        if reg_v and reg_v != 'N/A' and reg_v != rv.strip():
-            out.append((pdf, rv.strip(), reg_v))
+        if reg_v:
+            # ⚠⚠ RECORD THE ROW AS COVERED ONLY ON A SUCCESSFUL JOIN. It used to be recorded on the
+            # PARSE, one line earlier — so a row the regex matched but could NOT resolve was exempted
+            # from the floor below **by the very parse that failed**. The floor was asking *did the
+            # regex match?* when the property is *did this row actually get compared?* (`RLY18-3`,
+            # /rely round 2.) Measured then: `?raw=true` parsed, joined to nothing, and was skipped.
+            parsed.add(pdf)
+            if reg_v != 'N/A' and reg_v != rv.strip():
+                out.append((pdf, rv.strip(), reg_v))
 
     # ⚠⚠ THE COVERAGE FLOOR, AND IT IS THE PART THAT MATTERS. A row shape the regex does not match is
     # invisible: it produces no finding and no complaint, so the check reports "in sync" over ground it
     # never walked — the RLY3-2 / RLY5-1 shape one level up, in a checker written to close exactly that.
-    # /rely found SIX legal row shapes silently dropped. Chasing each shape is unbounded; asserting that
-    # every table row carrying a `.pdf` link was PARSED is finite and cannot be talked past.
-    # **NO SILENT TRUNCATION: a row this cannot read is reported, never skipped.**
+    # Chasing individual shapes is unbounded; asserting that every table row carrying a PDF link was
+    # COMPARED is finite and cannot be talked past.
+    # ⚠ GATED ON `.pdf`, NOT `.pdf)`. The first version reused the main regex's own `.pdf)` assumption —
+    # **a floor built from the assumption it is checking is not a floor** — so `...pdf#page=2)` and
+    # `...pdf?raw=true)` were invisible to the floor exactly as they were to the comparator.
+    # **NO SILENT TRUNCATION: a row this cannot compare is reported, never skipped.**
     for line in readme.splitlines():
         s = line.strip()
-        if not s.startswith('|') or '.pdf)' not in s:
+        if not s.startswith('|') or '.pdf' not in s:
             continue
-        links = re.findall(r'\]\(([^)]+\.pdf)\)', s)
-        if links and not any(os.path.basename(l.split('#')[0]) in parsed for l in links):
-            out.append((os.path.basename(links[0].split('#')[0]),
-                        'UNPARSED-ROW', 'this row carries a PDF link the comparator could not read'))
+        links = re.findall(r'\]\(<?([^)>\s]+\.pdf[^)>\s]*)>?[^)]*\)', s)
+        links += re.findall(r'href="([^"]+\.pdf[^"]*)"', s)          # raw HTML in a cell
+        if links and not any(_link_key(l) in parsed for l in links):
+            out.append((_link_key(links[0]),
+                        'UNPARSED-ROW', 'this row carries a PDF link that was never compared'))
     return out
 
 
@@ -297,7 +317,20 @@ def all_hash_mismatches():
     for key, script in STANDALONE_SCRIPTS.items():
         cur = sha8(script)
         reg = register_formal_token(key)
-        if reg and reg != cur:
+        # ⚠⚠ AN ABSENT TOKEN IS A FINDING, NOT A SKIP — and STANDALONE was the ONLY tier that got this
+        # wrong. COMP/FORMAL are immune via `(None, None)`; FORMAL_ONLY has an explicit `if reg is
+        # None`; this one read `if reg and ...`, so a document with no token was invisible. Measured
+        # (/rely round 2): perturbing `Foreword` (has a token) → seen; perturbing `Tools` (no token) →
+        # 0 mismatches. On a fresh clone, with the gitignored AR tracker absent, a modified
+        # `build_tools.py` gave exit 0 and "All hashes match".
+        #
+        # This closes the disarm route AT the check that was disarmed, which is why it replaces
+        # hashing `register.md` in `CHECKERS`: deleting a token, or the whole row, is now caught here
+        # rather than detected afterwards by the file's fingerprint moving.
+        if reg is None:
+            out.append('%s: no formal: token in register.md (%s has NO public provenance)'
+                       % (key, script))
+        elif reg != cur:
             out.append('%s register token: %s vs script %s' % (key, reg, cur))
     for name, was, cur in check_shared_build():
         out.append('SHARED %s: recorded %s vs current %s (affects EVERY document)' % (name, was, cur))
@@ -854,8 +887,18 @@ def selftest():
                 if _f.endswith('.py'):
                     _sh.copyfile(os.path.join(_saved_sd, _f), os.path.join(_sd, _f))
             globals()['SCRIPT_DIR'] = _sd
-            # unperturbed copies must be quiet, or every case below is meaningless
-            _base = all_hash_mismatches()
+            # Unperturbed copies must be quiet APART FROM KNOWN-OPEN DEBT, or every case below is
+            # meaningless.
+            # ⚠ NOT `== []`. `build_tools.py` genuinely has no `register.md` row (`ZP_Tools_and_
+            # Methods.pdf` is published and linked twice from GUIDE with no public provenance), and
+            # that finding is CORRECT — it is what closing the STANDALONE tier surfaced. Asserting an
+            # empty baseline would leave this control permanently red, and **a control that always
+            # fails is one people learn to scroll past**, which is worse than not having it. So the
+            # open item is named here explicitly: when it is fixed, this line must be deleted, and if
+            # a SECOND item appears the control fires.
+            _KNOWN_OPEN = ('Tools: no formal: token',)
+            _base = [m for m in all_hash_mismatches()
+                     if not any(m.startswith(k) for k in _KNOWN_OPEN)]
             ok = _base == []
             bad += 0 if ok else 1
             print('    %-34s %s%s' % ('untouched copies are quiet', 'ok' if ok else '*** WRONG ***',
@@ -874,6 +917,24 @@ def selftest():
                                         'ok' if _seen else '*** NOT SCANNED ***'))
         finally:
             globals()['SCRIPT_DIR'] = _saved_sd
+
+    # ⚠⚠ THE NON-HASH ROUTES NEED THE SAME TREATMENT, AND THIS IS THE SIXTH NEUTERING /rely FOUND.
+    # `RLY18-5` added the README and docstring checks to `all_hash_mismatches()`; the tier block above
+    # enumerates only the five HASH tiers, and the README control calls `check_readme_versions()`
+    # DIRECTLY — so deleting either delegation left `--selftest` PASS, exit 0. **A control that reaches
+    # a function by a different path than production does cannot see production's wiring removed.**
+    print('  MUST FIRE  (the non-hash routes are delegated too)')
+    for _label, _fn in (('README', 'check_readme_versions'),
+                        ('docstring', 'check_docstring_versions')):
+        _real = globals()[_fn]
+        try:
+            globals()[_fn] = lambda *_a, **_k: [('<probe>', 'PROBE', 'injected')]
+            _reached = any('PROBE' in str(x) or '<probe>' in str(x) for x in all_hash_mismatches())
+        finally:
+            globals()[_fn] = _real
+        bad += 0 if _reached else 1
+        print('    %-34s %s' % ('%s route reaches the release gate' % _label,
+                                'ok' if _reached else '*** NOT DELEGATED ***'))
 
 
     # ⚠ THE TWO-RECORD COMPARATOR (README vs register.md). Editorial rated this above the claim sweep

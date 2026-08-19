@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP-Q: The Frame-Change PDF Builder
-Version 1.8 | July 2026
+Version 1.9 | July 2026
+v1.9: same universal negative as ZP-P v1.24 - "choice enters only in the analytic realisations" - corrected to "mostly ... not only there", naming the category-theory face as the framework's own. No other claim changed.
 
 v1.8: Section III's computability sentence restated. It said the genuine Lawvere fixed point arises "where the fixed-point-free diagonal is not computable", which invites the reading that no fixed-point-free computable endomap exists - c |-> pair(c, c) is one, total and computable. Now: the diagonal CONSTRUCTION is not admissible, removing the obstruction does not by itself supply the witness, and the fixed point is cited (Rogers, up to eval) rather than derived. No claim changed; the entry is recorded because the bump shipped without one.
 v1.7: VOCABULARY DECISION, recorded rather than deferred (adversary round-5 verification). The word "instance" was doing two jobs: the technical instance-of-a-theorem relation, and ZP-P's inherited tier-2 word for a per-domain realization. After v1.6 answered the universal question in the negative, the title-block note on page 1 and the endnote on page 7 gave opposite answers about the same two objects purely through that collision. DECISION: "instance" is reserved for the instance-of-a-theorem relation; a per-domain realization is a "realization" or a "face". Five rendered sites changed; no claim changed. Recorded here because the reviewer's warning is the real risk - leaving it undecided is how the underlying claim survived four rounds. The Lawvere-instance uses in Section III are the technical sense and stay.
@@ -27,7 +28,7 @@ rules in scripts/PDF_Rendering_Standards.md.
 import os
 from zp_utils import *
 
-VERSION = '1.8'
+VERSION = '1.9'
 FIRST_RELEASED = 'July 2026'
 
 from reportlab.graphics.shapes import Drawing, Circle, Ellipse, PolyLine, String, Polygon
@@ -235,8 +236,9 @@ def build():
         'The frame-flip schema is choice-free. fork_is_frameflip and both duality lemmas depend only '
         'on [propext, Quot.sound] &#8212; propositional extensionality and quotient soundness, the '
         'benign kernel axioms used throughout Mathlib. None depends on the Axiom of Choice. As in '
-        'ZP-P, the conceptual skeleton needs no choice; choice enters only in the analytic '
-        'realisations (Section II). See AxiomProfile.lean.',
+        'ZP-P, the conceptual skeleton needs no choice; choice enters mostly in the analytic '
+        'realisations (Section II) &#8212; not only there, since the category-theory face carries the '
+        'framework&#8217;s own. See AxiomProfile.lean.',
         bg=GREEN_LITE, border=GREEN
     ))
     E.append(sp(6))

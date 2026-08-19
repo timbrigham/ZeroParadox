@@ -1,6 +1,7 @@
 """
 Zero Paradox — ZP Addendum: The Choice-Free Core
-Version 1.5 | August 2026
+Version 1.6 | August 2026
+v1.6: THE ENDNOTE CONTRADICTED SECTION III. Section III has named both taboo reductions since v1.5 - `wem_of_fixedPointFree` and `em_of_wellOrder_comparable`, each choice-free (`[propext, Quot.sound]`), which is the only shape that can establish necessity. The endnote still said choice "appears only where the framework builds on Mathlib's ... libraries, and whether it is necessary there remains open" - both halves false, in the two places a skimmer lands. Measured: `fixedPointFree_of_nontrivial` carries choice from a bare `classical` in framework source (`Category/Lawvere.lean`), not from Mathlib, while its sibling `no_witness_of_fixedPointFree` is axiom-free - so the dependence is neither inherited nor forced by the shape of the result. Found by sweeping the CLAIM after both prose gates returned FAIL-BEDROCK on the same universal in README.
 v1.5: BEDROCK - Section III asserted THE FRAMEWORK HAS NO PROVEN-NECESSITY CASE ANYWHERE, a universal
 negative that is FALSE and was live in the published PDF. Two taboo reductions exist and are named in
 CLAUDE.md: em_of_wellOrder_comparable (comparability of well-orders implies excluded middle; prior art
@@ -18,19 +19,22 @@ v1.1: WheelFrac.* citation updated to ZPJ_WheelFrac.* (Lean namespace standardiz
 v1.0: Initial release. Surfaces the machine-verified fact that the conceptual core of the
       framework is free of the Axiom of Choice. The central theorem T-SNAP (the Binary Snap)
       depends on NO axioms at all; the lattice algebra (ZP-A) and the Quine-atom self-reference
-      (ZP-J) are choice-free. Classical.choice appears only where the framework builds on Mathlib's
-      classically-built analysis/order/computability libraries (the analytic realization layers).
+      (ZP-J) are choice-free. Classical.choice appears mostly where the framework builds on Mathlib's
+      classically-built analysis/order/computability libraries (the analytic realization layers) - but
+      NOT only there: the category-theory face carries the framework's own bare `classical`.
       Anchored on the checkable artifact ZeroParadox/AxiomProfile.lean (a file of #print axioms
       commands). Honest fences throughout: not the whole framework is choice-free; choice is
-      inherited from Mathlib in the analytic layers; whether it is *necessary* there is open (the
-      one layer classified, ZPB_PadicTree, found it mostly incidental/routable).
+      mostly inherited from Mathlib in the analytic layers; whether the REMAINING dependence is
+      *necessary* there is open (the one layer classified, ZPB_PadicTree, found it mostly
+      incidental/routable) - but two taboo reductions already settle it for the principles they
+      cover, and the rendered Section III has named them since v1.5.
 Framework-wide note; reads after the Foreword.
 """
 
 import os
 from zp_utils import *
 
-VERSION = '1.5'
+VERSION = '1.6'
 FIRST_RELEASED = 'June 2026'
 
 # ── fix() guard ──
@@ -239,9 +243,11 @@ def build():
     E.append(Paragraph(
         'Endnote: This is a framework-wide note, machine-verified as of June 2026. The central '
         'theorem T-SNAP depends on no axioms; the conceptual core is free of the Axiom of Choice; '
-        '`Classical.choice` appears only where the framework builds on Mathlib\'s classical analysis, '
-        'order, and computability libraries, and whether it is necessary there remains open. All of '
-        'this is checkable in ZeroParadox/AxiomProfile.lean.',
+        '`Classical.choice` appears mostly where the framework builds on Mathlib\'s classical analysis, '
+        'order, and computability libraries, where whether it is necessary remains open. It is not '
+        'only there, and not everywhere open: the category-theory face carries the framework\'s own '
+        'bare classical, and Section III\'s two reductions settle necessity for the principles they '
+        'cover. All of this is checkable in ZeroParadox/AxiomProfile.lean.',
         S['endnote']))
 
     print(f'[build_zp_choice_free_core] Assembling document ({len(E)} elements)...')
