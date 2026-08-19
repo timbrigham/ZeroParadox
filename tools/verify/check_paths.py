@@ -23,6 +23,7 @@ the ride-along cross-reference rule, the private-layer dependency list, and the 
 reading list. A caller that reads only the exit status sees none of them - and CI does exactly
 that, discarding stdout, so those findings reach the push terminal only.
 """
+import io
 import re
 import subprocess
 import sys
@@ -212,6 +213,33 @@ def tracked_lean():
         ['git', 'ls-files', '*.lean'], cwd=REPO, capture_output=True, text=True, check=True
     ).stdout.split('\n')
     return [REPO / p for p in out if p.strip()]
+
+
+def tracked_scripts():
+    """Tracked build scripts — the surface a claim RENDERS from.
+
+    ⚠ Not optional. The 2026-08-01 sweep that recorded a false universal negative as removed grepped
+    `.lean` and missed a Python build script, so the claim survived in RENDERED PUBLIC PROSE and was
+    still there three months later.
+    """
+    out = subprocess.run(
+        ['git', 'ls-files', 'scripts/*.py'], cwd=REPO, capture_output=True, text=True, check=True
+    ).stdout.split('\n')
+    return [REPO / p for p in out if p.strip()]
+
+
+def _rel(path):
+    """Repo-relative display path, falling back to the absolute one.
+
+    ⚠ `relative_to` RAISES on anything outside the tree, so the bare form turned `sweep_claim` — a
+    pure function whose whole point is that a caller can hand it any file list — into one that
+    exploded on a path from a temp directory. Degrading is correct here: an out-of-tree file still
+    has a name worth printing.
+    """
+    try:
+        return str(path.relative_to(REPO)).replace('\\', '/')
+    except ValueError:
+        return str(path).replace('\\', '/')
 
 
 UNREADABLE = []          # tracked files the scanner could not decode; each is a FAILURE, not a skip
@@ -999,6 +1027,198 @@ def selftest():
 EXIT_SKIPPED = 3
 
 
+# ---------------------------------------------------------------------------------------------
+# `--claim` — sweep ONE CLAIM across every rendering surface. The mechanical half of DC-24, owed
+# since that class was opened and named by both prose gates in round 5 as the thing that would have
+# printed every finding they made.
+#
+# ⚠ THREE DESIGN POINTS, EACH PAID FOR BY A MEASURED FAILURE:
+#   1. WRAP-TOLERANT, WITH LINE NUMBERS SURVIVING IT. `check_modal` shipped with literal spaces in
+#      its patterns, so a claim wrapped across a line was invisible — and Lean docstrings and Python
+#      string concatenation wrap constantly. Markers are blanked to EQUAL-LENGTH spaces so a match
+#      offset still maps to the right line.
+#   2. ALL THREE SURFACES IN ONE RUN — `.md` + `.lean` + tracked `scripts/*.py`. See tracked_scripts.
+#   3. SEVERAL PHRASES, BECAUSE POLARITY IS THE POINT. Rounds 1–4 of the choice arc keyed on a
+#      universal negative; the sites that survived asserted the POSITIVE form. Neither search could
+#      reach the other. Pass the claim AND the form the corpus would use if it disagreed with you.
+#
+# ⚠⚠ ADVISORY. It never blocks and never classifies: whether a hit is a defect, a correct denial, or
+# a changelog entry recording the fix is judgement, and a checker that guessed would manufacture the
+# false-positive work this project has already measured twice.
+
+_CLAIM_MARKER = re.compile(r'(?m)^(\s*)(--|//|#)')
+_CLAIM_JOIN = re.compile(r"'\s*\n\s*'")
+# ⚠ INLINE EMPHASIS IS A FILTER, AND IT HID A LIVE SITE FROM THIS TOOL'S FIRST REAL RUN. README says
+# `*essential* rather than inherited`; the phrase as a human states it has no asterisks, so the match
+# failed and the sweep reported the file clean while an editorial gate had the site by hand. Same
+# shape as the truncation axis: a FORMATTING choice acting as a search filter, and an unexamined
+# filter is a blind half. Blanked to equal-length spaces like everything else here.
+_CLAIM_EMPH = re.compile(r'\*\*|\*|__|_|`|</?[bi]>|</?em>|</?strong>')
+
+
+def _soften(text):
+    """Blank comment markers and Python string-concatenation joins, PRESERVING LENGTH.
+
+    Equal-length substitution is the whole trick: it keeps every character offset mapped to its true
+    line. `check_modal` needed both halves — `\\s+` between words AND this — and the first fix alone
+    still missed a wrapped Lean comment.
+    """
+    out = _CLAIM_MARKER.sub(lambda m: m.group(1) + ' ' * len(m.group(2)), text)
+    out = _CLAIM_JOIN.sub(lambda m: ' ' * len(m.group(0)), out)
+    return _CLAIM_EMPH.sub(lambda m: ' ' * len(m.group(0)), out)
+
+
+def _claim_pattern(phrase):
+    """A phrase as a wrap-tolerant, case-insensitive regex: any whitespace run matches any other."""
+    return re.compile(r'\s+'.join(re.escape(w) for w in phrase.split()), re.I)
+
+
+def _claim_targets():
+    seen, out = set(), []
+    for group in (tracked_markdown(), tracked_lean(), tracked_scripts()):
+        for p in group:
+            if str(p) not in seen:
+                seen.add(str(p))
+                out.append(p)
+    return out
+
+
+def sweep_claim(phrases, files=None):
+    """[(rel, line, phrase, context)], [(rel, why)] — pure, prints nothing."""
+    hits, unreadable = [], []
+    for path in (files if files is not None else _claim_targets()):
+        try:
+            raw = path.read_text(encoding='utf-8')
+        except (OSError, UnicodeDecodeError) as exc:
+            unreadable.append((_rel(path), str(exc)))
+            continue
+        soft = _soften(raw)
+        line_at, n = [], 1
+        for ch in soft:
+            line_at.append(n)
+            if ch == '\n':
+                n += 1
+        flat = soft.replace('\n', ' ')
+        for phrase in phrases:
+            for m in _claim_pattern(phrase).finditer(flat):
+                lo, hi = max(0, m.start() - 90), min(len(flat), m.end() + 90)
+                hits.append((_rel(path), line_at[m.start()], phrase,
+                             re.sub(r'\s+', ' ', flat[lo:hi]).strip()))
+    return sorted(hits), unreadable
+
+
+def cmd_claim(phrases):
+    hits, unreadable = sweep_claim(phrases)
+    by_file = {}
+    for rel, line, phrase, ctx in hits:
+        by_file.setdefault(rel, []).append((line, ctx))
+    print('=' * 78)
+    print('  CLAIM SWEEP — %d phrase(s) over %d tracked surface(s)'
+          % (len(phrases), len(_claim_targets())))
+    for p in phrases:
+        print('    "%s"' % p)
+    print('=' * 78)
+    for rel in sorted(by_file):
+        print('\n  %s' % rel)
+        for line, ctx in by_file[rel]:
+            print('    :%-5d ...%s...' % (line, ctx[:150]))
+    # ⚠ NO SILENT TRUNCATION: a file that could not be read is REPORTED. Absence inferred from an
+    # unread file is the shape that produced three false negatives in one month.
+    if unreadable:
+        print('\n  ⚠ COULD NOT READ — absence is NOT established for these:')
+        for rel, why in unreadable:
+            print('    %s — %s' % (rel, why))
+    print('\n  %d site(s) across %d file(s).' % (len(hits), len(by_file)))
+    print('  ⚠ READING LIST, NOT A FINDING LIST — read every hit; never act on the count.')
+    print('  ⚠ Run BOTH POLARITIES. Four gate rounds missed a live site for want of that.')
+    return 0
+
+
+def selftest_claim():
+    """Controls for `--claim`. Subject is `sweep_claim` itself — never a re-implementation (DC-25).
+
+    ⚠ EVERY MUST-FIRE PLANT IS IN A SHAPE THIS CORPUS ACTUALLY PRODUCES: wrapped mid-sentence,
+    comment-prefixed, and split across adjacent Python string literals. A probe written FLAT passes
+    against a detector that cannot see wrapping and teaches nothing — measured on `check_modal`,
+    whose flat probe gave a false all-clear while the wrapped form was invisible.
+    """
+    import tempfile
+    bad = 0
+    CLAIM = 'choice enters only in the analytic realisations'
+
+    MUST_FIRE = [
+        ('flat, in markdown', 'x.md',
+         'Text before. The claim: choice enters only in the analytic realisations. After.\n'),
+        ('WRAPPED mid-sentence', 'x.md',
+         'Text before. The claim: choice enters only\nin the analytic realisations. After.\n'),
+        ('comment-prefixed and wrapped, Lean', 'x.lean',
+         '-- The claim: choice enters only\n-- in the analytic realisations, said here.\n'),
+        ('split across Python literals', 'x.py',
+         "E.append(body(\n    'The claim: choice enters only '\n"
+         "    'in the analytic realisations.'))\n"),
+        # ⚠ FOUND BY RUNNING THE TOOL, NOT BY DESIGNING IT. On its first real sweep this shape was
+        # SILENT: README carries `*essential* rather than inherited`, and a phrase a human types has
+        # no asterisks in it. An editorial gate had that site by hand while the sweep called the file
+        # clean — formatting acting as a search filter.
+        ('markdown emphasis INSIDE the phrase', 'x.md',
+         'The claim: choice *enters only* in the **analytic** realisations.\n'),
+        ('HTML emphasis inside the phrase, rendered prose', 'x.py',
+         "sp('The claim: choice enters <i>only</i> in the analytic realisations.')\n"),
+    ]
+    MUST_SUPPRESS = [
+        ('absent entirely', 'x.md', 'Nothing resembling it appears in this file at all.\n'),
+        ('near-miss wording', 'x.md', 'choice enters in some of the analytic realisations\n'),
+    ]
+
+    print('  MUST FIRE  (claim sweep)')
+    for label, name, content in MUST_FIRE:
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / name
+            io.open(p, 'w', encoding='utf-8', newline='\n').write(content)
+            hits, _ = sweep_claim([CLAIM], files=[p])
+        ok = len(hits) == 1
+        bad += 0 if ok else 1
+        print('    %-40s %s' % (label, 'ok' if ok else '*** MISSED ***'))
+
+    print('  MUST SUPPRESS  (claim sweep)')
+    for label, name, content in MUST_SUPPRESS:
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / name
+            io.open(p, 'w', encoding='utf-8', newline='\n').write(content)
+            hits, _ = sweep_claim([CLAIM], files=[p])
+        ok = not hits
+        bad += 0 if ok else 1
+        print('    %-40s %s' % (label, 'ok' if ok else '*** FALSE POSITIVE ***'))
+
+    # ⚠ THE LINE NUMBER IS THE POINT OF THE EQUAL-LENGTH BLANKING. If softening changed lengths, a
+    # wrapped hit would report the wrong line and send a reader to the wrong place — which is worse
+    # than not reporting it, because it looks authoritative.
+    print('  MUST FIRE  (line numbers survive softening)')
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / 'x.lean'
+        io.open(p, 'w', encoding='utf-8', newline='\n').write(
+            'one\ntwo\nthree\n-- The claim: choice enters only\n-- in the analytic realisations.\n')
+        hits, _ = sweep_claim([CLAIM], files=[p])
+    ok = len(hits) == 1 and hits[0][1] == 4
+    bad += 0 if ok else 1
+    print('    %-40s %s (line %s, want 4)'
+          % ('a wrapped hit reports its OPENING line', 'ok' if ok else '*** WRONG ***',
+             hits[0][1] if hits else '-'))
+
+    # An unreadable file must be REPORTED, never silently dropped.
+    print('  MUST FIRE  (unreadable file is reported)')
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / 'x.md'
+        io.open(p, 'wb').write(b'\xff\xfe\x00 not utf-8 \xff')
+        hits, unreadable = sweep_claim([CLAIM], files=[p])
+    ok = len(unreadable) == 1
+    bad += 0 if ok else 1
+    print('    %-40s %s' % ('absence is not claimed over it', 'ok' if ok else '*** DROPPED ***'))
+
+    print('\n  claim-sweep controls: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
+    return bad
+
+
 def main():
     # ⚠ LOCAL, initialised HERE. The first version declared this at module level and assigned to
     # it inside `main`, which makes it a LOCAL by Python's scoping rule — so reading it raised
@@ -1009,7 +1229,13 @@ def main():
     args = sys.argv[1:]
     if '--selftest' in args:
         print('== file-reference resolver - CONTROLS ==')
-        return selftest() + selftest_ride_along()
+        return selftest() + selftest_ride_along() + selftest_claim()
+    if '--claim' in args:
+        phrases = [a for a in args[args.index('--claim') + 1:] if not a.startswith('--')]
+        if not phrases:
+            print('--claim needs at least one phrase — and prefer two: the claim AND its inverse')
+            return 2
+        return cmd_claim(phrases)
     do_all = '--all' in args
     warn_private = '--warn-private' in args
 
