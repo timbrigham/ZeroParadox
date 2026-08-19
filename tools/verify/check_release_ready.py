@@ -179,7 +179,19 @@ def _register_versions():
 
 
 def _script_version(script):
-    path = os.path.join(LOCAL, script)
+    """The `VERSION` constant of a build script, or None if it cannot be read.
+
+    ⚠ **THIS READ FROM `.claude-local/`, WHICH HAS HELD NO BUILD SCRIPTS SINCE 2026-08-15**
+    (`RLY18-2`). The mirror was retired that day and `scripts/` became the only home, so every lookup
+    returned None, `if rv and sv` never fired, and `c_register_vs_script_version` reported
+    `[PASS] register <-> script VERSION` having resolved **0 of 26**. Measured live: `VERSION='9.99'`
+    against a register row of `v1.21` still printed `[PASS]`.
+
+    Same class as `RLY5-1` in this same file - a check reporting clean over ground it never walked.
+    That is now twice here, which is why the caller below asserts a RESOLUTION FLOOR rather than
+    trusting that silence means agreement.
+    """
+    path = os.path.join(ch.SCRIPT_DIR, script)
     if not os.path.exists(path):
         return None
     m = re.search(r"^VERSION\s*=\s*['\"]([^'\"]+)['\"]", read(path), re.M)
@@ -201,6 +213,22 @@ def c_register_vs_script_version():
         sv = _script_version(ch.COMP_SCRIPTS[doc])
         if rv and sv and norm_ver(rv) != norm_ver(sv):
             issues.append(f'{doc} comp: register "{rv}" vs script "{sv}"')
+
+    # ⚠⚠ THE RESOLUTION FLOOR. Every comparison above is guarded by `if rv and sv`, so a script whose
+    # VERSION cannot be read is skipped SILENTLY — and when the path was wrong, that was all 26 of
+    # them and this still printed `[PASS]` (`RLY18-2`). **A comparison that ran zero times is not a
+    # comparison that passed.** Count what actually resolved and fail when the answer is nothing.
+    _total = len(ch.FORMAL_SCRIPTS) + len(ch.COMP_SCRIPTS)
+    _resolved = sum(1 for s in list(ch.FORMAL_SCRIPTS.values()) + list(ch.COMP_SCRIPTS.values())
+                    if _script_version(s) is not None)
+    if _resolved == 0:
+        fail(f'register<->script VERSION resolved 0 of {_total} build scripts - the check did not '
+             f'run at all (bad path?), so its silence means nothing')
+        return False
+    if _resolved < _total:
+        warn(f'register<->script VERSION: only {_resolved} of {_total} scripts had a readable '
+             f'VERSION; the rest were skipped silently')
+
     for i in issues:
         warn(f'register<->script VERSION - {i} (authoritative check: /editorial-review)')
     return not issues
