@@ -20,7 +20,7 @@ Keep the two tiers apart:
 
 It appears in the layers that *realize* these results inside standard analytic structures — p-adic
 topology, Hilbert space, ordinals, computability, category theory — **mostly** inherited from
-Mathlib's classically-built libraries, shown in § III of the addendum for honest contrast.
+Mathlib's classically-built libraries, shown in § II for honest contrast.
 
 ⚠ **Not entirely inherited, and not entirely open.** Both halves of the older wording were wrong, and
 each is refuted by a measurement rather than by an argument:
@@ -34,9 +34,13 @@ each is refuted by a measurement rather than by an argument:
 | `em_of_wellOrder_comparable` | `[propext, Quot.sound]` |
 
 **Not inherited:** the category-theory face takes its choice from a bare `classical` written in
-framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib. That its sibling
-`no_witness_of_fixedPointFree` is axiom-free shows the dependence is not forced by the shape of the
-result either.
+framework source (`ZeroParadox/Category/Lawvere.lean`), not from Mathlib.
+
+⚠ **Do not read `no_witness_of_fixedPointFree`'s axiom-freedom as evidence the choice is avoidable.**
+It is not a purer proof of the same statement — it *takes* a fixed-point-free map as a hypothesis,
+where `fixedPointFree_of_nontrivial` *constructs* one. Purity of the consumer says nothing about the
+supplier, and composing them returns `[propext, Classical.choice, Quot.sound]`. `LawvereTaboo.lean`
+§ III settles it the other way: the `classical` there is **essential**.
 
 **Not open:** for two principles the question is *settled*. `wem_of_fixedPointFree` and
 `em_of_wellOrder_comparable` are **reductions to taboos**, and — this is the load-bearing detail —

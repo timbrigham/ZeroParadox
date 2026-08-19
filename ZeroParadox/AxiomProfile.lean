@@ -33,6 +33,8 @@ import ZeroParadox.Multihomed.Boundary
 import ZeroParadox.Multihomed.BoundaryBridge
 import ZeroParadox.Valuation.SnapDichotomy
 import ZeroParadox.Settheory.QuineDichotomy
+import ZeroParadox.Category.LawvereTaboo
+import ZeroParadox.Ordinal.OrdinalChoiceEssential
 
 
 /-!
@@ -51,6 +53,22 @@ each result's complete axiom dependency. **The core is choice-free; T-SNAP depen
 all.** Choice appears in the realization layers — mostly inherited from Mathlib, but not only there
 and not everywhere open. Argument and measurements: `ZeroParadox/AxiomProfile.md`.
 -/
+
+/-! ## 0. The framework's OWN choice — essential, not inherited
+
+⚠ These three are why "inherited from Mathlib" is false as a universal. The `.md` states it; this
+section makes it CHECKABLE, because a claim a reader cannot verify by building this file is a claim
+this file does not actually support. -/
+section FrameworkOwnChoice
+
+-- carries a bare `classical` written in framework source, not inherited:
+#print axioms ZeroParadox.fixedPointFree_of_nontrivial
+-- the two taboo reductions that settle necessity. Both CHOICE-FREE: a reduction that used choice
+-- would establish nothing.
+#print axioms ZeroParadox.wem_of_fixedPointFree
+#print axioms ZeroParadox.em_of_wellOrder_comparable
+
+end FrameworkOwnChoice
 
 /-! ## I. The choice-free core — T-SNAP, the lattice, the Quine atom
 

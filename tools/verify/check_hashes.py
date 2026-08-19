@@ -301,19 +301,20 @@ def all_hash_mismatches():
         reg_formal, reg_comp = registered.get(doc, (None, None))
         cur_comp = sha8(script)
         if reg_comp != cur_comp:
-            out.append('%s comp: register %s vs script %s' % (doc, reg_comp, cur_comp))
+            out.append('%s comp (%s): register %s vs script %s' % (doc, script, reg_comp, cur_comp))
         fscript = FORMAL_SCRIPTS.get(doc + '-formal')
         if fscript:
             cur_formal = sha8(fscript)
             if reg_formal != cur_formal:
-                out.append('%s formal: register %s vs script %s' % (doc, reg_formal, cur_formal))
+                out.append('%s formal (%s): register %s vs script %s'
+                           % (doc, fscript, reg_formal, cur_formal))
     for name, script in FORMAL_ONLY_SCRIPTS.items():
         cur = sha8(script)
         reg = parse_register_formal_by_name(name)
         if reg is None:
-            out.append('%s: no formal: token in register.md' % name)
+            out.append('%s (%s): no formal: token in register.md' % (name, script))
         elif reg != cur:
-            out.append('%s formal: register %s vs script %s' % (name, reg, cur))
+            out.append('%s formal (%s): register %s vs script %s' % (name, script, reg, cur))
     for key, script in STANDALONE_SCRIPTS.items():
         cur = sha8(script)
         reg = register_formal_token(key)
@@ -331,7 +332,7 @@ def all_hash_mismatches():
             out.append('%s: no formal: token in register.md (%s has NO public provenance)'
                        % (key, script))
         elif reg != cur:
-            out.append('%s register token: %s vs script %s' % (key, reg, cur))
+            out.append('%s register token (%s): %s vs script %s' % (key, script, reg, cur))
     for name, was, cur in check_shared_build():
         out.append('SHARED %s: recorded %s vs current %s (affects EVERY document)' % (name, was, cur))
     # ⚠ THE RELEASE GATE MUST NOT BE THE LAXER SURFACE (`RLY18-5`). These two checks lived only in
@@ -911,9 +912,23 @@ def selftest():
                     _hits = all_hash_mismatches()
                 finally:
                     io.open(_p, 'wb').write(_orig)
-                _seen = len(_hits) > len(_base)
+                # ⚠⚠ ASSERT THE PERTURBED SCRIPT IS NAMED. Comparing COUNTS was vacuous: `_base` was
+                # filtered for `_KNOWN_OPEN` and `_hits` was not, so `build_tools.py`'s permanent
+                # missing-token row made `len(_hits) > len(_base)` true with ZERO perturbation.
+                # Measured (`RLY19-1`, /rely round 3): deleting the COMP+FORMAL, FORMAL_ONLY or SHARED
+                # loop outright left `--selftest` at exit 0 printing "tier is actually scanned ok".
+                # Only STANDALONE was caught, and by ACCIDENT — deleting it removed the very row that
+                # was inflating the count.
+                #
+                # **This is `DC-25` for the fourth time in one arc, inside the control written to close
+                # the third.** Its detector list gains a fourth entry from it: *comparing aggregate
+                # counts instead of asserting the named subject appears* silently changes a control's
+                # subject exactly as relocating a probe does. Length arithmetic cannot say WHICH tier
+                # spoke; only the name can.
+                _hits = [m for m in _hits if not any(m.startswith(k) for k in _KNOWN_OPEN)]
+                _seen = any(_script in m for m in _hits)
                 bad += 0 if _seen else 1
-                print('    %-34s %s' % ('%s tier is actually scanned' % _label,
+                print('    %-34s %s' % ('%s tier names %s' % (_label, _script),
                                         'ok' if _seen else '*** NOT SCANNED ***'))
         finally:
             globals()['SCRIPT_DIR'] = _saved_sd

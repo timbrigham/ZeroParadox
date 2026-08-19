@@ -1281,7 +1281,9 @@ def _recurrence_note():
         # function written to surface recurrences, which is as good an argument for the class row as
         # the count was.
         r = subprocess.run([sys.executable, os.path.join(str(HERE), "selfheal.py")],
-                           capture_output=True, text=True, timeout=60,
+                           # 5s, not 60: a hanging child would otherwise cost a full minute on
+                           # EVERY push for a note that is advisory. (/rely round 3, ORDINARY.)
+                           capture_output=True, text=True, timeout=5,
                            encoding="utf-8", errors="replace")
     except (OSError, subprocess.SubprocessError):
         return
