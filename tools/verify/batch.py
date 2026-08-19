@@ -150,7 +150,18 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # blocks a push. It arrived ROUTED-BUT-UNHASHED, which `batch.py`'s own
                               # `_unhashed` leg caught and named on its first run — the enumerator
                               # working, one round after being written.
-                              "shared_build_baseline.txt"]
+                              "shared_build_baseline.txt",
+                              # ⚠⚠ AND THE RELEASE GATE. The rule above reads "if it can stop a PUSH,
+                              # it is in here" — and `check_release_ready.py` cannot, so it sat
+                              # outside this list while being the gate whose output is a permanent
+                              # Zenodo DOI. Found by editing it: `RLY5-1` corrected its hash leg from
+                              # a COMP-only subset to all four tiers plus the shared layer, and
+                              # `prepush` did not route that change to `/rely` at all, because an
+                              # unhashed file cannot be seen to have moved. **A fail-open here is
+                              # strictly worse than one in a push gate: a push is amendable and a
+                              # minted DOI is not.** The rule is therefore wider than it was written:
+                              # if it can stop a push OR A RELEASE, it is in here.
+                              "check_release_ready.py"]
 # ⚠ `gate_round.json` is DELIBERATELY NOT IN THIS LIST. It IS a real hole — hand-writing round 0
 # takes the cap from exit 2 to exit 0 with `checker_hashes()` byte-identical, and the `reset_from`
 # announcement only appears when `reset` itself writes it (/rely pass 8, REL8-3).
