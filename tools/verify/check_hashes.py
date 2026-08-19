@@ -195,7 +195,10 @@ def seed_shared():
 
 
 # README rows look like `| [Title](FILE.pdf) | ZP-X | v1.21 | description |`.
-_README_ROW = re.compile(r'^\|\s*\[[^\]]*\]\(([^)]+\.pdf)\)\s*\|[^|]*\|\s*(v[\d.]+)\s*\|', re.M)
+_README_ROW = re.compile(r'^\|\s*\[[^\]]*\]\(([^)]+\.pdf[^)]*)\)\s*\|[^|]*\|\s*(v[\d.]+)\s*\|', re.M)
+# ⚠ `\.pdf[^)]*` NOT `\.pdf` — an anchored link (`...pdf#page=2`) is a legal, rendering link, and
+# requiring `)` immediately after `.pdf` made the whole row invisible. The basename+anchor strip at the
+# use site is what turns the tolerated suffix back into a join key.
 # register rows: `| ZP-X Title | v1.21 | FILE.pdf | comp | AR | notes |`
 _REGISTER_ROW = re.compile(r'^\|\s*([^|]+?)\s*\|\s*(v[\d.]+|N/A)\s*\|\s*([^\s|]+\.pdf)\s*\|', re.M)
 
@@ -216,22 +219,47 @@ def check_readme_versions():
     GUIDE.md is deliberately not compared: measured 2026-08-18, it carries **no** version strings, so
     there is nothing in it that can drift.
     """
+    # ⚠ AN UNREADABLE RECORD IS A FINDING, NOT A CLEAN RESULT (`T6`, editorial round 1; DC-10).
+    # This returned `[]` on `OSError` — byte-identical to "the two records agree" — so deleting or
+    # locking `register.md` silently disarmed the comparison. **The whole point of this check is that
+    # two records were compared; if one could not be read, that did not happen.**
     try:
         readme = io.open(os.path.join(REPO, 'README.md'), encoding='utf-8').read()
         reg = io.open(REGISTER, encoding='utf-8').read()
-    except OSError:
-        return []
+    except OSError as e:
+        return [('<unreadable>', 'ERROR', 'could not read README.md or register.md: %s' % e)]
     by_pdf = {}
     for _name, ver, pdf in _REGISTER_ROW.findall(reg):
-        by_pdf.setdefault(pdf.strip(), ver.strip())
+        by_pdf.setdefault(os.path.basename(pdf.strip()), ver.strip())
     out = []
+    parsed = set()
     for pdf, rv in _README_ROW.findall(readme):
-        pdf = pdf.strip()
+        # ⚠ NORMALISE THE LINK. A `./ZP-A_...pdf` prefix parses fine and then joins to NOTHING, so
+        # the row silently vanishes from the comparison while still rendering correctly on GitHub
+        # (`RLY18-3`). Measured end to end: README `v0.1` against register `v1.21`, link prefixed
+        # `./`, gave exit 0 and "README versions in sync".
+        pdf = os.path.basename(pdf.strip().split('#')[0])
+        parsed.add(pdf)
         reg_v = by_pdf.get(pdf)
         # A README link with no register row is a different defect (check_paths owns dead links);
         # only DISAGREEMENT between two present records is reported here.
         if reg_v and reg_v != 'N/A' and reg_v != rv.strip():
             out.append((pdf, rv.strip(), reg_v))
+
+    # ⚠⚠ THE COVERAGE FLOOR, AND IT IS THE PART THAT MATTERS. A row shape the regex does not match is
+    # invisible: it produces no finding and no complaint, so the check reports "in sync" over ground it
+    # never walked — the RLY3-2 / RLY5-1 shape one level up, in a checker written to close exactly that.
+    # /rely found SIX legal row shapes silently dropped. Chasing each shape is unbounded; asserting that
+    # every table row carrying a `.pdf` link was PARSED is finite and cannot be talked past.
+    # **NO SILENT TRUNCATION: a row this cannot read is reported, never skipped.**
+    for line in readme.splitlines():
+        s = line.strip()
+        if not s.startswith('|') or '.pdf)' not in s:
+            continue
+        links = re.findall(r'\]\(([^)]+\.pdf)\)', s)
+        if links and not any(os.path.basename(l.split('#')[0]) in parsed for l in links):
+            out.append((os.path.basename(links[0].split('#')[0]),
+                        'UNPARSED-ROW', 'this row carries a PDF link the comparator could not read'))
     return out
 
 
@@ -273,6 +301,14 @@ def all_hash_mismatches():
             out.append('%s register token: %s vs script %s' % (key, reg, cur))
     for name, was, cur in check_shared_build():
         out.append('SHARED %s: recorded %s vs current %s (affects EVERY document)' % (name, was, cur))
+    # ⚠ THE RELEASE GATE MUST NOT BE THE LAXER SURFACE (`RLY18-5`). These two checks lived only in
+    # `main()`, so a README/register disagreement or a stale docstring header gave `check_hashes`
+    # exit 1 and the release gate `GO` — the gate whose output is a permanent DOI seeing LESS than the
+    # one whose output is an amendable push.
+    for pdf, readme_v, reg_v in check_readme_versions():
+        out.append('README %s: says %s, register says %s' % (pdf, readme_v, reg_v))
+    for entry in check_docstring_versions():
+        out.append('docstring version: %s' % (entry,))
     return sorted(out)
 
 
@@ -786,20 +822,58 @@ def selftest():
     # and calling it integrity (`RLY5-1`). This control is the thing that makes the delegation safe.
     print('  MUST SUPPRESS  (full-coverage mismatch scan)')
     _m = all_hash_mismatches()
-    ok = isinstance(_m, list)
+    # ⚠ `isinstance(_m, list)` alone is satisfied by `return []` — it asserts a TYPE, not a scan.
+    # The MUST FIRE block below is what establishes coverage; this only pins the shape and the
+    # clean-tree expectation. (`RLY18-1`.)
+    ok = isinstance(_m, list) and all(isinstance(x, str) for x in _m)
     bad += 0 if ok else 1
     print('    %-34s %s (%d mismatch(es) on this tree)'
           % ('scans without raising', 'ok' if ok else '*** WRONG ***', len(_m)))
-    # It must reach every tier: name one script from each and confirm a perturbed hash is seen.
-    print('  MUST FIRE  (every tier is reachable)')
-    _tiers = [('COMP', COMP_SCRIPTS, 'ZP-A'),
-              ('FORMAL_ONLY', FORMAL_ONLY_SCRIPTS, 'ZP-Q The Frame-Change'),
-              ('STANDALONE', STANDALONE_SCRIPTS, 'Foreword')]
-    for label, mapping, key in _tiers:
-        present = key in mapping and sha8(mapping[key]) != 'MISSING'
-        bad += 0 if present else 1
-        print('    %-34s %s' % ('%s tier is scanned (%s)' % (label, key),
-                                'ok' if present else '*** WRONG ***'))
+    # ⚠⚠ THIS CONTROL MUST *CALL* `all_hash_mismatches()`, AND THE FIRST VERSION DID NOT (`RLY18-1`).
+    # It checked `key in mapping and sha8(...) != 'MISSING'` — map membership, which is true of a
+    # function that scans nothing. /rely restored the exact `RLY5-1` defect (COMP-only) and `--selftest`
+    # returned PASS, exit 0. **THIRD TIME IN ONE ARC that a control's SUBJECT was wrong** — after
+    # `ORD-6-1` (hashlib in place of `sha8`) and the README control's hard-coded baseline. Each read
+    # plausibly; none tested what it named.
+    #
+    # The real control perturbs a COPY of one script per tier, with `SCRIPT_DIR` redirected at a
+    # tempdir (the `sha8` pattern), and requires the function itself to name that tier. Drop a tier
+    # from the scan and its case fails.
+    print('  MUST FIRE  (every tier is reachable — via the real function)')
+    import shutil as _sh
+    import tempfile as _tf2
+    _tiers = [('COMP', COMP_SCRIPTS['ZP-A']),
+              ('FORMAL', FORMAL_SCRIPTS['ZP-A-formal']),
+              ('FORMAL_ONLY', FORMAL_ONLY_SCRIPTS['ZP-Q The Frame-Change']),
+              ('STANDALONE', STANDALONE_SCRIPTS['Foreword']),
+              ('SHARED', SHARED_BUILD[0])]
+    _saved_sd = globals()['SCRIPT_DIR']
+    with _tf2.TemporaryDirectory() as _sd:
+        try:
+            for _f in os.listdir(_saved_sd):
+                if _f.endswith('.py'):
+                    _sh.copyfile(os.path.join(_saved_sd, _f), os.path.join(_sd, _f))
+            globals()['SCRIPT_DIR'] = _sd
+            # unperturbed copies must be quiet, or every case below is meaningless
+            _base = all_hash_mismatches()
+            ok = _base == []
+            bad += 0 if ok else 1
+            print('    %-34s %s%s' % ('untouched copies are quiet', 'ok' if ok else '*** WRONG ***',
+                                      '' if ok else ' — %s' % (_base[:2],)))
+            for _label, _script in _tiers:
+                _p = os.path.join(_sd, _script)
+                _orig = io.open(_p, 'rb').read()
+                try:
+                    io.open(_p, 'wb').write(_orig + b'\n# perturbation\n')
+                    _hits = all_hash_mismatches()
+                finally:
+                    io.open(_p, 'wb').write(_orig)
+                _seen = len(_hits) > len(_base)
+                bad += 0 if _seen else 1
+                print('    %-34s %s' % ('%s tier is actually scanned' % _label,
+                                        'ok' if _seen else '*** NOT SCANNED ***'))
+        finally:
+            globals()['SCRIPT_DIR'] = _saved_sd
 
 
     # ⚠ THE TWO-RECORD COMPARATOR (README vs register.md). Editorial rated this above the claim sweep
@@ -1267,7 +1341,14 @@ def main():
         hash_ok = (current_hash == stored_hash)
         hash_status = 'OK' if hash_ok else 'MISMATCH'
 
-        print(f'  {key}: hash={hash_status}  AR={ar_label}')
+        # ⚠ SAY WHEN THE ONLY WITNESS IS PRIVATE. With no `formal:` token in `register.md`, `hash=OK`
+        # here rests entirely on the gitignored `ar_status.json` — so a PUBLISHED document with no
+        # public provenance printed a green line indistinguishable from a fully-guarded one. Measured
+        # by the editorial gate: `ZP_Tools_and_Methods.pdf` is published and linked twice from GUIDE,
+        # has no register row and no `VERSION` in its build script, and still read `Tools: hash=OK`.
+        # The absent-tracker branch above already said this; the ordinary branch did not.
+        _public = '' if reg_tok else '  (no register token — private tracker only)'
+        print(f'  {key}: hash={hash_status}  AR={ar_label}{_public}')
 
         if not hash_ok:
             print(f'       stored: {stored_hash}  current: {current_hash}  *** re-mark required ***')
