@@ -1726,14 +1726,23 @@ It must **exit 0** before the release body is drafted. The script mechanically v
 **Schema:** One row per formal document:
 `| Document | Formal Version | Filename | Companion Version | Notes |`
 
-**Rule: update register.md first.** On any version bump — before touching README.md, GUIDE.md, or build script docstrings — update register.md. README.md's Framework table and GUIDE.md's Reading Paths are then verified against it.
+**Rule: update register.md first.** On any version bump — before touching README.md or a build script docstring — update register.md. **`register.md` is canonical and README.md's Framework table is the single derived copy; that is the whole propagation path.**
 
 **On every version bump, in order:**
 1. Update register.md (formal version, filename, companion version if changed)
 2. Update README.md Framework table (verify against register.md)
-3. Update GUIDE.md Reading Paths links (verify against register.md)
-4. Update build script docstring
-5. Archive old version per archiving convention
+3. Update build script docstring
+4. Archive old version per archiving convention
+
+⚠ **GUIDE.md IS DELIBERATELY NOT A STEP HERE, AND THE OLD STEP 3 WAS WORSE THAN VACUOUS.** It said to
+verify GUIDE's Reading Paths against register.md — but **GUIDE.md carries no version numbers at all**
+(measured 2026-08-19, `grep -c` = 0). A rule naming a surface that cannot go stale can only ever
+report green, so an audit ticks a box for a check that never ran. **That GUIDE carries no versions is
+a PROPERTY TO PRESERVE, not an omission to correct:** its Reading Paths link flat filenames and
+delegate version state to README, and re-adding numbers would mint a *third* copy of every version —
+against § *the pointer must not become a COPY* directly, and it would oblige the README↔register
+comparator to grow a third arm to police the copy the decision created. **Reintroducing a version
+number to GUIDE.md is a regression, not a helpful addition.**
 
 ## Companion Document Versioning
 
@@ -2013,11 +2022,19 @@ Certain changes require both README.md and GUIDE.md to be audited for consistenc
 3. **Document descriptions** — any "Candidate Theorem", "Open", or status language in the Framework table description column still accurately reflects the document's current state
 
 **On each trigger, verify in GUIDE.md:**
-1. **Reading Paths links** — all version numbers in Reading Paths match register.md (and therefore the Framework table in README.md)
+1. **Reading Paths links** — that the *targets* resolve. ⚠ **NOT the version numbers: GUIDE.md
+   carries none, deliberately** (see the version-bump section above). A version number appearing here
+   is a regression to revert, not drift to sync.
 2. **Companion table** — if a companion was updated, its row reflects current diagram list
 3. **Companion staleness note** — still accurate; update or remove if companions are brought current
 
-**Known pattern to watch:** Version numbers now appear in three places: register.md (canonical), README.md Framework table, and GUIDE.md Reading Paths. Updating any one does not update the others. Always update register.md first, then propagate to README.md and GUIDE.md in the same session. Stale reading path version numbers have caused errors before.
+**Known pattern to watch:** version numbers appear in **two** places — `register.md` (canonical) and
+README.md's Framework table (the single derived copy). Updating one does not update the other, so
+always update register.md first and propagate to README in the same session. ⭐ **This is now
+mechanically checked:** `check_hashes.py` compares the two tables on every run, joined on the PDF
+filename (never the `ZP-X` code — four register rows begin `ZP-J`). It found **five** stale README
+rows on its first run, and caught the author drifting the same way twice more within the hour. GUIDE
+is not in the comparison because it carries no versions to compare.
 
 ### Common Updates
 
@@ -2042,7 +2059,8 @@ permalinks and DOI-referenced commits depend on it).
 When a document is superseded (cosmetic **or** substantive), overwrite the flat root PDF in place:
 1. Rebuild the new version into the flat root name `ZP-X_Title.pdf` (overwrite; do **not** create a versioned copy or a `historical/` entry).
 2. Update `register.md` (version number + script hash).
-3. Update the version in README.md's Framework table and GUIDE.md Reading Paths.
+3. Update the version in README.md's Framework table. (GUIDE.md carries no version numbers — see
+   the version-bump section.)
 
 The prior version is recoverable from git (`git show <commit>:ZP-X_Title.pdf`) and lives permanently in the Zenodo snapshot of the release that last carried it.
 
