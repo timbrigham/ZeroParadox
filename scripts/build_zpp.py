@@ -1,7 +1,7 @@
 """
 Zero Paradox — ZP-P: The Fixed-Point Fork PDF Builder
 Version 1.24 | August 2026
-v1.24: "choice enters only in the analytic realisations" was a universal negative and false: the category-theory face carries the framework's own bare `classical`, and two choice-free taboo reductions show it is essential rather than incidental - a SEPARATE axis from provenance, and one of those two reductions concerns a dependence that IS inherited. Same claim corrected in ZP-Q v1.9, the Choice-Free Core endnote v1.6, README, CLAIMS and AxiomProfile in one sweep - the previous round fixed one site and manufactured a self-contradiction, which is the defect this entry exists to not repeat.
+v1.24: "choice enters only in the analytic realisations" was a universal negative and false: the category-theory face carries the framework's own bare `classical`, and `wem_of_fixedPointFree` - a choice-free taboo reduction - shows THAT dependence essential rather than incidental. Necessity is a SEPARATE axis from provenance: the second reduction, `em_of_wellOrder_comparable`, settles necessity for a dependence that is INHERITED, which is why inherited never meant removable. Same claim corrected in ZP-Q v1.9, the Choice-Free Core endnote v1.6, README, CLAIMS and AxiomProfile in one sweep - the previous round fixed one site and manufactured a self-contradiction, which is the defect this entry exists to not repeat.
 v1.23: two defects in ONE rendered p.4 sentence, both from the v1.22 fix. (1) The carrier phrase
 went in at the wrong POSITION here while all eight Lean sites got the clean order, so the
 publication site read 'no axioms over that M-type' - nearest-head parsing gives the meaningless

@@ -1046,31 +1046,96 @@ EXIT_SKIPPED = 3
 # a changelog entry recording the fix is judgement, and a checker that guessed would manufacture the
 # false-positive work this project has already measured twice.
 
-_CLAIM_MARKER = re.compile(r'(?m)^(\s*)(--|//|#)')
-_CLAIM_JOIN = re.compile(r"'\s*\n\s*'")
-# ⚠ INLINE EMPHASIS IS A FILTER, AND IT HID A LIVE SITE FROM THIS TOOL'S FIRST REAL RUN. README says
-# `*essential* rather than inherited`; the phrase as a human states it has no asterisks, so the match
-# failed and the sweep reported the file clean while an editorial gate had the site by hand. Same
-# shape as the truncation axis: a FORMATTING choice acting as a search filter, and an unexamined
-# filter is a blind half. Blanked to equal-length spaces like everything else here.
-_CLAIM_EMPH = re.compile(r'\*\*|\*|__|_|`|</?[bi]>|</?em>|</?strong>')
+# ⚠⚠ A PROPERTY, NOT A HOLE-LIST. This was `(--|//|#)` — three markers someone thought of — and a
+# `/rely` pass enumerated the routes instead of testing the list: of ten line-start markers in this
+# corpus FIVE were blind (`>`, `-`, `+`, `1.`, `|`), and `*` was covered only by accident because it
+# doubles as an emphasis character. A published gate brief's sentence returned zero sites purely
+# because its lines begin with `>`. Widening the list again would repeat the shape; the property is
+# **a line-start structural marker must not break a phrase**, so match the CLASS: any short run of
+# punctuation, or an ordered-list number, at the head of a line.
+_CLAIM_MARKER = re.compile(r'(?m)^([ \t]*)([-*+>|#/]{1,3}|\d{1,3}\.)(?=\s)')
+# Adjacent Python string literals across a line break — BOTH quote styles. The single-quote-only
+# form was blind in four tracked build scripts, and `scripts/*.py` is the surface DC-24's own row
+# names as the one that keeps being missed and the one a DOI freezes.
+_CLAIM_JOIN = re.compile("'\\s*\\n\\s*'" + '|"\\s*\\n\\s*"')
+# ⚠⚠ FORMATTING IS A SEARCH FILTER, AND THIS IS THE LONGEST LIST IN THE FILE FOR A REASON. Every
+# entry below was SILENT on a version of this tool, and two were live in prose written the same hour:
+#   *emphasis*          README's `*essential* rather than inherited` — the site an editorial gate had
+#                       by hand while this reported the file clean. The first blind spot found.
+#   &#8212; &#8217;      HTML entities mid-phrase, live in `build_zp_choice_free_core.py`
+#   framework\'s        an ESCAPED APOSTROPHE in a Python literal — and this arc's claim is
+#                       literally "the framework's own", so the sweep was blind to its own subject
+#   [text](href)        a markdown link injected mid-phrase, live at the README site itself
+#   curly ’ “ ”         against a phrase typed with ASCII punctuation
+#   | <sub> <br/>       table-cell pipes and inline tags
+# Blanking is always EQUAL-LENGTH; the curly folds are 1:1, so line numbers survive all of it.
+_CLAIM_EMPH = re.compile(
+    r'\*\*|\*|__|_|`'            # markdown emphasis / code spans
+    r'|</?[A-Za-z][^>]{0,20}>'   # any short inline HTML tag: <i> <b> <sub> <br/> <em> ...
+    r'|&[#A-Za-z0-9]{1,8};'      # HTML entities: &#8212; &#8217; &amp; ...
+    r'|\\(?=[\'"])'              # the BACKSLASH of an escaped quote, leaving the quote itself
+    r'|\]\([^)]{0,120}\)'        # the trailing half of a markdown link, keeping its text
+    r'|\['                       # ...and its opening bracket
+    r'|\|')                      # markdown table-cell separators
+# 1:1 punctuation folds — same character count, so offsets are untouched.
+_CLAIM_FOLD = str.maketrans({'’': "'", '‘': "'", '“': '"', '”': '"',
+                             '–': '-', '—': '-', ' ': ' '})
 
 
 def _soften(text):
-    """Blank comment markers and Python string-concatenation joins, PRESERVING LENGTH.
+    """Blank structural markers so they cannot break a phrase — PRESERVING EVERY NEWLINE.
 
-    Equal-length substitution is the whole trick: it keeps every character offset mapped to its true
-    line. `check_modal` needed both halves — `\\s+` between words AND this — and the first fix alone
-    still missed a wrapped Lean comment.
+    ⚠⚠ **NEWLINE preservation is the invariant, NOT length preservation, and the first version of
+    this docstring guarded the wrong one.** `line_at` is built by walking `soft` and counting `\\n`,
+    so an equal-length substitution that ATE a newline still shifted every subsequent line. That is
+    exactly what happened: `_CLAIM_JOIN` matches across a line break and replaced it with spaces, so
+    each hit was reported one line low per join above it — measured at up to **347 lines** of skew in
+    `build_zpe.py`. The certifying control passed throughout, because its fixture had zero joins
+    above the hit.
+
+    A length-destroying `_soften` survives every control here; a newline-destroying one is the bug.
+    Guard the invariant that matters: every substitution below re-emits the newlines it consumed.
     """
-    out = _CLAIM_MARKER.sub(lambda m: m.group(1) + ' ' * len(m.group(2)), text)
-    out = _CLAIM_JOIN.sub(lambda m: ' ' * len(m.group(0)), out)
-    return _CLAIM_EMPH.sub(lambda m: ' ' * len(m.group(0)), out)
+    def blank_keeping_newlines(m):
+        s = m.group(0)
+        return ''.join('\n' if ch == '\n' else ' ' for ch in s)
+
+    out = text.translate(_CLAIM_FOLD)
+    out = _CLAIM_MARKER.sub(lambda m: m.group(1) + ' ' * len(m.group(2)), out)
+    out = _CLAIM_JOIN.sub(blank_keeping_newlines, out)
+    return _CLAIM_EMPH.sub(blank_keeping_newlines, out)
 
 
 def _claim_pattern(phrase):
-    """A phrase as a wrap-tolerant, case-insensitive regex: any whitespace run matches any other."""
-    return re.compile(r'\s+'.join(re.escape(w) for w in phrase.split()), re.I)
+    """A phrase as a wrap-tolerant, case-insensitive regex: any whitespace run matches any other.
+
+    ⚠ THE FOLD APPLIES TO THE PHRASE TOO, or it only works in one direction. Folding the corpus
+    alone lets an ASCII-typed phrase reach curly text — but a phrase copied FROM rendered prose,
+    carrying an em dash or a smart apostrophe, still could not reach source written with a hyphen.
+    Normalising both sides means the direction the caller happens to type in stops mattering.
+    Measured as a live gap: "em dash vs hyphen, either direction".
+    """
+    folded = phrase.translate(_CLAIM_FOLD)
+    return re.compile(r'\s+'.join(re.escape(w) for w in folded.split()), re.I)
+
+
+def tracked_pdfs():
+    out = subprocess.run(
+        ['git', 'ls-files', '*.pdf'], cwd=REPO, capture_output=True, text=True, check=True
+    ).stdout.split('\n')
+    return [REPO / p for p in out if p.strip()]
+
+
+def _pdf_text(path):
+    """Extracted text of a rendered PDF, or None if it cannot be read."""
+    try:
+        try:
+            from pypdf import PdfReader
+        except ImportError:
+            from PyPDF2 import PdfReader
+        return ' '.join((pg.extract_text() or '') for pg in PdfReader(str(path)).pages)
+    except Exception:                                             # noqa: BLE001
+        return None
 
 
 def _claim_targets():
@@ -1083,10 +1148,34 @@ def _claim_targets():
     return out
 
 
-def sweep_claim(phrases, files=None):
-    """[(rel, line, phrase, context)], [(rel, why)] — pure, prints nothing."""
+def sweep_claim(phrases, files=None, pdfs=False):
+    """[(rel, line, phrase, context)], [(rel, why)] — pure, prints nothing.
+
+    ⚠⚠ `pdfs=True` ADDS THE RENDERED TEXT, AND IT IS THE AUTHORITATIVE SURFACE, NOT AN EXTRA.
+    `vocabulary_reference.md`'s Update Log records the rule, paid for by a claim that survived FOUR
+    sweeps: *verify prose claims against the extracted PDF text, not the build script — that is the
+    only surface where concatenation and entity-escaping are already resolved.* Every formatting
+    shape `_soften` has to defend against upstream (`&#8212;`, `framework\\'s`, literals split across
+    adjacent strings) is a SOURCE artifact the PDF has already resolved. Sweeping source alone means
+    defending against the whole list; sweeping the render means the question was already answered.
+    Line numbers are meaningless there, so a PDF hit reports page-less line 0 and names the file.
+    """
     hits, unreadable = [], []
-    for path in (files if files is not None else _claim_targets()):
+    targets = list(files if files is not None else _claim_targets())
+    if pdfs and files is None:
+        targets += tracked_pdfs()
+    for path in targets:
+        if str(path).lower().endswith('.pdf'):
+            raw = _pdf_text(path)
+            if raw is None:
+                unreadable.append((_rel(path), 'PDF text could not be extracted'))
+                continue
+            flat_pdf = re.sub(r'\s+', ' ', raw)
+            for phrase in phrases:
+                for m in _claim_pattern(phrase).finditer(flat_pdf):
+                    lo, hi = max(0, m.start() - 90), min(len(flat_pdf), m.end() + 90)
+                    hits.append((_rel(path) + '  [RENDERED]', 0, phrase, flat_pdf[lo:hi].strip()))
+            continue
         try:
             raw = path.read_text(encoding='utf-8')
         except (OSError, UnicodeDecodeError) as exc:
@@ -1107,8 +1196,8 @@ def sweep_claim(phrases, files=None):
     return sorted(hits), unreadable
 
 
-def cmd_claim(phrases):
-    hits, unreadable = sweep_claim(phrases)
+def cmd_claim(phrases, pdfs=False):
+    hits, unreadable = sweep_claim(phrases, pdfs=pdfs)
     by_file = {}
     for rel, line, phrase, ctx in hits:
         by_file.setdefault(rel, []).append((line, ctx))
@@ -1130,6 +1219,9 @@ def cmd_claim(phrases):
             print('    %s — %s' % (rel, why))
     print('\n  %d site(s) across %d file(s).' % (len(hits), len(by_file)))
     print('  ⚠ READING LIST, NOT A FINDING LIST — read every hit; never act on the count.')
+    if not pdfs:
+        print('  ⚠ SOURCE ONLY. Add --pdf for the RENDERED text, which is the authoritative surface')
+        print('    for a published claim: it has already resolved entities, escapes and string joins.')
     print('  ⚠ Run BOTH POLARITIES. Four gate rounds missed a live site for want of that.')
     return 0
 
@@ -1164,7 +1256,30 @@ def selftest_claim():
          'The claim: choice *enters only* in the **analytic** realisations.\n'),
         ('HTML emphasis inside the phrase, rendered prose', 'x.py',
          "sp('The claim: choice enters <i>only</i> in the analytic realisations.')\n"),
+        # ⚠ THE SIX THE EDITORIAL GATE ENUMERATED, EACH SILENT ON THE PREVIOUS VERSION. Two were
+        # live in prose written the same hour as the tool, including one inside the very fix that
+        # removed the claim. A formatting choice is a search filter, and an unexamined filter is a
+        # blind half — this list is the examined half.
+        ('HTML numeric entity mid-phrase', 'x.py',
+         "sp('The claim: choice enters only &#8212; in the analytic realisations.')\n"),
+        ('ESCAPED APOSTROPHE in a Python literal', 'x.py',
+         "sp('The claim: the framework\\\\'s own choice enters only in the analytic realisations.')\n"),
+        ('markdown link injected mid-phrase', 'x.md',
+         'The claim: choice enters [only](README.md) in the analytic realisations.\n'),
+        ('markdown table-cell pipes', 'x.md',
+         '| choice enters only | in the analytic realisations |\n'),
+        ('inline tags between words', 'x.md',
+         'The claim: choice enters only<br/> in the <sub>analytic</sub> realisations.\n'),
     ]
+    # ⚠ THE CURLY FOLD NEEDS ITS OWN PHRASE, and my first two probes for these were WRONG rather
+    # than the tool being wrong (DC-22 — a control failing for a reason unrelated to the property).
+    # I injected an em dash mid-phrase and put a digit inside a <sub>, then read the misses as tool
+    # defects. Neither is: injected PUNCTUATION and injected CONTENT are different text, and a sweep
+    # that matched across them would fire on anything. The fold's actual job is narrower — let an
+    # ASCII-typed phrase reach text set with typographic quotes.
+    CURLY = [('curly apostrophe vs an ASCII phrase', 'x.md',
+              'It is the framework’s own choice, stated here.\n',
+              "the framework's own choice")]
     MUST_SUPPRESS = [
         ('absent entirely', 'x.md', 'Nothing resembling it appears in this file at all.\n'),
         ('near-miss wording', 'x.md', 'choice enters in some of the analytic realisations\n'),
@@ -1176,6 +1291,15 @@ def selftest_claim():
             p = Path(d) / name
             io.open(p, 'w', encoding='utf-8', newline='\n').write(content)
             hits, _ = sweep_claim([CLAIM], files=[p])
+        ok = len(hits) == 1
+        bad += 0 if ok else 1
+        print('    %-40s %s' % (label, 'ok' if ok else '*** MISSED ***'))
+
+    for label, name, content, phrase in CURLY:
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / name
+            p.write_text(content, encoding='utf-8', newline='\n')
+            hits, _ = sweep_claim([phrase], files=[p])
         ok = len(hits) == 1
         bad += 0 if ok else 1
         print('    %-40s %s' % (label, 'ok' if ok else '*** MISSED ***'))
@@ -1203,6 +1327,26 @@ def selftest_claim():
     bad += 0 if ok else 1
     print('    %-40s %s (line %s, want 4)'
           % ('a wrapped hit reports its OPENING line', 'ok' if ok else '*** WRONG ***',
+             hits[0][1] if hits else '-'))
+
+    # ⚠⚠ THE CONTROL THAT WAS MISSING, AND ITS ABSENCE IS WHY THE SKEW SHIPPED. The fixture above has
+    # ZERO string-joins above the hit, so it passed while every real build script was reported one
+    # line low PER JOIN above the match — up to 347 lines out in `build_zpe.py`. A control whose
+    # fixture cannot exhibit the defect is a control that certifies nothing. This one puts joins
+    # BEFORE the hit, which is the shape every rendered script actually has.
+    print('  MUST FIRE  (line numbers survive JOINS ABOVE the hit)')
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / 'x.py'
+        p.write_text(
+            "E.append(body(\n    'filler one '\n    'filler two'))\n"
+            "E.append(body(\n    'filler three '\n    'filler four'))\n"
+            "sp('The claim: choice enters only in the analytic realisations.')\n",
+            encoding='utf-8', newline='\n')
+        hits, _ = sweep_claim([CLAIM], files=[p])
+    ok = len(hits) == 1 and hits[0][1] == 7
+    bad += 0 if ok else 1
+    print('    %-40s %s (line %s, want 7)'
+          % ('two joins above it, line still exact', 'ok' if ok else '*** SKEWED ***',
              hits[0][1] if hits else '-'))
 
     # An unreadable file must be REPORTED, never silently dropped.
@@ -1235,7 +1379,7 @@ def main():
         if not phrases:
             print('--claim needs at least one phrase — and prefer two: the claim AND its inverse')
             return 2
-        return cmd_claim(phrases)
+        return cmd_claim(phrases, pdfs='--pdf' in args)
     do_all = '--all' in args
     warn_private = '--warn-private' in args
 
