@@ -323,6 +323,38 @@ conventions that leaked, and every one leaked while being remembered by people w
 | **2nd** | a **class** | `DEFECT_CLASSES.md`, with a **detector** |
 | **3rd** | the rule's **TRIGGER** is wrong | fix the trigger — do not restate the rule |
 | **4th+** | **discipline will not work here** | build the mechanical check; stop writing prose about it |
+| **the CHECK then fails 3×** | **the check's SHAPE is wrong, not its patterns** | see rung 5 below — widening it again is the failure repeating |
+
+**⭐⭐ RUNG 5 — WHEN THE MECHANICAL CHECK ITSELF FAILS THREE TIMES, STOP WIDENING IT AND PUT AN LLM ON
+THAT LAYER. (Tim, 2026-08-19.)** Rung 4 says build the checker; it never said what to do when the
+checker keeps missing. The tell is unmistakable and it is not "more patterns are needed": **each fix
+closes the holes its author thought of, and the next reader finds different ones.** Measured
+2026-08-19 on `check_paths.py --claim`, which failed three times in one session — first on markdown
+emphasis, then on HTML entities and escaped apostrophes, then on line-start markers where five of ten
+were blind and the sixth was covered *by accident*. A `/rely` pass watched the second fix land and
+reported that both of its routes were **still** blind in the new version.
+
+**⚠ THE DISCRIMINATOR, AND IT IS THE WHOLE RULE — ASK WHAT THE TOOL IS FAILING AT:**
+- **ENUMERATION** — the space of shapes it must recognise is open-ended, so any pattern list is a
+  snapshot of one person's imagination. Formatting, phrasing, sentence structure, "is this a
+  fragment", "do these two paragraphs contradict". **→ ESCALATE TO AN LLM.** It reads the sentence
+  and does not care whether the line began with `>`.
+- **GROUND TRUTH** — the tool is failing because it lacks a fact, not a pattern. Does this citation
+  say what we claim; does this locator resolve; what is this declaration's real footprint.
+  **→ DO NOT ESCALATE.** `DC-17` measured this: citation-checking is *beyond* bulk-LLM reach, and an
+  LLM handed the same gap fabricates rather than reporting it. Fix the tool, or hand it the source.
+
+**The one-line test: can a careful human do it by reading, without opening anything else?** If yes it
+is enumeration and an LLM screen is the right layer. If they would have to go and check something,
+it is ground truth and an LLM makes it worse.
+
+⚠ **The screen is a READING LIST, exactly as the mechanical version was** — it locates, a human or a
+gate judges. And it is a SCREEN, not a replacement: keep the mechanical check for the shapes it does
+catch, because it is free and it runs on every push. `.claude-local/deepseek/` is the existing bulk
+tier (memory `feedback_llm_screen_for_grammar`, Tim 2026-08-02, where a whitespace rule corrupted 61
+files and **the damage checker written to catch it had the identical bug**, so it certified the
+damage). That memory has never bound anything, because memory bodies do not load — which is why the
+rule is here.
 
 **⚠⚠ DO NOT SKIP TO STEP 3 AND WRITE A NEW SECTION.** That is the reflex, it feels like progress, and it
 is how this file reached 2438 lines. A recurrence usually needs a **trigger changed**, not a rule added.

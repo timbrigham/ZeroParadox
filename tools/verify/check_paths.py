@@ -1045,6 +1045,16 @@ EXIT_SKIPPED = 3
 # ⚠⚠ ADVISORY. It never blocks and never classifies: whether a hit is a defect, a correct denial, or
 # a changelog entry recording the fix is judgement, and a checker that guessed would manufacture the
 # false-positive work this project has already measured twice.
+#
+# ⚠⚠⚠ **THIS CHECK HAS ALREADY FAILED THREE TIMES, WHICH IS RUNG 5 OF `CLAUDE.md`'s ESCALATION
+# LADDER: STOP WIDENING IT.** Emphasis, then entities and escaped quotes, then line-start markers —
+# each fix closed the holes its author thought of, and a `/rely` pass watching the second land
+# reported both its routes still blind. The failure is ENUMERATION (the space of formatting shapes is
+# open-ended), not GROUND TRUTH, so by the ladder's discriminator the next layer is an **LLM screen**
+# — `.claude-local/deepseek/fragment_screen.py` is the built precedent, and its docstring records the
+# same lesson from a whitespace rule that corrupted 61 files while its damage checker shared the bug.
+# **Keep this checker**: it is free, it runs anywhere, and it catches the shapes it knows. Do not
+# mistake it for coverage.
 
 # ⚠⚠ A PROPERTY, NOT A HOLE-LIST. This was `(--|//|#)` — three markers someone thought of — and a
 # `/rely` pass enumerated the routes instead of testing the list: of ten line-start markers in this
