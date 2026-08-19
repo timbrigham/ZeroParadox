@@ -334,19 +334,47 @@ emphasis, then on HTML entities and escaped apostrophes, then on line-start mark
 were blind and the sixth was covered *by accident*. A `/rely` pass watched the second fix land and
 reported that both of its routes were **still** blind in the new version.
 
-**⚠ THE DISCRIMINATOR, AND IT IS THE WHOLE RULE — ASK WHAT THE TOOL IS FAILING AT:**
-- **ENUMERATION** — the space of shapes it must recognise is open-ended, so any pattern list is a
-  snapshot of one person's imagination. Formatting, phrasing, sentence structure, "is this a
-  fragment", "do these two paragraphs contradict". **→ ESCALATE TO AN LLM.** It reads the sentence
-  and does not care whether the line began with `>`.
-- **GROUND TRUTH** — the tool is failing because it lacks a fact, not a pattern. Does this citation
-  say what we claim; does this locator resolve; what is this declaration's real footprint.
-  **→ DO NOT ESCALATE.** `DC-17` measured this: citation-checking is *beyond* bulk-LLM reach, and an
-  LLM handed the same gap fabricates rather than reporting it. Fix the tool, or hand it the source.
+**⚠ THE DISCRIMINATOR — AND THE UNIT IS THE DEFECT CLASS, NEVER THE TOOL.** Both gates caught the
+first draft on this: `--claim` is *itself mixed* — locating a phrase is enumeration, judging that the
+located sentence misdescribes the section it cites is ground truth, and the second is what the fix
+that triggered this rule actually turned on. Escalating "the tool" would carry the second across with
+the first.
 
-**The one-line test: can a careful human do it by reading, without opening anything else?** If yes it
-is enumeration and an LLM screen is the right layer. If they would have to go and check something,
-it is ground truth and an LLM makes it worse.
+**THE TEST — name the ORACLE, not the failure type: does deciding ONE candidate site require opening
+another artifact?**
+- **NO — self-contained.** The sentence in front of you settles it. Formatting shapes, phrasing,
+  fragments, "does this paragraph contradict the one above it". **→ AN LLM SCREEN IS THE RIGHT
+  LAYER.** It reads the sentence and does not care whether the line began with `>`.
+- **YES — you must go and read something else.** Does this citation say what we claim; does this
+  locator resolve; what is this declaration's real footprint. **→ DO NOT ESCALATE.** `DC-17` measured
+  it: 10/10 on the self-contained slice, **0/8** on the citation slice. Fix the tool, or hand it the
+  source.
+- **BOTH SURFACES AT ONCE — a THIRD category, and the first draft routed it wrongly.**
+  Cross-surface consistency ("README under-names relative to CLAIMS") *reads* like enumeration and is
+  not: deciding it means holding two artifacts simultaneously, and `DC-17` measured that context lines
+  **hurt** here. **→ HUMAN OR GATE. Neither the checker nor the screen.**
+
+**⚠⚠ THE SCREEN MAY REPLACE THE ENUMERATION. IT MAY NEVER REPLACE THE VERDICT.** `DC-17` measured
+precision as *unstable* — 1, 4, 4, 3 false positives across four runs over the same twelve negatives —
+and this file's own rule is that a false positive is the more expensive error, because it manufactures
+work that looks urgent. So the screen widens the candidate set and a human or a gate adjudicates,
+which is exactly what makes `fragment_screen.py` work. Two operational rules come with it, or it gets
+run once and believed: **take sites flagged in ≥2 of 3 runs**, and **ignore self-reported confidence**
+— `DC-17` measured `UNSURE` used **zero times** on the slice the screen got wrong.
+
+**⚠ AND THE MISAPPLICATION FAILS SILENTLY, WHICH IS WHY THE FENCE MUST BE AN ARTIFACT.** Point a screen
+at a ground-truth question and it does not refuse — it returns a confident PASS, because it accepts the
+sentence's own label as its warrant. Prose cannot stop that, and prose is what this rung exists to stop
+relying on. **Any screen must run `deepseek/pole_groundtruth.json` — the recorded slice it should get
+wrong — and be disqualified mechanically when it scores well on it.** That is the `check_checkers.py`
+move: the control is the deliverable.
+
+⚠⚠ **AND RUNG 5 IS NOT "PREFER AN LLM".** Measured in the round that produced it: all three prose kills
+came from *reading*, and the one finding neither gate's reading caught — a register fingerprint
+attesting a hash that matched nothing — came from **running a two-line comparison**. No screen would
+ever have caught it. **Where a mechanical check is possible at all, it still beats this rung.** Rung 5
+is for where enumeration has been *demonstrated* unbounded, three times, not for where it is merely
+tedious.
 
 ⚠ **The screen is a READING LIST, exactly as the mechanical version was** — it locates, a human or a
 gate judges. And it is a SCREEN, not a replacement: keep the mechanical check for the shapes it does

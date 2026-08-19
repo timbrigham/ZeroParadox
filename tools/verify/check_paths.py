@@ -1201,8 +1201,21 @@ def sweep_claim(phrases, files=None, pdfs=False):
         for phrase in phrases:
             for m in _claim_pattern(phrase).finditer(flat):
                 lo, hi = max(0, m.start() - 90), min(len(flat), m.end() + 90)
+                # ⚠ SHOW THE LINE BREAKS IN THE CONTEXT. Blanking a line-start marker lets a phrase
+                # WELD across two list items that never contained it:
+                #     * choice here is the framework's own
+                #     * rather than inherited from Mathlib
+                # matches "own rather than inherited", which is in neither bullet. That is the price
+                # of matching the marker CLASS rather than an enumeration — five markers were blind
+                # before and so could not weld; all ten can now. It is a real trade, not a bug to
+                # argue away, and the reader is the one who adjudicates: a run of spaces hides the
+                # boundary, a sentinel makes the weld self-evident. Line numbers are untouched.
+                _ctx = flat[lo:hi]
+                _brk = soft[lo:hi] if hi <= len(soft) else ''
+                _ctx = ''.join('⏎' if (i < len(_brk) and _brk[i] == '\n') else c
+                               for i, c in enumerate(_ctx))
                 hits.append((_rel(path), line_at[m.start()], phrase,
-                             re.sub(r'\s+', ' ', flat[lo:hi]).strip()))
+                             re.sub(r'[ \t]+', ' ', _ctx).strip()))
     return sorted(hits), unreadable
 
 
