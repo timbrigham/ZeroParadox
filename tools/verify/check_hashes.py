@@ -147,10 +147,17 @@ FORMAL_ONLY_SCRIPTS = {
 # `ZP-J_Wheel_Illustrated_Companion.pdf`) was in no map at all. The row printed `hash=OK` because
 # the loop checked its formal token and reported the verdict for the whole row.
 #
-# The phantom is residue of the retired private mirror: `register.md` used to fingerprint the
-# `.claude-local` copy, that copy was deleted in the 2026-08-15 consolidation, and the token stayed
-# pointing at a file that is now not merely stale but nonexistent. Exactly the failure
-# CLAUDE.md § `scripts/` predicts — "the PUBLISHED script sat outside the integrity check entirely".
+# It is MIRROR DRIFT, not a token that never named this file — an overstatement the first draft of
+# this comment made and two gates independently corrected. The register tracked the tracked script
+# correctly through `6c018de` and `c972ff0`, then diverged at `b8537c9` (2026-06-21) and never
+# reconverged: from there it fingerprinted the `.claude-local` copy, which the 2026-08-15
+# consolidation deleted. Exactly the failure CLAUDE.md § `scripts/` predicts — "the PUBLISHED script
+# sat outside the integrity check entirely" — and the same three-month silent drift as `scan_pdfs.py`.
+#
+# ⚠ The four-step rule was NOT skipped. Script, PDF and register moved together at `01a5dd2`, the
+# row's versions run v1.0→v1.1→v1.2→v1.3 one bump per revision, and the script declares `VERSION =
+# '1.3'`. Steps 1, 2 and 4 were followed throughout; only step 3 was writing the wrong file's digest.
+# That is why correcting the token here is a correction and not a laundered version bump.
 #
 # So this map is the EXCEPTION LIST, and `_formal_only_premise_violations()` below makes the premise
 # a CHECKED INVARIANT rather than a comment: any future formal-only row that grows a comp: token
@@ -161,7 +168,9 @@ FORMAL_ONLY_COMPANIONS = {
 }
 
 ALL_VALID_KEYS = (set(COMP_SCRIPTS) | set(FORMAL_SCRIPTS)
-                  | set(STANDALONE_SCRIPTS) | set(FORMAL_ONLY_SCRIPTS))
+                  | set(STANDALONE_SCRIPTS) | set(FORMAL_ONLY_SCRIPTS)
+                  # the comp half of a formal-only row, keyed `<name>-comp` like `ZP-A-formal`
+                  | {n + '-comp' for n in FORMAL_ONLY_COMPANIONS})
 
 AR_DISPLAY = {
     'remediated': 'Y/Y',
@@ -955,10 +964,17 @@ def selftest():
               ('SHARED', SHARED_BUILD[0])]
     # ⚠ THE COMPANION HALF OF A FORMAL-ONLY ROW IS A SIXTH TIER (added 2026-08-19 with the map). A
     # tier with no row here is precisely how this class stayed invisible: `ZP-J Wheel Addendum`'s
-    # comp: token was compared against nothing while the row printed `hash=OK`. Derived from the map
-    # rather than hardcoded, so adding an entry cannot leave the control behind.
-    if FORMAL_ONLY_COMPANIONS:
-        _tiers.insert(3, ('FORMAL_ONLY_COMP', sorted(FORMAL_ONLY_COMPANIONS.values())[0]))
+    # comp: token was compared against nothing while the row printed `hash=OK`.
+    #
+    # ⚠⚠ EVERY ENTRY, NOT `sorted(...)[0]`, AND THE COMMENT HERE USED TO CLAIM OTHERWISE. It read
+    # "derived from the map rather than hardcoded, so adding an entry cannot leave the control
+    # behind" — measurably false, and /rely measured it: grow the map to two, regress only the
+    # SECOND, and `--selftest` prints PASS while `check_hashes` prints "All hashes match" exit 0 with
+    # `comp:00000000` recorded against a live script. Deriving the tier from the map covers the map's
+    # EXISTENCE; only iterating it covers its MEMBERS. Latent at size 1 — the false comment was the
+    # real defect, because it is what would have stopped the next reader looking.
+    for _i, _cs in enumerate(sorted(FORMAL_ONLY_COMPANIONS.values())):
+        _tiers.insert(3 + _i, ('FORMAL_ONLY_COMP', _cs))
     _saved_sd = globals()['SCRIPT_DIR']
     with _tf2.TemporaryDirectory() as _sd:
         try:
@@ -1274,6 +1290,11 @@ def _recorded_token(key):
     if key in FORMAL_SCRIPTS:
         row = parse_register().get(key.replace('-formal', ''))
         return row[0] if row else None
+    # ⚠ THE COMP HALF OF A FORMAL-ONLY ROW IS KEYED `<name>-comp`, mirroring `ZP-A-formal`. Checked
+    # BEFORE the bare-name branch: `'X-comp'` is not a `FORMAL_ONLY_SCRIPTS` key, but ordering this
+    # after would invite the same shadowing the `-formal` convention already avoids.
+    if key.endswith('-comp') and key[:-5] in FORMAL_ONLY_COMPANIONS:
+        return parse_register_comp_by_name(key[:-5])
     if key in FORMAL_ONLY_SCRIPTS:
         return parse_register_formal_by_name(key)
     return None
@@ -1324,8 +1345,15 @@ def sync_hash(key):
     when the two are identical modulo comments and docstrings - so any change reaching a rendered
     string literal is refused. It fails closed on every uncertainty.
     """
+    # ⚠⚠ FIVE MAPS, AND THIS WALKED FOUR — the identical defect its own comment below records one map
+    # earlier. Measured (/rely, 2026-08-19): after a comment-only edit to the wheel companion,
+    # `--sync-hash "ZP-J Wheel Addendum"` exited **0** printing `formal:3435a3e8 written` — a no-op on
+    # an already-correct token — and left the comp mismatch untouched. The commit that added
+    # DETECTION for that token shipped with no way to REMEDIATE it, which is a tool reporting success
+    # over ground it never covered.
     _script = (FORMAL_SCRIPTS.get(key) or COMP_SCRIPTS.get(key)
-               or FORMAL_ONLY_SCRIPTS.get(key) or STANDALONE_SCRIPTS.get(key))
+               or FORMAL_ONLY_SCRIPTS.get(key) or STANDALONE_SCRIPTS.get(key)
+               or (FORMAL_ONLY_COMPANIONS.get(key[:-5]) if key.endswith('-comp') else None))
     if _script:
         _why = _refuses_as_laundering(key, _script, _recorded_token(key))
         if _why:
@@ -1335,6 +1363,15 @@ def sync_hash(key):
             print('    once the review has actually run.')
             return False
 
+    if key.endswith('-comp') and key[:-5] in FORMAL_ONLY_COMPANIONS:
+        _name = key[:-5]
+        h = sha8(FORMAL_ONLY_COMPANIONS[_name])
+        if h == 'MISSING':
+            print('  ERROR: %s not found' % FORMAL_ONLY_COMPANIONS[_name])
+            return False
+        ok = update_register_comp_hash(_name, h)
+        print('  %-26s comp:%s  %s' % (key, h, 'written' if ok else 'REFUSED'))
+        return ok
     if key in FORMAL_SCRIPTS:
         h = sha8(FORMAL_SCRIPTS[key])
         if h == 'MISSING':

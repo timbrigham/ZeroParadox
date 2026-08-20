@@ -370,7 +370,7 @@ _STOP	to
 _STOP	with
 
 _ARROW_DELIM	[`*"\']
-_ARROW_MOVE	[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*[\w-]*[./][\w./-]*
+_ARROW_MOVE	[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*(?:[\w.-]*/[\w./-]*|[\w.-]+\.(?:lean|py|md|json|yml|yaml)\b)
 _CLAIM_EMPH	\*\*|\*|__|_|`|</?[A-Za-z][^>]{0,20}>|&[#A-Za-z0-9]{1,8};|\\(?=[\'"])|\]\([^)]{0,120}\)|\[|\|
 _CLAIM_JOIN	'\s*\n\s*'|"\s*\n\s*"
 _CLAIM_MARKER	(?m)^([ \t]*)([-*+>|#/]{1,3}|\d{1,3}\.)(?=\s)

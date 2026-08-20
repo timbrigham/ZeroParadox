@@ -161,8 +161,15 @@ SKIP_MARKERS_LEAN = tuple(m for m in SKIP_MARKERS if m not in ('->', '→'))
 # and the move stopped being recognised. Caught by the `bare basenames` control on first run.
 # An italicised path is rare; an underscored one is the norm.
 _ARROW_DELIM = re.compile(r'[`*"\']')
+#
+# ⚠ THE TARGET NEEDS A SEPARATOR OR A KNOWN EXTENSION, NOT MERELY A DOT. "contains `/` or `.`" was
+# the first cut and /rely measured what it swallows: `v1.5`, `2.`, `0.5s`, `done.` and `...` all
+# contain a dot, so `` `build_zpa.py` → v1.5, then rebuild `` was classed a MOVE and silenced its
+# whole line. Live impact was nil, which is exactly how the original arrow defect stayed invisible
+# for months — a suppression rule is judged by what it COULD hide, not by today's count.
 _ARROW_MOVE = re.compile(
-    r'[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*[\w-]*[./][\w./-]*'
+    r'[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*'
+    r'(?:[\w.-]*/[\w./-]*|[\w.-]+\.(?:lean|py|md|json|yml|yaml)\b)'
 )
 
 
@@ -1087,6 +1094,11 @@ def selftest():
         ('workflow chain',  'run `ssot_l1_acceptance.py` exit 0 -> re-pin the hash -> finalize'),
         ('chain to prose',  '`build_zpa.py` → then rebuild the companion'),
         ('prose both ends', 'the log → the ledger'),
+        # /rely's four: a dot is not a path. Each of these was classed a MOVE by the first cut.
+        ('arrow to a version',  '`build_zpa.py` → v1.5, then rebuild'),
+        ('arrow to a list item', '`build_zpa.py` → 2. rebuild the companion'),
+        ('arrow to a duration',  '`build_zpa.py` → 0.5s on this machine'),
+        ('arrow to a sentence',  '`build_zpa.py` → done. Next step follows'),
     ):
         ok = not _arrow_is_a_move(line)
         bad += 0 if ok else 1

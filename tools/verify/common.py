@@ -355,8 +355,16 @@ def render_pattern_delta(dropped, added, width=38):
     i = next((n for n, (x, y) in enumerate(zip(a, b)) if x != y), min(len(a), len(b)))
     start = max(0, i - 8)
     lead = '' if start == 0 else '…'
-    return ('*** %d CHANGED: %s%s -> %s%s *** (an edit is one removal and one addition)'
-            % (max(len(dropped), len(added)),
+    # ⚠⚠ THE NAME IS PRINTED SEPARATELY, AND THE FIRST FIX DROPPED IT — creating the mirror of the
+    # defect it closed. Windowing on the first difference moves the window PAST the `NAME\t` prefix
+    # whenever only the regex changed, so on this very commit's `_ARROW_MOVE` edit the message
+    # contained no `_ARROW_MOVE` at all: with 92 pinned patterns, legible-but-anonymous is no more
+    # actionable than identical-but-named. Entries are `NAME\tPATTERN`, so the name is recoverable.
+    _name = a.split('\t', 1)[0]
+    _also = b.split('\t', 1)[0]
+    _label = _name if _name == _also else '%s -> %s' % (_name, _also)
+    return ('*** %d CHANGED [%s]: %s%s -> %s%s *** (an edit is one removal and one addition)'
+            % (max(len(dropped), len(added)), _label,
                lead, a[start:start + width], lead, b[start:start + width]))
 
 
@@ -791,21 +799,29 @@ def selftest():
     # changed leaves re-pinning blind as the only response, which converts a precise gate into a
     # rubber stamp. The failing shape is a long shared prefix — a pattern's name plus the opening of
     # its regex — which the old fixed `[:38]` window rendered identically on both sides.
-    print('MUST DISTINGUISH (a pattern edit is legible)')
+    # ⚠ TWO PROPERTIES, NOT ONE. The first version asserted only that the two sides RENDER
+    # DIFFERENTLY, and was therefore green on the mirror defect /rely found: windowing on the first
+    # difference walks past the `NAME\t` prefix, so a regex-only edit produced a legible diff of an
+    # ANONYMOUS pattern. With 92 pinned patterns that is as unactionable as the identical-sides bug
+    # it replaced. A message is legible only if it says WHICH pattern and HOW it changed.
+    print('MUST DISTINGUISH (a pattern edit names the pattern AND shows the change)')
     _shared = '_SOME_LONG_PATTERN_NAME\t(?:alpha|beta|gamma|delta)+\\s*'
-    for _label, _a, _b in (
-        ('long shared prefix', _shared + 'AAA', _shared + 'BBB'),
-        ('differs at char 0', 'aaa\tone', 'bbb\ttwo'),
-        ('one is a prefix of the other', _shared, _shared + 'XYZ'),
+    for _label, _a, _b, _want in (
+        ('long shared prefix', _shared + 'AAA', _shared + 'BBB', '_SOME_LONG_PATTERN_NAME'),
+        ('differs at char 0', 'aaa\tone', 'bbb\ttwo', 'aaa'),
+        ('one is a prefix of the other', _shared, _shared + 'XYZ', '_SOME_LONG_PATTERN_NAME'),
+        ('regex-only edit, long name', '_N\tzzzz' + 'q' * 60 + 'A', '_N\tzzzz' + 'q' * 60 + 'B', '_N'),
     ):
         _msg = render_pattern_delta([_a], [_b])
-        _l, _, _r = _msg.partition(' -> ')
-        _l = _l.split(': ', 1)[-1]
+        _named = _want in _msg
+        _rest = _msg.split(']: ', 1)[-1]
+        _l, _, _r = _rest.partition(' -> ')
         _r = _r.split(' ***', 1)[0]
-        _ok = _l != _r
+        _shown = _l != _r
+        _ok = _named and _shown
         bad += 0 if _ok else 1
-        print('  %-40s %s%s' % (_label, 'ok' if _ok else '*** ILLEGIBLE ***',
-                                '' if _ok else '  both sides render %r' % _l))
+        _why = '' if _ok else ('  NAME MISSING' if not _named else '  both sides render %r' % _l)
+        print('  %-40s %s%s' % (_label, 'ok' if _ok else '*** ILLEGIBLE ***', _why))
 
     print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
