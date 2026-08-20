@@ -289,7 +289,7 @@ LINE_REF	\.lean:\d+
 MATHLIB_EXEMPT_DIRS	Vendored
 MATHLIB_PATTERN	(?<![\w/.-])((?:Mathlib|Std|Batteries)/[A-Za-z0-9_./-]+\.lean)
 NOTE_REF	(?<![\w/.-])((?:[A-Za-z0-9_.-]+/)*[A-Za-z0-9][A-Za-z0-9_-]*(?:\d{4}-\d{2}-\d{2}|\d{8}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\d{4})\.md)
-PATTERN	(?<![\w/.-])((?:ZeroParadox|scripts|\.github)/[A-Za-z0-9_./-]+\.(?:lean|py|md|json|yml|yaml))
+PATTERN	(?<![\w/.-])((?:ZeroParadox|_layouts|\.claude|\.github|scripts|tools)/[A-Za-z0-9_./-]+\.(?:lean|py|md|json|yml|yaml))
 PRIVATE_REF	(?<![\w/.-])(\.claude-local/[A-Za-z0-9_./-]+)
 PROSE_NOUN	[`'\"\)\]]*\s*(?:'s|’s|s')\s+(?:[A-Za-z][\w-]*\s+){0,3}(paragraph|section|§|table|note|docstring|header|reframe|taxonomy|fence|fenced|citation|cites|cited|overview|gloss|discussion|argument|prior art|hypothesis|classification|module doc)
 PROSE_NOUN_BEFORE	\b(cited|cites|citation|fenced|fence|table|taxonomy|paragraph|section|reframe|note|docstring|gloss|argument|hypothesis|discussion|overview)\b[^`]{0,40}$
@@ -369,6 +369,10 @@ _STOP	this
 _STOP	to
 _STOP	with
 
+_ARROW_MOVE	[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*[\w./-]+
+_CLAIM_EMPH	\*\*|\*|__|_|`|</?[A-Za-z][^>]{0,20}>|&[#A-Za-z0-9]{1,8};|\\(?=[\'"])|\]\([^)]{0,120}\)|\[|\|
+_CLAIM_JOIN	'\s*\n\s*'|"\s*\n\s*"
+_CLAIM_MARKER	(?m)^([ \t]*)([-*+>|#/]{1,3}|\d{1,3}\.)(?=\s)
 [check_invariants]
 CUSTOM_TAG	\[ZP-CUSTOM\]
 REGISTRY_ENTRY	(?m)^### 

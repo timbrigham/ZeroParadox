@@ -43,7 +43,7 @@ For each arbitrated decl, compare the three reads — **SSOT · DeepSeek · Opus
 Route CORRECTs by the cited sources (§6): **FACT** (verifiable from the citation → apply after Tim confirms the citation) · **MATH-CONTENT** (domain/is-it-content → deeper read or escalate) · **CONVENTION** (what a vocab term means here → Tim decides once, write the ruling back into `l2_rules.md`).
 
 ## Output
-Write a decision-log table (§10 schema: `decl · SSOT · deepseek · opus · verdict · lane · proposed-tag · confidence · date · source_sha256`) to `.claude-local/notes/tag_review_log.md`. Present the CORRECT/SPLIT list to Tim. **Stop. Apply nothing until he signs off.** On approval: `annotate` the approved CORRECTs → `ssot_l1_acceptance.py` exit 0 → re-pin the new hash → finalize the log → optionally refresh `tools/registry/registry_export.json`.
+Write a decision-log table (§10 schema: `decl · SSOT · deepseek · opus · verdict · lane · proposed-tag · confidence · date · source_sha256`) to `.claude-local/notes/tag_review_log.md`. Present the CORRECT/SPLIT list to Tim. **Stop. Apply nothing until he signs off.** On approval: `annotate` the approved CORRECTs → `ssot_l1_acceptance.py` exit 0 → re-pin the new hash → finalize the log → export the SSOT with `export_full` to `ssot.json` (the canonical store) if declarations changed.
 
 ## Escalation / cost notes
 - Opus fires on ~20% of items (contradiction rate), isolated context each — far cheaper than cold-reviewing everything, and no Sonnet.

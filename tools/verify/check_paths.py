@@ -53,10 +53,34 @@ MEMORY = Path.home() / '.claude' / 'projects' / 'C--Workspace-ZeroParadox' / 'me
 # IS `.claude-local` — it is the thing being checked, not state belonging to the checker.
 NOTES = REPO / '.claude-local'
 
-# Repo-relative references to real project files. Deliberately narrow: only paths that
-# start at a known top-level directory, so prose like "see Foo/Bar" is not misread.
+# Repo-relative references to real project files. Narrow on purpose — only paths starting at a
+# TRACKED top-level directory, so prose like "see Foo/Bar" is not misread.
+#
+# ⚠⚠ THE ROOTS ARE DERIVED FROM `git ls-files`, NOT LISTED. They were `ZeroParadox|scripts|.github`
+# — three someone thought of in a session predating the layout — and `tools/` went public on
+# 2026-08-15 without the pattern following. Measured (`RLY16-1`): **54 references into `tools/` across
+# 26 distinct targets, one of them DANGLING**, while this file printed *"all repo-relative references
+# resolve"*, exit 0. That is this checker's own stated purpose inverted, and the dangling one sits in
+# a PUBLISHED gate brief. `.claude/` and `_layouts/` were missing too.
+#
+# **The property is decidable, so decide it**: a directory that is tracked is a directory whose
+# references must resolve. Adding a top-level directory now extends coverage by itself — which is the
+# difference between a guard and the hole-list this was.
+def _tracked_roots():
+    out = subprocess.run(['git', 'ls-files'], cwd=REPO,
+                         capture_output=True, text=True, check=True).stdout.split('\n')
+    roots = {p.split('/')[0] for p in out if '/' in p}
+    # ⚠ TOTALLY ORDERED, NOT JUST LONGEST-FIRST. `roots` is a SET, and sorting by length alone leaves
+    # equal-length roots in set-iteration order — `scripts`, `.github` and `.claude` are all seven
+    # characters, so the compiled pattern differed BETWEEN RUNS. Caught by the vocabulary pin, which
+    # is exactly what a pin is for: it does not care what the pattern is, only that it stopped being
+    # the same one. Length descending prevents prefix shadowing; the name breaks ties.
+    return sorted(roots, key=lambda r: (-len(r), r))
+
+
 PATTERN = re.compile(
-    r'(?<![\w/.-])((?:ZeroParadox|scripts|\.github)/[A-Za-z0-9_./-]+\.(?:lean|py|md|json|yml|yaml))'
+    r'(?<![\w/.-])((?:' + '|'.join(re.escape(r) for r in _tracked_roots()) +
+    r')/[A-Za-z0-9_./-]+\.(?:lean|py|md|json|yml|yaml))'
 )
 
 # Bare Lean basenames (pre-reorg style, e.g. ZPJ_APG.lean). These are the silent-failure class
@@ -113,6 +137,20 @@ SKIP_MARKERS = (
 # so reusing this tuple for .lean files would silently skip most of the file and report a clean
 # scan — the exact fail-open shape this resolver exists to prevent. Lean gets its own set.
 SKIP_MARKERS_LEAN = tuple(m for m in SKIP_MARKERS if m not in ('->', '→'))
+
+# ⚠⚠ AND THE SAME TRAP EXISTS IN MARKDOWN, ONE STEP OVER — carving Lean out was not enough.
+# An arrow marks a MOVE only when it joins two PATHS. In a workflow chain it means "then", and a
+# whole line was suppressed on that basis: `tag-review.md` reads *"exit 0 → re-pin the new hash →
+# finalize the log → optionally refresh `tools/registry/registry_export.json`"* — a genuinely
+# DANGLING reference in a PUBLISHED gate brief, invisible because a sentence used arrows to sequence
+# steps. Found by `/rely` hand-resolving what the tool would not (`RLY16-1`).
+# So the arrow suppresses only when it actually connects two path-like tokens.
+_ARROW_MOVE = re.compile(r'[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*[\w./-]+')
+
+
+def _arrow_is_a_move(line):
+    """True when an arrow on this line joins two paths, i.e. genuinely notates a rename/move."""
+    return bool(_ARROW_MOVE.search(line))
 
 # Mathlib citations resolve under the pinned checkout, not the repo root. They are a real and
 # frequently-cited class in this corpus (CLAUDE.md: "verify an API exists before naming it"),
@@ -263,7 +301,14 @@ def scan(files, find_bare, lean_mode=False, check_mathlib=False):
             UNREADABLE.append(md)
             continue
         for lineno, line in enumerate(text.split('\n'), 1):
-            if any(m in line.lower() for m in markers):
+            # ⚠ An arrow alone no longer suppresses: it must actually JOIN TWO PATHS. Otherwise a
+            # workflow sentence ("do X → then Y → then refresh `some/path.json`") silences the whole
+            # line, which is how a dangling reference sat in a published gate brief (`RLY16-1`).
+            _hit = [m for m in markers if m in line.lower()]
+            _arrows = {'->', '→'}
+            if _hit and set(_hit) <= _arrows and not _arrow_is_a_move(line):
+                _hit = []
+            if _hit:
                 continue  # the line is discussing a dead path on purpose
             for ref in PATTERN.findall(line):
                 checked += 1
@@ -1210,10 +1255,25 @@ def sweep_claim(phrases, files=None, pdfs=False):
                 # before and so could not weld; all ten can now. It is a real trade, not a bug to
                 # argue away, and the reader is the one who adjudicates: a run of spaces hides the
                 # boundary, a sentinel makes the weld self-evident. Line numbers are untouched.
-                _ctx = flat[lo:hi]
-                _brk = soft[lo:hi] if hi <= len(soft) else ''
-                _ctx = ''.join('⏎' if (i < len(_brk) and _brk[i] == '\n') else c
-                               for i, c in enumerate(_ctx))
+                # ⚠ ONLY INSIDE THE MATCHED SPAN. The first version marked every break in the ±90
+                # window, so an ordinary correct single-line hit showed three sentinels: measured
+                # **511 hits, 418 (82%) sentinel-marked, 0 of them welds** — the cry-wolf shape this
+                # project elsewhere says to narrow rather than tolerate, and the comment claiming it
+                # "makes the weld self-evident" was describing something the code did not do. A break
+                # OUTSIDE the match is just neighbouring text; a break INSIDE it is the weld.
+                # ⚠⚠ TWO SENTINELS, BECAUSE ONE DOES NOT DISCRIMINATE. `⏎` alone renders a WELD
+                # (a phrase spanning two list items, present in neither) identically to an honest
+                # wrapped line — both read `own⏎ rather` — since a blanked marker collapses to a
+                # space and so does continuation indentation, which is this repo's dominant wrap
+                # style. `_soften` is length-preserving, so comparing `raw` against `soft` recovers
+                # exactly the positions that were blanked: `⊘` marks a swallowed MARKER, and
+                # `⏎⊘` is the weld signature. Honest wrap stays `⏎`.
+                _ctx = ''.join(
+                    ('⏎' if soft[lo + i] == '\n'
+                     else '⊘' if (lo + i < len(raw) and raw[lo + i] != soft[lo + i]
+                                  and soft[lo + i] == ' ') else c)
+                    if (m.start() <= lo + i < m.end() and lo + i < len(soft)) else c
+                    for i, c in enumerate(flat[lo:hi]))
                 hits.append((_rel(path), line_at[m.start()], phrase,
                              re.sub(r'[ \t]+', ' ', _ctx).strip()))
     return sorted(hits), unreadable
