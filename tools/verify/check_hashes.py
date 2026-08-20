@@ -140,6 +140,26 @@ FORMAL_ONLY_SCRIPTS = {
     'ZP-R Diagonal Family Addendum': 'build_zpr_addendum.py',
 }
 
+# ⚠⚠ THE MAP ABOVE IS DOCUMENTED AS "no comp:", AND FOR ONE ROW THAT PREMISE WAS FALSE — which is
+# why nothing verified that row's companion. `register.md` recorded `comp:0ba1f949` for
+# `ZP-J Wheel Addendum`; measured 2026-08-19, that token matches NO revision of ANY tracked build
+# script in the entire history, while `build_zpj_wheel_companion.py` (which renders the TRACKED
+# `ZP-J_Wheel_Illustrated_Companion.pdf`) was in no map at all. The row printed `hash=OK` because
+# the loop checked its formal token and reported the verdict for the whole row.
+#
+# The phantom is residue of the retired private mirror: `register.md` used to fingerprint the
+# `.claude-local` copy, that copy was deleted in the 2026-08-15 consolidation, and the token stayed
+# pointing at a file that is now not merely stale but nonexistent. Exactly the failure
+# CLAUDE.md § `scripts/` predicts — "the PUBLISHED script sat outside the integrity check entirely".
+#
+# So this map is the EXCEPTION LIST, and `_formal_only_premise_violations()` below makes the premise
+# a CHECKED INVARIANT rather than a comment: any future formal-only row that grows a comp: token
+# without an entry here is reported. Closing the one site without that guard would relocate the
+# defect rather than remove it (§ *a guard protects a PROPERTY, not a hole — enumerate EVERY route*).
+FORMAL_ONLY_COMPANIONS = {
+    'ZP-J Wheel Addendum': 'build_zpj_wheel_companion.py',
+}
+
 ALL_VALID_KEYS = (set(COMP_SCRIPTS) | set(FORMAL_SCRIPTS)
                   | set(STANDALONE_SCRIPTS) | set(FORMAL_ONLY_SCRIPTS))
 
@@ -315,6 +335,17 @@ def all_hash_mismatches():
             out.append('%s (%s): no formal: token in register.md' % (name, script))
         elif reg != cur:
             out.append('%s formal (%s): register %s vs script %s' % (name, script, reg, cur))
+    # The companion half of a formal-only row, plus the premise that says there isn't one.
+    for name, script in FORMAL_ONLY_COMPANIONS.items():
+        cur = sha8(script)
+        reg = parse_register_comp_by_name(name)
+        if reg is None:
+            out.append('%s (%s): no comp: token in register.md' % (name, script))
+        elif reg != cur:
+            out.append('%s comp (%s): register %s vs script %s' % (name, script, reg, cur))
+    for name, tok in _formal_only_premise_violations():
+        out.append('%s: row carries comp:%s but no FORMAL_ONLY_COMPANIONS entry verifies it'
+                   % (name, tok))
     for key, script in STANDALONE_SCRIPTS.items():
         cur = sha8(script)
         reg = register_formal_token(key)
@@ -406,6 +437,47 @@ def parse_register_formal_by_name(prefix):
                 if m:
                     return m.group(1)
     return None
+
+
+def parse_register_comp_by_name(prefix):
+    """The comp:XXXXXXXX hash from the register row whose Doc cell starts with `prefix`, or None.
+
+    The sibling of `parse_register_formal_by_name`. Both exist because formal-only rows are keyed by
+    Doc NAME, not by the `ZP-[A-Z]` key the A..L parser uses.
+    """
+    with open(REGISTER, encoding='utf-8') as f:
+        for line in f:
+            if not line.startswith('|'):
+                continue
+            cells = line.split('|')
+            if len(cells) < 2:
+                continue
+            if cells[1].strip().startswith(prefix):
+                m = re.search(r'comp:([0-9a-f]{8})', line)
+                if m:
+                    return m.group(1)
+    return None
+
+
+def _formal_only_premise_violations():
+    """Formal-only rows carrying a comp: token that no map verifies.
+
+    THE PREMISE OF `FORMAL_ONLY_SCRIPTS` MADE CHECKABLE. Its docstring asserts each row has no
+    companion; where that is false the comp: token is verified by nothing and drifts silently — for
+    `ZP-J Wheel Addendum` it drifted all the way to naming a file that never existed in the tracked
+    history, while the row printed `hash=OK`.
+
+    Returns [(name, recorded_comp_token)] for rows that carry comp: with no FORMAL_ONLY_COMPANIONS
+    entry. Empty means the premise holds everywhere it is relied on.
+    """
+    out = []
+    for name in FORMAL_ONLY_SCRIPTS:
+        if name in FORMAL_ONLY_COMPANIONS:
+            continue
+        tok = parse_register_comp_by_name(name)
+        if tok is not None:
+            out.append((name, tok))
+    return out
 
 
 def load_ar_status():
@@ -881,6 +953,12 @@ def selftest():
               ('FORMAL_ONLY', FORMAL_ONLY_SCRIPTS['ZP-Q The Frame-Change']),
               ('STANDALONE', STANDALONE_SCRIPTS['Foreword']),
               ('SHARED', SHARED_BUILD[0])]
+    # ⚠ THE COMPANION HALF OF A FORMAL-ONLY ROW IS A SIXTH TIER (added 2026-08-19 with the map). A
+    # tier with no row here is precisely how this class stayed invisible: `ZP-J Wheel Addendum`'s
+    # comp: token was compared against nothing while the row printed `hash=OK`. Derived from the map
+    # rather than hardcoded, so adding an entry cannot leave the control behind.
+    if FORMAL_ONLY_COMPANIONS:
+        _tiers.insert(3, ('FORMAL_ONLY_COMP', sorted(FORMAL_ONLY_COMPANIONS.values())[0]))
     _saved_sd = globals()['SCRIPT_DIR']
     with _tf2.TemporaryDirectory() as _sd:
         try:
@@ -932,6 +1010,39 @@ def selftest():
                                         'ok' if _seen else '*** NOT SCANNED ***'))
         finally:
             globals()['SCRIPT_DIR'] = _saved_sd
+
+    # The PREMISE control. The tier control above proves the companion is compared once it is in the
+    # map; this proves the map cannot silently go incomplete again. Drop the entry and the row's
+    # comp: token is verified by nothing — the exact live state found on 2026-08-19 — so the
+    # violation must be reported by BOTH the predicate and the production scan.
+    print('  MUST FIRE  (a formal-only row that grows a comp: token is reported)')
+    _saved_map = dict(FORMAL_ONLY_COMPANIONS)
+    try:
+        FORMAL_ONLY_COMPANIONS.clear()
+        _v = _formal_only_premise_violations()
+        _names = [n for n, _t in _v]
+        _wanted = sorted(_saved_map)
+        _pred_ok = all(n in _names for n in _wanted)
+        bad += 0 if _pred_ok else 1
+        print('    %-34s %s (%s)' % ('predicate names the unguarded row',
+                                     'ok' if _pred_ok else '*** WRONG ***', _names or 'none'))
+        # ⚠ AND VIA THE PRODUCTION FUNCTION, not the predicate alone — a delegation that is never
+        # wired reaches `--selftest` green otherwise. This is the `RLY18-5` lesson applied at birth
+        # rather than after a round.
+        _scan = [m for m in all_hash_mismatches() if 'no FORMAL_ONLY_COMPANIONS entry' in m]
+        _scan_ok = any(any(m.startswith(n) for n in _wanted) for m in _scan)
+        bad += 0 if _scan_ok else 1
+        print('    %-34s %s' % ('all_hash_mismatches() reports it',
+                                'ok' if _scan_ok else '*** NOT DELEGATED ***'))
+    finally:
+        FORMAL_ONLY_COMPANIONS.clear()
+        FORMAL_ONLY_COMPANIONS.update(_saved_map)
+    # MUST SUPPRESS: with the map restored, the premise holds everywhere it is relied on.
+    _quiet = _formal_only_premise_violations()
+    bad += 0 if _quiet == [] else 1
+    print('  MUST SUPPRESS  (premise holds on the real tree)')
+    print('    %-34s %s%s' % ('no unguarded comp: tokens', 'ok' if _quiet == [] else '*** WRONG ***',
+                              '' if _quiet == [] else ' — %s' % (_quiet,)))
 
     # ⚠⚠ THE NON-HASH ROUTES NEED THE SAME TREATMENT, AND THIS IS THE SIXTH NEUTERING /rely FOUND.
     # `RLY18-5` added the README and docstring checks to `all_hash_mismatches()`; the tier block above
@@ -1434,13 +1545,26 @@ def main():
         if not hash_ok:
             hash_mismatches.append(key)
 
-    # --- Formal-only documents (no companion): verify formal build-script hash vs register ---
+    # --- Formal-only documents: verify formal build-script hash vs register ---
+    # ⚠ THE VERDICT IS NAMED FOR WHAT IT COVERS. This printed a bare `hash=OK` per row while
+    # checking only the formal token, so `ZP-J Wheel Addendum: hash=OK` was true of one token and
+    # read as true of the row — whose comp: token named a file that has never existed.
     print('  ---')
     for name, script in FORMAL_ONLY_SCRIPTS.items():
         current = sha8(script)
         reg = parse_register_formal_by_name(name)
         ok = (reg is not None and current == reg)
-        print(f'  {name}: hash={"OK" if ok else "MISMATCH"}')
+        cscript = FORMAL_ONLY_COMPANIONS.get(name)
+        # ⚠ THE VERDICT IS COMPUTED OVER EVERY TOKEN THE LABEL NAMES, BEFORE IT IS PRINTED. The first
+        # version of this fix printed `formal+comp hash=OK` off the formal token alone — re-creating
+        # the defect it was written to close, three lines under the comment describing it. A scope
+        # label is a claim about coverage; deriving it from a subset is how the row lied originally.
+        _cok = True
+        if cscript:
+            _ccur, _creg = sha8(cscript), parse_register_comp_by_name(name)
+            _cok = (_creg is not None and _ccur != 'MISSING' and _ccur == _creg)
+        _scope = 'formal+comp' if cscript else 'formal'
+        print(f'  {name}: {_scope} hash={"OK" if (ok and _cok) else "MISMATCH"}')
         if current == 'MISSING':
             print(f'       script {script} not found')
             hash_mismatches.append(name)
@@ -1450,6 +1574,24 @@ def main():
         elif not ok:
             print(f'       formal  — registered: {reg}  current: {current}  *** VERSION BUMP REQUIRED ***')
             hash_mismatches.append(name)
+        if cscript:
+            ccur = sha8(cscript)
+            creg = parse_register_comp_by_name(name)
+            if ccur == 'MISSING':
+                print(f'       companion script {cscript} not found')
+                hash_mismatches.append(name)
+            elif creg is None:
+                print(f'       no comp: hash found in register.md for a row starting "{name}"')
+                hash_mismatches.append(name)
+            elif creg != ccur:
+                print(f'       comp    — registered: {creg}  current: {ccur}  *** VERSION BUMP REQUIRED ***')
+                hash_mismatches.append(name)
+
+    for name, tok in _formal_only_premise_violations():
+        print(f'  {name}: *** comp:{tok} VERIFIED BY NOTHING ***')
+        print('       the row carries a companion token with no FORMAL_ONLY_COMPANIONS entry;')
+        print('       add one (script name) so the token is compared against bytes.')
+        hash_mismatches.append(name)
 
     print('=' * 55)
     print("NOTE: the LIVE, load-bearing check is build-script HASH INTEGRITY above (script bytes vs")
