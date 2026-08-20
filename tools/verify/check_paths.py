@@ -1135,6 +1135,34 @@ def selftest():
     # ⚠ THE SCOPE PIN (PAT-2). This checker BLOCKS at push and walks privately, and had no
     # scope section at all: its controls run in memory and never touch its enumerator, so
     # nothing exercised what it covers. Verified rather than inferred by /rely round 4.
+    # ⚠⚠ **A SNAPSHOT PIN CAN SEE A RECORDED FILE LEAVE. IT CAN NEVER SEE A NEW FILE FAIL TO ARRIVE**
+    # (`RLY22-2`). That is not a gap in the seeding, it is the SHAPE of a superset-over-recorded test:
+    # the files a bad glob drops are, by construction, the ones never recorded. Measured — the
+    # `tools/**/*.py` regression that shipped in `a34429c` passes the pin at exit 0 forever, because
+    # `**` and `*` return identical sets under `tools/` today and diverge only on files added later.
+    #
+    # So the pin is paired with an INVARIANT, which is a different kind of claim: each enumerator must
+    # cover its ENTIRE tracked universe, computed now rather than recorded. Measured 2026-08-19 —
+    # python 84/84, markdown 60/60, lean 219/219, all three exactly equal. Under the `**` regression
+    # the python arm reads 36 against a universe of 84 and this fires immediately.
+    #
+    # ⚠ A DELIBERATE exclusion (vendored code, generated files) will trip this, and that is the point:
+    # it forces the exclusion to be stated and recorded rather than introduced by a glob nobody reread.
+    print('  UNIVERSE')
+    for _name, _paths, _pat in (('python', tracked_scripts(), '*.py'),
+                                ('markdown', tracked_markdown(), '*.md'),
+                                ('lean', tracked_lean(), '*.lean')):
+        _live = {str(p.relative_to(REPO)).replace('\\', '/') for p in _paths}
+        _uni = {x.strip() for x in subprocess.run(
+            ['git', 'ls-files', _pat], cwd=REPO, capture_output=True, text=True,
+            encoding='utf-8', errors='replace').stdout.split('\n') if x.strip()}
+        _ok = _live == _uni
+        bad += 0 if _ok else 1
+        _why = '' if _ok else '  MISSED %s' % (sorted(_uni - _live)[:3] or sorted(_live - _uni)[:3],)
+        print('    %-32s %s (%d of %d tracked)%s'
+              % ('%s enumerator is complete' % _name,
+                 'ok' if _ok else '*** INCOMPLETE ***', len(_live), len(_uni), _why))
+
     print('  SCOPE')
     # ⚠⚠ `tracked_scripts()` IS IN THE PIN, AND ITS ABSENCE IS WHY `RLY21-1` SHIPPED. The pin was fed
     # markdown + lean only, so the 84 Python surfaces were pinned by nothing: `--selftest` printed
