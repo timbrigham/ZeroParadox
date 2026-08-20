@@ -145,12 +145,34 @@ SKIP_MARKERS_LEAN = tuple(m for m in SKIP_MARKERS if m not in ('->', '→'))
 # DANGLING reference in a PUBLISHED gate brief, invisible because a sentence used arrows to sequence
 # steps. Found by `/rely` hand-resolving what the tool would not (`RLY16-1`).
 # So the arrow suppresses only when it actually connects two path-like tokens.
-_ARROW_MOVE = re.compile(r'[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*[\w./-]+')
+#
+# ⚠⚠ AND THE FIRST VERSION OF THIS RULE DISCRIMINATED ON **DELIMITERS**, NOT ON MOVE-VS-CHAIN
+# (`ARROW-1`, /rely). `\s*` cannot cross a backtick, so `` `A.lean` → `B.lean` `` — the way this
+# corpus actually writes a move — did NOT match, and the rule suppressed nothing there. It caught
+# its own motivating case only because a backtick happened to sit between `.py` and the arrow:
+# right answer, accidental reason. Measured 2 of 9 fixtures correct.
+#
+# Two changes take it to 9 of 9. Blank the delimiters first, EQUAL-LENGTH so nothing shifts, so the
+# arrow can see the paths either side of them. And require the TARGET to look like a path — contain
+# a `/` or a `.` — because that is what separates *"Old.lean → New.lean"* (a move) from
+# *"`foo.py` → re-pin the hash"* (a chain whose next step is prose).
+# ⚠ `_` IS NOT IN THIS CLASS AND MUST NOT BE. It is a markdown emphasis marker, but it is also a
+# character inside almost every filename here — blanking it split `old_name.py` into `old name.py`
+# and the move stopped being recognised. Caught by the `bare basenames` control on first run.
+# An italicised path is rare; an underscored one is the norm.
+_ARROW_DELIM = re.compile(r'[`*"\']')
+_ARROW_MOVE = re.compile(
+    r'[\w./-]+\.(?:lean|py|md|json|yml|yaml)\s*(?:->|→)\s*[\w-]*[./][\w./-]*'
+)
 
 
 def _arrow_is_a_move(line):
-    """True when an arrow on this line joins two paths, i.e. genuinely notates a rename/move."""
-    return bool(_ARROW_MOVE.search(line))
+    """True when an arrow on this line joins two paths, i.e. genuinely notates a rename/move.
+
+    Delimiters are blanked equal-length before matching: the question is whether the arrow connects
+    two paths, and a backtick between them does not change the answer.
+    """
+    return bool(_ARROW_MOVE.search(_ARROW_DELIM.sub(' ', line)))
 
 # Mathlib citations resolve under the pinned checkout, not the repo root. They are a real and
 # frequently-cited class in this corpus (CLAUDE.md: "verify an API exists before naming it"),
@@ -1040,6 +1062,35 @@ def selftest():
     no_marker = not any(m in unmarked.lower() for m in SKIP_MARKERS)
     bad += 0 if no_marker else 1
     print('    %-32s %s' % ('...but a bare mention is NOT', 'ok' if no_marker else '*** OVER-WIDE ***'))
+
+    # ⚠⚠ THE ARROW RULE HAD NO CONTROL AT ALL, which is how it shipped answering 2 of these 9
+    # (`ARROW-1`). Both polarities matter and they fail in opposite directions: a move that is NOT
+    # recognised turns a rename note into false positives, and a chain that IS recognised silences
+    # a whole line — which is how a dangling reference sat in a published gate brief. The delimiter
+    # forms are the point: this corpus writes moves in backticks and bold, so a rule that only works
+    # on bare text works almost nowhere.
+    print('  MUST FIRE  (arrow notates a MOVE — suppression is correct)')
+    for label, line in (
+        ('bare',            'ZeroParadox/A.lean -> ZeroParadox/B.lean'),
+        ('unicode arrow',   'ZeroParadox/A.lean → ZeroParadox/B.lean'),
+        ('backticked',      'moved `ZeroParadox/A.lean` → `ZeroParadox/B.lean` last week'),
+        ('bold',            '**scripts/old.py** -> **scripts/new.py**'),
+        ('quoted',          '"tools/a.json" → "tools/b.json"'),
+        ('bare basenames',  'old_name.py → new_name.py'),
+    ):
+        ok = _arrow_is_a_move(line)
+        bad += 0 if ok else 1
+        print('    %-32s %s' % ('move: %s' % label, 'ok' if ok else '*** NOT RECOGNISED ***'))
+
+    print('  MUST SUPPRESS  (arrow sequences STEPS — suppression would hide a dead path)')
+    for label, line in (
+        ('workflow chain',  'run `ssot_l1_acceptance.py` exit 0 -> re-pin the hash -> finalize'),
+        ('chain to prose',  '`build_zpa.py` → then rebuild the companion'),
+        ('prose both ends', 'the log → the ledger'),
+    ):
+        ok = not _arrow_is_a_move(line)
+        bad += 0 if ok else 1
+        print('    %-32s %s' % ('chain: %s' % label, 'ok' if ok else '*** OVER-WIDE ***'))
 
     # ⚠ THE VOCABULARY PIN (PAT-1). The controls above prove the patterns they exercise;
     # this proves the rest are still there. Measured before it was written: 30 of 34

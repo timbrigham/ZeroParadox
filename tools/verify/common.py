@@ -338,6 +338,28 @@ def check_exemption_registry():
     return bad
 
 
+def render_pattern_delta(dropped, added, width=38):
+    """The CHANGED line for a pattern edit, windowed on the first character that differs.
+
+    ⚠ RENDER FROM THE FIRST DIFFERENCE, NOT FROM OFFSET 0 (`RLY16-8`, /rely). Both sides used to be
+    truncated at `[:38]` from the start, so editing a pattern whose first 38 characters are constant
+    — the common case, since a pattern's NAME and the opening of its regex rarely move — printed two
+    BYTE-IDENTICAL strings either side of the arrow. The gate fired correctly and said nothing a
+    reader could act on, which leaves re-pinning blind as the only available response: a message
+    that cannot distinguish the two versions turns a precise control into a rubber stamp.
+
+    Extracted from `check_vocabulary` so it can be controlled at all. It printed inline before, so
+    the only way to test the rendering was to read it.
+    """
+    a, b = dropped[0], added[0]
+    i = next((n for n, (x, y) in enumerate(zip(a, b)) if x != y), min(len(a), len(b)))
+    start = max(0, i - 8)
+    lead = '' if start == 0 else '…'
+    return ('*** %d CHANGED: %s%s -> %s%s *** (an edit is one removal and one addition)'
+            % (max(len(dropped), len(added)),
+               lead, a[start:start + width], lead, b[start:start + width]))
+
+
 def check_vocabulary(section, mod_globals, label=None):
     """Pin every detection pattern a module advertises. See `vocabulary`.
 
@@ -373,8 +395,7 @@ def check_vocabulary(section, mod_globals, label=None):
     # deletion that did not happen.
     detail = 'ok (%d patterns)' % len(live)
     if dropped and added:
-        detail = ('*** %d CHANGED: %s -> %s *** (an edit is one removal and one addition)'
-                  % (max(len(dropped), len(added)), dropped[0][:38], added[0][:38]))
+        detail = render_pattern_delta(dropped, added)
     elif dropped:
         detail = '*** %d REMOVED: %s ***' % (len(dropped), '; '.join(d[:44] for d in dropped[:2]))
     elif added:
@@ -765,6 +786,26 @@ def selftest():
             caught = bool(recorded - {r for _p, r in targets()})
         print('  %-40s %s' % (label, 'ok' if caught else '*** NOT CAUGHT ***'))
         bad += 0 if caught else 1
+
+    # ⚠ THE PIN'S MESSAGE IS PART OF THE PIN (`RLY16-8`). A control that fires and cannot say WHAT
+    # changed leaves re-pinning blind as the only response, which converts a precise gate into a
+    # rubber stamp. The failing shape is a long shared prefix — a pattern's name plus the opening of
+    # its regex — which the old fixed `[:38]` window rendered identically on both sides.
+    print('MUST DISTINGUISH (a pattern edit is legible)')
+    _shared = '_SOME_LONG_PATTERN_NAME\t(?:alpha|beta|gamma|delta)+\\s*'
+    for _label, _a, _b in (
+        ('long shared prefix', _shared + 'AAA', _shared + 'BBB'),
+        ('differs at char 0', 'aaa\tone', 'bbb\ttwo'),
+        ('one is a prefix of the other', _shared, _shared + 'XYZ'),
+    ):
+        _msg = render_pattern_delta([_a], [_b])
+        _l, _, _r = _msg.partition(' -> ')
+        _l = _l.split(': ', 1)[-1]
+        _r = _r.split(' ***', 1)[0]
+        _ok = _l != _r
+        bad += 0 if _ok else 1
+        print('  %-40s %s%s' % (_label, 'ok' if _ok else '*** ILLEGIBLE ***',
+                                '' if _ok else '  both sides render %r' % _l))
 
     print('\nselftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
     return 1 if bad else 0
