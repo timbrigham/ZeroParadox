@@ -154,9 +154,12 @@ FORMAL_ONLY_SCRIPTS = {
 # consolidation deleted. Exactly the failure CLAUDE.md § `scripts/` predicts — "the PUBLISHED script
 # sat outside the integrity check entirely" — and the same three-month silent drift as `scan_pdfs.py`.
 #
-# ⚠ The four-step rule was NOT skipped. Script, PDF and register moved together at `01a5dd2`, the
-# row's versions run v1.0→v1.1→v1.2→v1.3 one bump per revision, and the script declares `VERSION =
-# '1.3'`. Steps 1, 2 and 4 were followed throughout; only step 3 was writing the wrong file's digest.
+# ⚠ The four-step rule was NOT skipped. Script, PDF and register moved together at `01a5dd2`; the
+# row's versions run v1.0→v1.1→v1.2→v1.3, one bump per revision **from `b8537c9` on** (`c972ff0`
+# changed the script and rebuilt the PDF while still at v1.0, so five revisions carry three bumps —
+# the loose "one per revision" was corrected here rather than left to read as exact); and the script
+# declares `VERSION = '1.3'`. Steps 1, 2 and 4 were followed throughout; only step 3 wrote the wrong
+# file's digest.
 # That is why correcting the token here is a correction and not a laundered version bump.
 #
 # So this map is the EXCEPTION LIST, and `_formal_only_premise_violations()` below makes the premise
@@ -473,8 +476,8 @@ def _formal_only_premise_violations():
 
     THE PREMISE OF `FORMAL_ONLY_SCRIPTS` MADE CHECKABLE. Its docstring asserts each row has no
     companion; where that is false the comp: token is verified by nothing and drifts silently — for
-    `ZP-J Wheel Addendum` it drifted all the way to naming a file that never existed in the tracked
-    history, while the row printed `hash=OK`.
+    `ZP-J Wheel Addendum` it drifted from a tracked revision to a value matching no blob in the
+    repository at all, while the row printed `hash=OK`.
 
     Returns [(name, recorded_comp_token)] for rows that carry comp: with no FORMAL_ONLY_COMPANIONS
     entry. Empty means the premise holds everywhere it is relied on.
@@ -671,6 +674,24 @@ def mark_doc(key, status, ar_data):
         ar_data[key] = {'hash': current_hash, 'status': status}
         return current_hash
 
+    # ⚠⚠ `RLY4-6` RE-OPENED ONE MAP LATER, AND ITS RECORD SITS FIFTEEN LINES ABOVE — "a fix behind a
+    # locked door is not a fix". Adding `<name>-comp` to `ALL_VALID_KEYS` made this function PRINT the
+    # key as valid while having no branch for it, so `--mark-remediated "ZP-J Wheel Addendum-comp"`
+    # errored *while listing that exact key one column from the mangled form*. Two independent causes,
+    # both closed: no branch here, and `parse_mark_args` upper-casing it out of existence.
+    if key.endswith('-comp') and key[:-5] in FORMAL_ONLY_COMPANIONS:
+        name = key[:-5]
+        script = FORMAL_ONLY_COMPANIONS[name]
+        current_hash = sha8(script)
+        if current_hash == 'MISSING':
+            print(f'  ERROR: {script} not found — cannot mark {key}')
+            return None
+        if not update_register_comp_hash(name, current_hash):
+            print('  NOT marked %s: the register write was refused (see above)' % key)
+            return None
+        ar_data[key] = {'hash': current_hash, 'status': status}
+        return current_hash
+
     if key in STANDALONE_SCRIPTS:
         script = STANDALONE_SCRIPTS[key]
         current_hash = sha8(script)
@@ -704,9 +725,13 @@ def parse_mark_args(args):
                     # Frame-Change"` returned `unknown key "ZP-Q THE FRAME-CHANGE"` - printing the
                     # correct key one column from the mangled one. A fix behind a locked door is not
                     # a fix. (`RLY4-6`, /rely rounds 4 and 5.)
-                    named = next(
-                        (k for k in list(STANDALONE_SCRIPTS) + list(FORMAL_ONLY_SCRIPTS)
-                         if k.lower() == key.lower()), None)
+                    #
+                    # ⚠⚠ AND IT RE-OPENED WHEN `<name>-comp` WAS ADDED (`RLY20-1`), because this
+                    # enumerated TWO MAPS BY HAND — so growing the valid set grew what `mark_doc`
+                    # PRINTS as valid without growing what this can RESOLVE. Now derived from
+                    # `ALL_VALID_KEYS`, which is the very set the error message lists: the set that
+                    # is advertised and the set that resolves are now one object and cannot drift.
+                    named = next((k for k in ALL_VALID_KEYS if k.lower() == key.lower()), None)
                     key = named if named else key.upper()
                 marks.append((key, status))
                 i += 2
@@ -1417,7 +1442,11 @@ def sync_hash(key):
         save_ar_status(ar)
         print('  %-26s ar_status:%s  status preserved as %r' % (key, h, status))
         return True
-    print('  ERROR: unknown key %r' % key)
+    # ⚠ LIST THE KEYS, AS `mark_doc` DOES (`RLY20-2`). This printed a bare `unknown key`, so the
+    # repair route this function OWNS was undiscoverable from the tool: `check_hashes` names the
+    # drifting half of a formal-only row and nothing told the reader that `<name>-comp` is the key
+    # that fixes it. A remediation path nobody can find is the same cost as not having one.
+    print('  ERROR: unknown key %r. Valid: %s' % (key, ', '.join(sorted(ALL_VALID_KEYS))))
     return False
 
 
@@ -1585,7 +1614,7 @@ def main():
     # --- Formal-only documents: verify formal build-script hash vs register ---
     # ⚠ THE VERDICT IS NAMED FOR WHAT IT COVERS. This printed a bare `hash=OK` per row while
     # checking only the formal token, so `ZP-J Wheel Addendum: hash=OK` was true of one token and
-    # read as true of the row — whose comp: token named a file that has never existed.
+    # read as true of the row — whose comp: token had drifted to a value matching no blob at all.
     print('  ---')
     for name, script in FORMAL_ONLY_SCRIPTS.items():
         current = sha8(script)

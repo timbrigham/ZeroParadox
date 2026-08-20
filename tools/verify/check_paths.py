@@ -283,14 +283,24 @@ def tracked_lean():
 
 
 def tracked_scripts():
-    """Tracked build scripts — the surface a claim RENDERS from.
+    """Tracked Python — the surface a claim RENDERS from, plus the layer that ASSERTS about itself.
 
     ⚠ Not optional. The 2026-08-01 sweep that recorded a false universal negative as removed grepped
     `.lean` and missed a Python build script, so the claim survived in RENDERED PUBLIC PROSE and was
     still there three months later.
+
+    ⚠⚠ **`tools/verify/**` WAS ABSENT, AND `--claim`'s FIRST REAL USE PROVED IT** (2026-08-19). An
+    adversary pass located the same false claim at three sites in `check_hashes.py`; the sweep built
+    to catch exactly that — DC-24, one claim living at several sites — returned **0 hits across 328
+    surfaces**, because its surface set was `scripts/*.py` and nothing else. A zero from a detector
+    that cannot see the file is a COVERAGE GAP, never an absence, and this is the same `tools/`
+    blindness fixed in the path resolver two commits earlier and not carried here: one lesson, two
+    consumers, one updated. The checkers assert about themselves constantly — every ⚠ block in this
+    directory is a claim — so they are exactly the surface where a stale one hides.
     """
     out = subprocess.run(
-        ['git', 'ls-files', 'scripts/*.py'], cwd=REPO, capture_output=True, text=True, check=True
+        ['git', 'ls-files', 'scripts/*.py', 'tools/**/*.py'],
+        cwd=REPO, capture_output=True, text=True, check=True
     ).stdout.split('\n')
     return [REPO / p for p in out if p.strip()]
 
@@ -1145,7 +1155,9 @@ EXIT_SKIPPED = 3
 #      its patterns, so a claim wrapped across a line was invisible — and Lean docstrings and Python
 #      string concatenation wrap constantly. Markers are blanked to EQUAL-LENGTH spaces so a match
 #      offset still maps to the right line.
-#   2. ALL THREE SURFACES IN ONE RUN — `.md` + `.lean` + tracked `scripts/*.py`. See tracked_scripts.
+#   2. ALL THREE SURFACES IN ONE RUN — `.md` + `.lean` + tracked Python, which since 2026-08-19 means
+#      `tools/**` as well as `scripts/`. See `tracked_scripts`, and the measurement in its docstring:
+#      omitting the verification layer is what made this sweep's first real use return a false zero.
 #   3. SEVERAL PHRASES, BECAUSE POLARITY IS THE POINT. Rounds 1–4 of the choice arc keyed on a
 #      universal negative; the sites that survived asserted the POSITIVE form. Neither search could
 #      reach the other. Pass the claim AND the form the corpus would use if it disagreed with you.
