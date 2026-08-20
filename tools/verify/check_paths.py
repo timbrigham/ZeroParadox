@@ -1097,7 +1097,8 @@ EXIT_SKIPPED = 3
 # reported both its routes still blind. The failure is ENUMERATION (the space of formatting shapes is
 # open-ended), not GROUND TRUTH, so by the ladder's discriminator the next layer is an **LLM screen**
 # — `.claude-local/deepseek/fragment_screen.py` is the built precedent, and its docstring records the
-# same lesson from a whitespace rule that corrupted 61 files while its damage checker shared the bug.
+# same lesson from a whitespace rule that corrupted 61 files (measured 2026-08-02) while its damage
+# checker shared the bug.
 # **Keep this checker**: it is free, it runs anywhere, and it catches the shapes it knows. Do not
 # mistake it for coverage.
 
