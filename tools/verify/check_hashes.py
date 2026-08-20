@@ -736,8 +736,13 @@ def parse_mark_args(args):
                 marks.append((key, status))
                 i += 2
             else:
-                print(f'  ERROR: {args[i]} requires a key (e.g. ZP-A, ZP-B-formal, Foreword)')
-                i += 1
+                # ⚠ EXIT NON-ZERO. This printed `ERROR` and returned **0** (`RLY21-4`), so a caller
+                # reading the exit code saw a mark that never happened as a success — the shape this
+                # layer exists to refuse, arriving through the argument parser rather than a check.
+                # `--sync-hash` already exits 1 on the same mistake; the two now agree.
+                print(f'  ERROR: {args[i]} requires a key (e.g. ZP-A, ZP-B-formal, Foreword,')
+                print(f'         "ZP-Q The Frame-Change", "ZP-J Wheel Addendum-comp")')
+                sys.exit(1)
         else:
             i += 1
     return marks

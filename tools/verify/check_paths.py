@@ -297,9 +297,23 @@ def tracked_scripts():
     blindness fixed in the path resolver two commits earlier and not carried here: one lesson, two
     consumers, one updated. The checkers assert about themselves constantly — every ⚠ block in this
     directory is a claim — so they are exactly the surface where a stale one hides.
+
+    ⚠⚠ **`tools/*.py`, NOT `tools/**/*.py`, AND THE `**` FORM SILENTLY LOSES DEPTH 1** (`RLY21-1`).
+    Git's default pathspec is **non-pathname wildmatch, where a bare `*` ALREADY CROSSES `/`** — so
+    `scripts/*.py` was recursive all along, and adding `**` widened nothing while inserting a
+    mandatory separator. Measured at three depths: `tools/**/*.py` returns depth 2 and 3 and **drops
+    depth 1**; `tools/*.py` returns all three. Planting one sentence in three tracked files at three
+    depths, the `**` form reported `365 surfaces` (+2 for 3 files) and found 2 of 3 — a confident
+    count over a silent miss, i.e. this function's own defect class committed inside its own fix.
+
+    **The `**` came from `common.py:116`, where the identical string is CORRECT**, because
+    `pathlib.glob` gives `**` a zero-or-more-directories meaning git's wildmatch does not. A glob
+    STRING carried from a pathlib enumerator to a git enumerator means less at the destination —
+    the mirror-drift failure at the level of an idiom rather than a file. Use `:(glob)` if the
+    pathname semantics are ever actually wanted.
     """
     out = subprocess.run(
-        ['git', 'ls-files', 'scripts/*.py', 'tools/**/*.py'],
+        ['git', 'ls-files', 'scripts/*.py', 'tools/*.py'],
         cwd=REPO, capture_output=True, text=True, check=True
     ).stdout.split('\n')
     return [REPO / p for p in out if p.strip()]
@@ -1122,9 +1136,16 @@ def selftest():
     # scope section at all: its controls run in memory and never touch its enumerator, so
     # nothing exercised what it covers. Verified rather than inferred by /rely round 4.
     print('  SCOPE')
+    # ⚠⚠ `tracked_scripts()` IS IN THE PIN, AND ITS ABSENCE IS WHY `RLY21-1` SHIPPED. The pin was fed
+    # markdown + lean only, so the 84 Python surfaces were pinned by nothing: `--selftest` printed
+    # IDENTICAL numbers (252 recorded / 252 present / 279 live) at both revisions while the claim
+    # surface moved 328 → 363 and then silently lost every depth-1 file under a bad glob. A pin that
+    # cannot see an enumerator cannot notice it changing — and `selftest_claim` passes `files=[p]` at
+    # every call site, so no control touched it either. This is the one control that would have fired.
     bad += common.check_scope('check_paths',
                               [str(p.relative_to(REPO)).replace('\\', '/')
-                               for p in list(tracked_markdown()) + list(tracked_lean())])
+                               for p in (list(tracked_markdown()) + list(tracked_lean())
+                                         + list(tracked_scripts()))])
     print('  PATTERNS')
     bad += common.check_vocabulary('check_paths', globals())
     print('\n  selftest: %s' % ('PASS' if not bad else 'FAIL (%d)' % bad))
@@ -1147,8 +1168,15 @@ EXIT_SKIPPED = 3
 
 # ---------------------------------------------------------------------------------------------
 # `--claim` — sweep ONE CLAIM across every rendering surface. The mechanical half of DC-24, owed
-# since that class was opened and named by both prose gates in round 5 as the thing that would have
-# printed every finding they made.
+# since that class was opened and named by both prose gates in round 5.
+#
+# ⚠ IT IS A READING LIST, AND IT DOES NOT REPLACE THE GATES — an earlier version of this header said
+# it "would have printed every finding they made", and that was measured FALSE (`RLY21-3`). Over the
+# three sites of the 2026-08-19 defect: `"never existed"` returns **2 of 3**, `"nonexistent"` returns
+# **1 of 3**, and no single phrase returns all three — the third reads *"not merely stale but
+# nonexistent"*, which is the same claim in words this sweep cannot reach from either. That is the
+# tool working as designed: it takes a phrase, so it finds a phrasing. Run BOTH POLARITIES and more
+# than one wording, and treat a zero as evidence about the query until proven otherwise.
 #
 # ⚠ THREE DESIGN POINTS, EACH PAID FOR BY A MEASURED FAILURE:
 #   1. WRAP-TOLERANT, WITH LINE NUMBERS SURVIVING IT. `check_modal` shipped with literal spaces in
