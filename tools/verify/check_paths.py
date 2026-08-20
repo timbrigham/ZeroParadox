@@ -319,6 +319,20 @@ def tracked_scripts():
     return [REPO / p for p in out if p.strip()]
 
 
+def _universe_gap(paths, pat):
+    """(what the enumerator returned, what git tracks matching `pat`) — as repo-relative sets.
+
+    Extracted so the UNIVERSE check and its MUST-FIRE control run the SAME comparison. A control that
+    reaches the property by a different path cannot see production's wiring removed — the `RLY18-5`
+    lesson, applied at birth rather than after a round.
+    """
+    live = {str(p.relative_to(REPO)).replace('\\', '/') for p in paths}
+    uni = {x.strip() for x in subprocess.run(
+        ['git', 'ls-files', pat], cwd=REPO, capture_output=True, text=True,
+        encoding='utf-8', errors='replace').stdout.split('\n') if x.strip()}
+    return live, uni
+
+
 def _rel(path):
     """Repo-relative display path, falling back to the absolute one.
 
@@ -1143,25 +1157,54 @@ def selftest():
     #
     # So the pin is paired with an INVARIANT, which is a different kind of claim: each enumerator must
     # cover its ENTIRE tracked universe, computed now rather than recorded. Measured 2026-08-19 —
-    # python 84/84, markdown 60/60, lean 219/219, all three exactly equal. Under the `**` regression
-    # the python arm reads 36 against a universe of 84 and this fires immediately.
+    # python 84/84, markdown 60/60, lean 219/219, all three exactly equal.
     #
-    # ⚠ A DELIBERATE exclusion (vendored code, generated files) will trip this, and that is the point:
-    # it forces the exclusion to be stated and recorded rather than introduced by a glob nobody reread.
+    # ⚠⚠ **WHAT IT CATCHES IS A FILE THE ENUMERATOR CANNOT REACH — NOT, BY ITSELF, THE `RLY21-1`
+    # GLOB.** An earlier version of this comment claimed the shipped `**` regression "reads 36 against
+    # a universe of 84 and fires immediately". Measured FALSE (`RLY23-1`): planting the byte-exact
+    # `a34429c` enumerator into this tree gives `84 of 84`, PASS, exit 0, because `tools/**/*.py` and
+    # `tools/*.py` both return 35 while nothing sits at depth 1. The 36 came from a BOTH-ARMS form
+    # (`scripts/**` too) that never shipped — and on that form the SCOPE pin fires anyway, so on the
+    # example cited this control added nothing.
+    #
+    # **The honest statement, and the control below is exactly it:** the invariant is the SOLE
+    # detector when a bad enumerator meets a file that is genuinely new. Shipped `**` regression plus
+    # one new depth-1 `tools/*.py`: invariant `*** INCOMPLETE *** (84 of 85)`, SCOPE pin `ok
+    # (363/363/363)` — blind, as `RLY22-2` predicts. That is the pairing: the pin covers removals of
+    # what was recorded, the invariant covers arrivals it can never have recorded.
+    #
+    # ⚠ A DELIBERATE exclusion (vendored code, generated files) trips this, and **there is no
+    # exclusion list to record it in** — this is a strict set equality by design. An earlier line here
+    # said such an exclusion would be "stated and recorded", which named a surface that does not
+    # exist. If one is ever needed, add it explicitly rather than widening the universe query, which
+    # would silence the control instead of narrowing it.
     print('  UNIVERSE')
     for _name, _paths, _pat in (('python', tracked_scripts(), '*.py'),
                                 ('markdown', tracked_markdown(), '*.md'),
                                 ('lean', tracked_lean(), '*.lean')):
-        _live = {str(p.relative_to(REPO)).replace('\\', '/') for p in _paths}
-        _uni = {x.strip() for x in subprocess.run(
-            ['git', 'ls-files', _pat], cwd=REPO, capture_output=True, text=True,
-            encoding='utf-8', errors='replace').stdout.split('\n') if x.strip()}
+        _live, _uni = _universe_gap(_paths, _pat)
         _ok = _live == _uni
         bad += 0 if _ok else 1
         _why = '' if _ok else '  MISSED %s' % (sorted(_uni - _live)[:3] or sorted(_live - _uni)[:3],)
         print('    %-32s %s (%d of %d tracked)%s'
               % ('%s enumerator is complete' % _name,
                  'ok' if _ok else '*** INCOMPLETE ***', len(_live), len(_uni), _why))
+
+    # ⚠⚠ AND IT HAD **NO MUST-FIRE CONTROL**, WHICH `check_checkers` COULD NOT SEE (`RLY23-2`). Its
+    # "both halves" property is a PROXY: it greps this selftest's output for `MUST FIRE` headings, and
+    # the arrow and claim-sweep sections already supply them — so it reported `violations: 0` over a
+    # section asserted in the passing direction only. Exactly the shape that shipped the arrow rule at
+    # 2 of 9. In memory, no git writes: narrow each enumerator by one real file and require divergence.
+    print('  MUST FIRE  (a narrowed enumerator is INCOMPLETE)')
+    for _name, _paths, _pat in (('python', tracked_scripts(), '*.py'),
+                                ('markdown', tracked_markdown(), '*.md'),
+                                ('lean', tracked_lean(), '*.lean')):
+        _dropped = sorted(_paths)[:-1]
+        _l, _u = _universe_gap(_dropped, _pat)
+        _fires = _l != _u
+        bad += 0 if _fires else 1
+        print('    %-32s %s (%d of %d)' % ('%s: drop one, gap appears' % _name,
+                                           'ok' if _fires else '*** SILENT ***', len(_l), len(_u)))
 
     print('  SCOPE')
     # ⚠⚠ `tracked_scripts()` IS IN THE PIN, AND ITS ABSENCE IS WHY `RLY21-1` SHIPPED. The pin was fed
