@@ -698,7 +698,7 @@ verified at their definition sites 2026-08-11 — a dated survey, not a complete
 | `Bool`, `Fin 3`, `ℕ → ℕ` | — | "the class bites at two or more points" |
 | `trivialZPSemilattice` | `Valuation/Scale.lean:99` | `ZPSemilattice` membership as an argument |
 | `trivialSelfApp` | `Computability/SelfApp.lean:177` | *"L carries `AbstractSelfApp`, therefore…"* |
-| `trivialValBridge` | `Valuation/ScaleBridge.lean:274` | `ValBridge` membership |
+| `trivialValBridge` | `Valuation/ScaleBridge.lean:218` | `ValBridge` membership |
 | `trivialValuationStructure` | `Valuation/Scale.lean:111` | `ValuationStructure` membership |
 | the constant map `_ ↦ ⊥`, the always-true relation, a constant sequence | — | self-application, `SeparatedSuccession`, periodicity |
 | **ℝ** — `f_snap_impossible`, `Computability/ComputationCannotBe.lean:152` | | any claim that the snap is available in a general ordered carrier |
@@ -1255,10 +1255,9 @@ follows"** — never *"absent"*.
 
 ### (c) in full — THREE PHRASINGS, AND THEY MUST VARY ALONG AXES, NOT BE SYNONYMS. Tim's rule, 2026-08-07, measured three times the same day.
 
-Step (c) used to read *"grep the concept in at least two vocabularies"*. That is the right principle and
-it kept failing, because it says nothing about **which** vocabularies — and three synonyms of one
-formulation are one search run three times. **Vary along the three axes below. Each has its own measured
-false negative from a single session.**
+*"Grep the concept in two vocabularies"* is the right principle and fails on its own, because it says
+nothing about **which** — and three synonyms of one formulation are one search run three times.
+**Vary along the axes below. Each has its own measured false negative from a single session.**
 
 | axis | run BOTH ends | the failure it prevents |
 |---|---|---|
@@ -1349,24 +1348,17 @@ reviewer must act on rather than a number that drifts.**
 findings. Ratified 2026-07-19 after three rounds; memory `feedback_er_ar_max_iterations` carries the
 detail.
 
-**⚠ NO `--no-verify` IS INVOLVED, AND THIS LINE USED TO SAY OTHERWISE (corrected 2026-08-01, Tim).**
-It read *"2 iterations, then push `--no-verify`"* — wording that predates the reviewer refactor and
-describes a scheme that no longer exists. **Under the current scheme a STOP-ORDINARY reviewer WRITES
-ITS SIGNAL**, so at the ordinary cap the hook clears **on its own merits** and there is nothing to
-bypass. Say so in the brief: *withholding the signal on ordinary findings is not a valid outcome.*
-- **Why the stale wording was worse than merely wrong:** it trained the bypass reflex for a situation
-  that can no longer arise, which is exactly the hazard § *NEVER write a `--no-verify` fallback*
-  exists to prevent. **Measured the day it was corrected:** at the cap, with all three gates saying
-  PUSH and post-review edits having staled every signal, Claude proposed `--no-verify` **citing this
-  line**. Tim overruled it and called for a re-signature round instead.
-- **And he was right on the substance, not just the procedure.** The cap's licence assumes the
-  outstanding findings *stay outstanding*. Once you have **acted** on them, the push contains **new
-  unreviewed prose** — a different thing from known debt, and new prose warrants a gate, not a flag.
-  Vindicated immediately: four of the next round's six editorial findings landed in the one file no
-  gate had yet seen, which existed only because it was edited after the gates finished.
-- **The rule that falls out:** *fixing a finding restarts the obligation for the text you changed.*
-  If you edit after a STOP-ORDINARY, re-sign — do not bypass. If you do not want another round, then
-  do not edit: record the findings as next-touch debt and push what was actually certified.
+**⚠ NO `--no-verify` IS INVOLVED AT THE CAP.** A **STOP-ORDINARY reviewer WRITES ITS SIGNAL**, so the
+hook clears **on its own merits** and there is nothing to bypass. Put it in the brief:
+*withholding the signal on ordinary findings is not a valid outcome.*
+
+**⭐ AND FIXING A FINDING RESTARTS THE OBLIGATION FOR THE TEXT YOU CHANGED.** The cap's licence assumes
+the outstanding findings *stay outstanding*; once you have **acted** on them the push contains **new
+unreviewed prose**, which is a different thing from known debt and warrants a gate rather than a flag.
+**So: edit after a STOP-ORDINARY ⇒ re-sign. Do not want another round ⇒ do not edit** — record the
+findings as next-touch debt and push what was actually certified. Measured 2026-08-01: four of the
+next round's six editorial findings landed in the one file no gate had yet seen, which existed only
+because it was edited after the gates finished.
 
 ### Prose about PREVIOUS STATES is redundant. Git holds it. (Tim, 2026-08-08.)
 
@@ -1403,11 +1395,9 @@ gate-findings archive once it is closed. Both are read when choosing work; a doc
 doing mathematics. **The defects that recurred despite earlier fixes did not recur because a docstring
 lacked a retraction — they recurred because the ledger was not consulted.**
 
-**YES, THIS MEANS FIX IT SILENTLY — in the file.** (Tim asked directly; an earlier version of this
-paragraph said the opposite two sentences after saying this, which is the rule about error-narratives
-containing an error-narrative contradiction.) **Delete the false claim, state the true one, and let the
-COMMIT MESSAGE be the narrative.** That is its job, it is versioned, and it is where a reader looking
-for history will actually go.
+**YES, THIS MEANS FIX IT SILENTLY — in the file** (Tim asked directly). **Delete the false claim,
+state the true one, and let the COMMIT MESSAGE be the narrative.** That is its job, it is versioned,
+and it is where a reader looking for history will actually go.
 
 **The record is never lost, because it lives in three places that are not the docstring:** the commit
 message, `.claude-local/DEFECTS.md` while the defect is open, and the session itself. **The only thing
@@ -1928,13 +1918,12 @@ The minimum margin is 10 pts top and 5 pts bottom. If either fails, increase `dh
 
 ## scripts/ is the build scripts' ONLY home. There is no mirror to keep current. (2026-08-15.)
 
-**This section used to describe a hand-copied mirror and a per-commit obligation to refresh it.
-Both are gone.** `scripts/build_*.py`, `zp_utils.py` and `scan_pdfs.py` are the working copies now;
-the `.claude-local/` originals of those were deleted. Edit the file in `scripts/` and commit it
-like any other source file.
+`scripts/build_*.py`, `zp_utils.py` and `scan_pdfs.py` are the working copies; the `.claude-local/`
+originals of those were deleted. **Edit the file in `scripts/` and commit it like any other source
+file — there is no copy step.**
 
-⚠ **NOT every build script moved, and this paragraph said otherwise until 2026-08-15.** Five
-remain private-only: `build_bottom_matrix.py`, `build_claim_map.py`, `build_padicbridge.py`,
+⚠ **NOT every build script moved.** Five remain private-only: `build_bottom_matrix.py`,
+`build_claim_map.py`, `build_padicbridge.py`,
 `build_zp_reals_companion.py`, `build_zpj_bridge_companion.py`. **Measured 2026-08-15: none of
 the five emits a TRACKED artifact**, so nothing published depends on an unpublished builder and
 the transparency position holds — but `scripts/build_dictionary_map.py` *imports* the first of
