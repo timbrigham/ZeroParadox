@@ -2306,6 +2306,17 @@ During working sessions, apply the Communication Quality Rubric to evaluate Tim'
 
 `.claude-local/handoff.md` is the standardized session state file. At the start of every session, read it first. At the end of every session (or before a planned context switch), overwrite it with the current state. It has **two parts, in order**: first, **keeping the conversation thread alive** — the live orientation a fresh session needs to resume mid-thought rather than cold-start; then the **factual ledger** — what was just done, the immediate next action, and anything deferred. The thread leads, the ledger follows; the components, structure, and rationale of the thread part are defined privately (memory `feedback_handoff_thread_first`). Always use this exact filename — one file, always current, always overwritten.
 
+⭐ **"UPDATE THE HANDOFF" IS A COMPOUND ACTION, AND THE PROCEDURE IS DEFINED IN THE FILE ITSELF —
+`.claude-local/handoff.md` PART 0b.** It closes finished tickets by MOVING them to `queue/done/`,
+opens tickets for what was found, **commits the private repo**, and reports (never pushes) main-repo
+state. **Do not restate the six steps here** — one definition, and it lives where it is read first.
+⚠ It is loaded onto this phrase deliberately (Tim, 2026-08-20): the git hygiene this project keeps
+failing at has no reliable trigger, and *"update the handoff"* is one that actually fires.
+⚠ **Overwriting is safe ONLY because `.claude-local` is a git repo — and that is the step with the
+measured failure history.** 2026-08-20: 120 uncommitted entries, 86 of them notes never once
+committed, with 42- and 21-day gaps. An unstarted item vanished from this file for five revisions and
+was recovered only because Tim remembered it existed.
+
 ## Development mode — LOAD THE SECTION BEFORE YOU WORK. (Tim, 2026-07-31.)
 
 **Before fresh mathematical development, read the whole relevant subsystem. Do not start from
