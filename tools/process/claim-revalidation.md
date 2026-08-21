@@ -56,7 +56,9 @@ file, published prose does not need to relitigate it — that is how the ZP-P ca
 Baselined like `check_pov.py`: fires on NEW sites only. It flags modal vocabulary not accompanied by a
 measurement, a reduction, an explicit non-claim, or a **named exhibited witness**.
 
-**First run: 31 sites → 3 real defect clusters.**
+**First run, 2026-08-03: 31 sites → 3 real defect clusters.** (Measured while the checker still lived
+in the private folder; it moved into the tracked tree on 2026-08-15, where the baseline was re-seeded.
+**Do not read 31 as a current figure** — measure on demand.)
 
 - **A FALSE UNIVERSAL NEGATIVE LIVE IN A PUBLISHED PDF.** `ZP_Choice_Free_Core_Addendum` § III said
   *"The framework has no proven-necessity case anywhere."* Two taboo reductions exist
