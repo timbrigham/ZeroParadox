@@ -158,7 +158,13 @@ def pov_blocks():
 _ORDINARY = "ZeroParadox/Order/Snap.lean"          # must always be reviewable
 _EXEMPT_PATH = "CLAUDE.md"                          # exempt by exact path
 _EXEMPT_PREFIX = "tools/verify/check_pov.py"        # exempt by directory prefix
+_EXEMPT_PROCESS = "tools/process/claim-revalidation.md"  # exempt by the SECOND directory prefix
 _EXEMPT_DATA = "scripts/fonts/DejaVuSans.ttf"       # exempt by data extension
+# ⚠ A SECOND PREFIX IS A SECOND ROUTE. `EXEMPT_PREFIXES` was a one-entry tuple when this registry
+# was written, so "directory prefix" tested the mechanism and the only path through it at once.
+# Adding `tools/process/` split those apart: the mechanism stayed covered and the new route was
+# not, which is the exact shape CLAUDE.md means by closing one route and calling the hole fixed.
+# Registered 2026-08-20, in the same change that opened it.
 
 
 def _classifies(paths):
@@ -177,6 +183,8 @@ EXEMPTION_SURFACE = [
      "the operating manual; its own header exempts it"),
     ("directory prefix (tools/verify/)", _EXEMPT_PREFIX, True,
      "operating machinery; /rely reviews this layer and BLOCKS"),
+    ("directory prefix (tools/process/)", _EXEMPT_PROCESS, True,
+     "CLAUDE.md's routed body; declared in its header and routed to /rely, which BLOCKS"),
     ("data extension (a .ttf)", _EXEMPT_DATA, True,
      "a binary carries no prose for a prose gate to read"),
 ]

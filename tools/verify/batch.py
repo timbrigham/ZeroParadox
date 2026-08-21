@@ -233,6 +233,15 @@ ROUTING = [
     (re.compile(r"^tools/verify/", re.I),
      "/rely", "a checker, hook, or exemption switch changed - its first run produced CHK-2 and "
               "CHK-3, both checker bugs, so this is the measured persona for the verification layer"),
+    # `tools/process/` is CLAUDE.md's body — the argument behind each routed rule, split out so the
+    # injected file can be a routing table rather than the payload. Same pairing as the prefix above:
+    # it is exempt in EXEMPT_PREFIXES and routed here, and the two MUST be edited together. Added
+    # 2026-08-20 with its first two files; the exemption is DECLARED in CLAUDE.md's header, never
+    # inferred from "it is operating instructions" — that inference is what put `.claude/commands/`
+    # in the exempt tuple for an hour before it was removed.
+    (re.compile(r"^tools/process/", re.I),
+     "/rely", "CLAUDE.md's routed body changed - a rule whose trigger or pointer rots stops firing "
+              "silently, which is the failure mode the split exists to remove"),
     (re.compile(r"^\.github/workflows/", re.I),
      "/rely", "CI workflow changed - a fail-open here publishes a false verification claim"),
 ]
@@ -886,7 +895,19 @@ EXEMPT_PATHS = ("claude.md", "ssot.json", "lake-manifest.json")
 # "Externally-facing copy -> both gates fire ... Non-discretionary." CLAUDE.md is exempt because it
 # is an internal manual that happens to sit in a public repo; the gate briefs are being published
 # ON PURPOSE, as the artifact showing how this project reviews itself. That is publication.
-EXEMPT_PREFIXES = ("tools/verify/",)
+#
+# ⚠ `tools/process/` JOINED THIS TUPLE 2026-08-20, and it is the one case where the reasoning the
+# paragraph above rejects is nonetheless correct — so the difference has to be stated, not felt.
+# `.claude/commands/` is published ON PURPOSE, as the artifact showing how this project reviews
+# itself; that is publication and both prose gates fire on it. `tools/process/` is the opposite: it
+# is the BODY of CLAUDE.md, split out only so the injected file can be a routing table instead of
+# the payload, and CLAUDE.md is exempt. Moving a paragraph across a file boundary must not invent a
+# review obligation the paragraph did not have while it was inline — that would make the split cost
+# a gate round per extraction and the cleanup would stop.
+# The exemption is DECLARED in CLAUDE.md's header rather than inferred here, and `ROUTING` above
+# fires on this exact prefix, so the pair covers the same set. Fence: anything in there asserting
+# mathematics belongs in the corpus and is gated normally.
+EXEMPT_PREFIXES = ("tools/verify/", "tools/process/")
 
 
 def changed_files(ranges=None):
