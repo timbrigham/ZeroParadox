@@ -122,82 +122,43 @@ for every added declaration, an `ssot.json` row for every added declaration, all
 Those are the four things this project forgets most; each was forgotten again on 2026-08-09 with all
 four rules known and written down.
 
-**⭐ AND THEY ARE NOW ENFORCED BY HOOKS, NOT ONLY BY THIS COMMAND (Tim, 2026-08-09).** `precommit` is
-a manual command, so until this change three of the four obligations could be skipped simply by not
-running it. The enforcement map now:
-- **The four checkers BLOCK AT COMMIT** (`pre-commit` runs each with `--block`; it previously ran
-  them and then `exit 0`'d unconditionally). This does **not** reopen the 2026-07-30 warn-only
-  decision: that argument protects **build state**, because stub-first commits `sorry`-stubbed files
-  deliberately — and none of the four checkers looks at `sorry`, the build, or completeness. They are
-  baselined, sit at zero new, and **already blocked at push**, so nothing newly unpushable becomes
-  uncommittable; the identical failure just arrives earlier, where the fix is cheap.
-- **Purity and SSOT BLOCK AT PUSH** (`pre-push` § 3b-f, via `batch.py decls --block`). Before this
-  they were the only two obligations with **no automatic enforcement anywhere**.
-- **`lake build` deliberately gates NEITHER**, because that is the one genuinely in tension with
-  stub-first. CI at the PR to `main` remains its backstop.
-
-**⭐⭐ THE PIPELINE ANNOUNCES ITSELF, AT EVERY ENTRY POINT, BY DEFAULT (Tim, 2026-08-10: *"update the
-process so that when we run the pipeline in the future this is the default behavior"*).** Before any
-check runs, `hooks.py pre_commit`, `hooks.py pre_push`, `batch.py precommit` and `batch.py prepush`
-each print a manifest: **what is about to run, in what order, which checks BLOCK and which only warn,
-what scope they apply to, what is exempt, and what is deliberately NOT run.** `prepush` additionally
-names each required review — its purpose, what triggers it, its signal file, and **the recorded
-verdict line from that signal** — so *"cleared"* is never read as *"clean"*; all three signals today
-say STOP-ORDINARY, i.e. cleared **with findings outstanding**. One formatter,
-`tools/verify/report.py`, so the four cannot drift into describing themselves differently.
-- **This is not cosmetic; it is how three defects this month stayed invisible.** `check_modal
-  --block` had never blocked a push and the output looked identical either way (`HK-1`);
-  `check_poles` sat in the checker list gating nothing while `precommit` printed `suite ok`
-  (`REL-3`); and three checkers silently skipped a file they judged vendored, which is how a
-  self-exemption hole went unnoticed (`RLY2-1`). **A gate that does not declare its own scope and
-  enforcement mode cannot be audited by reading its output.**
-- ⚠ **Two output bugs found while building it, both of which would have shipped looking correct.**
-  Python's stdout is block-buffered while child processes write straight to the terminal fd, so the
-  manifest printed *after* everything it announced, and section headers landed under the wrong
-  sections. Fixed with `line_buffering=True` alongside `encoding="utf-8"` (the Windows console
-  otherwise mangles an em-dash). Both live in `report.py`, so every entry point inherits them.
-
-**⭐⭐ THE HOOKS ARE NOW THREE-LINE SHIMS. ALL pipeline logic is `tools/verify/hooks.py` (Tim,
-2026-08-10: *"the shell variants are legacy and should be retired... just the python version should
-remain"*).** There were **two partial implementations** — a ~300-line shell hook and `batch.py` —
-and they measurably disagreed three ways (what counts as reviewable; whether signals are required
-when nothing reviewable changed; whether a gate-exempt file can stale a signal) while checking
-**disjoint** things (the `/rely` routing only in `batch.py`, the four checkers and path resolver only
-in the hook). Neither was the pipeline. Shell and Python cannot share a module, so the shell went.
-**Edit `hooks.py`; the shim must never grow.**
-- ⚠ **This is also how `REL-1` got fixed, and the ordering was load-bearing.** The hook knows the
-  refs being pushed; `batch.py` alone did not, so it computed "what changed" from the working tree
-  and went **vacuous the moment a commit landed**. `hooks.py` parses stdin and passes the ranges in.
-  Measured on `7d25a46..e15b222`: the working tree reports **0 reviewable, trigger 5 not firing**;
-  the same range reports **22 reviewable, 346 insertions, trigger 5 FIRES**. Delegating *before*
-  fixing this would have replaced a correct computation with a vacuous one.
-- **`batch.py prepush` and the hook now run the same code**, the hook passing `--ranges` and a manual
-  run reading the working tree. One definition, two entry points.
+**⭐⭐ DO NOT LOOK UP WHAT BLOCKS WHERE — THE PIPELINE ANNOUNCES ITSELF AT EVERY ENTRY POINT.** Before
+any check runs, all four entry points print a manifest: what is about to run, in what order, which
+checks BLOCK and which only warn, what scope, what is exempt, and what is deliberately NOT run.
+`prepush` additionally prints **the recorded verdict line from each review signal**, so *"cleared"*
+is never read as *"clean"*. **Run it; never maintain a prose copy of its answer** — one formatter
+(`report.py`), so the four cannot drift.
 
 ⚠ **The purity/SSOT check is driven by an ON-DISK BASELINE (`tools/verify/decl_baseline.txt`), never
-by git** — see the hashing rule below. It used to compute "added" against `HEAD`, which is meaningful
-only *before* the commit; run afterwards it returned nothing and both checks passed vacuously. A
-**stale baseline is safe**: it can only make more declarations look new, so the check gets stricter,
-never blind. Re-seed with `python tools/verify/batch.py decls --baseline`. Vendored backports are
-exempt structurally, as in `check_prose.py`.
+by git.** Computed against `HEAD` it is meaningful only *before* the commit, and run afterwards both
+checks passed **vacuously**. A **stale baseline is safe** — it can only make more declarations look
+new, so the check gets stricter, never blind. Re-seed:
+`python tools/verify/batch.py decls --baseline`. Vendored backports are exempt structurally.
+
+**⚠ ALL pipeline logic is `tools/verify/hooks.py`; the hooks are three-line shims. Edit `hooks.py`,
+and the shim must never grow.** Two partial implementations measurably disagreed three ways while
+checking disjoint things — that is what this replaced.
 
 **Use `/batch <bucket>` for anything MULTI-SITE** — a debaselining bucket, a defect-class sweep, a
 file-sized burn-down. It adds stage ordering (`ledger` → `screen` → `probe` → `judge`), a frozen
 filter snapshot, and a recorded note per stage. **A single targeted fix with a named defect id does
 not need a batch**; `precommit` alone covers it.
 
-**Why stages exist at all: `ledger` and `screen` are the two that got skipped.** Consulting
-`DEFECTS.md` first is a discipline that failed three times in one session — three "findings"
-duplicated rows already in the ledger. A step that is not a stage is a step that can be forgotten.
-
-⚠ **If a stage BLOCKS, fix the cause.** Do not delete `batch_state.json`, do not `--no-verify`, do
-not push a subset to dodge a signal. A block is the control working, and this project has two
-recorded bypass incidents that both began by treating one as an obstacle.
-
 ⚠ **Filters are frozen at `batch start`.** Editing a checker mid-batch means the work was done
 against a moving target; the batch is invalid and must restart. Route filter defects to `DEFECTS.md`
 and fix them in their own batch. (Violated by the author of the rule on the day it was written —
-see `PRC-1`.)
+`PRC-1`.)
+
+⚠ **If a stage BLOCKS, fix the cause.** Do not delete `batch_state.json`, do not `--no-verify`, do
+not push a subset to dodge a signal. **This project has two recorded bypass incidents and both began
+by treating a block as an obstacle.**
+
+📖 **WHY THE PIPELINE IS SHAPED THIS WAY — `tools/process/pipeline.md`.** Which obligation gates at
+commit versus push and why `lake build` deliberately gates neither; the three defects that stayed
+invisible for a month because a gate did not declare its own enforcement mode; and the `REL-1`
+ordering lesson, where delegating before fixing would have replaced a correct computation with a
+vacuous one. **Read it before changing `hooks.py`, `batch.py` or `report.py`, or before arguing a
+gate is in the wrong place.**
 
 ## ⭐ The defect register — `.claude-local/DEFECT_CLASSES.md`. Consult it by DEFAULT.
 
@@ -1320,72 +1281,30 @@ brief with N substituted. **Open it before spawning any gate.** Why it matters: 
 does not fire from inside the loop — on 2026-07-19 three rounds ran against a 2-round cap because
 nobody was counting, and a reviewer that bumped the counter itself burned the cap a round early.
 
-## NEVER pipe `git push` through `head`/`tail` — it BYPASSES the pre-push gate. Hard Rule.
+## NEVER truncate the output of a hook-running command, and NEVER write a `--no-verify` fallback. Hard Rules.
 
-**Measured and reproduced 2026-07-26.** The same push, same repository state, same signals:
+**TRIGGER — an action: you are about to put `| head`, `| grep -q`, `| grep -m`, `| sed q` or any
+early-exiting consumer around a command that runs a git hook, or to write `|| git push --no-verify`.**
 
-```
-git push --dry-run origin <ref>                    → exit 1   (blocked, correctly)
-git push --dry-run origin <ref> 2>&1 | head -5     → exit 0   (SUCCEEDS — gate bypassed)
-```
+- **Redirect, do not truncate.** `git push origin <branch> > push.log 2>&1; echo $?`, then read the
+  log. (`tail` reads to EOF and is safe; the rule covers everything anyway, because you should not
+  have to remember which consumers exit early.)
+- **`--no-verify` is a separately-typed decision, never a fallback and never chained with `||`.** The
+  one documented case is a `CLAUDE.md`-only change against a stale signal.
 
-**Mechanism.** `head` exits after N lines and closes the pipe. The hook is still writing (file-reference
-resolver, invariants, hash check, font checks, then the review-signal check
-*last*). It dies of SIGPIPE **before reaching its `exit 1`**, and git proceeds with the push. The review
-gate never runs — and its output is at the END, so any truncation short enough to be useful is long
-enough to skip it.
+**⚠ THE COST, AND IT IS WHY THESE ARE HARD RULES: BOTH BYPASSES SUCCEED SILENTLY — THE PUSH LOOKS
+GREEN.** Measured 2026-07-26: the identical push exited **1** (blocked) bare and **0** (pushed)
+through `| head -5`, because `head` closed the pipe and the hook died of `SIGPIPE` before reaching
+its `exit 1` — and the review-signal check runs **last**, so any truncation short enough to be
+useful is long enough to skip it. A twelve-file push with a stale `pa_cleared.txt` reached `origin`
+that way. The `||` fallback is the same failure written down on purpose. **If a push is blocked,
+read the reason and fix it — the block is the control working.**
 
-**This actually happened.** A twelve-file push whose `pa_cleared.txt` was stale was blocked on the first
-attempt, then went to `origin` on a second attempt run as `git push … 2>&1 | head -40` — issued only to
-read the hook's output. Nothing else changed.
-
-**Two defences, both now in place:**
-1. **The hook is SIGPIPE-immune.** `trap '' PIPE` on line 2 of `.git/hooks/pre-push` (and the
-   version-controlled copy at `tools/verify/proposed_pre_push_hook.sh`). Verified: the truncated push
-   above now exits 1, and a nothing-to-push still exits 0. **Hooks live in `.git/` and are NOT
-   version-controlled — this fix must be re-installed per clone from the staged copy.**
-2. **Do not truncate push output.** Redirect to a file and read that:
-   `git push origin <branch> > /tmp/push.log 2>&1; echo $?` then inspect the log. Never
-   `| head`, `| tail`, `| grep -m`, or any consumer that exits early. The same hazard applies to any
-   hook-running command whose output you truncate.
-
-**Why this is filed as a hard rule and not a footnote:** a gate that can be cleared by re-running the
-command with a pipe is not a gate, and it fails *silently* — the push looks green. Anything that reaches
-a public remote must pass the gate on its own merits, not because a reader closed the pipe early.
-
-**Scope of the pipe hazard, measured after the fix:** `head` and `grep -q` (and `grep -m`, `sed q`, any
-consumer that exits before EOF) all sever the pipe early; `tail` does not, because it reads to EOF. With
-SIGPIPE immunity installed, the hook survives all of them and still exits 1. **The rule stands
-anyway** — do not rely on the protection being present, and never truncate push output.
-
-⚠ **Where the immunity actually lives, corrected 2026-08-15.** It is no longer `trap '' PIPE` in a
-shell hook: the shell hooks became three-line shims in August, and the protection moved into
-`tools/verify/hooks.py`, which ignores `SIGPIPE` where the signal exists and handles
-`BrokenPipeError` everywhere. Nothing was lost in that conversion — but a reader looking for `trap`
-in `.git/hooks/pre-push` will not find it, and could reasonably conclude the defence was dropped.
-
-⭐ **And the "fresh clone" half is now fixable rather than merely warned about.** The hook SOURCES
-are tracked at `tools/verify/proposed_pre_*_hook.sh`; `python tools/verify/install_hooks.py`
-installs them and `--check` exits 1 when the gates are not armed. The installed hook still lives in
-`.git/hooks/` and still is not version-controlled — git has no mechanism for that — but the copy
-step no longer depends on someone having been handed the file out of band.
-
-### And NEVER write a `--no-verify` fallback into a push command. Hard Rule.
-
-**Measured 2026-07-26 — self-inflicted, same session as the pipe bypass.** A command of the shape
-
-```
-git push origin <branch> ... || git push --no-verify origin <branch> ...
-```
-
-was written to "handle" a possible block. **That is an unconditional, silent gate bypass**: if the gate
-fires, the fallback pushes anyway, and the transcript shows a successful push. It did not fire that time
-only because the push was `CLAUDE.md`-only and therefore gate-exempt. It would have bypassed a real block.
-
-`--no-verify` is legitimate **only** as a deliberate, separately-typed decision for a known-good reason
-(the documented case is a `CLAUDE.md`-only change against a stale signal), never as an automatic fallback
-and never chained with `||`. If a push is blocked, **read the reason and fix it** — the block is the
-control working.
+📖 **THE MEASUREMENTS, AND WHERE THE DEFENCE ACTUALLY LIVES — `tools/process/push-gate-bypass.md`.**
+The immunity is in `tools/verify/hooks.py`, **not** a `trap '' PIPE` in `.git/hooks/pre-push` —
+a reader who greps for `trap` will not find it and could conclude the defence was dropped. Install
+per clone with `python tools/verify/install_hooks.py`; `--check` exits 1 when the gates are not
+armed. **Read it before assuming the clone you are standing in is protected.**
 
 ## Staging — `git add` NAMED PATHS, never `-A`, Hard Rule
 
@@ -1446,110 +1365,63 @@ Same-session self-review does not satisfy this requirement. The review must be a
 
 ## Prior-Art Search — Trigger Conditions and Gate
 
-The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. Prior-art search is therefore a **gated control**, not an aspiration. It is enforced through the adversary-review gate's **synthesis-layer detection** (the same routing pattern as claim-status → `/claim-review`).
-
-**Scope — synthesis/bridge layers only.** A trigger fires on content that unifies, connects, or identifies a structure across more than one field or framework (e.g. the diagonal-fixed-point keystone, ZP-P, ZP-G/H). It does **not** fire on theorem-backed layers whose central claim is a single named classical theorem the framework merely invokes (ZP-B / Ostrowski, ZP-L/M / Gentzen) — those are already anchored. *Caveat (the ZP-D lesson):* a theorem-backed layer can still carry a distinctive *construction* with its own prior art that the cited theorem does not cover — caught by trigger 5 below, not by synthesis-detection.
+The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. **It BLOCKS at push:** the adversary gate detects synthesis-layer content and withholds `ar_cleared.txt`, and the pre-push hook checks `pa_cleared.txt` directly on trigger 5.
 
 ### ⚠ TRIGGER 0 — SEARCH BEFORE YOU BUILD. Hard rule, and it is the cheapest one here.
 
-**If you can state the claim in one sentence of standard mathematical English, search for it
-BEFORE writing Lean.** Not after. The post-hoc gate below still runs; this sits in front of it.
+**If you can state the claim in one sentence of standard mathematical English, search for it BEFORE
+writing Lean.** Not after. The post-hoc gate still runs; this sits in front of it.
 
-**Measured 2026-07-27 — three findings in a single day, every one of them searchable beforehand:**
-
-| what was built | what already existed | cost of not looking |
-|---|---|---|
-| `notEL_unique` (non-terminating element of the final coalgebra of `1 + X` is unique) | **Escardó's `not-finite-is-∞'`** (TypeTopology) — and proved from function extensionality alone, where ours carries `Classical.choice` | a whole build, and a *purer* proof left on the table |
-| `HasFirstStep` (a first step above the bottom, nothing between) | **Mathlib's `CovBy`**, over a weaker typeclass, plus `CovBy.unique_right` and `not_covBy` | a false `[ZP-CUSTOM]` registry entry, **and we missed `denselyOrdered_iff_forall_not_covBy` — a BICONDITIONAL stronger than the framework's own claim** |
-| the Glauber one-bit probes | **one sentence** of Krapivsky-Redner-Ben-Naim p. 123; the premise of Hajek (1988); five lemmas already in Mathlib as `Real.sigmoid` | 256 lines reduced to 162, proof body to 6 lines; three claims retracted |
-
-**The point is NOT embarrassment-avoidance. Searching first gets you MORE.** In those three cases
-it would have handed us a stronger theorem (the density biconditional), a purer proof (Escardó's),
-free derivative/analyticity/continuity lemmas (`Real.sigmoid`), and the standard NAME for a thing
-described longhand ("critical slowing down").
+**⭐ THE POINT IS NOT EMBARRASSMENT-AVOIDANCE — SEARCHING FIRST GETS YOU MORE.** Measured 2026-07-27
+across three findings in one day, it would have handed us a **stronger** theorem than our own claim
+(a biconditional), a **purer** proof (function extensionality where ours took `Classical.choice`),
+free analyticity lemmas, and the standard NAME for a thing described longhand.
 
 **The three-step check, ~10 minutes:**
-1. **Grep our own corpus.** *This was the cheapest miss and it happened three times in one day* —
-   `NatListRegime.lean` already had the `1 + X` coalgebra, `Miniature.lean` already had
-   `enat_fp_iff`, `State/ReversibleSpectrum.lean` already had `Reversible` (a third definition of
-   detailed balance was written anyway). Not literature. A grep.
-2. **Grep the pinned Mathlib** for the concept, not just the name you would have chosen.
-   ⚠⚠ **AND IF THE CLAIM IS A LEAN STATEMENT, RUN `exact?` — IT BEATS GREP AND IT IS THE ONLY STEP
-   HERE WHOSE VERB IS *RUN*.** Grep searches **names**; `exact?` searches **statement shape**, so it
-   finds the lemma even when the library's chosen name is one you would never have guessed — which is
-   exactly the case where grepping "the concept" fails. Same authority argument as *"grep is not the
-   authority; `#check` is"* under § *NOT IN THE LIBRARY IS A CLAIM*, and it also reaches the
-   attribute-generated siblings (`@[to_dual]`, `@[simps]`) that have **no source line to grep**.
-   **Measured 2026-08-12:** a ten-line hand proof was written for the generic
-   connected-vs-totally-disconnected wall, having run steps 1 and 2 that same session on a neighbouring
-   thread. **`subsingleton_of_preconnected_totallyDisconnected` was already in Mathlib**, found by an
-   adversary gate with `exact?` and not by any grep. Adopting it cut the proof body from seven lines to
-   one **and corrected the mathematics**: the library states the result as `Subsingleton α`, so the
-   obstruction is a **cardinality floor** (connected + totally disconnected forces *at most one point*;
-   `Nontrivial` forbids it), not the topology fact the hand proof's route through `connectedComponent`
-   implied. **The standard framing was not merely shorter — it was the honest statement of what the
-   theorem obstructs.** Purity was checked before swapping, per the `CovBy` precedent: no regression.
-3. **One literature search** if the object has a name (Glauber dynamics, coalgebra, covering
-   relation). `.claude-local/papers/` FIRST — it is the downloaded-source library.
+1. **Grep our own corpus.** The cheapest miss, and it happened three times in one day.
+2. **Grep the pinned Mathlib for the CONCEPT, not the name you would have chosen — and ⚠⚠ IF THE
+   CLAIM IS A LEAN STATEMENT, RUN `exact?`.** It beats grep and is the only step here whose verb is
+   **RUN**: grep searches *names*, `exact?` searches *statement shape*, so it finds the lemma whose
+   name you would never have guessed, and it reaches the attribute-generated siblings (`@[to_dual]`,
+   `@[simps]`) that have **no source line to grep**.
+3. **One literature search** if the object has a name. **`.claude-local/papers/` FIRST** — it is the
+   downloaded-source library, and a scout once declared Aczel unobtainable while it sat on disk.
 
-**⚠ AND WHEN YOU FETCH A SOURCE, FILE IT. The library only works in both directions.**
-A **probe or scratch script** goes in the session scratchpad and is deleted. A **fetched SOURCE** is
-the opposite: it goes in `.claude-local/papers/`, named `author_topic_year[_id].pdf`. Nothing said this
-before, so every scout fetched, used, and abandoned — and the next one re-fetched or wrongly reported
-the source unobtainable.
-- **Measured 2026-08-02:** 19 PDFs were sitting abandoned across session scratchpads, **15 of them
-  genuine and absent from the library** — including **Diaconescu 1975** (cited in five Lean files and
-  the subject of its own ledger entry), **Barwise & Moss *Hypersets***, **Paulson's ZF final-coalgebra
-  paper**, **Rutten & Turi**, **Hajek 1988** and **Krapivsky–Redner–Ben-Naim ch. 7** (both named in the
-  Trigger-0 table above as prior art this project already missed once), and the **Buckingham /
-  Castro–de Boer / Villaverde** sources cited by name in `CLAIMS.md`. Filing them took the library from
-  55 to 70 files.
-- **VALIDATE BEFORE FILING.** 4 of the 19 were correctly discarded: three unreadable failed fetches
-  (a 12KB "Aczel", a 3KB "Glauber", a 2KB "Ramsey" — a tiny PDF is an error page, not a paper) and one
-  ZP-E build artifact, which is not a source at all. Open it and check the page count and first page.
-  A library with junk in it lies in the other direction.
-- **Do NOT record a file count anywhere** — this file carried "55 files / 43 PDFs" until the day it
-  went stale by 15. Measure: `Get-ChildItem .claude-local\papers -File | Measure-Object`.
-- Carry both halves — *check it first* AND *file what you fetch* — into every scout brief.
+**⚠ AND WHEN YOU FETCH A SOURCE, FILE IT** — `.claude-local/papers/`, named
+`author_topic_year[_id].pdf`. **Validate before filing** (a tiny PDF is an error page, not a paper).
+**Never record a file count** — measure it. **Grep loosely**: scanned books are OCR'd with spurious
+intra-word spaces, so a tight-pattern miss is not evidence of absence. **Carry both halves — check it
+first AND file what you fetch — into every scout brief.**
 
-**The exception, and it is real:** if you *cannot* yet state the claim in one sentence, building
-is how you find the shape and searching returns noise. Build, then search before promoting. The
-trigger is nameability, not a stopwatch — a rule of "never build first" would be wrong and would
-stop real work.
-
-⚠ **"Then search before promoting" is the half that gets skipped — measured 2026-08-08.** A
-requirements-class degeneracy audit (a survey, correctly un-searchable in advance) produced a
-**theorem**: the valuation axioms force an infinite carrier. The corpus grep run before the audit
-covered the **class names** (`ValBridge`, `ValuationStructure`) and never the **claim** —
-*one or infinitely many*, *no finite middle*, *orbit*, *periodic point*. `Order/OrbitDichotomy.lean`
-already proved that shape and its own header **named the framework's scale map as the checkable
-branch of it**; cross-references between the files, both directions, were zero. **When a survey turns
-into a theorem, the prior-art clock restarts — the search that justified the investigation does not
-cover the mathematics that came out of it.** (The delta was real, so the fix was a pointer, not a
-revert: the trunk assumes `Function.Injective s`, which the class does not supply.)
+**The exception, and it is real:** if you *cannot* yet state the claim in one sentence, building is
+how you find the shape and searching returns noise. Build, then **search before promoting** — and
+that second half is the one that gets skipped. **When a survey turns into a theorem, the prior-art
+clock restarts**; the search that justified the investigation does not cover the mathematics that
+came out of it.
 
 **Standard framing, once found, is ADOPTED — not noted and worked around** (Tim, 2026-07-27:
-*"anytime that we have official framing we need to make use of it"*). Keep the framework's own
-label as the handle where one exists (the CC-2 / AX-B1 pattern: `HasFirstStep` stayed a name and
-became `∃ a, bot ⋖ a`), and take the library's lemmas. **One caveat measured the same day:** check
-purity before swapping a proof — adopting `CovBy.unique_right` pushed `firstStep_unique` from
-`[propext]` to full choice, so the hand proof was kept and the standard name cited instead.
+*"anytime that we have official framing we need to make use of it"*). Keep the framework's own label
+as the handle where one exists; take the library's lemmas. ⚠ **Check purity before swapping a
+proof** — one adoption pushed a `[propext]` theorem to full choice, so the hand proof was kept and
+the standard name cited instead.
 
 **Trigger conditions:**
 1. **A new synthesis/bridge layer is created** — prior-art search before its first push. (Highest yield; every gap found in the 2026-06-22 arc originated at layer creation.)
 2. **A synthesis layer's central/distinctive claim is revised or strengthened** — re-run for that claim.
 3. **A layer is prepared for outreach or arXiv** — prior-art search is part of the pre-flight, beside the adversary pre-flight.
 4. **Reactive:** an external reviewer asks "have you seen X?" — search, then add the result to the CLAIMS "Convergence with established work" table with attribution.
-5. **A new `.lean` file, or a large net addition to one** — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim (the mechanical complement to synthesis-detection). This is what would have caught ZP-D's `T` (the van der Put / Kozyrev ball-indicator ONB), which the synthesis-only trigger missed.
+5. **A new `.lean` file, or a large net addition to one** (≥50 net `.lean` lines) — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim. This is the mechanical complement to synthesis-detection, and what would have caught ZP-D's `T` (the van der Put / Kozyrev ball-indicator ONB).
 
-**The mechanism (how it runs):**
-- **Step 0 — grep our own corpus first.** Before any web search, `/prior-art-review` greps the repo + `.claude-local` (notes, **`papers/`**, `external/`, outreach) for an existing reference; much of this project's prior-art knowledge already lives there, so this prevents false-positive "gaps" — e.g. the Bruhat-Tits tree is already cited in `PadicTree.lean`, and a web-first sweep "rediscovered" it. **`.claude-local/papers/` is the downloaded-source library and is the FIRST place to look for a book or paper — check it before concluding a source cannot be obtained; and FILE any source you fetch into it (see the rule under Trigger 0 above).** **No file count is recorded — measure it.** This line carried "55 files, of which 43 are PDFs" (itself a 2026-07-30 correction of an earlier "55 PDFs" that miscounted HTML/txt captures), and on 2026-08-02 it went stale by 15 files at once. A figure quoted rather than regenerated is this project's most reliably recurring defect. Measured 2026-07-26: a scout spent a full search declaring Aczel's *Non-Well-Founded Sets* unobtainable (404s, dead mirrors, lending-restricted archive.org) while `.claude-local/papers/aczel_afa_manuscript.pdf` sat on disk — because this line listed `external/` and omitted `papers/`, and the brief inherited the omission. **Carry `papers/` into every scout brief explicitly.** Note also that scanned books here are OCR'd with spurious intra-word spaces ("depend ent choice s"), so **grep loosely** — a miss on a tight pattern is not evidence of absence.
-- The **adversary-review** gate detects synthesis-layer content. If a distinctive cross-field claim lacks a specialist-branch citation (in the content or the CLAIMS Convergence ledger) and there is no `.claude-local/pa_cleared.txt` matching HEAD, it adds a kill-list item — `ar_cleared.txt` is withheld and the pre-push hook blocks. (Detection only; the adversary does not perform the search.)
-- The **pre-push hook also checks `pa_cleared.txt` directly** when the push adds a new `.lean` file or a large net `.lean` addition (trigger 5: a new `.lean` file, or ≥50 net `.lean` lines in the push). This closes the library-duplication leak: a non-synthesis `.lean` re-proof of an existing library lemma (e.g. a `lawvere_fixedpoint` duplicating Mathlib's `Function.exists_fixed_point_of_surjective`) carries no synthesis claim for the adversary to detect, so the hook enforces prior-art directly. Synthesis prose still routes through the adversary path above; `.lean` constructions are now hook-gated independent of it. (Hooks live in `.git/`, not version-controlled — per-clone install; staged at `tools/verify/proposed_pre_push_hook.sh`.)
-- **`/prior-art-review`** is the deep gate it routes to: a fresh-agent literature scout that states each distinctive synthesis claim in the target field's terms, searches for and **reads from source** the specialist branch, and either cites it (with the honest delta, credit pointing outward) or records "searched, none found." For a new or substantially-expanded `.lean` file the scope also includes a **library-duplication check** on the file's central/named results — a re-proof of an existing Mathlib lemma or a re-built known construction must cite the library/source version (bounded to named/central results, not every helper lemma). On PASS it writes `.claude-local/pa_cleared.txt`; the push clears once both adversary and prior-art-review are satisfied.
-- Same-session self-review does not satisfy this. The review must be a separate scout context (spawned Agent with no conversation history).
+**`/prior-art-review` is the deep gate**, a fresh-agent scout — same-session self-review does not
+satisfy it. On PASS it writes `.claude-local/pa_cleared.txt`. **The record:** the CLAIMS "Convergence
+with established work" table is the public ledger; `.claude-local/notes/prior_art_*` holds the
+per-search findings.
 
-**The record:** the CLAIMS "Convergence with established work" table is the public ledger of identified prior art; `.claude-local/notes/prior_art_*` notes hold the per-search findings and saved sources. Standing practice: memory `feedback_prior_art_search_baseline.md`.
+📖 **THE MEASURED CASES, THE THREE STEPS IN FULL, AND HOW THE GATE RUNS — `tools/process/prior-art.md`.**
+What each of the three 2026-07-27 findings cost, the `exact?` case that corrected the mathematics and
+not just the line count, the 19 abandoned PDFs, the survey-became-a-theorem case, and the scope rule
+that decides whether a layer triggers at all. **Read it before writing a scout brief or arguing that
+a layer is out of scope.**
 
 ## Guiding Principles (from Project Instructions)
 
@@ -1651,59 +1523,23 @@ number to GUIDE.md is a regression, not a helpful addition.**
 
 ## Companion Document Versioning
 
-Each formal ZP-X document has a paired illustrated companion (`ZP-X_Illustrated_Companion.pdf`). Companion PDFs overwrite in place - no versioned filename, no archiving (git history + Zenodo snapshots are the record). The current companion version lives only in the title block of the PDF and the docstring of its build script.
+**TRIGGER — an action: a formal document was updated, or you are touching any rendered PDF text.**
 
-### Companion sync rule
+- **Review its companion IN THE SAME SESSION**, and bump the companion's internal version in the
+  **same commit**. Companion versions are independent of formal versions; what matters is that the
+  companion is not materially **stale**, because a general reader meets the framework there and a
+  stale key-result box misdescribes what is proved.
+- **A document's OWN version appears in exactly ONE place in rendered content — the subtitle meta
+  line.** No self-version changelogs, no `[new in v1.7]` provenance tags. **Editorial review kills
+  these.** ⚠ **Cross-document citations are exempt** (*"T-SNAP derived in ZP-E v2.0"*) — that is a
+  citation, not a self-changelog, and treating it as a violation is a false kill.
 
-**Whenever a formal document is updated, review its companion in the same session.** Ask:
-- Does the companion describe any result whose label or status changed? (e.g., "Candidate Theorem" → "Theorem T-SNAP", CC-2 added, RP-2 added)
-- Does the companion omit a new result a general reader would benefit from? (e.g., L-INF, a new lemma or design principle)
-- Does the companion's key result box or closing summary still accurately reflect the framework state?
-
-If yes to any of these, update the companion and bump its internal version number in the same commit as the formal document. Do not leave the companion behind.
-
-### Bumping a companion version
-
-When updating a companion, change:
-1. The subtitle paragraph in `build()`: e.g., `'Information Theory | Version 1.4'` → `'Version 1.5'`
-2. The docstring at the top of the build script
-
-Companion version numbers are independent of formal version numbers. What matters is that the companion is not materially stale.
-
-### Version numbers and changelogs in rendered PDF content (ALL PDFs)
-
-**This rule applies to every PDF in the project — formal layers, companions, addenda — not just companions.** (Generalized 2026-06-13, Tim: version changelogs in rendered content should be "murdered by the style guide and review." Scope is **rendered PDF content only** — build-script docstrings and `register.md`/`RELEASES.md` are the changelog of record and are exempt; git history is the real changelog.)
-
-**The document's OWN version must appear in exactly one place in rendered PDF content: the subtitle / tagline meta line** (`'... | Version ' + VERSION + ' | ...'`; formal-doc footers via `make_doc()` may also carry it). Nowhere else in rendered content — not in disclaimers, section headers, body prose, title-block notes, endnotes, or status/provenance tags.
-
-**No self-version changelogs or provenance tags in rendered PDF content.** A title-block "note" or endnote narrating `"v1.1: Added X. v1.0: Initial release…"` is a violation — this was the standard formal-doc pattern (e.g. ZP-M) and is now retired. The title-block note must describe what the document *is*, not its version history. Violations include: `"New in v1.6"`, `"In v2.7, DA-1 was upgraded"`, `"End of ZP-X v1.0"`, `"Updated ZP-E v3.0 | …"`, and status/provenance tags such as `[unchanged from v1.0]`, `[new in v1.7]`, `[rebuilt in v1.1]`, `Relabelled in v1.2`, `Supersedes v1.4`. Strip them on discovery and bump the version.
-
-**EXCEPTION — cross-document version citations are ALLOWED (Tim, 2026-06-14).** A reference to *another* document's version (e.g. `"T-SNAP derived in ZP-E v2.0"`, `"Closed in ZP-G v1.1"`) is a legitimate citation, not a self-changelog, and is **not** a violation. The rule targets a document's references to *its own* version history, not citations of where a result landed in a sibling layer.
-
-**Editorial review enforces this as a kill** for any rendered mention of the document's OWN version beyond the single meta line, or any rendered self-version changelog/provenance tag. Cross-document version citations are exempt.
-
-### Companion sync checklist
-
-Run this whenever a formal document version changes:
-- [ ] Key result box / closing summary still accurate
-- [ ] Changed theorem or claim labels updated in plain language (e.g., "AX-1 is a Candidate Theorem" → "T-SNAP is a proven theorem")
-- [ ] New results relevant to a general reader added with plain-language explanation
-- [ ] Internal version string bumped if any changes were made
-- [ ] Build script docstring updated to match
-
-### Companion prose precision checklist
-
-Apply this when drafting or reviewing any companion section that makes claims about mathematical structures, properties, or comparisons. The same errors can appear in formal document preambles and contextual sections — it does not apply to formal theorem statements, which are held to a separate standard via Lean verification.
-
-**Category 1 — Precision errors:** Using the wrong technical term for the actual mathematical property being claimed. Common risk: describing a valuative property (e.g., v₂(0) = +∞) using topological vocabulary (e.g., "topologically isolated"), or using metric language for an algebraic property. Before using any technical term, verify it names the correct property in the correct sub-field.
-
-**Category 2 — Invented terminology:** Using informal or invented phrases as if they were recognized mathematical concepts. Any non-standard term that sounds technical risks confusing readers who know the actual vocabulary. Use standard terminology or explicitly flag non-standard usage as informal/metaphorical.
-
-**Category 3 — Directional ambiguity:** Claims where it is unclear whether the sentence is describing a property a structure has (and saying that's bad) or prescribing what a structure should have (and saying it falls short). Any sentence of the form "X is Y" near a comparison between two mathematical structures should make the normative/descriptive distinction explicit.
-
-**Category 4 — Context-free structural claims:** Asserting something as universally true that is only true within the ZP framework. Claims about zero or ⊥ that are true in the ZP context may be false in most mathematical frameworks. Scope all such claims explicitly to the ZP setting.
-
-**Category 5 — Scope overclaiming:** A statement implying a broader negative conclusion than intended. Universal quantifiers ("any domain," "every structure") applied to a ZP-specific limitation overstate the claim. Narrow the scope to what is actually proved.
+📖 **THE CHECKLISTS — `tools/process/document-workflow.md`.** The companion sync questions and
+checklist, the full violation list to strip on discovery, and the **five prose-precision categories**
+(precision error · invented terminology · directional ambiguity · context-free structural claim ·
+scope overclaiming) that every companion section is drafted and reviewed against. **Open it before
+writing companion prose** — those five are the errors that recur, and they are graded by an editorial
+gate that will send them back.
 
 ## Vocabulary Reference Guide — Standing Update Rule
 
@@ -1879,77 +1715,28 @@ This project runs on **Windows 11**. Shell commands must use PowerShell syntax, 
 
 ## README.md and GUIDE.md Maintenance
 
-The project index is split across two files. README.md is the formal index (for mathematicians and reviewers). GUIDE.md is the general reader hub (plain language, companions, reading paths). Both are public.
+**README.md is the formal index** (mathematicians and reviewers); **GUIDE.md is the general-reader
+hub**. Both are public and each carries a cross-pointer to the other near the top. **Preserve the
+section order in both** — do not add top-level sections, reorder, or drop terminal sections without
+agreement.
 
-### README.md and GUIDE.md Document Structure
+**TRIGGER — audit BOTH files when any of these happens:** a document is versioned up · an open
+question is closed · a claim's status changes · a document is added or archived.
 
-Preserve the existing section order in both files. Do not add top-level sections, reorder sections, or remove terminal sections (License, Citation, Contact, Purpose in README.md; footer pointer in GUIDE.md) without agreement. README.md is the formal index for mathematicians; GUIDE.md is the general reader hub. Both must have a cross-pointer to the other near the top.
+⭐ **`check_hashes.py` mechanically compares `register.md` against README's Framework table** on
+every run, joined on the **PDF filename** (never the `ZP-X` code — four register rows begin `ZP-J`).
+**Update `register.md` FIRST and propagate to README in the same session**; the check found five
+stale README rows on its first run.
 
-### Formatting Standards
+⚠ **GUIDE.md carries NO version numbers, deliberately, and that is a property to preserve.** Check
+its link *targets* resolve; **never** "sync" a version into it. A version number appearing in
+GUIDE.md is a regression to revert — it would mint a third copy of every version and force the
+comparator to grow a third arm to police the copy the decision created.
 
-**File links:**
-- Display text uses clean names — no file extensions, no version numbers
-  - Correct: `[ZP-A Lattice Algebra](ZP-A_Lattice_Algebra_v1_2.pdf)`
-  - Wrong: `[ZP-A Lattice Algebra v1.2.pdf](...)`
-- Link targets always point to the current (non-suffixed) version
-
-**Text:**
-- Use regular hyphens (`-`), not em dashes (`—`); mathematical arrows (`→`) are fine
-
-**Tables:**
-- Consistent column alignment; meaningful headers (File, Document, Version, Contents)
-- Version numbers go in the Version column only, not in display text
-
-### Validation Checklist (both files)
-
-Before committing any README.md or GUIDE.md update:
-- [ ] All linked files exist (verify with `Glob` tool, pattern `*.pdf`)
-- [ ] No file extensions in display text; no version numbers in display text
-- [ ] No em dashes — regular hyphens only
-- [ ] README.md: Axiomatic Commitments current (AX-1 is T-SNAP, not an axiom); Question Register reflects actual status
-- [ ] GUIDE.md: Reading Paths version numbers match register.md; "What This Is Not" section present
-- [ ] Cross-pointer to the other file present near top of each
-
-### Document Sync Requirements — Triggers and Checklist
-
-Certain changes require both README.md and GUIDE.md to be audited for consistency. Apply this checklist whenever any of the following occur:
-
-**Triggers:**
-- A document is versioned up (e.g. ZP-A v1.3 → v1.4)
-- An open question is closed (in any document)
-- A claim's status changes (axiom → theorem, candidate → derived, etc.)
-- A new document is added or archived
-
-**On each trigger, verify in README.md:**
-1. **Framework table** — version number matches the current file in the root and matches register.md
-2. **Question Register** — every OQ/item that changed status is updated; newly closed items are added if missing
-3. **Document descriptions** — any "Candidate Theorem", "Open", or status language in the Framework table description column still accurately reflects the document's current state
-
-**On each trigger, verify in GUIDE.md:**
-1. **Reading Paths links** — that the *targets* resolve. ⚠ **NOT the version numbers: GUIDE.md
-   carries none, deliberately** (see the version-bump section above). A version number appearing here
-   is a regression to revert, not drift to sync.
-2. **Companion table** — if a companion was updated, its row reflects current diagram list
-3. **Companion staleness note** — still accurate; update or remove if companions are brought current
-
-**Known pattern to watch:** version numbers appear in **two** places — `register.md` (canonical) and
-README.md's Framework table (the single derived copy). Updating one does not update the other, so
-always update register.md first and propagate to README in the same session. ⭐ **This is now
-mechanically checked:** `check_hashes.py` compares the two tables on every run, joined on the PDF
-filename (never the `ZP-X` code — four register rows begin `ZP-J`). It found **five** stale README
-rows on its first run, and caught the author drifting the same way twice more within the hour. GUIDE
-is not in the comparison because it carries no versions to compare.
-
-### Common Updates
-
-**Adding a new formal document:**
-1. Add to the Formal Framework Documents table in README.md
-2. Add a companion row to the Illustrated Companion Documents table in GUIDE.md (if companion exists)
-3. Add to the Mathematician reading path in GUIDE.md
-4. Use clean display name (no extension, no version) in both files
-5. Link to the current version (no `-1`, `-2` suffix)
-6. Put version number in the Version column only
-7. Verify file exists with `Glob` before committing
+📖 **THE CHECKLISTS AND FORMATTING RULES — `tools/process/document-workflow.md`.** The per-file
+pre-commit checklist, the display-name and table conventions, the per-trigger audit lists, and the
+seven steps for adding a new formal document. **Open it before committing a README or GUIDE edit** —
+these are the conventions a reviewer will send the diff back for.
 
 ## Superseding Document Versions
 

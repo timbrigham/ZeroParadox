@@ -56,4 +56,38 @@ that starts making claims about ⊥, the snap, or ε₀ has left this directory'
 | file | opens when |
 |---|---|
 | `claim-revalidation.md` | a sentence has been re-fixed three times, or you are writing a modal claim ("an artifact", "in principle", "removable") |
+| `document-workflow.md` | you are bumping a version, updating a companion, or editing README.md / GUIDE.md |
+| `file-encoding.md` | you are writing a file and `check_encoding.py` fired, or you are repairing double-encoded text |
+| `pipeline.md` | a gate blocked and you want to know what it protects, or you are changing `hooks.py` / `batch.py` / `report.py` |
+| `prior-art.md` | you are about to build something nameable in one sentence, or you are writing a scout brief |
+| `push-gate-bypass.md` | you are about to truncate a hook-running command's output, or to write a `--no-verify` fallback |
 | `review-loop-cap.md` | you are spawning a review gate and need the round mechanics and the verbatim brief block |
+
+⚠ **This table is the one thing here that goes stale silently** — `file-encoding.md` shipped on
+2026-08-20 and was absent from it within the hour. **Add the row in the same commit as the file.**
+
+## What was CONSIDERED and deliberately KEPT in `CLAUDE.md`
+
+Recorded so the next sweep does not re-litigate settled ground. **A section listed here has already
+been through the criterion; re-proposing it needs a new argument, not a fresh reading.**
+
+| section | why it stayed |
+|---|---|
+| § *WHEN A FAILURE RECURS* | governs how every other rule is applied; parked near the top because position determines firing |
+| § *BEFORE YOU EDIT ANY `.lean` FILE* | same — and its trigger is an ACTION that must fire before the edit, not after |
+| § *Every brief carries the CONTROL OBJECTS* | **nothing enforces it.** An unenforced rule outside the firing zone is a rule that stops working — this is the worked example of enforcement being the criterion, not adjacency |
+| § *Core Objects — Read the Lean First* | its argument is **mathematics**, which is out of scope here (see the fence above). Its canonical homes are the `CannotBe` indexes, and compressing it needs the N=3 blind control first — its framing is what makes it bind |
+| § *Rules That Must Reach Spawned Agents* | exists precisely because content outside the injected file does not reach a subagent unless carried into the brief. Routing it would be self-defeating |
+| § *The Two-Pole Test*, § *UNSTATED ADJACENCY*, § *Commitments in HYPOTHESES* | unenforced, and each is a **method** whose framing is the mechanism. Same bar as Core Objects: control first |
+| § *Theorem/Proposition/Lemma Naming Convention* | the taxonomy is reference and would route cleanly, but its CC-2 / MC-1 / diagonal-fixed-point subsections assert **mathematics**. Splitting it is open work, not a settled decision |
+
+**The criterion that decided every row: does a mechanical enforcer fire whether or not anyone read
+the argument?** If yes, the argument may move — the gate still catches the failure, and the reader
+who needs the reasoning is the one already fixing it. If no, the prose *is* the mechanism, and moving
+it out of the injected file removes the only thing making it work.
+
+⚠ **A third option this criterion does not name: move an unenforced rule UP rather than out.**
+Position is the lever — measured 2026-08-15, line 127 fired all day and line 2135 did not fire once.
+An unenforced section sitting at line 1200 is already in the zone where rules do not fire, so
+"keeping it in `CLAUDE.md`" is not the protection it sounds like. **Not yet acted on; raised
+2026-08-20.**
