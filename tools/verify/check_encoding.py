@@ -385,6 +385,34 @@ def main(argv):
         return selftest()
 
     explicit = [a for a in argv if not a.startswith('-')]
+
+    # ⚠ THE REASON FIELD IS EMITTED EMPTY, DELIBERATELY. This automates the mechanical half — the
+    # exact path and the exact run, which contains characters nobody wants to retype — and refuses
+    # to automate the judgement. `load_whitelist()` ignores an entry with no stated reason, so an
+    # appended line suppresses NOTHING until a human opens it and says why the text is genuine.
+    # A generated placeholder would have made the entry live on write, which is the opposite of
+    # what "verified exclusions" means.
+    if '--emit-whitelist' in argv:
+        rels = ([os.path.relpath(os.path.abspath(a), str(REPO)).replace('\\', '/')
+                 for a in explicit] if explicit else tracked_text_files())
+        # ⚠ ONE PASS PER FILE, and each (file, run) emitted ONCE. Iterating `scan()` rows and then
+        # re-scanning each file inside that loop emitted the cross product — 4 lines for 2 hits —
+        # and a duplicate whitelist entry is a second copy of a suppression, which is the drift this
+        # whole bundle exists to stop. `inspect()` already tells us which files are implicated.
+        flagged = sorted({rel for rel, kind, _d in scan(rels) if kind == 'double-encoded'})
+        n = 0
+        for rel in flagged:
+            try:
+                text = (REPO / rel).read_bytes().decode('utf-8')
+            except (OSError, UnicodeDecodeError):       # pragma: no cover - blocked elsewhere
+                continue
+            for run in sorted({r for _off, r in double_encoded_runs(text)}):
+                print('%s\t%s\t' % (rel, run))
+                n += 1
+        if not n:
+            print('# nothing to whitelist: no suspected double-encoding in scope')
+        return 0
+
     if explicit:
         rels = [os.path.relpath(os.path.abspath(a), str(REPO)).replace('\\', '/')
                 for a in explicit]
@@ -422,8 +450,13 @@ def main(argv):
     if warning:
         print('\n%d suspected double-encoding(s) — WARNING, not a block.' % len(warning))
         print('DO NOT hand-repair character by character - rewrite the whole passage, then re-run.')
-        print('If a site is GENUINE typography, add it to tools/verify/encoding_whitelist.txt with')
-        print('the reason — verified exclusions only; an entry with no stated reason is ignored.')
+        print('If a site is GENUINE typography, whitelist it — the runs contain characters that are')
+        print('painful to retype, so let the checker write the lines for you:')
+        print('    python %s <paths> --emit-whitelist >> %s'
+              % (SELF, os.path.relpath(str(WHITELIST), str(REPO)).replace('\\', '/')))
+        print('then OPEN each appended line and state why it is genuine. The reason field is left')
+        print('EMPTY on purpose: an entry without one is IGNORED, so nothing is suppressed until a')
+        print('human has actually looked. Verified exclusions only.')
         print('Safe write recipes (and why PowerShell 5.1 does this): tools/process/file-encoding.md')
     if blocking:
         print('\nA file was written through a codepage that is not UTF-8, or could not be read.')
