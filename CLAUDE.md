@@ -647,12 +647,12 @@ where an existing class carries a commitment, add a **companion explicit-hypothe
 refactoring the class. First candidates: `KleeneStructure`'s identification, and **AX-B1**, which is the
 framework's one substantive modelling commitment and currently the least visible of the three (encoding 1).
 
-## ⭐⭐ THE FOUR GATE-ENFORCED CONVENTIONS. Rules here; the ARGUMENT is `tools/verify/README.md`.
+## ⭐⭐ THE GATE-ENFORCED CONVENTIONS. Rules here; the ARGUMENT is `tools/verify/README.md`.
 
 **TRIGGER — an action, so there is nothing to adjudicate: you are about to write a POV claim, declare
-a requirements class, add a prose block or docstring, or close a self-exemption hole.** Each rule
-below **BLOCKS at push**, so you find out either way; reading first is how you avoid finding out the
-expensive way.
+a requirements class, add a prose block or docstring, close a self-exemption hole, or WRITE ANY FILE
+TO DISK.** Each rule below **BLOCKS at push**, so you find out either way; reading first is how you
+avoid finding out the expensive way.
 
 | rule | fires when | checker |
 |---|---|---|
@@ -660,6 +660,7 @@ expensive way.
 | **A requirements class is only informative if something FAILS to be a member.** Build the trivial witness or prove you cannot; both answers are worth having. | you declare a `class` or `structure` | `check_classes.py` |
 | **Short header, statement per declaration; prose never exceeds code.** The Engineer's Take is exempt. | you add a header block or a docstring | `check_prose.py` |
 | **A guard protects a PROPERTY, not a hole — enumerate EVERY route.** Closing one route and calling it fixed is this project's most repeated defect. | you close a self-exemption or bypass | `guards.py` |
+| **EVERY FILE WRITTEN TO DISK IS VERIFIED — `python tools/verify/check_encoding.py <path>`.** ⚠ **"Is it UTF-8?" is the WRONG QUESTION and returns PASS on this defect**: double-encoded text is valid UTF-8 at every byte, so a decodability test is green while the content is garbage. And the corruption usually enters at **script PARSE time, not write time** — PowerShell 5.1 reads a `.ps1` as the system codepage unless the script carries a BOM, so a correct writer faithfully writes an already-mangled string. **Prefer the `Write`/`Edit` tools; keep non-ASCII out of `.ps1` source.** Recipes and the repair procedure (a whole-file inverse DESTROYS a mixed file): `tools/process/file-encoding.md`. | you write any file | `check_encoding.py` |
 
 **⭐ THE ONE-LINE WHY, and it is the same for all four: each was a CONVENTION that leaked before it
 was a CHECKER.** This file records **seven** conventions that leaked while being remembered by people

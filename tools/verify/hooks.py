@@ -97,6 +97,10 @@ PRE_COMMIT_PLAN = [
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
     ("check_classes", "BLOCK", "a new requirements class records a degeneracy verdict"),
     ("check_prose", "BLOCK", "prose caps: block size, docstring vs decl, gloss labels"),
+    # ⚠ AT COMMIT, NOT ONLY AT PUSH, AND FOR A REASON THE OTHER FOUR DO NOT SHARE. Double-encoded
+    # text is valid UTF-8, so it survives every other check, renders plausibly in a diff, and the
+    # window in which the author still knows which write did it is minutes long.
+    ("check_encoding", "BLOCK", "no BOM, no double-encoded text in any tracked file"),
     ("gatelock", "warn", "a review round left open (harm is EDITING, not committing)"),
 ]
 
@@ -115,6 +119,7 @@ PRE_PUSH_PLAN = [
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
     ("check_classes", "BLOCK", "a new requirements class records a degeneracy verdict"),
     ("check_prose", "BLOCK", "prose caps, baselined; NEW sites only"),
+    ("check_encoding", "BLOCK", "no BOM, no double-encoded text in any tracked file"),
     ("decls", "BLOCK", "every new declaration has #print axioms + an ssot.json row"),
     ("check_hashes", "BLOCK", "build-script fingerprints match register.md"),
     # ⚠ NOT advisory: scan_pdfs' exit code IS the hook's when everything else passes, so it
@@ -142,7 +147,8 @@ def pre_commit():
     report.plan(PRE_COMMIT_PLAN)
 
     failed = []
-    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py"):
+    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
+                   "check_encoding.py"):
         if py(script, "--block") != 0:
             failed.append(script)
 
@@ -302,10 +308,14 @@ def pre_push(stream):
     if py("check_invariants.py") != 0:
         return 1
 
-    # The four checkers. Each exit code captured on its own line — HK-1 was a `$?` read one call
+    # The gating checkers. Each exit code captured on its own line — HK-1 was a `$?` read one call
     # too late, which meant check_modal had never blocked a push in its life.
+    # ⚠ COUNT THE TUPLE, DO NOT TRUST A WORD. This comment said "The four checkers" and the tuple
+    # held four; adding `check_encoding` made the sentence false in the same edit that would have
+    # left it. A number written in prose beside the list it describes is a second copy.
     checker_fail = False
-    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py"):
+    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
+                   "check_encoding.py"):
         if py(script, "--block") != 0:
             checker_fail = True
     if checker_fail:

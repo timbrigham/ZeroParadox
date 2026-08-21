@@ -56,9 +56,13 @@ from vendored import is_vendored  # noqa: E402
 import vendored  # noqa: E402
 import report    # noqa: E402  the one formatter every entry point announces itself with
 STATE = os.path.join(PRIV, "batch_state.json")
-# The four that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
+# The ones that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
 # deliberately — see check_suite.
-GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_classes.py"]
+# ⚠ `check_encoding.py` joined 2026-08-20 and is the one member with NO BASELINE, by design: it
+# found the corpus at zero on its first run, and a baseline is DEBT that may never be grown
+# deliberately. Zero is the invariant here, not a target.
+GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_classes.py",
+                   "check_encoding.py"]
 
 # Everything whose change must route to `/rely`. WIDER than the gating set on purpose: a defect in
 # `hooks.py`, `vendored.py` or `batch.py` itself is silent and multiplies through every verdict, and

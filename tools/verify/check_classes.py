@@ -38,12 +38,12 @@ import os
 import re
 import sys
 
-# Roots come from `common` â€” one derivation for the whole bundle; the baseline travels WITH the
+# Roots come from `common` — one derivation for the whole bundle; the baseline travels WITH the
 # checker, so a move never strands it. SELF is derived, never written down: a hardcoded invocation
 # path is a copy of the path and drifts exactly like a mirrored file does.
 #
-# âš  COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. One
-# line of type conversion is not a second definition â€” change the layout and there is still exactly
+# ⚠ COERCED TO `str`, not re-derived. This module speaks `os.path`; `common` speaks `pathlib`. One
+# line of type conversion is not a second definition — change the layout and there is still exactly
 # one place to edit.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import common  # noqa: E402
@@ -56,12 +56,12 @@ SELF = common.self_rel(__file__)
 BASELINE = os.path.join(HERE, "class_baseline.txt")
 
 # `class Foo` / `structure Foo` / `class Foo (a : T) extends ...`
-# âš  The name class must accept UNICODE. `[A-Za-z0-9_']` truncated `structure Qâ‚‚BallDepth` to `Q`
+# ⚠ The name class must accept UNICODE. `[A-Za-z0-9_']` truncated `structure Q₂BallDepth` to `Q`
 # at the subscript, which then sat in the baseline as an entry matching no declaration in the
 # corpus. Same defect as the `[^']+` name pattern in the CI report: an ASCII identifier class in a
-# corpus whose names routinely carry â‚‚ Îµ Ï‰ â„š. `\w` is Unicode-aware in Python 3.
-#     `[^\W\da-z]` is "a word character that is neither a digit nor ASCII-lowercase" â€” i.e. any
-#     uppercase or non-ASCII letter. It closes the LEADING case too (`Î”UnauditedThing`, `ÎµTest`),
+# corpus whose names routinely carry ₂ ε ω ℚ. `\w` is Unicode-aware in Python 3.
+#     `[^\W\da-z]` is "a word character that is neither a digit nor ASCII-lowercase" — i.e. any
+#     uppercase or non-ASCII letter. It closes the LEADING case too (`ΔUnauditedThing`, `εTest`),
 #     which `[A-Z]` missed entirely, while still rejecting `lowercaseThing`. Verified against both.
 DECL = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(class|structure)\s+([^\W\da-z][\w']*)", re.M | re.U)
 
@@ -73,7 +73,7 @@ def evidence_patterns(name):
     """Signs that the degeneracy question was asked, SPLIT BY WHETHER THEY NAME THE CLASS.
 
     CHK-3: five of the original eight patterns are name-agnostic (`NO-GO`, `vacuous`,
-    `degenerateâ€¦`), and they were searched over the WHOLE FILE. So one gauge cleared every class in
+    `degenerate…`), and they were searched over the WHOLE FILE. So one gauge cleared every class in
     the file, and the word "vacuous" anywhere cleared all of them. Measured 2026-08-09: a `NO-GO`
     section written for `APG` silently cleared `DecorationUniverse`, declared 60 lines later in the
     same file and never audited.
@@ -87,9 +87,9 @@ def evidence_patterns(name):
         re.compile(r"\btrivial" + n, re.I),
         re.compile(r"\bdegenerate" + n, re.I),
     ]
-    # âš  NO GENERIC PATTERNS. They were the whole of CHK-3: `NO-GO` / `vacuous` / `degenerate`
+    # ⚠ NO GENERIC PATTERNS. They were the whole of CHK-3: `NO-GO` / `vacuous` / `degenerate`
     # matched file-wide, so one gauge cleared every class in the file. Scoping them to a window
-    # around the declaration was NOT enough â€” a control showed a gauge naming a DIFFERENT class,
+    # around the declaration was NOT enough — a control showed a gauge naming a DIFFERENT class,
     # sitting immediately above `structure Foo`, still cleared `Foo`. The gauge must NAME the class
     # it is about; anything weaker answers "was a question asked here?" rather than "was it asked
     # about this?".
@@ -98,8 +98,8 @@ def evidence_patterns(name):
 
 # Lines of context around a declaration in which a GENERIC gauge is taken to be about it. A NO-GO
 # section usually sits just above the declaration, but sometimes just below it, so the window runs
-# both ways. âš  The first version ran -30/+5 and missed a gauge 5 lines BELOW its declaration by one
-# line â€” an off-by-one that reads as "unaudited" and manufactures work.
+# both ways. ⚠ The first version ran -30/+5 and missed a gauge 5 lines BELOW its declaration by one
+# line — an off-by-one that reads as "unaudited" and manufactures work.
 EVIDENCE_BEFORE, EVIDENCE_AFTER = 30, 40
 
 # Vocabulary that marks a passage as a degeneracy gauge rather than incidental prose.
@@ -112,7 +112,7 @@ def named_gauge(text, name):
     """True if the class is NAMED within `NEAR` chars of gauge vocabulary, in EITHER order.
 
     Order matters and a lookahead cannot express both directions: a section headed
-    `NO-GO gauge â€” what fails to be a `Foo`?` puts the keyword BEFORE the name, while
+    `NO-GO gauge — what fails to be a `Foo`?` puts the keyword BEFORE the name, while
     `Foo is degenerate` puts it after. Checking a window around each mention handles both, and
     keeps the evidence tied to the class it names rather than to the file it sits in.
 
@@ -222,7 +222,7 @@ def main():
 
 
 # --------------------------------------------------------------------------- controls
-# âš  These were RUN on 2026-08-09 and not retained â€” they lived in a throwaway heredoc, so the
+# ⚠ These were RUN on 2026-08-09 and not retained — they lived in a throwaway heredoc, so the
 # validation could not be repeated by anyone. A validation nobody can re-run is a claim about a
 # past session, not a control. Transcribed here so `--selftest` reproduces it.
 #
@@ -240,15 +240,15 @@ MUST_FIRE = [                      # must NOT be treated as audited
 ]
 MUST_SUPPRESS = [                  # must be treated as audited
     ("gauge above, names it",
-     "/-! NO-GO â€” what fails to be a `Foo`? Nothing. -/\nstructure Foo where\n  a : Nat\n"),
+     "/-! NO-GO — what fails to be a `Foo`? Nothing. -/\nstructure Foo where\n  a : Nat\n"),
     ("gauge BELOW, names it",
-     "structure Foo where\n  a : Nat\n\n/-! NO-GO gauge â€” `Foo` is trivially inhabited. -/\n"),
+     "structure Foo where\n  a : Nat\n\n/-! NO-GO gauge — `Foo` is trivially inhabited. -/\n"),
     ("named far away",
      "structure Foo where\n  a : Nat\n" + "\n" * 80 + "/-! `Foo` is degenerate on Unit. -/\n"),
     ("Nondegenerate predicate",
      "structure Foo where\n  a : Nat\ndef FooNondegenerate : Prop := True\n"),
     ("named trivial witness",
-     "structure Foo where\n  a : Nat\ndef trivialFoo : Foo := âŸ¨0âŸ©\n"),
+     "structure Foo where\n  a : Nat\ndef trivialFoo : Foo := ⟨0⟩\n"),
 ]
 
 
