@@ -4,10 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Gate exemption — this file and operational meta.** `CLAUDE.md` itself (and other internal operating-instruction / meta files, as opposed to the mathematical publication content) is **exempt from the Editorial Review Gate and the Adversary Review Gate** below. The review gates are scoped to externally-facing publication prose — formal documents, companions, README.md/GUIDE.md, build-script prose. `CLAUDE.md` is the operating manual, not publication content, so it needs **version control only**: commit and push normally, and use `git push --no-verify` if the pre-push hook blocks on a stale review signal for a `CLAUDE.md`-only change.
 
-**The exemption covers the VERIFICATION CODE only (2026-08-15).** `tools/verify/**` is operating
+**The exemption covers the VERIFICATION CODE (2026-08-15).** `tools/verify/**` is operating
 machinery on the same argument: a checker makes no claim about the mathematics, so there is nothing
 for an editorial or adversary gate to review. **`/rely` reviews that layer instead, and it BLOCKS** —
 the two are a pair, so weakening the routing re-opens this exemption as a hole.
+
+**AND IT COVERS `tools/process/**` — DECLARED, NOT DERIVED (2026-08-20).** That directory is **this
+file's body**: `CLAUDE.md` is a routing table (a condition, the exact file to open, the cost of
+skipping) and `tools/process/` holds what the routing points at. Same argument, same price —
+operating instructions asserting nothing about the mathematics, so editorial and adversary have no
+claim to review, and **`/rely` covers it and BLOCKS.** The carve is written here **because the
+paragraph below forbids inferring it**; do not extend it to a further directory by analogy — write
+the next one down too, or it is not exempt. **Fence: anything asserting mathematics belongs in the
+corpus and is gated normally.** Criterion for what may live there, and the two sections that
+deliberately may not: `tools/process/README.md`.
 
 ⚠ **IT DOES NOT COVER `.claude/commands/`, AND THE DISTINCTION IS THE POINT.** The gate briefs are
 now published deliberately, as the artifact showing how this project reviews itself, so they are
@@ -25,6 +35,7 @@ when the code went public.
 |---|---|---|
 | **`tools/verify/`** | every checker, the pipeline (`batch.py`, `hooks.py`, `guards.py`, `report.py`, `vendored.py`), the **baselines**, the hook sources + `install_hooks.py` | **yes — public** |
 | **`scripts/`** | every PDF build script, `zp_utils.py`, `scan_pdfs.py`, `PDF_Rendering_Standards.md` | **yes — public** |
+| **`tools/process/`** | `CLAUDE.md`'s body — the argument behind each routed rule | **yes — public** |
 | **`.claude/commands/`** | the review-gate definitions Claude Code reads | **yes — public** |
 | **`.claude-local/`** | signals (`*_cleared.txt`), `gate.lock`, `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/` | no — private, own git repo, no remote |
 
@@ -385,7 +396,8 @@ damage). That memory has never bound anything, because memory bodies do not load
 rule is here.
 
 **⚠⚠ DO NOT SKIP TO STEP 3 AND WRITE A NEW SECTION.** That is the reflex, it feels like progress, and it
-is how this file reached 2438 lines. A recurrence usually needs a **trigger changed**, not a rule added.
+is how this file grew past the point where its tail fires. A recurrence usually needs a **trigger
+changed**, not a rule added.
 If you are about to add a section, first find the one that already says it and ask why it did not fire.
 
 ## ⭐⭐ BEFORE YOU EDIT ANY `.lean` FILE: read `ZeroParadox/MANIFEST.md` AND grep the identifiers you are about to touch. Hard Rule. (Tim, 2026-08-15.)
@@ -523,7 +535,7 @@ Two-Pole rule demands, which the `r x x` form hides.**
 `floor_not_wellFounded_via_descent`. `ZeroParadox/Settheory/Wall.md` already says "Now adopted."
 **This line said "Adopting it is open work worth doing" until 2026-07-30 — while § "unstated adjacency"
 BELOW, in this same file, already listed the descending-chain form among the CLOSED finds. One file,
-two contradictory answers, 186 lines apart.** That is the exact trap that produced the `HostVerdict.lean`
+two contradictory answers.** That is the exact trap that produced the `HostVerdict.lean`
 Trigger-0 revert, and it was live in the manual meant to prevent it. Sweep this file too when a find closes.
 - **Purity, measured not inferred:** citing the biconditional at all costs `Classical.choice` (its `mp`
   builds the chain with `.choose_spec`, and `#print axioms` follows the STATEMENT). So
@@ -654,11 +666,11 @@ was a CHECKER.** This file records **seven** conventions that leaked while being
 who had read them; every one of these four is a rule that failed as discipline and works as a gate.
 That is the argument for reading `tools/verify/README.md` before arguing with any of them.
 
-**📖 THE FULL ARGUMENT — `tools/verify/README.md`.** 285 lines: what each checker detects, the
-measured defect it exists to stop, the baseline policy, and the controls each was verified against.
+**📖 THE FULL ARGUMENT — `tools/verify/README.md`.** What each checker detects, the measured defect
+it exists to stop, the baseline policy, and the controls each was verified against.
 **Read it before changing a checker, adding a baseline entry, or claiming a gate is wrong.**
 
-⚠ **Why it is THERE and the rules are HERE.** The arguments are 253 lines that every session and
+⚠ **Why it is THERE and the rules are HERE.** The arguments are prose that every session and
 every subagent used to pay for, and **the gate fires whether or not anyone read them** — measured
 2026-08-15: line 127 of this file fired reliably all day, line 2135 did not fire once. A rule in the
 tail is decorative. So the rule, the trigger and the consequence stay in the firing zone; the
@@ -1077,29 +1089,11 @@ changed instead of presenting the result as self-derived.
 measure the claim underneath. This is gate-enforced: `gate_round.py` prints a MANDATORY CLAIM
 REVALIDATION protocol at **round 3**, or as soon as the **same `--target` has been re-fixed 3 times**.
 
-**Why (measured 2026-08-03, Tim's call).** One remark-box sentence in ZP-P was wrong in **six
-consecutive versions** — v1.9 a universal, v1.10 a doubling, v1.11 the universal restored, v1.13/v1.14
-a false universal, v1.15 a false uniqueness. Four gate rounds ran over it. **Every round passed the
-citations, because the citations were always correct.** The defect was one level down: the claim the
-sentence existed to support — that Mathlib's `Classical.choice` in `cofix_nonempty` is *"an artifact,
-not a necessity"* — had never been measured by anyone. **One probe settled it in a minute:**
-
-```
-QPF.Cofix         (the TYPE) : [propext, Classical.choice, Quot.sound]
-PFunctor.M.corec             : does not depend on any axioms
-```
-
-`QPF.Cofix` carries choice **in the type**, so *no proof of any statement mentioning it can be
-choice-free* — "removable in principle" was not merely unproved, it was unprovable as stated. The
-honest, measurable version nobody had written: the choice comes from Mathlib's **QPF quotient layer**,
-not from the mathematics, and the corpus already witnesses the same inhabitation choice-free
-(`strict_cofix_nonempty`). ⚠ **Do NOT sharpen that into "the M-type underneath is axiom-free"** — the
-former and constructors are, the **destructor is not**, and that sharpening is the bedrock defect
-recorded below. That ACS is choice-free is a separate fact: an ω-limit with no quotient layer.
-
-**The generalizable lesson: the gates check WORDING against SOURCES. They cannot see an unmeasured
-claim, and they will keep passing one forever.** Six rounds of prose editing could never have found
-this. A one-minute probe did.
+**Why, in one line: the gates check WORDING against SOURCES. They cannot see an unmeasured claim, and
+they will keep passing one forever.** Measured 2026-08-03 — one ZP-P sentence was wrong in six
+consecutive versions and four gate rounds passed it, because the citations were always correct and the
+claim underneath had never been measured by anyone. Six rounds of prose editing could not find it. One
+probe did, in a minute.
 
 **⚠ MODAL CLAIMS ARE THE HIGH-RISK CLASS — and this corpus is full of them.** *"not a necessity"*,
 *"an artifact"*, *"in principle"*, *"could be removed"*, *"eliminable"*, *"inherited from Mathlib"* are
@@ -1121,104 +1115,12 @@ problem sentence"*).
 **Record what the MEASUREMENT showed, not that you re-worded something.** A changelog entry saying
 "clarified" after a revalidation round is the failure repeating.
 
-### The sweep this produced, and what it found on the first run (2026-08-03)
-
-`python tools/verify/check_modal.py` (WARN at commit) / `--block` (pre-push § 3b-c). Baselined like
-`check_pov.py`: fires on NEW sites only. It flags modal vocabulary not accompanied by a measurement, a
-reduction, an explicit non-claim, or a **named exhibited witness**.
-
-**Yield, first run: 31 sites → 3 real defect clusters.**
-- **A FALSE UNIVERSAL NEGATIVE LIVE IN A PUBLISHED PDF.** `ZP_Choice_Free_Core_Addendum` § III said
-  *"The framework has no proven-necessity case anywhere."* Two taboo reductions exist
-  (`em_of_wellOrder_comparable`, `wem_of_fixedPointFree`) and **neither was named anywhere in that
-  document**. The 2026-08-01 sweep that recorded both universal negatives as removed had grepped
-  `.lean` and **missed a Python build script** — so the claim survived in rendered public prose.
-  **Grep the CLAIM across every surface that renders, not just the sources.**
-- **The `Cofix` cluster, 9 sites including `CLAIMS.md`.** Restated from inference to measurement.
-- **Six sites were already honest** — retractions, `UNCLASSIFIED` tiers, explicit "does not show"
-  fences. `SnapNucleus.lean` had measured this correctly in July, including that `Ordinal` the *type*
-  is choice-free while `Ordinal.instLinearOrder` is not. **Read hits, do not count them.**
-
-**⚠ THE DETECTOR SHIPPED WITH THREE FALSE-NEGATIVE PATHS, AND EVERY ONE WAS FOUND BY A PROBE RATHER
-THAN BY READING THE CODE.** All three would have made a clean `0` meaningless:
-1. **`#print axioms` listed as *evidence*** — so a claim beside a `PurityCheck` block was suppressed,
-   which is exactly where these claims live. A footprint is the one thing that **cannot** establish a
-   modal claim. Removing it surfaced two real sites at once.
-2. **One wide evidence window** — a live claim passed because the word *"measured"* sat six lines away
-   describing a **different** measurement. **Proximity is not aboutness.** Fixed with two tiers: weak
-   tokens (`measur`, a named witness) must be in the *same sentence*; structural markers
-   (`retracted`, `UNCLASSIFIED`, `NOT claimed`) may sit wider.
-3. **Literal spaces in the pattern** — so any claim *wrapped across a line* was invisible, and Lean
-   docstrings wrap constantly. Two fixes were needed: `\s+` between words, **and** blanking the
-   `--` / `//` / quote-join separators that sit in the gap (to spaces of **equal length**, so line
-   numbers stay exact). The first fix alone still missed a wrapped Lean comment — measured by probe.
-
-**VERIFY THE DETECTOR BEFORE BELIEVING A ZERO.** Plant a known-bad line *in the shape you actually
-expect* — wrapped, comment-prefixed, near a purity block — confirm it fires, then remove it. A probe
-in the wrong shape passes and teaches you nothing: the wrapped probe was written flat first and gave
-a false all-clear. Keep a reproduction script in the scratchpad with **both** must-fire and
-must-suppress controls; a checker that fires on everything is as useless as one that fires on nothing.
-
-⚠ **AND BEFORE BELIEVING A NON-ZERO. A false POSITIVE is the more expensive error, because it
-manufactures work that looks urgent.** Measured 2026-08-08: a survey of prose axiom-footprint claims
-reported **6 mismatches against measured truth**, and that figure was relayed as fact before the hits
-were read. Read individually, **all six were the detector's** — it attributed each bracketed axiom
-list to the nearest backticked identifier, and in flowing prose the bracket normally belongs to the
-*previous* clause. Three cited the bare type `Ordinal` (genuinely `[propext, Quot.sound]`) inside
-sentences about declarations that inherit choice *through* it; two had the name opening the next
-sentence; one was a cross-reference sitting above the declaration the claim was actually about.
-**True corpus mismatches: zero.**
-- **The rule: READ EVERY HIT BEFORE REPORTING A COUNT.** This file already says *"Read hits, do not
-  count them"* for `check_modal`. It generalizes to every survey, and to positives as much as zeros.
-- **Attribution-by-proximity is the specific trap.** Prose is not a table. If a detector must guess
-  which declaration a sentence is *about*, its output is a **reading list, not a finding list** —
-  label it that way, and resolve each entry at the artifact before it becomes a number.
-
-**The measured facts worth not re-deriving** (⚠ the first version of this block listed only
-`PFunctor.M no axioms` and that half-truth immediately re-seeded a bedrock defect — see below):
-```
-PFunctor.M       (TYPE former) no axioms       ]  the M-type's FORMER and
-PFunctor.M.mk                  no axioms       ]  CONSTRUCTORS are clean
-PFunctor.M.corec               no axioms       ]
-PFunctor.M.children  [propext, Classical.choice, Quot.sound]  <-- THE ORIGIN (destructor)
-PFunctor.M.dest      [propext, Classical.choice, Quot.sound]
-QPF.Cofix  (TYPE)    [propext, Classical.choice, Quot.sound]  <-- inherits via Mcongr/IsPrecongr
-strict_cofix_nonempty          no axioms       -- clean because it only BUILDS, never destructs
-Ordinal    (TYPE)              [propext, Quot.sound]                    -- choice-FREE
-Ordinal.instLinearOrder        [propext, Classical.choice, Quot.sound]  -- the instance hazard
-
--- THE TWO LAYERS ARE CLEANLY SEPARATED. Measured 2026-08-08 after Tim asked whether
--- collapsing the hand-built ZPCategory instances would cost choice-freedom.
-CategoryTheory.Category        no axioms                                -- clean base
-CategoryTheory.Limits.IsLimit  [propext, Classical.choice, Quot.sound]  <-- the TYPE
-  -- `IsInitial` is defined over `IsLimit`, and `ZPCategory.zpIsInitial` IS an
-  -- `IsInitial`. So NO ZPCategory instance can ever be choice-free - not a defect and
-  -- not removable by better proving, the same shape as `QPF.Cofix` above.
-natZPCategory / nnrealZPCategory / forkZPCategory
-                               [propext, Classical.choice, Quot.sound]  -- ALL of them
-Preorder.smallCategory         no axioms  -- the Mathlib instance a generalization uses
-
-ZPSemilattice        (CLASS)   no axioms  ]  the choice-free CORE, untouched by any
-t_snap_derived                 no axioms  ]  of the above. Different class, different
-t_snap_irreversible            no axioms  ]  base. `ZPCategory` is NOT `ZPSemilattice`,
-da2_bottom_characterization    no axioms  ]  and the framework's own scoping - "the
-ZPSemilattice.bot_le           no axioms  ]  framework is not choice-free; the CORE
-ZPSemilattice.cc1              no axioms  ]  is" - is exactly right.
-Ordinal.nfp / .epsilon         [propext, Classical.choice, Quot.sound]
-padicValNat                    [propext, Classical.choice, Quot.sound]
-```
-**Read that table as a whole or not at all.** *"`PFunctor.M` is axiom-free"* is true of the **type
-former** and says nothing about its **eliminators** — and citing it to conclude *"the choice is not
-from the M-type underneath"* is a **witness-vs-statement defect**, which is exactly what shipped to a
-published PDF on 2026-08-03 under the word *"Measured"* and was caught by the gate measuring it.
-**The choice DOES come from the M-type — from its destructor.**
-
-**The accurate account is stronger than the false one it replaced:** choice enters at
-`M.children`/`M.dest`; `Cofix` inherits it in the type through the congruence it quotients by; and
-`strict_cofix_nonempty` is axiom-free **because it only builds and never destructs**. So the escape is
-not "use `M` instead of `Cofix`" generically — it is *build without destructing*. Attributing the
-footprint to the **QPF quotient layer** is defensible and is the claim to keep; *"not from the
-M-type"* is false and must not be re-introduced.
+📖 **THE CASE, THE DETECTOR AND THE MEASURED FOOTPRINTS — `tools/process/claim-revalidation.md`.**
+The ZP-P arc in full; `check_modal.py`'s three false-negative paths, **every one found by running a
+probe rather than by reading the code**; and the axiom-footprint table that must be read whole (*"`PFunctor.M`
+is axiom-free"* is true of the type former and false of its destructor, and that half-truth shipped to a
+published PDF under the word *"Measured"*). **Read it before believing a checker's zero, and before
+writing "removable" about anything.**
 
 ## "NOT IN THE LIBRARY" IS A CLAIM. Probe it before you believe it. Hard Rule.
 
@@ -1411,59 +1313,11 @@ and he cannot catch what he is not told. **Silent in the artifact, recorded in t
 ⚠ And this does not touch the dated-survey convention (*"none located as of &lt;date&gt;"*), which
 records a **measurement**, not a prior state.
 
-### The cap is enforced by the REVIEWER, not by the caller — pass it the round number
-
-**Why: a rule about a loop does not fire from inside the loop.** Each round is locally justified ("a gate
-found real defects; fix them"), so the caller never evaluates the trigger — on 2026-07-19 three rounds ran
-against a 2-round cap while the rule sat visible in the memory index, because nobody was *counting*. The
-fix is structural: the reviewer stands outside the loop, so give it the number and let it decide.
-
-**The CALLER bumps, exactly once, before spawning the round:**
-```
-python tools/verify/gate_round.py bump --target <what-is-being-re-fixed>   # caller, once per ROUND
-python tools/verify/gate_round.py show                                     # reviewers: read-only
-```
-**Always pass `--target`.** Use a stable slug for the thing being corrected, not the round's topic —
-`zpp-remark-veltri-modality`, not `round-3`. It is what makes the revalidation tripwire fire on the
-real signal (*the same sentence re-fixed*) rather than on round count alone. A target re-fixed three
-times prints the MANDATORY CLAIM REVALIDATION protocol; see the § above, and **follow it before
-drafting another fix**.
-`reset` at the start of a new arc or after a clean push. State lives in `.claude-local/gate_round.json`,
-so it survives compaction.
-
-**Reviewers must NEVER `bump`** — they are handed the number in the brief and may only `show`. Measured
-2026-07-19: the caller bumped to round 1, a spawned reviewer ran `bump` itself, and reported round 2. A
-double-increment is not cosmetic — it burns the cap early and can force a premature STOP-ORDINARY while a
-bedrock defect is still live. If several gates run in one round, they all share that round's number.
-
-**Put this in every review brief, with N substituted:**
-> This is **gate round N** against a cap of 2 (ORDINARY) / 5 (BEDROCK). Your verdict must be one of:
-> **PASS** — nothing found.
-> **FAIL-BEDROCK** — you found a violated core invariant, a FABRICATED external-source claim, or a false
-> premise carrying a conclusion. The loop continues.
-> **STOP-ORDINARY** — round N is past the ordinary cap and nothing you found is bedrock-tier. Report the
-> findings, then state explicitly that the correct action is to PUSH, not to iterate. Do not recommend
-> another round.
-> If N is past the ordinary cap, you must actively choose between FAIL-BEDROCK and STOP-ORDINARY — a bare
-> "FAIL" is not a valid verdict, because it hands the stopping decision back to the party inside the loop.
->
-> **If N ≥ 3, or if this text is a passage you are being asked to re-check for the third time: do NOT
-> report a wording fix.** Report the CLAIM the passage exists to support, whether anything actually
-> establishes it, and what measurement would settle it. Watch specifically for modal claims —
-> "not a necessity", "an artifact", "in principle", "removable", "eliminable" — which no footprint
-> measurement can establish (accidental needs an EXHIBITED clean proof; essential needs a REDUCTION;
-> `#print axioms` follows the STATEMENT, so a TYPE carrying an axiom makes "removable" false for every
-> possible proof). **A verdict that only re-words a passage that has already been re-worded twice is
-> not a useful verdict.** Recommending DELETION is in scope and is often the right answer when an
-> accurate statement already lives in a checkable file.
-
-**Two measured reasons the loop cannot converge, which the cap exists to bound:**
-1. **Fixes introduce errors.** Every fix is new prose carrying new claims. Two of round 3's eight
-   findings were created by round 2's fixes. A loop whose corrections generate errors asymptotes above
-   zero.
-2. **Fix-the-site, not-the-class.** Three of round 3's findings were unpropagated instances of round 2's
-   fixes. **Before declaring a kill fixed, grep the corpus for the CLAIM, not the named file.** Note that
-   retractions quoting an error pollute that search — read hits, do not count them.
+📖 **ROUND MECHANICS AND THE VERBATIM BRIEF BLOCK — `tools/process/review-loop-cap.md`.** Who bumps
+the counter and who may only read it; `--target` slugs; and the block that goes into **every** review
+brief with N substituted. **Open it before spawning any gate.** Why it matters: a rule about a loop
+does not fire from inside the loop — on 2026-07-19 three rounds ran against a 2-round cap because
+nobody was counting, and a reviewer that bumped the counter itself burned the cap a round early.
 
 ## NEVER pipe `git push` through `head`/`tail` — it BYPASSES the pre-push gate. Hard Rule.
 
@@ -1474,8 +1328,8 @@ git push --dry-run origin <ref>                    → exit 1   (blocked, correc
 git push --dry-run origin <ref> 2>&1 | head -5     → exit 0   (SUCCEEDS — gate bypassed)
 ```
 
-**Mechanism.** `head` exits after N lines and closes the pipe. The hook is still writing (it produces
-~90 lines: file-reference resolver, invariants, hash check, font checks, then the review-signal check
+**Mechanism.** `head` exits after N lines and closes the pipe. The hook is still writing (file-reference
+resolver, invariants, hash check, font checks, then the review-signal check
 *last*). It dies of SIGPIPE **before reaching its `exit 1`**, and git proceeds with the push. The review
 gate never runs — and its output is at the END, so any truncation short enough to be useful is long
 enough to skip it.
@@ -2347,7 +2201,7 @@ answer, and on one of four test queries the right folder ranked third. Load two 
 **Tim's Engineer's Takes are the bridge, and `where.py` reports them.** The Lean body says `cx`,
 `member`, `infinitude`; Tim says *"bottom itself is infinitely complex."* The Takes are the only
 corpus written in the register a question arrives in, they are attached to the file they describe, and
-**all 146 together are ~16k tokens.** Measured 2026-07-31: on four separate questions the answering
+**all of them together are ~16k tokens — cheap enough to load wholesale.** Measured 2026-07-31: on four separate questions the answering
 Take was found *after* the work, never before.
 
 **Not this, for error-sweeps.** A claim-sweep's unit is the **rendered PDF text**, never the source —
