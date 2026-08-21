@@ -772,9 +772,15 @@ def check_routing(state, ranges=None):
             if key is None:
                 continue                      # already reported by _unhashed
             for tip in _range_tips(ranges):
-                h = _blob_hash(tip, f)
-                if h is None:
-                    continue                  # absent at that tip (added or deleted) — not stale
+                # ⚠⚠ ABSENT AT THE TIP IS `<ABSENT>`, NOT `continue`. Skipping it meant a push that
+                # DELETES a gating checker cleared: measured (/rely round 3), a range removing
+                # `tools/verify/check_prose.py` from a checkout that still had it returned exit 0
+                # with `/rely ok ... — e.g. tools/verify/check_prose.py` — the row NAMING the
+                # deleted checker in the same breath as clearing it. The asymmetry was exact: the
+                # same deletion on disk hits `checker_hashes()`'s `<ABSENT>` sentinel and blocks.
+                # The sentinel already existed for precisely this reason one leg over; this leg
+                # simply has to use it, so deleting a gate stays louder than editing one.
+                h = _blob_hash(tip, f) or "<ABSENT>"
                 if reviewed.get(key) != h:
                     _stale_at_tip.append(f)
                     break

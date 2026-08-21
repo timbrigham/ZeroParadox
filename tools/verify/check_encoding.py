@@ -179,24 +179,44 @@ def double_encoded_runs(text):
     # ⚠ ROUND 1's MASKING CONTROL DID NOT COVER THIS AND LOOKED LIKE IT DID. `_mangle('a — ⭐ b')`
     # mangles BOTH characters, so it tests masking-by-mojibake; the hole is masking-by-GENUINE-glyph.
     # A control built by mangling everything can never exhibit a mixed run. See `_MUST_FIRE`.
+    # ⚠⚠ NO CUT SITES. Scan for ANY window that round-trips; do not decide where the run divides.
+    #
+    # THIS IS THE THIRD SHAPE, AND THE FIRST TWO WERE THE SAME MISTAKE. Round 1 cut nowhere (test
+    # the run whole) and a single inexpressible glyph suppressed it. Round 2 cut at inexpressible
+    # characters — and an EXPRESSIBLE one (an em dash, `¹`, `·`, `¬`, `§`, any Latin-1 accent) is
+    # then not a cut site, stays inside the piece, and suppresses it exactly as before:
+    # `The gate —<mangled apostrophe>s verdict is final.` returned exit 0 and "clean" (/rely round 3).
+    # Corpus exposure measured: 295 multi-character runs across 70 tracked files already carry such
+    # a masker.
+    #
+    # Both failures were *"which cut is right"*, which is the enumeration shape CLAUDE.md § RUNG 5
+    # names — each fix closes the cut its author thought of. A predicate with no cut point cannot get
+    # the cut wrong. Measured on adoption: fires on all 12 `_MUST_FIRE` and all 3 round-3 attacks,
+    # silent on all 6 `_MUST_SUPPRESS`, and **0 hits across the whole 409-file tracked corpus** — so
+    # it is strictly more sensitive without being a false-positive generator.
+    #
+    # Longest window first, then skip past it: a longer round trip is MORE evidence of mojibake, not
+    # less, and consuming it stops one mangled sentence reporting as a dozen overlapping fragments.
     hits = []
     for offset, run in runs:
-        piece, p_start = [], 0
-        for i, ch in enumerate(run + '\0'):          # sentinel forces the final flush
-            if ch != '\0' and ch in WIN1252_ENCODE:
-                if not piece:
-                    p_start = i
-                piece.append(ch)
-                continue
-            if len(piece) >= 2:                      # one character cannot be a multi-byte sequence
-                sub = ''.join(piece)
+        i, n = 0, len(run)
+        while i < n - 1:
+            found = None
+            for j in range(n, i + 1, -1):
+                sub = run[i:j]
+                if len(sub) < 2:
+                    break                 # one character cannot be a multi-byte sequence
                 try:
                     w1252_encode(sub).decode('utf-8')
                 except (ValueError, UnicodeDecodeError):
-                    pass          # reads back as noise => genuine accented text, not mojibake
-                else:
-                    hits.append((offset + p_start, sub))
-            piece = []
+                    continue              # this window reads back as noise; try a shorter one
+                found = sub
+                break
+            if found:
+                hits.append((offset + i, found))
+                i += len(found)
+            else:
+                i += 1
     return hits
 
 
@@ -282,6 +302,14 @@ _MUST_FIRE = [
     ('mojibake touching a real ⊥', '⊥' + _mangle('’s floor is the pole')),
     ('mojibake touching a real ℝ', _mangle('the reals —') + 'ℝ'),
     ('mojibake fenced by real glyphs on BOTH sides', '∞' + _mangle('—') + 'ε'),
+    # ⚠⚠ MASKED BY A cp1252-EXPRESSIBLE GLYPH. The round-2 controls all mask with characters
+    # Windows-1252 CANNOT express (⊥, ℝ, ∞), which the round-2 fix cut at — so they passed while
+    # the em-dash case below returned exit 0 and "clean". A masker the codec CAN express is the
+    # other half of the surface and the reason the predicate is now cut-site-free. Measured
+    # corpus exposure for these: ¹ (187 runs), · (58), ¬ (51), § (15), – (5).
+    ('mojibake masked by an em dash it CAN express', 'The gate —' + _mangle('’s verdict')),
+    ('mojibake masked by a superscript one', _mangle('the rule —') + '¹'),
+    ('mojibake masked by a section sign', '§' + _mangle('—') + '·'),
 ]
 _MUST_SUPPRESS = [
     ('a real em dash', 'the rule — and its consequence'),
