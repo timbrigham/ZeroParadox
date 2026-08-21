@@ -39,6 +39,7 @@ lets this run inside the hooks, where it is worth having.
 import io
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -269,14 +270,21 @@ def check_exemption_surface():
         if router is not None:
             prefix = _prefix_of(path)
             want = "^" + prefix
-            exact = [p.pattern for p, a, _w in _routing() if a == router and p.pattern == want]
+            # ⚠⚠ THE FLAGS ARE PART OF THE PATTERN. Comparing `p.pattern` alone was blind to
+            # `p.flags`: dropping `re.I` left this row printing ok while `reviewable_from`
+            # (which lowercases) exempted `Tools/Verify/CASETEST.md` and `ROUTING` (which no longer
+            # did) routed it nowhere — `prepush` exit 1 -> PASS (/rely round 4, RLY4-2).
+            # `batch.py`'s own comment calls that path LIVE on ubuntu-latest, where CI runs.
+            exact = [p for p, a, _w in _routing()
+                     if a == router and p.pattern == want and (p.flags & re.IGNORECASE)]
             r_ok = bool(exact) and prefix != ""
             if not r_ok:
                 bad += 1
             rows.append(("  ^ warrant: %s anchored at the prefix" % router, r_ok,
-                         ("a ROUTING pattern is exactly %r" % want) if r_ok else
-                         "NO ROUTING pattern equals %r — the exemption is VOID for any path the "
-                         "actual pattern does not reach, and no probe can prove it does" % want))
+                         ("a case-insensitive ROUTING pattern is exactly %r" % want) if r_ok else
+                         "NO case-insensitive ROUTING pattern equals %r — the exemption is VOID "
+                         "for any path the actual pattern does not reach, and no probe can prove "
+                         "it does" % want))
     return rows, bad
 
 
@@ -325,7 +333,12 @@ def check_exemption_completeness():
     import importlib
     import batch
     importlib.reload(batch)
-    covered = [p.lower().replace("\\", "/") for _l, p, _m, _r, _w in EXEMPTION_SURFACE]
+    # ⚠ ONLY ROWS THAT MAY BE EXEMPT CAN WITNESS AN EXEMPTION. Taking every row was a fail-open its
+    # own control caught: `_ORDINARY` is `ZeroParadox/Order/Snap.lean` and is registered as
+    # must-ALWAYS-be-reviewable, so it made `ZeroParadox/` look like an already-registered exempt
+    # prefix — the must-fire control warranting the exemption it exists to forbid.
+    covered = [p.lower().replace("\\", "/")
+               for _l, p, may, _r, _w in EXEMPTION_SURFACE if may]
     rows, bad = [], 0
 
     def row(label, hit, kind):
@@ -342,9 +355,23 @@ def check_exemption_completeness():
     # the attack passed. A row exempt by DATA_EXT or EXEMPT_PATHS would still be exempt with the
     # prefix tuple empty, so it witnesses nothing about the prefix.
     def witnesses(c, prefix):
-        return (c.startswith(prefix.lower())
-                and not c.endswith(tuple(e.lower() for e in batch.DATA_EXT))
-                and c not in [e.lower() for e in batch.EXEMPT_PATHS])
+        # ⚠⚠ AND IT MUST NOT BE CLAIMED BY A MORE SPECIFIC PREFIX. Requiring only
+        # `startswith(prefix)` was still a fail-open: `tools/verify/check_pov.py` starts with
+        # `tools/` too, so appending `"tools/"` to the tuple looked already-registered and
+        # un-reviewed 12 tracked files under `tools/registry/` and `tools/render/` — measured end to
+        # end, `prepush` went from exit 1 to PASS (/rely round 4, RLY4-1). A row witnesses the
+        # prefix it is EXEMPT BY, which is the most specific one covering it; anything longer would
+        # still be exempt with this prefix removed, so it proves nothing about this prefix.
+        p = prefix.lower()
+        if not c.startswith(p):
+            return False
+        if c.endswith(tuple(e.lower() for e in batch.DATA_EXT)):
+            return False
+        if c in [e.lower() for e in batch.EXEMPT_PATHS]:
+            return False
+        more_specific = [q.lower() for q in batch.EXEMPT_PREFIXES
+                         if q.lower() != p and q.lower().startswith(p)]
+        return not any(c.startswith(q) for q in more_specific)
 
     for prefix in batch.EXEMPT_PREFIXES:
         row("prefix: %s" % prefix,
@@ -358,12 +385,30 @@ def check_exemption_completeness():
     # ever in it — which is one assertion, cannot fall behind the tuple, and blocks the measured
     # attack (adding `.md`, which un-reviewed README, GUIDE and CLAIMS at once) directly. A row per
     # extension would be an enumeration, and enumerations are what this file exists to stop.
-    for ext in (".md", ".lean", ".py", ".txt", ".json", ".yml", ".yaml", ".sh", ".ps1"):
+    PROSE_EXT = (".md", ".lean", ".py", ".txt", ".json", ".yml", ".yaml", ".sh", ".ps1")
+    for ext in PROSE_EXT:
         rows.append(("prose ext NOT in DATA_EXT: %s" % ext, ext not in batch.DATA_EXT,
                      "not treated as data" if ext not in batch.DATA_EXT else
                      "*** %s IS IN DATA_EXT — every file with this extension is exempt from the "
                      "prose gates and reviewed by nothing ***" % ext))
         if ext in batch.DATA_EXT:
+            bad += 1
+
+    # ⚠⚠ AND THE SAME SWITCH ONE LEVEL OVER: `check_encoding` KEEPS ITS OWN SCAN-SCOPE TUPLE.
+    # It is the fifth private tree-enumerator in this bundle and it was added AFTER the class was
+    # supposedly closed, with no scope pin and no guards property. Measured (/rely round 4,
+    # RLY4-3): with a genuinely mojibaked `.md` staged, adding `'.md'` to `BINARY_EXT` took
+    # `hooks.py pre-commit` from exit 1 to exit 0 and silently cut the scan from 409 files to 341 —
+    # while `check_encoding --selftest`, `check_checkers --block` and `common --selftest` all stayed
+    # green, because its controls are in-memory strings and can never see its enumerator.
+    import check_encoding
+    for ext in PROSE_EXT:
+        hit = ext not in check_encoding.BINARY_EXT
+        rows.append(("prose ext NOT in check_encoding.BINARY_EXT: %s" % ext, hit,
+                     "still scanned" if hit else
+                     "*** %s IS IN BINARY_EXT — every file with this extension silently leaves the "
+                     "encoding scan, and the checker still reports clean ***" % ext))
+        if not hit:
             bad += 1
     return rows, bad
 

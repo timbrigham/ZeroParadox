@@ -1,0 +1,32 @@
+# VERIFIED EXCLUSIONS for check_encoding.py's double-encoding warning.
+#
+# Tim, 2026-08-21: "make it warn instead of block, and keep a whitelist that have been verified
+# exclusions."
+#
+# THIS IS NOT A BASELINE, AND THE DIFFERENCE IS THE WORD *VERIFIED*.
+# A baseline grandfathers whatever happened to be present when it was seeded. Every line here
+# records a run a HUMAN OPENED AND CONFIRMED is genuine typography. Two consequences:
+#   * an entry with no stated reason is IGNORED by the loader - it is not a verified exclusion;
+#   * the key is the exact RUN, never a line number, so editing the text retires the entry
+#     automatically. A line number is a copy of a location and drifts; the text does not.
+#
+# WHY ANY OF THIS IS NEEDED. The detector asks whether a run of non-ASCII characters can be read
+# back as Windows-1252 bytes forming valid UTF-8 - which double-encoded text does BY CONSTRUCTION,
+# because that is how it was produced. It cannot separate that from some real Western-European
+# typography, and the reason is structural rather than a bug worth patching: UTF-8's two-byte lead
+# bytes C2-DF map onto A-with-circumflex through sharp-s in Windows-1252, so a multiplication sign
+# followed by a superscript two encodes to D7 B2, which IS valid UTF-8. Measured 2026-08-21:
+# 14 of 15 constructed GENUINE strings fired.
+#
+# BEFORE ADDING A LINE, CONFIRM IT IS NOT DAMAGE:
+#   1. Open the file at that text and read it. Mojibake looks wrong to a human instantly.
+#   2. Check the "should almost certainly be" suggestion the checker prints. If that reads like
+#      what the author meant, it IS damage - fix the file instead of whitelisting it.
+#   3. Prefer fixing to excluding. An exclusion is permanent debt; a rewrite is one commit.
+#
+# FORMAT - three TAB-separated fields, no line numbers:
+#   <repo-relative path><TAB><the exact run><TAB><why it is genuine>
+#
+# The corpus is at ZERO suspected sites as of 2026-08-21, so this file is deliberately empty of
+# entries. That is the state to preserve: every line added is a site the detector will never look
+# at again.

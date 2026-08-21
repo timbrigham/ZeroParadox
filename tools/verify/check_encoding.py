@@ -220,6 +220,53 @@ def double_encoded_runs(text):
     return hits
 
 
+# ═══ VERIFIED EXCLUSIONS ═══════════════════════════════════════════════════════════════════════
+#
+# Tim, 2026-08-21: *"make it warn instead of block, and keep a whitelist that have been verified
+# exclusions."*
+#
+# ⚠ WHY THIS EXISTS, AND IT IS A REAL TRADE RATHER THAN A CONCESSION. The round-trip predicate
+# cannot separate mojibake from some genuine Western-European typography, and the reason is
+# structural, not a bug worth patching: UTF-8's 2-byte lead bytes C2-DF land exactly on
+# `Â Ã ... × Ø ...` in Windows-1252, so `3 × 10²` encodes to D7 B2, which IS valid UTF-8. Measured
+# (/rely round 4): 14 of 15 constructed GENUINE strings fire — French guillemets after an accented
+# capital, an all-caps accented word in curly quotes, an engineering tolerance. No cut-site choice
+# fixes it; rounds 1-3 each tried a different one.
+#
+# So the DOUBLE-ENCODED leg WARNS and the whitelist keeps the warning list short enough to read.
+# ⚠ BOM AND UNDECODABLE STILL BLOCK — they are exact, have no false-positive class, and a warning
+# nobody must act on is how the other two would rot.
+#
+# ⚠⚠ THIS IS NOT A BASELINE, AND THE DIFFERENCE IS THE WORD *VERIFIED*. A baseline grandfathers
+# whatever happened to be there; every line here records the exact RUN a human confirmed is genuine
+# typography, so the entry dies the moment the text changes and cannot silently cover new damage.
+# It is a data switch of exactly the kind the four suppression baselines are, so it is hashed in
+# `batch.CHECKERS` and registered in `guards.py`.
+# Resolved from `common.HERE` (which derives from `__file__`), never written down as a literal
+# path — a hardcoded path is a copy and drifts exactly like a mirrored file. The whitelist travels
+# with the checker, the same rule the baselines follow.
+WHITELIST = common.HERE / 'encoding_whitelist.txt'
+
+
+def load_whitelist():
+    """`{(rel, run)}` a human has verified is genuine typography, not mojibake.
+
+    Format, one per line: `<repo-relative path>\\t<the exact run>\\t<why it is genuine>`. Keyed on
+    the RUN and not on a line number, because a line number is a copy of a location and drifts —
+    edit the line and the entry stops applying, which is the behaviour we want."""
+    out = set()
+    if not WHITELIST.exists():
+        return out
+    for line in WHITELIST.read_text(encoding='utf-8').splitlines():
+        if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        parts = line.split('\t')
+        if len(parts) < 3 or not parts[2].strip():
+            continue      # an entry with no stated reason is not a VERIFIED exclusion
+        out.add((parts[0].strip().replace('\\', '/').lower(), parts[1]))
+    return out
+
+
 def inspect(rel):
     """Return a list of (kind, detail) violations for one repo-relative path."""
     path = REPO / rel
@@ -240,7 +287,11 @@ def inspect(rel):
         # it does not drift the way a line-number citation does.
         return bad + [('undecodable', 'byte %d: %s' % (exc.start, exc.reason))]
 
+    allowed = load_whitelist()
+    key = str(rel).replace('\\', '/').lower()
     for offset, run in double_encoded_runs(text):
+        if (key, run) in allowed:
+            continue                        # verified genuine typography, with a stated reason
         line = text.count('\n', 0, offset) + 1
         try:
             intended = w1252_encode(run).decode('utf-8')
@@ -344,23 +395,42 @@ def main(argv):
         hits = scan(rels)
         scope = '%d tracked text file(s)' % len(rels)
 
+    # ⚠ TWO TIERS, AND THE SPLIT IS THE POINT (Tim, 2026-08-21). `bom` and `undecodable` are EXACT
+    # tests with no false-positive class, so they BLOCK. `double-encoded` is a heuristic that
+    # provably cannot separate mojibake from some genuine typography (see WHITELIST above), so it
+    # WARNS — a gate that can halt work on correct prose is one that gets disabled, and disabling it
+    # would take the two exact tests down with it.
+    blocking = [h for h in hits if h[1] in ('bom', 'undecodable', 'unreadable')]
+    warning = [h for h in hits if h[1] == 'double-encoded']
+    n_allowed = len(load_whitelist())
+
     print('=' * 44)
     print('  encoding-integrity check')
     print('  scope                    : %s' % scope)
-    print('  BOM                      : %d' % sum(1 for h in hits if h[1] == 'bom'))
-    print('  undecodable              : %d' % sum(1 for h in hits if h[1] == 'undecodable'))
-    print('  double-encoded           : %d' % sum(1 for h in hits if h[1] == 'double-encoded'))
+    print('  BOM               BLOCK  : %d' % sum(1 for h in hits if h[1] == 'bom'))
+    print('  undecodable       BLOCK  : %d' % sum(1 for h in hits if h[1] == 'undecodable'))
+    print('  double-encoded    warn   : %d' % len(warning))
+    print('  verified exclusions      : %d  (encoding_whitelist.txt)' % n_allowed)
     print('=' * 44)
-    for rel, kind, detail in hits:
+    for rel, kind, detail in blocking:
         print('  %s  [%s]' % (rel, kind))
         print('      %s' % detail)
+    for rel, kind, detail in warning:
+        print('  %s  [%s — WARN]' % (rel, kind))
+        print('      %s' % detail)
 
-    if hits:
-        print('\nA file was written through a codepage that is not UTF-8.')
+    if warning:
+        print('\n%d suspected double-encoding(s) — WARNING, not a block.' % len(warning))
         print('DO NOT hand-repair character by character - rewrite the whole passage, then re-run.')
+        print('If a site is GENUINE typography, add it to tools/verify/encoding_whitelist.txt with')
+        print('the reason — verified exclusions only; an entry with no stated reason is ignored.')
         print('Safe write recipes (and why PowerShell 5.1 does this): tools/process/file-encoding.md')
+    if blocking:
+        print('\nA file was written through a codepage that is not UTF-8, or could not be read.')
+        print('Safe write recipes: tools/process/file-encoding.md')
         return 1 if '--block' in argv else 0
-    print('OK: every file in scope is clean UTF-8, no BOM, no double-encoding.')
+    if not warning:
+        print('OK: every file in scope is clean UTF-8, no BOM, no double-encoding.')
     return 0
 
 

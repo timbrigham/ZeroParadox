@@ -100,7 +100,7 @@ PRE_COMMIT_PLAN = [
     # ⚠ AT COMMIT, NOT ONLY AT PUSH, AND FOR A REASON THE OTHER FOUR DO NOT SHARE. Double-encoded
     # text is valid UTF-8, so it survives every other check, renders plausibly in a diff, and the
     # window in which the author still knows which write did it is minutes long.
-    ("check_encoding", "BLOCK", "no BOM, no double-encoded text in any tracked file"),
+    ("check_encoding", "BLOCK", "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
     ("gatelock", "warn", "a review round left open (harm is EDITING, not committing)"),
 ]
 
@@ -119,7 +119,7 @@ PRE_PUSH_PLAN = [
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
     ("check_classes", "BLOCK", "a new requirements class records a degeneracy verdict"),
     ("check_prose", "BLOCK", "prose caps, baselined; NEW sites only"),
-    ("check_encoding", "BLOCK", "no BOM, no double-encoded text in any tracked file"),
+    ("check_encoding", "BLOCK", "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
     ("decls", "BLOCK", "every new declaration has #print axioms + an ssot.json row"),
     ("check_hashes", "BLOCK", "build-script fingerprints match register.md"),
     # ⚠ NOT advisory: scan_pdfs' exit code IS the hook's when everything else passes, so it

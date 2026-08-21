@@ -58,9 +58,14 @@ import report    # noqa: E402  the one formatter every entry point announces its
 STATE = os.path.join(PRIV, "batch_state.json")
 # The ones that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
 # deliberately — see check_suite.
-# ⚠ `check_encoding.py` joined 2026-08-20 and is the one member with NO BASELINE, by design: it
-# found the corpus at zero on its first run, and a baseline is DEBT that may never be grown
-# deliberately. Zero is the invariant here, not a target.
+# ⚠ `check_encoding.py` joined 2026-08-20 and carries TWO TIERS rather than one baseline
+# (Tim, 2026-08-21: *"make it warn instead of block, and keep a whitelist that have been verified
+# exclusions"*). `bom` and `undecodable` are exact tests with no false-positive class and BLOCK;
+# suspected `double-encoding` is a heuristic that provably cannot separate mojibake from some
+# genuine Western-European typography, so it WARNS and is quieted by
+# `encoding_whitelist.txt` — verified exclusions, each with a stated reason, never a baseline seeded
+# from whatever happened to be there. The corpus is at ZERO suspected sites, and that is the state
+# to preserve rather than a number to grow.
 GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_classes.py",
                    "check_encoding.py"]
 
@@ -79,6 +84,13 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # route to one property: content marker, path, allowlist, baselines.
                               "prose_baseline.txt", "pov_baseline.txt",
                               "modal_baseline.txt", "class_baseline.txt",
+                              # ⚠ AND THE ENCODING WHITELIST (2026-08-21). It is not a baseline —
+                              # every line records a run a human VERIFIED is genuine typography, and
+                              # an entry with no stated reason is ignored — but it is a suppression
+                              # switch with exactly the power of the four above: one line silences
+                              # one site permanently. Same rule, no exception for being better
+                              # curated.
+                              "encoding_whitelist.txt",
                               # ⚠ AND THE GUARD ITSELF. `guards.py` is the control that walks the
                               # four routes above; deleting a route from its registry re-opens that
                               # route AND removes the only thing that would have said so. A control
