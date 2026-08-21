@@ -80,6 +80,19 @@ been through the criterion; re-proposing it needs a new argument, not a fresh re
 | § *Rules That Must Reach Spawned Agents* | exists precisely because content outside the injected file does not reach a subagent unless carried into the brief. Routing it would be self-defeating |
 | § *The Two-Pole Test*, § *UNSTATED ADJACENCY*, § *Commitments in HYPOTHESES* | unenforced, and each is a **method** whose framing is the mechanism. Same bar as Core Objects: control first |
 | § *Theorem/Proposition/Lemma Naming Convention* | the taxonomy is reference and would route cleanly, but its CC-2 / MC-1 / diagonal-fixed-point subsections assert **mathematics**. Splitting it is open work, not a settled decision |
+| § *WHERE THINGS LIVE* | it **is** a routing table, and it sits at line 32 — the firing zone. Routing a routing table is a no-op with an extra hop |
+| § *`batch.py precommit` BEFORE EVERY COMMIT* | the commands and the block rules stayed; only the argument moved to `pipeline.md`. Same for § *Prior-Art Search* → `prior-art.md` |
+| § *Review-Loop Cap* | the severity **tiering** is semantics a reviewer must act on, not a number that drifts, and it is deliberately restated everywhere. Round mechanics already routed. Its § *Prose about PREVIOUS STATES* sub-rule is unenforced — candidate, control first |
+| § *"NOT IN THE LIBRARY" IS A CLAIM* | **the strongest remaining candidate.** The four axes (polarity · part of speech · vocabulary · display) are the rule; the measured false negatives are the argument. But unenforced, and the measurements are what make the axes credible rather than arbitrary — **control first** |
+| § *Anything convertible from prose to Lean*, § *High-Value Insight Capture*, § *GitHub Issues* | unenforced. Candidates on the reference-versus-rule question below; none acted on |
+
+⚠ **THE OPEN QUESTION THIS SWEEP COULD NOT SETTLE ALONE: does "enforcement is the criterion" govern
+REFERENCE material as well as rules?** A checklist you look up while doing a task (companion sync,
+README formatting, the naming taxonomy) is not a rule that has to fire unprompted — it is consulted
+deliberately, so routing it costs nothing and the four properties above are satisfied cleanly. That
+reading is what moved `document-workflow.md`. The stricter reading — *nothing unenforced leaves* —
+would have kept it. **The distinction is real and it is not yet ratified.** Recorded here rather than
+applied silently.
 
 **The criterion that decided every row: does a mechanical enforcer fire whether or not anyone read
 the argument?** If yes, the argument may move — the gate still catches the failure, and the reader
