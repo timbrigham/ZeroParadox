@@ -227,14 +227,51 @@ def check_exemption_surface():
 
         # The WARRANT leg. An exemption justified by a re-route is only as good as the re-route,
         # and until this ran the justification was a sentence in the `why` column.
+        #
+        # ⚠⚠ TESTED AS A SET, NOT AT A POINT. Checking the one sample path was still a fail-open:
+        # NARROWING `ROUTING` (say to `^tools/process/sub/`) instead of deleting it leaves the
+        # sample matching and every other file in the prefix unrouted, with `bad = 0`. Measured
+        # /rely round 2. An exemption is a SET, so its warrant has to be checked over the set —
+        # probing the prefix root and a nested path is what makes this a coverage test.
         if router is not None:
-            routed = _routes_to(path)
-            r_ok = router in routed
+            prefix = path.rsplit("/", 1)[0] + "/" if "/" in path else ""
+            probes = [path, prefix + "zz_probe.md", prefix + "sub/zz_probe.md"]
+            missing = [q for q in probes if router not in _routes_to(q)]
+            r_ok = not missing
             if not r_ok:
                 bad += 1
-            rows.append(("  ^ warrant: routed to %s" % router, r_ok,
-                         "routes to %s — the exemption above is VOID without this"
-                         % (", ".join(sorted(routed)) if routed else "NOTHING")))
+            rows.append(("  ^ warrant: %s covers the PREFIX" % router, r_ok,
+                         ("all %d probe(s) route to %s" % (len(probes), router)) if r_ok else
+                         "NOT routed: %s — the exemption above is VOID for those"
+                         % ", ".join(missing)))
+    return rows, bad
+
+
+# ⚠⚠ AND THE REGISTRY MUST BE COMPLETE, WHICH IS A DIFFERENT PROPERTY FROM EACH ROW BEING RIGHT.
+# Every row above can pass while a WHOLE NEW exemption prefix exists that nobody registered — the
+# table is hand-maintained and nothing compared it against its source of truth. Measured /rely
+# round 2: adding `.claude/commands/` to `EXEMPT_PREFIXES` — the one directory CLAUDE.md says both
+# gates MUST fire on — produced `reviewable? False / routes to NOTHING / hashed? False` with this
+# registry reporting every row `ok` and `bad = 0`.
+#
+# This is the same failure this whole file exists to prevent, one level up: "enumerate the routes"
+# performed from memory, by the person who just added one. The fix is not another rule — it is
+# deriving the obligation from `batch.EXEMPT_PREFIXES` so a new prefix cannot be silently unlisted.
+def check_exemption_completeness():
+    """Every prefix `batch.py` exempts must appear in EXEMPTION_SURFACE above."""
+    import importlib
+    import batch
+    importlib.reload(batch)
+    covered = [p for _l, p, _m, _r, _w in EXEMPTION_SURFACE]
+    rows, bad = [], 0
+    for prefix in batch.EXEMPT_PREFIXES:
+        hit = any(c.lower().startswith(prefix.lower()) for c in covered)
+        if not hit:
+            bad += 1
+        rows.append(("registered: %s" % prefix, hit,
+                     "has a row above" if hit else
+                     "*** EXEMPT BUT UNREGISTERED — exempt from the prose gates, warranted by "
+                     "nothing, and no control would have said so ***"))
     return rows, bad
 
 
@@ -930,6 +967,13 @@ def main():
         # Classification, not mutation — so it runs inside the try but plants nothing.
         print("\n  PROPERTY: a changed file cannot escape the REVIEW-SIGNAL requirement")
         _rows, _bad = check_exemption_surface()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
+        # ⚠ AND THE REGISTRY'S OWN COMPLETENESS. Every row above can pass while an unregistered
+        # prefix is exempt from everything — see check_exemption_completeness.
+        print("\n  PROPERTY: no exemption prefix escapes the registry")
+        _rows, _bad = check_exemption_completeness()
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad

@@ -166,19 +166,37 @@ def double_encoded_runs(text):
     if cur:
         runs.append((start, ''.join(cur)))
 
+    # ⚠⚠ SPLIT EACH RUN AT THE CHARACTERS WINDOWS-1252 CANNOT EXPRESS, AND TEST THE PIECES.
+    # Testing a run WHOLE was a fail-open, measured 2026-08-21 (/rely round 2): one legitimate glyph
+    # touching mojibake makes the whole run un-encodable, so `except ValueError` discarded it and the
+    # file came back clean. `⊥<mangled apostrophe>s floor` — where the mojibake is this checker's own
+    # control #2 verbatim — returned exit 0. Measured exposure: 3,077 multi-character non-ASCII runs
+    # across 271 of 409 tracked files, and ANY single non-ASCII neighbour suppressed the lot.
+    #
+    # It is reachable rather than theoretical: this checker's own banner tells you to rewrite the
+    # passage, and a partial repair produces exactly this mixed shape — clean glyph beside mojibake.
+    #
+    # ⚠ ROUND 1's MASKING CONTROL DID NOT COVER THIS AND LOOKED LIKE IT DID. `_mangle('a — ⭐ b')`
+    # mangles BOTH characters, so it tests masking-by-mojibake; the hole is masking-by-GENUINE-glyph.
+    # A control built by mangling everything can never exhibit a mixed run. See `_MUST_FIRE`.
     hits = []
     for offset, run in runs:
-        if len(run) < 2:
-            continue          # one accented character cannot be a multi-byte sequence
-        try:
-            raw = w1252_encode(run)
-        except ValueError:
-            continue          # not representable in Windows-1252 => cannot have come from it
-        try:
-            raw.decode('utf-8')
-        except UnicodeDecodeError:
-            continue          # reads back as noise => genuine accented text, not mojibake
-        hits.append((offset, run))
+        piece, p_start = [], 0
+        for i, ch in enumerate(run + '\0'):          # sentinel forces the final flush
+            if ch != '\0' and ch in WIN1252_ENCODE:
+                if not piece:
+                    p_start = i
+                piece.append(ch)
+                continue
+            if len(piece) >= 2:                      # one character cannot be a multi-byte sequence
+                sub = ''.join(piece)
+                try:
+                    w1252_encode(sub).decode('utf-8')
+                except (ValueError, UnicodeDecodeError):
+                    pass          # reads back as noise => genuine accented text, not mojibake
+                else:
+                    hits.append((offset + p_start, sub))
+            piece = []
     return hits
 
 
@@ -255,6 +273,15 @@ _MUST_FIRE = [
     # fires on its own. This case is the reason the fix had to be the full table and not a fifth
     # special case -- a per-character patch would still have missed it.
     ('a blind glyph MASKING an em dash that fires alone', _mangle('a — ⭐ b')),
+    # ⚠⚠ MASKING BY A *GENUINE* GLYPH, WHICH IS A DIFFERENT SHAPE AND THE ONE THAT WAS OPEN.
+    # Every case above is built by mangling the WHOLE string, so it can never produce a run that
+    # mixes mojibake with a legitimate character -- and a mixed run is exactly what defeated the
+    # whole-run test (/rely round 2). These are built by hand: real glyph ADJACENT to mangled text,
+    # no separating ASCII. `⊥` and `ℝ` are not expressible in Windows-1252, which is precisely why
+    # they used to suppress the neighbour they touch.
+    ('mojibake touching a real ⊥', '⊥' + _mangle('’s floor is the pole')),
+    ('mojibake touching a real ℝ', _mangle('the reals —') + 'ℝ'),
+    ('mojibake fenced by real glyphs on BOTH sides', '∞' + _mangle('—') + 'ε'),
 ]
 _MUST_SUPPRESS = [
     ('a real em dash', 'the rule — and its consequence'),

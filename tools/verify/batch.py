@@ -749,7 +749,41 @@ def check_routing(state, ranges=None):
     # so nothing reviewed it at all. A basename collision in a subdirectory is a MISS.
     _hashed_paths = {os.path.relpath(_checker_path(c), REPO).replace("\\", "/") for c in now}
     _unhashed = sorted(f for f in _routed if f not in _hashed_paths)
-    if not state and not moved and not _unhashed:
+    # ⚠⚠ THE TWO LEGS DISAGREE ABOUT WHICH BYTES ARE BEING PUSHED, AND THE DISCHARGE FOLLOWED THE
+    # WRONG ONE. Leg (a) `moved` hashes the files ON DISK; leg (b) `_routed` reads the PUSHED RANGE.
+    # When the pushed ref is not the checkout those are different, and `prepush` returned PASS on a
+    # CLEAN tree for a range that adds unreviewed prose to a routed file — the row naming the file
+    # and clearing it in the same breath (measured end to end in a detached worktree, /rely round 2).
+    #
+    # It needs no dirty tree and no unusual command: `git push HEAD~2:branch`, pushing one branch
+    # while another is checked out, or any worktree. CLAUDE.md already names *"push a subset to dodge
+    # a signal"* as a known move; this made that move SUCCEED. Same shape as `REL-1`, which fixed the
+    # leg and left the discharge reading the other one.
+    #
+    # The fix asks leg (a)'s question about leg (b)'s bytes: for every routed file in the RANGE,
+    # does the signal cover the content AT THE RANGE TIP? Hashing a git object is correct precisely
+    # here — the pushed content IS a git value, and the "hash the file on disk" rule governs what a
+    # REVIEWER signs, not what a push contains.
+    _stale_at_tip = []
+    if ranges and _routed and not _unhashed:
+        for f in _routed:
+            key = next((c for c in now
+                        if os.path.relpath(_checker_path(c), REPO).replace("\\", "/") == f), None)
+            if key is None:
+                continue                      # already reported by _unhashed
+            for tip in _range_tips(ranges):
+                h = _blob_hash(tip, f)
+                if h is None:
+                    continue                  # absent at that tip (added or deleted) — not stale
+                if reviewed.get(key) != h:
+                    _stale_at_tip.append(f)
+                    break
+    if _stale_at_tip:
+        rows.append(("/rely", False,
+                     "%d routed file(s) differ at the PUSHED TIP from what /rely signed, even though "
+                     "the working tree matches: %s — the push carries bytes nobody reviewed"
+                     % (len(_stale_at_tip), ", ".join(sorted(set(_stale_at_tip))[:3]))))
+    if not state and not moved and not _unhashed and not _stale_at_tip:
         done.add("/rely")
     elif _unhashed and not moved:
         rows.append(("/rely", False,
@@ -955,6 +989,34 @@ EXEMPT_PATHS = ("claude.md", "ssot.json", "lake-manifest.json")
 # fires on this exact prefix, so the pair covers the same set. Fence: anything in there asserting
 # mathematics belongs in the corpus and is gated normally.
 EXEMPT_PREFIXES = ("tools/verify/", "tools/process/")
+
+
+def _range_tips(ranges):
+    """The TIP revision of each pushed range — the bytes that will land on the remote.
+
+    A range is `<base>..<tip>`; a bare rev is its own tip. Used only by the stale-at-tip leg, which
+    asks whether `/rely` signed the content being PUSHED rather than the content on disk."""
+    tips = []
+    for r in ranges or []:
+        r = r.strip()
+        if not r:
+            continue
+        tips.append(r.split("..")[-1] if ".." in r else r)
+    return tips
+
+
+def _blob_hash(rev, path):
+    """SHA-256 (first 12 hex) of `path` AT `rev`, hashed as RAW BYTES.
+
+    ⚠ Bytes, never text. `sh()` decodes as UTF-8 with `errors="replace"`, which is lossy — every
+    undecodable byte collapses to U+FFFD, so two different blobs can hash the same. That is exactly
+    the class of defect `check_encoding.py` exists for, and it would sit inside the check meant to
+    stop unreviewed bytes. Returns None when the path does not exist at `rev`."""
+    r = subprocess.run(["git", "cat-file", "-p", "%s:%s" % (rev, path)],
+                       cwd=REPO, capture_output=True)
+    if r.returncode != 0:
+        return None
+    return hashlib.sha256(r.stdout).hexdigest()[:12]
 
 
 def changed_files(ranges=None):
