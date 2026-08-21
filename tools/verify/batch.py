@@ -166,6 +166,33 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # minted DOI is not.** The rule is therefore wider than it was written:
                               # if it can stop a push OR A RELEASE, it is in here.
                               "check_release_ready.py"]
+
+
+# ⚠⚠ THE PROSE UNDER THE ROUTED PREFIXES IS HASHED BY GLOB, NOT BY NAME — and the glob is the point.
+# `tools/verify/**.md` and `tools/process/**.md` are EXEMPT from the editorial and adversary gates and
+# routed to `/rely` instead. That re-route is the entire warrant for the exemption, and `/rely` can
+# only discharge what the hash leg can see, so an unhashed `.md` under either prefix is exempt from
+# every prose gate AND undischargeable — reviewed by nothing, exactly the round-1 signature.
+#
+# Measured 2026-08-21: `tools/process/` was added to `EXEMPT_PREFIXES` and `ROUTING` and NOT here, so
+# `batch.py`'s own `_unhashed` leg reported 8 routed files it could not see. It failed CLOSED and
+# named the fix, which is why this was ordinary rather than blocking — the enumerator working, one
+# round after the previous entry was added the same way.
+#
+# ⚠ A LIST OF NAMES WOULD BE THE WRONG SHAPE. Naming the 8 files closes 8 holes; the 9th arrives with
+# the next routed document and nothing says so. This file's own history is that argument — the four
+# baselines, then a fifth, then a sixth. A glob over the routed prefix cannot fall behind the
+# directory it globs. Sorted so the signal's line order is stable across machines.
+def _routed_docs():
+    out = []
+    for rel in ("tools/verify", "tools/process"):
+        d = os.path.join(REPO, *rel.split("/"))
+        if os.path.isdir(d):
+            out += ["%s/%s" % (rel, n) for n in os.listdir(d) if n.lower().endswith(".md")]
+    return sorted(out)
+
+
+CHECKERS = CHECKERS + _routed_docs()
 # ⚠ `register.md` IS DELIBERATELY NOT IN THIS LIST, AND IT WAS ADDED AND THEN REMOVED — the reasoning
 # is worth more than the entry. It IS a switch: every hash check compares a script against a token
 # recorded there, and blanking one disarmed a check while `checker_hashes()` stayed byte-identical
@@ -273,7 +300,19 @@ def sh(*args, cwd=REPO):
 # both. The `<ABSENT>` sentinel, which exists so a DELETED checker still trips the routing,
 # is what made it silent: a file in the wrong place is indistinguishable from a deleted one.
 def _checker_path(name):
-    """Where a watched file actually lives. Three roots, not one."""
+    """Where a watched file actually lives. Three roots, not one — plus explicit repo-relative
+    entries.
+
+    ⚠ AN ENTRY CONTAINING `/` IS A REPO-RELATIVE PATH, NOT A BASENAME, and that escape hatch exists
+    because basenames stopped being unique. `tools/process/` routes to `/rely` and holds a
+    `README.md`, which collides with `tools/verify/README.md`; a bare-basename list cannot express
+    both, and the `_unhashed` leg compares PATHS precisely so a collision is a MISS rather than a
+    false cover. Added 2026-08-21 after `/rely` measured 8 routed-but-unhashed files — the routing
+    was opened for `tools/process/` without the hash leg that discharges it, so the exemption it
+    justifies had a compensating control that could not be satisfied. Prefer a path for anything
+    outside the verification bundle."""
+    if "/" in name:
+        return os.path.join(REPO, *name.split("/"))     # explicit, collision-proof
     if name == "scan_pdfs.py":
         return os.path.join(REPO, "scripts", name)      # build-side tool
     if name == "ar_status.json":
@@ -597,7 +636,11 @@ def check_ssot(decls):
 
 
 def check_suite():
-    """Run the four GATING checkers and honour their exit codes.
+    """Run the GATING checkers (`GATING_CHECKERS`) and honour their exit codes.
+
+    ⚠ The count is NOT written here. This said "the four" while `GATING_CHECKERS` held five —
+    `check_encoding.py` joined and the docstring did not — in the same commit that added
+    "COUNT THE TUPLE, DO NOT TRUST A WORD" to `hooks.py`. Name the list; let the reader count it.
 
     ⚠ It used to discard every exit code and grep only for a `NEW …: N` line, which meant it
     returned `suite reports 0 new` for a checker that was ABSENT from disk, a checker that CRASHED,

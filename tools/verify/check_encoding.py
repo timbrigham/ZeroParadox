@@ -93,8 +93,57 @@ def tracked_text_files():
             if rel and not rel.lower().endswith(BINARY_EXT)]
 
 
+# Windows-1252 AS WINDOWS IMPLEMENTS IT, which is the mis-decoder whose damage this file exists to
+# catch. Python's `cp1252` codec is NOT that table: it leaves 0x81 0x8D 0x8F 0x90 0x9D UNDEFINED and
+# raises, while the OS maps each to the C1 control of the same value.
+#
+# ⚠ THAT GAP WAS A FAIL-OPEN, MEASURED 2026-08-21 BY A `/rely` TRIAL ON THIS FILE'S FIRST VERSION.
+# Those five bytes are ordinary UTF-8 continuation bytes, so real corpus glyphs mangle straight into
+# them and the `except UnicodeEncodeError` swallowed the run as "not representable, cannot be
+# mojibake" — the exact opposite of the truth. Corrupting this repository's own CLAUDE.md with a
+# mangled star (U+2B50 = E2 AD 90, and 0x90 is one of the five) returned exit 0 and "no
+# double-encoding". Blind glyphs included ℝ, ₁, ← and ⭐; worse, one blind character MASKED its
+# neighbours, because the run is tested whole.
+#
+# The fix is the full 256-entry table, not another special case: encode by lookup and treat a
+# missing key as "not representable", which is the same predicate the codec was meant to supply.
+# ⚠ WRITTEN AS CODE POINTS, NOT LITERALS, AND THAT IS THIS FILE'S STANDING CONSTRAINT (see
+# the header): a detector whose source contains instances of what it detects can never report
+# clean. Spelling the five undefined slots out as the C1 controls Windows produces also makes the
+# gap that caused the fail-open VISIBLE rather than implicit -- and the first draft of this very
+# fix wrote the block as literals and silently dropped 0x81, which the length assert now catches.
+_W1252_80_9F = (
+    '\u20ac\u0081\u201a\u0192\u201e\u2026\u2020\u2021'   # 0x81 undefined -> U+0081
+    '\u02c6\u2030\u0160\u2039\u0152\u008d\u017d\u008f'   # 0x8d, 0x8f undefined
+    '\u0090\u2018\u2019\u201c\u201d\u2022\u2013\u2014'   # 0x90 undefined
+    '\u02dc\u2122\u0161\u203a\u0153\u009d\u017e\u0178'   # 0x9d undefined
+)
+WIN1252_DECODE = (''.join(chr(b) for b in range(0x80))
+                  + _W1252_80_9F
+                  + ''.join(chr(b) for b in range(0xa0, 0x100)))
+WIN1252_ENCODE = {ch: i for i, ch in enumerate(WIN1252_DECODE)}
+assert len(_W1252_80_9F) == 32, 'the 0x80-0x9F block must be exactly 32 entries'
+assert len(WIN1252_DECODE) == 256 and len(WIN1252_ENCODE) == 256, 'table must be total and 1:1'
+
+
+def w1252_encode(s):
+    """The bytes a Windows mis-decode would have produced this text from.
+
+    Raises `ValueError` when `s` is not representable — which is the real signal, because text that
+    Windows-1252 cannot express cannot have come from a Windows-1252 mis-decode."""
+    try:
+        return bytes(WIN1252_ENCODE[ch] for ch in s)
+    except KeyError:
+        raise ValueError('not representable in Windows-1252')
+
+
+def w1252_decode(raw):
+    """Read bytes the way Windows would. Total on all 256 values, unlike Python's codec."""
+    return ''.join(WIN1252_DECODE[b] for b in raw)
+
+
 def double_encoded_runs(text):
-    """Maximal non-ASCII runs that read back as cp1252 bytes forming valid UTF-8.
+    """Maximal non-ASCII runs that read back as Windows-1252 bytes forming valid UTF-8.
 
     Returns `[(start_offset, run), ...]`. See the module header for why a round trip rather than a
     pattern list — this predicate is the checker, and `--selftest` drives exactly this function.
@@ -122,9 +171,9 @@ def double_encoded_runs(text):
         if len(run) < 2:
             continue          # one accented character cannot be a multi-byte sequence
         try:
-            raw = run.encode('cp1252')
-        except UnicodeEncodeError:
-            continue          # not representable in cp1252 => cannot have come from it
+            raw = w1252_encode(run)
+        except ValueError:
+            continue          # not representable in Windows-1252 => cannot have come from it
         try:
             raw.decode('utf-8')
         except UnicodeDecodeError:
@@ -156,8 +205,8 @@ def inspect(rel):
     for offset, run in double_encoded_runs(text):
         line = text.count('\n', 0, offset) + 1
         try:
-            intended = run.encode('cp1252').decode('utf-8')
-        except (UnicodeEncodeError, UnicodeDecodeError):   # pragma: no cover - guarded upstream
+            intended = w1252_encode(run).decode('utf-8')
+        except (ValueError, UnicodeDecodeError):           # pragma: no cover - guarded upstream
             intended = '?'
         bad.append(('double-encoded',
                     'line %d: %r should almost certainly be %r' % (line, run, intended)))
@@ -187,7 +236,7 @@ def _mangle(good):
     This is the inverse of the repair, and writing the fixtures this way is what keeps this file's
     own source free of the thing it detects. It also makes each control self-describing: the test
     data is written as what it SHOULD say."""
-    return good.encode('utf-8').decode('cp1252')
+    return w1252_decode(good.encode('utf-8'))
 
 
 _MUST_FIRE = [
@@ -195,6 +244,17 @@ _MUST_FIRE = [
     ('curly apostrophe', _mangle('the checker’s own output')),
     ('emoji, doubly mangled', _mangle('\U0001f4d6 THE FULL ARGUMENT')),
     ('accented letter via cp1252', _mangle('Adámek–Milius–Moss')),
+    # ⚠ THE FIVE BYTES PYTHON'S `cp1252` LEAVES UNDEFINED. Every case below returned exit 0 and
+    # "no double-encoding" against this checker's first version (/rely, 2026-08-21); each names the
+    # blind byte so a regression is legible rather than just red. See the table above.
+    ('blind 0x90 - a mangled star, from this repo\'s own CLAUDE.md', _mangle('⭐⭐ WHERE THINGS LIVE')),
+    ('blind 0x9d - a mangled ℝ, 762 occurrences in the corpus', _mangle('the reals ℝ are where the snap fails')),
+    ('blind 0x81 - a mangled subscript, 470 occurrences', _mangle('ε₁ is a fixed point of the tower')),
+    ('blind 0x90 - a mangled left arrow, 167 occurrences', _mangle('the snap ⊥ ← ε₀ run backwards')),
+    # ⚠ MASKING: the run is tested WHOLE, so one blind character used to silence a neighbour that
+    # fires on its own. This case is the reason the fix had to be the full table and not a fifth
+    # special case -- a per-character patch would still have missed it.
+    ('a blind glyph MASKING an em dash that fires alone', _mangle('a — ⭐ b')),
 ]
 _MUST_SUPPRESS = [
     ('a real em dash', 'the rule — and its consequence'),

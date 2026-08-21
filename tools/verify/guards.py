@@ -175,19 +175,37 @@ def _classifies(paths):
     return set(batch.reviewable_from(paths))
 
 
+# ⚠⚠ THE `router` COLUMN IS THE EXEMPTION'S WARRANT, AND IT IS TESTED, NOT ASSERTED.
+# Added 2026-08-21 after a `/rely` trial: dropping the `tools/process/` entry from `batch.ROUTING`
+# left this table still printing `ok` for that row, still asserting "routed to /rely, which BLOCKS"
+# — while nothing routed. The exemption survived the deletion of the only thing that justified it.
+#
+# An exemption and its compensating control must cover the same set, and `batch.ROUTING`'s own
+# header already says so; what was missing was anything that FAILS when they come apart. A `router`
+# of `None` means the row is exempt for a reason other than routing and must be justified in `why`
+# — CLAUDE.md is version-control-only by its own header, and a font carries no prose at all.
 EXEMPTION_SURFACE = [
-    # (label, path, may_be_exempt, why)
-    ("an ordinary corpus file", _ORDINARY, False,
+    # (label, path, may_be_exempt, router, why)
+    ("an ordinary corpus file", _ORDINARY, False, None,
      "must ALWAYS be reviewable - this is the must-fire control"),
-    ("exact path (CLAUDE.md)", _EXEMPT_PATH, True,
-     "the operating manual; its own header exempts it"),
-    ("directory prefix (tools/verify/)", _EXEMPT_PREFIX, True,
+    ("exact path (CLAUDE.md)", _EXEMPT_PATH, True, None,
+     "the operating manual; its own header exempts it, and it is routed NOWHERE by design"),
+    ("directory prefix (tools/verify/)", _EXEMPT_PREFIX, True, "/rely",
      "operating machinery; /rely reviews this layer and BLOCKS"),
-    ("directory prefix (tools/process/)", _EXEMPT_PROCESS, True,
+    ("directory prefix (tools/process/)", _EXEMPT_PROCESS, True, "/rely",
      "CLAUDE.md's routed body; declared in its header and routed to /rely, which BLOCKS"),
-    ("data extension (a .ttf)", _EXEMPT_DATA, True,
+    ("data extension (a .ttf)", _EXEMPT_DATA, True, None,
      "a binary carries no prose for a prose gate to read"),
 ]
+
+
+def _routes_to(path):
+    """Which agents `batch.ROUTING` actually sends `path` to. The routing table itself, not a claim
+    about it — the same move as `_classifies()` reading the classifier rather than a proxy."""
+    import importlib
+    import batch
+    importlib.reload(batch)
+    return {agent for pat, agent, _why in batch.ROUTING if pat.match(path)}
 
 
 def check_exemption_surface():
@@ -197,7 +215,7 @@ def check_exemption_surface():
     recorded as exempt has quietly stopped being exempt — both directions, because an exemption
     that silently disappears is a false alarm generator and one that silently appears is a hole."""
     rows, bad = [], 0
-    for label, path, may_exempt, why in EXEMPTION_SURFACE:
+    for label, path, may_exempt, router, why in EXEMPTION_SURFACE:
         got = _classifies([path])
         is_exempt = path not in got
         ok = (is_exempt == may_exempt)
@@ -206,6 +224,17 @@ def check_exemption_surface():
         state = "exempt" if is_exempt else "reviewable"
         expect = "exempt (permitted)" if may_exempt else "reviewable (required)"
         rows.append((label, ok, "%s — expected %s; %s" % (state, expect, why)))
+
+        # The WARRANT leg. An exemption justified by a re-route is only as good as the re-route,
+        # and until this ran the justification was a sentence in the `why` column.
+        if router is not None:
+            routed = _routes_to(path)
+            r_ok = router in routed
+            if not r_ok:
+                bad += 1
+            rows.append(("  ^ warrant: routed to %s" % router, r_ok,
+                         "routes to %s — the exemption above is VOID without this"
+                         % (", ".join(sorted(routed)) if routed else "NOTHING")))
     return rows, bad
 
 
@@ -886,7 +915,7 @@ def main():
             for label, _f, may, _v in p["routes"]:
                 print("     - %-34s %s" % (label, "may suppress" if may else "must NOT suppress"))
         print("  a changed file cannot escape the REVIEW-SIGNAL requirement")
-        for label, _path, may, _why in EXEMPTION_SURFACE:
+        for label, _path, may, _router, _why in EXEMPTION_SURFACE:
             print("     - %-34s %s" % (label, "may exempt" if may else "must NOT exempt"))
         return 0
 

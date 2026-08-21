@@ -84,8 +84,15 @@ def evidence_patterns(name):
     n = re.escape(name)
     named = [
         re.compile(n + r"Nondegenerate"),
-        re.compile(r"\btrivial" + n, re.I),
-        re.compile(r"\bdegenerate" + n, re.I),
+        # ⚠ ANCHOR THE TAIL. `\btrivialFoo` is prefix-open, so it also matches `trivialFooBar` —
+        # a witness for the LONGER class silently clears the SHORTER one, which is the same
+        # one-gauge-clears-many defect as CHK-3 arriving through the named patterns instead of the
+        # generic ones. Two real pairs sit in position today (`InfinitudeFloor`/`...Inversion`,
+        # `Wheel`/`WheelValuationStructure`); neither fires yet, so this was latent, not live.
+        # `(?![A-Za-z0-9_])` and not `\b`: `\b` after a word character is satisfied by `_`, which is
+        # legal in a Lean identifier and would leave `trivialFoo_bar` matching.
+        re.compile(r"\btrivial" + n + r"(?![A-Za-z0-9_])", re.I),
+        re.compile(r"\bdegenerate" + n + r"(?![A-Za-z0-9_])", re.I),
     ]
     # ⚠ NO GENERIC PATTERNS. They were the whole of CHK-3: `NO-GO` / `vacuous` / `degenerate`
     # matched file-wide, so one gauge cleared every class in the file. Scoping them to a window
