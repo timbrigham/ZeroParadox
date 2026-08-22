@@ -341,21 +341,42 @@ the verification layer and **must keep blocking**. Downgrading the check wholesa
 across with the first.
 
 **⚠⚠ AND ASK WHAT THE DOWNGRADE UN-PRICES. AN EXEMPTION BOUGHT WITH A BLOCK IS UNPAID THE MOMENT THAT
-BLOCK BECOMES A WARNING.** `tools/verify/**` and `tools/process/**` skip editorial and adversary
-**because** `/rely` covers them and BLOCKS — so a wholesale downgrade leaves that directory with no
-blocking review gate at all. **MEASURED BY RUNNING A CONTROL, 2026-08-21**
-(`.claude-local/tools_wip/probe_warrant_blocks.py` — a `DC-25` neuter in a detached worktree: stop
-`batch.py` counting a routing FAIL as blocking, leave the ROUTING pattern untouched, which is exactly
-the edit a downgrade makes): **`guards.py` still exits 0 and the warrant row still reads `ok`.** The
-row (`guards.py:278`) compares the ROUTING PATTERN SOURCE — a string plus the `re.I` flag — so
-enforcement mode is not one of its inputs and cannot be. That is the fifth instance of
-*warrant-satisfied-while-empty* in that same code — rounds 1–4 found sampling, narrowing, a
-three-probe set and unchecked regex flags — and it is the shape the file calls *"deliberately
-brittle"* protection against, routed around because the warrant tests COVERAGE (does the pattern
-reach every path under the prefix) while the exemption is priced on coverage **and** enforcement.
-**Before any downgrade lands, `guards.py` gets a route asserting the router still BLOCKS** — at
-**both** consumers of `check_routing`, `batch.py:1365` and `ship.py:112` — or the exemption it
-warrants must be given up in the same change.
+BLOCK BECOMES A WARNING.** ⭐ **LANDED 2026-08-21, AND THE PRICE IS NOW SPLIT THE SAME WAY THE LEGS
+ARE.** `tools/verify/**` and `tools/process/**` skip editorial and adversary, and what pays for that
+depends on WHAT changed:
+
+| what changed under the prefix | `/rely` routing | what pays for the exemption |
+|---|---|---|
+| **executable logic** (`.py`, hooks) | **BLOCKS** | `/rely` covers it and blocks. Unchanged. |
+| **exemption switches** (baselines, whitelists, pins) | **BLOCKS** | as above — a fail-open surface, never downgradable |
+| **routed prose** (`.md`) | **WARNS** | **no longer a block** — see the warrant below |
+
+**The prose leg's warrant is now an ARGUMENT, not a gate, and it has to stand on its own.** It is
+this: routed `.md` is operating instruction of the same kind as `CLAUDE.md`, which is exempt from
+both prose gates **and routed nowhere at all, by design**. So advisory `/rely` coverage is strictly
+*more* review than the parent file gets, not less. **The fence is what makes that hold — anything
+asserting mathematics belongs in the corpus and is gated normally** (`tools/process/README.md` states
+the criterion). If that fence ever slips, this warrant fails and the prose must go back to editorial
+and adversary; that is the trigger to watch, and it is a content question, not a tooling one.
+
+**⚠ THE MECHANICAL HALF IS BUILT AND CONTROLLED.** `guards.py` § *the router the exemption is priced
+on still BLOCKS* walks five routes: the fail-open legs are declared blocking, `check_routing` emits
+those flags, every consumer of it honours them, `routing_bad` computes correctly, and `cmd_prepush`
+still calls it. Two probes in `.claude-local/tools_wip/` are its controls —
+`probe_warrant_blocks.py` neuters enforcement three ways and requires `guards.py` to go red on each
+(it does), and `probe_docs_only_clears.py` exercises both halves: a docs-only edit clears as a
+warning, a checker edit still blocks.
+
+**Why the guard had to exist first, in one line:** enforcement mode used to be a literal at one call
+site (`bad += 0 if ran else 1`), so no control could read it — a probe measured `guards.py` printing
+`ok` over a router that had stopped blocking, the **fifth** warrant-satisfied-while-empty in that same
+code (rounds 1–4: sampling, narrowing, a three-probe set, unchecked regex flags). The warrant tested
+COVERAGE and the exemption is priced on coverage **and** enforcement. The mode is now data
+(`_LEG_BLOCKING`, `routing_bad`), which is the entire reason it is testable.
+
+⚠ **The rule this instance satisfied, kept for the next one: before any downgrade lands, the guard
+asserting what still BLOCKS lands with it — or the exemption it warrants is given up in the same
+change.**
 
 **⚠ NON-CONVERGENCE MUST BE MEASURED, NOT ASSERTED — or this rule becomes a licence to downgrade any
 gate that is currently inconvenient.** Name the rounds and their finding counts, as the `10 → 4 → 6 →
