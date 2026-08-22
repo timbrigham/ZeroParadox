@@ -226,27 +226,35 @@ def run_check(c):
             "secs": round(time.time() - started, 2)}
 
 
-# ⚠⚠ THE PROMPT IS AN ARGV STRING, AND WINDOWS CAPS THE COMMAND LINE AT ~32,767 CHARACTERS.
-# Measured 2026-08-22 on the real corpus: `check_prose` with its baseline emptied emitted 848 lines
-# and the call died with `FileNotFoundError(2, 'The filename or extension is too long', ..., 206)`
-# BEFORE reaching the API — $0.00, 0.0s. It failed CLOSED, so nothing was let through, but the arm
-# was unusable on every real failure of any size. **It fires exactly when it is most needed: a large
-# failure is when you least want to read 774 lines yourself.** No fixture could have found this —
-# the planted one-line BOM produces 12 lines.
+# ⚠⚠ THE PROMPT GOES OVER STDIN, NEVER ARGV. `claude -p` with no positional prompt reads the prompt
+# from standard input (`--input-format text`, the default), and `subprocess.run(input=...)` writes it
+# encoded UTF-8. **Do not put the prompt back on the command line.** (Tim, 2026-08-22: *"I would
+# really rather that whatever you're writing not be passed on the command line — using a file as the
+# transport is safe."*)
 #
-# ⚠ HEAD **AND** TAIL, NOT `[:N]`. Checkers print their summary and their new-violation count LAST,
-# so a plain head truncation drops the one line that says how many there are. The agent is being
-# asked to CLASSIFY, not to enumerate — the checker already enumerated — so a sample plus an honest
-# total is the right input. `check_pov` classified 66 sites correctly from 151 lines.
+# Three separate hazards disappear at once, and only the first had bitten yet:
+#  1. **Length.** Windows caps a command line at ~32,767 characters. Measured the same day on the
+#     real corpus: `check_prose` with its baseline emptied emitted 848 lines and the call died with
+#     `FileNotFoundError(2, 'The filename or extension is too long', ..., 206)` BEFORE reaching the
+#     API — $0.00, 0.0s. It failed CLOSED, so nothing was let through, but the arm was useless at
+#     exactly the moment it is needed: a large failure is when you least want to read 774 lines
+#     yourself. The planted one-line fixture produces 12 lines and could never have found it.
+#  2. **Quoting.** Checker output contains quotes, backticks, newlines and `%` — every one of which
+#     is a shell metacharacter somewhere. This bundle already records `python -c` silently eating
+#     backticks.
+#  3. **Encoding.** An argv string crosses a codepage boundary on Windows; stdin with an explicit
+#     `encoding="utf-8"` does not. `SH-2` is this project's most-repeated shape and it has already
+#     appeared once inside this very file.
 #
-# ⚠ AND THE OMISSION IS STATED, WITH THE TRUE TOTAL. Silently handing over a slice would invite
-# `SINGLE` for a class of 774, which is the one answer that makes this arm worthless.
-# ⚠⚠ CAP ON CHARACTERS, NOT LINES — the first version of this capped LINES and still died. Windows
-# expresses its limit in CHARACTERS, and `check_prose` quotes long docstring text, so 180 lines was
-# still over 32k. **Capping the unit that was convenient rather than the unit the limit is stated in
-# is the same error as reading a truncated grep and concluding absence.** Measure in the constraint's
-# own unit.
-HEAD_CHARS, TAIL_CHARS = 6000, 2000
+# ⚠ THE CAP SURVIVES, BUT ITS REASON CHANGED — it is now a CONTEXT AND COST guard, not a transport
+# workaround, so it is an order of magnitude larger and will not fire on any realistic checker run.
+# Read it as "refuse to spend unbounded money on a pathological payload", not as "the pipe is thin".
+#
+# ⚠ HEAD **AND** TAIL, NOT `[:N]`, for the rare case it does fire. Checkers print their summary and
+# their new-violation count LAST, so a plain head truncation drops the one line stating how many
+# there are — and the omission is announced with the true total, because silently handing over a
+# slice would invite `SINGLE` for a class of 774, the one answer that makes this arm worthless.
+HEAD_CHARS, TAIL_CHARS = 60000, 20000
 
 
 def clip(output):
@@ -266,12 +274,15 @@ def interpret(c, res, prompt_tpl=PROMPT, schema=SCHEMA):
     """One agent call. Returns (parsed_or_None, raw, seconds)."""
     prompt = prompt_tpl.format(name=c["name"], rc=res["rc"], expected=c["expected_failure"],
                                output=clip(res["output"]) or "(no output at all)")
-    cmd = ["claude", "-p", prompt, "--model", MODEL, "--tools", "",
+    # ⚠ NO PROMPT ARGUMENT — see the block above `HEAD_CHARS`. The prompt is piped in on stdin.
+    # `--json-schema` stays on argv deliberately: it is our own fixed, small, ASCII literal, not
+    # captured output, so none of the three hazards apply to it.
+    cmd = ["claude", "-p", "--model", MODEL, "--tools", "",
            "--output-format", "json", "--json-schema", json.dumps(schema),
            "--max-budget-usd", BUDGET, "--no-session-persistence"]
     started = time.time()
     try:
-        p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8",
+        p = subprocess.run(cmd, input=prompt, capture_output=True, text=True, encoding="utf-8",
                            errors="replace", env=dict(os.environ, ZP_IN_HOOK="1"), timeout=300)
     except (subprocess.TimeoutExpired, FileNotFoundError) as e:
         return None, "agent unavailable: %r" % (e,), round(time.time() - started, 2)
