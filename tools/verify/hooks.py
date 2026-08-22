@@ -113,7 +113,8 @@ PRE_PUSH_PLAN = [
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
-    ("check_frozen", "BLOCK", "the accepted-defect baselines only SHRINK; the backlog total prints"),
+    ("check_frozen", "BLOCK", "baselines only SHRINK, and REMOVING an entry owes a /claim-review "
+                              "signal — the entry recorded that the site was never examined"),
     ("check_checkers", "BLOCK", "every checker has passing controls, and something invokes it"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
