@@ -920,10 +920,22 @@ def check_routing(state, ranges=None):
                      "(that is the fix, not a workaround)"
                      % (len(_unhashed), ", ".join(_unhashed[:3])),
                      True))
+    # ⚠⚠ THE GIT LEG TAKES THE LEG SPLIT TOO, AND MISSING THIS WOULD HAVE LEFT THE DEADLOCK ALIVE
+    # INSIDE A BATCH. The auto-discharge above is guarded by `not state`, so during a batch it never
+    # fires and this leg decides alone — meaning a docs-only edit would still have BLOCKED, in the
+    # one mode used for exactly the multi-site prose work the downgrade exists to unblock. Found by
+    # reading the final manifest rather than by a test, which is why it is written down.
+    # ⚠ FAILS CLOSED ON A MIXED PUSH: blocking if ANY hit is logic or a switch, WARN only when every
+    # hit under the prefix is routed prose. An unknown extension resolves to `switch`, so a new kind
+    # of file blocks until someone classifies it deliberately.
     for pat, agent, why in ROUTING:
         hits = [f for f in files if pat.match(f)]
         if hits:
-            rows.append((agent, agent in done, "%s — e.g. %s" % (why, hits[0]), True))
+            blocking = any(_LEG_BLOCKING[_leg_of(f)] for f in hits)
+            rows.append((agent, agent in done,
+                         "%s — e.g. %s%s" % (why, hits[0],
+                                             "" if blocking else "  [routed prose only — WARN]"),
+                         blocking))
     return rows
 
 
