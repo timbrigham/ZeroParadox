@@ -7,19 +7,10 @@ set_option maxHeartbeats 400000
 /-!
 # In TopCat the empty space is not isomorphic to the one-point space
 
-**Proves.** `top_initial_not_iso_terminal`: `TopCat.of PEmpty` (the initial object) is not isomorphic to
-`TopCat.of PUnit` (the terminal object) — an iso's inverse would map the point into the empty space.
-The content: in `TopCat`, initial ≄ terminal (because ∅ is empty and the point is not).
-
-**Reaching for (intent, NOT proved here).** This was *meant to* be the "Top polarity wall" — the claim
-that, because Top's bottom is terminal-flavored while the cluster bottoms are initial, no
-initiality-preserving functor can carry a cluster bottom onto the Top floor; with the 0=∞ flip
-(`tower_inv_valuation`) as the principled escape.
-
-**Gap (as far as this reaches).** The statement is about `TopCat`'s generic initial/terminal objects, not
-about `fB_functor` or the snap floor specifically, and it does not quantify over functors — so "no functor
-can carry the bottom across" is an interpretation, not a proved no-go. The escape via the flip is likewise
-intent (the ∞-view→cluster functor is not built). Conjecture: the spec note (read its cold-audit correction).
+**Proves.** `top_initial_not_iso_terminal`: in `TopCat` initial ≄ terminal. **Gap:** a statement about
+generic objects, not quantified over functors — that fence is canonical on the theorem's docstring.
+**Reaching for (intent, NOT proved here).** The "Top polarity wall" — no initiality-preserving functor
+carrying a cluster bottom onto the Top floor, escaping via 0=∞ (`tower_inv_valuation`); not built.
 
 ## Engineer's Take
 
@@ -27,6 +18,7 @@ This file is one of a series of iterative attempts on this branch to build a map
 bottoms interconnect, and by extension how bottom moves from being the floor, a thing (a noun), to a
 verb (an action). The Lean here is our attempt, one way or the other, to get a clean verification. I
 defer to my AI assistant regarding the specifics of how the internals work.
+---
 -/
 
 namespace ZeroParadox
