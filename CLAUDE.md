@@ -343,14 +343,19 @@ across with the first.
 **⚠⚠ AND ASK WHAT THE DOWNGRADE UN-PRICES. AN EXEMPTION BOUGHT WITH A BLOCK IS UNPAID THE MOMENT THAT
 BLOCK BECOMES A WARNING.** `tools/verify/**` and `tools/process/**` skip editorial and adversary
 **because** `/rely` covers them and BLOCKS — so a wholesale downgrade leaves that directory with no
-blocking review gate at all. **Verified by reading `guards.py:278` on 2026-08-21 (not yet by running a
-control): the warrant row compares the ROUTING PATTERN SOURCE and never tests that the router
-blocks**, so it would keep printing `ok` over an empty warrant. That is the fifth instance of
+blocking review gate at all. **MEASURED BY RUNNING A CONTROL, 2026-08-21**
+(`.claude-local/tools_wip/probe_warrant_blocks.py` — a `DC-25` neuter in a detached worktree: stop
+`batch.py` counting a routing FAIL as blocking, leave the ROUTING pattern untouched, which is exactly
+the edit a downgrade makes): **`guards.py` still exits 0 and the warrant row still reads `ok`.** The
+row (`guards.py:278`) compares the ROUTING PATTERN SOURCE — a string plus the `re.I` flag — so
+enforcement mode is not one of its inputs and cannot be. That is the fifth instance of
 *warrant-satisfied-while-empty* in that same code — rounds 1–4 found sampling, narrowing, a
 three-probe set and unchecked regex flags — and it is the shape the file calls *"deliberately
-brittle"* protection against, routed around because **enforcement mode is not part of the pattern.**
-**Before any downgrade lands, `guards.py` gets a route asserting the router still BLOCKS**, or the
-exemption it warrants must be given up in the same change.
+brittle"* protection against, routed around because the warrant tests COVERAGE (does the pattern
+reach every path under the prefix) while the exemption is priced on coverage **and** enforcement.
+**Before any downgrade lands, `guards.py` gets a route asserting the router still BLOCKS** — at
+**both** consumers of `check_routing`, `batch.py:1365` and `ship.py:112` — or the exemption it
+warrants must be given up in the same change.
 
 **⚠ NON-CONVERGENCE MUST BE MEASURED, NOT ASSERTED — or this rule becomes a licence to downgrade any
 gate that is currently inconvenient.** Name the rounds and their finding counts, as the `10 → 4 → 6 →
