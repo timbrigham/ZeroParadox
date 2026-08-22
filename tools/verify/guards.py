@@ -413,6 +413,147 @@ def check_exemption_completeness():
     return rows, bad
 
 
+def check_routing_enforcement():
+    """Does the `/rely` router still BLOCK — the property the exemption is PRICED on?
+
+    ⚠⚠ WHY THIS EXISTS, AND IT WAS MEASURED RATHER THAN REASONED. `tools/verify/**` and
+    `tools/process/**` skip editorial and adversary *because* `/rely` covers them and BLOCKS. The
+    warrant leg in `check_exemption_surface` tests that the ROUTING pattern reaches every path under
+    the prefix — a COVERAGE claim — and stops there. On 2026-08-21 a `DC-25` probe neutered the
+    enforcement in a detached worktree, leaving the pattern untouched, and this file exited 0 with
+    the warrant row still reading `ok`. Fifth instance of warrant-satisfied-while-empty in this same
+    code; the first four were sampling, narrowing, a three-probe set and unchecked regex flags.
+
+    The exemption is priced on COVERAGE **and** ENFORCEMENT. Only the first was ever checked.
+
+    ⚠ WHAT THIS DOES NOT CATCH, STATED SO NOBODY OVER-TRUSTS IT. It does not run the pre-push hook end
+    to end, so it cannot prove a push actually stops; the standing control for that is
+    `.claude-local/tools_wip/probe_warrant_blocks.py`, which neuters enforcement and requires this
+    file to go red. These rows are the cheap always-on layer, not a replacement for the probe."""
+    import importlib
+    import batch
+    importlib.reload(batch)
+    rows, bad = [], 0
+
+    def row(label, ok, why):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, why))
+
+    # ROUTE 1 — the fail-open legs are declared blocking. `logic` is executable checker code and
+    # `switch` is the baselines/whitelists/pins, where one appended line silences a site permanently
+    # with every control still green. Neither may ever be downgraded; only the `docs` enumeration may.
+    for leg in ("logic", "switch"):
+        got = batch._LEG_BLOCKING.get(leg)
+        row("fail-open leg still BLOCKS: %s" % leg, got is True,
+            "declared blocking" if got is True else
+            "*** %s IS NOT BLOCKING (%r) — this is a FAIL-OPEN surface and CLAUDE.md rung 5 forbids "
+            "downgrading it. The editorial/adversary exemption for tools/verify/** and "
+            "tools/process/** is priced on this and is now UNPAID ***" % (leg, got))
+
+    # ROUTE 2 — the table is not decorative: `check_routing` must actually emit those flags.
+    # Behavioural, and deterministic — the hashes are synthetic, so this does not depend on whether
+    # the working tree happens to be dirty. Asserting the table alone would be a claim about a
+    # constant; this is a claim about the function.
+    real = batch.checker_hashes
+    try:
+        batch.checker_hashes = lambda: {"check_prose.py": "0" * 12,
+                                        "pov_baseline.txt": "0" * 12,
+                                        "tools/process/README.md": "0" * 12}
+        emitted = {}
+        for _agent, _ran, why, blocking in batch.check_routing({}, None):
+            for leg in ("logic", "switch", "docs"):
+                if why.startswith("[%s]" % leg):
+                    emitted[leg] = blocking
+    finally:
+        batch.checker_hashes = real
+    for leg in ("logic", "switch"):
+        got = emitted.get(leg)
+        row("check_routing EMITS blocking: %s" % leg, got is True,
+            "row carries blocking=True" if got is True else
+            "*** check_routing emitted %r for the %s leg (expected True) — the table says one thing "
+            "and the function does another, so _LEG_BLOCKING is decorative ***" % (got, leg))
+
+    # ROUTE 3 — EVERY CONSUMER HONOURS THE FLAG. A guard protects a PROPERTY, not a hole, so this
+    # enumerates call sites rather than naming the two that exist today. A third consumer that
+    # unpacks three fields would crash; one that unpacks four and ignores `blocking` would silently
+    # re-impose or silently drop enforcement, which is exactly the shape the probe demonstrated.
+    # ⚠ WINDOWED, NOT WHOLE-FILE. Scanning the entire source for the word `blocking` was the first
+    # version and it is too loose to be worth running: `batch.py` mentions the flag in a dozen
+    # comments, so gutting the enforcement arithmetic to `bad += 0` would have left the row green.
+    # The window is the call site plus what immediately consumes it, which is where the decision is.
+    WINDOW = 12
+    consumers = []
+    for dirpath, _dirs, names in os.walk(os.path.join(REPO, "tools")):
+        for n in names:
+            if not n.endswith(".py"):
+                continue
+            p = os.path.join(dirpath, n)
+            lines = io.open(p, encoding="utf-8", errors="replace").read().splitlines()
+            for i, line in enumerate(lines):
+                # ⚠ SKIP OCCURRENCES INSIDE STRING LITERALS. This scanner's own detector line
+                # (`"check_routing(" in body`) matched itself and the row went green BY ACCIDENT —
+                # the surrounding lines happened to contain commas and the word `blocking`. An
+                # accidental pass is the `check_paths.py` shape CLAUDE.md names, so it is removed
+                # rather than tolerated: a control must not count itself as a subject.
+                j = line.find("check_routing(")
+                if j < 0 or "def check_routing" in line:
+                    continue
+                if line[:j].count('"') % 2 or line[:j].count("'") % 2:
+                    continue
+                body = [ln for ln in lines[i:i + WINDOW]
+                        if not ln.lstrip().startswith("#")]
+                consumers.append((os.path.relpath(p, REPO).replace("\\", "/"),
+                                  i + 1, "\n".join(body)))
+    row("consumers of check_routing located", bool(consumers),
+        "%d call site(s)" % len(consumers) if consumers else
+        "*** NO call site found — either check_routing is dead or this scan is broken; an "
+        "enumerator that finds nothing must never read as ok ***")
+    for rel, lineno, body in consumers:
+        # Two conditions, because either alone is passable. It must UNPACK four values (a three-value
+        # unpack would crash loudly, but a `for row in ...` would not), and it must REFERENCE the
+        # flag in code rather than in a comment.
+        unpacks = body.count(",") >= 3 and "check_routing(" in body
+        uses = "blocking" in body
+        ok = unpacks and uses
+        row("consumer honours blocking: %s:%d" % (rel, lineno), ok,
+            "unpacks four fields and consults the flag" if ok else
+            "*** %s:%d consumes check_routing without reading `blocking` in the %d lines that "
+            "follow — enforcement is being decided somewhere this control cannot see ***"
+            % (rel, lineno, WINDOW))
+
+    # ROUTE 4 — THE ARITHMETIC ITSELF IS CORRECT. Behavioural and total: a blocking FAIL counts, a
+    # non-blocking FAIL does not, and an `ok` row never counts whatever its flag says.
+    cases = [([("/rely", False, "w", True)], 1, "a blocking FAIL counts"),
+             ([("/rely", False, "w", False)], 0, "a WARN row does not count"),
+             ([("/rely", True, "w", True)], 0, "an ok row never counts"),
+             ([("/rely", False, "w", True), ("/rely", False, "w", False)], 1, "mixed rows")]
+    for r, want, label in cases:
+        got = batch.routing_bad(r)
+        row("routing_bad: %s" % label, got == want,
+            "%d as expected" % got if got == want else
+            "*** routing_bad returned %d, expected %d — the enforcement arithmetic is wrong, so "
+            "every row above is testing a decision that is not the one being made ***" % (got, want))
+
+    # ROUTE 5 — AND THE PUSH GATE STILL CALLS IT. This is the route the 2026-08-21 probe walked: the
+    # arithmetic can be perfect and simply not invoked. Gutting `bad += routing_bad(rows)` to
+    # `bad += 0` leaves ROUTES 1-4 green and the push wide open, so the call site is asserted at the
+    # FUNCTION OBJECT rather than a line window — immune to the code moving.
+    import inspect
+    try:
+        src = inspect.getsource(batch.cmd_prepush)
+    except (OSError, TypeError):
+        src = ""
+    calls = "routing_bad(" in src
+    row("prepush still CALLS routing_bad", calls,
+        "the push gate invokes the enforcement decision" if calls else
+        "*** cmd_prepush does not call routing_bad — the routing legs are computed and their verdict "
+        "discarded. This is exactly the neuter the 2026-08-21 warrant probe performed, and the "
+        "editorial/adversary exemption for tools/verify/** is UNPAID while it holds ***")
+    return rows, bad
+
+
 def routing_hash():
     """What `/rely` routing sees. A permitted exemption must MOVE this."""
     import importlib
@@ -1112,6 +1253,14 @@ def main():
         # prefix is exempt from everything — see check_exemption_completeness.
         print("\n  PROPERTY: no exemption prefix escapes the registry")
         _rows, _bad = check_exemption_completeness()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
+        # ⚠⚠ AND THAT THE ROUTER IT WARRANTS STILL BLOCKS. The warrant above tests COVERAGE (does the
+        # pattern reach the whole prefix) and is blind to ENFORCEMENT — measured 2026-08-21, a probe
+        # stopped the router blocking and this file still exited 0.
+        print("\n  PROPERTY: the router the exemption is priced on still BLOCKS")
+        _rows, _bad = check_routing_enforcement()
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad

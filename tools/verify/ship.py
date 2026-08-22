@@ -109,8 +109,15 @@ def required_gates(ranges):
         need.append(("prior-art",
                      "trigger 5 fires: %d inserted .lean line(s), new .lean file=%s"
                      % (ins, newfile)))
-    for agent, ran, why in batch.check_routing({}, ranges):
-        if agent == "/rely" and not ran:
+    # ⚠ SECOND CONSUMER OF `check_routing`, AND THE WARRANT IS BLIND TO BOTH. `batch.py`'s prepush
+    # site is the other. A `guards.py` route asserting the router still BLOCKS has to cover this one
+    # too, or half the enforcement can be removed with the control still green.
+    # ⚠ A non-blocking row does not raise a requirement here. `need` is what `ship.py` will refuse to
+    # proceed without, and a leg deliberately downgraded to WARN is by definition not that — carrying
+    # it would re-impose at release the block that was lifted at push, which is the `rely_capped()`
+    # deadlock in a new place.
+    for agent, ran, why, blocking in batch.check_routing({}, ranges):
+        if agent == "/rely" and not ran and blocking:
             base = why.split("—")[0].strip()
             capped, reason = rely_capped()
             # ⚠ A CAP NEVER MAKES THE HOOK LENIENT. This used to DROP the requirement when capped,

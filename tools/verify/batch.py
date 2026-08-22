@@ -212,6 +212,66 @@ def _routed_docs():
 
 
 CHECKERS = CHECKERS + _routed_docs()
+
+
+# ⚠⚠ THE THREE KINDS IN `CHECKERS` ARE NOT ONE OBLIGATION, AND UNTIL 2026-08-21 THEY SHARED ONE ROW.
+# The list mixes executable LOGIC (`.py`), exemption SWITCHES (the baselines, whitelists and pins) and
+# routed PROSE (`.md`, via `_routed_docs()` above), and `check_routing` reported "N checker(s) changed"
+# over the union. That single count is what deadlocked the routed set: a dated-figure correction in
+# `tools/process/claim-revalidation.md` — mechanically verified, zero judgement, demanded by another
+# blocking checker — re-armed exactly the same gate a rewritten `check_prose.py` would.
+#
+# ⚠ DERIVED FROM THE EXTENSION, NOT HAND-LISTED, for the reason `_routed_docs()` already gives one
+# comment up: naming today's members closes today's holes and the next arrival is invisible. A new
+# `.py` is logic, a new `.txt`/`.json` is a switch, a new routed `.md` is prose. Nobody has to
+# remember, and the partition cannot fall behind the list it partitions.
+#
+# ⚠⚠ ONLY THE PROSE LEG MAY EVER BE DOWNGRADED (CLAUDE.md rung 5, *split at the leg, never at the
+# check*). Logic and switches are FAIL-OPEN surfaces — one appended line to `pov_baseline.txt` took a
+# planted violation from exit 1 to exit 0 with `checker_hashes()` unmoved — and rung 5 is explicit
+# that a fail-open never downgrades, however many rounds it costs. Prose under a routed prefix is an
+# ENUMERATION obligation whose own repairs re-arm it, which is the shape that downgrades.
+def _leg_of(name):
+    n = name.lower()
+    if n.endswith(".md"):
+        return "docs"
+    if n.endswith(".py"):
+        return "logic"
+    return "switch"
+
+
+# Why each leg matters, kept beside the partition so a row can never state the wrong reason for the
+# kind it is reporting. A block whose stated reason is wrong is how bypass habits start.
+_LEG_WHY = {
+    "logic": "a fail-open here is silent and multiplies through every downstream verdict",
+    "switch": "one line in a baseline or whitelist silences one site permanently, with every "
+              "control still green",
+    "docs": "prose under a routed prefix is exempt from editorial and adversary, so /rely is the "
+            "only gate covering it",
+}
+_LEG_NOUN = {"logic": "checker(s)", "switch": "exemption switch(es)", "docs": "routed document(s)"}
+
+# ⚠⚠ THE ONE DEFINITION OF ENFORCEMENT MODE. `check_routing` reads this table and `guards.py` asserts
+# on it, so there is no second copy to drift and no literal at a call site for a control to be blind
+# to. Before 2026-08-21 the mode was the literal `bad += 0 if ran else 1` in `cmd_prepush`, and a
+# probe measured `guards.py` printing `ok` over a router that had stopped blocking — not because the
+# warrant was weak but because there was nothing for it to read.
+#
+# ⚠ `logic` and `switch` are FAIL-OPEN surfaces and MUST stay True, whatever it costs in rounds.
+# CLAUDE.md rung 5 is explicit: non-convergence in an ENUMERATION is a fact about the enumeration; a
+# fail-open is a fact about the work. Flipping either of these to False silently un-prices the
+# editorial/adversary exemption that `tools/verify/**` and `tools/process/**` hold.
+_LEG_BLOCKING = {"logic": True, "switch": True, "docs": True}
+
+
+def routing_bad(rows):
+    """How many routing rows actually BLOCK — the one place the enforcement decision is made.
+
+    ⚠ IT IS A FUNCTION SO A CONTROL CAN CALL IT. As a literal (`bad += 0 if ran else 1`) the decision
+    was unreachable by any check, which is why `guards.py` printed `ok` over a neutered router on
+    2026-08-21. A named function can be exercised directly AND its call site can be asserted to still
+    exist — gutting this to `bad += 0` removes the call, and `guards.py` fires on the absence."""
+    return sum(0 if (ran or not blocking) else 1 for _a, ran, _w, blocking in rows)
 # ⚠ `register.md` IS DELIBERATELY NOT IN THIS LIST, AND IT WAS ADDED AND THEN REMOVED — the reasoning
 # is worth more than the entry. It IS a switch: every hash check compares a script against a token
 # recorded there, and blanking one disarmed a check while `checker_hashes()` stayed byte-identical
@@ -721,17 +781,26 @@ def check_routing(state, ranges=None):
                 reviewed[parts[1]] = parts[0]
     now = checker_hashes()
     moved = [c for c, h in now.items() if reviewed.get(c) != h]
-    if moved:
-        # ⚠ NOT `"/rely" in state["reviews"]`. That let a CLAIM in the unhashed `batch_state.json`
-        # discharge a HASH obligation: measured `prepush PASS`, exit 0, with seven checkers changed
-        # since /rely last signed them — and the warning text still printing beside the word `ok`.
-        # `batch.py review /rely` reached it too, attaching no evidence. The hash leg asks one
-        # question — does the SIGNAL cover the bytes on disk — and only the signal can answer it.
-        # Anything else is self-certification wearing a state file (/rely pass 8, REL8-2).
-        rows.append(("/rely", False,
-                     "%d checker(s) changed since /rely last signed them: %s — a fail-open here is "
-                     "silent and multiplies through every downstream verdict"
-                     % (len(moved), ", ".join(sorted(moved)[:3]))))
+    # ⚠ NOT `"/rely" in state["reviews"]`. That let a CLAIM in the unhashed `batch_state.json`
+    # discharge a HASH obligation: measured `prepush PASS`, exit 0, with seven checkers changed
+    # since /rely last signed them — and the warning text still printing beside the word `ok`.
+    # `batch.py review /rely` reached it too, attaching no evidence. The hash leg asks one
+    # question — does the SIGNAL cover the bytes on disk — and only the signal can answer it.
+    # Anything else is self-certification wearing a state file (/rely pass 8, REL8-2).
+    #
+    # ⚠⚠ ONE ROW PER LEG, AND EACH ROW CARRIES ITS OWN ENFORCEMENT MODE AS DATA. That fourth field is
+    # the point, not bookkeeping: the 2026-08-21 warrant probe measured `guards.py` printing `ok`
+    # while the router no longer blocked, and the reason it could not do better is that enforcement
+    # mode existed ONLY as a literal at the call site (`bad += 0 if ran else 1`) and was therefore
+    # unreadable by any control. `CLAUDE.md` names that shape: *enforcement mode is not part of the
+    # pattern*. Putting it in the row makes it testable — see the `guards.py` route.
+    for leg in ("logic", "switch", "docs"):
+        m = sorted(c for c in moved if _leg_of(c) == leg)
+        if m:
+            rows.append(("/rely", False,
+                         "[%s] %d %s changed since /rely last signed them: %s — %s"
+                         % (leg, len(m), _LEG_NOUN[leg], ", ".join(m[:3]), _LEG_WHY[leg]),
+                         _LEG_BLOCKING[leg]))
     # (b) tracked files, by git — RANGE-AWARE. It read the working tree, so a `.github/workflows/`
     # change routed to `/rely` while uncommitted and produced ZERO rows once committed: the leg
     # fired never at push time, which is the only time it matters (measured, /rely pass 4).
@@ -807,7 +876,8 @@ def check_routing(state, ranges=None):
         rows.append(("/rely", False,
                      "%d routed file(s) differ at the PUSHED TIP from what /rely signed, even though "
                      "the working tree matches: %s — the push carries bytes nobody reviewed"
-                     % (len(_stale_at_tip), ", ".join(sorted(set(_stale_at_tip))[:3]))))
+                     % (len(_stale_at_tip), ", ".join(sorted(set(_stale_at_tip))[:3])),
+                     True))
     if not state and not moved and not _unhashed and not _stale_at_tip:
         done.add("/rely")
     elif _unhashed and not moved:
@@ -815,11 +885,12 @@ def check_routing(state, ranges=None):
                      "%d routed file(s) are NOT hashed by CHECKERS, so the hash leg cannot see them "
                      "and the auto-discharge is unsafe: %s — add the name to CHECKERS and re-sign "
                      "(that is the fix, not a workaround)"
-                     % (len(_unhashed), ", ".join(_unhashed[:3]))))
+                     % (len(_unhashed), ", ".join(_unhashed[:3])),
+                     True))
     for pat, agent, why in ROUTING:
         hits = [f for f in files if pat.match(f)]
         if hits:
-            rows.append((agent, agent in done, "%s — e.g. %s" % (why, hits[0])))
+            rows.append((agent, agent in done, "%s — e.g. %s" % (why, hits[0]), True))
     return rows
 
 
@@ -1360,9 +1431,19 @@ def cmd_prepush(ranges=None):
                           ("pdf coupling",) + check_pdf_coupling(ranges)]:
         print("  %-18s %-4s %s" % (name, "ok" if ok else "FAIL", why))
         bad += 0 if ok else 1
-    for agent, ran, why in check_routing(state or {}, ranges):
-        print("  %-18s %-4s %s" % (agent, "ok" if ran else "FAIL", why))
-        bad += 0 if ran else 1
+    # ⚠⚠ ENFORCEMENT MODE COMES FROM THE ROW, NOT FROM THIS LINE. It used to be the literal
+    # `bad += 0 if ran else 1`, which made the mode unreadable by any control — measured 2026-08-21,
+    # `guards.py` kept printing `ok` over a router that no longer blocked, because a warrant can
+    # compare a ROUTING pattern and has nothing to compare an enforcement decision against. A row
+    # that carries `blocking` can be tested; a literal here cannot.
+    # ⚠ A non-blocking row still PRINTS, and prints WARN rather than FAIL — a downgraded gate must
+    # get louder, not quieter (`RLY25-1`: a report publishing `pass` for a property it stopped
+    # checking).
+    _routing_rows = check_routing(state or {}, ranges)
+    for agent, ran, why, blocking in _routing_rows:
+        print("  %-18s %-4s %s"
+              % (agent, ("ok" if ran else ("FAIL" if blocking else "WARN")), why))
+    bad += routing_bad(_routing_rows)
     # THE INTERPRETATION LAYER. Advisory by construction: `agent_gate.run()` always returns 0 and
     # `bad` is deliberately NOT incremented, so a fuzzy component can never stop a push.
     # ⚠ DO NOT PROMOTE THIS TO BLOCK. Measured 2026-08-21 before adoption: 1 false positive in 6
