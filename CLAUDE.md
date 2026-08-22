@@ -295,7 +295,7 @@ conventions that leaked, and every one leaked while being remembered by people w
 | **2nd** | a **class** | `DEFECT_CLASSES.md`, with a **detector** |
 | **3rd** | the rule's **TRIGGER** is wrong | fix the trigger — do not restate the rule |
 | **4th+** | **discipline will not work here** | build the mechanical check; stop writing prose about it |
-| **the CHECK then fails 3×** | **the check's SHAPE is wrong, not its patterns** | see rung 5 below — widening it again is the failure repeating |
+| **the CHECK then fails 3×, OR THE LOOP NEVER CONVERGES** | **the check's SHAPE is wrong, not its patterns** | see rung 5 below — widening it again is the failure repeating, and **the gate DOWNGRADES TO A WARNING** |
 
 **⭐⭐ RUNG 5 — WHEN THE MECHANICAL CHECK ITSELF FAILS THREE TIMES, STOP WIDENING IT AND PUT AN LLM ON
 THAT LAYER. (Tim, 2026-08-19.)** Rung 4 says build the checker; it never said what to do when the
@@ -305,6 +305,48 @@ closes the holes its author thought of, and the next reader finds different ones
 emphasis, then on HTML entities and escaped apostrophes, then on line-start markers where five of ten
 were blind and the sixth was covered *by accident*. A `/rely` pass watched the second fix land and
 reported that both of its routes were **still** blind in the new version.
+
+**⭐⭐ NON-CONVERGENCE IS A SECOND, INDEPENDENT TRIGGER — AND IT FIRES THE DOWNGRADE. (Tim,
+2026-08-21: *"anytime a loop fails to converge stop attempting to write a script and use AI fuzzy
+logic instead — treat as a warning instead of a hard gate."*)** Rung 5 above triggers on a check that
+**misses** three times. This triggers on a **LOOP that never settles**, which is a different
+observation and was measured separately: four `/rely` rounds on `tools/verify/` ran **10 → 4 → 6 → 9**
+findings and never quiesced, because each round reviewed code written in response to the last. On
+2026-08-21 the same layer deadlocked outright — a one-line, mechanically-verified, zero-judgement fix
+demanded by `check_figures` re-staled the `/rely` signature and blocked the push it was made to
+unblock. **A loop whose own repairs land inside its own scope cannot terminate, and no amount of
+further script will make it.**
+
+**THE TWO MOVES, and the second is the new one:**
+1. **STOP WRITING SCRIPT.** Put an LLM screen on the layer, subject to every fence below.
+2. **DOWNGRADE THE GATE TO A WARNING.** It reports, it does not block. Enforcement moves to the
+   human read, which is where the judgement already was.
+
+**⚠ WHAT MAY BE DOWNGRADED, AND WHAT MAY NOT — this is the whole safety of the rule.** The unit is
+still the defect class (§ below), so ask what the gate DOES:
+- **An ENUMERATION gate — "have all sites been enumerated / do all hashes match / is everything
+  covered".** Its failure mode is *incompleteness*, it can never prove itself done, and its own
+  repairs re-arm it. **→ DOWNGRADE. It becomes a warning and a reading list.**
+- **A FAIL-OPEN gate — one that catches bad work getting THROUGH.** A check that can be walked past, a
+  signal that can be forged, an exemption anything can grant itself, a gate reporting success it has
+  not earned. **→ NEVER DOWNGRADE, no matter how many rounds it takes.** Non-convergence in an
+  enumeration is a fact about the enumeration; a fail-open is a fact about the work. `guards.py`, the
+  bedrock cap, the quarantine check and the hook-armed check are all this kind.
+
+**⚠ NON-CONVERGENCE MUST BE MEASURED, NOT ASSERTED — or this rule becomes a licence to downgrade any
+gate that is currently inconvenient.** Name the rounds and their finding counts, as the `10 → 4 → 6 →
+9` above does. *"This keeps blocking"* is not evidence; it is usually the gate working. And this does
+**not** touch § *If a stage BLOCKS, fix the cause* — downgrading a gate's declared enforcement mode,
+deliberately and in writing, is a different act from `--no-verify`-ing past one that still blocks.
+**This project has two recorded bypass incidents and neither would have been legitimised by this
+paragraph.**
+
+**⚠ AND A DOWNGRADED GATE MUST GET LOUDER, NOT QUIETER.** A warning nobody reads is strictly worse
+than a block, because it manufactures the appearance of coverage — which is `RLY25-1` exactly: a
+report publishing `pass` for a property it no longer checks. So a downgrade obliges the manifest to
+say **WARN** at every entry point (`report.py` already formats this), and obliges the count to be
+printed on every run, blocked or clear, the way `check_poles.py` prints its suppression count so
+rubber-stamping shows up as a rising number instead of going quiet.
 
 **⚠ THE DISCRIMINATOR — AND THE UNIT IS THE DEFECT CLASS, NEVER THE TOOL.** Both gates caught the
 first draft on this: `--claim` is *itself mixed* — locating a phrase is enumeration, judging that the
