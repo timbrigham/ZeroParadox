@@ -475,116 +475,73 @@ def check_routing_enforcement():
             "*** check_routing emitted %r for the %s leg (expected True) — the table says one thing "
             "and the function does another, so _LEG_BLOCKING is decorative ***" % (got, leg))
 
-    # ROUTE 3 — EVERY CONSUMER HONOURS THE FLAG, TESTED ON THE PARSE TREE.
+    # ROUTE 3 — THE RELEASE GATE ACTUALLY RAISES THE REQUIREMENT. Behavioural: hand
+    # `ship.required_gates` a synthetic routing row and read back what it demands.
     #
-    # ⚠⚠ THE SUBSTRING VERSION OF THIS ROW WAS A TAUTOLOGY AND COULD NOT FAIL (`RLY26-2`, measured
-    # 2026-08-21 by /rely round 5 — warrant-satisfied-while-empty #6, found INSIDE the control
-    # written the same day to close #5). It tested `"blocking" in body` where `body` began at the
-    # call site `for agent, ran, why, blocking in check_routing(...)` — a line that contains the
-    # token by construction. Three mutually contradictory `ship.py` behaviours all printed `ok`:
-    # as shipped, with the guard replaced by `if False:` (the RELEASE gate silently stops requiring
-    # /rely, and a minted DOI is not amendable), and with `and blocking` dropped (the deadlock the
-    # downgrade exists to remove, restored).
+    # ⚠⚠ THREE VERSIONS OF THIS ROW READ THE SOURCE AND ALL THREE WERE DEFEATED. A whole-file
+    # substring matched comments (`RLY26-2`); a 12-line window contained the token by construction,
+    # because the anchor line BINDS `blocking`; an AST walk over call sites then lost the consumer to
+    # a single space before the argument list (`RLY27-1`), to a list comprehension (`RLY27-2`), to a
+    # `list(...)` wrapper (`RLY27-3`), and passed a `print(blocking)` that reads the flag and obeys
+    # nothing (`RLY27-7`). Every one of those is a fact about SYNTAX, and every repair was a closer
+    # approximation of a semantic property that cannot be approximated.
     #
-    # ⚠ THE CLASS, AND IT IS THE SAME ONE TWICE IN ONE DAY: testing a PROXY for the property instead
-    # of the property. The warrant compared a routing PATTERN and was blind to enforcement; this
-    # compared a source SUBSTRING and was blind to use. Narrowing the window did not help, because
-    # the token was never the question.
+    # ⭐ THE DIAGNOSIS IS IN THIS FUNCTION'S OWN SCOREBOARD. ROUTES 1, 2 and 4 — which RUN something —
+    # survived every attack. ROUTES 3 and 5 — which READ something — were defeated six ways between
+    # them. `CLAUDE.md`: *prefer a detector whose verb is RUN over one whose verb is READ.* So this
+    # route stops asking what the call site LOOKS LIKE and calls the function. Spacing,
+    # comprehensions, wrappers, aliases and decorative reads are invisible to it, because none of
+    # them changes what `required_gates` RETURNS.
     #
-    # So the test is now: parse the file, find the `for` loop whose iterable is a `check_routing`
-    # call, take the FOURTH unpacked name, and require it to appear in **a position that can change
-    # control flow** — an `if` test, a boolean operator, a comparison, a conditional expression, or a
-    # comprehension guard. `print(blocking)` does not qualify, and neither does a mention in a
-    # comment or a docstring, because comments are not in the tree at all.
-    import ast
-
-    # ⚠ `Load` CONTEXT IS THE WHOLE TEST, AND IT IS EXACTLY WHAT THE SUBSTRING VERSION COULD NOT SEE.
-    # The anchor line's `blocking` is a **Store** — it is the loop target being bound — so an
-    # AST test scoped to Load context excludes it structurally, with no line-skipping, no window and
-    # no self-exemption. The tautology was never about the window; it was about not distinguishing
-    # a name being BOUND from a name being READ.
+    # ⚠ THE THREE CASES ARE THE WHOLE DECISION and the middle one is not padding: a WARN row must NOT
+    # raise a requirement, or the downgrade is undone at release and the deadlock it removed returns
+    # at the one end that cannot be amended — a minted DOI is permanent.
     #
-    # ⚠ WHAT THIS ESTABLISHES AND WHAT IT DOES NOT, stated because the honest limit is the point:
-    # it proves the flag is READ inside the loop, not that it is OBEYED. A consumer that only
-    # `print`ed it would pass. Obedience on the enforcement path is covered behaviourally by ROUTE 4
-    # (the arithmetic) and structurally by ROUTE 5 (the bare call). All three demonstrated attacks
-    # — `if False:`, dropping `and blocking`, and `bad += 0 * routing_bad(...)` — are caught.
-    def _flag_is_read(node, fname):
-        """Is `fname` READ (Load context) anywhere in this loop's body?"""
-        for stmt in node.body:
-            for sub in ast.walk(stmt):
-                if isinstance(sub, ast.Name) and sub.id == fname and \
-                        isinstance(sub.ctx, ast.Load):
-                    return True
-        return False
-
-    # ⚠ THE WHOLE REPO, NOT JUST `tools/`. The previous walk was rooted at `tools/`, so a consumer
-    # anywhere else discarded the verdict with the count still reading "3 call site(s)" — an
-    # enumerator whose scope is narrower than the property it claims to cover (measured, same round).
-    SKIP = {".git", ".lake", ".claude-local", "node_modules", "__pycache__", ".venv"}
-    consumers = []
-    for dirpath, dirs, names in os.walk(REPO):
-        dirs[:] = [d for d in dirs if d not in SKIP]
-        for n in names:
-            if not n.endswith(".py"):
-                continue
-            p = os.path.join(dirpath, n)
-            src = io.open(p, encoding="utf-8", errors="replace").read()
-            if "check_routing(" not in src:
-                continue
-            rel = os.path.relpath(p, REPO).replace("\\", "/")
-            try:
-                tree = ast.parse(src)
-            except SyntaxError:
-                # ⚠ UNPARSEABLE IS A FINDING, NOT A SKIP. Silently passing over a file this control
-                # cannot read is how an enumerator reports coverage it does not have.
-                consumers.append((rel, 0, None, None, None))
-                continue
-            # ⚠⚠ FOLLOW THE INDIRECTION. Matching only `for ... in check_routing(...)` MISSED
-            # `batch.py` the moment its loop became `rows = check_routing(...)` / `for ... in rows`,
-            # and the count silently fell from 3 to 2 with every remaining row green — the PUSH GATE
-            # itself dropping out of the enumeration that exists to cover it. Measured while fixing
-            # `RLY26-2`, i.e. the enumerator-too-narrow class reappearing inside its own repair.
-            def _is_cr(x):
-                fn = x.func if isinstance(x, ast.Call) else None
-                return fn is not None and \
-                    (getattr(fn, "attr", None) or getattr(fn, "id", None)) == "check_routing"
-
-            bound = {t.id for a in ast.walk(tree) if isinstance(a, ast.Assign) and _is_cr(a.value)
-                     for t in a.targets if isinstance(t, ast.Name)}
-            for node in ast.walk(tree):
-                if not isinstance(node, ast.For):
-                    continue
-                it = node.iter
-                direct = _is_cr(it)
-                via_name = isinstance(it, ast.Name) and it.id in bound
-                if not (direct or via_name):
-                    continue
-                tgt = node.target
-                elts = list(tgt.elts) if isinstance(tgt, (ast.Tuple, ast.List)) else []
-                flag = elts[3].id if len(elts) == 4 and isinstance(elts[3], ast.Name) else None
-                consumers.append((rel, node.lineno, len(elts), flag, node))
-
-    row("consumers of check_routing located", bool(consumers),
-        "%d call site(s), repo-wide" % len(consumers) if consumers else
-        "*** NO call site found — either check_routing is dead or this scan is broken; an "
-        "enumerator that finds nothing must never read as ok ***")
-
-    for rel, lineno, arity, flag, node in consumers:
-        if arity is None:
-            row("consumer honours blocking: %s" % rel, False,
-                "*** file does not parse, so this control cannot read it ***")
-            continue
-        if arity != 4 or flag is None:
-            row("consumer honours blocking: %s:%d" % (rel, lineno), False,
-                "*** unpacks %d value(s), not 4 — the blocking flag is being dropped at the call "
-                "site ***" % arity)
-            continue
-        reads = _flag_is_read(node, flag)
-        row("consumer honours blocking: %s:%d" % (rel, lineno), reads,
-            "`%s` is read in the loop body" % flag if reads else
-            "*** %s:%d unpacks `%s` and never reads it — it is bound and discarded, so enforcement "
-            "is being decided somewhere this control cannot see ***" % (rel, lineno, flag))
+    # ⚠ WHAT THIS DELIBERATELY NO LONGER CLAIMS: it does not enumerate consumers. "Is there a THIRD
+    # consumer nobody registered" is an enumeration question, it has been defeated four times, and it
+    # is now carried by `agent_gate.py` as an advisory screen that writes a defect file and returns no
+    # verdict (`CLAUDE.md` rung 5). The two surfaces below are NAMED, not discovered — which is also
+    # why the old "an enumerator that finds nothing must never read as ok" row is gone: it was
+    # unreachable, because `guards.py` counted itself as a consumer (`RLY27-6`).
+    import importlib as _il
+    try:
+        import ship as _ship
+        _il.reload(_ship)
+    except Exception as _e:                                   # noqa: BLE001 — reported, not raised
+        _ship = None
+        row("release gate raises /rely from a blocking row", False,
+            "*** cannot import ship.py (%r) — the RELEASE consumer of check_routing is unverifiable, "
+            "and half the enforcement lives there ***" % (_e,))
+    if _ship is not None:
+        _saved = (batch.check_routing, batch.reviewable_changed, batch.check_trigger5)
+        _cases = [
+            (("/rely", False, "[logic] synthetic control row", True), True,
+             "a BLOCKING row makes the release gate require /rely"),
+            (("/rely", False, "[docs] synthetic control row", False), False,
+             "a WARN row does NOT require /rely"),
+            (("/rely", True, "[logic] synthetic control row", True), False,
+             "an `ok` row requires nothing"),
+        ]
+        try:
+            # Stubbed so this measures the ROUTING decision only, and does not depend on whether the
+            # working tree happens to be dirty — the same discipline as ROUTE 2's synthetic hashes.
+            batch.reviewable_changed = lambda *_a, **_k: []
+            batch.check_trigger5 = lambda *_a, **_k: (False, 0, False)
+            for _synth, _want, _label in _cases:
+                batch.check_routing = lambda *_a, _s=_synth, **_k: [_s]
+                try:
+                    _scope, _need = _ship.required_gates(None)
+                    _got = "rely" in [k for k, _w in _need]
+                    _err = None
+                except Exception as _e:                       # noqa: BLE001
+                    _got, _err = None, _e
+                row("release gate: %s" % _label, _got is _want,
+                    "required_gates returned rely=%r as expected" % _got if _got is _want else
+                    "*** required_gates returned rely=%r, expected %r%s — ship.py is the RELEASE "
+                    "gate and it is no longer deciding from the blocking flag ***"
+                    % (_got, _want, "" if _err is None else " (raised %r)" % (_err,)))
+        finally:
+            (batch.check_routing, batch.reviewable_changed, batch.check_trigger5) = _saved
 
     # ROUTE 4 — THE ARITHMETIC ITSELF IS CORRECT. Behavioural and total: a blocking FAIL counts, a
     # non-blocking FAIL does not, and an `ok` row never counts whatever its flag says.
@@ -599,42 +556,77 @@ def check_routing_enforcement():
             "*** routing_bad returned %d, expected %d — the enforcement arithmetic is wrong, so "
             "every row above is testing a decision that is not the one being made ***" % (got, want))
 
-    # ROUTE 5 — AND THE PUSH GATE STILL CALLS IT. This is the route the 2026-08-21 probe walked: the
-    # arithmetic can be perfect and simply not invoked. Gutting `bad += routing_bad(rows)` to
-    # `bad += 0` leaves ROUTES 1-4 green and the push wide open, so the call site is asserted at the
-    # FUNCTION OBJECT rather than a line window — immune to the code moving.
-    # ⚠ ON THE PARSE TREE, NOT A SUBSTRING. `"routing_bad(" in src` was the first version and
-    # `bad += 0 * routing_bad(rows)` walks straight past it (measured, /rely round 5) — the call is
-    # present, its value is annihilated, and the row reads ok. Same defect as ROUTE 3's tautology and
-    # the same fix: require the augmented assignment to `bad` to be a BARE call, not an expression
-    # that merely contains one.
+    # ROUTE 5 — AND THE PUSH GATE'S VERDICT RESPONDS TO THE FLAG. Behavioural, same reason as
+    # ROUTE 3, and this is the route that was walked end to end on 2026-08-22.
+    #
+    # ⚠⚠ THE SHAPE TEST THIS REPLACES WAS SATISFIABLE BY CONSTRUCTION. It required an `AugAssign` to
+    # `bad` whose value was a bare `Call` to `routing_bad` — and never looked at the ARGUMENT, so
+    # `bad += routing_bad([])` passed it while four `/rely FAIL` rows printed on screen and the push
+    # exited 0 (`RLY27-4`, and composed with `RLY27-3` into a complete silent neuter, `RLY27-5`).
+    # Asserting the shape of an expression is not asserting what it computes.
+    #
+    # `batch.routing_verdict` now builds, prints and counts the rows in ONE unit, so "the rows the
+    # reader saw" and "the rows the counter counted" are the same object and cannot be separated by a
+    # caller. That makes the property directly callable: feed it a row, read the number back, and
+    # confirm the row reached the screen.
+    _saved_cr = batch.check_routing
+    _v_cases = [
+        (("/rely", False, "[logic] synthetic control row", True), 1,
+         "a BLOCKING row raises the push verdict"),
+        (("/rely", False, "[docs] synthetic control row", False), 0,
+         "a WARN row does not raise it"),
+        (("/rely", True, "[logic] synthetic control row", True), 0,
+         "an `ok` row never raises it"),
+    ]
+    try:
+        for _synth, _want, _label in _v_cases:
+            batch.check_routing = lambda *_a, _s=_synth, **_k: [_s]
+            _buf = io.StringIO()
+            try:
+                _real_stdout, sys.stdout = sys.stdout, _buf
+                try:
+                    _got = batch.routing_verdict({}, None)
+                finally:
+                    sys.stdout = _real_stdout
+                _err = None
+            except Exception as _e:                           # noqa: BLE001
+                _got, _err = None, _e
+            _printed = "synthetic control row" in _buf.getvalue()
+            row("push verdict: %s" % _label, _got == _want and _printed,
+                "returned %d and printed the row" % _got if _got == _want and _printed else
+                "*** routing_verdict returned %r (expected %d)%s%s — the push gate is counting "
+                "something other than the rows it displays, which is the RLY27-4 neuter ***"
+                % (_got, _want, "" if _printed else "; the row was NEVER PRINTED",
+                   "" if _err is None else " (raised %r)" % (_err,)))
+    finally:
+        batch.check_routing = _saved_cr
+
+    # ⚠ AND THE VERDICT IS STILL ON THE PUSH PATH. `routing_verdict` can be perfect and simply not
+    # called — that is the 2026-08-21 probe's neuter, one level out. This is the one leg of this
+    # function that remains a source test, and it is deliberately the NARROWEST possible one: the
+    # name must appear, in a Load position, inside the function the hook actually runs. It is a
+    # tripwire, not a proof, and the enumeration question it cannot settle is `agent_gate`'s.
     import inspect
     import textwrap
     import ast as _ast
     try:
-        src = inspect.getsource(batch.cmd_prepush)
+        _src = inspect.getsource(batch.cmd_prepush)
     except (OSError, TypeError):
-        src = ""
-    calls = False
-    if src:
+        _src = ""
+    _wired = False
+    if _src:
         try:
-            for node in _ast.walk(_ast.parse(textwrap.dedent(src))):
-                if not isinstance(node, _ast.AugAssign):
-                    continue
-                if getattr(node.target, "id", None) != "bad":
-                    continue
-                v = node.value
-                fn = v.func if isinstance(v, _ast.Call) else None
-                if fn is not None and getattr(fn, "id", None) == "routing_bad":
-                    calls = True
+            for _n in _ast.walk(_ast.parse(textwrap.dedent(_src))):
+                if isinstance(_n, _ast.Name) and _n.id == "routing_verdict" and \
+                        isinstance(_n.ctx, _ast.Load):
+                    _wired = True
         except SyntaxError:
-            calls = False
-    row("prepush still CALLS routing_bad", calls,
-        "`bad += routing_bad(...)` present as a bare call" if calls else
-        "*** cmd_prepush has no bare `bad += routing_bad(...)` — the routing legs are computed and "
-        "their verdict discarded or neutralised. This is the neuter the 2026-08-21 warrant probe "
-        "performed, and the editorial/adversary exemption for tools/verify/** is UNPAID while it "
-        "holds ***")
+            _wired = False
+    row("prepush still calls routing_verdict", _wired,
+        "`routing_verdict` is read in cmd_prepush" if _wired else
+        "*** cmd_prepush never mentions routing_verdict — the routing legs are computed and their "
+        "verdict discarded. The editorial/adversary exemption for tools/verify/** and "
+        "tools/process/** is priced on this router blocking, and is UNPAID while it holds ***")
     return rows, bad
 
 
@@ -994,6 +986,195 @@ def baseline_records_it(ctx):
                for ln in body.splitlines())
 
 
+
+# ═══ THE BASELINE FREEZE — the two routes below were retargeted, not deleted ══════════════════
+#
+# ⭐ WHY THEY WENT INERT, AND IT WAS THE SYSTEM WORKING. Both routes proved *appending to a baseline
+# suppresses a violation*, and both did it by running `check_prose.py --baseline`. The 2026-08-22
+# freeze made that command REFUSE — exit 2, file untouched — so the routes stopped changing their
+# declared target, and `guards.py` reported `ROUTE INERT` instead of a green it had not earned. That
+# is the false-green class this whole layer keeps producing, caught automatically for once.
+#
+# ⚠ THE THREAT MOVED; IT DID NOT DISAPPEAR. No refusal can intercept a text editor, so a hand edit
+# is now the only remaining path to a grown baseline — and it is the path the routes must take.
+# What catches it is no longer a human reading the file: it is `check_frozen --block`.
+
+
+def _probe_block_keys():
+    """The baseline keys `check_prose` ITSELF would emit for whatever is currently planted.
+
+    ⚠⚠ COMPUTED BY THE CHECKER, NEVER HAND-WRITTEN. The key is `<rel>::block::<sha256[:12]>::<title>`
+    and the digest is taken over the block body, so a literal written here would be stale the first
+    time the probe text changed — and a key that does not match SUPPRESSES NOTHING. The route would
+    then be graded `may_suppress=True` while quietly suppressing nothing at all, which is `REL9-5`
+    exactly: a route mis-graded because it does not in fact do the thing it claims, with the
+    mis-grading invisible precisely because the route is harmless."""
+    import importlib
+    import check_prose
+    importlib.reload(check_prose)
+    rel = os.path.relpath(PROBE_FILE, REPO).replace("\\", "/")
+    return [v[1] for v in check_prose.scan_file(PROBE_FILE, rel) if v[0] == "block"]
+
+
+def r_prose_baseline_handedit():
+    """Grow the frozen prose baseline BY HAND — the only route to a grandfathered violation left."""
+    import check_frozen
+    p = os.path.join(BASE, "prose_baseline.txt")
+    orig = io.open(p, "rb").read()
+
+    def apply():
+        keys = _probe_block_keys()
+        # ⚠ ONLY KEYS NOT ALREADY PRESENT. `check_frozen` compares SETS, so re-appending an existing
+        # key grows the FILE and not the SET, and the check would correctly not fire — the route
+        # would then look defeated when nothing had actually been added.
+        have = check_frozen.entries(io.open(p, encoding="utf-8").read())
+        fresh = [k for k in keys if k not in have]
+        if fresh:
+            with io.open(p, "a", encoding="utf-8", newline="\n") as f:
+                f.write("\n".join(fresh) + "\n")
+
+    def undo():
+        io.open(p, "wb").write(orig)
+    return apply, undo
+r_prose_baseline_handedit.attacks = os.path.join(BASE, "prose_baseline.txt")
+
+
+def frozen_catches_handedit(ctx):
+    """`check_frozen --block` must FAIL **and NAME the baseline that grew**.
+
+    ⚠ ASSERT THE NAMING, NOT ONLY THE EXIT CODE. A run failing for an unrelated reason — a different
+    baseline drifting, a git error — satisfies an exit-code-only predicate while being blind to the
+    thing this row exists to establish, which is that the reader is TOLD WHAT GREW. The project's own
+    rule: a block whose stated reason is wrong is how bypass habits start."""
+    rc, out = sh(sys.executable, os.path.join(BASE, "check_frozen.py"), "--block")
+    return rc != 0 and "prose_baseline.txt" in out and "GREW" in out
+
+
+def baseline_audited_and_caught(ctx):
+    """Both halves, and neither is sufficient alone: the suppression is written where a human can
+    audit and shrink it, AND the freeze mechanically catches that it was added."""
+    return baseline_records_it(ctx) and frozen_catches_handedit(ctx)
+
+
+# ⚠ THE SWAP-AT-EQUAL-COUNT CASE IS WHY `check_frozen` COMPARES SETS AND NOT COUNTS. Measured
+# 2026-08-22: replacing one entry with another reports `GREW 1 entry (+0)` and still exits 1. Delta
+# zero, verdict red. A count check passes that silently, and the property is "nothing was ADDED",
+# for which the count is only ever a proxy.
+#
+# ⚠⚠ THE FLAG IS PER-TOOL, AND THAT IS PRECISELY HOW THE HOLE HID. Five writers spell it
+# `--baseline`; `check_pov.py` spells it `--update-baseline`. So the freeze rollout — keyed on the
+# flag name — skipped the one writer it never reached, and `pov_baseline.txt` sat in
+# `common.FROZEN_BASELINES` for two weeks with a writer that still wrote. Registered here as DATA,
+# and the completeness row derives the roster from `common.FROZEN_BASELINES`, so a seventh frozen
+# baseline whose writer is not registered here FAILS instead of going quiet.
+FROZEN_WRITERS = [
+    ("check_prose.py", "prose_baseline.txt", "--baseline"),
+    ("check_pov.py", "pov_baseline.txt", "--update-baseline"),
+    ("check_modal.py", "modal_baseline.txt", "--baseline"),
+    ("check_figures.py", "figures_baseline.txt", "--baseline"),
+    ("check_negatives.py", "negatives_baseline.txt", "--baseline"),
+    ("check_classes.py", "class_baseline.txt", "--baseline"),
+]
+
+
+def check_baseline_freeze():
+    """`--baseline` must REFUSE, and must not write. Two assertions, deliberately separate.
+
+    ⚠ WHY THIS IS NOT A ROUTE, AND THE MECHANISM FORCES IT. A refusing command changes nothing,
+    which is precisely what `ROUTE INERT` reports — the right verdict for an attack that stopped
+    working, and the wrong one for a refusal that is working. Expressed as a route this would be
+    graded a broken route forever. So the refusal gets its own rows.
+
+    ⚠⚠ EXIT CODE AND BYTES ARE ASSERTED SEPARATELY, AND THE SECOND IS THE LOAD-BEARING ONE. A
+    version that printed the refusal loudly and wrote the file anyway satisfies an exit-code-only
+    test completely — and that is the shape of every fail-open in this bundle: the announcement is
+    right and the action is not."""
+    rows, bad = [], 0
+
+    def row(label, ok, why):
+        nonlocal bad
+        if not ok:
+            bad += 1
+        rows.append((label, ok, why))
+
+    # ⚠ COMPLETENESS FIRST. Every row below tests a REGISTERED writer; this one tests the register.
+    # Without it the section passes by testing whatever happens to be listed, which is the
+    # enumerator-narrower-than-its-property shape this file keeps catching elsewhere.
+    _registered = {b for _t, b, _f in FROZEN_WRITERS}
+    _missing = sorted(set(common.FROZEN_BASELINES) - _registered)
+    row("every frozen baseline has a writer here", not _missing,
+        "%d frozen baseline(s), all registered" % len(_registered) if not _missing else
+        "*** %s declared frozen in common.FROZEN_BASELINES with NO writer registered here, so its "
+        "regenerate path is never exercised — that is exactly how check_pov.py kept a working "
+        "writer for a frozen baseline ***" % ", ".join(_missing))
+
+    for tool, base_name, flag in FROZEN_WRITERS:
+        p = os.path.join(BASE, base_name)
+        try:
+            before = io.open(p, "rb").read()
+        except OSError as e:
+            row("%s refuses: %s" % (flag, tool), False,
+                "*** cannot read %s (%r) — this row cannot be evaluated ***" % (base_name, e))
+            continue
+        rc, _out = sh(sys.executable, os.path.join(BASE, tool), flag)
+        try:
+            after = io.open(p, "rb").read()
+        except OSError:
+            after = None
+        # ⚠ RESTORE IMMEDIATELY IF THE FREEZE IS BROKEN. The row below records the failure; leaving a
+        # regenerated accepted-defect baseline on disk would let this control CAUSE the fail-open it
+        # exists to detect.
+        if after is not None and after != before:
+            io.open(p, "wb").write(before)
+        row("%s refuses: %s" % (flag, tool), rc != 0,
+            "exit %d, refused" % rc if rc != 0 else
+            "*** %s %s exited 0 — the freeze is OFF, and a regenerate absorbs whatever "
+            "currently violates. This is the measured fail-open the freeze exists to stop: the "
+            "command the hook itself printed as the remedy swallowed a live purity obligation and "
+            "took the run from exit 1 to exit 0 with the checker hashes byte-identical ***"
+            % (tool, flag))
+        row("%s wrote nothing: %s" % (flag, tool), after == before,
+            "%s byte-identical" % base_name if after == before else
+            "*** %s CHANGED — it refused and wrote anyway (restored by this control), so the exit "
+            "code above describes an action that still happened ***" % base_name)
+    return rows, bad
+
+
+
+def r_pov_baseline_handedit():
+    """Hand-grow the frozen POV baseline — and it must STILL NOT suppress a DENIAL.
+
+    ⚠ THIS ROUTE WENT INERT AS A DIRECT RESULT OF CLOSING THE `check_pov.py` HOLE, WHICH IS THE
+    MECHANISM WORKING TWICE IN ONE CHANGE. It used to run `--update-baseline`, which wrote; that
+    writer now refuses, so the route stopped changing its declared target and `guards.py` refused to
+    grade it. The threat moved to the hand edit exactly as it did for the prose baseline.
+
+    ⚠ `may_suppress=False`, AND THAT IS A MEASURED CLAIM, NOT AN ASSUMPTION. `REL9-5` established
+    that a DENIAL is never absorbed by this baseline by design — the row previously carried
+    `may_suppress=True` on an unverified belief and passed anyway, because the route does not in
+    fact suppress, so the mis-grading was invisible."""
+    import importlib
+    import check_pov
+    p_base = os.path.join(BASE, "pov_baseline.txt")
+    orig = io.open(p_base, "rb").read()
+
+    def apply():
+        importlib.reload(check_pov)
+        untagged, _tagged, _denials = check_pov.scan()
+        have = io.open(p_base, encoding="utf-8").read()
+        lines = ["%s\t%s\t%s" % (k, loc, check_pov.ascii_safe(sn))
+                 for k, loc, sn in sorted(untagged)]
+        fresh = [ln for ln in lines if ln not in have]
+        if fresh:
+            with io.open(p_base, "a", encoding="utf-8", newline="\n") as f:
+                f.write("\n".join(fresh) + "\n")
+
+    def undo():
+        io.open(p_base, "wb").write(orig)
+    return apply, undo
+r_pov_baseline_handedit.attacks = os.path.join(BASE, "pov_baseline.txt")
+
+
 PROPERTIES = [
     {
         "name": "a block both over cap and latching appears in BOTH reports",
@@ -1003,7 +1184,12 @@ PROPERTIES = [
             # `takeopen` is never baselined by design, so grandfathering the over-cap half must
             # NOT take the gap row with it. If it ever does, the gap accounting becomes
             # suppressible and this property is back to where RLY12-1 found it.
-            ("checker baseline absorbs the over-cap half", r_prose_baseline, False, None),
+            # ⚠ RETARGETED onto the hand-edit path (the `--baseline` path is refused now).
+            # STILL `may_suppress=False`: grandfathering the over-cap half must NOT take the
+            # gap row with it, or the gap accounting becomes suppressible and this property
+            # is back where RLY12-1 found it.
+            ("baseline hand-edit absorbs the over-cap half", r_prose_baseline_handedit,
+             False, None),
         ],
     },
     {
@@ -1012,7 +1198,11 @@ PROPERTIES = [
         "detect": prose_blocks,
         "routes": [
             ("drop the `---` so the Take latches", r_drop_take_delimiter, True, gap_is_reported),
-            ("checker baseline absorbs it", r_prose_baseline, True, baseline_records_it),
+            # ⚠ RETARGETED, and the VISIBILITY BAR WENT UP with it. Suppression here is
+            # permitted, but it must now be both auditable by a human AND caught
+            # mechanically by `check_frozen --block` — see baseline_audited_and_caught.
+            ("baseline hand-edit absorbs it", r_prose_baseline_handedit, True,
+             baseline_audited_and_caught),
         ],
     },
     {
@@ -1030,7 +1220,7 @@ PROPERTIES = [
             # invisible; a future regression that DID let a baseline swallow a DENIAL would have
             # been scored "suppresses (permitted)" and reported ok. **A `may_suppress` entry is a
             # claim about the system and needs the same evidence as any other.**
-            ("checker baseline absorbs it", r_pov_baseline, False, None),
+            ("baseline hand-edit absorbs it", r_pov_baseline_handedit, False, None),
         ],
     },
     {
@@ -1345,6 +1535,15 @@ def main():
         # stopped the router blocking and this file still exited 0.
         print("\n  PROPERTY: the router the exemption is priced on still BLOCKS")
         _rows, _bad = check_routing_enforcement()
+        for label, ok, verdict in _rows:
+            print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
+        bad += _bad
+        # ⚠ AND THE FREEZE ITSELF. The two routes above prove a HAND EDIT is caught; these rows prove
+        # the other half — that the `--baseline` path is refused AND writes nothing. Both halves are
+        # needed: the routes would still pass if `--baseline` quietly started working again, because
+        # they no longer use it.
+        print("\n  PROPERTY: a frozen baseline cannot be regenerated")
+        _rows, _bad = check_baseline_freeze()
         for label, ok, verdict in _rows:
             print("    %-4s %-34s %s" % ("ok" if ok else "FAIL", label, verdict))
         bad += _bad

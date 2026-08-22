@@ -48,8 +48,7 @@ Usage (this tool prints its own invocation path; never hardcode one — see CLAU
   agent_gate.py --selftest    # both-halves controls for this tool itself
   agent_gate.py --list        # the registry, without running anything
 
-  ZP_AGENT_GATE=1             # required, or this no-ops. OPT-IN while it is being evaluated;
-                              # `batch.py prepush` declares it either way, so it is never silent.
+  ZP_AGENT_GATE=0             # OPT-OUT. This layer is ON by default (Tim, 2026-08-22).
   GATE_MODEL / GATE_BUDGET    # override the pinned model / per-call ceiling
 """
 import json
@@ -66,7 +65,19 @@ SELF = common.self_rel(__file__)
 SUGG_DIR = common.PRIV / "agent_suggestions"
 MODEL = os.environ.get("GATE_MODEL", "claude-haiku-4-5-20251001")
 BUDGET = os.environ.get("GATE_BUDGET", "0.50")
-ENABLED = os.environ.get("ZP_AGENT_GATE") == "1"
+# ⚠⚠ ON BY DEFAULT — OPT-OUT, NOT OPT-IN (Tim, 2026-08-22: *"the idea is to have all of this turned
+# on right here right now… how are we supposed to test if it's still off"*).
+#
+# It shipped opt-in "while it is being evaluated", and the consequence was measured the day a fourth
+# entry was registered: the screen carrying the enumeration leg that `guards.py` had DELIBERATELY
+# GIVEN UP was a no-op, on every machine, because nothing ever exported the variable. The mechanical
+# half had been surrendered and the fuzzy half was dark, so that leg was covered by NOTHING — and
+# every `prepush` printed a tidy `skip` line about it.
+#
+# **An opt-in gate is off.** That is not a configuration state, it is the `RLY25-1` shape: a report
+# announcing a layer it is not running. A screen that costs money and does not run costs more than
+# one that costs money and does.
+ENABLED = os.environ.get("ZP_AGENT_GATE", "1") == "1"
 
 # --- THE REGISTRY -----------------------------------------------------------
 # ⚠ `expected_failure` IS THE LOAD-BEARING FIELD AND IT IS JUDGEMENT, NOT TYPING (`DC-22`): state
@@ -112,6 +123,34 @@ CHECKS = [
         "expected_failure":
             "An undated artifact count in prose is printed with its file:line and exits 1. A genuine "
             "clean run reports a NON-ZERO 'sites found' count and 'NEW undated figures : 0'.",
+    },
+    # ⭐ THE FIRST ENTRY REGISTERED BECAUSE A MECHANICAL CHECK WAS GIVEN UP, RATHER THAN BECAUSE ONE
+    # EXISTED AND WANTED INTERPRETING. `guards.py` asked "does EVERY consumer of the routing decision
+    # honour the blocking flag?" in three successive source-reading versions and was defeated six
+    # ways (`RLY27-1..6`). The question splits: "do the two KNOWN enforcement surfaces obey the
+    # flag?" is finite and stayed in `guards.py` as a BLOCKING behavioural test, and "is there a
+    # THIRD consumer nobody registered?" is an unbounded enumeration whose own repairs re-arm it.
+    # That second half is this entry. `CLAUDE.md` rung 5: the screen may replace the ENUMERATION, it
+    # may never replace the VERDICT — and here it replaces nothing at all, because the verdict it
+    # would have carried was surrendered deliberately rather than quietly downgraded.
+    #
+    # ⚠ WHY THIS IS SAFE, STATED SO NOBODY HAS TO RECONSTRUCT IT: enforcement is not a vote among
+    # consumers. The push path is fixed (`hooks.py` -> `batch.py prepush` -> `cmd_prepush`) and the
+    # release path is `ship.required_gates`; both are behaviourally pinned and both still BLOCK. An
+    # unregistered consumer is ADDITIVE — it can fail to enforce, it cannot dis-enforce those two.
+    {
+        "name": "scan_routing_consumers",
+        "cmd": [sys.executable, str(common.HERE / "scan_routing_consumers.py")],
+        "expected_failure":
+            "A reference to check_routing / routing_verdict / routing_bad / _LEG_BLOCKING from a "
+            "file that is NOT on the PINNED allowlist prints as 'UNREGISTERED <path>:<line>' "
+            "followed by the source line, and exits 1; an unreadable .py does the same as "
+            "'UNREADABLE'. A genuine clean run reports a NON-ZERO count of scanned .py files, a "
+            "NON-ZERO 'reference sites' count, lists every PINNED surface with a NON-ZERO site "
+            "count beside it, and ends with 'UNREGISTERED: 0'. ** A PINNED surface showing 0 "
+            "site(s) is a real finding even though the run exits 0: it means either that surface "
+            "was neutered or the allowlist is stale. ** This check NEVER blocks a push -- it has no "
+            "verdict to contribute, and its exit code is consumed here and nowhere else.",
     },
 ]
 
@@ -471,8 +510,12 @@ def selftest():
          "and exit 1."),
     ]
     if not ENABLED:
-        print("SKIP: set ZP_AGENT_GATE=1 to run the controls (they cost real money).")
-        return 0
+        # ⚠ NON-ZERO, DELIBERATELY. This used to `return 0` printing SKIP — the `GRD-2` shape, a
+        # control reporting success for a run that did not happen. The layer is now ON by default,
+        # so reaching this means someone explicitly set ZP_AGENT_GATE=0, and a suite of controls
+        # that did not execute must never read as a suite of controls that passed.
+        print("REFUSING: ZP_AGENT_GATE=0 — the controls did NOT run, and this is not a pass.")
+        return 1
     print("=== agent_gate controls — MUST-FIRE and MUST-SUPPRESS ===")
     fp = fn = 0
     for name, script, expect, expected_failure in fixtures:

@@ -82,6 +82,15 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # produces — the same argument as the baselines below. Omitting it
                               # would be `RLY17-2`: routed to /rely, absent from CHECKERS.
                               "agent_gate.py",
+                              # ⚠ THE SCREEN AND ITS CONTROL ARE HERE FOR THE SAME REASON, AND
+                              # NEITHER BLOCKS ANYTHING. `scan_routing_consumers.py` carries the
+                              # enumeration leg the behavioural routes deliberately gave up, and
+                              # `probe_routing_behavioural.py` is the mutation control those routes
+                              # are only trustworthy because of. Both live under `tools/verify/**`,
+                              # which skips editorial and adversary — so a file here that /rely does
+                              # not hash is unreviewed by EVERY gate at once, which is `RLY26-1`
+                              # exactly. Advisory output does not buy an exemption from being read.
+                              "scan_routing_consumers.py", "probe_routing_behavioural.py",
                               # ⚠ THE BASELINES ARE EXEMPTION SWITCHES AND MUST BE HASHED. One
                               # appended line to pov_baseline.txt took a planted violation from
                               # exit 1 to exit 0 with checker_hashes() unmoved, and
@@ -284,6 +293,25 @@ def routing_bad(rows):
     2026-08-21. A named function can be exercised directly AND its call site can be asserted to still
     exist — gutting this to `bad += 0` removes the call, and `guards.py` fires on the absence."""
     return sum(0 if (ran or not blocking) else 1 for _a, ran, _w, blocking in rows)
+
+
+def routing_verdict(state, ranges):
+    """Print the routing rows AND return how many of them block — deliberately ONE unit.
+
+    ⚠ THE ROWS PRINTED ARE THE ROWS COUNTED, BY CONSTRUCTION. Split across two statements the two
+    could differ, and `RLY27-3`/`RLY27-4` are exactly that: `_routing_rows = list(check_routing(...))`
+    broke the enumeration a control used to find this site, and `bad += routing_bad([])` kept the
+    call, the callee and the augmented assignment all intact while counting a different sequence
+    from the one on screen. Both mutations printed four `/rely FAIL` rows and exited 0.
+
+    Neither is expressible here: the rows are built inside, printed inside, and counted inside, so
+    no caller can hand the counter a sequence the reader never saw. **This is why the control for it
+    is behavioural — call it, feed it a blocking row, and read the number back.**"""
+    rows = list(check_routing(state or {}, ranges))
+    for agent, ran, why, blocking in rows:
+        print("  %-18s %-4s %s"
+              % (agent, ("ok" if ran else ("FAIL" if blocking else "WARN")), why))
+    return routing_bad(rows)
 # ⚠ `register.md` IS DELIBERATELY NOT IN THIS LIST, AND IT WAS ADDED AND THEN REMOVED — the reasoning
 # is worth more than the entry. It IS a switch: every hash check compares a script against a token
 # recorded there, and blanking one disarmed a check while `checker_hashes()` stayed byte-identical
@@ -1506,11 +1534,7 @@ def cmd_prepush(ranges=None):
     # ⚠ A non-blocking row still PRINTS, and prints WARN rather than FAIL — a downgraded gate must
     # get louder, not quieter (`RLY25-1`: a report publishing `pass` for a property it stopped
     # checking).
-    _routing_rows = check_routing(state or {}, ranges)
-    for agent, ran, why, blocking in _routing_rows:
-        print("  %-18s %-4s %s"
-              % (agent, ("ok" if ran else ("FAIL" if blocking else "WARN")), why))
-    bad += routing_bad(_routing_rows)
+    bad += routing_verdict(state, ranges)
     # THE INTERPRETATION LAYER. Advisory by construction: `agent_gate.run()` always returns 0 and
     # `bad` is deliberately NOT incremented, so a fuzzy component can never stop a push.
     # ⚠ DO NOT PROMOTE THIS TO BLOCK. Measured 2026-08-21 before adoption: 1 false positive in 6
