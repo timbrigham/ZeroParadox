@@ -913,7 +913,18 @@ def check_routing(state, ranges=None):
     _tip_blocking = [f for f in _stale_at_tip if _LEG_BLOCKING[_leg_of(f)]]
     if not state and not _moved_blocking and not _unhashed and not _tip_blocking:
         done.add("/rely")
-    elif _unhashed and not moved:
+    # ⚠⚠ `and not moved` WAS HERE AND THE WARN DOWNGRADE TURNED IT INTO A FAIL-OPEN (`RLY26-1`,
+    # measured 2026-08-21 by /rely round 5). It was safe when it was written, because a non-empty
+    # `moved` ALWAYS produced a blocking row, so suppressing this one lost nothing. Since the
+    # routed-prose leg WARNs, `moved` can be non-empty and entirely non-blocking — so **one line of
+    # prose appended to a routed `.md` made `moved` truthy, this row vanish, and a brand-new
+    # `tools/verify/check_evil.py` containing `sys.exit(0)` reach `prepush PASS, exit 0`** with the
+    # `/rely` row printing `ok` beside it. That is `RLY16-2`'s signature through a new door.
+    # ⚠ THE LESSON IS NOT "ADD A CASE": a downgrade changes an INVARIANT other code was resting on
+    # (*a non-empty `moved` implies something blocks*), and the cost is paid wherever that invariant
+    # was read, not where it was written. An unhashed routed file is undischargeable AND exempt from
+    # the prose gates, so it blocks unconditionally — there is no docs/logic split to make here.
+    elif _unhashed:
         rows.append(("/rely", False,
                      "%d routed file(s) are NOT hashed by CHECKERS, so the hash leg cannot see them "
                      "and the auto-discharge is unsafe: %s — add the name to CHECKERS and re-sign "

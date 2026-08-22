@@ -475,53 +475,116 @@ def check_routing_enforcement():
             "*** check_routing emitted %r for the %s leg (expected True) — the table says one thing "
             "and the function does another, so _LEG_BLOCKING is decorative ***" % (got, leg))
 
-    # ROUTE 3 — EVERY CONSUMER HONOURS THE FLAG. A guard protects a PROPERTY, not a hole, so this
-    # enumerates call sites rather than naming the two that exist today. A third consumer that
-    # unpacks three fields would crash; one that unpacks four and ignores `blocking` would silently
-    # re-impose or silently drop enforcement, which is exactly the shape the probe demonstrated.
-    # ⚠ WINDOWED, NOT WHOLE-FILE. Scanning the entire source for the word `blocking` was the first
-    # version and it is too loose to be worth running: `batch.py` mentions the flag in a dozen
-    # comments, so gutting the enforcement arithmetic to `bad += 0` would have left the row green.
-    # The window is the call site plus what immediately consumes it, which is where the decision is.
-    WINDOW = 12
+    # ROUTE 3 — EVERY CONSUMER HONOURS THE FLAG, TESTED ON THE PARSE TREE.
+    #
+    # ⚠⚠ THE SUBSTRING VERSION OF THIS ROW WAS A TAUTOLOGY AND COULD NOT FAIL (`RLY26-2`, measured
+    # 2026-08-21 by /rely round 5 — warrant-satisfied-while-empty #6, found INSIDE the control
+    # written the same day to close #5). It tested `"blocking" in body` where `body` began at the
+    # call site `for agent, ran, why, blocking in check_routing(...)` — a line that contains the
+    # token by construction. Three mutually contradictory `ship.py` behaviours all printed `ok`:
+    # as shipped, with the guard replaced by `if False:` (the RELEASE gate silently stops requiring
+    # /rely, and a minted DOI is not amendable), and with `and blocking` dropped (the deadlock the
+    # downgrade exists to remove, restored).
+    #
+    # ⚠ THE CLASS, AND IT IS THE SAME ONE TWICE IN ONE DAY: testing a PROXY for the property instead
+    # of the property. The warrant compared a routing PATTERN and was blind to enforcement; this
+    # compared a source SUBSTRING and was blind to use. Narrowing the window did not help, because
+    # the token was never the question.
+    #
+    # So the test is now: parse the file, find the `for` loop whose iterable is a `check_routing`
+    # call, take the FOURTH unpacked name, and require it to appear in **a position that can change
+    # control flow** — an `if` test, a boolean operator, a comparison, a conditional expression, or a
+    # comprehension guard. `print(blocking)` does not qualify, and neither does a mention in a
+    # comment or a docstring, because comments are not in the tree at all.
+    import ast
+
+    # ⚠ `Load` CONTEXT IS THE WHOLE TEST, AND IT IS EXACTLY WHAT THE SUBSTRING VERSION COULD NOT SEE.
+    # The anchor line's `blocking` is a **Store** — it is the loop target being bound — so an
+    # AST test scoped to Load context excludes it structurally, with no line-skipping, no window and
+    # no self-exemption. The tautology was never about the window; it was about not distinguishing
+    # a name being BOUND from a name being READ.
+    #
+    # ⚠ WHAT THIS ESTABLISHES AND WHAT IT DOES NOT, stated because the honest limit is the point:
+    # it proves the flag is READ inside the loop, not that it is OBEYED. A consumer that only
+    # `print`ed it would pass. Obedience on the enforcement path is covered behaviourally by ROUTE 4
+    # (the arithmetic) and structurally by ROUTE 5 (the bare call). All three demonstrated attacks
+    # — `if False:`, dropping `and blocking`, and `bad += 0 * routing_bad(...)` — are caught.
+    def _flag_is_read(node, fname):
+        """Is `fname` READ (Load context) anywhere in this loop's body?"""
+        for stmt in node.body:
+            for sub in ast.walk(stmt):
+                if isinstance(sub, ast.Name) and sub.id == fname and \
+                        isinstance(sub.ctx, ast.Load):
+                    return True
+        return False
+
+    # ⚠ THE WHOLE REPO, NOT JUST `tools/`. The previous walk was rooted at `tools/`, so a consumer
+    # anywhere else discarded the verdict with the count still reading "3 call site(s)" — an
+    # enumerator whose scope is narrower than the property it claims to cover (measured, same round).
+    SKIP = {".git", ".lake", ".claude-local", "node_modules", "__pycache__", ".venv"}
     consumers = []
-    for dirpath, _dirs, names in os.walk(os.path.join(REPO, "tools")):
+    for dirpath, dirs, names in os.walk(REPO):
+        dirs[:] = [d for d in dirs if d not in SKIP]
         for n in names:
             if not n.endswith(".py"):
                 continue
             p = os.path.join(dirpath, n)
-            lines = io.open(p, encoding="utf-8", errors="replace").read().splitlines()
-            for i, line in enumerate(lines):
-                # ⚠ SKIP OCCURRENCES INSIDE STRING LITERALS. This scanner's own detector line
-                # (`"check_routing(" in body`) matched itself and the row went green BY ACCIDENT —
-                # the surrounding lines happened to contain commas and the word `blocking`. An
-                # accidental pass is the `check_paths.py` shape CLAUDE.md names, so it is removed
-                # rather than tolerated: a control must not count itself as a subject.
-                j = line.find("check_routing(")
-                if j < 0 or "def check_routing" in line:
+            src = io.open(p, encoding="utf-8", errors="replace").read()
+            if "check_routing(" not in src:
+                continue
+            rel = os.path.relpath(p, REPO).replace("\\", "/")
+            try:
+                tree = ast.parse(src)
+            except SyntaxError:
+                # ⚠ UNPARSEABLE IS A FINDING, NOT A SKIP. Silently passing over a file this control
+                # cannot read is how an enumerator reports coverage it does not have.
+                consumers.append((rel, 0, None, None, None))
+                continue
+            # ⚠⚠ FOLLOW THE INDIRECTION. Matching only `for ... in check_routing(...)` MISSED
+            # `batch.py` the moment its loop became `rows = check_routing(...)` / `for ... in rows`,
+            # and the count silently fell from 3 to 2 with every remaining row green — the PUSH GATE
+            # itself dropping out of the enumeration that exists to cover it. Measured while fixing
+            # `RLY26-2`, i.e. the enumerator-too-narrow class reappearing inside its own repair.
+            def _is_cr(x):
+                fn = x.func if isinstance(x, ast.Call) else None
+                return fn is not None and \
+                    (getattr(fn, "attr", None) or getattr(fn, "id", None)) == "check_routing"
+
+            bound = {t.id for a in ast.walk(tree) if isinstance(a, ast.Assign) and _is_cr(a.value)
+                     for t in a.targets if isinstance(t, ast.Name)}
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.For):
                     continue
-                if line[:j].count('"') % 2 or line[:j].count("'") % 2:
+                it = node.iter
+                direct = _is_cr(it)
+                via_name = isinstance(it, ast.Name) and it.id in bound
+                if not (direct or via_name):
                     continue
-                body = [ln for ln in lines[i:i + WINDOW]
-                        if not ln.lstrip().startswith("#")]
-                consumers.append((os.path.relpath(p, REPO).replace("\\", "/"),
-                                  i + 1, "\n".join(body)))
+                tgt = node.target
+                elts = list(tgt.elts) if isinstance(tgt, (ast.Tuple, ast.List)) else []
+                flag = elts[3].id if len(elts) == 4 and isinstance(elts[3], ast.Name) else None
+                consumers.append((rel, node.lineno, len(elts), flag, node))
+
     row("consumers of check_routing located", bool(consumers),
-        "%d call site(s)" % len(consumers) if consumers else
+        "%d call site(s), repo-wide" % len(consumers) if consumers else
         "*** NO call site found — either check_routing is dead or this scan is broken; an "
         "enumerator that finds nothing must never read as ok ***")
-    for rel, lineno, body in consumers:
-        # Two conditions, because either alone is passable. It must UNPACK four values (a three-value
-        # unpack would crash loudly, but a `for row in ...` would not), and it must REFERENCE the
-        # flag in code rather than in a comment.
-        unpacks = body.count(",") >= 3 and "check_routing(" in body
-        uses = "blocking" in body
-        ok = unpacks and uses
-        row("consumer honours blocking: %s:%d" % (rel, lineno), ok,
-            "unpacks four fields and consults the flag" if ok else
-            "*** %s:%d consumes check_routing without reading `blocking` in the %d lines that "
-            "follow — enforcement is being decided somewhere this control cannot see ***"
-            % (rel, lineno, WINDOW))
+
+    for rel, lineno, arity, flag, node in consumers:
+        if arity is None:
+            row("consumer honours blocking: %s" % rel, False,
+                "*** file does not parse, so this control cannot read it ***")
+            continue
+        if arity != 4 or flag is None:
+            row("consumer honours blocking: %s:%d" % (rel, lineno), False,
+                "*** unpacks %d value(s), not 4 — the blocking flag is being dropped at the call "
+                "site ***" % arity)
+            continue
+        reads = _flag_is_read(node, flag)
+        row("consumer honours blocking: %s:%d" % (rel, lineno), reads,
+            "`%s` is read in the loop body" % flag if reads else
+            "*** %s:%d unpacks `%s` and never reads it — it is bound and discarded, so enforcement "
+            "is being decided somewhere this control cannot see ***" % (rel, lineno, flag))
 
     # ROUTE 4 — THE ARITHMETIC ITSELF IS CORRECT. Behavioural and total: a blocking FAIL counts, a
     # non-blocking FAIL does not, and an `ok` row never counts whatever its flag says.
@@ -540,17 +603,38 @@ def check_routing_enforcement():
     # arithmetic can be perfect and simply not invoked. Gutting `bad += routing_bad(rows)` to
     # `bad += 0` leaves ROUTES 1-4 green and the push wide open, so the call site is asserted at the
     # FUNCTION OBJECT rather than a line window — immune to the code moving.
+    # ⚠ ON THE PARSE TREE, NOT A SUBSTRING. `"routing_bad(" in src` was the first version and
+    # `bad += 0 * routing_bad(rows)` walks straight past it (measured, /rely round 5) — the call is
+    # present, its value is annihilated, and the row reads ok. Same defect as ROUTE 3's tautology and
+    # the same fix: require the augmented assignment to `bad` to be a BARE call, not an expression
+    # that merely contains one.
     import inspect
+    import textwrap
+    import ast as _ast
     try:
         src = inspect.getsource(batch.cmd_prepush)
     except (OSError, TypeError):
         src = ""
-    calls = "routing_bad(" in src
+    calls = False
+    if src:
+        try:
+            for node in _ast.walk(_ast.parse(textwrap.dedent(src))):
+                if not isinstance(node, _ast.AugAssign):
+                    continue
+                if getattr(node.target, "id", None) != "bad":
+                    continue
+                v = node.value
+                fn = v.func if isinstance(v, _ast.Call) else None
+                if fn is not None and getattr(fn, "id", None) == "routing_bad":
+                    calls = True
+        except SyntaxError:
+            calls = False
     row("prepush still CALLS routing_bad", calls,
-        "the push gate invokes the enforcement decision" if calls else
-        "*** cmd_prepush does not call routing_bad — the routing legs are computed and their verdict "
-        "discarded. This is exactly the neuter the 2026-08-21 warrant probe performed, and the "
-        "editorial/adversary exemption for tools/verify/** is UNPAID while it holds ***")
+        "`bad += routing_bad(...)` present as a bare call" if calls else
+        "*** cmd_prepush has no bare `bad += routing_bad(...)` — the routing legs are computed and "
+        "their verdict discarded or neutralised. This is the neuter the 2026-08-21 warrant probe "
+        "performed, and the editorial/adversary exemption for tools/verify/** is UNPAID while it "
+        "holds ***")
     return rows, bad
 
 
