@@ -1,29 +1,10 @@
 # check_modal.py baseline - grandfathered sites, each verified by READING it, not by counting.
 #
-# ZeroParadox/Ordinal/Kruskal.lean (x2) - NOT a defect. The "route artifact" claim is supported the
-# right way: by EXHIBITING the clean proof. The file cites Seisenberger (*Kruskal's Tree Theorem in a
-# Constructive Theory of Inductive Definitions*, Synthese Library 306, 2001), Veldman (Arch. Math.
-# Logic 43(2), 2004), Coquand & Fridlender (1993), and Larchey-Wendling's axiom-free Coq-Kruskal as
-# the constructive routes.
-#   TWO ATTRIBUTION ERRORS WERE MADE IN THIS NOTE, both while correcting attributions:
-#   (a) "Berger (Sternagel-style...)" -- Sternagel takes the same CLASSICAL Nash-Williams route
-#       (Kruskal.lean:40-41), not a constructive one;
-#   (b) then "Berger (almost-full relations, Synthese Library 306, 2001)" -- that volume is
-#       SEISENBERGER's (Kruskal.lean:47-49). Berger is credited in that file only for the residual
-#       dependent choice / open induction.
-#   Both corrected 2026-08-03. Read Kruskal.lean:44-56 before citing any of these again.
-# It locates the choice precisely (Mathlib's
-# exists_min_bad_of_exists_bad / minBadSeqOfBadSeq, a Nat.find/Classical.choose selection), and hedges
-# the transfer honestly ("a choice-free proof exists, in an almost-full framework Mathlib does not
-# currently carry"). It also names the residual as dependent choice / open induction rather than a
-# taboo.
-#
 # Baselined rather than widening EVIDENCE: a pattern broad enough to auto-pass this would also
 # rubber-stamp the identical sentence asserted WITHOUT any citation, which is precisely the defect
 # this gate exists to catch.
 #
 # SHRINK this file as files are touched; never grow it deliberately. Format: <path>|<phrase>
-ZeroParadox/Ordinal/Kruskal.lean|artifact
 
 # .claude/commands/claim-review.md - NOT a defect. The hit is a SECTION HEADING that NAMES the
 # defect class the gate looks for: "3. Eliminable vs. necessary (the method-reach asymmetry)."

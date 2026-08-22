@@ -485,7 +485,6 @@ ZeroParadox/Ordinal/Incompleteness.lean::block::8239aef5825a::§II. Deriving hfp
 ZeroParadox/Ordinal/Incompleteness.lean::block::b6be859b8f5f::Remark R-M.1: DA-1 Path 2 and the Limits of the
 ZeroParadox/Ordinal/KirbyParis.lean::block::218466166e04::Kirby–Paris hydra termination (the ε₀ gap) — pro
 ZeroParadox/Ordinal/KirbyParis.lean::doc::Step
-ZeroParadox/Ordinal/Kruskal.lean::block::751f3266a040::Kruskal's Tree Theorem (labeled) — finite rose t
 ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::block::0cd46bcc815a::§ III — Why this is stated about `InitialSeg` an
 ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::block::f5769be87ecd::Comparability of well-orders is a constructive t
 ZeroParadox/Ordinal/OrdinalChoiceEssential.lean::doc::Two
