@@ -29,6 +29,56 @@ from "it is operating instructions" — CLAUDE.md is the exception, not the rule
 `DEFECT_CLASSES.md`, `vocabulary_reference.md` and the protocols, which is why those stayed private
 when the code went public.
 
+## ⭐⭐ DIRECT `git` AND `gh` ARE BLOCKED FOR AGENTS. USE `gitRobot`. (2026-08-22.)
+
+**TRIGGER — an action, so there is nothing to adjudicate: you are about to type `git` or `gh`.** A
+`PreToolUse` hook inspects the **whole command string** for a word-boundary `git` or `gh` and denies
+it — bare, `cd`-chained, `&&`-chained, `git -C`, absolute `git.exe`, shelled out of Python. It
+**fails closed**: empty or unparseable input denies.
+
+**Why, measured the day it landed:** `illustrated` had **no branch protection at all**, `main`
+required **zero status checks**, `.claude/settings.json` was `Bash(*)`/`PowerShell(*)` with no deny
+rules, there are **two recorded bypass incidents**, and `reset --hard` / `checkout -- .` / `clean` /
+`stash` **fire no hook at all** — which is how the most expensive incident here destroyed an
+uncommitted edit and then correctly reported success.
+
+| you want | use |
+|---|---|
+| status, unpushed count, **what would block a push** | `status()` — one call, more than `git status` + `git log ..HEAD` gave |
+| any read — `log` `diff` `show` `ls-files` `rev-parse` `blame` `cat-file` | `read(op=..., args=[...])` — tier 3, no gate, no audit, always available |
+| stage | `stage(paths=[...])` — **named paths only**; `-A` is refused on the main repo and permitted for `.claude-local` |
+| commit | `commit(message_file=...)` — message from a FILE, never argv; runs `precommit` first |
+| push | `preflight()` → poll `preflight_status()` → `push(branch, reason)` |
+| sync before work | `fetch()` then `merge(branch, reason)` |
+| a private checkout to mutate in | `worktree(action='add')` → path; `'remove'` tears it down |
+| move HEAD, drop a branch, untrack a file, tag | `switch` · `branch_delete` (safe only) · `remove_files` (named, no `-f`) · `tag_create` (no deletion verb) |
+| why was I refused | `explain(refusal_id)` · `history(limit)` for the audit log |
+| a **release** | **Tim.** Releases mint permanent DOIs; that is not an agent decision |
+
+⚠ **DO NOT WORK AROUND IT** — no aliases, no wrapper scripts, no shelling out from Python. If you
+believe you genuinely need direct git, **say so and let Tim decide**.
+
+⚠ **THE MATCHER SEES ARGUMENTS, NOT JUST COMMANDS.** A path containing the standalone token blocks
+the whole command — a file named `...-direct-git-migration.md` cannot be passed to *any* shell
+command, **including the one that would rename it**; the only escape is a glob avoiding the literal.
+**Never put a bare `git` in a filename.** (Measured 2026-08-22, on a file this project created that
+same day.)
+
+⚠ **TOOLS THAT USE GIT INTERNALLY ARE UNAFFECTED.** The hook intercepts **agent tool calls**, not
+subprocesses spawned by a Python process. `batch.py`, `hooks.py`, all 21 checkers that shell git,
+`check_frozen.py`'s upstream-ref basis and every build script keep working untouched. **Do not
+"migrate" them** — there is nothing wrong with them, and rewriting them onto an MCP server the
+pipeline cannot depend on would break the gates.
+
+⚠ **`gitRobot` IS LAYER 2 OF 3, AND LAYER 3 DOES NOT EXIST.** Local enforcement raises friction
+against drift; it cannot bind an actor who controls the machine. **The only sound layer is remote
+branch protection with required status checks, and it is still not configured.** Do not read this
+section as the hole being closed.
+
+📖 **What is denied, why, and what would REOPEN each item — `.claude-local/notes/access_controls_2026-08-22.md`.**
+Several are provisional. **The server's own definition, including the tier model and the
+absent-by-design parameters, is `C:\temp\gitRobot.md`.**
+
 ## ⭐⭐ WHERE THINGS LIVE. Three tiers, and the boundary is PUBLISHABILITY, not convenience. (2026-08-15.)
 
 | tier | what | tracked? |
@@ -830,10 +880,20 @@ into the brief explicitly — the same way the encoding and glob warnings are al
   the trial"*, and hard-reset anyway. **"Restore the tree" and "preserve the tree" are different
   instructions, and only the caller knows which is meant.**
   - **Rule for the BRIEF:** an agent needing to create commits works in a dedicated worktree —
-    `git worktree add --detach <scratchpad-path> <ref>` — never in the shared checkout. It gets a
-    private HEAD and index, so nothing it does can reach the caller's tree; cleanup is
-    `git worktree remove --force` plus `git worktree prune`. The `CAL-2` pipeline replay used
-    exactly this and left the main tree untouched.
+    **`worktree(action='add')`**, which returns a detached checkout under a scratch area outside the
+    repository — never in the shared checkout. It gets a private HEAD and index, so nothing it does
+    can reach the caller's tree; cleanup is `worktree(action='remove')` with that path, and
+    `action='prune'` drops records of worktrees whose directories are already gone. The `CAL-2`
+    pipeline replay used exactly this and left the main tree untouched.
+    ⚠ **CARRY THIS INTO THE BRIEF VERBATIM, because the command CHANGED.** The old
+    `git worktree add --detach` is now denied like every other direct git call, and this is the
+    sanctioned escape from the four destructive verbs — so a brief that still names the old form
+    leaves its agent with a safety rule it cannot execute. Measured 2026-08-22: `rely.md`'s single
+    git reference was exactly this line.
+  - ⭐ **The four destructive verbs are now REFUSED, not merely banned** — the hook denies the
+    command and gitRobot has no parameter that reaches `--force`, `--hard` or `-f`. This bullet is
+    now a statement of *why*, kept because the reasoning is what transfers to the next verb nobody
+    has classified yet.
   - **Rule for the CALLER:** commit or stash your own work **before** spawning any agent licensed to
     touch git state, and treat the tree as unstable until it returns. This file already warns that
     background agents run concurrently so the tree is not a stable snapshot; this is that hazard
@@ -1340,7 +1400,7 @@ and read what is left:
   all worth keeping and none needing a retraction to say: *`deriv` is not `nfp`, and here is the
   counterexample*; *ε₁ is a fixed point, so it is the one seed that makes the wrong reading look
   supported*; *an all-zero prefix names the same end, so the discriminator is a nonzero digit.*
-* **Nothing remains but history** — **delete it.** `git log -p` has it, exactly, permanently, with
+* **Nothing remains but history** — **delete it.** `read(op='log', args=['-p','--','<path>'])` has it, exactly, permanently, with
   provenance no docstring can match.
 
 **Where history actually belongs:** `.claude-local/DEFECTS.md` while a defect is open, the
@@ -1375,11 +1435,18 @@ nobody was counting, and a reviewer that bumped the counter itself burned the ca
 **TRIGGER — an action: you are about to put `| head`, `| grep -q`, `| grep -m`, `| sed q` or any
 early-exiting consumer around a command that runs a git hook, or to write `|| git push --no-verify`.**
 
-- **Redirect, do not truncate.** `git push origin <branch> > push.log 2>&1; echo $?`, then read the
-  log. (`tail` reads to EOF and is safe; the rule covers everything anyway, because you should not
-  have to remember which consumers exit early.)
+- **Redirect, do not truncate.** `python tools/verify/batch.py prepush > prepush.log 2>&1; echo $?`,
+  then read the log. (`tail` reads to EOF and is safe; the rule covers everything anyway, because you
+  should not have to remember which consumers exit early.)
 - **`--no-verify` is a separately-typed decision, never a fallback and never chained with `||`.** The
   one documented case is a `CLAUDE.md`-only change against a stale signal.
+
+⭐ **HALF OF THIS IS NOW STRUCTURAL, AND HALF IS NOT — KNOW WHICH.** Since 2026-08-22 a push goes
+through `gitRobot`, which **never passes `--no-verify` and has no parameter that reaches it**, so the
+second bullet can no longer be violated by an agent even deliberately. **The first bullet still binds
+with full force**, because the commands you truncate now are `batch.py`, `lake build` and the
+checkers — and `| Select-Object -First N` breaks a PowerShell pipe and reports a wrong exit code
+exactly as `| head` did. **The SIGPIPE hazard moved; it did not go away.**
 
 **⚠ THE COST, AND IT IS WHY THESE ARE HARD RULES: BOTH BYPASSES SUCCEED SILENTLY — THE PUSH LOOKS
 GREEN.** Measured 2026-07-26: the identical push exited **1** (blocked) bare and **0** (pushed)
@@ -1395,20 +1462,28 @@ a reader who greps for `trap` will not find it and could conclude the defence wa
 per clone with `python tools/verify/install_hooks.py`; `--check` exits 1 when the gates are not
 armed. **Read it before assuming the clone you are standing in is protected.**
 
-## Staging — `git add` NAMED PATHS, never `-A`, Hard Rule
+## Staging — NAMED PATHS, never `-A`. ⭐ NOW MECHANICAL, not remembered. (2026-08-22.)
 
-**`git add -A` stages whatever happens to be in the tree, including files this session did not create.**
+**Bulk staging takes whatever happens to be in the tree, including files this session did not create.**
 
 **Measured 2026-07-19:** a background review agent wrote a scratch probe into `ZeroParadox/`, and the next
-`git add -A` swept it into a commit unnoticed. It is in the permanent history now. Background agents run
+bulk add swept it into a commit unnoticed. It is in the permanent history now. Background agents run
 *concurrently* with commits, so the working tree is not a stable snapshot of what you intended to change.
 
-**The rule:** stage the specific paths you edited — `git add path/one path/two`. Before committing, run
-`git status --short` and confirm every staged path is one you meant to touch. If a path appears that you
-did not edit, find out where it came from before committing it.
+**The rule:** stage the specific paths you edited — `stage(paths=['a.lean','b.md'])`. Before committing,
+`read(op='status', args=['--short'])` and confirm every staged path is one you meant to touch. If a path
+appears that you did not edit, find out where it came from before committing it.
 
-`-A` is acceptable only when nothing has been spawned since the last commit and `git status` has been
-eyeballed. When in doubt, name the paths.
+⭐ **THIS IS THE EIGHTH CONVENTION IN THIS FILE TO STOP BEING A DISCIPLINE AND START BEING A GATE, AND
+IT IS THE ONE TO COPY.** `gitRobot.stage` has **no bulk form on the main repo** — `-A`, `.` and `-u` are
+refused, with the reason and the alternative in the refusal text. There is nothing left to remember and
+nothing to adjudicate. The old escape hatch (*"`-A` is acceptable when nothing has been spawned since the
+last commit"*) is **gone**, and it should be: it was a judgement call at exactly the moment a session is
+least able to make it.
+
+⚠ **`.claude-local` is exempt and bulk staging is its documented flow** —
+`stage(paths=['-A'], repo_mode='.claude-local')`. Different repo, different risk: nothing published, and
+the failure mode there is losing notes rather than shipping a probe.
 
 ## Editorial Review Gate — Hard Rule
 
@@ -1420,7 +1495,13 @@ eyeballed. When in doubt, name the paths.
 - Changes to register.md
 
 **The protocol:**
-1. Before committing any of the above, run `/editorial-review` (pre-commit mode — no arguments needed; it reads `git diff --staged` automatically)
+1. Before committing any of the above, run `/editorial-review` — ⚠ **and PASS IT THE FILE PATHS
+   EXPLICITLY (Targeted mode) until `MIG-3` is fixed.** Pre-commit mode discovers its own scope with
+   `git diff --staged`, which is now denied, and **the denial FAILS OPEN**: the empty result reads as
+   *"nothing staged"*, the brief falls back to Full Scan, reviews a scope nobody asked for, and
+   **still writes a signal** hashing whatever it opened. A gate certifying the wrong file set while
+   reporting success. Same pattern in `/adversary-review` and `/claim-review`. Ticket:
+   `.claude-local/queue/tooling-briefs-gitcall-migration.md`.
 2. Wait for the editorial agent to return a verdict
 3. If FAIL: resolve every item in the kill list before committing
 4. If PASS: the agent writes `.claude-local/er_cleared.txt` recording the SHA-256 of each reviewed file (see the SHA-256-per-file scheme below) — proceed with the commit
@@ -1571,6 +1652,11 @@ When Tim initiates a release: draft the `RELEASES.md` entry + `.zenodo.json` →
 ```
 gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"
 ```
+⚠ **THIS IS TIM'S COMMAND TO RUN, NOT AN AGENT'S — `gh` is denied for agents (2026-08-22).** That is
+deliberate rather than incidental: `gh release create` mints a **permanent Zenodo DOI**, and a
+permanent public act is not an agent decision. An agent's role ends at drafting the body and getting
+the Release-Readiness Gate to exit 0. `gitRobot` can create the annotated tag (`tag_create`) but has
+no way to push one and no release verb at all.
 After release, confirm the Zenodo snapshot minted (query `https://zenodo.org/api/records/<conceptID>`). The README DOI badge is the **concept DOI** (`10.5281/zenodo.20060860`), which auto-resolves to the latest version — so **no per-release badge edit is needed** (confirmed v2.6, 2026-06-24). Only verify the snapshot exists; do not chase a badge update.
 
 **Release-Readiness Gate — mandatory hard gate before drafting the release body / cutting any tag.** Run from the repo root:
@@ -1842,7 +1928,7 @@ When a document is superseded (cosmetic **or** substantive), overwrite the flat 
 3. Update the version in README.md's Framework table. (GUIDE.md carries no version numbers — see
    the version-bump section.)
 
-The prior version is recoverable from git (`git show <commit>:ZP-X_Title.pdf`) and lives permanently in the Zenodo snapshot of the release that last carried it.
+The prior version is recoverable from git (`read(op='show', args=['<commit>:ZP-X_Title.pdf'])`) and lives permanently in the Zenodo snapshot of the release that last carried it.
 
 ## Theorem/Proposition/Lemma Naming Convention
 
@@ -2173,9 +2259,17 @@ All work — Lean 4 proofs and PDF rendering — happens on the `illustrated` br
 2. **Math Workflow:** Verify theorem changes with two separate calls: `lake build 2>&1 | Out-File -FilePath build.log -Encoding utf8` then `Get-Content build.log | Select-Object -Last 1`.
 3. **PDF Workflow:** Use existing rendering scripts and strictly follow the document versioning and archiving conventions defined above.
 4. **Transparency:** Maintain the `.claude-local/` folder for in-progress scripts and internal notes as a private "collaboration buffer."
-5. **Sync before starting work:** At the start of any session, always run `git fetch origin main` then `git merge origin/main` before making any changes. Never make edits against a stale base.
-6. **Verify no conflict markers after any merge:** Before committing after a merge, run `git diff --check` to confirm no conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) remain in any file. A file with unresolved markers will commit silently and corrupt the document. This has happened twice on this project.
+5. **Sync before starting work:** At the start of any session, `fetch()` then `merge(branch='origin/main', reason=...)` before making any changes. Never make edits against a stale base. ⚠ `merge` is **refused while the tree is dirty** — that is deliberate, and the answer is to commit first or take a worktree, never to force it. (Until 2026-08-22 this step said `git fetch` / `git merge` and had been **unexecutable by agents** since direct git was denied.)
+6. **Verify no conflict markers after any merge:** Before committing after a merge, run `read(op='diff', args=['--check'])` to confirm no conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) remain in any file. A file with unresolved markers will commit silently and corrupt the document. This has happened twice on this project.
 7. **5-minute timeout on all external tool calls:** Every `PowerShell` or `Bash` call that invokes an external process (PDF build scripts, `lake build`, `python <script>`, long-running `git` or `gh` operations) must use `timeout: 300000` (5 minutes). If the command exceeds this limit, kill it and report back — never wait indefinitely. If it times out, diagnose the cause rather than retrying blindly.
+⚠ **STANDARDS 8, 9 AND 10 ARE TIM'S TO RUN — `gh` IS DENIED FOR AGENTS (2026-08-22).** PR creation
+and editing, and every GitHub Discussion mutation, reach outside the repository and are governed by
+the Adversary Review Gate, which is Tim's decision by construction. **GitHub READS are untouched** —
+all the `mcp__github__*` read tools still work, so an agent can still check PR status, read
+discussion comments and verify a posted body. The `--body-file` / `-F body=@file` discipline below is
+unchanged and still correct; it is the *transport* rule, and it matters exactly as much when Tim runs
+the command.
+
 8. **Pull request body — always use `--body-file`:** PowerShell cannot reliably pass multiline PR bodies inline (special characters, arrows, backticks, and asterisks all cause parse errors). Always write the body to `.claude-local\pr_body_<name>.md` first, then create the PR with:
    ```powershell
    gh pr create --title "..." --body-file ".claude-local\pr_body_<name>.md"
