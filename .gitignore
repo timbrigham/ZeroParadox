@@ -7,9 +7,15 @@
 # The review-gate definitions are TRACKED. They used to live only in `~/.claude/commands/` with a
 # hand-copied backup in `.claude-local/commands/` — unversioned, invisible to any reader, and 4 of
 # the 8 had silently drifted apart. Claude Code reads project commands from here, so tracking them
-# means exactly one copy, which is also the copy a reviewer can read. Settings stay ignored: they
-# carry machine-local paths and permissions.
+# means exactly one copy, which is also the copy a reviewer can read.
 !.claude/commands/
+# ⚠ SETTINGS ARE TWO FILES AND ONLY ONE IS MACHINE-LOCAL. `settings.local.json` genuinely is —
+# it carries the allow list, `defaultMode`, and a hook hard-coding a personal OneDrive path — and
+# stays ignored. `settings.json` is the SHARED, durable half, and leaving it untracked meant the
+# record of WHICH GUARDS ARE WIRED existed nowhere in version control while the hook scripts it
+# points at were tracked. Losing the local file falls back to allow-everything with no deny and no
+# hooks, silently, with the scripts still sitting there looking installed.
+!.claude/settings.json
 
 # Local MCP tooling (standalone repo, not part of the math publication)
 imap-email-mcp/
