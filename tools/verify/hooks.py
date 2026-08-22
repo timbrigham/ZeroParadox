@@ -126,7 +126,11 @@ PRE_PUSH_PLAN = [
     # can block a push on its own. Calling it "report" while it did exactly that is a
     # manifest that lies, which is worse than no manifest (/rely pass 3 and 4).
     ("scan_pdfs", "BLOCK", "PDF asset scan — its exit code becomes the hook's"),
-    ("batch prepush", "BLOCK", "trigger 5, /rely routing, and the three review signals"),
+    # ⚠ "/rely routing" is no longer one mode: the logic and exemption-switch legs BLOCK, the
+    # routed-prose leg WARNS (downgraded 2026-08-21, rung 5). Said here too, because a manifest that
+    # over-states at ONE entry point is the same defect as over-stating at all four.
+    ("batch prepush", "BLOCK", "trigger 5, the three review signals, and /rely routing — logic and "
+                               "exemption switches BLOCK, routed prose WARNS"),
 ]
 
 

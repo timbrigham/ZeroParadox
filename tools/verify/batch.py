@@ -261,7 +261,15 @@ _LEG_NOUN = {"logic": "checker(s)", "switch": "exemption switch(es)", "docs": "r
 # CLAUDE.md rung 5 is explicit: non-convergence in an ENUMERATION is a fact about the enumeration; a
 # fail-open is a fact about the work. Flipping either of these to False silently un-prices the
 # editorial/adversary exemption that `tools/verify/**` and `tools/process/**` hold.
-_LEG_BLOCKING = {"logic": True, "switch": True, "docs": True}
+#
+# ⚠⚠ `docs` IS FALSE BY DECISION, 2026-08-21, AND THE EVIDENCE IS NAMED BECAUSE RUNG 5 DEMANDS IT.
+# Four `/rely` rounds on this layer ran 10 → 4 → 6 → 9 findings and never quiesced, because each
+# round reviews code written in response to the last; then the loop deadlocked outright, when a
+# one-line mechanically-verified fix to `tools/process/claim-revalidation.md` re-staled the signature
+# and blocked the push it was made to unblock. That is an ENUMERATION gate whose own repairs re-arm
+# it, which is the shape rung 5 downgrades. *"This keeps blocking"* would not have been evidence;
+# `10 → 4 → 6 → 9` and a measured deadlock are.
+_LEG_BLOCKING = {"logic": True, "switch": True, "docs": False}
 
 
 def routing_bad(rows):
@@ -801,6 +809,17 @@ def check_routing(state, ranges=None):
                          "[%s] %d %s changed since /rely last signed them: %s — %s"
                          % (leg, len(m), _LEG_NOUN[leg], ", ".join(m[:3]), _LEG_WHY[leg]),
                          _LEG_BLOCKING[leg]))
+        elif not _LEG_BLOCKING[leg]:
+            # ⚠⚠ A DOWNGRADED LEG PRINTS ITS COUNT EVEN AT ZERO, AND THAT IS THE PRICE OF THE
+            # DOWNGRADE, NOT DECORATION. A warning nobody reads is strictly worse than a block,
+            # because it manufactures the appearance of coverage — `RLY25-1` exactly: a report
+            # publishing `pass` for a property it no longer checks. Printing the count on every run,
+            # blocked or clear, is how rubber-stamping shows up as a rising number instead of going
+            # quiet. Same move as `check_poles.py`'s suppression counter.
+            rows.append(("/rely", True,
+                         "[%s] 0 %s stale — WARN-only leg, count printed every run so a rising "
+                         "number is visible rather than silent" % (leg, _LEG_NOUN[leg]),
+                         False))
     # (b) tracked files, by git — RANGE-AWARE. It read the working tree, so a `.github/workflows/`
     # change routed to `/rely` while uncommitted and produced ZERO rows once committed: the leg
     # fired never at push time, which is the only time it matters (measured, /rely pass 4).
@@ -872,13 +891,27 @@ def check_routing(state, ranges=None):
                 if reviewed.get(key) != h:
                     _stale_at_tip.append(f)
                     break
-    if _stale_at_tip:
-        rows.append(("/rely", False,
-                     "%d routed file(s) differ at the PUSHED TIP from what /rely signed, even though "
-                     "the working tree matches: %s — the push carries bytes nobody reviewed"
-                     % (len(_stale_at_tip), ", ".join(sorted(set(_stale_at_tip))[:3])),
-                     True))
-    if not state and not moved and not _unhashed and not _stale_at_tip:
+    # ⚠⚠ THIS LEG IS THE SAME OBLIGATION MEASURED AGAINST DIFFERENT BYTES, SO IT TAKES THE SAME LEG
+    # SPLIT. `moved` asks whether the signal covers the files on DISK; this asks whether it covers
+    # them at the PUSHED TIP. Leaving it whole while downgrading `moved` would have defeated the
+    # downgrade entirely — a docs-only push would clear the hash leg and block here instead, with the
+    # deadlock intact and a new place to look for it. Found by tracing the docs-only path rather than
+    # by flipping the flag and assuming.
+    for _blocking in (True, False):
+        s = sorted({f for f in _stale_at_tip
+                    if _LEG_BLOCKING[_leg_of(f)] is _blocking})
+        if s:
+            rows.append(("/rely", False,
+                         "[%s] %d routed file(s) differ at the PUSHED TIP from what /rely signed, "
+                         "even though the working tree matches: %s — the push carries bytes nobody "
+                         "reviewed" % ("blocking" if _blocking else "warn", len(s), ", ".join(s[:3])),
+                         _blocking))
+    # ⚠ THE AUTO-DISCHARGE COUNTS ONLY THE BLOCKING LEGS. It gates the git leg below, so leaving it
+    # keyed to the whole of `moved` would have kept a docs-only change blocking through a THIRD code
+    # path while both hash rows read WARN — the downgrade visibly applied and factually undone.
+    _moved_blocking = [c for c in moved if _LEG_BLOCKING[_leg_of(c)]]
+    _tip_blocking = [f for f in _stale_at_tip if _LEG_BLOCKING[_leg_of(f)]]
+    if not state and not _moved_blocking and not _unhashed and not _tip_blocking:
         done.add("/rely")
     elif _unhashed and not moved:
         rows.append(("/rely", False,
@@ -1396,7 +1429,14 @@ def cmd_prepush(ranges=None):
         ("purity", "BLOCK", "every new declaration has a #print axioms entry"),
         ("ssot", "BLOCK", "every new declaration has an ssot.json row"),
         ("pdf coupling", "BLOCK", "a changed PDF arrives with its scripts/ build script"),
-        ("routing", "BLOCK", "/rely has signed the verification layer at its current hashes"),
+        # ⚠ TWO ROWS, NOT ONE, BECAUSE THE LEGS NOW ENFORCE DIFFERENTLY. A manifest that still said
+        # "routing BLOCK" over a leg that warns is `RLY25-1` — a report publishing a stronger
+        # property than it checks. The declaration is the whole point of the manifest.
+        ("routing: logic + switches", "BLOCK",
+         "/rely has signed every checker, hook and exemption switch at its current hashes"),
+        ("routing: routed docs", "WARN",
+         "prose under tools/verify|tools/process — DOWNGRADED 2026-08-21 (rung 5, measured "
+         "non-convergence 10>4>6>9 then deadlock); stale count prints every run"),
         ("signals", "BLOCK", "editorial + adversary (+ prior-art on trigger 5) fresh and covering"),
         ("agent gate", "WARN", "an agent judges whether each check's PASS is EARNED; never blocks"),
     ])
