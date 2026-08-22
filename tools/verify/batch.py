@@ -91,6 +91,11 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # not hash is unreviewed by EVERY gate at once, which is `RLY26-1`
                               # exactly. Advisory output does not buy an exemption from being read.
                               "scan_routing_consumers.py", "probe_routing_behavioural.py",
+                              # ⚠ `move_ridealong.py` MUTATES THE CORPUS AND EDITS NOTHING ELSE,
+                              # which is exactly why it is hashed: it decides whether a
+                              # grandfathered claim may be relocated, and a weakened version would
+                              # let a baselined site be re-keyed into a frozen baseline silently.
+                              "move_ridealong.py",
                               # ⚠ THE BASELINES ARE EXEMPTION SWITCHES AND MUST BE HASHED. One
                               # appended line to pov_baseline.txt took a planted violation from
                               # exit 1 to exit 0 with checker_hashes() unmoved, and
