@@ -707,5 +707,7 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
+    if "--baseline" in sys.argv:
+        common.refuse_baseline_write("prose_baseline.txt")
     sys.exit(run(block_mode="--block" in sys.argv,
                  write_baseline="--baseline" in sys.argv))

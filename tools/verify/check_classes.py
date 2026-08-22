@@ -180,6 +180,8 @@ def load_baseline():
 
 def main():
     block = "--block" in sys.argv
+    if "--baseline" in sys.argv:
+        common.refuse_baseline_write("class_baseline.txt")
     rebuild = "--baseline" in sys.argv
 
     found = scan()
