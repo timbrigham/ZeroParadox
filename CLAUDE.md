@@ -333,6 +333,25 @@ still the defect class (§ below), so ask what the gate DOES:
   enumeration is a fact about the enumeration; a fail-open is a fact about the work. `guards.py`, the
   bedrock cap, the quarantine check and the hook-armed check are all this kind.
 
+**⚠⚠ SPLIT AT THE LEG, NEVER AT THE CHECK — the first draft of this rule got that wrong and the
+error was silent.** A single check routinely has legs of both kinds. The `/rely` routing check is the
+worked example: *"a routed `.md` changed since the signature"* is enumeration and downgrades, while
+*"a checker's executable LOGIC changed since the signature"* guards against unreviewed weakening of
+the verification layer and **must keep blocking**. Downgrading the check wholesale carries the second
+across with the first.
+
+**⚠⚠ AND ASK WHAT THE DOWNGRADE UN-PRICES. AN EXEMPTION BOUGHT WITH A BLOCK IS UNPAID THE MOMENT THAT
+BLOCK BECOMES A WARNING.** `tools/verify/**` and `tools/process/**` skip editorial and adversary
+**because** `/rely` covers them and BLOCKS — so a wholesale downgrade leaves that directory with no
+blocking review gate at all. **Verified by reading `guards.py:278` on 2026-08-21 (not yet by running a
+control): the warrant row compares the ROUTING PATTERN SOURCE and never tests that the router
+blocks**, so it would keep printing `ok` over an empty warrant. That is the fifth instance of
+*warrant-satisfied-while-empty* in that same code — rounds 1–4 found sampling, narrowing, a
+three-probe set and unchecked regex flags — and it is the shape the file calls *"deliberately
+brittle"* protection against, routed around because **enforcement mode is not part of the pattern.**
+**Before any downgrade lands, `guards.py` gets a route asserting the router still BLOCKS**, or the
+exemption it warrants must be given up in the same change.
+
 **⚠ NON-CONVERGENCE MUST BE MEASURED, NOT ASSERTED — or this rule becomes a licence to downgrade any
 gate that is currently inconvenient.** Name the rounds and their finding counts, as the `10 → 4 → 6 →
 9` above does. *"This keeps blocking"* is not evidence; it is usually the gate working. And this does
