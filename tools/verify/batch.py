@@ -55,6 +55,7 @@ if HERE not in sys.path:
 from vendored import is_vendored  # noqa: E402
 import vendored  # noqa: E402
 import report    # noqa: E402  the one formatter every entry point announces itself with
+import agent_gate  # noqa: E402  the interpretation layer — ADVISORY, never blocks (rung 5)
 STATE = os.path.join(PRIV, "batch_state.json")
 # The ones that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
 # deliberately — see check_suite.
@@ -75,6 +76,12 @@ GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_cl
 # is gitignored) and the hash rule covered only the five checkers (F8).
 CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.txt",
                               "hooks.py", "batch.py", "ship.py", "report.py", "gate_round.py",
+                              # ⚠ `agent_gate.py` IS HERE THOUGH IT ONLY WARNS. Its registry of
+                              # `expected_failure` declarations is what the interpretation layer
+                              # judges against, so editing one silently changes every verdict it
+                              # produces — the same argument as the baselines below. Omitting it
+                              # would be `RLY17-2`: routed to /rely, absent from CHECKERS.
+                              "agent_gate.py",
                               # ⚠ THE BASELINES ARE EXEMPTION SWITCHES AND MUST BE HASHED. One
                               # appended line to pov_baseline.txt took a planted violation from
                               # exit 1 to exit 0 with checker_hashes() unmoved, and
@@ -1320,6 +1327,7 @@ def cmd_prepush(ranges=None):
         ("pdf coupling", "BLOCK", "a changed PDF arrives with its scripts/ build script"),
         ("routing", "BLOCK", "/rely has signed the verification layer at its current hashes"),
         ("signals", "BLOCK", "editorial + adversary (+ prior-art on trigger 5) fresh and covering"),
+        ("agent gate", "WARN", "an agent judges whether each check's PASS is EARNED; never blocks"),
     ])
     if state is None:
         print("no batch in progress — running the UNIVERSAL push checks only")
@@ -1355,6 +1363,19 @@ def cmd_prepush(ranges=None):
     for agent, ran, why in check_routing(state or {}, ranges):
         print("  %-18s %-4s %s" % (agent, "ok" if ran else "FAIL", why))
         bad += 0 if ran else 1
+    # THE INTERPRETATION LAYER. Advisory by construction: `agent_gate.run()` always returns 0 and
+    # `bad` is deliberately NOT incremented, so a fuzzy component can never stop a push.
+    # ⚠ DO NOT PROMOTE THIS TO BLOCK. Measured 2026-08-21 before adoption: 1 false positive in 6
+    # healthy runs, and UNSTABLE — byte-identical input returned TRUSTWORTHY twice and
+    # NOT_TRUSTWORTHY once. The >=2-of-3 rule takes that to 0, but the underlying variance is real
+    # and blocking on a coin flip is how a gate earns itself a bypass. CLAUDE.md rung 5: the screen
+    # may replace the enumeration, it may NEVER replace the verdict.
+    # ⚠ It is announced in the manifest even when switched off, so "not run" is visible rather than
+    # silent — the failure `RLY25-1` is made of.
+    try:
+        agent_gate.run()
+    except Exception as e:                                  # never let the advisory layer break a push
+        print("  agent gate         WARN  interpretation layer errored, ignored: %r" % (e,))
     # WHICH reviews are required, WHY, and WHAT their signals actually say — named in full rather
     # than left as three filenames (Tim, 2026-08-10: report the reviews being run and a summary of
     # their parameters). A signal is only as good as what it certified, so the recorded verdict line
