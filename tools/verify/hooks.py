@@ -113,6 +113,7 @@ PRE_PUSH_PLAN = [
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
+    ("check_frozen", "BLOCK", "the accepted-defect baselines only SHRINK; the backlog total prints"),
     ("check_checkers", "BLOCK", "every checker has passing controls, and something invokes it"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
@@ -301,6 +302,18 @@ def pre_push(stream):
         print("\nPush blocked: an artifact count recorded in prose with no date.")
         print("Prefer measuring on demand. If it must be written down, date it -")
         print("the papers count went stale by 15 in a day, and nothing noticed.")
+        return 1
+
+    # ⚠ THE ACCEPTED-DEFECT BASELINES ARE FROZEN (2026-08-22). The ordinary path already refuses —
+    # `--baseline` on any of the six exits 2 with an explanation — so this is the backstop for a
+    # HAND EDIT, which no refusal can intercept. It prints the backlog total on every run, clear or
+    # not, because a debt figure that surfaces only on failure cannot show progress.
+    if py("check_frozen.py", "--block") != 0:
+        print("\nPush blocked: an accepted-defect baseline GREW.")
+        print("Nothing is ever added to these again - the backlog only shrinks. Fix the site.")
+        print("If the finding is WRONG then the CHECKER is wrong: that is a DEFECTS.md row and a")
+        print("fix to the check, never a new suppression. Do not launder a checker bug into the")
+        print("accepted-defect list.")
         return 1
 
     if py("check_checkers.py", "--block") != 0:

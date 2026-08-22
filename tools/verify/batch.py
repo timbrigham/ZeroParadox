@@ -137,6 +137,10 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               "check_moved.py", "install_hooks.py", "ci_report.py",
                               "check_negatives.py", "negatives_baseline.txt",
                               "check_figures.py", "figures_baseline.txt", "check_checkers.py",
+                              # ⚠ THE FREEZE CHECK AND ITS OWN SUBJECTS. `check_frozen.py` enforces
+                              # that the accepted-defect baselines only shrink; editing it out is
+                              # exactly as powerful as editing a baseline, so it is hashed like one.
+                              "check_frozen.py",
                               # ⚠⚠ `common.py`, ADDED 2026-08-16 IN THE SAME CHANGE THAT CREATED IT,
                               # and it is now the WIDEST-BLAST-RADIUS entry in this list. It owns
                               # `SKIP_DIRS`, `SKIP_NAMES`, `GLOBS`, `targets()` and `load_baseline`

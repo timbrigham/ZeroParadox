@@ -125,26 +125,41 @@ def run(block=False):
     return 1 if (bad and block) else 0
 
 
+# The controls, in the two-group shape `common.fire_suppress` expects. Each case is the TEXT of a
+# baseline as it would stand after an edit; the predicate asks whether that edit GREW the set.
+_BEFORE = '# header\na\tsite one\nb\tsite two\n'
+
+_MUST_FIRE = [
+    ('a new entry appended', '# header\na\tsite one\nb\tsite two\nc\tbrand new\n'),
+    # ⚠⚠ THE CASE A COUNT CHECK PASSES, and it is the reason this is a SUBSET test. One entry out,
+    # one in: the total is unchanged and a brand-new defect is now suppressed. Counting is a PROXY
+    # for the property; the property is that today's set adds nothing. This bundle shipped the
+    # proxy-instead-of-property error twice on 2026-08-21 and this control is the standing answer.
+    ('one swapped for another at EQUAL count', '# header\na\tsite one\nc\tbrand new\n'),
+    ('everything replaced', '# header\nx\tone\ny\ttwo\n'),
+    ('an entry re-added after being drained', '# header\na\tsite one\nb\tsite two\nb2\tback again\n'),
+]
+
+_MUST_SUPPRESS = [
+    ('unchanged', _BEFORE),
+    ('one entry removed — progress', '# header\na\tsite one\n'),
+    ('drained to empty — the success condition', '# header\n'),
+    ('reordered', '# header\nb\tsite two\na\tsite one\n'),
+    ('a comment added', '# header\n# a note about the work\na\tsite one\nb\tsite two\n'),
+    ('indented comment, blank lines', '# header\n\n   # indented note\na\tsite one\nb\tsite two\n'),
+]
+
+
+def _grew(text):
+    """The predicate under test: did this candidate ADD anything to `_BEFORE`?"""
+    return bool(entries(text) - entries(_BEFORE))
+
+
 def selftest():
-    """Both directions, and the must-fire half is the one that matters."""
-    rows = []
-    before = {'a\tsite one', 'b\tsite two'}
-    # MUST NOT FIRE — a strict subset is progress.
-    rows.append(('shrink is allowed', not ({'a\tsite one'} - before)))
-    # MUST FIRE — a genuine addition.
-    rows.append(('growth is caught', bool({'a\tsite one', 'c\tnew'} - before)))
-    # ⚠ MUST FIRE — the case a COUNT check would pass: one out, one in, total unchanged.
-    swapped = {'a\tsite one', 'c\tnew'}
-    rows.append(('swap at equal count is caught',
-                 len(swapped) == len(before) and bool(swapped - before)))
-    # MUST NOT FIRE — reordering and comments are not content.
-    rows.append(('comments and order are ignored',
-                 entries('# note\nb\tsite two\n\na\tsite one\n') == before))
-    ok = all(v for _l, v in rows)
-    for label, v in rows:
-        print('  %-4s %s' % ('ok' if v else 'FAIL', label))
-    print('\n  %s' % ('both halves exercised' if ok else '** a control did not behave **'))
-    return 0 if ok else 1
+    print('=' * 44)
+    print('  frozen-baseline check - CONTROLS')
+    print('=' * 44)
+    return common.fire_suppress(_MUST_FIRE, _MUST_SUPPRESS, _grew, 'baseline growth')
 
 
 if __name__ == '__main__':
