@@ -13,7 +13,8 @@ re-proves):
 - `Set.PartiallyWellOrderedOn.partiallyWellOrderedOn_sublistForall₂` — **Higman's lemma** (lists under
   `List.SublistForall₂` are WQO when the alphabet is).
 
-Mathlib does **not** contain Kruskal's tree theorem (its `Kruskal*` lemmas are Kruskal-Katona, an
+Mathlib does not contain Kruskal's tree theorem — **not located as of 2026-08-22**, searched by
+concept, by name, and by the inverse phrasing (its `Kruskal*` lemmas are Kruskal-Katona, an
 unrelated set-family result). The rose-tree type, the embedding order, and the Nash-Williams assembly
 on top of Mathlib's Higman are the original *formalization* content here; the mathematics is classical
 and credited under Prior art below.
@@ -30,26 +31,55 @@ sequences, iterated by `Nat.rec`. Sternagel's Isabelle/HOL *Certified Kruskal's 
 the same classical route.
 
 **The constructive route.** Kruskal's theorem and Higman's lemma both have choice-free constructive
-proofs by a different technique — almost-full relations (Coquand) and bar induction (Fridlender) —
-that avoid the minimal bad sequence argument entirely. Larchey-Wendling's *Coq-Kruskal* is a
-mechanized, **axiom-free**, unrestricted proof of the tree theorem on that technique, with no
-decidability assumption on the ground relation and no Brouwer's Thesis. It removes the restrictions of
-the two earlier intuitionistic proofs: Seisenberger's, via an inductive characterization of
-well-quasi-orders (*Kruskal's Tree Theorem in a Constructive Theory of Inductive Definitions*,
-Synthese Library 306, 2001), which assumes decidability of the ground relation; and Veldman's (*An
-intuitionistic proof of Kruskal's theorem*, Arch. Math. Logic 43(2), 2004, pp. 215-264), which uses
-Brouwer's Thesis. Coquand & Fridlender (1993) give the constructive Higman's lemma.
+proofs, stated over **almost-full relations** (Coquand) and **bar inductive predicates**
+(Fridlender). ⚠ These are *reformulations* of the minimal-bad-sequence argument, not replacements
+for it: Coquand & Fridlender describe their 1993 constructive Higman's lemma (stated for a
+two-letter alphabet) as *"a constructive version of Nash-Williams' proof"*. Note also that **bar
+inductive predicates are not Brouwer's bar induction**, which is the principle Veldman's proof rests
+on.
 
-## The `Classical.choice` footprint
+Larchey-Wendling's *Coq-Kruskal* is a mechanized, **axiom-free**, unrestricted proof of the tree
+theorem in the almost-full formulation, with no decidability assumption on the ground relation and no
+Brouwer's Thesis. ⚠ It is not a different *argument* from Veldman's — *"Our proof follows the pattern
+of Veldman's"* — the delta is the **formulation**. It removes the restrictions of the two earlier
+intuitionistic proofs: Seisenberger's, via an inductive characterization of well-quasi-orders
+(*Kruskal's Tree Theorem in a Constructive Theory of Inductive Definitions*, Synthese Library 306,
+2001), which assumes decidability of the ground relation; and Veldman's (*An intuitionistic proof of
+Kruskal's theorem*, Arch. Math. Logic 43(2), 2004, pp. 215-264), which uses Brouwer's Thesis.
 
-The `Classical.choice` this file inherits through Mathlib's route is a route **artifact** rather than
-a requirement of the theorem, and the witness is exhibited rather than asserted: Larchey-Wendling's
-mechanized *Coq-Kruskal* is the axiom-free witness. This file does not build that route; it uses
-Mathlib's. The residual content of the minimal bad sequence argument is dependent choice / open
-induction (Berger), a choice principle, not a logical taboo.
+⚠ **That the formulation is the delta is exactly why the axiom-free result does not transfer to
+`Kruskal.lean`** — see the footprint section below.
 
-⚠ **Two attribution errors were made in the note that grandfathered this claim, both while
-correcting attributions.** (a) "Berger (Sternagel-style…)" — Sternagel takes the same **classical**
-Nash-Williams route, not a constructive one; (b) then "Berger (almost-full relations, Synthese
-Library 306, 2001)" — that volume is **Seisenberger's**. Berger is credited here only for the
-residual dependent choice / open induction. Read this section before citing any of these again.
+## The `Classical.choice` footprint — and why its eliminability here is an OPEN QUESTION
+
+What is measured: `Kruskal.lean` inherits `Classical.choice` through Mathlib's minimal-bad-sequence
+machinery. This file does not build a constructive route; it uses Mathlib's. The residual content of
+the minimal bad sequence argument is dependent choice / open induction (Berger), a choice principle,
+not a logical taboo.
+
+⚠ **What is NOT established: that the choice is eliminable from *this* statement.** That is an open
+question, not a result, and it is NOT claimed here. The obstruction is that "well-quasi-ordered" has two
+formulations which are classically equivalent and **intuitionistically inequivalent** — Larchey-Wendling's
+own abstract: *"the several classically equivalent definitions of the notion of WQO are (for most of
+them) not intuitionistically equivalent. Hence, the statement of the theorem depends
+(intuitionistically) on the choice of a particular definition."*
+
+- **Sequential** — for every infinite sequence, some later term embeds an earlier one. This is
+  Mathlib's `WellQuasiOrdered` / `Set.PartiallyWellOrderedOn`, and it is what `Kruskal.lean` proves.
+- **Almost-full (`af`)** — an inductive predicate, a finite constructive certificate. This is what
+  Coq-Kruskal proves: `af R → af (ltree_homeo_embed R)`.
+
+`af` is **constructively stronger**: sequential follows from it, not the reverse. So transferring
+Coq-Kruskal's axiom-free result to the statement in `Kruskal.lean` would require `sequential → af` on
+the *hypothesis* side — exactly the direction that is not constructively available, and exactly what
+Brouwer's Thesis was postulated for in Veldman's proof. **The axiom-free witness therefore does not
+discharge the claim about this file's theorem.**
+
+Status: **open**, not refuted. The type is axiom-free, so nothing structurally forbids a clean proof;
+what is missing is a constructive proof of the *sequential* form, or a reduction showing there is
+none. Falsifier: a choice-free proof of `Set.univ.PartiallyWellOrderedOn r → … (TreeEmbeds r)` in
+Lean, or a taboo reduction from it.
+
+**Berger** is credited here for one thing only: the residual dependent choice / open induction in the
+minimal-bad-sequence argument. He is not the source of the almost-full technique (that is Coquand),
+and Synthese Library 306 (2001) is Seisenberger's volume.
