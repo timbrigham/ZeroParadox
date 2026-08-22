@@ -226,10 +226,46 @@ def run_check(c):
             "secs": round(time.time() - started, 2)}
 
 
+# ⚠⚠ THE PROMPT IS AN ARGV STRING, AND WINDOWS CAPS THE COMMAND LINE AT ~32,767 CHARACTERS.
+# Measured 2026-08-22 on the real corpus: `check_prose` with its baseline emptied emitted 848 lines
+# and the call died with `FileNotFoundError(2, 'The filename or extension is too long', ..., 206)`
+# BEFORE reaching the API — $0.00, 0.0s. It failed CLOSED, so nothing was let through, but the arm
+# was unusable on every real failure of any size. **It fires exactly when it is most needed: a large
+# failure is when you least want to read 774 lines yourself.** No fixture could have found this —
+# the planted one-line BOM produces 12 lines.
+#
+# ⚠ HEAD **AND** TAIL, NOT `[:N]`. Checkers print their summary and their new-violation count LAST,
+# so a plain head truncation drops the one line that says how many there are. The agent is being
+# asked to CLASSIFY, not to enumerate — the checker already enumerated — so a sample plus an honest
+# total is the right input. `check_pov` classified 66 sites correctly from 151 lines.
+#
+# ⚠ AND THE OMISSION IS STATED, WITH THE TRUE TOTAL. Silently handing over a slice would invite
+# `SINGLE` for a class of 774, which is the one answer that makes this arm worthless.
+# ⚠⚠ CAP ON CHARACTERS, NOT LINES — the first version of this capped LINES and still died. Windows
+# expresses its limit in CHARACTERS, and `check_prose` quotes long docstring text, so 180 lines was
+# still over 32k. **Capping the unit that was convenient rather than the unit the limit is stated in
+# is the same error as reading a truncated grep and concluding absence.** Measure in the constraint's
+# own unit.
+HEAD_CHARS, TAIL_CHARS = 6000, 2000
+
+
+def clip(output):
+    total = len(output)
+    if total <= HEAD_CHARS + TAIL_CHARS:
+        return output
+    n_lines = len(output.splitlines())
+    return ("%s\n\n... [%d of %d CHARACTERS omitted from the middle (%d lines total in the real "
+            "output). You are seeing the first %d and last %d characters. Classify on this sample, "
+            "and do NOT infer the number of sites from how many you can see — use any count the "
+            "output states.] ...\n\n%s"
+            % (output[:HEAD_CHARS], total - HEAD_CHARS - TAIL_CHARS, total, n_lines,
+               HEAD_CHARS, TAIL_CHARS, output[-TAIL_CHARS:]))
+
+
 def interpret(c, res, prompt_tpl=PROMPT, schema=SCHEMA):
     """One agent call. Returns (parsed_or_None, raw, seconds)."""
     prompt = prompt_tpl.format(name=c["name"], rc=res["rc"], expected=c["expected_failure"],
-                               output=res["output"] or "(no output at all)")
+                               output=clip(res["output"]) or "(no output at all)")
     cmd = ["claude", "-p", prompt, "--model", MODEL, "--tools", "",
            "--output-format", "json", "--json-schema", json.dumps(schema),
            "--max-budget-usd", BUDGET, "--no-session-persistence"]
