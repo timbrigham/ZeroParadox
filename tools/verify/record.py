@@ -215,9 +215,9 @@ def _cli(argv):
                          "and belongs to common.record_if_asked, not here.")
     ap.add_argument("--how", required=True,
                     choices=["agreement", "signature", "override"],
-                    help="agreement = N independent passes concurred (see policy min_passes); "
-                         "signature = a human signed off; override = deliberately forced. "
-                         "'mechanical' is REFUSED here — a review is not a computation.")
+                    help="agreement = 3+ independent passes concurred and the round RAN; "
+                         "signature = a PERSON accepted a verdict the round did not produce; "
+                         "override = a regrade, the gate erred. 'mechanical' is REFUSED here.")
     ap.add_argument("--passes", type=int, default=1,
                     help="how many independent passes ran (agreement only)")
     ap.add_argument("--agreed", type=int, default=1,
@@ -253,6 +253,20 @@ def _cli(argv):
 
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import common
+
+    # ⚠⚠ NO CHECK CAN DECIDE WHETHER A NAME BELONGS TO A PERSON, SO IT IS STATED INSTEAD OF TESTED.
+    # `agreement` refuses a single agent round, which makes the tempting fix `signature` with the
+    # AGENT as `who` — and that is the anonymous-approval hole V5 closes, with a robot's name written
+    # in it. `signature` asserts that a person accepted a verdict the round did not produce; an agent
+    # cannot be accountable for that. The two honest shapes are: the agent produces findings and a
+    # PERSON signs, or the gate genuinely runs three passes and records `agreement`.
+    # ⚠ This prints on every signature rather than only on a suspicious one, because "suspicious"
+    # would be a guess at a name, and a warning that fires selectively teaches people to read the
+    # absence of it as approval.
+    if a.how == "signature":
+        print("  signature: recording that a PERSON accepted this - %s." % a.who)
+        print("  If that is an agent, this record claims an accountability that does not exist;")
+        print("  a single agent round is not a review anyone signed. Use 3 passes + --how agreement.")
 
     subjects, skipped = common.ledger_subjects(sorted(set(a.files)), a.ref)
     for rel, why in skipped:
