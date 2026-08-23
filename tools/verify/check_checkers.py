@@ -319,6 +319,17 @@ def main(argv):
 
     rows, failures = audit()
     n = len(checkers())
+
+    # ⚠ THE PROPERTY IS VERIFIED AGAINST THE CHECKERS IT AUDITS — those files ARE its inputs, so
+    # they are its subjects. A checker whose controls stopped proving anything must re-earn this
+    # verdict, and keying on their blobs is what makes that automatic.
+    _subjects = ["tools/verify/%s" % os.path.basename(c) for c in checkers()]
+    _bad = {"tools/verify/%s" % os.path.basename(c) for c, _p, _ok, _d in failures}
+    rc = common.record_if_asked("check_checkers", _subjects, _bad,
+                                "a checker cannot fail, or nothing runs it", argv)
+    if rc:
+        return rc
+
     print("=" * 52)
     print("  meta-test: the checkers themselves")
     print("  checkers audited : %d" % n)

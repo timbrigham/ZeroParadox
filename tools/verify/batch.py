@@ -826,7 +826,14 @@ def check_suite():
         if not os.path.exists(p):
             bad.append("%s: MISSING from disk — cannot be satisfied by absence" % c)
             continue
-        rc, out = sh(sys.executable, p, "--block")
+        rc, out = sh(sys.executable, p, "--block", "--record")
+        # ⚠ EXIT 2 IS "COULD NOT BE RECORDED", NOT "FAILED". A checker that ran and could not reach
+        # the ledger has produced no key, so the commit must not proceed as though it had — but the
+        # reason a reader needs is the outage, not a phantom finding. Reported as its own line.
+        if rc == 2:
+            bad.append("%s: exit 2 — ran, but its verdict was NOT RECORDED (ledger unreachable "
+                       "or the record refused). No key exists for this content." % c)
+            continue
         if rc != 0:
             hit = [l.strip() for l in out.splitlines() if re.search(r"NEW[^:]*:\s*[1-9]", l)]
             bad.append("%s: exit %d%s" % (c, rc, (" — " + "; ".join(hit)) if hit else ""))
@@ -1457,8 +1464,18 @@ def cmd_precommit():
     the suite at zero) apply to every commit; only stage ordering and filter-freezing are
     batch-specific. Without a batch it runs the universal half and says so."""
     state = load()
+    # ⚠⚠ RECORD AGAINST THE INDEX, NOT HEAD, AND THE REASON IS EASY TO GET WRONG. At pre-commit time
+    # HEAD is the PARENT — the commit being made does not exist yet — so a record keyed to HEAD would
+    # cover the content being replaced. The STAGED blobs are the new commit's blobs, and coverage is
+    # content-addressed, so recording the index covers a commit that has not happened. That is what
+    # makes `can_push` satisfiable across a RANGE rather than only at its tip: every commit earns its
+    # keys as it is made, instead of one sweep at the end that leaves the intermediates NOT_RUN.
+    os.environ.setdefault("ZPLEDGER_BASIS", "INDEX")
+    os.environ.setdefault("ZPLEDGER_RUN", "precommit-%s" % (state.get("bucket") if state
+                                                            else "universal"))
     report.banner("precommit pipeline", [
         ("entry", "batch.py precommit (manual; the pre-commit HOOK runs the checkers)"),
+        ("records", "verdicts recorded to verdictLedger against the STAGED content (not HEAD)"),
         ("batch", ("bucket '%s'" % state.get("bucket", "?")) if state
                   else "none — universal obligations only, stage ordering skipped"),
         ("scope", "the WORKING TREE as it stands"),

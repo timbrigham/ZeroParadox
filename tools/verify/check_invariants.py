@@ -239,6 +239,20 @@ def main():
     check_engineers_takes()
     check_custom_registry()
     check_bytes_are_portable()
+
+    # ⚠ THE PROPERTY IS VERIFIED AGAINST ITS INPUTS: the whole Lean corpus plus the registry it is
+    # counted against. `failures` are strings with no per-file attribution — an invariant does not
+    # break "at a file", it breaks OVER the set — so a broken invariant FAILS the whole subject set
+    # rather than inventing a culprit. That is the honest shape, and it re-earns on any input change.
+    _subjects = [p.relative_to(common.REPO).as_posix() for p in LEAN]
+    if REGISTRY.exists():
+        _subjects.append(REGISTRY.relative_to(common.REPO).as_posix())
+    rc = common.record_if_asked('check_invariants', _subjects,
+                                set(_subjects) if failures else set(),
+                                'a standing invariant is broken')
+    if rc:
+        return rc
+
     if failures:
         print('')
         for f in failures:

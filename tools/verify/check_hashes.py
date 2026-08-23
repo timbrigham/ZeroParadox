@@ -1704,6 +1704,19 @@ def main():
         print('  Update register.md FIRST, then propagate to README (and GUIDE if it ever carries one).')
     all_ok = (not hash_mismatches and not ar_stale and not doc_mismatches
               and not shared_moved and not readme_drift)
+
+    # ⚠ THE PROPERTY IS VERIFIED AGAINST THE SCRIPTS AND THE REGISTRY IT COMPARES THEM TO. Those two
+    # are its inputs: change a build script or `register.md` and "the fingerprints match" must be
+    # re-earned. That is the whole point of the four-step rule this checker enforces.
+    _scripts = sorted(set(list(COMP_SCRIPTS.values()) + list(FORMAL_ONLY_SCRIPTS.values())
+                          + list(STANDALONE_SCRIPTS.values()) + list(FORMAL_SCRIPTS.values())))
+    _subjects = ['register.md'] + ['scripts/%s' % os.path.basename(s) for s in _scripts if s]
+    _rc = common.record_if_asked('check_hashes', _subjects,
+                                 set(_subjects) if not all_ok else set(),
+                                 'a build-script fingerprint disagrees with register.md')
+    if _rc:
+        return _rc
+
     if all_ok:
         print('All hashes match. AR status current. Docstring and README versions in sync.')
         return 0

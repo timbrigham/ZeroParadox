@@ -492,6 +492,29 @@ def tracked_md():
 # differs from its index is EXCLUDED from the record rather than recorded on the wrong bytes.
 
 
+INDEX = 'INDEX'   # the staged content — see `ledger_subjects`
+
+
+def index_blobs():
+    """`{path: blob id}` from the INDEX. One git call, whatever the subject count."""
+    out = subprocess.run(['git', 'ls-files', '-s'], cwd=str(REPO), capture_output=True,
+                         text=True, encoding='utf-8', errors='replace').stdout
+    blobs = {}
+    for line in out.splitlines():
+        meta, _, path = line.partition('\t')          # `<mode> <blob> <stage>\t<path>`
+        bits = meta.split()
+        if path and len(bits) >= 2 and len(bits[1]) == 40:
+            blobs[path.strip().replace('\\', '/')] = bits[1]
+    return blobs
+
+
+def worktree_modified():
+    """Paths whose WORKING TREE differs from the index — not safe to record against a staged blob."""
+    out = subprocess.run(['git', 'ls-files', '-m'], cwd=str(REPO), capture_output=True,
+                         text=True, encoding='utf-8', errors='replace').stdout
+    return {p.strip().replace('\\', '/') for p in out.splitlines() if p.strip()}
+
+
 def ref_blobs(ref='HEAD'):
     """`{repo-relative path: blob id}` at `ref`. ONE git call, whatever the subject count.
 
@@ -521,7 +544,18 @@ def ledger_basis(ref='HEAD'):
     """The `basis` block for a record: a resolved ref, never a symbolic name.
 
     ⚠ `kind` is one of ('range', 'ref', 'scope', 'tree') — the ledger rejects anything else, which
-    is how `'index'` was caught on the first wiring attempt."""
+    is how `'index'` was caught on the first wiring attempt.
+
+    ⚠ INDEX MODE RESOLVES TO THE TREE THE COMMIT WILL CARRY. `write-tree` turns the index into a
+    real tree object, which is exactly what the pending commit will point at — so the basis names
+    the content being committed rather than the parent it is being committed onto. It writes an
+    object and changes no ref, so it is safe to run before a commit."""
+    if ref == INDEX:
+        tree = subprocess.run(['git', 'write-tree'], cwd=str(REPO), capture_output=True,
+                              text=True, encoding='utf-8', errors='replace').stdout.strip()
+        # `resolved_from` is V1's enum ('explicit' | 'upstream' | 'FALLBACK'), not free text — it
+        # records HOW the basis was determined, and this one was asked for by name.
+        return {'kind': 'tree', 'resolved_from': 'explicit', 'value': tree}
     sha = subprocess.run(['git', 'rev-parse', ref], cwd=str(REPO), capture_output=True,
                          text=True, encoding='utf-8', errors='replace').stdout.strip()
     return {'kind': 'ref', 'resolved_from': 'explicit', 'value': sha}
@@ -537,14 +571,25 @@ def ledger_subjects(rels, ref='HEAD'):
     subjects than the checker examined is a coverage gap, and a silent one is the defect this whole
     layer exists to end."""
     rels = [r.replace('\\', '/') for r in rels]
-    blobs = ref_blobs(ref)
-    moved = differs_from(ref)
+    # ⚠⚠ INDEX MODE IS WHAT MAKES PRE-COMMIT RECORDING POSSIBLE, and the reason is not obvious.
+    # At pre-commit time HEAD is the PARENT — the commit being made does not exist yet — so a record
+    # keyed to HEAD would cover the wrong content entirely. But the staged blobs ARE the new
+    # commit's blobs, and coverage is content-addressed, so recording the INDEX covers a commit that
+    # has not happened yet. That is the whole reason a blob id beats a commit id here.
+    if ref == INDEX:
+        blobs = index_blobs()
+        moved = worktree_modified()
+        why_moved = 'modified in the worktree since it was staged'
+    else:
+        blobs = ref_blobs(ref)
+        moved = differs_from(ref)
+        why_moved = 'differs from %s in the worktree or index' % ref
     subjects, skipped = [], []
     for rel in sorted(set(rels)):
         if rel in moved:
-            skipped.append((rel, 'differs from %s in the worktree or index' % ref))
+            skipped.append((rel, why_moved))
         elif rel not in blobs:
-            skipped.append((rel, 'not present at %s' % ref))
+            skipped.append((rel, 'not staged' if ref == INDEX else 'not present at %s' % ref))
         else:
             subjects.append({'path': rel, 'git_blob_id': blobs[rel]})
     return subjects, skipped
@@ -577,6 +622,11 @@ def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD',
     argv = sys.argv[1:] if argv is None else argv
     if '--record' not in argv:
         return 0
+    # ⚠ THE BASIS COMES FROM THE ENVIRONMENT, NOT FROM TEN CALL SITES. `precommit` sets
+    # `ZPLEDGER_BASIS=INDEX` so every checker records the STAGED content in one place; a manual run
+    # defaults to HEAD. Threading it through each checker's signature would be ten chances to
+    # disagree about what a verdict is about.
+    ref = os.environ.get('ZPLEDGER_BASIS') or ref
     if withheld:
         print('  not recorded: %s — %s' % (step, withheld))
         print('                a partial run must not record a PASS; the key stays MISSING.')

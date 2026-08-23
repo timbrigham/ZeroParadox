@@ -1556,6 +1556,20 @@ def main():
              + "\n    ".join(os.path.relpath(p, REPO) for p in moved)))
     report.done("property guards", bad == 0 and clean,
                 "every route behaves" if bad == 0 else "%d route(s) misbehaving" % bad)
+
+    # ⚠ THE PROPERTY IS VERIFIED AGAINST THE FILES IT EXERCISES, and this file already knows which
+    # they are: `TOUCHED` is the exact set it plants violations in and restores. Those are the
+    # checkers and exemption switches whose change could falsify "every route behaves", so a change
+    # to any of them must re-earn this verdict. A route misbehaving is not attributable to one file
+    # — the property holds OVER the set — so a failure fails the set.
+    _subjects = [os.path.relpath(p, REPO).replace("\\", "/") for p in TOUCHED]
+    _rc = common.record_if_asked("guards", _subjects,
+                                 set(_subjects) if (bad or not clean) else set(),
+                                 "a route to a guarded property misbehaved, or the tree was "
+                                 "not restored")
+    if _rc:
+        return _rc
+
     return 1 if (bad or not clean) else 0
 
 
