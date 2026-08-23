@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import time
 import urllib.error
 import urllib.request
@@ -168,3 +169,92 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
         return None
     print(f"UNDECIDED: verdictLedger unreachable ({last_error})")
     return None
+
+
+# --------------------------------------------------------------------- the review-gate CLI
+#
+# ⚠⚠ WHY THIS EXISTS AND WHY IT IS SEPARATE FROM `common.record_if_asked`. Every mechanical checker
+# emits through `common.emit_verdict`, which derives its own subjects and stamps
+# `decided.how = "mechanical"` by default. A REVIEW gate cannot use that path: its subjects are the
+# files a reviewer actually read (a decision, not a scan) and its verdict is a judgement. Until this
+# existed there was NO way for `/editorial-review`, `/adversary-review`, `/prior-art-review` or
+# `/rely` to record at all — they wrote `.claude-local/*_cleared.txt`, a file anyone could touch,
+# keyed to a hash nothing content-addressed.
+#
+# ⚠⚠ `--how` IS REQUIRED AND HAS NO DEFAULT, DELIBERATELY. Defaulting it to "mechanical" would let a
+# review gate silently claim a provenance it does not have, and defaulting it to anything else would
+# be a guess about the ledger's schema. A missing `--how` REFUSES rather than picking one: the whole
+# value of a review record is the answer to "who decided this, and how", and a wrong answer there is
+# worse than no record, because it satisfies a gate that nothing actually reviewed.
+#
+# ⚠ SUBJECTS ARE READ FROM THE INDEX, NEVER HASHED HERE. `common.ledger_subjects` reads the blob id
+# the index already stores and fences the paths that are not safe to record (untracked, outside the
+# repo, differing from the index). A blob id is sha1("blob " + bytelength + "\0" + content) —
+# computing one by hand is how the field that used to be called `sha256` made every record read
+# STALE for ever, because the validator accepted a 64-hex digest while the comparator resolved a
+# 40-hex object id.
+
+def _cli(argv):
+    import argparse
+    ap = argparse.ArgumentParser(
+        prog="record.py",
+        description="Record a REVIEW gate's verdict in the ledger (mechanical checkers use "
+                    "common.record_if_asked instead).")
+    ap.add_argument("--step", required=True,
+                    help="the registered step, e.g. editorial / adversary / prior_art / rely")
+    ap.add_argument("--verdict", required=True, choices=["pass", "fail"],
+                    help="the gate's verdict over the files it reviewed")
+    ap.add_argument("--files", required=True, nargs="+",
+                    help="repo-relative paths the review actually covered — its subjects")
+    # ⚠ THE ENUMS ARE THE SERVER'S, MIRRORED HERE ONLY AS FAIL-FAST. The ledger refuses a bad value
+    # either way — that is where the rule lives and this file holds no validation logic. Listing them
+    # in `choices` turns a round trip into an immediate usage error, which matters for a gate brief
+    # run by an agent that would otherwise read a refusal as "the ledger is down".
+    ap.add_argument("--tier", required=True, choices=["A", "H"],
+                    help="A = an agent gate actually ran; H = a human decided. 'M' is mechanical "
+                         "and belongs to common.record_if_asked, not here.")
+    ap.add_argument("--how", required=True,
+                    choices=["agreement", "signature", "override"],
+                    help="agreement = N independent passes concurred (see policy min_passes); "
+                         "signature = a human signed off; override = deliberately forced. "
+                         "'mechanical' is REFUSED here — a review is not a computation.")
+    ap.add_argument("--passes", type=int, default=1,
+                    help="how many independent passes ran (agreement only)")
+    ap.add_argument("--agreed", type=int, default=1,
+                    help="how many of them concurred (agreement only)")
+    ap.add_argument("--who", default=None, help="who decided it (agent id, or a person)")
+    ap.add_argument("--reason", default=None, help="one line, recorded on a FAIL")
+    ap.add_argument("--ref", default="HEAD", help="basis ref (default HEAD)")
+    a = ap.parse_args(argv)
+
+    # ⚠ A SIGNATURE WITH NO SIGNATORY IS A `*_cleared.txt` WITH EXTRA STEPS. The file-based signals
+    # this replaces could be created by anyone and recorded no author; if `who` may be null here, the
+    # replacement inherits the defect it was built to remove. Required for the two human-authority
+    # routes; an `agreement` record is authored by the passes themselves.
+    if a.how in ("signature", "override") and not a.who:
+        ap.error("--who is required with --how %s: a sign-off with no signatory records nothing "
+                 "about who is accountable for it" % a.how)
+
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import common
+
+    subjects, skipped = common.ledger_subjects(sorted(set(a.files)), a.ref)
+    for rel, why in skipped:
+        print("  not recorded: %-52s %s" % (rel, why))
+    if not subjects:
+        # ⚠ EXIT 2, NEVER 0. "nothing recordable" is not "the review passed" — a gate reporting
+        # success while writing no key leaves the step MISSING and the operator believing it is done.
+        print("  nothing recordable for %s at %s — the review certified no recordable file"
+              % (a.step, a.ref))
+        return 2
+    rid = emit(step=a.step, tier=a.tier, verdict=a.verdict.upper(), subjects=subjects,
+               basis=common.ledger_basis(a.ref), reason=a.reason,
+               decided={"how": a.how, "passes": a.passes, "agreed": a.agreed, "who": a.who})
+    if rid is None:
+        return 2
+    print("  recorded %-4s %4d subject(s)  %s" % (a.verdict.upper(), len(subjects), rid))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_cli(sys.argv[1:]))
