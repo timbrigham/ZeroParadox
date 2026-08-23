@@ -1708,8 +1708,16 @@ def main():
     # ⚠ THE PROPERTY IS VERIFIED AGAINST THE SCRIPTS AND THE REGISTRY IT COMPARES THEM TO. Those two
     # are its inputs: change a build script or `register.md` and "the fingerprints match" must be
     # re-earned. That is the whole point of the four-step rule this checker enforces.
+    # ⚠ ALL FIVE MAPS, AND THE FIFTH IS THE ONE THAT WAS MISSING. `FORMAL_ONLY_COMPANIONS` drives a
+    # real comparison (`_formal_only_premise_violations`, and the `-comp` key branch below), so the
+    # verdict depends on `build_zpj_wheel_companion.py` — which renders the TRACKED
+    # `ZP-J_Wheel_Illustrated_Companion.pdf` and carries `comp:` in `register.md`. Enumerating four
+    # of five left it checked but unnamed, so editing it moved no subject and the record stayed
+    # SATISFIED. That is the 2026-08-19 defect this map exists to fix, arriving a second time through
+    # the subject set instead of through the map. Derive from the maps, never from a hand-written list.
     _scripts = sorted(set(list(COMP_SCRIPTS.values()) + list(FORMAL_ONLY_SCRIPTS.values())
-                          + list(STANDALONE_SCRIPTS.values()) + list(FORMAL_SCRIPTS.values())))
+                          + list(STANDALONE_SCRIPTS.values()) + list(FORMAL_SCRIPTS.values())
+                          + list(FORMAL_ONLY_COMPANIONS.values())))
     # ⚠ `SHARED_BUILD` IS AN INPUT TOO, AND IT WAS MISSING FROM THIS LIST. `main` runs
     # `check_shared_build()`, which hashes `scripts/zp_utils.py` against `shared_build_baseline.txt`
     # — so the verdict depends on that module, and naming only the build scripts left the record
