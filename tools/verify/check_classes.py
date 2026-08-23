@@ -204,7 +204,8 @@ def main():
     _rc = common.record_if_asked(
         "check_classes",
         [os.path.relpath(p, REPO).replace("\\", "/") for p in lean_files()],
-        {e[0] for e in new}, "requirements class added with no degeneracy verdict")
+        {e[0] for e in new}, "requirements class added with no degeneracy verdict",
+        switches=["tools/verify/class_baseline.txt"])
     if _rc:
         return _rc
 

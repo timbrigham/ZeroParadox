@@ -295,7 +295,8 @@ def main(argv):
 def _record(new, argv):
     """The universe is THIS checker's own scope — never a shared roster."""
     return common.record_if_asked('check_negatives', [rel for _p, rel in targets()],
-                                  {h[0] for h in new}, 'undated universal negative', argv)
+                                  {h[0] for h in new}, 'undated universal negative', argv,
+                                  switches=['tools/verify/negatives_baseline.txt'])
 
 
 if __name__ == '__main__':

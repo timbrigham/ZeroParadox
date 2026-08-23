@@ -468,7 +468,8 @@ def main(argv):
     # for everything the step glanced at.
     _rc = common.record_if_asked(
         'check_encoding', rels, {rel for rel, _k, _d in blocking},
-        'BOM, undecodable or unreadable', argv)
+        'BOM, undecodable or unreadable', argv,
+        switches=['tools/verify/encoding_whitelist.txt'])
     if _rc:
         return _rc
 

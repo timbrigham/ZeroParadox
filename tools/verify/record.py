@@ -82,6 +82,34 @@ def _call(tool: str, arguments: dict):
         return None
 
 
+def stale_or_missing(ref, action='commit'):
+    """Steps the ledger says need re-running at `ref`. Returns a set, or None if it cannot ask.
+
+    ⚠⚠ ONE QUESTION, SERVER-SIDE — §12-0-alpha. The alternative is a second staleness predicate on
+    this side, which would be the mirror defect at the exact point the split exists to protect: two
+    implementations of "is this verdict still good", disagreeing silently.
+
+    ⚠ `ref` MAY BE A TREE HASH, not just a commit — which is what makes this answerable BEFORE the
+    commit exists. `git write-tree` turns the index into the tree the pending commit will carry, and
+    the ledger resolves it. Measured 2026-08-23.
+
+    ⚠ NO `admission` IS PASSED, DELIBERATELY. The admission set is gitRobot's, and asking for it here
+    would drag policy into the consumer. This asks only which rows are STALE or MISSING; it never
+    decides what GATES. A caller uses it to choose what to RE-RUN, nothing more.
+
+    ⚠ RETURNS None, NOT AN EMPTY SET, WHEN THE LEDGER CANNOT BE REACHED. Empty means "nothing needs
+    re-running" and would skip every checker — absence rendering as success, in the code that decides
+    what runs. The caller must treat None as "run everything"."""
+    try:
+        out = _call('inventory', {'ref': ref, 'action': action})
+    except (urllib.error.URLError, OSError, TimeoutError):
+        return None
+    if not out or not out.get('ok') or not isinstance(out.get('rows'), list):
+        return None
+    return {r.get('step') for r in out['rows']
+            if r.get('status') in ('STALE', 'MISSING', 'LEGACY_IDENTITY', 'FAIL', 'UNDECIDED')}
+
+
 def emit(step, tier, verdict, subjects, basis, reason=None,
          inputs=(), decided=None, cost=None, revision=0):
     """Append one record. Returns its id, or None if refused or unreachable.

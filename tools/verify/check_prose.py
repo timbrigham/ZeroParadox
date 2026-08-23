@@ -460,7 +460,8 @@ def run(block_mode=False, write_baseline=False):
     # thing a coverage record must never do.
     _rc = common.record_if_asked('check_prose', scanned,
                                  {v[1].split('::')[0] for v in new},
-                                 'new prose site over the cap')
+                                 'new prose site over the cap',
+                                 switches=['tools/verify/prose_baseline.txt'])
     if _rc:
         return _rc
 

@@ -437,7 +437,8 @@ def main():
     rc = common.record_if_asked(
         'check_pov',
         [str(p.relative_to(REPO)).replace(chr(92), '/') for p in TARGETS if p.is_file()],
-        _bad, 'untagged point-of-view claim and/or a DENIAL')
+        _bad, 'untagged point-of-view claim and/or a DENIAL',
+        switches=['tools/verify/pov_baseline.txt'])
     if rc:
         return rc
 

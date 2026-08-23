@@ -595,7 +595,8 @@ def ledger_subjects(rels, ref='HEAD'):
     return subjects, skipped
 
 
-def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD', withheld=None):
+def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD', withheld=None,
+                    switches=()):
     """⭐ THE ONE CALL EVERY CHECKER MAKES. Identical shape everywhere, by design.
 
         rc = common.record_if_asked('check_x', scanned, bad, 'why it failed', argv)
@@ -631,6 +632,19 @@ def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD',
         print('  not recorded: %s — %s' % (step, withheld))
         print('                a partial run must not record a PASS; the key stays MISSING.')
         return 0
+    # ⚠⚠ AN EXEMPTION SWITCH IS PART OF THE SUBJECT SET, AND LEAVING IT OUT IS A BYPASS.
+    # Measured 2026-08-23: `check_pov`'s subjects were its 291 scanned files and NOTHING from
+    # `tools/verify/` — so `pov_baseline.txt` was not a subject. Grandfather a new violation into
+    # that baseline and the record still reads SATISFIED, because the files it names did not move.
+    # The verdict changed; the record could not tell. That is the exemption-switch fail-open
+    # `gitRobot.md` §12-0-ter names, arriving through the subject list.
+    #
+    # ⚠ IT MATTERS TWICE OVER once anything SKIPS work on the strength of a fresh record: the
+    # checker would never re-run, so the suppression would land unverified and unexamined. A
+    # baseline is exactly the file whose edit MUST re-arm its checker.
+    #
+    # THE RULE: a subject set is everything the verdict DEPENDS ON, not merely everything it read.
+    scanned = list(scanned) + [s for s in switches if s not in set(scanned)]
     bad = set(bad)
     return emit_verdict(step, ok_rels=[r for r in scanned if r not in bad],
                         bad_rels=sorted(bad), reason=reason, tier=tier, ref=ref)
