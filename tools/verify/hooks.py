@@ -404,7 +404,7 @@ def pre_push(stream):
 
     # Purity + SSOT. Safe at push in a way `lake build` is not: neither touches `sorry`, so neither
     # conflicts with stub-first. Build state stays CI's job at the PR.
-    if py("batch.py", "decls", "--block") != 0:
+    if py("batch.py", "decls", "--block", "--record") != 0:
         print("\nPush blocked: a declaration is missing its #print axioms entry or its ssot.json row.")
         print("Add the purity line, run the SJV sync, then re-push.")
         print("If the baseline is merely stale: python %s/batch.py decls --baseline"

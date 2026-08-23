@@ -780,10 +780,19 @@ def check_purity(decls):
     newly created file read as missing."""
     if decls is None:
         return False, "NO DECLARATION BASELINE — run `batch.py decls --baseline` (failing closed)"
-    have = print_axioms_on_disk()
-    missing = [nm(d) for d in decls if nm(d) not in have]
+    missing = [nm(d) for d in missing_purity_keys(decls)]
     return (not missing), ("purity entries present" if not missing
                            else "no `#print axioms` for: %s" % ", ".join(missing))
+
+
+def missing_purity_keys(decls):
+    """The `file::name` keys owing a `#print axioms` line. ONE computation, two consumers.
+
+    ⚠ The emitter needs the KEYS and the message needs the short names, and computing them twice
+    would be two implementations of "which declarations are unpurified" — the mirror defect, in the
+    check whose whole job is noticing an obligation nobody discharged."""
+    have = print_axioms_on_disk()
+    return [d for d in decls if nm(d) not in have]
 
 
 def check_ssot(decls):
@@ -802,6 +811,18 @@ def check_ssot(decls):
                if nm(d) not in present and d.split("::")[-1] not in present]
     return (not missing), ("SSOT covers new decls" if not missing
                            else "NOT in ssot.json (SJV sync owed): %s" % ", ".join(missing))
+
+
+def missing_ssot_keys(decls):
+    """The `file::name` keys with no `ssot.json` row. Same one-computation rule as purity above."""
+    p = os.path.join(REPO, "ssot.json")
+    if not os.path.exists(p):
+        return []
+    blob = io.open(p, encoding="utf-8").read()
+    present = set(re.findall(r'"(?:qualified|short)"\s*:\s*"([^"]+)"', blob))
+    present |= {n.split(".")[-1] for n in present}
+    return [d for d in decls
+            if nm(d) not in present and d.split("::")[-1] not in present]
 
 
 def check_suite():
@@ -1452,6 +1473,25 @@ def cmd_decls(regen, block, prune=False):
     print("not in the baseline  : %d  %s" % (len(decls), ", ".join(decls[:8])))
     print("  purity  %-4s %s" % ("ok" if p_ok else "FAIL", p_msg))
     print("  ssot    %-4s %s" % ("ok" if s_ok else "FAIL", s_msg))
+
+    # ⚠ THE SUBJECT SET IS THE WHOLE `.lean` CORPUS PLUS `ssot.json`, NOT THE FILES THAT CHANGED.
+    # The obligation is discharged by a `#print axioms` line ANYWHERE in the tree and by a row in a
+    # single shared `ssot.json`, so the verdict depends on every file that could carry either.
+    # Naming only the added declarations' files would leave the record SATISFIED after a purity line
+    # was deleted somewhere else — a verdict recorded against the wrong file set, which claims a
+    # property still holds when its inputs moved.
+    # ⚠ `decl_baseline.txt` is the SWITCH: it decides what counts as "added", so editing it changes
+    # this verdict without touching a single subject. Same argument as the accepted-defect baselines.
+    _rels = sorted({os.path.relpath(fp, REPO).replace("\\", "/") for fp in lean_files_on_disk()})
+    if os.path.exists(os.path.join(REPO, "ssot.json")):
+        _rels.append("ssot.json")
+    _bad = {d.split("::")[0] for d in (missing_purity_keys(decls) + missing_ssot_keys(decls))}
+    _rc = common.record_if_asked(
+        "decls", _rels, _bad,
+        "a declaration is missing its #print axioms entry or its ssot.json row",
+        switches=["tools/verify/decl_baseline.txt"])
+    if _rc:
+        sys.exit(_rc)
     sys.exit(0 if (p_ok and s_ok) or not block else 1)
 
 
