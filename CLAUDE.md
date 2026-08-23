@@ -87,7 +87,7 @@ absent-by-design parameters, is `C:\temp\gitRobot.md`.**
 | **`scripts/`** | every PDF build script, `zp_utils.py`, `scan_pdfs.py`, `PDF_Rendering_Standards.md` | **yes — public** |
 | **`tools/process/`** | `CLAUDE.md`'s body — the argument behind each routed rule | **yes — public** |
 | **`.claude/commands/`** | the review-gate definitions Claude Code reads | **yes — public** |
-| **`.claude-local/`** | signals (`*_cleared.txt`), `gate.lock`, `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/` | no — private, own git repo, no remote |
+| **`.claude-local/`** | signals (`*_cleared.txt`), `gate.lock`, `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/` | **not tracked by THIS repo — it is its OWN repository**, with its own history, a `master` branch and a private remote (`ZeroParadoxLocal`). The parent additionally ignores the path |
 
 **The line: artifacts of VERIFICATION are public; artifacts of PROCESS-IN-FLIGHT are private.**
 A checker and its baseline are reproducible from the public corpus, so withholding them protected
@@ -898,9 +898,11 @@ into the brief explicitly — the same way the encoding and glob warnings are al
     touch git state, and treat the tree as unstable until it returns. This file already warns that
     background agents run concurrently so the tree is not a stable snapshot; this is that hazard
     with a **destructive** edge rather than the merely additive one of the `git add -A` incident.
-  - ⚠ **`.claude-local/` survived only because it is gitignored — do not read that as safety.** A
-    `git clean -xfd` would have taken the whole private working folder, which has no remote and is
-    backed up by hand.
+  - ⚠ **`.claude-local/` survived only because the parent ignores that path — do not read that as
+    safety.** A `clean -xfd` would have taken the whole private working folder. ⚠ **It DOES have a
+    remote now** (`ZeroParadoxLocal`, private) — this line said "no remote and is backed up by hand"
+    until 2026-08-22, which was stale, **and believing it is what left three commits sitting on one
+    disk that day.** Commit *and push* it; see the handoff's PART 0b step 4.
 - **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
   restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
   **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
@@ -1614,7 +1616,9 @@ This is a **mathematical publication repository** first. It is no longer true th
 
 ## Private Working Folder
 
-A `.claude-local/` folder exists locally and is **gitignored** — it does not appear in the public repository. This is intentional. It serves as a private working space for the project's core collaborators during active development, before material is ready for public discourse. It contains:
+A `.claude-local/` folder exists locally. **It is its OWN git repository** — its own history, a `master` branch, and a private remote (`ZeroParadoxLocal`) — and the public repo additionally ignores that path, so none of it appears here. This is intentional.
+
+⚠ **"Gitignored" is the parent repo's view of it and is the wrong mental model to work from** (Tim, 2026-08-22). Ignored files are protected by nothing; a repository with a remote is protected by committing and pushing. Get this wrong and you conclude the only copy is on disk and that backing it up is someone else's problem — which is exactly what happened on 2026-08-22, when three commits sat unpushed while the `PostToolUse` robocopy that used to catch them had been dead since agents lost `git commit`. **Commit AND push it; the handoff's PART 0b step 4 is the procedure.** It serves as a private working space for the project's core collaborators during active development, before material is ready for public discourse. It contains:
 
 - Reviewer feedback and correspondence (e.g. `feedback/`)
 - In-progress build scripts and draft outputs
