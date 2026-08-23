@@ -278,6 +278,11 @@ def main(argv):
     for rel, line, matched, sent in new:
         print('  %s:%d  [%s]' % (rel, line, matched))
         print('      %s' % sent)
+    if '--record' in argv:
+        rc = _record(new)
+        if rc:
+            return rc
+
     if new:
         print('\nA universal negative with no date and no search record.')
         print('The honest form is "none located as of <date>, searched as follows".')
@@ -285,6 +290,17 @@ def main(argv):
         return 1 if '--block' in argv else 0
     print('OK: no new undated universal negatives.')
     return 0
+
+
+def _record(new):
+    """Emit this run's verdict. The universe is THIS checker's own scope, recomputed from its own
+    `targets()` — never a shared roster, which would record coverage the checker never had."""
+    bad = {h[0] for h in new}
+    scanned = [rel for _p, rel in targets()]
+    return common.emit_verdict('check_negatives',
+                               ok_rels=[r for r in scanned if r not in bad],
+                               bad_rels=sorted(bad),
+                               reason='undated universal negative')
 
 
 if __name__ == '__main__':

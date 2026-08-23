@@ -312,7 +312,22 @@ def main():
         print('  Then state what was measured, mark it UNCLASSIFIED, or delete the claim.')
     print('=' * 40)
 
+    if '--record' in sys.argv[1:]:
+        rc = _record(new)
+        if rc:
+            return rc
+
     return 1 if (block and new) else 0
+
+
+def _record(new):
+    """Emit this run's verdict over THIS checker's own scope. See `common.emit_verdict`."""
+    bad = {h[0] for h in new}
+    scanned = [rel for _p, rel in targets()]
+    return common.emit_verdict('check_modal',
+                               ok_rels=[r for r in scanned if r not in bad],
+                               bad_rels=sorted(bad),
+                               reason='unmeasured modal claim')
 
 
 if __name__ == '__main__':

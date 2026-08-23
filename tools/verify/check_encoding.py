@@ -458,6 +458,23 @@ def main(argv):
         print('EMPTY on purpose: an entry without one is IGNORED, so nothing is suppressed until a')
         print('human has actually looked. Verified exclusions only.')
         print('Safe write recipes (and why PowerShell 5.1 does this): tools/process/file-encoding.md')
+    # ⚠⚠ EMIT THE VERDICT TO THE LEDGER. A checker that decides and tells nobody is a checker whose
+    # result cannot gate anything — the state measured 2026-08-23, when a push was allowed while the
+    # ledger held no key for it. `--record` is opt-in while the migration runs; it becomes the
+    # default once every admitted type has an emitter.
+    #
+    # ⚠ THE SPLIT IS PER-SUBJECT, not per-run (see `record.emit`'s docstring): the clean files get a
+    # PASS and the blocking ones get a FAIL, so coverage stays exact instead of one verdict standing
+    # for everything the step glanced at.
+    if '--record' in argv:
+        _bad = {rel for rel, _kind, _detail in blocking}
+        _rc = common.emit_verdict('check_encoding',
+                                  ok_rels=[r for r in rels if r not in _bad],
+                                  bad_rels=sorted(_bad),
+                                  reason='BOM, undecodable or unreadable')
+        if _rc != 0:
+            return _rc
+
     if blocking:
         print('\nA file was written through a codepage that is not UTF-8, or could not be read.')
         print('Safe write recipes: tools/process/file-encoding.md')

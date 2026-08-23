@@ -86,11 +86,21 @@ def emit(step, tier, verdict, subjects, basis, reason=None,
          inputs=(), decided=None, cost=None, revision=0):
     """Append one record. Returns its id, or None if refused or unreachable.
 
-    `subjects` is a list of {"path", "sha256"} — WHAT THIS VERDICT IS ABOUT, not
+    `subjects` is a list of {"path", "blob"} — WHAT THIS VERDICT IS ABOUT, not
     everything the step glanced at. A step that examined forty files and failed on
     one emits a PASS over the thirty-nine and a FAIL over the one; that is what
-    keeps coverage exact and makes repeat-subject a hash count rather than a grep
-    over prose.
+    keeps coverage exact and makes repeat-subject a lookup rather than a grep over
+    prose.
+
+    ⚠⚠ `blob` IS THE GIT BLOB ID, AND THE FIELD USED TO BE CALLED `sha256`. That was
+    not a rename for tidiness: the validator accepted a 64-hex content hash while the
+    comparator resolved a 40-hex blob id, so every record read STALE for ever and the
+    gate was unsatisfiable rather than strict (measured 2026-08-23). A field named for
+    something it does not hold is how two halves of one system disagree in silence.
+
+    ⚠ A blob id is `sha1("blob " + bytelength + "\\0" + content)` — `sha1(file_bytes)`
+    does NOT equal it. Do not compute one; read it from the index via
+    `common.ledger_subjects`, which also fences the paths it is not safe to record.
     """
     record = {
         "schema": "zp.record.v1",

@@ -476,6 +476,113 @@ def tracked_md():
     return [REPO / rel for rel in out]
 
 
+# ═══ SUBJECT IDENTITY FOR THE LEDGER ══════════════════════════════════════════════════════════
+#
+# ⚠⚠ A SUBJECT IS IDENTIFIED BY ITS GIT BLOB ID, NOT BY A CONTENT HASH (`gitRobot.md` §12-0-quater).
+# The blob id is the identifier git already maintains, so `inventory(ref)` answers "does this commit
+# have the keys" with a tree walk instead of reading and hashing every subject — which is the whole
+# point of moving the cross-check server-side (§12-0-alpha).
+#
+# ⚠ IT IS NOT `sha1(file_bytes)`. A blob id is `sha1("blob " + bytelength + "\0" + content)`; no
+# standard hash tool produces one, which is exactly why it is read from git rather than computed.
+#
+# ⚠⚠ AND IT NAMES THE STAGED OBJECT, NOT WHAT A CHECKER READ OFF DISK. That is the trap: a checker
+# scanning the working tree while recording a blob id would attest to bytes nobody examined. Until
+# the checkers read from the index, `unstaged_modified()` below is the fence — a file whose worktree
+# differs from its index is EXCLUDED from the record rather than recorded on the wrong bytes.
+
+
+def ref_blobs(ref='HEAD'):
+    """`{repo-relative path: blob id}` at `ref`. ONE git call, whatever the subject count.
+
+    ⚠ This is the cheap half of the design. `inventory(ref)` answers "does this commit have the
+    keys" from a tree the caller already has, instead of reading and hashing every subject."""
+    out = subprocess.run(['git', 'ls-tree', '-r', ref], cwd=str(REPO), capture_output=True,
+                         text=True, encoding='utf-8', errors='replace').stdout
+    blobs = {}
+    for line in out.splitlines():
+        # `<mode> blob <id>\t<path>`
+        meta, _, path = line.partition('\t')
+        bits = meta.split()
+        if path and len(bits) >= 3 and bits[1] == 'blob':
+            blobs[path.strip().replace('\\', '/')] = bits[2]
+    return blobs
+
+
+def differs_from(ref='HEAD'):
+    """Paths whose worktree OR index differs from `ref` — never safe to record against its blobs."""
+    out = subprocess.run(['git', 'diff', '--name-only', 'HEAD'], cwd=str(REPO),
+                         capture_output=True, text=True, encoding='utf-8',
+                         errors='replace').stdout if ref == 'HEAD' else ''
+    return {p.strip().replace('\\', '/') for p in out.splitlines() if p.strip()}
+
+
+def ledger_basis(ref='HEAD'):
+    """The `basis` block for a record: a resolved ref, never a symbolic name.
+
+    ⚠ `kind` is one of ('range', 'ref', 'scope', 'tree') — the ledger rejects anything else, which
+    is how `'index'` was caught on the first wiring attempt."""
+    sha = subprocess.run(['git', 'rev-parse', ref], cwd=str(REPO), capture_output=True,
+                         text=True, encoding='utf-8', errors='replace').stdout.strip()
+    return {'kind': 'ref', 'resolved_from': 'explicit', 'value': sha}
+
+
+def ledger_subjects(rels, ref='HEAD'):
+    """`([{path, blob}], skipped)` — subjects safe to record, and the paths deliberately left out.
+
+    ⚠⚠ FAIL CLOSED, AND REPORT THE SKIPS. A path absent from `ref`, or differing from it in the
+    worktree or the index, is DROPPED rather than recorded — because recording it would attest to
+    bytes the checker did not read, which is the one thing this identity scheme exists to prevent
+    (`gitRobot.md` §12-0-quater). The caller MUST print what was dropped: a record covering fewer
+    subjects than the checker examined is a coverage gap, and a silent one is the defect this whole
+    layer exists to end."""
+    rels = [r.replace('\\', '/') for r in rels]
+    blobs = ref_blobs(ref)
+    moved = differs_from(ref)
+    subjects, skipped = [], []
+    for rel in sorted(set(rels)):
+        if rel in moved:
+            skipped.append((rel, 'differs from %s in the worktree or index' % ref))
+        elif rel not in blobs:
+            skipped.append((rel, 'not present at %s' % ref))
+        else:
+            subjects.append({'path': rel, 'blob': blobs[rel]})
+    return subjects, skipped
+
+
+def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD'):
+    """Record one step's verdict in the ledger. Returns 0, or 2 if it could NOT be recorded.
+
+    ⚠⚠ ONE DEFINITION, CALLED BY EVERY CHECKER. Fifteen copies of this block is the mirror defect
+    this bundle exists to stop — and the worst place for it, because a checker whose emit drifted
+    would report a verdict nobody can act on while every control stayed green.
+
+    ⚠ THE SPLIT IS PER-SUBJECT, NOT PER-RUN. A step that examined forty files and failed on one
+    emits a PASS over the thirty-nine and a FAIL over the one, so coverage stays exact instead of a
+    single verdict standing for everything the step glanced at.
+
+    ⚠⚠ EXIT 2, NEVER 1. "the check failed" and "the check could not be RECORDED" are different
+    facts and only one is about the corpus. Collapsing them lets an outage read as a finding, or a
+    finding read as an outage and get retried away."""
+    import record
+    basis = ledger_basis(ref)
+    for verdict, rels in (('PASS', list(ok_rels)), ('FAIL', list(bad_rels))):
+        if not rels:
+            continue
+        subjects, skipped = ledger_subjects(rels, ref)
+        for rel, why in skipped:
+            print('  not recorded: %-52s %s' % (rel, why))
+        if not subjects:
+            continue
+        rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects, basis=basis,
+                          reason=None if verdict == 'PASS' else (reason or 'see the run output'))
+        if rid is None:
+            print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))
+            return 2
+        print('  recorded %-4s %4d subject(s)  %s' % (verdict, len(subjects), rid))
+    return 0
+
+
 def targets(skip_names=(), is_vendored=None):
     """Yield `(path, rel)` for every file in the `.lean` + `.py` + tracked-`.md` scan scope.
 

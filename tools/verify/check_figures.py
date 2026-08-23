@@ -283,12 +283,27 @@ def main(argv):
     for rel, line, matched, ctx in new:
         print('  %s:%d  [%s]' % (rel, line, matched))
         print('      %s' % ctx)
+    if '--record' in argv:
+        rc = _record(new)
+        if rc:
+            return rc
+
     if new:
         print('\nAn artifact count recorded in prose, with no date.')
         print('Prefer measuring on demand; if it must be written, date it.')
         return 1 if '--block' in argv else 0
     print('OK: no new undated artifact counts.')
     return 0
+
+
+def _record(new):
+    """Emit this run's verdict over THIS checker's own scope. See `common.emit_verdict`."""
+    bad = {h[0] for h in new}
+    scanned = [rel for _p, rel in targets()]
+    return common.emit_verdict('check_figures',
+                               ok_rels=[r for r in scanned if r not in bad],
+                               bad_rels=sorted(bad),
+                               reason='undated artifact count')
 
 
 if __name__ == '__main__':
