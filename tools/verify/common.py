@@ -546,7 +546,7 @@ def ledger_subjects(rels, ref='HEAD'):
         elif rel not in blobs:
             skipped.append((rel, 'not present at %s' % ref))
         else:
-            subjects.append({'path': rel, 'blob': blobs[rel]})
+            subjects.append({'path': rel, 'git_blob_id': blobs[rel]})
     return subjects, skipped
 
 
@@ -557,29 +557,51 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     this bundle exists to stop — and the worst place for it, because a checker whose emit drifted
     would report a verdict nobody can act on while every control stayed green.
 
-    ⚠ THE SPLIT IS PER-SUBJECT, NOT PER-RUN. A step that examined forty files and failed on one
-    emits a PASS over the thirty-nine and a FAIL over the one, so coverage stays exact instead of a
-    single verdict standing for everything the step glanced at.
+    ⚠⚠ ONE RECORD PER (step, basis) — V11, AND IT OVERRIDES `record.emit`'s DOCSTRING. That
+    docstring says a step failing on one of forty files emits a PASS over thirty-nine and a FAIL
+    over one. **The ledger refuses the second**: `(step, basis, revision)` is unique, so branching is
+    unrepresentable rather than merely detected. Measured 2026-08-23 by running it — the PASS landed
+    and the FAIL came back `V11`.
+    ⚠ AND `revision` IS NOT THE ESCAPE. It is the supersede ordinal (a regrade); using it to carry a
+    second simultaneous verdict would make a split look like a chain and corrupt tip resolution.
+    So: ONE verdict for the step — FAIL if anything failed — over ALL the subjects it examined.
+    Coverage stays exact because every examined file is still named; what is given up is a per-file
+    verdict, which the admission gate never consumed. It asks whether the STEP passed.
+
+    ⚠⚠ **A VERDICT IS ALWAYS A PROPERTY VERIFIED AGAINST A FILE SET** (Tim, 2026-08-23). There is no
+    second kind of checker. A scanner's subjects are the files it scanned; a PROPERTY checker's
+    subjects are the files its property was computed OVER — its inputs, the ones whose change could
+    falsify it. `guards` holds over the checkers and exemption switches it exercises; `check_frozen`
+    over the frozen baselines; `check_hashes` over the build scripts and `register.md`. Same shape,
+    same staleness: change an input and the verdict must be re-earned.
+
+    ⚠ THIS IS WHY THE SUBJECT SET IS NOT A JUDGEMENT CALL. Each checker already knows what it read;
+    it must SAY so rather than let a caller guess. A property recorded against the wrong file set is
+    worse than one not recorded at all — it claims the property still holds when its inputs moved,
+    which is the exact fail-open shape (`RLY25-1`) this layer exists to end.
 
     ⚠⚠ EXIT 2, NEVER 1. "the check failed" and "the check could not be RECORDED" are different
     facts and only one is about the corpus. Collapsing them lets an outage read as a finding, or a
     finding read as an outage and get retried away."""
     import record
-    basis = ledger_basis(ref)
-    for verdict, rels in (('PASS', list(ok_rels)), ('FAIL', list(bad_rels))):
-        if not rels:
-            continue
-        subjects, skipped = ledger_subjects(rels, ref)
-        for rel, why in skipped:
-            print('  not recorded: %-52s %s' % (rel, why))
-        if not subjects:
-            continue
-        rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects, basis=basis,
-                          reason=None if verdict == 'PASS' else (reason or 'see the run output'))
-        if rid is None:
-            print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))
-            return 2
-        print('  recorded %-4s %4d subject(s)  %s' % (verdict, len(subjects), rid))
+    bad = sorted(set(bad_rels))
+    verdict = 'FAIL' if bad else 'PASS'
+    subjects, skipped = ledger_subjects(sorted(set(ok_rels) | set(bad)), ref)
+    for rel, why in skipped:
+        print('  not recorded: %-52s %s' % (rel, why))
+    if not subjects:
+        print('  nothing recordable for %s at this ref' % step)
+        return 0
+    why = None
+    if bad:
+        why = '%s — %d failing subject(s): %s' % (reason or 'see the run output', len(bad),
+                                                  ', '.join(bad[:5]) + ('…' if len(bad) > 5 else ''))
+    rid = record.emit(step=step, tier=tier, verdict=verdict, subjects=subjects,
+                      basis=ledger_basis(ref), reason=why)
+    if rid is None:
+        print('UNDECIDED: %s ran but its %s verdict was not recorded' % (step, verdict))
+        return 2
+    print('  recorded %-4s %4d subject(s)  %s' % (verdict, len(subjects), rid))
     return 0
 
 

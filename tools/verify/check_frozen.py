@@ -211,7 +211,7 @@ def push_base():
     return (ref, 'upstream') if p.returncode == 0 and ref else ('HEAD', 'HEAD (no upstream)')
 
 
-def run(block=False, base=None):
+def run(block=False, base=None, record_to_ledger=False):
     base, why_base = (base, 'explicit --base') if base else push_base()
     report.banner('frozen accepted-defect baselines', [
         ('purpose', 'the accepted-defect backlog may only SHRINK'),
@@ -233,8 +233,11 @@ def run(block=False, base=None):
         ('mode', 'BLOCK' if block else 'report only (pass --block to enforce)'),
     ])
     bad, grew, total_now, total_head, all_removed = 0, 0, 0, 0, set()
+    grown = set()                     # which baselines FAILED — the per-subject half of the verdict
     for name in sorted(common.FROZEN_BASELINES):
         status, added, removed, n_now, n_head = check_one(name, base)
+        if status in ('GREW', 'NEW'):
+            grown.add(name)
         all_removed |= removed
         total_now += n_now
         total_head += n_head
@@ -292,6 +295,23 @@ def run(block=False, base=None):
     report.done('frozen accepted-defect baselines', bad == 0,
                 'no growth; every removal reviewed' if bad == 0 else
                 '%d problem(s): growth and/or unreviewed removal' % bad)
+
+    # ⚠⚠ THE PROPERTY IS VERIFIED AGAINST A FILE SET, AND HERE THE SET IS THE BASELINES THEMSELVES
+    # (Tim, 2026-08-23). "The accepted-defect backlog only shrinks" is a statement ABOUT these six
+    # files, so they are the subjects — change one and the verdict must be re-earned. The paths that
+    # OWE a review are subjects too, and they FAIL: the removal trigger is a claim about them, not
+    # about the baseline that recorded them.
+    if record_to_ledger:
+        owed_paths = {rel for rel, _why in owed}
+        base_rels = ['tools/verify/%s' % n for n in sorted(common.FROZEN_BASELINES)]
+        rc = common.emit_verdict(
+            'check_frozen',
+            ok_rels=[r for r in base_rels if os.path.basename(r) not in grown],
+            bad_rels=sorted({'tools/verify/%s' % n for n in grown} | owed_paths),
+            reason='a frozen baseline grew, or a removal owes a /claim-review')
+        if rc:
+            return rc
+
     return 1 if (bad and block) else 0
 
 
@@ -559,4 +579,5 @@ if __name__ == '__main__':
     if '--base' in sys.argv:
         _i = sys.argv.index('--base')
         _b = sys.argv[_i + 1] if _i + 1 < len(sys.argv) else None
-    sys.exit(run(block='--block' in sys.argv, base=_b))
+    sys.exit(run(block='--block' in sys.argv, base=_b,
+                 record_to_ledger='--record' in sys.argv))
