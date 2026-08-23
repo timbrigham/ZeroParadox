@@ -71,7 +71,7 @@ open Filter Topology
 /-! ### The symmetric doubly-stochastic kernel on `Fin 2` -/
 
 /-- The symmetric kernel `P_a` acting on `Fin 2 → ℝ`: matrix `[[1-a, a],[a, 1-a]]`. -/
-noncomputable def markovStep (a : ℝ) (v : Fin 2 → ℝ) : Fin 2 → ℝ :=
+noncomputable def step (a : ℝ) (v : Fin 2 → ℝ) : Fin 2 → ℝ :=
   ![(1 - a) * v 0 + a * v 1, a * v 0 + (1 - a) * v 1]
 
 /-- The imbalance functional `v 0 - v 1` (the subdominant eigenline coordinate). -/
@@ -80,22 +80,22 @@ def imb (v : Fin 2 → ℝ) : ℝ := v 0 - v 1
 /-- The uniform stationary vector `![1/2, 1/2]`. -/
 noncomputable def unif : Fin 2 → ℝ := ![1 / 2, 1 / 2]
 
-/-- Total mass is preserved by `markovStep`. -/
+/-- Total mass is preserved by `step`. -/
 theorem step_sum (a : ℝ) (v : Fin 2 → ℝ) :
-    (markovStep a v) 0 + (markovStep a v) 1 = v 0 + v 1 := by
-  simp only [markovStep, Matrix.cons_val_zero, Matrix.cons_val_one]
+    (step a v) 0 + (step a v) 1 = v 0 + v 1 := by
+  simp only [step, Matrix.cons_val_zero, Matrix.cons_val_one]
   ring
 
 /-- **Eigenline identity (the load-bearing algebra).** The imbalance scales by the subdominant
     eigenvalue `1 - 2a` under one step: `imb (P_a v) = (1 - 2a) · imb v`. -/
 theorem step_imb (a : ℝ) (v : Fin 2 → ℝ) :
-    imb (markovStep a v) = (1 - 2 * a) * imb v := by
-  simp only [imb, markovStep, Matrix.cons_val_zero, Matrix.cons_val_one]
+    imb (step a v) = (1 - 2 * a) * imb v := by
+  simp only [imb, step, Matrix.cons_val_zero, Matrix.cons_val_one]
   ring
 
 /-- Iterated imbalance: `imb (P_aᵏ v₀) = (1 - 2a)ᵏ · imb v₀`. The geometric rate, in-statement. -/
 theorem markov_imbalance_pow (a : ℝ) (v₀ : Fin 2 → ℝ) (k : ℕ) :
-    imb ((markovStep a)^[k] v₀) = (1 - 2 * a) ^ k * imb v₀ := by
+    imb ((step a)^[k] v₀) = (1 - 2 * a) ^ k * imb v₀ := by
   induction k with
   | zero => simp
   | succ k ih =>
@@ -104,7 +104,7 @@ theorem markov_imbalance_pow (a : ℝ) (v₀ : Fin 2 → ℝ) (k : ℕ) :
 
 /-- Iterated mass is preserved: `(P_aᵏ v₀) 0 + (P_aᵏ v₀) 1 = v₀ 0 + v₀ 1`. -/
 theorem markov_sum_pow (a : ℝ) (v₀ : Fin 2 → ℝ) (k : ℕ) :
-    ((markovStep a)^[k] v₀) 0 + ((markovStep a)^[k] v₀) 1 = v₀ 0 + v₀ 1 := by
+    ((step a)^[k] v₀) 0 + ((step a)^[k] v₀) 1 = v₀ 0 + v₀ 1 := by
   induction k with
   | zero => simp
   | succ k ih =>
@@ -125,11 +125,11 @@ theorem coord_from_imb {v : Fin 2 → ℝ} {s : ℝ} (hs : v 0 + v 1 = s) :
     a genuine geometric ν-attractor, structurally matching `ZeroParadox/Valuation/ContractionRate.lean`'s p-adic `c`-contraction. -/
 theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     {v₀ : Fin 2 → ℝ} (hv : v₀ 0 + v₀ 1 = 1) :
-    Tendsto (fun k => (markovStep a)^[k] v₀) atTop (nhds unif) := by
+    Tendsto (fun k => (step a)^[k] v₀) atTop (nhds unif) := by
   -- gap modulus is < 1
   have hgap : |1 - 2 * a| < 1 := by rw [abs_lt]; constructor <;> linarith
   -- the imbalance sequence tends to 0 geometrically
-  have himb : Tendsto (fun k => imb ((markovStep a)^[k] v₀)) atTop (nhds 0) := by
+  have himb : Tendsto (fun k => imb ((step a)^[k] v₀)) atTop (nhds 0) := by
     have h := (tendsto_pow_atTop_nhds_zero_of_abs_lt_one hgap).mul_const (imb v₀)
     simp only [zero_mul] at h
     exact h.congr (fun k => (markov_imbalance_pow a v₀ k).symm)
@@ -137,21 +137,21 @@ theorem markov_contraction_tendsto {a : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
   rw [tendsto_pi_nhds]
   intro i
   -- each iterate stays on the line v 0 + v 1 = 1
-  have hline : ∀ k, ((markovStep a)^[k] v₀) 0 + ((markovStep a)^[k] v₀) 1 = 1 := by
+  have hline : ∀ k, ((step a)^[k] v₀) 0 + ((step a)^[k] v₀) 1 = 1 := by
     intro k; rw [markov_sum_pow]; exact hv
   fin_cases i
   · -- coordinate 0 → unif 0 = 1/2
-    have e0 : ∀ k, ((markovStep a)^[k] v₀) 0 = (1 + imb ((markovStep a)^[k] v₀)) / 2 := fun k =>
+    have e0 : ∀ k, ((step a)^[k] v₀) 0 = (1 + imb ((step a)^[k] v₀)) / 2 := fun k =>
       (coord_from_imb (hline k)).1
     simp only [unif]
-    have : Tendsto (fun k => (1 + imb ((markovStep a)^[k] v₀)) / 2) atTop (nhds ((1 + 0) / 2)) := by
+    have : Tendsto (fun k => (1 + imb ((step a)^[k] v₀)) / 2) atTop (nhds ((1 + 0) / 2)) := by
       exact ((tendsto_const_nhds.add himb).div_const 2)
     simpa only [add_zero] using (this.congr (fun k => (e0 k).symm))
   · -- coordinate 1 → unif 1 = 1/2
-    have e1 : ∀ k, ((markovStep a)^[k] v₀) 1 = (1 - imb ((markovStep a)^[k] v₀)) / 2 := fun k =>
+    have e1 : ∀ k, ((step a)^[k] v₀) 1 = (1 - imb ((step a)^[k] v₀)) / 2 := fun k =>
       (coord_from_imb (hline k)).2
     simp only [unif]
-    have : Tendsto (fun k => (1 - imb ((markovStep a)^[k] v₀)) / 2) atTop (nhds ((1 - 0) / 2)) := by
+    have : Tendsto (fun k => (1 - imb ((step a)^[k] v₀)) / 2) atTop (nhds ((1 - 0) / 2)) := by
       exact ((tendsto_const_nhds.sub himb).div_const 2)
     simpa only [sub_zero] using (this.congr (fun k => (e1 k).symm))
 
@@ -231,7 +231,7 @@ theorem swap_orbit_not_convergent :
     second ambient — the within-ν rate structure `ZeroParadox/Computability/StationaryUnique.lean` and `ZeroParadox/Valuation/NuRateEdge.lean` left unbuilt. -/
 theorem markov_contraction_dichotomy :
     (∀ (a : ℝ), 0 < a → a < 1 → ∀ (v₀ : Fin 2 → ℝ), v₀ 0 + v₀ 1 = 1 →
-        Tendsto (fun k => (markovStep a)^[k] v₀) atTop (nhds unif)) ∧
+        Tendsto (fun k => (step a)^[k] v₀) atTop (nhds unif)) ∧
     (¬ ∃ w : Fin 2 → ℝ, Tendsto (fun k => swap^[k] e0vec) atTop (nhds w)) :=
   ⟨fun _ ha0 ha1 _ hv => markov_contraction_tendsto ha0 ha1 hv, swap_orbit_not_convergent⟩
 
@@ -239,14 +239,12 @@ end ZeroParadox
 
 /-! ## Axiom Purity Check
 
-`Classical.choice` enters via Mathlib — the real carrier for the definitions, and the
-analysis/topology library (`Tendsto`, the specific-limits lemmas) for the limit results — a library
-dependency, not a new commitment of this construction. -/
+`Classical.choice` enters via the Mathlib analysis/topology library (`Tendsto`, the specific-limits
+lemmas) — a library dependency, not a new commitment of this construction. -/
 
 section PurityCheck
 open ZeroParadox
 
-#print axioms markovStep
 #print axioms step_imb
 #print axioms markov_imbalance_pow
 #print axioms markov_sum_pow

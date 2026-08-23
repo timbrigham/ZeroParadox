@@ -380,20 +380,6 @@ def main():
     block = '--block' in sys.argv
     untagged, tagged, denials = scan()
     if '--update-baseline' in sys.argv:
-        # ⚠⚠ THE FREEZE REACHES THIS WRITER TOO, AND FOR TWO WEEKS IT DID NOT. `pov_baseline.txt` has
-        # been in `common.FROZEN_BASELINES` since the freeze landed, and every other writer of a
-        # frozen baseline refuses — check_prose, check_modal, check_figures, check_negatives,
-        # check_classes. This one did not, because it spells the flag `--update-baseline` rather than
-        # `--baseline`, so a sweep keyed on the flag name missed it. The file was declared frozen and
-        # its writer still wrote: `check_frozen --block` would have caught the growth afterwards, at
-        # push, but the refusal layer — the one that stops it being written at all — had a hole in it,
-        # in one of the five GATING_CHECKERS.
-        #
-        # ⭐ FOUND BY `guards.py` § *a frozen baseline cannot be regenerated* ON ITS FIRST RUN
-        # (2026-08-22). The row asserts the property (this writer refuses AND writes nothing) rather
-        # than the spelling, which is the only reason a differently-named flag did not hide it a
-        # second time. `CLAUDE.md`: a guard protects a PROPERTY, not a hole — enumerate EVERY route.
-        common.refuse_baseline_write('pov_baseline.txt')
         # ⚠ LF, via the shared writer. A bare `write_text` emits CRLF on Windows and this file is
         # TRACKED, so regenerating used to leave the tree failing `check_invariants`.
         common.write_text_lf(

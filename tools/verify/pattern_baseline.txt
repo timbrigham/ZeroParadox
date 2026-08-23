@@ -198,6 +198,7 @@ MOVED	\.claude-local[\\/]commands[\\/]	.claude/commands/
 MOVED	\.claude-local[\\/]debaseline\.py	tools/verify/debaseline.py
 MOVED	\.claude-local[\\/]decl_baseline\.txt	tools/verify/decl_baseline.txt
 MOVED	\.claude-local[\\/]gate_round\.py	tools/verify/gate_round.py
+MOVED	\.claude-local[\\/]gatelock\.py	tools/verify/gatelock.py
 MOVED	\.claude-local[\\/]guards\.py	tools/verify/guards.py
 MOVED	\.claude-local[\\/]hooks\.py	tools/verify/hooks.py
 MOVED	\.claude-local[\\/]modal_baseline\.txt	tools/verify/modal_baseline.txt
@@ -271,6 +272,7 @@ _VERIFY	check_prose
 _VERIFY	check_release_ready
 _VERIFY	debaseline
 _VERIFY	gate_round
+_VERIFY	gatelock
 _VERIFY	guards
 _VERIFY	hooks
 _VERIFY	report

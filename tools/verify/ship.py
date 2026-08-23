@@ -109,15 +109,8 @@ def required_gates(ranges):
         need.append(("prior-art",
                      "trigger 5 fires: %d inserted .lean line(s), new .lean file=%s"
                      % (ins, newfile)))
-    # ⚠ SECOND CONSUMER OF `check_routing`, AND THE WARRANT IS BLIND TO BOTH. `batch.py`'s prepush
-    # site is the other. A `guards.py` route asserting the router still BLOCKS has to cover this one
-    # too, or half the enforcement can be removed with the control still green.
-    # ⚠ A non-blocking row does not raise a requirement here. `need` is what `ship.py` will refuse to
-    # proceed without, and a leg deliberately downgraded to WARN is by definition not that — carrying
-    # it would re-impose at release the block that was lifted at push, which is the `rely_capped()`
-    # deadlock in a new place.
-    for agent, ran, why, blocking in batch.check_routing({}, ranges):
-        if agent == "/rely" and not ran and blocking:
+    for agent, ran, why in batch.check_routing({}, ranges):
+        if agent == "/rely" and not ran:
             base = why.split("—")[0].strip()
             capped, reason = rely_capped()
             # ⚠ A CAP NEVER MAKES THE HOOK LENIENT. This used to DROP the requirement when capped,
@@ -230,16 +223,35 @@ def cmd_pre(ranges, target):
     if rc_plan != 0:
         return rc_plan
 
-    # ⚠ THE REVIEW SCOPE IS NOT FROZEN, AND THE PROPERTY IT PROTECTED IS STILL ENFORCED — by
-    # DETECTION rather than prevention. The hazard is real and measured: twice, a caller wrote "the
-    # tree is stable" into a gate brief and then edited the reviewed files mid-round, once
-    # invalidating a signal computed against a tree that had moved. What catches that now is the
-    # per-file SHA-256 scheme — an edited file no longer hashes to what the signal recorded, so
-    # `prepush` refuses and names it.
+    # FREEZE the review scope — in `pre` ONLY, never in `plan`. Restored 2026-08-10 (Tim: *"we used
+    # to have logic that locked those files from being accidentally edited... might have been lost
+    # in the revamp"* — correct: `gatelock.py` still had `acquire`, both hooks still ran `guard`,
+    # and NOTHING called `acquire`; the guard survived and the lock it guards was never taken).
     #
-    # That is strictly harder to walk past than the read-only bit this replaced: git unlinks and
-    # recreates rather than opening for write, so `checkout` and `reset --hard` silently un-froze a
-    # locked path — measured, and recorded in the retired tool's own header.
+    # It exists because discipline demonstrably failed twice: the caller wrote "the tree is stable"
+    # into a gate brief and then edited the reviewed files mid-round, once invalidating a signal
+    # computed against a tree that had moved. v2 sets the read-only attribute, so the Edit tool
+    # fails at the syscall with EPERM rather than reporting success on a write that landed.
+    #
+    # ⚠ It was briefly wired into `cmd_plan`, which strands the tree on a read-only inspection
+    # command — measured within minutes: a cap drill left a lock held and the next `plan` refused.
+    # `plan` inspects and runs nothing; only `pre` commits you to a round.
+    # ⚠ Released by `ship.py post`, so fixing findings between rounds is unblocked. An abandoned run
+    # leaves it held, the pre-push guard refuses, and recovery is `gatelock.py sweep --clear`.
+    # ⚠ This guards the CALLER's accidental edits. It is NOT the protection against an agent
+    # mutating git state (that is the worktree rule, AGT-1) — different vector.
+    scope = batch.reviewable_changed(ranges)
+    if scope:
+        rc, out = batch.sh(sys.executable, os.path.join(BASE, "gatelock.py"), "acquire",
+                           "--round", str(gate_round()),
+                           "--reason", "ship: gates reading this scope", *scope)
+        print(out.rstrip())
+        if rc != 0:
+            report.done("ship pre", False,
+                        "could not freeze the review scope — refusing to spawn gates against a "
+                        "tree that can move under them. Resolve above, or `gatelock.py sweep --clear`.")
+            return 1
+        print("  scope FROZEN for the gate window; `ship.py post` releases it.")
     return 0
 
 
@@ -275,11 +287,21 @@ def cmd_plan(ranges):
         print("             run `python %s/selfheal.py` for the suggestions"
               % os.path.dirname(SELF))
 
-    # ⚠ THE GATES READ A TREE THAT CAN MOVE UNDER THEM, AND THAT IS HANDLED DOWNSTREAM, NOT HERE.
-    # Editing a reviewed file mid-round changes its SHA-256, the signal stops covering it, and
-    # `prepush` refuses by name. Two distinct vectors, and only the first is this file's business:
-    # the CALLER's accidental edits (detected as above) versus an AGENT mutating git state (the
-    # worktree rule, AGT-1, and now gitRobot refusing the destructive verbs outright).
+    # FREEZE the files the gates are about to read. Restored 2026-08-10 (Tim: *"we used to have
+    # logic that locked those files from being accidentally edited... might have been lost in the
+    # revamp"* — correct: `gatelock.py` still had `acquire`, both hooks still ran `guard`, and
+    # NOTHING called `acquire`. The guard survived and the lock it guards was never taken).
+    #
+    # It exists because discipline demonstrably failed twice: the caller wrote "the tree is stable"
+    # into a gate brief and then edited the reviewed files mid-round, once invalidating a signal
+    # computed against a tree that had moved. v2 sets the read-only attribute, so the Edit tool
+    # fails at the syscall with EPERM rather than reporting success on a write that landed.
+    #
+    # ⚠ Released by `ship.py post`, so fixing findings between rounds is unblocked. If a run is
+    # abandoned mid-round the lock stays held, the pre-push guard refuses, and recovery is
+    # `gatelock.py sweep --clear` — that is fail-closed on purpose.
+    # ⚠ This protects against the CALLER's accidental edits. It is NOT the protection against an
+    # agent mutating git state (that is the worktree rule, AGT-1) — different vector.
     print("\n  SHIP_SCOPE=%s" % ",".join(scope))
     print("  SHIP_GATES=%s" % ",".join(k for k, _w in need))
     print("  SHIP_ROUND=%d" % rnd)
@@ -292,6 +314,14 @@ def cmd_check():
 
 def cmd_verify(ranges):
     refuse_if_scope_unknown(ranges, 'a signal verdict')
+    # UNFREEZE first: the gates have finished reading, and the caller needs to be able to fix what
+    # they found. Released here rather than left to the operator, because an unreleased lock blocks
+    # the next push and the recovery command is one nobody remembers under pressure.
+    rc, out = batch.sh(sys.executable, os.path.join(BASE, "gatelock.py"), "release")
+    line = [l for l in out.splitlines() if l.strip()]
+    if line:
+        print("  gatelock: %s" % line[0].strip())
+
     scope, need = required_gates(ranges)
     keys = {k for k, _w in need}
     bad = 0

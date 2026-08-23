@@ -83,7 +83,7 @@ theorem padic_env_eq (n : ℕ) : (2 : ℝ) ^ (-(n : ℤ)) = ((1 : ℝ) / 2) ^ n 
 /-- **Markov side, matched rate.** With `a = 1/4` (spectral gap `|1 - 2a| = 1/2`), the irreducible
     Markov orbit's imbalance is exactly `(1/2)ᵏ · imb v₀`. Specialization of `markov_imbalance_pow`. -/
 theorem markov_imbalance_quarter (v₀ : Fin 2 → ℝ) (k : ℕ) :
-    imb ((markovStep (1/4))^[k] v₀) = ((1 : ℝ) / 2) ^ k * imb v₀ := by
+    imb ((step (1/4))^[k] v₀) = ((1 : ℝ) / 2) ^ k * imb v₀ := by
   rw [markov_imbalance_pow]
   norm_num
 
@@ -102,7 +102,7 @@ theorem padic_markov_shared_rate_envelope (x : Q₂) (v₀ : Fin 2 → ℝ) :
     -- the shared envelope tends to 0
     Tendsto (fun n : ℕ => ((1 : ℝ) / 2) ^ n) atTop (𝓝 0) ∧
     -- #2 (Markov, a = 1/4): imbalance distance is exactly the envelope · (imb v₀)
-    (∀ k : ℕ, imb ((markovStep (1/4))^[k] v₀) = ((1 : ℝ) / 2) ^ k * imb v₀) ∧
+    (∀ k : ℕ, imb ((step (1/4))^[k] v₀) = ((1 : ℝ) / 2) ^ k * imb v₀) ∧
     -- #3 (p-adic doubling): orbit distance is exactly the envelope · ‖x‖
     (∀ n : ℕ, ‖(2 : Q₂) ^ n * x‖ = ((1 : ℝ) / 2) ^ n * ‖x‖) :=
   ⟨env_tendsto, markov_imbalance_quarter v₀, padic_orbit_half x⟩
@@ -119,7 +119,7 @@ theorem padic_markov_shared_rate_envelope (x : Q₂) (v₀ : Fin 2 → ℝ) :
 theorem padic_markov_no_orbit_correspondence (x : Q₂) (hx : x ≠ 0)
     {v₀ : Fin 2 → ℝ} (hbal : imb v₀ = 0) :
     (∀ n, 0 < ‖(2 : Q₂) ^ n * x‖) ∧
-    (∀ k, imb ((markovStep (1/4))^[k] v₀) = 0) := by
+    (∀ k, imb ((step (1/4))^[k] v₀) = 0) := by
   refine ⟨padic_orbit_pos hx, ?_⟩
   intro k
   rw [markov_imbalance_quarter, hbal, mul_zero]

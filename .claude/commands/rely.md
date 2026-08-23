@@ -20,28 +20,6 @@ The existing agents all **look at** the work:
 
 **The law behind it, measured across ~20 agent runs in one session: every BEDROCK finding came from an agent EXECUTING something; every ORDINARY finding came from an agent READING something.** This agent only executes.
 
-## ⭐⭐ WHEN THE SCOPE CONTAINS A CONTROL, ATTACK THE CONTROL AND NOT THE CODE
-
-**The code in a mature verification layer is heavily commented and its comments are usually accurate. The defects are in the things that claim to verify it.** A control is the one artifact nobody checks, because checking it is what it was built to make unnecessary.
-
-**Measured 2026-08-21/22, same layer, one day apart, one sentence of difference in the brief:**
-
-| pass | briefed to | found |
-|---|---|---|
-| 5 | build on the layer | **2** BLOCKING, both in the code |
-| 6 | **attack the controls** | **6** BLOCKING, *all six in the control written to fix pass 5* |
-
-Pass 6's reviewer reported that reading the code found nothing the code did not already document.
-
-**Two detectors. RUN them, do not reason about them:**
-
-1. **What instance of this shape can the control's own CONSTRUCTION never produce?** Then build that instance. *(A fixture set built by mangling a whole string can never produce a MIXED run. A warrant that compares a routing pattern can never produce a router that no longer enforces.)*
-2. **Can this control FAIL? Write the mutation that should turn it red, and run it.** **A control nobody has seen fail is a hypothesis, not a control.** Of seven instances of *warrant-satisfied-while-empty* in one file, the two found by mutation took minutes; the four found by inspection took a full round each.
-
-⚠ **A GREEN CONTROL IS THE PRIMARY TARGET, NOT EVIDENCE OF HEALTH.** Pass 6 got `guards.py` to print **13/13 ok** over a completely neutered push gate, with `prepush PASS`, exit 0 and zero FAIL rows. Every row was individually true and the artifact as a whole was worthless.
-
-⚠ **AND WATCH FOR THE PROXY.** Every instance of this class so far tested a *stand-in* for the property instead of the property: a routing **pattern** for enforcement, a source **substring** for use, a **sample path** for a set. **Narrowing a proxy is the failure repeating** — one of these had already been tightened from a whole-file scan to a 12-line window, and the tightening changed nothing, because the token was never the question. Ask what the control would have to *observe* to be right, then check whether it observes it.
-
 ## CALLER PRE-FLIGHT
 
 **1. SCOPE IT** — a directory, a file list, or a named interface. Do not run it at `full`.

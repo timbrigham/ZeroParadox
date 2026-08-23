@@ -55,20 +55,10 @@ if HERE not in sys.path:
 from vendored import is_vendored  # noqa: E402
 import vendored  # noqa: E402
 import report    # noqa: E402  the one formatter every entry point announces itself with
-import agent_gate  # noqa: E402  the interpretation layer — ADVISORY, never blocks (rung 5)
 STATE = os.path.join(PRIV, "batch_state.json")
-# The ones that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
+# The four that GATE. `check_poles.py` is a counter with no baseline (REL-3) and is excluded
 # deliberately — see check_suite.
-# ⚠ `check_encoding.py` joined 2026-08-20 and carries TWO TIERS rather than one baseline
-# (Tim, 2026-08-21: *"make it warn instead of block, and keep a whitelist that have been verified
-# exclusions"*). `bom` and `undecodable` are exact tests with no false-positive class and BLOCK;
-# suspected `double-encoding` is a heuristic that provably cannot separate mojibake from some
-# genuine Western-European typography, so it WARNS and is quieted by
-# `encoding_whitelist.txt` — verified exclusions, each with a stated reason, never a baseline seeded
-# from whatever happened to be there. The corpus is at ZERO suspected sites, and that is the state
-# to preserve rather than a number to grow.
-GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_classes.py",
-                   "check_encoding.py"]
+GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_classes.py"]
 
 # Everything whose change must route to `/rely`. WIDER than the gating set on purpose: a defect in
 # `hooks.py`, `vendored.py` or `batch.py` itself is silent and multiplies through every verdict, and
@@ -76,26 +66,6 @@ GATING_CHECKERS = ["check_prose.py", "check_pov.py", "check_modal.py", "check_cl
 # is gitignored) and the hash rule covered only the five checkers (F8).
 CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.txt",
                               "hooks.py", "batch.py", "ship.py", "report.py", "gate_round.py",
-                              # ⚠ `agent_gate.py` IS HERE THOUGH IT ONLY WARNS. Its registry of
-                              # `expected_failure` declarations is what the interpretation layer
-                              # judges against, so editing one silently changes every verdict it
-                              # produces — the same argument as the baselines below. Omitting it
-                              # would be `RLY17-2`: routed to /rely, absent from CHECKERS.
-                              "agent_gate.py",
-                              # ⚠ THE SCREEN AND ITS CONTROL ARE HERE FOR THE SAME REASON, AND
-                              # NEITHER BLOCKS ANYTHING. `scan_routing_consumers.py` carries the
-                              # enumeration leg the behavioural routes deliberately gave up, and
-                              # `probe_routing_behavioural.py` is the mutation control those routes
-                              # are only trustworthy because of. Both live under `tools/verify/**`,
-                              # which skips editorial and adversary — so a file here that /rely does
-                              # not hash is unreviewed by EVERY gate at once, which is `RLY26-1`
-                              # exactly. Advisory output does not buy an exemption from being read.
-                              "scan_routing_consumers.py", "probe_routing_behavioural.py",
-                              # ⚠ `move_ridealong.py` MUTATES THE CORPUS AND EDITS NOTHING ELSE,
-                              # which is exactly why it is hashed: it decides whether a
-                              # grandfathered claim may be relocated, and a weakened version would
-                              # let a baselined site be re-keyed into a frozen baseline silently.
-                              "move_ridealong.py",
                               # ⚠ THE BASELINES ARE EXEMPTION SWITCHES AND MUST BE HASHED. One
                               # appended line to pov_baseline.txt took a planted violation from
                               # exit 1 to exit 0 with checker_hashes() unmoved, and
@@ -105,13 +75,6 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # route to one property: content marker, path, allowlist, baselines.
                               "prose_baseline.txt", "pov_baseline.txt",
                               "modal_baseline.txt", "class_baseline.txt",
-                              # ⚠ AND THE ENCODING WHITELIST (2026-08-21). It is not a baseline —
-                              # every line records a run a human VERIFIED is genuine typography, and
-                              # an entry with no stated reason is ignored — but it is a suppression
-                              # switch with exactly the power of the four above: one line silences
-                              # one site permanently. Same rule, no exception for being better
-                              # curated.
-                              "encoding_whitelist.txt",
                               # ⚠ AND THE GUARD ITSELF. `guards.py` is the control that walks the
                               # four routes above; deleting a route from its registry re-opens that
                               # route AND removes the only thing that would have said so. A control
@@ -128,7 +91,7 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # unreviewable by construction. The rule: if it can stop a push, it is
                               # in here.
                               "check_paths.py", "check_invariants.py", "check_hashes.py",
-                              "scan_pdfs.py", "selfheal.py",
+                              "scan_pdfs.py", "gatelock.py", "selfheal.py",
                               # ⚠ AND THE REMAINING DATA SWITCHES. Adding the four `*_baseline.txt`
                               # closed four routes and left two open, which is this property's whole
                               # history in one line. `decl_baseline.txt` is the FIFTH: `batch.py
@@ -151,10 +114,6 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               "check_moved.py", "install_hooks.py", "ci_report.py",
                               "check_negatives.py", "negatives_baseline.txt",
                               "check_figures.py", "figures_baseline.txt", "check_checkers.py",
-                              # ⚠ THE FREEZE CHECK AND ITS OWN SUBJECTS. `check_frozen.py` enforces
-                              # that the accepted-defect baselines only shrink; editing it out is
-                              # exactly as powerful as editing a baseline, so it is hashed like one.
-                              "check_frozen.py",
                               # ⚠⚠ `common.py`, ADDED 2026-08-16 IN THE SAME CHANGE THAT CREATED IT,
                               # and it is now the WIDEST-BLAST-RADIUS entry in this list. It owns
                               # `SKIP_DIRS`, `SKIP_NAMES`, `GLOBS`, `targets()` and `load_baseline`
@@ -202,155 +161,7 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # strictly worse than one in a push gate: a push is amendable and a
                               # minted DOI is not.** The rule is therefore wider than it was written:
                               # if it can stop a push OR A RELEASE, it is in here.
-                              "check_release_ready.py",
-                              # ⚠⚠ A TOMBSTONE ENTRY, AND IT IS LOAD-BEARING. `gatelock.py` was
-                              # DELETED 2026-08-23 (retired). A deleted routed file is still a
-                              # CHANGED routed file for as long as the deletion sits in the pushed
-                              # range, so `_unhashed` flagged it — the walk cannot find a file that
-                              # is gone, and a name absent from this list can never be discharged.
-                              # That deadlocks: the block clears only when the deletion leaves the
-                              # range, which cannot happen until the push it is blocking.
-                              # Naming it here routes it through `_checker_path` to the `<ABSENT>`
-                              # sentinel in `checker_hashes()`, which is the mechanism this file
-                              # already built for exactly this — "removing a gate was quieter than
-                              # editing one" (/rely pass 2). The deletion is now VISIBLE in the
-                              # fingerprint instead of being an unreviewable hole.
-                              # ⚠ Do not delete this line when the range moves on; it is the record
-                              # that the tool existed. The cleaner fix is for `_unhashed` to skip
-                              # paths that do not exist — a logic change to a blocking fail-open
-                              # leg, which wants its own control and its own round.
-                              "gatelock.py"]
-
-
-# ⚠⚠ THE PROSE UNDER THE ROUTED PREFIXES IS HASHED BY GLOB, NOT BY NAME — and the glob is the point.
-# `tools/verify/**.md` and `tools/process/**.md` are EXEMPT from the editorial and adversary gates and
-# routed to `/rely` instead. That re-route is the entire warrant for the exemption, and `/rely` can
-# only discharge what the hash leg can see, so an unhashed `.md` under either prefix is exempt from
-# every prose gate AND undischargeable — reviewed by nothing, exactly the round-1 signature.
-#
-# Measured 2026-08-21: `tools/process/` was added to `EXEMPT_PREFIXES` and `ROUTING` and NOT here, so
-# `batch.py`'s own `_unhashed` leg reported 8 routed files it could not see. It failed CLOSED and
-# named the fix, which is why this was ordinary rather than blocking — the enumerator working, one
-# round after the previous entry was added the same way.
-#
-# ⚠ A LIST OF NAMES WOULD BE THE WRONG SHAPE. Naming the 8 files closes 8 holes; the 9th arrives with
-# the next routed document and nothing says so. This file's own history is that argument — the four
-# baselines, then a fifth, then a sixth. A glob over the routed prefix cannot fall behind the
-# directory it globs. Sorted so the signal's line order is stable across machines.
-# ⚠⚠ WIDENED 2026-08-23, AND THE OLD SHAPE FAILED THE ARGUMENT DIRECTLY ABOVE IT. This globbed
-# `*.md` at the TOP LEVEL of TWO prefixes while `ROUTING` has THREE and routes *anything* under
-# them, "whatever it is called". Measured: EIGHTEEN tracked routed files were unhashed at once —
-# all five `.github/workflows/*.yml` (a routed prefix this function never looked at), both
-# `proposed_*_hook.sh`, `debaseline.py`, `record.py`, `policy.v1.json`, `required.v2.json`, and
-# every file in a SUBDIRECTORY (`agent_gate_fixtures/`, `claude_hooks/`).
-#
-# ⚠ THE GLOB MUST BE DERIVED FROM `ROUTING`, NOT RE-TYPED BESIDE IT. A second copy of the prefix
-# list is how these two fell out of step in the first place: the third prefix was added to `ROUTING`
-# and this function was not touched, so it silently kept answering for two.
-def _routed_files():
-    """Every file under a routed prefix — recursive, all extensions, prefixes taken from ROUTING."""
-    out = []
-    for pat, agent, _w in ROUTING:
-        if agent != "/rely":
-            continue
-        rel = pat.pattern.lstrip("^").rstrip("/").replace("\\.", ".")
-        d = os.path.join(REPO, *rel.split("/"))
-        if not os.path.isdir(d):
-            continue
-        for root, dirs, names in os.walk(d):
-            dirs[:] = [x for x in dirs if x != "__pycache__"]
-            for n in names:
-                if n.endswith((".pyc", ".pyo")):
-                    continue
-                out.append(os.path.relpath(os.path.join(root, n), REPO).replace("\\", "/"))
-    return sorted(out)
-
-
-# ⚠⚠ THE THREE KINDS IN `CHECKERS` ARE NOT ONE OBLIGATION, AND UNTIL 2026-08-21 THEY SHARED ONE ROW.
-# The list mixes executable LOGIC (`.py`), exemption SWITCHES (the baselines, whitelists and pins) and
-# routed PROSE (`.md`, via `_routed_docs()` above), and `check_routing` reported "N checker(s) changed"
-# over the union. That single count is what deadlocked the routed set: a dated-figure correction in
-# `tools/process/claim-revalidation.md` — mechanically verified, zero judgement, demanded by another
-# blocking checker — re-armed exactly the same gate a rewritten `check_prose.py` would.
-#
-# ⚠ DERIVED FROM THE EXTENSION, NOT HAND-LISTED, for the reason `_routed_docs()` already gives one
-# comment up: naming today's members closes today's holes and the next arrival is invisible. A new
-# `.py` is logic, a new `.txt`/`.json` is a switch, a new routed `.md` is prose. Nobody has to
-# remember, and the partition cannot fall behind the list it partitions.
-#
-# ⚠⚠ ONLY THE PROSE LEG MAY EVER BE DOWNGRADED (CLAUDE.md rung 5, *split at the leg, never at the
-# check*). Logic and switches are FAIL-OPEN surfaces — one appended line to `pov_baseline.txt` took a
-# planted violation from exit 1 to exit 0 with `checker_hashes()` unmoved — and rung 5 is explicit
-# that a fail-open never downgrades, however many rounds it costs. Prose under a routed prefix is an
-# ENUMERATION obligation whose own repairs re-arm it, which is the shape that downgrades.
-def _leg_of(name):
-    n = name.lower()
-    if n.endswith(".md"):
-        return "docs"
-    if n.endswith(".py"):
-        return "logic"
-    return "switch"
-
-
-# Why each leg matters, kept beside the partition so a row can never state the wrong reason for the
-# kind it is reporting. A block whose stated reason is wrong is how bypass habits start.
-_LEG_WHY = {
-    "logic": "a fail-open here is silent and multiplies through every downstream verdict",
-    "switch": "one line in a baseline or whitelist silences one site permanently, with every "
-              "control still green",
-    "docs": "prose under a routed prefix is exempt from editorial and adversary, so /rely is the "
-            "only gate covering it",
-}
-_LEG_NOUN = {"logic": "checker(s)", "switch": "exemption switch(es)", "docs": "routed document(s)"}
-
-# ⚠⚠ THE ONE DEFINITION OF ENFORCEMENT MODE. `check_routing` reads this table and `guards.py` asserts
-# on it, so there is no second copy to drift and no literal at a call site for a control to be blind
-# to. Before 2026-08-21 the mode was the literal `bad += 0 if ran else 1` in `cmd_prepush`, and a
-# probe measured `guards.py` printing `ok` over a router that had stopped blocking — not because the
-# warrant was weak but because there was nothing for it to read.
-#
-# ⚠ `logic` and `switch` are FAIL-OPEN surfaces and MUST stay True, whatever it costs in rounds.
-# CLAUDE.md rung 5 is explicit: non-convergence in an ENUMERATION is a fact about the enumeration; a
-# fail-open is a fact about the work. Flipping either of these to False silently un-prices the
-# editorial/adversary exemption that `tools/verify/**` and `tools/process/**` hold.
-#
-# ⚠⚠ `docs` IS FALSE BY DECISION, 2026-08-21, AND THE EVIDENCE IS NAMED BECAUSE RUNG 5 DEMANDS IT.
-# Four `/rely` rounds on this layer ran 10 → 4 → 6 → 9 findings and never quiesced, because each
-# round reviews code written in response to the last; then the loop deadlocked outright, when a
-# one-line mechanically-verified fix to `tools/process/claim-revalidation.md` re-staled the signature
-# and blocked the push it was made to unblock. That is an ENUMERATION gate whose own repairs re-arm
-# it, which is the shape rung 5 downgrades. *"This keeps blocking"* would not have been evidence;
-# `10 → 4 → 6 → 9` and a measured deadlock are.
-_LEG_BLOCKING = {"logic": True, "switch": True, "docs": False}
-
-
-def routing_bad(rows):
-    """How many routing rows actually BLOCK — the one place the enforcement decision is made.
-
-    ⚠ IT IS A FUNCTION SO A CONTROL CAN CALL IT. As a literal (`bad += 0 if ran else 1`) the decision
-    was unreachable by any check, which is why `guards.py` printed `ok` over a neutered router on
-    2026-08-21. A named function can be exercised directly AND its call site can be asserted to still
-    exist — gutting this to `bad += 0` removes the call, and `guards.py` fires on the absence."""
-    return sum(0 if (ran or not blocking) else 1 for _a, ran, _w, blocking in rows)
-
-
-def routing_verdict(state, ranges):
-    """Print the routing rows AND return how many of them block — deliberately ONE unit.
-
-    ⚠ THE ROWS PRINTED ARE THE ROWS COUNTED, BY CONSTRUCTION. Split across two statements the two
-    could differ, and `RLY27-3`/`RLY27-4` are exactly that: `_routing_rows = list(check_routing(...))`
-    broke the enumeration a control used to find this site, and `bad += routing_bad([])` kept the
-    call, the callee and the augmented assignment all intact while counting a different sequence
-    from the one on screen. Both mutations printed four `/rely FAIL` rows and exited 0.
-
-    Neither is expressible here: the rows are built inside, printed inside, and counted inside, so
-    no caller can hand the counter a sequence the reader never saw. **This is why the control for it
-    is behavioural — call it, feed it a blocking row, and read the number back.**"""
-    rows = list(check_routing(state or {}, ranges))
-    for agent, ran, why, blocking in rows:
-        print("  %-18s %-4s %s"
-              % (agent, ("ok" if ran else ("FAIL" if blocking else "WARN")), why))
-    return routing_bad(rows)
+                              "check_release_ready.py"]
 # ⚠ `register.md` IS DELIBERATELY NOT IN THIS LIST, AND IT WAS ADDED AND THEN REMOVED — the reasoning
 # is worth more than the entry. It IS a switch: every hash check compares a script against a token
 # recorded there, and blanking one disarmed a check while `checker_hashes()` stayed byte-identical
@@ -422,15 +233,6 @@ ROUTING = [
     (re.compile(r"^tools/verify/", re.I),
      "/rely", "a checker, hook, or exemption switch changed - its first run produced CHK-2 and "
               "CHK-3, both checker bugs, so this is the measured persona for the verification layer"),
-    # `tools/process/` is CLAUDE.md's body — the argument behind each routed rule, split out so the
-    # injected file can be a routing table rather than the payload. Same pairing as the prefix above:
-    # it is exempt in EXEMPT_PREFIXES and routed here, and the two MUST be edited together. Added
-    # 2026-08-20 with its first two files; the exemption is DECLARED in CLAUDE.md's header, never
-    # inferred from "it is operating instructions" — that inference is what put `.claude/commands/`
-    # in the exempt tuple for an hour before it was removed.
-    (re.compile(r"^tools/process/", re.I),
-     "/rely", "CLAUDE.md's routed body changed - a rule whose trigger or pointer rots stops firing "
-              "silently, which is the failure mode the split exists to remove"),
     (re.compile(r"^\.github/workflows/", re.I),
      "/rely", "CI workflow changed - a fail-open here publishes a false verification claim"),
 ]
@@ -458,35 +260,12 @@ def sh(*args, cwd=REPO):
 # both. The `<ABSENT>` sentinel, which exists so a DELETED checker still trips the routing,
 # is what made it silent: a file in the wrong place is indistinguishable from a deleted one.
 def _checker_path(name):
-    """Where a watched file actually lives. Three roots, not one — plus explicit repo-relative
-    entries.
-
-    ⚠ AN ENTRY CONTAINING `/` IS A REPO-RELATIVE PATH, NOT A BASENAME, and that escape hatch exists
-    because basenames stopped being unique. `tools/process/` routes to `/rely` and holds a
-    `README.md`, which collides with `tools/verify/README.md`; a bare-basename list cannot express
-    both, and the `_unhashed` leg compares PATHS precisely so a collision is a MISS rather than a
-    false cover. Added 2026-08-21 after `/rely` measured 8 routed-but-unhashed files — the routing
-    was opened for `tools/process/` without the hash leg that discharges it, so the exemption it
-    justifies had a compensating control that could not be satisfied. Prefer a path for anything
-    outside the verification bundle."""
-    if "/" in name:
-        return os.path.join(REPO, *name.split("/"))     # explicit, collision-proof
+    """Where a watched file actually lives. Three roots, not one."""
     if name == "scan_pdfs.py":
         return os.path.join(REPO, "scripts", name)      # build-side tool
     if name == "ar_status.json":
         return os.path.join(PRIV, name)                 # private legacy tracker
     return os.path.join(BASE, name)                     # the verification bundle
-
-
-# ⚠ EXTENDED HERE, NOT AT THE LITERAL, BECAUSE THE DEDUPE NEEDS `_checker_path`. The list above
-# names bundle files by BASENAME; `_routed_files()` returns REPO-RELATIVE paths, and the same file
-# reached both ways must not be hashed twice under two keys — that would double-count it in the
-# filter fingerprint and make a one-file edit look like two. Resolving both through the one path
-# function is what makes "already covered" a fact rather than a string comparison.
-CHECKERS = CHECKERS + [
-    f for f in _routed_files()
-    if f not in {os.path.relpath(_checker_path(c), REPO).replace("\\", "/") for c in CHECKERS}
-]
 
 
 def checker_hashes():
@@ -805,11 +584,7 @@ def check_ssot(decls):
 
 
 def check_suite():
-    """Run the GATING checkers (`GATING_CHECKERS`) and honour their exit codes.
-
-    ⚠ The count is NOT written here. This said "the four" while `GATING_CHECKERS` held five —
-    `check_encoding.py` joined and the docstring did not — in the same commit that added
-    "COUNT THE TUPLE, DO NOT TRUST A WORD" to `hooks.py`. Name the list; let the reader count it.
+    """Run the four GATING checkers and honour their exit codes.
 
     ⚠ It used to discard every exit code and grep only for a `NEW …: N` line, which meant it
     returned `suite reports 0 new` for a checker that was ABSENT from disk, a checker that CRASHED,
@@ -871,37 +646,17 @@ def check_routing(state, ranges=None):
                 reviewed[parts[1]] = parts[0]
     now = checker_hashes()
     moved = [c for c, h in now.items() if reviewed.get(c) != h]
-    # ⚠ NOT `"/rely" in state["reviews"]`. That let a CLAIM in the unhashed `batch_state.json`
-    # discharge a HASH obligation: measured `prepush PASS`, exit 0, with seven checkers changed
-    # since /rely last signed them — and the warning text still printing beside the word `ok`.
-    # `batch.py review /rely` reached it too, attaching no evidence. The hash leg asks one
-    # question — does the SIGNAL cover the bytes on disk — and only the signal can answer it.
-    # Anything else is self-certification wearing a state file (/rely pass 8, REL8-2).
-    #
-    # ⚠⚠ ONE ROW PER LEG, AND EACH ROW CARRIES ITS OWN ENFORCEMENT MODE AS DATA. That fourth field is
-    # the point, not bookkeeping: the 2026-08-21 warrant probe measured `guards.py` printing `ok`
-    # while the router no longer blocked, and the reason it could not do better is that enforcement
-    # mode existed ONLY as a literal at the call site (`bad += 0 if ran else 1`) and was therefore
-    # unreadable by any control. `CLAUDE.md` names that shape: *enforcement mode is not part of the
-    # pattern*. Putting it in the row makes it testable — see the `guards.py` route.
-    for leg in ("logic", "switch", "docs"):
-        m = sorted(c for c in moved if _leg_of(c) == leg)
-        if m:
-            rows.append(("/rely", False,
-                         "[%s] %d %s changed since /rely last signed them: %s — %s"
-                         % (leg, len(m), _LEG_NOUN[leg], ", ".join(m[:3]), _LEG_WHY[leg]),
-                         _LEG_BLOCKING[leg]))
-        elif not _LEG_BLOCKING[leg]:
-            # ⚠⚠ A DOWNGRADED LEG PRINTS ITS COUNT EVEN AT ZERO, AND THAT IS THE PRICE OF THE
-            # DOWNGRADE, NOT DECORATION. A warning nobody reads is strictly worse than a block,
-            # because it manufactures the appearance of coverage — `RLY25-1` exactly: a report
-            # publishing `pass` for a property it no longer checks. Printing the count on every run,
-            # blocked or clear, is how rubber-stamping shows up as a rising number instead of going
-            # quiet. Same move as `check_poles.py`'s suppression counter.
-            rows.append(("/rely", True,
-                         "[%s] 0 %s stale — WARN-only leg, count printed every run so a rising "
-                         "number is visible rather than silent" % (leg, _LEG_NOUN[leg]),
-                         False))
+    if moved:
+        # ⚠ NOT `"/rely" in state["reviews"]`. That let a CLAIM in the unhashed `batch_state.json`
+        # discharge a HASH obligation: measured `prepush PASS`, exit 0, with seven checkers changed
+        # since /rely last signed them — and the warning text still printing beside the word `ok`.
+        # `batch.py review /rely` reached it too, attaching no evidence. The hash leg asks one
+        # question — does the SIGNAL cover the bytes on disk — and only the signal can answer it.
+        # Anything else is self-certification wearing a state file (/rely pass 8, REL8-2).
+        rows.append(("/rely", False,
+                     "%d checker(s) changed since /rely last signed them: %s — a fail-open here is "
+                     "silent and multiplies through every downstream verdict"
+                     % (len(moved), ", ".join(sorted(moved)[:3]))))
     # (b) tracked files, by git — RANGE-AWARE. It read the working tree, so a `.github/workflows/`
     # change routed to `/rely` while uncommitted and produced ZERO rows once committed: the leg
     # fired never at push time, which is the only time it matters (measured, /rely pass 4).
@@ -938,97 +693,18 @@ def check_routing(state, ranges=None):
     # so nothing reviewed it at all. A basename collision in a subdirectory is a MISS.
     _hashed_paths = {os.path.relpath(_checker_path(c), REPO).replace("\\", "/") for c in now}
     _unhashed = sorted(f for f in _routed if f not in _hashed_paths)
-    # ⚠⚠ THE TWO LEGS DISAGREE ABOUT WHICH BYTES ARE BEING PUSHED, AND THE DISCHARGE FOLLOWED THE
-    # WRONG ONE. Leg (a) `moved` hashes the files ON DISK; leg (b) `_routed` reads the PUSHED RANGE.
-    # When the pushed ref is not the checkout those are different, and `prepush` returned PASS on a
-    # CLEAN tree for a range that adds unreviewed prose to a routed file — the row naming the file
-    # and clearing it in the same breath (measured end to end in a detached worktree, /rely round 2).
-    #
-    # It needs no dirty tree and no unusual command: `git push HEAD~2:branch`, pushing one branch
-    # while another is checked out, or any worktree. CLAUDE.md already names *"push a subset to dodge
-    # a signal"* as a known move; this made that move SUCCEED. Same shape as `REL-1`, which fixed the
-    # leg and left the discharge reading the other one.
-    #
-    # The fix asks leg (a)'s question about leg (b)'s bytes: for every routed file in the RANGE,
-    # does the signal cover the content AT THE RANGE TIP? Hashing a git object is correct precisely
-    # here — the pushed content IS a git value, and the "hash the file on disk" rule governs what a
-    # REVIEWER signs, not what a push contains.
-    _stale_at_tip = []
-    if ranges and _routed and not _unhashed:
-        for f in _routed:
-            key = next((c for c in now
-                        if os.path.relpath(_checker_path(c), REPO).replace("\\", "/") == f), None)
-            if key is None:
-                continue                      # already reported by _unhashed
-            for tip in _range_tips(ranges):
-                # ⚠⚠ ABSENT AT THE TIP IS `<ABSENT>`, NOT `continue`. Skipping it meant a push that
-                # DELETES a gating checker cleared: measured (/rely round 3), a range removing
-                # `tools/verify/check_prose.py` from a checkout that still had it returned exit 0
-                # with `/rely ok ... — e.g. tools/verify/check_prose.py` — the row NAMING the
-                # deleted checker in the same breath as clearing it. The asymmetry was exact: the
-                # same deletion on disk hits `checker_hashes()`'s `<ABSENT>` sentinel and blocks.
-                # The sentinel already existed for precisely this reason one leg over; this leg
-                # simply has to use it, so deleting a gate stays louder than editing one.
-                h = _blob_hash(tip, f) or "<ABSENT>"
-                if reviewed.get(key) != h:
-                    _stale_at_tip.append(f)
-                    break
-    # ⚠⚠ THIS LEG IS THE SAME OBLIGATION MEASURED AGAINST DIFFERENT BYTES, SO IT TAKES THE SAME LEG
-    # SPLIT. `moved` asks whether the signal covers the files on DISK; this asks whether it covers
-    # them at the PUSHED TIP. Leaving it whole while downgrading `moved` would have defeated the
-    # downgrade entirely — a docs-only push would clear the hash leg and block here instead, with the
-    # deadlock intact and a new place to look for it. Found by tracing the docs-only path rather than
-    # by flipping the flag and assuming.
-    for _blocking in (True, False):
-        s = sorted({f for f in _stale_at_tip
-                    if _LEG_BLOCKING[_leg_of(f)] is _blocking})
-        if s:
-            rows.append(("/rely", False,
-                         "[%s] %d routed file(s) differ at the PUSHED TIP from what /rely signed, "
-                         "even though the working tree matches: %s — the push carries bytes nobody "
-                         "reviewed" % ("blocking" if _blocking else "warn", len(s), ", ".join(s[:3])),
-                         _blocking))
-    # ⚠ THE AUTO-DISCHARGE COUNTS ONLY THE BLOCKING LEGS. It gates the git leg below, so leaving it
-    # keyed to the whole of `moved` would have kept a docs-only change blocking through a THIRD code
-    # path while both hash rows read WARN — the downgrade visibly applied and factually undone.
-    _moved_blocking = [c for c in moved if _LEG_BLOCKING[_leg_of(c)]]
-    _tip_blocking = [f for f in _stale_at_tip if _LEG_BLOCKING[_leg_of(f)]]
-    if not state and not _moved_blocking and not _unhashed and not _tip_blocking:
+    if not state and not moved and not _unhashed:
         done.add("/rely")
-    # ⚠⚠ `and not moved` WAS HERE AND THE WARN DOWNGRADE TURNED IT INTO A FAIL-OPEN (`RLY26-1`,
-    # measured 2026-08-21 by /rely round 5). It was safe when it was written, because a non-empty
-    # `moved` ALWAYS produced a blocking row, so suppressing this one lost nothing. Since the
-    # routed-prose leg WARNs, `moved` can be non-empty and entirely non-blocking — so **one line of
-    # prose appended to a routed `.md` made `moved` truthy, this row vanish, and a brand-new
-    # `tools/verify/check_evil.py` containing `sys.exit(0)` reach `prepush PASS, exit 0`** with the
-    # `/rely` row printing `ok` beside it. That is `RLY16-2`'s signature through a new door.
-    # ⚠ THE LESSON IS NOT "ADD A CASE": a downgrade changes an INVARIANT other code was resting on
-    # (*a non-empty `moved` implies something blocks*), and the cost is paid wherever that invariant
-    # was read, not where it was written. An unhashed routed file is undischargeable AND exempt from
-    # the prose gates, so it blocks unconditionally — there is no docs/logic split to make here.
-    elif _unhashed:
+    elif _unhashed and not moved:
         rows.append(("/rely", False,
                      "%d routed file(s) are NOT hashed by CHECKERS, so the hash leg cannot see them "
                      "and the auto-discharge is unsafe: %s — add the name to CHECKERS and re-sign "
                      "(that is the fix, not a workaround)"
-                     % (len(_unhashed), ", ".join(_unhashed[:3])),
-                     True))
-    # ⚠⚠ THE GIT LEG TAKES THE LEG SPLIT TOO, AND MISSING THIS WOULD HAVE LEFT THE DEADLOCK ALIVE
-    # INSIDE A BATCH. The auto-discharge above is guarded by `not state`, so during a batch it never
-    # fires and this leg decides alone — meaning a docs-only edit would still have BLOCKED, in the
-    # one mode used for exactly the multi-site prose work the downgrade exists to unblock. Found by
-    # reading the final manifest rather than by a test, which is why it is written down.
-    # ⚠ FAILS CLOSED ON A MIXED PUSH: blocking if ANY hit is logic or a switch, WARN only when every
-    # hit under the prefix is routed prose. An unknown extension resolves to `switch`, so a new kind
-    # of file blocks until someone classifies it deliberately.
+                     % (len(_unhashed), ", ".join(_unhashed[:3]))))
     for pat, agent, why in ROUTING:
         hits = [f for f in files if pat.match(f)]
         if hits:
-            blocking = any(_LEG_BLOCKING[_leg_of(f)] for f in hits)
-            rows.append((agent, agent in done,
-                         "%s — e.g. %s%s" % (why, hits[0],
-                                             "" if blocking else "  [routed prose only — WARN]"),
-                         blocking))
+            rows.append((agent, agent in done, "%s — e.g. %s" % (why, hits[0])))
     return rows
 
 
@@ -1210,47 +886,7 @@ EXEMPT_PATHS = ("claude.md", "ssot.json", "lake-manifest.json")
 # "Externally-facing copy -> both gates fire ... Non-discretionary." CLAUDE.md is exempt because it
 # is an internal manual that happens to sit in a public repo; the gate briefs are being published
 # ON PURPOSE, as the artifact showing how this project reviews itself. That is publication.
-#
-# ⚠ `tools/process/` JOINED THIS TUPLE 2026-08-20, and it is the one case where the reasoning the
-# paragraph above rejects is nonetheless correct — so the difference has to be stated, not felt.
-# `.claude/commands/` is published ON PURPOSE, as the artifact showing how this project reviews
-# itself; that is publication and both prose gates fire on it. `tools/process/` is the opposite: it
-# is the BODY of CLAUDE.md, split out only so the injected file can be a routing table instead of
-# the payload, and CLAUDE.md is exempt. Moving a paragraph across a file boundary must not invent a
-# review obligation the paragraph did not have while it was inline — that would make the split cost
-# a gate round per extraction and the cleanup would stop.
-# The exemption is DECLARED in CLAUDE.md's header rather than inferred here, and `ROUTING` above
-# fires on this exact prefix, so the pair covers the same set. Fence: anything in there asserting
-# mathematics belongs in the corpus and is gated normally.
-EXEMPT_PREFIXES = ("tools/verify/", "tools/process/")
-
-
-def _range_tips(ranges):
-    """The TIP revision of each pushed range — the bytes that will land on the remote.
-
-    A range is `<base>..<tip>`; a bare rev is its own tip. Used only by the stale-at-tip leg, which
-    asks whether `/rely` signed the content being PUSHED rather than the content on disk."""
-    tips = []
-    for r in ranges or []:
-        r = r.strip()
-        if not r:
-            continue
-        tips.append(r.split("..")[-1] if ".." in r else r)
-    return tips
-
-
-def _blob_hash(rev, path):
-    """SHA-256 (first 12 hex) of `path` AT `rev`, hashed as RAW BYTES.
-
-    ⚠ Bytes, never text. `sh()` decodes as UTF-8 with `errors="replace"`, which is lossy — every
-    undecodable byte collapses to U+FFFD, so two different blobs can hash the same. That is exactly
-    the class of defect `check_encoding.py` exists for, and it would sit inside the check meant to
-    stop unreviewed bytes. Returns None when the path does not exist at `rev`."""
-    r = subprocess.run(["git", "cat-file", "-p", "%s:%s" % (rev, path)],
-                       cwd=REPO, capture_output=True)
-    if r.returncode != 0:
-        return None
-    return hashlib.sha256(r.stdout).hexdigest()[:12]
+EXEMPT_PREFIXES = ("tools/verify/",)
 
 
 def changed_files(ranges=None):
@@ -1534,16 +1170,8 @@ def cmd_prepush(ranges=None):
         ("purity", "BLOCK", "every new declaration has a #print axioms entry"),
         ("ssot", "BLOCK", "every new declaration has an ssot.json row"),
         ("pdf coupling", "BLOCK", "a changed PDF arrives with its scripts/ build script"),
-        # ⚠ TWO ROWS, NOT ONE, BECAUSE THE LEGS NOW ENFORCE DIFFERENTLY. A manifest that still said
-        # "routing BLOCK" over a leg that warns is `RLY25-1` — a report publishing a stronger
-        # property than it checks. The declaration is the whole point of the manifest.
-        ("routing: logic + switches", "BLOCK",
-         "/rely has signed every checker, hook and exemption switch at its current hashes"),
-        ("routing: routed docs", "WARN",
-         "prose under tools/verify|tools/process — DOWNGRADED 2026-08-21 (rung 5, measured "
-         "non-convergence 10>4>6>9 then deadlock); stale count prints every run"),
+        ("routing", "BLOCK", "/rely has signed the verification layer at its current hashes"),
         ("signals", "BLOCK", "editorial + adversary (+ prior-art on trigger 5) fresh and covering"),
-        ("agent gate", "WARN", "an agent judges whether each check's PASS is EARNED; never blocks"),
     ])
     if state is None:
         print("no batch in progress — running the UNIVERSAL push checks only")
@@ -1576,28 +1204,9 @@ def cmd_prepush(ranges=None):
                           ("pdf coupling",) + check_pdf_coupling(ranges)]:
         print("  %-18s %-4s %s" % (name, "ok" if ok else "FAIL", why))
         bad += 0 if ok else 1
-    # ⚠⚠ ENFORCEMENT MODE COMES FROM THE ROW, NOT FROM THIS LINE. It used to be the literal
-    # `bad += 0 if ran else 1`, which made the mode unreadable by any control — measured 2026-08-21,
-    # `guards.py` kept printing `ok` over a router that no longer blocked, because a warrant can
-    # compare a ROUTING pattern and has nothing to compare an enforcement decision against. A row
-    # that carries `blocking` can be tested; a literal here cannot.
-    # ⚠ A non-blocking row still PRINTS, and prints WARN rather than FAIL — a downgraded gate must
-    # get louder, not quieter (`RLY25-1`: a report publishing `pass` for a property it stopped
-    # checking).
-    bad += routing_verdict(state, ranges)
-    # THE INTERPRETATION LAYER. Advisory by construction: `agent_gate.run()` always returns 0 and
-    # `bad` is deliberately NOT incremented, so a fuzzy component can never stop a push.
-    # ⚠ DO NOT PROMOTE THIS TO BLOCK. Measured 2026-08-21 before adoption: 1 false positive in 6
-    # healthy runs, and UNSTABLE — byte-identical input returned TRUSTWORTHY twice and
-    # NOT_TRUSTWORTHY once. The >=2-of-3 rule takes that to 0, but the underlying variance is real
-    # and blocking on a coin flip is how a gate earns itself a bypass. CLAUDE.md rung 5: the screen
-    # may replace the enumeration, it may NEVER replace the verdict.
-    # ⚠ It is announced in the manifest even when switched off, so "not run" is visible rather than
-    # silent — the failure `RLY25-1` is made of.
-    try:
-        agent_gate.run()
-    except Exception as e:                                  # never let the advisory layer break a push
-        print("  agent gate         WARN  interpretation layer errored, ignored: %r" % (e,))
+    for agent, ran, why in check_routing(state or {}, ranges):
+        print("  %-18s %-4s %s" % (agent, "ok" if ran else "FAIL", why))
+        bad += 0 if ran else 1
     # WHICH reviews are required, WHY, and WHAT their signals actually say — named in full rather
     # than left as three filenames (Tim, 2026-08-10: report the reviews being run and a summary of
     # their parameters). A signal is only as good as what it certified, so the recorded verdict line

@@ -617,7 +617,7 @@
       },
       "counts": {
         "declarations": 1678,
-        "files": 137
+        "files": 136
       },
       "entries": [
         {
@@ -4173,7 +4173,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "0d6dd94c-0a97-40a4-9383-024a2abe98bb",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -4182,13 +4182,12 @@
             "short": "nu_hosted_face"
           },
           "old": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.nu_hosted_face",
-            "short": "nu_hosted_face",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [
@@ -4199,7 +4198,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -5115,7 +5114,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "10964a75-a91d-43f0-af78-242d67e4ea8a",
           "new": {
             "file": "ZeroParadox/Valuation/ScaleBridge.lean",
@@ -5124,20 +5123,19 @@
             "short": "valBridge_nonempty_iff"
           },
           "old": {
-            "file": "ZeroParadox/Valuation/ScaleBridge.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.valBridge_nonempty_iff",
-            "short": "valBridge_nonempty_iff",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [],
             "object": [],
             "role": []
           },
-          "reason": "Duplicate registration: one declaration at ScaleBridge.lean:281, two live entries added during the ontology revamp. Kept c0005973 (carries the curated ontology - object bottom, domain valuation, role face); this entry is bare. Withdrawn as added-in-error, not dropped: it never had a prior identity.",
+          "reason": "Round-2 gate fixes: the converse is now proved, so the class is characterised exactly",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -13449,7 +13447,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "337e0196-a0e1-46bf-9cb6-a8e2230555a9",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -13458,13 +13456,12 @@
             "short": "wf_host_refuses_nu"
           },
           "old": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.wf_host_refuses_nu",
-            "short": "wf_host_refuses_nu",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [
@@ -13475,7 +13472,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -14570,7 +14567,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "38552ef5-7fed-477c-ae7f-4a8686dc094a",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -14579,13 +14576,12 @@
             "short": "host_verdict_axis"
           },
           "old": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.host_verdict_axis",
-            "short": "host_verdict_axis",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [
@@ -14596,7 +14592,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure: its content duplicated mu_nu_branch_exclusion and selfApp_lands_on_nu character-for-character. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -17254,7 +17250,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "44a2ba45-74f8-4b8e-b8a9-0d4a661deebd",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -17263,13 +17259,12 @@
             "short": "nu_refused_face"
           },
           "old": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.nu_refused_face",
-            "short": "nu_refused_face",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [
@@ -17280,7 +17275,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -20725,7 +20720,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "52887614-7041-401e-8b21-fab5daedd32d",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -20734,13 +20729,12 @@
             "short": "nu_hosted_forces_non_wf"
           },
           "old": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.nu_hosted_forces_non_wf",
-            "short": "nu_hosted_forces_non_wf",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [
@@ -20751,7 +20745,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -23606,7 +23600,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "5e07249b-a078-421a-98b0-692471f17210",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -23615,13 +23609,12 @@
             "short": "engine_blind_to_verdict"
           },
           "old": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.engine_blind_to_verdict",
-            "short": "engine_blind_to_verdict",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [
@@ -23632,7 +23625,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -26583,8 +26576,8 @@
           "new": {
             "file": "ZeroParadox/Order/MarkovContractionDual.lean",
             "namespace": "ZeroParadox",
-            "qualified": "ZeroParadox.markovStep",
-            "short": "markovStep"
+            "qualified": "ZeroParadox.step",
+            "short": "step"
           },
           "old": {
             "file": "ZeroParadox/ZPH_MC1_TC39.lean",
@@ -26603,7 +26596,7 @@
               "scaffolding"
             ]
           },
-          "reason": "Name collision: two distinct declarations were both ZeroParadox.step in a flat namespace - this Fin 2 Markov kernel (MarkovContractionDual.lean:74) and Valuation/BottomInvariant.lean:314 (InvariantMarkovKernel). Build was green only because no module imported both. Renamed the scaffolding-tagged Markov one; corpus updated across MarkovContractionDual, NuRateMatch and BottomCannotBe; lake build green, 3978 jobs, 0 errors. Tim's call 2026-08-22.",
+          "reason": "reorg import mislabeled rename as present (2026-07-07 fix)",
           "verify": {
             "axioms": null,
             "sorry_free": true
@@ -37485,7 +37478,7 @@
             "citations": [],
             "witness_of": []
           },
-          "disposition": "withdrawn",
+          "disposition": "new",
           "id": "9b8e0bed-1e85-4511-b89f-3f21a4fa6eb9",
           "new": {
             "file": "ZeroParadox/Settheory/HostVerdict.lean",
@@ -37494,13 +37487,12 @@
             "short": "trinary_faces"
           },
           "old": {
-            "file": "ZeroParadox/Settheory/HostVerdict.lean",
+            "file": null,
             "kind": null,
             "line": null,
-            "prefix": "ZeroParadox",
-            "qualified": "ZeroParadox.trinary_faces",
-            "short": "trinary_faces",
-            "synthetic": true
+            "prefix": null,
+            "qualified": null,
+            "short": null
           },
           "ontology": {
             "domain": [
@@ -37511,7 +37503,7 @@
               "scaffolding"
             ]
           },
-          "reason": "HostVerdict.lean reverted in full (7b997fa, 4a56da4) after a prior-art failure. File absent at HEAD; identifier resolves 0 times in the corpus. No claims links, no deps edges, no claim references. Tim confirmed 2026-08-22 the 7 are defects.",
+          "reason": "HostVerdict.lean: the trinary carving (mu / nu-hosted / nu-refused) of the one-root-or-two question",
           "verify": {
             "axioms": null,
             "sorry_free": true

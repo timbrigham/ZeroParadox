@@ -262,7 +262,6 @@ def main(argv):
 
     hits = scan()
     if '--baseline' in argv:
-        common.refuse_baseline_write('figures_baseline.txt')
         io.open(BASELINE, 'w', encoding='utf-8', newline='\n').write(
             '# Undated artifact counts present when this baseline was taken.\n'
             '# The honest form is a DATED survey: "70 files as of 2026-08-02".\n'

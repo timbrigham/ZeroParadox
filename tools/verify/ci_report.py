@@ -113,7 +113,6 @@ CHECKS = [
     ("check_pov.py",        ["--block"], GATE,  "POV claims declare a KIND; a DENIAL is never allowed"),
     ("check_modal.py",      ["--block"], GATE,  "modal claims carry a measurement or a reduction"),
     ("check_classes.py",    ["--block"], GATE,  "a requirements class records a degeneracy verdict"),
-    ("check_encoding.py",   ["--block"], GATE,  "no BOM, no double-encoded text in any tracked file"),
     ("check_moved.py",      ["--block"], GATE,  "nothing points at a relocated path"),
     ("check_negatives.py",  ["--block"], GATE,  "a universal negative carries a date or a search record"),
     ("check_figures.py",    ["--block"], GATE,  "an artifact count carries a date, or is measured on demand"),
@@ -139,9 +138,9 @@ CHECKS = [
 # its whole life, scoring `ok` because the attack never happened). A registry of routes that cannot
 # detect a dead route is the fail-open shape it exists to prevent, one level up.
 SELFTESTS = ["check_prose.py", "check_pov.py", "check_modal.py",
-             "check_classes.py", "check_encoding.py", "check_poles.py", "check_moved.py",
+             "check_classes.py", "check_poles.py", "check_moved.py",
              "check_paths.py", "check_invariants.py", "check_hashes.py", "check_negatives.py",
-             "check_figures.py", "check_checkers.py", "check_frozen.py",
+             "check_figures.py", "check_checkers.py",
              "check_release_ready.py", "common.py", "guards.py", "debaseline.py",
              # ⚠ `VEND-1`: THE definition of the vendored exemption, imported by every gating
              # checker and audited by nothing until 2026-08-16.

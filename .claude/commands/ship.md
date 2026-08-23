@@ -29,12 +29,11 @@ SHIP_GATES=<comma-separated gate keys that are OWED>
 SHIP_ROUND=<n>
 ```
 
-⚠ **DO NOT EDIT ANYTHING IN `SHIP_SCOPE` WHILE THE GATES ARE READING IT.** Nothing stops you at
-the keystroke any more — the read-only freeze was retired 2026-08-23, because git unlinks and
-recreates rather than opening for write, so `checkout` and `reset --hard` silently un-froze a
-locked path. **What catches it instead is the per-file SHA-256:** an edited file stops matching
-what the signal recorded, so `prepush` refuses and names it. The round is then wasted rather than
-corrupted — which is the right failure, and still a wasted round.
+⚠ **`pre` FREEZES the review scope** (`gatelock.py acquire`, read-only attribute → the Edit tool
+fails at the syscall with `EPERM`). That is deliberate: while gates are reading, the tree must not
+move under them. **Do not edit anything in `SHIP_SCOPE` until step 3 releases it.** If a run is
+abandoned mid-round the lock stays held and the pre-push guard refuses — recover with
+`python tools/verify/gatelock.py sweep --clear`.
 
 ## 2. Spawn exactly the gates in `SHIP_GATES` — one Agent call each, all in one message.
 

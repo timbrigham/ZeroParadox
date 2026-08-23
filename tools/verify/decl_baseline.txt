@@ -726,6 +726,7 @@ ZeroParadox/Order/MarkovContractionDual.lean::markov_contraction_dichotomy
 ZeroParadox/Order/MarkovContractionDual.lean::markov_contraction_tendsto
 ZeroParadox/Order/MarkovContractionDual.lean::markov_imbalance_pow
 ZeroParadox/Order/MarkovContractionDual.lean::markov_sum_pow
+ZeroParadox/Order/MarkovContractionDual.lean::step
 ZeroParadox/Order/MarkovContractionDual.lean::step_imb
 ZeroParadox/Order/MarkovContractionDual.lean::step_sum
 ZeroParadox/Order/MarkovContractionDual.lean::swap
