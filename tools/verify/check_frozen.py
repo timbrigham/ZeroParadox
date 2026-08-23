@@ -37,6 +37,7 @@ Usage (this tool prints its own invocation path; never hardcode one):
 """
 import io
 import os
+import shutil
 import subprocess
 import sys
 
@@ -215,8 +216,16 @@ def run(block=False, base=None):
     report.banner('frozen accepted-defect baselines', [
         ('purpose', 'the accepted-defect backlog may only SHRINK'),
         ('property', "today's set is a SUBSET of the basis below — not merely the same size"),
-        ('basis', 'git show %s:<path> (%s) — what the REMOTE already has, not the working tree'
-         % (base, why_base)),
+        # ⚠ `FRZ-4`. The basis line used to say "what the REMOTE already has" UNCONDITIONALLY, in a
+        # function whose own docstring says it falls back to HEAD. In the fallback branch that
+        # sentence is false, and it is false in the direction that reassures: a committed change
+        # reads as already-accepted, which is the FRZ-2 vacuity wearing the banner of a remote
+        # comparison. Say which basis this actually is.
+        ('basis', 'git show %s:<path> (%s) — %s' % (
+            base, why_base,
+            'what the REMOTE already has, not the working tree' if why_base == 'upstream' else
+            'NOT the remote — nothing upstream was resolved, so this compares against your own '
+            'tree and anything already committed reads as accepted')),
         ('trigger', 'removing an entry OWES a /claim-review signal — the entry recorded that the '
                     'site was never examined'),
         ('scope', '%d frozen file(s); decl/scope/pattern/whitelist are NOT debt and are excluded'
@@ -361,6 +370,173 @@ _R_MUST_SUPPRESS = [
 ]
 
 
+# ═══ BEHAVIOURAL CONTROLS — THEY DRIVE THE PROGRAM, NOT ITS PREDICATES ════════════════════════
+#
+# ⚠⚠ `FRZ-3` / `FRZ-4`, AND THE TWO ARE ONE DEFECT WEARING TWO FACES: every control above drives a
+# PREDICATE through injected lookups, and a predicate that is correct in a program which never
+# calls it is worth nothing. `DC-18` — a proxy control.
+#
+#   `FRZ-3`  `owed = review_owed(all_removed)` -> `owed = []` in `run()` took a grandfathered
+#            removal from exit 1 to PASS — printed two lines under `GRANDFATHERED STATUS REMOVED` —
+#            while `--selftest` PASSED, `check_checkers --block` reported `violations : 0` and
+#            `guards.py` exited 0. Three gates, all green, over a deleted trigger.
+#   `FRZ-4`  `push_base()` had NO control at all. `_grew()` compares two in-memory strings and never
+#            reaches `at_ref` / `check_one` / `push_base`, so reverting the `FRZ-2` fix to an
+#            unconditional `HEAD` basis was invisible to all three.
+#
+# So these run THE ACTUAL FILE AS A SUBPROCESS against a THROWAWAY git repository and assert what a
+# caller sees — the exit code and the text. Nothing is injected. `common.REPO` is
+# `Path(__file__).resolve().parent.parent`, so a copy of the bundle under `<tmp>/tools/verify`
+# roots the whole checker at `<tmp>` with no environment variable and no seam to stub.
+#
+# ⚠ THE FIXTURE NEVER TOUCHES THE SHARED CHECKOUT. It is built under `tempfile.mkdtemp()` and
+# removed. The `git` calls below run inside that directory, from a Python subprocess — the same way
+# `at_ref` and `push_base` themselves shell git.
+#
+# ⚠⚠ EACH CASE NAMES THE MUTATION IT EXISTS TO CATCH. A control whose failure mode is not written
+# down cannot be audited, and both defects here were controls nobody had seen fail.
+
+_FIX_BL = 'prose_baseline.txt'                       # any member of common.FROZEN_BASELINES
+_FIX_SRC = 'ZeroParadox/Demo/Thing.lean'
+_FIX_A = '%s::block::aaa111::demo block one' % _FIX_SRC
+_FIX_B = '%s::block::bbb222::demo block two' % _FIX_SRC
+
+
+def _fix_git(args, cwd):
+    """git INSIDE THE FIXTURE. Identity is pinned so the control does not depend on the machine."""
+    return subprocess.run(
+        ['git', '-c', 'user.email=control@example.invalid', '-c', 'user.name=control',
+         '-c', 'commit.gpgsign=false'] + list(args),
+        cwd=cwd, capture_output=True, text=True, encoding='utf-8', errors='replace')
+
+
+def _plant(root, baseline, source=True):
+    """Write the fixture tree: this bundle, one frozen baseline, and the source the key names."""
+    vdir = os.path.join(root, 'tools', 'verify')
+    if not os.path.isdir(vdir):
+        os.makedirs(vdir)
+        for mod in ('check_frozen.py', 'common.py', 'report.py'):
+            shutil.copyfile(os.path.join(str(common.HERE), mod), os.path.join(vdir, mod))
+    with io.open(os.path.join(vdir, _FIX_BL), 'w', encoding='utf-8', newline='\n') as fh:
+        fh.write(baseline)
+    src = os.path.join(root, _FIX_SRC.replace('/', os.sep))
+    if source:
+        if not os.path.isdir(os.path.dirname(src)):
+            os.makedirs(os.path.dirname(src))
+        with io.open(src, 'w', encoding='utf-8', newline='\n') as fh:
+            fh.write('-- demo\n')
+    elif os.path.exists(src):
+        os.remove(src)
+
+
+def _sign(root, rels):
+    """Plant a claim-review signal covering `rels` AT THEIR BYTES ON DISK, the way the real one is."""
+    import hashlib
+    priv = os.path.join(root, '.claude-local')
+    if not os.path.isdir(priv):
+        os.makedirs(priv)
+    lines = ['PASS  control fixture']
+    for rel in rels:
+        with io.open(os.path.join(root, rel.replace('/', os.sep)), 'rb') as fh:
+            lines.append('%s  %s' % (hashlib.sha256(fh.read()).hexdigest(), rel))
+    with io.open(os.path.join(priv, 'cr_cleared.txt'), 'w', encoding='utf-8',
+                 newline='\n') as fh:
+        fh.write('\n'.join(lines) + '\n')
+
+
+def _invoke(root):
+    """Run the checker the way a caller does: as a subprocess, reading only exit code and text."""
+    p = subprocess.run([sys.executable, os.path.join(root, 'tools', 'verify', 'check_frozen.py'),
+                        '--block'], cwd=root, capture_output=True, text=True,
+                       encoding='utf-8', errors='replace')
+    return p.returncode, (p.stdout or '') + (p.stderr or '')
+
+
+def _seed(root, baseline, source=True):
+    """A fixture whose FIRST COMMIT holds `baseline`."""
+    os.makedirs(root)
+    _plant(root, baseline, source=source)
+    _fix_git(['init'], root)
+    _fix_git(['add', '-A'], root)
+    _fix_git(['commit', '-m', 'base'], root)
+
+
+def _case_removal(root, signed=False, source=True):
+    """Committed {A,B}; on disk {A}. A grandfathered entry has lost its grandfathered status.
+
+    Drives the REMOVAL TRIGGER through `run()` — the wiring `FRZ-3` deleted."""
+    _seed(root, '# header\n%s\n%s\n' % (_FIX_A, _FIX_B))
+    _plant(root, '# header\n%s\n' % _FIX_A, source=source)
+    if signed:
+        _sign(root, [_FIX_SRC])
+    return _invoke(root)
+
+
+def _case_growth_behind_upstream(root, bare):
+    """Growth COMMITTED after the upstream point — the case where the BASIS decides the answer.
+
+    Against the upstream the baseline GREW; against `HEAD` the growth is inside the basis and the
+    diff is empty. That is exactly `FRZ-2`, and this is the control it never had."""
+    _seed(root, '# header\n%s\n' % _FIX_A)
+    _fix_git(['init', '--bare', bare], os.path.dirname(bare))
+    _fix_git(['remote', 'add', 'origin', bare], root)
+    branch = (_fix_git(['rev-parse', '--abbrev-ref', 'HEAD'], root).stdout or '').strip()
+    _fix_git(['push', '-u', 'origin', branch], root)
+    _plant(root, '# header\n%s\n%s\n' % (_FIX_A, _FIX_B))          # GROW …
+    _fix_git(['add', '-A'], root)
+    _fix_git(['commit', '-m', 'grow'], root)                       # … and COMMIT it
+    return _invoke(root)
+
+
+def selftest_behaviour():
+    """Drive `run()` and `push_base()` end to end, as a subprocess. `FRZ-3` / `FRZ-4`."""
+    import tempfile
+    print('')
+    print('  BEHAVIOURAL — the program, as a subprocess, against a throwaway repo')
+    tmp = tempfile.mkdtemp(prefix='frozenctl-')
+    rows = []
+    try:
+        code, out = _case_removal(os.path.join(tmp, 'removal'))
+        rows.append(('unreviewed removal EXITS 1 and names the liability',
+                     code == 1 and 'CONTENT REVIEW OWED' in out,
+                     'FRZ-3: owed = review_owed(all_removed) -> owed = []'))
+
+        code, out = _case_removal(os.path.join(tmp, 'signed'), signed=True)
+        rows.append(('…but a removal covered at matching bytes PASSES',
+                     code == 0 and 'CONTENT REVIEW OWED' not in out,
+                     'a control that is always red proves nothing'))
+
+        code, out = _case_removal(os.path.join(tmp, 'filegone'), source=False)
+        rows.append(('…and a removal whose FILE is gone PASSES',
+                     code == 0 and 'CONTENT REVIEW OWED' not in out,
+                     'the one sanctioned exemption must survive'))
+
+        code, out = _case_growth_behind_upstream(os.path.join(tmp, 'grown'),
+                                                 os.path.join(tmp, 'origin_bare'))
+        rows.append(('growth COMMITTED past the upstream still EXITS 1',
+                     code == 1 and 'GREW' in out,
+                     'FRZ-4: push_base() -> return ("HEAD", "HEAD")'))
+        rows.append(('…and the basis it reports is the UPSTREAM, not HEAD',
+                     'upstream' in out and 'what the REMOTE already has' in out,
+                     'FRZ-4: a silent fallback must never read as a remote comparison'))
+
+        code, out = _case_removal(os.path.join(tmp, 'noupstream'), signed=True)
+        rows.append(('with NO upstream the banner does NOT claim the remote',
+                     'what the REMOTE already has' not in out and 'NOT the remote' in out,
+                     'FRZ-4: the unconditional "what the REMOTE already has" line'))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+    bad = 0
+    for label, passed, mutation in rows:
+        print('  %-56s %s' % (label, 'ok' if passed else '*** FAILED ***'))
+        if not passed:
+            print('  %-56s   catches: %s' % ('', mutation))
+            bad += 1
+    print('  %d behavioural control(s), %d failing' % (len(rows), bad))
+    return bad
+
+
 def selftest():
     print('=' * 44)
     print('  frozen-baseline check - CONTROLS')
@@ -369,6 +545,10 @@ def selftest():
     print('')
     print('  REMOVAL TRIGGER')
     bad += common.fire_suppress(_R_MUST_FIRE, _R_MUST_SUPPRESS, _owes, 'unreviewed removal')
+    # ⚠ IN `selftest()` DELIBERATELY, not behind a separate flag. `FRZ-3`'s whole finding was that
+    # the mutation stayed green through `--selftest`, `check_checkers` and `guards.py` — all three
+    # reach the checker HERE, so this is the one placement that closes all three at once.
+    bad += selftest_behaviour()
     return bad
 
 
