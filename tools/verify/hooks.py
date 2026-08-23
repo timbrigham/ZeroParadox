@@ -81,6 +81,29 @@ def py(script, *args):
     return run(sys.executable, os.path.join(BASE, script), *args)
 
 
+def recorded(script, *args):
+    """Run a push-time checker WITH `--record`, and keep exit 2 distinct from exit 1.
+
+    ⚠ EXIT 2 IS NOT EXIT 1. A checker that PASSED but could not write its verdict leaves the key
+    MISSING, so the ledger refuses the push with nothing local explaining why — while the operator
+    has just watched every check go green. Collapsing the two prints "the check failed" over a
+    check that did not fail, which is the shape that trains the `--no-verify` reflex.
+
+    ⚠ WHY THE PUSH PATH RECORDS AT ALL. `--record` was wired into `pre_commit` and not here, so the
+    nine checkers that run only at push earned keys ONLY when someone ran them by hand. They went
+    STALE at every commit and stayed that way, which meant the skip helped exactly the five that
+    needed it least and the gate was satisfiable only after a manual sweep. Measured 2026-08-23:
+    15 of 24 steps needed a re-run on a tree whose checks had all just passed.
+    """
+    rc = py(script, *(args + ("--record",)))
+    if rc == 2:
+        print("\n⚠ %s ran but its verdict was NOT RECORDED." % script)
+        print("  The ledger will report this step MISSING and refuse the push. This is a RECORDING")
+        print("  failure, not a check failure — the check itself may have passed. Fix the ledger")
+        print("  connection; do not go looking for a defect in the corpus.")
+    return rc
+
+
 def git_out(*args):
     try:
         r = subprocess.run(["git"] + list(args), cwd=REPO, capture_output=True,
@@ -111,8 +134,19 @@ PRE_PUSH_PLAN = [
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
-    ("check_frozen", "BLOCK", "baselines only SHRINK, and REMOVING an entry owes a /claim-review "
-                              "signal — the entry recorded that the site was never examined"),
+    # ⚠ WARN, NOT BLOCK, AND THE RETIREMENT IS THE REASON (Tim, 2026-08-23). The freeze comparison
+    # is from the topology that preceded the independent-git-spaces rewrite, so its snapshot cannot
+    # correspond to anything now and it fails PERMANENTLY — measured, 5 failing subjects on a clean
+    # tree. The ledger retired it as a gate the same day (`actions: []`, stated reason) while keeping
+    # it REGISTERED so it still records. This row said BLOCK for eight commits after that, so the
+    # hook refused every push the ledger was willing to allow: a manifest telling the truth about a
+    # gate the server had already stood down.
+    # ⚠ It still RUNS and still RECORDS. What is retired is the freeze comparison's authority to
+    # stop a push, never the emitter — `claim_review` is emitted by this file alone, and killing the
+    # run would leave that key permanently MISSING and block every push forever, which is strictly
+    # worse than the failure being removed.
+    ("check_frozen", "WARN", "RETIRED as a gate (dead topology) — still runs, still records; "
+                             "claim_review rides on it and must keep being emitted"),
     ("check_checkers", "BLOCK", "every checker has passing controls, and something invokes it"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
@@ -263,8 +297,21 @@ def pre_push(stream):
     # It runs here, before the checkers it protects, because a green checker whose exemption surface
     # has a new hole is a false zero — and this project's own record is that a false zero costs more
     # than a red one. ~10s, once per push.
+    # ⚠ SET, NOT `setdefault`, AND THE DIFFERENCE IS A WRONG-TREE RECORD. At push the basis is
+    # unambiguous — the tip being pushed, which is HEAD — so a value inherited from the caller's
+    # environment could only be wrong, and would attach every verdict on this run to a tree nobody
+    # examined. `run.id` comes from the pipeline by V9 and is refused if absent; pre_commit sets
+    # both and pre_push set neither, so every push-time record was refused with
+    # "run.id is required ... not the caller's imagination" and the whole point of wiring
+    # `--record` here was lost at the first checker.
+    os.environ["ZPLEDGER_BASIS"] = "HEAD"
+    os.environ["ZPLEDGER_RUN"] = "pre-push"
+
     print("\n=== Property guards (exemption surface) ===")
-    if py("guards.py") != 0:
+    _rc_guards = recorded("guards.py")
+    if _rc_guards == 2:
+        return 1                      # `recorded` already said why; do not also blame the guard
+    if _rc_guards != 0:
         print("\nPush blocked: a guarded property can be walked, or a guard left files mutated.")
         print("Read the FAIL lines above — each names the ROUTE. Fix the route, do not skip the run.")
         return 1
@@ -273,7 +320,7 @@ def pre_push(stream):
     # ⚠ 3 means "skipped part of my scope", not failure — see check_paths.EXIT_SKIPPED.
     # Locally the pinned Mathlib checkout is present, so this is normally 0; the branch
     # exists so a developer without a built .lake is not blocked by an unrunnable check.
-    _rc_paths = py("check_paths.py", "--all", "--warn-private")
+    _rc_paths = recorded("check_paths.py", "--all", "--warn-private")
     if _rc_paths not in (0, 3):
         print("\nPush blocked: a repo-relative reference in TRACKED markdown does not resolve.")
         print("Fix the path, or word the line so the resolver skips it (e.g. 'no longer exists').")
@@ -298,20 +345,20 @@ def pre_push(stream):
         print("Run: python tools/verify/install_hooks.py --force")
         return 1
 
-    if py("check_moved.py", "--block") != 0:
+    if recorded("check_moved.py", "--block") != 0:
         print("\nPush blocked: something still points at a relocated path.")
         print("Update the reference, or record the file as a dated record in check_moved.py.")
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1
 
-    if py("check_negatives.py", "--block") != 0:
+    if recorded("check_negatives.py", "--block") != 0:
         print("\nPush blocked: an undated universal negative.")
         print("Write 'none located as of <date>, searched as follows' — a universal negative")
         print("is falsified by any single future commit and nothing mechanical notices.")
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1
 
-    if py("check_figures.py", "--block") != 0:
+    if recorded("check_figures.py", "--block") != 0:
         print("\nPush blocked: an artifact count recorded in prose with no date.")
         print("Prefer measuring on demand. If it must be written down, date it -")
         print("the papers count went stale by 15 in a day, and nothing noticed.")
@@ -321,21 +368,25 @@ def pre_push(stream):
     # `--baseline` on any of the six exits 2 with an explanation — so this is the backstop for a
     # HAND EDIT, which no refusal can intercept. It prints the backlog total on every run, clear or
     # not, because a debt figure that surfaces only on failure cannot show progress.
-    if py("check_frozen.py", "--block") != 0:
-        print("\nPush blocked: an accepted-defect baseline GREW.")
-        print("Nothing is ever added to these again - the backlog only shrinks. Fix the site.")
-        print("If the finding is WRONG then the CHECKER is wrong: that is a DEFECTS.md row and a")
-        print("fix to the check, never a new suppression. Do not launder a checker bug into the")
-        print("accepted-defect list.")
+    # ⚠ RUN AND RECORD, DO NOT BLOCK — see the manifest row. `--block` is deliberately NOT passed:
+    # the freeze comparison is retired (dead topology), and the run is kept because `claim_review`
+    # is emitted here and nowhere else. A downgraded gate must get LOUDER rather than quieter, so
+    # the outcome is printed on EVERY push, clear or not, instead of surfacing only on failure.
+    _rc_frozen = py("check_frozen.py", "--record")
+    if _rc_frozen == 2:
+        print("\n⚠ check_frozen ran but its verdict was NOT RECORDED — claim_review is emitted")
+        print("  here and nowhere else, so a missing record blocks the push at the ledger.")
         return 1
+    print("  check_frozen: WARN-only (retired 2026-08-23, dead topology). Ran and recorded;")
+    print("  claim_review emitted. A finding here is a reading list, not a block.")
 
-    if py("check_checkers.py", "--block") != 0:
+    if recorded("check_checkers.py", "--block") != 0:
         print("\nPush blocked: a checker cannot fail, or nothing runs it.")
         print("This suite's characteristic defect is a check that could not have failed;")
         print("every instance so far was found by probing, never by reading.")
         return 1
 
-    if py("check_invariants.py") != 0:
+    if recorded("check_invariants.py") != 0:
         return 1
 
     # The gating checkers. Each exit code captured on its own line — HK-1 was a `$?` read one call
@@ -346,7 +397,7 @@ def pre_push(stream):
     checker_fail = False
     for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
                    "check_encoding.py"):
-        if py(script, "--block") != 0:
+        if recorded(script, "--block") != 0:
             checker_fail = True
     if checker_fail:
         return 1
@@ -360,7 +411,7 @@ def pre_push(stream):
               % os.path.dirname(SELF))
         return 1
 
-    if py("check_hashes.py") != 0:
+    if recorded("check_hashes.py") != 0:
         print("\nPush blocked: build-script hash mismatch vs register.md.")
         print("A script changed without completing the four-step workflow")
         print("(change + version bump + PDF rebuild + hash update).")
