@@ -277,6 +277,7 @@ def main():
     hits = scan()
 
     if '--baseline' in sys.argv:
+        common.refuse_baseline_write('modal_baseline.txt')
         # ⚠ LF, via the shared writer. A bare `write_text` emits CRLF on Windows, and this file is
         # TRACKED — so regenerating the baseline used to break `check_invariants` on the next run.
         common.write_text_lf(

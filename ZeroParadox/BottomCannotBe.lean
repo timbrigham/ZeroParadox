@@ -160,7 +160,7 @@ example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance
 -- Statement: the swap chain's orbit from `e0vec` converges to no limit.
 #check @ZeroParadox.swap_orbit_not_convergent
 -- Statement: for `x ≠ 0` and balanced `v₀`, the p-adic orbit stays norm-positive and the
--- `step (1/4)` orbit stays balanced — that one chain, not Markov orbits generally.
+-- `markovStep (1/4)` orbit stays balanced — that one chain, not Markov orbits generally.
 #check @ZeroParadox.padic_markov_no_orbit_correspondence
 
 /-! ### the seam and floor cannot be transported or cross-connected -/

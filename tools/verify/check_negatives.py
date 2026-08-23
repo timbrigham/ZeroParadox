@@ -257,6 +257,7 @@ def main(argv):
 
     hits = scan()
     if '--baseline' in argv:
+        common.refuse_baseline_write('negatives_baseline.txt')
         io.open(BASELINE, 'w', encoding='utf-8', newline='\n').write(
             '# Universal-negative sites present when this baseline was taken.\n'
             '# Each is a PROMPT TO READ, not a verdict: a retraction quoting an error looks\n'

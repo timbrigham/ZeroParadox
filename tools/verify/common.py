@@ -499,6 +499,65 @@ def targets(skip_names=(), is_vendored=None):
 
 
 # --------------------------------------------------------------------------- baselines
+# ⚠⚠ THE ACCEPTED-DEFECT BASELINES ARE FROZEN AS OF 2026-08-22. NOTHING IS EVER ADDED AGAIN.
+#
+# Tim: *"We should never be adding anything to the baseline at this point, period… all we need to do
+# is work through the backlog. Step one is to stop the bleeding — no new additions. **You don't have
+# to guard a backlog that's impossible to be written.**"*
+#
+# That last sentence is the whole design. An earlier draft built a retired-entry list, a check that
+# no retired entry could reappear, and a git-history check guarding THAT — three mechanisms, all of
+# them there to catch an entry coming back. **If the file can never be written, nothing can come
+# back**, and all three collapse into one property: the set may only SHRINK.
+#
+# ⚠ THIS SET IS ONLY THE ACCEPTED-DEFECT BACKLOG. It is NOT every data file near it, and the
+# distinction is load-bearing — freezing the wrong one breaks the pipeline:
+#   * `decl_baseline.txt` is a high-water mark of KNOWN DECLARATIONS used to detect new ones. It MUST
+#     grow with the corpus; frozen, every future declaration looks new forever.
+#   * `encoding_whitelist.txt` holds VERIFIED exclusions with stated reasons, for text the round-trip
+#     test provably cannot decide (`3 × 10²` encodes to valid UTF-8). A permanent correct carve-out,
+#     not deferred work.
+#   * `scope_baseline.txt` / `pattern_baseline.txt` pin what the checkers scan and look for.
+#     Configuration, not debt — a separate question, deliberately not answered here.
+FROZEN_BASELINES = frozenset([
+    'prose_baseline.txt', 'pov_baseline.txt', 'figures_baseline.txt',
+    'modal_baseline.txt', 'negatives_baseline.txt', 'class_baseline.txt',
+])
+
+
+def refuse_baseline_write(name, tool=None):
+    """Refuse a `--baseline` regenerate on a frozen accepted-defect baseline. NEVER RETURNS.
+
+    ⚠ THE FLAG IS KEPT AND MADE TO REFUSE, RATHER THAN DELETED (Tim, 2026-08-22). Deleting it yields
+    `unknown option`, which teaches nothing and sends the reader looking for a way around — a
+    hand-edit, or their own regeneration loop. **A flag that exists and explains itself is a lesson
+    delivered at the exact moment of temptation**, and it keeps every docstring and usage line that
+    mentions `--baseline` pointing at something true instead of turning them into dead pointers.
+    """
+    import sys as _sys
+    bar = '=' * 72
+    _sys.stderr.write(
+        '\n%s\n  REFUSED — %s is FROZEN. Nothing is ever added to it again.\n%s\n\n'
+        '  This file is a BACKLOG OF ACCEPTED DEFECTS being drained to zero, not a place to\n'
+        '  put new work. Regenerating it would absorb whatever currently violates — which is\n'
+        '  a measured fail-open here, not a hypothetical: `batch.py decls --baseline`, the\n'
+        '  command the hook itself printed as the remedy, swallowed a live purity obligation\n'
+        '  and took the run from exit 1 to exit 0 with the checker hashes byte-identical.\n\n'
+        '  WHAT TO DO INSTEAD, and it depends on what you are actually looking at:\n\n'
+        '    The finding is REAL      -> fix the site. That is the whole job now; the backlog\n'
+        '                                only shrinks. Run the checker again and it goes green.\n\n'
+        '    The finding is a FALSE   -> then the CHECKER is wrong, and suppressing the symptom\n'
+        '    POSITIVE                    hides a defect in the verification layer. Route it:\n'
+        '                                open a row in DEFECTS.md and fix the check, or take it\n'
+        '                                through /rely. Do not launder a checker bug into the\n'
+        '                                accepted-defect list.\n\n'
+        '    You need to see the      -> `python tools/verify/debaseline.py --bucket <name>`\n'
+        '    remaining work              lists it, bucketed, MECHANICAL vs SEMANTIC.\n\n'
+        '  Removing an entry is always allowed. Adding one is not.\n%s\n\n'
+        % (bar, name, bar, bar))
+    _sys.exit(2)
+
+
 def load_baseline(path, field0=False):
     """Grandfathered sites. A baseline is DEBT, not a decision — it blocks on NEW sites only.
 

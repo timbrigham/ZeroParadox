@@ -9,7 +9,7 @@ routing existed only in `batch.py`, the four checkers and the path resolver only
 Neither was the pipeline.
 
 Shell and Python cannot share a module, so the only way to have one definition is for one of them
-to go. The shell went. Everything it orchestrated was already Python (`gatelock`, `check_paths`,
+to go. The shell went. Everything it orchestrated was already Python (`check_paths`,
 `check_invariants`, the four checkers, `check_hashes`, `scan_pdfs`); the shell was sequencing, and
 sequencing is what drifted.
 
@@ -97,36 +97,45 @@ PRE_COMMIT_PLAN = [
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
     ("check_classes", "BLOCK", "a new requirements class records a degeneracy verdict"),
     ("check_prose", "BLOCK", "prose caps: block size, docstring vs decl, gloss labels"),
-    ("gatelock", "warn", "a review round left open (harm is EDITING, not committing)"),
+    # ⚠ AT COMMIT, NOT ONLY AT PUSH, AND FOR A REASON THE OTHER FOUR DO NOT SHARE. Double-encoded
+    # text is valid UTF-8, so it survives every other check, renders plausibly in a diff, and the
+    # window in which the author still knows which write did it is minutes long.
+    ("check_encoding", "BLOCK", "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
 ]
 
 PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
-    ("gate lock", "BLOCK", "no push while a review round is open or files are frozen"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
+    ("check_frozen", "BLOCK", "baselines only SHRINK, and REMOVING an entry owes a /claim-review "
+                              "signal — the entry recorded that the site was never examined"),
     ("check_checkers", "BLOCK", "every checker has passing controls, and something invokes it"),
     ("check_invariants", "BLOCK", "Engineer's Takes filled; LEAN_CUSTOM_REGISTRY count matches"),
     ("check_pov", "BLOCK", "POV claims declare a KIND; DENIALs never allowed"),
     ("check_modal", "BLOCK", "modal claims carry a measurement or a reduction"),
     ("check_classes", "BLOCK", "a new requirements class records a degeneracy verdict"),
     ("check_prose", "BLOCK", "prose caps, baselined; NEW sites only"),
+    ("check_encoding", "BLOCK", "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
     ("decls", "BLOCK", "every new declaration has #print axioms + an ssot.json row"),
     ("check_hashes", "BLOCK", "build-script fingerprints match register.md"),
     # ⚠ NOT advisory: scan_pdfs' exit code IS the hook's when everything else passes, so it
     # can block a push on its own. Calling it "report" while it did exactly that is a
     # manifest that lies, which is worse than no manifest (/rely pass 3 and 4).
     ("scan_pdfs", "BLOCK", "PDF asset scan — its exit code becomes the hook's"),
-    ("batch prepush", "BLOCK", "trigger 5, /rely routing, and the three review signals"),
+    # ⚠ "/rely routing" is no longer one mode: the logic and exemption-switch legs BLOCK, the
+    # routed-prose leg WARNS (downgraded 2026-08-21, rung 5). Said here too, because a manifest that
+    # over-states at ONE entry point is the same defect as over-stating at all four.
+    ("batch prepush", "BLOCK", "trigger 5, the three review signals, and /rely routing — logic and "
+                               "exemption switches BLOCK, routed prose WARNS"),
 ]
 
 
 def pre_commit():
-    """The four checkers BLOCK; the gate lock warns.
+    """The five checkers BLOCK; nothing here warns.
 
     The stub-first protocol commits `sorry`-stubbed files on purpose, so BUILD state must never
     gate here — and none of these four reads `sorry`, the build, or completeness. They are
@@ -142,13 +151,10 @@ def pre_commit():
     report.plan(PRE_COMMIT_PLAN)
 
     failed = []
-    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py"):
+    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
+                   "check_encoding.py"):
         if py(script, "--block") != 0:
             failed.append(script)
-
-    # Gate lock: WARN only. The harm it guards is EDITING files mid-round, not committing; a commit
-    # during a round is a signal worth seeing, not a reason to refuse.
-    py("gatelock.py", "guard")
 
     if failed:
         print("")
@@ -226,13 +232,13 @@ def pre_push(stream):
     ])
     report.plan(PRE_PUSH_PLAN)
 
-    # Ordered cheapest-first: there is no reason to run PDF builds for a push that cannot be
-    # allowed. The gate lock is ~0.15s over ~350 tracked files.
-    print("\n=== Gate lock check ===")
-    if py("gatelock.py", "guard") != 0:
-        print("\nPush blocked: a gate lock is held, or tracked files are still frozen.")
-        print("Release the round (or sweep the orphans) and push again.")
-        return 1
+    # ⚠ `gatelock` RETIRED 2026-08-23 — deliberately, not dropped. It froze reviewed paths with the
+    # read-only bit while a gate round ran. Three reasons it went: the worktree rule makes the
+    # shared-tree concurrent-edit hazard structural rather than policed; its own header recorded the
+    # bypass it could not close (git unlinks and recreates, so `checkout`/`reset --hard` silently
+    # un-froze a locked path, measured); and the harm it aimed at is already DETECTED downstream,
+    # because editing a reviewed file changes its SHA-256 and stales the signal at this very gate.
+    # Prevention by an advisory attribute, replaced by detection that cannot be walked past.
 
     # ⚠ THE CHECKERS BELOW ARE ONLY WORTH THEIR EXIT CODES IF THEY CANNOT BE WALKED AROUND.
     # `guards.py` plants a known violation and then tries EVERY enumerated route to suppressing it.
@@ -293,6 +299,18 @@ def pre_push(stream):
         print("the papers count went stale by 15 in a day, and nothing noticed.")
         return 1
 
+    # ⚠ THE ACCEPTED-DEFECT BASELINES ARE FROZEN (2026-08-22). The ordinary path already refuses —
+    # `--baseline` on any of the six exits 2 with an explanation — so this is the backstop for a
+    # HAND EDIT, which no refusal can intercept. It prints the backlog total on every run, clear or
+    # not, because a debt figure that surfaces only on failure cannot show progress.
+    if py("check_frozen.py", "--block") != 0:
+        print("\nPush blocked: an accepted-defect baseline GREW.")
+        print("Nothing is ever added to these again - the backlog only shrinks. Fix the site.")
+        print("If the finding is WRONG then the CHECKER is wrong: that is a DEFECTS.md row and a")
+        print("fix to the check, never a new suppression. Do not launder a checker bug into the")
+        print("accepted-defect list.")
+        return 1
+
     if py("check_checkers.py", "--block") != 0:
         print("\nPush blocked: a checker cannot fail, or nothing runs it.")
         print("This suite's characteristic defect is a check that could not have failed;")
@@ -302,10 +320,14 @@ def pre_push(stream):
     if py("check_invariants.py") != 0:
         return 1
 
-    # The four checkers. Each exit code captured on its own line — HK-1 was a `$?` read one call
+    # The gating checkers. Each exit code captured on its own line — HK-1 was a `$?` read one call
     # too late, which meant check_modal had never blocked a push in its life.
+    # ⚠ COUNT THE TUPLE, DO NOT TRUST A WORD. This comment said "The four checkers" and the tuple
+    # held four; adding `check_encoding` made the sentence false in the same edit that would have
+    # left it. A number written in prose beside the list it describes is a second copy.
     checker_fail = False
-    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py"):
+    for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
+                   "check_encoding.py"):
         if py(script, "--block") != 0:
             checker_fail = True
     if checker_fail:
