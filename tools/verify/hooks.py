@@ -151,9 +151,27 @@ def pre_commit():
     report.plan(PRE_COMMIT_PLAN)
 
     failed = []
+    # ⚠⚠ RECORDING BELONGS HERE, NOT IN `batch.py precommit` — measured 2026-08-23 and it was a
+    # silent miss. `batch.py precommit` is a MANUAL command; the path that actually fires on every
+    # commit is this hook. Wiring `--record` there meant every ledger record came from someone
+    # typing the command, never from a commit — so the recorded basis was an index tree that no
+    # commit ever had (`cbac5acb` recorded, `HEAD^{tree}` = `292ac861`), and six to fifteen paths
+    # per step read STALE for content nobody had changed. Caught by mcp-mayhem, REQ-1.
+    #
+    # ⚠ INDEX, NOT HEAD. Git has already prepared the index by the time this hook runs, so the
+    # staged tree IS the tree the pending commit will carry. HEAD is still the PARENT here.
+    os.environ.setdefault("ZPLEDGER_BASIS", "INDEX")
+    os.environ.setdefault("ZPLEDGER_RUN", "pre-commit")
     for script in ("check_pov.py", "check_modal.py", "check_classes.py", "check_prose.py",
                    "check_encoding.py"):
-        if py(script, "--block") != 0:
+        rc = py(script, "--block", "--record")
+        # ⚠ EXIT 2 IS "COULD NOT BE RECORDED", NOT "FAILED". A checker that ran and could not reach
+        # the ledger produced no key, so the commit must not proceed as though it had — but the
+        # reader needs the outage named, not a phantom finding.
+        if rc == 2:
+            failed.append("%s (ran; verdict NOT RECORDED — no key exists for this content)"
+                          % script)
+        elif rc != 0:
             failed.append(script)
 
     if failed:

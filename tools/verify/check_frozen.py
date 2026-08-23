@@ -301,12 +301,31 @@ def run(block=False, base=None, record_to_ledger=False):
     # files, so they are the subjects — change one and the verdict must be re-earned. The paths that
     # OWE a review are subjects too, and they FAIL: the removal trigger is a claim about them, not
     # about the baseline that recorded them.
+    _argv = ['--record'] if record_to_ledger else []
     rc = common.record_if_asked(
         'check_frozen',
         ['tools/verify/%s' % n for n in sorted(common.FROZEN_BASELINES)],
         {'tools/verify/%s' % n for n in grown} | {rel for rel, _why in owed},
         'a frozen baseline grew, or a removal owes a /claim-review',
-        argv=(['--record'] if record_to_ledger else []))
+        argv=_argv)
+    if rc:
+        return rc
+
+    # ⚠⚠ `claim_review` IS RECORDED ON EVERY RUN, NOT ONLY WHEN A REMOVAL HAPPENED. Emitter contract
+    # from mcp-mayhem (REQ-2 reply), and the reason is one this project already knows: the registry's
+    # `when` is a PATH GLOB, so it cannot express "conditional on an EVENT" — a baseline entry being
+    # removed. A key that appears only sometimes is indistinguishable from a key nobody ran, which is
+    # absence rendering as success through the door marked "not applicable".
+    #
+    # So: PASS over the baselines when nothing was removed; FAIL over the paths that owe a review
+    # when something was. The verdict is about the SAME subjects either way — the baselines are what
+    # a removal is a removal FROM.
+    rc = common.record_if_asked(
+        'claim_review',
+        ['tools/verify/%s' % n for n in sorted(common.FROZEN_BASELINES)],
+        {rel for rel, _why in owed},
+        'a grandfathered entry was removed and its content review is not discharged',
+        argv=_argv, tier='H')
     if rc:
         return rc
 
