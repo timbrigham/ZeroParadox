@@ -466,14 +466,11 @@ def main(argv):
     # ⚠ THE SPLIT IS PER-SUBJECT, not per-run (see `record.emit`'s docstring): the clean files get a
     # PASS and the blocking ones get a FAIL, so coverage stays exact instead of one verdict standing
     # for everything the step glanced at.
-    if '--record' in argv:
-        _bad = {rel for rel, _kind, _detail in blocking}
-        _rc = common.emit_verdict('check_encoding',
-                                  ok_rels=[r for r in rels if r not in _bad],
-                                  bad_rels=sorted(_bad),
-                                  reason='BOM, undecodable or unreadable')
-        if _rc != 0:
-            return _rc
+    _rc = common.record_if_asked(
+        'check_encoding', rels, {rel for rel, _k, _d in blocking},
+        'BOM, undecodable or unreadable', argv)
+    if _rc:
+        return _rc
 
     if blocking:
         print('\nA file was written through a codepage that is not UTF-8, or could not be read.')

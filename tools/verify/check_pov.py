@@ -430,18 +430,16 @@ def main():
             print('        ' + ascii_safe(snippet))
     print('======================================')
 
-    if '--record' in sys.argv[1:]:
-        # ⚠ THIS CHECKER'S SCOPE IS ITS OWN `TARGETS`, not `common.targets()` — see the note at the
-        # top of the file. The record must name the set the verdict was actually computed over.
-        scanned = [str(p.relative_to(REPO)).replace(chr(92), '/') for p in TARGETS if p.is_file()]
-        bad = {k.split('::')[0] for k, _loc, _sn in new}
-        bad |= {loc.rsplit(':', 1)[0] for loc, _sn in denials}
-        rc = common.emit_verdict('check_pov',
-                                 ok_rels=[r for r in scanned if r not in bad],
-                                 bad_rels=sorted(bad),
-                                 reason='untagged point-of-view claim and/or a DENIAL')
-        if rc:
-            return rc
+    # ⚠ THIS CHECKER'S SCOPE IS ITS OWN `TARGETS`, not `common.targets()` — see the note at the
+    # top of the file. The record must name the set the verdict was actually computed over.
+    _bad = {k.split('::')[0] for k, _loc, _sn in new}
+    _bad |= {loc.rsplit(':', 1)[0] for loc, _sn in denials}
+    rc = common.record_if_asked(
+        'check_pov',
+        [str(p.relative_to(REPO)).replace(chr(92), '/') for p in TARGETS if p.is_file()],
+        _bad, 'untagged point-of-view claim and/or a DENIAL')
+    if rc:
+        return rc
 
     if (new or denials) and block:
         print('')

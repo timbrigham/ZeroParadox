@@ -301,16 +301,14 @@ def run(block=False, base=None, record_to_ledger=False):
     # files, so they are the subjects — change one and the verdict must be re-earned. The paths that
     # OWE a review are subjects too, and they FAIL: the removal trigger is a claim about them, not
     # about the baseline that recorded them.
-    if record_to_ledger:
-        owed_paths = {rel for rel, _why in owed}
-        base_rels = ['tools/verify/%s' % n for n in sorted(common.FROZEN_BASELINES)]
-        rc = common.emit_verdict(
-            'check_frozen',
-            ok_rels=[r for r in base_rels if os.path.basename(r) not in grown],
-            bad_rels=sorted({'tools/verify/%s' % n for n in grown} | owed_paths),
-            reason='a frozen baseline grew, or a removal owes a /claim-review')
-        if rc:
-            return rc
+    rc = common.record_if_asked(
+        'check_frozen',
+        ['tools/verify/%s' % n for n in sorted(common.FROZEN_BASELINES)],
+        {'tools/verify/%s' % n for n in grown} | {rel for rel, _why in owed},
+        'a frozen baseline grew, or a removal owes a /claim-review',
+        argv=(['--record'] if record_to_ledger else []))
+    if rc:
+        return rc
 
     return 1 if (bad and block) else 0
 

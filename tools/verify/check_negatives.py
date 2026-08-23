@@ -279,7 +279,7 @@ def main(argv):
         print('  %s:%d  [%s]' % (rel, line, matched))
         print('      %s' % sent)
     if '--record' in argv:
-        rc = _record(new)
+        rc = _record(new, argv)
         if rc:
             return rc
 
@@ -292,15 +292,10 @@ def main(argv):
     return 0
 
 
-def _record(new):
-    """Emit this run's verdict. The universe is THIS checker's own scope, recomputed from its own
-    `targets()` — never a shared roster, which would record coverage the checker never had."""
-    bad = {h[0] for h in new}
-    scanned = [rel for _p, rel in targets()]
-    return common.emit_verdict('check_negatives',
-                               ok_rels=[r for r in scanned if r not in bad],
-                               bad_rels=sorted(bad),
-                               reason='undated universal negative')
+def _record(new, argv):
+    """The universe is THIS checker's own scope — never a shared roster."""
+    return common.record_if_asked('check_negatives', [rel for _p, rel in targets()],
+                                  {h[0] for h in new}, 'undated universal negative', argv)
 
 
 if __name__ == '__main__':

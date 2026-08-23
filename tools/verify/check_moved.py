@@ -303,16 +303,13 @@ def main(argv):
     for rel, i, found, dest in hits:
         print("  %s:%d" % (rel, i))
         print("      %s  ->  %s" % (found, dest))
-    if "--record" in argv:
-        bad = {h[0] for h in hits}
-        scanned = [os.path.relpath(p, REPO).replace("\\", "/")
-                   for p in surfaces() if not is_tombstone(p)]
-        rc = common.emit_verdict("check_moved",
-                                 ok_rels=[r for r in scanned if r not in bad],
-                                 bad_rels=sorted(bad),
-                                 reason="a relocated path is still referenced")
-        if rc:
-            return rc
+    rc = common.record_if_asked(
+        "check_moved",
+        [os.path.relpath(p, REPO).replace("\\", "/")
+         for p in surfaces() if not is_tombstone(p)],
+        {h[0] for h in hits}, "a relocated path is still referenced", argv)
+    if rc:
+        return rc
 
     if hits:
         print("\nA relocated path is still referenced. Update the reference, or add the file to")

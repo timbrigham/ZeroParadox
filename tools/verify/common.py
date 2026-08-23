@@ -550,6 +550,42 @@ def ledger_subjects(rels, ref='HEAD'):
     return subjects, skipped
 
 
+def record_if_asked(step, scanned, bad, reason, argv=None, tier='M', ref='HEAD', withheld=None):
+    """⭐ THE ONE CALL EVERY CHECKER MAKES. Identical shape everywhere, by design.
+
+        rc = common.record_if_asked('check_x', scanned, bad, 'why it failed', argv)
+        if rc:
+            return rc
+
+    `scanned` is the file set THIS checker's verdict was computed over — its own scope, never a
+    shared roster, or the record claims coverage the checker never had. `bad` is the subset that
+    failed. Returns 0 when there is nothing to do, or 2 when a verdict could not be RECORDED.
+
+    ⚠⚠ `withheld` IS THE HONEST ESCAPE, AND IT IS NOT A FAILURE. Pass a reason string when the run
+    was PARTIAL — a skipped class, an unavailable dependency — and NOTHING is recorded, so the key
+    stays MISSING and the action BLOCKS. `check_paths` returns EXIT_SKIPPED with Mathlib absent, and
+    `ci_report.py`'s own header records that scoring that as a pass would publish *"a GREEN REQUIRED
+    CHECK covering a gate that was skipped"*. **"It could not decide" and "it decided yes" are the
+    two facts this whole layer exists to keep apart**; a checker that cannot tell them apart is the
+    defect, not the outage.
+
+    ⚠ COVERAGE CARRIES FORWARD BY CONTENT, NOT BY COMMIT (measured 2026-08-23). A record satisfies
+    any later commit whose subject blobs are unchanged — `can_push` gates EVERY commit in a range,
+    and a record made once covers all of them until the files it named actually move. That is what
+    makes per-commit recording cheap rather than quadratic, and it is why the identifier is a blob
+    id rather than a commit."""
+    argv = sys.argv[1:] if argv is None else argv
+    if '--record' not in argv:
+        return 0
+    if withheld:
+        print('  not recorded: %s — %s' % (step, withheld))
+        print('                a partial run must not record a PASS; the key stays MISSING.')
+        return 0
+    bad = set(bad)
+    return emit_verdict(step, ok_rels=[r for r in scanned if r not in bad],
+                        bad_rels=sorted(bad), reason=reason, tier=tier, ref=ref)
+
+
 def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD'):
     """Record one step's verdict in the ledger. Returns 0, or 2 if it could NOT be recorded.
 

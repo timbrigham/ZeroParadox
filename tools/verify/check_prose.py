@@ -458,14 +458,11 @@ def run(block_mode=False, write_baseline=False):
     # ⚠ Recorded here rather than at the returns: this function has more than one exit and a record
     # emitted on only some of them is a coverage gap that depends on the verdict, which is the one
     # thing a coverage record must never do.
-    if '--record' in sys.argv[1:]:
-        _bad = {v[1].split('::')[0] for v in new}
-        _rc = common.emit_verdict('check_prose',
-                                  ok_rels=[r for r in scanned if r not in _bad],
-                                  bad_rels=sorted(_bad),
-                                  reason='new prose site over the cap')
-        if _rc:
-            return _rc
+    _rc = common.record_if_asked('check_prose', scanned,
+                                 {v[1].split('::')[0] for v in new},
+                                 'new prose site over the cap')
+    if _rc:
+        return _rc
 
     vend = vendored_files()
     print("=" * 40)
