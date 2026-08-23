@@ -49,6 +49,30 @@ Each prints its own invocation path; run with no arguments for a report.
 
 ---
 
+## The type registry and the policy live in the LEDGER, not here.
+
+`required.v2.json` and `policy.v1.json` used to sit in this directory. They are gone, and they
+must not come back: the ledger serves both, and a second copy makes every inventory wrong in the
+most convincing way available — both sides internally consistent, disagreeing about what
+*complete* means.
+
+**It had already happened.** When the copies were removed the ledger served 24 types while the
+local file carried 22, missing `rely` and `claim_review`; the served `policy_sha` (`8c85b6c0`)
+matched neither the raw nor any canonical hash of the local policy. The drift arrived by
+reconfiguration — nobody decided it — which is exactly why a mirror plus a discipline is worse
+than one file.
+
+- **Ask the ledger:** `requirements(action=...)` for the registry, `policy()` for the thresholds.
+- **Review a change to the bar:** it is a tracked, public diff in the MCP server repository under
+  `verdictLedger/config/`, each commit carrying its reason. What was lost here is *proximity*,
+  never reviewability — and the fix for proximity is this pointer, not a second file.
+
+`admission.v1.json` REMAINS, and it is a copy of neither: the registry says what may be
+**recorded**, the admission set says what must be green to let an action **through**. Two facts,
+two lifecycles — registering a type is free, promoting one to gate a push is deliberate.
+
+---
+
 ## Point-of-view claims: declare the KIND and the STATUS. Gate-enforced.
 
 **"Point of view" / "chart" / "frame" was doing FIVE different jobs with one word.** The cost, measured

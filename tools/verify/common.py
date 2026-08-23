@@ -748,6 +748,10 @@ def targets(skip_names=(), is_vendored=None):
 #     not deferred work.
 #   * `scope_baseline.txt` / `pattern_baseline.txt` pin what the checkers scan and look for.
 #     Configuration, not debt — a separate question, deliberately not answered here.
+#   * `shared_build_baseline.txt` records the hash `zp_utils.py` last carried, so a change to
+#     the one module every build script imports forces a look at every document. Same KIND as
+#     `decl_baseline.txt` - a high-water mark, not accepted defect. Frozen, `zp_utils` could
+#     never legitimately change.
 FROZEN_BASELINES = frozenset([
     'prose_baseline.txt', 'pov_baseline.txt', 'figures_baseline.txt',
     'modal_baseline.txt', 'negatives_baseline.txt', 'class_baseline.txt',
