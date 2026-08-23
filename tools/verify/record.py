@@ -235,6 +235,22 @@ def _cli(argv):
         ap.error("--who is required with --how %s: a sign-off with no signatory records nothing "
                  "about who is accountable for it" % a.how)
 
+    # ⚠ V3 IS MIRRORED HERE ONLY TO FAIL FAST, AND THE DEFAULT IS THE TRAP IT CLOSES. A PASS under
+    # `agreement` needs `agreed == passes` AND `passes >= policy.agreement.min_passes` (3). The
+    # natural default is one pass — a single agent round — which produces a record that is accepted
+    # and then does NOT satisfy the gate, so the operator sees "recorded PASS" and the push still
+    # refuses with nothing connecting the two. Refusing at parse time says which of the two routes
+    # they actually want.
+    # ⚠ AND THE ANSWER IS USUALLY THE OTHER ROUTE. Each review gate spawns ONE fresh agent, so an
+    # honest single round is not `agreement` at all; a human accepting it is `signature`, which is
+    # deliberately a different signal — an accept is corpus DEBT, where `override` is evidence the
+    # step is defective. They must never share a code path.
+    if a.how == "agreement" and (a.passes < 3 or a.agreed != a.passes):
+        ap.error("--how agreement needs --passes >= 3 with --agreed equal to it (V3, "
+                 "policy.agreement.min_passes = 3); got passes=%d agreed=%d. One agent round is "
+                 "not an agreement - if a human is accepting it, use --how signature --who <name>."
+                 % (a.passes, a.agreed))
+
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import common
 
