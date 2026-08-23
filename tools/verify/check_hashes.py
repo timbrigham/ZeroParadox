@@ -1710,10 +1710,19 @@ def main():
     # re-earned. That is the whole point of the four-step rule this checker enforces.
     _scripts = sorted(set(list(COMP_SCRIPTS.values()) + list(FORMAL_ONLY_SCRIPTS.values())
                           + list(STANDALONE_SCRIPTS.values()) + list(FORMAL_SCRIPTS.values())))
-    _subjects = ['register.md'] + ['scripts/%s' % os.path.basename(s) for s in _scripts if s]
+    # ⚠ `SHARED_BUILD` IS AN INPUT TOO, AND IT WAS MISSING FROM THIS LIST. `main` runs
+    # `check_shared_build()`, which hashes `scripts/zp_utils.py` against `shared_build_baseline.txt`
+    # — so the verdict depends on that module, and naming only the build scripts left the record
+    # reading SATISFIED after `zp_utils.py` moved. A subject set is everything the verdict DEPENDS
+    # ON, not merely the part the headline check reads. Found 2026-08-23 by asking why the declared
+    # scope and the measured subjects disagreed by 27 files.
+    _subjects = (['register.md']
+                 + ['scripts/%s' % os.path.basename(s) for s in _scripts if s]
+                 + ['scripts/%s' % n for n in SHARED_BUILD])
     _rc = common.record_if_asked('check_hashes', _subjects,
                                  set(_subjects) if not all_ok else set(),
-                                 'a build-script fingerprint disagrees with register.md')
+                                 'a build-script fingerprint disagrees with register.md',
+                                 switches=[os.path.relpath(SHARED_BASELINE, REPO).replace('\\', '/')])
     if _rc:
         return _rc
 
