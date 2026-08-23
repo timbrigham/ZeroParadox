@@ -1779,6 +1779,37 @@ def main():
         for p in UNREADABLE:
             print('  %s' % p)
         failed = True
+    if '--record' in args:
+        # ⚠⚠ A SKIPPED CLASS MUST NEVER RECORD A PASS. `check_paths` returns EXIT_SKIPPED when
+        # Mathlib is absent, and `ci_report.py`'s own header records that a skip scored as a pass
+        # would publish "a GREEN REQUIRED CHECK covering a gate that was skipped". So the verdict is
+        # withheld: the key stays MISSING, which BLOCKS. A partial run leaving a hole is the honest
+        # outcome — "it could not decide" and "it decided yes" are the two facts this whole layer
+        # exists to keep apart.
+        if skipped_a_class:
+            print('  not recorded: check_paths skipped a class (Mathlib absent) — a partial run')
+            print('                must not record a PASS; the key stays MISSING and blocks.')
+        else:
+            # ⚠ REPO-RELATIVE, NOT ABSOLUTE. `tracked_markdown()` / `tracked_lean()` yield absolute
+            # paths; handing those to the ledger made every subject read "not present at HEAD" and
+            # the whole record was refused. The fence caught it rather than recording nonsense —
+            # which is the fence working, but the conversion belongs here.
+            def _rel(p):
+                # pathlib, not os.path — this module never imports `os`.
+                try:
+                    return Path(p).resolve().relative_to(common.REPO).as_posix()
+                except ValueError:
+                    return str(p).replace('\\', '/')
+            bad = {_rel(p) for p, _ln, _ref in list(d1) + list(dl)}
+            scanned = ([_rel(p) for p in tracked_markdown()]
+                       + [_rel(p) for p in tracked_lean()])
+            rc = common.emit_verdict('check_paths',
+                                     ok_rels=[r for r in scanned if r not in bad],
+                                     bad_rels=sorted(bad),
+                                     reason='a repo-relative reference does not resolve')
+            if rc:
+                return rc
+
     if failed:
         return 1
     return EXIT_SKIPPED if skipped_a_class else 0

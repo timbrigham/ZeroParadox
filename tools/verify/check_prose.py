@@ -425,7 +425,9 @@ def run(block_mode=False, write_baseline=False):
     tot_p = tot_c = 0
     worst = []
     takeopen = []
+    scanned = []                      # the file set this verdict is computed OVER, for the ledger
     for path, rel in all_files():
+        scanned.append(rel)
         # `takeopen` is a MEASUREMENT GAP, never a violation (PRS-1). It must not enter
         # `viols`: it would block on 13 files at once for prose nobody has read, and it is
         # not a claim that anything is over cap - it is a statement that the remainder of the
@@ -452,6 +454,18 @@ def run(block_mode=False, write_baseline=False):
 
     base = load_baseline()
     new = [v for v in viols if v[1] not in base]
+
+    # ⚠ Recorded here rather than at the returns: this function has more than one exit and a record
+    # emitted on only some of them is a coverage gap that depends on the verdict, which is the one
+    # thing a coverage record must never do.
+    if '--record' in sys.argv[1:]:
+        _bad = {v[1].split('::')[0] for v in new}
+        _rc = common.emit_verdict('check_prose',
+                                  ok_rels=[r for r in scanned if r not in _bad],
+                                  bad_rels=sorted(_bad),
+                                  reason='new prose site over the cap')
+        if _rc:
+            return _rc
 
     vend = vendored_files()
     print("=" * 40)

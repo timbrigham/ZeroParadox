@@ -199,6 +199,18 @@ def main():
     base = load_baseline()
     new = [e for e in found if key(e) not in base]
 
+    # ⚠ Recorded before the reporting branches: this function has several exits and a record
+    # emitted on only some of them would make coverage depend on the verdict.
+    if "--record" in sys.argv[1:]:
+        _bad = {e[0] for e in new}
+        _scanned = [os.path.relpath(p, REPO).replace("\\", "/") for p in lean_files()]
+        _rc = common.emit_verdict("check_classes",
+                                  ok_rels=[r for r in _scanned if r not in _bad],
+                                  bad_rels=sorted(_bad),
+                                  reason="requirements class added with no degeneracy verdict")
+        if _rc:
+            return _rc
+
     print("=" * 40)
     print("  requirements-class degeneracy check")
     print("  classes with the question unasked: %d" % len(found))
