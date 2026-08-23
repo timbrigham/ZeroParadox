@@ -220,16 +220,33 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
 # the next routed document and nothing says so. This file's own history is that argument — the four
 # baselines, then a fifth, then a sixth. A glob over the routed prefix cannot fall behind the
 # directory it globs. Sorted so the signal's line order is stable across machines.
-def _routed_docs():
+# ⚠⚠ WIDENED 2026-08-23, AND THE OLD SHAPE FAILED THE ARGUMENT DIRECTLY ABOVE IT. This globbed
+# `*.md` at the TOP LEVEL of TWO prefixes while `ROUTING` has THREE and routes *anything* under
+# them, "whatever it is called". Measured: EIGHTEEN tracked routed files were unhashed at once —
+# all five `.github/workflows/*.yml` (a routed prefix this function never looked at), both
+# `proposed_*_hook.sh`, `debaseline.py`, `record.py`, `policy.v1.json`, `required.v2.json`, and
+# every file in a SUBDIRECTORY (`agent_gate_fixtures/`, `claude_hooks/`).
+#
+# ⚠ THE GLOB MUST BE DERIVED FROM `ROUTING`, NOT RE-TYPED BESIDE IT. A second copy of the prefix
+# list is how these two fell out of step in the first place: the third prefix was added to `ROUTING`
+# and this function was not touched, so it silently kept answering for two.
+def _routed_files():
+    """Every file under a routed prefix — recursive, all extensions, prefixes taken from ROUTING."""
     out = []
-    for rel in ("tools/verify", "tools/process"):
+    for pat, agent, _w in ROUTING:
+        if agent != "/rely":
+            continue
+        rel = pat.pattern.lstrip("^").rstrip("/").replace("\\.", ".")
         d = os.path.join(REPO, *rel.split("/"))
-        if os.path.isdir(d):
-            out += ["%s/%s" % (rel, n) for n in os.listdir(d) if n.lower().endswith(".md")]
+        if not os.path.isdir(d):
+            continue
+        for root, dirs, names in os.walk(d):
+            dirs[:] = [x for x in dirs if x != "__pycache__"]
+            for n in names:
+                if n.endswith((".pyc", ".pyo")):
+                    continue
+                out.append(os.path.relpath(os.path.join(root, n), REPO).replace("\\", "/"))
     return sorted(out)
-
-
-CHECKERS = CHECKERS + _routed_docs()
 
 
 # ⚠⚠ THE THREE KINDS IN `CHECKERS` ARE NOT ONE OBLIGATION, AND UNTIL 2026-08-21 THEY SHARED ONE ROW.
@@ -442,6 +459,17 @@ def _checker_path(name):
     if name == "ar_status.json":
         return os.path.join(PRIV, name)                 # private legacy tracker
     return os.path.join(BASE, name)                     # the verification bundle
+
+
+# ⚠ EXTENDED HERE, NOT AT THE LITERAL, BECAUSE THE DEDUPE NEEDS `_checker_path`. The list above
+# names bundle files by BASENAME; `_routed_files()` returns REPO-RELATIVE paths, and the same file
+# reached both ways must not be hashed twice under two keys — that would double-count it in the
+# filter fingerprint and make a one-file edit look like two. Resolving both through the one path
+# function is what makes "already covered" a fact rather than a string comparison.
+CHECKERS = CHECKERS + [
+    f for f in _routed_files()
+    if f not in {os.path.relpath(_checker_path(c), REPO).replace("\\", "/") for c in CHECKERS}
+]
 
 
 def checker_hashes():
