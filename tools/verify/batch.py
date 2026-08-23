@@ -202,7 +202,24 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # strictly worse than one in a push gate: a push is amendable and a
                               # minted DOI is not.** The rule is therefore wider than it was written:
                               # if it can stop a push OR A RELEASE, it is in here.
-                              "check_release_ready.py"]
+                              "check_release_ready.py",
+                              # ⚠⚠ A TOMBSTONE ENTRY, AND IT IS LOAD-BEARING. `gatelock.py` was
+                              # DELETED 2026-08-23 (retired). A deleted routed file is still a
+                              # CHANGED routed file for as long as the deletion sits in the pushed
+                              # range, so `_unhashed` flagged it — the walk cannot find a file that
+                              # is gone, and a name absent from this list can never be discharged.
+                              # That deadlocks: the block clears only when the deletion leaves the
+                              # range, which cannot happen until the push it is blocking.
+                              # Naming it here routes it through `_checker_path` to the `<ABSENT>`
+                              # sentinel in `checker_hashes()`, which is the mechanism this file
+                              # already built for exactly this — "removing a gate was quieter than
+                              # editing one" (/rely pass 2). The deletion is now VISIBLE in the
+                              # fingerprint instead of being an unreviewable hole.
+                              # ⚠ Do not delete this line when the range moves on; it is the record
+                              # that the tool existed. The cleaner fix is for `_unhashed` to skip
+                              # paths that do not exist — a logic change to a blocking fail-open
+                              # leg, which wants its own control and its own round.
+                              "gatelock.py"]
 
 
 # ⚠⚠ THE PROSE UNDER THE ROUTED PREFIXES IS HASHED BY GLOB, NOT BY NAME — and the glob is the point.
