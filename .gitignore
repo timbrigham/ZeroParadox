@@ -9,12 +9,18 @@
 # the 8 had silently drifted apart. Claude Code reads project commands from here, so tracking them
 # means exactly one copy, which is also the copy a reviewer can read.
 !.claude/commands/
-# ⚠ SETTINGS ARE TWO FILES AND ONLY ONE IS MACHINE-LOCAL. `settings.local.json` genuinely is —
-# it carries the allow list, `defaultMode`, and a hook hard-coding a personal OneDrive path — and
-# stays ignored. `settings.json` is the SHARED, durable half, and leaving it untracked meant the
-# record of WHICH GUARDS ARE WIRED existed nowhere in version control while the hook scripts it
-# points at were tracked. Losing the local file falls back to allow-everything with no deny and no
-# hooks, silently, with the scripts still sitting there looking installed.
+# ⚠ THE WHOLE GUARD RECORD IS TRACKED, AND IT HAD TO BE ALL THREE PARTS OR NONE. `settings.json`
+# carries the permissions AND the `hooks` wiring; the scripts that wiring points at are in
+# `tools/verify/claude_hooks/`. A clone therefore inherits the guards rather than an appearance of
+# them. `settings.local.json` stays ignored and is now empty — it holds nothing load-bearing.
+#
+# Why all three: tracking the wiring alone would point at scripts a clone does not have, and a hook
+# whose command is missing fails OPEN — a repo that looks armed and is not, which is strictly worse
+# than one that is visibly bare. Tracking the scripts alone records what the guards ARE and not
+# which are ARMED. Measured 2026-08-23 (`GUARD-1`): the tracked file had held `permissions.allow`
+# only — seven wildcards, no `deny`, no `hooks` — while all 36 deny rules and both hook events sat
+# in the ignored file, so the record of which guards are wired existed in no repository at all,
+# which is exactly what tracking it had been claimed to fix.
 !.claude/settings.json
 
 # Local MCP tooling (standalone repo, not part of the math publication)

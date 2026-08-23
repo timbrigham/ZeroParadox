@@ -9,7 +9,7 @@ routing existed only in `batch.py`, the four checkers and the path resolver only
 Neither was the pipeline.
 
 Shell and Python cannot share a module, so the only way to have one definition is for one of them
-to go. The shell went. Everything it orchestrated was already Python (`gatelock`, `check_paths`,
+to go. The shell went. Everything it orchestrated was already Python (`check_paths`,
 `check_invariants`, the four checkers, `check_hashes`, `scan_pdfs`); the shell was sequencing, and
 sequencing is what drifted.
 
@@ -101,13 +101,11 @@ PRE_COMMIT_PLAN = [
     # text is valid UTF-8, so it survives every other check, renders plausibly in a diff, and the
     # window in which the author still knows which write did it is minutes long.
     ("check_encoding", "BLOCK", "BOM + undecodable BLOCK; suspected double-encoding WARNS"),
-    ("gatelock", "warn", "a review round left open (harm is EDITING, not committing)"),
 ]
 
 PRE_PUSH_PLAN = [
     ("hooks armed", "BLOCK", "the installed hooks match their tracked sources"),
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
-    ("gate lock", "BLOCK", "no push while a review round is open or files are frozen"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
@@ -137,7 +135,7 @@ PRE_PUSH_PLAN = [
 
 
 def pre_commit():
-    """The four checkers BLOCK; the gate lock warns.
+    """The five checkers BLOCK; nothing here warns.
 
     The stub-first protocol commits `sorry`-stubbed files on purpose, so BUILD state must never
     gate here — and none of these four reads `sorry`, the build, or completeness. They are
@@ -157,10 +155,6 @@ def pre_commit():
                    "check_encoding.py"):
         if py(script, "--block") != 0:
             failed.append(script)
-
-    # Gate lock: WARN only. The harm it guards is EDITING files mid-round, not committing; a commit
-    # during a round is a signal worth seeing, not a reason to refuse.
-    py("gatelock.py", "guard")
 
     if failed:
         print("")
@@ -238,13 +232,13 @@ def pre_push(stream):
     ])
     report.plan(PRE_PUSH_PLAN)
 
-    # Ordered cheapest-first: there is no reason to run PDF builds for a push that cannot be
-    # allowed. The gate lock is ~0.15s over ~350 tracked files.
-    print("\n=== Gate lock check ===")
-    if py("gatelock.py", "guard") != 0:
-        print("\nPush blocked: a gate lock is held, or tracked files are still frozen.")
-        print("Release the round (or sweep the orphans) and push again.")
-        return 1
+    # ⚠ `gatelock` RETIRED 2026-08-23 — deliberately, not dropped. It froze reviewed paths with the
+    # read-only bit while a gate round ran. Three reasons it went: the worktree rule makes the
+    # shared-tree concurrent-edit hazard structural rather than policed; its own header recorded the
+    # bypass it could not close (git unlinks and recreates, so `checkout`/`reset --hard` silently
+    # un-froze a locked path, measured); and the harm it aimed at is already DETECTED downstream,
+    # because editing a reviewed file changes its SHA-256 and stales the signal at this very gate.
+    # Prevention by an advisory attribute, replaced by detection that cannot be walked past.
 
     # ⚠ THE CHECKERS BELOW ARE ONLY WORTH THEIR EXIT CODES IF THEY CANNOT BE WALKED AROUND.
     # `guards.py` plants a known violation and then tries EVERY enumerated route to suppressing it.

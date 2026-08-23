@@ -50,7 +50,7 @@ SELF = common.self_rel(__file__)
 # ⚠ Do NOT post-process the patterns to add this. The first fix chained two `.replace` calls and
 # the second mangled the `[\\/]` the first had just inserted — seven controls failed at once.
 SEP = r"[\\/]"
-_VERIFY = ("hooks batch report guards vendored gate_round gatelock debaseline selfheal ship "
+_VERIFY = ("hooks batch report guards vendored gate_round debaseline selfheal ship "
            "check_classes check_hashes check_invariants check_modal check_paths check_poles "
            "check_pov check_prose check_release_ready").split()
 MOVED = [(r"\.claude-local" + SEP + r"%s\.py" % n, "tools/verify/%s.py" % n) for n in _VERIFY]

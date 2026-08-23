@@ -1,13 +1,114 @@
 {
   "permissions": {
     "allow": [
-      "Read(*)",
-      "Edit(*)",
-      "Write(*)",
-      "Glob(*)",
-      "Grep(*)",
+      "PowerShell(*)",
       "Bash(*)",
-      "PowerShell(*)"
+      "Skill(*)",
+      "Agent(*)",
+      "mcp__github__get_discussion_comments",
+      "mcp__github__get_discussion",
+      "mcp__github__list_discussion_categories",
+      "mcp__github__search_code",
+      "mcp__github__list_commits",
+      "mcp__imap-email-mcp__send_email",
+      "mcp__github__pull_request_read",
+      "mcp__sjv",
+      "mcp__gitRobot",
+      "WebSearch",
+      "WebFetch(*)"
+    ],
+    "deny": [
+      "mcp__github__actions_run_trigger",
+      "mcp__github__add_comment_to_pending_review",
+      "mcp__github__add_issue_comment",
+      "mcp__github__add_reply_to_pull_request_comment",
+      "mcp__github__assign_copilot_to_issue",
+      "mcp__github__create_branch",
+      "mcp__github__create_gist",
+      "mcp__github__create_or_update_file",
+      "mcp__github__create_pull_request",
+      "mcp__github__create_repository",
+      "mcp__github__delete_file",
+      "mcp__github__discussion_comment_write",
+      "mcp__github__dismiss_notification",
+      "mcp__github__fork_repository",
+      "mcp__github__issue_write",
+      "mcp__github__label_write",
+      "mcp__github__manage_notification_subscription",
+      "mcp__github__manage_repository_notification_subscription",
+      "mcp__github__mark_all_notifications_read",
+      "mcp__github__merge_pull_request",
+      "mcp__github__projects_write",
+      "mcp__github__pull_request_review_write",
+      "mcp__github__push_files",
+      "mcp__github__request_copilot_review",
+      "mcp__github__star_repository",
+      "mcp__github__sub_issue_write",
+      "mcp__github__unstar_repository",
+      "mcp__github__update_gist",
+      "mcp__github__update_pull_request",
+      "mcp__github__update_pull_request_branch",
+      "Bash(git:*)",
+      "PowerShell(git:*)",
+      "Bash(git)",
+      "PowerShell(git)",
+      "Bash(git.exe:*)",
+      "PowerShell(git.exe:*)",
+      "Bash(gh:*)",
+      "PowerShell(gh:*)",
+      "Bash(gh)",
+      "PowerShell(gh)",
+      "Bash(gh.exe:*)",
+      "PowerShell(gh.exe:*)"
+    ],
+    "defaultMode": "dontAsk"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_git_gh.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for direct git/gh..."
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\block_git_gh.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking for direct git/gh..."
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell(gh api graphql *)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\enforce_graphql_timeout.ps1",
+            "shell": "powershell",
+            "statusMessage": "Enforcing 30s GraphQL timeout..."
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell(Get-Content build.log*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& tools\\verify\\claude_hooks\\enforce_log_read_limits.ps1",
+            "shell": "powershell",
+            "statusMessage": "Checking log read has row limit..."
+          }
+        ]
+      }
     ]
   }
 }

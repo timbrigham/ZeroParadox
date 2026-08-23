@@ -128,7 +128,7 @@ CHECKERS = GATING_CHECKERS + ["check_poles.py", "vendored.py", "vendored_files.t
                               # unreviewable by construction. The rule: if it can stop a push, it is
                               # in here.
                               "check_paths.py", "check_invariants.py", "check_hashes.py",
-                              "scan_pdfs.py", "gatelock.py", "selfheal.py",
+                              "scan_pdfs.py", "selfheal.py",
                               # ⚠ AND THE REMAINING DATA SWITCHES. Adding the four `*_baseline.txt`
                               # closed four routes and left two open, which is this property's whole
                               # history in one line. `decl_baseline.txt` is the FIFTH: `batch.py
