@@ -33,7 +33,8 @@ section is preserved verbatim in the body named below.
 | Companion Document Versioning / Vocabulary Reference Guide | `R-COMPANION` | `tools/process/document-workflow.md` || scripts/ is the build scripts' ONLY home | `R-SCRIPTS` | `tools/process/repository-layout.md` |
 | Lean↔PDF Consistency / File-Reference Citation Convention | `R-LEANPDF` | `tools/process/document-workflow.md` |
 | Development Environment | `R-SHELL` | `inline — no body` |
-| README/GUIDE Maintenance / Transparency notices (RETIRED) / Superseding Document Versions | `R-INDEXES` | `tools/process/indexes-and-superseding.md` |
+| README/GUIDE Maintenance / Transparency notices (RETIRED) / Superseding Document Versions | `R-INDEXES` | `tools/process/indexes-and-superseding.md` || Theorem/Proposition/Lemma Naming Convention (+ CC-2, keystone, MC-1 status) | `R-NAMING` | `tools/process/naming-and-labels.md` |
+| GitHub Issues — Transparency and Engagement Policy | `R-ISSUES` | `tools/process/naming-and-labels.md` |
 
 ## Pass record
 
@@ -46,8 +47,9 @@ section is preserved verbatim in the body named below.
 | 5 | 2026-08-23 | `:768`-`:868` (prior-art, repo context) | 101 | 39 | **62** |
 | 6 | 2026-08-23 | `:808`-`:960` (releases, register, diagrams, companions) | 153 | 57 | **96** |
 | 7 | 2026-08-23 | `:866`-`:1013` (scripts home, Lean-PDF, shell, indexes) | 148 | 55 | **93** |
+| 8 | 2026-08-23 | `:922`-`:1082` (naming/labels, public issues) | 161 | 33 | **128** |
 
-**File total: 2338 → 1319 lines (−1019, 44%).**
+**File total: 2338 → 1192 lines (−1146, 49%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then
