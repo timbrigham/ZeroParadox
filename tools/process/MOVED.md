@@ -34,7 +34,11 @@ section is preserved verbatim in the body named below.
 | Lean↔PDF Consistency / File-Reference Citation Convention | `R-LEANPDF` | `tools/process/document-workflow.md` |
 | Development Environment | `R-SHELL` | `inline — no body` |
 | README/GUIDE Maintenance / Transparency notices (RETIRED) / Superseding Document Versions | `R-INDEXES` | `tools/process/indexes-and-superseding.md` || Theorem/Proposition/Lemma Naming Convention (+ CC-2, keystone, MC-1 status) | `R-NAMING` | `tools/process/naming-and-labels.md` |
-| GitHub Issues — Transparency and Engagement Policy | `R-ISSUES` | `tools/process/naming-and-labels.md` |
+| GitHub Issues — Transparency and Engagement Policy | `R-ISSUES` | `tools/process/naming-and-labels.md` || Framework Structure (for context) | `R-FRAMEWORK` | `tools/process/lean-development.md` |
+| Session Handoff File / Four-Fingerprint Scan / Communication Quality / Reviewer Feedback | `R-HANDOFF` | `tools/process/lean-development.md` |
+| High-Value Insight Capture — Standing Rule | `R-CAPTURE` | `tools/process/lean-development.md` |
+| Development mode — LOAD THE SECTION BEFORE YOU WORK | `R-DEVMODE` | `tools/process/lean-development.md` |
+| Stub-First Protocol / Proof Documentation Workflow / Operational Rules / .claudecodes | `R-LEANDEV` | `tools/process/lean-development.md` |
 
 ## Pass record
 
@@ -48,8 +52,9 @@ section is preserved verbatim in the body named below.
 | 6 | 2026-08-23 | `:808`-`:960` (releases, register, diagrams, companions) | 153 | 57 | **96** |
 | 7 | 2026-08-23 | `:866`-`:1013` (scripts home, Lean-PDF, shell, indexes) | 148 | 55 | **93** |
 | 8 | 2026-08-23 | `:922`-`:1082` (naming/labels, public issues) | 161 | 33 | **128** |
+| 9 | 2026-08-23 | `:956`-end (framework, handoff, capture, dev mode, Lean) | 236 | 85 | **151** |
 
-**File total: 2338 → 1192 lines (−1146, 49%).**
+**File total: 2338 → 1042 lines (−1296, 55%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then
