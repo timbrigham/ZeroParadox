@@ -50,7 +50,92 @@ statement of what the theorem obstructs.** Purity was checked before swapping, p
 precedent: no regression.
 
 **3. One literature search** if the object has a name (Glauber dynamics, coalgebra, covering
-relation). `.claude-local/papers/` FIRST — it is the downloaded-source library.
+relation). **Run the LADDER in § 2a** — it has four rungs and the last one is not optional.
+
+## 2a. The literature-search LADDER — four rungs, and a citation is not confirmed until rung 4
+
+**Adopted 2026-08-23, after calibrating `theoremsearch` (an MCP theorem-statement search over the
+arXiv-era literature) against cases where this project already knew the answer. The measurements are
+in § 2b; the rungs below are what they license.**
+
+**Rung 0 — `.claude-local/papers/` FIRST.** The downloaded-source library. Cheapest rung, and a scout
+once declared Aczel unobtainable while it sat on disk. **Grep loosely** — scanned books carry OCR'd
+intra-word spaces, so a tight-pattern miss is not evidence of absence.
+
+**Rung 1 — `theoremsearch`.** Claim-shaped rather than file-shaped: it matches on *statement*, which is
+the thing a title search cannot reach. Three standing rules, each measured:
+- **THREE PHRASINGS MINIMUM**, along the § *NOT IN THE LIBRARY IS A CLAIM* step (c) axes. Measured: the
+  noun form put the right theorem at rank 1 and the **verb** form dropped it out of the top 5 entirely,
+  same claim, same index. **A single-phrasing negative is worthless.**
+- **IGNORE THE SIMILARITY SCORE.** It is anti-correlated with relevance in the measured range — pure
+  noise scored 0.69 and genuine prior art scored 0.61, and an unrelated algebraic-geometry lemma
+  outranked the correct coalgebra theorem at 0.71. Any threshold keeping the garbage discards the find.
+  This is DC-17's *ignore self-reported confidence* arriving through a new door: the score **is** the
+  API's confidence.
+- **A NULL RESULT IS UNINFORMATIVE.** The index is coverage-bounded and the bound is invisible from the
+  result. Never write "no prior art exists" from a rung-1 null; it does not even license
+  "none located as of &lt;date&gt;" on its own, because rung 2 has not run yet.
+
+**Rung 2 — the open web.** Runs when rung 1 returns no good match, **and also when it returns a
+neighbourhood hit whose actual source needs identifying**. This is where everything pre-arXiv lives —
+Lawvere 1969, Aczel 1988, Ostrowski, Gentzen, Carlström — and `theoremsearch` structurally cannot return
+those as sources, only as things other people cite. Skipping rung 2 on a rung-1 null is how a coverage
+gap becomes a recorded novelty claim.
+
+**Rung 3 — RETRIEVE AND READ THE FULL DOCUMENT.** File it in `papers/` as `author_topic_year[_id].pdf`,
+**validating before filing** (a tiny PDF is an error page, not a paper). **A citation is not confirmed
+until this rung.** Draft-from-source is unchanged by any of the above: existence may be cited freely; a
+source's *content* may not be asserted without the passage in hand.
+
+⚠ **RUNGS 1 AND 2 ARE DISCOVERY. ONLY RUNG 3 IS VERIFICATION.** The ladder makes finding candidates
+cheaper; it does not make any of them citable. See § 2b for the measurement that settles this.
+
+## 2b. Why the ladder is shaped this way — the calibration, 2026-08-23
+
+Seven recorded prior-art cases were re-queried without using the citation's own wording, and two recorded
+*absences* were queried as negative controls. Raw score, not a favourable reading:
+
+**Recall: 1 exact / 3 right-neighbourhood / 3 miss out of 7.** The one exact hit was Fritz
+(arXiv:1908.07021) at rank 1. Adámek–Milius–Moss returned a *sibling* paper with the same content;
+Kraus–Nordvall Forsberg–Xu returned its 2023 successor; Kozyrev returned Khrennikov–Shelkovich with
+content-exact statements. Veltri, Ahrens–Capriotti–Spadotti and Yanofsky were missed outright.
+
+**Coverage is real and provable.** arXiv:2104.02549 is **verifiably absent** from the index while sitting
+in `papers/`. So a gate blocking on "no prior art found" would have returned clear for a claim whose prior
+art this project is physically holding. ⚠ `paper_filter` takes a **TITLE, not an arXiv id** — passing an
+id returns empty, which reads exactly like absence. Verify the filter before believing its zero.
+
+**Precision: one correct abstention, and one control that was itself wrong.** The two-forks universal
+negative (`ZeroParadox/Algebra/WheelFrac.md`) drew only unrelated combinatorics — correct abstention.
+But `ZeroParadox/Category/ChoiceCannotBe.lean` § IV ESSENTIAL CASE 2 (`wem_of_fixedPointFree`), which
+records **no** prior art, drew Booij–Escardó–Lumsdaine–Shulman arXiv:1701.05617 in **2 of 3 phrasings**,
+whose Theorems 3/5/6/8 sit in that exact shape. Not a proven duplicate from the returned bodies alone —
+theirs need naturality-under-equivalence plus an isolated point, and their Thm 3 yields full excluded
+middle where ours yields the weak form — but it is real adjacent work against a claim recording none.
+
+**THE MEASUREMENT THAT SETTLES VERIFICATION.** The tool returned Thm 64 of the successor paper —
+*"inequalities in Ord split, `(X≤Y) → (X=Y) ⊎ (X<Y)`, iff LEM"*. The recorded citation is Thm 38(d) of
+arXiv:2104.02549 — *"≤ is connex, `(X≤Y) ⊎ (X≥Y)`"* ⟹ LEM. **From the returned body alone, Thm 64 reads
+as Thm 38(d) renumbered for the journal version. Opening the PDF on disk shows they are different
+statements** — connexity versus splitting. Trusting the body would have produced a wrong citation.
+
+Three reasons the body is not a passage, all observed: `label` and `link` come back **null**, so there is
+no in-paper locator and numbering shifts between versions of one work; the `slogan` field is an **LLM
+paraphrase** sitting beside the body and is the most quotable thing on the screen; and ambient hypotheses
+are inconsistently present — sometimes in the body (*"If H preserves monomorphisms…"*), sometimes not,
+which is precisely the AMM Thm 8.1 trap this project already records (those conditions are the
+**category's**, not the functor's).
+
+⚠ **WHY THIS IS NOT A GATE, and the reasoning transfers to the next such tool.** A gate must be able to
+fail informatively. Here a null is uninformative (coverage) and a hit is a candidate, not a finding — so
+enforcement would manufacture the appearance of coverage, which is `RLY25-1` exactly. This is the rung-5
+shape from § *WHEN A FAILURE RECURS*: **the screen may replace the ENUMERATION, never the VERDICT.**
+
+⚠ **ITS CONTROLS SHIP WITH IT**, per the `check_checkers.py` move — the control is the deliverable. The
+two standing controls are the WheelFrac two-forks negative (must return nothing usable) and a Lawvere /
+Aczel probe (must return **citers only**, never the sources). **If a later version starts returning those
+sources, the coverage assumption has changed and every negative recorded under this ladder needs
+re-reading.**
 
 ## 3. The papers library works in both directions
 

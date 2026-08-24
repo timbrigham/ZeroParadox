@@ -235,269 +235,47 @@ remembering, which this file elsewhere records as failing by construction. That 
 solved problem — and this register is the **seventh** convention of this shape, the previous six having
 all leaked.
 
-## The open-defect ledger — `.claude-local/DEFECTS.md`. Read it before choosing what to work on.
+## R-DEFECTS  A defect's home is the ledger. Read it before choosing work.
+TRIGGER  you found a defect, you are choosing what to work on next, or you are about to
+         cut a release.
+RULE     record it in `.claude-local/DEFECTS.md` — never a note, a gate-findings archive,
+         or a handoff line, and never a second copy. Verify every entry AT THE ARTIFACT
+         before recording it open or closed. GREP LOOSELY. Burn down in FILE-SIZED
+         BATCHES. NO RELEASE IS CUT WHILE THE LEDGER IS NON-EMPTY; release pressure never
+         defers a finding to next-touch debt. The target is ZERO KNOWN defects, not zero.
+COST     a DOI is permanent and four releases already carry latent flaws — a defect fixed
+         before a release costs one gate round, one shipped inside a PDF is forever.
+READ     tools/process/defect-ledger.md
 
-**A defect's home is this ledger.** Not a note, not a gate-findings archive, not a line in the handoff.
-(Opened 2026-08-01, Tim.)
+## R-RECUR  A failure that recurs is evidence about the RULE, never about the reader.
+TRIGGER  you are told you are in a failure condition, this is a retry, a gate returned
+         FAIL, or someone refers to a rule you do not recognise.
+RULE     re-read this file FROM DISK first — `grep -n "^## " CLAUDE.md` before any full
+         read; your injected copy predates every rule written this session, your own edits
+         included. Then, stopping at the first step that resolves: check `DEFECTS.md` and
+         `DEFECT_CLASSES.md`; diagnose the TRIGGER, not the content (an ACTION binds, a
+         CATEGORY leaks); fix at the highest leverage — checker > trigger-plus-path > note;
+         control-test with a fresh agent, scorecard fixed BEFORE the result; test delivery
+         separately from correctness. Escalate by COUNT: 1st an instance, 2nd a class with
+         a detector, 3rd the trigger is wrong, 4th+ build the checker. Never add a second
+         rule saying the same thing louder, and never skip to writing a new section.
+COST     a mid-session edit never reaches agents spawned after it, so a correct fix can be
+         unreachable; and a rule stated twice fires in neither place.
+READ     tools/process/recurrence-protocol.md
 
-**Why it exists, and it is a gap this file created.** The § below correctly says *"if a finding is a
-DEFECT, its home is a gate finding or a fix, never a note that cannot know when it stops being true."*
-But the 2026-08-01 notes triage sorted 767 notes into `active` / `future-research` /
-`archive{gate-findings, resolved, superseded}` — and **none of those is "open defect."** So the rule
-forbade the wrong home without providing a right one, and defects scattered into gate-findings
-archives that this same file says to *"write, never expect to read."* Tim's observation on reviewing the
-triage: the classification should have been there from the start.
-
-**The standing rule it serves: NO RELEASE IS CUT WHILE THE LEDGER IS NON-EMPTY.** A GitHub Release
-mints a permanent Zenodo DOI; four already carry latent flaws that cannot be withdrawn. A defect fixed
-before a release costs one gate round; a defect shipped in one is permanent. **Never rank release
-readiness above defect elimination, and never let release pressure defer a finding to next-touch debt.**
-(Memory `feedback_no_release_until_defects_zero`.) One correction worth carrying: deposited **files** in
-a Zenodo snapshot are frozen, but record **metadata** can be corrected through the Zenodo web UI — so a
-wrong claim in a release *description* is fixable; a flaw inside a published PDF is not.
-
-**The target is ZERO KNOWN DEFECTS, not zero defects.** The gates always find something — that is why
-the severity-tiered cap exists. Do not blur the two, and do not imply a clean sheet.
-
-**Rules for the ledger:**
-- **Verify every entry AT THE ARTIFACT** before recording it open or closed. It goes stale exactly like
-  the notes it replaces — that is not a reason to distrust it, it is a reason to re-check before acting.
-- **GREP LOOSELY.** Measured while building it: two live defects first read as already-fixed because the
-  pattern was too tight — one phrase split across a line break, one with markdown bold inside it. A
-  tight-pattern miss is **not** evidence a defect is closed.
-- **Burn down in FILE-SIZED BATCHES.** Gate rounds are per-push; one file fixed completely and gated
-  once costs far less than one item at a time.
-- **Fixing an item creates new unreviewed prose** and restarts the review obligation for the text
-  changed — fix and re-sign, or push what was certified.
-- Keep the ledger the SINGLE copy. Do not re-list its entries in the handoff; two copies drift.
-
-## ⭐⭐⭐ WHEN A FAILURE RECURS: the rule is wrong, not the reader. Run this list. (Tim, 2026-08-15.)
-
-**THE PRINCIPLE, and everything below follows from it: a failure that recurs is evidence about the
-RULE, never about whoever tripped it.** The response is to change the rule's SHAPE. It is never to try
-harder, and it is never to add a second rule saying the same thing louder — this file records **seven**
-conventions that leaked, and every one leaked while being remembered by people who had read it.
-
-**THE LIST. Run it in order; stop when a step resolves.**
-
-0. **⭐⭐ RE-READ THIS FILE FROM DISK. YOUR COPY IS A SNAPSHOT AND IT IS PROBABLY STALE.** (Tim,
-   2026-08-15 — a cache invalidation on the one path where the cache is guaranteed to be wrong.)
-   **The `CLAUDE.md` in your context was injected at session start. Any rule written LATER in that
-   session — including the fix for the failure you are recovering from — is absent from it.** Measured
-   the same day: a control agent was handed the exact failing task, and the section that reverses that
-   task **was not in its context**; it found the rule **by accident**, through an unrelated grep that
-   happened to return a `CLAUDE.md` line.
-   - **THE TRIGGER, and it is an action so it cannot be adjudicated away:** you are told you are in a
-     failure condition, or this is a retry, or a gate returned FAIL, or **someone refers to a rule you
-     do not recognise** — that last one is the tell that your copy is stale.
-   - **DO IT CHEAPLY FIRST.** `grep -n "^## " CLAUDE.md` costs ~1k tokens, lists every section title,
-     and a rule added this session shows up immediately as a heading you have never seen. **Read only
-     the sections that scan relevant.** A full re-read is ~55k tokens — check the manifest before
-     loading the payload.
-   - **⚠ THIS APPLIES TO THE MAIN INSTANCE TOO, not only subagents.** If you edited this file earlier
-     in your own session, **your injected copy still does not contain your own edit.** You know it only
-     because you wrote it, which is not the same as having it.
-   - **⚠ CALLER-SIDE COMPLEMENT, and it is not optional:** if you edit this file mid-session, **carry
-     the new rule into every subsequent brief verbatim.** Briefs are the only thing a spawned agent
-     reliably reads, and until it re-reads from disk the brief is the sole delivery path.
-
-1. **CHECK `DEFECTS.md` AND `DEFECT_CLASSES.md` FIRST.** If the class is already there, **a rule
-   already exists and did not fire** — which is a different and more useful problem than a novel
-   failure. Skipping this step is itself one of the recorded recurrences.
-   - ⭐ **AND YOU DO NOT HAVE TO REMEMBER 60+ LEDGER ROWS TO SPOT A RECURRENCE — `tools/verify/selfheal.py`
-     COUNTS THEM.** It reports *"this shape has happened N times and has no class row"* and suggests;
-     it never corrects, because deciding whether N rows are one phenomenon or N coincidences is
-     judgement and auto-filing would produce a register nobody verified. **`batch.py prepush` now
-     prints the top uncovered shapes on every run, blocked or clear.** ⚠ It used to run only from
-     `/ship` — the release command, i.e. the rarest action — and this file did not mention it at all,
-     so the one decidable input to this whole list surfaced almost never. Measured 2026-08-18: a
-     session made the same control-subject error **three times** (`DC-25`), closing each instance with
-     a local comment and never lifting it to a class, while the counter that would have said *"three"*
-     sat unrun. **Its counts are a READING LIST, not a finding list** — read the rows before acting on
-     a number.
-2. **DIAGNOSE THE TRIGGER, NOT THE CONTENT.** A rule that exists and did not fire almost never has a
-   content problem. Ask: **is the trigger an ACTION, or a CATEGORY you must adjudicate?** A category
-   leaks, because the adjudication is where it gets talked past. Ask also: **how deep in this file does
-   it sit?** ⭐ **Measured 2026-08-15: line 127 fired reliably all day; line 2135 did not fire once.**
-3. **FIX AT THE HIGHEST LEVERAGE AVAILABLE.** In descending order of reliability:
-   - a **MECHANICAL check** — a gate, a hook, a checker. Fires whether or not anyone remembers. *Always
-     prefer this.*
-   - a **TRIGGER + NAMED FILE in this file** — the `CannotBe` pattern. Fires when someone reads. Needs
-     all four properties: unmissable trigger, exact path, stated consequence, target worth opening.
-   - a **NOTE.** Fires only if someone chooses to read it. **~10% of notes are ever referenced again** —
-     treat this as recording, not fixing.
-4. **CONTROL-TEST THE FIX.** ⭐ **Tim's addition, and it is what turned this protocol from a checklist
-   into something that works.** Give a **fresh agent the exact failing task**, read-only, **without
-   telling it the answer** — not the counts, not the finding, not that a prior attempt failed. **Fix
-   the scorecard BEFORE the result comes back.** A fix you have not tested is a hypothesis.
-5. **TEST DELIVERY SEPARATELY FROM CORRECTNESS.** ⚠ They fail independently and the second is invisible.
-   Measured the same day: the fix was correct and **did not reach the agents it was written for** — a
-   mid-session `CLAUDE.md` edit is absent from the context of agents spawned afterward. **Ask: did it
-   arrive?** separately from *did it work?*
-6. **RECORD ALL THREE — the class, the TRIGGER diagnosis, and the test result including how it was
-   compromised.** A control that passed for the wrong reason is worth more written down than a clean
-   pass, because the next person will otherwise trust it.
-
-**⚠ THE ESCALATION LADDER — the count is the signal, and this file's own history is the calibration:**
-
-| occurrence | what it is | where it goes |
-|---|---|---|
-| **1st** | an instance | `DEFECTS.md` |
-| **2nd** | a **class** | `DEFECT_CLASSES.md`, with a **detector** |
-| **3rd** | the rule's **TRIGGER** is wrong | fix the trigger — do not restate the rule |
-| **4th+** | **discipline will not work here** | build the mechanical check; stop writing prose about it |
-| **the CHECK then fails 3×, OR THE LOOP NEVER CONVERGES** | **the check's SHAPE is wrong, not its patterns** | see rung 5 below — widening it again is the failure repeating, and **the gate DOWNGRADES TO A WARNING** |
-
-**⭐⭐ RUNG 5 — WHEN THE MECHANICAL CHECK ITSELF FAILS THREE TIMES, STOP WIDENING IT AND PUT AN LLM ON
-THAT LAYER. (Tim, 2026-08-19.)** Rung 4 says build the checker; it never said what to do when the
-checker keeps missing. The tell is unmistakable and it is not "more patterns are needed": **each fix
-closes the holes its author thought of, and the next reader finds different ones.** Measured
-2026-08-19 on `check_paths.py --claim`, which failed three times in one session — first on markdown
-emphasis, then on HTML entities and escaped apostrophes, then on line-start markers where five of ten
-were blind and the sixth was covered *by accident*. A `/rely` pass watched the second fix land and
-reported that both of its routes were **still** blind in the new version.
-
-**⭐⭐ NON-CONVERGENCE IS A SECOND, INDEPENDENT TRIGGER — AND IT FIRES THE DOWNGRADE. (Tim,
-2026-08-21: *"anytime a loop fails to converge stop attempting to write a script and use AI fuzzy
-logic instead — treat as a warning instead of a hard gate."*)** Rung 5 above triggers on a check that
-**misses** three times. This triggers on a **LOOP that never settles**, which is a different
-observation and was measured separately: four `/rely` rounds on `tools/verify/` ran **10 → 4 → 6 → 9**
-findings and never quiesced, because each round reviewed code written in response to the last. On
-2026-08-21 the same layer deadlocked outright — a one-line, mechanically-verified, zero-judgement fix
-demanded by `check_figures` re-staled the `/rely` signature and blocked the push it was made to
-unblock. **A loop whose own repairs land inside its own scope cannot terminate, and no amount of
-further script will make it.**
-
-**THE TWO MOVES, and the second is the new one:**
-1. **STOP WRITING SCRIPT.** Put an LLM screen on the layer, subject to every fence below.
-2. **DOWNGRADE THE GATE TO A WARNING.** It reports, it does not block. Enforcement moves to the
-   human read, which is where the judgement already was.
-
-**⚠ WHAT MAY BE DOWNGRADED, AND WHAT MAY NOT — this is the whole safety of the rule.** The unit is
-still the defect class (§ below), so ask what the gate DOES:
-- **An ENUMERATION gate — "have all sites been enumerated / do all hashes match / is everything
-  covered".** Its failure mode is *incompleteness*, it can never prove itself done, and its own
-  repairs re-arm it. **→ DOWNGRADE. It becomes a warning and a reading list.**
-- **A FAIL-OPEN gate — one that catches bad work getting THROUGH.** A check that can be walked past, a
-  signal that can be forged, an exemption anything can grant itself, a gate reporting success it has
-  not earned. **→ NEVER DOWNGRADE, no matter how many rounds it takes.** Non-convergence in an
-  enumeration is a fact about the enumeration; a fail-open is a fact about the work. `guards.py`, the
-  bedrock cap, the quarantine check and the hook-armed check are all this kind.
-
-**⚠⚠ SPLIT AT THE LEG, NEVER AT THE CHECK — the first draft of this rule got that wrong and the
-error was silent.** A single check routinely has legs of both kinds. The `/rely` routing check is the
-worked example: *"a routed `.md` changed since the signature"* is enumeration and downgrades, while
-*"a checker's executable LOGIC changed since the signature"* guards against unreviewed weakening of
-the verification layer and **must keep blocking**. Downgrading the check wholesale carries the second
-across with the first.
-
-**⚠⚠ AND ASK WHAT THE DOWNGRADE UN-PRICES. AN EXEMPTION BOUGHT WITH A BLOCK IS UNPAID THE MOMENT THAT
-BLOCK BECOMES A WARNING.** ⭐ **LANDED 2026-08-21, AND THE PRICE IS NOW SPLIT THE SAME WAY THE LEGS
-ARE.** `tools/verify/**` and `tools/process/**` skip editorial and adversary, and what pays for that
-depends on WHAT changed:
-
-| what changed under the prefix | `/rely` routing | what pays for the exemption |
-|---|---|---|
-| **executable logic** (`.py`, hooks) | **BLOCKS** | `/rely` covers it and blocks. Unchanged. |
-| **exemption switches** (baselines, whitelists, pins) | **BLOCKS** | as above — a fail-open surface, never downgradable |
-| **routed prose** (`.md`) | **WARNS** | **no longer a block** — see the warrant below |
-
-**The prose leg's warrant is now an ARGUMENT, not a gate, and it has to stand on its own.** It is
-this: routed `.md` is operating instruction of the same kind as `CLAUDE.md`, which is exempt from
-both prose gates **and routed nowhere at all, by design**. So advisory `/rely` coverage is strictly
-*more* review than the parent file gets, not less. **The fence is what makes that hold — anything
-asserting mathematics belongs in the corpus and is gated normally** (`tools/process/README.md` states
-the criterion). If that fence ever slips, this warrant fails and the prose must go back to editorial
-and adversary; that is the trigger to watch, and it is a content question, not a tooling one.
-
-**⚠ THE MECHANICAL HALF IS BUILT AND CONTROLLED.** `guards.py` § *the router the exemption is priced
-on still BLOCKS* walks five routes: the fail-open legs are declared blocking, `check_routing` emits
-those flags, every consumer of it honours them, `routing_bad` computes correctly, and `cmd_prepush`
-still calls it. Two probes in `.claude-local/tools_wip/` are its controls —
-`probe_warrant_blocks.py` neuters enforcement three ways and requires `guards.py` to go red on each
-(it does), and `probe_docs_only_clears.py` exercises both halves: a docs-only edit clears as a
-warning, a checker edit still blocks.
-
-**Why the guard had to exist first, in one line:** enforcement mode used to be a literal at one call
-site (`bad += 0 if ran else 1`), so no control could read it — a probe measured `guards.py` printing
-`ok` over a router that had stopped blocking, the **fifth** warrant-satisfied-while-empty in that same
-code (rounds 1–4: sampling, narrowing, a three-probe set, unchecked regex flags). The warrant tested
-COVERAGE and the exemption is priced on coverage **and** enforcement. The mode is now data
-(`_LEG_BLOCKING`, `routing_bad`), which is the entire reason it is testable.
-
-⚠ **The rule this instance satisfied, kept for the next one: before any downgrade lands, the guard
-asserting what still BLOCKS lands with it — or the exemption it warrants is given up in the same
-change.**
-
-**⚠ NON-CONVERGENCE MUST BE MEASURED, NOT ASSERTED — or this rule becomes a licence to downgrade any
-gate that is currently inconvenient.** Name the rounds and their finding counts, as the `10 → 4 → 6 →
-9` above does. *"This keeps blocking"* is not evidence; it is usually the gate working. And this does
-**not** touch § *If a stage BLOCKS, fix the cause* — downgrading a gate's declared enforcement mode,
-deliberately and in writing, is a different act from `--no-verify`-ing past one that still blocks.
-**This project has two recorded bypass incidents and neither would have been legitimised by this
-paragraph.**
-
-**⚠ AND A DOWNGRADED GATE MUST GET LOUDER, NOT QUIETER.** A warning nobody reads is strictly worse
-than a block, because it manufactures the appearance of coverage — which is `RLY25-1` exactly: a
-report publishing `pass` for a property it no longer checks. So a downgrade obliges the manifest to
-say **WARN** at every entry point (`report.py` already formats this), and obliges the count to be
-printed on every run, blocked or clear, the way `check_poles.py` prints its suppression count so
-rubber-stamping shows up as a rising number instead of going quiet.
-
-**⚠ THE DISCRIMINATOR — AND THE UNIT IS THE DEFECT CLASS, NEVER THE TOOL.** Both gates caught the
-first draft on this: `--claim` is *itself mixed* — locating a phrase is enumeration, judging that the
-located sentence misdescribes the section it cites is ground truth, and the second is what the fix
-that triggered this rule actually turned on. Escalating "the tool" would carry the second across with
-the first.
-
-**THE TEST — name the ORACLE, not the failure type: does deciding ONE candidate site require opening
-another artifact?**
-- **NO — self-contained.** The sentence in front of you settles it. Formatting shapes, phrasing,
-  fragments, "does this paragraph contradict the one above it". **→ AN LLM SCREEN IS THE RIGHT
-  LAYER.** It reads the sentence and does not care whether the line began with `>`.
-- **YES — you must go and read something else.** Does this citation say what we claim; does this
-  locator resolve; what is this declaration's real footprint. **→ DO NOT ESCALATE.** `DC-17` measured
-  it: 10/10 on the self-contained slice, **0/8** on the citation slice. Fix the tool, or hand it the
-  source.
-- **BOTH SURFACES AT ONCE — a THIRD category, and the first draft routed it wrongly.**
-  Cross-surface consistency ("README under-names relative to CLAIMS") *reads* like enumeration and is
-  not: deciding it means holding two artifacts simultaneously, and `DC-17` measured that context lines
-  **hurt** here. **→ HUMAN OR GATE. Neither the checker nor the screen.**
-
-**⚠⚠ THE SCREEN MAY REPLACE THE ENUMERATION. IT MAY NEVER REPLACE THE VERDICT.** `DC-17` measured
-precision as *unstable* — 1, 4, 4, 3 false positives across four runs over the same twelve negatives —
-and this file's own rule is that a false positive is the more expensive error, because it manufactures
-work that looks urgent. So the screen widens the candidate set and a human or a gate adjudicates,
-which is exactly what makes `fragment_screen.py` work. Two operational rules come with it, or it gets
-run once and believed: **take sites flagged in ≥2 of 3 runs**, and **ignore self-reported confidence**
-— `DC-17` measured `UNSURE` used **zero times** on the slice the screen got wrong.
-
-**⚠ AND THE MISAPPLICATION FAILS SILENTLY, WHICH IS WHY THE FENCE MUST BE AN ARTIFACT.** Point a screen
-at a ground-truth question and it does not refuse — it returns a confident PASS, because it accepts the
-sentence's own label as its warrant. Prose cannot stop that, and prose is what this rung exists to stop
-relying on. **Any screen must run `deepseek/pole_groundtruth.json` — the recorded slice it should get
-wrong — and be disqualified mechanically when it scores well on it.** That is the `check_checkers.py`
-move: the control is the deliverable.
-
-⚠⚠ **AND RUNG 5 IS NOT "PREFER AN LLM".** Measured in the round that produced it: all three prose kills
-came from *reading*, and the one finding neither gate's reading caught — a register fingerprint
-attesting a hash that matched nothing — came from **running a two-line comparison**. No screen would
-ever have caught it. **Where a mechanical check is possible at all, it still beats this rung.** Rung 5
-is for where enumeration has been *demonstrated* unbounded, three times, not for where it is merely
-tedious.
-
-⚠ **The screen is a READING LIST, exactly as the mechanical version was** — it locates, a human or a
-gate judges. And it is a SCREEN, not a replacement: keep the mechanical check for the shapes it does
-catch, because it is free and it runs on every push. `.claude-local/deepseek/` is the existing bulk
-tier (memory `feedback_llm_screen_for_grammar`, Tim 2026-08-02, where a whitespace rule corrupted 61
-files and **the damage checker written to catch it had the identical bug**, so it certified the
-damage). That memory has never bound anything, because memory bodies do not load — which is why the
-rule is here.
-
-**⚠⚠ DO NOT SKIP TO STEP 3 AND WRITE A NEW SECTION.** That is the reflex, it feels like progress, and it
-is how this file grew past the point where its tail fires. A recurrence usually needs a **trigger
-changed**, not a rule added.
-If you are about to add a section, first find the one that already says it and ask why it did not fire.
+## R-NOCONV  A check that misses 3x, or a loop that will not settle, changes SHAPE.
+TRIGGER  a mechanical check has missed three times, or three or more rounds of fixes have
+         not reduced findings — name the rounds and their counts, never assert it.
+RULE     stop widening the script. Put an LLM screen on the layer as a READING LIST: it
+         may replace the ENUMERATION, never the VERDICT — take sites flagged in >=2 of 3
+         runs, ignore self-reported confidence, and ship the recorded slice it should get
+         WRONG as its control. Downgrade ENUMERATION legs to WARN; FAIL-OPEN legs never
+         downgrade, no matter how many rounds. SPLIT AT THE LEG, never at the check. The
+         guard asserting what still BLOCKS lands in the same change, or the exemption that
+         block paid for is given up with it. A downgraded gate prints its count every run.
+COST     a downgraded fail-open leg is an unpriced exemption, and a warning nobody counts
+         manufactures coverage that was never earned.
+READ     tools/process/non-convergence.md
 
 ## ⭐⭐ BEFORE YOU EDIT ANY `.lean` FILE: read `ZeroParadox/MANIFEST.md` AND grep the identifiers you are about to touch. Hard Rule. (Tim, 2026-08-15.)
 
@@ -1557,8 +1335,11 @@ free analyticity lemmas, and the standard NAME for a thing described longhand.
    **RUN**: grep searches *names*, `exact?` searches *statement shape*, so it finds the lemma whose
    name you would never have guessed, and it reaches the attribute-generated siblings (`@[to_dual]`,
    `@[simps]`) that have **no source line to grep**.
-3. **One literature search** if the object has a name. **`.claude-local/papers/` FIRST** — it is the
-   downloaded-source library, and a scout once declared Aczel unobtainable while it sat on disk.
+3. **One literature search** if the object has a name — **run the LADDER in order: `.claude-local/papers/`
+   → `theoremsearch` → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
+   `theoremsearch`; ignore its similarity score; **its null is UNINFORMATIVE** (coverage-bounded).
+   **Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION** — a returned body is not a passage in hand.
+   📖 `tools/process/prior-art.md` §§ 2a–2b.
 
 **⚠ AND WHEN YOU FETCH A SOURCE, FILE IT** — `.claude-local/papers/`, named
 `author_topic_year[_id].pdf`. **Validate before filing** (a tiny PDF is an error page, not a paper).

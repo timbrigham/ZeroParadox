@@ -131,6 +131,8 @@ PRE_PUSH_PLAN = [
     ("quarantine", "BLOCK", "private/* branches never reach a remote"),
     ("guards", "BLOCK", "every enumerated ROUTE to a guarded property still behaves"),
     ("check_paths", "BLOCK", "every repo-relative reference in tracked markdown resolves"),
+    ("check_claude_md", "BLOCK", "CLAUDE.md shape contract: rooted paths resolve, named checkers exist "
+                                 "(3 legs still PENDING — it says so on every run)"),
     ("check_moved", "BLOCK", "nothing points at a path that was relocated"),
     ("check_negatives", "BLOCK", "a universal negative carries a date or a search record"),
     ("check_figures", "BLOCK", "an artifact count carries a date, or is measured on demand"),
@@ -327,6 +329,20 @@ def pre_push(stream):
         print("Fix the finding, or ledger it in .claude-local/DEFECTS.md.")
         return 1
     print("===========================")
+
+    print("\n=== CLAUDE.md shape contract ===")
+    # ⚠ CALLED WITHOUT `--record`, DELIBERATELY, AND THIS IS DEBT rather than a design choice.
+    # The checker has no ledger support yet, and a `--record` flag that accepted the argument
+    # while writing nothing would publish a verdict it never earned — the exact shape this
+    # pipeline exists to refuse. So it BLOCKS locally and is NOT audited; wiring it into
+    # `recorded()` is the follow-up, and until then its verdict leaves no key.
+    # ⚠ Its manifest declares 3 PENDING legs on every run. A clear result here is evidence
+    # about two legs, never about the shape contract as a whole.
+    if py("check_claude_md.py") != 0:
+        print("\nPush blocked: CLAUDE.md names a path or a checker that does not exist.")
+        print("Fix the pointer. Body: tools/process/claude-md-maintenance.md.")
+        return 1
+    print("================================")
 
     # ⚠ WIRED IN 2026-08-15, AFTER BEING BUILT AND LEFT UNCONNECTED FOR A DAY. `check_moved.py` is
     # the control that proves the tools/verify migration is complete — a tombstone only helps a
