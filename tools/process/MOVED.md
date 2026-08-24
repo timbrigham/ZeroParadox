@@ -38,7 +38,10 @@ section is preserved verbatim in the body named below.
 | Session Handoff File / Four-Fingerprint Scan / Communication Quality / Reviewer Feedback | `R-HANDOFF` | `tools/process/lean-development.md` |
 | High-Value Insight Capture — Standing Rule | `R-CAPTURE` | `tools/process/lean-development.md` |
 | Development mode — LOAD THE SECTION BEFORE YOU WORK | `R-DEVMODE` | `tools/process/lean-development.md` |
-| Stub-First Protocol / Proof Documentation Workflow / Operational Rules / .claudecodes | `R-LEANDEV` | `tools/process/lean-development.md` |
+| Stub-First Protocol / Proof Documentation Workflow / Operational Rules / .claudecodes | `R-LEANDEV` | `tools/process/lean-development.md` || THE GATE-ENFORCED CONVENTIONS | `R-GATED` | `tools/process/gated-conventions.md` |
+| Every brief carries the CONTROL OBJECTS | `R-CONTROLS` | `tools/process/gated-conventions.md` |
+| Rules That Must Reach Spawned Agents | `R-BRIEF` | `tools/process/gated-conventions.md` |
+| Anything convertible from prose to Lean MUST be converted | `R-TOLEAN` | `tools/process/prose-to-lean.md` |
 
 ## Pass record
 
@@ -53,8 +56,9 @@ section is preserved verbatim in the body named below.
 | 7 | 2026-08-23 | `:866`-`:1013` (scripts home, Lean-PDF, shell, indexes) | 148 | 55 | **93** |
 | 8 | 2026-08-23 | `:922`-`:1082` (naming/labels, public issues) | 161 | 33 | **128** |
 | 9 | 2026-08-23 | `:956`-end (framework, handoff, capture, dev mode, Lean) | 236 | 85 | **151** |
+| 10 | 2026-08-23 | `:382`-`:628` (gated conventions, controls, briefs, prose-to-Lean) | 247 | 71 | **176** |
 
-**File total: 2338 → 1042 lines (−1296, 55%).**
+**File total: 2338 → 867 lines (−1471, 63%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then

@@ -379,252 +379,77 @@ COST     a commitment in brackets reads as data, which is how `da1_closed_concre
          remember anything — a signature simply is what it is.
 READ     tools/process/commitments-in-hypotheses.md
 
-## ⭐⭐ THE GATE-ENFORCED CONVENTIONS. Rules here; the ARGUMENT is `tools/verify/README.md`.
+## R-GATED  Five conventions are CHECKERS now. Each blocks at push.
+TRIGGER  you are writing a POV claim, declaring a `class`/`structure`, adding a prose block or
+         docstring, closing a self-exemption hole, deleting a `*_baseline.txt` line, or
+         WRITING ANY FILE TO DISK.
+RULE     a POV claim declares its KIND (COINCIDENCE · INVERSION · DRIFT · CARRIER · INVARIANT)
+         and STATUS via `Statement:`/`Reading:` — there is no slot for DENYING a reading
+         (`check_pov`). A requirements class is informative only if something FAILS to be a
+         member: build the trivial witness or prove you cannot (`check_classes`). Short header,
+         statement per declaration, prose never exceeds code (`check_prose`). A guard protects
+         a PROPERTY, not a hole — enumerate EVERY route (`guards.py`). Removing a baseline
+         entry owes a `/claim-review` and FAILS CLOSED, because no checker can tell content
+         GONE from content MOVED (`check_frozen`). Verify every file written:
+         `python tools/verify/check_encoding.py <path>` — "is it UTF-8?" is the WRONG question
+         and returns PASS on double-encoding; prefer the Write/Edit tools and keep non-ASCII
+         out of `.ps1` source.
+COST     each was a CONVENTION that leaked before it was a checker. A baseline is DEBT, not a
+         decision — shrink it as files are touched, never grow it deliberately.
+READ     tools/verify/README.md
 
-**TRIGGER — an action, so there is nothing to adjudicate: you are about to write a POV claim, declare
-a requirements class, add a prose block or docstring, close a self-exemption hole, or WRITE ANY FILE
-TO DISK.** Each rule below **BLOCKS at push**, so you find out either way; reading first is how you
-avoid finding out the expensive way.
+## R-CONTROLS  Every brief carries the control objects and "name your first unjustified step".
+TRIGGER  you are writing a brief that BUILDS or REVIEWS a class, a claim, or a construction.
+RULE     issue the controls as a standing set — objects satisfying the same inputs for which
+         the conclusion is FALSE — plus the instruction to NAME THE FIRST STEP THAT IS NOT
+         JUSTIFIED. `Unit`/`PUnit` kills any algebraic signature; `Empty` kills anything with
+         a `bot` field; `Bool`, `Fin 3`, `ℕ → ℕ` kill "bites at two or more points"; the
+         corpus's own `trivialZPSemilattice`, `trivialSelfApp`, `trivialValBridge`,
+         `trivialValuationStructure` kill membership-as-an-argument; the constant map `_ ↦ ⊥`
+         and the always-true relation kill self-application and periodicity; ℝ kills any claim
+         the snap is available in a general ordered carrier. VERIFY A CONTROL EXISTS BEFORE
+         NAMING IT.
+COST     `Empty` is a two-sided trap — "the finite carriers are exactly the subsingletons"
+         shipped as a bedrock defect because the true statement needed INHABITED subsingletons,
+         and the inverse error claimed non-members "abound" when inhabitation is the sole
+         obstruction. And a brief citing a control that does not exist is worse than none: the
+         agent reports it could not build the witness, which reads as evidence of teeth.
+READ     tools/process/gated-conventions.md
 
-| rule | fires when | checker |
-|---|---|---|
-| **A point-of-view claim declares its KIND and its STATUS.** Five kinds — COINCIDENCE, INVERSION, DRIFT, CARRIER, INVARIANT — via the existing `Statement:` / `Reading:` labels. **There is no slot for DENYING a reading, by design.** | you write "chart", "frame", "point of view" | `check_pov.py` |
-| **A requirements class is only informative if something FAILS to be a member.** Build the trivial witness or prove you cannot; both answers are worth having. | you declare a `class` or `structure` | `check_classes.py` |
-| **Short header, statement per declaration; prose never exceeds code.** The Engineer's Take is exempt. | you add a header block or a docstring | `check_prose.py` |
-| **A guard protects a PROPERTY, not a hole — enumerate EVERY route.** Closing one route and calling it fixed is this project's most repeated defect. | you close a self-exemption or bypass | `guards.py` |
-| **⭐⭐ REMOVING A BASELINE ENTRY OWES A `/claim-review`. A baseline entry IS the record that a site was let through UNEXAMINED**, so deleting it retires the record without discharging the liability. **The checkers measure the SHAPE of prose — volume, vocabulary — and never whether a claim is TRUE**, so a block dropping under cap is not a block whose claims were checked. ⚠ **FAIL-CLOSED, because "the key stopped matching" is not enough:** a removal is either *content GONE* (nothing to review) or *content MOVED* — a path-keyed entry dying while the claim lives on elsewhere — and no checker can tell them apart. The only exemption is the FILE being gone; an entry naming `Foo.lean` also demands its `Foo.md` ride-along. **Removal is still always ALLOWED — it is the point of the freeze — it is just not FREE.** | you delete a line from any `*_baseline.txt` | `check_frozen.py` |
-| **EVERY FILE WRITTEN TO DISK IS VERIFIED — `python tools/verify/check_encoding.py <path>`.** ⚠ **"Is it UTF-8?" is the WRONG QUESTION and returns PASS on this defect**: double-encoded text is valid UTF-8 at every byte, so a decodability test is green while the content is garbage. And the corruption usually enters at **script PARSE time, not write time** — PowerShell 5.1 reads a `.ps1` as the system codepage unless the script carries a BOM, so a correct writer faithfully writes an already-mangled string. **Prefer the `Write`/`Edit` tools; keep non-ASCII out of `.ps1` source.** ⚠ **TWO TIERS: BOM and undecodable BLOCK; suspected double-encoding WARNS** and is quieted only by `tools/verify/encoding_whitelist.txt` — **verified** exclusions each carrying a stated reason, because the round-trip test provably cannot separate mojibake from some genuine typography (`3 × 10²` encodes to valid UTF-8). An entry with no reason is ignored. Recipes and the repair procedure (a whole-file inverse DESTROYS a mixed file): `tools/process/file-encoding.md`. | you write any file | `check_encoding.py` |
+## R-BRIEF  A rule that must not be violated belongs in the BRIEF, never only in memory.
+TRIGGER  you are delegating to a spawned agent.
+RULE     carry the relevant rules into the brief VERBATIM — a spawned agent receives this file
+         and the memory INDEX, but never memory BODIES, so a rule living in a memory body
+         reaches it as one line among a hundred. Always include: draft from source, never
+         describe a source you have not read; start new `.lean` files from
+         `.claude-local/templates/`; never write a bare "bottom" — say which level; the literal
+         `ε₀ = 0` only as a guard or a theorem argument; standard mathematical term first, ZP
+         shorthand after; verify an API exists before naming it; never delete a Lean file a
+         subagent produced; NO SCRATCH FILES IN THE REPO — the scratchpad, never the tree; and
+         reviews are READ-ONLY on the working tree, writing only their signal and findings note.
+         An agent needing commits works in `worktree(action='add')`, never the shared checkout.
+COST     a subagent invented a detail about a cited paper while that exact rule sat in its
+         memory index. And "restore the tree" and "preserve the tree" are different
+         instructions: a review agent hard-reset three times, destroyed an uncommitted edit,
+         and correctly verified the tree was clean — which WAS the destruction.
+READ     tools/process/gated-conventions.md
 
-**⭐ THE ONE-LINE WHY, and it is the same for all four: each was a CONVENTION that leaked before it
-was a CHECKER.** This file records **seven** conventions that leaked while being remembered by people
-who had read them; every one of these four is a rule that failed as discipline and works as a gate.
-That is the argument for reading `tools/verify/README.md` before arguing with any of them.
-
-**📖 THE FULL ARGUMENT — `tools/verify/README.md`.** What each checker detects, the measured defect
-it exists to stop, the baseline policy, and the controls each was verified against.
-**Read it before changing a checker, adding a baseline entry, or claiming a gate is wrong.**
-
-⚠ **Why it is THERE and the rules are HERE.** The arguments are prose that every session and
-every subagent used to pay for, and **the gate fires whether or not anyone read them** — measured
-2026-08-15: line 127 of this file fired reliably all day, line 2135 did not fire once. A rule in the
-tail is decorative. So the rule, the trigger and the consequence stay in the firing zone; the
-justification moved to a file this line NAMES. Same mechanism as the `CannotBe` indexes — delivery
-is a trigger naming a path, not injection.
-
-⚠ **A baseline is DEBT, not a decision, and all four are baselined.** They block on NEW sites only.
-**Shrink the baseline as files are touched; never grow it deliberately** — `debaseline.py` reports
-what is outstanding.
-
-## Every brief carries the CONTROL OBJECTS and "name your first unjustified step". Hard Rule.
-
-⚠ **This section deliberately did NOT move to `tools/verify/README.md` with its four neighbours.
-Nothing enforces it** — no checker fires when a brief omits the controls — and an unenforced rule
-outside the firing zone is a rule that stops working. **Enforcement is the criterion for moving a
-section out, never adjacency.**
-
-**Adopted 2026-08-11 from the zeta-zeros paper** (`.claude-local/papers/claude_zeta_zeros_two_thirds_2026.pdf`,
-§C.6 *Parallelism with controls*). Its twenty-three concurrent agents each received the **same control
-objects** — Davenport-Heilbronn functions, Epstein zeta functions, planted-zero Beurling systems:
-objects satisfying the same inputs **for which the conclusion is FALSE** — plus one standing
-instruction, *name the first step that is not justified*. Reported outcome: *"Most lines died against
-their controls. The one that survived did so precisely because the controls under-certified."*
-
-**ZP already owns its controls and has never issued them as a standing set** — they get run when
-someone remembers, which is exactly how five of seventeen requirements classes went degenerate
-unnoticed. The § above enforces that the degeneracy question was *asked*; this makes the answer
-*available* to whoever is asking.
-
-**Put these in every brief that BUILDS or REVIEWS a class, a claim, or a construction.** Located and
-verified at their definition sites 2026-08-11 — a dated survey, not a completeness claim:
-
-| control | where | kills |
-|---|---|---|
-| `Unit` / `PUnit` | — | any algebraic signature; every theory has a one-element model |
-| `Empty` | — | anything with a `bot : L` field — but see the trap below |
-| `Bool`, `Fin 3`, `ℕ → ℕ` | — | "the class bites at two or more points" |
-| `trivialZPSemilattice` | `Valuation/Scale.lean:99` | `ZPSemilattice` membership as an argument |
-| `trivialSelfApp` | `Computability/SelfApp.lean:177` | *"L carries `AbstractSelfApp`, therefore…"* |
-| `trivialValBridge` | `Valuation/ScaleBridge.lean:218` | `ValBridge` membership |
-| `trivialValuationStructure` | `Valuation/Scale.lean:111` | `ValuationStructure` membership |
-| the constant map `_ ↦ ⊥`, the always-true relation, a constant sequence | — | self-application, `SeparatedSuccession`, periodicity |
-| **ℝ** — `f_snap_impossible`, `Computability/ComputationCannotBe.lean:152` | | any claim that the snap is available in a general ordered carrier |
-
-⚠ **`Empty` is a two-sided trap.** *"The finite carriers are exactly the subsingletons"* shipped as a
-bedrock defect because the true statement needed **inhabited** subsingletons. And K1 is the same trap
-inverted — `Order/Lattice.lean` claimed non-members *"abound"* when **every inhabited carrier admits a
-`ZPSemilattice`** and `Empty` is the only obstruction. Run it, and read which way it points.
-
-⚠ **VERIFY A CONTROL EXISTS BEFORE NAMING IT.** Writing this table, one name recalled from a ledger
-row (`scTriv`) **did not resolve anywhere in the corpus**. A brief citing a control that does not
-exist is worse than a brief with no controls: the agent reports it could not build the witness, and
-that reads as evidence the class has teeth.
-
-## Rules That Must Reach Spawned Agents — Hard Rules
-
-**Why this section exists (measured 2026-07-19).** A spawned agent receives, automatically: this file in
-full, the user-level `CLAUDE.md`, the Lean `.claudecodes` block, the project-standards block — **and the
-memory INDEX only, not memory file bodies.** So a rule whose content lives in a memory body reaches a
-subagent as one line among ~100 in an index, competing for attention with ninety-nine others, firing at
-no particular moment. That is not a control.
-
-**The consequence, verified:** a subagent invented a factual detail about a cited paper while the line
-*"Draft from source only — public math claims must trace to a specific source passage"* was sitting in
-its index. The rule was visible and did not bind. **A rule that must not be violated belongs HERE or in
-the task brief. Memory is for context, not enforcement.** When delegating, carry the relevant rules below
-into the brief explicitly — the same way the encoding and glob warnings are already carried.
-
-- **Draft from source.** Never describe the content of a source you have not read. Cite existence (title,
-  venue, that it exists) freely; assert specific technical content **only with the passage in hand**. If
-  you cannot read it, say so explicitly — do **not** soften a specific into a vaguer assertion about a
-  paper nobody opened. Applies to Lean docstrings citing external papers, companion sections, discussion
-  comments, and outreach. Before concluding a PDF is unreadable, try `pypdf`/`pdfminer` directly
-  (`.claude-local/extract_pdf_text.py`); a fetch tool's failure is not a fact about the source.
-- **Start new files from the templates.** Any new `.lean` file starts from `.claude-local/templates/`
-  (`TEMPLATE_lean.lean`, `TEMPLATE_experimental_mapping.lean`) and its `README.md`. Note the template's
-  namespace line is stale — namespaces are FLAT (`ZeroParadox`), not `ZeroParadox.ZPX`.
-- **Never write a bare "bottom."** Always say which level: the structureless referent / a specific
-  structured instance (a face) / the family-and-schema. The bare word sliding between senses is the
-  project's longest-standing source of confusion. (`/remember-bottom` re-orients.)
-- **The literal string `ε₀ = 0`** may appear ONLY as a guard or fence forbidding it, or as a theorem where
-  ε₀ is an argument. Never a bare assertion, never in conversation — even to deny it. Canary:
-  `epsilon0_ne_zero`.
-- **Standard mathematical term first**, ZP term after as a declared shorthand — never the reverse. This is
-  the defense against the "ontology built on an equivocation" reading.
-- **Verify an API exists before naming it in a plan.** Grep the Mathlib pin; a plan citing a lemma that
-  does not exist in the pinned version is worse than no plan.
-- **Never delete a Lean file a subagent produced**, even a failed experiment — say so in the brief.
-- **NO SCRATCH FILES IN THE REPO.** Any probe, temp script, or measurement file goes in the session
-  scratchpad directory, never under `ZeroParadox/` or anywhere else in the working tree. A reviewer that
-  needs to measure something writes it to the scratchpad, runs it, and deletes it. **Measured
-  2026-07-19:** a review agent left a `ZZTestOrd.lean` probe in the source tree (since deleted, so the
-  path no longer exists) and it was committed — a scratch probe is now in the permanent history. Put this
-  line in every subagent brief.
-- **Reviews are READ-ONLY on the working tree.** A gate reads, measures, and reports; it does not modify
-  repo files. The only writes a gate may make are its signal file and its findings note under
-  `.claude-local/notes/`.
-- ⚠⚠ **AN AGENT THAT EXERCISES THE HOOKS MUST NEVER `git reset --hard`, `git checkout -- .`,
-  `git clean`, OR `git stash` THE SHARED TREE — IT WILL DESTROY THE CALLER'S UNCOMMITTED WORK AND
-  REPORT SUCCESS.** Measured 2026-08-10: a `/rely` run was told to exercise the commit and push
-  gates and to leave the repository exactly as it found it. It made probe commits and reset
-  **`--hard`** to the base three times. That is a *correct* reading of the instruction, and it
-  **silently deleted an uncommitted `CLAUDE.md` edit** the caller was holding; the agent then
-  verified *"tracked tree clean, HEAD unchanged"*, which was true — and was the destruction. It had
-  even NOTICED the concurrency, reporting that two files *"were being edited by their author during
-  the trial"*, and hard-reset anyway. **"Restore the tree" and "preserve the tree" are different
-  instructions, and only the caller knows which is meant.**
-  - **Rule for the BRIEF:** an agent needing to create commits works in a dedicated worktree —
-    **`worktree(action='add')`**, which returns a detached checkout under a scratch area outside the
-    repository — never in the shared checkout. It gets a private HEAD and index, so nothing it does
-    can reach the caller's tree; cleanup is `worktree(action='remove')` with that path, and
-    `action='prune'` drops records of worktrees whose directories are already gone. The `CAL-2`
-    pipeline replay used exactly this and left the main tree untouched.
-    ⚠ **CARRY THIS INTO THE BRIEF VERBATIM, because the command CHANGED.** The old
-    `git worktree add --detach` is now denied like every other direct git call, and this is the
-    sanctioned escape from the four destructive verbs — so a brief that still names the old form
-    leaves its agent with a safety rule it cannot execute. Measured 2026-08-22: `rely.md`'s single
-    git reference was exactly this line.
-  - ⭐ **The four destructive verbs are now REFUSED, not merely banned** — the hook denies the
-    command and gitRobot has no parameter that reaches `--force`, `--hard` or `-f`. This bullet is
-    now a statement of *why*, kept because the reasoning is what transfers to the next verb nobody
-    has classified yet.
-  - **Rule for the CALLER:** commit or stash your own work **before** spawning any agent licensed to
-    touch git state, and treat the tree as unstable until it returns. This file already warns that
-    background agents run concurrently so the tree is not a stable snapshot; this is that hazard
-    with a **destructive** edge rather than the merely additive one of the `git add -A` incident.
-  - ⚠ **`.claude-local/` survived only because the parent ignores that path — do not read that as
-    safety.** A `clean -xfd` would have taken the whole private working folder. ⚠ **It DOES have a
-    remote now** (`ZeroParadoxLocal`, private) — this line said "no remote and is backed up by hand"
-    until 2026-08-22, which was stale, **and believing it is what left three commits sitting on one
-    disk that day.** Commit *and push* it; see the handoff's PART 0b step 4.
-- **Engineer's Takes are Tim's voice.** Claude never drafts one. The only sanctioned assembly is
-  restating Tim's own session statements as declaratives, grammar-cleaned, shown back for approval.
-  **Fill the Take BEFORE running the review gates (Tim, 2026-07-20)** — it is public prose in the pushed
-  file, so the reviews must cover it. Order: finish the work → insert Tim's Take (with approval) → run
-  editorial/adversary/prior-art on the COMPLETE file → push. Gating first and adding the Take after
-  leaves it unreviewed and (under the SHA-256-per-file signal scheme) stales every signal, forcing a
-  needless re-run.
-
-## Anything convertible from prose to Lean MUST be converted. (Tim, 2026-08-08.)
-
-> *"anything that can be converted from prose to lean should be done, with a single line statement
-> or read reference for it right there"*
-
-**THE RULE.** If a sentence makes a claim a declaration could carry, **write the declaration** and
-leave ONE line at the site — a `Statement:`/`Reading:` gloss, or a pointer. Prose is the fallback
-for what cannot elaborate, never the default. This generalizes the § above: that one caps prose by
-volume, this one removes the *reason* to write it.
-
-**THREE TIERS, in order of preference. Reach for the lowest-numbered one that fits:**
-1. **An `example` that fails to compile when the claim is wrong.** Already the stated best form for
-   `Statement:`; **now required for `Reading:` too, wherever the reading is checkable.**
-2. **Emitted output** — `#print axioms`, `#check`. The machine computes it, and the **public CI log
-   already carries all of it**: measured 2026-08-08 on `lean_action_ci.yml`, 1,270 `info:` lines
-   including every axiom footprint and all 72 `BottomCannotBe` signatures, file-and-line prefixed,
-   no truncation, regenerated per run, **retained nowhere in the repo — and that is correct.** Do
-   not commit build logs; point at the workflow, never at a run id (logs expire).
-3. **Prose**, only for interpretation carrying no mathematical content ("the framework calls this
-   concurrency"). Label it `Reading:` and leave it alone.
-
-**⚠ THE TRAP: `IO.println` of hand-written English is tier 3 wearing tier 2's clothes.** Measured
-2026-08-08 — `#eval IO.println "Reading: the two faces coincide as a bare point."` printed that
-**false** sentence, exit 0, no complaint. The machine did not compute it; it echoed it. In a log
-where every other line is elaborator-derived, a typed sentence inherits authority it never earned —
-this file's own *"the `#check` lines cannot overclaim, the glosses beside them absolutely can"*,
-amplified rather than fixed. **Never route a claim through stdout to make it look checked.**
-
-**A READING IS CHECKABLE WHENEVER IT CLAIMS STRENGTH, SCOPE, OR GENERICITY** — and those are the
-readings that go wrong. Worked example, the bedrock finding of 2026-08-08: a `Reading:` said
-`faces_iso_unique` shows the two faces of ⊥ coincide as a bare point, and that an exclusion rests on
-it. Three lines refute it — `example (α : Type) : Subsingleton (α ≃ PUnit) := inferInstance`
-elaborates, so the theorem holds of `Bool` and says nothing about ⊥. **That reading had been
-certified accurate by an editorial gate one round earlier.** A prose round could not catch it; an
-`example` makes it unwriteable. Same shape for *"the finiteness hypothesis is load-bearing"* (exhibit
-the counterexample without it) and *"not* the *period, merely* a *period"* (exhibit a constant code
-with a second period).
-
-**⚠ And the probe settles it EITHER WAY — a failing `example` is a finding, not a dead end.** For
-*"definitionally `t3_unreachability`"* the natural probe is `example : @t4 = @t3 := rfl`; **measured
-2026-08-08, it does NOT typecheck** — `t4_chains_forward_only` carries an extra unused binder, so the
-two statements are not the same type and the word *"definitionally"* was wrong. The one-line-
-consequence form does elaborate. **That is the rule working**, and it is why you run the probe
-instead of picking the phrasing that sounds safest.
-
-**This is the NO-GO gauge (`.claude-local/notes/nogo_gauges_2026-06-29.md`, discipline (b) — *name
-the obstruction in advance*) pointed at readings for the first time.** It also lands on the right
-side of the prose rule for free: an `example` counts as **code**, not comment.
-
-⚠ **Placement: put the `example` AFTER the `#check` it qualifies, never between the gloss and the
-`#check`.** `check_prose.py` looks immediately above a `#check` for its gloss, so an interposed
-`example` reads as a missing gloss and fires. Measured 2026-08-08 on the first application of this
-rule. Write "the `example` below" in the gloss.
-
-⚠⚠ **AND THE `example` MUST NOT ITSELF BE GENERIC — that is the same defect one level up, and it
-happened on the second application of this rule.** To witness *"monotonicity is not the obstruction
-for `Ordinal`"* an `example : Ordinal.{0} →o Ordinal.{0} := OrderHom.id` was written. **`OrderHom.id`
-inhabits `α →o α` for every preorder**, so it says nothing about `Ordinal` — exactly the
-`Subsingleton (α ≃ PUnit)` failure this section exists to prevent, committed four lines from where
-the same file correctly fences it. **The test is the one from § *A requirements class is only
-informative if something FAILS*: ask what the `example` EXCLUDES.** If it would elaborate with the
-subject swapped for an arbitrary carrier, it witnesses nothing. Here the honest witness is the
-ω-tower map itself, `⟨fun a => ω ^ a, fun _ _ h => opow_le_opow_right omega0_pos h⟩`.
-
-**⚠ THAT WARNING HAS A NULL CASE, and reading it absolutely gets the answer backwards.** Ask what
-the `example` excludes **relative to the claim it witnesses**, not in the abstract. When the claim
-IS a universal — *"every inhabited carrier can be equipped"*, *"nothing here excludes anything"* —
-a **generic** witness is the exact refutation and a specific one would be weaker. Worked example,
-K1 (2026-08-10): the corpus said non-members of `ZPSemilattice` *"abound"*; the witness that settles
-it is `example (L : Type) [Nonempty L] : Nonempty (ZPSemilattice L)`, which is maximally generic on
-purpose, paired with `example : IsEmpty (ZPSemilattice Empty)` to pin inhabitation as the sole
-obstruction. **Genericity is a defect when it is accidental and the content when it is the claim.**
-This is the same shape as INVARIANT being the ratified null case of the Two-Pole Test — a rule that
-fires everywhere is the cry-wolf shape this file says to narrow rather than tolerate.
-
-**PREFER AN ANONYMOUS `example` OVER A NAMED `def`/`theorem` FOR A WITNESS — measured 2026-08-10,
-it declares nothing.** `batch.py decls_in` returns `[]` for the two examples above and `['realOne']`
-for a `theorem` beside them, so a witness in `example` form owes **no `#print axioms` entry and no
-`ssot.json` row**, while a named one owes both plus an SJV sync. Name it only when something else
-must cite it. Nothing is lost: the kernel checks an `example` exactly as hard, which is the entire
-point of tier 1.
+## R-TOLEAN  Anything convertible from prose to Lean MUST be converted.
+TRIGGER  you are about to write a sentence making a claim a declaration could carry.
+RULE     write the declaration and leave ONE line at the site. Three tiers, lowest first:
+         (1) an `example` that FAILS TO COMPILE when the claim is wrong — now required for
+         `Reading:` too wherever the reading is checkable, and a reading is checkable whenever
+         it claims STRENGTH, SCOPE or GENERICITY; (2) emitted output (`#print axioms`,
+         `#check`); (3) prose, only for interpretation carrying no mathematical content.
+         Prefer an anonymous `example` over a named decl — it declares nothing, so it owes no
+         `#print axioms` entry, no `ssot.json` row and no SJV sync. Put the `example` AFTER
+         the `#check` it qualifies, never between the gloss and the `#check`.
+COST     `IO.println` of hand-written English is tier 3 wearing tier 2's clothes — the machine
+         echoed a FALSE sentence, exit 0. And the `example` must not itself be generic: ask
+         what it EXCLUDES relative to the claim. `Subsingleton (α ≃ PUnit)` elaborates for
+         every type, so it witnessed nothing — but where the claim IS a universal, a generic
+         witness is the content, not the defect.
+READ     tools/process/prose-to-lean.md
 
 ## R-ADJACENT  When the answer is already proved, the deliverable is a POINTER, not a theorem.
 TRIGGER  a question arose and you are about to write a new declaration to answer it.
