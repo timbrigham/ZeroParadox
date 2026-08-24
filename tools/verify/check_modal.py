@@ -323,7 +323,8 @@ def _record(new):
     """The universe is THIS checker's own scope — never a shared roster."""
     return common.record_if_asked('check_modal', [rel for _p, rel in targets()],
                                   {h[0] for h in new}, 'unmeasured modal claim',
-                                  switches=['tools/verify/modal_baseline.txt'])
+                                  switches=['tools/verify/modal_baseline.txt',
+                                            'tools/verify/vendored_files.txt'])
 
 
 if __name__ == '__main__':

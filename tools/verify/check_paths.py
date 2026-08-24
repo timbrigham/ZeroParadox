@@ -1797,6 +1797,7 @@ def main():
         [_rel(p) for p in tracked_markdown()] + [_rel(p) for p in tracked_lean()],
         {_rel(p) for p, _ln, _ref in list(d1) + list(dl)},
         'a repo-relative reference does not resolve', args,
+        switches=['tools/verify/vendored_files.txt'],
         withheld='it skipped a class (Mathlib absent)' if skipped_a_class else None)
     if rc:
         return rc

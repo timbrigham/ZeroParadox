@@ -300,7 +300,8 @@ def _record(new, argv):
     """The universe is THIS checker's own scope — never a shared roster."""
     return common.record_if_asked('check_figures', [rel for _p, rel in targets()],
                                   {h[0] for h in new}, 'undated artifact count', argv,
-                                  switches=['tools/verify/figures_baseline.txt'])
+                                  switches=['tools/verify/figures_baseline.txt',
+                                            'tools/verify/vendored_files.txt'])
 
 
 if __name__ == '__main__':

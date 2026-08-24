@@ -325,8 +325,11 @@ def main(argv):
     # verdict, and keying on their blobs is what makes that automatic.
     _subjects = ["tools/verify/%s" % os.path.basename(c) for c in checkers()]
     _bad = {"tools/verify/%s" % os.path.basename(c) for c, _p, _ok, _d in failures}
+    # vendored_files.txt is an exemption SWITCH: it decides which files every checker skips, so
+    # this verdict depends on it without reading it as corpus. Named here or editing it is free.
     rc = common.record_if_asked("check_checkers", _subjects, _bad,
-                                "a checker cannot fail, or nothing runs it", argv)
+                                "a checker cannot fail, or nothing runs it", argv,
+                                switches=["tools/verify/vendored_files.txt"])
     if rc:
         return rc
 

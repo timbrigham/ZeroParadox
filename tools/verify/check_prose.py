@@ -461,7 +461,8 @@ def run(block_mode=False, write_baseline=False):
     _rc = common.record_if_asked('check_prose', scanned,
                                  {v[1].split('::')[0] for v in new},
                                  'new prose site over the cap',
-                                 switches=['tools/verify/prose_baseline.txt'])
+                                 switches=['tools/verify/prose_baseline.txt',
+                                 'tools/verify/vendored_files.txt'])
     if _rc:
         return _rc
 

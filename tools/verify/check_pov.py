@@ -438,7 +438,8 @@ def main():
         'check_pov',
         [str(p.relative_to(REPO)).replace(chr(92), '/') for p in TARGETS if p.is_file()],
         _bad, 'untagged point-of-view claim and/or a DENIAL',
-        switches=['tools/verify/pov_baseline.txt'])
+        switches=['tools/verify/pov_baseline.txt',
+                  'tools/verify/vendored_files.txt'])
     if rc:
         return rc
 

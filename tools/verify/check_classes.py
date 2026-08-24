@@ -205,7 +205,8 @@ def main():
         "check_classes",
         [os.path.relpath(p, REPO).replace("\\", "/") for p in lean_files()],
         {e[0] for e in new}, "requirements class added with no degeneracy verdict",
-        switches=["tools/verify/class_baseline.txt"])
+        switches=["tools/verify/class_baseline.txt",
+                  "tools/verify/vendored_files.txt"])
     if _rc:
         return _rc
 

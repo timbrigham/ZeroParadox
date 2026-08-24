@@ -580,10 +580,24 @@ def ledger_subjects(rels, ref='HEAD'):
         blobs = index_blobs()
         moved = worktree_modified()
         why_moved = 'modified in the worktree since it was staged'
-    else:
+    elif ref == 'HEAD':
         blobs = ref_blobs(ref)
         moved = differs_from(ref)
-        why_moved = 'differs from %s in the worktree or index' % ref
+        why_moved = 'differs from HEAD in the worktree or index'
+    else:
+        # ⚠⚠ FAIL CLOSED ON A REF WE CANNOT FENCE. `differs_from` diffs against HEAD and returns an
+        # EMPTY set for any other ref, so an arbitrary basis silently disabled the fence: every path
+        # recorded cleanly against that ref's blobs while the checker had read today's disk.
+        # Measured 2026-08-23 by a reliability trial: `ZPLEDGER_BASIS=<older sha> check_encoding
+        # --record` printed `recorded PASS 425 subject(s)`, exit 0, keyed to an older commit's
+        # blobs, with no warning. The record is internally consistent, so the server cannot detect
+        # it — this is the mechanism for manufacturing keys for content nobody opened, and
+        # `can_push` gates every commit in a range.
+        # A checker reads the WORKING TREE. Only HEAD (clean) or the INDEX can correspond to what it
+        # read, so any other basis is refused rather than fenced.
+        blobs, moved = {}, set(rels)
+        why_moved = ('basis %r cannot be fenced — a checker reads the worktree, so only HEAD or '
+                     'INDEX can correspond to what it read' % ref)
     subjects, skipped = [], []
     for rel in sorted(set(rels)):
         if rel in moved:
@@ -690,7 +704,19 @@ def emit_verdict(step, ok_rels=(), bad_rels=(), reason=None, tier='M', ref='HEAD
     for rel, why in skipped:
         print('  not recorded: %-52s %s' % (rel, why))
     if not subjects:
-        print('  nothing recordable for %s at this ref' % step)
+        # ⚠⚠ 2, NOT 0, WHEN THE CHECKER ACTUALLY EXAMINED SOMETHING. "I read the whole corpus and
+        # could record none of it" is a RECORDING FAILURE — the step ends up MISSING and the
+        # operator has just watched a green run. Returning 0 made that read as success, in the one
+        # branch reached when every path was fenced out. `record.py`'s CLI already returned 2 here
+        # and this shared path returned 0, so the two disagreed about the same condition.
+        # ⚠ An EMPTY scan is different and stays 0: a checker whose scope matched nothing has
+        # nothing to attest and is not failing. The discriminator is whether anything was examined.
+        examined = len(set(ok_rels) | set(bad))
+        if examined:
+            print('  UNDECIDED: %s examined %d path(s) and could record NONE of them'
+                  % (step, examined))
+            return 2
+        print('  nothing recordable for %s at this ref (nothing examined)' % step)
         return 0
     why = None
     if bad:
