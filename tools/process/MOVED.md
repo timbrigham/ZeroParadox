@@ -26,7 +26,8 @@ section is preserved verbatim in the body named below.
 | NEVER truncate the output of a hook-running command | `R-TRUNC` | `tools/process/push-gate-bypass.md` |
 | Staging — NAMED PATHS, never `-A` | `R-STAGE` | `tools/process/staging.md` |
 | Editorial Review Gate | `R-ER` | `tools/process/review-gates.md` |
-| Adversary Review Gate | `R-AR` | `tools/process/review-gates.md` |
+| Adversary Review Gate | `R-AR` | `tools/process/review-gates.md` || Prior-Art Search — Trigger Conditions and Gate | `R-PRIORART` | `tools/process/prior-art.md` |
+| Guiding Principles / Repository Nature / Private Working Folder / Document Versioning | `R-CONTEXT` | `tools/process/repository-layout.md` |
 
 ## Pass record
 
@@ -36,8 +37,9 @@ section is preserved verbatim in the body named below.
 | 2 | 2026-08-23 | `:333`–`:527` (core objects + commitments) | 195 | 48 | **147** |
 | 3 | 2026-08-23 | `:629`–`:870` (adjacency, determinism, two-pole, revalidate) | 242 | 57 | **185** |
 | 4 | 2026-08-23 | `:687`–`:986` (not-in-library, loop cap, truncation, staging, both gates) | 300 | 80 | **220** |
+| 5 | 2026-08-23 | `:768`-`:868` (prior-art, repo context) | 101 | 39 | **62** |
 
-**File total: 2338 → 1567 lines (−771, 33%).**
+**File total: 2338 → 1506 lines (−832, 36%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then

@@ -238,3 +238,70 @@ no conversation history.
 
 **The record:** the CLAIMS "Convergence with established work" table is the public ledger of
 identified prior art; `.claude-local/notes/prior_art_*` holds the per-search findings.
+
+---
+
+## Routed from `CLAUDE.md`, 2026-08-23
+
+## Prior-Art Search — Trigger Conditions and Gate
+
+The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. **It BLOCKS at push:** the adversary gate detects synthesis-layer content and withholds `ar_cleared.txt`, and the pre-push hook checks `pa_cleared.txt` directly on trigger 5.
+
+### ⚠ TRIGGER 0 — SEARCH BEFORE YOU BUILD. Hard rule, and it is the cheapest one here.
+
+**If you can state the claim in one sentence of standard mathematical English, search for it BEFORE
+writing Lean.** Not after. The post-hoc gate still runs; this sits in front of it.
+
+**⭐ THE POINT IS NOT EMBARRASSMENT-AVOIDANCE — SEARCHING FIRST GETS YOU MORE.** Measured 2026-07-27
+across three findings in one day, it would have handed us a **stronger** theorem than our own claim
+(a biconditional), a **purer** proof (function extensionality where ours took `Classical.choice`),
+free analyticity lemmas, and the standard NAME for a thing described longhand.
+
+**The three-step check, ~10 minutes:**
+1. **Grep our own corpus.** The cheapest miss, and it happened three times in one day.
+2. **Grep the pinned Mathlib for the CONCEPT, not the name you would have chosen — and ⚠⚠ IF THE
+   CLAIM IS A LEAN STATEMENT, RUN `exact?`.** It beats grep and is the only step here whose verb is
+   **RUN**: grep searches *names*, `exact?` searches *statement shape*, so it finds the lemma whose
+   name you would never have guessed, and it reaches the attribute-generated siblings (`@[to_dual]`,
+   `@[simps]`) that have **no source line to grep**.
+3. **One literature search** if the object has a name — **run the LADDER in order: `.claude-local/papers/`
+   → `theoremsearch` → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
+   `theoremsearch`; ignore its similarity score; **its null is UNINFORMATIVE** (coverage-bounded).
+   **Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION** — a returned body is not a passage in hand.
+   📖 `tools/process/prior-art.md` §§ 2a–2b.
+
+**⚠ AND WHEN YOU FETCH A SOURCE, FILE IT** — `.claude-local/papers/`, named
+`author_topic_year[_id].pdf`. **Validate before filing** (a tiny PDF is an error page, not a paper).
+**Never record a file count** — measure it. **Grep loosely**: scanned books are OCR'd with spurious
+intra-word spaces, so a tight-pattern miss is not evidence of absence. **Carry both halves — check it
+first AND file what you fetch — into every scout brief.**
+
+**The exception, and it is real:** if you *cannot* yet state the claim in one sentence, building is
+how you find the shape and searching returns noise. Build, then **search before promoting** — and
+that second half is the one that gets skipped. **When a survey turns into a theorem, the prior-art
+clock restarts**; the search that justified the investigation does not cover the mathematics that
+came out of it.
+
+**Standard framing, once found, is ADOPTED — not noted and worked around** (Tim, 2026-07-27:
+*"anytime that we have official framing we need to make use of it"*). Keep the framework's own label
+as the handle where one exists; take the library's lemmas. ⚠ **Check purity before swapping a
+proof** — one adoption pushed a `[propext]` theorem to full choice, so the hand proof was kept and
+the standard name cited instead.
+
+**Trigger conditions:**
+1. **A new synthesis/bridge layer is created** — prior-art search before its first push. (Highest yield; every gap found in the 2026-06-22 arc originated at layer creation.)
+2. **A synthesis layer's central/distinctive claim is revised or strengthened** — re-run for that claim.
+3. **A layer is prepared for outreach or arXiv** — prior-art search is part of the pre-flight, beside the adversary pre-flight.
+4. **Reactive:** an external reviewer asks "have you seen X?" — search, then add the result to the CLAIMS "Convergence with established work" table with attribution.
+5. **A new `.lean` file, or a large net addition to one** (≥50 net `.lean` lines) — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim. This is the mechanical complement to synthesis-detection, and what would have caught ZP-D's `T` (the van der Put / Kozyrev ball-indicator ONB).
+
+**`/prior-art-review` is the deep gate**, a fresh-agent scout — same-session self-review does not
+satisfy it. On PASS it writes `.claude-local/pa_cleared.txt`. **The record:** the CLAIMS "Convergence
+with established work" table is the public ledger; `.claude-local/notes/prior_art_*` holds the
+per-search findings.
+
+📖 **THE MEASURED CASES, THE THREE STEPS IN FULL, AND HOW THE GATE RUNS — `tools/process/prior-art.md`.**
+What each of the three 2026-07-27 findings cost, the `exact?` case that corrected the mathematics and
+not just the line count, the 19 abandoned PDFs, the survey-became-a-theorem case, and the scope rule
+that decides whether a layer triggers at all. **Read it before writing a scout brief or arguing that
+a layer is out of scope.**

@@ -765,106 +765,45 @@ COST     docstring and build-script prose was pushed before review ran, and the 
          found two further precision errors in already-committed content.
 READ     tools/process/review-gates.md
 
-## Prior-Art Search — Trigger Conditions and Gate
+## R-PRIORART  Search BEFORE you build, and the gate runs after.
+TRIGGER  you can state the claim in one sentence of standard mathematical English and are
+         about to write Lean; or a synthesis layer is created, its central claim revised, a
+         layer prepared for outreach, a reviewer asks "have you seen X?", or a new `.lean`
+         file / >=50 net new lines lands.
+RULE     three steps, ~10 minutes, BEFORE building. (1) grep our own corpus. (2) grep the
+         pinned Mathlib for the CONCEPT — and if the claim is a Lean statement, RUN `exact?`;
+         it searches statement SHAPE, not names, and reaches attribute-generated siblings
+         that have no source line. (3) one literature search, run as the four-rung LADDER:
+         `.claude-local/papers/` → `theoremsearch` → the open web → RETRIEVE THE FULL
+         DOCUMENT. Three phrasings minimum at rung 2; ignore its similarity score; its null
+         is UNINFORMATIVE. Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION — a returned
+         theorem body is not a passage in hand. Standard framing, once found, is ADOPTED, not
+         noted and worked around; check purity before swapping a proof. `/prior-art-review`
+         is the deep gate, a fresh agent, and on PASS it writes `.claude-local/pa_cleared.txt`.
+         If you cannot yet state the claim, build first — then SEARCH BEFORE PROMOTING,
+         because a survey that became a theorem restarts the clock.
+COST     an uncited closest prior art reads as unaware — the crank-triage failure. And
+         searching first gets you MORE: one round yielded a stronger theorem than our own
+         claim, a purer proof, free lemmas, and the standard NAME for a thing described longhand.
+READ     tools/process/prior-art.md
 
-The framework's value is its *delta* against prior art, so an uncited closest-prior-art reads as "unaware" — the crank-triage failure mode. **It BLOCKS at push:** the adversary gate detects synthesis-layer content and withholds `ar_cleared.txt`, and the pre-push hook checks `pa_cleared.txt` directly on trigger 5.
-
-### ⚠ TRIGGER 0 — SEARCH BEFORE YOU BUILD. Hard rule, and it is the cheapest one here.
-
-**If you can state the claim in one sentence of standard mathematical English, search for it BEFORE
-writing Lean.** Not after. The post-hoc gate still runs; this sits in front of it.
-
-**⭐ THE POINT IS NOT EMBARRASSMENT-AVOIDANCE — SEARCHING FIRST GETS YOU MORE.** Measured 2026-07-27
-across three findings in one day, it would have handed us a **stronger** theorem than our own claim
-(a biconditional), a **purer** proof (function extensionality where ours took `Classical.choice`),
-free analyticity lemmas, and the standard NAME for a thing described longhand.
-
-**The three-step check, ~10 minutes:**
-1. **Grep our own corpus.** The cheapest miss, and it happened three times in one day.
-2. **Grep the pinned Mathlib for the CONCEPT, not the name you would have chosen — and ⚠⚠ IF THE
-   CLAIM IS A LEAN STATEMENT, RUN `exact?`.** It beats grep and is the only step here whose verb is
-   **RUN**: grep searches *names*, `exact?` searches *statement shape*, so it finds the lemma whose
-   name you would never have guessed, and it reaches the attribute-generated siblings (`@[to_dual]`,
-   `@[simps]`) that have **no source line to grep**.
-3. **One literature search** if the object has a name — **run the LADDER in order: `.claude-local/papers/`
-   → `theoremsearch` → the open web → RETRIEVE THE FULL DOCUMENT.** Three phrasings minimum at
-   `theoremsearch`; ignore its similarity score; **its null is UNINFORMATIVE** (coverage-bounded).
-   **Rungs 1–3 are DISCOVERY, only rung 4 is VERIFICATION** — a returned body is not a passage in hand.
-   📖 `tools/process/prior-art.md` §§ 2a–2b.
-
-**⚠ AND WHEN YOU FETCH A SOURCE, FILE IT** — `.claude-local/papers/`, named
-`author_topic_year[_id].pdf`. **Validate before filing** (a tiny PDF is an error page, not a paper).
-**Never record a file count** — measure it. **Grep loosely**: scanned books are OCR'd with spurious
-intra-word spaces, so a tight-pattern miss is not evidence of absence. **Carry both halves — check it
-first AND file what you fetch — into every scout brief.**
-
-**The exception, and it is real:** if you *cannot* yet state the claim in one sentence, building is
-how you find the shape and searching returns noise. Build, then **search before promoting** — and
-that second half is the one that gets skipped. **When a survey turns into a theorem, the prior-art
-clock restarts**; the search that justified the investigation does not cover the mathematics that
-came out of it.
-
-**Standard framing, once found, is ADOPTED — not noted and worked around** (Tim, 2026-07-27:
-*"anytime that we have official framing we need to make use of it"*). Keep the framework's own label
-as the handle where one exists; take the library's lemmas. ⚠ **Check purity before swapping a
-proof** — one adoption pushed a `[propext]` theorem to full choice, so the hand proof was kept and
-the standard name cited instead.
-
-**Trigger conditions:**
-1. **A new synthesis/bridge layer is created** — prior-art search before its first push. (Highest yield; every gap found in the 2026-06-22 arc originated at layer creation.)
-2. **A synthesis layer's central/distinctive claim is revised or strengthened** — re-run for that claim.
-3. **A layer is prepared for outreach or arXiv** — prior-art search is part of the pre-flight, beside the adversary pre-flight.
-4. **Reactive:** an external reviewer asks "have you seen X?" — search, then add the result to the CLAIMS "Convergence with established work" table with attribution.
-5. **A new `.lean` file, or a large net addition to one** (≥50 net `.lean` lines) — a substantial original *construction* is in-scope even if it is not a cross-field synthesis claim. This is the mechanical complement to synthesis-detection, and what would have caught ZP-D's `T` (the van der Put / Kozyrev ball-indicator ONB).
-
-**`/prior-art-review` is the deep gate**, a fresh-agent scout — same-session self-review does not
-satisfy it. On PASS it writes `.claude-local/pa_cleared.txt`. **The record:** the CLAIMS "Convergence
-with established work" table is the public ledger; `.claude-local/notes/prior_art_*` holds the
-per-search findings.
-
-📖 **THE MEASURED CASES, THE THREE STEPS IN FULL, AND HOW THE GATE RUNS — `tools/process/prior-art.md`.**
-What each of the three 2026-07-27 findings cost, the `exact?` case that corrected the mathematics and
-not just the line count, the 19 abandoned PDFs, the survey-became-a-theorem case, and the scope rule
-that decides whether a layer triggers at all. **Read it before writing a scout brief or arguing that
-a layer is out of scope.**
-
-## Guiding Principles (from Project Instructions)
-
-- **Logical Rigor First:** The primary goal is logical consistency and rigor. 
-- **Prose Role:** Use prose only to restate mathematics into accessible language. 
-- **Ontology Focus:** Finalized documents must be structured as an ontology. 
-- **Persistence:** All completed work must be committed back to the repository immediately to prevent data loss.
-
-## Repository Nature
-
-This is a **mathematical publication repository** first. It is no longer true that there is "no build system, test suite, or source code" — there is a Lean 4 corpus with CI, and as of 2026-08-15 a tracked verification suite — but the PDFs and the Lean remain the point, and the tooling exists to keep them honest. The repository contains:
-
-- PDF documents (the formal mathematical framework and illustrated companions)
-- The Lean 4 corpus under `ZeroParadox/`, with `MANIFEST.md` as its by-folder index
-- Markdown documentation (README.md, ABOUTME.md, this file)
-- (superseded document versions are preserved in git history and per-release Zenodo snapshots; the `historical/` folder was retired in v3.0)
-- `scripts/` — the PDF build tooling. Their only home since 2026-08-15, not a transparency mirror
-- `tools/verify/` — the checkers, pipeline and baselines that gate every commit and push
-- `tools/registry/`, `tools/render/` — the declaration extractor and the diagram generators
-
-## Private Working Folder
-
-A `.claude-local/` folder exists locally. **It is its OWN git repository** — its own history, a `master` branch, and a private remote (`ZeroParadoxLocal`) — and the public repo additionally ignores that path, so none of it appears here. This is intentional.
-
-⚠ **"Gitignored" is TRUE and INCOMPLETE, and the missing half is the half that matters** (Tim, 2026-08-22). The parent really does ignore the path — that is what keeps it out of the public repo. **It is ALSO its own repository with a private remote, and that remote is what provides the off-machine copy.** Reason only from the ignore entry and you conclude the sole copy is on disk and that protecting it is someone else's problem — which is exactly what happened on 2026-08-22, when three commits sat unpushed while the `PostToolUse` robocopy that used to catch them had been dead since agents lost the ability to run that command. **Commit AND push it; the handoff's PART 0b step 4 is the procedure, and the push is what makes the copy exist.** It serves as a private working space for the project's core collaborators during active development, before material is ready for public discourse. It contains:
-
-- Reviewer feedback and correspondence (e.g. `feedback/`)
-- In-progress build scripts and draft outputs
-- Session notes and development artifacts
-
-Transparency is a core value of this project. The existence of this private folder is acknowledged here precisely for that reason: readers of the public repo can see that private collaboration is occurring, understand its purpose, and know that the mathematical content and editorial decisions will be surfaced publicly as the work matures. Nothing in `.claude-local/` affects the formal mathematics — that lives entirely in the committed PDFs.
-
-## Document Versioning Conventions
-
-- Current documents live at the root with **flat (version-free) filenames**: `ZP-X_Title.pdf`
-- Version numbers are tracked in `register.md` (Formal Version column) and in each PDF's title block — not in the filename
-- Superseded versions are **not** archived to a folder (the `historical/` folder was retired in v3.0); the flat root PDF is overwritten in place, and git history + each release's Zenodo snapshot are the record
-- README.md and GUIDE.md always link to the flat root filename
+## R-CONTEXT  What this repository is, and where a file belongs.
+TRIGGER  you are orienting in this repo, or deciding where a new file goes.
+RULE     this is a mathematical PUBLICATION repository first: the PDFs and the Lean corpus
+         under `ZeroParadox/` (indexed by `ZeroParadox/MANIFEST.md`) are the point, and the
+         tooling exists to keep them honest. Formal documents live at the root under FLAT,
+         version-free filenames — versions live in `register.md` and each PDF's title block,
+         never in a filename. Superseded versions are NOT archived: overwrite the flat root
+         PDF in place and let history plus each release's Zenodo snapshot be the record. Do
+         not recreate `historical/`, and never rewrite history to purge old binaries —
+         SHA-pinned permalinks and DOI-referenced commits depend on them. `.claude-local/` is
+         its OWN repository with a private remote: commit AND PUSH it; the parent additionally
+         ignores the path. Prose exists only to restate mathematics accessibly; finalized
+         documents are structured as an ontology; completed work is committed immediately.
+COST     `historical/` drifted a month stale while the snapshots did not; and reasoning from
+         the ignore entry alone concludes the only copy is on disk, which is how three commits
+         sat unpushed on one machine.
+READ     tools/process/repository-layout.md
 
 ## GitHub Releases and Zenodo Snapshots
 
