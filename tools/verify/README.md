@@ -73,6 +73,60 @@ two lifecycles — registering a type is free, promoting one to gate a push is d
 
 ---
 
+## ⭐⭐ THE GATE CANNOT CERTIFY THE THING IT IS MADE OF. Three measured instances, 2026-08-23.
+
+**A verification layer can check the corpus. It cannot cleanly check itself, and every attempt so
+far has failed in a *different* way.** This is not a counsel of despair — each instance had an
+honest resolution — but the shape recurs, and someone meeting it for the first time will reach for
+the fix that makes it worse.
+
+| # | the gate | what it could not certify | resolution |
+|---|---|---|---|
+| 1 | `guards` | **its own inputs.** Two of its seven live in `.claude-local`, a different repository, so they can never be subjects of a record here. `rely_cleared.txt` can be edited, its verdict changes, and no subject moves | left **unscoped and under-covered** — 4 of 477 — because under-covered-and-true beats fully-covered-and-false. A scope cannot close it; only making `rely` a record instead of a file can |
+| 2 | `rely` | **anything, at the breadth its bar demanded.** Its brief forbids running at `full`; the admission set required exactly that breadth. The brief and the bar contradicted each other, so no amount of running it could ever have closed the key | scoped to `tools/verify/*`. **Unsatisfiable by construction** is its own class — a refusal no work can answer |
+| 3 | the recording path | **the review that found its own defects.** `/rely` found two fail-opens *in the recording path*; fixing them changed `tools/verify`, and the fence then refused a record naming the tree the reviewer had read | none. **The round's verdict is unrecordable and `rely` stays MISSING** — see the ordering rule below |
+
+⚠ **THE REFLEX TO RESIST, in each case, is the one that closes the hole by making the gate lie.**
+Scoping `guards` to `tools/verify/**` would zero its `subjects_unexamined` by dropping the corpus
+paths it plants violations in. A `--force-ref` escape would let instance 3 record — and would be the
+one fail-open with a reviewer's signature on it. **Prefer a gate that is visibly short over one that
+reads complete because it stopped asking.**
+
+### RECORD, THEN FIX. The other order is not bad practice — it is unrepresentable.
+
+**A review round's verdict must be recorded BEFORE its findings are fixed.** Run → record at HEAD
+with the verdict as found → *then* fix, which correctly stales the record for exactly the files that
+changed and leaves the rest covered.
+
+**Why it is not a matter of discipline:** `common.ledger_subjects` refuses any basis it cannot fence
+(only `HEAD` and the index can correspond to what a checker read from the worktree). Once the tree
+moves, the bytes the reviewer examined exist nowhere the fence can reach, so the record cannot be
+written at all. Measured 2026-08-23: `/rely` examined one commit, its fixes landed in the next, and
+the verdict became unrecordable in between.
+
+⚠ **And re-running is not a free repair when the fixes are inside the gate's own scope.** `CLAUDE.md`
+measures four `/rely` passes on `tools/verify` at **10 → 4 → 6 → 9** findings, never quiescing,
+because each pass reviews code written in response to the last. A second pass after a repair
+measures **the repair**, not the layer.
+
+### ⚠ A repair that satisfies the checker while deleting what the checker was protecting
+
+**A distinct defect class, and the most dangerous kind found this session, because nothing is absent
+and nothing is silent.** The checker runs, passes, and reports honestly — on a property that has
+quietly become smaller.
+
+**The measured near-miss:** six checkers already declared a *baseline* switch when the vendored
+allowlist had to be added. Writing the allowlist **over** the baseline would have removed the
+earlier protection while adding the new one — **and every record would still have validated**,
+because the rule asserts that *declared* switches are *named by a record*; it says nothing about
+whether a previously-declared switch still exists. Caught by appending rather than replacing, and
+pinned by a test carrying the full map of every type's declarations.
+
+**The general form: a validator that checks a set is COVERED cannot notice the set SHRINKING.**
+Wherever a check is keyed to a declaration, the declaration itself needs a separate pin.
+
+---
+
 ## Point-of-view claims: declare the KIND and the STATUS. Gate-enforced.
 
 **"Point of view" / "chart" / "frame" was doing FIVE different jobs with one word.** The cost, measured

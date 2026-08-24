@@ -596,7 +596,7 @@ def ledger_subjects(rels, ref='HEAD'):
         # A checker reads the WORKING TREE. Only HEAD (clean) or the INDEX can correspond to what it
         # read, so any other basis is refused rather than fenced.
         blobs, moved = {}, set(rels)
-        why_moved = ('basis %r cannot be fenced — a checker reads the worktree, so only HEAD or '
+        why_moved = ('basis %r cannot be fenced - a checker reads the worktree, so only HEAD or '
                      'INDEX can correspond to what it read' % ref)
     subjects, skipped = [], []
     for rel in sorted(set(rels)):
