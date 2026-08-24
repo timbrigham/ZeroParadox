@@ -626,247 +626,63 @@ for a `theorem` beside them, so a witness in `example` form owes **no `#print ax
 must cite it. Nothing is lost: the kernel checks an `example` exactly as hard, which is the entire
 point of tier 1.
 
-## The recurring defect is UNSTATED ADJACENCY — the fix is a pointer, not a theorem
+## R-ADJACENT  When the answer is already proved, the deliverable is a POINTER, not a theorem.
+TRIGGER  a question arose and you are about to write a new declaration to answer it.
+RULE     ask in order: is it proved in this corpus already? is it in Mathlib? is the only
+         gap that nobody wrote it where the question gets asked? If the last, write it
+         THERE — ONE LINE of consequence at the site, plus a pointer to the canonical home.
+         Never a bare pointer, and never a paraphrase. THE TEST: would this sentence become
+         false if the canonical statement changed? If yes it is a copy — replace it with a
+         line and a pointer. Never enumerate in prose what an artifact defines — counts,
+         field lists, "the N conditions". Point, name the load-bearing member, stop. A
+         DATED survey is legitimate; a completeness claim is not.
+COST     adding an elementary instantiation is what the prior-art gate keeps catching, and a
+         paraphrase goes stale the instant the original moves — 10 of 25 sites citing `l_inf`
+         paraphrased it, and one rewrite falsified four of them immediately.
+READ     tools/process/unstated-adjacency.md
 
-**This corpus's characteristic failure is not wrong theorems. It is true theorems whose reach nobody
-recorded.** Measured four times on 2026-07-29/30, each time the honest finding was *"the mathematics is
-already here, and nothing says so"*:
+## R-DETERMINISM  Single-valuedness is the obstruction, never the fixed point.
+TRIGGER  you are about to write prose about why the bottom cannot move, or about the
+         halted / self-looping / stepping-onward trichotomy.
+RULE     attribute the obstruction to the step being a FUNCTION, not to the presence of a
+         self-loop. A function admits at most one successor; a RELATION can loop at `s` and
+         reach elsewhere. Under a function, halted and self-looping share a FATE, so the
+         trichotomy is genuinely three-valued only in the non-deterministic setting — the
+         function-vs-relation choice is how the framework encodes that modality. Say so.
+         Non-determinism buys the POSSIBILITY, never the occurrence.
+COST     this was re-derived four separate ways in one session; and "nothing else encodes the
+         modality" is too strong — `carry` is a function with no fixed point anywhere whose
+         observable projection never changes, which is a fact about a quotient, not determinism.
+READ     tools/process/determinism.md
 
-* **Oscillation.** Asked whether the framework excludes liar-type flip-flop. `wf_no_cycle` already proved
-  it — its own docstring says *"this also rules out 2-cycles"* — and grepping the Lean for "oscillation"
-  returned nothing. Fix: instantiate at the two ends + state the fence (the floor is non-well-founded, so
-  the exclusion holds ABOVE it and fails AT it).
-* **min≡max.** Related coincidences, never cross-linked, so the "both poles" and "both extremes" readings
-  drifted as if separate. **NONE of them is a `fork_collapse_iff` instance** — corrected TWICE on
-  2026-07-30, because the first fix relocated the error rather than removing it. `fork_collapse_iff` needs
-  `[CompleteLattice α]` and a monotone `f : α →o α`; `Ordinal` with `α ↦ ω^α` has a proper class of fixed
-  points (`omega0_opow_epsilon`, so nothing collapses), `ZPSemilattice` is a bare join-semilattice whose
-  `selfApp` is not an `OrderHom`, and the categorical seam lives in `ModuleCat ℂ`. **They share a SHAPE,
-  which across distinct structures is a type boundary, never a common theorem.** State the shape; never an
-  instance-of relation.
-* **Turing machines.** `Occurrence.lean`'s results are stated over `σ → Option σ`, which **is** Mathlib's
-  `StateTransition`; `Turing.TM0/TM1/TM2.step` all have that exact type and Mathlib's TM development is
-  *built on* it. So those results already cover every Mathlib Turing machine — and the corpus had never
-  mentioned `Turing.*` once.
-* **The descending-chain form.** The INFINITE-pole reading of the floor sat in a Mathlib biconditional
-  (`wellFounded_iff_isEmpty_descending_chain`) that this family had never cited.
+## R-TWOPOLE  Every face of the bottom has TWO readings. Build both, concurrently.
+TRIGGER  you are starting fresh development, a face is stuck, or a claim needs an extra
+         assumption to close.
+RULE     run both, never in sequence: Q1 — where is the zero that runs to infinity? Q2 —
+         what is the one-way arrow, and what does it look like run BACKWARDS? If either has
+         no answer, the piece is not part of the framework yet; record that as a finding.
+         Run it on METHOD too: state the claim from the other side, and ask what words the
+         corpus would use if it DISAGREED with you — a single-polarity search has a blind
+         half. When flipping genuinely gains nothing, say INVARIANT (the ratified null case)
+         rather than forcing a second pole. Call out where Tim's read is load-bearing.
+COST     a missing pole shows up as a bridge you cannot formalize — ZP-K implemented only the
+         EMPTY reading, so the step to forced execution stayed a commitment rather than a theorem.
+READ     tools/process/two-pole-test.md
 
-**The rule.** When a question arises and the answer turns out to be already proved, **the deliverable is a
-POINTER, not a new declaration.** Adding an elementary instantiation is the failure mode the prior-art gate
-keeps catching (see Trigger 0). Ask in order: is it proved here already? is it in Mathlib? is the gap only
-that nobody wrote it where the question gets asked? If the last — write it *there*, at the site the reader
-lands on, not five sections away.
-
-**Two corollaries worth their own line.** (1) **Generality is why the results are weak, and also why they
-are free** — a theorem over `σ → Option σ` is elementary *because* it covers everything, and covering
-everything is the payoff; state both halves. (2) **Adjacency is not identity.** "Turing machines are
-witnesses" is licensed; "the bottom is a Turing machine" is a cross-carrier identity and the same type
-boundary as everywhere else. The `QuineHost` precedent is the model: never "we commit to AFA", always "here
-are the requirements, and AFA is a witness meeting them."
-
-### ⭐ THE TWO RULES ABOVE AND BELOW PULL OPPOSITE WAYS. The resolution: ONE LINE at the site, the FULL STATEMENT at the canonical home. (Tim, 2026-08-15.)
-
-*"Write it **there**, at the site the reader lands on"* pushes toward restating it locally.
-*"Never enumerate in prose what the artifact defines"* pushes toward a bare pointer. **Both are rules
-on this page and they disagree.** The resolution is the shape the corpus already uses in its
-`Statement:` / `Reading:` glosses:
-
-- **ONE LINE of consequence at the site** — what a reader standing here needs in order to keep reading.
-- **A POINTER to the canonical home** for the full statement.
-- **NEVER a bare pointer** (*"see `l_inf`"* makes the site worse to read, which is what the
-  write-it-there rule is protecting).
-- **NEVER a paraphrase.** A paraphrase is a copy, and a copy goes stale the instant the original moves.
-
-**⚠ THE TEST, and it is the operative part: WOULD THIS SENTENCE BECOME FALSE IF THE CANONICAL
-STATEMENT CHANGED?** If yes, it is a copy — replace it with a line plus a pointer. If no, it is a
-consequence and it belongs where it is.
-
-**Measured 2026-08-15 — this is not hypothetical.** `l_inf`'s docstring is already canonical by
-adoption: **25 sites depend on it**, six build-script changelogs call it *"the designated honest
-stopping point"*, and four retraction commits were written against it as their anchor. **But 10 of the
-25 PARAPHRASE it** — *"`l_inf`'s docstring states that the step … is an ontological bridge"* — and a
-rewrite of the docstring **falsified four of them immediately**. Ledger: `BLAST-1`, `OCC-2`.
-
-⚠ **A canonical statement can have a copy that can NEVER be updated, and that must be recorded rather
-than discovered.** `scripts/build_zpc.py:142` reproduces this docstring's closing paragraph, rendered
-into **ZP-C v1.21 — already deposited with a Zenodo DOI.** The build script can be converted so future
-rebuilds point rather than copy; **the deposited PDF is frozen and always will be.** That is correct
-behaviour for a snapshot, and it means *"one canonical definition everywhere"* has permanent
-exceptions. Name them at the canonical site.
-
-**Rollout is AS-TOUCHED, never big-bang** — the same model as the file-path citation convention. A
-25-site conversion in one round is the shape that generates new defects; 2026-08-15 is the evidence.
-
-### And the pointer must not become a COPY. Never enumerate in prose what the artifact defines.
-
-**A pointer that re-lists its target's contents is a second copy of the definition, and a second copy
-drifts.** This is the general form of a rule this file already states three times for three specific
-figures — the choice-footprint count ("NO COUNT — measure on demand, never record one"), the
-`papers/` file count, and the `LEAN_CUSTOM_REGISTRY` tally. It is one rule, so state it once:
-
-**Do not write into prose any count, tally, field list, instance list, or "these are the N conditions"
-enumeration of something a Lean file, a directory, or a data store already defines.** Point at it, name
-the one or two members that are load-bearing for what you are saying, and let the reader open it.
-
-**Measured 2026-08-04 — the same defect twice in two rounds, one level apart, in the same paragraph.**
-A pointer block added to `ZeroParadox/Valuation/PoleCornersBridge.lean` said `InfinitudeFloor` had
-**four** realizations (there are five — `boundaryFloor` was missed) and, after that was fixed, said the
-class had **two** conditions and that this "is the whole requirement" (it has three, and the dropped
-`cx_floor_eq_iSup` is the load-bearing one, the field the headline theorem rewrites with first). Both
-are the same error: **a completeness claim about an artifact's contents, asserted in prose that cannot
-check itself** — in a file whose entire job was to POINT AT that artifact.
-
-**Why enumeration specifically, and not just counts.** A count at least looks like a figure and invites
-the "measure it" reflex. A field list reads as *description* and invites nothing, which makes it the
-more dangerous of the two. Both are completeness claims; neither is checkable from where it is written.
-
-**What IS legitimate to write down:** a **dated survey result** — "realizations located as of
-&lt;date&gt;: …" — because that is a measurement, not a re-copy, and the date says so. Same for
-"none located as of &lt;date&gt;" over "none exists" (§ the choice index's universal-negative rule).
-The distinguishing question: *would this sentence be wrong if someone added a field tomorrow, with
-nothing mechanical noticing?* If yes, it is an enumeration — replace it with a pointer or a date.
-
-## Determinism is the SINGLE recurring cost — name it, don't rediscover it
-
-**Every "the bottom cannot move" result in this corpus is powered by SINGLE-VALUEDNESS, not by
-self-reference.** This surfaced four separate ways in one session (2026-07-30) and was re-derived each
-time, so it is written here rather than left to be found five sections into a file:
-
-- `machine_snap_impossible` — nothing is both its own fixed point and departed from. `Occurrence.lean` § VI
-  states the diagnosis: *"the obstruction of § III is the absence of fan-out, not the presence of a fixed
-  point."*
-- `deterministic_has_no_fanout` — a function `σ → Option σ` admits at most one successor. That is the
-  whole obstruction.
-- `nondeterministic_escapes_the_trap` — a **relation** can loop at `s` *and* reach elsewhere. That is the
-  whole escape.
-- `execution_requires_branching` — stated over a **relation** for exactly this reason.
-
-**The consequence to carry into any prose about the trichotomy:** halted / self-looping / stepping-onward
-are three distinct **states** under any dynamics, but under a **function** the first two share a **FATE** —
-`loop_is_a_trap` and `eval_of_halted` each give a singleton reachable set. The trichotomy is genuinely
-three-valued **only** in the non-deterministic setting; make the step single-valued and the self-loop is a
-relabelled trap. So **"could it still move?" is a MODAL question, and the function-vs-relation choice is
-how the framework encodes that modality WITHIN the trichotomy.**
-
-⚠ **It is not the only encoding, and "nothing else" is too strong** — the corpus's own counterexample is
-`carry` (§ VI-c, `ZeroParadox/Computability/Occurrence.lean`): a **function with no fixed point anywhere**
-whose observable projection never changes. `LoopsInPlace` demands the state return to *itself*, so adding
-any accumulating component leaves no fixed point at all and `machine_snap_impossible` does not apply —
-yet nothing observable moves. The separation being made is **the state moving** versus **the observable
-changing**, which is a question about a quotient rather than about determinism.
-
-**Do not re-derive this, and do not attribute the obstruction to the fixed point.** The self-loop is not
-what blocks departure; being a function is. Note also what it is NOT: this says nothing about whether the
-bottom *does* move. Non-determinism buys the *possibility* and never the *occurrence* — see `l_inf`'s
-docstring, and `tri_idle_never_starts`, where a perfectly well-formed third state sits inert forever.
-
-## The Two-Pole Test — Hard Rule. Run BOTH readings of ⊥ concurrently, never one.
-
-**⊥ = 0 = ∞ is the framework's own pole identity (`rInv_swaps`). So every face of ⊥ has TWO readings —
-the EMPTY one and the INFINITE one — and a face that implements only one is half-built.** Build and check
-both concurrently. Do not sequence them, and do not treat "which first?" as a real question: the poles are
-one object seen from two ends, so picking one builds half and forces a later switch.
-
-**The test, run on every new development and on any face that is stuck:**
-- **Q1 — where is the zero that runs to infinity?** (valuation, frequency, surprisal, self-reference…)
-- **Q2 — what is the one-way arrow, and what does it look like run backwards?** (reversal is the
-  *inversion*, never a second construction.)
-
-**If either has no answer, the piece is not part of the framework yet, or its floor has not been found.**
-That is a finding, not a stall — record it.
-
-**The measured case that made this a hard rule (2026-07-26).** ZP-K's computational bottom is
-`MachinePhase.initial`, whose own comment reads *"machine exists; no instruction fetched"* — a pure EMPTY
-reading, with no infinity in it. **Q1 has no answer there**, and the test was never run. The consequence
-was not cosmetic: because a machine that has fetched nothing has no reason to fetch anything, the claim
-that ⊥ *executes itself* needed an ontological bridge, and that bridge is a commitment rather than a
-theorem (see `l_inf`'s docstring, which says so honestly). **The INFINITE reading of the computational
-bottom is divergence — the non-terminating computation — which does not need starting because it is
-already running.** The occurrence problem is an artifact of implementing one pole.
-
-**The diagnostic value, stated generally:** when a claim will not close, or a face needs an extra
-assumption to work, **first check whether only one pole has been built.** A missing pole shows up as a
-bridge you cannot formalize.
-
-### The test applies to METHOD, not only to objects (Tim, 2026-08-07)
-
-**A search that implements one polarity is a half-built detector, for exactly the reason a face that
-implements one pole is half-built.** Tim, on being shown that four of five false negatives in one
-session were one grep away in the opposite polarity: *"that polarity is the nature of the project — I
-feel like every instance we can have will have that structure."* He is right, and **Q2 above is already
-that question**, asked of a construction rather than of a search: *what does the one-way arrow look like
-run backwards?*
-
-**So run the test on the METHOD:**
-- **Q1-M — what would this claim look like stated from the other side?** *"Seed-independent"* and
-  *"⊥ is **a** seed, not a distinguished one"* are one fact. *"Converges"* and *"diverges"*. *"Is
-  used"* and *"has no call sites"*. **Search both, or you have searched half.**
-- **Q2-M — if the corpus disagreed with me, what words would it use?** That phrasing is where a
-  contradicting result is sitting, and it is the phrasing you will never reach from your own.
-
-**Measured, same day:** `seed-independent` → 0 hits; the inverse `"a seed, not"` → the section that
-already proved it, by Tim, eight days earlier. `atTop (nhds _)` → 13 convergent files; the inverse
-`atTop atTop` → the divergences, in files the survey never saw. Both had already shipped into docstrings
-as measured fact. See § *NOT IN THE LIBRARY IS A CLAIM* step (c) for the operational form.
-
-**⚠ Where it STOPS, and the framework already names the exception.** *"Every instance"* is the right
-instinct and needs one qualifier the corpus itself supplies: the fifth POV KIND, **INVARIANT** — *"the
-quantity does not transform; flipping the chart gains nothing."* That is the ratified slot for polarity
-**not** applying. Four of the five KINDs are two-sided (COINCIDENCE, INVERSION, DRIFT, CARRIER); the
-fifth is the null case. **So: expect polarity, and when flipping genuinely gains nothing, say INVARIANT
-rather than forcing a second pole.** A rule that fires everywhere is the cry-wolf shape this file
-elsewhere says to narrow rather than tolerate.
-
-**Why this is here and not only in memory.** It *was* only in memory
-(`feedback_two_part_lens_call_out`), where the body does not load — only the one-line index entry does,
-competing with ~100 others. It did not fire for months. Per this file's own rule: *memory is for context,
-not enforcement.* The memory keeps the full lens (the which-first corollary, the external-evaluation
-corollary, and the call-out protocol for where Tim's human read is load-bearing); **the binding
-obligation is here.**
-
-**Call-out protocol (retained from the memory, still required):** when development turns on this lens —
-a floor to locate, a reversal to characterize, a 0↔∞ swap — say so explicitly and flag it as needing
-Tim's read rather than guessing; and when his input on such a point proves load-bearing, name what it
-changed instead of presenting the result as self-derived.
-
-## Prose that resists correction is a CLAIM defect. Revalidate, don't redraft. Hard Rule.
-
-**If a sentence has to be fixed three times, the sentence is not the problem.** Stop editing it and go
-measure the claim underneath. This is gate-enforced: `gate_round.py` prints a MANDATORY CLAIM
-REVALIDATION protocol at **round 3**, or as soon as the **same `--target` has been re-fixed 3 times**.
-
-**Why, in one line: the gates check WORDING against SOURCES. They cannot see an unmeasured claim, and
-they will keep passing one forever.** Measured 2026-08-03 — one ZP-P sentence was wrong in six
-consecutive versions and four gate rounds passed it, because the citations were always correct and the
-claim underneath had never been measured by anyone. Six rounds of prose editing could not find it. One
-probe did, in a minute.
-
-**⚠ MODAL CLAIMS ARE THE HIGH-RISK CLASS — and this corpus is full of them.** *"not a necessity"*,
-*"an artifact"*, *"in principle"*, *"could be removed"*, *"eliminable"*, *"inherited from Mathlib"* are
-claims about what **cannot be proved**, and a footprint measurement can never establish one:
-- **ACCIDENTAL** is proved only by **EXHIBITING** the clean proof.
-- **ESSENTIAL** is proved only by a **REDUCTION** to a taboo.
-- **`#print axioms` follows the STATEMENT, not the proof.** A *type* can carry an axiom — then no
-  proof is clean, and every "removable" claim about it is false. **Measure the type, not just the
-  theorem.**
-
-**The protocol, when the tripwire fires:** name the claim in one line without its framing → ask what
-would settle it and whether anyone did that → probe it in the scratchpad (`lake env lean` on a
-standalone file needs no repo write) → then either restate to exactly what was measured, or restate as
-an explicit conjecture, **or delete the sentence**. **Deleting is legitimate and often correct**: if an
-accurate statement already lives in a checkable file, published prose does not need to relitigate it —
-that is how the ZP-P case was finally closed (v1.16, Tim: *"if the Lean is accurate, just delete the
-problem sentence"*).
-
-**Record what the MEASUREMENT showed, not that you re-worded something.** A changelog entry saying
-"clarified" after a revalidation round is the failure repeating.
-
-📖 **THE CASE, THE DETECTOR AND THE MEASURED FOOTPRINTS — `tools/process/claim-revalidation.md`.**
-The ZP-P arc in full; `check_modal.py`'s three false-negative paths, **every one found by running a
-probe rather than by reading the code**; and the axiom-footprint table that must be read whole (*"`PFunctor.M`
-is axiom-free"* is true of the type former and false of its destructor, and that half-truth shipped to a
-published PDF under the word *"Measured"*). **Read it before believing a checker's zero, and before
-writing "removable" about anything.**
+## R-REVALIDATE  A sentence fixed three times is a CLAIM defect. Measure it; do not redraft.
+TRIGGER  the same sentence or `--target` has been re-fixed three times, or the gate round
+         reaches 3 — `gate_round.py` prints the protocol at that point.
+RULE     stop editing. Name the claim in one line without its framing; ask what would settle
+         it and whether anyone did that; probe it in the scratchpad; then restate to exactly
+         what was measured, restate as an explicit conjecture, or DELETE the sentence —
+         deleting is legitimate and often correct. Record what the MEASUREMENT showed, never
+         that you re-worded something. MODAL claims are the high-risk class: ACCIDENTAL is
+         proved only by exhibiting the clean proof, ESSENTIAL only by a reduction to a taboo,
+         and `#print axioms` follows the STATEMENT, so measure the type, not just the theorem.
+COST     the gates check WORDING against SOURCES — they cannot see an unmeasured claim and
+         will pass one forever. Six versions and four gate rounds missed one; a probe found
+         it in a minute.
+READ     tools/process/claim-revalidation.md
 
 ## "NOT IN THE LIBRARY" IS A CLAIM. Probe it before you believe it. Hard Rule.
 

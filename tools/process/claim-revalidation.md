@@ -158,3 +158,46 @@ its destructor.**
 not "use `M` instead of `Cofix`" generically — it is *build without destructing*. Attributing the
 footprint to the **QPF quotient layer** is defensible and is the claim to keep; *"not from the M-type"*
 is false and must not be re-introduced.
+
+---
+
+## Routed from `CLAUDE.md` (§ `R-REVALIDATE`), 2026-08-23
+
+## Prose that resists correction is a CLAIM defect. Revalidate, don't redraft. Hard Rule.
+
+**If a sentence has to be fixed three times, the sentence is not the problem.** Stop editing it and go
+measure the claim underneath. This is gate-enforced: `gate_round.py` prints a MANDATORY CLAIM
+REVALIDATION protocol at **round 3**, or as soon as the **same `--target` has been re-fixed 3 times**.
+
+**Why, in one line: the gates check WORDING against SOURCES. They cannot see an unmeasured claim, and
+they will keep passing one forever.** Measured 2026-08-03 — one ZP-P sentence was wrong in six
+consecutive versions and four gate rounds passed it, because the citations were always correct and the
+claim underneath had never been measured by anyone. Six rounds of prose editing could not find it. One
+probe did, in a minute.
+
+**⚠ MODAL CLAIMS ARE THE HIGH-RISK CLASS — and this corpus is full of them.** *"not a necessity"*,
+*"an artifact"*, *"in principle"*, *"could be removed"*, *"eliminable"*, *"inherited from Mathlib"* are
+claims about what **cannot be proved**, and a footprint measurement can never establish one:
+- **ACCIDENTAL** is proved only by **EXHIBITING** the clean proof.
+- **ESSENTIAL** is proved only by a **REDUCTION** to a taboo.
+- **`#print axioms` follows the STATEMENT, not the proof.** A *type* can carry an axiom — then no
+  proof is clean, and every "removable" claim about it is false. **Measure the type, not just the
+  theorem.**
+
+**The protocol, when the tripwire fires:** name the claim in one line without its framing → ask what
+would settle it and whether anyone did that → probe it in the scratchpad (`lake env lean` on a
+standalone file needs no repo write) → then either restate to exactly what was measured, or restate as
+an explicit conjecture, **or delete the sentence**. **Deleting is legitimate and often correct**: if an
+accurate statement already lives in a checkable file, published prose does not need to relitigate it —
+that is how the ZP-P case was finally closed (v1.16, Tim: *"if the Lean is accurate, just delete the
+problem sentence"*).
+
+**Record what the MEASUREMENT showed, not that you re-worded something.** A changelog entry saying
+"clarified" after a revalidation round is the failure repeating.
+
+📖 **THE CASE, THE DETECTOR AND THE MEASURED FOOTPRINTS — `tools/process/claim-revalidation.md`.**
+The ZP-P arc in full; `check_modal.py`'s three false-negative paths, **every one found by running a
+probe rather than by reading the code**; and the axiom-footprint table that must be read whole (*"`PFunctor.M`
+is axiom-free"* is true of the type former and false of its destructor, and that half-truth shipped to a
+published PDF under the word *"Measured"*). **Read it before believing a checker's zero, and before
+writing "removable" about anything.**
