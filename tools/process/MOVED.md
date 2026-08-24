@@ -44,7 +44,7 @@ section is preserved verbatim in the body named below.
 | Anything convertible from prose to Lean MUST be converted | `R-TOLEAN` | `tools/process/prose-to-lean.md` || Gate exemption — this file and operational meta / WHERE THINGS LIVE | `R-EXEMPT` | `tools/process/gate-exemptions.md` |
 | NARRATE THE MATH — in an engineer's register | `R-NARRATE` | `tools/process/narrate-and-pipeline.md` |
 | batch.py precommit BEFORE EVERY COMMIT | `R-PRECOMMIT` | `tools/process/pipeline.md` |
-| The defect register — DEFECT_CLASSES.md | `R-DEFECTCLASS` | `tools/process/narrate-and-pipeline.md` |
+| The defect register — DEFECT_CLASSES.md | `R-DEFECTCLASS` | `tools/process/narrate-and-pipeline.md` || BEFORE YOU EDIT ANY `.lean` FILE | `R-EDITLEAN` | `tools/process/core-objects.md` |
 
 ## Pass record
 
@@ -61,8 +61,9 @@ section is preserved verbatim in the body named below.
 | 9 | 2026-08-23 | `:956`-end (framework, handoff, capture, dev mode, Lean) | 236 | 85 | **151** |
 | 10 | 2026-08-23 | `:382`-`:628` (gated conventions, controls, briefs, prose-to-Lean) | 247 | 71 | **176** |
 | 11 | 2026-08-23 | `:4`-`:237` (exemptions, layout, narrate, pipeline, defect classes) | 234 | 87 | **147** |
+| 12 | 2026-08-23 | `:134`-`:186` (before you edit a .lean file) | 53 | 17 | **36** |
 
-**File total: 2338 → 721 lines (−1617, 69%).**
+**File total: 2338 → 686 lines (−1652, 71%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then

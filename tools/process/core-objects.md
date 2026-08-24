@@ -142,3 +142,60 @@ reframe itself (Tim's) is
 **The claims mirror (the claim graph made checkable — read/update it whenever a claim's STATUS is asserted or changed):** `ZeroParadox/ClaimsMirror.lean` — the machine-checked representation of the SSOT `claims` store. Each claim node the store marks `proved` / `corr` / `deep` is **restated exactly and discharged from the existing machinery**, so a claim's status is a **verified link to a green declaration, not a label**; the purity block prints each claim's honest axiom footprint (three faces axiom-free — `node-order`, `node-set-theory`, `T-SNAP`; the p-adic floor `[propext]`; the rest carry Mathlib choice). The three non-theorems are represented by their **deliberate absence**: the two `Lawvere-*` conjectures (one Set face provably *not* a Lawvere instance) and the retired `MC-1-identity` (ill-typed — `x = y` across distinct categories is not a well-formed proposition) carry **no theorem**, and that non-representation is itself the checked fact. **Why it exists (2026-07-21):** a `proved` label is only as good as the decl under it, and a false premise attached to a *true* conclusion is invisible from the outside — nothing downstream breaks, so being right about the conclusion hides a wrong reason (the ZP-A / ZP-E Foundation-squeeze false premise survived to high revision exactly this way). The mirror is the mechanical guard: the kernel re-derives each claim indifferent to how it was reached, so a status that is not actually backed shows up as a decl that will not elaborate. **The rule:** before asserting a claim is proved (in prose, a docstring, a companion, outreach), check it has a green entry here; and whenever a core claim is added, or a claim's status changes, update `ClaimsMirror.lean` and its SSOT `link_claim` in the **same** change — the same reflex as the purity check and the SJV sync.
 
 **Why this rule exists (2026-07-17):** a run of prose/figure errors — fencing ε₀ = 0, "co-locating ⊥ and ε₀," flattening min≡max to one face, calling ε₀ "a large ordinal / ceiling" — all came from reconstructing these objects from working memory instead of reading the Lean. The fix is mechanical: read the `CannotBe` index first, cite the theorem, never gloss.
+
+---
+
+## Routed from `CLAUDE.md`, 2026-08-23
+
+## ⭐⭐ BEFORE YOU EDIT ANY `.lean` FILE: read `ZeroParadox/MANIFEST.md` AND grep the identifiers you are about to touch. Hard Rule. (Tim, 2026-08-15.)
+
+**The trigger is an ACTION, not a category. If you are about to change a `.lean` file — one character, a
+docstring, a comment — this fires.** No judgement call, nothing to classify, no exception for "it's only
+prose".
+
+1. **Read `ZeroParadox/MANIFEST.md`** — the by-folder index of the whole corpus, **~7k tokens**, cheaper
+   than the Engineer's Takes and far cheaper than loading a folder. **104 `.lean` files already point at
+   it**; until today this file mentioned it once.
+2. **Grep the IDENTIFIER of every declaration you are touching**, not the wording of the claim. Then read
+   the hits.
+
+**⚠ WHY THIS EXISTS, AND IT IS A DIAGNOSIS RATHER THAN A RESOLUTION.** § *Development mode* below already
+says to load the subsystem. **It did not fire on 2026-08-15 and the reason is its trigger:** *"before
+fresh **mathematical development**"* is a **category that has to be adjudicated**, and the adjudication is
+where it leaks — *"this is a docstring edit, not development"* is how the rule was talked past, in this
+session, by someone who had read it. **Compare § *Core Objects* directly below, which binds reliably: its
+trigger is an unmissable TOPIC and it NAMES THREE EXACT FILES.** A rule you must first decide applies is a
+rule that does not.
+
+**What it cost, measured the same day.** A `l_inf` docstring was rewritten after grepping three theorem
+names. The wording survey found **4** citing sites; `grep -n "l_inf"` returns **9**. And the appended
+paragraph re-committed an overclaim that had **already been made and corrected** — the correction sits on
+`machine_trichotomy` (`ZeroParadox/Computability/Occurrence.lean` § II), which fences that the
+function-vs-relation choice is not the ONLY encoding of the modality, in the very file the new text
+cited and never opened. **FAIL-BEDROCK, reverted in
+full.** Ledger: `PROC-2`, `OCC-2`.
+
+⚠ **Searching the CLAIM is not the same as searching the NAME, and this file already says the first
+half.** § *Review-Loop Cap* says *"grep the corpus for the CLAIM, not the named file"* — correct, and
+**insufficient**: a paraphrase search misses every site that cites the identifier without repeating the
+phrasing. **Do both. The identifier sweep is the mechanical one, so it is the one that cannot be talked
+past.**
+
+⚠⚠ **AND A RULE ADDED MID-SESSION DOES NOT REACH AGENTS SPAWNED LATER IN THAT SESSION.** Measured
+2026-08-15, hours after this section was written: a read-only control agent was given the exact task
+that had just failed. It performed the reconnaissance correctly and **reported that the `CLAUDE.md`
+injected into its context did not contain this section** — its snapshot predates the edit. It found
+the rule **by accident**, through an unrelated grep that happened to return a `CLAUDE.md` line. Had
+its search been scoped to `ZeroParadox/` (this project's own stated convention for Lean searches) it
+would never have seen it. **So an edit here binds FRESH sessions, which read this file from disk, and
+silently does not bind the current one's subagents.** Two consequences: **carry a new rule into the
+BRIEF explicitly** for the rest of the session in which it is written — briefs are the only thing a
+spawned agent reliably reads — and **do not treat a same-session agent's compliance as evidence the
+rule works**, because it may never have received it.
+
+⚠ **This is the EIGHTH convention of this shape and the previous seven leaked**, which is the argument for
+the narrow mechanical half over the broad remembered one. The durable fix is a tool that prints reverse
+references at edit time (`refs.py`, wired into a `PreToolUse` hook and the `precommit` manifest) so it
+fires whether or not anyone remembers — the `guards.py` pattern, where the registry is the deliverable and
+the discipline is not. **Until that exists, this rule is remembered, and this file records that remembered
+rules fail here by construction.**

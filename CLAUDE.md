@@ -131,58 +131,23 @@ COST     a downgraded fail-open leg is an unpriced exemption, and a warning nobo
          manufactures coverage that was never earned.
 READ     tools/process/non-convergence.md
 
-## ⭐⭐ BEFORE YOU EDIT ANY `.lean` FILE: read `ZeroParadox/MANIFEST.md` AND grep the identifiers you are about to touch. Hard Rule. (Tim, 2026-08-15.)
-
-**The trigger is an ACTION, not a category. If you are about to change a `.lean` file — one character, a
-docstring, a comment — this fires.** No judgement call, nothing to classify, no exception for "it's only
-prose".
-
-1. **Read `ZeroParadox/MANIFEST.md`** — the by-folder index of the whole corpus, **~7k tokens**, cheaper
-   than the Engineer's Takes and far cheaper than loading a folder. **104 `.lean` files already point at
-   it**; until today this file mentioned it once.
-2. **Grep the IDENTIFIER of every declaration you are touching**, not the wording of the claim. Then read
-   the hits.
-
-**⚠ WHY THIS EXISTS, AND IT IS A DIAGNOSIS RATHER THAN A RESOLUTION.** § *Development mode* below already
-says to load the subsystem. **It did not fire on 2026-08-15 and the reason is its trigger:** *"before
-fresh **mathematical development**"* is a **category that has to be adjudicated**, and the adjudication is
-where it leaks — *"this is a docstring edit, not development"* is how the rule was talked past, in this
-session, by someone who had read it. **Compare § *Core Objects* directly below, which binds reliably: its
-trigger is an unmissable TOPIC and it NAMES THREE EXACT FILES.** A rule you must first decide applies is a
-rule that does not.
-
-**What it cost, measured the same day.** A `l_inf` docstring was rewritten after grepping three theorem
-names. The wording survey found **4** citing sites; `grep -n "l_inf"` returns **9**. And the appended
-paragraph re-committed an overclaim that had **already been made and corrected** — the correction sits on
-`machine_trichotomy` (`ZeroParadox/Computability/Occurrence.lean` § II), which fences that the
-function-vs-relation choice is not the ONLY encoding of the modality, in the very file the new text
-cited and never opened. **FAIL-BEDROCK, reverted in
-full.** Ledger: `PROC-2`, `OCC-2`.
-
-⚠ **Searching the CLAIM is not the same as searching the NAME, and this file already says the first
-half.** § *Review-Loop Cap* says *"grep the corpus for the CLAIM, not the named file"* — correct, and
-**insufficient**: a paraphrase search misses every site that cites the identifier without repeating the
-phrasing. **Do both. The identifier sweep is the mechanical one, so it is the one that cannot be talked
-past.**
-
-⚠⚠ **AND A RULE ADDED MID-SESSION DOES NOT REACH AGENTS SPAWNED LATER IN THAT SESSION.** Measured
-2026-08-15, hours after this section was written: a read-only control agent was given the exact task
-that had just failed. It performed the reconnaissance correctly and **reported that the `CLAUDE.md`
-injected into its context did not contain this section** — its snapshot predates the edit. It found
-the rule **by accident**, through an unrelated grep that happened to return a `CLAUDE.md` line. Had
-its search been scoped to `ZeroParadox/` (this project's own stated convention for Lean searches) it
-would never have seen it. **So an edit here binds FRESH sessions, which read this file from disk, and
-silently does not bind the current one's subagents.** Two consequences: **carry a new rule into the
-BRIEF explicitly** for the rest of the session in which it is written — briefs are the only thing a
-spawned agent reliably reads — and **do not treat a same-session agent's compliance as evidence the
-rule works**, because it may never have received it.
-
-⚠ **This is the EIGHTH convention of this shape and the previous seven leaked**, which is the argument for
-the narrow mechanical half over the broad remembered one. The durable fix is a tool that prints reverse
-references at edit time (`refs.py`, wired into a `PreToolUse` hook and the `precommit` manifest) so it
-fires whether or not anyone remembers — the `guards.py` pattern, where the registry is the deliverable and
-the discipline is not. **Until that exists, this rule is remembered, and this file records that remembered
-rules fail here by construction.**
+## R-EDITLEAN  Before you edit ANY `.lean` file, read the manifest and grep the identifiers.
+TRIGGER  you are about to change a `.lean` file — one character, a docstring, a comment.
+         No judgement call, no exception for "it's only prose".
+RULE     (1) read `ZeroParadox/MANIFEST.md`, the by-folder index of the whole corpus, ~7k
+         tokens — cheaper than loading a folder, and 104 `.lean` files already point at it.
+         (2) grep the IDENTIFIER of every declaration you are touching, not the wording of
+         the claim, then READ THE HITS. Do BOTH: searching the CLAIM finds paraphrases,
+         searching the NAME finds every citing site, and the identifier sweep is the
+         mechanical one, so it is the one that cannot be talked past.
+COST     measured on a docstring edit made after grepping three theorem names: the wording
+         survey found 4 citing sites and `grep -n "l_inf"` returns 9, and the appended
+         paragraph re-committed an overclaim that had ALREADY been corrected — in the very
+         file the new text cited and never opened. Reverted in full. This is the eighth
+         convention of this shape and the previous seven leaked; until `refs.py` prints
+         reverse references at edit time, this one is remembered, and remembered rules fail
+         here by construction.
+READ     tools/process/core-objects.md
 
 ## R-COREOBJ  Read the Lean before writing about the bottom, the snap, or epsilon-zero.
 TRIGGER  you are about to write any prose, figure, docstring, companion text, note or
