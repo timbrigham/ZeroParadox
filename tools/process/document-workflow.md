@@ -165,3 +165,160 @@ added or archived.
 5. Link the current version, no `-1` / `-2` suffix
 6. Version number in the Version column only
 7. Verify the file exists with `Glob` before committing
+
+---
+
+## Routed from `CLAUDE.md`, 2026-08-23
+
+## GitHub Releases and Zenodo Snapshots
+
+GitHub Releases trigger automatic Zenodo snapshots with permanent DOIs. `RELEASES.md` is the human-readable record of each release.
+
+### Release naming
+
+`v<major>.<minor>` - e.g. `v1.0`, `v1.1`, `v2.0`
+
+### What triggers a release
+
+- **Major version** (`v1.0 → v2.0`): a new formal layer added, or a theorem status changes (candidate → derived), or a significant structural revision to the framework
+- **Minor version** (`v1.0 → v1.1`): a substantive reviewer feedback round addressed, or accumulated document/companion updates that represent a meaningful state of the framework
+
+**Do not release on:** every individual PR. Releases should feel like milestones worth timestamping.
+
+**Lean-only changes are an open question, not an automatic trigger (either way).** The release model is document-centric: `RELEASES.md` is built around a "Document versions" table, and the candidate→derived trigger above refers to *tracked, labeled* results in formal documents (carried in `register.md`), not to a placeholder proved only inside a `.lean` file. When a Lean milestone lands without accompanying formal prose (e.g. a conjecture proved only in Lean, no PDF document or companion moved), do not assume it warrants a release, and do not assume it doesn't - raise it as an explicit question for Tim. The two clean resolutions are: (a) bundle it into the next document release, or (b) write the result up as formal prose first, then release. Example: the wheel of fractions (§VIII conjecture → theorem, ZPJ_Wheel/ZPJ_WheelFrac) landed 2026-06-06 as a Lean-only change and was flagged, not auto-released.
+
+### Release workflow
+
+When Tim initiates a release: draft the `RELEASES.md` entry + `.zenodo.json` → PR → after merge, **run the Release-Readiness Gate (`check_release_ready.py <tag>` must exit 0) and confirm its judgment checklist** → draft the GitHub Release body → **wait for explicit approval** → execute:
+```
+gh release create <tag> --target main --title "<tag> - <title>" --notes-file ".claude-local\release_<tag>_body.md"
+```
+⚠ **THIS IS TIM'S COMMAND TO RUN, NOT AN AGENT'S — `gh` is denied for agents (2026-08-22).** That is
+deliberate rather than incidental: `gh release create` mints a **permanent Zenodo DOI**, and a
+permanent public act is not an agent decision. An agent's role ends at drafting the body and getting
+the Release-Readiness Gate to exit 0. `gitRobot` can create the annotated tag (`tag_create`) but has
+no way to push one and no release verb at all.
+After release, confirm the Zenodo snapshot minted (query `https://zenodo.org/api/records/<conceptID>`). The README DOI badge is the **concept DOI** (`10.5281/zenodo.20060860`), which auto-resolves to the latest version — so **no per-release badge edit is needed** (confirmed v2.6, 2026-06-24). Only verify the snapshot exists; do not chase a badge update.
+
+**Release-Readiness Gate — mandatory hard gate before drafting the release body / cutting any tag.** Run from the repo root:
+```
+python tools/verify/check_release_ready.py <tag>
+```
+It must **exit 0** before the release body is drafted. The script mechanically verifies the deterministic release preconditions and **exits 1 (NO-GO)** on any blocking failure: Engineer's Takes filled (no `TODO (Tim)` / `TODO: Engineer` / empty take section), build-script hash integrity vs `register.md`, the `LEAN_CUSTOM_REGISTRY` invariant (`### ` entries == `[ZP-CUSTOM]` tags), `.zenodo.json` valid JSON, no conflict markers in tracked files, a `## <tag>` entry present in `RELEASES.md`, and every README/GUIDE-linked PDF exists. It also prints WARN-level hygiene checks (register↔script VERSION, `scripts/` mirror currency, untracked root PDFs) and a **judgment checklist** of the non-mechanizable items (editorial/adversary/claim-review/prior-art ran on the PR; companion sync; major-vs-minor decision; release body approved). It **consolidates** the `.zenodo.json` and Engineer's-Take checks below (kept individually documented for context) and adds the rest. The gate cannot hook `gh release create` (no git event for tag creation), so enforcement is procedural: **the gate must exit 0 AND its judgment checklist must be confirmed before the release body is drafted.** Lives in `tools/verify/` — **TRACKED, alongside every other checker (2026-08-15).** This reverses the old rule that `check_*` dev tools stay gitignored and unmirrored: they are now tracked *in place*, which is not the same as mirroring them. There is one copy, it is the public one, and a checker edit is an ordinary reviewable diff instead of a change `git diff` could not see. Reuses `check_hashes.py` for register parsing. Spec: `.claude-local/notes/release_readiness_gate_2026-06-24.md`. (Added 2026-06-24 after `LEAN_CUSTOM_REGISTRY` went 18 days stale undetected at the v2.6 threshold — the scattered-checks model let it slip.)
+
+**`.zenodo.json` check — mandatory before every release:** Read `.zenodo.json` and verify the `description` field accurately reflects the current layer count and layer list. Update it in the same PR as `RELEASES.md` if anything is stale. Zenodo reads this file at release creation time; it cannot be updated retroactively via the repo (only via the Zenodo web UI).
+
+**Engineer's Take check — mandatory before every release (hard gate):** Before cutting any release, grep the Lean sources for outstanding Engineer's Take placeholders — at minimum `TODO (Tim)` and `TODO: Engineer's Take` across **`ZeroParadox/**/*.lean`** (also scan for any `## Engineer's Take` heading followed immediately by an empty section). **The glob MUST be recursive.** This instruction previously read `ZeroParadox/*.lean`, which post-reorg matches only 3 files out of 187 — a manual check run that way would pass silently on an unfilled Take in any subdirectory. `check_release_ready.py` already uses the recursive form and is correct; only this prose was wrong (fixed 2026-07-19). Every ZP-X Lean file included in the release must have its Engineer's Take filled in Tim's own voice. **A release is BLOCKED until all are filled.** Claude never writes these — they must be Tim's own language (see the Engineer's Take convention) — so this gate catches the omission, it does not fill it. Surface the list of unfilled takes to Tim and wait for his prose. (Added 2026-06-11 after the four ZP-H functor takes plus ZP-L's were almost missed at the v2.4 threshold.)
+
+**RELEASES.md format:** `## vX.Y - YYYY-MM-DD` header, then **Why this release** (one sentence), **What changed** (bullets), **Document versions at this release** (table), **Next threshold**. Match existing entries in RELEASES.md for exact formatting.
+
+## register.md — Canonical Version Registry
+
+`register.md` is the authoritative source for all current document version numbers, filenames, and companion versions. It is committed to the public repository and reachable from the main index via the Claims Ledger (`CLAIMS.md`, which README links to register.md), so it no longer carries an unlinked-transparency notice (removed 2026-06-21).
+
+**Schema:** One row per formal document:
+`| Document | Formal Version | Filename | Companion Version | Notes |`
+
+**Rule: update register.md first.** On any version bump — before touching README.md or a build script docstring — update register.md. **`register.md` is canonical and README.md's Framework table is the single derived copy; that is the whole propagation path.**
+
+**On every version bump, in order:**
+1. Update register.md (formal version, filename, companion version if changed)
+2. Update README.md Framework table (verify against register.md)
+3. Update build script docstring
+4. Archive old version per archiving convention
+
+⚠ **GUIDE.md IS DELIBERATELY NOT A STEP HERE, AND THE OLD STEP 3 WAS WORSE THAN VACUOUS.** It said to
+verify GUIDE's Reading Paths against register.md — but **GUIDE.md carries no version numbers at all**
+(measured 2026-08-19, `grep -c` = 0). A rule naming a surface that cannot go stale can only ever
+report green, so an audit ticks a box for a check that never ran. **That GUIDE carries no versions is
+a PROPERTY TO PRESERVE, not an omission to correct:** its Reading Paths link flat filenames and
+delegate version state to README, and re-adding numbers would mint a *third* copy of every version —
+against § *the pointer must not become a COPY* directly, and it would oblige the README↔register
+comparator to grow a third arm to police the copy the decision created. **Reintroducing a version
+number to GUIDE.md is a regression, not a helpful addition.**
+
+## Companion Document Versioning
+
+**TRIGGER — an action: a formal document was updated, or you are touching any rendered PDF text.**
+
+- **Review its companion IN THE SAME SESSION**, and bump the companion's internal version in the
+  **same commit**. Companion versions are independent of formal versions; what matters is that the
+  companion is not materially **stale**, because a general reader meets the framework there and a
+  stale key-result box misdescribes what is proved.
+- **A document's OWN version appears in exactly ONE place in rendered content — the subtitle meta
+  line.** No self-version changelogs, no `[new in v1.7]` provenance tags. **Editorial review kills
+  these.** ⚠ **Cross-document citations are exempt** (*"T-SNAP derived in ZP-E v2.0"*) — that is a
+  citation, not a self-changelog, and treating it as a violation is a false kill.
+
+📖 **THE CHECKLISTS — `tools/process/document-workflow.md`.** The companion sync questions and
+checklist, the full violation list to strip on discovery, and the **five prose-precision categories**
+(precision error · invented terminology · directional ambiguity · context-free structural claim ·
+scope overclaiming) that every companion section is drafted and reviewed against. **Open it before
+writing companion prose** — those five are the errors that recur, and they are graded by an editorial
+gate that will send them back.
+
+## Vocabulary Reference Guide — Standing Update Rule
+
+A vocabulary reference guide lives at `.claude-local/vocabulary_reference.md`. It is the authoritative list of:
+- Terms to avoid or replace (technically loaded words used incorrectly, or invented ZP jargon)
+- Terms requiring a plain-language gloss for non-specialist audiences
+- ZP-internal vocabulary and how to describe it externally
+
+**Standing rule:** Whenever a vocabulary problem is surfaced — by Dan, by an adversary review kill-list, or by any external reviewer — update `.claude-local/vocabulary_reference.md` in the same session before the session ends. Add a row to the Update Log with the date, source, and term. Do not leave vocabulary fixes as one-off edits without capturing the general rule.
+
+This rule applies to both directions:
+- A term flagged as wrong (e.g., "isolated," "membership status") → add to Section 1
+- A term flagged as needing a gloss (e.g., "valuation," "clopen") → add or verify in Section 2
+
+## Build Script Hash Integrity
+
+`register.md` records a SHA-256 fingerprint (first 8 chars) of every formal and companion build script in the `formal:XXXXXXXX comp:XXXXXXXX` token embedded in each row's Notes field.
+
+**Line endings are LF, enforced by `.gitattributes`.** Because the fingerprint is a hash of file *bytes*, line endings must be byte-stable across machines or the same script would hash differently (CRLF vs LF). `.gitattributes` declares `* text=auto eol=lf` (all text normalized to LF) and marks PDFs/images `binary` (never converted). Do not commit CRLF in tracked text files, and do not rely on `core.autocrlf` — the attributes override it. `check_hashes.py` hashes the active `.claude-local` scripts (LF); the `scripts/` mirror is the same content under the same LF policy. (Added 2026-06-21 after a CRLF/LF mismatch made the `scripts/` mirror hash differ from the active script for the same content.)
+
+**Standing rule — any script change requires all four steps in the same commit:**
+1. Make the change and bump the internal version number
+2. Rebuild the PDF and archive the old version
+3. Recompute the hash: `python -c "import hashlib; print(hashlib.sha256(open('scripts/build_<doc>.py','rb').read()).hexdigest()[:8])"`
+4. Update the hash token in `register.md`
+
+**Session start check:** Run `python tools/verify/check_hashes.py` at the start of any session that will touch build scripts. A mismatch means a script was modified without completing the full four-step workflow — version bump and PDF rebuild are overdue.
+
+A hash mismatch is not just a "rebuild needed" signal — it means the version bump step was skipped. Do not rebuild without incrementing the version number.
+
+## PDF Build Standards
+
+**Before building any PDF in this project** — formal layer, companion, or otherwise — read `scripts/PDF_Rendering_Standards.md`. It is the single authoritative source for font stack, glyph rendering, table cell formatting, HTML entities, subscript/superscript rules, and pre-build verification. All rules there apply to every PDF build without exception.
+
+## Companion PDF Diagram Layout Standards
+
+These rules apply to every `Drawing` object in every companion build script. Violations cause diagram content to overflow the declared bounding box and render over surrounding text — a recurring issue that has required multiple retroactive fixes.
+
+**Now build-enforced (automatic).** `zp_utils` validates every `Drawing` in the story at `doc.build()` time — no per-function `validate_drawing()` call required. It **hard-fails the build** when content escapes its box (`max_y > dh` or `min_y < 0`, the only case that overlaps surrounding text), and prints a **margin warning** when content is inside the box but within the 10pt-top / 5pt-bottom safety margin. The rules below are still the design discipline (write diagrams that fit), but a forgotten check can no longer ship an escape. The bounds gate cannot see the *internal-collision* class (two elements overlapping inside the box, e.g. a caption over a node box); for that, every build prints a **diagram-page report** (`[diagram pages — eyeball for internal overlaps: …]`) naming the pages to visually check. Eyeball those pages on any diagram-touching build before commit.
+
+**Known deferred tripwire (2026-06-19):** `build_zpc_companion.py`'s surprisal diagram has a pre-existing ~2pt bottom escape (the amber origin marker) — sub-perceptible, no visible overlap. Left unfixed by decision; the gate will block that companion's next rebuild until the diagram's `dh` is bumped a few points. Fix it then, bundled with whatever change prompts the rebuild.
+
+### Diagram height and cy rules
+
+**Rule 1 — Never derive `cy` from `dh` when the diagram contains fixed-size elements (circles, boxes, labels at fixed offsets).** `cy = dh * fraction` is only safe when all content scales with `dh`. If any element has a fixed radius `r` or a fixed offset, use a fixed numeric `cy` instead.
+
+**Rule 2 — Verify bounds before committing.** After placing all elements, check:
+- `max_y = max content y` must satisfy `max_y < dh - 10`
+- `min_y = min content y` must satisfy `min_y > 5`
+
+The minimum margin is 10 pts top and 5 pts bottom. If either fails, increase `dh` or adjust `cy`.
+
+**Rule 3 — Common overflow sources to check explicitly:**
+- Labels below circles: `cy - r - label_offset` — goes negative when `cy` is too small
+- Labels above circles: `cy + r + label_offset` — exceeds `dh` when `cy` is too large  
+- Internal title strings at `dh - N` — conflict with top circle labels when both are near the top
+- Caption strings at fixed `y=10` inside the drawing — safe, but check nothing else sits at the same y
+
+**Rule 4 — Internal title strings are usually redundant.** Diagrams that have both a title string inside the `Drawing` and a `ccaption()` below it should drop the internal title. It adds clutter and occupies the same crowded top zone as circle labels.
+
+### Pre-build checklist for new diagrams
+
+- [ ] `cy` is a fixed value, not `dh * fraction` (unless all elements scale with `dh`)
+- [ ] Calculated `max_y < dh - 10` and `min_y > 5` for all content
+- [ ] No internal title string that duplicates the caption
+- [ ] `dh` expressed in inches with comment: `# N * 72 = M pts; content top = X, content bottom = Y`

@@ -27,7 +27,10 @@ section is preserved verbatim in the body named below.
 | Staging — NAMED PATHS, never `-A` | `R-STAGE` | `tools/process/staging.md` |
 | Editorial Review Gate | `R-ER` | `tools/process/review-gates.md` |
 | Adversary Review Gate | `R-AR` | `tools/process/review-gates.md` || Prior-Art Search — Trigger Conditions and Gate | `R-PRIORART` | `tools/process/prior-art.md` |
-| Guiding Principles / Repository Nature / Private Working Folder / Document Versioning | `R-CONTEXT` | `tools/process/repository-layout.md` |
+| Guiding Principles / Repository Nature / Private Working Folder / Document Versioning | `R-CONTEXT` | `tools/process/repository-layout.md` || GitHub Releases and Zenodo Snapshots | `R-RELEASE` | `tools/process/document-workflow.md` |
+| register.md — Canonical Version Registry / Build Script Hash Integrity | `R-REGISTER` | `tools/process/document-workflow.md` |
+| Companion PDF Diagram Layout Standards / PDF Build Standards | `R-DIAGRAM` | `tools/process/document-workflow.md` |
+| Companion Document Versioning / Vocabulary Reference Guide | `R-COMPANION` | `tools/process/document-workflow.md` |
 
 ## Pass record
 
@@ -38,8 +41,9 @@ section is preserved verbatim in the body named below.
 | 3 | 2026-08-23 | `:629`–`:870` (adjacency, determinism, two-pole, revalidate) | 242 | 57 | **185** |
 | 4 | 2026-08-23 | `:687`–`:986` (not-in-library, loop cap, truncation, staging, both gates) | 300 | 80 | **220** |
 | 5 | 2026-08-23 | `:768`-`:868` (prior-art, repo context) | 101 | 39 | **62** |
+| 6 | 2026-08-23 | `:808`-`:960` (releases, register, diagrams, companions) | 153 | 57 | **96** |
 
-**File total: 2338 → 1506 lines (−832, 36%).**
+**File total: 2338 → 1411 lines (−927, 40%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then
