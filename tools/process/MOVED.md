@@ -14,14 +14,18 @@ section is preserved verbatim in the body named below.
 | The open-defect ledger — `.claude-local/DEFECTS.md`. Read it before choosing what to work on. | `R-DEFECTS` | `tools/process/defect-ledger.md` |
 | ⭐⭐⭐ WHEN A FAILURE RECURS: the rule is wrong, not the reader. Run this list. | `R-RECUR` | `tools/process/recurrence-protocol.md` |
 | — rung 5 / non-convergence, formerly inside the section above | `R-NOCONV` | `tools/process/non-convergence.md` |
+| Core Objects — Read the Lean First (Hard Rule) | `R-COREOBJ` | `tools/process/core-objects.md` |
+| — Bedrock invariants, formerly inside the section above | `R-BEDROCK` | `tools/process/core-objects.md` |
+| Commitments Go In HYPOTHESES, Data Goes In BRACKETS | `R-COMMIT` | `tools/process/commitments-in-hypotheses.md` |
 
 ## Pass record
 
 | pass | date | unit | before | after | saved |
 |---|---|---|---|---|---|
 | 1 | 2026-08-23 | `:238`–`:501` (defect ledger + failure-recurs) | 264 | 41 | **223** |
+| 2 | 2026-08-23 | `:333`–`:527` (core objects + commitments) | 195 | 48 | **147** |
 
-**File total: 2338 → 2116 lines.**
+**File total: 2338 → 1970 lines (−368).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then
