@@ -1,239 +1,93 @@
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## R-ROBOT  Direct `git` and `gh` are BLOCKED for agents. Use `gitRobot`.
+TRIGGER  you are about to type `git` or `gh`.
+RULE     a `PreToolUse` hook inspects the WHOLE command string for a word-boundary `git` or
+         `gh` and denies it — bare, `cd`-chained, `&&`-chained, `-C`, absolute path, shelled
+         out of Python. It FAILS CLOSED. Use instead:
+           status, unpushed count, what would block a push  → `status()`
+           any read (log diff show ls-files rev-parse blame) → `read(op=..., args=[...])`
+           stage → `stage(paths=[...])` — NAMED PATHS; `-A` refused on the main repo
+           commit → `commit(message_file=...)` — message from a FILE, never argv
+           push → `preflight()` → `preflight_status()` → `push(branch, reason)`
+           sync → `fetch()` then `merge(branch, reason)`
+           a private checkout to mutate → `worktree(action='add')`
+           why was I refused → `explain(refusal_id)` · `history(limit)`
+           a RELEASE → Tim. Releases mint permanent DOIs; not an agent decision.
+         DO NOT WORK AROUND IT — no aliases, no wrapper scripts, no shelling out. If you
+         believe you need direct access, say so and let Tim decide.
+COST     ⚠ the matcher sees ARGUMENTS: a path containing the standalone token blocks the whole
+         command, so never put a bare `git` in a filename. Tools using it INTERNALLY are
+         unaffected — `batch.py`, the checkers and the build scripts keep working; do not
+         "migrate" them. This is layer 2 of 3 and layer 3 does not exist: only remote branch
+         protection with required status checks is sound, and it is still not configured.
+READ     .claude-local/notes/access_controls_2026-08-22.md
 
-**Gate exemption — this file and operational meta.** `CLAUDE.md` itself (and other internal operating-instruction / meta files, as opposed to the mathematical publication content) is **exempt from the Editorial Review Gate and the Adversary Review Gate** below. The review gates are scoped to externally-facing publication prose — formal documents, companions, README.md/GUIDE.md, build-script prose. `CLAUDE.md` is the operating manual, not publication content, so it needs **version control only**: commit and push normally, and use `git push --no-verify` if the pre-push hook blocks on a stale review signal for a `CLAUDE.md`-only change.
+## R-EXEMPT  What is gate-exempt, and why you may not infer the next one.
+TRIGGER  you are about to commit a file and are deciding whether the prose gates apply.
+RULE     EXEMPT: `CLAUDE.md`, `tools/verify/**`, `tools/process/**` — operating machinery that
+         asserts nothing about the mathematics, so editorial and adversary have no claim.
+         `/rely` covers those two directories INSTEAD, and it BLOCKS on executable logic and
+         exemption switches; routed `.md` only WARNS. NOT EXEMPT: `.claude/commands/**` — the
+         gate briefs are published deliberately, as the artifact showing how this project
+         reviews itself, so both gates fire on them. **Published-and-exempt is not a category
+         you may reason your way into.** Each carve is WRITTEN DOWN; do not extend one to a
+         further directory by analogy — write the next one, or it is not exempt. Fence:
+         anything asserting mathematics belongs in the corpus and is gated normally.
+COST     the exemption is PRICED on `/rely` still blocking. Weaken that routing and the
+         exemption becomes a hole; a downgrade un-prices whatever the block paid for.
+READ     tools/process/README.md
 
-**The exemption covers the VERIFICATION CODE (2026-08-15).** `tools/verify/**` is operating
-machinery on the same argument: a checker makes no claim about the mathematics, so there is nothing
-for an editorial or adversary gate to review. **`/rely` reviews that layer instead, and it BLOCKS** —
-the two are a pair, so weakening the routing re-opens this exemption as a hole.
+## R-NARRATE  Narrate the MATHEMATICS, in an engineer's register, in every report.
+TRIGGER  you are writing any report that touches mathematical content.
+RULE     carry a plain-language pass on the MATHEMATICS beside the process summary — not
+         instead of it, and not only when asked. Gate verdicts, defect ids and exit codes are
+         scaffolding. Use systems and programming analogies (recursion and termination, type
+         signatures, preconditions, interface versus implementation, invariants, null versus
+         empty, cycles in a graph) and name the object before using its symbol. Spell glyphs
+         out in words at least once per paragraph — bottom, epsilon-zero, infinity. Standard
+         mathematical term first, ZP shorthand after. STATE WHICH DIRECTION AN IMPLICATION
+         RUNS and why that matters. Do not soften the claim: precision is the deliverable and
+         only the register changes.
+COST     Tim is this project's mathematician of record by decision, not by training; he cannot
+         review what is never explained, and his review is the control that has repeatedly
+         caught what the gates did not. This governs REPORTS, never the corpus — it is not
+         licence to add prose to `.lean` files.
 
-**AND IT COVERS `tools/process/**` — DECLARED, NOT DERIVED (2026-08-20).** That directory is **this
-file's body**: `CLAUDE.md` is a routing table (a condition, the exact file to open, the cost of
-skipping) and `tools/process/` holds what the routing points at. Same argument, same price —
-operating instructions asserting nothing about the mathematics, so editorial and adversary have no
-claim to review, and **`/rely` covers it and BLOCKS.** The carve is written here **because the
-paragraph below forbids inferring it**; do not extend it to a further directory by analogy — write
-the next one down too, or it is not exempt. **Fence: anything asserting mathematics belongs in the
-corpus and is gated normally.** Criterion for what may live there, and the two sections that
-deliberately may not: `tools/process/README.md`.
+## R-PRECOMMIT  `batch.py precommit` before every commit. `/batch` for anything multi-site.
+TRIGGER  you are about to commit, push, or start multi-site work.
+RULE     `python tools/verify/batch.py precommit` before EVERY commit — it runs the four
+         universal obligations (build green, a `#print axioms` entry and an `ssot.json` row
+         per added declaration, all checkers at zero new). `python tools/verify/batch.py
+         prepush` before any push: which reviews are required, whether the signals are FRESH
+         by hash and coverage, and the recorded VERDICT line from each, so "cleared" is never
+         read as "clean". DO NOT LOOK UP WHAT BLOCKS WHERE — all four entry points print a
+         manifest first; run it, never maintain a prose copy. Use `/batch <bucket>` for
+         multi-site work; filters FREEZE at `batch start`, so editing a checker mid-batch
+         invalidates it. IF A STAGE BLOCKS, FIX THE CAUSE — never delete `batch_state.json`,
+         never `--no-verify`, never push a subset to dodge a signal.
+COST     the purity/SSOT check runs off an ON-DISK baseline, never git: computed against HEAD
+         it passes VACUOUSLY after the commit. A stale baseline is safe — it only makes more
+         declarations look new. This project has two recorded bypass incidents and both began
+         by treating a block as an obstacle.
+READ     tools/process/pipeline.md
 
-⚠ **IT DOES NOT COVER `.claude/commands/`, AND THE DISTINCTION IS THE POINT.** The gate briefs are
-now published deliberately, as the artifact showing how this project reviews itself, so they are
-**publication content and both gates fire on them** — `VERIFICATION_BUILDOUT.md` Phase 7 lists "the
-gate command files" under publishing the method and calls the review non-discretionary. `CLAUDE.md`
-is exempt because it is an internal manual that happens to live in a public repo; a gate brief is
-being surfaced *on purpose*. **Published-and-exempt is not a category you may reason your way into
-from "it is operating instructions" — CLAUDE.md is the exception, not the rule.** Same for
-`DEFECT_CLASSES.md`, `vocabulary_reference.md` and the protocols, which is why those stayed private
-when the code went public.
-
-## ⭐⭐ DIRECT `git` AND `gh` ARE BLOCKED FOR AGENTS. USE `gitRobot`. (2026-08-22.)
-
-**TRIGGER — an action, so there is nothing to adjudicate: you are about to type `git` or `gh`.** A
-`PreToolUse` hook inspects the **whole command string** for a word-boundary `git` or `gh` and denies
-it — bare, `cd`-chained, `&&`-chained, `git -C`, absolute `git.exe`, shelled out of Python. It
-**fails closed**: empty or unparseable input denies.
-
-**Why, measured the day it landed:** `illustrated` had **no branch protection at all**, `main`
-required **zero status checks**, `.claude/settings.json` was `Bash(*)`/`PowerShell(*)` with no deny
-rules, there are **two recorded bypass incidents**, and `reset --hard` / `checkout -- .` / `clean` /
-`stash` **fire no hook at all** — which is how the most expensive incident here destroyed an
-uncommitted edit and then correctly reported success.
-
-| you want | use |
-|---|---|
-| status, unpushed count, **what would block a push** | `status()` — one call, more than `git status` + `git log ..HEAD` gave |
-| any read — `log` `diff` `show` `ls-files` `rev-parse` `blame` `cat-file` | `read(op=..., args=[...])` — tier 3, no gate, no audit, always available |
-| stage | `stage(paths=[...])` — **named paths only**; `-A` is refused on the main repo and permitted for `.claude-local` |
-| commit | `commit(message_file=...)` — message from a FILE, never argv; runs `precommit` first |
-| push | `preflight()` → poll `preflight_status()` → `push(branch, reason)` |
-| sync before work | `fetch()` then `merge(branch, reason)` |
-| a private checkout to mutate in | `worktree(action='add')` → path; `'remove'` tears it down |
-| move HEAD, drop a branch, untrack a file, tag | `switch` · `branch_delete` (safe only) · `remove_files` (named, no `-f`) · `tag_create` (no deletion verb) |
-| why was I refused | `explain(refusal_id)` · `history(limit)` for the audit log |
-| a **release** | **Tim.** Releases mint permanent DOIs; that is not an agent decision |
-
-⚠ **DO NOT WORK AROUND IT** — no aliases, no wrapper scripts, no shelling out from Python. If you
-believe you genuinely need direct git, **say so and let Tim decide**.
-
-⚠ **THE MATCHER SEES ARGUMENTS, NOT JUST COMMANDS.** A path containing the standalone token blocks
-the whole command — a file named `...-direct-git-migration.md` cannot be passed to *any* shell
-command, **including the one that would rename it**; the only escape is a glob avoiding the literal.
-**Never put a bare `git` in a filename.** (Measured 2026-08-22, on a file this project created that
-same day.)
-
-⚠ **TOOLS THAT USE GIT INTERNALLY ARE UNAFFECTED.** The hook intercepts **agent tool calls**, not
-subprocesses spawned by a Python process. `batch.py`, `hooks.py`, all 21 checkers that shell git,
-`check_frozen.py`'s upstream-ref basis and every build script keep working untouched. **Do not
-"migrate" them** — there is nothing wrong with them, and rewriting them onto an MCP server the
-pipeline cannot depend on would break the gates.
-
-⚠ **`gitRobot` IS LAYER 2 OF 3, AND LAYER 3 DOES NOT EXIST.** Local enforcement raises friction
-against drift; it cannot bind an actor who controls the machine. **The only sound layer is remote
-branch protection with required status checks, and it is still not configured.** Do not read this
-section as the hole being closed.
-
-📖 **What is denied, why, and what would REOPEN each item — `.claude-local/notes/access_controls_2026-08-22.md`.**
-Several are provisional. **The server's own definition, including the tier model and the
-absent-by-design parameters, is `C:\temp\gitRobot.md`.**
-
-## ⭐⭐ WHERE THINGS LIVE. Three tiers, and the boundary is PUBLISHABILITY, not convenience. (2026-08-15.)
-
-| tier | what | tracked? |
-|---|---|---|
-| **`tools/verify/`** | every checker, the pipeline (`batch.py`, `hooks.py`, `guards.py`, `report.py`, `vendored.py`), the **baselines**, the **git** hook sources + `install_hooks.py` | **yes — public** |
-| **`tools/verify/claude_hooks/`** | the **Claude Code** `PreToolUse` hooks — `block_git_gh.ps1` and its 24-case control, the two enforcement shims. Wired from the tracked `.claude/settings.json`, so a clone inherits the guards rather than an appearance of them (2026-08-23, `GUARD-1`) | **yes — public** |
-| **`scripts/`** | every PDF build script, `zp_utils.py`, `scan_pdfs.py`, `PDF_Rendering_Standards.md` | **yes — public** |
-| **`tools/process/`** | `CLAUDE.md`'s body — the argument behind each routed rule | **yes — public** |
-| **`.claude/commands/`** | the review-gate definitions Claude Code reads | **yes — public** |
-| **`.claude-local/`** | signals (`*_cleared.txt`), `batch_state.json`, `gate_round.json`, `DEFECTS.md`, `notes/`, `feedback/`, `outreach/`, `papers/` | **not tracked by THIS repo — it is its OWN repository**, with its own history, a `master` branch and a private remote (`ZeroParadoxLocal`). The parent additionally ignores the path |
-
-**The line: artifacts of VERIFICATION are public; artifacts of PROCESS-IN-FLIGHT are private.**
-A checker and its baseline are reproducible from the public corpus, so withholding them protected
-nothing and only made the claims unauditable. A signal recording what this session reviewed is
-per-push state that churns on every commit.
-
-⚠ **THERE ARE NO MIRRORS ANY MORE, AND RE-CREATING ONE IS A DEFECT.** Three existed and **two had
-silently drifted**: the build scripts, duplicated between `scripts/` and the private folder
-(`scan_pdfs.py`, adrift three months), and the gate definitions, which existed in the user-level
-Claude directory *and* as a private backup copy — 4 of the 8 had diverged. If something must exist in
-two places, that is the signal to change the layout — **not** to add a copy step and a rule asking
-someone to remember it. Every old path now holds a tombstone that **exits 2**, and
-`python tools/verify/check_moved.py --block` fails if anything still points at a relocated path.
-
-⚠ **A tool NEVER writes its own invocation path down.** Each derives `SELF` from `__file__` and
-prints that, so usage text cannot go stale — a hardcoded `python <dir>/tool.py` in a docstring is a
-COPY of the path and drifts exactly like a mirrored file. Baselines resolve relative to the checker
-for the same reason, so they travel with it. **This file is the one place a literal path is
-correct**, because a human reads it and nothing computes on their behalf.
-
-⚠⚠ **NEVER PUT A NON-COMMAND `.md` FILE IN `.claude/commands/`.** Claude Code registers **every**
-`.md` in that directory as a slash command, so a `README.md` there silently creates `/readme`. The
-directory is an interface, not a folder — anything explaining it goes here instead. (Tim, 2026-08-15,
-catching exactly that proposal.)
-
-**What a public reader should know about the published gate briefs, since they cannot follow all of
-it:** the 11 files in `.claude/commands/` are the real briefs, run verbatim, and the published
-surface as a whole references a substantial number of artifacts inside `.claude-local/` —
-measure it rather than quoting a figure; an earlier count here said 66 and an adversary pass
-measured considerably more across the wider surface — the notes, the defect ledger, the papers library, the DeepSeek
-screening scripts, and the per-push signal files. Those are deliberately private (see § *Private
-Working Folder*), so a reader can see exactly what each gate is instructed to do and cannot open
-every artifact it names. That is the honest position and it should be stated rather than discovered:
-**the method is public; some of the material it operates on is not.**
-
-## NARRATE THE MATH — in an engineer's register, every report. (Tim, 2026-08-12.)
-
-> *"for future iterations I want you to narrate the math for me. and do it in terms fitting to an
-> engineer that's not a mathematician by trade."*
-
-**Every report touching mathematical content carries a plain-language pass on the MATHEMATICS, beside
-the process summary — not instead of it, and not only when asked.** Long verification arcs drift into
-reporting gate verdicts, defect ids, signal freshness and exit codes. That is scaffolding. *"The
-prior-art gate verified AMM Thm 7.2 p. 27"* says a check passed; it does not say what the theorem
-**states** or why its direction was load-bearing.
-
-**Tim is this project's mathematician of record by decision, not by training. He cannot review what is
-never explained, and his review is the control that has repeatedly caught what the gates did not.**
-
-- **Use systems and programming analogies** — recursion and termination, type signatures,
-  preconditions, interface vs implementation, invariants, null vs empty, cycles in a graph. Name the
-  object before using its symbol.
-- **Spell glyphs out in words at least once per paragraph** (bottom, epsilon-zero, infinity) — the
-  standing mobile-readability rule.
-- **Standard mathematical term first, ZP shorthand after.** Narration is never licence to lead with
-  framework vocabulary; the § on language ordering still governs.
-- **State which direction an implication runs, and why that matters.** The 2026-08-12 arc turned
-  entirely on sufficiency versus necessity in a cited theorem, and *"the biconditional overstates the
-  source"* is precisely the phrasing that hides the point from anyone not already holding it.
-- **Do not soften the claim.** Precision is the deliverable; only the register changes. If a
-  distinction is load-bearing, explain it rather than dropping it.
-
-⚠ **This governs REPORTS TO Tim, not the corpus.** It is not licence to add prose to `.lean` files —
-the prose cap, the `Statement:`/`Reading:` labels and *"anything convertible to Lean MUST be
-converted"* are untouched. If narration reveals that a claim is only expressible in prose, that is a
-finding about the claim, not a reason to write an essay into the source.
-
-## ⭐⭐ `batch.py precommit` BEFORE EVERY COMMIT. `/batch` for any multi-site work. Not optional.
-
-**The orchestrator is the default entry point, not a special mode.** `tools/verify/batch.py` owns
-sequencing and mechanical preconditions; an agent owns judgement. It decides nothing — it refuses to
-let a commit or push happen while a decidable obligation is unmet.
-
-```
-python tools/verify/batch.py precommit    # BEFORE EVERY COMMIT. Works with or without a batch.
-python tools/verify/batch.py prepush      # before any push: which reviews are required, and are
-                                           # the signals FRESH (hash + coverage, not existence)
-```
-
-**`precommit` runs the UNIVERSAL obligations on every commit** — build green, a `#print axioms` entry
-for every added declaration, an `ssot.json` row for every added declaration, all checkers at zero new.
-Those are the four things this project forgets most; each was forgotten again on 2026-08-09 with all
-four rules known and written down.
-
-**⭐⭐ DO NOT LOOK UP WHAT BLOCKS WHERE — THE PIPELINE ANNOUNCES ITSELF AT EVERY ENTRY POINT.** Before
-any check runs, all four entry points print a manifest: what is about to run, in what order, which
-checks BLOCK and which only warn, what scope, what is exempt, and what is deliberately NOT run.
-`prepush` additionally prints **the recorded verdict line from each review signal**, so *"cleared"*
-is never read as *"clean"*. **Run it; never maintain a prose copy of its answer** — one formatter
-(`report.py`), so the four cannot drift.
-
-⚠ **The purity/SSOT check is driven by an ON-DISK BASELINE (`tools/verify/decl_baseline.txt`), never
-by git.** Computed against `HEAD` it is meaningful only *before* the commit, and run afterwards both
-checks passed **vacuously**. A **stale baseline is safe** — it can only make more declarations look
-new, so the check gets stricter, never blind. Re-seed:
-`python tools/verify/batch.py decls --baseline`. Vendored backports are exempt structurally.
-
-**⚠ ALL pipeline logic is `tools/verify/hooks.py`; the hooks are three-line shims. Edit `hooks.py`,
-and the shim must never grow.** Two partial implementations measurably disagreed three ways while
-checking disjoint things — that is what this replaced.
-
-**Use `/batch <bucket>` for anything MULTI-SITE** — a debaselining bucket, a defect-class sweep, a
-file-sized burn-down. It adds stage ordering (`ledger` → `screen` → `probe` → `judge`), a frozen
-filter snapshot, and a recorded note per stage. **A single targeted fix with a named defect id does
-not need a batch**; `precommit` alone covers it.
-
-⚠ **Filters are frozen at `batch start`.** Editing a checker mid-batch means the work was done
-against a moving target; the batch is invalid and must restart. Route filter defects to `DEFECTS.md`
-and fix them in their own batch. (Violated by the author of the rule on the day it was written —
-`PRC-1`.)
-
-⚠ **If a stage BLOCKS, fix the cause.** Do not delete `batch_state.json`, do not `--no-verify`, do
-not push a subset to dodge a signal. **This project has two recorded bypass incidents and both began
-by treating a block as an obstacle.**
-
-📖 **WHY THE PIPELINE IS SHAPED THIS WAY — `tools/process/pipeline.md`.** Which obligation gates at
-commit versus push and why `lake build` deliberately gates neither; the three defects that stayed
-invisible for a month because a gate did not declare its own enforcement mode; and the `REL-1`
-ordering lesson, where delegating before fixing would have replaced a correct computation with a
-vacuous one. **Read it before changing `hooks.py`, `batch.py` or `report.py`, or before arguing a
-gate is in the wrong place.**
-
-## ⭐ The defect register — `.claude-local/DEFECT_CLASSES.md`. Consult it by DEFAULT.
-
-**One row per defect CLASS, each with its DETECTOR.** `DEFECTS.md` is open instances; the register is
-kinds, and the detector column is the part that transfers to a question nobody has asked yet.
-
-**Three triggers, and they are obligations, not suggestions:**
-1. **Writing a gate brief or spawning any reviewing agent** — name the **LAYER** attacked, the
-   **STATE** tested, and the **DETECTOR by id**. *"Check the glosses"* is not a detector; *"DC-1: read
-   the elaborated `#check`"* is. A gate that does not name its layer re-attacks the one the last gate
-   already cleared.
-2. **Something looks wrong and you are choosing how to check it** — find the class first. The register
-   is indexed by what you have in hand (a suspicious sentence), not by what you are asking.
-3. **A defect recurs** — add or amend a row, in the same change. A one-off is an instance and belongs
-   in `DEFECTS.md`; the *second* occurrence is a class.
-
-**The one-line summary of everything measured so far: PREFER A DETECTOR WHOSE VERB IS *RUN* OVER ONE
-WHOSE VERB IS *READ*.** Across ~20 agent runs, every BEDROCK finding came from an agent **executing**
-something and every ORDINARY finding from an agent **reading** something, with no exceptions.
-
-⚠ **Six of seventeen rows have a mechanical checker; eleven do not.** Those eleven rely on someone
-remembering, which this file elsewhere records as failing by construction. That is visible debt, not a
-solved problem — and this register is the **seventh** convention of this shape, the previous six having
-all leaked.
+## R-DEFECTCLASS  One row per defect CLASS, each with its DETECTOR.
+TRIGGER  you are writing a gate brief or spawning a reviewing agent; something looks wrong and
+         you are choosing how to check it; or a defect has recurred.
+RULE     consult `.claude-local/DEFECT_CLASSES.md` by DEFAULT. In a brief, name the LAYER
+         attacked, the STATE tested, and the DETECTOR BY ID — "check the glosses" is not a
+         detector, "DC-1: read the elaborated `#check`" is. A gate that does not name its
+         layer re-attacks the one the last gate cleared. A one-off is an instance and belongs
+         in `DEFECTS.md`; the SECOND occurrence is a class and gets a row plus a detector, in
+         the same change. `tools/verify/selfheal.py` counts recurrences and `batch.py prepush`
+         prints the top uncovered shapes on every run — its counts are a READING LIST, never a
+         finding list.
+COST     PREFER A DETECTOR WHOSE VERB IS *RUN* OVER ONE WHOSE VERB IS *READ*: across ~20 agent
+         runs every BEDROCK finding came from EXECUTING something and every ORDINARY one from
+         READING something, without exception. Six of seventeen rows have a mechanical checker
+         and eleven do not — that is visible debt, not a solved problem.
 
 ## R-DEFECTS  A defect's home is the ledger. Read it before choosing work.
 TRIGGER  you found a defect, you are choosing what to work on next, or you are about to

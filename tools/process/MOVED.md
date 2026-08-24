@@ -41,7 +41,10 @@ section is preserved verbatim in the body named below.
 | Stub-First Protocol / Proof Documentation Workflow / Operational Rules / .claudecodes | `R-LEANDEV` | `tools/process/lean-development.md` || THE GATE-ENFORCED CONVENTIONS | `R-GATED` | `tools/process/gated-conventions.md` |
 | Every brief carries the CONTROL OBJECTS | `R-CONTROLS` | `tools/process/gated-conventions.md` |
 | Rules That Must Reach Spawned Agents | `R-BRIEF` | `tools/process/gated-conventions.md` |
-| Anything convertible from prose to Lean MUST be converted | `R-TOLEAN` | `tools/process/prose-to-lean.md` |
+| Anything convertible from prose to Lean MUST be converted | `R-TOLEAN` | `tools/process/prose-to-lean.md` || Gate exemption — this file and operational meta / WHERE THINGS LIVE | `R-EXEMPT` | `tools/process/gate-exemptions.md` |
+| NARRATE THE MATH — in an engineer's register | `R-NARRATE` | `tools/process/narrate-and-pipeline.md` |
+| batch.py precommit BEFORE EVERY COMMIT | `R-PRECOMMIT` | `tools/process/pipeline.md` |
+| The defect register — DEFECT_CLASSES.md | `R-DEFECTCLASS` | `tools/process/narrate-and-pipeline.md` |
 
 ## Pass record
 
@@ -57,8 +60,9 @@ section is preserved verbatim in the body named below.
 | 8 | 2026-08-23 | `:922`-`:1082` (naming/labels, public issues) | 161 | 33 | **128** |
 | 9 | 2026-08-23 | `:956`-end (framework, handoff, capture, dev mode, Lean) | 236 | 85 | **151** |
 | 10 | 2026-08-23 | `:382`-`:628` (gated conventions, controls, briefs, prose-to-Lean) | 247 | 71 | **176** |
+| 11 | 2026-08-23 | `:4`-`:237` (exemptions, layout, narrate, pipeline, defect classes) | 234 | 87 | **147** |
 
-**File total: 2338 → 867 lines (−1471, 63%).**
+**File total: 2338 → 721 lines (−1617, 69%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then
