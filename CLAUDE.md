@@ -684,305 +684,86 @@ COST     the gates check WORDING against SOURCES — they cannot see an unmeasur
          it in a minute.
 READ     tools/process/claim-revalidation.md
 
-## "NOT IN THE LIBRARY" IS A CLAIM. Probe it before you believe it. Hard Rule.
+## R-NOTINLIB  "Not in the library" is a CLAIM. Probe it before you believe it.
+TRIGGER  you are about to write "not in Mathlib", "the corpus does not have", "no instance
+         exists", or any dated survey negative.
+RULE     a failed `#synth` or grep is evidence about YOUR PROBE, never about the library.
+         Confirm the name imports and elaborates; re-run with universes explicit; ask whether
+         it DECOMPOSES into pieces that are present; remember attribute-generated siblings
+         have no source line, so `#check` is the authority and grep is not. Run THREE
+         phrasings varied along axes, never synonyms: POLARITY (how the corpus would say it
+         if it DISAGREED with you) · PART OF SPEECH (the verb that builds it, not the noun) ·
+         VOCABULARY (the domain's words) · DISPLAY (never conclude absence from TRUNCATED
+         output — re-run untruncated or print `file:line` and open the hits). Then write
+         "not located as of &lt;date&gt;, searched as follows" — never "absent".
+COST     three recorded negatives were false and had already shipped into docstrings as
+         measured fact; and correcting them turned "one of four hypotheses holds" into three.
+READ     tools/process/not-in-the-library.md
 
-**The characteristic error of 2026-08-04 was not a wrong theorem. It was three wrong NEGATIVES**, each
-of the form *"X is not available"*, each recorded as measured, each false:
+## R-LOOPCAP  Stopping is a decision about SEVERITY, never a wait for silence.
+TRIGGER  a review gate has returned findings and you are deciding whether to iterate again.
+RULE     ask only: did this round find anything BEDROCK? BEDROCK — a violated core invariant,
+         a fabricated claim about a source, a false premise carrying a conclusion — gets up to
+         5 rounds and must not ship. ORDINARY — citation scope, a mischaracterized lemma,
+         hedging, wording — gets 2, then STOP and push normally. Run `gate_round.py show` for
+         the live caps; never maintain a prose copy of them. A STOP-ORDINARY reviewer WRITES
+         its signal, so nothing is bypassed. EDIT AFTER A STOP ⇒ RE-SIGN; do not want another
+         round ⇒ do not edit. Prose about PREVIOUS STATES is redundant — apply the strip test,
+         state the live rule positively, and let the commit message narrate.
+COST     the cap's licence assumes findings stay outstanding; acting on them creates NEW
+         unreviewed prose — four of one round's six findings landed in the one file no gate
+         had seen, which existed only because it was edited after the gates finished.
+READ     tools/process/review-loop-cap.md
 
-| the claim | what was actually there |
-|---|---|
-| *"`pole_inversion` is not available on `ℤ_[2]`"* | true of the class instance, **false of the content** — both halves of the drift were already proved (`towerCx_zero`/`towerCx_member`, `tower_converges_to_zero`); only the packaging was missing |
-| *"`WellPowered (Type 0)` does not synthesize"* | `instance : WellPowered.{u} (Type u)` sits in a module **titled** *"`Type u` is well-powered"*; the probe failed on an unimported name and an **unresolved universe parameter** |
-| *"AMM Def 2.14 clause (c) is not a Mathlib concept"* | **derivable in six lines** — `IsStableUnderColimitsOfShape.condition` already has that exact shape; instantiate its second diagram at the constant functor |
+## R-TRUNC  Never truncate a hook-running command; never write a `--no-verify` fallback.
+TRIGGER  you are about to put `| head`, `| grep -q`, `| grep -m`, `| Select-Object -First N`
+         or any early-exiting consumer around a command that runs a gate — or to chain
+         `|| ... --no-verify`.
+RULE     redirect to a file and read it: `python tools/verify/batch.py prepush > log 2>&1`,
+         then open the log. `--no-verify` is a separately-typed decision, never a fallback and
+         never chained. If a push is blocked, read the reason and fix it — the block is the
+         control working.
+COST     BOTH bypasses succeed SILENTLY and the push looks green: the identical push exited 1
+         bare and 0 through `| head -5`, because the hook died of SIGPIPE before its `exit 1`,
+         and the review-signal check runs LAST. A twelve-file push with a stale signal reached
+         `origin` that way.
+READ     tools/process/push-gate-bypass.md
 
-**A failed `#synth` is EVIDENCE ABOUT YOUR PROBE, not a fact about the library.** It has at least four
-innocent causes, and all four were hit in one day:
-1. **Not imported.** `unknown identifier` and `failed to synthesize` look alike in a hurried read, and
-   `Mathlib.Tactic` does not reach most of `CategoryTheory`.
-2. **Universe parameters.** `WellPowered (Type 0)` fails; `WellPowered.{u} (Type u)` succeeds. An
-   unresolved metavariable in the goal is the tell — read it.
-3. **A different name.** Grep the CONCEPT, never the name you would have chosen.
-4. **Decomposed into parts.** The thing is not absent, it is *assembled from* pieces that are present —
-   the clause-(c) case, where a three-clause definition had two clauses as instances and the third as a
-   short derivation. **A definition can be available without any declaration bearing its name.**
-5. **GENERATED BY AN ATTRIBUTE, so it has NO SOURCE LINE AT ALL.** Mathlib's `@[to_dual]`, `@[simps]`,
-   `@[mk_iff]` and friends synthesise siblings that grep can never see. Measured 2026-08-08:
-   `OrderDual.toDual_bot` appears in **no source line anywhere in Mathlib** — only its dual
-   `toDual_top` is written out — and `#check @OrderDual.toDual_bot` resolves it instantly. It cost
-   **three probes across two agents** before anyone got it. **grep is not the authority; `#check` is.**
+## R-STAGE  Stage NAMED PATHS. Never `-A` on the main repo.
+TRIGGER  you are about to stage anything.
+RULE     `stage(paths=['a.lean','b.md'])` — the specific paths you edited. Then
+         `read(op='status', args=['--short'])` and confirm every staged path is one you meant
+         to touch; if an unexpected one appears, find out where it came from before committing.
+         `.claude-local` is exempt and bulk staging is its documented flow.
+COST     background agents write to this checkout concurrently, so the tree is not a stable
+         snapshot — a review agent's scratch probe was swept into a commit that way and is in
+         the permanent history. `gitRobot.stage` now refuses `-A` outright, so there is nothing
+         left to remember.
+READ     tools/process/staging.md
 
-**The rule.** Before writing *"not in Mathlib"*, *"the corpus does not have"*, *"no instance exists"*, or
-any dated survey negative: **(a)** confirm the name is imported and elaborates at all, **(b)** re-run
-with universes explicit, **(c)** **run THREE phrasings, and make one of them the INVERSE** (see below),
-and **(d)** ask whether it decomposes. Then write **"not located as of &lt;date&gt;, searched as
-follows"** — never *"absent"*.
+## R-ER  Editorial review completes BEFORE the commit that touches document prose.
+TRIGGER  you are about to commit a change to a build script's prose, a README/GUIDE/RELEASES/
+         register edit, or any root `.md` other than `CLAUDE.md`.
+RULE     run `/editorial-review` in a FRESH agent — same-session self-review does not satisfy
+         it — and PASS IT THE FILE PATHS EXPLICITLY. On FAIL, clear every kill-list item before
+         committing. On PASS the agent writes `.claude-local/er_cleared.txt` recording the
+         SHA-256 of each reviewed file, computed FROM THE FILE ON DISK, never from a git value.
+COST     `MIG-3`: pre-commit mode discovers its own scope with a now-denied git call, and the
+         denial FAILS OPEN — the empty result reads as "nothing staged", the brief falls back to
+         Full Scan, and it still writes a signal hashing whatever it happened to open.
+READ     tools/process/review-gates.md
 
-### (c) in full — THREE PHRASINGS, AND THEY MUST VARY ALONG AXES, NOT BE SYNONYMS. Tim's rule, 2026-08-07, measured three times the same day.
-
-*"Grep the concept in two vocabularies"* is the right principle and fails on its own, because it says
-nothing about **which** — and three synonyms of one formulation are one search run three times.
-**Vary along the axes below. Each has its own measured false negative from a single session.**
-
-| axis | run BOTH ends | the failure it prevents |
-|---|---|---|
-| **1. POLARITY** | the claim / **its inverse** — how the corpus would say it if it *disagreed* with you | you find only the half stated your way |
-| **2. PART OF SPEECH** | the **noun** (the object) / the **verb** (the operation that produces it) | you search for the *thing* and miss the *step that makes it* |
-| **3. VOCABULARY** | your words / the **domain's** words | you find only what you would have named it |
-| **4. DISPLAY** ⚠ | the full matched line / **what you actually printed** | the query was right, the match was there, and you **truncated it off the screen** |
-
-⚠⚠ **AXIS 4 IS NOT ABOUT THE QUERY, WHICH IS WHY THE OTHER THREE CANNOT CATCH IT.** Axes 1-3 all
-assume the failure is in what you *asked*. Here the query was correct, the pattern **did** include the
-term, the file **was** in the result set — and the term sat past the character limit of the formatting
-applied to the output. **Absence was read off a line that contained the thing.**
-**Measured 2026-08-12**, and it produced a note, a handoff entry and a spoken claim all asserting a
-gap that did not exist: a search for `Γ₀|Feferman|Schütte` matched `Ordinal/Epsilon0CannotBe.lean:79`,
-whose gloss ends *"coords (1,0), the minimum closure, **below Γ₀**"* — at roughly character 110 of a
-line printed to 90. `Ordinal/Epsilon0LeastFP.md` states the entire Veblen ladder up to Γ₀ and
-`SnapNucleusConstructive.lean` references `epsilon_zero_lt_gamma`. **The corpus was ahead of the
-search, and the deliverable dissolved.**
-**THE RULE: never conclude absence from truncated output.** Re-run untruncated — or print
-`file:line` only and open the hits — **before writing any negative.** This is § *NOT IN THE LIBRARY IS
-A CLAIM* applied to your own terminal: **a formatting choice is a filter, and an unexamined filter is
-a blind half.** ⚠ It compounds with `head_limit`/`-First N` caps, which drop whole *rows* the same way
-this dropped whole *columns*.
-
-**Measured, all on 2026-08-07, all having already shipped into docstrings as fact before a gate or Tim
-caught them:**
-
-| axis | the claim | what was run | what should have been run |
-|---|---|---|---|
-| POLARITY | *"the corpus never measured seed-independence"* | `seed-independent` → **0 hits** | `"a seed, not"` → lands directly on `Epsilon0MinMax.md`, which states the theorem, the proof route, and the verdict *"Elementary and not novel"* |
-| POLARITY | *"every `Tendsto` in the corpus runs inward"* | `atTop (nhds _)` → 13 files, all convergent | `atTop atTop` → the divergences, immediately, in files the survey never saw |
-| **PART OF SPEECH** | *"the succession of bottoms is not formalized"* | the NOUN — `family of bottom`, `botSeq`, `ℕ → .*Bot` → nothing | the VERB — `next bottom`, `re-seed`, `succ` → **`succession_succ`**, the n → n+1 re-seeding theorem, which had been there all along |
-
-**⚠ The part-of-speech axis is the newest and was the most expensive**, because it produced a *published
-note* asserting a formalization did not exist. Tim: *"you need to look closer at n and n+1 logic. we very
-likely already have this belt."* **A corpus names an operation and a thing differently, and formal corpora
-overwhelmingly declare the OPERATION** — `succession_succ`, `snapNucleus`, `nfp` — while prose about them
-uses the noun. **If you are asking whether a structure exists, search for the step that builds it.**
-
-**Why the inverse specifically.** A corpus records a fact in whichever polarity its author found natural,
-and that is frequently the opposite of yours. *"Seed-independent"* and *"⊥ is **a** seed, not a
-distinguished one"* are the same fact; only one of them is greppable from the other. Likewise
-*"converges"* / *"diverges"*, *"is available"* / *"cannot be stated"*, *"is used"* / *"has no call
-sites"*. **A single-polarity grep is a detector with a blind half**, and this file's own
-*"VERIFY THE DETECTOR BEFORE BELIEVING A ZERO"* applies to it.
-
-**A bonus worth expecting:** the inverse grep surfaces the corpus's *idioms*. `"a seed, not a
-distinguished one"` also returned `Computability/Kleene.lean`'s *"computational quine, not a
-distinguished one"* — the same sentence shape used for a different object. Finding the idiom is how you
-find the other places the claim is made.
-
-**The generalization, now that there are three axes:** a search is a **projection**, and a projection
-loses whatever is orthogonal to it. Polarity, part of speech and vocabulary are the three projections
-this corpus has actually been caught by; there is no reason to think they are the only three.
-**When an absence matters, ask what dimension your query collapsed** — and note that this is the
-Two-Pole Test again (§ above), which is itself a rule about never looking from only one end.
-
-**Why this is its own section and not a footnote.** This file already says
-*"VERIFY THE DETECTOR BEFORE BELIEVING A ZERO"* — but scoped to `check_modal.py`, so it did not fire for
-`#synth`, and the identical failure recurred three times in one day. **The generalization is the point:
-any tool that reports absence needs its absence-reporting verified before the absence is believed.**
-It also compounds: each false negative was written into a docstring as a *measured* fact, which is the
-`CannotBe`-index universal-negative hazard arriving through a new door.
-
-**And the payoff for checking is real, not just defensive.** Correcting the three negatives above turned
-"one of four hypotheses holds" into "three of four", and put an instance-of claim the corpus had twice
-withheld back within reach. **Searching harder gets you MORE** — the same lesson as Trigger 0.
-
-## Review-Loop Cap — Severity-Tiered, Hard Rule
-
-**The gates will always find something. Stopping is a decision about SEVERITY, not a wait for silence.**
-
-⚠ **THE NUMBERS BELOW ARE A HUMAN-READABLE ECHO. `tools/verify/gate_round.py` IS AUTHORITATIVE**
-(`BEDROCK_CAP` / `ORDINARY_CAP`), and `gate_round.py show` prints the current round beside both caps.
-**Change a cap THERE, in one place, and never here alone** — this paragraph is prose and cannot check
-itself. The four gate briefs used to restate the figures too; as of 2026-08-15 they instruct the
-reviewer to run `show` and obey it, so a cap change no longer has to be chased across five files.
-**What stays written out everywhere is the SEVERITY TIERING below, because that is semantics a
-reviewer must act on rather than a number that drifts.**
-
-- **BEDROCK severity → up to 5 iterations.** A violated core invariant (`ε₀ ≠ 0`, `ε₀ ≠ ⊥`, min≡max
-  flattened, the snap-arc returning to the same ⊥, a cross-type `=`), a **fabricated** claim about an
-  external source, or a false premise carrying a conclusion. These must not ship — keep iterating.
-- **ORDINARY severity → 2 iterations, then STOP and push normally.** Citation scope, a mischaracterized
-  lemma, hedging a tier too strong, path-convention drift, wording. These never reach zero.
-
-**The stopping question is "did this round find anything BEDROCK?" — if no, stop**, even on ten ordinary
-findings. Ratified 2026-07-19 after three rounds; memory `feedback_er_ar_max_iterations` carries the
-detail.
-
-**⚠ NO `--no-verify` IS INVOLVED AT THE CAP.** A **STOP-ORDINARY reviewer WRITES ITS SIGNAL**, so the
-hook clears **on its own merits** and there is nothing to bypass. Put it in the brief:
-*withholding the signal on ordinary findings is not a valid outcome.*
-
-**⭐ AND FIXING A FINDING RESTARTS THE OBLIGATION FOR THE TEXT YOU CHANGED.** The cap's licence assumes
-the outstanding findings *stay outstanding*; once you have **acted** on them the push contains **new
-unreviewed prose**, which is a different thing from known debt and warrants a gate rather than a flag.
-**So: edit after a STOP-ORDINARY ⇒ re-sign. Do not want another round ⇒ do not edit** — record the
-findings as next-touch debt and push what was actually certified. Measured 2026-08-01: four of the
-next round's six editorial findings landed in the one file no gate had yet seen, which existed only
-because it was edited after the gates finished.
-
-### Prose about PREVIOUS STATES is redundant. Git holds it. (Tim, 2026-08-08.)
-
-**This project already ratified the argument, for documents, and never applied it to prose.** The
-`historical/` folder was retired because *"git history and each release's Zenodo snapshot are records
-more complete and authoritative than a hand-maintained archive"* — the archive drifted a month out of
-date; those do not. **A retraction record in a docstring is a hand-maintained archive of prior
-states.** Same object, same failure mode.
-
-**Measured 2026-08-08: 87 lines across 39 `.lean` files** carry prior-state prose (*"an earlier
-draft"*, *"was FALSE"*, *"is retracted"*, *"previously read"*, *"until 2026-…"*). **The distribution
-is the finding** — the top six are the files most recently through the gate loop. This prose is not
-spread through the corpus; **it is what the review loop deposits**, and nothing prunes it.
-
-**The cost is not tidiness.** In one three-round arc the correction layer grew to ~40% of a 96-line
-section guarding **two** declarations, and **generated a new defect in every round** — including a
-retraction that misdescribed its own subject, and a "corrected" claim (*"proved by `funext`, not
-`rfl`"*) that a gate refuted by running it. **Records about records are unverifiable by construction
-and nothing checks them.**
-
-**THE RULE — apply the strip test.** Remove the *"an earlier draft said X, which was wrong"* framing
-and read what is left:
-
-* **Something remains, and it is MATHEMATICS** — then that is **content**, and its provenance in an
-  error is irrelevant. **State it positively and delete the framing.** Worked examples from that arc,
-  all worth keeping and none needing a retraction to say: *`deriv` is not `nfp`, and here is the
-  counterexample*; *ε₁ is a fixed point, so it is the one seed that makes the wrong reading look
-  supported*; *an all-zero prefix names the same end, so the discriminator is a nonzero digit.*
-* **Nothing remains but history** — **delete it.** `read(op='log', args=['-p','--','<path>'])` has it, exactly, permanently, with
-  provenance no docstring can match.
-
-**Where history actually belongs:** `.claude-local/DEFECTS.md` while a defect is open, the
-gate-findings archive once it is closed. Both are read when choosing work; a docstring is read when
-doing mathematics. **The defects that recurred despite earlier fixes did not recur because a docstring
-lacked a retraction — they recurred because the ledger was not consulted.**
-
-**YES, THIS MEANS FIX IT SILENTLY — in the file** (Tim asked directly). **Delete the false claim,
-state the true one, and let the COMMIT MESSAGE be the narrative.** That is its job, it is versioned,
-and it is where a reader looking for history will actually go.
-
-**The record is never lost, because it lives in three places that are not the docstring:** the commit
-message, `.claude-local/DEFECTS.md` while the defect is open, and the session itself. **The only thing
-being removed is a fourth copy — the one that cannot be checked, drifts, and accumulates.**
-
-⚠ **The narrow thing that is NOT permitted:** letting a fix be invisible **everywhere**. Do not skip
-the ledger on an open defect, do not bury a substantive correction under a vague commit subject, and do
-not decline to surface it — cross-arc patterns are caught by the human, repeatedly and by measurement,
-and he cannot catch what he is not told. **Silent in the artifact, recorded in the process.**
-
-⚠ And this does not touch the dated-survey convention (*"none located as of &lt;date&gt;"*), which
-records a **measurement**, not a prior state.
-
-📖 **ROUND MECHANICS AND THE VERBATIM BRIEF BLOCK — `tools/process/review-loop-cap.md`.** Who bumps
-the counter and who may only read it; `--target` slugs; and the block that goes into **every** review
-brief with N substituted. **Open it before spawning any gate.** Why it matters: a rule about a loop
-does not fire from inside the loop — on 2026-07-19 three rounds ran against a 2-round cap because
-nobody was counting, and a reviewer that bumped the counter itself burned the cap a round early.
-
-## NEVER truncate the output of a hook-running command, and NEVER write a `--no-verify` fallback. Hard Rules.
-
-**TRIGGER — an action: you are about to put `| head`, `| grep -q`, `| grep -m`, `| sed q` or any
-early-exiting consumer around a command that runs a git hook, or to write `|| git push --no-verify`.**
-
-- **Redirect, do not truncate.** `python tools/verify/batch.py prepush > prepush.log 2>&1; echo $?`,
-  then read the log. (`tail` reads to EOF and is safe; the rule covers everything anyway, because you
-  should not have to remember which consumers exit early.)
-- **`--no-verify` is a separately-typed decision, never a fallback and never chained with `||`.** The
-  one documented case is a `CLAUDE.md`-only change against a stale signal.
-
-⭐ **HALF OF THIS IS NOW STRUCTURAL, AND HALF IS NOT — KNOW WHICH.** Since 2026-08-22 a push goes
-through `gitRobot`, which **never passes `--no-verify` and has no parameter that reaches it**, so the
-second bullet can no longer be violated by an agent even deliberately. **The first bullet still binds
-with full force**, because the commands you truncate now are `batch.py`, `lake build` and the
-checkers — and `| Select-Object -First N` breaks a PowerShell pipe and reports a wrong exit code
-exactly as `| head` did. **The SIGPIPE hazard moved; it did not go away.**
-
-**⚠ THE COST, AND IT IS WHY THESE ARE HARD RULES: BOTH BYPASSES SUCCEED SILENTLY — THE PUSH LOOKS
-GREEN.** Measured 2026-07-26: the identical push exited **1** (blocked) bare and **0** (pushed)
-through `| head -5`, because `head` closed the pipe and the hook died of `SIGPIPE` before reaching
-its `exit 1` — and the review-signal check runs **last**, so any truncation short enough to be
-useful is long enough to skip it. A twelve-file push with a stale `pa_cleared.txt` reached `origin`
-that way. The `||` fallback is the same failure written down on purpose. **If a push is blocked,
-read the reason and fix it — the block is the control working.**
-
-📖 **THE MEASUREMENTS, AND WHERE THE DEFENCE ACTUALLY LIVES — `tools/process/push-gate-bypass.md`.**
-The immunity is in `tools/verify/hooks.py`, **not** a `trap '' PIPE` in `.git/hooks/pre-push` —
-a reader who greps for `trap` will not find it and could conclude the defence was dropped. Install
-per clone with `python tools/verify/install_hooks.py`; `--check` exits 1 when the gates are not
-armed. **Read it before assuming the clone you are standing in is protected.**
-
-## Staging — NAMED PATHS, never `-A`. ⭐ NOW MECHANICAL, not remembered. (2026-08-22.)
-
-**Bulk staging takes whatever happens to be in the tree, including files this session did not create.**
-
-**Measured 2026-07-19:** a background review agent wrote a scratch probe into `ZeroParadox/`, and the next
-bulk add swept it into a commit unnoticed. It is in the permanent history now. Background agents run
-*concurrently* with commits, so the working tree is not a stable snapshot of what you intended to change.
-
-**The rule:** stage the specific paths you edited — `stage(paths=['a.lean','b.md'])`. Before committing,
-`read(op='status', args=['--short'])` and confirm every staged path is one you meant to touch. If a path
-appears that you did not edit, find out where it came from before committing it.
-
-⭐ **THIS IS THE EIGHTH CONVENTION IN THIS FILE TO STOP BEING A DISCIPLINE AND START BEING A GATE, AND
-IT IS THE ONE TO COPY.** `gitRobot.stage` has **no bulk form on the main repo** — `-A`, `.` and `-u` are
-refused, with the reason and the alternative in the refusal text. There is nothing left to remember and
-nothing to adjudicate. The old escape hatch (*"`-A` is acceptable when nothing has been spawned since the
-last commit"*) is **gone**, and it should be: it was a judgement call at exactly the moment a session is
-least able to make it.
-
-⚠ **`.claude-local` is exempt and bulk staging is its documented flow** —
-`stage(paths=['-A'], repo_mode='.claude-local')`. Different repo, different risk: nothing published, and
-the failure mode there is losing notes rather than shipping a probe.
-
-## Editorial Review Gate — Hard Rule
-
-**Any commit touching document prose requires editorial review to have completed before the commit is made.** This applies to:
-
-- Changes to any build script `body()`, `cbody()`, `sp()`, or box-helper string content
-- Changes to README.md, GUIDE.md, RELEASES.md, or any `.md` file in the repo root (except `CLAUDE.md` — see the gate exemption above)
-- Changes to any companion or formal document build script
-- Changes to register.md
-
-**The protocol:**
-1. Before committing any of the above, run `/editorial-review` — ⚠ **and PASS IT THE FILE PATHS
-   EXPLICITLY (Targeted mode) until `MIG-3` is fixed.** Pre-commit mode discovers its own scope with
-   `git diff --staged`, which is now denied, and **the denial FAILS OPEN**: the empty result reads as
-   *"nothing staged"*, the brief falls back to Full Scan, reviews a scope nobody asked for, and
-   **still writes a signal** hashing whatever it opened. A gate certifying the wrong file set while
-   reporting success. Same pattern in `/adversary-review` and `/claim-review`. Ticket:
-   `.claude-local/queue/tooling-briefs-gitcall-migration.md`.
-2. Wait for the editorial agent to return a verdict
-3. If FAIL: resolve every item in the kill list before committing
-4. If PASS: the agent writes `.claude-local/er_cleared.txt` recording the SHA-256 of each reviewed file (see the SHA-256-per-file scheme below) — proceed with the commit
-
-Same-session self-review does not satisfy this requirement. `/editorial-review` spawns a fresh agent with no conversation history.
-
-The pre-push hook validates `.claude-local/er_cleared.txt` and `.claude-local/ar_cleared.txt` (and `pa_cleared.txt` on a `.lean` trigger) using the **SHA-256-per-file scheme** (2026-07-20): each signal records the content SHA-256 of every file the review certified (line 1 = verdict record; lines 2+ = `<sha256>  <path>`), and it is valid iff (a) every recorded file still hashes to its recorded value and (b) every *reviewable* file in the push is covered by a recorded hash. Reviewable = changed files minus pure data/binary (`ssot.json`, PDFs, images, lockfiles), so a data-only commit no longer stales a review — that was the old HEAD-equality scheme's failure mode. If nothing reviewable changed, no signal is required. `--no-verify` should now be genuinely rare; if a signal is stale it is because a reviewed file actually changed (re-run the review) or a new reviewable file is uncovered.
-
-⚠ **EVERY hash in this scheme is of the FILE ON DISK. Never a git value** (Tim, 2026-08-09). Not `git show "HEAD:<path>"`, not the index, not the blob — `Get-FileHash -Algorithm SHA256 <path>` or `sha256sum <path>`. **Why it is a rule and not a preference:** the four command files used to say *"compute each hash from the committed content … `git show "HEAD:<path>" | sha256sum`"*, and that is one command meaning two different things depending on when it runs. At push time HEAD is the new commit, so it matched and the instruction looked correct for months. But editorial and claim-review are **pre-commit** gates, so there HEAD holds the **OLD** content: the reviewer certifies the pre-edit file, the commit lands, and the hook compares against a hash of content that no longer exists. **Measured 2026-08-09** with both controls — on a clean tree the two forms agree (which is why nothing ever caught it), and on a dirty tree they diverge, with the `git show` form returning the hash of the *unmodified* file. Fixed in `.git/hooks/pre-push` and its staged copy (`file_hash` now hashes the path), and in all four command files. `batch.py check_signals` already hashed the file on disk, so all three components now agree. **CRLF is not a hazard here:** `.gitattributes` declares `* text=auto eol=lf`, which overrides `core.autocrlf`, so working files are LF on every clone. ⚠ Hooks live in `.git/` and are **not** version-controlled — re-install from `tools/verify/proposed_pre_push_hook.sh` per clone or this fix is absent.
-
-## Adversary Review Gate — Hard Rule
-
-**Any public-facing action requires adversary review to have completed before execution.** This is non-negotiable and applies to every action that puts content in front of an external reader:
-
-- `git push` containing changes to prose in any tracked file (Lean source docstrings, build script `body()` calls, README.md, GUIDE.md, any companion script)
-- Sending an email to any external party
-- Posting or editing a GitHub Discussion body or follow-up comment
-- Posting or editing a GitHub Issue
-- Any other action that surfaces content outside this repository
-
-**The protocol:**
-1. Before executing any of the above, Claude must explicitly ask: "Adversary review complete for this content?"
-2. Wait for Tim's confirmation before proceeding — do not self-assess whether review is needed
-3. If review has not been run, offer to run `/adversary-review` on the relevant content first
-4. If PASS: the agent writes `.claude-local/ar_cleared.txt` recording the SHA-256 of each reviewed file (see the SHA-256-per-file scheme below)
-5. Only after explicit confirmation may the public-facing action execute
-
-Same-session self-review does not satisfy this requirement. The review must be a separate adversarial context (spawned Agent with no conversation history).
-
-**What triggered this rule:** Lean docstring and build script prose changes were pushed on 2026-05-20 before adversary review ran. The review subsequently found two additional precision errors in the already-committed content.
+## R-AR  Adversary review completes BEFORE anything reaches an external reader.
+TRIGGER  you are about to push prose, send an email, post or edit a GitHub Discussion or Issue,
+         or surface any content outside this repository.
+RULE     ask Tim explicitly: "Adversary review complete for this content?" and WAIT for
+         confirmation — never self-assess whether review is needed. If it has not run, offer
+         `/adversary-review` first. It must be a separate adversarial context, never this one.
+         On PASS the agent writes `.claude-local/ar_cleared.txt` with a SHA-256 per reviewed
+         file. Only after explicit confirmation may the public-facing action execute.
+COST     docstring and build-script prose was pushed before review ran, and the review then
+         found two further precision errors in already-committed content.
+READ     tools/process/review-gates.md
 
 ## Prior-Art Search — Trigger Conditions and Gate
 

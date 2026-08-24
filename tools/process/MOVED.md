@@ -21,6 +21,12 @@ section is preserved verbatim in the body named below.
 | Determinism is the SINGLE recurring cost | `R-DETERMINISM` | `tools/process/determinism.md` |
 | The Two-Pole Test — Hard Rule | `R-TWOPOLE` | `tools/process/two-pole-test.md` |
 | Prose that resists correction is a CLAIM defect | `R-REVALIDATE` | `tools/process/claim-revalidation.md` |
+| "NOT IN THE LIBRARY" IS A CLAIM | `R-NOTINLIB` | `tools/process/not-in-the-library.md` |
+| Review-Loop Cap — Severity-Tiered | `R-LOOPCAP` | `tools/process/review-loop-cap.md` |
+| NEVER truncate the output of a hook-running command | `R-TRUNC` | `tools/process/push-gate-bypass.md` |
+| Staging — NAMED PATHS, never `-A` | `R-STAGE` | `tools/process/staging.md` |
+| Editorial Review Gate | `R-ER` | `tools/process/review-gates.md` |
+| Adversary Review Gate | `R-AR` | `tools/process/review-gates.md` |
 
 ## Pass record
 
@@ -29,8 +35,9 @@ section is preserved verbatim in the body named below.
 | 1 | 2026-08-23 | `:238`–`:501` (defect ledger + failure-recurs) | 264 | 41 | **223** |
 | 2 | 2026-08-23 | `:333`–`:527` (core objects + commitments) | 195 | 48 | **147** |
 | 3 | 2026-08-23 | `:629`–`:870` (adjacency, determinism, two-pole, revalidate) | 242 | 57 | **185** |
+| 4 | 2026-08-23 | `:687`–`:986` (not-in-library, loop cap, truncation, staging, both gates) | 300 | 80 | **220** |
 
-**File total: 2338 → 1786 lines (−552, 24%).**
+**File total: 2338 → 1567 lines (−771, 33%).**
 
 ⚠ **The cap is still unset, deliberately.** Per the contract, the first cap is set BY MEASUREMENT
 after the classification sweep completes, never picked as a round number mid-program. Until then
