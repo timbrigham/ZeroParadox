@@ -322,3 +322,63 @@ The minimum margin is 10 pts top and 5 pts bottom. If either fails, increase `dh
 - [ ] Calculated `max_y < dh - 10` and `min_y > 5` for all content
 - [ ] No internal title string that duplicates the caption
 - [ ] `dh` expressed in inches with comment: `# N * 72 = M pts; content top = X, content bottom = Y`
+
+---
+
+## Routed from `CLAUDE.md`, 2026-08-23
+
+## Lean↔PDF Consistency — AI-Assisted Workflow
+
+There is no automated tooling that verifies theorem status labels in PDF build scripts (e.g. "Status: DERIVED", "Candidate Theorem") match the actual Lean proof state. This is a known gap.
+
+It is closed by the Claude-assisted session workflow instead. At every session where a Lean proof changes status or a new result is added, Claude cross-checks the corresponding PDF script and companion document as part of the same work. The companion sync checklist and README sync triggers (above) formalize this discipline.
+
+This is a deliberate choice: the mapping between Lean theorem names and PDF prose descriptions is not machine-parseable without a maintained lookup table that would itself require discipline to keep current. The AI workflow catches the same class of errors more flexibly, with lower maintenance overhead, at the project's current scale.
+
+If the framework grows significantly or external contributors join, a lightweight parseable-marker convention (`-- LEAN_STATUS: DERIVED` in Lean files, grepped against PDF scripts) would be worth adding. For now, the session discipline is the mechanism.
+
+**Lean encoding descriptions can also go stale.** The gap above covers theorem *status* labels. A separate gap: prose descriptions of Lean *encodings* (type names, constructor names, how a concept is represented in code) can drift when the Lean source is refactored. Before stating any Lean encoding in a PDF, companion, README, or correspondence — verify it against the actual source file. Do not rely on memory or prior documentation. Example: `Fin 2` was replaced by `OntologicalStates` in ZPB.lean; stale references persisted in README.md, CLAUDE.md, and build scripts until caught by a reviewer question in May 2026.
+
+### File-Reference Citation Convention (standing rule — Tim 2026-07-08, post-reorg)
+
+References to Lean **files** in reviewer-facing / checkable surfaces must carry the **full repository path** (`ZeroParadox/<Domain>/<Name>.lean`), never a bare basename. A full path is grep-verifiable against the filesystem — it resolves or it does not — so a move/rename fails **loud**; a bare basename fails **silent** (plausible but pointing nowhere), which is exactly the stale-citation class the 2026-07-08 reorg sweep had to hunt down. For a "check it yourself" repo, loud is the point.
+
+By reference kind and surface:
+- **Declaration names** (`t_snap_derived`, `mc1_correspondence`): keep **bare** — a decl name is globally unique in the codebase and self-locating via `#print axioms ZeroParadox.<name>`. Never prefix a decl with a path or a (dead) per-layer namespace.
+- **File references in checkable surfaces** — CLAIMS.md, BOTTOMELEMENT.md, README/GUIDE, and each formal document's "Lean source" box/footer: **full path**, as a markdown link href where the medium supports it. The markdown ledgers already do this; keep it uniform.
+- **File references in flowing general-reader companion prose**: a bare basename is acceptable where a full path would clutter the sentence for a non-programmer — the checkable surfaces carry the path and the file is one grep away.
+
+**Rollout is additive, not a big-bang rewrite.** Every new or edited reference uses a full path immediately. Existing formal-doc source boxes upgrade to full paths **as each document is next rebuilt** (the same as-touched model as the companion-sync and vocabulary conventions — do not burn a rebuild round retrofitting). The authoritative old→new file map is `ssot.json` (`new.file`).
+
+**Enforcement:** a `check_paths.py`-style resolver (the one used in the 2026-07-08 sweep, in the scratch/`.claude-local` tooling) verifies every repo-relative file reference in tracked markdown resolves against the filesystem. Run it before any doc-touching commit; it should become a pre-push/CI check so a future reorg cannot silently rot the citation layer again.
+
+## Transparency notices on unlinked files — RETIRED 2026-08-15 (Tim).
+
+**The rule was: any tracked file unlinked from both README.md and GUIDE.md must carry a
+transparency blockquote (or, for a PDF, an amber callout). It is gone.** It bound seven files
+and exactly one honoured it, for months, with nothing noticing — which is past this file's own
+*fix the trigger* rung and into *discipline will not work here*.
+
+**Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md`,
+`BOTTOMELEMENT_findings.md`, `CLAUDE.md`, `LEAN_CUSTOM_REGISTRY.md`, `RELEASES.md`,
+`register.md`, `scripts/PDF_Rendering_Standards.md`. Only `ABOUTME.md` carried a notice. Its own
+table named two files and one of them, `ZP_Gen2_Applications.pdf`, had been moved to the private
+folder and was not tracked at all.
+
+⚠ **THE TRIGGER WAS MEASURING THE WRONG THING, and that is the transferable part.** It asked
+*is this linked?* when what anyone actually cared about is *would a reader be misled about why
+this exists?* Those came apart twice: `register.md` is flagged unlinked while this same file
+says it is deliberately reachable through the Claims Ledger, and an instruction file cannot
+carry a header at all, because a notice prepended to a prompt **becomes part of the prompt**.
+The exception carved for `.claude/commands/*.md` and `CLAUDE.md` was the tell that the trigger
+was wrong, not that it needed one more exception.
+
+**What replaces it: nothing mechanical, and that is deliberate.** Disclosure lives in
+§ *WHERE THINGS LIVE* and § *Private Working Folder* — pages a human reads. Where a document's
+STATUS could mislead (speculative, superseded, a development artifact), say so in its own
+opening because it is true, not because a linkage rule fired. `ABOUTME.md` keeps its note on
+exactly that basis.
+
+**Also retired with it: § *README.md Link Restrictions*,** whose table named the same two files
+and was stale the same way. Nothing is being *hidden* — if a file should not be in the index,
+the reason belongs in a commit message or a defect row, not a standing table that outlives it.

@@ -43,3 +43,45 @@ Transparency is a core value of this project. The existence of this private fold
 - Version numbers are tracked in `register.md` (Formal Version column) and in each PDF's title block — not in the filename
 - Superseded versions are **not** archived to a folder (the `historical/` folder was retired in v3.0); the flat root PDF is overwritten in place, and git history + each release's Zenodo snapshot are the record
 - README.md and GUIDE.md always link to the flat root filename
+
+---
+
+## Routed from `CLAUDE.md`, 2026-08-23
+
+## scripts/ is the build scripts' ONLY home. There is no mirror to keep current. (2026-08-15.)
+
+`scripts/build_*.py`, `zp_utils.py` and `scan_pdfs.py` are the working copies; the `.claude-local/`
+originals of those were deleted. **Edit the file in `scripts/` and commit it like any other source
+file — there is no copy step.**
+
+⚠ **NOT every build script moved.** Five remain private-only: `build_bottom_matrix.py`,
+`build_claim_map.py`, `build_padicbridge.py`,
+`build_zp_reals_companion.py`, `build_zpj_bridge_companion.py`. **Measured 2026-08-15: none of
+the five emits a TRACKED artifact**, so nothing published depends on an unpublished builder and
+the transparency position holds — but `scripts/build_dictionary_map.py` *imports* the first of
+them, which is why it cannot run from a public clone and now says so instead of raising
+`ModuleNotFoundError`.
+
+⚠ **WHY IT WAS RETIRED, and the failure is the general argument against mirrors.** The rule asked a
+human to remember a copy step on every commit, and `register.md` fingerprinted only the PRIVATE
+copy — so the PUBLISHED script sat outside the integrity check entirely. `scan_pdfs.py` drifted on
+2026-05-20 and nothing noticed for three months. A mirror plus a discipline is strictly worse than
+one file: it adds a way to be wrong and removes the way to detect it. `check_hashes.py` now
+fingerprints `scripts/`, so **what `register.md` attests to is exactly what a reader can download.**
+
+**The four-step rule for changing a build script is unchanged** — edit, bump the internal version,
+rebuild the PDF, update the hash token in `register.md`. Only the copy step is gone.
+
+✅ **The fonts are published too, so `scripts/` is RUNNABLE and not merely source-visible.** The
+12 DejaVu + STIX Two TTFs live in `scripts/fonts/` (6.1 MB, measured 2026-08-16), which was the
+last thing standing
+between a clone and a working build — the code was public and its fonts were not.
+
+⚠ **Both licences ship beside them and that is a requirement, not a courtesy.** The SIL OFL says
+each copy must contain "the above copyright notice and this license"; redistributing the binaries bare
+would violate it. `LICENSE-DejaVu.txt` is the Bitstream Vera text extracted from the font's own
+`name` table (authoritative for these exact files, rather than assumed from the family name), and
+`LICENSE-STIXTwo-OFL.txt` is the canonical upstream OFL 1.1. **If a font is ever added or replaced,
+read its `name` table id 13 and ship whatever licence it declares.**
+
+If a script is new, add a row for it to `scripts/README.md` in the same commit.

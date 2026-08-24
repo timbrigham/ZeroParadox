@@ -863,153 +863,61 @@ COST     a general reader meets the framework in the companion, so a stale key-r
          misdescribes what is proved.
 READ     tools/process/document-workflow.md
 
-## scripts/ is the build scripts' ONLY home. There is no mirror to keep current. (2026-08-15.)
+## R-SCRIPTS  `scripts/` is the build scripts' only home. There is no mirror.
+TRIGGER  you are editing, adding, or looking for a PDF build script.
+RULE     edit the file in `scripts/` and commit it like any other source file — there is no
+         copy step. A new script gets a row in `scripts/README.md` in the same commit. The
+         fonts ship beside them under `scripts/fonts/` with their licences, so a clone can
+         actually build; if a font is added or replaced, read its `name` table id 13 and ship
+         whatever licence it declares. Five scripts remain private-only and none emits a
+         tracked artifact — `scripts/build_dictionary_map.py` imports one and says so rather
+         than raising `ModuleNotFoundError`.
+COST     the retired mirror asked a human to remember a copy step while `register.md`
+         fingerprinted only the PRIVATE copy — so the PUBLISHED script sat outside the
+         integrity check and drifted three months unnoticed. A mirror plus a discipline adds
+         a way to be wrong and removes the way to detect it.
+READ     tools/process/repository-layout.md
 
-`scripts/build_*.py`, `zp_utils.py` and `scan_pdfs.py` are the working copies; the `.claude-local/`
-originals of those were deleted. **Edit the file in `scripts/` and commit it like any other source
-file — there is no copy step.**
+## R-LEANPDF  Verify a Lean encoding at the source before stating it anywhere.
+TRIGGER  you are about to state a Lean type name, constructor, or theorem STATUS in a PDF,
+         companion, README, or correspondence.
+RULE     open the actual `.lean` file and check; never rely on memory or prior documentation.
+         No automated checker covers status labels or encoding descriptions — the session
+         workflow IS the mechanism, so cross-check the PDF script and companion in the same
+         session as any Lean status change. File references in CHECKABLE surfaces carry the
+         FULL repository path (`ZeroParadox/<Domain>/<Name>.lean`); declaration names stay
+         BARE and unprefixed; flowing companion prose may use a bare basename. Rollout is
+         as-touched, never a retrofit round.
+COST     a full path fails LOUD when a file moves; a bare basename fails SILENT — plausible
+         and pointing nowhere. `Fin 2` survived in three surfaces after the Lean moved to
+         `OntologicalStates`, until a reviewer asked.
+READ     tools/process/document-workflow.md
 
-⚠ **NOT every build script moved.** Five remain private-only: `build_bottom_matrix.py`,
-`build_claim_map.py`, `build_padicbridge.py`,
-`build_zp_reals_companion.py`, `build_zpj_bridge_companion.py`. **Measured 2026-08-15: none of
-the five emits a TRACKED artifact**, so nothing published depends on an unpublished builder and
-the transparency position holds — but `scripts/build_dictionary_map.py` *imports* the first of
-them, which is why it cannot run from a public clone and now says so instead of raising
-`ModuleNotFoundError`.
+## R-SHELL  This is Windows. PowerShell syntax, and never prepend `cd`.
+TRIGGER  you are about to run a shell command or search for a file.
+RULE     use the `PowerShell` tool, not Bash with Unix commands. Use `Glob` for file discovery
+         — never `find`, which hangs here. `Get-ChildItem` not `ls`; `Move-Item` not `mv`.
+         Backslash paths in PowerShell, forward slash in Lean/lake config. The working
+         directory is already the repo root: never prepend `cd` or `Set-Location`. Every call
+         invoking an external process (a build script, `lake build`, `python <script>`) uses
+         `timeout: 300000`; if it times out, diagnose rather than retry blindly.
+COST     a prepended `cd` produces a command string that misses the allowlist and triggers an
+         avoidable permission prompt.
 
-⚠ **WHY IT WAS RETIRED, and the failure is the general argument against mirrors.** The rule asked a
-human to remember a copy step on every commit, and `register.md` fingerprinted only the PRIVATE
-copy — so the PUBLISHED script sat outside the integrity check entirely. `scan_pdfs.py` drifted on
-2026-05-20 and nothing noticed for three months. A mirror plus a discipline is strictly worse than
-one file: it adds a way to be wrong and removes the way to detect it. `check_hashes.py` now
-fingerprints `scripts/`, so **what `register.md` attests to is exactly what a reader can download.**
-
-**The four-step rule for changing a build script is unchanged** — edit, bump the internal version,
-rebuild the PDF, update the hash token in `register.md`. Only the copy step is gone.
-
-✅ **The fonts are published too, so `scripts/` is RUNNABLE and not merely source-visible.** The
-12 DejaVu + STIX Two TTFs live in `scripts/fonts/` (6.1 MB, measured 2026-08-16), which was the
-last thing standing
-between a clone and a working build — the code was public and its fonts were not.
-
-⚠ **Both licences ship beside them and that is a requirement, not a courtesy.** The SIL OFL says
-each copy must contain "the above copyright notice and this license"; redistributing the binaries bare
-would violate it. `LICENSE-DejaVu.txt` is the Bitstream Vera text extracted from the font's own
-`name` table (authoritative for these exact files, rather than assumed from the family name), and
-`LICENSE-STIXTwo-OFL.txt` is the canonical upstream OFL 1.1. **If a font is ever added or replaced,
-read its `name` table id 13 and ship whatever licence it declares.**
-
-If a script is new, add a row for it to `scripts/README.md` in the same commit.
-
-## Lean↔PDF Consistency — AI-Assisted Workflow
-
-There is no automated tooling that verifies theorem status labels in PDF build scripts (e.g. "Status: DERIVED", "Candidate Theorem") match the actual Lean proof state. This is a known gap.
-
-It is closed by the Claude-assisted session workflow instead. At every session where a Lean proof changes status or a new result is added, Claude cross-checks the corresponding PDF script and companion document as part of the same work. The companion sync checklist and README sync triggers (above) formalize this discipline.
-
-This is a deliberate choice: the mapping between Lean theorem names and PDF prose descriptions is not machine-parseable without a maintained lookup table that would itself require discipline to keep current. The AI workflow catches the same class of errors more flexibly, with lower maintenance overhead, at the project's current scale.
-
-If the framework grows significantly or external contributors join, a lightweight parseable-marker convention (`-- LEAN_STATUS: DERIVED` in Lean files, grepped against PDF scripts) would be worth adding. For now, the session discipline is the mechanism.
-
-**Lean encoding descriptions can also go stale.** The gap above covers theorem *status* labels. A separate gap: prose descriptions of Lean *encodings* (type names, constructor names, how a concept is represented in code) can drift when the Lean source is refactored. Before stating any Lean encoding in a PDF, companion, README, or correspondence — verify it against the actual source file. Do not rely on memory or prior documentation. Example: `Fin 2` was replaced by `OntologicalStates` in ZPB.lean; stale references persisted in README.md, CLAUDE.md, and build scripts until caught by a reviewer question in May 2026.
-
-### File-Reference Citation Convention (standing rule — Tim 2026-07-08, post-reorg)
-
-References to Lean **files** in reviewer-facing / checkable surfaces must carry the **full repository path** (`ZeroParadox/<Domain>/<Name>.lean`), never a bare basename. A full path is grep-verifiable against the filesystem — it resolves or it does not — so a move/rename fails **loud**; a bare basename fails **silent** (plausible but pointing nowhere), which is exactly the stale-citation class the 2026-07-08 reorg sweep had to hunt down. For a "check it yourself" repo, loud is the point.
-
-By reference kind and surface:
-- **Declaration names** (`t_snap_derived`, `mc1_correspondence`): keep **bare** — a decl name is globally unique in the codebase and self-locating via `#print axioms ZeroParadox.<name>`. Never prefix a decl with a path or a (dead) per-layer namespace.
-- **File references in checkable surfaces** — CLAIMS.md, BOTTOMELEMENT.md, README/GUIDE, and each formal document's "Lean source" box/footer: **full path**, as a markdown link href where the medium supports it. The markdown ledgers already do this; keep it uniform.
-- **File references in flowing general-reader companion prose**: a bare basename is acceptable where a full path would clutter the sentence for a non-programmer — the checkable surfaces carry the path and the file is one grep away.
-
-**Rollout is additive, not a big-bang rewrite.** Every new or edited reference uses a full path immediately. Existing formal-doc source boxes upgrade to full paths **as each document is next rebuilt** (the same as-touched model as the companion-sync and vocabulary conventions — do not burn a rebuild round retrofitting). The authoritative old→new file map is `ssot.json` (`new.file`).
-
-**Enforcement:** a `check_paths.py`-style resolver (the one used in the 2026-07-08 sweep, in the scratch/`.claude-local` tooling) verifies every repo-relative file reference in tracked markdown resolves against the filesystem. Run it before any doc-touching commit; it should become a pre-push/CI check so a future reorg cannot silently rot the citation layer again.
-
-## Transparency notices on unlinked files — RETIRED 2026-08-15 (Tim).
-
-**The rule was: any tracked file unlinked from both README.md and GUIDE.md must carry a
-transparency blockquote (or, for a PDF, an amber callout). It is gone.** It bound seven files
-and exactly one honoured it, for months, with nothing noticing — which is past this file's own
-*fix the trigger* rung and into *discipline will not work here*.
-
-**Measured the day it was retired.** Unlinked from both indexes: `ABOUTME.md`,
-`BOTTOMELEMENT_findings.md`, `CLAUDE.md`, `LEAN_CUSTOM_REGISTRY.md`, `RELEASES.md`,
-`register.md`, `scripts/PDF_Rendering_Standards.md`. Only `ABOUTME.md` carried a notice. Its own
-table named two files and one of them, `ZP_Gen2_Applications.pdf`, had been moved to the private
-folder and was not tracked at all.
-
-⚠ **THE TRIGGER WAS MEASURING THE WRONG THING, and that is the transferable part.** It asked
-*is this linked?* when what anyone actually cared about is *would a reader be misled about why
-this exists?* Those came apart twice: `register.md` is flagged unlinked while this same file
-says it is deliberately reachable through the Claims Ledger, and an instruction file cannot
-carry a header at all, because a notice prepended to a prompt **becomes part of the prompt**.
-The exception carved for `.claude/commands/*.md` and `CLAUDE.md` was the tell that the trigger
-was wrong, not that it needed one more exception.
-
-**What replaces it: nothing mechanical, and that is deliberate.** Disclosure lives in
-§ *WHERE THINGS LIVE* and § *Private Working Folder* — pages a human reads. Where a document's
-STATUS could mislead (speculative, superseded, a development artifact), say so in its own
-opening because it is true, not because a linkage rule fired. `ABOUTME.md` keeps its note on
-exactly that basis.
-
-**Also retired with it: § *README.md Link Restrictions*,** whose table named the same two files
-and was stale the same way. Nothing is being *hidden* — if a file should not be in the index,
-the reason belongs in a commit message or a defect row, not a standing table that outlives it.
-
-## Development Environment
-
-This project runs on **Windows 11**. Shell commands must use PowerShell syntax, not Unix/Bash.
-
-- **File discovery:** Use the `Glob` tool — never `find` (hangs on this system) or `ls`
-- **Shell commands:** Use the `PowerShell` tool — never `Bash` with Unix-style commands
-- **Never prepend `cd`:** The working directory is always `C:\Workspace\ZeroParadox` at session start. 
-- **Never prepend `cd C:\Workspace\ZeroParadox;` or `Set-Location` to any command — doing so creates command strings that don't match the allowlist and triggers unnecessary permission prompts.
-- **File verification:** Use `Get-ChildItem *.pdf` not `ls *.pdf`
-- **File moves:** Use `Move-Item` not `mv`
-- **Path separators:** Backslash in PowerShell (`C:\Workspace\ZeroParadox`), forward slash in Lean/lake config
-
-## README.md and GUIDE.md Maintenance
-
-**README.md is the formal index** (mathematicians and reviewers); **GUIDE.md is the general-reader
-hub**. Both are public and each carries a cross-pointer to the other near the top. **Preserve the
-section order in both** — do not add top-level sections, reorder, or drop terminal sections without
-agreement.
-
-**TRIGGER — audit BOTH files when any of these happens:** a document is versioned up · an open
-question is closed · a claim's status changes · a document is added or archived.
-
-⭐ **`check_hashes.py` mechanically compares `register.md` against README's Framework table** on
-every run, joined on the **PDF filename** (never the `ZP-X` code — four register rows begin `ZP-J`).
-**Update `register.md` FIRST and propagate to README in the same session**; the check found five
-stale README rows on its first run.
-
-⚠ **GUIDE.md carries NO version numbers, deliberately, and that is a property to preserve.** Check
-its link *targets* resolve; **never** "sync" a version into it. A version number appearing in
-GUIDE.md is a regression to revert — it would mint a third copy of every version and force the
-comparator to grow a third arm to police the copy the decision created.
-
-📖 **THE CHECKLISTS AND FORMATTING RULES — `tools/process/document-workflow.md`.** The per-file
-pre-commit checklist, the display-name and table conventions, the per-trigger audit lists, and the
-seven steps for adding a new formal document. **Open it before committing a README or GUIDE edit** —
-these are the conventions a reviewer will send the diff back for.
-
-## Superseding Document Versions
-
-The `historical/` folder was **retired in v3.0**. Superseded versions are preserved by two records more
-complete and authoritative than a hand-maintained archive: **git history** (every prior PDF stays in the
-commit record) and each release's **Zenodo DOI snapshot** (the full repo - including the then-current root
-PDFs - captured at a permanent, browsable DOI). The archive folder had drifted a month out of date; these
-do not. Do NOT recreate `historical/`, and do NOT rewrite git history to purge old binaries (SHA-pinned
-permalinks and DOI-referenced commits depend on it).
-
-When a document is superseded (cosmetic **or** substantive), overwrite the flat root PDF in place:
-1. Rebuild the new version into the flat root name `ZP-X_Title.pdf` (overwrite; do **not** create a versioned copy or a `historical/` entry).
-2. Update `register.md` (version number + script hash).
-3. Update the version in README.md's Framework table. (GUIDE.md carries no version numbers — see
-   the version-bump section.)
-
-The prior version is recoverable from git (`read(op='show', args=['<commit>:ZP-X_Title.pdf'])`) and lives permanently in the Zenodo snapshot of the release that last carried it.
+## R-INDEXES  README is the formal index; GUIDE is the general-reader hub.
+TRIGGER  a document is versioned up, an open question closes, a claim's status changes, or a
+         document is added or archived.
+RULE     audit BOTH files. Preserve the section order in each — do not add top-level
+         sections, reorder, or drop terminal ones without agreement. `check_hashes.py`
+         mechanically compares `register.md` against README's Framework table on every run,
+         joined on the PDF FILENAME, never the `ZP-X` code (four register rows begin `ZP-J`).
+         Check GUIDE's link TARGETS resolve, and never sync a version into it. Where a
+         document's STATUS could mislead — speculative, superseded, a development artifact —
+         say so in its own opening because it is TRUE, not because a linkage rule fired.
+COST     the retired transparency-notice rule bound seven files and exactly one honoured it,
+         because it measured "is this linked?" when what matters is "would a reader be misled
+         about why this exists?" Those came apart twice.
+READ     tools/process/indexes-and-superseding.md
 
 ## Theorem/Proposition/Lemma Naming Convention
 
